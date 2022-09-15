@@ -85,6 +85,7 @@
 			name = "special grenades crate"
 			spawn_contents = list(/obj/item/storage/box/QM_grenadekit_security = 2,\
 			/obj/item/storage/box/QM_grenadekit_experimentalweapons,\
+			/obj/item/storage/box/stinger_kit,\
 			/obj/item/storage/box/stun_landmines)
 
 	sarin_grenades
@@ -130,36 +131,28 @@
 
 	interdictor
 		name = "interdictor assembly kit"
-		desc = "Contains mainboards, blueprints and a usage guide for spatial interdictors."
+		desc = "Contains mainboards, a manudrive and a usage guide for spatial interdictors."
 		req_access = list(access_engineering)
 
 		make_my_stuff()
 			if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
-				var/obj/item/interdictor_board/B1 = new(src)
-				B1.pixel_x = -6
-				B1.pixel_y = -3
+				var/obj/item/disk/data/floppy/manudrive/interdictor_parts/B1 = new(src)
+				B1.pixel_x = 8
+				B1.pixel_y = 3
 
 				var/obj/item/interdictor_board/B2 = new(src)
 				B2.pixel_x = -6
+				B2.pixel_y = -3
 
 				var/obj/item/interdictor_board/B3 = new(src)
 				B3.pixel_x = -6
-				B3.pixel_y = 3
 
-				var/obj/item/paper/manufacturer_blueprint/interdictor_rod_lambda/B4 = new(src)
-				B4.pixel_x = 8
-				B4.pixel_y = -5
+				var/obj/item/interdictor_board/B4 = new(src)
+				B4.pixel_x = -6
+				B4.pixel_y = 3
 
-				var/obj/item/paper/manufacturer_blueprint/interdictor_rod_sigma/B5 = new(src)
-				B5.pixel_x = 8
-				B5.pixel_y = -1
-
-				var/obj/item/paper/manufacturer_blueprint/interdictor_frame/B6 = new(src)
-				B6.pixel_x = 8
-				B6.pixel_y = 3
-
-				var/obj/item/paper/book/from_file/interdictor_guide/B7 = new(src)
-				B7.pixel_y = 1
+				var/obj/item/paper/book/from_file/interdictor_guide/B5 = new(src)
+				B5.pixel_y = 1
 				return 1
 
 /obj/storage/secure/crate/medical

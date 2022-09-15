@@ -49,7 +49,7 @@
 		..()
 		layer = initial(layer)
 		if (king) return // king has his own death noises, spooky
-		playsound(src.loc, "sound/voice/animal/brullbar_cry.ogg", 60, 1)
+		playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 60, 1)
 
 	seek_target()
 		src.anchored = 0
@@ -77,7 +77,7 @@
 			src.task = "chasing"
 			src.appear()
 			if(king)
-				playsound(src.loc, "sound/voice/animal/brullbar_roar.ogg", 75, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>", 1)
 			break
 
@@ -96,7 +96,7 @@
 		user.lastattacked = src
 		if (!src.alive)
 			// TODO: tie this into surgery()
-			if (istype(W, /obj/item/scalpel))
+			if (iscuttingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 0)
 						user.visible_message("<span class='alert'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
@@ -105,7 +105,7 @@
 						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s left arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s left arm on with [W].</span>")
 						src.left_arm_stage++
 
-						src.left_arm.quality = (src.quality + 150) / 350.0
+						src.left_arm.quality = (src.quality + 150) / 350
 						var/nickname = "king"
 						if (src.quality < 200)
 							nickname = src.quality_name
@@ -126,7 +126,7 @@
 						user.visible_message("<span class='alert'>[user] cuts through the remaining strips of skin holding [src]'s right arm on with [W].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [src]'s right arm on with [W].</span>")
 						src.right_arm_stage++
 
-						src.right_arm.quality = (src.quality + 100) / 350.0
+						src.right_arm.quality = (src.quality + 100) / 350
 						var/nickname = "king"
 						if (src.quality < 200)
 							nickname = src.quality_name
@@ -139,7 +139,7 @@
 							src.right_arm = null
 						src.update_dead_icon()
 
-			else if (istype(W, /obj/item/circular_saw))
+			else if (issawingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 1)
 						user.visible_message("<span class='alert'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
@@ -175,13 +175,13 @@
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<span class='alert'><b>[user]</b> hits [src] with [W]!</span>", 1)
 		if(prob(30))
-			playsound(src.loc, "sound/voice/animal/brullbar_cry.ogg", 60, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] cries!</b></span>", 1)
 		if(prob(25) && alive) // crowds shouldn't be able to beat the fuck out of a confused brullbar with impunity, fuck that
 			src.target = user
 			src.oldtarget_name = user.name
 			src.task = "chasing"
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 60, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 			frenzy(src.target)
 
@@ -204,13 +204,13 @@
 				O.show_message("<span class='alert'><b>[user]</b> punches [src]!</span>", 1)
 			playsound(src.loc, "punch", 50, 1)
 			if(prob(30))
-				playsound(src.loc, "sound/voice/animal/brullbar_cry.ogg", 60, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 60, 1)
 				src.visible_message("<span class='alert'><b>[src] cries!</b></span>", 1)
 			if(prob(20) && alive) // crowd beatdown fix
 				src.target = user
 				src.oldtarget_name = user.name
 				src.task = "chasing"
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 				user.changeStatus("weakened", 2 SECONDS)
 				frenzy(src.target)
@@ -222,7 +222,7 @@
 			src.task = "chasing"
 		else
 			src.visible_message("<span class='alert'><b>[user]</b> pets [src]!</span>", 1)
-			playsound(src.loc, "sound/voice/animal/brullbar_laugh.ogg", 60, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
 
 	on_sleep()
@@ -231,10 +231,10 @@
 
 	ChaseAttack(mob/M)
 		if(prob(10))
-			playsound(src.loc, "sound/voice/animal/brullbar_scream.ogg", 75, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>[src] howls!</b></span>", 1)
 			..()
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(ismob(M))
 				M.changeStatus("stunned", 2 SECONDS)
 				M.changeStatus("weakened", 2 SECONDS)
@@ -249,60 +249,60 @@
 				src.visible_message("<span class='alert'><B>[src]</B> sniffs at [BORG.name].</span>")
 				sleep(1.5 SECONDS)
 				src.visible_message("<span class='alert'><B>[src]</B> throws a tantrum and smashes [BORG.name] to pieces!</span>")
-				playsound(src.loc, "sound/voice/animal/brullbar_scream.ogg", 75, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
-				logTheThing("combat", src, BORG, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "gibs [constructTarget(BORG,"combat")] at [log_loc(src)].")
 				BORG.gib()
 				src.target = null
 				src.boredom_countdown = 0
 			else
 				if (BORG.part_head.ropart_get_damage_percentage() >= 85)
 					src.visible_message("<span class='alert'><B>[src]</B> grabs [BORG.name]'s head and wrenches it right off!</span>")
-					playsound(src.loc, "sound/voice/animal/brullbar_laugh.ogg", 70, 1)
+					playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 70, 1)
 					BORG.compborg_lose_limb(BORG.part_head)
 					sleep(1.5 SECONDS)
 					src.visible_message("<span class='alert'><B>[src]</B> ravenously eats the mangled brain remnants out of the decapitated head!</span>")
-					playsound(src.loc, "sound/voice/animal/brullbar_maul.ogg", 80, 1)
+					playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
 					make_cleanable( /obj/decal/cleanable/blood,src.loc)
 					src.target = null
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> pounds on [BORG.name]'s head furiously!</span>")
-					playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1)
+					playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1)
 					if (BORG.part_head.ropart_take_damage(rand(20,40),0) == 1)
 						BORG.compborg_lose_limb(BORG.part_head)
-					if (prob(33)) playsound(src.loc, "sound/voice/animal/brullbar_scream.ogg", 75, 1)
+					if (prob(33)) playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 					attack_delay = 5
 		else
 			if (boredom_countdown-- > 0)
 				if(prob(70))
 					src.visible_message("<span class='alert'><B>[src]</B> [pick("bites", "nibbles", "chews on", "gnaws on")] [src.target]!</span>")
-					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
-					playsound(src.loc, "sound/items/eatfood.ogg", 50, 1)
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+					playsound(src.loc, 'sound/items/eatfood.ogg', 50, 1)
 					random_brute_damage(target, 10,1)
 					take_bleeding_damage(target, null, 5, DAMAGE_STAB, 1, get_turf(target))
 					if(prob(40))
-						playsound(src.loc, "sound/voice/animal/brullbar_laugh.ogg", 70, 1)
+						playsound(src.loc, 'sound/voice/animal/brullbar_laugh.ogg', 70, 1)
 						src.visible_message("<span class='alert'><b>[src] laughs!</b></span>", 1)
 				else
 					src.visible_message("<span class='alert'><B>[src]</B> [pick("slashes", "swipes", "claws", "tears")] a chunk out of [src.target]!</span>")
-					playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					random_brute_damage(target, 20,1)
 					take_bleeding_damage(target, null, 10, DAMAGE_CUT, 0, get_turf(target))
-					playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
-					playsound(src.loc, "sound/voice/animal/brullbar_scream.ogg", 75, 1)
+					playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 75, 1)
 					src.visible_message("<span class='alert'><b>[src] howls!</b></span>", 1)
 					if(!M.stat) M.emote("scream") // don't scream while dead/asleep
 
 			else // flip the fuck out
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> slams into [src.target]!</span>")
 				M.changeStatus("weakened", 2 SECONDS)
 				frenzy(src.target)
 
 			if (isdead(M)) // devour corpses
 				src.visible_message("<span class='alert'><b>[src] devours [src.target]! Holy shit!</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 				M.ghostize()
 				new /obj/decal/fakeobjects/skeleton(M.loc)
 				M.gib()
@@ -325,7 +325,7 @@
 				src.icon_state = "brullbarking"
 			else
 				src.icon_state = "brullbar"
-			playsound(src.loc, "sound/voice/animal/brullbar_scream.ogg", 85, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_scream.ogg', 85, 1)
 			src.visible_message("<span class='alert'><B>[src]</B> howls!</span>")
 		return
 
@@ -367,9 +367,9 @@
 
 		SPAWN(0)
 			src.visible_message("<span class='alert'><b>[src] goes [pick("into a frenzy", "into a bloodlust", "berserk", "hog wild", "crazy")]!</b></span>")
-			playsound(src.loc, "sound/voice/animal/brullbar_maul.ogg", 80, 1)
+			playsound(src.loc, 'sound/voice/animal/brullbar_maul.ogg', 80, 1)
 			if(king)
-				playsound(src.loc, "sound/voice/animal/brullbar_roar.ogg", 80, 1)
+				playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 80, 1)
 				src.visible_message("<span class='alert'><b>[src] roars!</b></span>")
 			src.set_loc(M.loc)
 			src.frenzied = 20
@@ -407,8 +407,8 @@
 
 	CritterDeath()
 		..()
-		playsound(src.loc, "sound/voice/animal/brullbar_roar.ogg", 75, 1)
-		playsound(src.loc, "sound/voice/animal/brullbar_cry.ogg", 75, 1)
+		playsound(src.loc, 'sound/voice/animal/brullbar_roar.ogg', 75, 1)
+		playsound(src.loc, 'sound/voice/animal/brullbar_cry.ogg', 75, 1)
 
 ////////////////
 ////// e-egg?

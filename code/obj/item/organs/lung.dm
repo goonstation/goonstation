@@ -7,7 +7,7 @@
 	organ_name = "lung"
 	desc = "Inflating meat airsacks that pass breathed oxygen into a person's blood and expels carbon dioxide back out. Hopefully whoever used to have these doesn't need them anymore."
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 2.0
+	organ_holder_required_op_stage = 2
 	icon_state = "lung_R"
 	failure_disease = /datum/ailment/disease/respiratory_failure
 	var/temp_tolerance = T0C+66
@@ -27,10 +27,10 @@
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -51,10 +51,10 @@
 
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
-	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 	// 	else
-	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
@@ -113,7 +113,7 @@
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
 			if(SA)
-				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
+				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well
@@ -161,7 +161,7 @@
 		if (!src.can_attach_organ(H, user))
 			return 0
 
-		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2.0)
+		if (H.organHolder.chest && H.organHolder.chest.op_stage == 2)
 			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 			var/target_organ_location = null
 
@@ -180,7 +180,7 @@
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "right_lung", 2.0)
+				H.organHolder.receive_organ(src, "right_lung", 2)
 				H.update_body()
 			else if (target_organ_location == "left" && !H.organHolder.left_lung)
 				user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left lung socket!</span>",\
@@ -189,7 +189,7 @@
 
 				if (user.find_in_hand(src))
 					user.u_equip(src)
-				H.organHolder.receive_organ(src, "left_lung", 2.0)
+				H.organHolder.receive_organ(src, "left_lung", 2)
 				H.update_body()
 			else
 				user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right lung socket!<br>But there's something already there!</span>",\

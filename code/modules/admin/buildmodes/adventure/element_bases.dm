@@ -18,7 +18,7 @@ var/global/list/adventure_elements_by_id = list()
 
 	New()
 		if (src.opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 			RL_SetOpacity(1)
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
@@ -99,6 +99,14 @@ var/global/list/adventure_elements_by_id = list()
 // DO SOMETHING.
 // LEAVE ME ALONE.
 /obj/adventurepuzzle/triggerable/triggerer
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	var/list/triggered = list()
 
 	proc/post_trigger()

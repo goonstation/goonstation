@@ -12,7 +12,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/food_color = "#FF0000" //Color for various food items
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
-	var/brewable = 0 // will hitting a still with it do anything?
 	var/brew_result = null // what will it make if it's brewable?
 	var/unlock_medal_when_eaten = null // Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 // to prevent re-rolling of food in emagged ovens
@@ -224,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
@@ -247,13 +246,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				user.tri_message(M, "<span class='alert'><b>[user]</b> tries to feed [M] [src]!</span>",\
 					"<span class='alert'>You try to feed [M] [src]!</span>",\
 					"<span class='alert'><b>[user]</b> tries to feed you [src]!</span>")
-				logTheThing("combat", user, M, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "attempts to feed [constructTarget(M,"combat")] [src] [log_reagents(src)] at [log_loc(user)].")
 
 				//no or broken stomach
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
@@ -272,17 +271,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (consumer == feeder)
 			consumer.visible_message("<span class='notice'>[consumer] takes a bite of [src]!</span>",\
 			  "<span class='notice'>You take a bite of [src]!</span>")
-			logTheThing("combat", consumer, null, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
+			logTheThing(LOG_COMBAT, consumer, "takes a bite of [src] [log_reagents(src)] at [log_loc(consumer)].")
 		else
 			feeder.tri_message(consumer, "<span class='alert'><b>[feeder]</b> feeds [consumer] [src]!</span>",\
 				"<span class='alert'>You feed [consumer] [src]!</span>",\
 				"<span class='alert'><b>[feeder]</b> feeds you [src]!</span>")
-			logTheThing("combat", feeder, consumer, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
+			logTheThing(LOG_COMBAT, feeder, "feeds [constructTarget(consumer,"combat")] [src] [log_reagents(src)] at [log_loc(feeder)].")
 
 		src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
-		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
@@ -479,10 +478,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	on_spin_emote(var/mob/living/carbon/human/user as mob)
 		. = ..()
 		if (src.reagents && src.reagents.total_volume > 0)
-			user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
-			logTheThing("combat", user, null, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
-			src.reagents.reaction(get_turf(user), TOUCH)
-			src.reagents.clear_reagents()
+			if(user.mind.assigned_role == "Bartender")
+				. = ("You deftly [pick("spin", "twirl")] [src] managing to keep all the contents inside.")
+				if(!ON_COOLDOWN(user, "bartender spinning xp", 180 SECONDS)) //only for real cups
+					JOB_XP(user, "Bartender", 1)
+			else
+				user.visible_message("<span class='alert'><b>[user] spills the contents of [src] all over [him_or_her(user)]self!</b></span>")
+				logTheThing(LOG_COMBAT, user, "spills the contents of [src] [log_reagents(src)] all over [him_or_her(user)]self at [log_loc(user)].")
+				src.reagents.reaction(get_turf(user), TOUCH)
+				src.reagents.clear_reagents()
 
 	mouse_drop(atom/over_object)
 		..()
@@ -502,6 +506,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			maybe_too_tipsy = (C.reagents.reagent_list["ethanol"].volume >= 50) && prob(50)
 			too_drunk = C.reagents.reagent_list["ethanol"].volume >= 150
 
+		if(!in_interact_range(src, C))
+			boutput(usr, "<span class='alert'>That's too far!</span>")
+			return
+
+		if(C.restrained()) // Can't chug if your arms are not available
+			if(prob(1)) // Actually you can if you're really lucky
+				C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
+			else
+				boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
+				return
+
 		if(too_drunk || maybe_too_tipsy || maybe_too_clumsy)
 			C.visible_message("[C.name] was too energetic, and threw the [src.name] backwards instead of chugging it!")
 			src.set_loc(get_turf(C))
@@ -511,14 +526,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (!C.hasStatus("weakened"))
 				//Make them fall over, they lost their balance.
 				C.changeStatus("weakened", 2 SECONDS)
-		else
-			if (C.restrained()) // Can't chug if your arms are not available
-				if (prob(1)) // Actually you can if you're really lucky
-					C.visible_message("<span class='alert'>Holy shit! [C] grabs the [src] with their teeth and prepares to chug!</span>")
-				else
-					boutput(C, "<span class='alert'>You can't grab the [src] with your arms to chug it.</span>")
-					return
-			actions.start(new /datum/action/bar/icon/chug(C, src), C)
+			return
+
+		actions.start(new /datum/action/bar/icon/chug(C, src), C)
 
 	//Wow, we copy+pasted the heck out of this... (Source is chemistry-tools dm)
 	attack_self(mob/user as mob)
@@ -545,7 +555,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return 1
 		else
 			user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src].</span>")
-			logTheThing("combat", user, M, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "attempts to force [constructTarget(M,"combat")] to drink from [src] [log_reagents(src)] at [log_loc(user)].")
 			if (check_target_immunity(M))
 				user.visible_message("<span class='alert'>[user] attempts to force [M] to drink from [src], but fails!.</span>", "<span class='alert'>You try to force [M] to drink [src], but fail!</span>")
 				return 0
@@ -588,13 +598,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			"<span class='alert'>[feeder] makes you drink from the [src].</span>\n[tasteMessage]",
 				group = "drinkMessages")
 		if (src.reagents.total_volume)
-			logTheThing("combat", feeder, consumer, "[feeder == consumer ? "takes a sip from" : "makes [constructTarget(consumer,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(feeder)].")
+			logTheThing(LOG_COMBAT, feeder, "[feeder == consumer ? "takes a sip from" : "makes [constructTarget(consumer,"combat")] drink from"] [src] [log_reagents(src)] at [log_loc(feeder)].")
 			src.reagents.reaction(consumer, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(src.gulp_size, (consumer.reagents?.maximum_volume - consumer.reagents?.total_volume))))
 			SPAWN(0.5 SECONDS)
 				if (src?.reagents && consumer?.reagents)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
-		playsound(consumer.loc,"sound/items/drink.ogg", rand(10,50), 1)
+		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		consumer.urine += 0.1
 		eat_twitch(consumer)
 
@@ -622,7 +632,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
 				var/turf/T = get_turf(F)
-				logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
+				logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
 				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
 
@@ -648,7 +658,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
+			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Added reagents (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 
@@ -661,7 +671,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].")
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You dump [trans] units of the solution to [target].</span>")
 
@@ -672,7 +682,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (target:flags & NOSPLASH) return
 			can_mousedrop = 0
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
-			logTheThing("combat", user, target, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
+			logTheThing(LOG_COMBAT, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 			if (reagents)
 				reagents.physical_shock(14)
 
@@ -710,7 +720,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return
 
-			logTheThing("combat", user, null, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Brought in line with beakers (Convair880).
+			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Brought in line with beakers (Convair880).
 			var/trans = src.reagents.trans_to(target, 10)
 			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
 		return
@@ -918,8 +928,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	attack(target, mob/user)
 		if (src.broken && !src.unbreakable)
-			force = 5.0
-			throwforce = 10.0
+			force = 5
+			throwforce = 10
 			throw_range = 5
 			w_class = W_CLASS_SMALL
 			stamina_damage = 15
@@ -936,15 +946,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				qdel(src)
 				if (prob (25))
 					user.visible_message("<span class='alert'>The broken shards of [src] slice up [user]'s hand!</span>")
-					playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(U, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					var/damage = rand(5,15)
 					random_brute_damage(user, damage)
 					take_bleeding_damage(user, null, damage)
 			else
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
-				logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
-				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
 				take_bleeding_damage(target, null, damage)
@@ -995,7 +1005,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			user.visible_message("<span class='alert'><b>[user] smashes [src] on [target]! \The [src] shatters completely!</span>")
 			if (prob(hurt_prob))
 				user.visible_message("<span class='alert'>The broken shards of [src] slice up [user]'s hand!</span>")
-				playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(U, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(user, damage)
 				take_bleeding_damage(user, user, damage)
 			SPAWN(0)
@@ -1237,7 +1247,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			bladder = H.sims?.getValue("Bladder")
 			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(H, 'sound/misc/pourdrink.ogg', 50, 1)
 				if (!H.sims)
 					H.urine -= 2
 				else
@@ -1283,13 +1293,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
-			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(H, 'sound/items/eatfood.ogg', rand(10,50), 1)
 			qdel(eat_thing)
 			src.UpdateIcon()
 			return
 
 	ex_act(severity)
 		src.smash()
+
+
+	Crossed(atom/movable/mover) //Makes barfights cooler
+		if(istype(mover, /obj/projectile))
+			if(prob(30))
+				src.smash()
+		. = ..()
 
 	proc/smash(var/atom/A)
 		if (src.smashed)
@@ -1387,7 +1404,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			glassholder.visible_message("[glassholder.name] starts chugging the [glass.name]!")
 		else
 			glassholder.visible_message("[glassholder.name] starts forcing [target.name] to chug the [glass.name]!")
-		logTheThing("combat", glassholder, target, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, glassholder, "[glassholder == target ? "starts chugging from" : "makes [constructTarget(target,"combat")] chug from"] [glass] [log_reagents(glass)] at [log_loc(target)].")
 		return
 
 	loopStart()
@@ -1409,7 +1426,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (glass.reagents.total_volume) //Take a sip
 			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
-			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			playsound(target.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			target.urine += 0.1
 			eat_twitch(target)
 
@@ -1797,7 +1814,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='alert'><B>You smash the [src] over your own head!</b></span>")
 		else
 			M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-			logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+			logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 		M.TakeDamageAccountArmor("head", force, 0, 0, DAMAGE_BLUNT)
 		M.changeStatus("weakened", 2 SECONDS)
 		playsound(M, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
@@ -1810,7 +1827,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
-		logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+		logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 /obj/item/reagent_containers/food/drinks/carafe/medbay
 	icon_state = "carafe-med"
@@ -1890,7 +1907,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(src, "sound/items/CocktailShake.ogg", 25, 1, -6)
+			playsound(src, 'sound/items/CocktailShake.ogg', 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.physical_shock(rand(5, 20))

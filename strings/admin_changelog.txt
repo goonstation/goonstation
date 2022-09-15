@@ -1,3 +1,12 @@
+(T)wed sep 07 22
+(u)Sord
+(+)Added new "Summon vortexes" random event for admin spawning. This spawns the disaster portals which summons critters. Has an option to use void critters or non-void critters.
+(t)tue aug 30 22
+(u)Sovexe
+(*)The Topic log is now hidden by default. This behavior can be toggled in your admin preferences.
+(t)tue jul 19 22
+(u)Ilysen
+(*)Started integrating the new antagonist system with the player panel. Development is still ongoing, but at bare minimum admins should be able to add and remove traitor status from people now.
 (t)tue jun 14 22
 (u)LeahTheTech
 (*)Added flockgib verb and player option

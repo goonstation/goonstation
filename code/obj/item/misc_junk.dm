@@ -1,25 +1,5 @@
 // The misc crap that used to clutter up item.dm and didn't fit elsewhere.
 
-/obj/item/aplate
-	name = "armor plates"
-	desc = "A bunch of armor plates."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "armorplate"
-	amount = 1
-	throwforce = 1
-	force = 1
-	w_class = W_CLASS_TINY
-
-/obj/item/gears
-	name = "gears"
-	desc = "A bunch of gears. Not very useful like this."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "gears"
-	amount = 1
-	throwforce = 1
-	force = 1
-	w_class = W_CLASS_TINY
-
 /obj/item/lens
 	name = "Lens"
 	desc = "A lens of some sort. Not super useful on its own."
@@ -41,13 +21,6 @@
 		throwforce = 3
 		force = 3
 		w_class = W_CLASS_TINY
-
-	large
-		name = "large coil"
-		icon_state = "large_coil"
-		throwforce = 5
-		force = 5
-		w_class = W_CLASS_SMALL
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
@@ -73,7 +46,7 @@
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
 			user.visible_message("<span class='notice'><b>[user]</b> hugs [src]!</span>","<span class='notice'>You hug [src]!</span>")
-			playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 50, 1)
 			last_laugh = world.time
 
 	process()
@@ -98,8 +71,9 @@
 			return
 		container = pick(eligible_containers)
 
-		playsound(src.loc,"sound/misc/gnomegiggle.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/gnomegiggle.ogg', 50, 1)
 		src.set_loc(container)
+
 /obj/item/c_tube
 	name = "cardboard tube"
 	icon = 'icons/obj/items/items.dmi'
@@ -110,7 +84,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A tube made of cardboard. Extremely non-threatening."
-	w_class = W_CLASS_TINY
 	stamina_damage = 5
 	stamina_cost = 1
 
@@ -142,7 +115,6 @@
 	throw_speed = 4
 	throw_range = 5
 	desc = "A sheet of creased cardboard."
-	w_class = W_CLASS_TINY
 	stamina_damage = 0
 	stamina_cost = 0
 
@@ -159,7 +131,7 @@
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	burn_possible = 0
 
@@ -276,7 +248,7 @@
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -409,7 +381,7 @@
 				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
 					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
-			logTheThing("combat", usr, null, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
+			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
 
 /obj/item/reagent_containers/vape/medical //medical cannabis got nothing on this!!
@@ -460,7 +432,7 @@
 			return
 		else
 			last_ring = world.time
-			playsound(src.loc,"sound/misc/Boxingbell.ogg",50,1)
+			playsound(src.loc, 'sound/misc/Boxingbell.ogg', 50,1)
 
 /obj/item/trophy
 	name = "trophy"

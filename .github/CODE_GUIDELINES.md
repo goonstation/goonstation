@@ -10,6 +10,7 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 * Don't use `del`, it's horrendously slow. Use `qdel()`.
+* Don't use `<>`, it's completely unused in the land of SS13. Use `!=` instead, as it's infinitely more sane.
 
 ## Stuff To Use
 
@@ -380,6 +381,29 @@ So, where possible, it's advised to use DM's syntax. (Note: the to keyword is in
 
 **Be Warned:** if either `some_value` or `i` changes within the body of the for (underneath the `for(...)`) or if you are looping over a list and changing the length of the list then you cannot use this type of for-loop!
 
+## for-in loop copying
+
+Almost all of the time when iterating through lists, we use the `for (var/i in some_list)` syntax. However, in __some very few__ cases, we run into a performance issue.
+
+Internally, BYOND copies the `some_list` for this operation, so that when you are iterating through the list, you don't skip items or run into things twice if you modify the list inside the loop.
+
+However, this can cause performance issues with large lists of *complex* objects, generally greater than ~5000.
+There exists a performance optimization, but bear in mind it's **only applicable if you are traversing less than half of the list**.
+Perhaps you are breaking after a found item that's randomly in the list, or you only want to process the first 20 entries or something.
+
+Code that avoids this list copying would look like:
+```csharp
+/proc/direct_iteration()
+	var/list/some_list = list() // just say this has 10,000 objs in it
+
+	for (var/i in 1 to length(some_list))
+	var/obj/mine = some_list[i]
+
+	// do stuff with this object
+	if (condition)
+		break
+```
+
 ## Default Return (`.`)
 
 Like other languages in the C family, DM has a `.` or "dot" operator, used for accessing variables/members/functions of an object instance. For example:
@@ -469,7 +493,6 @@ proc/give_mob_item(mob/person as mob, obj/item/gift as obj)
 <span style="color: green">Good:</span>
 ```csharp
 proc/give_mob_item(mob/person, obj/item/gift)
-    
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
@@ -493,6 +516,17 @@ Guide to the categories:
 * Overtime: How much was spent past 100 tick_usage. This results in what we know as 'lag'.
 
 If total cpu and real time are the same the proc never sleeps, otherwise real time will be higher as it counts the time while the proc is waiting.
+
+## Even Better Profiler
+There exists a project to provide an incredibly more advanced real-time profiler for DM, named [byond-tracy](https://github.com/mafemergency/byond-tracy), capable of providing incredible resolution.
+
+![](https://i.imgur.com/1CEwo0g.png)
+
+To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
+* The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+
+If you're on Linux you need to compile both yourself manually, obviously.
 
 ## Target Dummy
 You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.

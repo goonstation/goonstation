@@ -5,7 +5,7 @@
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "pipe-fab"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 

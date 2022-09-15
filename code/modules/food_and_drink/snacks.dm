@@ -186,7 +186,7 @@
 				var/mob/living/carbon/human/H = M
 				H.implant.Add(src)
 				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
 				src.set_loc(M)
 				src.transfer_all_reagents(M)
@@ -409,7 +409,7 @@
 		food_effects = list("food_hp_up_big", "food_energized_big")
 
 		heal(var/mob/M)
-			if (ispug(M))
+			if (ispug(M) || iswerewolf(M))
 				..()
 				boutput(M, "<span class='notice'>That tasted delicious!</span>")
 			else
@@ -420,7 +420,7 @@
 
 		on_bite(var/mob/M)
 			var/list/food_effects_pre = src.food_effects //would just use initial() but it was nulling the list. whatever
-			if (!ispug(M))
+			if (!ispug(M) && !iswerewolf(M))
 				src.food_effects = list()
 			..()
 			src.food_effects = food_effects_pre
@@ -1051,7 +1051,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if(16 to 20)
 					boutput(M, "<span class='alert'>AGHBGLBLGHLGBGLHGHBLGH</span>")
 					M.visible_message("<span class='alert'>[M] pukes their guts out!</span>")
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					M.changeStatus("weakened", 4 SECONDS)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1174,7 +1174,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
+					playsound(src, 'sound/voice/animal/dogbark.ogg', 40, 1)
 					SPAWN(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
@@ -2205,7 +2205,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if (wrapped)
-			if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+			if (iscuttingtool(W) || issawingtool(W))
 				user.visible_message("<span class='alert'>[user] performs an act of wonton destruction!</span>","You slice open the wrapper.")
 				wrapped.set_loc(get_turf(src))
 				src.reagents = null
@@ -2282,7 +2282,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_brute")
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher))
+		if (iscuttingtool(W) || issawingtool(W))
 			boutput(user, "<span class='notice'>You cut [src] into halves</span>")
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
 			new /obj/item/reagent_containers/food/snacks/emuffin(get_turf(src))
@@ -2892,3 +2892,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+
+/obj/item/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A giant wheel of cheese. It seems a slice is already missing."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "cheesewheel"
+	throwforce = 6
+	real_name = "cheesewheel"
+	throw_speed = 2
+	throw_range = 5
+	stamina_cost = 5
+	stamina_damage = 2
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	initial_volume = 40
+	initial_reagents = "cheese"
+	food_effects = list("food_warm")
+
+	attack(mob/M, mob/user, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+

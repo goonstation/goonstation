@@ -15,7 +15,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 6
 //Kill/Stun ratio
-	ks_ratio = 1.0
+	ks_ratio = 1
 //name of the projectile setting, used when you change a guns setting
 	sname = "laser"
 //file location for the sound you want it to play
@@ -99,6 +99,14 @@ toxic - poisons
 /datum/projectile/laser/heavy/law_safe //subclass of heavy laser that can't damage the law rack - for AI turrets
 	name = "heavy laser"
 
+/datum/projectile/laser/diffuse
+	sname = "diffuse laser"
+	cost = 30
+	dissipation_delay = 1
+	dissipation_rate = 8
+	max_range = 7
+	shot_number = 2
+
 /datum/projectile/laser/asslaser // heh
 	name = "assault laser"
 	icon_state = "u_laser"
@@ -130,16 +138,16 @@ toxic - poisons
 	sname = "phaser bolt"
 	dissipation_delay = 5
 	shot_sound = 'sound/weapons/laserlight.ogg'
-	color_red = 1
-	color_green = 0
-	color_blue = 0
+	color_red = 0
+	color_green = 1
+	color_blue = 0.2
 
 	tiny
-		name = "mini phaser bolt"
+		name = "micro phaser bolt"
 		icon_state = "bolt"
-		sname = "mini phaser bolt"
+		sname = "micro phaser bolt"
 		power = 10
-		cost = 25
+		cost = 10
 		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
 		color_red = 0
 		color_green = 1
@@ -149,17 +157,21 @@ toxic - poisons
 		name = "macro phaser blast"
 		icon_state = "crescent"
 		sname = "macro phaser blast"
-		power = 55
-		cost = 100
+		power = 50
+		cost = 62.5
 		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
 		color_red = 0
 		color_green = 0.1
 		color_blue = 0.4
 
+		on_hit(atom/hit, dir, obj/projectile/P)
+			hit.ex_act(3, src, 1.5)
+			P.die()
+
 
 	mining
 		name = "mining phaser bolt"
-		power = 3
+		power = 5
 		cost = 5
 		dissipation_delay = 3
 		icon_state = "blue_spark"
@@ -187,6 +199,9 @@ toxic - poisons
 		icon_state = "red_bolt"
 		dissipation_delay = 10
 		shot_sound = 'sound/weapons/laser_b.ogg'
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
 
 	split
 		dissipation_rate = 100
@@ -272,7 +287,7 @@ toxic - poisons
 	name = "prismatic laser"
 	icon_state = "eyebeam"
 	power = 25
-	cost = 35
+	cost = 20
 	sname = "phaser bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/TaserOLD.ogg'
@@ -282,12 +297,16 @@ toxic - poisons
 	impact_image_state = "burn2"
 	projectile_speed = 42
 
+	burst
+		cost = 50
+		shot_number = 3
+
 /datum/projectile/laser/precursor // for precursor traps
-	name = "energy bolt"
+	name = "rydberg-matter bolt"
 	icon_state = "disrupt"
 	power = 30
 	cost = 30
-	sname = "energy bolt"
+	sname = "rydberg-matter bolt"
 	dissipation_delay = 10
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
 	color_red = 0.1
@@ -482,9 +501,9 @@ toxic - poisons
 	impact_image_state = null
 	var/damtype = DAMAGE_STAB
 
-	var/hit_human_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+	var/hit_human_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 	on_hit(atom/hit)
-		//playsound(hit.loc, "sound/machines/engine_grump1.ogg", 45, 1)
+		//playsound(hit.loc, 'sound/machines/engine_grump1.ogg', 45, 1)
 		if (istype(hit, /turf/simulated/wall/auto/asteroid))
 			var/turf/simulated/wall/auto/asteroid/T = hit
 			if (power <= 0)
@@ -511,7 +530,7 @@ toxic - poisons
 		dissipation_rate = 5
 		sname = "saw teeth"
 		shot_sound = 'sound/machines/chainsaw.ogg'
-		hit_human_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+		hit_human_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 		damtype = DAMAGE_CUT
 
 		on_hit(atom/hit) //do extra damage to pod
@@ -582,44 +601,24 @@ toxic - poisons
 				hit.delStatus("signified")
 			..()
 
-/datum/projectile/special/spreader/plasma_spreader
-	name = "energy bolt"
-	sname = "plasma spray"
-	cost = 30
-	power = 60 //a chunky pointblank
-	ks_ratio = 0
-	damage_type = D_SPECIAL
-	pellets_to_fire = 4
-	spread_projectile_type = /datum/projectile/laser/plasma/mini
-	split_type = 0
-	shot_sound = 'sound/weapons/plasma_gun.ogg'
-	var/spread_angle_variance = 10
 
-	new_pellet(var/obj/projectile/P, var/turf/PT, var/datum/projectile/F)
-		var/obj/projectile/FC = initialize_projectile(PT, F, P.xo, P.yo, P.shooter)
-		FC.rotateDirection(rand(0-spread_angle_variance,spread_angle_variance))
-		FC.launch()
-
-/datum/projectile/laser/plasma/mini
+/datum/projectile/laser/plasma/auto
+	icon_state = "miniphaser_med"
+	shot_sound = 'sound/weapons/lasersound.ogg'
 	dissipation_delay = 4
-	dissipation_rate = 3
-	power = 15
-
-	on_hit(atom/movable/hit, dir, datum/projectile/P)
-		. = ..()
-
-		if(hit.hasStatus("cornicened2") && ismovable(hit))
-			hit.throw_at(get_edge_target_turf(hit, dir), 7, 1, throw_type = THROW_GUNIMPACT)
-			hit.delStatus("cornicened")
-			hit.delStatus("cornicened2")
-		else
-			hit.setStatus("cornicened", 0.5 SECONDS)
+	dissipation_rate = 2
+	cost = 10
+	power = 18
+	fullauto_valid = 1
+	shot_volume = 75
 
 /datum/projectile/laser/plasma/burst
 	cost = 60
 	power = 25
 	shot_number = 4
 	shot_delay = 1
+	shot_volume = 75
+	projectile_speed = 42
 
 	on_hit(atom/movable/hit, dir, datum/projectile/P)
 		. = ..()

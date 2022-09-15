@@ -33,10 +33,10 @@
 		user.lastattacked = src
 		_health -= I.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1, pitch = 1.1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1, pitch = 1.1)
 
 		if (_health <= 0)
-			logTheThing("combat", user, null, "destroyed [src] at [log_loc(src)]")
+			logTheThing(LOG_COMBAT, user, "destroyed [src] at [log_loc(src)]")
 			bust_out()
 
 
@@ -77,7 +77,7 @@
 		V.coffin_turf = target
 		boutput(M, "<span class='notice'>You plant your coffin on [target].</span>")
 
-		logTheThing("combat", M, target, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/targetable/vampire/coffin_escape
@@ -107,8 +107,8 @@
 		var/turf/spawnturf = V.coffin_turf
 		if (istype(spawnturf,/turf/space))
 			spawnturf = get_turf(M)
-
-		if (spawnturf.z != M.z)
+		var/turf/owner_turf = get_turf(M)
+		if (spawnturf.z != owner_turf?.z)
 			boutput(M, "<span class='alert'>You cannot escape to a different Z-level.</span>")
 			return 1
 
@@ -128,7 +128,7 @@
 
 		proj.launch()
 
-		logTheThing("combat", M, target, "begins escaping to a coffin from [log_loc(M)] to [log_loc(V.coffin_turf)].")
+		logTheThing(LOG_COMBAT, M, "begins escaping to a coffin from [log_loc(M)] to [log_loc(V.coffin_turf)].")
 
 		if (get_turf(coffin) == get_turf(M))
 			M.set_loc(coffin)

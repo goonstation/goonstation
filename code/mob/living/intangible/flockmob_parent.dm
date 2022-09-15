@@ -129,7 +129,7 @@
 		..()
 		return
 
-	if (get_dist(src, target) > 0)
+	if (GET_DIST(src, target) > 0)
 		set_dir(get_dir(src, target))
 
 	if (abilityHolder.click(target, params)) //check the abilityholder
@@ -173,7 +173,7 @@
 		return src.say_dead(message)
 
 	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	message = prefixAndMessage[2]
@@ -199,10 +199,10 @@
 			if (src.emote_check(voluntary, 50))
 				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
-				playsound(src, "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
-		logTheThing("say", src, null, "EMOTE: [message]")
+		logTheThing(LOG_SAY, src, "EMOTE: [message]")
 		if (m_type & 1)
 			for (var/mob/O in viewers(src, null))
 				O.show_message(message, m_type)
@@ -215,9 +215,8 @@
 				O.show_message(message, m_type)
 
 
-/mob/living/intangible/flock/proc/createstructure(var/T, var/resources = 0)
-	//todo check for flocktile underneath flockmind cheers
-	new /obj/flock_structure/ghost(src.loc, T, src.flock, resources)
+/mob/living/intangible/flock/proc/createstructure(obj/flock_structure/structure_type, resources = 0)
+	new /obj/flock_structure/ghost(get_turf(src), structure_type, src.flock, resources)
 
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()

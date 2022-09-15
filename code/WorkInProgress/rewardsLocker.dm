@@ -693,6 +693,7 @@
 					return 1
 				else if (istype(M, /obj/item/clothing/under/rank/security))
 					M.icon_state = "security-old"
+					M.item_state = "security-relic"
 					H.set_clothing_icon_dirty()
 					return 1
 
@@ -806,7 +807,7 @@
 
 /datum/achievementReward/dioclothes
 	title = "(Skin) Strange Vampire Outfit"
-	desc = "Requires that you wear something in your suit slot."
+	desc = "Requires that you wear a vampire cape."
 	required_medal = "Dracula Jr."
 
 	rewardActivate(var/mob/activator)
@@ -814,30 +815,20 @@
 			var/mob/living/carbon/human/H = activator
 			if (H.wear_suit)
 				var/obj/item/clothing/M = H.wear_suit
-				if (istype(M, /obj/item/clothing/suit/wizrobe))
-					boutput(activator, "Your magic-infused robes resist the meta-telelogical energies!")
-					return
-				if (istype(M, /obj/item/clothing/suit/space/industrial/syndicate) || istype(M, /obj/item/clothing/suit/space/syndicate))
-					boutput(activator, "Nyet, comrade.")
-					return
-				var/prev = M.name
-				M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-				M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				if (M.inhand_image) M.inhand_image.icon = 'icons/mob/inhand/hand_cl_suit.dmi'
-				M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				if (M.wear_image) M.wear_image.icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-				M.icon_state = "vclothes"
-				M.item_state = "vclothes"
-				if (istype(M, /obj/item/clothing/suit/labcoat))
-					var/obj/item/clothing/suit/labcoat/L = M
-					L.coat_style = null
-				M.name = "strange vampire outfit"
-				M.real_name = "strange vampire outfit"
-				M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
-				H.set_clothing_icon_dirty()
-				return 1
+				if (istype(M, /obj/item/clothing/suit/gimmick/vampire))
+					var/prev = M.name
+					M.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
+					M.inhand_image_icon = 'icons/mob/inhand/hand_cl_suit.dmi'
+					M.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+					M.icon_state = "vclothes"
+					M.item_state = "vclothes"
+					M.name = "strange vampire outfit"
+					M.real_name = "strange vampire outfit"
+					M.desc = "How many breads <i>have</i> you eaten in your life? It's a good question. (Base Item: [prev])"
+					H.set_clothing_icon_dirty()
+					return 1
 
-		boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+		boutput(activator, "<span class='alert'>Unable to redeem... you must be wearing a vampire cape. Guess it's the thought that <i>counts<i>. </span>")
 		return
 
 /datum/achievementReward/clown_college
@@ -863,6 +854,7 @@
 	title = "(Skin set) Inspector's Clothes"
 	desc = "Will change the skin of a detective's coat, hats, gloves, shoes, jumpsuit, and holster."
 	required_medal = "Neither fashionable noir stylish"
+	once_per_round = FALSE
 
 	rewardActivate(var/mob/activator)
 		if (ishuman(activator))
@@ -1386,7 +1378,7 @@ datum/achievementReward/ai_dwaine
 	name = "shelterbee"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "shelterbee"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1451,7 +1443,7 @@ datum/achievementReward/ai_dwaine
 	name = "smug"
 	icon = 'icons/mob/64.dmi'
 	icon_state = "smug"
-	anchored = 1.0
+	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
 
@@ -1495,7 +1487,7 @@ datum/achievementReward/ai_dwaine
 			blood_mult = blood_mult + 3
 		T.fluid_react_single(blood_id,blood_mult * blood_amount)
 		var/result = world.ClearMedal("Original Sin", activator, config.medal_hub, config.medal_password)
-		logTheThing("combat", activator, null, "Activated the blood flood gib reward thing (Original Sin)")
+		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
 			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)

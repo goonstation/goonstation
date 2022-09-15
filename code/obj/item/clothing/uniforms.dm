@@ -1231,18 +1231,7 @@
 				return
 
 			if ("Rip up")
-				boutput(user, "You begin ripping up [src].")
-				if (!do_after(user, 3 SECONDS))
-					boutput(user, "<span class='alert'>You were interrupted!</span>")
-					return
-				else
-					for (var/i=3, i>0, i--)
-						var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
-						CF.set_loc(get_turf(src))
-					boutput(user, "You rip up [src].")
-					user.u_equip(src)
-					qdel(src)
-					return
+				try_rip_up(user)
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
@@ -1253,7 +1242,7 @@
 			else
 				for (var/i=3, i>0, i--)
 					new /obj/item/bandage(get_turf(src))
-				playsound(src.loc, "sound/items/Scissor.ogg", 100, 1)
+				playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
 				boutput(user, "You cut [src] into bandages.")
 				user.u_equip(src)
 				qdel(src)
@@ -1739,3 +1728,23 @@
     desc = "Now comes with a matching belt buckle and leather straps!"
     icon_state = "western"
     item_state = "western"
+
+//Crate Loot
+
+/obj/item/clothing/under/misc/tiedye
+    name = "tiedye shirt"
+    desc = "Featuring a pretty inky pattern."
+    icon_state = "tiedye"
+    item_state = "tiedye"
+
+/obj/item/clothing/under/misc/neapolitan
+    name = "neapolitan shirt"
+    desc = "Like the icecream, not made in Naples."
+    icon_state = "neapolitan"
+    item_state = "neapolitan"
+
+/obj/item/clothing/under/misc/mint_chip
+    name = "mint chip shirt"
+    desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
+    icon_state = "mint_chip"
+    item_state = "mint_chip"

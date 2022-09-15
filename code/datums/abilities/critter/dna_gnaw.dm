@@ -26,7 +26,7 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, "sound/impact_sounds/Flesh_Tear_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1, -1)
 		var/mob/M = target
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] gnaws into [M]!</b></span>", "<span class='alert'>We sink our teeth into [M]!</span>")
@@ -48,7 +48,7 @@
 						MT:blood_volume -= 5
 
 				if (MT.dna_to_absorb <= 0)
-					logTheThing("combat", holder.owner, MT, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
+					logTheThing(LOG_COMBAT, holder.owner, "drains [constructTarget(MT,"combat")] of all DNA as a handspider [log_loc(holder.owner)].")
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else

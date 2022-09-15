@@ -130,6 +130,7 @@
 	target = null
 	var/my_portal = null
 	var/start_on = 0
+	var/invisible_portal = 0
 
 	var/static/list/triggeracts = list("Disable" = "off", "Do nothing" = "nop", "Enable" = "on")
 
@@ -151,6 +152,8 @@
 					return
 				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
 				P.target = get_turf(target)
+				if(src.invisible_portal)
+					P.invisibility = 20
 				src.my_portal = P
 				return
 			if ("off")
@@ -211,9 +214,9 @@
 			V.update_colorful_parts()
 			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 			H.emote("scream")
-			playsound(H.loc, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(H.loc, 'sound/weapons/flashbang.ogg', 25, 1)
 			for (var/mob/N in viewers(src, null))
-				if (get_dist(N, src) <= 6)
+				if (GET_DIST(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
 					shake_camera(N, 6, 32)
@@ -221,7 +224,7 @@
 			if (V.client)
 				shake_camera(V, 6, 32)
 			H.mind.transfer_to(V)
-			playsound(V.loc, "sound/ambience/music/VRtunes_edited.ogg", 10, 0)
+			playsound(V.loc, 'sound/ambience/music/VRtunes_edited.ogg', 10, 0)
 			H.elecgib()
 			doing_login = 0
 
@@ -278,10 +281,10 @@
 						L += T3
 
 		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 		for (var/mob/N in viewers(H, null))
-			if (get_dist(N, src) <= 6)
+			if (GET_DIST(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
 				shake_camera(N, 6, 32)
@@ -535,9 +538,9 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/ursium = 0
-	var/s_time = 1.0
+	var/s_time = 1
 	var/content = null
 
 /obj/item/ursium/proc/convert2energy(var/M)
@@ -628,7 +631,7 @@
 		src.injest(M)
 */
 
-var/johnbill_ursdungeon_code = 0420
+var/johnbill_ursdungeon_code = "0420"
 
 /area/diner/arcade/New()
 		..()

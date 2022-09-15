@@ -14,6 +14,8 @@
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 
+	/// The material name (string) that this will default to if a material is not otherwise set
+	var/default_material = "steel"
 	var/health = 100
 	var/list/proj_impacts = list()
 	var/list/forensic_impacts = list()
@@ -36,6 +38,10 @@
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
+
+		if(!src.material)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+
 
 	ReplaceWithFloor()
 		. = ..()
@@ -125,7 +131,7 @@
 		return //..(parts, user)
 
 	if(!instantly && W && !W.disposed)
-		playsound(src, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
 			list(W, user, dir), W.icon, W.icon_state, null, null)
@@ -151,7 +157,7 @@
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
 			if (src.material)
@@ -191,7 +197,7 @@
 
 	else
 		if (!devastated)
-			playsound(src, "sound/items/Welder.ogg", 100, 1)
+			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
@@ -266,7 +272,7 @@
 			return
 		else
 			if (prob(70))
-				playsound(user.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 				if (src.material)
 					src.material.triggerOnAttacked(src, user, user, src)
 				for (var/mob/N in AIviewers(user, null))
@@ -274,7 +280,7 @@
 						shake_camera(N, 4, 8, 0.5)
 			if (prob(40))
 				boutput(user, text("<span class='notice'>You smash through the [src.name].</span>"))
-				logTheThing("combat", user, null, "uses hulk to smash a wall at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, user, "uses hulk to smash a wall at [log_loc(src)].")
 				dismantle_wall(1)
 				return
 			else
@@ -282,7 +288,7 @@
 				return
 
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
-	playsound(src, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
+	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
 	interact_particle(user,src)
 	return
 
@@ -337,7 +343,7 @@
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
-	logTheThing("station", user, null, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
+	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
 	dismantle_wall()
 
 /turf/simulated/wall/r_wall
@@ -419,7 +425,7 @@
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Detaching support rods.</span>")
-			playsound(src, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
@@ -430,7 +436,7 @@
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
-			playsound(src, "sound/items/Wirecutter.ogg", 100, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
 			src.d_state = 1
 			var/atom/A = new /obj/item/rods( src )
 			if (src.material)
@@ -441,7 +447,7 @@
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			boutput(user, "<span class='notice'>Removing support lines.</span>")
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -455,7 +461,7 @@
 		if (src.d_state == 3)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying cover off.</span>")
-			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
@@ -466,17 +472,17 @@
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-			playsound(src, "sound/items/Crowbar.ogg", 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 			else if((isrobot(user) && (user.loc == T)))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
 				dismantle_wall()
-				logTheThing("station", user, null, "dismantles a reinforced wall at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "dismantles a reinforced wall at [log_loc(user)].")
 				return
 
 	//More spooky halloween key

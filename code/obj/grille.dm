@@ -13,6 +13,7 @@
 	var/corrode_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
+	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
@@ -184,7 +185,7 @@
 
 			cut_resist = material.getProperty("hard") * 10
 			blunt_resist = material.getProperty("density") * 10
-			corrode_resist = material.getProperty("corrosion") * 10
+			corrode_resist = material.getProperty("chemical") * 10
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -269,15 +270,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_blunt(40)
 				src.damage_heat(40)
 
-			if(2.0)
+			if(2)
 				src.damage_blunt(15)
 				src.damage_heat(15)
 
-			if(3.0)
+			if(3)
 				src.damage_blunt(7)
 				src.damage_heat(7)
 
@@ -391,7 +392,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
+					logTheThing(LOG_STATION, usr, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -411,7 +412,7 @@
 		if (src.material && src.material.getProperty("electrical") < 4)
 			OSHA_is_crying = 0
 
-		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
+		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
 			return
 
 		// Things that will electrocute you

@@ -17,13 +17,10 @@ ABSTRACT_TYPE(/datum/material_property)
 	/// Max value for low-prefix. Maximum for the prefix to show up on the object names.
 	var/prefix_low_max = 3
 
-	proc/changeValue(var/datum/material/M, var/newValue)
-		for(var/X in M.properties)
-			if(X == src)
-				M.properties[X] = clamp(newValue, min_value, max_value)
-				onValueChanged(M, M.properties[X])
-				return
-		return
+	proc/changeValue(datum/material/M, newValue)
+		if (src in M.properties)
+			M.properties[src] = clamp(newValue, min_value, max_value)
+			onValueChanged(M, M.properties[src])
 
 	proc/onValueChanged(var/datum/material/M, var/new_value)
 		return
@@ -155,25 +152,24 @@ ABSTRACT_TYPE(/datum/material_property)
 /datum/material_property/flammability
 	name = "Flammability"
 	id = "flammable"
+	default_value = 1
 
 	getAdjective(var/datum/material/M)
 		switch(M.getProperty(id))
 			if(0 to 1)
-				return "very fireproof"
-			if(1 to 2)
-				return "fireproof"
-			if(2 to 4)
-				return "slightly fireproof"
-			if(4 to 6)
+				return "nonflammable"
+			if(1 to 3)
 				return "slightly flammable"
-			if(6 to 8)
+			if(3 to 5)
 				return "flammable"
+			if(5 to 8)
+				return "extremely flammable"
 			if(8 to INFINITY)
-				return "very flammable"
+				return "insanely flammable"
 
-/datum/material_property/corrosion
-	name = "Corrosion resistance"
-	id = "corrosion"
+/datum/material_property/chemical
+	name = "Chemical resistance"
+	id = "chemical"
 	default_value = 3
 
 	prefix_high_min = 5
@@ -188,32 +184,11 @@ ABSTRACT_TYPE(/datum/material_property)
 			if(2 to 4)
 				return "slightly corroded"
 			if(4 to 6)
-				return "slightly corrosion-resistant"
+				return "slightly chemical-resistant"
 			if(6 to 8)
-				return "corrosion-resistant"
+				return "chemical-resistant"
 			if(8 to INFINITY)
-				return "highly corrosion-resistant"
-
-/datum/material_property/permeability
-	name = "Permeability"
-	id = "permeable"
-
-	default_value = 6
-
-	getAdjective(var/datum/material/M)
-		switch(M.getProperty(id))
-			if(0 to 1)
-				return "very impermeable"
-			if(1 to 2)
-				return "impermeable"
-			if(2 to 4)
-				return "slightly impermeable"
-			if(4 to 6)
-				return "slightly permeable"
-			if(6 to 8)
-				return "permeable"
-			if(8 to INFINITY)
-				return "very permeable"
+				return "highly chemical-resistant"
 
 /datum/material_property/radioactivity
 	name = "Radioactivity"
@@ -239,17 +214,13 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "impossibly radioactive"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/radioactive_remove)
 		return
 
 /datum/material_property/neutron_radioactivity
@@ -277,43 +248,14 @@ ABSTRACT_TYPE(/datum/material_property)
 				return "blindingly glowing blue"
 
 	onAdded(var/datum/material/M, var/new_value)
-		M.addTrigger(M.triggersPickup, new /datum/materialProc/n_radioactive_pickup())
-		M.addTrigger(M.triggersOnLife, new /datum/materialProc/n_radioactive_life())
 		M.addTrigger(M.triggersOnAdd, new /datum/materialProc/n_radioactive_add())
-		M.addTrigger(M.triggersOnEntered, new /datum/materialProc/n_radioactive_on_enter())
+		M.addTrigger(M.triggersOnRemove, new /datum/materialProc/n_radioactive_remove())
 		return
 
 	onRemoved(var/datum/material/M)
-		M.removeTrigger(M.triggersPickup, /datum/materialProc/n_radioactive_pickup)
-		M.removeTrigger(M.triggersOnLife, /datum/materialProc/n_radioactive_life)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
-		M.removeTrigger(M.triggersOnEntered, /datum/materialProc/n_radioactive_on_enter)
+		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
 		return
-
-/datum/material_property/fissile
-	name = "Fissibility"
-	id = "fissile"
-
-	default_value = 0
-
-	prefix_high_min = 1
-	prefix_low_max = 9
-
-	getAdjective(var/datum/material/M)
-		switch(M.getProperty(id))
-			if(0 to 1)
-				return "barely fissile"
-			if(1 to 2)
-				return "somewhat fissile"
-			if(2 to 4)
-				return "fissile"
-			if(4 to 6)
-				return "very fissile"
-			if(6 to 8)
-				return "dangerously fissile"
-			if(8 to INFINITY)
-				return "supercritically fissile"
-
 /datum/material_property/resonance // Just for molitz, not used for anything else and doubt it will be. Could tie instance boosts to resonance and give other mats resonance for purposes of being good to alloy with molitz.
 	name = "Resonance"
 	id = "resonance"

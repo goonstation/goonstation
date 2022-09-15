@@ -135,12 +135,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,
-	/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,
-	/datum/plantmutation/synthmeat/eye,/datum/plantmutation/synthmeat/lung,
-	/datum/plantmutation/synthmeat/appendix,/datum/plantmutation/synthmeat/pancreas,
-	/datum/plantmutation/synthmeat/liver,/datum/plantmutation/synthmeat/kidney,
-	/datum/plantmutation/synthmeat/spleen, /datum/plantmutation/synthmeat/stomach,)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
@@ -150,7 +144,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
 		switch(reagent)
-			if("simethicone")
+			if("anti_fart")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt)
 			if("synthflesh")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/limb)
@@ -162,7 +156,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/eye)
 			if("salbutamol")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/lung)
-			if("compost")
+			if("poo")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/appendix)
 			if("sugar")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/pancreas)
@@ -260,6 +254,13 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	attacked_proc = 1 // for dogwood tree
 	mutations = list(/datum/plantmutation/tree/money, /datum/plantmutation/tree/rubber,/datum/plantmutation/tree/sassafras, /datum/plantmutation/tree/dog,/datum/plantmutation/tree/paper)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/resistance_drought)
+
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		if (reagent == "radium")
+			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/glowstick)
 
 /datum/plant/crop/coffee
 	name = "Coffee"

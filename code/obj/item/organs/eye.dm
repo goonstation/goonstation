@@ -42,7 +42,7 @@
 				iris_image.color = AH.e_color
 		src.UpdateOverlays(iris_image, "iris")
 
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	attach_organ(var/mob/living/carbon/M, var/mob/user)
 		/* Overrides parent function to handle special case for attaching eyes.
 		Note that eyes don't appear to track op_stage on the head container, like chest organs do. */
 		var/mob/living/carbon/human/H = M
@@ -71,7 +71,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "right_eye", 2.0)
+			H.organHolder.receive_organ(src, "right_eye", 2)
 			H.update_body()
 		else if (target_organ_location == "left" && !H.organHolder.left_eye)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] left eye socket!</span>",\
@@ -80,7 +80,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, "left_eye", 2.0)
+			H.organHolder.receive_organ(src, "left_eye", 2)
 			H.update_body()
 		else
 			user.tri_message(H, "<span class='alert'><b>[user]</b> tries to [fluff] the [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] right eye socket!<br>But there's something already there!</span>",\
@@ -165,7 +165,7 @@
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
@@ -212,7 +212,7 @@
 	var/on = 1
 	var/mob/living/carbon/human/assigned = null
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
@@ -232,7 +232,7 @@
 
 	proc/toggle()
 		src.on = !src.on
-		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, 1)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
@@ -278,16 +278,18 @@
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
-	on_removal()
+	on_removal(var/mob/M)
 		processing_items.Remove(src)
+		REMOVE_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		..()
 		return
@@ -330,7 +332,7 @@
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		src.camera.c_tag = "[M]'s Eye"
 		return ..()

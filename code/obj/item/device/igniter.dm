@@ -2,7 +2,7 @@
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
-	var/status = 1.0
+	var/status = 1
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
 	item_state = "electronic"
 	m_amt = 100

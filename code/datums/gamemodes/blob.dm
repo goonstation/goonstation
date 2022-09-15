@@ -2,6 +2,7 @@
 	name = "blob"
 	config_tag = "blob"
 	shuttle_available = 2
+	shuttle_available_threshold = 12000 // 20 min
 
 	var/const/blobs_minimum = 2
 	var/const/blobs_possible = 4
@@ -39,7 +40,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_blobs = max(0, num_blobs - 1)
 

@@ -22,6 +22,10 @@
 			boutput(M, "<span class='alert'>You are already performing a Bite action and cannot start a Blood Steal.</span>")
 			return 1
 
+		if (isnpc(target))
+			boutput(M, "<span class='alert'>The blood of this target would provide you with no sustenance.</span>")
+			return 1
+
 		actions.start(new/datum/action/bar/private/icon/vamp_ranged_blood_suc(M,V,target, src), M)
 
 		return 0
@@ -51,7 +55,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || HH.blood_volume <= 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -65,7 +69,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (get_dist(M, HH) > 7)
+		if (GET_DIST(M, HH) > 7)
 			boutput(M, "<span class='alert'>That target is too far away!</span>")
 			return
 
@@ -92,10 +96,10 @@
 		if (prob(25))
 			boutput(HH, "<span class='alert'>Some blood is forced right out of your body!</span>")
 
-		logTheThing("combat", M, HH, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "steals blood from [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 	onEnd()
-		if(get_dist(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
+		if(GET_DIST(M, HH) > 7 || M == null || HH == null || !H.can_bite(HH, is_pointblank = 0))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			src.end()
@@ -136,7 +140,7 @@
 	silentshot = 1
 	pierces = -1
 	max_range = 10
-	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+	shot_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 
 	on_launch(var/obj/projectile/P)
 		if (!("victim" in P.special_data))
