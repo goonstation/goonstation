@@ -62,6 +62,8 @@
 	process()
 		if (src.on)
 			light_ticks --
+		else
+			return
 		if ((light_ticks < 40) && (burn_state < 1))
 			burn_state = 1
 			src.icon_state = "smelted-lit"
@@ -72,6 +74,12 @@
 			src.visible_message("<span class='notice'>[src]'s light is almost out!</span>")
 		if (light_ticks <= 0)
 			src.put_out()
+			return
+		var/turf/T = get_turf(src)
+		for_by_tcl(W, /mob/wraith)
+			if (IN_RANGE(W, T, WIDE_TILE_WIDTH / 2))
+				new /obj/decal/wraith_shadow(W.loc)
+
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if((temperature > T0C+400))
@@ -114,3 +122,15 @@
 				user.update_inhands()
 		return
 
+/obj/decal/wraith_shadow
+	name = "dark shadow"
+	desc = "A dark shadow indicating the presence of an evil spirit."
+	alpha = 0
+	icon = 'icons/effects/wraitheffects.dmi'
+	icon_state = "acursed"
+	New(loc, lifespan = 3 SECONDS)
+		. = ..()
+		animate(src, time = lifespan / 2, alpha = 255)
+		animate(time = lifespan / 2, alpha = 0)
+		SPAWN(lifespan)
+			qdel(src)
