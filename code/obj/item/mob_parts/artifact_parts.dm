@@ -122,7 +122,7 @@
 		if (src.standImage)
 			return src.standImage
 
-		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
+		src.standImage = image('icons/mob/human.dmi', src.partlistPart || src.handlistPart)
 		return standImage
 
 	attack(mob/M as mob, mob/user as mob, def_zone, is_special)
@@ -221,14 +221,14 @@
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-martian-L"
-		handlistPart = "arm-martian-L-attached"
+		partlistPart = "arm-martian-L-attached"
 
 	right
 		name = "martian right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-martian-R"
-		handlistPart = "arm-martian-R-attached"
+		partlistPart = "arm-martian-R-attached"
 
 /obj/item/parts/artifact_parts/leg/martian
 	artifact_type = "martian"
@@ -239,7 +239,7 @@
 		side = "left"
 		step_image_state = "footprintsL"
 		icon_state = "leg-martian-L"
-		handlistPart = "leg-martian-L-attached"
+		partlistPart = "leg-martian-L-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/left
 
 	right
@@ -248,7 +248,7 @@
 		side = "right"
 		step_image_state = "footprintsR"
 		icon_state = "leg-martian-R"
-		handlistPart = "leg-martian-R-attached"
+		partlistPart = "leg-martian-R-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
 /obj/item/parts/artifact_parts/arm/precursor
@@ -271,14 +271,14 @@
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-precursor-L"
-		handlistPart = "arm-precursor-L-attached"
+		partlistPart = "arm-precursor-L-attached"
 
 	right
 		name = "precursor right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-precursor-R"
-		handlistPart = "arm-precursor-R-attached"
+		partlistPart = "arm-precursor-R-attached"
 
 /obj/item/parts/artifact_parts/leg/precursor
 	artifact_type = "precursor"
@@ -324,7 +324,7 @@
 		side = "left"
 		step_image_state = "footprintsL"
 		icon_state = "leg-precursor-L"
-		handlistPart = "leg-precursor-L-attached"
+		partlistPart = "leg-precursor-L-attached"
 
 	right
 		name = "precursor right leg"
@@ -332,7 +332,7 @@
 		side = "right"
 		step_image_state = "footprintsR"
 		icon_state = "leg-precursor-R"
-		handlistPart = "leg-precursor-R-attached"
+		partlistPart = "leg-precursor-R-attached"
 
 /datum/targetable/artifact_limb_ability
 	icon = 'icons/mob/artifact_limb_abilities.dmi'
