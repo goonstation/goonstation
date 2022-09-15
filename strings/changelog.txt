@@ -1,5 +1,10 @@
 
 (t)wed sep 14 22
+(u)Bartimeus973
+(p)10773
+(e)|
+(*)Overhaul to the wraith. Wraiths can now pick from three paths upon consuming enough bodies, each with their unique abilities. Sprites done in collaboration with: Swinglow, CalliopeSoups, Mora and Shiiba!
+(*)Adds a new item to counter wraith: the spirit candle. Created by combining a skull and a candle. While lit in hand it reveals wraiths in the surrounding area and using it in hand will manifest the wraith. One time use.
 (u)Idiot
 (p)10806
 (e)|
