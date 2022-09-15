@@ -21,7 +21,7 @@ export const MusicInstrument = (_props, context) => {
     'zsxdcvgbhnjmq2w3er5t6y7ui9o0p+'.split('')
   );
 
-  const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', new Array(notes.length));
+  const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', {}); // new Array(notes.length)
   const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
 
   const setVolume = (value: number) => {
@@ -49,8 +49,9 @@ export const MusicInstrument = (_props, context) => {
   const playNote = (index: number) => {
     if (keyIndexWithinRange(index) && !activeKeys[index]) {
       act('play_note', { note: index + transpose, volume: volume });
-      const newKeys = [...activeKeys];
-      newKeys[index] = true;
+      const newKeys = activeKeys;
+      const note = notes[index];
+      newKeys[note] = true;
       setActiveKeys(newKeys);
     }
   };
@@ -58,13 +59,14 @@ export const MusicInstrument = (_props, context) => {
   const playNoteRelease = (index: number) => {
     if (keyIndexWithinRange(index)) {
       const newKeys = activeKeys;
-      newKeys[index] = false;
+      const note = notes[index];
+      newKeys[note] = false;
       setActiveKeys(newKeys);
     }
   };
 
   const getKeyboardIndex = (key: string) => {
-    return keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
+    return keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key) || -1;
   };
 
   return (
@@ -177,7 +179,7 @@ export const MusicInstrument = (_props, context) => {
                     'instruments__piano-key',
                     keyClass,
                     whiteKeyOffsetClass,
-                    activeKeys[index]
+                    activeKeys[notes[index]]
                       ? isBlackKey
                         ? 'instruments__piano-key-black-active'
                         : 'instruments__piano-key-white-active'
