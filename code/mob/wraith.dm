@@ -87,6 +87,7 @@
 
 	New(var/mob/M)
 		. = ..()
+		START_TRACKING
 		src.poltergeists = list()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -141,6 +142,7 @@
 				plane.alpha = 255
 
 	disposing()
+		STOP_TRACKING
 		for (var/mob/wraith/poltergeist/P in src.poltergeists)
 			P.master = null
 		poltergeists = null
