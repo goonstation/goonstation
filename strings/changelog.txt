@@ -1,4 +1,9 @@
 
+(t)wed sep 14 22
+(u)Idiot
+(p)10806
+(e)|
+(+)Lowers chance of falling down stairs on a wheelchair heavily, and reduces duration of the stuns that come from it.
 (t)tue sep 13 22
 (u)Kubius
 (p)10797
