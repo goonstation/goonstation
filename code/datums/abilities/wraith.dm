@@ -1250,7 +1250,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 
-		var/message = html_encode(input("What would you like to whisper to everyone?", "Whisper", "") as text)
+		var/message = input("What would you like to whisper to everyone?", "Whisper", "") as text|null
 		message = ghostify_message(copytext(html_encode(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return 1

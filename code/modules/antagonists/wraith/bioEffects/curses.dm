@@ -29,7 +29,7 @@
 		if (probmult(5))
 			owner.emote("cough")
 			var/turf/T = get_turf(owner)
-			new /obj/decal/cleanable/blood/drip(T)
+			make_cleanable(/obj/decal/cleanable/blood,T)
 		if (probmult(3))
 			owner.visible_message("<span class='alert'>[owner] vomits a lot of blood!</span>")
 			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
