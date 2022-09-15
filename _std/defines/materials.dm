@@ -1,7 +1,3 @@
-#define VALUE_CURRENT 1
-#define VALUE_MAX 2
-#define VALUE_MIN 4
-
 //materials
 
 /// Crystals, Minerals

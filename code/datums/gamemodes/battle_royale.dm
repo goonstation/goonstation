@@ -571,11 +571,12 @@ proc/get_accessible_station_areas()
 		return global.station_areas
 	// All areas
 	var/list/L = list()
-	for_by_tcl(AR, /area/station)
-		for(var/turf/T in AR)
-			if(!isfloor(T) && is_blocked_turf(T) && istype(T,/area/sim/test_area) && T.z == 1)
+	for_by_tcl(area, /area/station)
+		for(var/turf/T in area)
+			if(!isfloor(T) && is_blocked_turf(T) && T.z == 1)
 				continue
-			L[AR.name] = AR
+			L[area.name] = area
+			break
 	global.area_list_is_up_to_date = 1
 	global.station_areas = L
 	return L

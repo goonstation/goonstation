@@ -73,17 +73,9 @@ ABSTRACT_TYPE(/datum/material)
 			if(initial(propPath.default_value) > 0)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
 
-	proc/getProperty(var/property, var/type = VALUE_CURRENT)
-		for(var/datum/material_property/P in properties)
-			if(P.id == property)
-				switch(type)
-					if(VALUE_CURRENT)
-						return properties[P]
-					if(VALUE_MIN)
-						return P.min_value
-					if(VALUE_MAX)
-						return P.max_value
-		return 0
+	proc/getProperty(var/property)
+		var/value = src.properties[property]
+		return isnull(value) ? 0 : value
 
 	proc/removeProperty(var/property)
 		for(var/datum/material_property/P in properties)
