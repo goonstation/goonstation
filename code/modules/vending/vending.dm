@@ -1002,7 +1002,7 @@
 	if (!PN) //Wire note: Fix for Cannot read null.avail
 		return 0
 
-	if (user.shock(src, PN.avail, user.hand == 1 ? "l_arm" : "r_arm", 1, 0))
+	if (user.shock(src, PN.avail, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0))
 		for (var/mob/M in AIviewers(src))
 			if (M == user)	continue
 			M.show_message("<span class='alert'>[user.name] was shocked by the [src.name]!</span>", 3, "<span class='alert'>You hear a heavy electrical crack</span>", 2)
