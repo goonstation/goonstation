@@ -322,11 +322,16 @@ datum
 			id = "rat_spit"
 			description = "The spit of a disease rat. Contains a whole bunch of known and unknown disease."
 			reagent_state = LIQUID
+			depletion_rate = 0.2
 			fluid_r = 255
 			fluid_g = 40
 			fluid_b = 40
 			transparency = 50
 			disease = /datum/ailment/disease/rat_plague
+
+			on_mob_life(mob/M, mult)
+				M.take_toxin_damage(2 * mult)
+				. = ..()
 
 		disease/plague // Space Plague
 			name = "rat venom"
