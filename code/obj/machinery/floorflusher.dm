@@ -228,6 +228,11 @@
 					boutput(M, "You feel your handcuffs being removed.")
 					M.handcuffs.drop_handcuffs(M)
 
+				//Might as well set their security record to "released"
+				SPAWN(1)
+					var/datum/db_record/R = data_core.security.find_record("name", M.name)
+					if(!isnull(R))
+						R["criminal"]="Released"
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
