@@ -939,11 +939,16 @@
 	item_state = "anthy"
 
 /obj/item/clothing/suit/gimmick/fantasy_cloak
-	name = "fantasy cloak"
+	name = "black fantasy cloak"
 	desc = "A fantasy cloak replica with synth fur, nerdy and comfy."
-	icon_state = "cloak"
-	item_state = "mobile_suit"
+	icon_state = "fantasy_cloak"
+	item_state = "fantasy_cloak"
 	wear_layer = MOB_BACK_LAYER + 0.2
+
+/obj/item/clothing/suit/gimmick/fantasy_cloak/red
+	name = "red fantasy cloak"
+	icon_state = "fantasy_cloak_red"
+	item_state = "fantasy_cloak_red"
 
 // Gundam Costumes
 

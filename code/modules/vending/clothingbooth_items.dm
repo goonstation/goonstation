@@ -1092,6 +1092,16 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_DOCTORATE/3
 
+/datum/clothingbooth_item/costume/fantasycloak
+	name = "Fantasy Cloak costume"
+	path = /obj/item/clothing/suit/gimmick/fantasy_cloak
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_TRADESMAN/2
+
+	red
+		name = "Red Fantasy Cloak costume"
+		path = /obj/item/clothing/suit/gimmick/fantasy_cloak/red
+
 /datum/clothingbooth_item/costume/russsianmob
 	name = "Russian Mobster Suit"
 	path = /obj/item/clothing/under/misc/rusmob
