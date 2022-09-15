@@ -1,5 +1,7 @@
 
 (t)thu sep 15 22
+(u)tamuonra
+(+)Hydra smart pistol now tracks targets without needing to hold LMB, fires on click. Locks decay after a couple seconds.
 (u)aloe
 (+)Pouring reagents onto objects or walls will now pool the reagents on the floor. Pouring on dense objects and walls will pool the reagents on your tile; otherwise the reagents will pool on the object's tile.
 (t)wed sep 14 22
