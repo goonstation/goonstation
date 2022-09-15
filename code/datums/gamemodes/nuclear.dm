@@ -211,7 +211,7 @@
 				concatenated_location_names += (((i != length(target_location_names)) ? ", " : " or ") + target_location_names[i])
 
 			to_store_in_mind = "The bomb must be armed in one of the following:<B>[concatenated_location_names]</B>."
-			to_output = "We have identified several major structural weakness in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
+			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
 
 	for(var/datum/mind/synd_mind in syndicates)
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
