@@ -364,7 +364,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 
 		else if (istype(I, /obj/item/scalpel) || istype(I, /obj/item/circular_saw) || istype(I, /obj/item/surgical_spoon) || istype(I, /obj/item/scissors/surgical_scissors))
 			if (src.reagents && I.reagents)
-				I:Poisoner = user
 				src.reagents.trans_to(I, 5)
 				logTheThing(LOG_COMBAT, user, "poisoned [I] [log_reagents(I)] with reagents from [src] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
 				user.visible_message("<span class='alert'><b>[user]</b> dips the blade of [I] into [src]!</span>")
