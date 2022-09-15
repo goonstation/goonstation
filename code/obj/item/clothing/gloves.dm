@@ -637,7 +637,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 						if("harm")
 							src.electrocute(victim, 100, netnum)
 							if(uses)
-								victim.shock(src, 1000 * uses, victim.hand == 1 ? "l_arm": "r_arm", 1)
+								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--
 								charges_used = TRUE
 							break

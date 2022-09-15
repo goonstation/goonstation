@@ -31,6 +31,10 @@
 #define LIMB_LEFT_LEG 4
 #define LIMB_RIGHT_LEG 8
 
+//hand values
+#define LEFT_HAND 1
+#define RIGHT_HAND 0
+
 // ---- mob damage ----
 
 /**
