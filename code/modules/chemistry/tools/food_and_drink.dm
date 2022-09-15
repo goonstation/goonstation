@@ -833,7 +833,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/alt_filled_state = null // does our icon state gain a 1 if we've got fluid? put that 1 in this here var if so!
 	var/fluid_underlay_shows_volume = FALSE // determines whether this bottle is special and shows reagent volume
 	var/shatter = 0
-	initial_volume = 50
+	initial_volume = 100
 	g_amt = 60
 
 	New()
