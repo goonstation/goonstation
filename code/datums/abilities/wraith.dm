@@ -378,7 +378,7 @@
 /datum/targetable/wraithAbility/raiseSkeleton
 	name = "Raise Skeleton"
 	icon_state = "skeleton"
-	desc = "Raise a skeletonized dead body as an indurable skeletal servant."
+	desc = "Raise a skeletonized dead body or fill a locker with an indurable skeletal servant."
 	targeted = 1
 	target_anything = 1
 	pointCost = 100
