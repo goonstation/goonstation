@@ -422,7 +422,7 @@
 			src.camera = new /obj/machinery/camera (src)
 			src.camera.c_tag = src.camera_tag
 			src.camera.network = src.camera_network
-			src.camera.camera_status = 0
+			src.camera.set_camera_status(FALSE)
 			src.camera_tag = src.name
 
 		if (src.has_radio)
@@ -449,7 +449,7 @@
 		if (src.radio)
 			src.loc.open_to_sound = 0
 		if (src.camera)
-			src.camera.camera_status = 0
+			src.camera.set_camera_status(FALSE)
 			src.camera.c_tag = src.camera_tag
 		if(!isnull(pinpointer_category))
 			STOP_TRACKING_CAT(pinpointer_category)
@@ -469,8 +469,7 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
-			src.camera.camera_status = 1
-			src.camera.updateCoverage()
+			src.camera.set_camera_status(TRUE)
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
 		logTheThing(LOG_COMBAT, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")

@@ -201,7 +201,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	. = list()
 
 	var/turf/T = get_turf(center)
-	if(length(T?.cameras))
+	if(length(T?.camera_coverage_emitters))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
 				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
