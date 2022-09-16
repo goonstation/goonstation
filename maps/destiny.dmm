@@ -15602,12 +15602,6 @@
 	dir = 1
 	},
 /area/space)
-"bzE" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/space)
 "bzF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -74769,7 +74763,7 @@ aaa
 bzy
 bzy
 bzy
-bzE
+bzD
 byX
 bzK
 bzO
@@ -75373,7 +75367,7 @@ aaa
 bzy
 bzy
 bzy
-bzE
+bzD
 byX
 bzK
 bzQ
