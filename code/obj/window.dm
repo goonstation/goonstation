@@ -95,9 +95,10 @@
 		return
 
 	disposing()
+		connect_image = null
 		density = 0
 		update_nearby_tiles(need_rebuild=1)
-		..()
+		. = ..()
 
 	Move()
 		set_density(0) //mbc : icky but useful for fluids
