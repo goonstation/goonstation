@@ -509,7 +509,7 @@
 					puppet.appearance = T.copied_appearance
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
-					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
+					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 					puppet.alpha = 0
 					animate(puppet, alpha=255, time=2 SECONDS)
 					puppet.flags &= UNCRUSHABLE
@@ -524,7 +524,7 @@
 				return 1
 			else
 				W.setStatus("corporeal", INFINITE_STATUS)
-				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
+				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 			return 0
 
 
@@ -1057,7 +1057,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			var/mob/living/carbon/human/H = target
 			var/mob/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
-				W.playsound_local(W.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
 				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
 				H.make_jittery(300)

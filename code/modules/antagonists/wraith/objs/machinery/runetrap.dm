@@ -60,7 +60,7 @@
 
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		if (M.reagents.total_volume + src.amount_to_inject >= M.reagents.maximum_volume)
@@ -77,7 +77,7 @@
 
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		M.changeStatus("drowsy", 30 SECONDS)
@@ -93,7 +93,7 @@
 /obj/machinery/wraith/runetrap/stunning
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		flashpowder_reaction(get_turf(src), 40)
@@ -109,7 +109,7 @@
 		..()
 		var/area/AR = get_area(src)
 		if(AR.sanctuary) return
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		var/turf/T = get_turf(M)
@@ -124,7 +124,7 @@
 /obj/machinery/wraith/runetrap/terror
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		for (var/mob/living/L in range(4, src))
@@ -139,7 +139,7 @@
 /obj/machinery/wraith/runetrap/fire
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		fireflash(M, 1, TRUE)
@@ -154,7 +154,7 @@
 
 	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
+		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		if (isrestrictedz(M.z))
@@ -180,10 +180,10 @@
 		qdel(src)
 
 /obj/machinery/wraith/runetrap/explosive
-	Crossed(atom/movable/A)
+	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
-		var/mob/M = A
+		if(!try_trigger(AM)) return
+		var/mob/M = AM
 		if(!checkRun(M)) return
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You hear a buzzing sound!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
@@ -192,10 +192,10 @@
 		qdel(src)
 
 /obj/machinery/wraith/runetrap/slipping
-	Crossed(atom/movable/A)
+	Crossed(atom/movable/AM)
 		..()
-		if(!try_trigger()) return
-		var/mob/M = A
+		if(!try_trigger(AM)) return
+		var/mob/M = AM
 		if(!checkRun(M)) return
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
 		M.remove_pulling()
@@ -211,7 +211,6 @@
 	if(!M) return
 	var/slip_delay = BASE_SPEED_SUSTAINED + WALK_DELAY_ADD
 	var/movement_delay_real = max(M.movement_delay(get_step(M,M.move_dir), 0),world.tick_lag)
-	var/movedelay = clamp(TIME - M.next_move, movement_delay_real, TIME - M.last_pulled_time)
-
+	var/movedelay = clamp(world.time - M.next_move, movement_delay_real, world.time - M.last_pulled_time)
 	if (movedelay < slip_delay)
 		return TRUE
