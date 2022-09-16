@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_762)
-	spread_angle = 8
+	spread_angle = 10
 	shoot_delay = 3 DECI SECONDS
 	max_ammo_capacity = 30
 	auto_eject = 1
