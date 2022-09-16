@@ -9,7 +9,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_BELT
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -360,7 +360,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
-	hides_from_examine = C_UNIFORM|C_BELT
+	hides_from_examine = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
@@ -382,7 +382,6 @@
 	icon_state = "td"
 	item_state = "td"
 	body_parts_covered = TORSO|LEGS
-	hides_from_examine = C_BELT
 
 /obj/item/clothing/suit/armor/tdome/red
 	name = "red skulls raiment"
@@ -439,7 +438,7 @@
 	icon_state = "eod"
 	item_state = "eod"
 	w_class = W_CLASS_NORMAL
-	hides_from_examine = C_UNIFORM|C_GLOVES|C_BELT
+	hides_from_examine = C_UNIFORM|C_GLOVES
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
