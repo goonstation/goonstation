@@ -2325,7 +2325,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/turf/T = get_turf(M)
-		if(!T.cameras || !length(T.cameras))
+		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
 			continue
 
 		var/name = M.name

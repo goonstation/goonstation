@@ -189,6 +189,128 @@
 		if (prob(25))
 			src.icon_state = pick("pencil-b", "pencil-g")
 
+/obj/item/pen/omni
+	name = "omnipen"
+	desc = "A fancy combination pen, capable of switching modes like those multi color pens you remember from school."
+
+	var/penmode = "pen"
+	var/extra_desc = null
+
+	New()
+		..()
+		src.change_mode(penmode)
+
+	attack_self(var/mob/user)
+		..()
+		// cycle between modes
+		var/new_mode = null
+		switch (src.penmode)
+			if ("pen") new_mode = "fancy"
+			if ("fancy") new_mode = "odd"
+			if ("odd") new_mode = "red"
+			if ("red") new_mode = "pencil"
+			if ("pencil") new_mode = "pen"
+		if (new_mode)
+			src.change_mode(new_mode, user)
+
+	proc/change_mode(var/new_mode, var/mob/holder)
+		tooltip_rebuild = 1
+		switch (new_mode)
+			if ("pen")
+				src.penmode = "pen"
+				src.extra_desc = null
+				src.icon_state = "pen"
+				src.force = 1
+				src.throwforce = 1
+				src.throw_range = 7
+				src.throw_speed = 2
+				src.stamina_damage = 20
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 10
+				src.hit_type = DAMAGE_BLUNT
+				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.font = "Georgia"
+				src.webfont = null
+				src.color = null
+
+			if ("fancy")
+				src.penmode = "fancy"
+				src.extra_desc = "It's in fancy mode."
+				src.icon_state = "pen_fancy"
+				src.force = 1
+				src.throwforce = 1
+				src.throw_range = 7
+				src.throw_speed = 2
+				src.stamina_damage = 20
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 10
+				src.hit_type = DAMAGE_BLUNT
+				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.font = "'Dancing Script', cursive"
+				src.webfont = "Dancing Script"
+				src.color = null
+
+			if ("odd")
+				src.penmode = "odd"
+				src.extra_desc = "It's in 'odd' mode... Whatever that means."
+				src.icon_state = "pen"
+				src.force = 1
+				src.throwforce = 1
+				src.throw_range = 7
+				src.throw_speed = 2
+				src.stamina_damage = 20
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 10
+				src.hit_type = DAMAGE_BLUNT
+				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.font = "Wingdings"
+				src.webfont = null
+				src.color = "#ff66ff"
+
+			if ("red")
+				src.penmode = "red"
+				src.extra_desc = "It's in red pen mode."
+				src.icon_state = "pen"
+				src.force = 1
+				src.throwforce = 1
+				src.throw_range = 7
+				src.throw_speed = 2
+				src.stamina_damage = 20
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 10
+				src.hit_type = DAMAGE_BLUNT
+				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.font = "red"
+				src.webfont = null
+				src.color = "#ff0000"
+
+			if ("pencil")
+				src.penmode = "pencil"
+				src.extra_desc = "It's in pencil mode."
+				src.icon_state = "pencil-y"
+				src.force = 1
+				src.throwforce = 1
+				src.throw_range = 7
+				src.throw_speed = 2
+				src.stamina_damage = 20
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 10
+				src.hit_type = DAMAGE_BLUNT
+				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.font = "'Dancing Script', cursive"
+				src.webfont = "Dancing Script"
+				src.color = null
+
+		if (holder)
+			holder.update_inhands()
+
+	get_desc(dist, mob/user)
+		var/list/extras = list()
+		if (extra_desc)
+			extras += extra_desc
+		extras += ..()
+		return extras.Join(" ")
+
 /* =============== MARKERS =============== */
 
 /obj/item/pen/marker

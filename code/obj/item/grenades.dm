@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 				if ((src.bootleg_level == 2) && (ishuman(user)))
 					var/mob/living/carbon/human/H = user
-					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
+					H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 
 			else
 				elecflash(src,power = 2)

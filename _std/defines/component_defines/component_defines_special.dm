@@ -28,6 +28,8 @@
 	#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 	/// Mouse down when shooting full auto
 	#define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
+	/// MouseMove over a fullauto hud object
+	#define COMSIG_FULLAUTO_MOUSEMOVE "fullauto_mousemove"
 	/// Gun projectile changed while in fullauto mode
 	#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
 
