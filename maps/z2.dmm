@@ -41430,7 +41430,6 @@
 "cvW" = (
 /obj/storage/crate/wooden,
 /obj/item/storage/box/record/radio/host,
-/obj/item/radio_tape/audio_book/commander_announcement,
 /obj/item/radio_tape/audio_book/commander_resignation,
 /obj/item/radio_tape/audio_book/commander_support,
 /turf/unsimulated/floor/circuit/red,
