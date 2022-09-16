@@ -15,6 +15,10 @@
 		. = ..()
 		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEDOWN, src, location, control, params)
 
+	MouseMove(location, control, params)
+		. = ..()
+		SEND_SIGNAL(usr, COMSIG_FULLAUTO_MOUSEMOVE, src, location, control, params)
+
 TYPEINFO(/datum/component/holdertargeting/fullauto)
 	initialization_args = list(
 		ARG_INFO("delaystart", DATA_INPUT_NUM, "Initial delay between shots (in deciseconds)", 1.5),

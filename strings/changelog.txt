@@ -1,4 +1,49 @@
 
+(t)thu sep 15 22
+(u)LeahTheTech
+(p)10378
+(e)|
+(+)Changed Flock relay compute cost 1000 -> 500, resource cost 1000 -> 750.
+(u)tamuonra
+(+)Hydra smart pistol now tracks targets without needing to hold LMB, fires on click. Locks decay after a couple seconds.
+(u)aloe
+(+)Pouring reagents onto objects or walls will now pool the reagents on the floor. Pouring on dense objects and walls will pool the reagents on your tile; otherwise the reagents will pool on the object's tile.
+(t)wed sep 14 22
+(u)Bartimeus973
+(p)10773
+(e)|
+(*)Overhaul to the wraith. Wraiths can now pick from three paths upon consuming enough bodies, each with their unique abilities. Sprites done in collaboration with: Swinglow, CalliopeSoups, Mora and Shiiba!
+(*)Adds a new item to counter wraith: the spirit candle. Created by combining a skull and a candle. While lit in hand it reveals wraiths in the surrounding area and using it in hand will manifest the wraith. One time use.
+(u)Idiot
+(p)10806
+(e)|
+(+)Lowers chance of falling down stairs on a wheelchair heavily, and reduces duration of the stuns that come from it.
+(t)tue sep 13 22
+(u)Kubius
+(p)10797
+(e)|
+(+)Kondaru's ranch has been expanded to accommodate additional ranchers.
+(u)Idiot
+(p)10714
+(e)|
+(+)Adds Stumped trait that spawns you with no legs and a free wheelchair.
+(t)mon sep 12 22
+(u)DimWhat
+(p)10786
+(e)|
+(+)Resprited the riot helmet's object sprite.
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
+(u)DimWhat
+(p)10785
+(e)|
+(+)Removed the antique lawbringer skin
 (t)sun sep 11 22
 (u)Emily
 (+)Buff to Plant Chicken eggs; give feedback on the usual places

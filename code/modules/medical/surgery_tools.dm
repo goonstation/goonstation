@@ -39,7 +39,6 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
@@ -111,7 +110,6 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
@@ -180,7 +178,6 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
@@ -1561,7 +1558,6 @@ keeping this here because I want to make something else with it eventually
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	var/mob/Poisoner = null
 	move_triggered = 1
 	var/image/handle = null
 
@@ -1580,7 +1576,6 @@ keeping this here because I want to make something else with it eventually
 
 	disposing()
 		handle = null
-		Poisoner = null
 		..()
 
 	move_trigger(var/mob/M, kindof)

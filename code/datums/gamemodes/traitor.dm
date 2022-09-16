@@ -3,6 +3,7 @@
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
+	antag_token_support = TRUE
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
