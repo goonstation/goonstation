@@ -3405,13 +3405,13 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "aoq" = (
-/obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/decal/cleanable/vomit,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /obj/machinery/light/incandescent,
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "aov" = (
@@ -4641,9 +4641,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
-"asy" = (
-/turf/space,
-/area/station/crew_quarters/stockex)
 "asz" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
@@ -5563,6 +5560,10 @@
 	},
 /obj/item/clothing/mask/gas/plague,
 /obj/machinery/light/incandescent,
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "avU" = (
@@ -12198,6 +12199,9 @@
 	name = "Medical Doctor"
 	},
 /obj/machinery/light/incandescent,
+/obj/item/device/radio/intercom/medical{
+	dir = 1
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/medical/medbay/psychiatrist)
 "aQJ" = (
@@ -25250,6 +25254,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"cgV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "chF" = (
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment/morgue{
@@ -26082,13 +26092,13 @@
 	},
 /area/station/quartermaster/office)
 "cXf" = (
-/obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
 /obj/machinery/light/incandescent,
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "cXg" = (
@@ -26786,7 +26796,6 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "dzO" = (
-/obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/decal/cleanable/rust{
 	pixel_y = 34
@@ -26795,6 +26804,7 @@
 	name = "Staff Assistant"
 	},
 /obj/item/clothing/suit/gimmick/hotdog,
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "dzU" = (
@@ -28136,7 +28146,7 @@
 	name = "crematorium pipe"
 	},
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -29635,7 +29645,6 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
 "fIq" = (
-/obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/decal/cleanable/rust{
@@ -29645,6 +29654,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "fIu" = (
@@ -32040,11 +32050,6 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /obj/access_spawn/crematorium,
-/obj/machinery/activation_button/driver_button{
-	id = "kondaru_funeral";
-	name = "Funerary Driver Button";
-	pixel_x = -24
-	},
 /turf/simulated/floor/plating,
 /area/station/chapel/sanctuary)
 "hVT" = (
@@ -33042,12 +33047,12 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/exit)
 "iQt" = (
-/obj/stool/bed/moveable,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "iQu" = (
@@ -41054,6 +41059,12 @@
 /obj/reagent_dispensers/watertank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
+"pDF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/sanitary,
+/area/station/medical/crematorium)
 "pDR" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -43604,15 +43615,11 @@
 	dir = 4;
 	name = "crematorium pipe"
 	},
-/obj/machinery/power/apc/autoname_west,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
 	name = "autoname - SS13";
 	tag = ""
-	},
-/obj/cable{
-	icon_state = "0-4"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -43819,6 +43826,14 @@
 	},
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
+"rTH" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment,
+/obj/machinery/power/apc/autoname_north,
+/turf/simulated/floor/white,
+/area/station/medical/medbay)
 "rTP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -45806,7 +45821,6 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/stool/bed/moveable,
 /obj/item/clothing/suit/bedsheet/pink,
 /obj/landmark/start{
 	name = "Staff Assistant"
@@ -45814,6 +45828,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/stool/bed,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/quarters)
 "ttH" = (
@@ -46162,9 +46177,6 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
-	},
-/obj/cable{
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -46863,6 +46875,9 @@
 "upK" = (
 /obj/machinery/traymachine/locking/crematorium{
 	id = "crematorium"
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -49307,6 +49322,9 @@
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
 	pixel_y = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
@@ -65945,7 +65963,7 @@ aSE
 fHr
 qbr
 aWc
-aWc
+rTH
 baL
 jYW
 gja
@@ -76203,7 +76221,7 @@ aUL
 lzt
 aUj
 aRs
-asy
+aaa
 aaa
 aaa
 aXP
@@ -76505,7 +76523,7 @@ eUb
 ydN
 dag
 aRs
-asy
+aaa
 aaa
 aaa
 aXP
@@ -76807,7 +76825,7 @@ aRs
 aRs
 aRs
 fUw
-asy
+aaa
 aaa
 aaa
 aXP
@@ -90666,7 +90684,7 @@ aaa
 abZ
 axu
 upK
-avS
+pDF
 eAS
 aED
 azj
@@ -90967,7 +90985,7 @@ aaa
 aaa
 aaa
 axu
-avS
+cgV
 avS
 avS
 axu
