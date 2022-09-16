@@ -24,3 +24,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/cruiser_nanotrasen.dmm"
 	prefabSizeX = 7
 	prefabSizeY = 13
+
+/datum/mapPrefab/allocated/shuttle_transit
+	prefabPath = "assets/maps/allocated/shuttle_transit.dmm"
+	prefabSizeX = 32
+	prefabSizeY = 32
