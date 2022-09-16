@@ -252,14 +252,14 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
