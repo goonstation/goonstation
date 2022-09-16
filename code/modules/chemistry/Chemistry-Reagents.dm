@@ -124,10 +124,12 @@ datum
 		// YES i know this is kind of backwards - however it's much easier to change these return values to 1 than to change every single reagent
 
 		proc/reaction_blob(var/obj/blob/B, var/volume)
+			SHOULD_CALL_PARENT(TRUE)
 			if (!blob_damage)
 				return 1
+			src.holder.remove_reagent(src.id, volume)
 			B.take_damage(blob_damage, volume, "poison")
-			return 1
+			return 0
 
 		//Proc to check a mob's chemical protection in advance of reaction.
 		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
