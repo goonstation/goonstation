@@ -92,8 +92,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "Flechette magazine"
 	ammo_type = new/datum/projectile/bullet/flechette
 	icon_state = "flech_mag"
-	amount_left = 24
-	max_amount = 24
+	amount_left = 40
+	max_amount = 40
 	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
@@ -101,7 +101,7 @@ obj/item/ammo/bullets/flechette_mag
 	name = "flechette"
 	shot_sound = 'sound/weapons/fleshot.ogg'
 	shot_volume = 70
-	power = 20
+	power = 25
 	cost = 2
 	ks_ratio = 1
 	hit_ground_chance = 100
