@@ -388,15 +388,15 @@
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/ak47
-	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
-	name = "AK magazine"
-	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
-	ammo_type = new/datum/projectile/bullet/ak47
+/obj/item/ammo/bullets/akm
+	sname = "7.62x39mm"
+	name = "AKM magazine"
+	desc = "A curved 30 round magazine, for the AKM assault rifle."
+	ammo_type = new/datum/projectile/bullet/akm
 	icon_state = "ak47"
 	amount_left = 30
 	max_amount = 30
-	ammo_cat = AMMO_AUTO_308
+	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/rifle_3006
