@@ -212,6 +212,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		FC.internal_speed = rand(speed_min,speed_max)
 		FC.travelled = rand(0,dissipation_variance)
 		FC.launch()
+/datum/projectile/special/spreader/buckshot_burst/plasglass
+	name = "fragments"
+	sname = "fragments"
+	cost = 1
+	pellets_to_fire = 4
+	casing = /obj/item/casing/shotgun/pipe
+	spread_projectile_type = /datum/projectile/bullet/improvplasglass
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	speed_max = 40
+	speed_min = 34
+	spread_angle_variance = 15
+	dissipation_variance = 10
 
 /datum/projectile/special/spreader/buckshot_burst/glass
 	spread_projectile_type = /datum/projectile/bullet/improvglass

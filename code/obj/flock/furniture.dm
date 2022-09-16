@@ -8,14 +8,19 @@
 // Fibrenet (functionally a lattice)
 // Barricade (functionally a grille, but flockdrones can pass through it)
 
-////////////////////////////
+//----------------------------
 // TABLE & PARTS
-///////////////////////////
+//----------------------------
+
+TYPEINFO(/obj/table/flock)
+TYPEINFO_NEW(/obj/table/flock)
+	. = ..()
+	smooth_list = typecacheof(/obj/table/flock/auto)
+
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
 	icon = 'icons/obj/furniture/table_flock.dmi'
-	auto_type = /obj/table/flock/auto
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
@@ -23,7 +28,7 @@
 
 /obj/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -62,7 +67,7 @@
 
 /obj/item/furniture_parts/table/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -92,7 +97,7 @@
 
 /obj/stool/chair/comfy/flock/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 
@@ -119,7 +124,7 @@
 
 /obj/item/furniture_parts/flock_chair/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -159,14 +164,14 @@
 			playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 			var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 			S.set_loc(T)
-			S.setMaterial(getMaterial("gnesisglass"))
+			S.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 			src.dump_contents()
 			make_cleanable( /obj/decal/cleanable/flockdrone_debris, T)
 			qdel(src)
 
 /obj/storage/closet/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_attack=FALSE)
 

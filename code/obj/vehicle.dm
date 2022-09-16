@@ -1702,15 +1702,15 @@ obj/vehicle/clowncar/proc/log_me(var/mob/rider, var/mob/pax, var/action = "", va
 		return
 
 // the adminbus has a pressurized cabin!
-/obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+/obj/vehicle/adminbus/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 	var/datum/gas_mixture/GM = new /datum/gas_mixture
 
 	var/oxygen = MOLES_O2STANDARD
 	var/nitrogen = MOLES_N2STANDARD
 	var/sum = oxygen + nitrogen
 
-	GM.oxygen = (oxygen/sum)*breath_request
-	GM.nitrogen = (nitrogen/sum)*breath_request
+	GM.oxygen = (oxygen/sum)*breath_request * mult
+	GM.nitrogen = (nitrogen/sum)*breath_request * mult
 	GM.temperature = T20C
 
 	return GM

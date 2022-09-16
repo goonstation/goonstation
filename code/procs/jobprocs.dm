@@ -90,6 +90,7 @@
 	var/list/medical_staff = list()
 	var/list/engineering_staff = list()
 	var/list/research_staff = list()
+	var/list/security_officers = list()
 
 
 	for(var/datum/job/JOB in job_controls.staple_jobs)
@@ -192,6 +193,8 @@
 				research_staff += player
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += player
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += player
 
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [player] took [JOB.name] from favorite selector")
 			player.mind.assigned_role = JOB.name
@@ -218,6 +221,8 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
@@ -246,6 +251,8 @@
 				research_staff += candidate
 			else if (istype(JOB, /datum/job/research/medical_doctor))
 				medical_staff += candidate
+			else if (istype(JOB, /datum/job/security/security_officer))
+				security_officers += candidate
 
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
@@ -259,39 +266,26 @@
 	/////////////////////////////////////////////////
 
 	//Find the command jobs, if they are unfilled, pick a random person from within that department to be that command officer
+	//if they had the command job in their medium or low priority jobs
 	for(var/datum/job/JOB in available_job_roles)
 		//cheaper to discout this first than type check here *I think*
-		if (JOB.limit > 0 && JOB.assigned < JOB.limit)
-			//Promote Chief Engineer
+		if (istype(JOB, /datum/job/command) && JOB.limit > 0 && JOB.assigned < JOB.limit)
+			var/list/picks
 			if (istype(JOB, /datum/job/command/chief_engineer))
-				var/list/picks = FindPromotionCandidates(engineering_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Research Director
+				picks = FindPromotionCandidates(engineering_staff, JOB)
 			else if (istype(JOB, /datum/job/command/research_director))
-				var/list/picks = FindPromotionCandidates(research_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
-			//Promote Medical Director
+				picks = FindPromotionCandidates(research_staff, JOB)
 			else if (istype(JOB, /datum/job/command/medical_director))
-				var/list/picks = FindPromotionCandidates(medical_staff, JOB)
-				if (!picks || !length(picks))
-					continue
-				var/mob/new_player/candidate = pick(picks)
-				logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
-				candidate.mind.assigned_role = JOB.name
-				logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
-				JOB.assigned++
+				picks = FindPromotionCandidates(medical_staff, JOB)
+			else if (istype(JOB, /datum/job/command/head_of_security))
+				picks = FindPromotionCandidates(security_officers, JOB)
+			if (!length(picks))
+				continue
+			var/mob/new_player/candidate = pick(picks)
+			logTheThing(LOG_DEBUG, null, "<b>kyle:</b> [candidate] took [JOB.name] from Job Promotion Picker")
+			candidate.mind.assigned_role = JOB.name
+			logTheThing(LOG_DEBUG, candidate, "reassigned job: [candidate.mind.assigned_role]")
+			JOB.assigned++
 
 
 	// If there's anyone left without a job after this, lump them with a randomly
@@ -470,8 +464,8 @@
 			//Has the immigrant trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
 			for_by_tcl(S, /obj/storage)
-				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
-				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
+				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
+				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost) && !istype(get_area(S), /area/evilreaver))
 					var/turf/simulated/T = S.loc
 					//Simple checks done, now do some environment checks to make sure it's survivable
 					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
@@ -691,6 +685,15 @@
 					if (src.limbs.r_arm)
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+
+	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+		if (src.limbs)
+			SPAWN(6 SECONDS)
+				if (src.limbs.l_leg)
+					src.limbs.l_leg.delete()
+				if (src.limbs.r_leg)
+					src.limbs.r_leg.delete()
+			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))

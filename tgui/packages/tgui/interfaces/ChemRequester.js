@@ -43,6 +43,7 @@ export const ChemRequester = (props, context) => {
     volume,
     max_volume,
     notes,
+    silicon_user,
   } = data;
   const [notesText, setNotesText] = useLocalState(context, 'notesText', '');
   return (
@@ -90,7 +91,12 @@ export const ChemRequester = (props, context) => {
             </Stack.Item>
           </Stack>
         )}
-        {!card && <Section>Please swipe ID to place request.</Section>}
+        {!card && !silicon_user && <Section>Please swipe ID to place request.</Section>}
+        {!card && !!silicon_user && (
+          <Section>
+            <Button onClick={() => act("silicon_login")}>Login to place request.</Button>
+          </Section>
+        )}
       </Window.Content>
     </Window>
   );

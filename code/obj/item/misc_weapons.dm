@@ -206,7 +206,7 @@
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
-		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
+		user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
@@ -1519,8 +1519,8 @@ obj/item/whetstone
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = 'sound/weapons/hadar-pickup.ogg'
-	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	pickup_sfx = 'sound/weapons/hadar_pickup.ogg'
+	hitsound = 'sound/weapons/hadar_impact.ogg'
 	two_handed = 1
 	uses_multiple_icon_states = 1
 

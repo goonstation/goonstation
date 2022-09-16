@@ -211,7 +211,7 @@
 				if(target:health <= 0)
 					if(isliving(target))
 						var/mob/living/M = target
-						M.set_loc(src.loc)
+						M.set_loc(src)
 						M.gib()
 						occupant = null
 						playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
@@ -221,9 +221,9 @@
 							occupant = null
 							playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
 							src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
-						target.set_loc(null)
-						qdel(target)
-						target = null
+					target.set_loc(null)
+					qdel(target)
+					target = null
 			else
 				reagents.add_reagent(target_fluid, 10)
 				qdel(target)
@@ -262,8 +262,10 @@
 		if(ON_COOLDOWN(src,"move_damage",1 SECOND))
 			return
 		if(prob(75))
+			if (!ON_COOLDOWN(src, "move_msg", 3 SECONDS))
+				user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
+			user.playsound_local(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 			takeDamage("brute",1)
-		return
 
 	takeDamage(var/damageType, var/amount)
 		..(damageType,amount)
@@ -281,10 +283,18 @@
 		if(src.health <= 0)
 			qdel(src)
 
+	mob_resist_inside(var/mob/user)
+		if (ON_COOLDOWN(src, "resist_damage", 3 SECONDS))
+			return
+		ON_COOLDOWN(src, "move_damage", 1 SECOND)
+		user.show_text("<span class='alert'>[src] [pick("begins to splinter","cracks open slightly","becomes a little less solid","loosens around you")].</span>")
+		src.takeDamage("brute",6)
+		user.playsound_local(src, "sound/misc/flockmind/flockdrone_grump[pick(1,2,3)].ogg", 50, 1, 0, 0.5 )
+		return TRUE
+
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span class='alert'>[src] [pick("cracks","bends","shakes","groans")].</span>")
-		src.takeDamage("brute",6)
+		src.mob_resist_inside(user)
 
 	special_desc(dist, mob/user)
 		if (!isflockmob(user))

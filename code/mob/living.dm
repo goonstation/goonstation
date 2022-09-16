@@ -472,7 +472,7 @@
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
@@ -595,7 +595,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/point_at(var/atom/target)
+/mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
@@ -614,9 +614,8 @@
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
-
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
-		make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)
@@ -1388,6 +1387,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 	src.last_resist = world.time + 20
 
+	if (isobj(src.loc))
+		var/obj/container = src.loc
+		if (container.mob_resist_inside(src))
+			return TRUE //cancel further resist code if needed
+
 	if (src.getStatusDuration("burning"))
 		if (!actions.hasAction(src, "fire_roll"))
 			src.last_resist = world.time + 25
@@ -1435,6 +1439,20 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
+
+/mob/living/set_loc(var/newloc as turf|mob|obj in world)
+	var/atom/oldloc = src.loc
+	. = ..()
+	if(src && !src.disposed && src.loc && (!istype(src.loc, /turf) || !istype(oldloc, /turf)))
+		if(src.chat_text?.vis_locs?.len)
+			var/atom/movable/AM = src.chat_text.vis_locs[1]
+			AM.vis_contents -= src.chat_text
+		if(istype(src.loc, /turf))
+			src.vis_contents += src.chat_text
+		else
+			var/atom/movable/A = src
+			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
+			A?.vis_contents += src.chat_text
 
 /mob/living/proc/empty_hands()
 	. = 0
@@ -1532,7 +1550,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				return
 			*/
 			if (gloves?.activeweapon)
-				gloves.special_attack(src)
+				gloves.special_attack(src, M)
 				return
 
 			if (src.parry_or_dodge(M))
@@ -1816,9 +1834,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-		P.die()
-		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [P] ([P.type]) hitting mob [src] (src.type)")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
@@ -2096,4 +2117,4 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
 	else if((!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
-		src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
+		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")

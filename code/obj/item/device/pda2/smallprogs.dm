@@ -793,12 +793,22 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && length(eye_loc.cameras)))
+			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
+
+		if(isliving(usr))
+			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
 
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb

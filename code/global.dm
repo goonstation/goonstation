@@ -337,6 +337,7 @@ var/global
 		LOG_BOMBING		=	list(),
 		LOG_STATION		=	list(),
 		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),

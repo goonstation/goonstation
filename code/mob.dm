@@ -2153,10 +2153,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 
@@ -3103,7 +3103,7 @@
 	set name = "Point"
 	src.point_at(A)
 
-/mob/proc/point_at(var/atom/target) //overriden by living and dead
+/mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
 	.=0
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))

@@ -31,16 +31,16 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
+
 	the_tuff_stuff
 		explosion_resistance = 3
+
 	New()
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1)
-		var/datum/material/M
 		if (default_material)
-			M = getMaterial(default_material)
-			src.setMaterial(M)
+			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
@@ -95,9 +95,10 @@
 		return
 
 	disposing()
+		connect_image = null
 		density = 0
 		update_nearby_tiles(need_rebuild=1)
-		..()
+		. = ..()
 
 	Move()
 		set_density(0) //mbc : icky but useful for fluids
@@ -731,22 +732,53 @@
 	icon_state = "mapwin"
 	dir = 5
 	health_multiplier = 2
+	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
 	var/mod = "W-"
-	var/list/connects_to = list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/auto/marsoutpost,
-		/turf/simulated/shuttle/wall, /turf/unsimulated/wall, /turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner,
-		/obj/machinery/door, /obj/window, /turf/simulated/wall/auto/reinforced/supernorn/yellow, /turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange, /turf/simulated/wall/auto/reinforced/paper,
-		/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
-		/turf/unsimulated/wall/auto/supernorn/wood, /turf/unsimulated/wall/auto/adventure/shuttle/dark, /turf/simulated/wall/auto/reinforced/old, /turf/unsimulated/wall/auto/lead/blue, /turf/unsimulated/wall/auto/adventure/old, /turf/unsimulated/wall/auto/adventure/mars/interior, /turf/unsimulated/wall/auto/adventure/shuttle, /turf/unsimulated/wall/auto/reinforced/supernorn,
-		/turf/simulated/wall/false_wall)
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto/supernorn,
+		/turf/simulated/wall/auto/reinforced/supernorn,
+		/turf/unsimulated/wall/auto/reinforced/supernorn,
 
-	var/list/connects_to_exceptions = list(/obj/window/cubicle, /obj/window/reinforced, /turf/unsimulated/wall/auto/lead/blue)
-	var/list/connects_with_overlay_exceptions = list(/obj/window, /obj/machinery/door/poddoor )
-	alpha = 160
-	the_tuff_stuff
-		explosion_resistance = 3
+		/turf/simulated/shuttle/wall,
+		/turf/unsimulated/wall,
+		/turf/simulated/wall/auto/shuttle,
+		/obj/indestructible/shuttle_corner,
+
+		/turf/simulated/wall/auto/reinforced/supernorn/yellow,
+		/turf/simulated/wall/auto/reinforced/supernorn/blackred,
+		/turf/simulated/wall/auto/reinforced/supernorn/orange,
+		/turf/simulated/wall/auto/reinforced/paper,
+		/turf/simulated/wall/auto/jen,
+		/turf/simulated/wall/auto/reinforced/jen,
+		/turf/simulated/wall/auto/supernorn/wood,
+		/turf/unsimulated/wall/auto/supernorn/wood,
+
+		/turf/unsimulated/wall/auto/lead/blue,
+		/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+		/turf/simulated/wall/auto/reinforced/old,
+		/turf/unsimulated/wall/auto/adventure/old,
+		/turf/unsimulated/wall/auto/adventure/mars/interior,
+		/turf/unsimulated/wall/auto/adventure/shuttle,
+		/turf/simulated/wall/auto/marsoutpost,
+		/turf/simulated/wall/false_wall,
+	))
+
+	/// Gotta be a typecache list
+	var/static/list/connects_to_exceptions = typecacheof(list(
+		/obj/window/reinforced,
+		/obj/window/cubicle,
+		/turf/unsimulated/wall/auto/lead/blue,
+	))
+	var/static/list/connects_with_overlay_exceptions = typecacheof(list(
+		/obj/window,
+		/obj/machinery/door/poddoor
+	))
+
 	New()
 		..()
 
@@ -780,12 +812,7 @@
 				src.UpdateOverlays(src.connect_image, "connect")
 		else
 			src.UpdateOverlays(null, "connect")
-	/*
-	attackby(obj/item/W, mob/user)
-		if (..(W, user))
-			src.UpdateIcon()
-			src.update_neighbors()
-	*/
+
 	proc/update_neighbors()
 		for (var/turf/simulated/wall/auto/T in orange(1,src))
 			T.UpdateIcon()
@@ -793,6 +820,9 @@
 			O.UpdateIcon()
 		for (var/obj/grille/G in orange(1,src))
 			G.UpdateIcon()
+
+/obj/window/auto/the_tuff_stuff
+	explosion_resistance = 3
 
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
