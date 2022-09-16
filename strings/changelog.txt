@@ -1,5 +1,10 @@
 
 (t)fri sep 16 22
+(u)NightmarechaMillian
+(p)10661
+(e)|
+(*)New pipeshot subtype: Plasmaglass! See minor changes for more details.
+(+)Plasmaglass pipeshot shoots like a middle ground between scrap and glass (fires 4 projectiles at a 15 degree spread), but has armor piercing properties.
 (u)BatElite
 (p)10819
 (e)|
