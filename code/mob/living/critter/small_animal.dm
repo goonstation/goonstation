@@ -57,10 +57,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	butcherable = 1
 	name_the_meat = 1
 	max_skins = 1
-	var/health_brute = 20 // moved up from birds since more than just they can use this, really
-	var/health_brute_vuln = 1
-	var/health_burn = 20
-	var/health_burn_vuln = 1
+	health_brute = 20 // moved up from birds since more than just they can use this, really
+	health_brute_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 1
 
 	var/fur_color = 0
 	var/eye_color = 0
@@ -2861,10 +2861,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)))
+				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)))
+				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
 
 	death(var/gibbed)
 		. = ..()

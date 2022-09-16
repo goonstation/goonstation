@@ -1625,10 +1625,12 @@ About the new airlock wires panel:
 		src.closeOther.close(1)
 
 /obj/machinery/door/airlock/close()
-	if (src.linked_forcefield) //mbc : this sucks, but I need the forcefield to turn off even if the door is unpowered and can't close.
-		src.linked_forcefield.setactive(0)
-
-	if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
+	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		if (src.linked_forcefield)
+			src.linked_forcefield.setactive(0)
+		return
+	if (src.welded || src.locked || src.operating)
 		return
 	src.use_power(50)
 

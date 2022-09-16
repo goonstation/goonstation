@@ -19,6 +19,7 @@
 	var/token_players_assigned = 0
 
 	do_antag_random_spawns = 0
+	antag_token_support = TRUE
 	escape_possible = 0
 
 /datum/game_mode/nuclear/announce()
