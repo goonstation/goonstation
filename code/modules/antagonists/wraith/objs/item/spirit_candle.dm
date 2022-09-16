@@ -78,7 +78,7 @@
 		var/turf/T = get_turf(src)
 		for_by_tcl(W, /mob/wraith)
 			if (IN_RANGE(W, T, WIDE_TILE_WIDTH / 2))
-				new /obj/decal/wraith_shadow(W.loc)
+				W.changeStatus("spirit_candle", 5 SECONDS)
 
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
@@ -134,3 +134,17 @@
 		animate(time = lifespan / 2, alpha = 0)
 		SPAWN(lifespan)
 			qdel(src)
+
+/// applied to waith by spirit candle, causes them to spawn dark shadows
+/datum/statusEffect/spirit_candle
+	id = "spirit_candle"
+	desc = "You've been revealed!"
+	unique = TRUE
+	maxDuration = 5 SECONDS
+	visible = FALSE
+
+	onUpdate(timePassed)
+		. = ..()
+		if (GET_COOLDOWN(owner, "spirit_candle")) return
+		new /obj/decal/wraith_shadow(owner.loc)
+		ON_COOLDOWN(owner, "spirit_candle", 1 SECOND)
