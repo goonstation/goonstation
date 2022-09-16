@@ -38,8 +38,6 @@ var/global/area/current_battle_spawn = null
 	boutput(world, "<B>You are approaching [station_name(1)] in the Battle Shuttle! Jump out of the ship to land on the station!</B>")
 
 /datum/game_mode/battle_royale/pre_setup()
-	for(var/datum/mind/mind in antag_token_list())
-		mind.current?.client?.using_antag_token = FALSE
 	// EVERYONE IS A BATTLER
 	for(var/client/C)
 		var/mob/new_player/player = C.mob

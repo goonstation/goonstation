@@ -320,7 +320,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 						antagWeighter.record(role = ROLE_FLOCKMIND, ckey = F.ckey)
 
 				else if (player.mind)
-					if (player.client.using_antag_token)
+					if (player.client.using_antag_token && ticker.mode.antag_token_support)
 						player.client.use_antag_token()	//Removes a token from the player
 					player.create_character()
 					qdel(player)

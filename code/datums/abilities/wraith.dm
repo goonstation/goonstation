@@ -378,7 +378,7 @@
 /datum/targetable/wraithAbility/raiseSkeleton
 	name = "Raise Skeleton"
 	icon_state = "skeleton"
-	desc = "Raise a skeletonized dead body as an indurable skeletal servant."
+	desc = "Raise a skeletonized dead body or fill a locker with an indurable skeletal servant."
 	targeted = 1
 	target_anything = 1
 	pointCost = 100
@@ -808,7 +808,7 @@
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
 	icon_state = "evolve"
-	desc = "Choose a form to evolve into once you have grown strong enough"
+	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
 	targeted = 0
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT

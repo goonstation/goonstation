@@ -1,5 +1,9 @@
 
 (t)thu sep 15 22
+(u)LeahTheTech
+(p)10378
+(e)|
+(+)Changed Flock relay compute cost 1000 -> 500, resource cost 1000 -> 750.
 (u)tamuonra
 (+)Hydra smart pistol now tracks targets without needing to hold LMB, fires on click. Locks decay after a couple seconds.
 (u)aloe
