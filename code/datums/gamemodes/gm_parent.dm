@@ -22,6 +22,7 @@
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
+	var/antag_token_support = FALSE // players can redeem antag tokens for this game mode
 	var/do_antag_random_spawns = 1
 	var/do_random_events = 1
 	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.

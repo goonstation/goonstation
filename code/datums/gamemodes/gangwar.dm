@@ -3,6 +3,7 @@
 	name = "gang"
 	config_tag = "gang"
 
+	antag_token_support = TRUE
 	var/list/leaders = list()
 	var/list/gangs = list()
 
