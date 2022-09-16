@@ -1,5 +1,9 @@
 
 (t)fri sep 16 22
+(u)ZWRh3
+(p)10542
+(e)|
+(+)following items were removed from battle royale: makeshift armor, microbomb, holographic disguiser, syndicate sponge capsules and turboflash box
 (u)glowbold
 (p)10552
 (e)|
