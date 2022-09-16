@@ -76,6 +76,9 @@ ABSTRACT_TYPE(/obj/item/parts)
 	/// Can we roll this limb as a random limb?
 	var/random_limb_blacklisted = 0
 
+	/// If the limb state changes when changing clothing
+	var/update_with_clothing = FALSE
+
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))

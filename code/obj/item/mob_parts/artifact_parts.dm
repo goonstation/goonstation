@@ -150,6 +150,26 @@
 /obj/item/parts/artifact_parts/arm
 	can_hold_items = TRUE
 
+	getHandIconState()
+		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
+			return ..()
+		return src.pick_arm_attached_image()
+
+	getMobIcon()
+		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
+			return ..()
+		return src.pick_arm_attached_image()
+
+	proc/pick_arm_attached_image()
+		var/mob/living/carbon/human/H = holder
+		var/wearing_clothing = H.w_uniform || H.wear_suit
+		if (!wearing_clothing)
+			return image('icons/mob/human.dmi', src.handlistPart)
+		else
+			var/image/I = image('icons/mob/human.dmi', src.handlistPart)
+			I.filters += filter(type = "alpha", icon = icon('icons/mob/humanmasks.dmi', src.slot == "l_arm" ? "arm-L-mask" : "arm-R-mask"))
+			return I
+
 /obj/item/parts/artifact_parts/leg
 
 /obj/item/parts/artifact_parts/arm/eldritch
@@ -177,6 +197,7 @@
 		if (!..())
 			return
 		var/mob/living/carbon/human/H = holder
+		H.update_clothing()
 		if (istype(H.limbs.get_limb("l_leg"), /obj/item/parts/artifact_parts/leg/eldritch/left) && istype(H.limbs.get_limb("r_leg"), /obj/item/parts/artifact_parts/leg/eldritch/right))
 			src.holder.addAbility(/datum/targetable/artifact_limb_ability/eldritch_run)
 
@@ -202,6 +223,7 @@
 		handlistPart = "leg-eldritch-R-attached"
 
 /obj/item/parts/artifact_parts/arm/martian
+	update_with_clothing = TRUE
 	artifact_type = "martian"
 
 	on_attach()
@@ -221,14 +243,14 @@
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-martian-L"
-		partlistPart = "arm-martian-L-attached"
+		handlistPart = "arm-martian-L-attached"
 
 	right
 		name = "martian right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-martian-R"
-		partlistPart = "arm-martian-R-attached"
+		handlistPart = "arm-martian-R-attached"
 
 /obj/item/parts/artifact_parts/leg/martian
 	artifact_type = "martian"
@@ -252,6 +274,7 @@
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
 /obj/item/parts/artifact_parts/arm/precursor
+	update_with_clothing = TRUE
 	artifact_type = "precursor"
 
 	on_attach()
@@ -271,14 +294,14 @@
 		slot = "l_arm"
 		side = "left"
 		icon_state = "arm-precursor-L"
-		partlistPart = "arm-precursor-L-attached"
+		handlistPart = "arm-precursor-L-attached"
 
 	right
 		name = "precursor right arm"
 		slot = "r_arm"
 		side = "right"
 		icon_state = "arm-precursor-R"
-		partlistPart = "arm-precursor-R-attached"
+		handlistPart = "arm-precursor-R-attached"
 
 /obj/item/parts/artifact_parts/leg/precursor
 	artifact_type = "precursor"
