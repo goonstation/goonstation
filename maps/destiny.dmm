@@ -14237,6 +14237,7 @@
 	pixel_x = 11
 	},
 /obj/table/glass/reinforced/auto,
+/obj/item/crowbar,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "bri" = (
