@@ -41,7 +41,7 @@
 			R.set_loc(src)
 			user.u_equip(R)
 
-		if (issnippingtool(O) && wiretap)
+		else if (issnippingtool(O) && wiretap)
 			boutput(user, "<span class='notice'>You begin removing [src.wiretap] from [src].</span>")
 			if (!do_after(user, 2 SECONDS))
 				boutput(user, "<span class='alert'>You were interrupted!.</span>")
