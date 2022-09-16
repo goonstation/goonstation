@@ -124,6 +124,7 @@ datum
 				P.growth -= 3
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -181,6 +182,7 @@ datum
 				P.HYPdamageplant("acid", 1)
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -474,6 +476,7 @@ datum
 				return
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (istype(B, /obj/blob/lipid))
 					B.take_damage(B.health_max, 2, "chaos")
 
@@ -792,6 +795,7 @@ datum
 				..()
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (B.type == /obj/blob)
 					var/obj/blob/lipid/L = new /obj/blob/lipid(B.loc)
 					L.setOvermind(B.overmind)
@@ -928,6 +932,7 @@ datum
 				P.growth -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
