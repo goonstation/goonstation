@@ -536,7 +536,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
-	gildable = 0
+	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
