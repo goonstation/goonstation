@@ -520,27 +520,35 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.4)
 
-/obj/item/gun/kinetic/ak47
-	name = "\improper AK-744 Rifle"
-	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
-	icon = 'icons/obj/large/48x32.dmi' // big guns get big icons
+/obj/item/gun/kinetic/akm
+	name = "\improper AKM Assault Rifle"
+	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted."
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	ammo_cats = list(AMMO_AUTO_762)
+	spread_angle = 8
+	shoot_delay = 3 DECI SECONDS
+	max_ammo_capacity = 30
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
-	gildable = 1
-	default_magazine = /obj/item/ammo/bullets/ak47
+	gildable = 0
+	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	w_class = W_CLASS_BULKY
+	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/ak47)
+		set_current_projectile(new/datum/projectile/bullet/akm)
 		..()
+
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"

@@ -109,7 +109,7 @@ obj/item/ammo/bullets/flechette_mag
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	shot_number = 2
-	shot_delay = 0.07 SECONDS
+	shot_delay = 70 MILLI SECONDS
 	dissipation_delay = 10
 	dissipation_rate = 3
 	projectile_speed = 56
@@ -128,13 +128,16 @@ obj/item/ammo/bullets/flechette_mag
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 24
+	max_ammo_capacity = 40
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_NORMAL
 	spread_angle = 3
 	default_magazine = /obj/item/ammo/bullets/flechette_mag
+	ammobag_magazines = list(/obj/item/ammo/bullets/flechette_mag)
 
 	New()
 		ammo = new default_magazine

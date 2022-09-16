@@ -1036,6 +1036,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/surplus/akm
+	name = "AKM Assault Rifle"
+	item = /obj/item/gun/kinetic/akm
+	cost = 12
+	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
+
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
 	item = /obj/item/storage/banana_grenade_pouch

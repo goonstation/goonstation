@@ -4,6 +4,9 @@
 (p)10552
 (e)|
 (*)Cyborg Docking Stations have a new interface.
+(u)Virvatuli & Dimwhat
+(e)🔄🎨|rework, sprites
+(*)The AK is back and has been added exclusively to the traitor surplus crate! The gun has been overhauled codewise and features new gunfire sounds, as well as both new inhand and worn back sprites by Dimwhat. This is a 12TC item which is randomly rolled in the crate, and comes with 1 thirty round magazine. This rifle cannot fit in a backpack, but can be slung in your back slot, so there is no being sneaky with it equipped!
 (t)thu sep 15 22
 (u)LeahTheTech
 (p)10378
