@@ -1,5 +1,10 @@
 
 (t)fri sep 16 22
+(u)Amylizzle
+(p)10818
+(e)|
+(*)Ghosts can shoulder surf your TGUI windows now. You're always being watched.
+(*)As an observer, when you're observing someone, click on the machine they're using to open the window they see.
 (u)ZWRh3
 (p)10542
 (e)|
