@@ -1,5 +1,9 @@
 
 (t)fri sep 16 22
+(u)BatElite
+(p)10819
+(e)|
+(*)Nuclear operative teams now have 2 options for where to plant the nuke.
 (u)Amylizzle
 (p)10818
 (e)|
