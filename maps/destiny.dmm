@@ -37930,7 +37930,8 @@
 /obj/machinery/disposal/mail/small{
 	dir = 8;
 	name = "mail chute-'Bar'";
-	pixel_x = 5
+	pixel_x = 5;
+	mail_tag = "bar"
 	},
 /obj/disposalpipe/trunk/mail{
 	dir = 4
