@@ -1547,12 +1547,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	force = MELEE_DMG_SMG
 	contraband = 4
 	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = 1
-	spread_angle = 12.5
+	spread_angle = 10
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
@@ -1566,6 +1567,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(0) //Go 1-handed.
+				src.spread_angle = initial(src.spread_angle)
+			else
+				if(!setTwoHanded(1)) //Go 2-handed.
+					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+				else
+					src.spread_angle = 4
 		..()
 
 /obj/item/gun/kinetic/smg/empty
