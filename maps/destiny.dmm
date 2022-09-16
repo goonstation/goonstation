@@ -3604,7 +3604,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/turf/space,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "aoG" = (
@@ -11968,18 +11967,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"bal" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar/east,
-/turf/space,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/east)
 "bam" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -15240,7 +15227,6 @@
 	},
 /obj/grille/steel,
 /turf/space,
-/turf/space,
 /area/station/com_dish/auxdish)
 "bxd" = (
 /obj/cable/yellow{
@@ -15517,10 +15503,6 @@
 /obj/grille/steel,
 /turf/space,
 /area/station/com_dish/auxdish)
-"bze" = (
-/turf/space,
-/turf/space,
-/area/space)
 "bzi" = (
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
@@ -15765,12 +15747,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost)
-"bAb" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/space)
 "bAd" = (
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
@@ -15797,12 +15773,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost)
-"bAi" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/space)
 "bAj" = (
 /turf/simulated/wall/auto/asteroid{
 	dir = 6
@@ -15838,18 +15808,6 @@
 	dir = 8
 	},
 /area/listeningpost)
-"bAo" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
-/area/space)
-"bAp" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/space)
 "bAr" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -16214,16 +16172,6 @@
 "bBs" = (
 /obj/storage/crate/loot,
 /turf/simulated/floor/plating/airless/asteroid,
-/area/space)
-"bBt" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/space)
-"bBu" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bBw" = (
 /obj/disposalpipe/segment,
@@ -17680,12 +17628,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/fitness)
-"ckn" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "ckr" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -19537,13 +19479,6 @@
 	dir = 4
 	},
 /area/station/security/hos)
-"cZo" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/space,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/solar/east)
 "cZE" = (
 /obj/machinery/door/airlock/pyro/glass/toxins{
 	name = "Toxins"
@@ -32066,12 +32001,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"jfh" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "jfp" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -35111,7 +35040,6 @@
 	pixel_y = 21
 	},
 /turf/space,
-/turf/space,
 /area/space)
 "kIn" = (
 /obj/cable{
@@ -36976,12 +36904,6 @@
 	dir = 1
 	},
 /area/station/medical/medbay/cloner)
-"lKi" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "lKs" = (
 /obj/decal/tile_edge/line/white{
 	dir = 5;
@@ -39593,10 +39515,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
-"nan" = (
-/turf/space,
-/turf/space,
-/area/station/shield_zone)
 "naA" = (
 /obj/storage/secure/closet/medical/medkit,
 /obj/decal/tile_edge/line/white{
@@ -40105,10 +40023,6 @@
 	dir = 4
 	},
 /area/station/medical/cdc)
-"nnS" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/solar/east)
 "nog" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -42985,7 +42899,6 @@
 	},
 /obj/grille/steel,
 /turf/space,
-/turf/space,
 /area/station/com_dish/auxdish)
 "oMx" = (
 /obj/cable{
@@ -45716,12 +45629,6 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
-"qmd" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 9
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "qmh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -48294,9 +48201,6 @@
 /turf/simulated/floor/plating/random,
 /area/station/ai_monitored/armory)
 "rCv" = (
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "rCH" = (
@@ -48581,18 +48485,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/security/interrogation)
-"rIQ" = (
-/obj/cable,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/solar/west,
-/turf/space,
-/turf/simulated/floor/airless{
-	icon_state = "solarbase";
-	name = "solar paneling"
-	},
-/area/station/solar/west)
 "rIS" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -52869,7 +52761,6 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/grille/steel,
-/turf/space,
 /turf/space,
 /area/station/com_dish/auxdish)
 "ucG" = (
@@ -72166,7 +72057,7 @@ aaa
 aaa
 aaa
 aaa
-bAi
+bzU
 bzJ
 aaa
 aaa
@@ -72469,9 +72360,9 @@ aaa
 aaa
 bzD
 byX
-bAp
+bzJ
 bzU
-bAp
+bzJ
 aaa
 aaa
 aaa
@@ -72769,11 +72660,11 @@ aaa
 aaa
 aaa
 aai
-qmd
+bzi
 bAj
-lKi
+bzi
 byX
-bAp
+bzJ
 bzJ
 aaa
 aaa
@@ -73074,7 +72965,7 @@ bzn
 bAd
 bAd
 bAd
-lKi
+bzi
 byX
 bzJ
 bzJ
@@ -73376,7 +73267,7 @@ bzM
 bAd
 bAd
 bAd
-ckn
+bzi
 byX
 byX
 bzJ
@@ -74277,7 +74168,7 @@ aaa
 bzD
 byX
 byX
-jfh
+bzi
 bzU
 bAe
 bAk
@@ -75801,8 +75692,8 @@ bAl
 bzK
 bzK
 bzK
-bAp
-bAp
+bzJ
+bzJ
 aaa
 aaa
 aaa
@@ -76104,7 +75995,7 @@ bBf
 bBo
 bzK
 byX
-bBu
+byX
 aaa
 aaa
 aaa
@@ -76406,7 +76297,7 @@ bBg
 bBp
 bzK
 byX
-bBu
+byX
 aaa
 aaa
 aaa
@@ -76708,7 +76599,7 @@ bBl
 bBq
 bzK
 byX
-bBu
+byX
 aaa
 aaa
 aaa
@@ -77010,7 +76901,7 @@ bBm
 bzK
 bzK
 byX
-bBu
+byX
 aaa
 aaa
 aaa
@@ -77311,8 +77202,8 @@ bBi
 bBi
 bBi
 bzK
-bBt
-bBt
+bAj
+bAj
 aaa
 aaa
 aaa
@@ -77600,8 +77491,8 @@ aaa
 aaa
 bzl
 aaa
-bAb
-bAb
+bzG
+bzG
 byX
 byX
 byX
@@ -77613,7 +77504,7 @@ bBj
 bBn
 bBr
 bzK
-bBt
+bAj
 aaa
 aaa
 aaa
@@ -77903,13 +77794,13 @@ aaa
 aaa
 aaa
 aaa
-bAb
-bAo
-bAo
-bAo
-bAo
-bAo
-bAb
+bzG
+bzL
+bzL
+bzL
+bzL
+bzL
+bzG
 bzK
 bBk
 bBi
@@ -78211,7 +78102,7 @@ aaa
 aaa
 byX
 byX
-bAb
+bzG
 bzK
 bzK
 bzK
@@ -99525,7 +99416,7 @@ aaa
 aaa
 asq
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -99827,7 +99718,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -100129,7 +100020,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -100431,7 +100322,7 @@ aaa
 aaa
 asq
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -100733,7 +100624,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -101035,7 +100926,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -101337,7 +101228,7 @@ aaa
 aaa
 asq
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -101639,7 +101530,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -101941,7 +101832,7 @@ alw
 alw
 sxU
 alw
-rIQ
+alw
 alw
 alw
 alw
@@ -102243,7 +102134,7 @@ aaa
 aaa
 asq
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -102545,7 +102436,7 @@ aaa
 aaa
 asq
 aaa
-bze
+aaa
 aag
 aag
 aag
@@ -102847,7 +102738,7 @@ aag
 aag
 ass
 aag
-nan
+aag
 aag
 aaa
 aaa
@@ -103149,7 +103040,7 @@ aaa
 aaa
 nqM
 aaa
-bze
+aaa
 aaa
 aaa
 bkt
@@ -106864,7 +106755,7 @@ vmj
 saq
 wQA
 oMw
-bze
+aaa
 bzn
 abd
 uBe
@@ -107468,7 +107359,7 @@ vmj
 saq
 wQA
 ucx
-bze
+aaa
 bzn
 abd
 gvq
@@ -110095,7 +109986,7 @@ uGe
 vVd
 jwD
 gBH
-cZo
+tFq
 jwD
 aAp
 xqi
@@ -110397,7 +110288,7 @@ nrA
 nrA
 iqW
 nrA
-nnS
+nrA
 tFq
 aSo
 aDB
@@ -111001,7 +110892,7 @@ aaa
 aaa
 acq
 aaa
-bze
+aaa
 aaa
 aaa
 aAM
@@ -111303,7 +111194,7 @@ aag
 aag
 ass
 aag
-nan
+aag
 aag
 aaa
 aaa
@@ -111605,7 +111496,7 @@ aaa
 aaa
 avt
 aaa
-bze
+aaa
 aag
 aag
 aag
@@ -111907,7 +111798,7 @@ aaa
 aaa
 avt
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -112209,7 +112100,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -112511,7 +112402,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -112813,7 +112704,7 @@ aaa
 aaa
 avt
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -113115,7 +113006,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -113417,7 +113308,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -113719,7 +113610,7 @@ aaa
 aaa
 avt
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
@@ -114021,7 +113912,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -114323,7 +114214,7 @@ alL
 alL
 wAL
 alL
-bal
+alL
 alL
 alL
 alL
@@ -114625,7 +114516,7 @@ aaa
 aaa
 avt
 aaa
-bze
+aaa
 aaa
 aaa
 aaa
