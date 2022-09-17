@@ -1271,6 +1271,18 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	stamina_cost = 1
 	stamina_crit_chance = 0
 
+/obj/item/breaching_charge/Syndicate
+	name = "Syndicate Breaching Charge"
+	icon =
+	expl_devas = 2
+	expl_heavy = 2
+	expl_light = 4
+	expl_flash = 10
+	expl_range = 2
+	stamina_damage = 1
+	stamina_cost = 1
+	stamina_crit_chance = 0
+
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
