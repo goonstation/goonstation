@@ -167,7 +167,7 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	health = 1
+	health = 25
 	aggressive = 1
 	defensive = 1
 	wanderer = 1

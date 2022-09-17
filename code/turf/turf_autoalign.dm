@@ -628,15 +628,15 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 
 
 TYPEINFO(/turf/unsimulated/wall/auto)
-	var/static/list/connects_to = typecacheof(/turf/unsimulated/wall/auto)
+	var/list/connects_to = null
 	/// must be typecache list
-	var/static/list/connects_to_exceptions = null
+	var/list/connects_to_exceptions = null
 	/// do we have wall connection overlays, ex nornwalls?
-	var/static/connect_overlay = 0
-	var/static/list/connects_with_overlay = null
-	var/static/list/connects_with_overlay_exceptions = null
+	var/connect_overlay = 0
+	var/list/connects_with_overlay = null
+	var/list/connects_with_overlay_exceptions = null
 	/// 0 = no diagonal sprites, 1 = diagonal only if both adjacent cardinals are present, 2 = always allow diagonals
-	var/static/connect_diagonal = 0
+	var/connect_diagonal = 0
 TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto)
@@ -654,7 +654,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 	var/d_state = 0
 
 	New()
-		..()
+		. = ..()
 		if (map_setting && ticker)
 			src.update_neighbors()
 		if (current_state > GAME_STATE_WORLD_INIT)
@@ -672,12 +672,10 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto)
 		..()
 
 	update_icon()
-		var/typeinfo/turf/simulated/wall/auto/typinfo = get_typeinfo()
+		var/typeinfo/turf/unsimulated/wall/auto/typinfo = get_typeinfo()
 
 		var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
 		var/the_state = "[mod][connectdir]"
-		if ( !(istype(src, /turf/simulated/wall/auto/jen)) && !(istype(src, /turf/simulated/wall/auto/reinforced/jen)) ) //please no more sprite, i drained my brain doing this
-			src.icon_state += "[src.d_state ? "C" : null]"
 		icon_state = the_state
 
 		if (light_mod)
@@ -805,7 +803,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 /turf/unsimulated/wall/auto/coral
 	New()
 		..()
-		setMaterial(getMaterial("coral"))
+		setMaterial(getMaterial("coral"), copy = FALSE)
 
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
@@ -935,6 +933,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	desc = "Honeycomb's big, yeah yeah yeah."
 	icon = 'icons/turf/walls_beehive.dmi'
 	mod = "bee-"
+	plane = PLANE_WALL-1 //We don't want depth shadows
 	icon_state = "cave-0"
 
 	exterior // so i dont have to make more parts for it to look good
@@ -1202,7 +1201,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
@@ -1226,7 +1225,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."

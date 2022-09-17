@@ -1037,7 +1037,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 				if ((src.bootleg_level == 2) && (ishuman(user)))
 					var/mob/living/carbon/human/H = user
-					H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm") // copied from weapon_racks.dm
+					H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm") // copied from weapon_racks.dm
 
 			else
 				elecflash(src,power = 2)
@@ -1231,7 +1231,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					for(var/client/C in clients)
 						if(C.mob && (C.mob.z == src.z))
 							shake_camera(C.mob, 8, 24) // remove if this is too laggy
-							playsound(C.mob, explosions.distant_sound, 100, 0)
+							playsound(C.mob, explosions.distant_sound, 70, 0)
 							new /obj/effects/explosion (src.loc)
 				else
 					playsound(src.loc, pick(sounds_explosion), 75, 1)

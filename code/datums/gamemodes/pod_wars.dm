@@ -60,8 +60,6 @@ var/list/pw_rewards_tier3 = null
 
 //setup teams and commanders
 /datum/game_mode/pod_wars/pre_setup()
-	for(var/datum/mind/mind in antag_token_list())
-		mind.current?.client?.using_antag_token = FALSE
 	board = new()
 	stats_manager = new()
 	if (!setup_teams())

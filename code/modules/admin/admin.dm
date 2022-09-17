@@ -204,6 +204,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
 				src.show_pref_window(usr)
+		if ("toggle_uncool_word_filtering")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_uncool_word_filtering()
+				src.show_pref_window(usr)
 		if ("toggle_hear_prayers")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.hear_prayers = !usr.client.holder.hear_prayers
@@ -3575,7 +3579,7 @@ var/global/noir = 0
 
 								dat += "<tr><td>Target area:"
 								if (!isnull(NN.target_location_type))
-									dat += " [NN.target_location_name]</tr></td>"
+									dat += " [NN.concatenated_location_names]</tr></td>"
 								else
 									dat += " Unknown or not assigned</tr></td>"
 

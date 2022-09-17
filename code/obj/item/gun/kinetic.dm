@@ -520,27 +520,35 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		..()
 		setProperty("movespeed", 0.4)
 
-/obj/item/gun/kinetic/ak47
-	name = "\improper AK-744 Rifle"
-	desc = "Based on an old Cold War relic, often used by paramilitary organizations and space terrorists."
-	icon = 'icons/obj/large/48x32.dmi' // big guns get big icons
+/obj/item/gun/kinetic/akm
+	name = "\improper AKM Assault Rifle"
+	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted."
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	force = MELEE_DMG_RIFLE
 	contraband = 8
-	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 30 // It's magazine-fed (Convair880).
+	ammo_cats = list(AMMO_AUTO_762)
+	spread_angle = 9
+	shoot_delay = 3 DECI SECONDS
+	max_ammo_capacity = 30
 	auto_eject = 1
 	can_dual_wield = 0
 	two_handed = 1
 	gildable = 1
-	default_magazine = /obj/item/ammo/bullets/ak47
+	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	w_class = W_CLASS_BULKY
+	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/bullet/ak47)
+		set_current_projectile(new/datum/projectile/bullet/akm)
 		..()
+
 
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
@@ -810,7 +818,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	w_class = W_CLASS_SMALL
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toygun"
 	contraband = 1
 	force = 1
@@ -870,7 +878,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "foamdartrevolver"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
 	w_class = W_CLASS_SMALL
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toyrevolver"
 	contraband = 1
 	force = 1
@@ -1334,7 +1342,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "\improper MPRT-7"
 	icon = 'icons/obj/large/64x32.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
@@ -1547,12 +1555,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	force = MELEE_DMG_SMG
 	contraband = 4
 	ammo_cats = list(AMMO_SMG_9MM)
 	max_ammo_capacity = 30
 	auto_eject = 1
-	spread_angle = 12.5
+	spread_angle = 10
 	has_empty_state = 1
 	default_magazine = /obj/item/ammo/bullets/bullet_9mm/smg
 	ammobag_magazines = list(/obj/item/ammo/bullets/bullet_9mm/smg)
@@ -1566,6 +1575,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	attack_self(mob/user as mob)
+		if(ishuman(user))
+			if(two_handed)
+				setTwoHanded(0) //Go 1-handed.
+				src.spread_angle = initial(src.spread_angle)
+			else
+				if(!setTwoHanded(1)) //Go 2-handed.
+					boutput(user, "<span class='alert'>Can't switch to 2-handed while your other hand is full.</span>")
+				else
+					src.spread_angle = 4
 		..()
 
 /obj/item/gun/kinetic/smg/empty
@@ -1986,7 +2007,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/sawnoff
 	name = "double-barreled shotgun"
 	desc = "A double-barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "coachgun"
 	icon_state = "coachgun"
 	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage

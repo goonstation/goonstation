@@ -388,26 +388,29 @@
 	ammo_cat = AMMO_AUTO_308
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/ak47
-	sname = ".308 Auto" // This makes little sense, but they're all chambered in the same caliber, okay (Convair880)?
-	name = "AK magazine"
-	desc = "30 some rounds of 7.62 x 39 in an old iron banana magazine."
-	ammo_type = new/datum/projectile/bullet/ak47
+/obj/item/ammo/bullets/akm
+	sname = "7.62x39mm"
+	name = "AKM magazine"
+	desc = "A curved 30 round magazine, for the AKM assault rifle."
+	ammo_type = new/datum/projectile/bullet/akm
 	icon_state = "ak47"
 	amount_left = 30
 	max_amount = 30
-	ammo_cat = AMMO_AUTO_308
+	ammo_cat = AMMO_AUTO_762
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
 /obj/item/ammo/bullets/rifle_3006
 	sname = ".308 AP"
 	name = ".308 rifle magazine"
-	desc = "An old magazine of .308 bullets, ready to rip through whatever they hit."
+	desc = "An old stripper clip of .308 bullets, ready to rip through whatever they hit."
 	ammo_type = new/datum/projectile/bullet/rifle_3006
-	icon_state = "rifle_clip"
+	icon_state = "rifle_clip-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_RIFLE_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip"
+	icon_empty = "rifle_clip_empty"
 
 /obj/item/ammo/bullets/rifle_762_NATO
 	sname = "7.62×51mm NATO"
@@ -422,12 +425,37 @@
 /obj/item/ammo/bullets/tranq_darts
 	sname = ".308 Tranquilizer"
 	name = ".308 tranquilizer darts"
-	desc = "A box of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
+	desc = "A stripper clip of haloperidol darts. Although not lethal, you wouldn't want to be in a fight under the influence of these."
 	ammo_type = new/datum/projectile/bullet/tranq_dart
-	icon_state = "tranq_clip"
+	icon_state = "rifle_clip_dart-4"
 	amount_left = 4
 	max_amount = 4
 	ammo_cat = AMMO_TRANQ_308
+	icon_dynamic = 1
+	icon_short = "rifle_clip_dart"
+	icon_empty = "rifle_clip_empty"
+
+	var/image/reagent_image
+
+	New()
+		..()
+		src.update_icon()
+
+	update_icon()
+		..()
+		if (!src.icon_dynamic || !src.ammo_type.reagent_payload)
+			return
+
+		src.underlays = null
+		if (!src.reagent_image)
+			src.reagent_image = image(src.icon, "rifle_clip_dart_underlay-[src.amount_left]", -1)
+		else
+			src.reagent_image.icon_state = "rifle_clip_dart_underlay-[src.amount_left]"
+
+
+		var/datum/reagent/reagent = reagents_cache[src.ammo_type.reagent_payload]
+		src.reagent_image.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b, reagent.transparency)
+		src.underlays += src.reagent_image
 
 	syndicate
 		sname = ".308 Tranquilizer Deluxe"
@@ -440,6 +468,7 @@
 			icon_state = "pistol_tranq"
 			amount_left = 10
 			max_amount = 15
+			icon_dynamic = 0
 			ammo_cat = AMMO_TRANQ_9MM//i prefer having tranqs grouped up- owari.
 			ammo_type = new/datum/projectile/bullet/tranq_dart/syndicate/pistol
 
@@ -691,6 +720,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
+/obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
+	sname = "plasmaglass load"
+	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/plasglass
+	icon_state = "makeshiftplasglass"
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"

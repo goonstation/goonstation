@@ -165,15 +165,16 @@ toxic - poisons
 	power = 15
 	dissipation_delay = 8
 
-/datum/projectile/bullet/ak47
+/datum/projectile/bullet/akm
 	name = "bullet"
-	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 40
+	shot_sound = 'sound/weapons/akm.ogg'
+	power = 40  // BEFORE YOU TWEAK THESE VALUES: This projectile is also used by the Syndicate Ballistic Drone and Nukie NAS-T turret
 	cost = 3
 	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
+	shot_delay = 120 MILLI SECONDS
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -629,7 +630,19 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
-//for makeshift shotgun shells
+//for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
+
+/datum/projectile/bullet/improvplasglass
+	name = "plasmaglass fragments"
+	sname = "plasmaglass fragments"
+	icon_state = "plasglass"
+	dissipation_delay = 3
+	dissipation_rate = 2
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	implanted = null
+	power = 6
+
 /datum/projectile/bullet/improvglass
 	name = "glass"
 	sname = "glass"

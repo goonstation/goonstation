@@ -86,8 +86,8 @@ TRAYS
 		var/utensil_color = replacetext(src.icon_state,replacethis,"")
 		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
 		k.icon_state = "snapped_[utensil_color]"
-		k.snapped = 1
-		k.name = "snapped [k.name]"
+		k.snapped = TRUE
+		k.name = "snapped [src.name]"
 		if(spawnatloc)
 			k.set_loc(location)
 		else
@@ -107,7 +107,7 @@ TRAYS
 		if (!spoon_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -175,7 +175,7 @@ TRAYS
 		if(!scalpel_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if(!src.user_can_suicide(user))
 			return 0
@@ -190,6 +190,7 @@ TRAYS
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -219,6 +220,7 @@ TRAYS
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -245,9 +247,10 @@ TRAYS
 /obj/item/kitchen/utensil/knife/plastic
 	name = "plastic knife"
 	icon_state = "knife_plastic"
+	desc = "A long bit plastic that is serrated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 	force = 1
 	throwforce = 1
-	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -291,9 +294,8 @@ TRAYS
 			k.set_loc(get_turf(user))
 			s.set_loc(get_turf(user))
 			user.u_equip(src)
-			src.set_loc(user)
 			if(prob(30))
-				user.show_text("<b>The plastic silverware go EVERYWHERE!</b>","red")
+				user.show_text("<b>The plastic silverware goes EVERYWHERE!</b>","red")
 				var/list/throw_targets = list()
 				for (var/i=1, i<=3, i++)
 					throw_targets += get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
@@ -638,7 +640,7 @@ TRAYS
 		if(src.cant_drop == TRUE)
 			if (istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
-				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
 			src.set_loc(get_turf(M))

@@ -1997,50 +1997,11 @@
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"agA" = (
-/obj/machinery/conveyor{
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "cateringdock_in";
-	name = "Cargo Routing Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
-"agB" = (
-/obj/securearea{
-	desc = "A warning sign which reads 'COLLISION HAZARD'";
-	name = "COLLISION HAZARD";
-	pixel_y = -4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "agC" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 23;
-	id = "cateringdock_out"
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
-/obj/machinery/door/poddoor/pyro{
-	id = "cateringdock_out";
-	name = "Cargo Routing Door"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -2216,21 +2177,15 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "ahk" = (
-/obj/machinery/conveyor{
-	name = "cargo belt - south";
-	operating = 1
+/obj/cable{
+	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "ahl" = (
-/obj/machinery/mass_driver{
-	dir = 1;
-	drive_range = 23;
-	id = "cateringdock_out"
-	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -2626,19 +2581,11 @@
 "aif" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/southwest)
-"aig" = (
-/obj/machinery/computer/barcode,
-/obj/machinery/light/small{
-	dir = 1;
-	status = 2
-	},
-/turf/simulated/floor/delivery,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "aih" = (
-/obj/machinery/launcher_loader/north,
-/turf/simulated/floor/plating,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -2648,14 +2595,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
-/turf/space,
-/area/space)
-"aij" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light,
 /turf/space,
 /area/space)
 "aik" = (
@@ -2995,13 +2934,6 @@
 "ajc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northeast)
-"aje" = (
-/obj/table/auto,
-/obj/item/hand_labeler,
-/turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "ajf" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -3009,20 +2941,17 @@
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/quartersB)
 "ajg" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+/obj/cable{
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/stairs,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "ajh" = (
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north,
+/obj/machinery/light,
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
+	dir = 4
 	},
 /turf/simulated/floor/grime,
 /area/station/hangar/catering{
@@ -3044,16 +2973,20 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ajk" = (
-/obj/machinery/door_control{
-	id = "hangar_north";
-	name = "Catering Hangar Door Control";
-	pixel_y = 24
+/obj/machinery/conveyor{
+	name = "cargo belt - south";
+	operating = 1
 	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
+/obj/machinery/door/poddoor/pyro{
+	id = "cateringdock_in";
+	name = "Cargo Routing Door"
 	},
-/turf/simulated/floor/shuttlebay,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -3337,54 +3270,50 @@
 /obj/critter/roach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"ake" = (
-/obj/machinery/computer/ordercomp,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
+"akf" = (
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
-"akf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "akg" = (
+/obj/machinery/door/airlock/pyro/external,
 /obj/cable{
-	icon_state = "2-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/grime,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "akh" = (
-/turf/simulated/floor/grime,
+/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/secscanner{
+	pixel_y = 10
+	},
+/obj/firedoor_spawn,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "aki" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
+/turf/simulated/wall/auto/supernorn,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "akj" = (
-/obj/machinery/vehicle/pod_smooth/light,
-/turf/simulated/floor/shuttlebay,
+/obj/item/crowbar,
+/obj/table/auto,
+/obj/item/hand_labeler,
+/obj/item/shipcomponent/secondary_system/cargo,
+/obj/item/crowbar,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -3761,46 +3690,45 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "alk" = (
-/obj/storage/crate,
-/turf/simulated/floor/plating,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
-"all" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
+/obj/shrub{
+	dir = 1
 	},
 /turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
+"all" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 23;
+	id = "cateringdock_out"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "cateringdock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "alm" = (
 /obj/cable{
-	icon_state = "2-4"
-	},
-/obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/turf/simulated/floor/bot,
+/area/station/hallway/primary/east)
 "aln" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/turf/simulated/floor/bot,
+/area/station/hallway/primary/east)
 "alo" = (
-/obj/cable{
-	icon_state = "1-8"
+/obj/machinery/conveyor{
+	name = "cargo belt - south";
+	operating = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -4100,16 +4028,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"amn" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/stairs,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "amo" = (
-/turf/simulated/floor/stairs,
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 23;
+	id = "cateringdock_out"
+	},
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -4515,69 +4440,39 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "anp" = (
-/obj/item/crowbar,
 /obj/table/auto,
-/obj/item/hand_labeler,
-/obj/item/shipcomponent/secondary_system/cargo,
-/obj/item/crowbar,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+/obj/item/satchel/hydro{
+	rand_pos = 1
 	},
-/turf/simulated/floor/grime,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "anq" = (
-/obj/reagent_dispensers/fueltank,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+/obj/machinery/firealarm{
+	pixel_y = 24
 	},
-/obj/machinery/light,
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
-"anr" = (
-/obj/machinery/portable_atmospherics/canister/air/large,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/simulated/floor/grime,
+/obj/table/auto,
+/obj/item/wrapping_paper,
+/obj/item/scissors,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "ans" = (
-/obj/rack,
-/obj/item/storage/toolbox/mechanical{
-	pixel_x = -3;
-	pixel_y = -9
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/storage/belt/utility{
-	pixel_x = 5;
-	pixel_y = -1
-	},
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/obj/item/sponge,
+/obj/item/kitchen/utensil/knife,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "ant" = (
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -4731,13 +4626,12 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "anV" = (
-/obj/decal/poster/wallsign/stencil/left/c{
-	pixel_x = 0
+/obj/machinery/computer/barcode,
+/obj/machinery/light/small{
+	dir = 1;
+	status = 2
 	},
-/obj/decal/poster/wallsign/stencil/right/a{
-	pixel_x = 12
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/turf/simulated/floor/delivery,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -5410,52 +5304,16 @@
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"apT" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
-/area/station/ranch)
-"apU" = (
-/obj/shrub{
-	dir = 6
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
-"apV" = (
-/obj/railing/orange/reinforced{
-	dir = 4
-	},
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "apW" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
-/obj/submachine/ranch_feed_grinder,
-/obj/item/reagent_containers/food/snacks/plant/corn{
-	doants = 0
-	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "apX" = (
-/obj/machinery/camera/ranch,
-/obj/machinery/disposal{
-	name = "Produce Chute - Kitchen"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "xtra_bigstripe-edge2"
-	},
-/obj/disposalpipe/trunk/produce,
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
-/turf/simulated/floor/delivery,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "apY" = (
 /obj/wingrille_spawn/auto,
@@ -5471,19 +5329,6 @@
 	name = "astroturf"
 	},
 /area/station/hydroponics/bay)
-"aqa" = (
-/obj/railing/orange/reinforced{
-	dir = 8
-	},
-/obj/submachine/chef_sink/chem_sink{
-	pixel_y = 12
-	},
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "aqm" = (
 /obj/cable,
 /obj/wingrille_spawn/auto/reinforced,
@@ -5543,16 +5388,8 @@
 	},
 /area/station/crew_quarters/locker)
 "aqx" = (
-/obj/decal/poster/wallsign/stencil/right/r{
-	pixel_x = 14
-	},
-/obj/decal/poster/wallsign/stencil/right/e{
-	pixel_x = 2
-	},
-/obj/decal/poster/wallsign/stencil/left/t{
-	pixel_x = -9
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
+/obj/machinery/launcher_loader/north,
+/turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -5566,12 +5403,11 @@
 	},
 /area/station/crew_quarters/locker)
 "aqz" = (
-/obj/decal/poster/wallsign/stencil/right/g,
-/obj/decal/poster/wallsign/stencil/left/n{
-	pixel_x = -1
+/obj/decal/poster/wallsign/stencil/left/c{
+	pixel_x = 0
 	},
-/obj/decal/poster/wallsign/stencil/left/i{
-	pixel_x = -9
+/obj/decal/poster/wallsign/stencil/right/a{
+	pixel_x = 12
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
@@ -5770,10 +5606,12 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/bot,
+/turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "arf" = (
-/obj/shrub,
+/obj/stool/chair/comfy{
+	dir = 1
+	},
 /turf/simulated/floor/green/side{
 	dir = 4
 	},
@@ -5783,24 +5621,25 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "arh" = (
-/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
-	},
-/obj/reagent_dispensers/watertank/big,
-/obj/cable{
-	icon_state = "0-2"
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "ari" = (
 /obj/railing/orange/reinforced{
 	dir = 4
+	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -5813,13 +5652,6 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/table/reinforced/auto,
-/obj/item/kitchen/utensil/knife,
-/obj/item/sponge,
-/obj/item/reagent_containers/glass/wateringcan{
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "ark" = (
@@ -5838,12 +5670,6 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/area/station/ranch)
-"arm" = (
-/obj/shrub{
-	dir = 8
-	},
-/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "arn" = (
 /turf/simulated/floor/grass{
@@ -5990,13 +5816,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "arS" = (
-/obj/machinery/r_door_control{
-	id = "hangar_north"
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
+/obj/disposalpipe/segment/produce,
+/obj/machinery/drainage,
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "arU" = (
 /obj/machinery/door/window/eastleft,
 /obj/landmark/start{
@@ -6300,7 +6123,6 @@
 	name = "Tool Storage"
 	})
 "asG" = (
-/obj/railing/orange/reinforced,
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light{
 	dir = 8;
@@ -6311,9 +6133,7 @@
 	dir = 4;
 	pixel_x = -6
 	},
-/turf/simulated/floor/grasstodirt{
-	dir = 4
-	},
+/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "asI" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6322,12 +6142,6 @@
 /obj/disposalpipe/segment/produce,
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/landmark/start{
-	name = "Rancher"
-	},
-/obj/stool/chair/green{
-	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -6347,13 +6161,6 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 8
 	},
-/area/station/ranch)
-"asL" = (
-/obj/submachine/chicken_incubator,
-/obj/item/reagent_containers/food/snacks/ingredient/egg{
-	rand_pos = 0
-	},
-/turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "asM" = (
 /obj/cable{
@@ -6793,6 +6600,9 @@
 /obj/item/device/radio/intercom/botany{
 	dir = 1
 	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
@@ -6800,6 +6610,9 @@
 "atS" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -6814,7 +6627,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 1
+	icon_state = "dirt"
 	},
 /area/station/ranch)
 "atU" = (
@@ -6829,7 +6642,7 @@
 	name = "mail chute-'Ranch'"
 	},
 /turf/simulated/floor/grasstodirt{
-	dir = 1
+	icon_state = "dirt"
 	},
 /area/station/ranch)
 "atV" = (
@@ -6839,8 +6652,13 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ranch)
 "atX" = (
-/obj/chicken_nesting_box,
-/turf/simulated/floor/grass/leafy,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt"
+	},
 /area/station/ranch)
 "atZ" = (
 /turf/simulated/floor/green/side{
@@ -6850,9 +6668,6 @@
 "aua" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
-	},
-/obj/machinery/plantpot{
-	anchored = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -7269,7 +7084,6 @@
 	},
 /area/station/hydroponics/bay)
 "avi" = (
-/obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 4
 	},
@@ -7282,6 +7096,10 @@
 "avl" = (
 /obj/railing/orange/reinforced{
 	dir = 8
+	},
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -7376,7 +7194,12 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/turf/simulated/floor/dirt,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
 /area/station/ranch)
 "avz" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -7418,16 +7241,28 @@
 	},
 /area/station/crew_quarters/barber_shop)
 "avH" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/decal/poster/wallsign/stencil/right/r{
+	pixel_x = 14
+	},
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 2
+	},
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_x = -9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
 "avI" = (
-/obj/machinery/light,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
+/obj/decal/poster/wallsign/stencil/right/g,
+/obj/decal/poster/wallsign/stencil/left/n{
+	pixel_x = -1
 	},
-/turf/simulated/floor/grime,
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_x = -9
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -7821,9 +7656,6 @@
 "awz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
-	},
-/obj/machinery/plantpot{
-	anchored = 1
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -8777,7 +8609,6 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "azl" = (
-/obj/railing/orange/reinforced,
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
@@ -8819,7 +8650,9 @@
 /turf/simulated/floor/green,
 /area/station/ranch)
 "azp" = (
-/obj/railing/orange/reinforced,
+/obj/shrub{
+	dir = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "azq" = (
@@ -30097,6 +29930,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
+"bBt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/stool/chair/green{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Rancher"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "bBw" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -36997,9 +36843,13 @@
 /turf/simulated/floor/plating,
 /area/station/routing/airbridge)
 "bSY" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/space)
 "bSZ" = (
 /obj/disposalpipe/switch_junction{
 	desc = "An underfloor mail pipe.";
@@ -38799,8 +38649,10 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bXT" = (
-/turf/simulated/floor/bot,
-/area/station/hallway/primary/east)
+/obj/table/auto,
+/obj/item/hand_labeler,
+/turf/simulated/floor/plating,
+/area/space)
 "bXU" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50962,7 +50814,7 @@
 "dnB" = (
 /obj/machinery/light,
 /turf/simulated/floor/grasstodirt{
-	dir = 1
+	icon_state = "dirt"
 	},
 /area/station/ranch)
 "dnI" = (
@@ -51093,13 +50945,13 @@
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
 "duM" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/machinery/secscanner{
-	pixel_y = 10
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
 	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hallway/primary/east)
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "duS" = (
 /obj/machinery/launcher_loader/west{
 	name = "Trash Re-router";
@@ -51330,6 +51182,24 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
+"dKw" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/south)
 "dLz" = (
 /obj/storage/crate/furnacefuel,
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -51391,12 +51261,8 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "dRb" = (
-/obj/grille/catwalk/cross{
-	dir = 1
-	},
-/obj/cable/yellow,
-/obj/cable/yellow{
-	icon_state = "0-2"
+/obj/grille/catwalk{
+	dir = 6
 	},
 /obj/cable/yellow{
 	icon_state = "0-4"
@@ -51404,8 +51270,8 @@
 /obj/cable/yellow{
 	icon_state = "0-8"
 	},
+/obj/cable/yellow,
 /turf/simulated/floor/airless/plating/catwalk{
-	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
@@ -51590,6 +51456,7 @@
 "dZb" = (
 /obj/railing/orange/reinforced,
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled,
+/obj/chicken_nesting_box,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "dZw" = (
@@ -51657,6 +51524,17 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
+"ehU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "eiP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52079,6 +51957,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"eIp" = (
+/obj/machinery/vehicle/pod_smooth/light,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "eIy" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -52086,6 +51970,9 @@
 "eJd" = (
 /obj/disposalpipe/segment{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -52183,6 +52070,16 @@
 /obj/item/pen/fancy,
 /turf/simulated/floor/plating/damaged3,
 /area/station/maintenance/northeast)
+"eOj" = (
+/obj/machinery/computer/ordercomp,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "eOP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52878,6 +52775,12 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/routing/catering)
+"fKh" = (
+/obj/shrub{
+	dir = 6
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "fLe" = (
 /obj/machinery/meter,
 /obj/machinery/atmospherics/pipe/manifold{
@@ -53013,6 +52916,9 @@
 /obj/machinery/disposal/small,
 /obj/disposalpipe/trunk{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
 	},
 /turf/simulated/floor/grasstodirt{
 	dir = 1
@@ -53239,6 +53145,11 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/space)
+"git" = (
+/turf/simulated/floor/stairs,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "gjs" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -53331,6 +53242,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"gpF" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/obj/chicken_nesting_box,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gpQ" = (
 /turf/simulated/floor/stairs{
 	dir = 1;
@@ -53681,6 +53599,11 @@
 	dir = 1
 	},
 /area/station/hydroponics/bay)
+"gJZ" = (
+/obj/cable/yellow,
+/obj/machinery/power/solar/west,
+/turf/simulated/floor/airless/solar,
+/area/station/solar/south)
 "gLv" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate{
@@ -53767,6 +53690,15 @@
 /obj/machinery/power/tracker/west,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/west)
+"gPb" = (
+/obj/machinery/portable_atmospherics/canister/air/large,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "gQe" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -54123,6 +54055,12 @@
 /obj/item/cloneModule/genepowermodule,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
+"hwT" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "hxh" = (
 /obj/table/auto,
 /obj/decal/cleanable/dirt,
@@ -54204,6 +54142,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/turret_protected/ai_upload_foyer)
+"hAi" = (
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/solar/west,
+/turf/simulated/floor/airless/solar,
+/area/station/solar/south)
 "hAu" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -54332,6 +54277,25 @@
 /obj/decal/cleanable/cobweb,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"hLn" = (
+/obj/chicken_nesting_box,
+/obj/machinery/light/small/floor/greenish,
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
+"hMn" = (
+/obj/machinery/camera/ranch,
+/obj/machinery/disposal{
+	name = "Produce Chute - Kitchen"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/obj/disposalpipe/trunk/produce,
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/delivery,
+/area/station/ranch)
 "hNk" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -55528,6 +55492,17 @@
 /obj/item/gun/flamethrower/assembled/loaded,
 /turf/simulated/floor/bot,
 /area/station/security/main)
+"jKe" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "jKH" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass,
@@ -55639,6 +55614,17 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/sortingRoom)
+"jPL" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "jQc" = (
 /obj/machinery/light{
 	dir = 4
@@ -55653,6 +55639,13 @@
 /obj/securearea,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"jRc" = (
+/obj/shrub,
+/obj/shrub,
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "jRr" = (
 /obj/storage/crate/adventure,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -55936,10 +55929,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
 "kiI" = (
-/obj/table/auto,
-/obj/item/satchel/hydro{
-	rand_pos = 1
-	},
+/obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
@@ -56560,14 +56550,6 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/engine)
-"lrI" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/simulated/floor/grime,
-/area/station/hangar/catering{
-	name = "Catering Hangar"
-	})
 "lrO" = (
 /obj/machinery/atmospherics/valve{
 	dir = 4
@@ -57255,6 +57237,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"mwY" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "myo" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -57356,6 +57344,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"mDJ" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "mDT" = (
 /obj/table/wood/auto,
 /obj/item/storage/secure/sbriefcase,
@@ -57989,6 +57984,17 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
+"nHu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/submachine/ranch_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn{
+	doants = 0
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "nHP" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -58408,13 +58414,10 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "opl" = (
-/obj/machinery/firealarm{
-	pixel_y = 24
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
 	},
-/obj/table/auto,
-/obj/item/wrapping_paper,
-/obj/item/scissors,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grime,
 /area/station/hangar/catering{
 	name = "Catering Hangar"
 	})
@@ -59233,6 +59236,17 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"pyR" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg{
+	rand_pos = 0
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "pzj" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -59475,6 +59489,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/cdc)
+"pUw" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 8;
+	name = "Ranch"
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/rancher,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "pVj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59645,6 +59668,17 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"qiq" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/reagent_dispensers/watertank/big,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "qiY" = (
 /obj/machinery/disposal/mail{
 	mail_tag = "brig";
@@ -59906,6 +59940,18 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"qDb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/ranch)
 "qDf" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -59971,6 +60017,16 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
+"qHj" = (
+/obj/reagent_dispensers/fueltank,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/machinery/light,
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "qIm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60013,8 +60069,8 @@
 	pixel_x = -26
 	},
 /obj/machinery/coffeemaker/engineering{
-	pixel_y = 3;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/drinks/creamer{
 	pixel_x = 8;
@@ -60175,6 +60231,20 @@
 	},
 /turf/simulated/floor/delivery,
 /area/station/engine/inner)
+"qQH" = (
+/obj/machinery/door_control{
+	id = "hangar_north";
+	name = "Catering Hangar Door Control";
+	pixel_y = 24
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "qRD" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -60923,6 +60993,24 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/chemistry)
+"saJ" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow{
+	icon_state = "0-4"
+	},
+/obj/cable/yellow{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/station/solar/south)
 "scA" = (
 /obj/decal/tile_edge/stripe/corner/big2{
 	dir = 9
@@ -60973,6 +61061,15 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/science/lobby)
+"sem" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "seX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -62215,20 +62312,15 @@
 /turf/simulated/floor/blue/side,
 /area/station/medical/medbooth)
 "tMA" = (
-/obj/grille/catwalk{
-	dir = 6
+/obj/securearea{
+	desc = "A warning sign which reads 'COLLISION HAZARD'";
+	name = "COLLISION HAZARD";
+	pixel_y = -4
 	},
-/obj/cable/yellow{
-	icon_state = "0-4"
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow,
-/turf/simulated/floor/airless/plating/catwalk{
-	icon_state = "catwalk_cross"
-	},
-/area/station/solar/north)
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "tMD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62405,6 +62497,19 @@
 "tWV" = (
 /turf/simulated/floor,
 /area/station/engine/engineering/ce)
+"tYJ" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 12
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "tZB" = (
 /obj/lattice{
 	dir = 6;
@@ -63138,6 +63243,14 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"uUA" = (
+/obj/machinery/r_door_control{
+	id = "hangar_north"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "uVm" = (
 /obj/machinery/power/generatorTemp,
 /obj/item/paper/engine,
@@ -63170,21 +63283,17 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "uVV" = (
-/obj/grille/catwalk{
-	dir = 5
-	},
-/obj/cable/yellow{
-	icon_state = "0-8"
-	},
-/obj/cable/yellow{
+/obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable/yellow,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4;
-	icon_state = "catwalk_cross"
+/obj/machinery/power/apc/autoname_north,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
 	},
-/area/station/solar/south)
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "uVW" = (
 /obj/cable,
 /obj/cable{
@@ -64422,6 +64531,38 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
+"wxJ" = (
+/obj/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -3;
+	pixel_y = -9
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/storage/belt/utility{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "wyD" = (
 /obj/machinery/computer/chem_request_receiver{
 	dir = 4
@@ -64633,6 +64774,17 @@
 	dir = 8
 	},
 /area/station/engine/elect)
+"wRT" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/station/hangar/catering{
+	name = "Catering Hangar"
+	})
 "wRV" = (
 /obj/cable/yellow{
 	icon_state = "0-2"
@@ -64672,15 +64824,10 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "wWK" = (
-/obj/machinery/door/airlock/pyro/external,
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/secscanner{
-	pixel_y = 10
-	},
-/obj/firedoor_spawn,
-/turf/simulated/floor/plating,
+/turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
 "wXJ" = (
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -64968,6 +65115,20 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
+"xrq" = (
+/obj/table/wood/round,
+/obj/item/card_group/stg{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/item/card_group/stg{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/turf/simulated/floor/green/side{
+	dir = 4
+	},
+/area/station/hallway/primary/east)
 "xsa" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -119708,9 +119869,9 @@ iDm
 nzi
 adC
 adC
-iyk
-tZO
-nzi
+adC
+adC
+adC
 adC
 aag
 ajc
@@ -120010,9 +120171,9 @@ iDm
 nzi
 adC
 adC
-iyk
-ukJ
-nzi
+adC
+adC
+adC
 adC
 aag
 vxT
@@ -120312,9 +120473,9 @@ iDm
 nzi
 adC
 adC
-iyk
-ukJ
-nzi
+adC
+adC
+adC
 adC
 aag
 vxT
@@ -120614,17 +120775,17 @@ iDm
 nzi
 adC
 adC
-iyk
-ukJ
-nzi
 adC
-aag
+adC
 agz
 agz
 agz
 agz
-avH
-avH
+agz
+agz
+agz
+bLI
+bLI
 bLI
 arc
 arq
@@ -120916,18 +121077,18 @@ etw
 aaG
 adC
 adC
-iyk
-ukJ
-nzi
 aaw
 aap
 agz
+anp
+bXT
+eOj
 kiI
-aje
-ake
+kiI
+akf
 alk
-alk
-bSY
+arq
+arq
 arc
 arr
 aqZ
@@ -121218,18 +121379,18 @@ etw
 aaG
 adC
 adC
-iyk
-ukJ
-nzi
 aap
 agz
 agz
+anq
+duM
+ehU
 opl
-lrI
+opl
 akf
-all
-all
-bSY
+arq
+arq
+arq
 ard
 ars
 aqZ
@@ -121517,20 +121678,20 @@ aaw
 aaw
 aap
 etw
+aaG
+adC
+adC
 aap
-aaw
-aaw
-aap
-etw
-aap
-aap
-agA
+ajk
+alo
+alo
+agC
 ahk
-ahk
+wRT
 ajg
 akg
 alm
-amn
+wWK
 wWK
 are
 art
@@ -121814,27 +121975,27 @@ aay
 aap
 aaZ
 cVP
-fBp
-fBp
-fBp
-fBp
+qAl
+qAl
+qAl
+qAl
 dRb
-fBp
-fBp
-fBp
-fBp
-tMA
-aaZ
+aaG
+adC
+adC
 aap
-agB
+tMA
 agz
-aig
-ajg
+anV
+agC
+ahl
+aih
+git
 akh
 aln
-amo
-duM
-bXT
+arq
+arq
+arq
 arq
 asN
 azx
@@ -122121,21 +122282,21 @@ aaq
 aaq
 aap
 etw
+aaG
+adC
+adC
 aap
-aaq
-aaq
-aap
-etw
-aap
-aap
+all
+amo
+aqx
 agC
 ahl
 aih
-ajg
-akh
-aln
-akh
-bLI
+ahl
+aki
+jRc
+hwT
+xrq
 arf
 asx
 asO
@@ -122426,20 +122587,20 @@ iDm
 nzi
 adC
 adC
-iyk
-iDm
-nzi
 aaq
 agz
 agz
 agz
+uVV
+jPL
+jKe
 ajh
 aki
-alo
-avI
-bLI
 amD
 apY
+apY
+apY
+pUw
 atO
 amD
 amD
@@ -122728,20 +122889,20 @@ iDm
 nzi
 adC
 adC
-iyk
-iDm
-nzi
 adC
 aaj
 adC
 agz
-ajk
+qQH
+eIp
+ajl
+ajl
 akj
-ajl
-ajl
-anp
 amD
-apT
+pyR
+awI
+awI
+atX
 arg
 asG
 avy
@@ -123030,22 +123191,22 @@ iDm
 nzi
 adC
 adC
-iyk
-iDm
-nzi
 adC
 adC
 adC
-anV
+aqz
 ajl
 ajl
 ajl
 ajl
-anq
+qHj
 apY
-apU
+fKh
 awI
-azp
+awI
+atX
+awI
+awI
 atR
 amD
 awu
@@ -123332,20 +123493,20 @@ iDm
 nzi
 adC
 adC
-iyk
-iDm
-nzi
 adC
 adC
 adC
-aqx
+avH
 ajl
 ajl
 ajl
 ajl
-anr
+gPb
 apY
-apV
+gpF
+avi
+avi
+atX
 ari
 avi
 atS
@@ -123634,19 +123795,19 @@ iDm
 nzi
 adC
 adC
-iyk
-iDm
-nzi
 adC
 adC
 adC
-aqz
+avI
 ajl
 ajl
 ajl
 ajl
-ans
+wxJ
 apY
+nHu
+ans
+bBt
 apW
 arj
 asI
@@ -123936,9 +124097,6 @@ iDm
 nzi
 adC
 adC
-iyk
-oPz
-nzi
 adC
 adC
 adC
@@ -123947,8 +124105,11 @@ ajm
 ajm
 ajm
 ajm
-arS
+uUA
 atW
+hMn
+arS
+apX
 apX
 ark
 asJ
@@ -124239,9 +124400,6 @@ aaG
 adC
 adC
 adC
-aaj
-adC
-adC
 adC
 adC
 aii
@@ -124251,6 +124409,9 @@ adC
 adC
 aii
 atW
+qiq
+qDb
+qDb
 arh
 aua
 awz
@@ -124543,17 +124704,17 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
-aij
+bSY
 adC
 adC
 adC
 adC
-aij
+bSY
 atW
-aqa
+tYJ
+azl
+azl
+atX
 avl
 azl
 fSd
@@ -124668,7 +124829,7 @@ aaG
 adC
 adC
 wRV
-uVV
+fCU
 qJN
 adC
 aah
@@ -124851,13 +125012,13 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
 atW
-asL
+mDJ
 awI
-azp
+awI
+atX
+awI
+awI
 eJd
 atW
 auW
@@ -124969,9 +125130,9 @@ aaj
 aah
 adC
 adC
-adC
-adC
-adC
+aap
+goC
+aap
 adC
 aah
 adC
@@ -125153,11 +125314,11 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
 tqZ
-arm
+mwY
+awI
+awI
+atX
 awI
 azp
 eJd
@@ -125271,9 +125432,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -125455,13 +125616,13 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
 tqZ
+hLn
+awI
+awI
 atX
 dZb
-avl
+sem
 jiQ
 atW
 awC
@@ -125573,9 +125734,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -125757,9 +125918,9 @@ adC
 adC
 adC
 adC
-adC
-adC
-adC
+tqZ
+tqZ
+tqZ
 tqZ
 tqZ
 arl
@@ -125875,9 +126036,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -126177,9 +126338,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -126479,9 +126640,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -126781,9 +126942,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -127083,9 +127244,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+aap
+goC
+aap
 adC
 aah
 adC
@@ -127385,9 +127546,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+saJ
+gJZ
 adC
 aah
 adC
@@ -127687,9 +127848,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+dKw
+gJZ
 adC
 aah
 adC
@@ -127989,9 +128150,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+dKw
+gJZ
 adC
 aah
 adC
@@ -128291,9 +128452,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+dKw
+gJZ
 adC
 aah
 adC
@@ -128593,9 +128754,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+dKw
+gJZ
 adC
 aah
 adC
@@ -128895,9 +129056,9 @@ adC
 aah
 adC
 adC
-adC
-adC
-adC
+hAi
+uUo
+gJZ
 adC
 aah
 adC
@@ -129198,7 +129359,7 @@ aah
 adC
 adC
 adC
-adC
+aaj
 adC
 adC
 aah

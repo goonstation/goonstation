@@ -1499,7 +1499,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/broken_egun
 	name = "broken energy gun"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."
