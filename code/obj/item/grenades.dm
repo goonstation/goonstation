@@ -1272,7 +1272,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	stamina_crit_chance = 0
 
 /obj/item/breaching_charge/syndicate
-	name = "Syndicate Breaching Charge"
+	name = "syndicate breaching charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "syndicharge"
 	expl_devas = 2
