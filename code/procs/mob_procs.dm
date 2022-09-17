@@ -820,7 +820,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_heads_sometimes && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
