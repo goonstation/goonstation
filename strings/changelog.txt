@@ -1,5 +1,9 @@
 
 (t)sat sep 17 22
+(u)ZWRh3
+(p)10858
+(e)|
+(*)Thralls are now immune to all diseases and maladies
 (u)Flappybat
 (+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
 (t)fri sep 16 22
