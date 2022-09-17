@@ -35275,13 +35275,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/southeast)
-"kdc" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 1
-	},
-/area/station/solar/west)
 "kde" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/grille/catwalk/jen/side,
@@ -97413,8 +97406,8 @@ acc
 ach
 ach
 acn
-kdc
-kdc
+ach
+ach
 acu
 fiN
 rdj
@@ -99524,11 +99517,11 @@ erB
 cNV
 kuM
 acf
-kdc
-kdc
+ach
+ach
 acp
-kdc
-kdc
+ach
+ach
 tsu
 kuM
 cNV
@@ -102547,8 +102540,8 @@ acc
 ach
 ach
 acp
-kdc
-kdc
+ach
+ach
 acu
 jYm
 rdj
@@ -104658,11 +104651,11 @@ erB
 cNV
 kuM
 acf
-kdc
-kdc
+ach
+ach
 acp
-kdc
-kdc
+ach
+ach
 tsu
 kuM
 cNV
