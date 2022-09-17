@@ -750,6 +750,7 @@
 	var/see_wizards = 0
 	var/see_revs = 0
 	var/see_heads = 0
+	var/see_heads_sometimes = FALSE
 	var/see_xmas = 0
 	var/see_zombies = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
@@ -768,6 +769,8 @@
 			var/list/datum/mind/RR = R.revolutionaries
 			if (src.mind in (HR + RR))
 				see_revs = 1
+			if (src.mind in RR)
+				see_heads_sometimes = TRUE
 			if (src.mind in HR)
 				see_heads = 1
 		else if (istype(ticker.mode, /datum/game_mode/spy))
@@ -942,6 +945,14 @@
 				if (M.current)
 					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
 					can_see.Add(I)
+		if (see_heads_sometimes)
+			for (var/datum/mind/M in heads)
+				var/mob/living/carbon/human/H
+				if (M.current && H.face_visible())
+					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+					can_see.Add(I)
+
+
 
 	else if (istype(ticker.mode, /datum/game_mode/nuclear))
 		var/datum/game_mode/nuclear/N = ticker.mode
