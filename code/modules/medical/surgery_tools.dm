@@ -1561,7 +1561,6 @@ keeping this here because I want to make something else with it eventually
 		src.create_reagents(5)
 
 	disposing()
-		handle = null
 		..()
 
 	move_trigger(var/mob/M, kindof)
