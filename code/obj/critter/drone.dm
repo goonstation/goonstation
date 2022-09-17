@@ -22,7 +22,6 @@
 	flying = 1
 	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 	var/score = 10
-	var/must_drop_loot = 0
 	dead_state = "drone-dead"
 	var/obj/item/droploot = null
 	var/damaged = 0 // 1, 2, 3
@@ -91,19 +90,6 @@
 	seek_target()
 		src.anchored = 0
 
-		var/area/AR = get_area(src)
-		if (AR == colosseum_controller.colosseum)
-			var/list/targets = list()
-			for (var/obj/machinery/colosseum_putt/C in colosseum_controller.colosseum)
-				if (C.dying) continue
-				targets += C
-			for (var/mob/living/carbon/human/H in colosseum_controller.colosseum)
-				if (isdead(H)) continue
-				targets += H
-			if (targets.len)
-				select_target(pick(targets))
-			return
-
 		if(smashes_shit)
 			//There be shit near us what can block our way.
 			for (var/obj/O in oview(1,src))
@@ -127,7 +113,7 @@
 
 		for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 			var/atom/A = atom
-			if (A && src.z == A.z && get_dist(src,A) <= src.seekrange)
+			if (A && src.z == A.z && GET_DIST(src,A) <= src.seekrange)
 				if (istype(atom, /obj/machinery/vehicle))
 					var/obj/machinery/vehicle/C = atom
 					if (C.health < 0) continue
@@ -190,7 +176,7 @@
 	CritterAttack(atom/M)
 		if(target)
 			src.attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
@@ -211,7 +197,7 @@
 	ChaseAttack(atom/M)
 		if(target)
 			src.attacking = 1
-			//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+			//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
 			var/tturf = get_turf(M)
@@ -237,12 +223,10 @@
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN(2 SECONDS)
-			if (get_area(src) != colosseum_controller.colosseum || must_drop_loot)
-				if (prob(25))
-					new /obj/item/device/prox_sensor(src.loc)
-
-				if(droploot)
-					new droploot(src.loc)
+			if (prob(25))
+				new /obj/item/device/prox_sensor(src.loc)
+			if(droploot)
+				new droploot(src.loc)
 			..()
 			return
 
@@ -282,26 +266,11 @@
 						waking = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		waking = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					waking = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		waking = 1
-			//		break
-
-
-			if (!waking)
-				if (get_area(src) == colosseum_controller.colosseum)
-					waking = 1
 
 			if(waking)
 				task = "thinking"
@@ -320,21 +289,11 @@
 						stay_awake = 1
 						break
 
-			//for(var/mob/living/M in view(10, src))
-			//	if(M.client)
-			//		stay_awake = 1
-			//		break
-
 			for (var/atom in by_cat[TR_CAT_PODS_AND_CRUISERS])
 				var/atom/A = atom
 				if (A && src.z == A.z && GET_DIST(src, A) <= 10)
 					stay_awake = 1
 					break
-
-			//for(var/obj/machinery/M in view(10, src))
-			//	if (istype(M,/obj/machinery/vehicle) || istype(M,/obj/machinery/cruiser))
-			//		stay_awake = 1
-			//		break
 
 			if(!stay_awake)
 				sleeping = 5
@@ -363,7 +322,7 @@
 					src.task = "thinking"
 					walk_to(src,0)
 				if (target)
-					if (get_dist(src, src.target) <= src.attack_range)
+					if (GET_DIST(src, src.target) <= src.attack_range)
 						var/mob/living/carbon/M = src.target
 						if (M)
 							if(!src.attacking) ChaseAttack(M)
@@ -373,7 +332,7 @@
 							if(prob(15)) walk_rand(src,4) // juke around and dodge shots
 
 					else
-						var/turf/olddist = get_dist(src, src.target)
+						var/turf/olddist = GET_DIST(src, src.target)
 
 						if(smashes_shit) //Break another thing near the drone
 							//There be shit near us what can block our way.
@@ -391,7 +350,7 @@
 							walk_towards(src, src.target, 1, 4)*/
 						else walk_to(src, src.target,1,4)
 
-						if ((get_dist(src, src.target)) >= (olddist))
+						if ((GET_DIST(src, src.target)) >= (olddist))
 							src.frustration++
 
 						else
@@ -588,7 +547,7 @@
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
-			playsound(src, "sound/effects/mag_warp.ogg", 50, 1)
+			playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
 			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
@@ -597,7 +556,7 @@
 				else
 					target_r = new/obj/railgun_trg_dummy(target)
 
-				playsound(src, "sound/weapons/railgun.ogg", 50, 1)
+				playsound(src, 'sound/weapons/railgun.ogg', 50, 1)
 				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -615,9 +574,6 @@
 					for(var/turf/T in src_turf)
 						if(T == O) continue
 						T.meteorhit(O)
-					for(var/obj/machinery/colosseum_putt/A in src_turf)
-						if (A == O || A == user) continue
-						A.meteorhit(O)
 					for (var/obj/machinery/cruiser/C in src_turf)
 						if (C == O || C == user) continue
 						C.meteorhit(O)
@@ -664,7 +620,7 @@
 		CritterAttack(atom/M)
 			if(target && !attacking)
 				attacking = 1
-				//playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+				//playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
 				src.visible_message("<span class='alert'><b>[src]</b> hits [M]!</span>")
 
 				var/tturf = get_turf(M)
@@ -830,7 +786,7 @@
 		process()
 			..()
 			if(prob(3))
-				playsound(src,"sound/machines/signal.ogg", 60, 0)
+				playsound(src, 'sound/machines/signal.ogg', 60, 0)
 			return
 
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
@@ -907,7 +863,6 @@
 	bound_height = 96
 	bound_width = 96
 	score = 10000
-	must_drop_loot = 1
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
@@ -920,7 +875,7 @@
 	process()
 		..()
 		if(prob(3))
-			playsound(src,"sound/machines/signal.ogg", 60, 0)
+			playsound(src, 'sound/machines/signal.ogg', 60, 0)
 
 		return
 
@@ -1033,7 +988,7 @@
 			P2.launch()
 
 	proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1052,18 +1007,12 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
-			poorPod.ex_act(3)
-
-		for (var/obj/machinery/colosseum_putt/poorPod in range(src, 5))
-			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		for (var/obj/machinery/cruiser/C in range(src, 5))
 			lineObjs += DrawLine(src, C, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-			playsound(C.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(C.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			C.ex_act(3)
 
 		SPAWN(0.6 SECONDS)
@@ -1166,7 +1115,7 @@
 
 
 	/*proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1176,7 +1125,7 @@
 			random_burn_damage(poorSoul, 45)
 			boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 			poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-			poorSoul:Virus_ShockCure(poorSoul, 100)
+			poorSoul:Virus_ShockCure(100)
 			poorSoul:shock_cyberheart(100)
 			poorSoul:weakened += rand(3,5)
 			if (isdead(poorSoul) && prob(25))
@@ -1185,7 +1134,7 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 5))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.ex_act(3)
 
 		SPAWN(0.6 SECONDS)
@@ -1218,7 +1167,7 @@
 	process()
 		..()
 		if(prob(3))
-			playsound(src,"sound/effects/heartbeat.ogg", 60, 0) //for the spooky effect
+			playsound(src,'sound/effects/heartbeat.ogg', 60, 0) //for the spooky effect
 		return
 
 	New()
@@ -1311,7 +1260,7 @@
 
 	select_target(var/atom/newtarget)
 		..()
-		playsound(src, (voice_gender == "male" ? "sound/voice/screams/male_scream.ogg" : "sound/voice/screams/female_scream.ogg"), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, (voice_gender == "male" ? 'sound/voice/screams/male_scream.ogg' : 'sound/voice/screams/female_scream.ogg'), 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 
 	ex_act(severity)
 		return

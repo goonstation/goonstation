@@ -17,13 +17,6 @@
 		if (!W) return
 		if (!user) return
 		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) qdel(src)
-		else if (istype(W, /obj/item/axe)) qdel(src)
-		else if (istype(W, /obj/item/circular_saw)) qdel(src)
-		else if (istype(W, /obj/item/kitchen/utensil/knife)) qdel(src)
-		else if (istype(W, /obj/item/scalpel)) qdel(src)
-		else if (istype(W, /obj/item/shard)) qdel(src)
-		else if (istype(W, /obj/item/sword)) qdel(src)
-		else if (istype(W, /obj/item/saw)) qdel(src)
 		..()
 
 	proc/Life()
@@ -39,7 +32,7 @@
 			for(var/obj/O in Vspread)
 				if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/alien/weeds)) dogrowth = 0
 				if (istype(O, /obj/machinery/door/))
-					if(!O:p_open && prob(70))
+					if(!O:panel_open && prob(70))
 						O:open()
 						O:operating = -1
 					else dogrowth = 0

@@ -10,8 +10,8 @@
 		return
 
 	msg = copytext(sanitize(html_encode(msg)), 1, MAX_MESSAGE_LEN)
-	logTheThing("admin", src, null, "DSAY: [msg]")
-	logTheThing("diary", src, null, "DSAY: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src, "DSAY: [msg]")
+	logTheThing(LOG_DIARY, src, "DSAY: [msg]", "admin")
 
 	if (!msg)
 		return

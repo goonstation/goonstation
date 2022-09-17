@@ -431,7 +431,7 @@
 	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if(get_dist(src,target) > 2) return
+		if(GET_DIST(src,target) > 2) return
 
 		if(!isturf(target)) target = get_turf(target)
 
@@ -638,6 +638,8 @@
 
 
 	attack_self(mob/user as mob)
+		if(!user.client)
+			return
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
 		var/input = input(user,"Select option:","Option") in options
 

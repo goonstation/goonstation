@@ -109,7 +109,7 @@
 		if (!src || !istype(src) || !user|| !target)
 			return
 
-		logTheThing("combat", user, target, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
 		return
 
 /* ============================================================ */
@@ -138,6 +138,12 @@
 	on_reagent_change()
 		if (src.reagents.total_volume && !src.fluid_image)
 			src.fluid_image = image(src.icon, "ppipette-fluid")
+
+		if (src.reagents.is_full() && src.transfer_mode == TO_SELF)
+			src.transfer_mode = TO_TARGET
+		else if (!src.reagents.total_volume && src.transfer_mode == TO_TARGET)
+			src.transfer_mode = TO_SELF
+		src.UpdateIcon()
 		..()
 
 	ui_interact(mob/user, datum/tgui/ui)

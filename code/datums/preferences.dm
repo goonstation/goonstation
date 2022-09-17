@@ -121,7 +121,7 @@ datum/preferences
 
 	ui_static_data(mob/user)
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/list/categories
 			if (islist(trait.category))
 				categories = trait.category.Copy()
@@ -129,7 +129,7 @@ datum/preferences
 
 			traits[trait.id] = list(
 				"id" = trait.id,
-				"name" = trait.cleanName,
+				"name" = trait.name,
 				"desc" = trait.desc,
 				"category" = categories,
 				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
@@ -168,7 +168,7 @@ datum/preferences
 		sanitize_null_values()
 
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/selected = (trait.id in traitPreferences.traits_selected)
 			var/list/categories
 			if (islist(trait.category))
@@ -572,7 +572,7 @@ datum/preferences
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
 					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 					if (!(src.pda_ringtone_index in selectable_ringtones))
@@ -1010,7 +1010,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -1040,12 +1040,12 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break

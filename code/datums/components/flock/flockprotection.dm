@@ -24,6 +24,9 @@
 			boutput(F, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
 		return intentional
 
+	if (istype(source, /mob/living/critter/flock/drone))
+		return
+
 	var/mob/living/critter/flock/drone/snitch
 	for (var/mob/living/critter/flock/drone/FD in viewers(attacker))
 		if (FD != attacker && !isdead(FD) && FD.is_npc && !FD.dormant && FD.flock == src.flock)

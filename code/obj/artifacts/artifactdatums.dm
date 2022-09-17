@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 			return 1
 		if (!user.in_real_view_range(T))
 			return 1
-		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
+		else if (!user.client && GET_DIST(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
 		O.add_fingerprint(user)
 		if (!istype(O, /obj/item/artifact/attack_wand)) // Special log handling required there.

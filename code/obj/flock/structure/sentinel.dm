@@ -95,6 +95,7 @@
 				src.updatefilter()
 				return
 			arcFlash(src, to_hit, wattage, 1.1)
+			logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(to_hit)].")
 			hit += to_hit
 
 			var/atom/last_hit = to_hit
@@ -109,6 +110,7 @@
 								continue
 						found_chain_target = TRUE
 						arcFlash(last_hit, A, wattage / 1.5, 1.1)
+						logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(A)] with a chained arcflash.")
 						hit += A
 						last_hit = A
 						break

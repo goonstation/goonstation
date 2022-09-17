@@ -283,7 +283,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(user, target) > 0 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || GET_DIST(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -521,7 +521,7 @@ Contents:
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
@@ -686,14 +686,21 @@ Contents:
 // Turfs
 
 // -Walls
-
+TYPEINFO(/turf/unsimulated/wall/auto/sengoku)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
 	icon = 'icons/turf/walls_sengoku.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/sengoku)
 
+
+TYPEINFO(/turf/unsimulated/wall/auto/paper)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
 	icon = 'icons/turf/walls_paper.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/paper)
+
 
 /turf/unsimulated/wall/sengoku_tall
 	icon = 'icons/turf/walls_sengoku.dmi'

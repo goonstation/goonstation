@@ -185,7 +185,7 @@
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"alertTriggered")
 	if (!src.ringlimiter)
 		src.ringlimiter = 1
-		playsound(src.loc, "sound/machines/firealarm.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/firealarm.ogg', 50, 1)
 
 
 

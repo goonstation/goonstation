@@ -636,9 +636,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(master, "sound/effects/flame.ogg", 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, 0)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -722,8 +722,8 @@
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"
-			P.shot_sound = "sound/voice/screams/monkey_scream.ogg"
-			P.hit_sound = "sound/impact_sounds/Slimy_Splat_1.ogg"
+			P.shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+			P.hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
 			P.name = "monkey"
 
 /datum/item_special/slam
@@ -1127,7 +1127,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelay = 5
 	moveDelayDuration = 5
 	damageMult = 0.8
-
 	image = "dagger"
 	name = "Slice"
 	desc = "Attack twice in rapid succession."
@@ -1186,7 +1185,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	moveDelayDuration = 6
 	damageMult = 1
 	restrainDuration = 3
-
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
@@ -1244,10 +1242,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "flame"
 	name = "Flame"
 	desc = "Pop out a flame 1 tile away from you in a direction."
@@ -1264,7 +1259,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	pixelaction(atom/target, params, mob/user, reach)
 		if(!isturf(target.loc) && !isturf(target)) return
 		if(!usable(user)) return
-		if(params["left"] && master && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
+		if(params["left"] && !QDELETED(master) && get_dist_pixel_squared(user, target, params) > ITEMSPECIAL_PIXELDIST_SQUARED)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 
@@ -1329,10 +1324,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	cooldown = 0
 	moveDelay = 5
 	moveDelayDuration = 2
-
 	damageMult = 0.8
-
-
 	image = "pulse"
 	name = "Pulse"
 	desc = "Pulse 1 tile away from you in any direction. The pulse will emit a mild shock that spreads in a random direction."
@@ -1350,7 +1342,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			preUse(user)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
-
 
 			var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 			C.setup(turf)
@@ -1798,7 +1789,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					if (tile)
 						hit = 1
 						user.visible_message("<span class='alert'><b>[user] flings a tile from [turf] into the air!</b></span>")
-						logTheThing("combat", user, null, "fling throws a floor tile ([F]) from [turf].")
+						logTheThing(LOG_COMBAT, user, "fling throws a floor tile ([F]) [get_dir(user, target)] from [turf].")
 
 						user.lastattacked = user //apply combat click delay
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params)

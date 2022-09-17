@@ -26,7 +26,7 @@
 			if (in_container)
 				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
 				for (var/mob/living/M in psource)
-					logTheThing("combat", M, null, "takes [damage] damage due to ldmatter implosion while inside [psource].")
+					logTheThing(LOG_COMBAT, M, "takes [damage] damage due to ldmatter implosion while inside [psource].")
 					M.TakeDamage("All", damage, 0)
 					boutput(M, "<span class='alert'>[psource] [created_volume >= 10 ? "crushes you as it implodes!" : "compresses around you tightly for a moment!"]</span>")
 
@@ -63,7 +63,7 @@
 			if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
 				continue
 			new/obj/decal/shockwave(source)
-			playsound(source, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
 			SPAWN(0)
 				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 					if(M.anchored || M == source || M.throwing) continue
@@ -80,7 +80,10 @@
 /proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0, var/do_sfx = 1)
 	var/block = 0
 
-	if (holder?.my_atom) //this happens with burning plants somehow
+	if(QDELETED(holder))
+		return 0
+
+	if (holder.my_atom) //this happens with burning plants somehow
 		var/atom/psource = holder.my_atom.loc
 		while (psource)
 			if (istype(psource, /obj/machinery/vehicle))
@@ -93,7 +96,7 @@
 
 	var/og_smoke_size = smoke_size
 
-	var/list/covered = holder.covered_turf()
+	var/list/covered = holder?.covered_turf()
 	if (!covered || !length(covered))
 		covered = list(get_turf(holder.my_atom))
 
@@ -217,7 +220,7 @@
 			continue
 
 		var/anim_dur = issilicon(M) ? 30 : 60
-		var/dist = get_dist(M, center)
+		var/dist = GET_DIST(M, center)
 		var/stunned = max(0, amount * (4 - dist) * 0.2)
 		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.2)
 		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
@@ -241,7 +244,7 @@
 		else
 			continue
 
-		var/checkdist = get_dist(M, center)
+		var/checkdist = GET_DIST(M, center)
 
 		var/weak = max(0, amount * 0.2 * (3 - checkdist))
 		var/misstep = max(0, 2 + amount * (5 - checkdist))

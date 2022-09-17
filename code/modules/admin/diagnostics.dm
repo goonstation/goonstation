@@ -191,8 +191,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
@@ -356,7 +356,7 @@ proc/debug_map_apc_count(delim,zlim)
 					/*
 					var/list/borders_space = list()
 					for(var/turf/spaceses in group.space_borders)
-						if(get_dist(spaceses, theTurf) == 1)
+						if(GET_DIST(spaceses, theTurf) == 1)
 							var/dir = get_dir(theTurf, spaceses)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
@@ -371,7 +371,7 @@ proc/debug_map_apc_count(delim,zlim)
 					*/
 					var/list/borders_individual = list()
 					for(var/turf/ind in group.border_individual)
-						if(get_dist(ind, theTurf) == 1)
+						if(GET_DIST(ind, theTurf) == 1)
 							var/dir = get_dir(theTurf, ind)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_individual[++borders_individual.len] = "NORTH"
@@ -385,7 +385,7 @@ proc/debug_map_apc_count(delim,zlim)
 						img.app.desc += "<br/>(borders individual to the [borders_individual.Join(" ")])"
 					var/list/borders_group = list()
 					for(var/turf/simulated/T in group.enemies)
-						if(get_dist(T, theTurf) == 1)
+						if(GET_DIST(T, theTurf) == 1)
 							var/dir = get_dir(theTurf, T)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_group[++borders_group.len] = "NORTH"

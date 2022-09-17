@@ -9,7 +9,6 @@
 //Camera Helmets /obj/item/clothing/head/helmet/camera X
 //Bots /obj/machinery/bot  X
 //Observables /obj/observable  X
-//Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
@@ -26,7 +25,7 @@
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
-	
+
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 
@@ -180,7 +179,7 @@
 			if( isturf(target) && findtext(control, "map_viewport") )
 				set_loc(src, target)
 
-			if (get_dist(src, target) > 0)
+			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
 
@@ -273,10 +272,10 @@
 
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
-		
+
 	vomit()
 		return 0 //can't puke
-		
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
@@ -395,7 +394,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P?.operating)
+			if(P)
 				P.attack_ai(src)
 				return
 
@@ -530,8 +529,10 @@
 //---MISC---//
 
 var/list/obj/machinery/camera/camerasToRebuild
-world/proc/updateCameraVisibility(generateAiImages=FALSE)
+
+/world/proc/updateCameraVisibility(generateAiImages=FALSE)
 	set waitfor = FALSE
+
 #if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
 	// I don't wanna wait for this camera setup shit just GO
 	return
@@ -565,7 +566,7 @@ world/proc/updateCameraVisibility(generateAiImages=FALSE)
 			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
 
 			donecount++
-			thispct = round(donecount / cam_candidates.len * 100)
+			thispct = round(donecount / length(cam_candidates) * 100)
 			if (thispct != lastpct)
 				lastpct = thispct
 				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")

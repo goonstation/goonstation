@@ -60,7 +60,7 @@ THROWING DARTS
 
 	// called when an implant is implanted into M by I
 	proc/implanted(mob/M, mob/I)
-		logTheThing("combat", I, M, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, I, "has implanted [constructTarget(M,"combat")] with a [src] implant ([src.type]) at [log_loc(M)].")
 		implanted = 1
 		SEND_SIGNAL(src, COMSIG_ITEM_IMPLANT_IMPLANTED, M)
 		owner = M
@@ -456,7 +456,7 @@ THROWING DARTS
 				H.visible_message("<span class='alert'><b>[H] resists the counter-revolutionary implant!</b></span>")
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
-				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 2.4)
+				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 2.4)
 				//src.on_remove(H)
 				//H.implant.Remove(src)
 				//src.set_loc(get_turf(H))
@@ -465,7 +465,7 @@ THROWING DARTS
 				H.changeStatus("weakened", 1 SECOND)
 				H.force_laydown_standup()
 				H.emote("scream")
-				playsound(H.loc, "sound/effects/electric_shock.ogg", 60, 0,0,pitch = 1.6)
+				playsound(H.loc, 'sound/effects/electric_shock.ogg', 60, 0,0,pitch = 1.6)
 
 	do_process(var/mult = 1)
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
@@ -476,6 +476,7 @@ THROWING DARTS
 				H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 				if (H.health < 0)
 					H.changeStatus("paralysis", 5 SECONDS)
+					H.changeStatus("newcause", 5 SECONDS)
 					H.force_laydown_standup()
 					H.show_text("<B>The [src] has successfuly deprogrammed your revolutionary spirit!</B>", "blue")
 
@@ -487,7 +488,7 @@ THROWING DARTS
 				else
 					if (prob(30))
 						H.show_text("<B>The [src] burns and rattles inside your chest! It's attempting to force your loyalty to the heads of staff!</B>", "blue")
-						playsound(H.loc, "sound/effects/electric_shock_short.ogg", 60, 0,0,pitch = 0.8)
+						playsound(H.loc, 'sound/effects/electric_shock_short.ogg', 60, 0,0,pitch = 0.8)
 						H.emote("twitch_v")
 
 		..()
@@ -546,7 +547,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				source.visible_message("[source][small_message].")
 			var/area/A = get_area(source)
 			if (!A.dont_log_combat)
-				logTheThing("bombing", source, null, "triggered \a [src] on death at [log_loc(source)].")
+				logTheThing(LOG_BOMBING, source, "triggered \a [src] on death at [log_loc(source)].")
 				message_admins("[key_name(source)] triggered \a [src] on death at [log_loc(source)].")
 
 /obj/item/implant/revenge/microbomb
@@ -602,9 +603,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		elecflash(src, ., . * 2, TRUE)
 		for (var/mob/living/M in orange(. / 6 + 1, src.owner))
 			if (!isintangible(M))
-				var/dist = get_dist(src.owner, M) + 1
+				var/dist = GET_DIST(src.owner, M) + 1
 				// arcflash uses some fucked up thresholds so trust me on this one
-				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(.) + 3))
+				arcFlash(src.owner, M, (40000 * (4 - (0.4 * dist * log(dist)))) * (15 * log(max(1,.)) + 3))
 		for (var/obj/machinery/machine in orange(round(. / 6) + 1)) // machinery around you also zaps people, based on the amount of power in the grid
 			if (prob(. * 7))
 				var/mob/living/target
@@ -674,7 +675,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		if (H.mind && ((H.mind.special_role == ROLE_VAMPTHRALL) || (H.mind.special_role == "spyminion")))
 			if (ismob(user)) user.show_text("<b>[H] seems to be immune to being mindhacked!</b>", "red")
 			H.show_text("<b>You resist [implant_hacker]'s attempt to mindhack you!</b>", "red")
-			logTheThing("combat", H, implant_hacker, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
+			logTheThing(LOG_COMBAT, H, "resists [constructTarget(implant_hacker,"combat")]'s attempt to mindhack them at [log_loc(H)].")
 			return 0
 		// Same here, basically. Multiple active implants is just asking for trouble.
 		for (var/obj/item/implant/mindhack/MS in H.implant)
@@ -1060,11 +1061,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		var/turf/T = get_turf(src.owner)
 		switch(src.artifact_implant_type)
 			if ("eldritch")
-				playsound(T, pick("sound/machines/ArtifactEld1.ogg", "sound/machines/ArtifactEld2.ogg"), volume, 1)
+				playsound(T, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), volume, 1)
 			if ("ancient")
-				playsound(T, "sound/machines/ArtifactAnc1.ogg", volume, 1)
+				playsound(T, 'sound/machines/ArtifactAnc1.ogg', volume, 1)
 			if ("wizard")
-				playsound(T, "sound/machines/ArtifactWiz1.ogg", volume, 1)
+				playsound(T, 'sound/machines/ArtifactWiz1.ogg', volume, 1)
 
 		if (unremovable)
 			src.cant_take_out = TRUE
@@ -1100,7 +1101,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			for (var/organ in organs)
 				if (!organ_found)
 					current_organ = H.get_organ(organ)
-					if (!current_organ || current_organ.get_damage() > current_organ.FAIL_DAMAGE)
+					if (!current_organ || current_organ.get_damage() > current_organ.fail_damage)
 						organ_found = organ
 
 			if (organ_found)
@@ -1197,7 +1198,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 				SPAWN(2 SECONDS)
 					if (H && src && (src in H.implant))
-						playsound(get_turf(H), "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 1)
+						playsound(get_turf(H), 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
 						if (!l_arm)
 							H.limbs.replace_with("l_arm", pick(left_arm), null, 0)
 						else if (!r_arm)
@@ -1233,7 +1234,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				if (H && src && (src in H.implant))
 					H.say(pick(message_list))
 					if (prob(3))
-						playsound(get_turf(H), pick("sound/voice/screams/robot_scream.ogg", "sound/voice/screams/Robot_Scream_2.ogg"), 50, 1)
+						playsound(get_turf(H), pick('sound/voice/screams/robot_scream.ogg', 'sound/voice/screams/Robot_Scream_2.ogg'), 50, 1)
 		..()
 
 /obj/item/implant/artifact/ancient/ancient_bad
@@ -1249,7 +1250,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				SPAWN(3 SECONDS)
 					for (var/limb in list("l_arm", "r_arm", "l_leg", "r_leg"))
 						if (H && src)
-							playsound(get_turf(H), pick("sound/impact_sounds/circsaw.ogg", "sound/machines/rock_drill.ogg"), 50, 1)
+							playsound(get_turf(H), pick('sound/impact_sounds/circsaw.ogg', 'sound/machines/rock_drill.ogg'), 50, 1)
 							H.sever_limb(limb)
 							sleep(1 SECOND)
 
@@ -1354,7 +1355,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 							sleep(4 SECONDS)
 							if (H && src)
 								make_cleanable(/obj/decal/cleanable/ash, get_turf(H))
-								playsound(get_turf(H), "sound/effects/mag_fireballlaunch.ogg", 50, 1)
+								playsound(get_turf(H), 'sound/effects/mag_fireballlaunch.ogg', 50, 1)
 								H.firegib(FALSE)
 						else
 							boutput(H, "<span class='alert'><b>Oh god, it's SO COLD!</b></span>")
@@ -1364,7 +1365,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 							sleep(4 SECONDS)
 							if (H && src)
-								playsound(get_turf(H), "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+								playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 								H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
 		..()
 
@@ -1406,6 +1407,10 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 
 	proc/implant(mob/M as mob, mob/user as mob)
+		if(!in_interact_range(M, user))
+			boutput(user, "<span class='alert'>You are too far away from [M]!</span>")
+			return
+
 		if (sneaky)
 			boutput(user, "<span class='alert'>You implanted the implant into [M].</span>")
 		else
@@ -1589,59 +1594,59 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implantcase/health
 	name = "glass case - 'Health'"
-	implant_type = "/obj/item/implant/health"
+	implant_type = /obj/item/implant/health
 
 /obj/item/implantcase/sec
 	name = "glass case - 'Security Access'"
-	implant_type = "/obj/item/implant/sec"
+	implant_type = /obj/item/implant/sec
 /*
 /obj/item/implantcase/nt
 	name = "glass case - 'Weapon Auth 2'"
-	implant_type = "/obj/item/implant/nt"
+	implant_type = /obj/item/implant/nt
 
 /obj/item/implantcase/ntc
 	name = "glass case - 'Weapon Auth 3'"
-	implant_type = "/obj/item/implant/ntc"
+	implant_type = /obj/item/implant/ntc
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = "/obj/item/implant/freedom"
+	implant_type = /obj/item/implant/freedom
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
-	implant_type = "/obj/item/implant/counterrev"
+	implant_type = /obj/item/implant/counterrev
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb"
+	implant_type = /obj/item/implant/revenge/microbomb
 
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
-	implant_type = "/obj/item/implant/robotalk"
+	implant_type = /obj/item/implant/robotalk
 
 /obj/item/implantcase/bloodmonitor
 	name = "glass case - 'Blood Monitor'"
-	implant_type = "/obj/item/implant/bloodmonitor"
+	implant_type = /obj/item/implant/bloodmonitor
 
 /obj/item/implantcase/mindhack
 	name = "glass case - 'Mindhack'"
-	implant_type = "/obj/item/implant/mindhack"
+	implant_type = /obj/item/implant/mindhack
 
 /obj/item/implantcase/super_mindhack
 	name = "glass case - 'Mindhack DELUXE'"
-	implant_type = "/obj/item/implant/mindhack/super"
+	implant_type = /obj/item/implant/mindhack/super
 
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
-	implant_type = "/obj/item/implant/robust"
+	implant_type = /obj/item/implant/robust
 
 /obj/item/implantcase/antirot
 	name = "glass case - 'Rotbusttec'"
-	implant_type = "/obj/item/implant/antirot"
+	implant_type = /obj/item/implant/antirot
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
-	implant_type = "/obj/item/implant/access"
+	implant_type = /obj/item/implant/access
 
 	get_desc(dist)
 		if (dist <= 1 && src.imp)
@@ -1650,7 +1655,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				. += "It appears to contain \a [src.imp.name] with [I.uses] charges."
 
 	unlimited
-		implant_type = "/obj/item/implant/access/infinite"
+		implant_type = /obj/item/implant/access/infinite
 		get_desc(dist)
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
@@ -2084,7 +2089,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			random_brute_damage(M, 1)
 			src.set_loc(M)
 			src.implanted(M)
@@ -2113,7 +2118,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 			var/mob/living/carbon/human/H = M
 			H.implant.Add(src)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
 			random_brute_damage(M, 20)//if it can get in you, it probably doesn't give a damn about your armor
 			take_bleeding_damage(M, null, 10, DAMAGE_CUT)

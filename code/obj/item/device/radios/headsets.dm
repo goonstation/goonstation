@@ -45,7 +45,7 @@
 				"z" = RADIOCL_SYNDICATE,
 				)
 			boutput(user, "<span class='notice'>You install [R] into [src]. It will now receive transmissions from all station frequencies.</span>")
-			playsound(src.loc ,"sound/items/Deconstruct.ogg", 80, 0)
+			playsound(src.loc , 'sound/items/Deconstruct.ogg', 80, 0)
 			set_secure_frequencies(src)
 			qdel(R)
 
