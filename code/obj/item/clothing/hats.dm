@@ -311,26 +311,26 @@ proc/filter_trait_hats(var/type)
 
 	New()
 		..()
-		items = list("bodybag" = /obj/item/body_bag,
-									"scanner" = /obj/item/device/detective_scanner,
-									"lighter" = /obj/item/device/light/zippo/,
-									"spray" = /obj/item/spraybottle,
-									"monitor" = /obj/item/device/camera_viewer,
-									"camera" = /obj/item/camera,
-									"audiolog" = /obj/item/device/audio_log ,
-									"flashlight" = /obj/item/device/light/flashlight,
-									"glasses" = /obj/item/clothing/glasses)
+		items = list("bodybag" = list("bodybag", /obj/item/body_bag),
+									"scaner" = list("scanner", /obj/item/device/detective_scanner), // scanner -> scaner for phrase detection
+									"lighter" = list("lighter", /obj/item/device/light/zippo/),
+									"spray" = list("spray", /obj/item/spraybottle),
+									"monitor" = list("monitor", /obj/item/device/camera_viewer),
+									"camera" = list("camera", /obj/item/camera),
+									"audiolog" = list("audiolog", /obj/item/device/audio_log),
+									"flashlight" = list("flashlight", /obj/item/device/light/flashlight),
+									"glases" = list("glasses", /obj/item/clothing/glasses)) // glasses -> glases
 		cigs = list()
 	examine()
 		. = ..()
 		. += "<span class='notice'>Current activation phrase is <b>\"[phrase]\"</b>.</span>"
 		for (var/name in items)
-			var/type = items[name]
+			var/type = items[name][2]
 			var/obj/item/I = locate(type) in contents
 			if(I)
-				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[name]\"!</span>"
+				. += "<br><span class='notice'>[bicon(I)][I] is ready and bound to the word \"[items[name][1]]\"!</span>"
 			else
-				. += "<br>There is no [name]!"
+				. += "<br>There is no [items[name][1]]!"
 		if (cigs.len)
 			. += "<br><span class='notice'>It contains <b>[cigs.len]</b> cigarettes!</span>"
 
@@ -340,11 +340,15 @@ proc/filter_trait_hats(var/type)
 			src.talk_into(M, msg, null, real_name, lang_id)
 
 	talk_into(mob/M as mob, messages, param, real_name, lang_id)
-		var/gadget = findtext(messages[1], src.phrase) //check the spoken phrase
+		if (!messages[1])
+			return
+		var/new_message = src.remove_repeated_letters(messages[1])
+
+		var/gadget = findtext(new_message, src.remove_repeated_letters(src.phrase)) //check the spoken phrase
 		if(gadget)
-			gadget = replacetext(copytext(messages[1], gadget + length(src.phrase)), " ", "") //get rid of spaces as well
+			gadget = replacetext(copytext(new_message, gadget + length(src.phrase)), " ", "") //get rid of spaces as well
 			for (var/name in items)
-				var/type = items[name]
+				var/type = items[name][2]
 				var/obj/item/I = locate(type) in contents
 				if(findtext(gadget, name) && I)
 					M.put_in_hand_or_drop(I)
@@ -380,7 +384,7 @@ proc/filter_trait_hats(var/type)
 	attackby(obj/item/W, mob/M)
 		var/success = 0
 		for (var/name in items)
-			var/type = items[name]
+			var/type = items[name][2]
 			if(istype(W, type) && !(locate(type) in contents))
 				success = 1
 				M.drop_item()
@@ -439,6 +443,15 @@ proc/filter_trait_hats(var/type)
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
+
+	proc/remove_repeated_letters(message)
+		var/msg = message
+		var/new_message
+		for (var/i = 1 to length(msg) - 1)
+			if (msg[i] != msg[i + 1])
+				new_message += msg[i]
+		new_message += msg[length(msg)]
+		return new_message
 
 	proc/make_inspector()
 		src.inspector = TRUE

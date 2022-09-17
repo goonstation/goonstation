@@ -1347,6 +1347,8 @@
 	rechargeable = 0
 	can_swap_cell = 0
 	muzzle_flash = "muzzle_flash_elec"
+	var/list/keywords = list("detain", "execute", "exterminate", "smokeshot", "fog", "knockout", "slepshot", "hotshot", "incendiary", "bigshot",
+			"highexplosive", "he", "bigshot", "highexplosive", "he", "clownshot", "clown", "pulse", "push", "throw") // sleepshot -> slepshot
 
 	New(var/mob/M)
 		set_current_projectile(new/datum/projectile/energy_bolt/aoe)
@@ -1419,6 +1421,9 @@
 
 		var/text = msg[1]
 		text = sanitize_talk(text)
+		if (!(text in src.keywords))
+			return
+
 		if (fingerprints_can_shoot(M))
 			switch(text)
 				if ("detain")
@@ -1435,7 +1440,7 @@
 					current_projectile.cost = 50
 					item_state = "lawg-smokeshot"
 					playsound(M, 'sound/vox/smoke.ogg', 50)
-				if ("knockout", "sleepshot")
+				if ("knockout", "slepshot") // sleepshot -> slepshot
 					set_current_projectile(projectiles["knockout"])
 					current_projectile.cost = 60
 					item_state = "lawg-knockout"
@@ -1463,13 +1468,11 @@
 
 					/datum/projectile/energy_bolt/pulse
 		else		//if you're not the owner and try to change it, then fuck you
-			switch(text)
-				if ("detain","execute","knockout","hotshot","incendiary","bigshot","highexplosive","he","clownshot","clown", "pulse", "punch")
-					random_burn_damage(M, 50)
-					M.changeStatus("weakened", 4 SECONDS)
-					elecflash(src,power=2)
-					M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
-					return
+			random_burn_damage(M, 50)
+			M.changeStatus("weakened", 4 SECONDS)
+			elecflash(src,power=2)
+			M.visible_message("<span class='alert'>[M] tries to fire [src]! The gun initiates its failsafe mode.</span>")
+			return
 
 		M.update_inhands()
 		UpdateIcon()
@@ -1545,7 +1548,14 @@
 		var/regex/r = regex("\[^a-z\]+", "g")
 		msg = lowertext(msg)
 		msg = r.Replace(msg, "")
-		return msg
+		if (!msg)
+			return
+		var/new_message
+		for (var/i = 1; i < length(msg); i++)
+			if (msg[i] != msg[i + 1])
+				new_message += msg[i]
+		new_message += msg[length(msg)]
+		return new_message
 
 	// Checks if the gun can shoot based on the fingerprints of the shooter.
 	//returns true if the prints match or there are no prints stored on the gun(emagged). false if it fails
