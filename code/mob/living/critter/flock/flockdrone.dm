@@ -1204,10 +1204,7 @@
 		if (I.health > 0)
 			return
 		if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
-			if (initial(I.health))
-				I.health = initial(I.health)
-			else
-				I.set_health()
+			I.health = get_initial_item_health(I.type)
 			I.change_stack_amount(-1)
 			return
 
