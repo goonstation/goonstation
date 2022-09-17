@@ -676,22 +676,7 @@ var/flock_signal_unleashed = FALSE
 // !!!! priority is determined by list order !!!!
 // if you have a subclass, it MUST go first in the list, or the first type that matches will take priority (ie, the superclass)
 // see /obj/machinery/light/small/floor and /obj/machinery/light for examples of this
-/var/list/flock_conversion_paths = list(
-	/obj/grille = /obj/grille/flock,
-	/obj/window = /obj/window/auto/feather,
-	/obj/machinery/door = /obj/machinery/door/feather,
-	/obj/stool = /obj/stool/chair/comfy/flock,
-	/obj/table = /obj/table/flock/auto,
-	/obj/machinery/light/small/floor = /obj/machinery/light/flock/floor,
-	/obj/machinery/light = /obj/machinery/light/flock,
-	/obj/storage/closet = /obj/storage/closet/flock,
-	/obj/storage/secure/closet = /obj/storage/closet/flock,
-	/obj/machinery/computer3 = /obj/flock_structure/compute,
-	/obj/machinery/computer = /obj/flock_structure/compute,
-	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
-	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
-	/obj/spacevine = null
-	)
+/var/list/flock_conversion_paths = null
 
 /proc/flockTurfAllowed(var/turf/T)
 	var/area/area = get_area(T)
@@ -702,6 +687,59 @@ var/flock_signal_unleashed = FALSE
 		return
 	if (!flockTurfAllowed(T))
 		return
+
+	if (!flock_conversion_paths)
+		flock_conversion_paths = list()
+
+		for (var/subtype in typesof(/obj/grille))
+			flock_conversion_paths[subtype] = /obj/grille/flock
+		for (var/subtype in typesof(/obj/window))
+			flock_conversion_paths[subtype] = /obj/window/auto/feather
+		for (var/subtype in typesof(/obj/machinery/door))
+			flock_conversion_paths[subtype] = /obj/machinery/door/feather
+		for (var/subtype in typesof(/obj/stool))
+			flock_conversion_paths[subtype] = /obj/stool/chair/comfy/flock
+		for (var/subtype in typesof(/obj/table))
+			flock_conversion_paths[subtype] = /obj/table/flock/auto
+		for (var/subtype in typesof(/obj/machinery/light))
+			flock_conversion_paths[subtype] = /obj/machinery/light/flock
+		for (var/subtype in typesof(/obj/machinery/light/small/floor))
+			flock_conversion_paths[subtype] = /obj/machinery/light/flock/floor
+		for (var/subtype in typesof(/obj/storage/closet))
+			flock_conversion_paths[subtype] = /obj/storage/closet/flock
+		for (var/subtype in typesof(/obj/storage/secure/closet))
+			flock_conversion_paths[subtype] = /obj/storage/closet/flock
+		for (var/subtype in typesof(/obj/machinery/computer))
+			flock_conversion_paths[subtype] = /obj/flock_structure/compute
+		for (var/subtype in typesof(/obj/machinery/computer3))
+			flock_conversion_paths[subtype] = /obj/flock_structure/compute
+		for (var/subtype in typesof(/obj/machinery/networked/teleconsole))
+			flock_conversion_paths[subtype] = /obj/flock_structure/compute
+		for (var/subtype in typesof(/obj/machinery/networked/mainframe))
+			flock_conversion_paths[subtype] = /obj/flock_structure/compute/mainframe
+		for (var/subtype in typesof(/obj/spacevine))
+			flock_conversion_paths[subtype] = "delete"
+
+		flock_conversion_paths -= /obj/machinery/computer/card/portable
+		flock_conversion_paths -= /obj/machinery/computer/security/wooden_tv
+		flock_conversion_paths -= /obj/machinery/computer/secure_data/detective_computer
+		flock_conversion_paths -= /obj/machinery/computer/airbr
+		flock_conversion_paths -= /obj/machinery/computer/tanning
+		flock_conversion_paths -= /obj/machinery/computer/tour_console
+		flock_conversion_paths -= /obj/machinery/computer/arcade
+		flock_conversion_paths -= /obj/machinery/computer/tetris
+
+		flock_conversion_paths -= /obj/machinery/computer3/luggable
+		flock_conversion_paths -= /obj/machinery/computer3/generic/personal
+
+		flock_conversion_paths -= /obj/machinery/light/lamp
+
+		flock_conversion_paths[/obj/machinery/door/firedoor/pyro] = "delete"
+		flock_conversion_paths[/obj/machinery/door/window] = "delete"
+		flock_conversion_paths[/obj/machinery/door/window] = "delete"
+		flock_conversion_paths[/obj/machinery/door/airlock/pyro/glass/windoor] = "delete"
+		flock_conversion_paths[/obj/machinery/door/poddoor/pyro/shutters] = "delete"
+		flock_conversion_paths[/obj/machinery/door/unpowered/wood] = "delete"
 
 	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
@@ -735,40 +773,30 @@ var/flock_signal_unleashed = FALSE
 			if (cam.camera_status)
 				cam.break_camera()
 			continue
-		for(var/keyPath in flock_conversion_paths)
-			if (!istype(O, keyPath))
-				continue
-			if (isnull(flock_conversion_paths[keyPath]))
-				qdel(O)
-				continue
-			if (istype(O, /obj/machinery))
-				if (istype(O, /obj/machinery/door))
-					if (istype(O, /obj/machinery/door/firedoor/pyro) || istype(O, /obj/machinery/door/window) || istype(O, /obj/machinery/door/airlock/pyro/glass/windoor) || istype(O, /obj/machinery/door/poddoor/pyro/shutters) || istype(O, /obj/machinery/door/unpowered/wood))
-						qdel(O)
-						break
-				if (istype(O, /obj/machinery/computer))
-					if (istype(O, /obj/machinery/computer/card/portable) || istype(O, /obj/machinery/computer/security/wooden_tv) || istype(O, /obj/machinery/computer/secure_data/detective_computer) || istype(O, /obj/machinery/computer/airbr) || istype(O, /obj/machinery/computer/tanning) || istype(O, /obj/machinery/computer/tour_console) || istype(O, /obj/machinery/computer/arcade) || istype(O, /obj/machinery/computer/tetris))
-						break
-				if (istype(O, /obj/machinery/light/lamp) || istype(O, /obj/machinery/computer3/generic/personal) || istype(O, /obj/machinery/computer3/luggable))
-					break
-			var/dir = O.dir
-			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
-			// if the object is a closet, it might not have spawned its contents yet
-			// so force it to do that first
-			if(istype(O, /obj/storage))
-				var/obj/storage/S = O
-				if(!isnull(S.spawn_contents))
-					S.make_my_stuff()
-			// if the object has contents, move them over!!
-			for (var/obj/stored_obj in O)
-				stored_obj.set_loc(converted)
-			for (var/mob/M in O)
-				M.set_loc(converted)
+		var/replacementPath = flock_conversion_paths[O.type]
+		if (!replacementPath)
+			continue
+		if (replacementPath == "delete")
 			qdel(O)
-			converted.set_dir(dir)
-			animate_flock_convert_complete(converted)
-			break
+			continue
+
+		var/dir = O.dir
+		var/obj/converted = new replacementPath(T)
+		// if the object is a closet, it might not have spawned its contents yet
+		// so force it to do that first
+		if(istype(O, /obj/storage))
+			var/obj/storage/S = O
+			if(!isnull(S.spawn_contents))
+				S.make_my_stuff()
+		// if the object has contents, move them over!!
+		for (var/obj/stored_obj in O)
+			stored_obj.set_loc(converted)
+		for (var/mob/M in O)
+			M.set_loc(converted)
+		qdel(O)
+		converted.set_dir(dir)
+		animate_flock_convert_complete(converted)
+
 	return T
 
 /proc/mass_flock_convert_turf(var/turf/T, datum/flock/F)
