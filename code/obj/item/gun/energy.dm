@@ -1551,7 +1551,7 @@
 		if (!msg)
 			return
 		var/new_message
-		for (var/i = 1 to length(msg - 1))
+		for (var/i = 1 to length(msg) - 1)
 			if (msg[i] != msg[i + 1])
 				new_message += msg[i]
 		new_message += msg[length(msg)]
