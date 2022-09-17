@@ -1,5 +1,10 @@
 
 (t)fri sep 16 22
+(u)Mr. Moriarty
+(p)10641
+(e)|
+(+)Conspirator headsets now have a removable private radio channel upgrade, instead of their immutable radio channel.
+(+)Wiretap radio upgrades (alongside the Conspirators' private radio channel upgrades) may now be removed with a snipping tool.
 (u)LeahTheTech
 (p)10685
 (e)|
