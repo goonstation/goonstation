@@ -19312,6 +19312,10 @@
 	pixel_y = 3
 	},
 /obj/item/device/prisoner_scanner,
+/obj/item/hand_labeler{
+	pixel_x = 6;
+	pixel_y = 9
+	},
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -19490,7 +19494,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/stool/chair/office/red,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -36304,11 +36307,6 @@
 /obj/item/clothing/suit/wizrobe/purple,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
-"lyw" = (
-/obj/effects/background_objects/star_blue,
-/obj/effects/background_objects/star_red,
-/turf/simulated/floor/plating/airless,
-/area/space)
 "lyD" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -36642,6 +36640,10 @@
 "lMl" = (
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/item/storage/toilet/random{
+	dir = 8;
+	pixel_x = 8
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
@@ -38224,11 +38226,6 @@
 "nfc" = (
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_x = 30
-	},
-/obj/table/auto,
-/obj/item/hand_labeler{
-	pixel_x = 6;
-	pixel_y = 9
 	},
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -80309,7 +80306,7 @@ acK
 apU
 aaa
 aaA
-lyw
+acK
 aWx
 aai
 apU
