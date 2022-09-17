@@ -44621,6 +44621,7 @@
 "mQj" = (
 /obj/wingrille_spawn/auto,
 /obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
 /area/station/engine/engineering/ce)
 "mQz" = (
 /obj/machinery/light/small/floor,
