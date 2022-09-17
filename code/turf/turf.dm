@@ -58,6 +58,13 @@
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 
+	New()
+		..()
+
+		src.init_lighting()
+
+		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
+
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
@@ -138,6 +145,10 @@
 	Del()
 		dispose()
 		..()
+
+	proc/on_set_opacity(turf/thisTurf, old_opacity)
+		if (length(src.camera_coverage_emitters))
+			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -554,6 +565,7 @@ proc/generate_space_color()
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
+	var/old_camera_coverage_emitters = src.camera_coverage_emitters
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -636,6 +648,7 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+	new_turf.camera_coverage_emitters = old_camera_coverage_emitters
 
 	new_turf.disposal_image = old_disposal_image
 

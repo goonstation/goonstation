@@ -799,9 +799,7 @@ TYPEINFO_NEW(/obj/table/glass)
 	New()
 		..()
 		if (!src.material && default_material)
-			var/datum/material/M
-			M = getMaterial(default_material)
-			src.setMaterial(M)
+			src.setMaterial(getMaterial(default_material), copy = FALSE)
 
 	UpdateName()
 		if (src.glass_broken)

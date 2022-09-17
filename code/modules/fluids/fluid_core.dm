@@ -762,7 +762,7 @@ var/mutable_appearance/fluid_ma
 
 
 	//Possibility to consume reagents. (Each reagent should return 0 in its reaction_[type]() proc if reagents should be removed from fluid)
-	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list)
+	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list && F.amt > CHEM_EPSILON)
 		F.group.last_reacted = F
 		var/react_volume = F.amt > 10 ? (F.amt / 2) : (F.amt)
 		react_volume = min(react_volume,100) //capping the react amt

@@ -120,6 +120,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.emagged = TRUE
 				return TRUE
 
+		is_open_container()
+			return TRUE
+
 		emagged
 			brute_hp = 50
 			burn_hp = 50

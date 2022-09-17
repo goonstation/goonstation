@@ -31,16 +31,16 @@
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = 1
+
 	the_tuff_stuff
 		explosion_resistance = 3
+
 	New()
 		..()
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1)
-		var/datum/material/M
 		if (default_material)
-			M = getMaterial(default_material)
-			src.setMaterial(M)
+			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
 			src.reinforcement = getMaterial(default_reinforcement)
 		onMaterialChanged()
@@ -95,9 +95,10 @@
 		return
 
 	disposing()
+		connect_image = null
 		density = 0
 		update_nearby_tiles(need_rebuild=1)
-		..()
+		. = ..()
 
 	Move()
 		set_density(0) //mbc : icky but useful for fluids

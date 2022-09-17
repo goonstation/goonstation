@@ -67,6 +67,7 @@
 				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
 			else
 				traitor_mob.put_in_hand_or_drop(H)
+		H.wiretap = new /obj/item/device/radio_upgrade/conspirator
 		H.secure_classes["z"] = RADIOCL_SYNDICATE
 		H.set_secure_frequency("z",the_frequency)
 

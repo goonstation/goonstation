@@ -432,7 +432,7 @@
 					boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
 					src.state = EXTENDO_BATON_OPEN_AND_OFF
 					src.is_active = FALSE
-					src.w_class = W_CLASS_BULKY
+					src.w_class = W_CLASS_NORMAL
 					src.force = 7
 					playsound(src, 'sound/misc/lightswitch.ogg', 75, 1, -1)
 					boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")
@@ -444,13 +444,13 @@
 				src.state = EXTENDO_BATON_OPEN_AND_ON
 				src.is_active = TRUE
 				boutput(user, "<span class='notice'>The [src.name] is now open and on.</span>")
-				src.w_class = W_CLASS_BULKY
+				src.w_class = W_CLASS_NORMAL
 				src.force = 7
 				playsound(src, "sparks", 75, 1, -1)
 			if (EXTENDO_BATON_OPEN_AND_ON)		//move to open/off state
 				src.state = EXTENDO_BATON_OPEN_AND_OFF
 				src.is_active = FALSE
-				src.w_class = W_CLASS_BULKY
+				src.w_class = W_CLASS_NORMAL
 				src.force = 7
 				playsound(src, 'sound/misc/lightswitch.ogg', 75, 1, -1)
 				boutput(user, "<span class='notice'>The [src.name] is now open and unpowered.</span>")

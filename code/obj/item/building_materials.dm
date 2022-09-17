@@ -834,16 +834,17 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = user.loc
-			SPAWN(1.5 SECONDS)
-				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
-					var/atom/G = new /obj/grille(user.loc)
-					G.setMaterial(src.material)
-					src.change_stack_amount(-2)
-					logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
-					G.add_fingerprint(user)
+			SETUP_GENERIC_ACTIONBAR(user, src, 1.5 SECONDS, /obj/item/rods/proc/build_grille, user, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		src.add_fingerprint(user)
 		return
+
+	proc/build_grille(mob/user)
+		if (src.amount >= 2)
+			var/atom/A = new /obj/grille(user.loc)
+			A.setMaterial(src.material)
+			src.change_stack_amount(-2)
+			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.mat_id || "*UNKNOWN*"]) at [log_loc(user)].")
+			A.add_fingerprint(user)
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -1092,8 +1093,8 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				// If this isn't space or metal foam...
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam) || istype(S, /turf/simulated/floor/plating/airless/asteroid)))
+				// If this isn't space, metal foam, or an asteroid...
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T

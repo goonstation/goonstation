@@ -128,7 +128,7 @@
 		return TRUE
 	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
-	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
+	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)) || !flockTurfAllowed(T))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
 		return TRUE
 	if(isfeathertile(T))
