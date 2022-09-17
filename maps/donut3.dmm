@@ -4935,7 +4935,7 @@
 /turf/simulated/floor/black,
 /area/station/chapel/sanctuary)
 "bmd" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
@@ -16460,9 +16460,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
+/turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "eBr" = (
 /turf/simulated/pool/no_animate,
@@ -31276,7 +31274,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/cloner)
 "iSh" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/airless/plating,
@@ -32618,10 +32616,6 @@
 	dir = 5
 	},
 /area/mining/magnet)
-"jnz" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/hangar/qm)
 "jnB" = (
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
@@ -33614,7 +33608,7 @@
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/kitchen)
 "jEb" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
@@ -40578,13 +40572,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"lJb" = (
-/obj/wingrille_spawn/auto,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "lJi" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -41363,10 +41350,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
-"lSz" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/routing/depot)
 "lSB" = (
 /obj/decal/mule/dropoff,
 /obj/access_spawn/research,
@@ -44463,11 +44446,6 @@
 	dir = 1
 	},
 /area/station/maintenance/inner/sw)
-"mQj" = (
-/obj/wingrille_spawn/auto,
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/plating,
-/area/station/engine/engineering/ce)
 "mQz" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/specialroom/chapel{
@@ -44513,10 +44491,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/turret_protected/armory_outside)
-"mRl" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/engine/engineering)
 "mRw" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/desk_stuff/three,
@@ -55718,7 +55692,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/solar/west)
 "qar" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
 /turf/simulated/floor/airless/plating,
 /area/station/crew_quarters/bathroom)
@@ -57468,10 +57442,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
-"qvg" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/refinery)
 "qvl" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor,
@@ -64160,6 +64130,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"sqU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/ranch)
 "sqY" = (
 /obj/cable{
 	d1 = 4;
@@ -65042,7 +65016,7 @@
 /area/station/crew_quarters/catering)
 "sEo" = (
 /obj/decal/poster/wallsign/hazard_rad,
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "sEv" = (
@@ -65197,10 +65171,6 @@
 	dir = 9
 	},
 /area/station/crew_quarters/hor)
-"sGs" = (
-/obj/wingrille_spawn/auto,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/ne)
 "sGu" = (
 /turf/simulated/wall/auto/jen,
 /area/station/library)
@@ -65610,7 +65580,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "sNb" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "sNe" = (
@@ -72475,7 +72445,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/se)
 "uNP" = (
-/obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /turf/simulated/floor/airless/plating,
 /area/station/crew_quarters/bathroom)
@@ -77194,7 +77164,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "wbX" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/bot_storage)
 "wcf" = (
@@ -83723,7 +83693,7 @@
 /turf/simulated/floor/carpet/red/fancy/narrow/south,
 /area/station/crew_quarters/cafeteria)
 "xSW" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/engine/gas)
 "xSZ" = (
@@ -84868,7 +84838,7 @@
 	},
 /area/station/crew_quarters/market)
 "yhV" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/hangar/science)
 "yid" = (
@@ -131435,12 +131405,12 @@ oVt
 mfs
 mfs
 mfs
-sJC
-sJC
+sqU
+sqU
 wnd
 mfs
-sGs
-sGs
+kyD
+kyD
 gug
 jxC
 aJt
@@ -132337,7 +132307,7 @@ fEX
 lhr
 dyw
 oht
-sJC
+sqU
 aSU
 mBB
 mBB
@@ -133847,7 +133817,7 @@ gRC
 bRk
 ePf
 gYk
-sJC
+sqU
 aSU
 mBB
 mBB
@@ -135063,12 +135033,12 @@ mfs
 mfs
 mfs
 mfs
-sJC
-sJC
+sqU
+sqU
 mfs
 mfs
-sJC
-sJC
+sqU
+sqU
 mfs
 kwJ
 mfs
@@ -136930,12 +136900,12 @@ fLf
 fsF
 mhe
 aaZ
-jnz
-jnz
+iwC
+iwC
 gzE
 cvN
-jnz
-jnz
+iwC
+iwC
 mhe
 mhe
 vnK
@@ -138737,18 +138707,18 @@ nZO
 acb
 cxc
 cxc
-qvg
+tHb
 gER
-qvg
+tHb
 plQ
 nAr
 plQ
 plQ
 plQ
 xUo
-qxQ
+lcg
 rRP
-lJb
+gAd
 duN
 qxQ
 qxQ
@@ -139047,11 +139017,11 @@ nyk
 gXc
 ptT
 qmW
-qvg
+tHb
 mHm
 xAW
 aSD
-qxQ
+lcg
 vIE
 sxu
 ydb
@@ -139655,7 +139625,7 @@ bmd
 uWL
 uSd
 ivX
-qxQ
+lcg
 ugb
 buT
 edW
@@ -143288,7 +143258,7 @@ dbP
 dbP
 dbP
 vqi
-mRl
+pJQ
 vqi
 hch
 mZu
@@ -152345,7 +152315,7 @@ ise
 nyj
 iik
 tLa
-mQj
+kTR
 xcQ
 wCh
 rdj
@@ -155664,7 +155634,7 @@ mfw
 kTR
 kTR
 kTR
-mQj
+kTR
 kTR
 mfw
 mfw
@@ -155975,7 +155945,7 @@ rdj
 rdj
 rdj
 bBD
-lSz
+rfz
 rNW
 qNg
 oFy
