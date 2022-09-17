@@ -174,6 +174,16 @@
 /datum/mining_encounter/seafloor
 	name = "Hydroscopic Asteroid"
 	rarity_tier = 3
+	var/static/list/crates = list(
+			/obj/storage/crate/trench_loot/meds,
+			/obj/storage/crate/trench_loot/meds2,
+			/obj/storage/crate/trench_loot/ore3,
+			/obj/storage/crate/trench_loot/rad,
+			/obj/storage/crate/trench_loot/drug,
+			/obj/storage/crate/trench_loot/clothes,
+			/obj/storage/crate/trench_loot/tools2,
+			/obj/storage/crate/trench_loot/weapons4,
+			)
 
 	generate(var/obj/magnet_target_marker/target)
 		if (..())
@@ -195,25 +205,13 @@
 			AST.build_icon()
 
 		var/list/floors = list()
-		var/list/crates = list(
-			/obj/storage/crate/trench_loot/meds,
-			/obj/storage/crate/trench_loot/meds2,
-			/obj/storage/crate/trench_loot/ore3,
-			/obj/storage/crate/trench_loot/rad,
-			/obj/storage/crate/trench_loot/drug,
-			/obj/storage/crate/trench_loot/clothes,
-			/obj/storage/crate/trench_loot/tools2,
-			/obj/storage/crate/trench_loot/weapons4,
-			)
 		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
 			floors += T
 
-		var/amount = rand(1,3)
 		var/the_crate = null
-		while (amount > 0)
-			amount--
+		for (var/i in 1 to rand(1,3))
 			the_crate = pick(crates)
-			if (floors.len) //ZeWaka: Fix for pick() from empty list
+			if (floors.len)
 				var/obj/storage/crate/new_crate = new the_crate
 				new_crate.set_loc(pick(floors))
 

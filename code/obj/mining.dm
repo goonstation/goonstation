@@ -1059,13 +1059,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 		space_overlays()
 			. = ..()
-			if (length(space_overlays)) // Are we on the edge of a chunk wall
-				var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
-				var/color_vals = list(255, 0, 255, 30) // TODO: Hardcoded hot pink lol
-				algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-				algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
-				UpdateOverlays(algea, "glow_algae")
-				add_medium_light("glow_algae", color_vals)
+			if (!length(space_overlays)) // Are we on the edge of a chunk wall
+				return
+			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
+			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			UpdateOverlays(algea, "glow_algae")
+			add_medium_light("glow_algae", color_vals)
 
 		destroy_asteroid(dropOre)
 			ClearSpecificOverlays("glow_algae")
@@ -1074,7 +1075,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			for (var/turf/T as anything in neighbors)
 				if (!length(T.medium_lights)) continue
 				T.update_medium_light_visibility()
-			. = ..()
+			return ..()
 
 	consider_superconductivity(starting)
 		return FALSE
