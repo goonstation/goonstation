@@ -107,7 +107,7 @@
 		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
-			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
@@ -122,6 +122,13 @@
 			qdel(src)
 			return
 
+		if (istype(W, /obj/item/device/light/candle))
+			user.visible_message("<b>[user]</b> carefully sets up a candle on top of [src].",\
+			"You ritualistically plant a candle on [src]. Welp.")
+			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
+			user.put_in_hand_or_drop(C)
+			qdel(W)
+			qdel(src)
 		else
 			return ..()
 

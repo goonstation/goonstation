@@ -368,7 +368,7 @@
 			new /obj/item/clothing/head/emerg(src)
 
 /obj/item/storage/box/starter/withO2
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
@@ -431,7 +431,7 @@
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return

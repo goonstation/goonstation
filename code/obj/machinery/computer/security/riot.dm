@@ -110,7 +110,7 @@
 			return
 
 		logTheThing(LOG_STATION, usr, "authorized armory access")
-		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", "sound/misc/announcement_1.ogg")
+		command_announcement("<br><b><span class='alert'>Armory weapons access has been authorized for all security personnel.</span></b>", "Security Level Increased", 'sound/misc/announcement_1.ogg')
 		authed = 1
 		src.ClearSpecificOverlays("screen_image")
 		src.icon_state = "drawbr-alert"
@@ -138,6 +138,7 @@
 		if(src.authed)
 
 			logTheThing(LOG_STATION, usr, "unauthorized armory access")
+			command_announcement("<br><b><span class='alert'>Armory weapons access has been revoked from all security personnel. All crew are advised to hand in riot gear to the Head of Security.</span></b>", "Security Level Decreased", "sound/misc/announcement_1.ogg")
 			authed = 0
 			src.ClearSpecificOverlays("screen_image")
 			icon_state = "drawbr"
@@ -212,11 +213,11 @@
 		if (choice == "Unauthorize")
 			if(GET_COOLDOWN(src, "unauth"))
 				boutput(user, "<span class='alert'> The armory computer cannot take your commands at the moment! Wait [GET_COOLDOWN(src, "unauth")/10] seconds!</span>")
-				playsound( src.loc,"sound/machines/airlock_deny.ogg", 10, 0 )
+				playsound( src.loc, 'sound/machines/airlock_deny.ogg', 10, 0 )
 				return
 			if(!ON_COOLDOWN(src, "unauth", 5 MINUTES))
 				unauthorize()
-				playsound(src.loc,"sound/machines/chime.ogg", 10, 1)
+				playsound(src.loc, 'sound/machines/chime.ogg', 10, 1)
 				boutput(user,"<span class='notice'> The armory's equipments have returned to having their default access!</span>")
 		return
 

@@ -134,11 +134,11 @@ var/global/lastStationNameChange = 0 //timestamp
 		"nouns" = "Nouns"
 	)
 
-	whitelist_lists = sortList(whitelist_lists)
+	sortList(whitelist_lists, /proc/cmp_text_asc)
 
 	for (var/section in whitelist_lists)
 		var/list/words = strings("station_name_whitelist.txt", section)
-		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words))
+		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
 			station_name_whitelist += lowertext(word)

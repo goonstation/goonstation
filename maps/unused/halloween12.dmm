@@ -183,7 +183,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Pad Lockdown Door";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	tag = "icon-1-2";
@@ -9811,7 +9811,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -11249,7 +11249,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -11689,7 +11689,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -12044,7 +12044,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -23018,7 +23018,7 @@
 	layer = 4;
 	name = "Market #2";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -23039,7 +23039,7 @@
 	layer = 4;
 	name = "Market #1";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -24720,7 +24720,7 @@
 	layer = 4;
 	name = "Privacy Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/table/reinforced/bar{
 	dir = 4
@@ -27378,7 +27378,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27714,7 +27714,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31175,7 +31175,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;

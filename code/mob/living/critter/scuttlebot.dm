@@ -18,10 +18,10 @@
 						/datum/targetable/critter/flash,
 						/datum/targetable/critter/scuttle_scan,
 						/datum/targetable/critter/control_owner)
-	var/health_brute = 25
-	var/health_brute_vuln = 1
-	var/health_burn = 25
-	var/health_burn_vuln = 0.2
+	health_brute = 25
+	health_brute_vuln = 1
+	health_burn = 25
+	health_burn_vuln = 0.2
 	var/is_inspector = FALSE
 	var/mob/living/carbon/human/controller = null //Who's controlling us? Lets keep track so we can put them back in their body
 
@@ -54,12 +54,12 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/robot_scream.ogg" , 60, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/robot_scream.ogg' , 60, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> screams!"
 
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
 					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
 		return null
 
@@ -76,11 +76,11 @@
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 			src.audible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 			src.drop_item()
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			elecflash(src, radius=1, power=3, exclude_center = 0)
 			qdel(src)
 		else
-			playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
 
 	proc/return_to_owner()

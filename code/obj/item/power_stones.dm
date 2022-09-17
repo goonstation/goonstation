@@ -70,7 +70,7 @@
 					return ..(user)
 				else
 					boutput(user,"<span class='alert'><B>The stone finds you unworthy.</B></span>")
-					playsound(user.loc, "sound/voice/animal/hoot.ogg", 100, 1)
+					playsound(user.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
 					logTheThing(LOG_COMBAT, user, "is owlgibbed by [src] at [log_loc(user)]")
 					user.owlgib()
 

@@ -48,6 +48,7 @@
 	stamina_cost = 0
 	stamina_crit_chance = 0
 
+	pixel_point = TRUE
 
 	New()
 		..()
@@ -90,7 +91,7 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 

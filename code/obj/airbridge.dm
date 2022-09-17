@@ -171,7 +171,7 @@
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
 					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
-				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -207,10 +207,10 @@
 
 		working = 1
 		maintaining_bridge = 0
-		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 
 		SPAWN(2 SECONDS)
-			var/list/path_reverse = reverse_list(path)
+			var/list/path_reverse = reverse_list_range(path)
 
 			for(var/obj/light in src.my_lights)
 				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
@@ -227,7 +227,7 @@
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
 					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
-				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)

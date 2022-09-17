@@ -239,7 +239,7 @@
 				var/mob/living/R2 = M3.humanize()
 				if (R2 && istype(R2))
 					M3 = R2
-					R2.make_werewolf(1)
+					R2.make_werewolf()
 					role = ROLE_WEREWOLF
 					objective_path = /datum/objective_set/werewolf
 				else
@@ -376,7 +376,7 @@
 
 		if (lucky_dude.current)
 			lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
-		message_admins("[lucky_dude.key] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+		message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 		return

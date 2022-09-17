@@ -731,7 +731,7 @@
 				return
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
@@ -832,7 +832,7 @@
 				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
-			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
+			H.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 5)
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -845,7 +845,7 @@
 		return
 
 	if(current_lamp.light_status == LIGHT_OK || current_lamp.light_status == LIGHT_BURNED)
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 
 	if(!nospark)
 		if(on)
@@ -1366,7 +1366,7 @@
 		boutput(user, "The [name] shatters!")
 		light_status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 		update()
 
 /obj/machinery/light/get_power_wire()

@@ -18,10 +18,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/text_cooldown = "makes a subdued noise."
 	var/text_dud = "sputters and rattles a bit, then falls quiet."
 	var/flascustomization_first_color = "#FF0000"
-	var/sound/alarm_initial = "sound/machines/lavamoon_plantalarm.ogg"
-	var/sound/alarm_during = "sound/machines/alarm_a.ogg"
-	var/sound/alarm_final = "sound/machines/engine_alert1.ogg"
-	var/sound/sound_cooldown = "sound/machines/weaponoverload.ogg"
+	var/sound/alarm_initial = 'sound/machines/lavamoon_plantalarm.ogg'
+	var/sound/alarm_during = 'sound/machines/alarm_a.ogg'
+	var/sound/alarm_final = 'sound/machines/engine_alert1.ogg'
+	var/sound/sound_cooldown = 'sound/machines/weaponoverload.ogg'
 	var/doAlert = 0
 	var/blewUp = 0
 	var/animationScale = 3
@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_final = ""
 	alarm_initial = null
 	alarm_during = null
-	alarm_final = "sound/machines/satcrash.ogg"
+	alarm_final = 'sound/machines/satcrash.ogg'
 	var/material = "gold"
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue

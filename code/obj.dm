@@ -178,7 +178,7 @@
 		O.alpha = alpha
 		O.anchored = anchored
 		O.set_density(density)
-		O.opacity = opacity
+		O.set_opacity(opacity)
 		if (material)
 			O.setMaterial(material)
 		O.transform = transform
@@ -207,7 +207,7 @@
 		else
 			return null
 
-	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		//Return: (NONSTANDARD)
 		//		null if object handles breathing logic for lifeform
 		//		datum/air_group to tell lifeform to process using that breath return
@@ -215,10 +215,10 @@
 		if (breath_request>0)
 			var/datum/gas_mixture/environment = return_air()
 			if (environment)
-				var/breath_moles = TOTAL_MOLES(environment)*BREATH_PERCENTAGE
+				var/breath_moles = TOTAL_MOLES(environment)*BREATH_PERCENTAGE*mult
 				return remove_air(breath_moles)
 			else
-				return remove_air(breath_request)
+				return remove_air(breath_request * mult)
 		else
 			return null
 
@@ -365,7 +365,7 @@
 			var/obj/item/tile/T = C
 			if (T.amount >= 1)
 				T.build(get_turf(src))
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 				T.add_fingerprint(user)
 				qdel(src)
 			return
@@ -390,7 +390,7 @@
 
 	proc/barricade_damage(var/hitstrength)
 		strength -= hitstrength
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if (strength < 1)
 			src.visible_message("The barricade breaks!")
 			if (prob(50)) new /obj/item/rods/steel(src.loc)
@@ -428,7 +428,7 @@
 			if (W.force > 8)
 				user.lastattacked = src
 				src.barricade_damage(W.force / 8)
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 			..()
 
 	ex_act(severity)
@@ -510,7 +510,7 @@
 		replica.name = O.name
 		replica.desc = O.desc
 		replica.set_density(O.density)
-		replica.opacity = O.opacity
+		replica.set_opacity(O.opacity)
 		replica.anchored = O.anchored
 		replica.layer = O.layer - 0.05
 		replica.pixel_x = O.pixel_x
@@ -546,6 +546,9 @@
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
+
+/obj/proc/mob_resist_inside(var/mob/user)
+	return
 
 /obj/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()

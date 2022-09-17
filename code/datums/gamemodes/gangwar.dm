@@ -3,6 +3,7 @@
 	name = "gang"
 	config_tag = "gang"
 
+	antag_token_support = TRUE
 	var/list/leaders = list()
 	var/list/gangs = list()
 
@@ -720,7 +721,7 @@
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -729,7 +730,7 @@
 			return
 
 		if(prob(15))
-			playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")
