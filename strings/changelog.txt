@@ -1,4 +1,7 @@
 
+(t)sat sep 17 22
+(u)Flappybat
+(+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
 (t)fri sep 16 22
 (u)Mr. Moriarty
 (p)10641
