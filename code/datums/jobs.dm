@@ -2407,7 +2407,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat/NT)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud)
+	slot_eyes = list(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/command

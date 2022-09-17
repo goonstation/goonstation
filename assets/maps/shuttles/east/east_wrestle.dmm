@@ -47,7 +47,7 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "aQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -706,7 +706,7 @@
 	},
 /area/centcom/outside)
 "wT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "xw" = (
@@ -1026,6 +1026,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "JK" = (

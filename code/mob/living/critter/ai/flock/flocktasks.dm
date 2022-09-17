@@ -205,6 +205,8 @@ stare
 	. = list()
 	var/mob/living/critter/flock/F = holder.owner
 	for(var/turf/simulated/floor/T in view(max_dist, holder.owner))
+		if (!flockTurfAllowed(T))
+			continue
 		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 			continue
 		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
@@ -242,7 +244,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/valid_target(var/atom/target)
 	var/mob/living/critter/flock/F = holder.owner
-	if(!isfeathertile(target))
+	if(!isfeathertile(target) && flockTurfAllowed(get_turf(target)))
 		if(F?.flock && !F.flock.isTurfFree(target, F.real_name))
 			return FALSE
 		return TRUE
@@ -355,7 +357,7 @@ stare
 	. = list()
 	//as drone, we want to prioritise converting doors and walls and containers
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
-		if(!isfeathertile(T) && (
+		if(!isfeathertile(T) && flockTurfAllowed(T) && (
 			istype(T, /turf/simulated/wall) || \
 			locate(/obj/machinery/door/airlock) in T || \
 			locate(/obj/storage) in T))
@@ -368,7 +370,7 @@ stare
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
 	if(!length(.))
 		for(var/turf/simulated/T in view(max_dist, holder.owner))
-			if(!isfeathertile(T))
+			if(!isfeathertile(T) && flockTurfAllowed(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
 				. = get_path_to(holder.owner, list(T), max_dist, 1)
