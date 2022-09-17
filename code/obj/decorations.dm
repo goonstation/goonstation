@@ -1255,7 +1255,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4

@@ -37471,7 +37471,10 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/launcher_loader/north,
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargo_in"
+	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "bBS" = (
@@ -37967,6 +37970,7 @@
 	name = "Door-linked Atmospheric Forcefield";
 	powerlevel = 1
 	},
+/obj/machinery/launcher_loader/north,
 /turf/simulated/floor/caution/misc,
 /area/station/quartermaster/office)
 "bCZ" = (
@@ -38573,13 +38577,6 @@
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/storage)
-"bEe" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/station/quartermaster/office)
 "bEf" = (
 /obj/lattice{
 	dir = 10;
@@ -43451,6 +43448,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
+"dzu" = (
+/obj/machinery/conveyor{
+	dir = 1;
+	id = "cargo_in"
+	},
+/turf/space,
+/area/space)
 "dCy" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -44833,6 +44837,13 @@
 	dir = 6
 	},
 /area/station/security/brig)
+"gIl" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/station/shield_zone)
 "gIr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -90335,10 +90346,10 @@ bzx
 bAx
 bBP
 bCX
-bEe
-aay
-aay
-aay
+bDq
+aaa
+aaa
+aaa
 aaa
 aaa
 aaa
@@ -90592,11 +90603,11 @@ bzy
 bAy
 bBQ
 bzw
-bDq
+gIl
 aay
-aaa
-aaa
-aaa
+aay
+aay
+aay
 aaa
 aaa
 aaa
@@ -90850,9 +90861,9 @@ bAz
 bBR
 bCY
 bEf
-aay
-aay
-aay
+dzu
+dzu
+aaa
 aaa
 aaa
 aaa
