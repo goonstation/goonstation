@@ -1,5 +1,9 @@
 
 (t)sat sep 17 22
+(u)Ikea, tarmunora
+(p)10505
+(e)|
+(*)Cryoxadone brute/burn healing has been reduced from 12 to 2, oxy healing also reduced to 2, however it now can combat losebreath, counters radiation, and provides some protection from random death rolls in crit while in effect. Cryoxadone will no longer work when body temp is below -240C or so
 (u)ZWRh3
 (p)10858
 (e)|
