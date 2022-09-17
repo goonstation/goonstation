@@ -25478,7 +25478,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "bNk" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -25601,7 +25601,7 @@
 	dir = 1;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "bRR" = (
 /obj/lattice{
 	dir = 9;
@@ -26334,7 +26334,7 @@
 "cFD" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "cFT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26355,7 +26355,7 @@
 /turf/simulated/floor/carpet{
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "cGu" = (
 /obj/cable/black{
 	icon_state = "2-4"
@@ -28036,7 +28036,7 @@
 	dir = 10;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "ecM" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/ptl)
@@ -28045,7 +28045,7 @@
 /area/station/turret_protected/AIsat)
 "edp" = (
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "edx" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -32148,7 +32148,7 @@
 	dir = 9;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "hFy" = (
 /obj/machinery/firealarm{
 	dir = 1;
@@ -32237,7 +32237,7 @@
 	pixel_y = -1
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "hKJ" = (
 /obj/machinery/conveyor/west{
 	id = "cargo-art-in"
@@ -33799,9 +33799,6 @@
 /obj/decal/poster/wallsign/danger_highvolt,
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/gen_storage)
-"jkE" = (
-/turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/barber_shop)
 "jlr" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -35107,7 +35104,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "kwi" = (
 /obj/machinery/light/incandescent,
 /obj/item/neon_lining/cut,
@@ -36306,7 +36303,7 @@
 /obj/item/clothing/head/biglizard,
 /obj/item/clothing/suit/wizrobe/purple,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "lyw" = (
 /obj/effects/background_objects/star_blue,
 /obj/effects/background_objects/star_red,
@@ -36859,7 +36856,7 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "lYX" = (
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -37753,7 +37750,7 @@
 /obj/random_item_spawner/pizza,
 /obj/storage/crate/pizza,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "mNv" = (
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/science/lobby)
@@ -37898,7 +37895,7 @@
 	dir = 6;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "mSm" = (
 /obj/machinery/genetics_scanner,
 /obj/machinery/camera{
@@ -37960,7 +37957,7 @@
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "mUN" = (
 /obj/landmark/start{
 	name = "Engineer"
@@ -38554,7 +38551,7 @@
 	},
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "nwq" = (
 /obj/lattice{
 	dir = 2;
@@ -39969,7 +39966,7 @@
 	name = "Assistant"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "oJW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40018,6 +40015,9 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"oLx" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/arcade/dungeon)
 "oLE" = (
 /obj/stool,
 /obj/machinery/light/incandescent,
@@ -40506,7 +40506,7 @@
 	dir = 5;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "peT" = (
 /obj/item/raw_material/shard/glass,
 /turf/simulated/floor/plating,
@@ -40683,7 +40683,7 @@
 	dir = 5;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "ppd" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/escape{
@@ -41538,7 +41538,7 @@
 	dir = 9;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "qgJ" = (
 /obj/machinery/sparker{
 	dir = 1;
@@ -43181,7 +43181,7 @@
 /obj/table/wood/auto,
 /obj/random_item_spawner/tableware/three,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "rvM" = (
 /obj/item/cigbutt{
 	pixel_x = -1;
@@ -43259,7 +43259,7 @@
 "rxV" = (
 /obj/machinery/vending/cola/red,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "ryq" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43446,6 +43446,9 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"rJf" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/crew_quarters/arcade/dungeon)
 "rJk" = (
 /obj/iv_stand,
 /turf/simulated/floor/engine,
@@ -44651,7 +44654,7 @@
 	dir = 4;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "sCz" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -45826,7 +45829,7 @@
 	dir = 1;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "tyd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46253,7 +46256,7 @@
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "tQe" = (
 /turf/simulated/floor/dirt,
 /area/station/ranch)
@@ -46593,7 +46596,7 @@
 	dir = 9;
 	icon_state = "fred1"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "uhd" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -46843,7 +46846,7 @@
 "usb" = (
 /obj/machinery/vending/pizza,
 /turf/simulated/floor/carpet/grime,
-/area/station/maintenance/inner/central)
+/area/station/crew_quarters/arcade/dungeon)
 "utf" = (
 /obj/disposalpipe/segment/mail{
 	dir = 8;
@@ -46952,7 +46955,7 @@
 	dir = 8;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "uyl" = (
 /obj/random_item_spawner/tools/one_or_zero,
 /turf/simulated/floor/plating,
@@ -48350,7 +48353,7 @@
 	dir = 5;
 	icon_state = "fred2"
 	},
-/area/station/crew_quarters/barber_shop)
+/area/station/crew_quarters/arcade/dungeon)
 "vJy" = (
 /obj/firedoor_spawn,
 /obj/access_spawn/crematorium,
@@ -49104,9 +49107,6 @@
 /obj/access_spawn/research,
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
-"wxU" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/barber_shop)
 "wyb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -85129,15 +85129,15 @@ aOE
 aEk
 qwo
 azU
-lpG
-wxU
+oLx
+rJf
 cFD
 cFD
-wxU
-wxU
-acd
-acd
-acd
+rJf
+rJf
+rJf
+rJf
+rJf
 aXP
 aYE
 aXP
@@ -85431,13 +85431,13 @@ fck
 bLC
 hll
 azU
-lpG
+oLx
 hFr
 bMT
 uxw
 ecC
 mUe
-aCy
+oLx
 usb
 mNs
 aXP
@@ -85733,12 +85733,12 @@ aNS
 aEk
 fcg
 azU
-lpG
+oLx
 bQH
 ugE
 peB
 cGc
-jkE
+edp
 tPS
 edp
 edp
@@ -86035,12 +86035,12 @@ hJE
 aLj
 hll
 aFq
-lpG
+oLx
 tyc
 poZ
 qgt
 cGc
-jkE
+edp
 kvI
 oJE
 hKE
@@ -86337,13 +86337,13 @@ dFk
 xFa
 nFf
 aXf
-lpG
+oLx
 vJw
 sBZ
 lYT
 mSh
 lyh
-aCy
+oLx
 rxV
 rvd
 aXP
@@ -86639,15 +86639,15 @@ uvh
 aLj
 azk
 aAl
-lpG
-lpG
-lpG
+oLx
+oLx
+oLx
 nvW
-lpG
-lpG
-aCy
-aBQ
-aBQ
+oLx
+oLx
+oLx
+rJf
+rJf
 aXP
 aYE
 aXP
