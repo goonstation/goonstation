@@ -96,6 +96,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
+
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
 

@@ -396,7 +396,7 @@
 
 /obj/item/storage/fanny
 	name = "fanny pack"
-	desc = "No, 'fanny' as in 'butt.' Not the other thing."
+	desc = "Be the butt of jokes with this simple storage device."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"

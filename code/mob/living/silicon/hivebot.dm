@@ -80,7 +80,7 @@
 		logTheThing(LOG_COMBAT, src, "'s AI shell was destroyed at [log_loc(src)].") // Brought in line with carbon mobs (Convair880).
 		src.mainframe.return_to(src)
 	if (src.camera)
-		src.camera.camera_status = 0
+		src.camera.set_camera_status(FALSE)
 
 	setdead(src)
 	src.canmove = 0

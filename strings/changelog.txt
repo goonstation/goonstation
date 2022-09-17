@@ -1,5 +1,47 @@
 
+(t)sat sep 17 22
+(u)BotchKing
+(p)10825
+(e)|
+(+)Changes criminal status to "released" upon being flushed
+(u)Ikea, tarmunora
+(p)10505
+(e)|
+(*)Cryoxadone brute/burn healing has been reduced from 12 to 2, oxy healing also reduced to 2, however it now can combat losebreath, counters radiation, and provides some protection from random death rolls in crit while in effect. Cryoxadone will no longer work when body temp is below -240C or so
+(u)ZWRh3
+(p)10858
+(e)|
+(*)Thralls are now immune to all diseases and maladies
+(u)Flappybat
+(+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
 (t)fri sep 16 22
+(u)Mr. Moriarty
+(p)10641
+(e)|
+(+)Conspirator headsets now have a removable private radio channel upgrade, instead of their immutable radio channel.
+(+)Wiretap radio upgrades (alongside the Conspirators' private radio channel upgrades) may now be removed with a snipping tool.
+(u)LeahTheTech
+(p)10685
+(e)|
+(+)Flock can no longer break into the listening post or convert the ghostdrone factory. Bad radio pigeons.
+(u)NightmarechaMillian
+(p)10661
+(e)|
+(*)New pipeshot subtype: Plasmaglass! See minor changes for more details.
+(+)Plasmaglass pipeshot shoots like a middle ground between scrap and glass (fires 4 projectiles at a 15 degree spread), but has armor piercing properties.
+(u)BatElite
+(p)10819
+(e)|
+(*)Nuclear operative teams now have 2 options for where to plant the nuke.
+(u)Amylizzle
+(p)10818
+(e)|
+(*)Ghosts can shoulder surf your TGUI windows now. You're always being watched.
+(*)As an observer, when you're observing someone, click on the machine they're using to open the window they see.
+(u)ZWRh3
+(p)10542
+(e)|
+(+)following items were removed from battle royale: makeshift armor, microbomb, holographic disguiser, syndicate sponge capsules and turboflash box
 (u)glowbold
 (p)10552
 (e)|
