@@ -717,29 +717,21 @@ var/flock_signal_unleashed = FALSE
 			flock_conversion_paths[subtype] = /obj/flock_structure/compute
 		for (var/subtype in typesof(/obj/machinery/networked/mainframe))
 			flock_conversion_paths[subtype] = /obj/flock_structure/compute/mainframe
-		for (var/subtype in typesof(/obj/spacevine))
-			flock_conversion_paths[subtype] = "delete"
 
-		flock_conversion_paths -= /obj/machinery/computer/card/portable
-		flock_conversion_paths -= /obj/machinery/computer/security/wooden_tv
-		flock_conversion_paths -= /obj/machinery/computer/secure_data/detective_computer
-		flock_conversion_paths -= /obj/machinery/computer/airbr
-		flock_conversion_paths -= /obj/machinery/computer/tanning
-		flock_conversion_paths -= /obj/machinery/computer/tour_console
-		flock_conversion_paths -= /obj/machinery/computer/arcade
-		flock_conversion_paths -= /obj/machinery/computer/tetris
+		var/types_to_skip = list(/obj/machinery/computer/card/portable, /obj/machinery/computer/security/wooden_tv,
+									/obj/machinery/computer/secure_data/detective_computer, /obj/machinery/computer/airbr,
+									/obj/machinery/computer/tanning, /obj/machinery/computer/tour_console, /obj/machinery/computer/arcade,
+									/obj/machinery/computer/tetris, /obj/machinery/computer3/luggable, /obj/machinery/computer3/generic/personal,
+									/obj/machinery/light/lamp)
+		for (var/type in types_to_skip)
+			for (var/subtype in typesof(type))
+				flock_conversion_paths -= subtype
 
-		flock_conversion_paths -= /obj/machinery/computer3/luggable
-		flock_conversion_paths -= /obj/machinery/computer3/generic/personal
-
-		flock_conversion_paths -= /obj/machinery/light/lamp
-
-		flock_conversion_paths[/obj/machinery/door/firedoor/pyro] = "delete"
-		flock_conversion_paths[/obj/machinery/door/window] = "delete"
-		flock_conversion_paths[/obj/machinery/door/window] = "delete"
-		flock_conversion_paths[/obj/machinery/door/airlock/pyro/glass/windoor] = "delete"
-		flock_conversion_paths[/obj/machinery/door/poddoor/pyro/shutters] = "delete"
-		flock_conversion_paths[/obj/machinery/door/unpowered/wood] = "delete"
+		var/types_to_delete = list(/obj/machinery/door/firedoor/pyro, /obj/machinery/door/window, /obj/machinery/door/airlock/pyro/glass/windoor,
+								/obj/machinery/door/poddoor/pyro/shutters, /obj/machinery/door/unpowered/wood, /obj/spacevine)
+		for (var/type in types_to_delete)
+			for (var/subtype in typesof(type))
+				flock_conversion_paths[subtype] = "delete"
 
 	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
