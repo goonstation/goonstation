@@ -33,6 +33,10 @@
 		src.ability_holder.removeAbility(/datum/targetable/hunter/hunter_summongear)
 		src.owner.current.remove_ability_holder(/datum/abilityHolder/hunter)
 
+	relocate()
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+
 	assign_objectives()
 		new /datum/objective_set/hunter(src.owner)
 

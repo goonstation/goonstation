@@ -248,7 +248,7 @@
 			if ("Hunter")
 				var/mob/living/L = M3.humanize()
 				if (istype(L))
-					L.mind?.add_antagonist(ROLE_HUNTER)
+					L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
 				else
 					failed = 1
 
