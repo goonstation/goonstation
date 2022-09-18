@@ -1092,7 +1092,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/large/48x32.dmi'
-	icon_state = "shotty-empty"
+	icon_state = "shotty"
 	item_state = "shotty"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
