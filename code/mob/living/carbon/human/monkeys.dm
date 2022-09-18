@@ -263,7 +263,7 @@
 					if (ismob(thing_to_poke) && healing_touch && healing_touch.ability.last_cast < world.time)
 						healing_touch.ability.handleCast(thing_to_poke)
 					else if (!ismob(thing_to_poke) && midas_touch && midas_touch?.ability.last_cast < world.time)
-						midas_touch?.ability.handleCast(thing_to_poke)
+						midas_touch.ability.handleCast(thing_to_poke)
 					else
 						ink_glands?.ability.handleCast(thing_to_poke)
 				else if(src.equipped())
