@@ -556,6 +556,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
+	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
@@ -1094,6 +1095,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
+	wear_state = "shotty" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
