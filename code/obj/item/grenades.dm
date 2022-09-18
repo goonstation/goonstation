@@ -1190,7 +1190,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
 					user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
-					src.icon_state = "bcharge2"
+					src.icon_state += "1"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
 					src.anchored = 1
@@ -1283,42 +1283,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 0
-
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (user.equipped() == src)
-			if (!src.state)
-				if (istype(target, /obj/item/storage))
-					return
-				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
-					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
-					var/area/A = get_area(src)
-					if(!A.dont_log_combat)
-						logTheThing(LOG_COMBAT, user, "accidentally triggers [src] (clumsy bioeffect) at [log_loc(user)].")
-					SPAWN(0.5 SECONDS)
-						user.u_equip(src)
-						src.boom()
-						return
-				else
-					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
-					user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
-					src.icon_state = "syndicharge1"
-					user.u_equip(src)
-					src.set_loc(get_turf(target))
-					src.anchored = 1
-					src.state = 1
-
-					// Yes, please (Convair880).
-					var/area/A = get_area(src)
-					if(!A.dont_log_combat)
-						logTheThing(LOG_COMBAT, user, "attaches a [src] to [target] at [log_loc(target)].")
-
-					SPAWN(src.det_time)
-						if (src)
-							src.boom()
-							if (target)
-								if (istype(target, /obj/machinery))
-									target.ex_act(1) // Reliably blasts through doors.
-						return
 
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"

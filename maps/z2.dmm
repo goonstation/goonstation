@@ -56967,11 +56967,9 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
-/obj/item/breaching_charge/syndicate,
-/obj/item/breaching_charge/syndicate,
-/obj/item/breaching_charge/syndicate,
-/obj/item/breaching_charge/syndicate,
-/obj/item/breaching_charge/syndicate,
+/obj/landmark{
+	name = "Breaching-Charges"
+	},
 /turf/unsimulated/floor/darkblue,
 /area/syndicate_station/battlecruiser)
 "dgM" = (
