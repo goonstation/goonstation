@@ -747,7 +747,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\grinch\abilities\vandalism.dm"
 #include "code\modules\antagonists\hunter\hunter.dm"
 #include "code\modules\antagonists\traitor\sleeper_agent.dm"
-#include "code\modules\antagonists\hunter\hunter.dm"
 #include "code\modules\antagonists\traitor\traitor.dm"
 #include "code\modules\antagonists\wraith\bioEffects\curses.dm"
 #include "code\modules\antagonists\wraith\critters\exploder.dm"
