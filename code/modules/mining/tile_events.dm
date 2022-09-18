@@ -112,7 +112,7 @@
 		AST.amount += rand(1,3)
 
 /datum/ore/event/volatile
-	analysis_string = "Caution! Volatile compounds detected!"
+	analysis_string = "Danger! Volatile compounds detected!"
 	scan_decal = "scan-danger"
 	prevent_excavation = 1
 	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
@@ -121,11 +121,12 @@
 	New()
 		..()
 		warning_overlay = image('icons/turf/walls_asteroid.dmi', "unstable")
+		warning_overlay.layer = ASTEROID_MINING_SCAN_DECAL_LAYER
 
 	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		AST.overlays += warning_overlay
+		AST.UpdateOverlays(warning_overlay, "warning")
 		var/timer = rand(3,6) * 10
 		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
@@ -133,7 +134,7 @@
 				explosion(AST, AST, 1, 2, 3, 4, 1)
 
 /datum/ore/event/radioactive
-	analysis_string = "Caution! Radioactive mineral deposits detected!"
+	analysis_string = "Danger! Radioactive mineral deposits detected!"
 	nearby_tile_distribution_min = 4
 	nearby_tile_distribution_max = 8
 	scan_decal = "scan-danger"
@@ -150,3 +151,28 @@
 			return
 		for (var/mob/living/L in range(1,AST))
 			L.take_radiation_dose(0.1 SIEVERTS)
+
+/datum/ore/event/nanites
+	analysis_string = "Danger! Suspended nano-lifeforms detected!"
+	scan_decal = "scan-danger"
+	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
+	weight = 10
+	var/image/warning_overlay = null
+
+	New()
+		..()
+		warning_overlay = image('icons/turf/walls_asteroid.dmi', "nanite cluster1")
+		warning_overlay.layer = ASTEROID_MINING_SCAN_DECAL_LAYER
+
+	onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
+		if (..())
+			return
+		AST.UpdateOverlays(warning_overlay, "warning")
+
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+		if (!AST)
+			return 1
+		var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+		var/obj/item/I = new /obj/item/material_piece/cloth/carbon
+		N.set_loc(AST)
+		I.set_loc(AST)
