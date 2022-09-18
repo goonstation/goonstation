@@ -1619,7 +1619,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "It shoots bullets."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/gun/kinetic/colt_saa
+	item_path = /obj/item/gun/kinetic/single_action/colt_saa
 /datum/gang_item/country_western/colt_45_bullet
 	name = "Colt .45 Speedloader"
 	desc = "A speedloader containing 7 rounds of Colt .45 ammunition.."

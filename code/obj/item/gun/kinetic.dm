@@ -268,6 +268,36 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return 0
 		return 1
 
+ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
+/obj/item/gun/kinetic/single_action
+	var/hammer_cocked = FALSE
+
+	// Handles the odd scenario of gilding and hammer cocking
+	update_icon()
+		. = ..()
+		src.icon_state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "") + (src.hammer_cocked ? "-c" : "")
+
+	canshoot()
+		if (hammer_cocked)
+			return ..()
+		else
+			return FALSE
+
+	shoot(var/target,var/start ,var/mob/user)
+		..()
+		hammer_cocked = FALSE
+		src.UpdateIcon()
+
+	attack_self(mob/user as mob)
+		..()	//burst shot has a slight spread.
+		if (hammer_cocked)
+			boutput(user, "<span class='notice'>You gently lower the weapon's hammer!</span>")
+		else
+			boutput(user, "<span class='alert'>You cock the hammer!</span>")
+			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
+		src.hammer_cocked = !src.hammer_cocked
+		src.UpdateIcon()
+
 /obj/item/casing
 	name = "bullet casing"
 	desc = "A spent casing from a bullet of some sort."
@@ -971,7 +1001,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		UpdateIcon()
 
 //0.45
-/obj/item/gun/kinetic/colt_saa
+
+/obj/item/gun/kinetic/single_action/colt_saa
 	name = "colt saa revolver"
 	desc = "A nearly adequate replica of a nearly ancient single action revolver. Used by war reenactors for the last hundred years or so."
 	icon_state = "colt_saa"
@@ -982,7 +1013,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	spread_angle = 1
 	max_ammo_capacity = 7
 	default_magazine = /obj/item/ammo/bullets/c_45
-	var/hammer_cocked = 0
 
 	detective
 		name = "\improper Peacemaker"
@@ -1000,28 +1030,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/revolver_45)
 		..()
-
-	canshoot()
-		if (hammer_cocked)
-			return ..()
-		else
-			return 0
-	shoot(var/target,var/start ,var/mob/user)
-		..()
-		hammer_cocked = 0
-		icon_state = "colt_saa"
-
-	attack_self(mob/user as mob)
-		..()	//burst shot has a slight spread.
-		if (hammer_cocked)
-			hammer_cocked = 0
-			icon_state = "colt_saa"
-			boutput(user, "<span class='notice'>You gently lower the weapon's hammer!</span>")
-		else
-			hammer_cocked = 1
-			icon_state = "colt_saa-c"
-			boutput(user, "<span class='alert'>You cock the hammer!</span>")
-			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
 
 //0.58
 /obj/item/gun/kinetic/flintlockpistol
