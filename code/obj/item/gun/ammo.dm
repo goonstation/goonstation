@@ -1304,6 +1304,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	charge = 100
 	max_charge = 100
 
+/obj/item/ammo/power_cell/self_charging/disruptor/bad
+	name = "Power Cell - Slowcharge Plus"
+	desc = "An upgraded radioisotope power cell to support additional capacity. Holds 100 PU"
+	recharge_rate = 2.5
+
 /obj/item/ammo/power_cell/self_charging/ntso_baton
 	name = "Power Cell - NTSO Stun Baton"
 	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
