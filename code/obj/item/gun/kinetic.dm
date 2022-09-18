@@ -282,6 +282,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	update_icon()
 		. = ..()
 		src.icon_state = src.gen_icon_state(FALSE)
+		src.wear_state = src.gen_icon_state(TRUE)
 		if (src.has_uncocked_state && src.fire_animation)
 			src.has_fire_anim_state = TRUE
 			src.fire_anim_state = src.gen_icon_state(TRUE)
@@ -1217,8 +1218,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	name = "\improper MTs-255 Revolver Shotgun"
 	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."
 	icon = 'icons/obj/large/48x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
+	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
