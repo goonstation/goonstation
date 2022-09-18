@@ -170,9 +170,9 @@
 		AST.UpdateOverlays(warning_overlay, "warning")
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
-		if (!AST)
-			return 1
-		var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
-		var/obj/item/I = new /obj/item/material_piece/cloth/carbon
-		N.set_loc(AST)
-		I.set_loc(AST)
+		if (..())
+			return
+		var/obj/critter/ancient_repairbot/nanites = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+		var/obj/item/loot = new /obj/item/material_piece/cloth/carbon
+		nanites.set_loc(AST)
+		loot.set_loc(AST)
