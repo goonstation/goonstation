@@ -406,7 +406,7 @@
 
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
-	desc = "An armored jacket worn by NanoTrasen security commanders."
+	desc = "An armored jacket given by nanotrasen for when their bureaucrats inevitably get shoved into hostile situations."
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO

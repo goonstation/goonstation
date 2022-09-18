@@ -1473,7 +1473,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 /datum/job/special/random/inspector
 	name = "Inspector"
 	wages = PAY_IMPORTANT
-	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	slot_back = list(/obj/item/storage/backpack/withO2)
