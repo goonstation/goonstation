@@ -364,6 +364,16 @@ toxic - poisons
 	shot_volume = 66
 	sname = "full auto"
 
+/datum/projectile/bullet/nine_mm_soviet
+	name = "bullet"
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	power = 15
+	impact_image_state = "bhole-small"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/ninemmplastic
+	casing = /obj/item/casing/small
+
 //0.357
 /datum/projectile/bullet/revolver_357
 	name = "bullet"

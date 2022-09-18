@@ -534,6 +534,17 @@
 /obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
 	amount_left = 0
 
+/obj/item/ammo/bullets/nine_mm_soviet
+	sname = "9x18mm Makarov"
+	name = "9x18mm magazine"
+	desc = "A standard 8 round magazine, for the PM pistol. It featuring an observation slot for checking remaining munitions."
+	icon_state = "makarov_magazine"
+	icon_empty = "makarov_magazine-empty"
+	amount_left = 8
+	max_amount = 8
+	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
+	ammo_cat = AMMO_PISTOL_9MM
+
 //0.357
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
