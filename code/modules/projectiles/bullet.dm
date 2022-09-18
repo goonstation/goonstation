@@ -371,7 +371,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
-	implanted = /obj/item/implant/projectile/ninemmplastic
+	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 
 //0.357
