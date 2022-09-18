@@ -653,7 +653,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	shoot_delay = 2
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
-	ammo_cats = list(AMMO_PISTOL_9MM)
+	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
 	max_ammo_capacity = 18
 	auto_eject = 1
 	has_empty_state = 1
@@ -749,7 +749,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
-	ammo_cats = list(AMMO_PISTOL_9MM)
+	ammo_cats = list(AMMO_PISTOL_9MM_SOVIET)
 	max_ammo_capacity = 8
 	shoot_delay = 2
 	auto_eject = TRUE
@@ -1585,7 +1585,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_PISTOL
 	contraband = 4
-	ammo_cats = list(AMMO_PISTOL_9MM)
+	ammo_cats = list(AMMO_PISTOL_9MM_ALL)
 	max_ammo_capacity = 15
 	auto_eject = 1
 	has_empty_state = 1

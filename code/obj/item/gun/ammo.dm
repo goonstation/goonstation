@@ -543,7 +543,7 @@
 	amount_left = 8
 	max_amount = 8
 	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
-	ammo_cat = AMMO_PISTOL_9MM
+	ammo_cat = AMMO_PISTOL_9MM_SOVIET
 
 //0.357
 /obj/item/ammo/bullets/a357
