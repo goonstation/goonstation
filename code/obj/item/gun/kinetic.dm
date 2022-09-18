@@ -11,6 +11,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	var/ammo_cats = null
 	/// Does this gun have a special icon state for having no ammo lefT?
 	var/has_empty_state = FALSE
+	/// Does this gun have a special icon state it should flick to when fired?
+	var/has_fire_anim_state = FALSE
+	var/fire_anim_state = null
 	/// Can this gun be affected by the [Helios] medal reward?
 	var/gildable = FALSE
 	/// Is this gun currently gilded by the [Helios] medal reward?
@@ -220,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.casings_to_eject += src.current_projectile.shot_number
 		..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(var/target, var/start, var/mob/user)
 		if (src.canshoot() && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
@@ -239,7 +242,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 		if (fire_animation)
 			if(src.ammo?.amount_left > 1)
-				flick(icon_state, src)
+				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
+				flick(flick_state, src)
 
 		..()
 
@@ -270,12 +274,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/single_action
+	// We need a separate uncocked state if a gun has a fire animation
+	var/has_uncocked_state = FALSE
 	var/hammer_cocked = FALSE
 
 	// Handles the odd scenario of gilding and hammer cocking
 	update_icon()
 		. = ..()
-		src.icon_state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "") + (src.hammer_cocked ? "-c" : "")
+		src.icon_state = src.gen_icon_state(FALSE)
+		if (src.has_uncocked_state && src.fire_animation)
+			src.has_fire_anim_state = TRUE
+			src.fire_anim_state = src.gen_icon_state(TRUE)
 
 	canshoot()
 		if (hammer_cocked)
@@ -283,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			return FALSE
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(var/target, var/start, var/mob/user)
 		..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -297,6 +306,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			playsound(user.loc, 'sound/weapons/gun_cocked_colt45.ogg', 70, 1)
 		src.hammer_cocked = !src.hammer_cocked
 		src.UpdateIcon()
+
+	proc/gen_icon_state(var/ignore_hammer_state)
+		var/state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "")
+		if (!ignore_hammer_state && src.hammer_cocked)
+			state += "-c"
+		// Gun is uncocked and has a separate uncock icon_state
+		else if (!ignore_hammer_state && src.has_uncocked_state)
+			state +="-uc"
+		return state
 
 /obj/item/casing
 	name = "bullet casing"
@@ -1194,6 +1212,30 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 						var/obj/item/casing/C = new src.current_projectile.casing(T)
 						C.forensic_ID = src.forensic_ID
 						C.set_loc(T)
+
+/obj/item/gun/kinetic/single_action/mts_255
+	name = "\improper MTs-255 Revolver Shotgun"
+	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "mts255"
+	item_state = "mts255"
+	force = MELEE_DMG_RIFLE
+	contraband = 5
+	ammo_cats = list(AMMO_SHOTGUN_ALL)
+	max_ammo_capacity = 5
+	auto_eject = FALSE
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	has_empty_state = FALSE
+	has_uncocked_state = TRUE
+	fire_animation = TRUE
+	gildable = TRUE
+	default_magazine = /obj/item/ammo/bullets/a12/weak/five
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new /datum/projectile/bullet/a12/weak)
+		..()
 
 /obj/item/gun/kinetic/flaregun
 	desc = "A 12-gauge flaregun."

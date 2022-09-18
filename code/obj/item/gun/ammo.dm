@@ -702,8 +702,12 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-	weak //for nuke ops engineer
+/obj/item/ammo/bullets/a12/weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
+
+/obj/item/ammo/bullets/a12/weak/five
+		amount_left = 5
+		max_amount = 5
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
