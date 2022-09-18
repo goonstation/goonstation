@@ -750,6 +750,7 @@
 	var/see_wizards = 0
 	var/see_revs = 0
 	var/see_heads = 0
+	var/see_heads_sometimes = FALSE
 	var/see_xmas = 0
 	var/see_zombies = 0
 	var/see_special = 0 // Just a pass-through. Game mode-specific stuff is handled further down in the proc.
@@ -768,6 +769,9 @@
 			var/list/datum/mind/RR = R.revolutionaries
 			if (src.mind in (HR + RR))
 				see_revs = 1
+			if (src.mind in RR)
+				see_heads_sometimes = TRUE
+			if (src.mind in HR)
 				see_heads = 1
 		else if (istype(ticker.mode, /datum/game_mode/spy))
 			var/datum/game_mode/spy/S = ticker.mode
@@ -816,7 +820,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_heads_sometimes && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -939,6 +943,12 @@
 		if (see_heads || see_everything)
 			for (var/datum/mind/M in heads)
 				if (M.current)
+					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
+					can_see.Add(I)
+		if (see_heads_sometimes)
+			for (var/datum/mind/M in heads)
+				var/mob/living/carbon/human/H
+				if (M.current && H.face_visible())
 					var/I = image(antag_head, loc = M.current, icon_state = null, layer = (EFFECTS_LAYER_UNDER_4 + 0.1))
 					can_see.Add(I)
 
