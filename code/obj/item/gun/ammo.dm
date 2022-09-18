@@ -1294,16 +1294,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
 	recharge_rate = 2.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
-/obj/item/ammo/power_cell/self_charging/disruptor
-	name = "Power Cell - Disruptor Charger"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 100PU."
-	icon = 'icons/obj/items/ammo.dmi'
-	icon_state = "recharger_cell"
-	m_amt = 18000
-	g_amt = 38000
-	charge = 100
-	max_charge = 100
-
 /obj/item/ammo/power_cell/self_charging/disruptor/bad
 	name = "Power Cell - Slowcharge Plus"
 	desc = "An upgraded radioisotope power cell to support additional capacity. Holds 100 PU"
