@@ -24,10 +24,10 @@
 
 /datum/hud/critter/flock/drone/create_hand_element()
 	..()
-	var/datum/handHolder/HH = hands[3]
+	var/datum/handHolder/HH = src.hands[3]
 	src.charge_overlay = src.create_screen("stunner_charge", "Stunner charge", 'icons/mob/flock_ui.dmi', "charge_overlay", HH.screenObj.screen_loc, HUD_LAYER + 2)
 	src.overlay_mask = new('icons/mob/flock_ui.dmi', "darkener")
-	src.charge_overlay.add_filter("mask", 1, alpha_mask_filter(0, 0, overlay_mask))
+	src.charge_overlay.add_filter("mask", 1, alpha_mask_filter(0, 0, src.overlay_mask))
 
 ///Charge is given as a ratio from 0 to 1
 /datum/hud/critter/flock/drone/proc/set_stunner_charge(var/charge)

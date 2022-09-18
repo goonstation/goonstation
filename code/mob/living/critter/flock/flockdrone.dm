@@ -1119,23 +1119,23 @@
 
 /datum/limb/gun/flock_stunner/New()
 	..()
-	RegisterSignal(cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
 	var/mob/living/critter/flock/drone/F = holder.holder
 	var/datum/hud/critter/flock/drone/flockhud = F.hud
-	flockhud.set_stunner_charge(cell.get_charge() / cell.max_charge)
+	flockhud.set_stunner_charge(src.cell.get_charge() / src.cell.max_charge)
 
 /datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
 	if(!target || !user)
 		return
 	if (isflockmob(target) && point_blank)
 		return
-	if (cell.get_charge() < src.cost)
+	if (src.cell.get_charge() < src.cost)
 		return
 	. = ..()
 	if (.)
-		SEND_SIGNAL(cell, COMSIG_CELL_USE, src.cost)
+		SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cost)
 
 /datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
 	src.point_blank(target, user)
