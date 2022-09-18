@@ -67,7 +67,7 @@
 				//now that we have a human, put them at the spawnpoints and set them up
 				H.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
 				SPAWN(0)
-					equip_shitty_syndicate(R, 1)//do this after the name call to prevent their agent cards from changing
+					equip_shitty_syndicate(H, 1)//do this after the name call to prevent their agent cards from changing
 					H.choose_name(3, "Surplus Operative")
 					chosen_mind.special_role = ROLE_SURPLUS_OPERATIVE
 					ticker.mode.Agimmicks |= chosen_mind  //add them to the antags
