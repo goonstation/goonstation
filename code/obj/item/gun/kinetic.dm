@@ -530,7 +530,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_762)
-	spread_angle = 8
+	spread_angle = 9
 	shoot_delay = 3 DECI SECONDS
 	max_ammo_capacity = 30
 	auto_eject = 1
@@ -840,7 +840,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
 	w_class = W_CLASS_SMALL
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toygun"
 	contraband = 1
 	force = 1
@@ -900,7 +900,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon_state = "foamdartrevolver"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
 	w_class = W_CLASS_SMALL
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toyrevolver"
 	contraband = 1
 	force = 1
@@ -1364,7 +1364,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "\improper MPRT-7"
 	icon = 'icons/obj/large/64x32.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
@@ -2029,7 +2029,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic/sawnoff
 	name = "double-barreled shotgun"
 	desc = "A double-barreled sawn-off break-action shotgun, mostly used by people who think it looks cool."
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "coachgun"
 	icon_state = "coachgun"
 	force = MELEE_DMG_REVOLVER //it's one handed, no reason for it to be rifle-levels of melee damage

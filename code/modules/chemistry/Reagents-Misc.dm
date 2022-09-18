@@ -680,11 +680,11 @@ datum
 			viscosity = 0.4
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/window))
+				if (istype(O, /obj/window))
 					var/obj/window/W = O
 
 					// Silicate was broken. I fixed it (Convair880).
-					var/max_reinforce = 500
+					var/static/max_reinforce = 500
 					if (W.health >= max_reinforce)
 						return
 					var/do_reinforce = W.health * 2
@@ -696,7 +696,7 @@ datum
 					var/icon/I = icon(W.icon)
 					I.ColorTone( rgb(165,242,243) )
 					W.icon = I
-				return
+					src.holder.remove_reagent(src.id, src.holder.get_reagent_amount(src.id))
 
 		graphene
 			name = "graphene"
@@ -1184,7 +1184,7 @@ datum
 
 			proc/cube_mob(var/mob/M, var/volume_passed)
 				var/obj/icecube/I = new/obj/icecube(get_turf(M), M)
-				I.health = max(volume_passed/5,1)
+				I.health = clamp(volume_passed/2, 1, 10)
 				//M.bodytemperature = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)

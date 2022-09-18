@@ -731,6 +731,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
+/obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
+	sname = "plasmaglass load"
+	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/plasglass
+	icon_state = "makeshiftplasglass"
 
 /obj/item/ammo/bullets/pipeshot/glass // glass handmade shells
 	sname = "glass load"
