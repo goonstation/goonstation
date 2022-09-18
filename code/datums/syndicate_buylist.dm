@@ -503,7 +503,7 @@ This is basically useless for anyone but miners.
 	desc = "A scroll from ages past, sure to fill your heart with radiating light... and knives, lots and lots of knives."
 	job = list("Chaplain")
 	not_in_crates = TRUE
-	vr_allowed = 0
+	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY
 
 /datum/syndicate_buylist/traitor/contract
