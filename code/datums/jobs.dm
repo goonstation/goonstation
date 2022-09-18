@@ -1508,7 +1508,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 /datum/job/special/random/director
 	name = "Regional Director"
-	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	wages = PAY_EXECUTIVE
 
@@ -1525,7 +1524,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 
 	New()
 		..()
-		src.access = get_all_accesses()
+		src.access = get_access("VIP")
+		src.access += get_access("Janitor")
+		return
 
 /datum/job/special/random/diplomat
 	name = "Diplomat"
