@@ -586,7 +586,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 
 	New()
 		..()
-		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
+		overlays += image('icons/mob/inhand/hand_guns.dmi', "flamethrower1-R")
 		L.set_loc(src)
 		L.lit = 1
 

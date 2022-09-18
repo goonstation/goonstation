@@ -396,7 +396,7 @@
 
 /obj/item/storage/fanny
 	name = "fanny pack"
-	desc = "No, 'fanny' as in 'butt.' Not the other thing."
+	desc = "Be the butt of jokes with this simple storage device."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
@@ -699,7 +699,8 @@
 	/obj/item/gun/energy/tasersmg,
 	/obj/item/gun/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
-	/obj/item/gun/energy/ntgun)
+	/obj/item/gun/energy/ntgun,
+	/obj/item/gun/energy/cornicen3)
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)

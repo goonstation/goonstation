@@ -124,6 +124,7 @@ datum
 				P.growth -= 3
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -181,6 +182,7 @@ datum
 				P.HYPdamageplant("acid", 1)
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -474,6 +476,7 @@ datum
 				return
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (istype(B, /obj/blob/lipid))
 					B.take_damage(B.health_max, 2, "chaos")
 
@@ -792,6 +795,7 @@ datum
 				..()
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (B.type == /obj/blob)
 					var/obj/blob/lipid/L = new /obj/blob/lipid(B.loc)
 					L.setOvermind(B.overmind)
@@ -874,7 +878,7 @@ datum
 						else
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") * 2 < raw_volume)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") <= raw_volume * 2)
 									if(!D.hasStatus("acid"))
 										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
 										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -884,7 +888,7 @@ datum
 							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") * 3 < raw_volume)
+									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") <= raw_volume * 2)
 										if(!K.hasStatus("acid"))
 											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
 											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -928,6 +932,7 @@ datum
 				P.growth -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")

@@ -592,7 +592,7 @@
 /obj/item/gun/bow
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "bow"
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null

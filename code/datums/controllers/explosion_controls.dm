@@ -136,7 +136,6 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
-		world.updateCameraVisibility()
 		next_turf_safe = FALSE
 
 	proc/process()

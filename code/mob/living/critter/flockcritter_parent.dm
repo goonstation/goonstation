@@ -18,8 +18,8 @@
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
 	// HEALTHS
-	var/health_brute = 1
-	var/health_burn = 1
+	health_brute = 1
+	health_burn = 1
 	var/repair_per_resource
 
 	metabolizes = FALSE // under assumption drones dont metabolize chemicals due to gnesis internals
@@ -58,7 +58,7 @@
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
 	qdel(abilityHolder)
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -252,14 +252,14 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
 		var/mob/living/critter/flock/F = owner
-		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST))
+		if(!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target) || !F.can_afford(FLOCK_CONVERT_COST) || !flockTurfAllowed(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
