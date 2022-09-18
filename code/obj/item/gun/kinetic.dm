@@ -1128,10 +1128,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = 1
-		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.UpdateIcon()
-			src.casings_to_eject = 0
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		if(ammo.amount_left > 0 && !racked_slide)
@@ -1139,10 +1137,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = 1
-		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.UpdateIcon()
-			src.casings_to_eject = 0
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		..()
