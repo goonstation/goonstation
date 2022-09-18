@@ -525,7 +525,7 @@
 		setProperty("movespeed", -0.5)
 
 //chaplain traitor knice
-/obj/item/dagger/syndicate/chap_knife
+/obj/item/dagger/syndicate/chaplain_knife
 	name = "Blade of Light"
 	desc = "A knife made out of pure light. Now thats what I call blind faith"
 	item_state = "chap_dagger"

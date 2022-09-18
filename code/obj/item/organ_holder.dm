@@ -1628,5 +1628,5 @@
 		if (..())
 			return 1
 		boutput(holder.owner, "<span class='notice'>You use your [islist(linked_organ) ? "s" : ""] to conjure a knife of pure light from thin air!</span>")
-		var/obj/item/dagger/syndicate/chap_knife = new/obj/item/dagger/syndicate/chap_knife(get_turf(holder.owner))
-		holder.owner.put_in_hand_or_drop(chap_knife)
+		var/obj/item/dagger/syndicate/chaplain_knife = new/obj/item/dagger/syndicate/chaplain_knife(get_turf(holder.owner))
+		holder.owner.put_in_hand_or_drop(chaplain_knife)
