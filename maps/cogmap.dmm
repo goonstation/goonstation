@@ -46429,7 +46429,6 @@
 	dir = 4
 	},
 /obj/railing/orange,
-/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "csx" = (
