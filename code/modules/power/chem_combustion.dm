@@ -5,7 +5,7 @@
 	density = 1
 	anchored = 0
 	flags = FPRINT | FLUID_SUBMERGE | NOSPLASH
-	mats = list("MET-2" = 12, "CON-1" = 8)
+	mats = list("MET-2" = 80, "CON-1" = 60)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
@@ -35,6 +35,13 @@
 		"magnesium" = 4000
 	) // wattage
 
+	// bit wierd but a bunch of type checks feels bad
+	var/valid_tanks = list(
+		/obj/item/tank/air,
+		/obj/item/tank/oxygen,
+		/obj/item/tank/anesthetic
+	)
+
 	// tanks
 	var/obj/item/reagent_containers/food/drinks/fueltank/fuel_tank
 	var/obj/item/tank/inlet_tank
@@ -62,7 +69,7 @@
 
 		src.fuel_tank_image.icon_state = "genfueltank"
 
-		if (istype(src.inlet_tank, /obj/item/tank/oxygen) || istype(src.inlet_tank, /obj/item/tank/emergency_oxygen))
+		if (istype(src.inlet_tank, /obj/item/tank/oxygen))
 			src.inlet_tank_image.icon_state = "gengastank_o"
 		else
 			src.inlet_tank_image.icon_state = "gengastank"
@@ -144,7 +151,7 @@
 
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/tank) && !(istype(I, /obj/item/tank/plasma) || istype(I, /obj/item/tank/jetpack)))
+				if (I.type in src.valid_tanks)
 					if (!src.check_tank_oxygen(I))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
 						return
@@ -164,7 +171,7 @@
 		src.add_fingerprint(user)
 
 		// atmos tank
-		if (istype(W, /obj/item/tank) && (!istype(W, /obj/item/tank/plasma) || !istype(W, /obj/item/tank/jetpack)))
+		if (W.type in src.valid_tanks)
 			if (src.inlet_tank)
 				boutput(user, "<span class='alert'>There appears to be a tank loaded already!</span>")
 				return
