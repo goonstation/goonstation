@@ -558,9 +558,18 @@
 		coat_style = "MDlabcoat-cool"
 
 /obj/item/clothing/suit/labcoat/medical_director
-	name = "director's labcoat"
-	desc = "The Medical Directors personal labcoat, its creation was commisioned by the director themself."
-	icon_state = "labcoat-MDlong"
+	name = "medical director's labcoat"
+	desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
+	icon_state = "MDlonglabcoat"
+	item_state = "MDlonglabcoat"
+	coat_style = "MDlonglabcoat"
+
+/obj/item/clothing/suit/labcoat/research_director
+	name = "research director's labcoat"
+	desc = "The Research Directors personal labcoat, its creation was commisioned and designed by the director themself."
+	icon_state = "RDlonglabcoat"
+	item_state = "RDlonglabcoat"
+	coat_style = "RDlonglabcoat"
 
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
