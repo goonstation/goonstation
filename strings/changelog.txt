@@ -1,5 +1,9 @@
 
 (t)mon sep 19 22
+(u)Blackrep
+(p)10874
+(e)|
+(+)Two new (old?) Soviet firearms have been added. The PM Pistol, and the MTs-255 Revolver Shotgun
 (u)DimWhat & aloe
 (p)10803
 (e)|
