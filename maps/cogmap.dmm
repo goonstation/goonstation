@@ -47733,6 +47733,7 @@
 	pixel_x = -6;
 	pixel_y = 1
 	},
+/obj/item/paper/cryo,
 /obj/item/wrench{
 	pixel_x = 4;
 	pixel_y = 1
