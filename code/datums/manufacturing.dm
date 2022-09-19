@@ -3011,7 +3011,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Colt SAA"
 	item_paths = list("MET-2")
 	item_amounts = list(7)
-	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	time = 30 SECONDS
 	create = 1
 	category = "Weapon"

@@ -534,6 +534,17 @@
 /obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
 	amount_left = 0
 
+/obj/item/ammo/bullets/nine_mm_soviet
+	sname = "9x18mm Makarov"
+	name = "9x18mm magazine"
+	desc = "A standard 8 round magazine, for the PM pistol. It featuring an observation slot for checking remaining munitions."
+	icon_state = "makarov_magazine"
+	icon_empty = "makarov_magazine-empty"
+	amount_left = 8
+	max_amount = 8
+	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
+	ammo_cat = AMMO_PISTOL_9MM_SOVIET
+
 //0.357
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
@@ -720,6 +731,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
+
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
 	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
@@ -736,6 +748,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
+/obj/item/ammo/bullets/pipeshot/scrap/five
+	amount_left = 5
+	max_amount = 5
 
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
