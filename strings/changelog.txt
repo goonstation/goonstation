@@ -1,4 +1,9 @@
 
+(t)mon sep 19 22
+(u)DimWhat & aloe
+(p)10803
+(e)|
+(+)A number of 2-handed guns (common ones being the tranq rifle and riot shotgun) no longer fit on the belt, but do fit on the back. They also have neat sprites when you wear them.
 (t)sun sep 18 22
 (u)Roddy
 (p)10844

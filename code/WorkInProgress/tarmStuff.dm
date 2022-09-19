@@ -211,6 +211,9 @@
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0

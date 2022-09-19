@@ -539,7 +539,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK | EXTRADELAY
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
@@ -556,6 +556,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
+	wear_state = "ohr" // prevent empty state from breaking the worn image
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_RIFLE_308)
@@ -579,6 +583,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	ammo_cats = list(AMMO_TRANQ_308)
@@ -1086,8 +1093,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
 	icon = 'icons/obj/large/48x32.dmi'
-	icon_state = "shotty-empty"
+	icon_state = "shotty"
 	item_state = "shotty"
+	wear_state = "shotty" // prevent empty state from breaking the worn image
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1119,10 +1130,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = 1
-		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.UpdateIcon()
-			src.casings_to_eject = 0
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		if(ammo.amount_left > 0 && !racked_slide)
@@ -1130,10 +1139,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			return
 		..()
 		src.racked_slide = FALSE
-		src.casings_to_eject = 1
-		if (src.ammo.amount_left == 0) // change icon_state to empty if 0 shells left
-			src.UpdateIcon()
-			src.casings_to_eject = 0
+		src.casings_to_eject = src.ammo.amount_left ? 1 : 0
+		src.UpdateIcon()
 
 	attack_self(mob/user as mob)
 		..()
@@ -1398,6 +1405,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1646,6 +1656,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
@@ -1821,6 +1834,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
