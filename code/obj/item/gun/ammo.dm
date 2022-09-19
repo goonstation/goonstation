@@ -702,12 +702,8 @@
 	icon_empty = "12-0"
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 
-/obj/item/ammo/bullets/a12/weak //for nuke ops engineer
+	weak //for nuke ops engineer
 		ammo_type = new/datum/projectile/bullet/a12/weak
-
-/obj/item/ammo/bullets/a12/weak/five
-		amount_left = 5
-		max_amount = 5
 
 /obj/item/ammo/bullets/buckshot_burst // real spread shotgun ammo
 	sname = "Buckshot"
@@ -735,6 +731,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
+
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
 	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
@@ -751,6 +748,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
+/obj/item/ammo/bullets/pipeshot/scrap/five
+	amount_left = 5
+	max_amount = 5
 
 
 /obj/item/ammo/bullets/nails // oh god oh fuck

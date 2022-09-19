@@ -1234,11 +1234,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	has_uncocked_state = TRUE
 	fire_animation = TRUE
 	gildable = TRUE
-	default_magazine = /obj/item/ammo/bullets/a12/weak/five
+	default_magazine = /obj/item/ammo/bullets/pipeshot/scrap/five
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new /datum/projectile/bullet/a12/weak)
+		set_current_projectile(new /datum/projectile/special/spreader/buckshot_burst/scrap)
 		..()
 
 /obj/item/gun/kinetic/flaregun
