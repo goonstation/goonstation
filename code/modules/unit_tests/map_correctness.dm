@@ -69,6 +69,7 @@ proc/check_door_turfs()
 proc/check_window_turfs()
 	var/list/log_lines = list()
 	for(var/obj/window/window in world)
+		if (QDELETED(window)) return
 		var/turf/T = window.loc
 		if(istype(T.loc, /turf/space) || T.density)
 			log_lines += "[window] [window.type] on [T.x], [T.y], [T.z] in [T.loc]"

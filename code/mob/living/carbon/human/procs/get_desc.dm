@@ -51,6 +51,8 @@
 
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><b class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
 	if (src.w_uniform)
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
 
@@ -91,7 +93,7 @@
 	if (src.belt)
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
-	if (src.gloves)
+	if (src.gloves && !src.gloves.nodescripition)
 		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
@@ -115,9 +117,6 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
-
-	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.arrestIcon?.icon_state && ishuman(usr))
 		var/mob/living/carbon/human/H = usr

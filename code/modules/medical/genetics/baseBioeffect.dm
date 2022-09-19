@@ -354,7 +354,8 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		if (can_act_check && !can_act(owner, needs_hands))
 			return 999
 		if (last_cast > world.time)
-			boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
+			if(holder)
+				boutput(holder.owner, "<span class='alert'>That ability is on cooldown for [round((last_cast - world.time) / 10)] seconds.</span>")
 			return 999
 
 		if (has_misfire)

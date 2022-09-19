@@ -396,7 +396,7 @@
 
 /obj/item/storage/fanny
 	name = "fanny pack"
-	desc = "No, 'fanny' as in 'butt.' Not the other thing."
+	desc = "Be the butt of jokes with this simple storage device."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
@@ -692,7 +692,6 @@
 	/obj/item/gun/energy/laser_gun,
 	/obj/item/gun/energy/egun,
 	/obj/item/gun/energy/lawbringer,
-	/obj/item/gun/energy/lawbringer/old,
 	/obj/item/gun/energy/wavegun,
 	/obj/item/gun/kinetic/revolver,
 	/obj/item/gun/kinetic/zipgun,
@@ -700,7 +699,8 @@
 	/obj/item/gun/energy/tasersmg,
 	/obj/item/gun/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
-	/obj/item/gun/energy/ntgun)
+	/obj/item/gun/energy/ntgun,
+	/obj/item/gun/energy/cornicen3)
 	in_list_or_max = 1
 
 // kiki's detective shoulder (holster)
@@ -736,10 +736,10 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSO, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
 
 	ntso
-		spawn_contents = list(/obj/item/gun/energy/ntgun, /obj/item/old_grenade/stinger/frag, /obj/item/ammo/power_cell/med_power = 5)
+		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
 
 	baton
 		spawn_contents = list(/obj/item/baton, /obj/item/barrier, /obj/item/requisition_token/security/utility)

@@ -1829,7 +1829,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && world.time < ghost_timestamp + confirmation_spawn)
+		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
 			sleep(30 SECONDS)
 
 		// Filter list again.

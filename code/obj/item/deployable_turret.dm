@@ -440,7 +440,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	projectile_type = /datum/projectile/bullet/ak47
+	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 

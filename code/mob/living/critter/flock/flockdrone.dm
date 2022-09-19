@@ -777,11 +777,11 @@
 			if(0 to 45)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesis"))
+				B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 			if(46 to 90)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesisglass"))
+				B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
@@ -986,6 +986,9 @@
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need [FLOCK_CONVERT_COST]).</span>")
 	else
 		if(istype(target, /turf))
+			if (!flockTurfAllowed(target))
+				boutput(user, "<span class='alert'>Something about this area resists your attempt to convert it</span>")
+				return
 			if (user.flock)
 				for (var/name in user.flock.busy_tiles)
 					if (user.flock.busy_tiles[name] == target && name != user.real_name)
