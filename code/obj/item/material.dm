@@ -76,7 +76,7 @@
 				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, "sound/machines/chime.ogg", 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -86,7 +86,7 @@
 				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
-					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
+					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
 			return
@@ -210,6 +210,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
 
 /obj/item/raw_material/pharosium
@@ -322,7 +323,7 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				logTheThing(LOG_COMBAT, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
 				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -337,7 +338,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_COMBAT, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
 			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -570,12 +571,13 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -598,7 +600,7 @@
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 				return
 			if(isabomination(H))
 				return
@@ -607,9 +609,12 @@
 				step_on(H)
 			else
 				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+
+				if (H.mutantrace?.can_walk_on_shards)
+					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70)) && !iscow(H))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
@@ -742,11 +747,6 @@
 	default_material = "erebite"
 	icon_state = "martian-bar"
 
-/obj/item/material_piece/gold
-	name = "stamped bullion"
-	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	default_material = "gold"
-
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"
 	default_material = "ice"
@@ -853,6 +853,9 @@
 
 	proc/output_bar(material, amount, quality)
 
+		if(amount <= 0)
+			return
+
 		var/datum/material/MAT = material
 		if (!istype(MAT))
 			MAT = getMaterial(material)
@@ -907,12 +910,12 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
+		else if (W?.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
-		else if (W.cant_drop)
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
-			return ..()
 		else
 			. = ..()
 

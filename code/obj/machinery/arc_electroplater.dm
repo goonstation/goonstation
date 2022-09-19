@@ -13,7 +13,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 	var/obj/target_item = null
 	var/cooktime = 0
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_BULKY
 	var/obj/item/material_piece/my_bar = null
 
 	New()
@@ -81,7 +81,11 @@
 			boutput(user, "<span class='alert'>That wouldn't possibly fit!</span>")
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure) || istype(W, /obj/item/plate)) //can't do plates because of material duping with breaking them over your head
+		if (istype(W, /obj/item/implant))
+			boutput(user, "<span class='alert'>You can't plate something this tiny!</span>")
+			return
+
+		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage/secure))
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
@@ -139,7 +143,7 @@
 			src.cooktime++
 
 		if (src.cooktime == 5)
-			playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 			src.visible_message("<span class='notice'>[src] dings!</span>")
 			eject_item()
 

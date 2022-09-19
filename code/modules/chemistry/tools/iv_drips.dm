@@ -83,9 +83,9 @@
 				user.show_text("[src] is already being used by someone else!", "red")
 				return
 			else if (src.patient == H)
-				H.tri_message("<span class='notice'><b>[user]</b> removes [src]'s needle from [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-				user, "<span class='notice'>You remove [src]'s needle from [H == user ? "your" : "[H]'s"] arm.</span>",\
-				H, "<span class='notice'>[H == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm.</span>")
+				H.tri_message(user, "<span class='notice'><b>[user]</b> removes [src]'s needle from [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
+					"<span class='notice'>You remove [src]'s needle from [H == user ? "your" : "[H]'s"] arm.</span>",\
+					"<span class='notice'>[H == user ? "You remove" : "<b>[user]</b> removes"] [src]'s needle from your arm.</span>")
 				src.stop_transfusion()
 				return
 		else
@@ -107,10 +107,10 @@
 					user.show_text("[H] doesn't have anything left to give!", "red")
 					return
 
-			H.tri_message("<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-			user, "<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
-			H, "<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>")
-			logTheThing("combat", user, H, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+			H.tri_message(user, "<span class='notice'><b>[user]</b> begins inserting [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
+				"<span class='notice'>[H == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s needle into your arm.</span>",\
+				"<span class='notice'>You begin inserting [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+			logTheThing(LOG_COMBAT, user, "tries to hook up an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/reagent_containers/iv_drip/proc/insert_needle, list(H, user), src.icon, src.icon_state, null, null)
 			return
 
@@ -172,10 +172,10 @@
 
 	proc/insert_needle(var/mob/living/carbon/human/H as mob, mob/living/carbon/user as mob)
 		src.patient = H
-		H.tri_message("<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
-		user, "<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>",\
-		H, "<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>")
-		logTheThing("combat", user, H, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
+		H.tri_message(user, "<span class='notice'><b>[user]</b> inserts [src]'s needle into [H == user ? "[his_or_her(H)]" : "[H]'s"] arm.</span>",\
+			"<span class='notice'>[H == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s needle into your arm.</span>",\
+			"<span class='notice'>You insert [src]'s needle into [H == user ? "your" : "[H]'s"] arm.</span>")
+		logTheThing(LOG_COMBAT, user, "connects an IV drip [log_reagents(src)] to [constructTarget(H,"combat")] at [log_loc(user)].")
 		src.start_transfusion()
 
 	proc/start_transfusion()

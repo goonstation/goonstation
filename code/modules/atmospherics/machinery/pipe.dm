@@ -363,24 +363,24 @@ obj/machinery/atmospherics/pipe
 						new_rupture = i + 1
 						break
 			if(new_rupture > src.ruptured)
-				ON_COOLDOWN(parent, "pipeline_rupture_protection", 8 SECONDS + rand(4 SECONDS, 20 SECONDS))
+				ON_COOLDOWN(parent, "pipeline_rupture_protection", 16 SECONDS + rand(4 SECONDS, 24 SECONDS))
 			ruptured = max(src.ruptured, new_rupture, 1)
 			src.desc = "A one meter section of ruptured pipe still looks salvageable through some careful welding."
 			UpdateIcon()
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
-				if(1.0)
+				if(1)
 					if(prob(5))
 						qdel(src)
 					else
 						rupture(destroy=TRUE)
-				if(2.0)
+				if(2)
 					if(prob(10))
 						rupture(destroy=TRUE)
 					else
 						rupture()
-				if(3.0)
+				if(3)
 					if (prob(50))
 						rupture()
 			return
@@ -396,7 +396,7 @@ obj/machinery/atmospherics/pipe
 					boutput(user, "<span class='alert'>This needs more than just a welder. We need to make a new pipe!</span>")
 					return
 
-				if(!W:try_weld(user, 1, noisy=2))
+				if(!W:try_weld(user, 0.8, noisy=2))
 					return
 
 				boutput(user, "You start to repair the [src.name].")
@@ -462,7 +462,7 @@ obj/machinery/atmospherics/pipe
 			src.ruptured = 0
 			desc = initial(desc)
 			UpdateIcon()
-			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 100 SECONDS))
+			ON_COOLDOWN(src, "rupture_protection", 20 SECONDS + rand(10 SECONDS, 220 SECONDS))
 
 		proc/reconstruct_pipe(mob/M, obj/item/rods/R)
 			if(istype(R) && istype(M))
@@ -798,30 +798,6 @@ obj/machinery/atmospherics/pipe
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
-
-		rad_particles
-			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
-			name = "Pressure Tank (Nuclear Exhaust)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
-			New()
-				air_temporary = new /datum/gas_mixture
-				air_temporary.volume = volume
-				air_temporary.temperature = T0C
-
-				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
-
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'

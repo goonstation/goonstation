@@ -89,14 +89,14 @@
 	return 1
 
 /obj/item/paper/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Fold","Read","Nothing")
-	if (menuchoice == "Nothing")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use paper", list("Fold", "Read", "Nothing"))
+	if (!menuchoice || menuchoice == "Nothing")
 		return
 	else if (menuchoice == "Read")
 		src.examine(user)
 	else
-		var/fold = alert("What would you like to fold [src] into?",,"Paper hat","Paper plane","Paper ball")
-		if(src.disposed) //It's possible to queue multiple of these menus before resolving any.
+		var/fold = tgui_alert(user, "What would you like to fold [src] into?", "Fold paper", list("Paper hat", "Paper plane", "Paper ball"))
+		if(src.disposed || !fold) //It's possible to queue multiple of these menus before resolving any.
 			return
 		user.u_equip(src)
 		if (fold == "Paper hat")
@@ -125,7 +125,7 @@
 		user = E.mainframe
 	else
 		user = AI
-	if (!isAI(user) || (user.current && get_dist(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
+	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
 		var/font_junk = ""
 		for (var/i in src.fonts)
 			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
@@ -156,8 +156,11 @@
 		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
 	if(istype(src.loc, /obj/item/clipboard))
-		var/mob/living/M = user
-		return M.shared_living_ui_distance(src, viewcheck = FALSE)
+		if (isliving(user))
+			var/mob/living/L = user
+			return L.shared_living_ui_distance(src, viewcheck = FALSE)
+		else
+			return UI_UPDATE // ghosts always get updates
 	. = max(..(), UI_DISABLED)
 	if(IN_RANGE(user, src, 8))
 		. = max(., UI_UPDATE)
@@ -183,6 +186,7 @@
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
+				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -200,7 +204,7 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+				logTheThing(LOG_DEBUG, src, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
@@ -315,7 +319,7 @@
 		return // Normaly you just stamp, you don't need to read the thing
 	else if (issnippingtool(P))
 		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
@@ -537,7 +541,7 @@ ASC: Aux. Solar Control<BR>
 	icon_state = "flag_neutral"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
-	anchored = 1.0
+	anchored = 1
 
 /obj/item/paper/sop
 	name = "'Standard Operating Procedure'"
@@ -1057,7 +1061,7 @@ as it may become compromised.
 /obj/item/paper/photograph
 	name = "photo"
 	icon_state = "photo"
-	var/photo_id = 0.0
+	var/photo_id = 0
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 
@@ -1150,7 +1154,7 @@ as it may become compromised.
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "paper_bin1"
 	uses_multiple_icon_states = 1
-	amount = 10.0
+	amount = 10
 	item_state = "sheet-metal"
 	throwforce = 1
 	w_class = W_CLASS_NORMAL
@@ -1162,10 +1166,23 @@ as it may become compromised.
 	burn_output = 800
 	burn_possible = 1
 
+	/// the item type this bin contains, should always be a subtype for /obj/item for reasons...
+	var/bin_type = /obj/item/paper
+
+/obj/item/paper_bin/artifact_paper
+	name = "artifact analysis form tray"
+	desc = "A tray full of forms for classifying alien artifacts."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "artifact_form_tray"
+	amount = INFINITY
+	bin_type = /obj/item/sticker/postit/artifact_paper
+
+	update()
+		tooltip_rebuild = 1
 
 /obj/item/paper_bin/proc/update()
 	tooltip_rebuild = 1
-	src.icon_state = "paper_bin[(src.amount || locate(/obj/item/paper, src)) ? "1" : null]"
+	src.icon_state = "paper_bin[(src.amount || locate(bin_type, src)) ? "1" : null]"
 	return
 
 /obj/item/paper_bin/mouse_drop(mob/user as mob)
@@ -1175,17 +1192,18 @@ as it may become compromised.
 
 /obj/item/paper_bin/attack_hand(mob/user)
 	src.add_fingerprint(user)
-	var/obj/item/paper = locate(/obj/item/paper) in src
+	var/obj/item/paper = locate(bin_type) in src
 	if (paper)
 		user.put_in_hand_or_drop(paper)
 	else
 		if (src.amount >= 1 && user) //Wire: Fix for Cannot read null.loc (&& user)
 			src.amount--
-			var/obj/item/paper/P = new /obj/item/paper
+			var/obj/item/P = new bin_type
 			P.set_loc(src)
 			user.put_in_hand_or_drop(P)
-			if (rand(1,100) == 13)
-				P.info = "Help me! I am being forced to code SS13 and It won't let me leave."
+			if (rand(1,100) == 13 && istype(P, /obj/item/paper))
+				var/obj/item/paper/PA = P
+				PA.info = "Help me! I am being forced to code SS13 and It won't let me leave."
 	src.update()
 	return
 
@@ -1193,8 +1211,8 @@ as it may become compromised.
 	..()
 	src.Attackhand(user)
 
-/obj/item/paper_bin/attackby(obj/item/paper/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
-	if (istype(P))
+/obj/item/paper_bin/attackby(obj/item/P, mob/user) // finally you can write on all the paper AND put it back in the bin to mess with whoever shows up after you ha ha
+	if (istype(P, bin_type))
 		user.drop_item()
 		P.set_loc(src)
 		boutput(user, "You place [P] into [src].")
@@ -1212,7 +1230,7 @@ as it may become compromised.
 	var/next_generate = 0
 
 	attack_self(mob/user as mob)
-		if (src.amount < 1 && isnull(locate(/obj/item/paper) in src))
+		if (src.amount < 1 && isnull(locate(bin_type) in src))
 			if (src.next_generate < ticker.round_elapsed_ticks)
 				boutput(user, "The [src] generates another sheet of paper using the power of [pick("technology","science","computers","nanomachines",5;"magic",5;"extremely tiny clowns")].")
 				src.amount++
@@ -1228,7 +1246,7 @@ as it may become compromised.
 
 /obj/item/stamp
 	name = "rubber stamp"
-	desc = "A rubber stamp for stamping important documents."
+	desc = "A no-nonsense National Notary rubber stamp for stamping important documents. It has a simple acrylic handle."
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "stamp"
 	item_state = "stamp"
@@ -1315,91 +1333,91 @@ as it may become compromised.
 /obj/item/stamp // static staff stamps
 	cap
 		name = "\improper captain's rubber stamp"
-		desc = "The Captain's rubber stamp for stamping important documents."
+		desc = "The Captain's rubber stamp for stamping important documents. Ooh, it's the really fancy National Notary 'Congressional' model with the fine ebony handle."
 		icon_state = "stamp-cap"
 		special_mode = "Captain"
 		is_reassignable = 0
 		assignment = "stamp-cap"
 	hop
 		name = "\improper head of personnel's rubber stamp"
-		desc = "The Head of Personnel's rubber stamp for stamping important documents."
+		desc = "The Head of Personnel's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Continental' models with the kingwood handle."
 		icon_state = "stamp-hop"
 		special_mode = "Head of Personnel"
 		is_reassignable = 0
 		assignment = "stamp-hop"
 	hos
 		name = "\improper head of security's rubber stamp"
-		desc = "The Head of Security's rubber stamp for stamping important documents."
+		desc = "The Head of Security's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'Bancroft' models with the bloodwood handle."
 		icon_state = "stamp-hos"
 		special_mode = "Head of Security"
 		is_reassignable = 0
 		assignment = "stamp-hos"
 	ce
 		name = "\improper chief engineer's rubber stamp"
-		desc = "The Chief Engineer's rubber stamp for stamping important documents."
+		desc = "The Chief Engineer's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Mary' models with the ironwood handle."
 		icon_state = "stamp-ce"
 		special_mode = "Chief Engineer"
 		is_reassignable = 0
 		assignment = "stamp-ce"
 	md
 		name = "\improper medical director's rubber stamp"
-		desc = "The Medical Director's rubber stamp for stamping important documents."
+		desc = "The Medical Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. Anne' models with the rosewood handle."
 		icon_state = "stamp-md"
 		special_mode = "Medical Director"
 		is_reassignable = 0
 		assignment = "stamp-md"
 	rd
 		name = "\improper research director's rubber stamp"
-		desc = "The Research Director's rubber stamp for stamping important documents."
+		desc = "The Research Director's rubber stamp for stamping important documents. Looks like one of those fancy National Notary 'St. John' models with the purpleheart handle."
 		icon_state = "stamp-rd"
 		special_mode = "Research Director"
 		is_reassignable = 0
 		assignment = "stamp-rd"
 	clown
 		name = "\improper clown's rubber stamp"
-		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Clown's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-honk"
 		special_mode = "Clown"
 		is_reassignable = 0
 		assignment = "stamp-honk"
 	centcom
-		name = "\improper centcom rubber stamp"
-		desc = "Some bureaucrat from Centcom probably lost this."
+		name = "\improper centcom executive rubber stamp"
+		desc = "Some bureaucrat from Centcom probably lost this. Dang, is that National Notary's 'Admiral Sampson' model with the exclusive blackwood handle?"
 		icon_state = "stamp-centcom"
 		special_mode = "Centcom"
 		is_reassignable = 0
 		assignment = "stamp-centcom"
 	mime
 		name = "\improper mime's rubber stamp"
-		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Mime's rubber stamp for stamping whatever important documents they've gotten their hands on. It doesn't seem very legit."
 		icon_state = "stamp-mime"
 		special_mode = "Mime"
 		is_reassignable = 0
 		assignment = "stamp-mime"
 	chap
 		name = "\improper chaplain's rubber stamp"
-		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Chaplain's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the National Notary 'Chesapeake' model in varnished oak."
 		icon_state = "stamp-chap"
 		special_mode = "Chaplain"
 		is_reassignable = 0
 		assignment = "stamp-chap"
 	qm
 		name = "\improper quartermaster's rubber stamp"
-		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "The Quartermaster's rubber stamp for stamping whatever important documents they've gotten their hands on. A classic National Notary 'Eastport' model in oiled black walnut."
 		icon_state = "stamp-qm"
 		special_mode = "Quartermaster"
 		is_reassignable = 0
 		assignment = "stamp-qm"
 	syndicate
 		name = "\improper syndicate rubber stamp"
-		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Syndicate rubber stamp for stamping whatever important documents they've gotten their hands on. Surprisingly, it's also a National Notary 'Continental'. Not many choices out here."
 		icon_state = "stamp-syndicate"
 		special_mode = "Syndicate"
 		is_reassignable = 0
 		assignment = "stamp-syndicate"
 	law
 		name = "\improper security's rubber stamp"
-		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on."
+		desc = "Security's rubber stamp for stamping whatever important documents they've gotten their hands on. It's the rugged National Notary 'Severn' model with the rock maple handle."
 		icon_state = "stamp-syndicate"
 		special_mode = "Security"
 		is_reassignable = 0
@@ -1460,7 +1478,7 @@ as it may become compromised.
 /obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
@@ -1636,6 +1654,12 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 But please, please do something about the fact it's hanging on by just the data cables, they're not remotely capable of tugging this kind of mass.<br><br>
 That clump of dirt has a metal substrate, we can just ask Rachid to weld it to the station while we keep the lovebirds at a safe distance. A little wrangling never hurt a bee."}
 
+/obj/item/paper/artists_anger // for starved artist random maint room
+	name = "stained note"
+	desc = "This paper is stained yellow from old age."
+	icon_state = "paper_caution"
+	info = {"God damnit, why is drawing a simple rubber duck so fucking hard?!"}
+
 /obj/item/paper/synd_lab_note
 	name = "scribbled note"
 	info = {"So, we've been out here for a week already, and our insurmountable task isn't looking any easier.<br><br>
@@ -1715,3 +1739,213 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/obj/item/paper/band_notice
+	name = "Internal Memo - NT Marching Band"
+	icon_state = "paper"
+	info = {"
+	-----------------|HEAD|-----------------<br>
+	MAILNET: PUBLIC_NT<br>
+	WORKGROUP: *MARCHING_BAND<br>
+	FROM: OGOTDAM@NT13<br>
+	TO: NTMARCHINGBAND@NT13<br>
+	PRIORITY: HIGH<br>
+	SUBJECT: Imminent Closure<br>
+	----------------------------------------<br>
+	Dearest friends,<br><br>
+
+	It is my great displeasure to inform you all of the imminent cessation of financial support from the Station Morale
+	Organization to all performing arts activities due to budgetary constraints. This therefore means that the NanoTrasen
+	Marching Band will have to close down and stop paying all of its employees.<br><br>
+
+	Off the record, what BUFFOONISH bean-counter cut off our funding?! Do they not know how IMPORTANT the arts are in
+	maintaining our collective sanity in this HELLHOLE of a station?! For Capital-G God's sake, I spend forty hours a
+	day in the engine room, is it so hard to spare us but one of those hours doing something, ANYTHING to keep us from
+	resorting to savagery?! So what if our uniforms make us look like dorks and that half the crew wish to puncture their
+	eardrums, music is all I have, all that ANY of us have!<br><br>
+
+	You know what, these bastards don't even deserve us. I'm out of here.<br><br>
+
+	Yours faithfully,<br><br>
+
+	Ovidius Gotdam<br>
+	NT Marching Band Director
+	"}
+
+
+/obj/item/paper/businesscard
+	name = "business card"
+	icon_state = "businesscard"
+	desc = "A generic looking business card, offering printing services for more business cards."
+
+	sizex = 640
+	sizey = 400
+
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_blank.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/banjo
+	name = "business card - Tum Tum Phillips"
+	icon_state = "businesscard"
+	desc = "A business card for the famous Tum Tum Phillips, Frontier banjoist."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_banjo.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/biteylou
+	name = "business card - Bitey Lou's Bodyshop"
+	icon_state = "businesscard"
+	desc = "A business card for some sorta mechanic's shop."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_biteylou.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/bonktek
+	name = "business card - Bonktek Shopping Pyramid"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_bonktek.png")]'></body></html>"
+
+/obj/item/paper/businesscard/clowntown
+	name = "business card - Clown Town"
+	icon_state = "businesscard"
+	desc = "A business card for the Bonktek Shopping Pyramid of New Memphis."
+	color = "blue"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_clowntown.png")]'></body></html>"
+
+/obj/item/paper/businesscard/cosmicacres
+	name = "business card - Cosmic Acres"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a retirement community on Earth's moon."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_cosmicacres.png")]'></body></html>"
+
+/obj/item/paper/businesscard/ezekian
+	name = "business card - Ezekian Veterinary Clinic"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier veterinarian's office."
+	color = "gray"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_ezekian.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg1
+	name = "business card - Amantes Mini Golf"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a mini golf course."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg1.png")]'></body></html>"
+
+/obj/item/paper/businesscard/gragg2
+	name = "business card - Amantes Rock Shop"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a rock collector's shop."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_gragg2.png")]'></body></html>"
+
+/obj/item/paper/businesscard/josh
+	name = "business card - Josh"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "green"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_josh.png")]'></body></html>"
+
+/obj/item/paper/businesscard/lawyers
+	name = "business card - Hogge & Wylde"
+	icon_state = "businesscard-alt"
+	desc = "A business card for a personal injury law firm. You've heard their ads way, way too many times."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_law.png")]'></body></html>"
+
+/obj/item/paper/businesscard/hemera_rcd
+	name = "info card - Rapid Construction Device"
+	icon_state = "businesscard-alt"
+	desc = "An information card for the Mark III Rapid Construction Device from Hemera Astral Research Corporation."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_RCD.png")]'></body></html>"
+
+
+/obj/item/paper/businesscard/skulls
+	name = "business card - Skulls for Cash"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_skulls.png")]'></body></html>"
+
+/obj/item/paper/businesscard/taxi
+	name = "business card - Old Fortuna Taxi Company"
+	icon_state = "businesscard"
+	desc = "A business card for a Frontier space-taxi and shuttle company."
+	color = "yellow"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_taxi.png")]'></body></html>"
+
+/obj/item/paper/businesscard/vurdulak
+	name = "business card - Emporium Vurdulak"
+	icon_state = "businesscard"
+	desc = "A business card for someone's personal business. Looks like it's based at a flea market, in space. Hopefully there aren't any space fleas there."
+	color = "purple"
+
+	New()
+		..()
+		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
+
+obj/item/paper/donut2smesinstructions
+	name = "Donut 2 SMES Units and YOU"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	Donut 2 SMES Units and YOU<br><br>
+
+	A full guide to ensuring the station is powered up properly<br>
+	----------------------------------------<br><br>
+	Howdy Engineer, so you just set up this here SMES unit and you think you're done? Boy howdy do I have some news for you!<br><br>
+
+	This here station has not just ONE, not just TWO, but FOUR SMES units set up to power up the entire main station. You might be thinking, 'So,
+	Ms. Mysterious Engineer Who Knows Way More Than I Do, what does that mean?'<br><br>
+
+	WELL! It means there's four SMES units and four power grids on the station! Finding them is pretty damn simple if I do say so myself, all you
+	gotta do is walk around the inner loop of maintenance and find the SMES rooms. There's one just east of medbay, one just below arrivals and QM
+	and one direction west of the bridge! Oh, there's also, uhh, you know, the one in Engineering.<br><br>
+
+	Once you've got those four SMES units set you're all good. The singularity is a MARVEL of modern engineering and produces near ENDLESS power!<br><br>
+
+	Oh, couple small things to add. There are a few solar panel groups in outer maintenance, but they're not wired to power the whole station at once
+	so you would have to connect the four grids if you wanted, or needed, to run the station that way. Research Outpost Zeta also has its own solar
+	panel setup, but it comes preconfigured and should last them well through any single shift, so you don't gotta worry about that none.<br><br><br>
+
+	Keep that power flowing,<br>
+	S.L.
+	"}

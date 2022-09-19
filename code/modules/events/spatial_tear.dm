@@ -30,7 +30,7 @@
 	desc = "A breach in the spatial fabric. Extremely difficult to pass."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "spat-h"
-	anchored = 1.0
+	anchored = 1
 	opacity = 1
 	density = 1
 	var/stabilized = 0
@@ -63,12 +63,18 @@
 		if(AM.client?.check_key(KEY_RUN) && src.stabilized)
 			src.try_pass(AM)
 
+	ex_act(severity)
+		return
+
+	meteorhit()
+		return
+
 	proc/try_pass(mob/user)
 		actions.start(new /datum/action/bar/icon/push_through_tear(user, src), user)
 
 	proc/stabilize()
 		src.alpha = 150
-		src.opacity = 0
+		src.set_opacity(0)
 		src.stabilized = 1
 		src.name = "Stabilized Spatial Tear"
 		desc = "A breach in the spatial fabric, partially stabilized by an interdictor. Difficult to pass."
@@ -157,4 +163,4 @@
 		ownerMob.show_text("You take some damage from pushing through the tear.", "red")
 		ownerMob.TakeDamage("chest", rand(4,6), 0, 0, DAMAGE_BLUNT)
 		playsound(spatialtear, 'sound/impact_sounds/Flesh_Tear_3.ogg', 20, 1, -1)
-		logTheThing("combat", ownerMob, spatialtear, "pushes through [spatialtear].")
+		logTheThing(LOG_COMBAT, ownerMob, "pushes through [spatialtear].")

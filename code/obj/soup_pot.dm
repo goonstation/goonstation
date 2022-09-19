@@ -82,7 +82,7 @@
 				return
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span class='alert'><b>Did [user] just light \his [src] with [W]? Holy Shit.</b></span>")
+				src.light(user, "<span class='alert'><b>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</b></span>")
 				return
 
 			else if (istype(W, /obj/item/device/igniter))
@@ -296,7 +296,7 @@
 	inhand_image_icon = 'icons/obj/soup_pot.dmi'
 	item_state = "souppot"
 	two_handed = 1
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 	var/total_wclass_max = 15
 	var/total_wclass = 0
 	var/max_reagents = 150

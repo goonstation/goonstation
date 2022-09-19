@@ -5,8 +5,8 @@
  * @license MIT
  */
 
-import { useBackend, useLocalState, useSharedState } from "../backend";
-import { Flex, Button, Stack, Tabs, Icon, Box, Section, Dropdown } from "../components";
+import { useBackend, useLocalState } from "../backend";
+import { Tooltip, Button, Stack, Tabs, Icon, Box, Section, Dropdown } from "../components";
 import { Window } from '../layouts';
 
 const FlockPartitions = (props, context) => {
@@ -103,6 +103,7 @@ const iconLookup = {
   "depositing": "border-style",
   "observing": "eye",
   "deconstructing": "trash",
+  "hibernating": "stop-circle",
 };
 const taskIcon = function (task) {
   let iconString = iconLookup[task];
@@ -201,12 +202,14 @@ const FlockStructures = (props, context) => {
             <Stack>
               {/* name and health */}
               <Stack.Item width="30%">
-                <Section>
-                  <Stack vertical align="center">
-                    <Stack.Item >{structure.name}</Stack.Item>
-                    <Stack.Item >{structure.health}<Icon name="heart" /></Stack.Item>
-                  </Stack>
-                </Section>
+                <Tooltip position="bottom" content={structure.desc}>
+                  <Section position="relative">
+                    <Stack vertical align="center">
+                      <Stack.Item >{structure.name}</Stack.Item>
+                      <Stack.Item >{structure.health} <Icon name="heart" /></Stack.Item>
+                    </Stack>
+                  </Section>
+                </Tooltip>
               </Stack.Item>
               <Stack.Item grow={1}>
                 <Section height="100%">

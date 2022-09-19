@@ -3351,7 +3351,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "ki" = (
-/obj/machinery/air_vendor{
+/obj/machinery/vending/air_vendor{
 	pixel_y = 20
 	},
 /turf/simulated/floor/black,
@@ -7387,7 +7387,7 @@
 	},
 /area/space)
 "uQ" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/engine,
 /turf/unsimulated/wall/setpieces/bunker_grille,
 /area/space)

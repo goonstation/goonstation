@@ -57,7 +57,7 @@
 		var/image/suit_image
 		wear_sanity_check(src.w_uniform)
 		suit_image = src.w_uniform.wear_image
-
+		suit_image.filters = src.w_uniform.filters.Copy()
 		var/wear_state = src.w_uniform.wear_state || src.w_uniform.icon_state
 		if (islist(override_states) && ("js-[wear_state]" in override_states))
 			suit_image.icon = src.mutantrace.clothing_icon_override
@@ -84,7 +84,7 @@
 
 		if (src.w_uniform.blood_DNA)
 			blood_image.icon_state =  "uniformblood_c"
-			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			blood_image.layer = src.w_uniform.wear_layer + 0.1
 			UpdateOverlays(blood_image, "suit_image_blood")
 		else
 			UpdateOverlays(null, "suit_image_blood")
@@ -117,6 +117,7 @@
 		src.wear_id.wear_image.layer = src.wear_id.wear_layer
 		src.wear_id.wear_image.color = src.wear_id.color
 		src.wear_id.wear_image.alpha = src.wear_id.alpha
+		src.wear_id.wear_image.filters = src.wear_id.filters.Copy()
 		UpdateOverlays(src.wear_id.wear_image, "wear_id")
 	else
 		UpdateOverlays(null, "wear_id")
@@ -149,7 +150,7 @@
 	// same as above but for shoes/bare feet
 	if (islist(src.tracked_blood) && !src.shoes)
 
-		blood_image.layer = MOB_CLOTHING_LAYER+0.1
+		blood_image.layer = MOB_CLOTHING_LAYER + 0.1 // idk what layer exactly this is supposed to be on TODO figure that out
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			blood_image.icon_state = "left_shoeblood_c"
 			UpdateOverlays(blood_image, "bloody_feet_l")
@@ -171,7 +172,7 @@
 		var/icon_name = src.gloves.wear_state || src.gloves.item_state || src.gloves.icon_state
 		var/no_offset = FALSE
 		src.gloves.wear_image.layer = src.gloves.wear_layer
-
+		src.gloves.wear_image.filters = src.gloves.filters.Copy()
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
 			if (islist(override_states) && ("glove-left_[icon_name]" in override_states)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
@@ -250,6 +251,7 @@
 		src.shoes.wear_image.color = src.shoes.color
 		src.shoes.wear_image.alpha = src.shoes.alpha
 		src.shoes.wear_image.overlays = null
+
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
@@ -272,18 +274,23 @@
 			else
 				if (islist(override_states) && ("shoe-right_[wear_state]" in override_states))
 					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_override
-					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "shoe-right_[wear_state]")
+					var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "shoe-right_[wear_state]")
+					right_shoe_overlay.filters = src.shoes.filters.Copy() //haha filters don't apply to overlays, so you have to do this unless you only want one painted shoe
+					src.shoes.wear_image.overlays += right_shoe_overlay
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
-					src.shoes.wear_image.overlays += image(src.shoes.wear_image.icon, "right_[wear_state]")
+					var/image/right_shoe_overlay = image(src.shoes.wear_image.icon, "right_[wear_state]")
+					right_shoe_overlay.filters = src.shoes.filters.Copy()
+					src.shoes.wear_image.overlays += right_shoe_overlay
 
 		if(shoes_count)
+			src.shoes.wear_image.filters = src.shoes.filters.Copy()
 			UpdateOverlays(src.shoes.wear_image, "wear_shoes")
 		else
 			UpdateOverlays(null, "wear_shoes")
 
 		if (src.shoes.blood_DNA)
-			blood_image.layer = MOB_CLOTHING_LAYER+0.1
+			blood_image.layer = src.shoes.wear_layer + 0.1
 			if (src.limbs && src.limbs.l_leg && !.)
 				blood_image.icon_state = "left_shoeblood_c"
 				UpdateOverlays(blood_image, "bloody_shoes_l")
@@ -306,6 +313,7 @@
 	if (src.wear_suit)
 		wear_sanity_check(src.wear_suit)
 		src.wear_suit.wear_image.layer = src.wear_suit.wear_layer
+		src.wear_suit.wear_image.filters = src.wear_suit.filters.Copy()
 
 		var/wear_state = src.wear_suit.wear_state || src.wear_suit.icon_state
 		if (islist(override_states) && ("suit-[wear_state]" in override_states))
@@ -379,6 +387,7 @@
 		src.back.wear_image.color = src.back.color
 		src.back.wear_image.alpha = src.back.alpha
 		src.back.update_wear_image(src, src.back.wear_image.icon != src.back.wear_image_icon)
+		src.back.wear_image.filters = src.back.filters.Copy()
 		UpdateOverlays(src.back.wear_image, "wear_back")
 
 		if (src.back.worn_material_texture_image != null)
@@ -410,6 +419,7 @@
 		src.glasses.wear_image.color = src.glasses.color
 		src.glasses.wear_image.alpha = src.glasses.alpha
 		src.glasses.update_wear_image(src, src.glasses.wear_image.icon != src.glasses.wear_image_icon)
+		src.glasses.wear_image.filters = src.glasses.filters.Copy()
 		UpdateOverlays(src.glasses.wear_image, "wear_glasses")
 		if (src.glasses.worn_material_texture_image != null)
 			src.glasses.worn_material_texture_image.layer = src.glasses.wear_image.layer + 0.1
@@ -437,6 +447,7 @@
 			src.ears.wear_image.pixel_y = head_offset
 		src.ears.wear_image.color = src.ears.color
 		src.ears.wear_image.alpha = src.ears.alpha
+		src.ears.wear_image.filters = src.ears.filters.Copy()
 		UpdateOverlays(src.ears.wear_image, "wear_ears")
 		if (src.ears.worn_material_texture_image != null)
 			src.ears.worn_material_texture_image.layer = src.ears.wear_image.layer + 0.1
@@ -467,6 +478,7 @@
 		src.wear_mask.wear_image.color = src.wear_mask.color
 		src.wear_mask.wear_image.alpha = src.wear_mask.alpha
 		src.wear_mask.update_wear_image(src, src.wear_mask.wear_image.icon != src.wear_mask.wear_image_icon)
+		src.wear_mask.wear_image.filters = src.wear_mask.filters.Copy()
 		UpdateOverlays(src.wear_mask.wear_image, "wear_mask")
 		if (src.wear_mask.worn_material_texture_image != null)
 			src.wear_mask.worn_material_texture_image.layer = src.wear_mask.wear_image.layer + 0.1
@@ -509,6 +521,7 @@
 		src.head.wear_image.color = src.head.color
 		src.head.wear_image.alpha = src.head.alpha
 		src.head.update_wear_image(src, src.head.wear_image.icon != src.head.wear_image_icon)
+		src.head.wear_image.filters = src.head.filters.Copy()
 		UpdateOverlays(src.head.wear_image, "wear_head")
 		if (src.head.worn_material_texture_image != null)
 			src.head.worn_material_texture_image.layer = src.head.wear_image.layer + 0.1
@@ -549,6 +562,7 @@
 			src.belt.wear_image.layer = MOB_BELT_LAYER
 		src.belt.wear_image.color = src.belt.color
 		src.belt.wear_image.alpha = src.belt.alpha
+		src.belt.wear_image.filters = src.belt.filters.Copy()
 		UpdateOverlays(src.belt.wear_image, "wear_belt")
 		if (src.belt.worn_material_texture_image != null)
 			src.belt.worn_material_texture_image.layer = src.belt.wear_image.layer + 0.1
@@ -604,17 +618,6 @@
 		if (I.implant_overlay && !(I in implant_images))
 			UpdateOverlays(I.implant_overlay, "implant--\ref[I]")
 			implant_images += I
-
-	if (world.time - src.last_show_inv <= 30 SECONDS)
-		for (var/client/C in src.showing_inv)
-			if (C?.mob)
-				if (BOUNDS_DIST(src, C.mob) == 0)
-					src.show_inv(C.mob)
-				else
-					src.remove_dialog(C.mob)
-			else
-				src.showing_inv -= C
-
 
 	src.last_b_state = src.stat
 
@@ -984,10 +987,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_decomp_image.layer = MOB_HAND_LAYER1
+											human_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_decomp_image.pixel_y = armleg_offset
-											src.hands_standing.layer = MOB_HAND_LAYER1
-											src.hands_standing.overlays += human_decomp_image
+											src.body_standing.overlays += human_decomp_image
 										human_decomp_image.layer = oldlayer
 									else
 										var/oldlayer = human_untoned_decomp_image.layer // ugh
@@ -1000,10 +1002,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
-											src.hands_standing.layer = MOB_HAND_LAYER1
-											src.hands_standing.overlays += human_untoned_decomp_image
+											src.body_standing.overlays += human_untoned_decomp_image
 										human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = hand_icon_s
@@ -1015,12 +1016,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_HAND_LAYER1
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += I
+										src.body_standing.overlays += I
 
 							if (part_icon_s)
 								if (istext(part_icon_s))
@@ -1036,10 +1036,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
-											src.hands_standing.layer = MOB_HAND_LAYER1
-											src.hands_standing.overlays += human_untoned_decomp_image
+											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
 											human_untoned_decomp_image.layer = oldlayer
 									else
@@ -1053,10 +1052,9 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_HAND_LAYER1
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
-											src.hands_standing.layer = MOB_HAND_LAYER1
-											src.hands_standing.overlays += human_untoned_decomp_image
+											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
 											human_untoned_decomp_image.layer = oldlayer
 								else
@@ -1067,12 +1065,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_HAND_LAYER1
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += I
+										src.body_standing.overlays += I
 
 						else
 							if (hand_icon_s)
@@ -1089,9 +1086,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_HAND_LAYER1
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += human_image
+										human_image.layer = MOB_BODYDETAIL_LAYER2
+										src.body_standing.overlays += human_image
 									human_image.layer = oldlayer
 
 								else
@@ -1106,12 +1102,11 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_HAND_LAYER1
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += I
+										src.body_standing.overlays += I
 
 							if (part_icon_s)
 								if (istext(part_icon_s))
@@ -1119,20 +1114,16 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									human_image.icon_state = part_icon_s
 									human_image.color = limb_skin_tone
 									human_image.pixel_y = armleg_offset
-									var/oldlayer
-									if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
-										oldlayer = human_image.layer // ugh
-										human_image.layer = MOB_HAND_LAYER1
+									var/oldlayer = human_image.layer
+									human_image.layer = MOB_LIMB_LAYER
 									src.body_standing.overlays += human_image
 									if(limb.handfoot_overlay_1)
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_HAND_LAYER1
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += human_image
-									if (oldlayer)
-										human_image.layer = oldlayer
+										human_image.layer = MOB_BODYDETAIL_LAYER2
+										src.body_standing.overlays += human_image
+									human_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
 									I.layer = MOB_HAND_LAYER1
@@ -1141,9 +1132,8 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_HAND_LAYER1
-										src.hands_standing.layer = MOB_HAND_LAYER1
-										src.hands_standing.overlays += I
+										I.layer = MOB_BODYDETAIL_LAYER2
+										src.body_standing.overlays += I
 
 					else	// Handles stumps
 						var/stump = update_body_limbs[name]
@@ -1188,7 +1178,7 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					heart_image.pixel_y = body_offset
 					src.body_standing.overlays += heart_image
 
-			if (src.decomp_stage < 3 && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
+			if (src.decomp_stage < DECOMP_STAGE_HIGHLY_DECAYED && ((AHOLD.underwear && AHOLD.mob_appearance_flags & WEARS_UNDERPANTS) || src.underpants_override)) // no more bikini werewolves
 				undies_image.icon_state = underwear_styles[AHOLD.underwear]
 				undies_image.color = AHOLD.u_color
 				undies_image.pixel_y = body_offset
@@ -1215,13 +1205,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 				juggle_image.icon_state = "juggle"
 				juggle_image.pixel_y = body_offset
 				src.body_standing.overlays += juggle_image
-
-#if ASS_JAM
-	src.maptext_y = 32
-	src.maptext_width = 64
-	src.maptext_x = -16
-	health_update_queue |= src
-#endif
 
 	if (src.bioHolder)
 		src.bioHolder.OnMobDraw()

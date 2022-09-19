@@ -3,6 +3,7 @@
 	name = "gang"
 	config_tag = "gang"
 
+	antag_token_support = TRUE
 	var/list/leaders = list()
 	var/list/gangs = list()
 
@@ -71,7 +72,7 @@
 			break
 		leaders += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
@@ -355,7 +356,7 @@
 			part2chosen = pick(part2)
 			temp_name = part1chosen + " " + part2chosen
 
-		switch(alert(leaderMind.current,"Name: [temp_name].","Approve your gang's name","Accept","Randomize"))
+		switch(tgui_alert(leaderMind.current, "Name: [temp_name].", "Approve your gang's name", list("Accept", "Randomize")))
 			if ("Accept")
 				//make sure no other gangs have this name
 				if (fullchosen)
@@ -373,7 +374,7 @@
 					part2_used += part2chosen
 				leaderMind.gang.gang_name = temp_name
 				boutput(leaderMind.current, "<h1><font color=red>Your gang name is [temp_name]!</font></h1>")
-			if ("Randomize")
+			else
 				continue
 
 /datum/game_mode/gang/proc/check_winner()
@@ -431,7 +432,7 @@
 			top_gang = G
 
 	if (!top_gang)
-		logTheThing("debug", null, null, "No winning gang chosen for kidnapping event. Something's broken.")
+		logTheThing(LOG_DEBUG, null, "No winning gang chosen for kidnapping event. Something's broken.")
 		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
 		return 0
 
@@ -442,7 +443,7 @@
 			potential_targets += H
 
 	if (!potential_targets.len)
-		logTheThing("debug", null, null, "No players found to be kidnapping targets.")
+		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
 		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
 		return 0
 
@@ -720,7 +721,7 @@
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -729,7 +730,7 @@
 			return
 
 		if(prob(15))
-			playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")
@@ -1219,7 +1220,7 @@
 			boutput(target, "<span class='alert'>You're already in a gang, you can't switch sides!</span>")
 			return
 
-		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant"))
+		if(target.mind.assigned_role in list("Security Officer", "Security Assistant", "Vice Officer","Part-time Vice Officer","Head of Security","Captain","Head of Personnel","Communications Officer", "Medical Director", "Chief Engineer", "Research Director", "Detective", "Nanotrasen Security Consultant", "Nanotrasen Special Operative"))
 			boutput(target, "<span class='alert'>You are too responsible to join a gang!</span>")
 			return
 

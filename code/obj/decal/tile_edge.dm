@@ -31,7 +31,8 @@
 			return ..()
 
 	Move()
-		return 0
+		SHOULD_CALL_PARENT(FALSE)
+		return FALSE
 
 /obj/decal/tile_edge/stripe
 	name = "hazard stripe"

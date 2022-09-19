@@ -4,14 +4,14 @@
 	desc = "Ew, this thing is just the wurst."
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 3.0
+	organ_holder_required_op_stage = 3
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
 
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 			donor.contract_disease(failure_disease,null,null,1)
 		return 1
 

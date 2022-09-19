@@ -57,7 +57,7 @@
 				if (H in mobs_messaged)
 					continue
 				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(get_dist(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
+				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for_by_tcl(S, /obj/loudspeaker)
@@ -126,6 +126,7 @@
 	anchored = 1
 	density = 1
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()
 		. = ..()

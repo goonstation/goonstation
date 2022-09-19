@@ -8,12 +8,12 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6.0
-	throwforce = 10.0
+	force = 6
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	//cogwerks - burn vars
 	burn_point = 4500
@@ -207,7 +207,7 @@
 
 		src.hunger = 0
 		src.hunger_message_level = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
 		var/obj/item/storage/box/per_person = new
 		per_person.set_loc(src)
@@ -256,7 +256,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return
@@ -304,7 +304,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")
@@ -386,7 +386,7 @@
 			progenitor.hunger += clamp((progenitor.force / 10), 1, 10) * mult
 
 		else if(D.stage == 4)
-			if(get_dist(get_turf(progenitor),src) <= 7)
+			if(GET_DIST(get_turf(progenitor),src) <= 7)
 				D.stage = 1
 				return
 			if(probmult(4))

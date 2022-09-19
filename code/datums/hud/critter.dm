@@ -375,7 +375,8 @@
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
-	if (!src.bleeding || isdead(src.master))
+	if (!src.bleeding) return //doesn't have a hud element to update
+	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
 		src.bleeding.tooltipTheme = "healthDam healthDam0"
 		return

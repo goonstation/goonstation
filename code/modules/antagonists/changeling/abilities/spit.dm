@@ -21,7 +21,7 @@
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] spits acid towards [target]!</b></span>")
-		logTheThing("combat", holder.owner, MT, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "spits acid at [constructTarget(MT,"combat")] as a changeling [log_loc(holder.owner)].")
 
 		if (isliving(MT))
 			MT:was_harmed(holder.owner, special = "ling")
@@ -53,7 +53,7 @@
 				B.set_loc(A.loc)
 
 				step_to(A,MT,0)
-				if (get_dist(A,MT) == 0)
+				if (GET_DIST(A,MT) == 0)
 					for(var/mob/O in AIviewers(MT, null))
 						O.show_message("<span class='alert'><B>[MT.name] is hit by the acid spit!</B></span>", 1)
 					A.reagents.reaction(MT)

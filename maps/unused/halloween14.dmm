@@ -1669,7 +1669,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Pad Lockdown Door";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	tag = "icon-1-2";
@@ -11611,9 +11611,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters)
 "axr" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
 /turf/simulated/floor/grime,
@@ -13099,7 +13097,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13550,7 +13548,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -13913,7 +13911,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -25963,9 +25961,7 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/cable{
 	icon_state = "4-8";
 	d1 = 4;
@@ -29830,7 +29826,7 @@
 	layer = 4;
 	name = "Market #2";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/market)
@@ -29851,7 +29847,7 @@
 	layer = 4;
 	name = "Market #1";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/market)
@@ -31621,7 +31617,7 @@
 	layer = 4;
 	name = "Privacy Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/table/reinforced/bar{
 	dir = 4
@@ -34495,9 +34491,7 @@
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
 "brd" = (
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/juryroom)
 "bre" = (
@@ -34970,9 +34964,7 @@
 /area/station/janitor/office)
 "brZ" = (
 /obj/stool,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -38775,9 +38767,7 @@
 	dir = 1
 	},
 /obj/item/device/radio/signaler,
-/obj/item/device/radio/intercom{
-	
-	},
+/obj/item/device/radio/intercom,
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
 	pixel_y = -2
@@ -39500,7 +39490,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "bBd" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -40702,10 +40692,7 @@
 /turf/unsimulated/wall/setpieces/leadwall,
 /area/crater)
 "bDI" = (
-/obj/machinery/atmospherics/pipe/tank/rad_particles{
-	desc = "A large vessel containing an unknown pressurized gas.";
-	name = "Unidentified Gas Tank"
-	},
+/obj/machinery/atmospherics/pipe/tank/toxins/south,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bDJ" = (
@@ -42409,12 +42396,6 @@
 /area/marsoutpost)
 "bIc" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/unsimulated/floor/grime,
@@ -67488,12 +67469,6 @@
 /area/crypt/sigma/lab)
 "cIf" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /obj/decal/fakeobjects/firelock_broken{
@@ -70657,21 +70632,9 @@
 /area/crypt/sigma/kitchen)
 "cPt" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_locked";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/unsimulated/floor/delivery,
@@ -90018,12 +89981,6 @@
 /area/helldrone)
 "dGY" = (
 /obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/doorint.dmi';
-	icon_state = "door_closed";
-	name = "rusted airlock";
-	opacity = 1;
 	tag = "icon-bloodydoor"
 	},
 /turf/simulated/floor/black,

@@ -137,11 +137,11 @@ var/global/datum/controller/processScheduler/processScheduler
 			last_start[p] -= 36000
 
 		// If the process should be running by now, go ahead and queue it
-		if (TimeOfHour > last_start[p] + p.schedule_interval)
+		if (TimeOfHour > last_start[p] + p.schedule_interval + p.schedule_jitter)
 			setQueuedProcessState(p)
 
 /datum/controller/processScheduler/proc/runQueuedProcesses()
-	if (queued.len)
+	if (length(queued))
 		var/delay = 0
 		for (var/datum/controller/process/p as anything in queued)
 			runProcess(p, delay)
@@ -228,6 +228,9 @@ var/global/datum/controller/processScheduler/processScheduler
 	idle |= process
 
 /datum/controller/processScheduler/proc/setQueuedProcessState(var/datum/controller/process/process)
+	// Do jitter adjustments since we just queued (± in the !initial! jitter range)
+	process.schedule_jitter = ((rand() * 2) - 1) * initial(process.schedule_jitter)
+
 	running -= process
 	idle -= process
 	queued |= process

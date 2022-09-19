@@ -342,7 +342,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
+		logTheThing(LOG_SAY, holder.owner, "[message]")
 		.= holder.owner.say_kudzu(message, holder)
 
 		return 0
@@ -511,7 +511,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
+			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -621,7 +621,7 @@
 			amount = length(K.kudzu)
 		else
 			boutput(usr, "messed up kudzu controller call 1-800-CODER")
-			logTheThing("debug", null, null, "Messed up kudzu controller for kudzuman")
+			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
 		kudzu_controller = null
@@ -676,8 +676,8 @@
 	icon_state = "vine-item"
 	// inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	// item_state = "knife"
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_range = 5
 	hit_type = DAMAGE_BLUNT
 	burn_type = 1
@@ -784,14 +784,4 @@
 //O is obj to be destroyed, W is obj used to destroy.
 //This is total shit too, but I'm in a hurry again. I'll be back, -Kyle
 /proc/destroys_kudzu_object(var/obj/O, var/obj/item/W as obj, var/mob/user)
-		var/destroyed = 0
-		if (istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)) destroyed = 1
-		else if (istype(W, /obj/item/axe)) destroyed = 1
-		else if (istype(W, /obj/item/circular_saw)) destroyed = 1
-		else if (istype(W, /obj/item/kitchen/utensil/knife)) destroyed = 1
-		else if (istype(W, /obj/item/scalpel)) destroyed = 1
-		else if (istype(W, /obj/item/sword)) destroyed = 1
-		else if (istype(W, /obj/item/saw)) destroyed = 1
-
-		return destroyed
-
+	return istool(W, TOOL_CUTTING | TOOL_SAWING | TOOL_SCREWING | TOOL_SNIPPING | TOOL_WELDING)

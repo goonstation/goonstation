@@ -5,7 +5,7 @@
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1.0
+	anchored = 1
 	mats = 20
 	is_syndicate = 1
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
@@ -91,7 +91,7 @@
 			var/mob/M = target
 			random_brute_damage(M, rand(5, 10), TRUE)
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
-			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 66)
+			playsound(M, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 66)
 			if(prob(10) && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				H.limbs?.sever(pick("l_arm", "r_arm", "l_leg", "r_leg"))
@@ -104,7 +104,7 @@
 			var/mob/M = target
 			random_brute_damage(M, rand(15, 45))
 			take_bleeding_damage(M, null, 10, DAMAGE_CRUSH)
-			playsound(M, pick("sound/impact_sounds/Flesh_Stab_1.ogg","sound/impact_sounds/Metal_Clang_1.ogg","sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Flesh_Tear_2.ogg","sound/impact_sounds/Slimy_Hit_3.ogg"), 100)
+			playsound(M, pick('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg'), 100)
 			M.emote("scream", FALSE)
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -139,7 +139,7 @@
 						tm_amt += 5000
 						tg_amt += 1000
 				qdel(O)
-			logTheThing("combat", M, null, "is ground up in a crusher at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, M, "is ground up in a crusher at [log_loc(owner)].")
 			M.gib()
 		else if(istype(AM, /obj))
 			var/obj/B = AM

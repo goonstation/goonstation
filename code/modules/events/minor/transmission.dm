@@ -11,7 +11,7 @@
 			if(fexists(fname))
 				event_transmissions = json_decode(file2text(fname))
 		if(!event_transmissions)
-			logTheThing("debug", src, null, "Event transmission JSON file loading failed.")
+			logTheThing(LOG_DEBUG, src, "Event transmission JSON file loading failed.")
 			return
 		var/event = pick(event_transmissions)
 		var/command_report = event["text"]
@@ -28,7 +28,7 @@
 				tele.updateUsrDialog()
 			command_report += "\n\nTransmission source stored in the Teleportation Console."
 
-		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		command_announcement(replacetext(command_report, "\n", "<br>"), "Emergency Broadcast Received", sound_to_play, do_sanitize=0);
 		return
 

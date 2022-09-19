@@ -8,9 +8,11 @@
 	density = FALSE
 	name = "glowing doodad"
 	desc = "Oh god is that a fucking light grenade?!"
+	flock_desc = "Will soon hatch into a Flockdrone."
 	flock_id = "Second-Stage Assembler"
 	build_time = 6
 	health = 30
+	uses_health_icon = FALSE
 	var/decal_made = FALSE // for splashing stuff on throw
 
 /obj/flock_structure/egg/building_specific_info()
@@ -32,15 +34,16 @@
 
 /obj/flock_structure/egg/throw_impact(atom/A, datum/thrown_thing/thr)
 	var/turf/T = get_turf(A)
-	playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 100, 1)
+	playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, 1)
 	if (T && !decal_made)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 80, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 80, 1)
 		make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,T)
 		decal_made = TRUE
 	..()
 
 /obj/flock_structure/egg/bit
 	flock_id = "Secondary Second-Stage Assembler"
+	flock_desc = "Will soon hatch into Flockbits."
 
 /obj/flock_structure/egg/bit/spawn_contents()
 	for (var/i in 1 to 3)

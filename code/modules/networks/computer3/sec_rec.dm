@@ -393,7 +393,7 @@
 
 					if (FIELDNUM_PRINT)
 						if (ckey(inputText))
-							src.active_general["fingerprint"] = copytext(inputText, 1, 33)
+							src.active_general["fingerprint"] = copytext(inputText, 1, 35)
 						else
 							return
 
@@ -769,7 +769,7 @@
 				return
 
 			if (usr)
-				logTheThing("station", usr, null, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
+				logTheThing(LOG_STATION, usr, "[perp_name] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src.master)]")
 
 			//Unlikely that this would be a problem but OH WELL
 			if(last_arrest_report && world.time < (last_arrest_report + 10))

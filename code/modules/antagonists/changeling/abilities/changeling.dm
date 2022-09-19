@@ -7,7 +7,7 @@
 		L.blood_id = "bloodc"
 
 	if (src.mind && !src.mind.is_changeling && (src.mind.special_role != ROLE_OMNITRAITOR))
-		src.Browse(grabResource("html/traitorTips/changelingTips.html"),"window=antagTips;size=600x400;title=Antagonist Tips")
+		src.show_antag_popup("changeling")
 
 	var/datum/abilityHolder/changeling/C = src.add_ability_holder(/datum/abilityHolder/changeling)
 	C.addAbility(/datum/targetable/changeling/abomination)
@@ -107,7 +107,7 @@
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
 			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
-			logTheThing("combat", owner, M, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
 			if (headspider_override != 1) // Headspiders shouldn't be free.
 				src.points += M.dna_to_absorb // 10 regular points for their body...
@@ -149,7 +149,6 @@
 		if (iscarbon(victim))
 			var/mob/living/M = victim
 			obs = new(src.owner)
-			obs.corpse = null
 
 			//Set up name and vision
 			obs.name = M.name
@@ -183,6 +182,7 @@
 				M.ghost = obs
 			*/
 			obs.set_owner(src)
+			obs.show_antag_popup("changeling_absorbed")
 		else if (istype(victim,/mob/dead/target_observer/hivemind_observer))
 			obs = victim
 
@@ -260,7 +260,7 @@
 
 	proc/return_control_to_master()
 		if(master)
-			logTheThing("combat", master, owner, "has retaken control of the changeling body from [constructTarget(owner,"combat")].")
+			logTheThing(LOG_COMBAT, master, "has retaken control of the changeling body from [constructTarget(owner,"combat")].")
 			//Return the controller to the hivemind, with their original names.
 			boutput(src.owner,"<h2><span class='combat bold'>[master] has retaken control of the flesh!</span></h2>")
 			src.owner.mind.transfer_to(temp_controller)

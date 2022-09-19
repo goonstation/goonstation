@@ -16,7 +16,7 @@
 	req_access = list(access_security)
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/floorflusher (floorflusher.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
@@ -166,10 +166,15 @@
 
 /obj/machinery/flasher/New()
 	..()
+	START_TRACKING
 	light = new /datum/light/point
 	light.attach(src)
 	light.set_brightness(0.4)
 	light.set_height(0.5)
+
+/obj/machinery/flasher/disposing()
+	..()
+	STOP_TRACKING
 
 /obj/machinery/flasher/power_change()
 	if ( powered() )
@@ -204,13 +209,13 @@
 	if (src.disable)
 		return
 
-	playsound(src.loc, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/flash.ogg', 100, 1)
 	flick("[base_state]_flash", src)
 	ON_COOLDOWN(src, "flash", cooldown_flash)
 	use_power(1000)
 
 	for (var/mob/O in viewers(src, null))
-		if (get_dist(src, O) > src.range)
+		if (GET_DIST(src, O) > src.range)
 			continue
 
 		// Heavy-duty flashers should be capable of disrupting cloaks in a reliable fashion, hence the 100% at the end.
@@ -226,7 +231,7 @@
 	anchored = 0
 	base_state = "pflash"
 	density = 1
-	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 	var/cooldown_scan = 1.5 SECONDS
 	var/cooldown_end = 0
 
@@ -284,6 +289,7 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] can now be moved.</span>"))
 			src.UpdateOverlays(null, "anchor")
+			remove_use_proximity()
 
 		else if (src.anchored)
 			if (powered())
@@ -291,3 +297,4 @@
 			UpdateIcon()
 			user.show_message(text("<span class='alert'>[src] is now secured.</span>"))
 			src.UpdateOverlays(image(src.icon, "[base_state]-s"), "anchor")
+			setup_use_proximity()

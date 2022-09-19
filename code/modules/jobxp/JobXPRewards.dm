@@ -54,7 +54,7 @@ mob/verb/checkrewards()
 						if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 							claimsLeft = 0
 					if(claimsLeft)
-						if(alert("Would you like to claim this reward?",,"Yes","No") == "Yes")
+						if(tgui_alert(usr, "Would you like to claim this reward?", "Claim reward", list("Yes", "No")) == "Yes")
 							if(rewardDatum.claimPerRound > 0)
 								if(rewardDatum.claimedNumbers.Find(usr.key) && rewardDatum.claimedNumbers[usr.key] >= rewardDatum.claimPerRound)
 									return
@@ -257,7 +257,7 @@ mob/verb/checkrewards()
 /datum/jobXpReward/HeadofSecurity/mug
 	name = "Alternate Blue Mug"
 	desc = "It's your favourite coffee mug, but now its text is blue. Wow."
-	required_levels = list("Head of Security"=1)
+	required_levels = list("Head of Security"=0)
 	claimable = 1
 	var/path_to_spawn = /obj/item/reagent_containers/food/drinks/mug/HoS/blue
 
@@ -322,23 +322,6 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(LGP)
 		boutput(C.mob, "<span class='emote'>A pamphlet flutters out.</span>")
 		return
-
-/datum/jobXpReward/head_of_security_LG_old
-	name = "The Antique Lawbringer"
-	desc = "Gain access to a voice activated weapon of the past-future-past by sacrificing your gun of the future-past. I.E. The Lawbringer."
-	required_levels = list("Head of Security"=5)
-	claimable = 1
-	claimPerRound = 1
-
-	activate(var/client/C)
-		var/obj/item/gun/energy/lawbringer/I = C.mob.find_type_in_hand(/obj/item/gun/energy/lawbringer)
-
-		if (I)
-			I.make_antique()
-			boutput(C.mob, "Your Lawbringer becomes a little more antique!")
-		else
-			boutput(C.mob, "You need to be holding your Lawbringer in order to claim this reward.")
-			src.claimedNumbers[usr.key] --
 
 //Captain
 
@@ -544,7 +527,7 @@ mob/verb/checkrewards()
 
 /datum/jobXpReward/clown20
 	name = "Bananna"
-	desc = "Banana, but misspelled!"
+	desc = "Bananna, but misspelled!"
 	required_levels = list("Clown"=20)
 	icon_state = "?"
 	claimable = 1
@@ -559,7 +542,6 @@ mob/verb/checkrewards()
 			banana = new/obj/item/reagent_containers/food/snacks/plant/banana()
 		banana.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(banana)
-		return
 
 /////////////Bartender////////////////
 

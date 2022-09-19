@@ -11,9 +11,9 @@
 	var/blunt_resist = 0
 	var/cut_resist = 0
 	var/corrode_resist = 0
-	var/temp_resist = 0
 	var/shock_when_entered = 1
 	var/auto = TRUE
+	//zewaka: typecacheof here
 	var/list/connects_to_turf = list(/turf/simulated/wall/auto, /turf/simulated/wall/auto/reinforced, /turf/simulated/shuttle/wall, /turf/unsimulated/wall)
 	var/list/connects_to_obj = list(/obj/indestructible/shuttle_corner,	/obj/grille/, /obj/machinery/door, /obj/window)
 	text = "<font color=#aaa>+"
@@ -180,13 +180,12 @@
 	onMaterialChanged()
 		..()
 		if (istype(src.material))
-			health_max = material.hasProperty("density") ? round(material.getProperty("density")) : 25
+			health_max = material.getProperty("density") * 10
 			health = health_max
 
-			cut_resist = material.hasProperty("hard") ? material.getProperty("hard") : cut_resist
-			blunt_resist = material.hasProperty("density") ? material.getProperty("density") : blunt_resist
-			corrode_resist = material.hasProperty("corrosion") ? material.getProperty("corrosion") : corrode_resist
-			//temp_resist = material.hasProperty(PROP_MOB_MELTING) ? material.getProperty(PROP_MOB_MELTING) : temp_resist
+			cut_resist = material.getProperty("hard") * 10
+			blunt_resist = material.getProperty("density") * 10
+			corrode_resist = material.getProperty("chemical") * 10
 			if (blunt_resist != 0) blunt_resist /= 2
 
 	damage_blunt(var/amount)
@@ -251,11 +250,6 @@
 			qdel(src)
 			return
 
-		if (src.material)
-			if (amount * 100000 <= temp_resist)
-				// Not applying enough heat to melt it
-				return
-
 		src.health = clamp(src.health - amount, 0, src.health_max)
 		if (src.health == 0)
 			UpdateIcon("melted")
@@ -276,15 +270,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.damage_blunt(40)
 				src.damage_heat(40)
 
-			if(2.0)
+			if(2)
 				src.damage_blunt(15)
 				src.damage_heat(15)
 
-			if(3.0)
+			if(3)
 				src.damage_blunt(7)
 				src.damage_heat(7)
 
@@ -331,9 +325,7 @@
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 		if (ismob(AM))
 			if(src?.material.hasProperty("electrical"))
-				shock(AM, 100 - (60 - src.material.getProperty("electrical")))  // sure loved people being able to throw corpses into these without any consequences.
-			else
-				shock(AM, 100) // no electrical stat means that it returns -1, default value is 60
+				shock(AM, 60 + (5 * (src.material.getProperty("electrical") - 5)))  // sure loved people being able to throw corpses into these without any consequences.
 			damage_blunt(5)
 		else if (isobj(AM))
 			var/obj/O = AM
@@ -400,7 +392,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing("station", usr, null, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
+					logTheThing(LOG_STATION, usr, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(usr)] in [usr.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return
@@ -417,14 +409,10 @@
 		// electrocution check
 
 		var/OSHA_is_crying = 1
-		var/dmg_mod = 0
-		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") < 30))
+		if (src.material && src.material.getProperty("electrical") < 4)
 			OSHA_is_crying = 0
 
-		if ((src.material && src.material.hasProperty("electrical") && src.material.getProperty("electrical") > 30))
-			dmg_mod = 60 - src.material.getProperty("electrical")
-
-		if (OSHA_is_crying && (BOUNDS_DIST(src, user) == 0) && shock(user, 100 - dmg_mod))
+		if (OSHA_is_crying && src.material && (BOUNDS_DIST(src, user) == 0) && shock(user, 60 + (5 * (src?.material.getProperty("electrical") - 5))))
 			return
 
 		// Things that will electrocute you
@@ -562,10 +550,10 @@
 		var/net = get_connection()
 		if (!powernets[net])
 			return FALSE
-		if (src?.material.hasProperty("electrical")) // if the material being checked does not have the stat set, it will return -1 which is bad
-			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical"))
+		if(src.material)
+			powernets[net].newavail += lpower / 100 * (100 - src.material.getProperty("electrical") * 5)
 		else
-			powernets[net].newavail += lpower / 100 * (100 - 60) // electrical default value is 60 according to Mat_Properties.dm
+			powernets[net].newavail += lpower / 7500
 
 	Cross(atom/movable/mover)
 		if (istype(mover, /obj/projectile))

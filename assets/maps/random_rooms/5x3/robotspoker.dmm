@@ -1,0 +1,150 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decoration/clock{
+	pixel_y = 30
+	},
+/obj/table/wood/auto,
+/obj/machinery/light/small/floor/cool/very,
+/obj/shrub/dead{
+	pixel_y = 15
+	},
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"d" = (
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/gin{
+	pixel_x = -7;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = 8
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/stool/chair/wooden,
+/obj/machinery/bot/cleanbot{
+	name = "Dirty Money"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/north,
+/area/dmm_suite/clear_area)
+"A" = (
+/turf/simulated/floor/carpet/green/fancy/edge/nw,
+/area/dmm_suite/clear_area)
+"D" = (
+/turf/simulated/floor/carpet/green/fancy/edge/se,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/drinks/bottle/bojackson{
+	pixel_x = -5;
+	pixel_y = 17
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
+	pixel_x = -8
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/simulated/floor/wood/seven,
+/area/space)
+"G" = (
+/obj/table/wood/auto,
+/obj/item/device/light/zippo{
+	pixel_y = 7;
+	pixel_x = 8
+	},
+/obj/item/cigarbox{
+	pixel_y = 5;
+	pixel_x = -3
+	},
+/obj/machinery/light/small/floor/cool/very,
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"H" = (
+/turf/simulated/floor/wood/seven,
+/area/dmm_suite/clear_area)
+"I" = (
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/stool/chair/wooden{
+	dir = 4
+	},
+/obj/machinery/bot/skullbot{
+	name = "Poker Face"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/table/wood/round,
+/obj/machinery/light/small/floor/cool/very,
+/obj/item/spacecash/random/small{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/card_box/plain{
+	pixel_x = -7
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/machinery/bot/floorbot{
+	name = "The Pit Boss"
+	},
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/green/fancy/edge,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/machinery/bot/mining{
+	name = "One-Eyed Jack"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+G
+H
+o
+"}
+(2,1,1) = {"
+A
+O
+I
+"}
+(3,1,1) = {"
+w
+P
+R
+"}
+(4,1,1) = {"
+d
+Z
+D
+"}
+(5,1,1) = {"
+a
+H
+F
+"}

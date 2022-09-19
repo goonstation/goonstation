@@ -40,7 +40,7 @@ MATERIAL
 	var/icon_state_base = "sheet"
 	desc = "Thin sheets of building material. Can be used to build many things."
 	flags = FPRINT | TABLEPASS
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -137,7 +137,7 @@ MATERIAL
 
 	split_stack(toRemove)
 		. = ..()
-		if(src.reinforcement)
+		if(. && src.reinforcement)
 			var/obj/item/sheet/S = .
 			S.set_reinforcement(src.reinforcement)
 			. = S
@@ -254,7 +254,7 @@ MATERIAL
 		var/t1 = text("<HTML><HEAD></HEAD><TT>Amount Left: [] <BR>", src.amount)
 		var/counter = 1
 		var/list/L = list(  )
-		if (src?.material.material_flags & MATERIAL_METAL)
+		if (src?.material?.material_flags & MATERIAL_METAL)
 			if (istype(src.reinforcement))
 				L["retable"] = "Reinforced Table Parts (2 Sheets)"
 				L["industrialtable"] = "Industrial Table Parts (2 Sheets)"
@@ -278,13 +278,13 @@ MATERIAL
 				L["computer"] = "Console Frame (5 Sheets)"
 				L["hcomputer"] = "Computer Frame (5 Sheets)"
 				L["vending"] = "Vending Machine Frame (3 Sheets)"
-		if (src?.material.material_flags & MATERIAL_CRYSTAL)
+		if (src?.material?.material_flags & MATERIAL_CRYSTAL)
 			L["smallwindow"] = "Thin Window"
 			L["bigwindow"] = "Large Window (2 Sheets)"
 			L["displaycase"] = "Display Case (3 Sheets)"
 			if (istype(src.reinforcement))
 				L["remetal"] = "Remove Reinforcement"
-		if (src?.material.mat_id == "cardboard")
+		if (src?.material?.mat_id == "cardboard")
 			L["c_box"] = "Cardboard Box (2 Sheets)"
 
 		for(var/t in L)
@@ -668,8 +668,8 @@ MATERIAL
 	item_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -834,15 +834,17 @@ MATERIAL
 				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
 			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = user.loc
-			SPAWN(1.5 SECONDS)
-				if (T == user.loc && !user.getStatusDuration("weakened") && !user.getStatusDuration("stunned") && src.amount >= 2)
-					var/atom/G = new /obj/grille(user.loc)
-					G.setMaterial(src.material)
-					src.change_stack_amount(-2)
-					logTheThing("station", user, null, "builds a grille (<b>Material:</b> [G.material && G.material.mat_id ? "[G.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(user)].")
+			SETUP_GENERIC_ACTIONBAR(user, src, 1.5 SECONDS, /obj/item/rods/proc/build_grille, user, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 		src.add_fingerprint(user)
 		return
+
+	proc/build_grille(mob/user)
+		if (src.amount >= 2)
+			var/atom/A = new /obj/grille(user.loc)
+			A.setMaterial(src.material)
+			src.change_stack_amount(-2)
+			logTheThing(LOG_STATION, user, "builds a grille (<b>Material:</b> [A.material?.mat_id || "*UNKNOWN*"]) at [log_loc(user)].")
+			A.add_fingerprint(user)
 
 /obj/head_on_spike
 	name = "head on a spike"
@@ -977,7 +979,7 @@ MATERIAL
 		user.visible_message("<span class='alert'><b>[user] headbutts the spike, impaling [his_or_her(user)] head on it!</b></span>")
 		user.TakeDamage("head", 50, 0)
 		user.changeStatus("stunned", 50 SECONDS)
-		playsound(src.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 		if(prob(40)) user.emote("scream")
 
 		SPAWN(1 SECOND)
@@ -987,7 +989,7 @@ MATERIAL
 			heads += head
 			src.update()
 			make_cleanable( /obj/decal/cleanable/blood,user.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -1017,8 +1019,8 @@ MATERIAL
 	m_amt = 937.5
 	throw_speed = 3
 	throw_range = 20
-	force = 6.0
-	throwforce = 5.0
+	force = 6
+	throwforce = 5
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 15
@@ -1091,8 +1093,8 @@ MATERIAL
 			return
 		else
 			var/S = T
-			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam)))
-				// If this isn't space or metal foam...
+			if (!( istype(S, /turf/space) || istype(S, /turf/simulated/floor/metalfoam) || istype(S, /turf/simulated/floor/plating/airless/asteroid)))
+				// If this isn't space, metal foam, or an asteroid...
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
@@ -1115,13 +1117,14 @@ MATERIAL
 		if (W.material && src.material && !isSameMaterial(W.material, src.material))
 			boutput(user, "<span class='alert'>You can't mix two stacks of different materials!</span>")
 			return
+		var/inMagtractor = istype(W.loc, /obj/item/magtractor)
 		var/success = stack_item(W)
 		if (!success)
 			boutput(user, "<span class='alert'>You can't put any more tiles in this stack!</span>")
 			return
-		if(!user.is_in_hands(src))
+		if(!(user.is_in_hands(src) || inMagtractor))
 			user.put_in_hand(src)
-		if(isrobot(user))
+		if(issilicon(user))
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [W.amount] tiles.</span>")
 		else
 			boutput(user, "<span class='notice'>You add [success] tiles to the stack. It now has [src.amount] tiles.</span>")
@@ -1153,7 +1156,7 @@ MATERIAL
 			W.to_plating()
 
 		if(ismob(usr) && !istype(src.material, /datum/material/metal/steel))
-			logTheThing("station", usr, null, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
+			logTheThing(LOG_STATION, usr, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(S)].")
 		if(src.material)
 			W.setMaterial(src.material)
 		src.change_stack_amount(-1)
@@ -1169,6 +1172,7 @@ MATERIAL
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
+	force = 0
 	New()
 		..()
 		var/datum/material/M = getMaterial("cardboard")

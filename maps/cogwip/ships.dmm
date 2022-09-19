@@ -2348,7 +2348,7 @@
 /area/space)
 "gz" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/carpet{
 	icon_state = "blue2"
 	},
@@ -3153,7 +3153,7 @@
 /area/space)
 "iN" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp{
+/obj/machinery/light/lamp/black{
 	on = 1
 	},
 /turf/simulated/floor/wood/two,
@@ -7752,7 +7752,7 @@
 /area/space)
 "ud" = (
 /obj/table/reinforced/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /turf/unsimulated/floor/red,
 /area/space)
 "ue" = (
@@ -8745,7 +8745,7 @@
 	dir = 8;
 	icon_state = "line-broken1"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "wu" = (

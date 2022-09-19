@@ -84,7 +84,7 @@
 		if (user.a_intent == "harm")
 			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
 			playsound(src.loc, pick(sounds_punch), 100, 1)
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, rand(1, 4))
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, rand(1, 4))
 			return
 		else
 			src.visible_message("<b>[user]</b> thumps the [src]!  Ayy!")
@@ -99,13 +99,13 @@
 
 	proc/mindswap()
 		src.visible_message("<span class='alert'>The [src] activates!</span>")
-		playsound(src.loc,"sound/effects/ghost2.ogg", 100, 1)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
 			if(M.loc == src) continue //Don't add the jerk trapped souls.
 			if(M.key) //Okay cool, we have a player to transfer.
-				var/mob/living/carbon/wall/holder = new
+				var/mob/living/holder = new
 				holder.set_loc(src)
 				if(M.mind)
 					M.mind.transfer_to(holder)
@@ -171,7 +171,7 @@
 		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
 			src.visible_message("<span class='alert'>[src] disappears!</span>")
-			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
 
@@ -281,23 +281,6 @@
 	pictures_left = -1 // halloween magic doesn't need photos
 	steals_souls = TRUE
 
-/mob/living/carbon/wall/halloween
-	var/mob/oldbody = null
-
-/mob/living/carbon/wall/horror
-	say_quote(var/text)
-		if(src.emote_allowed)
-			if(!(src.client && src.client.holder))
-				src.emote_allowed = 0
-
-			if(src.gender == MALE) playsound(src, "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91, channel=VOLUME_CHANNEL_EMOTE)
-			else playsound(src, "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9, channel=VOLUME_CHANNEL_EMOTE)
-			SPAWN(5 SECONDS)
-				src.emote_allowed = 1
-			return "screams!"
-		else
-			return pick("gurgles.","shivers.","twitches.","shakes.","squirms.", "cries.")
-
 /obj/item/photo/haunted
 	var/list/mob/old_bodies = list()
 
@@ -344,10 +327,9 @@
 		if (ishuman(user) && !user.stat)
 			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
-			var/mob/living/carbon/wall/halloween/holder = new
+			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
-			holder.oldbody = M
 			if(M.mind)
 				M.mind.transfer_to(holder)
 			else
@@ -514,7 +496,7 @@
 	anchored = 1
 	density = 0
 	pixel_y = 7
-	var/trigger_sound = "sound/effects/ExtremelyScaryGhostNoise.ogg"
+	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
 	var/trigger_duration = 118 // should be about as long as the sound clip
 	var/spam_flag = 0
 	var/spam_timer = 150

@@ -20,20 +20,23 @@ CONTENTS:
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/crunch/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(10 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg','sound/ambience/spooky/Void_Screaming.ogg','sound/ambience/spooky/Void_Wail.ogg','sound/ambience/spooky/Void_Calls.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 50)
+/area/crunch/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
+
+/area/crunch/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Void_Hisses.ogg',\
+		'sound/ambience/spooky/Void_Screaming.ogg',\
+		'sound/ambience/spooky/Void_Wail.ogg',\
+		'sound/ambience/spooky/Void_Calls.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /turf/unsimulated/wall/void
 	name = "dense void"
@@ -315,7 +318,7 @@ CONTENTS:
 		if(activating) return
 		activating = 1
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/computerboot_pc_start.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_start.ogg', 50, 0)
 
 		sleep(boot_duration / 2)
 		activating = 2
@@ -341,7 +344,7 @@ CONTENTS:
 
 	proc/make_some_noise()
 		do
-			playsound(src.loc, "sound/machines/computerboot_pc_loop.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/computerboot_pc_loop.ogg', 50, 0)
 			sleep(loop_duration)
 		while(active && !activating && remain_active-- > 0) //So it will shut itself down after a while
 
@@ -354,7 +357,7 @@ CONTENTS:
 	proc/deactivate()
 		if(!active || activating || operating) return
 		activating = 1
-		playsound(src.loc, "sound/machines/computerboot_pc_end.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/computerboot_pc_end.ogg', 50, 0)
 		sleep(2 SECONDS)
 		activating = 0
 		active = 0

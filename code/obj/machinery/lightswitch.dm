@@ -7,7 +7,7 @@
 	name = null
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
 	text = ""
 	var/on = 1
@@ -38,9 +38,9 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 
 		if (on)
-			light.set_color(0.5, 1, 0.50)
+			light.set_color(0.5, 1, 0.5)
 		else
-			light.set_color(1, 0.50, 0.50)
+			light.set_color(1, 0.5, 0.5)
 		light.set_brightness(0.3)
 		light.attach(src)
 		light.enable()
@@ -63,10 +63,10 @@
 			light.enable()
 		if(on)
 			icon_state = "light1"
-			light.set_color(0.5, 1, 0.50)
+			light.set_color(0.5, 1, 0.5)
 		else
 			icon_state = "light0"
-			light.set_color(1, 0.50, 0.50)
+			light.set_color(1, 0.5, 0.5)
 
 /obj/machinery/light_switch/get_desc(dist, mob/user)
 	if(user && !user.stat)
@@ -90,9 +90,9 @@
 
 	if(user)
 		src.add_fingerprint(user)
-		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+		logTheThing(LOG_STATION, user, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
-	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
@@ -101,7 +101,7 @@
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-		toggle(null)
+		toggle(user)
 
 /obj/machinery/light_switch/power_change()
 

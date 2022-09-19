@@ -12,6 +12,14 @@
 	blend_mode = BLEND_ADD
 	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
 
+/obj/ambient
+	icon = 'icons/effects/white.dmi'
+	plane = PLANE_LIGHTING
+	layer = LIGHTING_LAYER_BASE
+	blend_mode = BLEND_ADD
+	appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_ALPHA | RESET_COLOR
+
+
 /area
 	var
 		force_fullbright = 0
@@ -36,18 +44,15 @@
 
 /turf
 	luminosity = 1
+	var/fullbright = 0
 
-	var
-		fullbright = 0
+/turf/proc/init_lighting()
+	var/area/A = loc
 
-	New()
-		..()
-		var/area/A = loc
+	#ifdef UNDERWATER_MAP //FUCK THIS SHIT. NO FULLBRIGHT ON THE MINING LEVEL, I DONT CARE.
+	if (z == AST_ZLEVEL) return
+	#endif
 
-		#ifdef UNDERWATER_MAP //FUCK THIS SHIT. NO FULLBRIGHT ON THE MINING LEVEL, I DONT CARE.
-		if (z == AST_ZLEVEL) return
-		#endif
-
-		// space handles its own lighting via simple lights which already cover the turf itself too
-		if (!istype(src, /turf/space) && !A.force_fullbright && fullbright) // if the area's fullbright we'll use a single overlay on the area instead
-			src.UpdateOverlays(new /image/fullbright, "fullbright")
+	// space handles its own lighting via simple lights which already cover the turf itself too
+	if (!istype(src, /turf/space) && !A.force_fullbright && fullbright) // if the area's fullbright we'll use a single overlay on the area instead
+		src.UpdateOverlays(new /image/fullbright, "fullbright")

@@ -6,6 +6,7 @@ var/global/list/type_ids = list(
 	/mob = "03",
 	/area = "04",
 	/client = "05",
+	// strings are "06"
 	/image = "0d",
 	/datum = "21"
 )

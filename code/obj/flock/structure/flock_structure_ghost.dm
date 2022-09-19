@@ -1,9 +1,9 @@
 /obj/flock_structure/ghost
 	name = "weird lookin ghost building"
 	desc = "It's some weird looking ghost building. Seems like its under construction, You can see faint strands of material floating in it."
-
+	flock_desc = "A Flock structure not yet realised. Provide it resources to bring it into existence."
 	var/goal = 0 //mats needed to make the thing actually build
-	var/building = null //thing thats being built
+	var/obj/flock_structure/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
 	flock_id = "Construction Tealprint"
 	density = FALSE
@@ -13,8 +13,9 @@
 	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
 	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
 
-/obj/flock_structure/ghost/New(var/atom/location, building = null, var/datum/flock/F = null, goal = 0)
+/obj/flock_structure/ghost/New(atom/location, obj/flock_structure/building = null, datum/flock/F = null, goal = 0)
 	..(location, F)
+	START_TRACKING
 	if(building)
 		var/obj/flock_structure/b = building
 		icon = initial(b.icon)
@@ -45,6 +46,19 @@
 		qdel(src)
 		flock_speak(null, "ERROR: Build area is blocked by an obstruction.", flock)
 
+	if (src.flock)
+		if(building == /obj/flock_structure/relay)
+			src.flock.relay_in_progress_or_finished = TRUE
+			src.uses_health_icon = FALSE
+			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+
+/obj/flock_structure/ghost/disposing()
+	if (src.flock)
+		if (src.flock.relay_in_progress_or_finished && src.building == /obj/flock_structure/relay && !(locate(/obj/flock_structure/relay) in src.flock.structures))
+			src.flock.relay_in_progress_or_finished = FALSE
+	STOP_TRACKING
+	. = ..()
+
 /obj/flock_structure/ghost/Click(location, control, params)
 	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
 		return ..()
@@ -53,16 +67,6 @@
 
 /obj/flock_structure/ghost/deconstruct()
 	cancelBuild()
-
-/obj/flock_structure/ghost/process()
-	if(currentmats > goal)
-		var/obj/item/flockcache/c = new(get_turf(src))
-		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
-		c.resources = (currentmats - goal)
-		src.completebuild()
-	else if(currentmats == goal)
-		src.completebuild()
-	updatealpha()
 
 /obj/flock_structure/ghost/gib()
 	visible_message("<span class='alert'>[src] suddenly dissolves!</span>")
@@ -75,6 +79,21 @@
 /obj/flock_structure/ghost/proc/updatealpha()
 	alpha = lerp(104, 255, currentmats / goal)
 
+/obj/flock_structure/ghost/proc/add_mats(mats)
+	src.currentmats += mats
+
+	if(currentmats > goal)
+		var/obj/item/flockcache/c = new(get_turf(src))
+		flock_speak(src, "ALERT: Material excess detected, ejecting excess", flock)
+		c.resources = (currentmats - goal)
+		src.completebuild()
+		return
+	else if(currentmats == goal)
+		src.completebuild()
+		return
+
+	updatealpha()
+
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
@@ -85,5 +104,5 @@
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
 	flock_speak(src, "Tealprint derealizing", flock)
-	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 40, 1)
+	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, 1, extrarange = -10)
 	qdel(src)

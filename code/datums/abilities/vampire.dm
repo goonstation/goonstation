@@ -136,10 +136,6 @@
 				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
-
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
-			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
 			usr.update_cursor()
@@ -217,7 +213,7 @@
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.vamp_blood = 0
@@ -227,12 +223,18 @@
 		else
 			if (src.points < 0)
 				src.points = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.points = 0
 			else
 				src.points = max(src.points + change, 0)
+
+			if (change > 0 && ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				if (H.sims)
+					H.sims.affectMotive("Thirst", change * 0.5)
+					H.sims.affectMotive("Hunger", change * 0.5)
 
 	proc/get_vampire_blood(var/total_blood = 0)
 		if (total_blood)
@@ -334,7 +336,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", sender, null, "(GHOULSPEAK): [message]", "ghoulsay")
+		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
 
 		if (sender.client && sender.client.ismuted())
 			boutput(sender, "You are currently muted and may not speak.")
@@ -344,7 +346,7 @@
 
 
 	proc/remove_thrall(var/mob/victim)
-		remove_mindslave_status(victim)
+		remove_mindhack_status(victim)
 		thralls -= victim
 
 	proc/make_thrall(var/mob/victim)
@@ -407,12 +409,12 @@
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindslave")
+			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
-			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 
@@ -438,6 +440,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampire
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	New()
@@ -509,7 +512,9 @@
 
 		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
 			return 1
-
+		if (src.not_when_in_an_object && !isturf(M.loc))
+			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
+			return 0
 		if (!(iscarbon(M) || ismobcritter(M)))
 			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
