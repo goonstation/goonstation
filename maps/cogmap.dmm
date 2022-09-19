@@ -45964,6 +45964,9 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/big,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cqO" = (
@@ -45980,9 +45983,6 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/clonepod,
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/railing/orange,
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/cloner)
@@ -46224,6 +46224,9 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/stairs{
 	icon_state = "medstairs_alone"
 	},
@@ -46239,15 +46242,6 @@
 "crT" = (
 /obj/machinery/computer/cloning,
 /obj/item/paper/Cloning,
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -46255,6 +46249,15 @@
 	tag = ""
 	},
 /obj/decal/stage_edge/alt,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crU" = (
@@ -46520,6 +46523,9 @@
 	},
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
@@ -53457,9 +53463,6 @@
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/pathology,
-/obj/cable{
-	icon_state = "4-8"
-	},
 /turf/simulated/floor/delivery/white,
 /area/station/medical/cdc)
 "gNJ" = (
@@ -56590,6 +56593,13 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
+"lDv" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/medical/research)
 "lEV" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -60110,6 +60120,9 @@
 	icon_state = "0-4"
 	},
 /obj/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "qMw" = (
@@ -64170,6 +64183,9 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/grass{
 	name = "astroturf"
@@ -105958,7 +105974,7 @@ cwi
 ctD
 ctD
 ctD
-ctD
+lDv
 dhj
 dgt
 pkK
@@ -106260,7 +106276,7 @@ cwj
 cuo
 cuo
 vql
-ctD
+lDv
 dhj
 dhj
 rBL
@@ -106562,7 +106578,7 @@ cwj
 cuo
 hjc
 hvo
-ctD
+lDv
 dhj
 dhj
 qBE
