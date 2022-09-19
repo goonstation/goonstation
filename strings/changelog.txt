@@ -1,5 +1,9 @@
 
 (t)mon sep 19 22
+(u)Sovexe
+(p)10893
+(e)|
+(+)The cog1 medbay has had some alterations made to its layout
 (u)Blackrep
 (p)10874
 (e)|
