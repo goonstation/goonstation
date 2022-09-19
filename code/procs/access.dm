@@ -372,7 +372,7 @@
 		if("Club member")
 			return list(access_special_club)
 		if("Inspector", "Communications Officer")
-			return list(access_security, access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
+			return list(access_tox, access_tox_storage, access_chemistry, access_medical, access_medlab,
 						access_emergency_storage, access_eva, access_heads, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_kitchen, access_robotics, access_cargo, access_research, access_hydro, access_ranch, access_pathology,
 						access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
