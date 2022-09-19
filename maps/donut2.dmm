@@ -3105,10 +3105,6 @@
 /obj/item/disk/data/tape/master/readonly,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
-"alX" = (
-/obj/item/device/radio/beacon,
-/turf/simulated/floor/white,
-/area/station/crew_quarters/observatory)
 "alY" = (
 /turf/simulated/floor/blue/side{
 	dir = 4
@@ -21313,6 +21309,10 @@
 	pixel_y = 0
 	},
 /obj/machinery/power/lgenerator,
+/obj/item/paper{
+	info = "<center>Local Generators for Dummies (you)</center><hr>The NanoTrasen Local APC Generator is a remarkable device that will take us further into the future of plasma technology. Using state of the art plasma recycling techniques, the LAPCG charges all power cells within APCs to generate power in the unlikely event of emergency.<br>Operating Procedure follows:<br><li>Unsecure the generator with a wrench</li><li>Move the generator to an area lacking power</li><li>Insert plasma tank and activate the generator</li><li>At this point, the power cell in the area should begin to charge, and the plasma tank will begin to drain</li><li>When the plasma tank is depleted, energy will stop radiating from the LAPCG. The power cell will likely begin to lose charge until a new tank is inserted.</li><li>Insert a new plasma tank, or refuel the used one until power has been restored to the area.</li>";
+	name = "Paper-'Operating Instructions: LAPG'"
+	},
 /turf/simulated/floor/yellow/corner,
 /area/station/engine/engineering)
 "bvP" = (
@@ -21324,10 +21324,6 @@
 	},
 /obj/cable{
 	icon_state = "2-4"
-	},
-/obj/item/paper{
-	info = "<center>Local Generators for Dummies (you)</center><hr>The NanoTrasen Local APC Generator is a remarkable device that will take us further into the future of plasma technology. Using state of the art plasma recycling techniques, the LAPCG charges all power cells within APCs to generate power in the unlikely event of emergency.<br>Operating Procedure follows:<br><li>Unsecure the generator with a wrench</li><li>Move the generator to an area lacking power</li><li>Insert plasma tank and activate the generator</li><li>At this point, the power cell in the area should begin to charge, and the plasma tank will begin to drain</li><li>When the plasma tank is depleted, energy will stop radiating from the LAPCG. The power cell will likely begin to lose charge until a new tank is inserted.</li><li>Insert a new plasma tank, or refuel the used one until power has been restored to the area.</li>";
-	name = "Paper-'Operating Instructions: LAPG'"
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -23776,12 +23772,9 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bEX" = (
-/obj/decal/fakeobjects/firelock_broken{
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/junk.dmi';
-	icon_state = "bdoor_maint";
-	name = "broken airlock"
-	},
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/obj/access_spawn/engineering_atmos,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "bEY" = (
@@ -26252,6 +26245,13 @@
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "cCj" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "cCz" = (
@@ -27796,16 +27796,10 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "dUq" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 5;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/stairs/wood,
 /area/station/crew_quarters/barber_shop)
 "dUF" = (
@@ -36366,12 +36360,11 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "lAn" = (
-/obj/cable,
-/obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/bent/west,
+/obj/item/device/radio/beacon,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "lBl" = (
@@ -42158,6 +42151,7 @@
 	pixel_y = 5;
 	pixel_x = 5
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/barber_shop)
 "qEO" = (
@@ -42366,7 +42360,7 @@
 "qNg" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/access_spawn/engineering_atmos,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "qNj" = (
@@ -44524,7 +44518,7 @@
 	req_access = null
 	},
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/access_spawn/engineering_atmos,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "swi" = (
@@ -45201,6 +45195,16 @@
 	dir = 1
 	},
 /area/station/wreckage)
+"sUi" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/atmos/highcap_storage)
 "sVO" = (
 /obj/item/raw_material/syreline,
 /obj/item/raw_material/pharosium,
@@ -51061,7 +51065,7 @@
 	},
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/firedoor_spawn,
-/obj/access_spawn/engineering,
+/obj/access_spawn/engineering_atmos,
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "yjK" = (
@@ -61589,7 +61593,7 @@ avq
 avq
 aEx
 avq
-aaA
+avq
 acF
 aaa
 aaa
@@ -61890,7 +61894,7 @@ uYC
 arN
 arN
 aVl
-avq
+arN
 avq
 avq
 avq
@@ -83067,7 +83071,7 @@ bBH
 bCr
 bDn
 rOH
-bEu
+sUi
 bDg
 bFo
 bFT
@@ -120404,7 +120408,7 @@ akY
 alj
 alA
 alJ
-alX
+ajD
 oLE
 ajA
 vrT
