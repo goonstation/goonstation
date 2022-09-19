@@ -67,6 +67,7 @@
 				traitor_mob.equip_if_possible(H, traitor_mob.slot_in_backpack)
 			else
 				traitor_mob.put_in_hand_or_drop(H)
+		H.wiretap = new /obj/item/device/radio_upgrade/conspirator
 		H.secure_classes["z"] = RADIOCL_SYNDICATE
 		H.set_secure_frequency("z",the_frequency)
 
@@ -279,7 +280,7 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(synd_mob), synd_mob.slot_wear_mask)
 	synd_mob.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(synd_mob), synd_mob.slot_glasses)
 	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
-	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen(synd_mob), synd_mob.slot_l_store)
+	synd_mob.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(synd_mob), synd_mob.slot_l_store)
 
 	synd_mob.equip_sensory_items()
 

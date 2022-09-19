@@ -41,6 +41,8 @@
 	#define COMSIG_ATTACKBY "attackby"
 	/// Attacking without an item in-hand (attacker)
 	#define COMSIG_ATTACKHAND "attackhand"
+	/// when an atom changes its opacity (thing, previous_opacity)
+	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 
 // ---- atom/movable signals ----
 
@@ -67,6 +69,12 @@
 	#define XSIG_OUTERMOST_MOVABLE_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_outermost_changed")
 	/// when the z-level of a movable changes (works in nested contents) (thing, old_z_level, new_z_level)
 	#define XSIG_MOVABLE_Z_CHANGED list(/datum/component/complexsignal/outermost_movable, "mov_z-level_changed")
+
+// ---- turf signals ----
+	// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
+	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
+	// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
+	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
 
 // ---- obj signals ----
 

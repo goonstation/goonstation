@@ -49,7 +49,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "cu" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "cA" = (
@@ -381,6 +381,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -390,6 +391,7 @@
 	dir = 4;
 	name = "Secure Transport"
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -596,7 +598,6 @@
 /area/centcom)
 "wu" = (
 /obj/table/auto,
-/obj/table/auto,
 /obj/item/storage/firstaid/fire{
 	pixel_x = -6
 	},
@@ -620,7 +621,7 @@
 /turf/unsimulated/floor/stairs/dark/wide,
 /area/centcom/outside)
 "xq" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1024,8 +1025,8 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "NZ" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"

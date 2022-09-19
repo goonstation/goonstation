@@ -57,6 +57,7 @@
 					C.delStatus("stunned")
 					C.delStatus("weakened")
 					C.delStatus("radiation")
+					C.take_radiation_dose(-INFINITY)
 					C.delStatus("disorient")
 					C.health = 100
 					C.reagents.clear_reagents()

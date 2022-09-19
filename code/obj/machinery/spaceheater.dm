@@ -148,9 +148,9 @@
 
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -363,9 +363,9 @@
 			UpdateIcon()
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 

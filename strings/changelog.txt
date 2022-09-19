@@ -1,4 +1,447 @@
 
+(t)mon sep 19 22
+(u)DimWhat & aloe
+(p)10803
+(e)|
+(+)A number of 2-handed guns (common ones being the tranq rifle and riot shotgun) no longer fit on the belt, but do fit on the back. They also have neat sprites when you wear them.
+(t)sun sep 18 22
+(u)Roddy
+(p)10844
+(e)|
+(+)Donut 2 Barbershop moved to crew quarters, new nerd dungeon in maint behind arcade. Made other small fixes and tweaks
+(t)sat sep 17 22
+(u)BotchKing
+(p)10825
+(e)|
+(+)Changes criminal status to "released" upon being flushed
+(u)Ikea, tarmunora
+(p)10505
+(e)|
+(*)Cryoxadone brute/burn healing has been reduced from 12 to 2, oxy healing also reduced to 2, however it now can combat losebreath, counters radiation, and provides some protection from random death rolls in crit while in effect. Cryoxadone will no longer work when body temp is below -240C or so
+(u)ZWRh3
+(p)10858
+(e)|
+(*)Thralls are now immune to all diseases and maladies
+(u)Flappybat
+(+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
+(t)fri sep 16 22
+(u)Mr. Moriarty
+(p)10641
+(e)|
+(+)Conspirator headsets now have a removable private radio channel upgrade, instead of their immutable radio channel.
+(+)Wiretap radio upgrades (alongside the Conspirators' private radio channel upgrades) may now be removed with a snipping tool.
+(u)LeahTheTech
+(p)10685
+(e)|
+(+)Flock can no longer break into the listening post or convert the ghostdrone factory. Bad radio pigeons.
+(u)NightmarechaMillian
+(p)10661
+(e)|
+(*)New pipeshot subtype: Plasmaglass! See minor changes for more details.
+(+)Plasmaglass pipeshot shoots like a middle ground between scrap and glass (fires 4 projectiles at a 15 degree spread), but has armor piercing properties.
+(u)BatElite
+(p)10819
+(e)|
+(*)Nuclear operative teams now have 2 options for where to plant the nuke.
+(u)Amylizzle
+(p)10818
+(e)|
+(*)Ghosts can shoulder surf your TGUI windows now. You're always being watched.
+(*)As an observer, when you're observing someone, click on the machine they're using to open the window they see.
+(u)ZWRh3
+(p)10542
+(e)|
+(+)following items were removed from battle royale: makeshift armor, microbomb, holographic disguiser, syndicate sponge capsules and turboflash box
+(u)glowbold
+(p)10552
+(e)|
+(*)Cyborg Docking Stations have a new interface.
+(u)Virvatuli & Dimwhat
+(e)🔄🎨|rework, sprites
+(*)The AK is back and has been added exclusively to the traitor surplus crate! The gun has been overhauled codewise and features new gunfire sounds, as well as both new inhand and worn back sprites by Dimwhat. This is a 12TC item which is randomly rolled in the crate, and comes with 1 thirty round magazine. This rifle cannot fit in a backpack, but can be slung in your back slot, so there is no being sneaky with it equipped!
+(t)thu sep 15 22
+(u)LeahTheTech
+(p)10378
+(e)|
+(+)Changed Flock relay compute cost 1000 -> 500, resource cost 1000 -> 750.
+(u)tamuonra
+(+)Hydra smart pistol now tracks targets without needing to hold LMB, fires on click. Locks decay after a couple seconds.
+(u)aloe
+(+)Pouring reagents onto objects or walls will now pool the reagents on the floor. Pouring on dense objects and walls will pool the reagents on your tile; otherwise the reagents will pool on the object's tile.
+(t)wed sep 14 22
+(u)Bartimeus973
+(p)10773
+(e)|
+(*)Overhaul to the wraith. Wraiths can now pick from three paths upon consuming enough bodies, each with their unique abilities. Sprites done in collaboration with: Swinglow, CalliopeSoups, Mora and Shiiba!
+(*)Adds a new item to counter wraith: the spirit candle. Created by combining a skull and a candle. While lit in hand it reveals wraiths in the surrounding area and using it in hand will manifest the wraith. One time use.
+(u)Idiot
+(p)10806
+(e)|
+(+)Lowers chance of falling down stairs on a wheelchair heavily, and reduces duration of the stuns that come from it.
+(t)tue sep 13 22
+(u)Kubius
+(p)10797
+(e)|
+(+)Kondaru's ranch has been expanded to accommodate additional ranchers.
+(u)Idiot
+(p)10714
+(e)|
+(+)Adds Stumped trait that spawns you with no legs and a free wheelchair.
+(t)mon sep 12 22
+(u)DimWhat
+(p)10786
+(e)|
+(+)Resprited the riot helmet's object sprite.
+(u)Amylizzle
+(p)10688
+(e)|
+(+)Fire elementals explode into flame when gibbed now.
+(u)Hans
+(p)10576
+(e)|
+(*)Adds bladed transparent gloves as a 3TC traitor purchase. Snap your fingers to deploy/retract the blades!
+(u)DimWhat
+(p)10785
+(e)|
+(+)Removed the antique lawbringer skin
+(t)sun sep 11 22
+(u)Emily
+(+)Buff to Plant Chicken eggs; give feedback on the usual places
+(u)Moberry
+(p)10731
+(e)|
+(*)Radiation Collectors can now be deconstructed and scanned by mechanics!
+(u)Mr. Moriarty
+(p)10734
+(e)|
+(+)Added an announcement for when the Armoury is deauthorised.
+(u)Sord
+(*)The emergency shuttle can no longer be called on blob rounds until 20 minutes have passed
+(t)sat sep 10 22
+(u)glowbold
+(p)10737
+(e)|
+(+)Vampire's bat form no longer works on restricted z levels.
+(t)fri sep 09 22
+(u)tarmunora
+(+)fixed bug where the rate at which internals were used wasn't consistent across server population values (i.e.: tanks should no longer drain significantly slower on highpop than on lowpop)
+(u)Sord
+(e)|
+(+)Raw gemstones now have their own value on the shipping market
+(u)LeahTheTech
+(p)10460
+(e)|
+(+)Cyborgs now also get a killswitch warning overlay.
+(u)Conchuckter
+(p)10527
+(e)|
+(+)Tranquilizer darts and old hunting rifle clips have been resprited, they now look like stripper clips.
+(u)glowbold
+(p)10713
+(e)|
+(+)Donut3's taxi/mining shuttle can now be boarded through a new maintenance dock, south of nerd lounge.
+(u)aloe
+(+)You can now click through the cloaking field generator hologram floor things. Still can't see through them though.
+(u)Mr. Moriarty
+(p)10573
+(e)|
+(*)Custom emotes now have a typing indicator.
+(t)thu sep 08 22
+(u)NightmarechaMillian
+(p)10658
+(e)|
+(+)??? pills have been updated with some new chems.
+(u)aloe
+(e)|
+(+)Cyborgs are now faster when missing arms. Previously light arms were faster than no arms.
+(t)wed sep 07 22
+(u)Ikea, Zonespace, and Yellow/Myco
+(p)9898
+(e)|
+(*)Pressing the PDA crisis or security alert now alerts people nearby through the use of a sound effect, chatbox message, and overhead text.
+(u)Sord
+(*)Donut 2's Research Outpost now has a public telescience pad. No research access required.
+(u)Stonepillar
+(p)10537
+(e)|
+(*)Fixed syndicate drones not dropping their loot (including sharkdrones!)
+(t)tue sep 06 22
+(u)Sord
+(*)The Mining Outpost and Diner have swapped places.
+(u)Sord
+(e)|
+(+)The mining shuttle, now renamed, also stops at all three locations. Station, Diner, and Mining Outpost.
+(t)mon sep 05 22
+(u)LeahTheTech
+(p)10656
+(e)|
+(+)Silicons can now use the chemical request console.
+(u)FlameArrow57
+(p)10621
+(e)|
+(+)A Head of Security can now be picked from medium and low priority job selections.
+(u)LeahTheTech
+(p)10631
+(e)|
+(+)Canvases now support pixel-precise pointing.
+(u)ZeWaka
+(p)10589
+(e)|
+(+)Made some large internal changes to how our walls smooth out and look pretty. Be sure to report any bugs!
+(u)Wisemonster
+(p)10554
+(e)|
+(+)The interdictor blueprints are now on a single manudrive.
+(u)Ikea
+(p)10625
+(e)|
+(+)Nukies now come with a bit more explosion protection
+(u)NightmarechaMillian
+(p)10645
+(e)|
+(+)Windows and doors will now tell you roughly how damaged they are on examine!
+(u)Caio029
+(p)10380
+(e)|
+(+)Allows health analyzers with organ scan upgrade to scan for eye health as well.
+(u)glowbold
+(p)10652
+(e)|
+(*)Shambling abominations can no longer be pinned.
+(u)ZWRh3
+(p)10660
+(e)|
+(*)Werewolves no longer forcibly transform.
+(u)glowbold
+(p)10653
+(e)|
+(*)While pinned, using movement keys resists against the pin.
+(+)You can still use IKJL to flail uselessly while pinned.
+(t)sun sep 04 22
+(u)Roddy
+(p)10639
+(e)|
+(+)QoL changes to Donut 2.
+(+)Adds a new wreck to Donut 2.
+(u)tarmunora
+(+)firebrands get a little firebot buddie that puts out (mostly) only allies.
+(u)LeahTheTech
+(p)10361
+(e)|
+(+)Messages from sentient elements of the flock are now much easier to pick out.
+(t)sat sep 03 22
+(u)LeahTheTech and JulyJade
+(p)10564
+(e)|
+(*)Added a glowstick tree mutation, obtained from infusion with radium.
+(u)Amylizzle
+(p)10610
+(e)|
+(+)Space suits provide a little bit of radiation protection.
+(u)Ikea
+(p)10622
+(e)|
+(*)Changed how slips work: you will no longer slip, as long as you won't exceed the "default" movespeed (running with full health). However, for example, sprinting, taking meth or having mechboots will make you vulnerable to slips again.
+(u)Emily
+(*)Floating Chat for Ghosts! OooOOooO! Yeah this will probably be buggy.
+(*)New Chicken Grenade sprite by Walpvrgis!
+(*)Fixed bug with cluwne-ified henks dying of old age before they can lay any cluwne eggs.
+(+)Fixed bug with dream chicken eggs where lag could interrupt your rest before you even started.
+(u)LeahTheTech
+(p)10517
+(e)|
+(*)Added chemical request consoles for requesting chemicals. Find them outside science and in medbay, with another terminal in chemistry to let scientists decide whether to fulfil or deny the clown's request for 200u of space lube.
+(u)TheTrueMunchkin
+(p)10561
+(e)|
+(+)Artist is now a playable gimmick job. Go paint your dreams!
+(u)Wisemonster
+(p)10557
+(e)|
+(+)The detomax bomb program has be renamed to self-destruct.
+(t)fri sep 02 22
+(u)Ikea
+(p)10405
+(e)|
+(+)You now have to be able to see the singulo in order to get irradiated by the singulo.
+(u)NightmarechaMillian
+(p)10568
+(e)|
+(+)Drinking glasses now have a 33% chance to break when shot at - spectate a bar fight today!
+(u)LeahTheTech
+(p)10563
+(e)|
+(+)The nuke ops combat engineer battle wrench now hits a lot harder.
+(t)thu sep 01 22
+(u)LeahTheTech
+(p)10577
+(e)|
+(+)Cows can now walk on mousetraps without hurting their hooves.
+(u)Emily & Walpvrgis
+(*)Dragon Chickens' new favorite food is now gold. Thank you Walp for the BEAUTIFUL dragon sprite!
+(u)CrystalClover
+(p)10551
+(e)|
+(+)Restructured Donut 2 Janitorial, added biohazard locker and removed redundant disposal chute.
+(t)wed aug 31 22
+(u)Wisemonster
+(p)10549
+(e)|
+(+)Forklifts are no longer being haunted by ghost crates
+(u)Wisemonster
+(p)10550
+(e)|
+(+)Destiny qm can now print barcodes to the shipping market.
+(u)Sovexe & Emily
+(*)New Rancher exclusive traitor item: Chicken grenade. Load with 5 chicken eggs to instantly deploy an aggressive horde syndicate-brainwashed chickens, even if the chickens would normally not be aggressive.
+(u)Emily
+(*)Wizard Chickens now accept credits to fund their education. They will gain more powerful spells with more funding.
+(u)Sord
+(*)Added new pocket sized oxygen tank. All backpacks/boxes will now spawn with these.
+(*)Pocket tanks hold roughly 3 minutes worth of air on spawn, more if filled up to maximum.
+(*)The old emergency oxygen tanks are now "mini oxygen tanks", found where you'd find them normally. They hold more volume, but no longer fit in your pocket, only on your belt slot.
+(u)RubberRats
+(p)10490
+(e)|
+(+)Captains now always spawn with an emergency oxygen tank in their bag.
+(u)ZWRh3
+(p)10529
+(e)|
+(+)On the battle royale gamemode people will now start with armory/HOS office access.
+(u)Sord
+(*)Added new micro jetpack to all maps, standard size jetpack can be produced by the miners at greater cost
+(t)tue aug 30 22
+(u)Cherman0
+(p)10534
+(e)|
+(+)Made jetpack ability icons properly reflect whether the jetpack is on or off.
+(u)Amylizzle
+(p)9741
+(e)|
+(*)Changes how radiation works. All radiation sources are now visible, with a green or blue highlight and a glowing light!
+(*)You now have an accumulated dose, which starts to make you sick over time.
+(*)Radiation protection now stacks and approaches 100% but never reaches it. Better not hang on to those radioactive ores!
+(*)Radiation resistance is now split into two forms: Internal and external. Wearing a rad suit will no longer protect you from eating radium.
+(t)mon aug 29 22
+(u)Sord
+(*)Added 4 new Research accesses, view minor changes for details
+(u)Sord
+(e)|
+(+)New Research accesses are "Research Foyer", "Telescience", "Artifact Lab", and "Robot Depot"
+(u)Roddy
+(p)9442
+(e)|
+(+)Adds a cheese wheel to the game.
+(u)Azrun
+(p)10499
+(e)|
+(+)Head Access no longer required to deconstruct fabricators and Genetics booth.
+(t)sun aug 28 22
+(u)zjdtmkhzt
+(p)10442
+(e)|
+(+)Terminals should now respect font size settings.
+(u)LeahTheTech
+(p)10494
+(e)|
+(+)AIs can no longer track Wraiths
+(u)CrystalClover
+(p)10469
+(e)|
+(+)Fixed custom pizzas so that Pepperoni, Meatball and Mushroom can be added alongside other toppings
+(u)flappybat
+(e)⚖|balance
+(+)Upgrade the single landmine given by the surplus crate to a landmine pouch with three random mines.
+(+)Add beartrap pouch to the surplus crate loot table.
+(+)Add 25% chance of a random extra weapon to the Battle Royale syndicate lockers.
+(+)Add 33% chance of a mini synthflesh healing patch to Battle Royale chests.
+(+)Add Micro Phaser, Macro Phaser, Optio 1 and Heavy Ion to Battle Royale.
+(+)Remove Butcher Knife, Dagger, Hunter Spear, Garotte, EMAG, Sawflys, Wasp bow, Wasp grenades, Radbow, Chameleon Projector, Slip and Sign from Battle Royale for being useless or overpowered.
+(+)Remove Light Machine Gun, Assault Rifle, Laser Gun from Battle Royale for being comparitvely strong.
+(+)Remove belts from Battle Royale.
+(+)Remove  Medical vendors and Port-A-NanoMed from Battle Royale.
+(+)Battlers start with an empty backpack.
+(+)Nerf the Battle Royale shotgun spawn to the Nukie engineer version.
+(+)Remove chemistry equipment from BR. It's Battle Royale not Nerd Royale!
+(t)sat aug 27 22
+(u)Mr. Moriarty
+(p)10476
+(e)|
+(+)The Armoury's stinger grenades have been moved to the special grenades crate.
+(u)ZeWaka
+(p)10484
+(e)|
+(*)Reworked internal list sorting code - be sure to report any bugs you see (hopefully less, as this fixed a lot)
+(u)Mr. Moriarty
+(p)10461
+(e)|
+(+)Moved the forensic scanner's print option to the text window, alongside adding the ability to print previously made scans.
+(u)LeahTheTech
+(p)10325
+(e)|
+(+)Gunbots no longer take eye damage from welding
+(u)flappybat
+(e)⚖|balance
+(+)Remove turrets and firelocks from Battle Royale.
+(+)Remove Syndicate Donk Pockets box from Battle Royale.
+(+)Battlers start with a mini synthflesh mender (50u) instead of a Donk.
+(t)thu aug 25 22
+(u)Mr. Moriarty
+(p)10462
+(e)|
+(+)Removed the sunglasses, NVGs, and 12ga rubber slugs from the special equipment locker in the Armoury.
+(u)ZWRh3
+(p)9518
+(e)|
+(*)Cyborg prodoc upgrade now acts like upgraded prodoc glasses and can scan people on examine.
+(+)You now only need one prodoc eye for it to work.
+(u)Sord
+(*)Security can now buy Night Vision SecHUD Goggles from the vendor
+(t)wed aug 24 22
+(u)Mr. Moriarty
+(p)9908
+(e)|
+(*)Added Ctrl-I as the *twirl hotkey.
+(u)Amylizzle
+(p)10383
+(e)|
+(+)Flock response emergency shuttle now comes in 60 seconds (down from 3 minutes).
+(t)tue aug 23 22
+(u)Sovexe
+(p)10439
+(e)|
+(*)The Nanotrasen Applied Paints art gallery has opened its doors at Centcom and welcomes submissions from artists throughout the frontier
+(u)Sord
+(e)|
+(+)Donut 2 now has a public refinery near mining
+(u)Mr. Moriarty
+(p)10403
+(e)|
+(+)Clowns will now always spawn with the comic sans accent mutation.
+(u)uwumacaronitime
+(p)10433
+(e)|
+(+)Adds ability sprites to the hunter.
+(u)LeahTheTech
+(p)10421
+(e)|
+(+)Stammering now applies when whispering
+(u)CrystalClover
+(p)10398
+(e)|
+(+)Increased Cleaner bottle base reagent size to 100u (these are the refills in janitorial closets).
+(t)sun aug 21 22
+(u)tarmunora
+(+)captain's antique laser gun now fires glitter-lasers by default, upgrades to standard lasers with better materials
+(t)fri aug 19 22
+(u)RichardGere
+(p)10307
+(e)|
+(+)Capped space movement at base speed.
+(u)Wisemonster
+(p)9792
+(e)|
+(*)Capsaicin (the stuff in crowd dispersal grenades and peppers) now requires chem smoke protection (or internals) and glasses to be protected from it.
 (t)thu aug 18 22
 (u)Roddy
 (p)10340

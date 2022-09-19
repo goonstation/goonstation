@@ -29,7 +29,7 @@
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
 				user.show_text("You fill [W] with water.", "blue")
-				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
+				playsound(src.loc, 'sound/misc/pourdrink.ogg', 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
 			if (W.reagents.total_volume >= fill)
@@ -38,9 +38,9 @@
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
 				user.show_text("You wet [W].", "blue")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		else if (istype(W, /obj/item/grab))
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
 		else if (W.burning)
 			W.combust_ended()
@@ -62,7 +62,7 @@
 		user.lastattacked = src
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			if (H.gloves)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
 				H.gloves.clean_forensic() // Ditto (Convair880).
@@ -585,6 +585,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
+			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+
 
 	Topic(href, href_list)
 		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -736,7 +738,7 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
 				src.working = 0
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				for (var/atom/movable/I in src.contents)
 					qdel(I)
 				src.updateUsrDialog()
@@ -1014,7 +1016,7 @@ table#cooktime a#start {
 			S.set_loc(get_turf(src))
 		src.working = 0
 		src.icon_state = "processor-off"
-		playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 		return
 
 	attack_ai(var/mob/user as mob)
@@ -1225,7 +1227,7 @@ var/list/mixer_recipes = list()
 		working = 1
 		src.UpdateIcon()
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
 		var/derivename = 0
 		for (var/datum/cookingrecipe/R in src.recipes)

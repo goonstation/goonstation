@@ -6,7 +6,7 @@
 		location = usr
 	if(!location?.z) // we care not for null gibs
 		return
-	playsound(location, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
 	// NORTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
@@ -89,7 +89,7 @@
 	if(!location)
 		return
 
-	playsound(location, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+	playsound(location, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 
 	// RUH ROH
 	elecflash(location,power=2)
@@ -257,3 +257,22 @@
 
 	// CORE SPLAT
 	gib = make_cleanable( /obj/decal/cleanable/flockdrone_debris/fluid,location)
+
+
+/proc/fire_elemental_gibs(atom/location, var/list/diseases, var/list/ejectables, var/blood_DNA, var/blood_type)
+	if(!location) return
+	// WHO LIKES COPY PASTED CODE? I DO I LOVE IT DELICIOUS YUM YUM
+	var/obj/decal/cleanable/ash/gib = null
+	playsound(location, 'sound/effects/mag_fireballlaunch.ogg', 50, 1, pitch = 0.5)
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+	// RANDOM
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	gib.streak_cleanable()
+
+	handle_ejectables(location, ejectables)
+
+	// CORE SPLAT
+	gib = make_cleanable(/obj/decal/cleanable/ash, location)
+	fireflash(location, 1)

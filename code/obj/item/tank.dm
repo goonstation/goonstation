@@ -99,7 +99,7 @@ Contains:
 			var/mob/living/carbon/location = loc
 			if (!location)
 				return
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
 					if(T.the_item == src)
@@ -125,7 +125,7 @@ Contains:
 					return TRUE
 				else
 					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
-					playsound(src.loc, "sound/items/penclick.ogg", 50, TRUE)
+					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
 					return FALSE
 
 	proc/remove_air_volume(volume_to_return)
@@ -149,7 +149,7 @@ Contains:
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
 			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
@@ -179,14 +179,14 @@ Contains:
 				loc.assume_air(air_contents)
 				air_contents = null
 				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, TRUE)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
 			if(integrity <= 0)
-				playsound(src.loc, "sound/effects/spray.ogg", 50, TRUE)
+				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
 			else
@@ -347,7 +347,7 @@ Contains:
 		src.on = !(src.on)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
-		playsound(src.loc, "sound/machines/click.ogg", 30, TRUE)
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
 		update_icon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
@@ -408,6 +408,20 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack0"
+	item_state = "microjetpack0"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	mats = 8
+	force = 6
+
+	New()
+		..()
+		src.air_contents.volume = 18
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/oxygen
@@ -424,22 +438,60 @@ Contains:
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/emergency_oxygen
-	name = "emergency oxygen tank"
-	icon_state = "em_oxtank"
+	name = "pocket oxygen tank"
+	icon_state = "pocket_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	health = 5
+	w_class = W_CLASS_TINY
+	force = 1
+	stamina_damage = 20
+	stamina_cost = 8
+	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.volume = 3
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+/obj/item/tank/emergency_oxygen/extended
+	name = "extended capacity pocket oxygen tank"
+	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	icon_state = "ex_pocket_oxtank"
+
+	New()
+		..()
+		src.air_contents.volume = 6
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+
+
+/obj/item/tank/mini_oxygen
+	name = "mini oxygen tank"
+	icon_state = "mini_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	health = 5
-	w_class = W_CLASS_SMALL
+	w_class = W_CLASS_NORMAL
 	force = 3
 	stamina_damage = 30
 	stamina_cost = 16
-	desc = "A small personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
 
 	New()
 		..()
-		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4.5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		src.air_contents.volume = 8
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 ////////////////////////////////////////////////////////////
@@ -479,7 +531,7 @@ Contains:
 			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, TRUE)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
