@@ -54454,7 +54454,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/stairs{
-	dir = 4
+	dir = 8
 	},
 /area/station/medical/cdc)
 "iod" = (
