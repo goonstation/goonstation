@@ -1188,7 +1188,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						src.boom()
 						return
 				else
-					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span>")
+					boutput(user, "<span class='alert'>You slap the charge on [target], [det_time/10] seconds!</span> <font size='3'><font color='#FF0000'><B>STAND BACK!</font></B>")
 					user.visible_message("<span class='alert'>[user] has attached [src] to [target].</span>")
 					src.icon_state += "1"
 					user.u_equip(src)
@@ -1272,12 +1272,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	stamina_crit_chance = 0
 
 /obj/item/breaching_charge/syndicate
-	name = "syndicate breaching charge"
+	name = "Syndicate Breaching Charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "syndicharge"
-	expl_devas = 2
+	desc = "A powerful syndicate explosive charge, for situations where collateral damage is unavoidable."
+	expl_devas = 1
 	expl_heavy = 2
-	expl_light = 4
+	expl_light = 5
 	expl_flash = 10
 	expl_range = 2
 	stamina_damage = 1
