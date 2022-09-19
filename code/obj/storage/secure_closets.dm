@@ -758,7 +758,8 @@
 	/obj/item/clothing/head/helmet/welding,
 	/obj/item/clothing/suit/hi_vis,
 	/obj/item/lamp_manufacturer/organic,
-	/obj/item/pinpointer/category/apcs/station)
+	/obj/item/pinpointer/category/apcs/station,
+	/obj/item/disk/data/floppy/manudrive/combustion_generator)
 
 /obj/storage/secure/closet/engineering/mining
 	name = "\improper Miner's locker"
