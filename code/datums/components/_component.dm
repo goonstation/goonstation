@@ -4,15 +4,15 @@
 		*
 		* Lazy associated list in the structure of `type:component/list of components`
 		*/
-	var/list/datum_components
+	var/list/datum_components = null
 	/**
 		* Any datum registered to receive signals from this datum is in this list
 		*
 		* Lazy associated list in the structure of `signal:registree/list of registrees`
 		*/
-	var/list/comp_lookup
+	var/list/comp_lookup = null
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
-	var/tmp/list/list/datum/callback/signal_procs
+	var/tmp/list/list/datum/callback/signal_procs = null
 	/**
 		* Is this datum capable of sending signals?
 		*

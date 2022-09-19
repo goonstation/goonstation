@@ -917,7 +917,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 
 	//NEW VARS
 	var/mining_health = 120
@@ -1201,6 +1201,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			if(!src.space_overlays)
+				src.space_overlays = list()
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
 			A.UpdateOverlays(new /image/fullbright, "fullbright")
@@ -1394,7 +1396,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1467,6 +1469,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			if(!src.space_overlays)
+				src.space_overlays = list()
 			src.space_overlays += edge_overlay
 #ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
 			A.UpdateOverlays(new /image/fullbright, "fullbright")
