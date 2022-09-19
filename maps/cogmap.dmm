@@ -45143,16 +45143,12 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat{
 	pixel_x = 4
 	},
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
 	},
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "coT" = (
 /obj/machinery/camera{
@@ -45959,10 +45955,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
 /obj/machinery/manufacturer/medical,
+/obj/railing/orange,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cqN" = (
@@ -45976,9 +45970,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/railing/orange,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -45988,12 +45980,10 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/clonepod,
-/obj/window/reinforced{
-	dir = 2
-	},
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/railing/orange,
 /turf/simulated/floor/bot,
 /area/station/medical/medbay/cloner)
 "cqQ" = (
@@ -46003,20 +45993,18 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/railing/orange,
 /turf/simulated/floor/bluewhite{
 	dir = 10
 	},
 /area/station/medical/medbay)
 "cqR" = (
-/obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment,
 /obj/machinery/atmospherics/pipe/manifold/west,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/decal/tile_edge/stripe/big,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "cqS" = (
@@ -46026,9 +46014,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
-/obj/window/reinforced{
-	dir = 2
-	},
+/obj/railing/orange,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -46229,15 +46215,13 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "crQ" = (
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/machinery/computer3/generic/med_data,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/simulated/floor,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crR" = (
 /turf/simulated/floor/stairs{
@@ -46246,13 +46230,11 @@
 /area/station/medical/medbay/cloner)
 "crS" = (
 /obj/machinery/clone_scanner,
-/obj/window/reinforced{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "0-4"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crT" = (
 /obj/machinery/computer/cloning,
@@ -46272,17 +46254,16 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crU" = (
 /obj/machinery/clonegrinder,
-/obj/window/reinforced{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "0-8"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/blue,
 /area/station/medical/medbay/cloner)
 "crV" = (
 /obj/disposalpipe/segment,
@@ -46447,6 +46428,8 @@
 /obj/machinery/light{
 	dir = 4
 	},
+/obj/railing/orange,
+/obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "csx" = (
@@ -46844,6 +46827,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -46852,13 +46838,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/stairs/medical/wide/other{
+	dir = 8
+	},
 /area/station/medical/medbay)
 "ctv" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -47182,13 +47167,12 @@
 	},
 /area/station/medical/medbay)
 "cuh" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/white,
+/turf/simulated/floor/stairs/medical/wide{
+	dir = 8
+	},
 /area/station/medical/medbay)
 "cui" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -48051,10 +48035,16 @@
 	dir = 10
 	},
 /obj/disposalpipe/segment,
+/obj/cable{
+	icon_state = "2-4"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwM" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "cwN" = (
@@ -48280,12 +48270,17 @@
 /turf/simulated/floor/bot/white,
 /area/station/medical/cdc)
 "cxw" = (
-/obj/machinery/atmospherics/pipe/simple,
 /obj/blind_switch/area/east{
 	pixel_y = -6
 	},
 /obj/machinery/light_switch/east{
 	pixel_y = 6
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -48342,13 +48337,13 @@
 "cxF" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
-	icon_state = "0-2"
+	icon_state = "0-4"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxG" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
+/obj/cable{
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -48364,15 +48359,18 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "cxQ" = (
-/obj/stool/bed/moveable,
-/obj/item/clothing/suit/bedsheet,
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+	icon_state = "1-2"
 	},
-/turf/simulated/floor/white,
-/area/station/medical/medbay/treatment)
+/obj/disposalpipe/segment/morgue,
+/obj/decal/tile_edge/stripe/big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/medbay)
 "cxR" = (
 /obj/iv_stand,
 /obj/item/reagent_containers/iv_drip/saline,
@@ -48556,6 +48554,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/bluewhite{
@@ -50032,6 +50033,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -50404,6 +50408,9 @@
 /area/station/engine/core)
 "ddE" = (
 /obj/machinery/vending/medical,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "dgj" = (
@@ -53435,6 +53442,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -54405,6 +54416,9 @@
 	},
 /obj/machinery/atmospherics/pipe/simple,
 /obj/disposalpipe/segment/morgue,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/medical/medbay/surgery)
 "ill" = (
@@ -57944,9 +57958,6 @@
 /obj/window_blinds/cog2/middle{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "0-4"
-	},
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/treatment)
 "nLg" = (
@@ -58443,6 +58454,9 @@
 	},
 /obj/item/clothing/glasses/blindfold{
 	pixel_y = -4
+	},
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 6
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -59712,8 +59726,8 @@
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
 "quY" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -61392,6 +61406,9 @@
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor/red,
 /area/station/medical/medbay/surgery)
@@ -63097,12 +63114,15 @@
 /area/station/hallway/secondary/exit)
 "uBk" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 4;
+	dir = 1;
 	icon_state = "on";
 	on = 1
 	},
 /obj/landmark/start{
 	name = "Test Subject"
+	},
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
@@ -63677,6 +63697,9 @@
 /obj/machinery/door/airlock/pyro/medical,
 /obj/firedoor_spawn,
 /obj/access_spawn/medical,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "vnq" = (
@@ -102605,7 +102628,7 @@ cBP
 cAX
 cqG
 crF
-crF
+cxQ
 ctt
 cyp
 gLK
@@ -103220,7 +103243,7 @@ unF
 cxo
 cFh
 cxF
-cxQ
+pnt
 cxe
 mWh
 cxV
