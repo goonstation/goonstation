@@ -48496,7 +48496,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cyj" = (
-/obj/machinery/vending/pathology,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -64364,6 +64363,7 @@
 /area/station/maintenance/disposal)
 "wfB" = (
 /obj/machinery/light_switch/north,
+/obj/machinery/vending/pathology,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "wfH" = (
