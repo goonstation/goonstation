@@ -123,7 +123,7 @@
 			logTheThing(LOG_STATION, user, "has disconnected \the [src] [log_atmos(src)] from the port at [log_loc(src)].")
 			disconnect()
 			boutput(user, "<span class='notice'>You disconnect [name] from the port.</span>")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			tgui_process.update_uis(src)
 			return
 		else
@@ -132,7 +132,7 @@
 				if(connect(possible_port))
 					logTheThing(LOG_STATION, user, "has connected \the [src] [log_atmos(src)] to the port at [log_loc(src)].")
 					boutput(user, "<span class='notice'>You connect [name] to the port.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					tgui_process.update_uis(src)
 					return
 				else

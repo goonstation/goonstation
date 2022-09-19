@@ -23,4 +23,4 @@ proc/generate_teleareas()
 			teleareas[entry] = a
 			continue
 		teleareas[a.name] = a
-	teleareas = sortList(teleareas)
+	sortList(teleareas, /proc/cmp_text_asc)

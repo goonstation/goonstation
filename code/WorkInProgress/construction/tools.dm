@@ -504,7 +504,7 @@
 		selecting = 1
 
 		// mode selection for floor planner
-		mode = tgui_input_list(message="What to mark?", title="Marking", buttons=icons)
+		mode = tgui_input_list(message="What to mark?", title="Marking", items=icons)
 		if(!mode)
 			mode = "floors"
 		var/states = list()
@@ -518,13 +518,13 @@
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			states += icon_states('icons/turf/construction_floors.dmi')
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", buttons=states)
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(!selectedtype)
 				selectedtype = states[1]
 			selectedicon = 'icons/turf/construction_floors.dmi'
 		if (mode == "walls")
 			states += wallicons
-			selectedtype = tgui_input_list(message="What kind?", title="Marking", buttons=states)
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(!selectedtype)
 				selectedtype = states[1]
 			selectedicon = wallicons[selectedtype]
@@ -820,8 +820,9 @@
 
 		// this has been reworked to use auto walls that i resprited a while back.
 		if (istype(T, /turf/simulated/wall/auto))
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(T.type)
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
 			var/turf/simulated/wall/auto/AT = T
-			var/connectdir = get_connected_directions_bitflag(AT.connects_to, AT.connects_to_exceptions, TRUE, AT.connect_diagonal)
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
 

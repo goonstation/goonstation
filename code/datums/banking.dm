@@ -43,13 +43,13 @@
 				continue
 
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
 		for(var/occupation in assistant_occupations)
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
@@ -580,7 +580,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
@@ -807,11 +807,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 

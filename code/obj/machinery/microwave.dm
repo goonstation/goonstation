@@ -325,6 +325,8 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 					src.being_cooked.reagents.add_reagent("radium", 25)
 				if((src.extra_item && src.extra_item.type == src.cooked_recipe.extra_item))
 					qdel(src.extra_item)
+				if(prob(1))
+					src.being_cooked.AddComponent(/datum/component/radioactive, 20, TRUE, FALSE, 0)
 				src.being_cooked.set_loc(get_turf(src)) // Create the new item
 				src.extra_item = null
 				src.cooked_recipe = null

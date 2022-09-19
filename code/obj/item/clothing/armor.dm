@@ -75,7 +75,7 @@
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)
-		setProperty("rangedprot", 0.4)
+		setProperty("rangedprot", 0.5)
 
 	attackby(obj/item/W, mob/user)
 		return

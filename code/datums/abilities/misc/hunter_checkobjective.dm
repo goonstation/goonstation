@@ -1,6 +1,7 @@
 /datum/targetable/hunter/hunter_trophycount
 	name = "Check trophy value"
 	desc = "Displays the combined value of all trophies in your possession."
+	icon_state = "trophycount"
 	targeted = 0
 	target_nodamage_check = 0
 	max_range = 0

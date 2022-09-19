@@ -34,7 +34,7 @@
 	..(hit_atom)
 	src.icon_state = "bball"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
@@ -269,7 +269,7 @@
 	..(hit_atom)
 	src.icon_state = "bloodbowlball"
 	if(hit_atom)
-		playsound(src.loc, "sound/items/bball_bounce.ogg", 65, 1)
+		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
 			var/mob/M = hit_atom
 			if(ishuman(M))
@@ -278,14 +278,14 @@
 					for(var/mob/V in AIviewers(src, null))
 						if(V.client)
 							V.show_message("<span class='combat'>[T] gets stabbed by one of the [src.name]'s spikes.</span>", 1)
-							playsound(src.loc, "sound/impact_sounds/Flesh_Stab_2.ogg", 65, 1)
+							playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_2.ogg', 65, 1)
 					T.changeStatus("stunned", 5 SECONDS)
 					T.TakeDamageAccountArmor("chest", 30, 0)
 					take_bleeding_damage(T, null, 15, DAMAGE_STAB)
 					return
 				else if (prob(50))
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
-					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
+					T.TakeDamage(T.hand == LEFT_HAND ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
 					src.Attackhand(T)
 					return
@@ -301,7 +301,7 @@
 	. = ..()
 
 /obj/item/bloodbowlball/attack(target, mob/user)
-	playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target
 		if(!isdead(targMob))
@@ -310,10 +310,10 @@
 	if(prob(30))
 		if(prob(30))
 			boutput(user, "<span class='combat'>You accidentally cut your hand badly!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 10, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 10, 0)
 			take_bleeding_damage(user, user, 5, DAMAGE_CUT)
 		else
 			boutput(user, "<span class='combat'>You accidentally cut your hand!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 0)
 			take_bleeding_damage(user, null, 1, DAMAGE_CUT, 0)
 

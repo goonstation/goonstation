@@ -205,6 +205,8 @@ stare
 	. = list()
 	var/mob/living/critter/flock/F = holder.owner
 	for(var/turf/simulated/floor/T in view(max_dist, holder.owner))
+		if (!flockTurfAllowed(T))
+			continue
 		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 			continue
 		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
@@ -242,7 +244,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/valid_target(var/atom/target)
 	var/mob/living/critter/flock/F = holder.owner
-	if(!isfeathertile(target))
+	if(!isfeathertile(target) && flockTurfAllowed(get_turf(target)))
 		if(F?.flock && !F.flock.isTurfFree(target, F.real_name))
 			return FALSE
 		return TRUE
@@ -355,7 +357,7 @@ stare
 	. = list()
 	//as drone, we want to prioritise converting doors and walls and containers
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
-		if(!isfeathertile(T) && (
+		if(!isfeathertile(T) && flockTurfAllowed(T) && (
 			istype(T, /turf/simulated/wall) || \
 			locate(/obj/machinery/door/airlock) in T || \
 			locate(/obj/storage) in T))
@@ -368,7 +370,7 @@ stare
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
 	if(!length(.))
 		for(var/turf/simulated/T in view(max_dist, holder.owner))
-			if(!isfeathertile(T))
+			if(!isfeathertile(T) && flockTurfAllowed(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
 				. = get_path_to(holder.owner, list(T), max_dist, 1)
@@ -779,8 +781,12 @@ stare
 		return 0
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/on_tick()
-	var/mob/living/critter/owncritter = holder.owner
-	walk(owncritter, 0)
+	var/mob/living/critter/flock/drone/flockdrone = holder.owner
+	if (is_incapacitated(flockdrone))
+		return
+	if (flockdrone.floorrunning)
+		flockdrone.end_floorrunning(TRUE)
+	walk(flockdrone, 0)
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
 	if(holder.target)
@@ -798,25 +804,25 @@ stare
 			holder.interrupt()
 			return
 
-		var/dist = GET_DIST(owncritter, holder.target)
+		var/dist = GET_DIST(flockdrone, holder.target)
 		if(dist > target_range)
 			holder.target = get_best_target(get_targets())
 		else if(dist > shoot_range)
 			holder.move_to(holder.target,4)
 			frustration++ //if frustration gets too high, the task is ended and re-evaluated
 		else
-			if(owncritter.active_hand != 3) // stunner
-				owncritter.set_hand(3)
-			owncritter.set_dir(get_dir(owncritter, holder.target))
-			owncritter.hand_range_attack(holder.target, dummy_params)
+			if(flockdrone.active_hand != 3) // stunner
+				flockdrone.set_hand(3)
+			flockdrone.set_dir(get_dir(flockdrone, holder.target))
+			flockdrone.hand_range_attack(holder.target, dummy_params)
 			if(dist < run_range)
 				if(prob(20))
 					// run
 					holder.move_away(holder.target,4)
 			else if(prob(30))
 				// dodge
-				walk(owncritter, 0)
-				walk_rand(owncritter, 1, 2)
+				walk(flockdrone, 0)
+				walk_rand(flockdrone, 1, 2)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()

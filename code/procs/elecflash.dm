@@ -24,11 +24,11 @@ var/global/mutable_appearance/elecflash_ma = null
 		if (1)
 			sound = "sparks"
 		if (2)
-			sound = "sound/effects/electric_shock_short.ogg"
+			sound = 'sound/effects/electric_shock_short.ogg'
 		if (3,4)
-			sound = "sound/effects/electric_shock.ogg"
+			sound = 'sound/effects/electric_shock.ogg'
 		else
-			sound = "sound/effects/elec_bzzz.ogg"
+			sound = 'sound/effects/elec_bzzz.ogg'
 	var/atom/E = null
 
 	var/list/chain_to = list()

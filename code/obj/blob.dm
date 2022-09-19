@@ -59,7 +59,7 @@
 
 		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
-				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
+				if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
 				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
@@ -635,9 +635,9 @@
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
 			if (prob(50))
-				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else
-				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeath.ogg', 100, 1)
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
@@ -786,7 +786,7 @@
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
+				playsound(hit.loc, 'sound/voice/blob/blobhit.ogg', 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()

@@ -22,6 +22,7 @@
 
 	var/datum/game_mode/spy_theft/spy_market = 0	//In case any spies are spawned into a round that is NOT spy_theft, we need a place to hold their spy market.
 
+	var/antag_token_support = FALSE // players can redeem antag tokens for this game mode
 	var/do_antag_random_spawns = 1
 	var/do_random_events = 1
 	var/escape_possible = 1		//for determining if players lose their held spacebux item on round end if they are able to "escape" in this mode.
@@ -184,12 +185,14 @@
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
 						var/datum/flock/flock = flocks[flockname]
-						if (flock.flockmind_mind == traitor && length(flock.trace_minds))
-							stuff_to_output += "Flocktraces:"
-							for (var/trace_name in flock.trace_minds)
-								var/datum/mind/trace_mind = flock.trace_minds[trace_name]
-								//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
-								stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
+						if (flock.flockmind_mind == traitor)
+							stuff_to_output += "Peak total compute value reached: [flock.peak_compute]"
+							if(length(flock.trace_minds))
+								stuff_to_output += "Flocktraces:"
+								for (var/trace_name in flock.trace_minds)
+									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
+									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
+									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES

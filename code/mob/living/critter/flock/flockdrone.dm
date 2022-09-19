@@ -17,6 +17,7 @@
 	var/datum/equipmentHolder/flockAbsorption/absorber
 	health_brute = 30
 	health_burn = 30
+	repair_per_resource = 2
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
@@ -84,7 +85,7 @@
 			var/mob/living/critter/flock/drone/F = grab.assailant
 			if (F.flock == src.flock)
 				return
-		playsound(src, "sound/effects/electric_shock.ogg", 40, 1, -3)
+		playsound(src, 'sound/effects/electric_shock.ogg', 40, 1, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 		var/mob/living/L = grab.assailant
 		L.shock(src, 5000)
@@ -118,7 +119,8 @@
 	..()
 	src.client?.set_color()
 	if(isnull(controller))
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	if(src.dormant)
 		src.undormantize()
@@ -126,9 +128,6 @@
 		src.wake_from_ai_pause()
 	if(src.flock)
 		src.flock.showAnnotations(src)
-
-/mob/living/critter/flock/drone/proc/relay_boutput(target, message, group, forceScroll)
-	boutput(src, message, group, forceScroll)
 
 /mob/living/critter/flock/drone/proc/take_control(mob/living/intangible/flock/pilot, give_alert = TRUE)
 	if(!pilot)
@@ -157,6 +156,7 @@
 			ticker.minds += src.mind
 
 	pilot.set_loc(src)
+	pilot.boutput_relay_mob = src
 	controller = pilot
 	src.client?.set_color()
 	//hack to make night vision apply instantly
@@ -179,7 +179,10 @@
 		emote("beep")
 		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
 	if(src.client && !controller)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		else
+			src.ghostize()
 	if(controller)
 		if (src.floorrunning)
 			src.end_floorrunning(TRUE)
@@ -201,23 +204,29 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
-			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
+			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
-			flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 
 		controller = null
 		src.update_health_icon()
+	if(!src.flock)
+		src.dormantize()
 
 /mob/living/critter/flock/drone/proc/release_control_abrupt(give_alert = TRUE)
 	src.flock?.hideAnnotations(src)
 	src.is_npc = TRUE
 	if(src.client && !controller)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		else
+			src.ghostize()
 	if(!controller)
 		return
 	if (src.floorrunning)
@@ -237,14 +246,17 @@
 		controller.mind.key = key
 		controller.mind.current = controller
 		ticker.minds += controller.mind
+	controller.boutput_relay_mob = null
 	if (give_alert)
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
-		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
+		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
-		flock.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
 	controller = null
 	src.update_health_icon()
+	if(!src.flock)
+		src.dormantize()
 
 /mob/living/critter/flock/drone/dormantize()
 	src.icon_state = "drone-dormant"
@@ -271,6 +283,7 @@
 				controller.mind.key = key
 				controller.mind.current = controller
 				ticker.minds += controller.mind
+		controller.boutput_relay_mob = null
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Connection to drone [src.real_name] lost.\]</b></span>")
 		controller = null
 	src.is_npc = TRUE // to ensure right flock_speak message
@@ -299,13 +312,15 @@
 	src.add_simple_light("drone_light", rgb2num(glow_color))
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, .proc/do_antigrab)
 	if(src.client)
-		controller = new/mob/living/intangible/flock/trace(src, src.flock)
+		if(src.flock)
+			controller = new/mob/living/intangible/flock/trace(src, src.flock)
 		src.is_npc = FALSE
 	else
 		src.is_npc = TRUE
 
 /mob/living/critter/flock/drone/proc/pause_ai()
-	if(src.controller || src.dormant) //can't pause_ai when controlled or dormant, this shouldn't ever happen
+	if(src.controller || src.dormant || !src.flock) //can't pause_ai when controlled or dormant, this shouldn't ever happen. Also can't pause without a flock.
+		src.wander_count = 0
 		return
 	src.ai.stop_move()
 	src.ai_paused = TRUE
@@ -321,6 +336,8 @@
 
 /mob/living/critter/flock/drone/proc/wake_from_ai_pause()
 	if(!src.ai_paused || src.dormant) //can't wake up if you're dormant
+		return
+	if (isdead(src) || isnull(src.flock)) //also can't wake up if you're dead
 		return
 	src.compute = FLOCK_DRONE_COMPUTE
 	src.flock.total_compute -= FLOCK_DRONE_COMPUTE_HIBERNATE - src.compute
@@ -464,7 +481,7 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(src, "sound/misc/flockmind/flockdrone_fart.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockdrone_fart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh")
 			if (src.emote_check(voluntary, 50))
@@ -539,7 +556,7 @@
 /mob/living/critter/flock/drone/proc/start_floorrunning()
 	if(src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
@@ -562,7 +579,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
 		return
-	playsound(src, "sound/misc/flockmind/flockdrone_floorrun.ogg", 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
@@ -760,15 +777,15 @@
 			if(0 to 45)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesis"))
+				B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 			if(46 to 90)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesisglass"))
+				B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(src, "sound/impact_sounds/Glass_Shatter_2.ogg", 30, 1, extrarange = -10)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_2.ogg', 30, 1, extrarange = -10)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -969,6 +986,9 @@
 		boutput(user, "<span class='alert'>Not enough resources to convert (you need [FLOCK_CONVERT_COST]).</span>")
 	else
 		if(istype(target, /turf))
+			if (!flockTurfAllowed(target))
+				boutput(user, "<span class='alert'>Something about this area resists your attempt to convert it</span>")
+				return
 			if (user.flock)
 				for (var/name in user.flock.busy_tiles)
 					if (user.flock.busy_tiles[name] == target && name != user.real_name)
@@ -1027,8 +1047,8 @@
 		if (!found_target)
 			boutput(user, "<span class='alert'>The target is in perfect condition!</span>")
 		else
-			if(user.resources < FLOCK_REPAIR_COST)
-				boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+			if(user.resources <= 0)
+				boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 			else
 				actions.start(new /datum/action/bar/flock_repair(target), user)
 
@@ -1042,8 +1062,8 @@
 			return
 		if (isdead(F))
 			return
-		if(user.resources < FLOCK_REPAIR_COST)
-			boutput(user, "<span class='alert'>Not enough resources to repair (you need [FLOCK_REPAIR_COST]).</span>")
+		if(user.resources <= 0)
+			boutput(user, "<span class='alert'>You have no resources available for repairing.</span>")
 		else
 			actions.start(new/datum/action/bar/flock_repair(F), user)
 	else
@@ -1194,7 +1214,7 @@
 			I.change_stack_amount(-1)
 			return
 
-	playsound(flock_owner, "sound/impact_sounds/Energy_Hit_1.ogg", 30, 1, extrarange = -10)
+	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1, extrarange = -10)
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE

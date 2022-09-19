@@ -12,6 +12,7 @@
 	config_tag = "revolution"
 	shuttle_available = 0
 
+	antag_token_support = TRUE
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
@@ -513,7 +514,7 @@
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	item_state = "revsign"
 
 	w_class = W_CLASS_BULKY

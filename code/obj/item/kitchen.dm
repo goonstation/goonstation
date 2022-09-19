@@ -70,7 +70,7 @@ TRAYS
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
+		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
 		switch(src.type)
@@ -86,8 +86,8 @@ TRAYS
 		var/utensil_color = replacetext(src.icon_state,replacethis,"")
 		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
 		k.icon_state = "snapped_[utensil_color]"
-		k.snapped = 1
-		k.name = "snapped [k.name]"
+		k.snapped = TRUE
+		k.name = "snapped [src.name]"
 		if(spawnatloc)
 			k.set_loc(location)
 		else
@@ -107,7 +107,7 @@ TRAYS
 		if (!spoon_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -175,7 +175,7 @@ TRAYS
 		if(!scalpel_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if(!src.user_can_suicide(user))
 			return 0
@@ -190,6 +190,7 @@ TRAYS
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -219,6 +220,7 @@ TRAYS
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -245,9 +247,10 @@ TRAYS
 /obj/item/kitchen/utensil/knife/plastic
 	name = "plastic knife"
 	icon_state = "knife_plastic"
+	desc = "A long bit plastic that is serrated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 	force = 1
 	throwforce = 1
-	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -291,9 +294,8 @@ TRAYS
 			k.set_loc(get_turf(user))
 			s.set_loc(get_turf(user))
 			user.u_equip(src)
-			src.set_loc(user)
 			if(prob(30))
-				user.show_text("<b>The plastic silverware go EVERYWHERE!</b>","red")
+				user.show_text("<b>The plastic silverware goes EVERYWHERE!</b>","red")
 				var/list/throw_targets = list()
 				for (var/i=1, i<=3, i++)
 					throw_targets += get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
@@ -546,7 +548,7 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
-	pickup_sfx = "sound/items/pickup_plate.ogg"
+	pickup_sfx = 'sound/items/pickup_plate.ogg'
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
 
@@ -555,7 +557,7 @@ TRAYS
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
-	var/hit_sound = "sound/items/plate_tap.ogg"
+	var/hit_sound = 'sound/items/plate_tap.ogg'
 	/// Can this be stacked with other stackable plates?
 	var/stackable = TRUE
 
@@ -638,7 +640,7 @@ TRAYS
 		if(src.cant_drop == TRUE)
 			if (istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
-				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
 			src.set_loc(get_turf(M))
@@ -647,7 +649,7 @@ TRAYS
 
 	/// The plate shatters into shards and tosses its contents around.
 	proc/shatter()
-		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to 2)
 			var/obj/O = new /obj/item/raw_material/shard/glass
@@ -791,13 +793,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, "sound/weapons/trayhit.ogg", 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return

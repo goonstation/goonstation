@@ -165,15 +165,16 @@ toxic - poisons
 	power = 15
 	dissipation_delay = 8
 
-/datum/projectile/bullet/ak47
+/datum/projectile/bullet/akm
 	name = "bullet"
-	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 40
+	shot_sound = 'sound/weapons/akm.ogg'
+	power = 40  // BEFORE YOU TWEAK THESE VALUES: This projectile is also used by the Syndicate Ballistic Drone and Nukie NAS-T turret
 	cost = 3
 	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
+	shot_delay = 120 MILLI SECONDS
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -629,7 +630,19 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
-//for makeshift shotgun shells
+//for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
+
+/datum/projectile/bullet/improvplasglass
+	name = "plasmaglass fragments"
+	sname = "plasmaglass fragments"
+	icon_state = "plasglass"
+	dissipation_delay = 3
+	dissipation_rate = 2
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	implanted = null
+	power = 6
+
 /datum/projectile/bullet/improvglass
 	name = "glass"
 	sname = "glass"
@@ -1111,8 +1124,8 @@ datum/projectile/bullet/autocannon
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	hit_type = DAMAGE_BLUNT
-	hit_mob_sound = "sound/misc/splash_1.ogg"
-	hit_object_sound = "sound/misc/splash_1.ogg"
+	hit_mob_sound = 'sound/misc/splash_1.ogg'
+	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
 
 
@@ -1472,7 +1485,7 @@ datum/projectile/bullet/autocannon
 		for(var/atom/a in hit)
 			a.icon_state = pick(icon_states(a.icon))
 
-		playsound(hit, "sound/machines/glitch3.ogg", 50, 1)
+		playsound(hit, 'sound/machines/glitch3.ogg', 50, 1)
 
 /datum/projectile/bullet/glitch/gun
 	power = 1
@@ -1527,7 +1540,7 @@ datum/projectile/bullet/autocannon
 			if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
 				clown_tally += 1
 			if(clown_tally > 0)
-				playsound(H, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)

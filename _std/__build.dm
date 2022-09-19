@@ -48,10 +48,11 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //////////// PROFILING OPTIONS
 
+//#define TRACY_PROFILER_HOOK // Enables the hook for the DM Tracy profiler in world/init(), read the code guide
+
 //#define SERVER_SIDE_PROFILING_FULL_ROUND 1 // Generate and save profiler data for the entire round
 //#define SERVER_SIDE_PROFILING_PREGAME 1	// Generate and save profiler data for pregame work (before "Welcome to pregame lobby")
 //#define SERVER_SIDE_PROFILING_INGAME_ONLY 1 // Generate and save profiler data for post-pregame work
-
 
 //////////// DEBUGGING TOGGLES
 
@@ -143,6 +144,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CLONING_IS_A_SIN
 #define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
+#define NO_RANDOM_ROOMS
 #endif
 
 var/global/vcs_revision = "1"

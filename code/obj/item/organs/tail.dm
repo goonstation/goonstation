@@ -109,12 +109,12 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && probmult(src.get_damage() * 0.2))
+		if (src.get_damage() >= fail_damage && probmult(src.get_damage() * 0.2))
 			src.breakme()
 		return 1
 
 	on_broken(var/mult = 1)
-		if(src.get_damage() < FAIL_DAMAGE)
+		if(src.get_damage() < fail_damage)
 			src.unbreakme()
 		if(ischangeling(src.holder.donor))
 			return
@@ -229,8 +229,8 @@
 	desc = "A long, fluffy tail."
 	icon_state = "tail-wolf"
 	organ_image_icon = 'icons/mob/werewolf.dmi'
-	MAX_DAMAGE = 250	// Robust tail for a robust antag
-	FAIL_DAMAGE = 240
+	max_damage = 250	// Robust tail for a robust antag
+	fail_damage = 240
 	tail_num = TAIL_WEREWOLF
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null

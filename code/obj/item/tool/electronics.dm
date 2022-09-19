@@ -786,12 +786,10 @@
 					match_check = 1
 					break
 			if (!match_check)
-				var/obj/tempobj = new X (src)
-				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/obj/tempobj = X
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(tempobj.name),X,initial(tempobj.mats))
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)
@@ -950,13 +948,13 @@
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity)
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
-			if (O.deconstruct_flags & DECON_ACCESS)
+			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
 			return
-		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
+		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
@@ -1022,7 +1020,7 @@
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
 			C.dispose()
-	..()
+	. = ..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
@@ -1033,7 +1031,7 @@
 /obj/proc/build_deconstruction_buttons()
 	.= 0
 
-	if (deconstruct_flags & DECON_ACCESS)
+	if (deconstruct_flags & DECON_NULL_ACCESS)
 		if (src.has_access_requirements())
 			return
 
