@@ -225,7 +225,7 @@
 		var/job = person.mind.assigned_role
 		if(!job || job == "MODE")
 			job = "Staff Assistant"
-		if(ishivebot(person) || isrobot(person))
+		if(issilicon(person))
 			job = "Cyborg"
 		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
