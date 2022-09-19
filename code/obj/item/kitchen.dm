@@ -578,7 +578,7 @@ TRAYS
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
-		if (length(src.foods_inside) == max_food)
+		if (length(src.foods_inside) == max_food && src.is_plate)
 			boutput(user, "<span class='alert'>There's no more space [src.is_plate ? "on" : "in"] \the [src]!</span>")
 			return
 			                                    // anything that isn't a plate may as well hold anything that fits the plate
@@ -748,16 +748,23 @@ TRAYS
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "pizzabox" // to avoid using plate SFX
 	pickup_sfx = 0
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "pizza_box"
 	is_plate = FALSE
 	var/open = FALSE
 
-	add_contents(obj/item/food, mob/user, click_params)
+	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
 
 		if (!src.open && !istype(food, /obj/item/plate/))
 			boutput(user, "<span class='alert'>You have to open \the [src] to put something in it, silly!</span>")
 			return
+
 		if (src.open && istype(food, /obj/item/plate/))
 			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
+			return
+
+		if (length(src.foods_inside) == src.max_food && !istype(food, src.type))
+			boutput(user, "You try to think of a way to put [food] in \the [src] but it's not possible! It's too large!")
 			return
 
 		. = ..()
@@ -787,6 +794,13 @@ TRAYS
 				src.UpdateIcon()
 
 			if (FALSE)
+				if (isnull(user))
+					icon_state = "pizzabox_open"
+					src.open = TRUE
+					playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
+					src.UpdateIcon()
+					return
+
 				if (user.bioHolder.HasEffect("clumsy") && prob(33))
 					user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
 					"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
