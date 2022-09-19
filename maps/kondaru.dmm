@@ -2557,7 +2557,9 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "ahn" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -3007,7 +3009,9 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/northwest)
+/area/station/crew_quarters/clown{
+	name = "Clowntainment"
+	})
 "ait" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/radio/news_office)
