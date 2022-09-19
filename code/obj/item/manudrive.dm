@@ -47,3 +47,9 @@
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
 		icon_state = "datadiskcom"
 		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)
+
+	combustion_generator
+		name = "Engineering ManuDrive: Portable Combustion Generator"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture Portable Combustion Generators."
+		icon_state = "datadiskeng"
+		temp_recipe_string = list(/datum/manufacture/mechanics/combustion_generator)

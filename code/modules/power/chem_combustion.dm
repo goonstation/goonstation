@@ -1,5 +1,5 @@
 /obj/machinery/power/combustion_generator
-	name = "Portable Generator"
+	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
 	icon_state = "chemportgen0"
 	density = 1
