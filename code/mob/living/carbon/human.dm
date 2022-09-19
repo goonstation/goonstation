@@ -495,6 +495,9 @@
 /mob/living/carbon/human/proc/is_vampiric_thrall()
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 
+/mob/living/carbon/human/is_open_container()
+	return !src.organHolder.head
+
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
 		if(I.equipped_in_slot != slot_w_uniform)
