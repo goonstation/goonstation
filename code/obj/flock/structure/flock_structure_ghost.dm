@@ -51,6 +51,9 @@
 			src.flock.relay_in_progress_or_finished = TRUE
 			src.uses_health_icon = FALSE
 			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+			src.info_tag?.set_tag_offset(64, -4) // see comments for same numbers in relay file
+
+	src.info_tag?.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/disposing()
 	if (src.flock)
@@ -93,6 +96,7 @@
 		return
 
 	updatealpha()
+	src.info_tag.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
