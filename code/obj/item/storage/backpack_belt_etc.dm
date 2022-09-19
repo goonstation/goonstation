@@ -638,6 +638,12 @@
 	can_hold = list(/obj/item/robodefibrillator)
 	in_list_or_max = 1
 
+/obj/item/storage/belt/medical/prepared
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+	/obj/item/reagent_containers/mender/burn,
+	/obj/item/reagent_containers/hypospray = 3,
+	/obj/item/device/analyzer/healthanalyzer/upgraded)
+
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
 	name = "Roboticist's belt"
