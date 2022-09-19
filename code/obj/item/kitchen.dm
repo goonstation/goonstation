@@ -748,6 +748,7 @@ TRAYS
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "pizzabox" // to avoid using plate SFX
 	pickup_sfx = 0
+	w_class = W_CLASS_BULKY
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pizza_box"
 	is_plate = FALSE
