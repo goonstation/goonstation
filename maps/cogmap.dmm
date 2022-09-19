@@ -48219,8 +48219,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxo" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/left,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxp" = (
@@ -54151,8 +54151,8 @@
 /turf/simulated/floor/plating,
 /area/station/routing/sortingRoom)
 "hTs" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "hTA" = (
@@ -60934,8 +60934,8 @@
 	},
 /area/station/solar/south)
 "sbg" = (
-/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "scA" = (
