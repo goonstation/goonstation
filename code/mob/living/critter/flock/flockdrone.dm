@@ -1122,8 +1122,8 @@
 	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
 
 /datum/limb/gun/flock_stunner/proc/update_overlay()
-	var/mob/living/critter/flock/drone/F = holder.holder
-	var/datum/hud/critter/flock/drone/flockhud = F.hud
+	var/mob/living/critter/flock/drone/flockdrone = holder.holder
+	var/datum/hud/critter/flock/drone/flockhud = flockdrone.hud
 	flockhud.set_stunner_charge(src.cell.get_charge() / src.cell.max_charge)
 
 /datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
