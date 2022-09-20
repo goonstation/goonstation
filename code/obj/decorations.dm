@@ -860,6 +860,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	mors
+		icon_state = "mors"
+		name = "Mors"
+		pixel_x = -256
+		pixel_y = -256
+
 	station
 		name = "Space Station 14"
 		desc = "Another Nanotrasen station passing by your orbit."

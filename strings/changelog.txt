@@ -1,4 +1,13 @@
 
+(t)tue sep 20 22
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
+(u)Gannets
+(p)10888
+(e)|
+(*)Added the currently unattainable Fomalhaut MRL, 6-shot homing missile launcher. Homing projectile code by Zjdtmkhzt!
 (t)mon sep 19 22
 (u)Sovexe
 (p)10893
