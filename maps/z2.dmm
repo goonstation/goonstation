@@ -57044,10 +57044,12 @@
 /area/syndicate_station/battlecruiser)
 "dgX" = (
 /obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 1
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
-/turf/unsimulated/outdoors/grass,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dgY" = (
 /obj/storage/crate/wooden,
@@ -57266,6 +57268,15 @@
 /obj/item/parts/robot_parts/leg/right/standard,
 /turf/unsimulated/floor/red,
 /area/syndicate_station/medbay)
+"dhF" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "dhG" = (
 /obj/storage/crate/medical{
 	name = "Medkits"
@@ -57636,6 +57647,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/syndicate_station/battlecruiser)
+"djf" = (
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 9
+	},
+/area/centcom)
 "djg" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-M"
@@ -59480,13 +59496,11 @@
 	},
 /area/afterlife/bar)
 "duv" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
 	},
-/obj/stool/chair/comfy,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
+/turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "duw" = (
 /obj/table/reinforced/auto,
@@ -59520,12 +59534,14 @@
 	},
 /area/afterlife/bar)
 "duA" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 1;
-	icon_state = "alt_heater"
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
 	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom)
 "duB" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -68569,11 +68585,10 @@
 /turf/unsimulated/floor/black,
 /area/crypt/sigma/rd)
 "fjd" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/machinery/light/small/floor,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+/obj/machinery/shuttle/engine/heater{
+	icon_state = "alt_heater"
 	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "fjp" = (
 /obj/storage/crate/bin/lostandfound{
@@ -68933,9 +68948,13 @@
 /turf/unsimulated/floor/carpet/red/fancy/edge/north,
 /area/iomoon/base)
 "gae" = (
-/obj/wingrille_spawn/auto,
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/obj/shrub{
+	dir = 1
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
 "gaE" = (
 /obj/admin_plaque{
 	name = "Vaughn Moon's Office"
@@ -68949,6 +68968,13 @@
 	icon_state = "logo_xg2"
 	},
 /area/iomoon/base)
+"gaL" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "gbs" = (
 /obj/submachine/slot_machine/cash,
 /obj/map/light/white,
@@ -69213,12 +69239,11 @@
 	},
 /area/iomoon/base)
 "gAG" = (
-/obj/indestructible/shuttle_corner{
-	icon_state = "wall3_trans";
-	dir = 8
+/obj/machinery/vending/cola/blue,
+/turf/unsimulated/floor/arrival{
+	dir = 1
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "gCM" = (
 /obj/cable{
 	d1 = 2;
@@ -69574,6 +69599,14 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"hrN" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 9
+	},
+/area/centcom)
 "hrQ" = (
 /obj/decal/cleanable/glitter/harmless,
 /obj/stool/bee_bed{
@@ -69712,12 +69745,14 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "hIz" = (
-/obj/machinery/shuttle/engine/propulsion{
-	dir = 2;
-	icon_state = "alt_propulsion"
+/obj/reagent_dispensers/watertank/fountain/piss,
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/turf/unsimulated/floor/arrival{
+	dir = 5
+	},
+/area/centcom)
 "hJD" = (
 /obj/table/reinforced,
 /obj/item/breaching_charge{
@@ -70129,14 +70164,11 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
 "iwq" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon_state = "wall3_trans"
+/obj/shrub,
+/turf/unsimulated/floor/arrival{
+	dir = 9
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "ixz" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris{
@@ -70799,6 +70831,17 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"jRS" = (
+/obj/npc/trader/random{
+	trader_area = "/area/shuttle/merchant_shuttle/right_station"
+	},
+/obj/stool/chair/comfy{
+	dir = 2
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "jSc" = (
 /obj/decal/stage_edge{
 	layer = 2.8;
@@ -71522,6 +71565,11 @@
 	},
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/research)
+"lBN" = (
+/turf/unsimulated/floor/arrival/corner{
+	dir = 4
+	},
+/area/centcom)
 "lCe" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4
@@ -71583,12 +71631,11 @@
 	},
 /area/iomoon)
 "lFq" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon_state = "wall3_trans"
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 8
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "lFI" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -71685,6 +71732,12 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
+"lPc" = (
+/obj/stool/bench/blue/auto,
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
 "lPg" = (
 /obj/table/auto,
 /obj/item/paper{
@@ -71887,6 +71940,14 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"mpx" = (
+/obj/machinery/light/small/floor,
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "mrd" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -72005,6 +72066,15 @@
 	dir = 10
 	},
 /area/diner/cow)
+"mEy" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "mEG" = (
 /obj/securearea,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -72015,14 +72085,14 @@
 /turf/unsimulated/floor/void,
 /area/diner/cow)
 "mGl" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon_state = "wall3_trans"
+/obj/stool/bench/blue/auto,
+/obj/machinery/light{
+	dir = 4
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+/turf/unsimulated/floor/arrival{
+	dir = 4
 	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "mIm" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -72355,6 +72425,11 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"nnS" = (
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/centcom)
 "noj" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-40"
@@ -72507,6 +72582,11 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"nvA" = (
+/turf/unsimulated/floor/arrival{
+	dir = 4
+	},
+/area/centcom)
 "nwd" = (
 /obj/decal/stage_edge,
 /obj/machinery/vending/snack,
@@ -73924,13 +74004,11 @@
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
 "pWB" = (
-/obj/decal/fakeobjects/teleport_pad,
-/obj/machinery/light/small/floor,
-/obj/marker/supplymarker,
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor/arrival{
+	dir = 1
 	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "pXE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74128,6 +74206,12 @@
 	dir = 4
 	},
 /area/centcom/offices/adhara)
+"qrq" = (
+/obj/machinery/shuttle/engine/propulsion{
+	icon_state = "alt_propulsion"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "qrC" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -74683,10 +74767,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/crew)
 "rtk" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "delivery2"
-	},
+/obj/stool/bench/blue/auto,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -75982,12 +76063,11 @@
 	icon_state = "blue"
 	})
 "tZZ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon_state = "wall3_trans"
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor{
+	name = "plating"
 	},
-/turf/unsimulated/outdoors/grass,
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "uaI" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -76494,8 +76574,12 @@
 	icon_state = "blue"
 	})
 "vjx" = (
-/turf/unsimulated/outdoors/grass,
-/area/space)
+/obj/machinery/light/small/floor,
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "vjH" = (
 /turf/unsimulated/floor/plating,
 /area/retentioncenter)
@@ -76586,6 +76670,14 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"vrO" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/turf/unsimulated/floor/orangeblack/side{
+	dir = 5
+	},
+/area/centcom)
 "vrR" = (
 /obj/tombstone{
 	dir = 1
@@ -76873,6 +76965,11 @@
 	dir = 8
 	},
 /area/diner/cow)
+"vTG" = (
+/turf/unsimulated/floor/arrival{
+	dir = 1
+	},
+/area/centcom)
 "vTT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -77605,6 +77702,14 @@
 /obj/table/auto,
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/centcom/offices/marknstein)
+"xBc" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "xBu" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -77953,14 +78058,10 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "yaC" = (
-/obj/indestructible/shuttle_corner{
-	dir = 2;
-	icon_state = "wall3_trans"
+/turf/unsimulated/floor/arrival/corner{
+	dir = 1
 	},
-/turf/unsimulated/floor/shuttle{
-	icon_state = "floor2"
-	},
-/area/shuttle/merchant_shuttle/left_centcom/donut2)
+/area/centcom)
 "ybt" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater)
@@ -126126,11 +126227,11 @@ dFc
 aES
 aES
 aES
-lFq
-duB
-duA
-hIz
 aES
+gcn
+gcn
+tZZ
+gcn
 gcn
 dkX
 dny
@@ -126426,15 +126527,15 @@ cnw
 cnw
 dFc
 aES
-gAG
-ddN
-dgb
-fjd
+aES
+dFl
+gcn
+gcn
 iwq
-ddN
-gcn
-gcn
-dnv
+lFq
+mEy
+nnS
+dkX
 dny
 dmu
 gcn
@@ -126728,14 +126829,14 @@ cnw
 cnw
 dFc
 aES
-gae
-duw
-duv
-duy
-duy
-duI
-rtk
-klN
+aES
+aES
+gcn
+hrN
+yaC
+dny
+dny
+dny
 dkX
 dny
 dmu
@@ -127030,14 +127131,14 @@ cnw
 cnw
 dFc
 aES
-gae
-duw
-duy
-duy
-duy
-duI
+aES
+aES
+tZZ
+vTG
 rtk
-klN
+rtk
+rtk
+dny
 dkX
 dny
 dmu
@@ -127332,17 +127433,17 @@ cnw
 cnw
 dFc
 aES
-dgX
-ddN
-yaC
+aES
+aES
+tZZ
 pWB
-mGl
-ddN
-gcn
-gcn
-dnv
 dny
-dmu
+dny
+dny
+dny
+dkX
+dny
+voQ
 gcn
 aES
 sdU
@@ -127634,14 +127735,14 @@ cnw
 cnw
 dFc
 aES
-aES
+dFl
 aES
 tZZ
-duB
-duA
-hIz
-aES
-gcn
+gAG
+dny
+dny
+dny
+dny
 dkX
 dny
 dmu
@@ -127938,13 +128039,13 @@ dFc
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
-gcn
-dnv
+tZZ
+vTG
+rtk
+rtk
+rtk
+dny
+dkX
 dny
 dmu
 klN
@@ -128240,15 +128341,15 @@ dFc
 dFl
 aES
 aES
-aES
-aES
-dFl
-aES
-aES
 gcn
+hIz
+lBN
+dny
+dny
+dny
 dkX
 dny
-dmu
+voQ
 gcn
 gcn
 luV
@@ -128542,15 +128643,15 @@ dFc
 aES
 aES
 dFl
-aES
-aES
-aES
-aES
-aES
 gcn
+gcn
+gae
+lPc
+mGl
+nvA
 dkX
 dny
-voQ
+dmu
 gcn
 aES
 sdU
@@ -128845,10 +128946,10 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
+gcn
+gcn
+tZZ
+gcn
 gcn
 dkX
 dny
@@ -129151,7 +129252,7 @@ aES
 aES
 aES
 aES
-dmy
+gcn
 dkX
 dny
 dmu
@@ -129446,12 +129547,12 @@ aES
 aES
 aES
 aES
-aES
-aES
-aES
-aES
-aES
 dFl
+aES
+aES
+aES
+aES
+aES
 aES
 gcn
 dkX
@@ -129734,16 +129835,11 @@ aaa
 dFc
 aES
 aES
-dFl
-aES
-aES
-aES
 aES
 aCG
 dhD
 dhD
 dmt
-aES
 aES
 aES
 aES
@@ -129755,7 +129851,12 @@ aES
 aES
 aES
 aES
-gcn
+ddN
+duB
+fjd
+qrq
+aES
+dmy
 dnv
 dny
 dmu
@@ -130037,15 +130138,10 @@ dFc
 aES
 aES
 aES
-aES
-aES
-aES
-aES
 qan
 qhR
 qhR
 qan
-aES
 aES
 aES
 aES
@@ -130055,9 +130151,14 @@ drU
 dsc
 aES
 aES
-aES
-aES
-dmy
+gaL
+ddN
+dgb
+vjx
+dgX
+ddN
+gcn
+gcn
 dkX
 dny
 dmu
@@ -130338,17 +130439,12 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-dFl
-aES
 aCG
 dvq
 dvi
 dvl
 dnx
 dmt
-aES
 aES
 dsj
 drQ
@@ -130357,9 +130453,14 @@ drX
 fKc
 fFv
 aES
-aES
-aES
-gcn
+duB
+duw
+jRS
+duy
+duy
+duI
+duA
+klN
 dkX
 dny
 dmu
@@ -130640,17 +130741,12 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-aES
-aES
 jlk
 wEA
 dvl
 dvl
 dvo
 jlk
-aES
 aES
 drK
 drR
@@ -130659,9 +130755,14 @@ drX
 dsa
 drK
 aES
-aES
-aES
-gcn
+duB
+duw
+duy
+duy
+duy
+duI
+duA
+klN
 dkX
 dny
 voQ
@@ -130942,17 +131043,12 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-aES
-aES
 gIA
 qQd
 dvl
 dvl
 dvp
 gIA
-aES
 aES
 drM
 drS
@@ -130961,9 +131057,14 @@ drX
 dsb
 drM
 aES
-aES
-aES
-dmy
+duv
+ddN
+xBc
+mpx
+dhF
+ddN
+gcn
+gcn
 dkX
 dny
 dmu
@@ -131244,17 +131345,12 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-aES
-aES
 oXl
 qan
 dkL
 dkL
 qan
 oXl
-aES
 aES
 drN
 dsc
@@ -131265,7 +131361,12 @@ drN
 aES
 aES
 aES
-gcn
+ddN
+duB
+fjd
+qrq
+aES
+dmy
 dnv
 dny
 dmu
@@ -131289,7 +131390,7 @@ aES
 aES
 aES
 aES
-aES
+dFl
 aES
 dFc
 aaa
@@ -131547,10 +131648,13 @@ dFc
 aES
 aES
 aES
-dFl
+gcn
+wxJ
+wxJ
+gcn
 aES
 aES
-vjx
+aES
 gcn
 wxJ
 wxJ
@@ -131559,10 +131663,7 @@ aES
 aES
 aES
 aES
-gcn
-wxJ
-wxJ
-gcn
+aES
 aES
 aES
 aES
@@ -131847,11 +131948,7 @@ duq
 aaa
 dFc
 aES
-dFl
 aES
-aES
-aES
-gcn
 gcn
 gcn
 klN
@@ -131859,11 +131956,15 @@ klN
 gcn
 gcn
 dnI
+gcn
+gcn
+klN
+klN
+gcn
+gcn
+gcn
 dnI
-gcn
-gcn
-klN
-klN
+dnI
 gcn
 gcn
 dnI
@@ -132150,11 +132251,11 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-aES
 gcn
-aDA
+djf
+dmJ
+dmJ
+drO
 dmJ
 dmJ
 dmJ
@@ -132162,8 +132263,8 @@ drO
 dmJ
 dmJ
 dmJ
-dmJ
 drO
+dmJ
 dmJ
 dmJ
 dmJ
@@ -132452,11 +132553,11 @@ aaa
 dFc
 aES
 aES
-aES
-aES
-aES
-gcn
+dmy
 dkX
+dny
+dny
+dny
 dny
 dny
 dny
@@ -132753,18 +132854,18 @@ duq
 aaa
 dFc
 aES
-dFl
-aES
-aES
 aES
 gcn
-dkX
+vrO
+bxr
+bxr
+rtQ
 dny
 dmr
 bxr
 bxr
-bxr
 drW
+bxr
 bxr
 bxr
 bxr
@@ -133056,10 +133157,10 @@ aaa
 dFc
 aES
 aES
-aES
-dFl
-aES
-dmy
+gcn
+gcn
+dnI
+gcn
 dkX
 dny
 voQ
@@ -134606,7 +134707,7 @@ gcn
 aES
 aES
 aES
-aES
+dFl
 aES
 aES
 aES
@@ -134908,7 +135009,7 @@ dmy
 aES
 aES
 aES
-dFl
+aES
 aES
 aES
 aES
@@ -135212,7 +135313,7 @@ aES
 aES
 aES
 aES
-aES
+dFl
 aES
 aES
 aES
@@ -135517,7 +135618,7 @@ aES
 aES
 aES
 aES
-aES
+dFl
 aES
 dFc
 aaa
@@ -135816,7 +135917,7 @@ aES
 aES
 aES
 aES
-dFl
+aES
 aES
 aES
 aES
@@ -136116,7 +136217,7 @@ gcn
 aES
 aES
 aES
-aES
+dFl
 aES
 aES
 aES
