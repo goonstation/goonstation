@@ -358,6 +358,9 @@
 	usr << output("[src.name]", "atom_label")
 */
 
+/atom/proc/get_examine_tag(mob/examiner)
+	return null
+
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))

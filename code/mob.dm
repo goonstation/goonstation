@@ -37,7 +37,7 @@
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
-	var/mob_hovered_over = null
+	var/atom/atom_hovered_over = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -2702,10 +2702,16 @@
 	if(the_pos)
 		name = copytext(name, 1, the_pos)
 	if(name)
-		src.name_tag.set_extra(he_or_she(src))
+		src.name_tag.set_info_tag(he_or_she(src))
 	else
-		src.name_tag.set_extra("")
+		src.name_tag.set_info_tag("")
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
+
+/mob/proc/get_tracked_examine_atoms()
+	return mobs
+
+/mob/get_examine_tag(mob/examiner)
+	return src.name_tag
 
 /mob/proc/protected_from_space()
 	return 0
@@ -3158,14 +3164,16 @@
 
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
-	M.mob_hovered_over = src
+	M.atom_hovered_over = src
 	if(M.client.check_key(KEY_EXAMINE))
-		src.name_tag?.show_images(M.client, FALSE, TRUE)
+		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+		hover_tag?.show_images(M.client, FALSE, TRUE)
 
 /mob/MouseExited(location, control, params)
 	var/mob/M = usr
-	M.mob_hovered_over = null
-	src.name_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
+	M.atom_hovered_over = null
+	var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+	hover_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)
