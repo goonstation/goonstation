@@ -1399,7 +1399,7 @@ datum/projectile/bullet/autocannon
 	shot_number = 1
 	cost = 1
 	power = 15
-	icon_state = "regrocket"
+	icon_state = "mininuke"
 	max_speed = 10
 	start_speed = 10
 	shot_delay = 1 SECONDS

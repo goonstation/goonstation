@@ -1047,10 +1047,9 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "MRL rocket pack"
 	amount_left = 6
 	max_amount = 6
-	icon_state = "rpg_rocket"
+	icon_state = "mrl_rocketpack"
 	ammo_type = new /datum/projectile/bullet/homing/mrl
 	ammo_cat = AMMO_ROCKET_MRL
-	icon = 'icons/obj/projectiles.dmi'
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
