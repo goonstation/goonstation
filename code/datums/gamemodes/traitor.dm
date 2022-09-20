@@ -40,7 +40,7 @@
 		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
-		wraith_add()
+		replace_with_wraith()
 
 	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
