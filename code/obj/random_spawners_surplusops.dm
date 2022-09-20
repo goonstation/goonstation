@@ -1,6 +1,6 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
-	rare_chance = 5
+	//rare_chance = 5
 
 /*
 	amt2spawn =
@@ -54,7 +54,7 @@
 	/obj/item/gun/kinetic/revolver)
 
 /obj/random_item_spawner/surplus/melee
-	amt2spawn = 2
+	amt2spawn = 1
 	items2spawn = list(/obj/item/ratstick,
 		/obj/item/bat,
 		/obj/item/katana_sheath/reverse,
@@ -75,9 +75,9 @@
 		/obj/item/fireaxe,
 		/obj/item/quarterstaff, //consider canning this since it's busted as hell
 		/obj/item/kitchen/utensil/knife/cleaver)
-	spawn_items()
-		var/obj/item/thingy = pick(items2spawn)
-		new thingy(get_turf(src))
+	//spawn_items()
+	//	var/obj/item/thingy = pick(items2spawn)
+	//	new thingy(get_turf(src))
 
 
 
@@ -118,9 +118,9 @@
 		/obj/item/storage/belt,
 		/obj/item/storage/belt/medical,
 		/obj/item/storage/box/syndibox)
-	spawn_items()
-		var/obj/item/thingy = pick(src.items2spawn)
-		new thingy(get_turf(src))
+	//spawn_items()
+	//	var/obj/item/thingy = pick(src.items2spawn)
+	//	new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/backup
 	items2spawn = list(
@@ -128,6 +128,7 @@
 		/obj/item/old_grenade/spawner/sawflycluster,
 		///obj/item/old_grenade/sawfly/withremote,
 		/obj/item/storage/box/wasp_grenade_kit,
+		/obj/item/aiModule/freeform,
 		/obj/item/spongecaps/syndicate,
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/gun/energy/wasp,
@@ -135,9 +136,9 @@
 		///obj/item/toy/plush/small/kitten,
 		/obj/machinery/recharge_station/syndicate)
 
-	spawn_items()
-		var/obj/item/thingy = pick(src.items2spawn)
-		new thingy(get_turf(src))
+	//spawn_items()
+//		var/obj/item/thingy = pick(src.items2spawn)
+	//	new thingy(get_turf(src))
 
 
 /obj/random_item_spawner/surplus/expensive
@@ -148,15 +149,16 @@
 		/obj/item/implanter/super_mindhack,
 		/obj/item/clothing/suit/space/industrial/syndicate,
 		/obj/item/katana_sheath,
+		/obj/item/gun/kinetic/ak47, //not adding a new ammo category just for the ak47, and it's pretty damn powerful
 		/obj/item/sword,
 		/obj/item/saw/syndie,
 		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
 		/obj/item/storage/box/donkpocket_w_kit,
 		/obj/storage/crate/syndicate_surplus/spawnable, //yo dawg, I heard you like surplus
 		/obj/item/storage/box/mindhack_module_kit)
-	spawn_items()
-		var/obj/item/thingy = pick(src.items2spawn)
-		new thingy(get_turf(src))
+//	spawn_items()
+//		var/obj/item/thingy = pick(src.items2spawn)
+//		new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/stealth
 	amt2spawn = 1
@@ -177,9 +179,9 @@
 		)
 
 
-	spawn_items()
-		var/obj/item/thingy = pick(src.items2spawn)
-		new thingy(get_turf(src))
+//	spawn_items()
+//		var/obj/item/thingy = pick(src.items2spawn)
+//		new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/defensive
 
@@ -196,8 +198,8 @@
 		)
 
 
-/obj/surplusopspawner/medical //the medical spawner uppity and refuses to work so we're doing this for the time being.
-	var/list/items2spawn = list(
+/obj/random_item_spawner/surplus/medical
+	items2spawn = list(
 	/obj/item/reagent_containers/food/snacks/donkpocket_w,
 	/obj/item/storage/firstaid/crit,
 	/obj/item/storage/firstaid/fire,
@@ -218,10 +220,10 @@
 	/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 	/obj/item/storage/firstaid/regular/doctor_spawn,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
-	New()
-		var/obj/new_item = pick(items2spawn)
-		new new_item(src.loc)
-		..()
+	//New()
+	//	var/obj/new_item = pick(items2spawn)
+	//	new new_item(src.loc)
+	//	..()
 
 //AMMO
 /obj/random_item_spawner/surplus/plinkerrounds
@@ -266,9 +268,8 @@
 	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	items2spawn = list(
 		/obj/item/ammo/bullets/rifle_3006)
-
-
 /obj/random_item_spawner/surplus/shotgunshells
+	min_amt2spawn = 4
 	max_amt2spawn = 5
 	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
 	/obj/item/ammo/bullets/pipeshot/scrap,

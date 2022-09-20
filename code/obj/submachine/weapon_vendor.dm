@@ -543,7 +543,7 @@
 
 /datum/materiel/loadout/longgun
 	name = "Long gun"
-	path = /obj/random_item_spawner/surplus/longgun
+	path = /obj/random_item_spawner/surplus/longgun/loadout
 	description = "Long guns that be havin' the power of thunder!"
 
 /datum/materiel/loadout/shortgun
@@ -591,7 +591,7 @@
 
 /datum/materiel/utility/healing
 	name = "Healing items"
-	path = /obj/surplusopspawner/medical
+	path = /obj/random_item_spawner/surplus/medical
 	description = "Some medicinal supplies me lads have scrounged up."
 	cost = 1
 /datum/materiel/utility/grenade
@@ -622,7 +622,7 @@
 	path = /obj/random_item_spawner/surplus/storage
 	description = "Ye can never have enough room fer yer carryin' yer plunder!"
 	cost = 1
-	vr_allowed = TRUE
+	//vr_allowed = TRUE
 
 /datum/materiel/utility/backup
 	name = "Backup"

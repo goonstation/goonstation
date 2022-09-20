@@ -5,7 +5,7 @@
 //surplus medical beaker
 //surplus deployment computer and teleporter
 
-/obj/surplusopspawner //borrowing attributes from the random objects spawner
+/obj/surplusopspawner //object that decays into spawners
 	name = "surplus spawner"
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
@@ -75,7 +75,10 @@
 			new suit(src.loc)
 			new helm(src.loc)
 			..()
-//misc stuff
+
+
+
+//Items for surplusops that don't belogn anywhere else
 /obj/item/reagent_containers/glass/beaker/large/surplusmedical
 	name = "Doctor Schmidt's Super Mega Restoration Jungle Juice"
 	desc = "A beaker containing a supposed panacea. It smells weird and the glass feels sticky."
