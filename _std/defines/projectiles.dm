@@ -70,7 +70,8 @@
 
 #define AMMO_ROCKET_SING "rocket_sing"
 #define AMMO_ROCKET_RPG "rocket_rpg"
-#define AMMO_ROCKET_ALL AMMO_ROCKET_SING, AMMO_ROCKET_RPG
+#define AMMO_ROCKET_MRL "rocket_mrl"
+#define AMMO_ROCKET_ALL AMMO_ROCKET_SING, AMMO_ROCKET_RPG, AMMO_ROCKET_MRL
 
 #define AMMO_FOAMDART "foamdart"
 #define AMMO_AIRZOOKA "airzooka"
