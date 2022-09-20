@@ -1,5 +1,9 @@
 
 (t)tue sep 20 22
+(u)aloe
+(*)Cyborgs can now construct furniture parts into furniture by click dragging to the floor.
+(u)aloe
+(*)Engineers on Oshan now get Stomper Boots, and there's an extra pair in engi lockers. They act kinda like a stomper, but they're boots. You'll figure it out.
 (u)Sord
 (*)Every map in rotation now has 3 oxygen vending machines on station, with one always being in Escape. Buy your life 2day
 (u)CrystalClover
