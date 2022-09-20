@@ -22,9 +22,11 @@
 		/obj/item/gun/energy/egun,
 		/obj/item/gun/kinetic/hunting_rifle,
 		/obj/item/gun/energy/plasma_gun,
+		/obj/item/gun/kinetic/riotgun, //sorta out of place but it's more out of place in the shortgun category
+		/obj/item/gun/kinetic/single_action/mts_255, //ditto
 		/obj/item/gun/energy/alastor,
 		/obj/item/gun/energy/blaster_smg)
-	rare_items2spawn = list(/obj/item/gun/kinetic/riotgun, //sorta out of place but it's more out of place in the shortguns
+	rare_items2spawn = list(
 	/obj/item/gun/kinetic/grenade_launcher, //A little unsure on these two
 	/obj/item/gun/kinetic/sniper)
 
@@ -36,15 +38,17 @@
 		/obj/item/gun/kinetic/pistol/smart/mkII,
 		/obj/item/gun/kinetic/sawnoff,
 		/obj/item/gun/kinetic/silenced_22,
+		/obj/item/gun/kinetic/pistol,
 		/obj/item/gun/kinetic/clock_188,
 		/obj/item/gun/kinetic/slamgun, //lol
 		/obj/item/gun/kinetic/zipgun, //lmao, even
 		/obj/item/gun/kinetic/detectiverevolver,
 		/obj/item/gun/kinetic/colt_saa/detective,
 		/obj/item/gun/kinetic/derringer,
-		/obj/item/gun/energy/laser_gun,
 		/obj/item/storage/rockit,
+		/obj/item/gun/energy/laser_gun,
 		/obj/item/gun/energy/phaser_gun,
+		/obj/item/gun/energy/phaser_small
 		/obj/item/gun/reagent/syringe //while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
 
 	)
@@ -115,7 +119,7 @@
 		/obj/item/storage/fanny/funny,
 		/obj/item/storage/fanny,
 		/obj/item/storage/belt/utility,
-		/obj/item/storage/belt,
+		/obj/item/storage/belt/hunter, //can be gotten from space, no reason it can't show up here
 		/obj/item/storage/belt/medical,
 		/obj/item/storage/box/syndibox)
 	//spawn_items()
@@ -242,6 +246,7 @@
 	items2spawn = list(/obj/item/ammo/bullets/bullet_9mm,
 	/obj/item/ammo/bullets/bullet_9mm,
 	/obj/item/ammo/bullets/bullet_9mm,
+	/obj/item/ammo/bullets/nine_mm_soviet,//no makarov due to ammo pain, but I am including the magazines to help dilute the brawnen clips
 	/obj/item/ammo/bullets/nine_mm_NATO)
 
 /obj/random_item_spawner/surplus/revolverrounds
@@ -273,6 +278,7 @@
 	max_amt2spawn = 5
 	items2spawn = list(/obj/item/ammo/bullets/buckshot_burst,
 	/obj/item/ammo/bullets/pipeshot/scrap,
+	/obj/item/ammo/bullets/pipeshot/plasglass,
 	/obj/item/ammo/bullets/abg,
 	/obj/item/ammo/bullets/flare,
 	/obj/item/ammo/bullets/a12/weak,
