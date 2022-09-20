@@ -930,11 +930,7 @@ TYPEINFO(/datum/mutantrace)
 
 			SPAWN(rand(4, 30))
 				M.emote("scream")
-			if (M.mind && ticker.mode)
-				if (!M.mind.special_role)
-					M.mind.special_role = ROLE_ZOMBIE
-				if (!(M.mind in ticker.mode.Agimmicks))
-					ticker.mode.Agimmicks += M.mind
+			M.mind.add_antagonist(ROLE_ZOMBIE, "Yes", "Yes", ANTAGONIST_SOURCE_MUTANT, FALSE)
 			M.show_antag_popup("zombie")
 
 	on_attach()

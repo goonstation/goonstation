@@ -375,9 +375,8 @@
 			antag.current.make_vampire()
 
 		if (ROLE_HUNTER)
-			objective_set_path = /datum/objective_set/hunter
-			antag.current.show_text("<h2><font color=red><B>You are a hunter!</B></font></h2>", "red")
-			antag.current.make_hunter()
+			antag.add_antagonist(ROLE_HUNTER)
+			do_objectives = FALSE
 
 		if (ROLE_GRINCH)
 			objective_set_path = /datum/objective_set/grinch
