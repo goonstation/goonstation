@@ -43,7 +43,7 @@
 		name = "Desktop Computer-frame"
 		icon = 'icons/obj/computer_frame_desk.dmi'
 		created_icon_state = "old"
-		computer_type = /obj/machinery/computer3/personal/personel_alt
+		computer_type = /obj/machinery/computer3/generic/personal/personel_alt
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
