@@ -571,7 +571,7 @@ TRAYS
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
-		if (istype(food, /obj/item/plate) && src.is_plate)
+		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
 				return
@@ -581,11 +581,11 @@ TRAYS
 		if (length(src.foods_inside) == max_food && src.is_plate)
 			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
-			                                    // anything that isn't a plate may as well hold anything that fits the plate
+			                                    // anything that isn't a plate may as well hold anything that fits the "plate"
 		if (!food.edible && !. && src.is_plate) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
-		if (food.w_class > W_CLASS_NORMAL && !istype(food, /obj/item/plate/))
+		if (food.w_class > W_CLASS_NORMAL && !.) // same logic as above, but to check if we can stack it
 			boutput(user, "You try to think of a way to put [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
 			return
 		if (food in src.vis_contents)
@@ -746,8 +746,8 @@ TRAYS
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
 	icon = 'icons/obj/large_storage.dmi'
-	icon_state = "pizzabox" // to avoid using plate SFX
-	pickup_sfx = 0
+	icon_state = "pizzabox"
+	pickup_sfx = 0 // to avoid using plate SFX
 	w_class = W_CLASS_BULKY
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pizza_box"
