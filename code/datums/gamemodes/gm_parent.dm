@@ -480,3 +480,11 @@
 		num_spies -= 1
 	num_wraiths = 1
 
+/datum/game_mode/proc/add_wraith(var/num_wraiths) // datumizes actually adding the wraith to the round
+	var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
+	var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
+	for (var/datum/mind/wraith in chosen_wraiths)
+		traitors += wraith
+		wraith.special_role = ROLE_WRAITH
+		possible_wraiths.Remove(wraith)
+
