@@ -340,6 +340,17 @@
 			else
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
+		// Remove zombie antag status as zombie race is removed on cloning
+		var/mob/M = src.occupant
+		if (!M?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
+		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
+			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
+			if (success)
+				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
+			else
+				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)

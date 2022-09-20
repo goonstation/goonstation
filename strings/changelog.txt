@@ -1,4 +1,37 @@
 
+(t)mon sep 19 22
+(u)Sovexe
+(p)10893
+(e)|
+(+)The cog1 medbay has had some alterations made to its layout
+(u)Blackrep
+(p)10874
+(e)|
+(+)Two new (old?) Soviet firearms have been added. The PM Pistol, and the MTs-255 Revolver Shotgun
+(u)DimWhat & aloe
+(p)10803
+(e)|
+(+)A number of 2-handed guns (common ones being the tranq rifle and riot shotgun) no longer fit on the belt, but do fit on the back. They also have neat sprites when you wear them.
+(t)sun sep 18 22
+(u)Roddy
+(p)10844
+(e)|
+(+)Donut 2 Barbershop moved to crew quarters, new nerd dungeon in maint behind arcade. Made other small fixes and tweaks
+(t)sat sep 17 22
+(u)BotchKing
+(p)10825
+(e)|
+(+)Changes criminal status to "released" upon being flushed
+(u)Ikea, tarmunora
+(p)10505
+(e)|
+(*)Cryoxadone brute/burn healing has been reduced from 12 to 2, oxy healing also reduced to 2, however it now can combat losebreath, counters radiation, and provides some protection from random death rolls in crit while in effect. Cryoxadone will no longer work when body temp is below -240C or so
+(u)ZWRh3
+(p)10858
+(e)|
+(*)Thralls are now immune to all diseases and maladies
+(u)Flappybat
+(+)Nerfed sawfly. Damage now reduced by armor, less bleed. A security officer batoning sawfly now loses half health instead of reaching crit.
 (t)fri sep 16 22
 (u)Mr. Moriarty
 (p)10641
