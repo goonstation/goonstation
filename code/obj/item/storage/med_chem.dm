@@ -29,6 +29,16 @@
 	/obj/item/device/analyzer/healthanalyzer,\
 	/obj/item/reagent_containers/emergency_injector/epinephrine)
 
+	// Comes with upgraded health scanner.
+	prepared
+		spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+		/obj/item/reagent_containers/mender/burn,
+		/obj/item/device/analyzer/healthanalyzer/upgraded,
+		/obj/item/reagent_containers/hypospray,
+		/obj/item/reagent_containers/glass/beaker/antitox,
+		/obj/item/reagent_containers/glass/beaker/epinephrine,
+		/obj/item/reagent_containers/glass/beaker/salbutamol)
+
 	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\

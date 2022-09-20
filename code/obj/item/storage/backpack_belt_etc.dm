@@ -641,7 +641,8 @@
 /obj/item/storage/belt/medical/prepared
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
 	/obj/item/reagent_containers/mender/burn,
-	/obj/item/reagent_containers/hypospray = 3,
+	/obj/item/reagent_containers/hypospray = 2,
+	/obj/item/reagent_containers/syringe,
 	/obj/item/device/analyzer/healthanalyzer/upgraded)
 
 /obj/item/storage/belt/roboticist
