@@ -1,5 +1,8 @@
 
 (t)tue sep 20 22
+(u)Sord
+(e)|
+(+)Added a new hyper capacity power cell to manufacturers. Requires expensive mats and has capacity of 25000. Also increased erebite cell's power capacity.
 (u)golferjoe
 (p)10895
 (e)|
