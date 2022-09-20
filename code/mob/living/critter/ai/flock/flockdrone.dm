@@ -31,4 +31,7 @@
 /datum/aiTask/prioritizer/flock/drone/on_reset()
 	..()
 	if(holder.owner)
-		holder.owner.set_a_intent(INTENT_GRAB)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		F.set_a_intent(INTENT_GRAB)
+		F.flock_name_tag?.set_info_tag(capitalize(src.name))
+

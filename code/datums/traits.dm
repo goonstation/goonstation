@@ -436,8 +436,8 @@
 		var/datum/bioHolder/B = owner.bioHolder
 		var/datum/bioEffect/E = pick(B.effectPool)
 		B.ActivatePoolEffect(B.effectPool[E], 1, 0)
-		SPAWN (1 SECOND) // This DOES NOT WORK unless delayed but somehow the trait part is logged??
-			logTheThing(LOG_DEBUG, owner, "gets the bioeffect [E] from the trait [name].")
+		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			logTheThing(LOG_COMBAT, owner, "gets the bioeffect [E] from the trait [name].")
 
 /datum/trait/stablegenes
 	name = "Stable Genes"
@@ -704,6 +704,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 	New()
 		..()
 		allergen = pick(allergen_id_list)
+
+	onAdd(var/mob/owner)
+		SPAWN (1 SECOND) // This DOES NOT WORK at round start unless delayed but somehow the trait part is logged??
+			logTheThing(LOG_COMBAT, owner, "gains an allergy to [allergen] from the trait [name].")
 
 	onLife(var/mob/owner)
 		if (owner?.reagents?.has_reagent(allergen))

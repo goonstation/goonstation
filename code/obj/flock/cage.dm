@@ -7,7 +7,7 @@
 	flock_desc = "Spins living matter into Flockdrones. Painfully."
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "cage"
-	flock_id = "matter reprocessor"
+	flock_id = "Matter reprocessor"
 	flags = USEDELAY
 	health = 30
 	health_max = 30
