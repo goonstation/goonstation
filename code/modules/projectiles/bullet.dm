@@ -1313,7 +1313,7 @@ datum/projectile/bullet/autocannon
 			explosion_new(null, T, 36, 0.45)
 		return
 
-/datum/projectile/bullet/rpg/homing
+/datum/projectile/bullet/homing
     var/min_speed = 0
     var/max_speed = 2
     var/start_speed = 2
@@ -1376,7 +1376,16 @@ datum/projectile/bullet/autocannon
 
         ..()
 
-/datum/projectile/bullet/rpg/homing/mrls
+/datum/projectile/bullet/homing/mrls
+	name = "MPRT rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_delay = 30
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1
+	impact_image_state = "bhole-large"
 	shot_number = 1
 	cost = 1
 	power = 15

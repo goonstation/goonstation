@@ -1032,7 +1032,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	amount_left = 6
 	max_amount = 6
 	icon_state = "rpg_rocket"
-	ammo_type = new /datum/projectile/bullet/rpg/homing/mrls
+	ammo_type = new /datum/projectile/bullet/homing/mrls
 	ammo_cat = AMMO_ROCKET_MRLS
 	icon = 'icons/obj/projectiles.dmi'
 	w_class = W_CLASS_NORMAL
