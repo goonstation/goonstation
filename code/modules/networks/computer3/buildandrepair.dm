@@ -24,6 +24,7 @@
 	var/max_peripherals = 3
 	var/list/peripherals = list()
 	var/created_icon_state = "computer_generic"
+	var/computer_type = /obj/machinery/computer3
 	var/glass_needed = 2 //How much glass does this need for a screen?
 	var/metal_given = 5 //How much metal does this give when destroyed?
 
@@ -181,7 +182,9 @@
 			if (isscrewingtool(P))
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/obj/machinery/computer3/C= new /obj/machinery/computer3( src.loc )
+				if(!ispath(computer_type, /obj/machinery/computer3))
+					src.computer_type = /obj/machinery/computer3
+				var/obj/machinery/computer3/C= new src.computer_type( src.loc )
 				C.set_dir(src.dir)
 				if(src.material) C.setMaterial(src.material)
 				C.setup_drive_size = 0
