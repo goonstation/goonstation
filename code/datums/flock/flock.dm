@@ -703,9 +703,6 @@ var/flock_signal_unleashed = FALSE
 	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
 	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
 	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
-	/obj/machinery/portable_atmospherics/canister = /obj/flock_structure/fabricator,
-	/obj/machinery/portable_atmospherics/scrubber = /obj/flock_structure/fabricator,
-	/obj/machinery/atmospherics/pipe/tank = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
 
@@ -769,7 +766,7 @@ var/flock_signal_unleashed = FALSE
 						break
 				if (istype(O, /obj/machinery/light/lamp) || istype(O, /obj/machinery/computer3/generic/personal) || istype(O, /obj/machinery/computer3/luggable))
 					break
-				if (istype(O, /obj/machinery/vending) || istype(O, /obj/machinery/manufacturer) || istype(O, /obj/machinery/dispenser) || istype(O, /obj/machinery/disposal_pipedispenser) || istype(O, /obj/machinery/portable_atmospherics/canister) || istype(O, /obj/machinery/atmospherics/pipe/tank) || istype(O, /obj/machinery/portable_atmospherics/scrubber) || istype(O, /obj/machinery/chem_dispenser) || istype(O, /obj/machinery/chemicompiler_stationary))
+				if (istype(O, /obj/machinery/vending) || istype(O, /obj/machinery/manufacturer) || istype(O, /obj/machinery/dispenser) || istype(O, /obj/machinery/disposal_pipedispenser) || istype(O, /obj/machinery/chem_dispenser) || istype(O, /obj/machinery/chemicompiler_stationary))
 					params = O
 			else if (istype(O, /obj/submachine/seed_vendor))
 				params = O

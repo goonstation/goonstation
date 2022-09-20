@@ -39,15 +39,6 @@
 		else if (istype(content_holder, /obj/reagent_dispensers))
 			var/obj/reagent_dispensers/reagent_holder = content_holder
 			src.resources_to_produce += round(reagent_holder.reagents.total_volume / 40) // welding fuel dispenser has 4000u of fuel, for 100 resources
-		else if (istype(content_holder, /obj/machinery/portable_atmospherics/canister))
-			var/obj/machinery/portable_atmospherics/canister/canister = content_holder
-			src.resources_to_produce += round(TOTAL_MOLES(canister.air_contents) / 74.86) // 18.2 MPa air canister turns to 100 resources
-		else if (istype(content_holder, /obj/machinery/portable_atmospherics/scrubber))
-			var/obj/machinery/portable_atmospherics/scrubber/air_scrubber = content_holder
-			src.resources_to_produce += round(TOTAL_MOLES(air_scrubber.air_contents) / 74.86)
-		else if (istype(content_holder, /obj/machinery/atmospherics/pipe/tank))
-			var/obj/machinery/atmospherics/pipe/tank/air_tank = content_holder
-			src.resources_to_produce += round(TOTAL_MOLES(air_tank.parent.air) / 74.86)
 
 		ON_COOLDOWN(src, "resource_production", 10 SECONDS)
 
