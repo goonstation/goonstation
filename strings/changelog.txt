@@ -1,5 +1,22 @@
 
+(t)tue sep 20 22
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
+(u)Gannets
+(p)10888
+(e)|
+(*)Added the currently unattainable Fomalhaut MRL, 6-shot homing missile launcher. Homing projectile code by Zjdtmkhzt!
 (t)mon sep 19 22
+(u)Sovexe
+(p)10893
+(e)|
+(+)The cog1 medbay has had some alterations made to its layout
+(u)Blackrep
+(p)10874
+(e)|
+(+)Two new (old?) Soviet firearms have been added. The PM Pistol, and the MTs-255 Revolver Shotgun
 (u)DimWhat & aloe
 (p)10803
 (e)|

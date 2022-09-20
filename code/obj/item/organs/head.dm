@@ -289,11 +289,7 @@
 		src.pixel_y = rand(-20,-8)
 		src.pixel_x = rand(-8,8)
 
-	do_missing()
-		..()
-
 	on_removal()
-		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
 		if (src.linked_human)
 			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)

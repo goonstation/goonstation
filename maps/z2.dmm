@@ -41267,9 +41267,9 @@
 /area/afterlife/arena)
 "cvC" = (
 /obj/rack,
-/obj/item/gun/kinetic/colt_saa,
-/obj/item/gun/kinetic/colt_saa,
-/obj/item/gun/kinetic/colt_saa,
+/obj/item/gun/kinetic/single_action/colt_saa,
+/obj/item/gun/kinetic/single_action/colt_saa,
+/obj/item/gun/kinetic/single_action/colt_saa,
 /obj/map/light/dimred,
 /turf/unsimulated/iomoon/floor/arena,
 /area/afterlife/arena)
