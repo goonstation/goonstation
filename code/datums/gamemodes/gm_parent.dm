@@ -469,17 +469,6 @@
 
 	return O
 
-/datum/game_mode/proc/replace_with_wraith(var/num_traitors, var/num_changelings, var/num_spies, var/num_wizards, var/num_wraiths) //datumizes the wraith roll for non-mixed gamemodes
-	if (istype(ticker.mode, /datum/game_mode/traitor))
-		num_traitors -= 1
-	if (istype(ticker.mode, /datum/game_mode/changeling))
-		num_changelings -= 1
-	if (istype(ticker.mode, /datum/game_mode/wizard))
-		num_wizards -= 1
-	if (istype(ticker.mode, /datum/game_mode/spy_theft))
-		num_spies -= 1
-	num_wraiths = 1
-
 /datum/game_mode/proc/add_wraith(var/num_wraiths) // datumizes actually adding the wraith to the round
 	var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
 	var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
