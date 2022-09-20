@@ -1,5 +1,10 @@
 
 (t)tue sep 20 22
+(u)Emily
+(e)|
+(*)Puritans can no longer be revived with Strange Reagent
+(+)"Monkey Cloning" no longer circumvents Puritan
+(+)Inserting someone's old brain in a corpse no longer kills them
 (u)Sord
 (e)|
 (+)Added a new hyper capacity power cell to manufacturers. Requires expensive mats and has capacity of 25000. Also increased erebite cell's power capacity.
