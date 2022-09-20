@@ -1386,8 +1386,8 @@ datum/projectile/bullet/autocannon
 
         ..()
 
-/datum/projectile/bullet/homing/mrls
-	name = "MPRT rocket"
+/datum/projectile/bullet/homing/mrl
+	name = "MRL rocket"
 	window_pass = 0
 	icon = 'icons/obj/projectiles.dmi'
 	damage_type = D_KINETIC

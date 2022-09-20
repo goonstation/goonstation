@@ -1475,9 +1475,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			src.UpdateIcon()
 			return
 
-/obj/item/gun/kinetic/mrls
-	desc = "A multiple rocket launch system."
-	name = "\improper MRLS-6"
+/obj/item/gun/kinetic/mrl
+	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles."
+	name = "Fomalhaut MRL"
 	icon = 'icons/obj/large/64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "mrls"
@@ -1489,13 +1489,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	throw_range = 4
 	force = MELEE_DMG_LARGE
 	contraband = 8
-	ammo_cats = list(AMMO_ROCKET_MRLS)
+	ammo_cats = list(AMMO_ROCKET_MRL)
 	max_ammo_capacity = 6
 	can_dual_wield = 0
 	two_handed = 1
 	muzzle_flash = "muzzle_flash_launch"
-	default_magazine = /obj/item/ammo/bullets/mrls
-	ammobag_magazines = list(/obj/item/ammo/bullets/mrls)
+	default_magazine = /obj/item/ammo/bullets/mrl
+	ammobag_magazines = list(/obj/item/ammo/bullets/mrl)
 	ammobag_spec_required = TRUE
 	ammobag_restock_cost = 6
 
@@ -1503,7 +1503,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		ammo = new default_magazine
 		ammo.amount_left = 0 // Spawn empty.
-		set_current_projectile(new /datum/projectile/bullet/homing/mrls)
+		set_current_projectile(new /datum/projectile/bullet/homing/mrl)
 		..()
 
 	disposing()
