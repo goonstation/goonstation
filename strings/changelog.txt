@@ -1,5 +1,9 @@
 
 (t)tue sep 20 22
+(u)CrystalClover
+(p)10914
+(e)|
+(+)Adds Skull to Crayon options and Blood Writing options.
 (u)Emily
 (e)|
 (*)Puritans can no longer be revived with Strange Reagent
