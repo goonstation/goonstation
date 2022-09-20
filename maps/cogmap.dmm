@@ -46863,7 +46863,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/turf/simulated/floor/sanitary/white,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "ctw" = (
 /obj/cable{
@@ -47189,7 +47189,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/turf/simulated/floor/sanitary/white,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cuj" = (
 /obj/disposalpipe/segment{
@@ -50891,6 +50891,7 @@
 	pixel_x = 9;
 	pixel_y = 11
 	},
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "dJk" = (
@@ -55742,6 +55743,7 @@
 /area/station/medical/medbay)
 "kfp" = (
 /obj/machinery/vending/coffee,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "kgh" = (
@@ -63712,7 +63714,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/blue,
+/turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "vnq" = (
 /obj/disposalpipe/segment,
@@ -65190,6 +65192,7 @@
 /area/station/hydroponics/bay)
 "xiQ" = (
 /obj/machinery/vending/snack,
+/obj/decal/stage_edge,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "xjC" = (
