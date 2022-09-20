@@ -1,5 +1,9 @@
 
 (t)tue sep 20 22
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
 (u)Gannets
 (p)10888
 (e)|
