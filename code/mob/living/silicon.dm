@@ -46,6 +46,7 @@
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
 	req_access = null
