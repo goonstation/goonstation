@@ -53,11 +53,7 @@
 		if (!token_players.len)
 			break
 		if (num_wraiths && !(token_wraith))
-			token_wraith = 1 // only allow 1 wraith to spawn
-			var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
-			traitors += twraith
-			token_players.Remove(twraith)
-			twraith.special_role = ROLE_WRAITH
+			add_token_wraith()
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)

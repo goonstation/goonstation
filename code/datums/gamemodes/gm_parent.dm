@@ -482,3 +482,11 @@
 		wraith.special_role = ROLE_WRAITH
 		possible_wraiths.Remove(wraith)
 
+/datum/game_mode/proc/add_token_wraith(var/token_wraith) // Handles adding a token wraith
+	token_wraith = 1 // only allow 1 wraith to spawn
+	var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
+	traitors += twraith
+	token_players.Remove(twraith)
+	twraith.special_role = ROLE_WRAITH
+
+
