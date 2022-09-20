@@ -216,6 +216,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Fresh Produce Crate"
 
+/datum/supply_packs/pizza_boxes
+	name = "Pizza Boxes"
+	desc = "x3 Pizza Boxes"
+	category = "Civilian Department"
+	contains = list(/obj/item/plate/pizza_box = 3)
+	cost = 2000
+	containertype = /obj/storage/crate/wooden
+	containername = "Pizza Boxes inside Box"
+
 /datum/supply_packs/condiment
 	name = "Catering: Condiment Crate"
 	desc = "x25 Assorted Cooking Ingredients"
@@ -761,7 +770,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/fries = 2,
 					/obj/random_item_spawner/cola = 1)
 	cost = 200
-	containertype = /obj/storage/crate/pizza
+	containertype = /obj/storage/crate/wooden // No wonder why their pizza is so bad.
 	containername = "Soft Soft Pizza Delivery"
 
 /datum/supply_packs/mimicry

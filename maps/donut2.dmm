@@ -26707,8 +26707,8 @@
 "cXA" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
-/obj/storage/crate/pizza,
-/obj/storage/crate/pizza,
+/obj/storage/crate/wooden,
+/obj/storage/crate/wooden,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cYx" = (
@@ -37743,7 +37743,7 @@
 "mNs" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/pizza,
-/obj/storage/crate/pizza,
+/obj/storage/crate/wooden,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "mNv" = (

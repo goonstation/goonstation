@@ -63673,7 +63673,7 @@
 /area/centcom/lounge)
 "dIv" = (
 /obj/table/wood/round/auto,
-/obj/storage/crate/pizza,
+/obj/storage/crate/wooden,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"

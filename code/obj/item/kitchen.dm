@@ -579,13 +579,13 @@ TRAYS
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
 		if (length(src.foods_inside) == max_food && src.is_plate)
-			boutput(user, "<span class='alert'>There's no more space [src.is_plate ? "on" : "in"] \the [src]!</span>")
+			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
 			                                    // anything that isn't a plate may as well hold anything that fits the plate
 		if (!food.edible && !. && src.is_plate) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
-		if (food.w_class > W_CLASS_NORMAL)
+		if (food.w_class > W_CLASS_NORMAL && !istype(food, /obj/item/plate/))
 			boutput(user, "You try to think of a way to put [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
 			return
 		if (food in src.vis_contents)
@@ -765,7 +765,7 @@ TRAYS
 			return
 
 		if (length(src.foods_inside) >= src.max_food && !istype(food, src.type))
-			boutput(user, "You try to think of a way to put [food] in \the [src] but it's not possible! It's too large!")
+			boutput(user, "<span class='alert'>There's no more space in \the [src]!</span>")
 			return
 
 		. = ..()
@@ -775,47 +775,47 @@ TRAYS
 			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
 			return
 
-		switch (src.open)
-			if (TRUE)
-				if(user.bioHolder.HasEffect("clumsy") && prob(10))
-					user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
-					"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
-					user.setStatus("stunned", 1 SECOND)
-					user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
-					bleed(user, 1, 1)
-					playsound(user.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 0)
-					user.emote("scream") // Sounds specially painful when you get your finger stuck in a steel pizza box
-				else
-					playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+		if (src.open)
+			if(user.bioHolder.HasEffect("clumsy") && prob(10))
+				user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
+				"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
+				bleed(user, 1, 1)
+				playsound(user.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 0)
+				user.emote("scream") // Sounds specially painful when you get your finger stuck in a steel pizza box
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
 
 
-				src.vis_contents = list()
-				icon_state = "pizzabox"
-				open = FALSE
-				src.UpdateIcon()
+			src.vis_contents = list()
+			icon_state = "pizzabox"
+			open = FALSE
+			src.UpdateIcon()
 
-			if (FALSE)
-				if (isnull(user))
-					icon_state = "pizzabox_open"
-					src.open = TRUE
-					playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
-					src.UpdateIcon()
-					return
-
-				if (user.bioHolder.HasEffect("clumsy") && prob(33))
-					user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
-					"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
-					user.setStatus("stunned", 1 SECOND)
-					user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
-					playsound(user.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 80, 0)
-
-				else
-					playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
-
+		else
+			if (isnull(user))
 				icon_state = "pizzabox_open"
 				src.open = TRUE
-				src.vis_contents = src.contents
+				playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
 				src.UpdateIcon()
+				return
+
+			if (user.bioHolder.HasEffect("clumsy") && prob(33))
+				user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
+				"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
+				playsound(user.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 80, 0)
+
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+			icon_state = "pizzabox_open"
+			src.open = TRUE
+			src.vis_contents = src.contents
+			src.UpdateIcon()
 
 	shatter()
 		shit_goes_everywhere()

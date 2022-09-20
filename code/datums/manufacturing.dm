@@ -2904,15 +2904,6 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
-/datum/manufacture/pizzabox
-	name = "Pizza Box"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
-	item_outputs = list(/obj/storage/crate/pizza)
-	time = 10 SECONDS
-	create = 1
-	category = "Miscellaneous"
-
 /datum/manufacture/wooden
 	name = "Wooden Crate"
 	item_paths = list("MET-1")
