@@ -41796,7 +41796,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "qrB" = (
-/obj/stool/bench/blue,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/escape{
 	dir = 1
 	},

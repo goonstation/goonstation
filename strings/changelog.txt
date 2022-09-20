@@ -1,5 +1,7 @@
 
 (t)tue sep 20 22
+(u)Sord
+(*)Every map in rotation now has 3 oxygen vending machines on station, with one always being in Escape. Buy your life 2day
 (u)CrystalClover
 (p)10914
 (e)|

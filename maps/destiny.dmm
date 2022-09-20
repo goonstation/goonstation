@@ -25812,11 +25812,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "fNJ" = (
-/obj/stool/bench/red/auto,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "fOb" = (
@@ -39661,6 +39661,7 @@
 /obj/disposalpipe/junction{
 	dir = 1
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "neD" = (
@@ -41400,7 +41401,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
 "nXS" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/vending/air_vendor,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51314,7 +51315,7 @@
 	name = "Crew Quarters P04"
 	})
 "tkJ" = (
-/obj/machinery/vending/air_vendor,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "tkQ" = (
