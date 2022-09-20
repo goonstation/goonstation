@@ -2850,7 +2850,9 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/delay5{
+	connected_signal = "trader_right"
+	},
 /turf/space,
 /area/space)
 "agE" = (
@@ -2858,7 +2860,9 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/delay4{
+	connected_signal = "trader_left"
+	},
 /turf/space,
 /area/space)
 "agF" = (
@@ -5641,7 +5645,9 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
+/obj/machinery/light/traffic_light/delay3{
+	connected_signal = "trader_left"
+	},
 /turf/space,
 /area/space)
 "anm" = (
@@ -68614,7 +68620,6 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
 "cZv" = (
@@ -76773,6 +76778,16 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
+"iwD" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/delay3{
+	connected_signal = "trader_right"
+	},
+/turf/space,
+/area/space)
 "izF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -77173,6 +77188,16 @@
 /obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"kiP" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/delay4{
+	connected_signal = "trader_right"
+	},
+/turf/space,
+/area/space)
 "kiZ" = (
 /obj/cable,
 /obj/cable{
@@ -77402,6 +77427,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_west)
+"lqm" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/delay3{
+	connected_signal = "trader_left"
+	},
+/turf/space,
+/area/space)
 "lsb" = (
 /obj/cable{
 	d1 = 4;
@@ -78981,6 +79016,16 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"svA" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/delay5{
+	connected_signal = "trader_left"
+	},
+/turf/space,
+/area/space)
 "sEu" = (
 /obj/cable{
 	d1 = 4;
@@ -102360,14 +102405,14 @@ aaa
 aaa
 aaa
 aaa
-agD
+svA
 aaa
 ahg
 ahg
 ahg
 ahg
 aaa
-agD
+svA
 aaa
 aaa
 aaa
@@ -103081,14 +103126,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+kiP
 dax
 dax
 dax
 dax
 dax
 dax
-aao
+kiP
 aaa
 aaa
 aaa
@@ -103383,14 +103428,14 @@ aaa
 aaa
 aaa
 aaa
-agE
+aao
 dax
 dax
 dax
 dax
 dax
 dax
-agE
+aao
 aaa
 aaa
 aaa
@@ -103685,14 +103730,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+iwD
 dax
 dax
 dax
 dax
 dax
 dax
-aao
+iwD
 aaa
 aaa
 aaa
@@ -104172,7 +104217,7 @@ aaa
 aaa
 aaa
 aaa
-afA
+lqm
 aaa
 afI
 aiE
@@ -104296,7 +104341,7 @@ dcj
 dcj
 dbu
 aaa
-afA
+aao
 aaa
 aaa
 aaa

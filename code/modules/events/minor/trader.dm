@@ -50,8 +50,7 @@
 			var/list/dest_turfs = src.arrive()
 			SEND_GLOBAL_SIGNAL(COMSIG_TRADER_STOPPED)
 
-			// SPAWN(rand(5 MINUTES, 10 MINUTES))
-			SPAWN(1 MINUTE) // TODO: This is for testing only don't leave it
+			SPAWN(rand(5 MINUTES, 10 MINUTES))
 				command_alert("The merchant shuttle is preparing to undock, please stand clear.", "Merchant Departure Alert")
 
 				if(shuttle == "diner")
