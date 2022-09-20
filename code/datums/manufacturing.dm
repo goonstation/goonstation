@@ -1324,6 +1324,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/powercellH
+	name = "Hyper Capacity Power Cell"
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(5,10,10)
+	item_outputs = list(/obj/item/cell/hypercell)
+	time = 120 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/core_frame
 	name = "AI Core Frame"
 	item_paths = list("MET-2")
