@@ -860,6 +860,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	mors
+		icon_state = "mors"
+		name = "Mors"
+		pixel_x = -256
+		pixel_y = -256
+
 	station
 		name = "Space Station 14"
 		desc = "Another Nanotrasen station passing by your orbit."
@@ -1255,7 +1261,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4

@@ -104,7 +104,7 @@
 		..()
 
 	butcher(mob/user)
-		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
 		return ..(user, FALSE)
 

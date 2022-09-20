@@ -344,6 +344,49 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
+			if (2)
+				name = "Harbinger"
+				desc = "Lead an army of otherwoldly foes."
+				icon_state = "choose_harbinger"
+			if (3)
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
+				icon_state = "choose_trickster"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'

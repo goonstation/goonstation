@@ -2273,9 +2273,7 @@ obj/item/clothing/gloves/concussive
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
 		if (!istype(pad)) //wuh?
 			return
-		if (pad in pads)
-			return
-		src.pads += pad
+		src.pads |= pad
 
 	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
 	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)

@@ -385,7 +385,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/kinetic/detectiverevolver
-	var/reward_path = /obj/item/gun/kinetic/colt_saa/detective
+	var/reward_path = /obj/item/gun/kinetic/single_action/colt_saa/detective
 	var/sacrifice_name = ".38 revolver"
 
 	activate(var/client/C)
@@ -408,7 +408,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/kinetic/colt_saa/colt = new reward_path()
+		var/obj/item/gun/kinetic/single_action/colt_saa/colt = new reward_path()
 		if (!istype(colt))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're a detective! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
