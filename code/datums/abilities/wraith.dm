@@ -691,8 +691,8 @@
 	icon_state = "bloodwriting"
 	targeted = 1
 	target_anything = 1
-	pointCost = 10
-	cooldown = 5 SECONDS
+	pointCost = 3
+	cooldown = 0 SECONDS
 	min_req_dist = 10
 	var/in_use = 0
 
