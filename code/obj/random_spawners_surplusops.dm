@@ -43,18 +43,15 @@
 		/obj/item/gun/kinetic/slamgun, //lol
 		/obj/item/gun/kinetic/zipgun, //lmao, even
 		/obj/item/gun/kinetic/detectiverevolver,
-		/obj/item/gun/kinetic/colt_saa/detective,
+		/obj/item/gun/kinetic/single_action/colt_saa/detective,
 		/obj/item/gun/kinetic/derringer,
 		/obj/item/storage/rockit,
 		/obj/item/gun/energy/laser_gun,
 		/obj/item/gun/energy/phaser_gun,
-		/obj/item/gun/energy/phaser_small
-		/obj/item/gun/reagent/syringe //while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
-
-	)
+		/obj/item/gun/energy/phaser_small,
+		/obj/item/gun/reagent/syringe )//while the syringegun is capable, it'll be hard to find poison for it, hence shortgun status
 
 	rare_items2spawn = list(
-
 	/obj/item/gun/kinetic/revolver)
 
 /obj/random_item_spawner/surplus/melee
@@ -153,7 +150,7 @@
 		/obj/item/implanter/super_mindhack,
 		/obj/item/clothing/suit/space/industrial/syndicate,
 		/obj/item/katana_sheath,
-		/obj/item/gun/kinetic/ak47, //not adding a new ammo category just for the ak47, and it's pretty damn powerful
+		/obj/item/gun/kinetic/akm, //putting it here since I'm not adding a new ammo category just for the ak47, and it's pretty damn powerful
 		/obj/item/sword,
 		/obj/item/saw/syndie,
 		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
@@ -190,15 +187,18 @@
 /obj/random_item_spawner/surplus/defensive
 
 	amt2spawn = 1
-	rare_items2spawn = list(/obj/item/clothing/suit/armor/vest)
 	items2spawn = list(
 		/obj/item/barrier,
 		/obj/item/storage/beartrap_pouch,
 		/obj/item/clothing/suit/armor/makeshift,
+		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/gloves/swat,
+		/obj/item/storage/box/mousetraps, //will be downright nasty with the grenades they get
 		/obj/item/device/flash,
+		/obj/item/device/ocular_implanter,
+		/obj/item/implanter/freedom,
 		/obj/item/storage/box/stun_landmines,
-//land mine pouch?
+		/obj/item/storage/landmine_pouch
 		)
 
 
@@ -250,8 +250,9 @@
 	/obj/item/ammo/bullets/nine_mm_NATO)
 
 /obj/random_item_spawner/surplus/revolverrounds
-	amt2spawn = 3
-	rare_items2spawn = list(/obj/item/ammo/bullets/a38)
+	amt2spawn = 2
+	guaranteed = list(/obj/item/ammo/bullets/a38)//always ensure they get at least some univeral ammo
+
 	items2spawn = list(/obj/item/ammo/bullets/a357,
 		/obj/item/ammo/bullets/a357/AP,
 		/obj/item/ammo/bullets/a38,
