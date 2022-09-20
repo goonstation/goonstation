@@ -40,6 +40,8 @@
 			var/obj/reagent_dispensers/reagent_holder = content_holder
 			src.resources_to_produce += round(reagent_holder.reagents.total_volume / 40) // welding fuel dispenser has 4000u of fuel, for 100 resources
 
+		src.info_tag.set_info_tag("Resources left: [src.resources_to_produce]")
+
 		ON_COOLDOWN(src, "resource_production", 10 SECONDS)
 
 	building_specific_info()
@@ -57,6 +59,7 @@
 		resource_cube.resources = min(src.resources_to_produce, round(25 * mult))
 		playsound(src, 'sound/effects/crackle3.ogg', 40, TRUE, -10) // placeholder
 		src.resources_to_produce -= resource_cube.resources
+		src.info_tag.set_info_tag("Resources left: [src.resources_to_produce]")
 
 	gib(atom/location)
 		if (src.resources_to_produce)
