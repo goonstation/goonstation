@@ -216,14 +216,6 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Fresh Produce Crate"
 
-/datum/supply_packs/pizza_boxes
-	name = "Pizza boxes"
-	desc = "x3 pizza boxes"
-	category = "Civilian Department"
-	contains = list(/obj/item/plate/pizza_box = 3)
-	cost = 2000
-	containertype = /obj/storage/crate/wooden
-
 /datum/supply_packs/condiment
 	name = "Catering: Condiment Crate"
 	desc = "x25 Assorted Cooking Ingredients"
