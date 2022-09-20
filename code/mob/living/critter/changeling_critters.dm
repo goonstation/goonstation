@@ -257,7 +257,6 @@
 	setup_healths()
 		add_hh_flesh(5, 1)
 		add_hh_flesh_burn(4, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
 
 
 	//Give master the DNA we collected, the DNA points it cost to create us, and their arm back!
@@ -562,7 +561,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
