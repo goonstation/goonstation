@@ -10,7 +10,6 @@
 	passthrough = TRUE
 
 	var/resources_to_produce = 0
-	var/done = FALSE
 
 	New(atom/location, datum/flock/F = null, obj/content_holder)
 		..()
@@ -42,24 +41,31 @@
 
 		src.info_tag.set_info_tag("Resources left: [src.resources_to_produce]")
 
-		ON_COOLDOWN(src, "resource_production", 10 SECONDS)
+		if (!src.resources_to_produce)
+			SPAWN(0.1 SECONDS)
+				if (src)
+					flock_speak(src, "ALERT: No resources available to produce.", src.flock)
+		else
+			ON_COOLDOWN(src, "resource_production", 10 SECONDS)
 
 	building_specific_info()
 		return "<span class='bold'>Resources left to produce:</span> [src.resources_to_produce]."
 
 	process(mult)
 		if (!src.resources_to_produce)
-			if (!src.done)
-				flock_speak(src, "ALERT: No resources left to produce", src.flock)
-				src.done = TRUE
 			return
 		if (ON_COOLDOWN(src, "resource_production", 10 SECONDS))
 			return
+
 		var/obj/item/flockcache/resource_cube = new(get_turf(src))
 		resource_cube.resources = min(src.resources_to_produce, round(25 * mult))
 		playsound(src, 'sound/effects/crackle3.ogg', 40, TRUE, -10) // placeholder
 		src.resources_to_produce -= resource_cube.resources
+
 		src.info_tag.set_info_tag("Resources left: [src.resources_to_produce]")
+
+		if (!src.resources_to_produce)
+			flock_speak(src, "ALERT: No resources left to produce", src.flock)
 
 	gib(atom/location)
 		if (src.resources_to_produce)
