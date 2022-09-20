@@ -469,6 +469,14 @@
 /obj/machinery/computer/airbr/emergency_shuttle
 	icon = 'icons/obj/airtunnel.dmi'
 	emergency = 1
+	var/connected_signal = null
+
+	New()
+		..()
+		if (src.connected_signal)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_signal, .proc/establish_bridge)
+			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_RETURNED, .proc/remove_bridge)
+
 
 /* -------------------- Button -------------------- */
 

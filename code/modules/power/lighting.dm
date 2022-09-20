@@ -385,6 +385,58 @@
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/traffic_light
+	name = "warning light"
+	desc = "A small light used to warn when shuttle traffic is expected."
+	icon_state = "runway10"
+	base_state = "runway1"
+	fitting = "bulb"
+	brightness = 0.5
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	plane = PLANE_NOSHADOW_BELOW
+	on = 0
+	wallmounted = 0
+	removable_bulb = 0
+	var/connected_signal = null
+
+	New()
+		..()
+		if(src.connected_signal)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_signal, .proc/incoming)
+			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_STOPPED, .proc/stop )
+			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_RETURNED, .proc/stop )
+
+	proc/incoming()
+		color = "#eb6b15"
+		on = 1
+		update()
+
+	proc/stop()
+		color = null
+		on = 0
+		update()
+
+	delay2
+		icon_state = "runway20"
+		base_state = "runway2"
+	delay3
+		icon_state = "runway30"
+		base_state = "runway3"
+	delay4
+		icon_state = "runway40"
+		base_state = "runway4"
+	delay5
+		icon_state = "runway50"
+		base_state = "runway5"
+
+// Traffic lights on/off is signal controlled; light switches should not affect us.
+/obj/machinery/light/traffic_light/power_change()
+	if(src.loc)
+		var/area/A = get_area(src)
+		var/state = src.on && A.power_light
+		seton(state)
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."
