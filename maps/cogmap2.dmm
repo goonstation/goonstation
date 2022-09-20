@@ -24,7 +24,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaf" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aag" = (
@@ -23779,7 +23779,7 @@
 /turf/space,
 /area/space)
 "beu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/airless/scorched,
@@ -23828,7 +23828,7 @@
 /area/station/catwalk/north)
 "beB" = (
 /obj/disposalpipe/segment/morgue,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -72492,7 +72492,7 @@
 /area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dir" = (

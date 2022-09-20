@@ -39538,7 +39538,7 @@
 	name = "Clowntainment"
 	})
 "cZV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
 "dae" = (
@@ -46382,7 +46382,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jCx" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "jDh" = (

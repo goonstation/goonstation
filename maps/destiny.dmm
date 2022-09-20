@@ -16164,7 +16164,7 @@
 	},
 /area/listeningpost)
 "bBs" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bBw" = (

@@ -19200,7 +19200,7 @@
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bhu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "bhv" = (
@@ -23983,7 +23983,7 @@
 /turf/unsimulated/floor,
 /area/iomoon/base)
 "btO" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/item/paper/businesscard/clowntown,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
@@ -46603,7 +46603,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/syndicate_station/battlecruiser)
 "cIM" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
 "cIN" = (
@@ -46964,7 +46964,7 @@
 /area/crater/cave)
 "cJD" = (
 /obj/decal/cleanable/dirt,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/white,
 /area/shuttle/john/owlery)
 "cJE" = (
@@ -81915,7 +81915,7 @@ aKX
 aKX
 aLq
 aLN
-aLN
+bhu
 aLN
 bgR
 bhb
@@ -82813,7 +82813,7 @@ aKX
 aLq
 aLN
 aLN
-aLN
+bhu
 aLN
 aNb
 aNa
@@ -84030,7 +84030,7 @@ aKX
 aLq
 aLN
 aLN
-aLN
+bhu
 aLN
 aLN
 aLN
@@ -84340,7 +84340,7 @@ aLN
 aLN
 aLO
 aLN
-aLN
+bhu
 aLN
 aRC
 aKX
@@ -87354,7 +87354,7 @@ aLN
 aLN
 aLN
 aLN
-aLN
+bhu
 aLN
 aLN
 aLN
@@ -88234,7 +88234,7 @@ gjq
 aUp
 aLN
 aLN
-aLN
+bhu
 aLN
 aLN
 aLN
@@ -88526,7 +88526,7 @@ aKX
 aLr
 aMy
 aLS
-aLN
+bhu
 aLN
 aLN
 aLN
@@ -91881,7 +91881,7 @@ aLN
 aLN
 aLN
 aLN
-aLN
+bhu
 aLN
 aRC
 aKX

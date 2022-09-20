@@ -39911,7 +39911,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "lAh" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "lAi" = (
@@ -66509,7 +66509,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "tcV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
 "tcW" = (
