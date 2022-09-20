@@ -959,7 +959,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/list/respawn_types = list("Heavenly", "Demonically", "Beam")
 	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
@@ -972,6 +972,9 @@ var/list/fun_images = list()
 			var/mob/living/carbon/human/M = src.mob
 			M.bioHolder.AddEffect("hell_fire", magical = 1)
 			demonic_spawn(M)
+		if("Beam")
+			src.respawn_as_self()
+			spawn_beam(src.mob)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
