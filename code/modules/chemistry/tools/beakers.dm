@@ -100,6 +100,9 @@
 	name = "beaker (epinephrine)"
 	initial_reagents = "epinephrine"
 
+/obj/item/reagent_containers/glass/beaker/salbutamol
+	name = "beaker (salbutamol)"
+	initial_reagents = "salbutamol"
 /obj/item/reagent_containers/glass/beaker/antitox
 	name = "beaker (anti-toxin)"
 	initial_reagents = "charcoal"
