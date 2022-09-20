@@ -3,7 +3,7 @@
 (u)Emily
 (e)|
 (*)Puritans can no longer be revived with Strange Reagent
-(+)"Monkey Cloning" no longer circumvents Puritan
+(*)"Monkey Cloning" no longer circumvents Puritan
 (+)Inserting someone's old brain in a corpse no longer kills them
 (u)Sord
 (e)|
