@@ -470,13 +470,13 @@
 	return O
 
 /datum/game_mode/proc/replace_with_wraith(var/num_traitors, var/num_changelings, var/num_spies, var/num_wizards, var/num_wraiths) //datumizes the wraith roll for non-mixed gamemodes
-	if (istype(ticker.mode, datum/game_mode/traitor))
+	if (istype(ticker.mode, /datum/game_mode/traitor))
 		num_traitors -= 1
-	if (istype(ticker.mode, datum/game_mode/changeling))
+	if (istype(ticker.mode, /datum/game_mode/changeling))
 		num_changelings -= 1
-	if (istype(ticker.mode, datum/game_mode/wizard))
+	if (istype(ticker.mode, /datum/game_mode/wizard))
 		num_wizards -= 1
-	if (istype(ticker.mode, datum/game_mode/spy_theft))
+	if (istype(ticker.mode, /datum/game_mode/spy_theft))
 		num_spies -= 1
 	num_wraiths = 1
 
