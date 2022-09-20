@@ -764,7 +764,7 @@ TRAYS
 			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
 			return
 
-		if (length(src.foods_inside) == src.max_food && !istype(food, src.type))
+		if (length(src.foods_inside) >= src.max_food && !istype(food, src.type))
 			boutput(user, "You try to think of a way to put [food] in \the [src] but it's not possible! It's too large!")
 			return
 
