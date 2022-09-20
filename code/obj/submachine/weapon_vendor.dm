@@ -240,6 +240,7 @@
 		materiel_stock += new/datum/materiel/utility/healing
 		materiel_stock += new/datum/materiel/utility/stealth
 		materiel_stock += new/datum/materiel/utility/melee
+		materiel_stock += new/datum/materiel/utility/defensive
 		materiel_stock += new/datum/materiel/utility/backup
 		materiel_stock += new/datum/materiel/utility/expensive
 		materiel_stock += new/datum/materiel/utility/holding
