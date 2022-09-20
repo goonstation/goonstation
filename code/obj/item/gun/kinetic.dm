@@ -1514,6 +1514,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		New()
 			..()
 			ammo.amount_left = 6
+			UpdateIcon()
 			return
 
 /obj/item/gun/kinetic/antisingularity
