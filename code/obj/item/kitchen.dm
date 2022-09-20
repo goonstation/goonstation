@@ -778,7 +778,7 @@ TRAYS
 		switch (src.open)
 			if (TRUE)
 				if(user.bioHolder.HasEffect("clumsy") && prob(10))
-					user.visible_message("<span class='alert'>[user] gets their finger in \the [src] when closing it. That thing is out of cardboard! How is that possible?!</span>", \
+					user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
 					"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
 					user.setStatus("stunned", 1 SECOND)
 					user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
