@@ -1,4 +1,9 @@
 
+(t)wed sep 21 22
+(u)Gannets
+(p)10938
+(e)|
+(+)Added Fomalhaut MRL to the nuke ops commander uplink for a cost of 3 points.
 (t)tue sep 20 22
 (u)aloe
 (*)Cyborgs can now construct furniture parts into furniture by click dragging to the floor.
