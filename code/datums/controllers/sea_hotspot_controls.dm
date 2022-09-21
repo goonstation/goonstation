@@ -1015,7 +1015,7 @@
 	laces = LACES_NONE
 	mats = 20
 	burn_possible = 0
-	abilities = list(/obj/ability_button/stomper_boot_stomp) // todo
+	abilities = list(/obj/ability_button/stomper_boot_stomp)
 
 	setupProperties()
 		. = ..()
@@ -1029,9 +1029,10 @@
 	var/jump_height = 1.5 //! Jump height, in tiles.
 	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
 	var/stomp_cooldown = 10 SECONDS
+	var/stomp_damage = 20
 
 	execute_ability()
-		if (!ON_COOLDOWN(src, "stomp", stomp_cooldown))
+		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
 			// Mostly stolen from jumpy
 			if (istype(the_mob.loc, /turf/))
 				the_mob.visible_message("<span class='alert'><b>[the_mob]</b> activates the boost on their stomper boots!</span>")
@@ -1077,7 +1078,7 @@
 
 					for (var/mob/M in get_turf(src))
 						if (isliving(M) && M != the_mob)
-							random_brute_damage(M, 20, TRUE)
+							random_brute_damage(M, src.stomp_damage, TRUE)
 							M.changeStatus("weakened", 1 SECOND)
 							playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
@@ -1093,6 +1094,17 @@
 		else
 			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
 			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
+
+/obj/item/clothing/shoes/stomp_boots/extreme
+	name = "STOMP BOOTS HYPERMURDER EDITION"
+	desc = "PAPA'S GOT A BRAND NEW SHOE"
+	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
+
+/obj/ability_button/stomper_boot_stomp/extreme
+	name = "EARTH SHATTERING MEGA STOMP"
+	desc = "EXTREMELY HAZARDOUS TO ALL LIFE"
+	stomp_cooldown = 0 SECONDS
+	stomp_damage = 200
 
 ////////////////////////////////////////////////////////////
 //actions
