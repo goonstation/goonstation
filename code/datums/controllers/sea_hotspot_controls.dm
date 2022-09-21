@@ -1040,6 +1040,9 @@
 				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
 				the_mob.plane = PLANE_NOSHADOW_ABOVE
 
+				if (prob(10))
+					the_mob.emote("flip")
+
 				animate(the_mob,
 					pixel_y = jump_height * 32,
 					time = jump_time / 2,
