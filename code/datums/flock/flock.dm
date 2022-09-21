@@ -703,7 +703,7 @@ var/flock_signal_unleashed = FALSE
 	if (!flockTurfAllowed(T))
 		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 
