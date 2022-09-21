@@ -74851,6 +74851,17 @@
 	},
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
+"rzJ" = (
+/obj/table/wood/round,
+/obj/item/gun/kinetic/makarov{
+	pixel_y = 4;
+	pixel_x = -2
+	},
+/obj/item/ammo/bullets/nine_mm_soviet{
+	pixel_x = 6
+	},
+/turf/unsimulated/floor/carpet/office,
+/area/hospital/samostrel)
 "rAl" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -162939,7 +162950,7 @@ ahg
 afF
 abr
 abr
-afL
+rzJ
 afP
 afS
 afL
