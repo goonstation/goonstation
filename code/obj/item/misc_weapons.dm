@@ -1740,6 +1740,11 @@ obj/item/whetstone
 		. = ..()
 		setProperty("deflection", 33)
 
+
+	intent_switch_trigger(mob/user as mob)
+		if(guard != user.a_intent)
+			change_guard(user,user.a_intent)
+
 	proc/change_guard(var/mob/user,var/intent)
 		guard = intent
 		switch(guard)
@@ -1791,56 +1796,6 @@ obj/item/whetstone
 
 		user.update_inhands()
 		src.buildTooltipContent()
-
-	proc/parry_block_check(var/mob/living/carbon/human/attacker,var/mob/living/carbon/human/defender)
-		if(attacker == defender)
-			return
-
-		if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
-			playsound(defender, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
-			attacker.do_disorient(0,0,0,0,10,1)
-			return 1
-
-		else if(defender.hasStatus("blocking"))
-			playsound(defender, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
-			if(attacker.equipped())
-				defender.do_disorient((attacker.equipped().stamina_cost*1.5),0,0,0,0,1,null)
-			return 2
-		return 0
-
-	proc/stat_reset()
-		if(force != 5)
-			force = 5
-		else
-			return
-		stamina_damage = 10
-		stamina_cost = 5
-		item_state = "shinai-light"
-		src.setItemSpecial(/datum/item_special/simple/kendo_light)
-		src.buildTooltipContent()
-
-	intent_switch_trigger(mob/user as mob)
-		if(guard != user.a_intent)
-			change_guard(user,user.a_intent)
-
-	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
-		if(ishuman(defender))
-			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
-				var/obj/item/shinai/S = defender.equipped()
-				var/parry_block = S.parry_block_check(attacker,defender)
-				if((parry_block == 1) || (parry_block == 2))
-					attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
-					return //stops damage if parried or blocked, if not, itll check for a disarm
-
-			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
-				var/obj/item/I = defender.equipped()
-				defender.u_equip(I)
-				I.set_loc(defender.loc)
-				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
-				I.throw_at(target_turf,3,1)
-				defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
-				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
-		..()
 
 	attack_hand(mob/user)
 		if(src.loc != user)
