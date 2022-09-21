@@ -1,5 +1,9 @@
 
 (t)wed sep 21 22
+(u)CrystalClover
+(p)10912
+(e)|
+(+)Added Skull and Eye expressions to the cyborg screen head.
 (u)Gannets
 (p)10938
 (e)|
