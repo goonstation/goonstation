@@ -343,40 +343,11 @@
 		return 0 //not welding
 
 /obj/item/weldingtool/yellow
-	icon_state = "engiwelder-off"
-	item_state = "engiwelder-off"
-	icon_state_variant_suffix =
+	icon_state = "weldingtool-off-yellow"
+	item_state = "weldingtool-off-yellow"
+	icon_state_variant_suffix = "-yellow"
 	uses_multiple_icon_states = 1
 	capacity = 45
-
-	afterattack(obj/O as obj, mob/user as mob)
-		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
-			if  (!O.reagents.total_volume)
-				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
-				return
-			if ("fuel" in O.reagents.reagent_list)
-				O.reagents.trans_to(src, capacity, 1, 1, O.reagents.reagent_list.Find("fuel"))
-				src.inventory_counter.update_number(get_fuel())
-				boutput(user, "<span class='notice'>Welder refueled</span>")
-				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
-				return
-		if (src.welding)
-			use_fuel((ismob(O) || istype(O, /obj/blob) || istype(O, /obj/critter)) ? 2 : 0.2)
-			if (get_fuel() <= 0)
-				boutput(user, "<span class='notice'>Need more fuel!</span>")
-				src.welding = 0
-				src.force = 3
-				hit_type = DAMAGE_BLUNT
-				set_icon_state("engiwelder-off" + src.icon_state_variant_suffix)
-				src.item_state = "engiwelder-off" + src.item_state_variant_suffix
-				user.update_inhands()
-			var/turf/location = user.loc
-			if (istype(location, /turf))
-				location.hotspot_expose(700, 50, 1)
-			if (O && !ismob(O) && O.reagents)
-				boutput(user, "<span class='notice'>You heat \the [O.name]</span>")
-				O.reagents.temperature_reagents(4000,50, 100, 100, 1)
-		return
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"
