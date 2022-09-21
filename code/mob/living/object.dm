@@ -264,7 +264,7 @@
 				mind.transfer_to(src.owner)
 			else if (src.client)
 				src.client.mob = src.owner
-			else
+			else if (src.key) //This can be null!!
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
@@ -292,7 +292,6 @@
 			qdel(src.possessed_thing)
 
 		src.owner = null
-		src.client = null
 		src.possessed_thing = null
 		qdel(src)
 		..()
