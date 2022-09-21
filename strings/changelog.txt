@@ -20,6 +20,7 @@
 (+)Adds Skull to Crayon options and Blood Writing options.
 (u)Emily
 (e)|
+(*)Baby ranch animals now follow Momma (You are Momma).
 (*)Puritans can no longer be revived with Strange Reagent
 (*)"Monkey Cloning" no longer circumvents Puritan
 (+)Inserting someone's old brain in a corpse no longer kills them
