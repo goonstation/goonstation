@@ -983,7 +983,7 @@ This is basically useless for anyone but miners.
 	name = "AI Camera Taser Module"
 	item = /obj/item/aiModule/ability_expansion/taser
 	cost = 6
-	vr_allowed = 0
+	vr_allowed = FALSE
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the tasers installed in the cameras."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
@@ -992,7 +992,7 @@ This is basically useless for anyone but miners.
 	name = "AI Camera Laser Module"
 	item = /obj/item/aiModule/ability_expansion/laser
 	cost = 7
-	vr_allowed = 0
+	vr_allowed = FALSE
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
