@@ -374,7 +374,7 @@ proc/get_angle(atom/a, atom/b)
 
 /proc/add_zero(text, desired_length)
 	text = "[text]" // ensure it's a string
-	if ((desired_length - length(text)) <= 1)
+	if ((desired_length - length(text)) <= 0)
 		return text
 	return (num2text(0, desired_length - length(text), 10) + text)
 
