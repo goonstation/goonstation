@@ -21096,7 +21096,7 @@
 /area/timewarp/ship)
 "mWO" = (
 /obj/decal/cleanable/urine,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "mXB" = (
 /turf/simulated/shuttle/wall{
@@ -22162,7 +22162,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qhW" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "qiL" = (
 /obj/rack,

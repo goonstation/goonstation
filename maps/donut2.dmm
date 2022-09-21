@@ -3230,7 +3230,7 @@
 /area/space)
 "anb" = (
 /obj/item/inner_tube/flamingo,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ani" = (
 /turf/space,
@@ -9405,7 +9405,7 @@
 /turf/simulated/floor/dojo/sand,
 /area/station/crew_quarters/pool)
 "aIb" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aIc" = (
 /obj/pool/perspective{
@@ -9894,7 +9894,7 @@
 /area/station/ai_monitored/storage/eva)
 "aJw" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aJx" = (
 /obj/pool/perspective{
@@ -10115,7 +10115,7 @@
 /obj/fluid_spawner{
 	amount = 3600
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aKq" = (
 /obj/cable{
@@ -10388,7 +10388,7 @@
 /area/station/hallway/primary/north)
 "aLd" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aLf" = (
 /obj/machinery/light/incandescent,
@@ -28185,7 +28185,7 @@
 "eka" = (
 /obj/machinery/light/incandescent,
 /obj/stool/bench,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ekx" = (
 /obj/stool/chair/red{
@@ -31906,12 +31906,12 @@
 /area/station/bridge)
 "hvh" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "hvO" = (
 /obj/critter/sealpup,
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "hwg" = (
 /obj/shrub,
@@ -39045,7 +39045,7 @@
 "nTZ" = (
 /obj/critter/sealpup,
 /obj/stool/bench,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "nUH" = (
 /turf/simulated/floor/engine,
@@ -42508,7 +42508,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "qQA" = (
 /obj/disposalpipe/segment,
@@ -43722,7 +43722,7 @@
 /area/station/maintenance/west)
 "rUL" = (
 /obj/stool/bench,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "rVf" = (
 /obj/cable/black{
