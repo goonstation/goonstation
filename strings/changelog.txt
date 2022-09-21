@@ -1,4 +1,58 @@
 
+(t)tue sep 20 22
+(u)aloe
+(*)Cyborgs can now construct furniture parts into furniture by click dragging to the floor.
+(u)aloe
+(*)Engineers on Oshan now get Stomper Boots, and there's an extra pair in engi lockers. They act kinda like a stomper, but they're boots. You'll figure it out.
+(u)Ikea
+(p)10902
+(e)|
+(+)Freeze now cools you down 20 k per lifeloop
+(u)golferjoe
+(p)10913
+(e)|
+(+)Buttcrabs are now immune to tox damage.
+(u)Sord
+(*)Every map in rotation now has 3 oxygen vending machines on station, with one always being in Escape. Buy your life 2day
+(u)CrystalClover
+(p)10914
+(e)|
+(+)Adds Skull to Crayon options and Blood Writing options.
+(u)Emily
+(e)|
+(*)Baby ranch animals now follow Momma (You are Momma).
+(*)Puritans can no longer be revived with Strange Reagent
+(*)"Monkey Cloning" no longer circumvents Puritan
+(+)Inserting someone's old brain in a corpse no longer kills them
+(u)Sord
+(e)|
+(+)Added a new hyper capacity power cell to manufacturers. Requires expensive mats and has capacity of 25000. Also increased erebite cell's power capacity.
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
+(u)Gannets
+(p)10888
+(e)|
+(*)Added the currently unattainable Fomalhaut MRL, 6-shot homing missile launcher. Homing projectile code by Zjdtmkhzt!
+(t)mon sep 19 22
+(u)Sovexe
+(p)10893
+(e)|
+(+)The cog1 medbay has had some alterations made to its layout
+(u)Blackrep
+(p)10874
+(e)|
+(+)Two new (old?) Soviet firearms have been added. The PM Pistol, and the MTs-255 Revolver Shotgun
+(u)DimWhat & aloe
+(p)10803
+(e)|
+(+)A number of 2-handed guns (common ones being the tranq rifle and riot shotgun) no longer fit on the belt, but do fit on the back. They also have neat sprites when you wear them.
+(t)sun sep 18 22
+(u)Roddy
+(p)10844
+(e)|
+(+)Donut 2 Barbershop moved to crew quarters, new nerd dungeon in maint behind arcade. Made other small fixes and tweaks
 (t)sat sep 17 22
 (u)BotchKing
 (p)10825

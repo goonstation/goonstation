@@ -183,7 +183,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab)
+	/// Sent when a mob is grabbed by another mob (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 
 	// ---- cloaking device signal ----
@@ -206,7 +206,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks
+		// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----

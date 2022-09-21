@@ -56749,7 +56749,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "ceW" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ceX" = (

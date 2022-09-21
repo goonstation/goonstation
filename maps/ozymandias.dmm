@@ -6416,7 +6416,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "bVu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -78466,7 +78466,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "uzc" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
