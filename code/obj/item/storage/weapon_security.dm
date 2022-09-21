@@ -269,6 +269,7 @@
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
 	max_wclass = W_CLASS_NORMAL
+	burn_possible = FALSE
 
 	New()
 		..()
