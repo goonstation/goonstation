@@ -1032,6 +1032,9 @@
 	var/stomp_damage = 20
 
 	execute_ability()
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
 		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
 			// Mostly stolen from jumpy
 			if (istype(the_mob.loc, /turf/))
