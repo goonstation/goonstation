@@ -3963,7 +3963,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/checkpoint/arrivals)
+/area/station/hallway/secondary/exit)
 "ame" = (
 /obj/machinery/deep_fryer{
 	dir = 4
@@ -10288,8 +10288,8 @@
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "aDm" = (
-/obj/machinery/portable_atmospherics/canister/air,
 /obj/disposalpipe/segment,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bot,
 /area/station/storage/emergency)
 "aDn" = (
@@ -42513,7 +42513,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "civ" = (
-/obj/machinery/computer/arcade,
+/obj/machinery/vending/air_vendor,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21

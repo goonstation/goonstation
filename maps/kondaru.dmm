@@ -24722,9 +24722,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool/chair/red{
-	dir = 4
-	},
+/obj/machinery/vending/air_vendor,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20

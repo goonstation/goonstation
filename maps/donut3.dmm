@@ -18891,6 +18891,10 @@
 /obj/item/device/flyswatter,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"fkJ" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/wood/two,
+/area/station/hallway/primary/west)
 "fkZ" = (
 /obj/cable{
 	d1 = 1;
@@ -49519,6 +49523,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering/breakroom)
+"onS" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "onT" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen/blue,
@@ -114227,7 +114235,7 @@ qph
 hFg
 tJK
 oHE
-oyc
+fkJ
 pCP
 hjI
 fFx
@@ -140485,7 +140493,7 @@ wpg
 cUx
 iPz
 mxH
-mkl
+onS
 akj
 oys
 jFH

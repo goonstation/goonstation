@@ -3586,6 +3586,7 @@
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
 "ahx" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bluegreen/corner{
 	dir = 8
 	},
