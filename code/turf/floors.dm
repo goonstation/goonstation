@@ -2033,7 +2033,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
-					C.move_callback(user, F, src)
+					C.move_callback(user, F, 0, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
