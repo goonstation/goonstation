@@ -164,7 +164,9 @@
 
 		if(src.authed)
 			return
-		for(var/obj/submachine/surplusopdeployer/D in range(get_turf(src), 16)) //this is insanely stupid but it actually functions
+
+		src.visible_message("<span class='alert'><b>Deployment has been authorized! Group up and deploy!</b></span>")
+		for(var/obj/submachine/surplusopdeployer/D in range(get_turf(src), 16)) //this is insanely stupid but for_by_tcl was misbehaving
 			D.active = TRUE //FLIP THE LEVER, KRONK!
 			D.icon_state = "tele1"
 			src.desc = "An authorization computer. The display shows a green check mark."

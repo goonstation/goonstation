@@ -598,6 +598,7 @@
 	name = "Grenade bullets"
 	path = /obj/random_item_spawner/surplus/grenadeshells
 	description = "Bullets fer various launchers. These be NOT for throwing."
+
 /datum/materiel/ammo/energy
 	name = "Energy bullets"
 	path = /obj/random_item_spawner/surplus/energycells
@@ -625,6 +626,7 @@
 	path = /obj/random_item_spawner/surplus/defensive
 	description = "If anyone be wantin' to harm ye, this'll help."
 	cost = 1
+
 /datum/materiel/utility/melee
 	name = "Additional item of hand in hand combat"
 	path = /obj/random_item_spawner/surplus/melee
@@ -636,7 +638,6 @@
 	path = /obj/random_item_spawner/surplus/storage
 	description = "Ye can never have enough room fer yer carryin' yer plunder!"
 	cost = 1
-	//vr_allowed = TRUE
 
 /datum/materiel/utility/backup
 	name = "Backup"
