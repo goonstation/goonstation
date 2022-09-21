@@ -1740,11 +1740,6 @@ obj/item/whetstone
 		. = ..()
 		setProperty("deflection", 33)
 
-
-	intent_switch_trigger(mob/user as mob)
-		if(guard != user.a_intent)
-			change_guard(user,user.a_intent)
-
 	proc/change_guard(var/mob/user,var/intent)
 		guard = intent
 		switch(guard)
@@ -1796,6 +1791,21 @@ obj/item/whetstone
 
 		user.update_inhands()
 		src.buildTooltipContent()
+
+	proc/stat_reset()
+		if(force != 5)
+			force = 5
+		else
+			return
+		stamina_damage = 10
+		stamina_cost = 5
+		item_state = "shinai-light"
+		src.setItemSpecial(/datum/item_special/simple/kendo_light)
+		src.buildTooltipContent()
+
+	intent_switch_trigger(mob/user as mob)
+		if(guard != user.a_intent)
+			change_guard(user,user.a_intent)
 
 	attack_hand(mob/user)
 		if(src.loc != user)
