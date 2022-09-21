@@ -292,6 +292,7 @@
 			qdel(src.possessed_thing)
 
 		src.owner = null
+		src.client = null
 		src.possessed_thing = null
 		qdel(src)
 		..()
