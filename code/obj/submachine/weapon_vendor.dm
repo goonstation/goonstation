@@ -233,6 +233,7 @@
 		materiel_stock += new/datum/materiel/ammo/riflesmall
 		materiel_stock += new/datum/materiel/ammo/riflebig
 		materiel_stock += new/datum/materiel/ammo/shotgun
+		materiel_stock += new/datum/materiel/ammo/grenadeshells
 		materiel_stock += new/datum/materiel/ammo/energy
 
 		materiel_stock += new/datum/materiel/utility/change
@@ -578,6 +579,7 @@
 	name = "Revolver bullets"
 	path = /obj/random_item_spawner/surplus/revolverrounds
 	description = "Revolvin' bullets. Fer the revolvin' guns."
+
 /datum/materiel/ammo/riflesmall
 	name = "Rifle bullets- 5.56"
 	path = /obj/random_item_spawner/surplus/rifleroundslittle
@@ -592,6 +594,10 @@
 	path = /obj/random_item_spawner/surplus/shotgunshells
 	description = "Bullets fer the blunderbusses."
 
+/datum/materiel/ammo/grenadeshells
+	name = "Grenade bullets"
+	path = /obj/random_item_spawner/surplus/grenadeshells
+	description = "Bullets fer various launchers. These be NOT for throwing."
 /datum/materiel/ammo/energy
 	name = "Energy bullets"
 	path = /obj/random_item_spawner/surplus/energycells

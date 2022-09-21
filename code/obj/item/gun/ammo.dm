@@ -953,6 +953,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
+
+	four
+		amount_left = 2
+		max_amount = 2
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"

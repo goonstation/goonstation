@@ -437,10 +437,11 @@
 		what they said about why were here and what we need to do <br>
 		<br> 1) First, put the checks into the computer and get yoruself a loadout ammo and utillitys. Different loadouts give different utillitys, and the utillitys can be
 		swapped from one computer to the other, <br>
-		<br> 1.5) When u are loading up, try to look like your one of them. They do'nt care enough about us to give us any fancey weapons or equipment, so stelth and co-ordinating are going to be the only thing we have going for us. Stick together and stay low.<br>
-		<br> 2) Second of all, settle on a plan. We should all know our objectives, and all have the headsets they gave us, so comunication shouldn't be an issue. Once we know whose doing what,
-		hit the authoreyze deploymint button. After everyones voted, the portal should turn on and allow us to get into NT teritorry.
-		<br> 3) From the telleport point, itll be another short space walk to the station. Don NOT forget the jetpacks.
+		<br> 2) Anything you need, you can probably scavenge around, either on the ship or on the station. Remember to grab tools from the manufactshorer they got us.<br>
+		<br> 2.5) When u are loading up, try to look like your one of them. They do'nt care enough about us to give us any fancey weapons or equipment, so stelth and co-ordinating are going to be the only thing we have going for us. Stick together and stay low.<br>
+		<br> 3) BEFORE we leave, we should settle on a plan. We all know who's who, and have the headsets they gave us, so comunication shouldn't be an issue. Once we know whose doing what,
+		hit the authoreyze deploymint button. After everyones voted, the portal should turn on and allow us to get into NT teritorry.<br>
+		<br> 4) From the telleport point, itll be another short space walk to the station. Do NOT forget the jetpacks.
 
 	"}
 

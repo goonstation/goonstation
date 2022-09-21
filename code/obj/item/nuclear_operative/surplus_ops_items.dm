@@ -25,6 +25,7 @@
 		new /obj/random_item_spawner/surplus/melee(src.loc)
 		new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 		new /obj/surplusopspawner/suitandhelm(src.loc)
+		new /obj/item/card/id/syndicate(src.loc)
 		..()
 
 /obj/random_item_spawner/surplus/melee/loadout
@@ -35,6 +36,7 @@
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/item/requisition_token/syndicate/surplusutility(src.loc)
 			new /obj/surplusopspawner/suitandhelm(src.loc)
+			new /obj/item/card/id/syndicate(src.loc)
 		..()
 
 
@@ -42,6 +44,7 @@
 	New()
 
 		new /obj/surplusopspawner/suitandhelm(src.loc)
+		new /obj/item/card/id/syndicate(src.loc)
 		..()
 
 /obj/surplusopspawner/suitandhelm

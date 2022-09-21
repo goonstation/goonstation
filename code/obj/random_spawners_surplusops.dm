@@ -1,19 +1,8 @@
 //shit used in surplus ops' loadouts
 /obj/random_item_spawner/surplus //for sake of organization, extend the path
-	//rare_chance = 5
-
-/*
-	amt2spawn =
-		items2spawn = list(
-
-			)
-			*/
-///obj/surplus_spawner
-
-//ammo!
 
 
-//weapons
+/////////////////Weapons- actual loadout spawners are in surplus_ops_items/////////////////
 /obj/random_item_spawner/surplus/longgun //not necessarily 2 handed, but powerful. Very pricey.
 	amt2spawn = 1
 	items2spawn = list(
@@ -74,16 +63,10 @@
 		/obj/item/brick,
 		/obj/item/rods/steel,
 		/obj/item/fireaxe,
-		/obj/item/quarterstaff, //consider canning this since it's busted as hell
+		/obj/item/quarterstaff,
 		/obj/item/kitchen/utensil/knife/cleaver)
-	//spawn_items()
-	//	var/obj/item/thingy = pick(items2spawn)
-	//	new thingy(get_turf(src))
 
-
-
-
-//utility
+/////////////////Utilities/////////////////
 /obj/random_item_spawner/surplus/grenades
 	min_amt2spawn = 3
 	max_amt2spawn = 4
@@ -109,7 +92,6 @@
 		/obj/item/chem_grenade/sarin,
 		/obj/item/gimmickbomb/butt)
 
-
 /obj/random_item_spawner/surplus/storage
 	amt2spawn = 1
 	items2spawn = list(/obj/item/storage/pouch/highcap,
@@ -119,29 +101,19 @@
 		/obj/item/storage/belt/hunter, //can be gotten from space, no reason it can't show up here
 		/obj/item/storage/belt/medical,
 		/obj/item/storage/box/syndibox)
-	//spawn_items()
-	//	var/obj/item/thingy = pick(src.items2spawn)
-	//	new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/backup
 	amt2spawn = 1
 	items2spawn = list(
 		/obj/item/remote/reinforcement_beacon,
 		/obj/item/old_grenade/spawner/sawflycluster,
-		///obj/item/old_grenade/sawfly/withremote,
 		/obj/item/storage/box/wasp_grenade_kit,
 		/obj/item/aiModule/freeform,
 		/obj/item/spongecaps/syndicate,
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/gun/energy/wasp,
 		/obj/item/implanter/mindhack,
-		///obj/item/toy/plush/small/kitten,
 		/obj/machinery/recharge_station/syndicate)
-
-	//spawn_items()
-//		var/obj/item/thingy = pick(src.items2spawn)
-	//	new thingy(get_turf(src))
-
 
 /obj/random_item_spawner/surplus/expensive
 	amt2spawn = 1
@@ -159,16 +131,12 @@
 		/obj/item/storage/box/donkpocket_w_kit,
 		/obj/storage/crate/syndicate_surplus/spawnable, //yo dawg, I heard you like surplus
 		/obj/item/storage/box/mindhack_module_kit)
-//	spawn_items()
-//		var/obj/item/thingy = pick(src.items2spawn)
-//		new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/stealth
 	amt2spawn = 1
 	items2spawn = list(
 		/obj/item/storage/backpack/chameleon,
 		/obj/item/radiojammer,
-		///obj/item/clothing/suit/armor/sneaking_suit,
 		/obj/item/pen/sleepypen,
 		/obj/item/device/chameleon,
 		/obj/item/cigpacket/syndicate,
@@ -181,11 +149,6 @@
 		/obj/item/storage/box/chameleonbomb,
 		)
 
-
-//	spawn_items()
-//		var/obj/item/thingy = pick(src.items2spawn)
-//		new thingy(get_turf(src))
-
 /obj/random_item_spawner/surplus/defensive
 
 	amt2spawn = 1
@@ -195,7 +158,7 @@
 		/obj/item/clothing/suit/armor/makeshift,
 		/obj/item/clothing/suit/armor/vest,
 		/obj/item/clothing/gloves/swat,
-		/obj/item/storage/box/mousetraps, //will be downright nasty with the grenades they get
+		/obj/item/storage/box/mousetraps, //solely to synergize with grenades
 		/obj/item/device/flash,
 		/obj/item/device/ocular_implanter,
 		/obj/item/implanter/freedom,
@@ -227,12 +190,8 @@
 	/obj/item/reagent_containers/emergency_injector/high_capacity/cardiac,
 	/obj/item/storage/firstaid/regular/doctor_spawn,
 	/obj/item/reagent_containers/emergency_injector/high_capacity/donk_injector)
-	//New()
-	//	var/obj/new_item = pick(items2spawn)
-	//	new new_item(src.loc)
-	//	..()
 
-//AMMO
+/////////////////Ammo/////////////////
 /obj/random_item_spawner/surplus/plinkerrounds
 	amt2spawn = 4
 	rare_items2spawn = list(/obj/item/ammo/bullets/bullet_22)
@@ -240,8 +199,6 @@
 	/obj/item/ammo/bullets/bullet_22, //repeats, as a hacky way to alter the weight of some items without using rare_items2spawn
 	/obj/item/ammo/bullets/bullet_22,
 	/obj/item/ammo/bullets/bullet_22HP)
-
-
 
 /obj/random_item_spawner/surplus/pistolrounds
 	amt2spawn = 4
@@ -263,8 +220,6 @@
 		/obj/item/ammo/bullets/a38/AP,
 		/obj/item/ammo/bullets/a38/stun)
 
-
-
 /obj/random_item_spawner/surplus/rifleroundslittle
 	amt2spawn = 4
 	rare_items2spawn = list(/obj/item/ammo/bullets/assault_rifle)
@@ -277,6 +232,7 @@
 	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
 	items2spawn = list(
 		/obj/item/ammo/bullets/rifle_3006)
+
 /obj/random_item_spawner/surplus/shotgunshells
 	min_amt2spawn = 4
 	max_amt2spawn = 5
@@ -289,6 +245,15 @@
 	/obj/item/ammo/bullets/a12)
 	rare_items2spawn = list(/obj/item/ammo/bullets/pipeshot/scrap,
 		/obj/item/ammo/bullets/aex)
+
+/obj/random_item_spawner/surplus/grenadeshells
+	amt2spawn = 3
+	items2spawn = list(
+		/obj/item/ammo/bullets/smoke,
+		/obj/item/ammo/bullets/pbr/four,
+		/obj/item/ammo/bullets/grenade_round/explosive,
+		/obj/item/ammo/bullets/grenade_round/high_explosive,
+		)
 
 /obj/random_item_spawner/surplus/energycells
 	amt2spawn = 2

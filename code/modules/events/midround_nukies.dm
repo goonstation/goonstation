@@ -28,6 +28,9 @@
 			return
 		if(candidates.len < 3)
 			message_admins("There are less than three potential candidates for surplus ops, this will cause issues with their deployment!") //once build is final, it won't ever trigger if theres less than 3 dead folks
+//flockpillar says to fix:
+			//take M and turn into a new human H
+			//and return a ref to the new human we just made
 
 		//spawn them in, set up as needed
 		for (var/i in 1 to 3)
@@ -48,31 +51,22 @@
 			//the following code is an extremely condensed version of what the midround antag event uses to respawn traitors
 			//it's bad, but functional
 
-			//flockpillar says to fix:
-			//take M and turn into a new human H
-			//and return a ref to the new human we just made
 
-			var/mob/M //create a mob, assign it to our winner
-			if (!M)
-				M = chosen_mind.current
-			else
-				return
-
-			var/mob/living/carbon/human/H = M.humanize()//since humanize is local to the mob proc, we then must make the mob human
+			var/mob/M = chosen_mind.current
+			var/mob/living/carbon/human/H = M.humanize()
 
 			if (H && istype(H))
-				M = H
 				H.unequip_all(1)
 
 				//now that we have a human, put them at the spawnpoints and set them up
 				H.set_loc(pick_landmark(LANDMARK_SYNDICATESURPLUS))
 				SPAWN(0)
-					equip_shitty_syndicate(H, 1)//do this after the name call to prevent their agent cards from changing
+					equip_shitty_syndicate(H, 1)
 					H.choose_name(3, "Surplus Operative")
 					chosen_mind.special_role = ROLE_SURPLUS_OPERATIVE
 					ticker.mode.Agimmicks |= chosen_mind  //add them to the antags
 
-					H.antagonist_overlay_refresh(1, 0) //this doesn't work RN
+					H.antagonist_overlay_refresh(1, 0)
 
 					boutput(H, "<span class='notice'>You are a surplus operative!</span>")
 					ticker.mode.bestow_objective(H, ourobjectives)
