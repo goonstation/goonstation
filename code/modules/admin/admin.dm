@@ -3127,7 +3127,7 @@ var/global/noir = 0
 								else if (P.icon_state == "pool")
 									P.icon_state = "ballpit"
 								LAGCHECK(LAG_LOW)
-							for (var/turf/simulated/pool/P in world)
+							for (var/turf/simulated/floor/pool/P in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
 									return
@@ -4711,10 +4711,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 				M.make_vampire()
 			if(ROLE_HUNTER)
-				M.mind.special_role = ROLE_HUNTER
-				M.mind.assigned_role = "Hunter"
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-				M.make_hunter()
+				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE)
 			if(ROLE_WRESTLER)
 				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")

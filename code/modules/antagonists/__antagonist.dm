@@ -85,6 +85,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_equip)
 			src.give_equipment()
+		else
+			src.alt_equipment()
 
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
@@ -103,6 +105,10 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()
+		return
+
+	/// Fallback in case the antag must have some level of initalization even with no equipment.
+	proc/alt_equipment()
 		return
 
 	/// The inverse of give_equipment(). Remove things like changeling abilities, etc. Non-innate things like items should probably be kept.

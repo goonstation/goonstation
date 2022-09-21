@@ -24,7 +24,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaf" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aag" = (
@@ -9382,6 +9382,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awB" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -18193,7 +18194,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aRo" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aRp" = (
 /obj/pool_springboard,
@@ -18658,20 +18659,20 @@
 /area/station/crew_quarters/pool)
 "aSv" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSw" = (
 /obj/landmark/spawner{
 	icon_state = "chimp-start";
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSx" = (
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSy" = (
 /obj/disposalpipe/segment/food,
@@ -19216,13 +19217,13 @@
 /area/station/crew_quarters/pool)
 "aTL" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTM" = (
 /obj/fluid_spawner{
 	amount = 2550
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTN" = (
 /obj/critter/seagull,
@@ -23779,7 +23780,7 @@
 /turf/space,
 /area/space)
 "beu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/airless/scorched,
@@ -23828,7 +23829,7 @@
 /area/station/catwalk/north)
 "beB" = (
 /obj/disposalpipe/segment/morgue,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -70064,9 +70065,7 @@
 	dir = 4
 	},
 /obj/machinery/bot/secbot,
-/turf/simulated/floor/arrival{
-	dir = 10
-	},
+/turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "dcE" = (
 /obj/disposalpipe/segment/transport{
@@ -72492,7 +72491,7 @@
 /area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dir" = (
@@ -75939,6 +75938,9 @@
 "evw" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "ewr" = (
@@ -77884,11 +77886,9 @@
 /area/station/ranch)
 "ndb" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/light/emergency/exitsign,
-/obj/machinery/status_display{
-	pixel_y = -30
+/turf/simulated/floor/arrival/corner{
+	dir = 8
 	},
-/turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "nfB" = (
 /turf/unsimulated/floor/shuttle,
@@ -78958,6 +78958,12 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"sqD" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/arrival{
+	dir = 10
+	},
+/area/station/hallway/secondary/exit)
 "srd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -79614,6 +79620,11 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vht" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/emergency/exitsign,
+/turf/simulated/floor/arrival,
+/area/station/hallway/secondary/exit)
 "viq" = (
 /turf/simulated/floor/plating/airless/shuttlebay{
 	name = "landing pad plating"
@@ -142616,7 +142627,7 @@ aaa
 cie
 cmn
 cnY
-cpJ
+vht
 cie
 aaI
 aaa
@@ -142919,7 +142930,7 @@ cie
 cmn
 cnY
 cpJ
-cie
+ckG
 aaI
 aaa
 aaa
@@ -143523,9 +143534,9 @@ ckE
 cmo
 cnY
 evw
-ckG
-aaI
-aaa
+cie
+cie
+cie
 aaa
 qaU
 qaU
@@ -143825,9 +143836,9 @@ ckF
 cmn
 cnY
 ndb
-cie
-cie
-cie
+crz
+sqD
+izF
 aaa
 qaU
 qaU
@@ -144126,8 +144137,8 @@ aaa
 cie
 deJ
 cnY
-cpJ
-crz
+cpF
+cmk
 dcD
 izF
 aaa

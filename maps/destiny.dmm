@@ -2365,7 +2365,7 @@
 	},
 /area/station/crew_quarters/heads)
 "ajv" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ajw" = (
 /obj/wingrille_spawn/auto,
@@ -16164,7 +16164,7 @@
 	},
 /area/listeningpost)
 "bBs" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bBw" = (
@@ -19563,7 +19563,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dbz" = (
 /obj/table/reinforced/auto,
@@ -20659,7 +20659,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dCK" = (
 /obj/disposalpipe/segment/mail{
@@ -25812,11 +25812,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "fNJ" = (
-/obj/stool/bench/red/auto,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "fOb" = (
@@ -37381,7 +37381,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "lWn" = (
 /obj/cable{
@@ -37643,7 +37643,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mdn" = (
 /obj/firedoor_spawn,
@@ -39661,6 +39661,7 @@
 /obj/disposalpipe/junction{
 	dir = 1
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "neD" = (
@@ -41400,7 +41401,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
 "nXS" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/vending/air_vendor,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -51314,7 +51315,7 @@
 	name = "Crew Quarters P04"
 	})
 "tkJ" = (
-/obj/machinery/vending/air_vendor,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "tkQ" = (

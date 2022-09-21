@@ -402,7 +402,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -857,6 +857,12 @@
 	antistes
 		icon_state = "antistes"
 		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
+	mors
+		icon_state = "mors"
+		name = "Mors"
 		pixel_x = -256
 		pixel_y = -256
 

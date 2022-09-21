@@ -1,4 +1,49 @@
 
+(t)wed sep 21 22
+(u)CrystalClover
+(p)10912
+(e)|
+(+)Added Skull and Eye expressions to the cyborg screen head.
+(u)Gannets
+(p)10938
+(e)|
+(+)Added Fomalhaut MRL to the nuke ops commander uplink for a cost of 3 points.
+(t)tue sep 20 22
+(u)aloe
+(*)Cyborgs can now construct furniture parts into furniture by click dragging to the floor.
+(u)aloe
+(*)Engineers on Oshan now get Stomper Boots, and there's an extra pair in engi lockers. They act kinda like a stomper, but they're boots. You'll figure it out.
+(u)Ikea
+(p)10902
+(e)|
+(+)Freeze now cools you down 20 k per lifeloop
+(u)golferjoe
+(p)10913
+(e)|
+(+)Buttcrabs are now immune to tox damage.
+(u)Sord
+(*)Every map in rotation now has 3 oxygen vending machines on station, with one always being in Escape. Buy your life 2day
+(u)CrystalClover
+(p)10914
+(e)|
+(+)Adds Skull to Crayon options and Blood Writing options.
+(u)Emily
+(e)|
+(*)Baby ranch animals now follow Momma (You are Momma).
+(*)Puritans can no longer be revived with Strange Reagent
+(*)"Monkey Cloning" no longer circumvents Puritan
+(+)Inserting someone's old brain in a corpse no longer kills them
+(u)Sord
+(e)|
+(+)Added a new hyper capacity power cell to manufacturers. Requires expensive mats and has capacity of 25000. Also increased erebite cell's power capacity.
+(u)golferjoe
+(p)10895
+(e)|
+(+)Moved "stumped" trait from uncategorized to body
+(u)Gannets
+(p)10888
+(e)|
+(*)Added the currently unattainable Fomalhaut MRL, 6-shot homing missile launcher. Homing projectile code by Zjdtmkhzt!
 (t)mon sep 19 22
 (u)Sovexe
 (p)10893
