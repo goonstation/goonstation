@@ -85,7 +85,7 @@ Shield and graivty well generators
 	return
 
 /obj/shield/meteorhit(obj/O as obj)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50, 1)
 	return
 
 /obj/shieldgen/ex_act(severity)

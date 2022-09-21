@@ -114,7 +114,7 @@
 		if (next_shot_at > ticker.round_elapsed_ticks)
 			return
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
-		playsound(user.loc, "sound/weapons/lasermed.ogg", 100, 1)
+		playsound(user.loc, 'sound/weapons/lasermed.ogg', 100, 1)
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
 			var/mob/MT = target
@@ -151,11 +151,11 @@
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, "sound/effects/mag_warp.ogg", 50, 1)
+		playsound(user, 'sound/effects/mag_warp.ogg', 50, 1)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
-			playsound(user, "sound/weapons/railgun.ogg", 50, 1)
+			playsound(user, 'sound/weapons/railgun.ogg', 50, 1)
 			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -351,7 +351,7 @@
 		reload_time = 20 SECONDS
 
 /datum/limb/mouth
-	var/sound_attack = "sound/voice/animal/werewolf_attack1.ogg"
+	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
@@ -396,7 +396,7 @@
 		user.lastattacked = target
 
 /datum/limb/mouth/small // for cats/mice/etc
-	sound_attack = "sound/impact_sounds/Flesh_Tear_1.ogg"
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 	dam_low = 1
 	dam_high = 3
 	stam_damage_mult = 0.3
@@ -472,11 +472,13 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(60))
-			target.changeStatus("weakened", 2 SECONDS)
+		if (prob(20))
+			if (iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/bear/zombie
@@ -507,7 +509,7 @@
 				var/obj/grille/O = target
 				if (!O.shock(user, 70))
 					O.visible_message("<span class='alert'><b>[user]</b> violently slashes [O]!</span>")
-					playsound(O.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 80, 1)
+					playsound(O.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 80, 1)
 					O.damage_slashing(5)
 				hit = TRUE
 
@@ -521,7 +523,7 @@
 			else if(istype(target, /obj/table))
 				var/obj/table/O = target
 				O.visible_message("<span class='alert'><b>[user]</b> violently rips apart the [O]!</span>")
-				playsound(O.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(O.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				O.deconstruct()
 				hit = TRUE
 
@@ -585,7 +587,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
 		if (prob(40))
@@ -656,7 +658,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/effects/sawhit.ogg"
+		msgs.played_sound = 'sound/effects/sawhit.ogg'
 		boutput(target, "<span class='alert'>You can feel the saw slicing your body apart!</span>")
 		target.emote("scream")
 		msgs.damage_type = DAMAGE_CUT
@@ -733,15 +735,17 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,9) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(5,9) * quality)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Stab_1.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(35 * quality))
-			target.changeStatus("weakened", (4 * quality) SECONDS)
+		if (prob(20 * quality))
+			if (iscarbon(target))
+				var/mob/living/carbon/C = target
+				C.do_disorient(25, disorient=2 SECONDS)
 		user.lastattacked = target
 
 /datum/limb/brullbar/severed_werewolf
@@ -814,7 +818,7 @@
 		user.attack_effects(target, affecting)
 
 		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/burn_sizzle.ogg"
+		msgs.played_sound = 'sound/impact_sounds/burn_sizzle.ogg'
 		msgs.damage_type = DAMAGE_BURN
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -852,7 +856,7 @@
 
 				playsound(user.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 				SPAWN(0.1 SECONDS)
-					if (user) playsound(user.loc, "sound/impact_sounds/Flesh_Tear_3.ogg", 40, 1, -1)
+					if (user) playsound(user.loc, 'sound/impact_sounds/Flesh_Tear_3.ogg', 40, 1, -1)
 
 				user.visible_message("<span class='alert'><B>[user] slashes viciously at [victim]!</B></span>")
 				victim.health -= rand(4,8) * victim.brutevuln
@@ -1257,7 +1261,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
@@ -1308,7 +1312,7 @@
 	var/dam_low = 1
 	var/dam_high = 1
 	var/actions = list("scratches", "baps", "slashes", "paws")
-	var/sound_attack = "sound/impact_sounds/Flesh_Tear_3.ogg"
+	var/sound_attack = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 	var/dmg_type = DAMAGE_BLUNT
 	var/custom_msg = null
 	var/stam_damage_mult = 0.1
@@ -1420,7 +1424,7 @@
 	stam_damage_mult = 0.5
 	dam_low = 2
 	dam_high = 4
-	sound_attack = "sound/items/Wirecutter.ogg"
+	sound_attack = 'sound/items/Wirecutter.ogg'
 	actions = list("snips", "pinches", "slashes")
 
 /datum/limb/small_critter/possum
@@ -1462,7 +1466,7 @@
 		user.attack_effects(target, affecting)
 		var/action = pick("cut", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound = "sound/impact_sounds/Flesh_Tear_3.ogg"
+		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target

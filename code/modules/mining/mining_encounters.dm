@@ -840,7 +840,8 @@
 		picker = rand(1,6)
 		switch(picker)
 			if (1 to 3)
-				new /obj/storage/crate/loot(pick(turfs_near_center))
+				if(prob(10))
+					new /obj/storage/crate/loot(pick(turfs_near_center))
 			if (4)
 				I = new /obj/item/sheet(pick(turfs_near_center))
 				I.amount = rand(1,5)
@@ -984,7 +985,7 @@
 		amount--
 		if (turfs.len < 1)
 			break
-		E = pick(mining_controls.events)
+		E = weighted_pick(mining_controls.weighted_events)
 		AST = pick(turfs)
 		if (!istype(AST) || (E.restrict_to_turf_type && AST.type != E.restrict_to_turf_type))
 			turfs -= AST

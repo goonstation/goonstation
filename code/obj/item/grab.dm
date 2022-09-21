@@ -511,7 +511,7 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -521,14 +521,14 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 || !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -767,9 +767,11 @@
 		..()
 
 	proc/shoot()
-		shot = 1
+		if(shot)
+			return
 
-		if (affecting && assailant && isitem(src.loc))
+		shot = 1
+		if (!shot && affecting && assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 

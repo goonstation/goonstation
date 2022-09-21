@@ -77,7 +77,7 @@ var/global
 
 	list/factions = list()
 
-	list/obj/trait/traitList = list() //List of trait objects
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -325,20 +325,21 @@ var/global
 	/// Loooooooooogs
 	list/logs = list(
 		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
 		LOG_AHELP		=	list(),
 		LOG_AUDIT		=	list(),
-		LOG_BOMBING		=	list(),
-		LOG_COMBAT		=	list(),
-		LOG_DEBUG		=	list(),
 		LOG_MHELP		=	list(),
 		LOG_OOC			=	list(),
-		LOG_PATHOLOGY	=	list(),
-		LOG_PDAMSG		=	list(),
 		LOG_SPEECH		=	list(), // whisper and say combined
-		LOG_SIGNALERS	=	list(),
-		LOG_STATION		=	list(),
+		LOG_PDAMSG		=	list(),
 		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
 		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
 	)
 	/// The file holding computer ID information

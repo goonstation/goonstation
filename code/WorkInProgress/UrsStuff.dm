@@ -18,6 +18,8 @@
 
 /obj/dialogueobj/dreambee
 
+/obj/item/old_grenade/chicken
+
 /turf/unsimulated/floor/dream/beach
 
 /turf/unsimulated/floor/dream/space

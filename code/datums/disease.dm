@@ -27,7 +27,7 @@
 	//IM SORRY
 
 	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
-		if (!affected_mob || !D)
+		if (QDELETED(affected_mob) || !D)
 			return 1
 		return 0
 
@@ -362,8 +362,8 @@
 	if (count >= A.max_stacks)
 		return null
 
-	if (ischangeling(src) || isvampire(src) || src.nodamage)
-		//Vampires and changelings are immune to disease, as are the godmoded.
+	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
+		//Vampires, thralls, zombies and changelings are immune to disease, as are the godmoded.
 		//This is here rather than in the resistance check proc because otherwise certain things could bypass the
 		//hard immunity these folks are supposed to have
 		return null

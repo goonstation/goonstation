@@ -95,7 +95,7 @@
 		usr.show_text("You cannot use this command when your shell or mainframe is incapacitated.", "red")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/target_name = tgui_input_list(usr, "Open doors nearest to which creature?", "Open Door", creatures)
 
 	if (!target_name)
@@ -525,6 +525,10 @@ var/global/list/module_editors = list()
 
 	src.UpdateName()
 
+/mob/living/silicon/UpdateName()
+	..()
+	src.botcard.registered = src.name
+
 /mob/living/silicon/robot/choose_name(var/retries = 3, var/what_you_are = null, var/default_name = null, var/force_instead = 0)
 	. = ..()
 	src.internal_pda.name = "[src.name]'s Internal PDA Unit"
@@ -643,4 +647,4 @@ var/global/list/module_editors = list()
 	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"

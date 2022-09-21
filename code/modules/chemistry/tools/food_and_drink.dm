@@ -223,7 +223,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
@@ -252,7 +252,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.MAX_DAMAGE))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.bites_left--
 		consumer.nutrition += src.heal_amt * 10
 		src.heal(consumer)
-		playsound(consumer.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+		playsound(consumer.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 		on_bite(consumer, feeder)
 		if (src.festivity)
 			modify_christmas_cheer(src.festivity)
@@ -604,11 +604,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (src?.reagents && consumer?.reagents)
 					src.reagents.trans_to(consumer, min(reagents.total_volume, src.gulp_size))
 
-		playsound(consumer.loc,"sound/items/drink.ogg", rand(10,50), 1)
+		playsound(consumer.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		consumer.urine += 0.1
 		eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
+	// still copy paste btw
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
 		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
@@ -677,54 +678,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else if (reagents.total_volume)
 
-			if (ismob(target)) return
-			if (isobj(target)) //Have to do this in 2 lines because byond is shit.
-				if (target:flags & NOSPLASH) return
-			can_mousedrop = 0
+			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
+				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_COMBAT, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-			if (reagents)
-				reagents.physical_shock(14)
+			reagents.physical_shock(14)
 
-			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
-			else src.reagents.reaction(target, TOUCH, src.amount_per_transfer_from_this)
-			SPAWN(0.5 SECONDS)
-				if (src.splash_all_contents) src.reagents.clear_reagents()
-				else src.reagents.remove_any(src.amount_per_transfer_from_this)
-				can_mousedrop = 1
-			return
+			var/splash_volume
+			if (src.splash_all_contents)
+				splash_volume = src.reagents.maximum_volume
+			else
+				splash_volume = min(src.amount_per_transfer_from_this, src.reagents.total_volume)
 
+			src.reagents.reaction(target, TOUCH, splash_volume)
 
-	/*
-	afterattack(obj/target, mob/user , flag)
-		if (istype(target, /obj/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+			var/turf/T
+			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
+				T = get_turf(target)
+			else if (target.density)
+				// if we splashed on a wall or a dense obj, we still want to flow out onto the floor we're pouring from (avoid pouring under windows and on walls)
+				T = get_turf(user)
 
-			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is empty.</span>")
-				return
+			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
+				src.reagents.reaction(T, TOUCH, splash_volume)
 
-			if (reagents.total_volume >= reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[src] is full.</span>")
-				return
-
-			var/transferamt = src.reagents.maximum_volume - src.reagents.total_volume
-			var/trans = target.reagents.trans_to(src, transferamt)
-			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-
-		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if (!reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is empty.</span>")
-				return
-
-			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[target] is full.</span>")
-				return
-
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Brought in line with beakers (Convair880).
-			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
-		return
-	*/
+			src.reagents.remove_any(splash_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */
@@ -946,7 +924,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				qdel(src)
 				if (prob (25))
 					user.visible_message("<span class='alert'>The broken shards of [src] slice up [user]'s hand!</span>")
-					playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(U, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					var/damage = rand(5,15)
 					random_brute_damage(user, damage)
 					take_bleeding_damage(user, null, damage)
@@ -954,7 +932,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				src.shatter++
 				user.visible_message("<span class='alert'><b>[user]</b> [pick("shanks","stabs","attacks")] [target] with the broken [src]!</span>")
 				logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a broken [src] at [log_loc(user)].")
-				playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 				var/damage = rand(1,10)
 				random_brute_damage(target, damage)//shiv that nukie/secHoP
 				take_bleeding_damage(target, null, damage)
@@ -1005,7 +983,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			user.visible_message("<span class='alert'><b>[user] smashes [src] on [target]! \The [src] shatters completely!</span>")
 			if (prob(hurt_prob))
 				user.visible_message("<span class='alert'>The broken shards of [src] slice up [user]'s hand!</span>")
-				playsound(U, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(U, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(user, damage)
 				take_bleeding_damage(user, user, damage)
 			SPAWN(0)
@@ -1247,7 +1225,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			bladder = H.sims?.getValue("Bladder")
 			if ((!isnull(bladder) && (bladder <= 65)) || (isnull(bladder) && (H.urine >= 2)))
 				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>")
-				playsound(H, "sound/misc/pourdrink.ogg", 50, 1)
+				playsound(H, 'sound/misc/pourdrink.ogg', 50, 1)
 				if (!H.sims)
 					H.urine -= 2
 				else
@@ -1293,13 +1271,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				H.losebreath += max(H.losebreath, 5)
 			else if (eat_thing.reagents && eat_thing.reagents.total_volume)
 				eat_thing.reagents.trans_to(H, eat_thing.reagents.total_volume)
-			playsound(H, "sound/items/eatfood.ogg", rand(10,50), 1)
+			playsound(H, 'sound/items/eatfood.ogg', rand(10,50), 1)
 			qdel(eat_thing)
 			src.UpdateIcon()
 			return
 
 	ex_act(severity)
 		src.smash()
+
+
+	Crossed(atom/movable/mover) //Makes barfights cooler
+		if(istype(mover, /obj/projectile))
+			if(prob(30))
+				src.smash()
+		. = ..()
 
 	proc/smash(var/atom/A)
 		if (src.smashed)
@@ -1419,7 +1404,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (glass.reagents.total_volume) //Take a sip
 			glass.reagents.reaction(target, INGEST, clamp(glass.reagents.total_volume, CHEM_EPSILON, min(glass.gulp_size, (target.reagents?.maximum_volume - target.reagents?.total_volume))))
 			glass.reagents.trans_to(target, min(glass.reagents.total_volume, glass.gulp_size))
-			playsound(target.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			playsound(target.loc,'sound/items/drink.ogg', rand(10,50), 1)
 			target.urine += 0.1
 			eat_twitch(target)
 
@@ -1900,7 +1885,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	attack_self(mob/user)
 		if (src.reagents.total_volume > 0)
 			user.visible_message("<b>[user.name]</b> shakes the container [pick("rapidly", "thoroughly", "carefully")].")
-			playsound(src, "sound/items/CocktailShake.ogg", 25, 1, -6)
+			playsound(src, 'sound/items/CocktailShake.ogg', 25, 1, -6)
 			sleep (0.3 SECONDS)
 			src.reagents.inert = 0
 			src.reagents.physical_shock(rand(5, 20))

@@ -207,7 +207,7 @@
 
 		src.hunger = 0
 		src.hunger_message_level = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
 		var/obj/item/storage/box/per_person = new
 		per_person.set_loc(src)
@@ -256,7 +256,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return
@@ -304,7 +304,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")

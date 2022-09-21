@@ -83,7 +83,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/effects/mindkill.ogg", 50)
+			playsound(user, 'sound/effects/mindkill.ogg', 50)
 			user.take_brain_damage(69*420)
 		SPAWN(20 SECONDS)
 			if (user && !isdead(user))
@@ -538,7 +538,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -582,7 +582,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -693,14 +693,14 @@
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
 
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -730,9 +730,9 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html(html_decode(input.signal))
+			P.info = strip_html_tags(html_decode(input.signal))
 			P.name = paper_name
 		return
 
@@ -787,9 +787,9 @@
 				return 0
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
-			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
-			var/saniStr = strip_html(sanitize(html_encode(P.info)))
+			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
@@ -916,7 +916,7 @@
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
-				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
@@ -1182,7 +1182,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1217,7 +1217,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1325,7 +1325,7 @@
 		if(!R) return
 
 		var/mod = R.Replace(input.signal, expressionrepl)
-		mod = strip_html(sanitize(html_encode(mod)))//U G H
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
 		if(mod)
 			input.signal = mod
@@ -1607,7 +1607,7 @@
 		setStartingString(input.signal)
 
 	proc/setStartingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		bstr = inp
 		tooltip_rebuild = 1
 
@@ -1625,7 +1625,7 @@
 		setEndingString(input.signal)
 
 	proc/setEndingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		astr = inp
 		tooltip_rebuild = 1
 
@@ -1648,7 +1648,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
+		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
@@ -1838,7 +1838,7 @@
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1864,7 +1864,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/wifi.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
@@ -1873,7 +1873,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1881,21 +1881,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("[signal.encryption]" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["data"])), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["message"])), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -2311,7 +2311,7 @@
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
+		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
@@ -2522,7 +2522,7 @@
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message))
+		message = strip_html_tags(html_decode(message))
 		var/heardname = null
 		if (isobj(AM))
 			heardname = AM.name
@@ -2815,10 +2815,10 @@
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No gun installed.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	update_icon()
@@ -2863,7 +2863,7 @@
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
 			UpdateIcon()

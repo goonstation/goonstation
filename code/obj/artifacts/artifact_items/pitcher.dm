@@ -64,6 +64,8 @@
 			reagents.add_reagent("werewolf_serum", 2)
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
+		if (prob(3))
+			reagents.add_reagent("rat_spit", 5)
 		if (prob(1))
 			reagents.add_reagent("rat_venom", 5)
 		if (prob(3))

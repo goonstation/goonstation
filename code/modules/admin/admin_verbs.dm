@@ -53,6 +53,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_attack_messages,
 		/client/proc/toggle_adminwho_alerts,
 		/client/proc/toggle_rp_word_filtering,
+		/client/proc/toggle_uncool_word_filtering,
 		/client/proc/toggle_hear_prayers,
 		/client/proc/cmd_admin_plain_message,
 		/client/proc/cmd_admin_check_vehicle,
@@ -452,6 +453,7 @@ var/list/admin_verbs = list(
 		/client/proc/set_pod_wars_score,
 		/client/proc/set_pod_wars_deaths,
 		/client/proc/clear_nukeop_uplink_purchases,
+		/client/proc/upload_uncool_words,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -923,10 +925,10 @@ var/list/fun_images = list()
 	message_admins("[key_name(src)] forced [key_name(M)] to view the rules.")
 	switch(crossness)
 		if ("A bit")
-			M << csound("sound/misc/newsting.ogg")
+			M << csound('sound/misc/newsting.ogg')
 			boutput(M, "<span class='alert'><B>Here are the rules, you can read this, you have a good chance of being able to read them too.</B></span>")
 		if ("A lot")
-			M << csound("sound/misc/klaxon.ogg")
+			M << csound('sound/misc/klaxon.ogg')
 			boutput(M, "<span class='alert'><B>WARNING: An admin is likely very cross with you and wants you to read the rules right fucking now!</B></span>")
 
 	// M << browse(rules, "window=rules;size=800x1000")
@@ -957,7 +959,7 @@ var/list/fun_images = list()
 	set popup_menu = 0
 	ADMIN_ONLY
 
-	var/list/respawn_types = list("Heavenly", "Demonically")
+	var/list/respawn_types = list("Heavenly", "Demonically", "Beam")
 	var/selection = tgui_input_list(src.mob, "Select Respawn type.", "Cinematic Respawn", respawn_types)
 	switch(selection)
 		if("Heavenly")
@@ -970,6 +972,9 @@ var/list/fun_images = list()
 			var/mob/living/carbon/human/M = src.mob
 			M.bioHolder.AddEffect("hell_fire", magical = 1)
 			demonic_spawn(M)
+		if("Beam")
+			src.respawn_as_self()
+			spawn_beam(src.mob)
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
@@ -1073,7 +1078,7 @@ var/list/fun_images = list()
 	if (!length(ckeys))
 		return
 	var/list/jobs = job_controls.staple_jobs + job_controls.special_jobs + job_controls.hidden_jobs
-	SortList(jobs, /proc/compareName)
+	sortList(jobs, /proc/cmp_text_asc)
 	var/datum/job/job = tgui_input_list(usr, "Select job to respawn", "Respawn As", jobs)
 	if (!job)
 		return
@@ -2219,7 +2224,7 @@ var/list/fun_images = list()
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
-	addPlayerNote(vpnckey, src.ckey, "Ckey [ckey] added to the VPN whitelist.")
+	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
 	return 1
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
@@ -2278,3 +2283,13 @@ var/list/fun_images = list()
 		flock.unAchieve(cheat)
 	boutput(src, "[cheat] turned [toggle ? "on" : "off"] for flock [flockname]")
 	logTheThing(LOG_ADMIN, src, "has toggled [cheat] [toggle ? "on" : "off"] for flock [flockname]")
+
+/client/proc/upload_uncool_words()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Upload Uncool Words"
+	set desc = "Upload a JSON file for the uncool words list"
+	ADMIN_ONLY
+	DENY_TEMPMIN
+
+	global.phrase_log?.upload_uncool_words()
+	global.phrase_log?.load()

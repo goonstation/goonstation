@@ -452,7 +452,7 @@
 		flockmindcircuit.d_icon = 'icons/effects/overlays/flockmindcircuit.dmi'
 		flockmindcircuit.d_icon_state = "flockmindcircuit"
 		flockmindcircuit.d_blend_mode = BLEND_DEFAULT
-		flockmindcircuit.d_alpha = 192
+		flockmindcircuit.d_alpha = 140
 		definitions.Add(flockmindcircuit)
 
 		return ..()

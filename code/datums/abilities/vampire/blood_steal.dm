@@ -140,7 +140,7 @@
 	silentshot = 1
 	pierces = -1
 	max_range = 10
-	shot_sound = "sound/impact_sounds/Flesh_Tear_1.ogg"
+	shot_sound = 'sound/impact_sounds/Flesh_Tear_1.ogg'
 
 	on_launch(var/obj/projectile/P)
 		if (!("victim" in P.special_data))

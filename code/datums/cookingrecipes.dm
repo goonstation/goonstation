@@ -1484,7 +1484,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake
 
@@ -1827,6 +1827,15 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
+
+
+/datum/cookingrecipe/cheesewheel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cheesewheel
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

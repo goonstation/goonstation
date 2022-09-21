@@ -122,7 +122,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -135,7 +135,7 @@
 			if (P && src.material)
 				P.setMaterial(src.material)
 		else
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			var/obj/item/sheet/S = new (src.loc)
 			if (src.material)
 				S.setMaterial(src.material)
@@ -388,7 +388,7 @@
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
 
@@ -399,7 +399,7 @@
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -577,7 +577,7 @@
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -601,7 +601,7 @@
 			var/obj/stool/chair/e_chair/E = new /obj/stool/chair/e_chair(src.loc)
 			if (src.material)
 				E.setMaterial(src.material)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			E.set_dir(src.dir)
 			E.part1 = W
 			W.set_loc(E)
@@ -734,7 +734,7 @@
 		if (has_butt)
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 		return TRUE
 
 
@@ -764,7 +764,7 @@
 
 		src.buckled_guy = null
 
-		playsound(src, "sound/misc/belt_click.ogg", 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -1048,7 +1048,7 @@
 	comfort_value = 3
 	buckle_move_delay = 1
 	p_class = 2
-	scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
+	scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 	var/lying = 0 // didja get knocked over? fall down some stairs?
 	parts_type = /obj/item/furniture_parts/wheelchair
 	mat_appearances_to_ignore = list("steel")
@@ -1076,9 +1076,9 @@
 				M.visible_message("<span class='alert'>[M] is tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>",\
 				"<span class='alert'>You're tossed out of [src] as it tips [T ? "while rolling over [T]" : "over"]!</span>")
 				var/turf/target = get_edge_target_turf(src, src.dir)
-				M.throw_at(target, 5, 1)
-				M.changeStatus("stunned", 8 SECONDS)
-				M.changeStatus("weakened", 5 SECONDS)
+				M.throw_at(target, 3, 1)
+				M.changeStatus("stunned", 5 SECONDS)
+				M.changeStatus("weakened", 3 SECONDS)
 			else
 				src.visible_message("<span class='alert'>[src] tips [T ? "as it rolls over [T]" : "over"]!</span>")
 		else
@@ -1086,7 +1086,7 @@
 		src.lying = 1
 		animate_rest(src, !src.lying)
 		src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
-		src.scoot_sounds = list("sound/misc/chair/normal/scoot1.ogg", "sound/misc/chair/normal/scoot2.ogg", "sound/misc/chair/normal/scoot3.ogg", "sound/misc/chair/normal/scoot4.ogg", "sound/misc/chair/normal/scoot5.ogg")
+		src.scoot_sounds = list('sound/misc/chair/normal/scoot1.ogg', 'sound/misc/chair/normal/scoot2.ogg', 'sound/misc/chair/normal/scoot3.ogg', 'sound/misc/chair/normal/scoot4.ogg', 'sound/misc/chair/normal/scoot5.ogg')
 
 	attack_hand(mob/user)
 		if (src.lying)
@@ -1095,7 +1095,7 @@
 			src.lying = 0
 			animate_rest(src, !src.lying)
 			src.p_class = initial(src.p_class) + src.lying // 2 while standing, 3 while lying
-			src.scoot_sounds = scoot_sounds = list("sound/misc/chair/office/scoot1.ogg", "sound/misc/chair/office/scoot2.ogg", "sound/misc/chair/office/scoot3.ogg", "sound/misc/chair/office/scoot4.ogg", "sound/misc/chair/office/scoot5.ogg")
+			src.scoot_sounds = scoot_sounds = list('sound/misc/chair/office/scoot1.ogg', 'sound/misc/chair/office/scoot2.ogg', 'sound/misc/chair/office/scoot3.ogg', 'sound/misc/chair/office/scoot4.ogg', 'sound/misc/chair/office/scoot5.ogg')
 			return
 		else
 			return ..()
@@ -1348,7 +1348,7 @@
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		return
 
@@ -1384,7 +1384,7 @@
 			var/obj/stool/chair/C = new /obj/stool/chair(get_turf(src))
 			if (src.material)
 				C.setMaterial(src.material)
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			C.set_dir(src.dir)
 			if (src.part1)
 				src.part1.set_loc(get_turf(src))
@@ -1498,9 +1498,9 @@
 		for (var/mob/M in AIviewers(src, null))
 			M.show_message("<span class='alert'>The electric chair went off!</span>", 3)
 			if (lethal)
-				playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 0)
+				playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 0)
 			else
-				playsound(src.loc, "sound/effects/sparks4.ogg", 50, 0)
+				playsound(src.loc, 'sound/effects/sparks4.ogg', 50, 0)
 
 		if (src.buckled_guy && isliving(src.buckled_guy))
 			var/mob/living/L = src.buckled_guy

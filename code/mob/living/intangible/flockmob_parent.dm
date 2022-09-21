@@ -21,6 +21,7 @@
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -180,6 +181,9 @@
 
 	flock_speak(src, message, src.flock)
 
+/mob/living/intangible/flock/get_tracked_examine_atoms()
+	return ..() + src.flock.structures
+
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
 
@@ -199,7 +203,7 @@
 			if (src.emote_check(voluntary, 50))
 				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
-				playsound(src, "sound/misc/flockmind/flockmind_caw.ogg", 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
 		logTheThing(LOG_SAY, src, "EMOTE: [message]")

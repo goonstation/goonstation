@@ -11,7 +11,7 @@
 #endif
 	static_type_override = /mob/living/carbon/human
 	throw_range = 4
-	p_class = 1.5 // 1.5 while standing, 2.5 while resting (see UpdateIcon.dm for the place where this change happens)
+	p_class = 1.5 // 1.5 while standing, 2.5 while resting)
 
 	event_handler_flags = USE_FLUID_ENTER  | IS_FARTABLE
 	mob_flags = IGNORE_SHIFT_CLICK_MODIFIER
@@ -25,7 +25,6 @@
 	var/pin = null
 	var/obj/item/clothing/suit/wear_suit = null
 	var/obj/item/clothing/under/w_uniform = null
-//	var/obj/item/device/radio/w_radio = null
 	var/obj/item/clothing/shoes/shoes = null
 	var/obj/item/belt = null
 	var/obj/item/clothing/gloves/gloves = null
@@ -42,7 +41,6 @@
 	var/image/tail_standing_oversuit = null
 	var/image/detail_standing_oversuit = null
 	var/image/fire_standing = null
-	//var/image/face_standing = null
 	var/image/hands_standing = null
 
 	var/image/body_damage_standing = null
@@ -62,9 +60,9 @@
 
 	var/last_b_state = 1
 
-	var/chest_cavity_open = 0
+	var/chest_cavity_open = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
-	var/chest_item_sewn = 0			// Item is sewn in or is loose
+	var/chest_item_sewn = FALSE		// Item is sewn in or is loose
 
 	var/cust_icon = 'icons/mob/human_hair.dmi'	// icon for hair, in case we want something else
 	var/special_one_icon = 'icons/mob/human_hair.dmi'
@@ -78,15 +76,13 @@
 	var/last_eyes_blinded = 0 // used in handle_blindness_overlays() to determine if a change is needed!
 
 	var/obj/on_chair = null
-	var/simple_examine = 0
-
-	var/last_cluwne_noise = 0 // used in /proc/process_accents() to keep cluwnes from making constant fucking noise
+	var/simple_examine = FALSE
 
 	var/in_throw_mode = 0
 
 	var/yeet_chance = 0.1 //yeet
 
-	var/decomp_stage = 0 // 1 = bloat, 2 = decay, 3 = advanced decay, 4 = skeletonized
+	var/decomp_stage = DECOMP_STAGE_NO_ROT
 	var/time_until_decomposition = 0
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
@@ -376,7 +372,7 @@
 					limbs_to_sever += list(src.l_leg)
 				if ("r_leg")
 					limbs_to_sever += list(src.r_leg)
-			if (limbs_to_sever.len)
+			if (length(limbs_to_sever))
 				for (var/obj/item/parts/P in limbs_to_sever)
 					P.sever(user)
 				return 1
@@ -399,15 +395,20 @@
 			if("r_leg")
 				. = r_leg
 
-	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1)
+	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/l_held_item
 					if (src.l_arm)
+						if (no_drop && src.holder.l_hand)
+							l_held_item = src.holder.l_hand
 						src.l_arm.delete()
 					src.l_arm = new new_type(src.holder)
+					if (l_held_item)
+						src.holder.equip_if_possible(l_held_item, SLOT_L_HAND)
 				else // need to make an item arm
 					if (src.l_arm)
 						src.l_arm.delete()
@@ -422,9 +423,14 @@
 
 			if (target == "both_arms" || target == "r_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/r_held_item
 					if (src.r_arm)
+						if (no_drop && src.holder.r_hand)
+							r_held_item = src.holder.r_hand
 						src.r_arm.delete()
 					src.r_arm = new new_type(src.holder)
+					if (r_held_item)
+						src.holder.equip_if_possible(r_held_item, SLOT_R_HAND)
 				else // need to make an item arm
 					if (src.r_arm)
 						src.r_arm.delete()
@@ -488,6 +494,9 @@
 
 /mob/living/carbon/human/proc/is_vampiric_thrall()
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+/mob/living/carbon/human/is_open_container()
+	return !src.organHolder.head
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)
@@ -1214,14 +1223,14 @@
 			src.update_name_tag("")
 	else
 		if (id_name != src.real_name)
-			if (src.decomp_stage > 2 || src.disfigured)
+			if (src.decomp_stage > DECOMP_STAGE_DECAYED || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][id_name ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 		else
-			if (src.decomp_stage > 2 || src.disfigured)
+			if (src.decomp_stage > DECOMP_STAGE_DECAYED || src.disfigured)
 				src.name = "[src.name_prefix(null, 1)]Unknown[src.wear_id ? " (as [id_name])" : ""][src.name_suffix(null, 1)]"
 				src.update_name_tag(id_name)
 			else
@@ -2491,7 +2500,8 @@
 //MBC : oh god there's like 6 different code paths for the 'rip apart handcuffs' ability
 //																						pls standardize later
 /mob/living/carbon/human/resist()
-	..() // For resisting burning and grabs see living.dm
+	if (..()) // For resisting burning and grabs see living.dm
+		return TRUE
 	// Added this here (Convair880).
 	if (!isalive(src)) //can't resist when dead or unconscious
 		return
@@ -2616,7 +2626,7 @@
 		SPAWN(1 SECOND)
 			make_cleanable(/obj/decal/cleanable/vomit/spiders,src.loc)
 			for (var/i in 1 to 4)
-				new /obj/critter/spider/baby(src.loc)
+				new /mob/living/critter/spider/baby(src.loc)
 
 	if (src.mind || src.client)
 		ghostize()
