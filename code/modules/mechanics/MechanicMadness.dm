@@ -582,11 +582,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-<<<<<<< HEAD
-			var/codecheck = strip_html(tgui_input_text(user, "Please enter current code:", "Code check"))
-=======
-			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
->>>>>>> master
+			var/codecheck = strip_html_tags(tgui_input_text(user, "Please enter current code:", "Code check"))
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
