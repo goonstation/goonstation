@@ -144,14 +144,16 @@
 		return
 	if (ismob(M))
 		var/mob/T = M
-		boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+		if (!issilicon(M)) // Borgs don't care about rads (for the meantime)
+			boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
+
 		if(prob(1))
 			T.gib()
 			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
 			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)] and gibbed")
 			return
 		else
-			T.changeStatus("radiation", rand(5,25) SECONDS, 2)
+			T.take_radiation_dose(rand()*1 SIEVERTS)
 			if(ishuman(T))
 				var/mob/living/carbon/human/H = T
 				if (prob(75))

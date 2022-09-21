@@ -8745,7 +8745,7 @@
 	dir = 8;
 	icon_state = "line-broken1"
 	},
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/unsimulated/floor/plating/random,
 /area/space)
 "wu" = (

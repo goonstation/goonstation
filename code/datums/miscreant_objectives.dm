@@ -11,7 +11,10 @@
 			return
 		if (!crewMind.current || !crewMind.objectives || crewMind.objectives.len || crewMind.special_role || (crewMind.assigned_role == "MODE"))
 			return
-		if (crewMind.current && (isdead(crewMind.current) || isobserver(crewMind.current) || issilicon(crewMind.current) || isintangible(crewMind.current)))
+		if (crewMind.current && (isdead(crewMind.current) || isobserver(crewMind.current) || isintangible(crewMind.current)))
+			return
+		var/datum/job/J = find_job_in_controller_by_string(crewMind.assigned_role)
+		if (!J.allow_miscreant)
 			return
 		#ifdef RP_MODE
 		var/list/objectiveTypes = concrete_typesof(/datum/objective/miscreantrp)

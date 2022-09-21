@@ -47,11 +47,15 @@ var/flock_signal_unleashed = FALSE
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	processing_items |= src
-	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
-		src.unlockableStructures += new DT(src)
+	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
+/datum/flock/proc/load_structures()
+	src.unlockableStructures = list()
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
 	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
@@ -270,7 +274,7 @@ var/flock_signal_unleashed = FALSE
 			SPAWN(3 SECONDS)
 				F.client?.images -= arrow
 				qdel(arrow)
-		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmindsay" : ""]"
+		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
 		var/prefix = "<span class='bold'>\[[src.name]\] </span><span class='name'>[pinger.name]</span>"
 		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
@@ -549,6 +553,7 @@ var/flock_signal_unleashed = FALSE
 	src.used_compute = 0
 	src.peak_compute = 0
 	if (!real)
+		src.load_structures()
 		return
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
@@ -579,6 +584,8 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	T.AddComponent(/datum/component/flock_interest, src)
@@ -686,11 +693,17 @@ var/flock_signal_unleashed = FALSE
 	/obj/spacevine = null
 	)
 
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
+
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return
+	if (!flockTurfAllowed(T))
+		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 

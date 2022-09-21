@@ -638,6 +638,8 @@
 
 
 	attack_self(mob/user as mob)
+		if(!user.client)
+			return
 		var/list/options = list("Reset", "Set Blueprint Name", "Print Saved Blueprint", "Save Blueprint", "Delete Blueprint" , "Information")
 		var/input = input(user,"Select option:","Option") in options
 

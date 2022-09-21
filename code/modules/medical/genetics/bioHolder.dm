@@ -460,7 +460,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredList = list()
 
 		if (!bioEffectList || !length(bioEffectList))
-			logTheThing(LOG_DEBUG, null, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 			return 0
 
@@ -473,7 +473,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			filteredList[instance] = instance.probability
 
 		if(!filteredList.len)
-			logTheThing(LOG_DEBUG, null, null, {"<b>Genetics:</b> Unable to get effects for new random effect for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to get effects for new random effect for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredList.len = [filteredList.len])"})
 			return 0
 
@@ -500,7 +500,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		effectPool.Cut()
 
 		if (!bioEffectList || !length(bioEffectList))
-			logTheThing(LOG_DEBUG, null, null, {"<b>Genetics:</b> Tried to build effect pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 
 		for(var/T in bioEffectList)
@@ -520,7 +520,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					filteredGood[instance] = instance.probability
 
 		if(!filteredGood.len || !length(filteredBad))
-			logTheThing(LOG_DEBUG, null, null, {"<b>Genetics:</b> Unable to build effect pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
 			return

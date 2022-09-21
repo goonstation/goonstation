@@ -31,7 +31,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
-
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 		var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(src)
 		O.owner = src
 		O.implanted = 1
@@ -119,6 +119,9 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				src.abilityHolder.addAbility(/datum/targetable/critter/bot/fill_with_chem/phlogiston_dust)
 				src.emagged = TRUE
 				return TRUE
+
+		is_open_container()
+			return TRUE
 
 		emagged
 			brute_hp = 50

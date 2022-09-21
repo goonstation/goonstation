@@ -207,7 +207,7 @@
 		else
 			return null
 
-	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	proc/handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		//Return: (NONSTANDARD)
 		//		null if object handles breathing logic for lifeform
 		//		datum/air_group to tell lifeform to process using that breath return
@@ -215,10 +215,10 @@
 		if (breath_request>0)
 			var/datum/gas_mixture/environment = return_air()
 			if (environment)
-				var/breath_moles = TOTAL_MOLES(environment)*BREATH_PERCENTAGE
+				var/breath_moles = TOTAL_MOLES(environment)*BREATH_PERCENTAGE*mult
 				return remove_air(breath_moles)
 			else
-				return remove_air(breath_request)
+				return remove_air(breath_request * mult)
 		else
 			return null
 
@@ -546,6 +546,9 @@
 	src.visible_message("<span class='alert'><b>[src]</b> emits a loud thump and rattles a bit.</span>")
 
 	animate_storage_thump(src)
+
+/obj/proc/mob_resist_inside(var/mob/user)
+	return
 
 /obj/hitby(atom/movable/AM, datum/thrown_thing/thr)
 	. = ..()

@@ -937,10 +937,10 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	audio = 'sound/radio_station/trial_of_heisenbee.ogg'
 	name_of_thing = "The Trial of Heisenbee"
 
-/obj/item/radio_tape/audio_book/commander_announcement
-	name = "Commander's Log - 'You Got A Small Arsenal'"
-	name_of_thing = "You Got A Small Arsenal"
-	audio = 'sound/radio_station/commander_announcement.ogg'
+///obj/item/radio_tape/audio_book/commander_announcement
+//	name = "Commander's Log - 'You Got A Small Arsenal'"
+//	name_of_thing = "You Got A Small Arsenal"
+//	audio = 'sound/radio_station/commander_announcement.ogg'
 
 /obj/item/radio_tape/audio_book/commander_support
 	name = "Commander's Log - 'Customer Support Ticket #121'"

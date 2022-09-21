@@ -34,6 +34,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0
@@ -1400,7 +1404,8 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 	New()
 		..()
 		src.reagents = null
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT, src, 100)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
 

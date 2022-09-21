@@ -124,6 +124,7 @@ datum
 				P.growth -= 3
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -181,6 +182,7 @@ datum
 				P.HYPdamageplant("acid", 1)
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -474,6 +476,7 @@ datum
 				return
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (istype(B, /obj/blob/lipid))
 					B.take_damage(B.health_max, 2, "chaos")
 
@@ -792,6 +795,7 @@ datum
 				..()
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (B.type == /obj/blob)
 					var/obj/blob/lipid/L = new /obj/blob/lipid(B.loc)
 					L.setOvermind(B.overmind)
@@ -874,7 +878,7 @@ datum
 						else
 							if (H.head)
 								var/obj/item/clothing/head/D = H.head
-								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") * 2 < raw_volume)
+								if (!(D.item_function_flags & IMMUNE_TO_ACID) && D.getProperty("chemprot") <= raw_volume * 2)
 									if(!D.hasStatus("acid"))
 										boutput(M, "<span class='alert'>Your [H.head] begins to melt!</span>")
 										D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -884,7 +888,7 @@ datum
 							if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 								if (H.wear_mask)
 									var/obj/item/clothing/mask/K = H.wear_mask
-									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") * 3 < raw_volume)
+									if (!(K.item_function_flags & IMMUNE_TO_ACID) && K.getProperty("chemprot") <= raw_volume * 2)
 										if(!K.hasStatus("acid"))
 											boutput(M, "<span class='alert'>Your [H.wear_mask] begins to melt away!</span>")
 											K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
@@ -928,6 +932,7 @@ datum
 				P.growth -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
@@ -998,7 +1003,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 5 SECONDS * mult, 4)
+				M.take_radiation_dose(0.125 SIEVERTS * mult, internal=TRUE)
 				..()
 				return
 
@@ -1379,7 +1384,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 3 SECONDS * mult, 1)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				var/mutChance = 4
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 2
 				if (probmult(mutChance))
@@ -1415,7 +1420,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.changeStatus("radiation", 2 SECONDS * mult)
+				M.take_radiation_dose(0.02 SIEVERTS * mult, internal=TRUE)
 				// DNA buckshot
 				var/mutChance = 15
 				if (M.traitHolder && M.traitHolder.hasTrait("stablegenes")) mutChance = 7
@@ -1461,9 +1466,9 @@ datum
 			transparency = 220
 
 		harmful/wolfsbane
-			name = "Aconitum"
+			name = "Aconitine"
 			id = "wolfsbane"
-			description = "Also known as monkshood or wolfsbane, aconitum is a very potent neurotoxin."
+			description = "Also known as monkshood or wolfsbane, aconitine is a very potent neurotoxin."
 			reagent_state = LIQUID
 			fluid_r = 129
 			fluid_b = 116
@@ -1686,7 +1691,6 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				//M.changeStatus("radiation", 30, 1)
 				if (!src.data) // Pull bioholder data from blood that's in the same reagentholder
 					for (var/bloodtype in holder.reagent_list)
 						var/datum/reagent/blood = holder.reagent_list[bloodtype]

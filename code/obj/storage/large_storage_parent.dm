@@ -267,23 +267,23 @@
 				return
 
 		if (src.open)
-			if ((src._health <= 0) && isweldingtool(I))
-				if(!I:try_weld(user, 1, burn_eyes = TRUE))
+			if (isweldingtool(I))
+				var/obj/item/weldingtool/weldingtool = I
+				if(weldingtool.welding)
+					if (src._health <= 0)
+						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
+							return
+						src._health = src._max_health
+						src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
+					else if (!src.is_short && !src.legholes)
+						if (!weldingtool.try_weld(user, 1))
+							return
+						src.legholes = 1
+						src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
 					return
-				src._health = src._max_health
-				src.visible_message("<span class='alert'>[user] repairs [src] with [I].</span>")
-				return
-			if (!src.is_short && isweldingtool(I))
-				if (!src.legholes)
-					if(!I:try_weld(user, 1))
-						return
-					src.legholes = 1
-					src.visible_message("<span class='alert'>[user] adds some holes to the bottom of [src] with [I].</span>")
-					return
-				else if(!issilicon(user))
+				if(!issilicon(user))
 					if(user.drop_item())
-						if (I)
-							I:set_loc(src.loc)
+						weldingtool?.set_loc(src.loc)
 					return
 
 			else if (iswrenchingtool(I))
@@ -502,8 +502,6 @@
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
 						continue
-					if (thing.material && thing.material.getProperty("radioactive") > 0)
-						user.changeStatus("radiation", (round(min(thing.material.getProperty("radioactive") * 2, 20))) SECONDS)
 					if (thing in user)
 						continue
 					if (!check_if_enterable(thing))
@@ -511,6 +509,7 @@
 					if (thing.loc == src || thing.loc == src.loc) // we're already there!
 						continue
 					thing.set_loc(T)
+					SEND_SIGNAL(thing,COMSIG_ATTACKHAND,user) //triggers radiation/explsion/glue stuff
 					sleep(0.5)
 					if (!src.open)
 						break

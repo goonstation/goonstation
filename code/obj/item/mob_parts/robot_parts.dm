@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","skull","eye")
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
@@ -1025,34 +1025,34 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					user.unlock_medal("Weird Science", 1)
 					src.finish_cyborg()
 				if("Remove the Right leg")
-					src.r_leg.set_loc( get_turf(src) )
+					src.r_leg?.set_loc( get_turf(src) )
 					if (src.r_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.r_leg = null
 				if("Remove the Left leg")
-					src.l_leg.set_loc( get_turf(src) )
+					src.l_leg?.set_loc( get_turf(src) )
 					if (src.l_leg.slot == "leg_both")
 						src.r_leg = null
 						src.l_leg = null
 					else src.l_leg = null
 				if("Remove the Right arm")
-					src.r_arm.set_loc( get_turf(src) )
+					src.r_arm?.set_loc( get_turf(src) )
 					if (src.r_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.r_arm = null
 				if("Remove the Left arm")
-					src.l_arm.set_loc( get_turf(src) )
+					src.l_arm?.set_loc( get_turf(src) )
 					if (src.l_arm.slot == "arm_both")
 						src.r_arm = null
 						src.l_arm = null
 					else src.l_arm = null
 				if("Remove the Head")
-					src.head.set_loc( get_turf(src) )
+					src.head?.set_loc( get_turf(src) )
 					src.head = null
 				if("Remove the Chest")
-					src.chest.set_loc( get_turf(src) )
+					src.chest?.set_loc( get_turf(src) )
 					src.chest = null
 			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			src.UpdateIcon()

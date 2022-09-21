@@ -368,7 +368,7 @@
 			new /obj/item/clothing/head/emerg(src)
 
 /obj/item/storage/box/starter/withO2
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"

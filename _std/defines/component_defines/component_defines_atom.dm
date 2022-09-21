@@ -73,6 +73,8 @@
 // ---- turf signals ----
 	// when an atom inside the turfs contents changes opacity (turf, previous_opacity, thing)
 	#define COMSIG_TURF_CONTENTS_SET_OPACITY "turf_contents_set_opacity"
+	// when an atom inside the turfs contents changes opacity, but only called when it would actually do a meaningful change (turf, previous_opacity, thing)
+	#define COMSIG_TURF_CONTENTS_SET_OPACITY_SMART "turf_contents_set_opacity_smart"
 
 // ---- obj signals ----
 
@@ -181,7 +183,7 @@
 	#define COMSIG_MOB_SHOCKED_DEFIB "mob_shocked"
 	/// Sent to mob when client lifts the mouse button
 	#define COMSIG_MOB_MOUSEUP "mob_mouseup"
-	/// Sent when a mob is grabbed by another mob (grab)
+	/// Sent when a mob is grabbed by another mob (grab object)
 	#define COMSIG_MOB_GRABBED "mob_grabbed"
 
 	// ---- cloaking device signal ----
@@ -204,7 +206,7 @@
 	#define COMSIG_MOB_DISGUISER_DEACTIVATE "disguiser_deactivate"
 
 // ---- living signals ----
-		// When Life() ticks
+		// When Life() ticks (mult)
 		#define COMSIG_LIVING_LIFE_TICK "mob_life_tick"
 
 // ---- human signals ----

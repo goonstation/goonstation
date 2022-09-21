@@ -40,7 +40,7 @@
 		#endif
 
 		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE)
+			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
@@ -166,8 +166,8 @@
 				B.set_reinforcement(src.material)
 			else
 				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
+				A.setMaterial(M, copy = FALSE)
+				B.setMaterial(M, copy = FALSE)
 				B.set_reinforcement(M)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
@@ -175,8 +175,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 				if (prob(50))
 					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
@@ -184,16 +183,14 @@
 					if (src.material)
 						B.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						B.setMaterial(M)
+						B.setMaterial(getMaterial("steel"), copy = FALSE)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	else
 		if (!devastated)
@@ -207,17 +204,16 @@
 				C.setMaterial(src.material)
 			else
 				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M)
-				B.setMaterial(M)
-				C.setMaterial(M)
+				A.setMaterial(M, copy = FALSE)
+				B.setMaterial(M, copy = FALSE)
+				C.setMaterial(M, copy = FALSE)
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
@@ -225,8 +221,7 @@
 				if (src.material)
 					B.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					B.setMaterial(M)
+					B.setMaterial(getMaterial("steel"), copy = FALSE)
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
@@ -234,15 +229,13 @@
 					if (src.material)
 						C.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						C.setMaterial(M)
+						C.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	var/atom/D = ReplaceWithFloor()
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		var/datum/material/M = getMaterial("steel")
-		D.setMaterial(M)
+		D.setMaterial(getMaterial("steel"), copy = FALSE)
 
 /turf/simulated/wall/burn_down()
 	src.ReplaceWithFloor()
@@ -410,7 +403,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -418,7 +411,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
@@ -442,7 +435,7 @@
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"))
+				A.setMaterial(getMaterial("steel"), copy = FALSE)
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
@@ -507,8 +500,7 @@
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				var/datum/material/M = getMaterial("steel")
-				src.setMaterial(M)
+				src.setMaterial(getMaterial("steel"), copy = FALSE)
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 
 //grabsmash

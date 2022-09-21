@@ -53,8 +53,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		if (src.loc != null)
 			var/area/Ar = get_area(src)
-			if (Ar)
-				Ar.sims_score = max(Ar.sims_score - 6, 0)
+			Ar?.sims_score = max(Ar.sims_score - 6, 0)
 
 			if (src.stain)
 				src.Stain()
@@ -62,10 +61,9 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if(isturf(src.loc))
 				var/turf/T = src.loc
 				T.messy++
-
-			if (istype(src.loc, /turf/simulated/floor))
-				var/turf/simulated/T = src.loc
-				T.cleanable_fluid_react()
+				if (istype(T, /turf/simulated/floor))
+					var/turf/simulated/floor/floor = T
+					floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -187,7 +185,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				src.sampled = 1
 				return 1
 
-	proc/Stain(var/atom/movable/AM)
+	proc/Stain(atom/movable/AM)
 		if (src.stain)
 			if (AM)
 				if (ishuman(AM))
@@ -206,21 +204,19 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					C.add_stain(src.stain)
 					return
 			else
-				SPAWN(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
-					for (var/mob/living/carbon/human/H in src.loc)
-						if (H.lying)
-							if (H.wear_suit)
-								H.wear_suit.add_stain(src.stain)
-							else if (H.w_uniform)
-								H.w_uniform.add_stain(src.stain)
-						//else
-							//if (H.shoes)
-								//H.shoes.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
-					LAGCHECK(LAG_HIGH)
-					for (var/obj/item/clothing/C in src.loc)
-						C.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
+				for (var/mob/living/carbon/human/H in src.loc)
+					if (H.lying)
+						if (H.wear_suit)
+							H.wear_suit?.add_stain(src.stain)
+						else if (H.w_uniform)
+							H.w_uniform?.add_stain(src.stain)
+					//else
+						//if (H.shoes)
+							//H.shoes.add_stain(src.stain)
+					LAGCHECK(LAG_REALTIME)
+				for (var/obj/item/clothing/C in src.loc)
+					C.add_stain(src.stain)
+					LAGCHECK(LAG_REALTIME)
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction, var/overlay_icon)
 		var/overlay_icon_state

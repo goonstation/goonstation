@@ -372,11 +372,11 @@ proc/get_angle(atom/a, atom/b)
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
-/proc/add_zero(t, u)
-	t = "[t]"
-	while (length(t) < u)
-		t = "0[t]"
-	. = t
+/proc/add_zero(text, desired_length)
+	text = "[text]" // ensure it's a string
+	if ((desired_length - length(text)) <= 0)
+		return text
+	return (num2text(0, desired_length - length(text), 10) + text)
 
 /proc/add_lspace(t, u)
 	// why????? because if you pass this a number,
@@ -1043,7 +1043,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			if(client)
+				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
@@ -1828,7 +1829,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && world.time < ghost_timestamp + confirmation_spawn)
+		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
 			sleep(30 SECONDS)
 
 		// Filter list again.

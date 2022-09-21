@@ -66,7 +66,7 @@
 	/// Boolean field describing if the tgui_modal was closed by the user.
 	var/closed
 
-/datum/tgui_modal/New(mob/user, message, title, list/items, default, timeout, autofocus)
+/datum/tgui_modal/New(mob/user, message, title, list/items, timeout, autofocus)
 	src.user = user
 	src.autofocus = autofocus
 	src.items = items.Copy()
@@ -90,8 +90,7 @@
  * the window was closed by the user.
  */
 /datum/tgui_modal/proc/wait()
-	while (user.client && !choice && !closed && !QDELETED(src))
-		LAGCHECK(LAG_HIGH)
+	UNTIL(!user.client || choice || closed || QDELETED(src))
 
 /datum/tgui_modal/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)

@@ -38,6 +38,7 @@
 		ensure_reagent_holder()
 		src.current_projectile = new /datum/projectile/syringe/syringe_barbed/gnesis(src)
 		src.current_projectile.cost = src.fluid_shot_amt
+		src.info_tag.set_info_tag("Gnesis: [src.reagents.total_volume]/[src.fluid_level_max]")
 
 
 	proc/ensure_reagent_holder()
@@ -100,6 +101,7 @@
 				src.update_flock_compute("apply")
 			if (src.making_projectiles)
 				src.reagents.add_reagent(fluid_gen_type, fluid_gen_amt * mult)
+				src.info_tag.set_info_tag("Gnesis: [src.reagents.total_volume]/[src.fluid_level_max]")
 		else if (src.making_projectiles)
 			src.making_projectiles = FALSE
 			src.update_flock_compute("remove", FALSE)
@@ -115,6 +117,7 @@
 				return
 			else //GUN THEM DOWN
 				if(src.target)
+					logTheThing(LOG_COMBAT, src, "Flock gnesis turret at [log_loc(src)] belonging to flock [src.flock?.name] fires at [constructTarget(src.target)].")
 					SPAWN(0)
 						for(var/i in 1 to src.current_projectile.shot_number) //loop animation until finished
 							muzzle_flash_any(src, 0, "muzzle_flash")
@@ -184,3 +187,4 @@
 	on_launch(obj/projectile/O)
 		. = ..()
 		parentTurret.reagents.trans_to(O,src.cost)
+		parentTurret.info_tag.set_info_tag("Gnesis: [parentTurret.reagents.total_volume]/[parentTurret.fluid_level_max]")

@@ -121,7 +121,7 @@ datum/preferences
 
 	ui_static_data(mob/user)
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/list/categories
 			if (islist(trait.category))
 				categories = trait.category.Copy()
@@ -168,7 +168,7 @@ datum/preferences
 		sanitize_null_values()
 
 		var/list/traits = list()
-		for (var/obj/trait/trait as anything in src.traitPreferences.getTraits(user))
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
 			var/selected = (trait.id in traitPreferences.traits_selected)
 			var/list/categories
 			if (islist(trait.category))
@@ -326,7 +326,7 @@ datum/preferences
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
-					if(!isnull(new_name) && length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
@@ -1045,7 +1045,7 @@ datum/preferences
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break
