@@ -1038,8 +1038,11 @@
 				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
 				var/prevLayer = the_mob.layer
 				var/prevPlane = the_mob.plane
+				var/prevDensity = the_mob.density
 				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
 				the_mob.plane = PLANE_NOSHADOW_ABOVE
+				APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+				the_mob.flags |= TABLEPASS
 
 				if (prob(10))
 					the_mob.emote("flip")
@@ -1059,6 +1062,8 @@
 					sleep(jump_time)
 					the_mob.layer = prevLayer
 					the_mob.plane = prevPlane
+					REMOVE_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+					the_mob.flags &= ~TABLEPASS
 					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
 
 					if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
