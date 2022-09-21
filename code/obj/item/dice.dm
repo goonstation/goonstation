@@ -57,7 +57,7 @@ var/list/rollList = list()
 		var/roll_total = null
 
 		if (src.sound_roll)
-			playsound(src, src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
 		if (!src.cant_drop)
 			src.set_loc(get_turf(src))
@@ -437,7 +437,7 @@ var/list/rollList = list()
 			usr.mind.damned = 1
 
 		if (src.sound_roll)
-			playsound(src, src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
 		if (!src.cant_drop)
 			src.set_loc(get_turf(src))

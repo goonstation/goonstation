@@ -181,7 +181,9 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -345,7 +347,9 @@
 		return 6
 
 	proc/check_for_unacceptable_content()
-		return mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	construction
 		var/marker_type = /obj/magnet_target_marker
@@ -870,6 +874,18 @@
 	return 2
 
 // Turf Defines
+
+TYPEINFO(/turf/simulated/wall/auto/asteroid)
+TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
+	. = ..()
+	connect_overlay = 0
+	connect_diagonal = 1
+	connects_to = typecacheof(list(
+		/turf/simulated/wall/auto/asteroid,
+		/turf/simulated/wall/false_wall,
+		/obj/structure/woodwall,
+		/obj/machinery/door/poddoor/blast/asteroid
+	))
 /turf/simulated/wall/auto/asteroid
 	icon = 'icons/turf/walls_asteroid.dmi'
 	mod = "asteroid-"
@@ -877,10 +893,7 @@
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	connect_overlay = 0
-	connect_diagonal = 1
 	default_material = "rock"
-	connects_to = list(/turf/simulated/wall/auto/asteroid, /turf/simulated/wall/false_wall, /obj/structure/woodwall, /obj/machinery/door/poddoor/blast/asteroid)
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -1170,15 +1183,7 @@
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
 
-	proc/build_icon(var/wipe_overlays = 0)
-		/*
-		if (wipe_overlays)
-			src.overlays = list()
-		var/image/coloration = image(src.icon,"color_overlay")
-		coloration.blend_mode = 4
-		coloration.color = src.stone_color
-		src.overlays += coloration
-		*/
+	proc/build_icon()
 		src.color = src.stone_color
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
@@ -1441,8 +1446,9 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(ispryingtool(W))
-			src.ReplaceWithSpace()
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
 
 	update_icon()
 
@@ -2267,9 +2273,7 @@ obj/item/clothing/gloves/concussive
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
 		if (!istype(pad)) //wuh?
 			return
-		if (pad in pads)
-			return
-		src.pads += pad
+		src.pads |= pad
 
 	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
 	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)

@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	New(var/loc, var/direction)
 		..()
-		src.set_dir(direction)
+		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -440,7 +440,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	projectile_type = /datum/projectile/bullet/ak47
+	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 

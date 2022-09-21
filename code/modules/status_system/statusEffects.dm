@@ -402,13 +402,13 @@
 				M = owner
 			else
 				return ..(timePassed)
+			damage_tox = 0
+			damage_burn = 0
 
 			stage = get_stage(M.radiation_dose)
 			switch(stage)
 				if(0)
 					howMuch = ""
-					damage_tox = 0
-					damage_burn = 0
 				if(1)
 					howMuch = "barely " //you'll be fine
 				if(2)
@@ -421,6 +421,10 @@
 					howMuch = "fatally " //congrats, you're dead in a minute
 				if(6)
 					howMuch = "totally " // you are literally dying in seconds
+
+			if(isdead(M))
+				return ..(timePassed) //no mutations or damage for the dead
+
 			if(stage > 0)
 				visible = TRUE
 				var/damage_total = 5 * (M.radiation_dose**1.4 - tanh(M.radiation_dose**1.6))
@@ -430,7 +434,7 @@
 				visible = FALSE
 
 
-			if(stage > 0 && !isdead(M) && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
+			if(stage > 0 && (M.bioHolder && !M.bioHolder.HasEffect("revenant")))
 				if(!ON_COOLDOWN(M,"radiation_mutation_check", 3 SECONDS) && prob(((stage - 1) - M.traitHolder?.hasTrait("stablegenes"))**2))
 					boutput(M, "<span class='alert'>You mutate!</span>")
 					M.bioHolder.RandomEffect("either")
@@ -880,7 +884,7 @@
 				icon_state = "drunk[how_drunk]"
 
 		getTooltip()
-			. =  "You are [how_drunk == 2 ? "very": ""][how_drunk == 3 ? ", very" : ""] drunk."
+			. =  "You are [how_drunk >= 2 ? "very": ""][how_drunk >= 3 ? ", very" : ""] drunk."
 
 	blinded
 		id = "blinded"
@@ -1559,6 +1563,15 @@
 	id = "thirsty"
 	name = "Thirsty"
 	desc = "You really need some water!"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5
+
+/datum/statusEffect/staminaregen/cursed
+	id = "weakcurse"
+	name = "Enfeebled"
+	desc = "You feel really weak"
 	icon_state = "stam-"
 	duration = INFINITE_STATUS
 	maxDuration = null

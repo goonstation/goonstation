@@ -206,7 +206,7 @@
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> fumbles [src] and cuts [himself_or_herself(user)].</span>")
-		user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
+		user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 5)
 		take_bleeding_damage(user, user, 5)
 		JOB_XP(user, "Clown", 1)
 	src.active = !( src.active )
@@ -1510,7 +1510,7 @@ obj/item/whetstone
 	icon_state = "hadar_sword2"
 	item_state = "hadar_sword2"
 	flags = ONBACK | FPRINT | TABLEPASS
-	hit_type = DAMAGE_CUT | DAMAGE_STAB
+	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
 	w_class = W_CLASS_BULKY
@@ -1519,8 +1519,8 @@ obj/item/whetstone
 	stamina_damage = 25
 	stamina_cost = 20
 	stamina_crit_chance = 15
-	pickup_sfx = 'sound/weapons/hadar-pickup.ogg'
-	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	pickup_sfx = 'sound/weapons/hadar_pickup.ogg'
+	hitsound = 'sound/weapons/hadar_impact.ogg'
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
@@ -1562,14 +1562,14 @@ obj/item/whetstone
 	if (t.loc:sanctuary)
 		return
 
-	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
-		src.force += 5
-		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
-		src.tooltip_rebuild = TRUE
 	if(src.mode == 1) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
 	..()
+	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
+		src.force += 5
+		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+		src.tooltip_rebuild = TRUE
 
 /obj/item/heavy_power_sword/dropped(mob/user)
 	..()
@@ -1586,12 +1586,14 @@ obj/item/whetstone
 			icon_state = "hadar_sword1"
 			item_state = "hadar_sword1"
 			src.mode = STAB_MODE
+			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
 		if(2)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
 			icon_state = "hadar_sword2"
 			item_state = "hadar_sword2"
 			src.mode = SWIPE_MODE
+			hit_type = DAMAGE_CUT
 			src.setItemSpecial(/datum/item_special/swipe)
 	user.update_inhands()
 	tooltip_rebuild = TRUE

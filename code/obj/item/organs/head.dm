@@ -18,7 +18,7 @@
 	rand_pos = 0 // we wanna override it below
 	made_from = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
-	MAX_DAMAGE = INFINITY
+	max_damage = INFINITY
 
 	var/obj/item/organ/brain/brain = null
 	var/obj/item/skull/skull = null
@@ -289,11 +289,7 @@
 		src.pixel_y = rand(-20,-8)
 		src.pixel_x = rand(-8,8)
 
-	do_missing()
-		..()
-
 	on_removal()
-		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
 		if (src.linked_human)
 			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
@@ -541,8 +537,8 @@
 				if(HEAD_WEREWOLF)
 					src.organ_name = "wolf head"
 					src.desc = "Definitely not a good boy."
-					src.MAX_DAMAGE = 250	// Robust head for a robust antag
-					src.FAIL_DAMAGE = 240
+					src.max_damage = 250	// Robust head for a robust antag
+					src.fail_damage = 240
 
 				if(HEAD_SKELETON)
 					src.organ_name = "bony head"

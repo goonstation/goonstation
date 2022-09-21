@@ -17,7 +17,7 @@
 	name = "Railgun"
 	desc = "Bzooom"
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT

@@ -2,8 +2,8 @@
 	var/mob/living/owner
 	var/last_process = 0
 
-	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
+	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -264,7 +264,7 @@
 		//Regular Trait updates
 		if(src.traitHolder)
 			for(var/id in src.traitHolder.traits)
-				var/obj/trait/O = src.traitHolder.traits[id]
+				var/datum/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
