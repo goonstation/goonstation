@@ -1702,3 +1702,151 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+
+// Halberd- Experimental weapon by NightmareChamillian
+/obj/item/halberd
+	name = "Halberd"
+	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "halberd"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "halberd1"
+
+	w_class = W_CLASS_BULKY
+	two_handed = 1
+	throw_range = 10
+	throwforce = 30 //yeet like spear
+	stamina_crit_chance = 5
+
+	//these combat variables change depending on the stance- starts with help intent vars
+	force = 28
+	stamina_damage = 10
+	stamina_cost = 7
+
+
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | TABLEPASS | USEDELAY | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD
+	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
+
+	var/guard = null
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_SWORD)
+
+	setupProperties()
+		. = ..()
+		setProperty("deflection", 33)
+
+	proc/change_guard(var/mob/user,var/intent)
+		guard = intent
+		switch(guard)
+			if("help") //light swing with the axe
+				force = 28
+				stamina_damage = 10
+				stamina_cost = 7
+				item_state = "halberd1"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 0.75
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
+				icon_state = "halberd"
+			if("disarm") //thrust with the pointy end
+				force = 15
+				stamina_damage = 10
+				stamina_cost = 8
+				item_state = "halberd2"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY * 0.60
+				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/rangestab)
+				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
+				icon_state = "halberd"
+			if("grab") //attack with the spur on the back
+				force = 10
+				stamina_damage = 40
+				stamina_cost = 20
+				item_state = "halberd1"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY
+				hitsound ='sound/impact_sounds/Fireaxe.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
+				icon_state = "halberd2"
+			if("harm") //wide, tiring swings with the axe
+				force = 35
+				stamina_damage = 20
+				stamina_cost = 35
+				item_state = "halberd1"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 1.25
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/swipe)
+				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
+				icon_state = "halberd"
+
+
+		user.update_inhands()
+		src.buildTooltipContent()
+
+	proc/parry_block_check(var/mob/living/carbon/human/attacker,var/mob/living/carbon/human/defender)
+		if(attacker == defender)
+			return
+
+		if((attacker.a_intent == defender.a_intent) && !defender.hasStatus("disorient"))
+			playsound(defender, "sound/impact_sounds/kendo_parry_[pick(1,2,3)].ogg", 50, 1)
+			attacker.do_disorient(0,0,0,0,10,1)
+			return 1
+
+		else if(defender.hasStatus("blocking"))
+			playsound(defender, "sound/impact_sounds/kendo_block_[pick(1,2)].ogg", 50, 1)
+			if(attacker.equipped())
+				defender.do_disorient((attacker.equipped().stamina_cost*1.5),0,0,0,0,1,null)
+			return 2
+		return 0
+
+	proc/stat_reset()
+		if(force != 5)
+			force = 5
+		else
+			return
+		stamina_damage = 10
+		stamina_cost = 5
+		item_state = "shinai-light"
+		src.setItemSpecial(/datum/item_special/simple/kendo_light)
+		src.buildTooltipContent()
+
+	intent_switch_trigger(mob/user as mob)
+		if(guard != user.a_intent)
+			change_guard(user,user.a_intent)
+
+	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
+		if(ishuman(defender))
+			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
+				var/obj/item/shinai/S = defender.equipped()
+				var/parry_block = S.parry_block_check(attacker,defender)
+				if((parry_block == 1) || (parry_block == 2))
+					attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
+					return //stops damage if parried or blocked, if not, itll check for a disarm
+
+			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
+				var/obj/item/I = defender.equipped()
+				defender.u_equip(I)
+				I.set_loc(defender.loc)
+				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
+				I.throw_at(target_turf,3,1)
+				defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
+				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
+		..()
+
+	attack_hand(mob/user)
+		if(src.loc != user)
+			change_guard(user,user.a_intent)
+		..()
+
+	dropped(mob/user as mob)
+		..()
+		stat_reset()
