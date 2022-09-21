@@ -1038,7 +1038,6 @@
 				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
 				var/prevLayer = the_mob.layer
 				var/prevPlane = the_mob.plane
-				var/prevDensity = the_mob.density
 				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
 				the_mob.plane = PLANE_NOSHADOW_ABOVE
 				APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
