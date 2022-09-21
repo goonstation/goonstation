@@ -1020,6 +1020,7 @@
 	setupProperties()
 		. = ..()
 		src.setProperty("movespeed", 0.8)
+		src.setProperty("disorient_resist", 15)
 
 /obj/ability_button/stomper_boot_stomp
 	name = "Stomp"
