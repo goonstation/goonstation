@@ -33,7 +33,6 @@
 		desc = "A light micro-computer frame used for terminal systems."
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
-		computer_type = /obj/machinery/computer3/terminal
 		material_amt = 0.3
 		max_peripherals = 2
 		metal_given = 3
@@ -43,7 +42,6 @@
 		name = "Desktop Computer-frame"
 		icon = 'icons/obj/computer_frame_desk.dmi'
 		created_icon_state = "old"
-		computer_type = /obj/machinery/computer3/personal/personel_alt
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
