@@ -124,6 +124,7 @@
 	//	new thingy(get_turf(src))
 
 /obj/random_item_spawner/surplus/backup
+	amt2spawn = 1
 	items2spawn = list(
 		/obj/item/remote/reinforcement_beacon,
 		/obj/item/old_grenade/spawner/sawflycluster,
@@ -143,6 +144,7 @@
 
 
 /obj/random_item_spawner/surplus/expensive
+	amt2spawn = 1
 	items2spawn = list(
 		/obj/item/card/emag,
 		/obj/item/storage/belt/wrestling,
@@ -203,6 +205,7 @@
 
 
 /obj/random_item_spawner/surplus/medical
+	amt2spawn = 1
 	items2spawn = list(
 	/obj/item/reagent_containers/food/snacks/donkpocket_w,
 	/obj/item/storage/firstaid/crit,

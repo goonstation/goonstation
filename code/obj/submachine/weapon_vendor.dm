@@ -248,8 +248,15 @@
 
 	accepted_token(var/token)
 
+
+
 		if (istype(token, /obj/item/requisition_token/syndicate/surplusutility))
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
+
+		else if(istype(token, /obj/item/requisition_token/syndicate/surplus/giga))
+			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=15
+			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=30
+			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=1
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
@@ -661,6 +668,10 @@
 			name = "Prepaid check"
 			desc = "A written check of a couple thousand credits to an individual named Jack Hysen Matthews. Huh."
 			icon_state = "req-token-surplus"
+
+			giga
+				name = "Super duper check"
+				desc = "wow! this thing can buy you a lot!!!"
 
 		surplusutility
 			name = "Copper dubloon"
