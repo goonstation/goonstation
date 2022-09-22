@@ -47249,6 +47249,11 @@
 	dir = 1
 	},
 /obj/lattice,
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "cargo belt - west";
+	operating = 1
+	},
 /turf/space,
 /area/supply/delivery_point)
 "cpA" = (
@@ -50427,9 +50432,7 @@
 	})
 "czu" = (
 /turf/simulated/floor/carpet/purple/fancy/edge/east,
-/area/station/science/artifact{
-	name = "Artifact Lounge"
-	})
+/area/supply/delivery_point)
 "czv" = (
 /obj/table/wood/auto,
 /obj/machinery/networked/storage/scanner{
@@ -52234,6 +52237,18 @@
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
+"cMu" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
+/obj/lattice,
+/obj/machinery/conveyor{
+	dir = 8;
+	name = "cargo belt - west";
+	operating = 1
+	},
+/turf/space,
+/area/space)
 "cNT" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mineral{
@@ -137004,7 +137019,7 @@ asH
 bqb
 bqb
 bqb
-bqb
+cMu
 bzS
 iNi
 bFw
@@ -137306,7 +137321,7 @@ aEo
 bqb
 bqb
 bqb
-bqb
+cMu
 bzT
 iNi
 bFw
