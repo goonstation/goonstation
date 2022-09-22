@@ -1077,12 +1077,8 @@ TYPEINFO(/datum/mutantrace)
 			make_cleanable(/obj/decal/cleanable/blood,get_turf(src.mob))
 			cleanable_tally = 0
 
-		var/old_max = src.mob.max_health
 		src.mob.max_health = blood_points * blood_to_health_scalar
 		src.mob.max_health = max(20,src.mob.max_health)
-		var/delta = src.mob.max_health - old_max
-		if (delta > 0)
-			src.mob.health += src.mob.health + delta
 		health_update_queue |= src.mob
 
 	emote(var/act)
