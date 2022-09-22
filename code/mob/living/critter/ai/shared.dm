@@ -235,7 +235,7 @@
 
 /datum/aiTask/timed/targeted/follower/evaluate()
 	..()
-	. = precondition() * FOLLOW_PRIORITY
+	. = precondition() * 4 //FOLLOW_PRIORITY = 4
 
 /datum/aiTask/timed/targeted/follower/on_tick()
 	var/mob/living/critter/owncritter = holder.owner
