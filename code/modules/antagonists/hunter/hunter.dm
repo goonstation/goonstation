@@ -52,7 +52,7 @@
 		var/mob/living/carbon/human/H = src
 
 		if (!H.organHolder)
-			sleep (20)
+			sleep (2 SECONDS)
 			if (!H.organHolder)
 				return
 
@@ -88,6 +88,7 @@
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
 							if (ROLE_VAMPIRE)
+								skull_type = /obj/item/skull/menacing
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -375,6 +376,10 @@
 	src.set_face_icon_dirty()
 	src.set_body_icon_dirty()
 	src.update_clothing()
+
+	SPAWN(2.5 SECONDS) // Don't remove.
+		if (src)
+			src.assign_gimmick_skull()
 
 	boutput(src, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
 	logTheThing(LOG_COMBAT, src, "transformed into a hunter at [log_loc(src)].")

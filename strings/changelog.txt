@@ -4,6 +4,8 @@
 (p)10861
 (e)|
 (*)You can now tame rattlesnakes by giving them food, try not to get bit too many times trying.
+(u)flappybat & CloverOfCrystal
+(*)Adds special skulls for vampires. Sprite by CloverOfCrystal.
 (t)wed sep 21 22
 (u)zjdtmkhzt
 (p)10801
