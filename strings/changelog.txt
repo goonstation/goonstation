@@ -1,5 +1,10 @@
 
 (t)thu sep 22 22
+(u)glowbold
+(p)10780
+(e)|
+(+)Cargo orders now consistently land on intake belts.
+(+)Using an EMAG on a QM supply console removes intake targeting.
 (u)Rodimus and LeahTheTech
 (p)10754
 (e)|
