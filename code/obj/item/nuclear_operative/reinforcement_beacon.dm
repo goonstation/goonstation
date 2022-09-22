@@ -47,7 +47,7 @@
 		synd.mind.current.antagonist_overlay_refresh(1, 0)
 		if(istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/nuke_mode = ticker.mode
-			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.target_location_name]</B>.", 0, 0)
+			synd.mind.store_memory("The bomb must be armed in <B>[nuke_mode.concatenated_location_names]</B>.", 0, 0)
 			nuke_mode.syndicates += synd.mind
 		synd.mind.current.show_antag_popup("nukeop-gunbot")
 		SPAWN(0)

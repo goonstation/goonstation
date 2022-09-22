@@ -28,7 +28,7 @@
 		if (has_material)
 			if (isnull(plate_mat))
 				plate_mat = getMaterial("steel")
-			setMaterial(plate_mat)
+			setMaterial(plate_mat, copy = FALSE)
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -651,8 +651,8 @@
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		..()
-		setMaterial(getMaterial("pharosium"))
+		plate_mat = getMaterial("pharosium")
+		. = ..()
 
 /turf/simulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -1058,8 +1058,8 @@ DEFINE_FLOORS(minitiles/black,
 	step_priority = STEP_PRIORITY_MED
 
 	New()
-		..()
-		setMaterial(getMaterial("wood"))
+		plate_mat = getMaterial("wood")
+		. = ..()
 
 /turf/simulated/floor/wood/two
 	icon_state = "wooden"
@@ -1133,7 +1133,7 @@ DEFINE_FLOORS(minitiles/black,
 	Entered(atom/A as mob|obj)
 		if (istype(A, /obj/stool/chair/comfy/wheelchair))
 			var/obj/stool/chair/comfy/wheelchair/W = A
-			if (!W.lying && prob(40))
+			if (!W.lying && prob(10))
 				if (W.buckled_guy && W.buckled_guy.m_intent == "walk")
 					return ..()
 				else
@@ -1384,9 +1384,9 @@ DEFINE_FLOORS(techfloor/green,
 			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
 		#endif
-
+		plate_mat = getMaterial("synthrubber")
 		..()
-		setMaterial(getMaterial("synthrubber"))
+
 /turf/proc/grassify()
 	.=0
 
@@ -1534,8 +1534,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	allows_vehicles = 1
 
 	New()
+		plate_mat = getMaterial("blob")
 		..()
-		setMaterial(getMaterial("blob"))
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(copyMaterial(O.my_material))
@@ -1694,9 +1694,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	broken = 0
 	burnt = 0
 	if(plate_mat)
-		src.setMaterial(plate_mat)
+		src.setMaterial(plate_mat, copy = FALSE)
 	else
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial("steel"), copy = FALSE)
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1844,8 +1844,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
+				R1.setMaterial(getMaterial("steel"), copy = FALSE)
+				R2.setMaterial(getMaterial("steel"), copy = FALSE)
 			ReplaceWithFloor()
 			src.to_plating()
 			return
@@ -2033,7 +2033,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
-					C.move_callback(user, F, src)
+					C.move_callback(user, F, 0, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2403,8 +2403,8 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	mat_appearances_to_ignore = list("ice")
 
 	New()
+		plate_mat = getMaterial("ice")
 		..()
-		setMaterial(getMaterial("ice"))
 		name = initial(name)
 
 /turf/simulated/floor/auto/water/ice/rough
@@ -2469,3 +2469,39 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+/turf/unsimulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/unsimulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))

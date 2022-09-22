@@ -982,7 +982,7 @@ proc/filter_trait_hats(var/type)
 			return
 		if(prob(20))
 			var/turf/T = get_turf(src)
-			T.fluid_react_single("miasma_s", 5, airborne = 1)
+			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
 			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
 			host.name = host.real_name

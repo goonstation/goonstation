@@ -351,6 +351,9 @@
 		qdel(src)
 		return
 
+	is_open_container()
+		return TRUE
+
 	red
 		icon_state = "cleanbot-red0"
 		idle_delay = 175 // DA RED WUNZ GO FASTA

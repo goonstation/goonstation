@@ -296,7 +296,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/spongecaps/syndicate
 	cost = 3
 	desc = "A pack of sponge capsules that react with water and produce nasty critters."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
@@ -318,7 +317,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/disguiser
 	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
@@ -376,7 +374,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
@@ -1036,6 +1033,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/surplus/akm
+	name = "AKM Assault Rifle"
+	item = /obj/item/gun/kinetic/akm
+	cost = 12
+	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
+
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
 	item = /obj/item/storage/banana_grenade_pouch
@@ -1055,7 +1058,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
 	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
@@ -1168,6 +1170,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	item = /obj/item/remote/nuke_summon_remote
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
+
+/datum/syndicate_buylist/commander/mrl
+	name = "Fomalhaut MRL"
+	item = /obj/item/gun/kinetic/mrl/loaded
+	cost = 3
+	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////

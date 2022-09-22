@@ -680,13 +680,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		supplies = list(/obj/item/gun/kinetic/hunting_rifle)
 
 	ak47
-		name = "An AK47"
+		name = "An AKM"
 		point_cost = -2
 		minimum_level = 45
 		min_percent = 0.25
 		max_percent = 0.5
 		max_amount = 1
-		supplies = list(/obj/item/gun/kinetic/ak47)
+		supplies = list(/obj/item/gun/kinetic/akm)
 
 	bfg
 		name = "The BFG"
