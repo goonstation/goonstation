@@ -345,7 +345,7 @@
 
 		var/i = 1
 		for (var/datum/objective/Obj in lucky_dude.objectives)
-			if (istype(Obj, /datum/objective/crew) || istype(Obj, /datum/objective/miscreant))
+			if (istype(Obj, /datum/objective/crew))
 				continue
 			boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 			i++

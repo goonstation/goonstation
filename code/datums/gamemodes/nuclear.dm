@@ -365,8 +365,6 @@
 #ifdef CREW_OBJECTIVES
 			if (istype(objective, /datum/objective/crew)) continue
 #endif
-			if (istype(objective, /datum/objective/miscreant)) continue
-
 			if (objective.check_completion())
 				if (!isnull(objective.medal_name) && !isnull(M.current))
 					M.current.unlock_medal(objective.medal_name, objective.medal_announce)

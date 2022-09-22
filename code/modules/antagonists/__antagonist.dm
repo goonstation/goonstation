@@ -127,7 +127,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/objective in owner.objectives)
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+			if (istype(objective, /datum/objective/crew))
 				continue
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [objective.explanation_text]")
 			obj_count++
@@ -148,7 +148,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()
 		for (var/datum/objective/objective as anything in owner.objectives)
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+			if (istype(objective, /datum/objective/crew))
 				continue
 			if (!objective.check_completion())
 				return FALSE
@@ -170,7 +170,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)
-				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+				if (istype(objective, /datum/objective/crew))
 					continue
 				if (objective.check_completion())
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"

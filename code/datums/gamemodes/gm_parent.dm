@@ -198,8 +198,6 @@
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue
 	#endif
-					if (istype(objective, /datum/objective/miscreant)) continue
-
 					obj_count++
 					if (objective.check_completion())
 						stuff_to_output += "Objective #[obj_count]: [objective.explanation_text] <span class='success'><B>Success</B></span>"

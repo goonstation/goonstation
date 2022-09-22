@@ -100,7 +100,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\limiter.dm"
 #include "code\datums\manufacturing.dm"
 #include "code\datums\mind.dm"
-#include "code\datums\miscreant_objectives.dm"
 #include "code\datums\mutable_appearance.dm"
 #include "code\datums\mutantraces.dm"
 #include "code\datums\named_colors.dm"
