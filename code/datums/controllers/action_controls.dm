@@ -662,7 +662,8 @@ var/datum/action_controller/actions
 		if(QDELETED(sheet) || sheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
 		if (ismob(owner))
-			if(!equipped_or_holding(sheet, owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
@@ -672,7 +673,8 @@ var/datum/action_controller/actions
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
-			if(!equipped_or_holding(sheet, owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
