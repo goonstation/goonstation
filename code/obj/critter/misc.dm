@@ -1559,7 +1559,7 @@
 		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
 			if(prob(25))
 				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
-				friends += M
+				src.friends += M
 				src.task = "thinking"
 			else
 				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
