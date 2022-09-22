@@ -1,5 +1,9 @@
 
 (t)thu sep 22 22
+(u)Ikea
+(p)10886
+(e)|
+(*)Stun cane is now unswappable and no longer fits into rechargers, however it now has a disruptor power cell.
 (u)Hans
 (p)10861
 (e)|
