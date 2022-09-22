@@ -1315,7 +1315,7 @@ stare
 	var/mob/living/critter/flock/drone/D = holder.owner
 	if(istype(D))
 		D.wander_count++
-		D.flock_name_tag.set_info_tag(capitalize(src.name))
+		D.flock_name_tag?.set_info_tag(capitalize(src.name))
 
 /datum/aiTask/timed/wander/flock/on_tick()
 	if(!startpos)
