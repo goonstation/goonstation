@@ -1078,7 +1078,8 @@ TYPEINFO(/datum/mutantrace)
 			cleanable_tally = 0
 
 		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = (max(20,src.mob.max_health))
+		src.mob.max_health = max(20,src.mob.max_health)
+		health_update_queue |= src.mob
 
 	emote(var/act)
 		var/message = null
