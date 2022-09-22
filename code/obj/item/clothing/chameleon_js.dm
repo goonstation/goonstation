@@ -660,12 +660,6 @@
 		icon_state = "MDlonglabcoat"
 		item_state = "MDlonglabcoat"
 
-	labcoat_RD
-		name = "research director's labcoat"
-		desc = "The Research Directors personal labcoat, its creation was commisioned and designed by the director themself."
-		icon_state = "RDlonglabcoat"
-		item_state = "RDlonglabcoat"
-
 	paramedic
 		name = "paramedic suit"
 		desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
@@ -1753,7 +1747,7 @@
 		name = "Research Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
-		suit_type = new/datum/chameleon_suit_pattern/labcoat_RD
+		suit_type = new/datum/chameleon_suit_pattern/labcoat
 		glasses_type = new/datum/chameleon_glasses_pattern/spectro
 		shoes_type = new/datum/chameleon_shoes_pattern/brown
 		gloves_type = new/datum/chameleon_gloves_pattern/latex

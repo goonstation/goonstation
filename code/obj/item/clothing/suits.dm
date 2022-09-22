@@ -564,13 +564,6 @@
 	item_state = "MDlonglabcoat"
 	coat_style = "MDlonglabcoat"
 
-/obj/item/clothing/suit/labcoat/research_director
-	name = "research director's labcoat"
-	desc = "The Research Directors personal labcoat, its creation was commisioned and designed by the director themself."
-	icon_state = "RDlonglabcoat"
-	item_state = "RDlonglabcoat"
-	coat_style = "RDlonglabcoat"
-
 /obj/item/clothing/suit/labcoat/pathology
 	name = "pathologist's labcoat"
 	desc = "A protective laboratory coat with the orange markings of a Pathologist."
