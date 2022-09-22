@@ -1217,6 +1217,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
+	proc/get_charge()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			return clamp(ret["charge"], 0, src.max_charge)
 
 /obj/item/ammo/power_cell/empty
 	charge = 0
@@ -1405,6 +1409,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	charge = 2500
 	max_charge = 2500
 
+/obj/item/ammo/power_cell/self_charging/flockdrone
+	name = "Flockdrone incapacitor cell"
+	desc = "You should not be seeing this!"
+	max_charge = 40
+	recharge_rate = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

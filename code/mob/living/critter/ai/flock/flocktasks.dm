@@ -771,10 +771,7 @@ stare
 /datum/aiTask/timed/targeted/flockdrone_shoot/proc/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(length(F.flock?.enemies))
-		var/datum/handHolder/HH = F.hands[3]
-		var/datum/limb/gun/stunner = HH?.limb
-		if(istype(stunner) && !stunner.is_on_cooldown(F))
-			return TRUE
+		return TRUE
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/evaluate()
 	if(src.precondition())
@@ -818,13 +815,13 @@ stare
 			flockdrone.set_dir(get_dir(flockdrone, holder.target))
 			flockdrone.hand_range_attack(holder.target, dummy_params)
 			if(dist < run_range)
-				if(prob(20))
+				if(prob(40))
 					// run
 					holder.move_away(holder.target,4)
-			else if(prob(30))
+			if(prob(60))
 				// dodge
 				walk(flockdrone, 0)
-				walk_rand(flockdrone, 1, 2)
+				walk_rand(flockdrone, 2, 2)
 
 
 /datum/aiTask/timed/targeted/flockdrone_shoot/get_targets()
