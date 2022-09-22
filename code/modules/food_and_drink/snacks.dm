@@ -789,14 +789,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"
 	desc = "A bowl of colorful breakfast cereal, each piece sharp enough to slice the roof of your mouth into meat confetti."
-	icon_state = "cereal_bowl"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	bites_left = 5
 	heal_amt = 1
 	var/dry = 1
 	var/hasPrize = 0
 	food_effects = list("food_refreshed")
 
-	New(loc, prize_inside)
+	New(loc, prize_inside, var/obj/item/reagent_containers/food/drinks/bowl/bowl)
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+		src.UpdateOverlays(image(icon = 'icons/obj/foodNdrink/food_meals.dmi', icon_state = src.icon_state + "_cereal"), "cereal")
 		..()
 		hasPrize = (prize_inside == 1)
 
