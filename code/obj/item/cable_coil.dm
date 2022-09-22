@@ -186,7 +186,7 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/turf/source)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
 	if (!isturf(M.loc))

@@ -16463,7 +16463,7 @@
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "eBr" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "eBt" = (
 /obj/decal/tile_edge/line/green{
@@ -18891,6 +18891,10 @@
 /obj/item/device/flyswatter,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"fkJ" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/wood/two,
+/area/station/hallway/primary/west)
 "fkZ" = (
 /obj/cable{
 	d1 = 1;
@@ -39911,7 +39915,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "lAh" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "lAi" = (
@@ -41745,7 +41749,7 @@
 /area/station/security/brig/south_side)
 "lXJ" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "lXN" = (
 /obj/cable{
@@ -49519,6 +49523,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering/breakroom)
+"onS" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "onT" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen/blue,
@@ -61135,7 +61143,7 @@
 	amount = 3600
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "rxE" = (
 /obj/decal/mule/dropoff,
@@ -66509,7 +66517,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "tcV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
 "tcW" = (
@@ -66867,7 +66875,7 @@
 /area/station/medical/robotics)
 "tii" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "tiv" = (
 /obj/disposalpipe/junction/left/south,
@@ -84758,7 +84766,7 @@
 /obj/item/beach_ball{
 	pixel_y = 7
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "yhb" = (
 /obj/decal/cleanable/dirt/jen,
@@ -114227,7 +114235,7 @@ qph
 hFg
 tJK
 oHE
-oyc
+fkJ
 pCP
 hjI
 fFx
@@ -140485,7 +140493,7 @@ wpg
 cUx
 iPz
 mxH
-mkl
+onS
 akj
 oys
 jFH

@@ -696,11 +696,11 @@
 	pixel_x = -22
 	},
 /obj/decal/fakeobjects{
+	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Broken Printer";
-	true_name = "printer?";
-	desc = "It looks like it was never even plugged in. Did this ever work?!"
+	true_name = "printer?"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
@@ -15098,7 +15098,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "bgO" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bgP" = (
@@ -21096,7 +21096,7 @@
 /area/timewarp/ship)
 "mWO" = (
 /obj/decal/cleanable/urine,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "mXB" = (
 /turf/simulated/shuttle/wall{
@@ -21988,7 +21988,7 @@
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "pKO" = (
-/obj/landmark/spawner/loot,
+/obj/storage/crate/loot,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "pMZ" = (
@@ -22162,7 +22162,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qhW" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "qiL" = (
 /obj/rack,
@@ -24548,7 +24548,7 @@
 /area/abandonedship)
 "xjC" = (
 /obj/decal/woodclutter,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "xkn" = (

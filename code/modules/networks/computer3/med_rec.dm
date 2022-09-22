@@ -296,7 +296,7 @@
 							return
 
 						src.active_general["age"] = newAge
-						return
+
 
 					if (FIELDNUM_PSTAT)
 						if (ckey(inputText))

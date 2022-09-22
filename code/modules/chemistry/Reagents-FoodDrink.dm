@@ -1599,7 +1599,7 @@ datum
 					M.reagents.del_reagent("chocolate")
 					M.reagents.del_reagent("freeze")
 				if(M.bodytemperature > 0)
-					M.bodytemperature=max(M.bodytemperature-(10 * mult),0)
+					M.bodytemperature=max(M.bodytemperature-(20 * mult),0)
 				if(probmult(10))
 					boutput(M, pick("<span class='notice'><i>Brrr...</i></span>","<span class='notice'><i>Isn't it a bit chilly in here?</i></span>","<span class='notice'><i>Who left an airlock open?</i></span>"))
 				if(probmult(15))

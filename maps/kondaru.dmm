@@ -356,22 +356,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
-"aba" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 4;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/magnet)
 "abb" = (
 /obj/lattice{
 	dir = 1;
@@ -450,7 +434,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 9
 	},
@@ -475,22 +458,6 @@
 /turf/space,
 /turf/space,
 /area/space)
-"abo" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/landmark/magnet_shield,
-/obj/securearea{
-	desc = "A warning that demarcates where the magnetic area begins.";
-	dir = 8;
-	icon_state = "magwarning";
-	name = "Magnet Area Boundary"
-	},
-/turf/space,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 4
-	},
-/area/mining/magnet)
 "abp" = (
 /obj/cable{
 	d1 = 4;
@@ -1564,6 +1531,7 @@
 /area/station/hangar/main)
 "aef" = (
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aeg" = (
@@ -1744,6 +1712,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grime,
 /area/station/chapel/sanctuary)
 "aeF" = (
@@ -1941,6 +1910,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grime,
 /area/station/chapel/sanctuary)
 "afp" = (
@@ -2351,6 +2321,7 @@
 	name = "Pod Bay"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
 	},
@@ -2374,6 +2345,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_we"
 	},
@@ -2904,6 +2876,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/chapel/sanctuary)
 "ahZ" = (
@@ -3051,6 +3024,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/radio/news_office)
 "aiv" = (
@@ -3059,6 +3033,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aiy" = (
@@ -3406,6 +3381,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ajx" = (
@@ -3430,6 +3406,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ajA" = (
@@ -3815,6 +3792,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aky" = (
@@ -3919,6 +3897,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/wood/seven,
 /area/station/crew_quarters/info{
 	name = "Book Nook"
@@ -3955,6 +3934,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "akO" = (
@@ -5049,6 +5029,7 @@
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment/vertical,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "anI" = (
@@ -5133,6 +5114,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/utility)
 "anW" = (
@@ -5994,6 +5976,7 @@
 "aqv" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/radio/news_office)
 "aqw" = (
@@ -6045,6 +6028,7 @@
 "aqE" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/atmospherics/pipe/simple,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aqF" = (
@@ -7577,6 +7561,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "avB" = (
@@ -7981,6 +7966,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "awI" = (
@@ -8531,6 +8517,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "ayl" = (
@@ -10067,6 +10054,7 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/west)
 "aCb" = (
@@ -13068,6 +13056,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/west)
 "aKm" = (
@@ -13499,6 +13488,7 @@
 "aLL" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment/vertical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aLM" = (
@@ -13527,6 +13517,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aLQ" = (
@@ -14425,6 +14416,7 @@
 /area/station/maintenance/west)
 "aPp" = (
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aPq" = (
@@ -15428,6 +15420,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_east)
 "aSg" = (
@@ -15832,6 +15825,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aTu" = (
@@ -15975,6 +15969,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/maintenance/east)
 "aTN" = (
@@ -16014,6 +16009,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
 "aTZ" = (
@@ -16253,6 +16249,7 @@
 "aUO" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/disposalpipe/segment/vertical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "aUQ" = (
@@ -16454,6 +16451,7 @@
 "aVn" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/neutral/side,
 /area/station/crew_quarters/quarters_north)
 "aVp" = (
@@ -16462,6 +16460,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "aVx" = (
@@ -19014,6 +19013,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/north)
 "bei" = (
@@ -19435,6 +19435,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "bfX" = (
@@ -20530,7 +20531,7 @@
 /area/station/hangar/engine)
 "bjC" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjE" = (
 /obj/machinery/camera{
@@ -21480,7 +21481,7 @@
 /area/station/crew_quarters/catering)
 "bmW" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bmX" = (
 /obj/table/auto,
@@ -24020,6 +24021,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bvM" = (
@@ -24047,7 +24049,7 @@
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "bvT" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bvV" = (
 /obj/machinery/light/small{
@@ -24720,9 +24722,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool/chair/red{
-	dir = 4
-	},
+/obj/machinery/vending/air_vendor,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20
@@ -25208,6 +25208,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/mining/refinery)
 "bAh" = (
@@ -25487,6 +25488,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner/south)
 "bBD" = (
@@ -26274,6 +26276,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "bDI" = (
@@ -26298,6 +26301,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bDN" = (
@@ -26402,6 +26406,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bEa" = (
@@ -26725,6 +26730,7 @@
 /area/station/crew_quarters/md)
 "bEU" = (
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "bEV" = (
@@ -27265,6 +27271,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/south)
 "bGx" = (
@@ -31399,6 +31406,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bSN" = (
@@ -31477,9 +31485,9 @@
 /obj/machinery/floorflusher/industrial,
 /obj/disposalpipe/trunk/east,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
+	dir = 8;
+	name = "Loading Chute Cover"
 	},
-/obj/access_spawn/cargo,
 /turf/simulated/floor/orangeblack/side{
 	dir = 4
 	},
@@ -32145,6 +32153,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bVk" = (
@@ -32272,6 +32281,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bWa" = (
@@ -32430,6 +32440,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "bWt" = (
@@ -32667,6 +32678,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bXV" = (
@@ -32850,6 +32862,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bYL" = (
@@ -34564,6 +34577,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "cel" = (
@@ -39522,7 +39536,7 @@
 	name = "Clowntainment"
 	})
 "cZV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
 "dae" = (
@@ -40586,6 +40600,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "dXt" = (
@@ -41848,6 +41863,7 @@
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "fhx" = (
@@ -42180,6 +42196,7 @@
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/red/checker,
 /area/station/maintenance/central)
 "fsR" = (
@@ -44375,6 +44392,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "hrS" = (
@@ -44763,6 +44781,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/sw)
 "hSs" = (
@@ -45366,7 +45385,6 @@
 	icon_state = "magwarning2";
 	name = "ACTIVE MAGNET AREA"
 	},
-/turf/space,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10
 	},
@@ -46362,7 +46380,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jCx" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "jDh" = (
@@ -48944,6 +48962,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor,
 /area/station/storage/emergency)
 "mlf" = (
@@ -49606,6 +49625,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "mSD" = (
@@ -49670,7 +49690,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVm" = (
 /obj/machinery/atmospherics/pipe/vent{
@@ -51085,6 +51105,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -51669,6 +51690,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/inner/south)
 "oUk" = (
@@ -53269,6 +53291,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/greenblack,
 /area/station/garden/aviary)
 "qpS" = (
@@ -54086,6 +54109,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "reX" = (
@@ -54915,6 +54939,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rZC" = (
@@ -59736,6 +59761,7 @@
 /area/station/security/checkpoint/escape)
 "wBw" = (
 /obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/maint,
 /turf/simulated/floor/red/checker,
 /area/station/maintenance/central)
 "wBS" = (
@@ -106306,7 +106332,7 @@ aLI
 aML
 aaa
 ach
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -106320,7 +106346,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 aaa
 bgm
 bfg
@@ -106608,7 +106634,7 @@ aLJ
 azW
 aay
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -106622,7 +106648,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 ree
 gxN
 ree
@@ -106910,7 +106936,7 @@ aLK
 auL
 nRo
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -106924,7 +106950,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 ree
 gxN
 ree
@@ -107212,7 +107238,7 @@ aaX
 aaY
 abg
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -107226,7 +107252,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 ree
 gxN
 ree
@@ -107514,7 +107540,7 @@ aaf
 aMN
 aad
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -107528,7 +107554,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 tOE
 fXT
 tOE
@@ -107816,7 +107842,7 @@ acO
 aBj
 aaa
 aaO
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -107830,7 +107856,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 oUa
 ury
 tWL
@@ -108118,7 +108144,7 @@ acO
 aaa
 aaa
 acb
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -108132,7 +108158,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 qoc
 mLb
 juf
@@ -108420,7 +108446,7 @@ aaf
 aay
 aay
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -108434,7 +108460,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 iuC
 mLb
 tOE
@@ -108722,7 +108748,7 @@ aaf
 aad
 aad
 aaf
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -108736,7 +108762,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 tzN
 ury
 tWL
@@ -109024,7 +109050,7 @@ acO
 aaa
 aaa
 ach
-aba
+aea
 aQJ
 aQJ
 aQJ
@@ -109038,7 +109064,7 @@ aQJ
 aQJ
 aQJ
 aQJ
-abo
+aeV
 juf
 xQB
 juf
@@ -109326,7 +109352,7 @@ acO
 aaa
 aaa
 ach
-aba
+aea
 abe
 abe
 abe
@@ -109340,7 +109366,7 @@ abe
 abe
 abe
 abe
-abo
+aeV
 ree
 gxN
 ree

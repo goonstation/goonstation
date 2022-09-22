@@ -818,7 +818,11 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_poc1 = list(/obj/item/device/pda2/engine)
 	slot_ears = list(/obj/item/device/radio/headset/engineer)
+#ifdef MAP_OVERRIDE_OSHAN
+	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/clothing/shoes/stomp_boots)
+#else
 	items_in_backpack = list(/obj/item/paper/book/from_file/pocketguide/engineering, /obj/item/old_grenade/oxygen)
+#endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1342,7 +1346,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_UNTRAINED
 	slot_jump = list(/obj/item/clothing/under/rank/det)
-	slot_belt = list(/obj/item/gun/kinetic/colt_saa)
+	slot_belt = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	slot_head = list(/obj/item/clothing/head/cowboy)
 	slot_mask = list(/obj/item/clothing/mask/cigarette/random)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)

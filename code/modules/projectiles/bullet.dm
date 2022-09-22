@@ -364,6 +364,16 @@ toxic - poisons
 	shot_volume = 66
 	sname = "full auto"
 
+/datum/projectile/bullet/nine_mm_soviet
+	name = "bullet"
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	power = 15
+	impact_image_state = "bhole-small"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+
 //0.357
 /datum/projectile/bullet/revolver_357
 	name = "bullet"
@@ -1311,6 +1321,107 @@ datum/projectile/bullet/autocannon
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 36, 0.45)
+		return
+
+/datum/projectile/bullet/homing
+    var/min_speed = 0
+    var/max_speed = 2
+    var/start_speed = 2
+    var/easemult = 0.
+
+    var/auto_find_targets = 1
+    var/homing_active = 1
+
+    var/desired_x = 0
+    var/desired_y = 0
+
+    var/rotate_proj = 1
+    var/face_desired_dir = 0
+
+    precalculated = FALSE
+
+    on_launch(var/obj/projectile/P)
+        ..()
+        P.internal_speed = start_speed
+
+        if (auto_find_targets)
+            P.targets = list()
+            for(var/mob/M in view(P,15))
+                if (M == P.shooter) continue
+                P.targets += M
+
+    proc/calc_desired_x_y(var/obj/projectile/P)
+        .= 0
+        if (P.targets && P.targets.len && P.targets[1])
+            var/atom/closest = P.targets[1]
+
+            for (var/atom in P.targets)
+                var/atom/A = atom
+                if (A.disposed)
+                    P.targets -= A
+                if (GET_DIST(P,A) < GET_DIST(P,closest))
+                    closest = A
+
+            desired_x = closest.x - P.x - P.pixel_x/32
+            desired_y = closest.y - P.y - P.pixel_y/32
+
+            .= 1
+
+    tick(var/obj/projectile/P)
+        if (!P || !src.homing_active)
+            return
+
+        desired_x = 0
+        desired_y = 0
+        if (calc_desired_x_y(P))
+            var/magnitude = vector_magnitude(desired_x,desired_y)
+            if (magnitude != 0)
+                var/angle_diff = arctan(desired_y, desired_x) - arctan(P.yo, P.xo)
+                if (angle_diff > 180)
+                    angle_diff -= 360
+                else if (angle_diff < -180)
+                    angle_diff += 360
+                angle_diff = -clamp(angle_diff, -1, 1)
+                P.rotateDirection(angle_diff)
+
+        ..()
+
+/datum/projectile/bullet/homing/mrl
+	name = "MRL rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_delay = 30
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1
+	impact_image_state = "bhole-large"
+	shot_number = 1
+	cost = 1
+	power = 15
+	icon_state = "mininuke"
+	max_speed = 10
+	start_speed = 10
+	shot_delay = 1 SECONDS
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		if (T)
+			for (var/mob/living/carbon/human/M in view(hit, 2))
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				if (M.get_ranged_protection()>=1.5)
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+				else
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+					implanted.owner = M
+					M.implant += implanted
+					implanted.implanted(M, null, 2)
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					if (!M.stat)
+						M.emote("scream")
+
+			T.hotspot_expose(700,125)
+			explosion_new(null, T, 15, 0.45)
 		return
 
 /datum/projectile/bullet/antisingularity

@@ -2033,7 +2033,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			if(istype(I,/obj/item/cable_coil))
 				var/obj/item/cable_coil/C = I
 				if(BOUNDS_DIST(user,F) == 0 && BOUNDS_DIST(user,src) == 0)
-					C.move_callback(user, F, src)
+					C.move_callback(user, F, 0, src)
 
 ////////////////////////////////////////////ADVENTURE SIMULATED FLOORS////////////////////////
 DEFINE_FLOORS_SIMMED_UNSIMMED(racing,
@@ -2469,3 +2469,39 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
+
+/turf/unsimulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/unsimulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	name = "water"
+	icon_state = "poolwaterfloor"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))
+
+/turf/simulated/floor/pool/no_animate
+	name = "pool floor"
+	icon_state = "poolwaterfloor_static"
+
+	New()
+		..()
+		src.set_dir(pick(NORTH,SOUTH))

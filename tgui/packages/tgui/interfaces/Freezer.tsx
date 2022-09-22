@@ -50,10 +50,10 @@ export const Freezer = (props, context) => {
                 color={active === 0 ? "red" : "green"}
                 fluid
                 height="100%"
-                fontSize={1.25}
+                fontSize={1.15}
                 textAlign="center"
                 onClick={() => act('active_toggle')}>
-                {active === 0 ? "Deactivate" : "Activate"}
+                {active === 0 ? "Deactivated" : "Activated"}
               </Button>
             </Stack.Item>
           </Stack>
