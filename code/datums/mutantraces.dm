@@ -1052,11 +1052,13 @@ TYPEINFO(/datum/mutantrace)
 		if(ishuman(src.mob))
 			src.add_ability(src.mob)
 			M.add_stam_mod_max("vampiric_thrall", 100)
+			M.bioHolder.AddEffect("accent_thrall", magical=TRUE)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
 		if (ishuman(src.mob))
 			src.mob.remove_stam_mod_max("vampiric_thrall")
+			src.mob.bioHolder.RemoveEffect("accent_thrall")
 			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
