@@ -409,7 +409,6 @@
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 
