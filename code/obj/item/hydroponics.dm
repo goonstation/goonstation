@@ -649,7 +649,7 @@
 	icon_state = "Jug"
 	amount_per_transfer_from_this = 25
 	w_class = W_CLASS_NORMAL
-	incompatible_with_chem_dispensers = 1
+	incompatible_with_chem_dispensers = TRUE
 	rc_flags = RC_FULLNESS | RC_SPECTRO
 	initial_volume = 200
 
