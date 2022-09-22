@@ -1,5 +1,10 @@
 
 (t)thu sep 22 22
+(u)LeahTheTech
+(p)10843
+(e)|
+(*)Reworked flockdrone incapacitors to use a recharge mechanic.
+(+)AI controlled flockdrones are now more evasive.
 (u)Ikea
 (p)10886
 (e)|
