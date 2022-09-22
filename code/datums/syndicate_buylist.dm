@@ -984,9 +984,10 @@ This is basically useless for anyone but miners.
 	item = /obj/item/aiModule/ability_expansion/laser
 	cost = 6
 	vr_allowed = FALSE
+	not_in_crates = TRUE
 	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
 	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+	can_buy = UPLINK_TRAITOR
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
