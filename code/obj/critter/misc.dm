@@ -1578,7 +1578,7 @@
 			if(M.a_intent == INTENT_HELP && src.aggressive)
 				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
 				src.aggressive = FALSE
-				src.mobile = 1
+				src.mobile = TRUE
 				icon_state = "rattlesnake"
 				src.task = "thinking"
 				return
