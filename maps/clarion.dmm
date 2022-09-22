@@ -2480,7 +2480,7 @@
 	id = "merchant_N";
 	pixel_y = 32;
 	req_access_txt = "";
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -4204,7 +4204,7 @@
 	id = "merchant_S";
 	pixel_y = 32;
 	req_access_txt = "";
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -43732,7 +43732,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/station/shield_zone)
@@ -44202,7 +44202,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/station/shield_zone)

@@ -273,12 +273,15 @@
 	var/obj/airbridge_controller/primary_controller = null
 
 	var/emergency = 0 // 1 to automatically extend when the emergency shuttle docks
+	var/connected_dock = null
 
 	New()
 		..()
 		START_TRACKING
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
+		if (src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
 
 	initialize()
 		..()
@@ -290,6 +293,15 @@
 	disposing()
 		STOP_TRACKING
 		..()
+
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(COMSIG_DOCK_EVENT_INCOMING)
+				src.establish_bridge()
+			if(COMSIG_DOCK_EVENT_ARRIVED)
+				src.pressurize()
+			if(COMSIG_DOCK_EVENT_DEPARTED)
+				src.remove_bridge()
 
 	proc/get_links()
 		for_by_tcl(C, /obj/airbridge_controller)
@@ -469,14 +481,6 @@
 /obj/machinery/computer/airbr/emergency_shuttle
 	icon = 'icons/obj/airtunnel.dmi'
 	emergency = 1
-	var/connected_signal = null
-
-	New()
-		..()
-		if (src.connected_signal)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_signal, .proc/establish_bridge)
-			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_RETURNED, .proc/remove_bridge)
-
 
 /* -------------------- Button -------------------- */
 

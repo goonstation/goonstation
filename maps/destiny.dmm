@@ -31579,7 +31579,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay3{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/space)
@@ -41944,7 +41944,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay3{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)
@@ -44430,7 +44430,7 @@
 	id = "merchant_R";
 	pixel_y = 32;
 	req_access_txt = "";
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -49120,7 +49120,7 @@
 	id = "merchant_L";
 	pixel_y = 32;
 	req_access_txt = "";
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
@@ -53684,7 +53684,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/space)
@@ -54428,7 +54428,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)

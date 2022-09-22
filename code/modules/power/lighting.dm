@@ -398,21 +398,30 @@
 	on = 0
 	wallmounted = 0
 	removable_bulb = 0
-	var/connected_signal = null
+	var/connected_dock = null
 
 	New()
 		..()
-		if(src.connected_signal)
-			RegisterSignal(GLOBAL_SIGNAL, src.connected_signal, .proc/incoming)
-			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_STOPPED, .proc/stop )
-			RegisterSignal(GLOBAL_SIGNAL, COMSIG_TRADER_RETURNED, .proc/stop )
+		if(src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
 
-	proc/incoming()
-		color = "#eb6b15"
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(COMSIG_DOCK_EVENT_INCOMING)
+				src.activate()
+			if(COMSIG_DOCK_EVENT_ARRIVED)
+				src.deactivate()
+			if(COMSIG_DOCK_EVENT_OUTGOING)
+				src.activate()
+			if(COMSIG_DOCK_EVENT_DEPARTED)
+				src.deactivate()
+
+	proc/activate()
+		color = "#da9b49"
 		on = 1
 		update()
 
-	proc/stop()
+	proc/deactivate()
 		color = null
 		on = 0
 		update()

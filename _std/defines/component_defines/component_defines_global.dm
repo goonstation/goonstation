@@ -37,20 +37,27 @@
 #define COMSIG_GLOBAL_SUSSY_PHRASE "sussy"
 #define COMSIG_GLOBAL_UNCOOL_PHRASE "uncool_word"
 
-// ---- Trader Shuttle Movement ----
+// ---- Generic Dock Events ----
+
+	/// Shuttle is about to arrive at a dock
+	#define COMSIG_DOCK_EVENT_INCOMING "dock_incoming"
+
+	/// Shuttle has arrived
+	#define COMSIG_DOCK_EVENT_ARRIVED "dock_arrived"
+
+	/// Shuttle is about to depart
+	#define COMSIG_DOCK_EVENT_OUTGOING "dock_outgoing"
+
+	/// Shuttle has departed from the dock
+	#define COMSIG_DOCK_EVENT_DEPARTED "dock_departed"
+
+// ---- Trader Docks ----
 
 	/// When a trader is arriving/departing at the 'left' trading area on-station
-	#define COMSIG_TRADER_LEFT "trader_left"
+	#define COMSIG_DOCK_TRADER_WEST "trader_left"
 
 	/// When a trader is arriving/departing at the 'right' trading area on-station
-	#define COMSIG_TRADER_RIGHT "trader_right"
+	#define COMSIG_DOCK_TRADER_EAST "trader_right"
 
 	/// When a trader is arriving/departing at the diner trading area
-	#define COMSIG_TRADER_DINER "trader_diner"
-
-	/// When a trader has arrived at centcom
-	#define COMSIG_TRADER_RETURNED "trader_returned"
-
-	/// When a trader has stopped moving
-	#define COMSIG_TRADER_STOPPED "trader_stopped"
-
+	#define COMSIG_DOCK_TRADER_DINER "trader_diner"

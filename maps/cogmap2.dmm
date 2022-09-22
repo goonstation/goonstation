@@ -2851,7 +2851,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay5{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/space)
@@ -2861,7 +2861,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay4{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)
@@ -5646,7 +5646,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay3{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)
@@ -76784,7 +76784,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay3{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/space)
@@ -77194,7 +77194,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay4{
-	connected_signal = "trader_right"
+	connected_dock = "trader_right"
 	},
 /turf/space,
 /area/space)
@@ -77433,7 +77433,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay3{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)
@@ -79022,7 +79022,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/traffic_light/delay5{
-	connected_signal = "trader_left"
+	connected_dock = "trader_left"
 	},
 /turf/space,
 /area/space)
