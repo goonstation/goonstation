@@ -381,11 +381,11 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Hydroponics: Nutrient Crate"
 	desc = "Five bulk jugs of the most essential plant nutrients"
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/glass/saltpetrebulk,
-					/obj/item/reagent_containers/glass/ammoniabulk,
-					/obj/item/reagent_containers/glass/potashbulk,
-					/obj/item/reagent_containers/glass/mutadonebulk,
-					/obj/item/reagent_containers/glass/mutagenicbulk)
+	contains = list(/obj/item/reagent_containers/glass/jug/saltpetrebulk,
+					/obj/item/reagent_containers/glass/jug/ammoniabulk,
+					/obj/item/reagent_containers/glass/jug/potashbulk,
+					/obj/item/reagent_containers/glass/jug/mutadonebulk,
+					/obj/item/reagent_containers/glass/jug/mutagenicbulk)
 	cost = 2000
 	containertype = /obj/storage/crate
 	containername = "Hydroponics: Nutrient Crate"
