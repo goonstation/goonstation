@@ -34,10 +34,10 @@
 		spawn_contents = list(/obj/item/reagent_containers/mender/brute,
 		/obj/item/reagent_containers/mender/burn,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
-		/obj/item/reagent_containers/hypospray,
-		/obj/item/reagent_containers/glass/beaker/antitox,
-		/obj/item/reagent_containers/glass/beaker/epinephrine,
-		/obj/item/reagent_containers/glass/beaker/salbutamol)
+		/obj/item/reagent_containers/emergency_injector/high_capacity/charcoal,
+		/obj/item/reagent_containers/emergency_injector/high_capacity/salbutamol,
+		/obj/item/reagent_containers/emergency_injector/high_capacity/epinephrine,
+		/obj/item/reagent_containers/emergency_injector/atropine)
 
 	emergency
 		spawn_contents = list(/obj/item/item_box/medical_patches/mini_styptic,\
