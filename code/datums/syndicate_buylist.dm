@@ -979,6 +979,16 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/ai_laser
+	name = "AI Camera Laser Module"
+	item = /obj/item/aiModule/ability_expansion/laser
+	cost = 6
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
@@ -1170,6 +1180,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	item = /obj/item/remote/nuke_summon_remote
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
+
+/datum/syndicate_buylist/commander/mrl
+	name = "Fomalhaut MRL"
+	item = /obj/item/gun/kinetic/mrl/loaded
+	cost = 3
+	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////

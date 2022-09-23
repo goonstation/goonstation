@@ -3847,7 +3847,7 @@
 	layer = 3;
 	name = "floor-mounted light fixture"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bfQ" = (
 /obj/machinery/vending/cigarette,
@@ -6416,7 +6416,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/east/restroom)
 "bVu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating{
 	icon_state = "platingdmg2"
 	},
@@ -8979,7 +8979,7 @@
 	name = "floor-mounted light fixture";
 	pixel_x = -1
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "cEC" = (
 /obj/machinery/camera{
@@ -17002,7 +17002,7 @@
 /obj/fluid_spawner{
 	amount = 11000
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "eKg" = (
 /obj/reagent_dispensers/watertank/fountain,
@@ -18755,7 +18755,7 @@
 "fkv" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/light/small{
@@ -41368,10 +41368,6 @@
 	},
 /turf/simulated/floor/green/checker,
 /area/station/storage/emergency)
-"leM" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
 "leR" = (
 /obj/stool/chair{
 	dir = 1
@@ -51601,7 +51597,7 @@
 /area/station/medical/medbay/surgery/storage)
 "nNk" = (
 /obj/storage/crate/internals{
-	spawn_contents = list(/obj/item/clothing/mask/gas = 2,/obj/item/tank/emergency_oxygen = 1,/obj/item/tank/air = 1,/obj/item/clothing/head/emerg = 2,/obj/item/clothing/suit/space/emerg = 2)
+	spawn_contents = list(/obj/item/clothing/mask/gas=2,/obj/item/tank/emergency_oxygen=1,/obj/item/tank/air=1,/obj/item/clothing/head/emerg=2,/obj/item/clothing/suit/space/emerg=2)
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
@@ -60758,9 +60754,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/quartermaster/office)
-"qfP" = (
-/turf/space,
-/area/supply/delivery_point)
 "qgb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -65124,7 +65117,7 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
+/area/space)
 "rnd" = (
 /obj/machinery/manufacturer/general{
 	desc = "It's covered in more gunk than a truck stop ashtray. Is this thing even safe?";
@@ -73069,7 +73062,7 @@
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
-/area/station/quartermaster/cargobay)
+/area/supply/delivery_point)
 "tig" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -73986,7 +73979,7 @@
 /area/station/hangar/qm)
 "ttH" = (
 /obj/storage/crate/internals{
-	spawn_contents = list(/obj/item/clothing/mask/gas = 2,/obj/item/tank/emergency_oxygen = 1,/obj/item/tank/air = 1,/obj/item/clothing/head/emerg = 2,/obj/item/clothing/suit/space/emerg = 2)
+	spawn_contents = list(/obj/item/clothing/mask/gas=2,/obj/item/tank/emergency_oxygen=1,/obj/item/tank/air=1,/obj/item/clothing/head/emerg=2,/obj/item/clothing/suit/space/emerg=2)
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
@@ -75270,7 +75263,7 @@
 "tKI" = (
 /obj/critter/sealpup,
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "tKL" = (
 /turf/simulated/floor/blueblack/corner,
@@ -78466,7 +78459,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "uzc" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
@@ -87284,7 +87277,7 @@
 	})
 "wBx" = (
 /obj/machinery/light/small,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/bridge/captain)
 "wBC" = (
 /obj/cable{
@@ -91368,7 +91361,7 @@
 /obj/fluid_spawner{
 	amount = 600
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/bridge/captain)
 "xzg" = (
 /obj/disposalpipe/segment/mail/vertical,
@@ -91636,7 +91629,7 @@
 	},
 /area/station/medical/medbay/lobby)
 "xCv" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/bridge/captain)
 "xCA" = (
 /obj/machinery/computer/security/wooden_tv,
@@ -93090,7 +93083,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/engine/engineering/private)
 "xUn" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "xUq" = (
 /turf/simulated/floor/orangeblack/side,
@@ -94371,7 +94364,7 @@
 /area/listeningpost)
 "yjN" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "yjO" = (
 /obj/stool/chair{
@@ -159071,7 +159064,7 @@ fdT
 xGX
 aJu
 fdT
-leM
+avG
 rna
 xGX
 aJu
@@ -159676,7 +159669,7 @@ xGX
 aJu
 fdT
 xGX
-qfP
+aJu
 wqf
 aJu
 aJu

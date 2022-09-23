@@ -534,6 +534,17 @@
 /obj/item/ammo/bullets/nine_mm_NATO/boomerang //empty clip for the clock_188/boomerang
 	amount_left = 0
 
+/obj/item/ammo/bullets/nine_mm_soviet
+	sname = "9x18mm Makarov"
+	name = "9x18mm magazine"
+	desc = "A standard 8 round magazine, for the PM pistol. It featuring an observation slot for checking remaining munitions."
+	icon_state = "makarov_magazine"
+	icon_empty = "makarov_magazine-empty"
+	amount_left = 8
+	max_amount = 8
+	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
+	ammo_cat = AMMO_PISTOL_9MM_SOVIET
+
 //0.357
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
@@ -720,6 +731,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
 	w_class = W_CLASS_NORMAL
+
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
 	desc = "Some mean-looking plasmaglass shards that are jammed into a few cut open pipe frames."
@@ -736,6 +748,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "scrap load"
 	desc = "This appears to be some metal bits haphazardly shoved into a few cut open pipe frames."
 	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/scrap
+
+/obj/item/ammo/bullets/pipeshot/scrap/five
+	amount_left = 5
+	max_amount = 5
 
 
 /obj/item/ammo/bullets/nails // oh god oh fuck
@@ -1026,6 +1042,18 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+/obj/item/ammo/bullets/mrl
+	sname = "MRL rocket pack"
+	name = "MRL rocket pack"
+	amount_left = 6
+	max_amount = 6
+	icon_state = "mrl_rocketpack"
+	ammo_type = new /datum/projectile/bullet/homing/mrl
+	ammo_cat = AMMO_ROCKET_MRL
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = 1
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /obj/item/ammo/bullets/antisingularity
 	sname = "Singularity buster rocket"
 	name = "Singularity buster rocket"
@@ -1189,6 +1217,10 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 			. += "There are [ret["charge"]]/[ret["max_charge"]] PU left!"
 
+	proc/get_charge()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			return clamp(ret["charge"], 0, src.max_charge)
 
 /obj/item/ammo/power_cell/empty
 	charge = 0
@@ -1377,6 +1409,11 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	charge = 2500
 	max_charge = 2500
 
+/obj/item/ammo/power_cell/self_charging/flockdrone
+	name = "Flockdrone incapacitor cell"
+	desc = "You should not be seeing this!"
+	max_charge = 40
+	recharge_rate = 10
 
 /datum/action/bar/icon/powercellswap
 	duration = 1 SECOND

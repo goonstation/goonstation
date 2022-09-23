@@ -785,6 +785,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/cleaner_grenade
+	name = "Cleaner Grenade"
+	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
+	item_amounts = list(8, 8, 10, 10)
+	item_outputs = list(/obj/item/chem_grenade/cleaner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
@@ -1321,6 +1330,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(4,4,2)
 	item_outputs = list(/obj/item/cell/cerenkite)
 	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/powercellH
+	name = "Hyper Capacity Power Cell"
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(5,10,10)
+	item_outputs = list(/obj/item/cell/hypercell)
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -3011,7 +3029,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Colt SAA"
 	item_paths = list("MET-2")
 	item_amounts = list(7)
-	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	time = 30 SECONDS
 	create = 1
 	category = "Weapon"

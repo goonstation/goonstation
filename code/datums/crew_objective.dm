@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 

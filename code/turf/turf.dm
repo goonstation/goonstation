@@ -1068,7 +1068,7 @@ proc/generate_space_color()
 #else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
-
+	var/turf/target_turf
 	if(A.z == 3) zlevel = 5
 	else zlevel = 3
 
@@ -1078,6 +1078,9 @@ proc/generate_space_color()
 		var/obj/machinery/vehicle/V = A
 		if (V.going_home)
 			zlevel = 1
+			target_turf = V.go_home()
+			if(target_turf)
+				zlevel = target_turf.z
 			V.going_home = 0
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
@@ -1088,9 +1091,10 @@ proc/generate_space_color()
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
-	var/target_x = newx || A.x
-	var/target_y = newy || A.y
-	var/turf/target_turf = locate(target_x, target_y, zlevel)
+	if(!target_turf)
+		var/target_x = newx || A.x
+		var/target_y = newy || A.y
+		target_turf = locate(target_x, target_y, zlevel)
 	if(target_turf)
 		A.set_loc(target_turf)
 #endif
@@ -1141,40 +1145,6 @@ proc/generate_space_color()
 ////////////////////////////////////////////////
 
 //stuff ripped out of keelinsstuff.dm
-/turf/unsimulated/floor/pool
-	name = "water"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-
-/turf/unsimulated/pool/no_animate
-	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-/turf/simulated/pool
-	name = "water"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-
-/turf/simulated/pool/no_animate
-	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/grasstodirt
 	name = "grass"

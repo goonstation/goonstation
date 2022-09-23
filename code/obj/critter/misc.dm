@@ -1490,6 +1490,7 @@
 	dead_state = "rattlesnake_dead"
 	density = 1
 	health = 20
+	maxhealth = 50
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1553,6 +1554,40 @@
 				src.visible_message("<span class='combat'><b>[src]</b> charges at [C.name]!</span>")
 				src.task = "chasing"
 				break
+
+	attackby(obj/item/W, mob/M)
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+			if(prob(25))
+				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
+				src.friends += M
+				src.task = "thinking"
+			else
+				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
+				M.reagents?.add_reagent("viper_venom", rand(15,30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				M.emote("scream")
+			M.drop_item()
+			qdel(W)
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
+			eat_twitch(src)
+		else
+			..()
+
+	attack_hand(mob/M)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				src.mobile = TRUE
+				icon_state = "rattlesnake"
+				src.task = "thinking"
+				return
+			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				src.task = "thinking"
+				return
+		..()
 
 	ChaseAttack(mob/M)
 		..()

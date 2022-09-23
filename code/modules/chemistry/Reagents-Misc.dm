@@ -514,6 +514,7 @@ datum
 			on_remove()
 				..()
 				UnregisterSignal(holder.my_atom, COMSIG_MOB_SHOCKED_DEFIB)
+
 			proc/revive(source)
 				var/mob/living/M = source
 				var/volume_passed = holder.get_reagent_amount("strange_reagent")
@@ -539,7 +540,14 @@ datum
 						var/mob/living/carbon/human/H = M
 						var/obj/item/organ/brain/B = H.organHolder?.get_organ("brain")
 						G = find_ghost_by_key(B?.owner?.key)
-						if (came_back_wrong || H.decomp_stage || G?.mind?.dnr) //Wire: added the dnr condition here
+						var/is_puritan = 0
+						if(ismob(G))
+							for (var/trait as anything in G?.client.preferences.traitPreferences.traits_selected)
+								if(trait == "puritan")
+									is_puritan = 1
+						if(H.traitHolder.hasTrait("puritan"))
+							is_puritan = 1
+						if (came_back_wrong || H.decomp_stage || G?.mind?.dnr || is_puritan) //Wire: added the dnr condition here
 							H.visible_message("<span class='alert'><B>[H]</B> starts convulsing violently!</span>")
 							if (G?.mind?.dnr)
 								H.visible_message("<span class='alert'><b>[H]</b> seems to prefer the afterlife!</span>")
@@ -680,11 +688,11 @@ datum
 			viscosity = 0.4
 
 			reaction_obj(var/obj/O, var/volume)
-				if (istype(O,/obj/window))
+				if (istype(O, /obj/window))
 					var/obj/window/W = O
 
 					// Silicate was broken. I fixed it (Convair880).
-					var/max_reinforce = 500
+					var/static/max_reinforce = 500
 					if (W.health >= max_reinforce)
 						return
 					var/do_reinforce = W.health * 2
@@ -696,7 +704,7 @@ datum
 					var/icon/I = icon(W.icon)
 					I.ColorTone( rgb(165,242,243) )
 					W.icon = I
-				return
+					src.holder.remove_reagent(src.id, src.holder.get_reagent_amount(src.id))
 
 		graphene
 			name = "graphene"
@@ -1184,7 +1192,7 @@ datum
 
 			proc/cube_mob(var/mob/M, var/volume_passed)
 				var/obj/icecube/I = new/obj/icecube(get_turf(M), M)
-				I.health = max(volume_passed/5,1)
+				I.health = clamp(volume_passed/2, 1, 10)
 				//M.bodytemperature = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)

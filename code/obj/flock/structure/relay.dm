@@ -1,6 +1,10 @@
 /////////////////////////////////////////////////////////////////////////////////
 // RELAY
 /////////////////////////////////////////////////////////////////////////////////
+
+// Important: Reduce size of max_conv_radius if you are planning on viewing
+// variables of the relay, otherwise it will take a long time to load
+
 /obj/flock_structure/relay
 	icon = 'icons/misc/featherzone-160x160.dmi'
 	icon_state = "structure-relay"
@@ -22,6 +26,8 @@
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
+	var/max_conv_radius = 100
+	var/list/turfs_to_convert = null
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
 	var/charge_time_length = 360 // in seconds
@@ -37,6 +43,8 @@
 /obj/flock_structure/relay/New()
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
+	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
+	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
 	// no shuttle for you, either destroy the relay or flee when it unleashes
 	if (emergency_shuttle.online)
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
@@ -55,6 +63,19 @@
 		var/msg = "Overwhelming anomalous power signatures detected on station. This is an existential threat to the station. All personnel must contain this event."
 		msg = radioGarbleText(msg, 7)
 		command_alert(msg, sound_to_play = 'sound/misc/announcement_1.ogg', alert_origin = ALERT_ANOMALY)
+
+	turfs_to_convert = list()
+	var/turf/center = get_turf(src)
+	for (var/turf/T as anything in block(locate(max(center.x - src.max_conv_radius, 1), max(center.y - src.max_conv_radius, 1), center.z), locate(min(center.x + src.max_conv_radius, world.maxx), min(center.y + src.max_conv_radius, world.maxy), center.z)))
+		LAGCHECK(LAG_LOW)
+		if (!flockTurfAllowed(T))
+			continue
+		var/dist = round(GET_EUCLIDEAN_DIST(center, T))
+		if (dist > src.max_conv_radius)
+			continue
+		if (!("[dist]" in turfs_to_convert))
+			turfs_to_convert["[dist]"] = list()
+		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
@@ -78,11 +99,12 @@
 		return "<b><i>BROADCASTING IN PROGRESS</i></b>"
 
 /obj/flock_structure/relay/process()
-	if (src.conversion_radius <= 20)
+	if (src.conversion_radius <= length(src.turfs_to_convert))
 		src.convert_turfs()
 		src.conversion_radius++
 
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
+	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - elapsed)] seconds")
 	if(elapsed >= last_time_sound_played_in_seconds + sound_length_in_seconds)
 		play_sound()
 	if(elapsed >= charge_time_length/2) // halfway point, start doing more
@@ -105,11 +127,10 @@
 		boutput(M, "<span class='flocksay bold'>You hear something unworldly coming from the <i>[dir2text(get_dir(M, center_loc))]</i>!</span>")
 
 /obj/flock_structure/relay/proc/convert_turfs()
-	var/list/turfs = circular_range(get_turf(src), src.conversion_radius)
 	SPAWN(0)
-		for (var/turf/T as anything in turfs)
+		for (var/turf/T as anything in src?.turfs_to_convert["[src.conversion_radius]"])
+			LAGCHECK(LAG_LOW)
 			if (istype(T, /turf/simulated) && !isfeathertile(T))
-				LAGCHECK(LAG_LOW)
 				src?.flock?.claimTurf(flock_convert_turf(T))
 
 /obj/flock_structure/relay/proc/unleash_the_signal()

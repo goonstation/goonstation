@@ -186,12 +186,14 @@ obj/item/cable_coil/dropped(mob/user)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
 	if (!isturf(M.loc))
 		return
-	var/turf/source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
+
+	if(!source)
+		source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
 
 	var/obj/cable/C = find_half_cable(source, get_dir(source, target))
 	if (C)

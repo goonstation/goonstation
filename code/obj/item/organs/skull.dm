@@ -214,6 +214,12 @@
 	icon_state = "skull_strange"
 	value = 3
 
+/obj/item/skull/menacing // Vampires.
+	name = "menacing skull"
+	desc = "Gives off a threatening aura and also makes a great halloween decoration."
+	icon_state = "skull_menacing"
+	value = 3
+
 /obj/item/skull/crystal // Omnitraitors.
 	name = "crystal skull"
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
