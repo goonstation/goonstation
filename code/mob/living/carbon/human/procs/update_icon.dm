@@ -823,7 +823,7 @@
 		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
 
 
-var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left", "r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left")
+var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
 /mob/living/carbon/human/update_body()
 	..()
@@ -962,7 +962,6 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 					if (limb)
 
 						var/image/limb_pic = limb.getMobIcon(0, src.decomp_stage)	// The limb, not the hand/foot
-						var/layer_offset = limb.slot == "l_arm" || limb.slot == "r_arm" ? 0.01 : 0
 						var/limb_skin_tone = "#FFFFFF"	// So we dont stomp on any limbs that arent supposed to be colorful
 						if (limb.skintoned && limb.skin_tone)	// Get the limb's stored skin tone, if its skintoned and has a skin_tone
 							limb_skin_tone = limb.skin_tone	// So the limb's hand/foot gets the color too, when/if we get there
@@ -982,45 +981,45 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 								if (istext(hand_icon_s))
 									if (limb.skintoned)
 										var/oldlayer = human_decomp_image.layer // ugh
-										human_decomp_image.layer = MOB_HAND_LAYER1 + layer_offset
+										human_decomp_image.layer = MOB_HAND_LAYER1
 										human_decomp_image.icon_state = hand_icon_s
 										human_decomp_image.pixel_y = armleg_offset
-										src.hands_standing.layer = MOB_HAND_LAYER1 + layer_offset
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_decomp_image
 										if(limb.handfoot_overlay_1)
 											human_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_decomp_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+											human_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_decomp_image.pixel_y = armleg_offset
 											src.body_standing.overlays += human_decomp_image
 										human_decomp_image.layer = oldlayer
 									else
 										var/oldlayer = human_untoned_decomp_image.layer // ugh
-										human_untoned_decomp_image.layer = MOB_HAND_LAYER1 + layer_offset
+										human_untoned_decomp_image.layer = MOB_HAND_LAYER1
 										human_untoned_decomp_image.icon_state = hand_icon_s
 										human_untoned_decomp_image.pixel_y = armleg_offset
-										src.hands_standing.layer = MOB_HAND_LAYER1 + layer_offset
+										src.hands_standing.layer = MOB_HAND_LAYER1
 										src.hands_standing.overlays += human_untoned_decomp_image
 										if(limb.handfoot_overlay_1)
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = hand_icon_s
-									I.layer = MOB_HAND_LAYER1 + layer_offset
+									I.layer = MOB_HAND_LAYER1
 									I.pixel_y = armleg_offset
 									if (limb.skintoned)
 										I.color = human_decomp_image.color
-									src.hands_standing.layer = MOB_HAND_LAYER1 + layer_offset
+									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
@@ -1034,13 +1033,13 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										var/oldlayer
 										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
 											oldlayer = human_decomp_image.layer // ugh
-											human_decomp_image.layer = MOB_HAND_LAYER1 + layer_offset
+											human_decomp_image.layer = MOB_HAND_LAYER1
 										src.body_standing.overlays += human_decomp_image
 										if(limb.handfoot_overlay_1)
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
@@ -1050,26 +1049,26 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 										var/oldlayer
 										if (sleeveless && (limb.slot == "l_arm" || limb.slot == "r_arm"))
 											oldlayer = human_untoned_decomp_image.layer // ugh
-											human_untoned_decomp_image.layer = MOB_HAND_LAYER1 + layer_offset
+											human_untoned_decomp_image.layer = MOB_HAND_LAYER1
 										src.body_standing.overlays += human_untoned_decomp_image
 										if(limb.handfoot_overlay_1)
 											human_untoned_decomp_image.icon = limb.handfoot_overlay_1?.icon
 											human_untoned_decomp_image.icon_state = limb.handfoot_overlay_1?.icon_state
 											human_untoned_decomp_image.color = limb.handfoot_overlay_1?.color
-											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+											human_untoned_decomp_image.layer = MOB_BODYDETAIL_LAYER2
 											human_untoned_decomp_image.pixel_y = armleg_offset
 											src.body_standing.overlays += human_untoned_decomp_image
 										if (oldlayer)
 											human_untoned_decomp_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_HAND_LAYER1 + layer_offset
+									I.layer = MOB_HAND_LAYER1
 									if (limb.skintoned)
 										I.color = human_decomp_image.color
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
@@ -1079,34 +1078,34 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 							if (hand_icon_s)
 								if (istext(hand_icon_s))
 									var/oldlayer = human_image.layer // ugh
-									human_image.layer = MOB_HAND_LAYER1 + layer_offset
+									human_image.layer = MOB_HAND_LAYER1
 									human_image.icon = handlimb_icon
 									human_image.icon_state = hand_icon_s
 									human_image.color = limb_skin_tone
 									human_image.pixel_y = armleg_offset
-									src.hands_standing.layer = MOB_HAND_LAYER1 + layer_offset
+									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += human_image
 									if(limb.handfoot_overlay_1)
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										human_image.layer = MOB_BODYDETAIL_LAYER2
 										src.body_standing.overlays += human_image
 									human_image.layer = oldlayer
 
 								else
 									var/image/I = hand_icon_s
-									I.layer = MOB_HAND_LAYER1 + layer_offset
+									I.layer = MOB_HAND_LAYER1
 									if(!limb.no_icon)
 										I.icon = handlimb_icon
 										I.icon_state = hand_icon_s
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
-									src.hands_standing.layer = MOB_HAND_LAYER1 + layer_offset
+									src.hands_standing.layer = MOB_HAND_LAYER1
 									src.hands_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										I.layer = MOB_BODYDETAIL_LAYER2
 										I.pixel_y = armleg_offset
 										if (limb.skintoned)
 											I.color = human_decomp_image.color
@@ -1119,24 +1118,24 @@ var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_
 									human_image.color = limb_skin_tone
 									human_image.pixel_y = armleg_offset
 									var/oldlayer = human_image.layer
-									human_image.layer = MOB_LIMB_LAYER + layer_offset
+									human_image.layer = MOB_LIMB_LAYER
 									src.body_standing.overlays += human_image
 									if(limb.handfoot_overlay_1)
 										human_image.icon = limb.handfoot_overlay_1?.icon
 										human_image.icon_state = limb.handfoot_overlay_1?.icon_state
 										human_image.color = limb.handfoot_overlay_1?.color
-										human_image.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										human_image.layer = MOB_BODYDETAIL_LAYER2
 										src.body_standing.overlays += human_image
 									human_image.layer = oldlayer
 								else
 									var/image/I = part_icon_s
-									I.layer = MOB_HAND_LAYER1 + layer_offset
+									I.layer = MOB_HAND_LAYER1
 									I.color = limb_skin_tone
 									I.pixel_y = armleg_offset
 									src.body_standing.overlays += I
 									if(limb.handfoot_overlay_1)
 										I = limb.handfoot_overlay_1
-										I.layer = MOB_BODYDETAIL_LAYER2 + layer_offset
+										I.layer = MOB_BODYDETAIL_LAYER2
 										src.body_standing.overlays += I
 
 					else	// Handles stumps
