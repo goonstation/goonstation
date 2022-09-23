@@ -487,6 +487,7 @@
 	pixel_x = -7;
 	pixel_y = 6
 	},
+/obj/item/aiModule/ability_expansion/mfoam_launcher,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
