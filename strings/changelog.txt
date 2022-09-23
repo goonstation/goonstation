@@ -1,5 +1,10 @@
 
 (t)fri sep 23 22
+(u)LeahTheTech
+(p)10943
+(e)|
+(*)Flockdrones are now slowed whenever they would have been stunned.
+(*)Flockdrones now EMP any item they pick up.
 (u)Grokberg, pali6, glowbolt/pgmzeta
 (p)6679
 (e)|
