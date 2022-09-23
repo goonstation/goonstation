@@ -42,7 +42,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
-	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
+	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -801,8 +801,8 @@
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
 /obj/item/axe
-	name = "Axe"
-	desc = "An energised battle axe."
+	name = "TN-DOLORIS Axe"
+	desc = "An energised battle axe. The handle bears the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "axe0"
 	uses_multiple_icon_states = 1
