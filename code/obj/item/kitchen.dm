@@ -783,7 +783,7 @@ TRAYS
 				user.setStatus("stunned", 1 SECOND)
 				user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
 				bleed(user, 1, 1)
-				playsound(user.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 0)
+				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 0)
 				user.emote("scream") // Sounds specially painful when you get your finger stuck in a steel pizza box
 			else
 				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
