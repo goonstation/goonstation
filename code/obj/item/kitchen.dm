@@ -807,7 +807,7 @@ TRAYS
 				"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
 				user.setStatus("stunned", 1 SECOND)
 				user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
-				playsound(user.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 80, 0)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 80, 0)
 
 			else
 				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
