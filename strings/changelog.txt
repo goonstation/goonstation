@@ -1,5 +1,9 @@
 
 (t)fri sep 23 22
+(u)LeahTheTech
+(p)10956
+(e)|
+(*)Vampiric thralls no longer have "thrall" added to their name, and instead have a gurgling speech effect.
 (u)Wisemonster
 (p)10690
 (e)|
