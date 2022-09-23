@@ -161,7 +161,7 @@
 	if (traitor_scaling)
 		num_spies = clamp(round((num_players + randomizer) / pop_divisor), 2, spies_possible)
 
-	if (num_spies > 4 && prob(10))
+	if (num_spies > 2 && prob(10))
 		num_spies -= 1
 		num_wraiths = 1
 
