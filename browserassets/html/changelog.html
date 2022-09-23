@@ -57,8 +57,18 @@
 		font-weight: normal;
 	}
 
+	@font-face
+	{
+		font-family: 'Twemoji';
+		src: url('Twemoji.eot');
+		src: url('Twemoji.eot') format('embedded-opentype'),
+			 url('Twemoji.ttf') format('truetype'),
+	}
+
 	.emoji {
-		margin-left: 20px;
+		font-family: 'Twemoji', 'Segoe UI Emoji', 'Consolas', sans-serif !important;
+		font-size: 1.15em;
+		margin-left: 10px;
 		position: relative;
 		display: inline-block;
 	}
@@ -67,6 +77,7 @@
 		visibility: hidden;
 		background-color: #333;
 		color: #fff;
+		font-size: 1.1em;
 		width: 200px;
 		text-align: center;
 		padding: 5px 0;
