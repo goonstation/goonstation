@@ -1239,27 +1239,30 @@
 	icon_state = "midas"
 	targeted = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
-		if (linked_power.power > 1)
-			base_path = /obj/
+		var/obj/the_object = target
 
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to touch.")
-			return 1
+		if(!target)
+			var/base_path = /obj/item/
+			if (linked_power.power > 1)
+				base_path = /obj/
 
-		linked_power.using = 1
-		var/obj/the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			linked_power.using = 0
-			return 1
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to touch.")
+				return 1
+
+			linked_power.using = 1
+			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				linked_power.using = 0
+				return 1
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1277,7 +1280,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"))
+				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -1314,7 +1317,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"))
+			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
 		linked_power.using = 0
 		return
 
@@ -2100,20 +2103,23 @@
 	has_misfire = FALSE
 	needs_hands = FALSE
 
-	cast()
+	cast(atom/target)
 		if (..())
 			return 1
 
-		var/base_path = /obj
-		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
-		if (!items.len)
-			boutput(usr, "/red You can't find anything nearby to spray ink on.")
-			return 1
+		var/obj/the_object = target
 
-		var/obj/the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
-		if (!the_object)
-			last_cast = 0
-			return 1
+		if(!the_object)
+			var/base_path = /obj
+			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+			if (!items.len)
+				boutput(usr, "/red You can't find anything nearby to spray ink on.")
+				return 1
+
+			the_object = input("Which item do you want to color?","Ink Glands") as null|obj in items
+			if (!the_object)
+				last_cast = 0
+				return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)

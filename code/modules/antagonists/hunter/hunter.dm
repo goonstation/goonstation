@@ -1,79 +1,45 @@
-// Converted everything related to hunters from client procs to ability holders and used
-// the opportunity to do some clean-up as well (Convair880).
+/datum/antagonist/hunter
+	id = ROLE_HUNTER
+	display_name = "hunter"
 
-/* 	/		/		/		/		/		/		Setup		/		/		/		/		/		/		/		/		*/
+	/// The ability holder of this hunter, containing their respective abilities. We also use this for tracking power, at the moment.
+	var/datum/abilityHolder/hunter/ability_holder
 
-/mob/proc/make_hunter()
-	if (ishuman(src))
-		var/datum/abilityHolder/hunter/A = src.get_ability_holder(/datum/abilityHolder/hunter)
-		if (A && istype(A))
-			return
+	is_compatible_with(datum/mind/mind)
+		return ishuman(mind.current)
 
-		var/datum/abilityHolder/hunter/P = src.add_ability_holder(/datum/abilityHolder/hunter)
-		P.addAbility(/datum/targetable/hunter/hunter_gearspawn)
-		P.addAbility(/datum/targetable/hunter/hunter_taketrophy)
-		P.addAbility(/datum/targetable/hunter/hunter_trophycount)
-		P.addAbility(/datum/targetable/hunter/hunter_summongear)
+	give_equipment()
+		if (!ishuman(src.owner.current))
+			return FALSE
 
-		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
-			src.show_antag_popup("hunter")
+		var/mob/living/carbon/human/M = src.owner.current
+		M.hunter_transform()
 
-	else return
+	alt_equipment()
+		if (!ishuman(src.owner.current))
+			return FALSE
 
-/* 	/		/		/		/		/		/		Ability Holder		/		/		/		/		/		/		/		/		*/
+		var/datum/abilityHolder/hunter/A = src.owner.current.get_ability_holder(/datum/abilityHolder/hunter)
+		if (!A)
+			src.ability_holder = src.owner.current.add_ability_holder(/datum/abilityHolder/hunter)
+		else
+			src.ability_holder = A
+		src.ability_holder.addAbility(/datum/targetable/hunter/hunter_gearspawn)
 
-/mob/living/carbon/human/proc/hunter_transform()
-	if (ishuman(src))
-		var/mob/living/carbon/human/M = src
+	remove_equipment()
+		src.ability_holder.removeAbility(/datum/targetable/hunter/hunter_gearspawn)
+		src.ability_holder.removeAbility(/datum/targetable/hunter/hunter_taketrophy)
+		src.ability_holder.removeAbility(/datum/targetable/hunter/hunter_trophycount)
+		src.ability_holder.removeAbility(/datum/targetable/hunter/hunter_summongear)
+		src.owner.current.remove_ability_holder(/datum/abilityHolder/hunter)
 
-		M.real_name = "hunter"
+	relocate()
+		var/mob/M = src.owner.current
+		M.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
-		M.jitteriness = 0
-		M.delStatus("stunned")
-		M.delStatus("weakened")
-		M.delStatus("paralysis")
-		M.delStatus("slowed")
-		M.change_misstep_chance(-INFINITY)
-		M.stuttering = 0
-		M.delStatus("drowsy")
+	assign_objectives()
+		new /datum/objective_set/hunter(src.owner)
 
-		if (M.hasStatus("handcuffed"))
-			M.visible_message("<span class='alert'><B>[M] rips apart the [M.handcuffs] with pure brute strength!</b></span>")
-			M.handcuffs.destroy_handcuffs(M)
-		M.buckled = null
-
-		if (M.mutantrace)
-			qdel(M.mutantrace)
-		M.set_mutantrace(/datum/mutantrace/hunter)
-
-		M.unequip_all()
-
-		var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(M)
-		M.implant.Add(B)
-		B.implanted = 1
-		B.implanted(M)
-
-		M.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(M), slot_w_uniform) // Must be at the top of the list.
-		M.equip_if_possible(new /obj/item/clothing/mask/hunter(M), slot_wear_mask)
-		M.equip_if_possible(new /obj/item/storage/belt/hunter(M), slot_belt)
-		M.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(M), slot_shoes)
-		M.equip_if_possible(new /obj/item/device/radio/headset(M), slot_ears)
-		M.equip_if_possible(new /obj/item/storage/backpack(M), slot_back)
-		M.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(M), slot_l_store)
-		M.equip_if_possible(new /obj/item/cloaking_device/hunter(M), slot_r_store)
-		M.equip_if_possible(new /obj/item/knife/butcher/hunterspear(M), slot_in_backpack)
-		M.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(M), slot_in_backpack)
-
-		M.set_face_icon_dirty()
-		M.set_body_icon_dirty()
-		M.update_clothing()
-
-		boutput(M, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
-		logTheThing(LOG_COMBAT, M, "transformed into a hunter at [log_loc(M)].")
-		return 1
-
-	else
-		return 0
 
 // Called for every human mob spawn and mutantrace change. The value of non-standard skulls is defined in organ.dm.
 #define default_skull_desc "A trophy from a less interesting kill."
@@ -86,7 +52,7 @@
 		var/mob/living/carbon/human/H = src
 
 		if (!H.organHolder)
-			sleep (20)
+			sleep (2 SECONDS)
 			if (!H.organHolder)
 				return
 
@@ -122,6 +88,7 @@
 								skull_type = /obj/item/skull/peculiar
 								skull_desc = "A grand trophy from a powerful magician. It brings you great honor."
 							if (ROLE_VAMPIRE)
+								skull_type = /obj/item/skull/menacing
 								skull_value = 3
 								skull_desc = "A trophy taken from an undead vampire! It brings you great honor."
 							else
@@ -356,3 +323,63 @@
 		. = ..()
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return
+
+// We have two paths to becoming a hunter so I think we are stuck with this
+
+/mob/living/carbon/human/proc/hunter_transform()
+	src.real_name = "hunter"
+
+	src.jitteriness = 0
+	src.delStatus("stunned")
+	src.delStatus("weakened")
+	src.delStatus("paralysis")
+	src.delStatus("slowed")
+	src.change_misstep_chance(-INFINITY)
+	src.stuttering = 0
+	src.delStatus("drowsy")
+
+	if (src.hasStatus("handcuffed"))
+		src.visible_message("<span class='alert'><B>[src] rips apart the [src.handcuffs] with pure brute strength!</b></span>")
+		src.handcuffs.destroy_handcuffs(src)
+	src.buckled = null
+
+	if (src.mutantrace)
+		qdel(src.mutantrace)
+	src.set_mutantrace(/datum/mutantrace/hunter)
+
+	var/datum/abilityHolder/hunter/A = src.get_ability_holder(/datum/abilityHolder/hunter)
+	if (!A)
+		A = src.add_ability_holder(/datum/abilityHolder/hunter)
+	A.removeAbility(/datum/targetable/hunter/hunter_gearspawn)
+	A.addAbility(/datum/targetable/hunter/hunter_taketrophy)
+	A.addAbility(/datum/targetable/hunter/hunter_trophycount)
+	A.addAbility(/datum/targetable/hunter/hunter_summongear)
+
+	src.unequip_all()
+
+	var/obj/item/implant/revenge/microbomb/hunter/B = new /obj/item/implant/revenge/microbomb/hunter(src)
+	src.implant.Add(B)
+	B.implanted = 1
+	B.implanted(src)
+
+	src.equip_if_possible(new /obj/item/clothing/under/gimmick/hunter(src), slot_w_uniform) // srcust be at the top of the list.
+	src.equip_if_possible(new /obj/item/clothing/mask/hunter(src), slot_wear_mask)
+	src.equip_if_possible(new /obj/item/storage/belt/hunter(src), slot_belt)
+	src.equip_if_possible(new /obj/item/clothing/shoes/cowboy/hunter(src), slot_shoes)
+	src.equip_if_possible(new /obj/item/device/radio/headset(src), slot_ears)
+	src.equip_if_possible(new /obj/item/storage/backpack(src), slot_back)
+	src.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(src), slot_l_store)
+	src.equip_if_possible(new /obj/item/cloaking_device/hunter(src), slot_r_store)
+	src.equip_if_possible(new /obj/item/knife/butcher/hunterspear(src), slot_in_backpack)
+	src.equip_if_possible(new /obj/item/gun/energy/plasma_gun/hunter(src), slot_in_backpack)
+
+	src.set_face_icon_dirty()
+	src.set_body_icon_dirty()
+	src.update_clothing()
+
+	SPAWN(2.5 SECONDS) // Don't remove.
+		if (src)
+			src.assign_gimmick_skull()
+
+	boutput(src, "<span class='notice'><h3>You have received your equipment. Let the hunt begin!</h3></span>")
+	logTheThing(LOG_COMBAT, src, "transformed into a hunter at [log_loc(src)].")

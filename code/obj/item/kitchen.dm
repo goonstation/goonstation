@@ -99,6 +99,7 @@ TRAYS
 	name = "spoon"
 	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
 	icon_state = "spoon"
+	tool_flags = TOOL_SPOONING
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
@@ -640,7 +641,7 @@ TRAYS
 		if(src.cant_drop == TRUE)
 			if (istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
-				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
 			src.set_loc(get_turf(M))

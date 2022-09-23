@@ -8,7 +8,7 @@
 	hud_path = /datum/hud/wraith/poltergeist
 	var/mob/wraith/master = null
 	var/obj/spookMarker/marker = null
-	haunt_duration = 150
+	forced_haunt_duration = 15 SECONDS
 	death_icon_state = "derangedghost"
 	weak_tk = TRUE
 	var/max_dist_marker = 15
@@ -97,7 +97,7 @@
 		qdel(orbit_anchor)
 		..()
 
-	addAllAbilities()
+	addAllBasicAbilities()
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)
 		src.addAbility(/datum/targetable/wraithAbility/animateObject)
@@ -118,24 +118,6 @@
 		src.removeAbility(/datum/targetable/wraithAbility/blood_writing)
 
 		src.removeAbility(/datum/targetable/wraithAbility/retreat)
-
-	makeCorporeal()
-		if (!src.density)
-			src.set_density(1)
-			REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
-			src.icon_state = "poltergeist-corp"
-			src.see_invisible = INVIS_NONE
-			src.visible_message(pick("<span class='alert'>A horrible apparition fades into view!</span>", "<span class='alert'>A pool of shadow forms!</span>"), pick("<span class='alert'>A shell of ectoplasm forms around you!</span>", "<span class='alert'>You manifest!</span>"))
-		update_body()
-
-	makeIncorporeal()
-		if (src.density)
-			src.visible_message(pick("<span class='alert'>[src] vanishes!</span>", "<span class='alert'>The poltergeist dissolves into shadow!</span>"), pick("<span class='notice'>The ectoplasm around you dissipates!</span>", "<span class='notice'>You fade into the aether!</span>"))
-			src.set_density(0)
-			APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_GHOST)
-			src.icon_state = "poltergeist"
-			src.see_invisible = INVIS_GHOST
-		update_body()
 
 	Move(var/turf/NewLoc, direct)
 		..()

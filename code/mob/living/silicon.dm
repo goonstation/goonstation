@@ -46,6 +46,7 @@
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -573,9 +574,6 @@ var/global/list/module_editors = list()
 			if (istype(O, /datum/objective/crew))
 				src.mind.objectives -= O
 				qdel(O)
-			if (istype(O, /datum/objective/miscreant))
-				src.mind.objectives -= O
-				qdel(O)
 		src.syndicate = TRUE
 		return TRUE
 
@@ -647,4 +645,4 @@ var/global/list/module_editors = list()
 	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"

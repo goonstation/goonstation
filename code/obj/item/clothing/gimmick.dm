@@ -546,8 +546,8 @@
 // Vikings
 
 /obj/item/clothing/under/gimmick/viking
-	name = "Viking Hauberk"
-	desc = "A shirt of mail armor commonly utilized by space vikings."
+	name = "TN-HEIMALIS-1 Hauberk"
+	desc = "A shirt of flexible cobryl-alloy mail armor with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "viking"
 
@@ -556,8 +556,8 @@
 		setProperty("coldprot", 40)
 
 /obj/item/clothing/head/helmet/viking
-	name = "Viking Helmet"
-	desc = "A helmet, but for space vikings."
+	name = "TN-HEIMALIS-2 Helmet"
+	desc = "A cobryl-alloy armored helmet with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "vhelmet"
 
@@ -566,7 +566,8 @@
 		setProperty("coldprot", 40)
 
 /obj/item/device/energy_shield/viking
-	name = "Space Viking energy-shield"
+	name = "TN-FIDEI Energy Shield"
+	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
@@ -1193,7 +1194,7 @@
 		if (!isturf(src.loc))
 			return
 		src.layer = initial(src.layer)
-		playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 		SPAWN(rand(2,5))
 			if (src && isturf(src.loc))
 				var/obj/table/T = locate(/obj/table) in range(3,src)
@@ -1203,7 +1204,7 @@
 							break
 						if (src.loc == T.loc)
 							src.visible_message("<span class='alert'>\The [src] rolls under [T]!</span>")
-							playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 530, 1, null, 2)
 							if (prob(30))
 								qdel(src)
 								return
@@ -1213,7 +1214,7 @@
 						else
 							step_towards(src, T)
 							src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-							playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 							sleep(rand(2,5))
 				else
 					for (var/i=rand(0,4), i>0, i--)
@@ -1221,7 +1222,7 @@
 							break
 						step(src, pick(alldirs))
 						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-						playsound(src.loc, 'sound/items/coindrop.ogg', 50, 1, null, 2)
+						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
 /obj/item/clothing/gloves/ring/gold

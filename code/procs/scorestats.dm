@@ -70,7 +70,6 @@ var/datum/score_tracker/score_tracker
 #ifdef CREW_OBJECTIVES
 				if (istype(objective, /datum/objective/crew)) continue
 #endif
-				if (istype(objective, /datum/objective/miscreant)) continue
 				if (!objective.check_completion())
 					traitor_objectives_failed++
 

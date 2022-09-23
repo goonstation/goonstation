@@ -2,6 +2,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	shuttle_available = 2
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING, ROLE_VAMPIRE)

@@ -91,9 +91,9 @@
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		if (breath_request>0)
-			return remove_air(breath_request)
+			return remove_air(breath_request * mult)
 		else
 			return null
 
@@ -908,9 +908,7 @@
 	if(passengers)
 		find_pilot()
 	else
-		src.ion_trail.stop()
-
-
+		src.ion_trail?.stop()
 
 	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
@@ -1668,6 +1666,9 @@
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+
+/obj/machinery/vehicle/proc/go_home()
+	return null
 
 
 

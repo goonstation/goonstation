@@ -222,6 +222,7 @@
 		if (current_shots > 0)
 			if (ON_COOLDOWN(user, "\ref[src] shoot", src.cooldown))
 				return
+			. = TRUE
 			current_shots--
 			if (pointblank)
 				src.shoot_pointblank(target, user)
