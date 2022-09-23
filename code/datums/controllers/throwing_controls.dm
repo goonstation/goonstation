@@ -50,8 +50,8 @@
 
 	proc/get_throw_travelled()
 		. = src.dist_travelled //dist traveled is super innacurrate, especially when stacking throws
-		if (src.thrown_from) //if we have this param we should use it to get the REAL distance.
-			. = get_dist(get_turf(thing), get_turf(src.thrown_from))
+		if (src.thrown_from && (get_step(src.thrown_from, 0)?.z == get_step(src.thing, 0)?.z)) //if we have this param and we haven't gone cross-z-level we should use it to get the REAL distance.
+			. = GET_DIST(get_turf(thing), get_turf(src.thrown_from))
 
 var/global/datum/controller/throwing/throwing_controller = new
 
@@ -128,7 +128,7 @@ var/global/datum/controller/throwing/throwing_controller = new
 
 			if(isliving(thing) && (thr.throw_type & THROW_PEEL_SLIP))
 				var/mob/living/L = thing
-				REMOVE_MOB_PROPERTY(L, PROP_CANTMOVE, "peel_slip_\ref[thr]")
+				REMOVE_ATOM_PROPERTY(L, PROP_MOB_CANTMOVE, "peel_slip_\ref[thr]")
 
 			thing.throw_end(thr.params, thrown_from=thr.thrown_from)
 			SEND_SIGNAL(thing, COMSIG_MOVABLE_THROW_END, thr)

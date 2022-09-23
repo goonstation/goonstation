@@ -100,11 +100,11 @@
 					return
 				for(var/obj/item/remote/syndicate_teleporter/T in M.get_all_items_on_mob())
 					qdel(T) //Emphasizing that there really is no easy way back if you go this way
-				playsound(M, "sound/effects/teleport.ogg", 30, 1)
+				playsound(M, 'sound/effects/teleport.ogg', 30, 1)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(M)
 				M.set_loc(L)
 				var/obj/decal/residual_energy/R = new/obj/decal/residual_energy(L)
-				playsound(L, "sound/effects/teleport.ogg", 30, 1)
+				playsound(L, 'sound/effects/teleport.ogg', 30, 1)
 				SPAWN(1 SECOND)
 					qdel(S)
 					qdel(R)
@@ -114,11 +114,11 @@
 				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!landmark_teleport)
 					return
-				playsound(the_nuke, "sound/effects/teleport.ogg", 30, 1)
+				playsound(the_nuke, 'sound/effects/teleport.ogg', 30, 1)
 				var/obj/decal/teleport_swirl/tele_swirl = new/obj/decal/teleport_swirl(the_nuke)
 				the_nuke.set_loc(landmark_teleport)
 				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
-				playsound(landmark_teleport, "sound/effects/teleport.ogg", 30, 1)
+				playsound(landmark_teleport, 'sound/effects/teleport.ogg', 30, 1)
 				SPAWN(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)
@@ -135,9 +135,17 @@
 					L.throw_at(target, 3, 1)
 					L.changeStatus("stunned", 2 SECONDS)
 					L.changeStatus("weakened", 2 SECONDS)
-			command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+			var/num_players = 0
+			for(var/client/C)
+				var/mob/new_player/player = C.mob
+				if (!istype(player))
+					continue
+				if(player.ready)
+					num_players++
+			if (num_players <= 70)
+				command_alert("A Syndicate Assault pod is heading towards [station_name], be on high alert.", "Central Command Alert", 'sound/misc/announcement_1.ogg')
 			sleep(rand_time / 2)
-			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", "sound/misc/announcement_1.ogg")
+			command_alert("Our sensors have determined the Syndicate Assault pod is headed towards the [src.landing_area], a response would be advised.", "Central Command Alert", 'sound/misc/announcement_1.ogg')
 			sleep(rand_time / 2)
 			send_pods()
 
@@ -158,7 +166,7 @@
 			if(!length(possible_turfs))
 				src.visible_message("<span class='alert'>The [src] makes a grumpy beep, it seems not everyone could be sent!</span>")
 				break
-		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", "sound/misc/announcement_1.ogg")
+		command_alert("A [length(sent_mobs) > 1 ? "group of [length(sent_mobs)] personnel missiles have" : "single personnel missile has"] been spotted launching from a Syndicate Assault pod towards the [src.landing_area], be prepared for heavy contact.","Central Command Alert", 'sound/misc/announcement_1.ogg')
 		qdel(src)
 
 /obj/machinery/computer/security/pod_timer

@@ -179,14 +179,14 @@ var/global
 		if (json_decode_crasher.Find(cookie))
 			if (src.owner)
 				message_admins("[src.owner] just attempted to crash the server using at least 5 '\['s in a row.")
-				logTheThing("admin", src.owner, null, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
+				logTheThing(LOG_ADMIN, src.owner, "just attempted to crash the server using at least 5 '\['s in a row.", "admin")
 
 				//Irc message too
 				var/ircmsg[] = new()
 				ircmsg["key"] = owner.key
 				ircmsg["name"] = stripTextMacros(owner.mob.name)
 				ircmsg["msg"] = "just attempted to crash the server using at least 5 '\['s in a row."
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 			return
 
 		var/list/connData = json_decode(cookie)
@@ -205,8 +205,8 @@ var/global
 			if (found.len > 0 && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("debug", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
-				logTheThing("diary", src.owner, null, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
+				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
 
 				//Irc message too
 				if(owner)
@@ -214,7 +214,7 @@ var/global
 					ircmsg["key"] = owner.key
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
 					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
-					ircbot.export("admin", ircmsg)
+					ircbot.export_async("admin", ircmsg)
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
@@ -265,14 +265,15 @@ var/global
 				if (jumptarget)
 					src.owner.jumptoturf(get_turf(jumptarget))
 		if ("get")
-			src.owner.Getmob(targetMob)
+			if (tgui_alert(src.owner, "Are you sure you want to get [targetMob]?", "Confirmation", list("Yes", "No")) == "Yes")
+				src.owner.Getmob(targetMob)
 		if ("boot")
 			src.owner.cmd_boot(targetMob)
 		if ("ban")
 			src.owner.addBanDialog(targetMob)
 		if ("gib")
 			src.owner.cmd_admin_gib(targetMob)
-			logTheThing("admin", src.owner, targetMob, "gibbed [constructTarget(targetMob,"admin")].")
+			logTheThing(LOG_ADMIN, src.owner, "gibbed [constructTarget(targetMob,"admin")].")
 		if ("popt")
 			if(src.owner.holder)
 				src.owner.holder.playeropt(targetMob)
@@ -283,7 +284,7 @@ var/global
 				src.owner.mob:insert_observer(targetMob)
 		if ("teleport")
 			if (istype(src.owner.mob, /mob/dead/target_observer))
-				src.owner.mob:stop_observing()
+				qdel(src.owner.mob)
 			if(istype(src.owner.mob, /mob/dead/observer))
 				src.owner.mob.set_loc(get_turf(targetMob))
 
@@ -369,7 +370,7 @@ var/global
 			var/list/partial = splittext(iconData, "{")
 
 			if (length(partial) < 2)
-				logTheThing("debug", null, null, "Got invalid savefile data for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Got invalid savefile data for: [obj]")
 				return
 
 			baseData = copytext(partial[2], 3, -5)
@@ -378,24 +379,24 @@ var/global
 			var/icon/icon = icon(file(obj:icon), obj:icon_state, SOUTH, 1)
 
 			if (!icon)
-				logTheThing("debug", null, null, "Unable to create output icon for: [obj]")
+				logTheThing(LOG_DEBUG, null, "Unable to create output icon for: [obj]")
 				return
 
 			baseData = icon2base64(icon, iconKey)
 
 		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
 
-/proc/boutput(target = 0, message = "", group = "")
+/proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
 	if (target == world)
 		for (var/client/C in clients)
-			boutput(C, message)
+			boutput(C, message, group, forceScroll)
 		return
 
 	//If the target is a list, attempt to send the message to each item in the list
 	//(it's up to the caller to ensure the list contains actual things we can send to)
 	if (islist(target))
 		for (var/T in target)
-			boutput(T, message)
+			boutput(T, message, group, forceScroll)
 		return
 
 	//Otherwise, we're good to throw it at the user
@@ -412,7 +413,15 @@ var/global
 		if (isclient(target))
 			C = target
 		else if (ismob(target))
-			C = target:client
+			var/mob/M = target
+			if (M.boutput_relay_mob)
+				boutput(M.boutput_relay_mob, message, group, forceScroll)
+			else if(istype(M, /mob/living/silicon/ai))
+				var/mob/living/silicon/ai/AI = M
+				if(AI.deployed_to_eyecam)
+					C = AI.eyecam?.client
+			else
+				C = M.client
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
@@ -434,7 +443,7 @@ var/global
 
 				if (C.chatOutput.burstCount > CHAT_BURST_START)
 					C.chatOutput.burstQueue = list(
-						list("message" = message, "group" = group)
+						list("message" = message, "group" = group, "forceScroll" = forceScroll)
 					)
 					SPAWN(CHAT_BURST_TIME)
 						target << output(list2params(list(
@@ -445,7 +454,9 @@ var/global
 
 			target << output(list2params(list(
 				message,
-				group
+				group,
+				0,
+				forceScroll
 			)), "browseroutput:output")
 
 //Aliases for boutput

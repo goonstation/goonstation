@@ -8,9 +8,9 @@
 	layer = CABLE_LAYER
 	color = "#037ffc"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W))
-			logTheThing("station", user, null, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
+			logTheThing(LOG_STATION, user, "cut the don't-cut-this wire and got ghosted/disconnected as a result.")
 			//boutput(user, "<span class='alert'>You snip the ca</span>")
 			user.visible_message("[user] nearly snips the cable with \the [W], but suddenly freezes in place just before it cuts!", "<span class='alert'>You snip the ca</span>")
 			var/client/C = user.client
@@ -147,13 +147,13 @@
 	anchored = 1
 	density = 1
 	opacity = 0
-	icon = 'icons/obj/glass.dmi'
-	icon_state = "sheet"
+	icon = 'icons/obj/metal.dmi'
+	icon_state = "sheet-g_1"
 
 	var/facing = NW_SE
 	var/list/affecting = list()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "rotating mirror...")
 		facing = 1 - facing
 		for (var/obj/machinery/power/pt_laser/PTL in affecting)
@@ -161,7 +161,7 @@
 			boutput(user, "[PTL] would be notified")
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			boutput(user, "this would deconstruct it.")
 			return
@@ -277,14 +277,14 @@
 		tracker.maptext = "<span class='c vt ps2p sh'>TOTAL [add_lspace(round(total_score), 7)]\nROUND [add_lspace(round(round_score), 7)]</span>"
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/score = get_item_value(W)
 		if (score == -1)
 			return ..()
 
 		boutput(user, "<span class='notice'>[src] mulches up [W].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		mulch_item(W, score)
 		var/MT = start_scoring()
 		update_score(MT, score)
@@ -325,7 +325,7 @@
 
 
 	proc/mulch_item(var/obj/I, score)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_4.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1)
 		qdel( I )
 		total_score += score
 		round_score += score
@@ -364,10 +364,10 @@
 		if (!isliving(user))
 			boutput(user, "<span class='alert'>Excuse me you are dead, get your gross dead hands off that!</span>")
 			return
-		if (get_dist(user,src) > 1)
+		if (BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You need to move closer to [src] to do that.</span>")
 			return
-		if (get_dist(O,src) > 1 || get_dist(O,user) > 1)
+		if (BOUNDS_DIST(O, src) > 0 || BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>[O] is too far away to load into [src]!</span>")
 			return
 
@@ -405,7 +405,7 @@
 		SPAWN(0.5 SECONDS)
 			gunsim = locate() in world
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "It just did some cleaning give it a minute!!!")
 			return
@@ -423,22 +423,10 @@
 					qdel(I)
 
 			for (var/atom/S in gunsim)
-				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy))
+				if(istype(S, /obj/storage) || istype(S, /obj/artifact) || istype(S, /obj/critter) || istype(S, /obj/machinery) || istype(S, /obj/decal) || istype(S, /mob/living/carbon/human/tdummy) || istype(S, /mob/living/critter))
 					qdel(S)
 
 
-/*
-			for (var/obj/storage/S in gunsim)
-				qdel(S)
-			for (var/obj/artifact/A in gunsim)
-				qdel(A)
-			for (var/obj/critter/C in gunsim)
-				qdel(C)
-			for (var/obj/machinery/bot/B in gunsim)
-				qdel(B)
-			for (var/obj/decal/D in gunsim)
-				qdel(D)
-*/
 		SPAWN(60 SECONDS)
 			active = 0
 			alpha = 255
@@ -453,7 +441,7 @@
 	var/active = 0
 	alpha = 255
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			boutput(user, "did you already kill the dummy? either way wait a bit!")
 			return
@@ -689,7 +677,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -709,7 +697,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, "sound/mksounds/gotitem.ogg",33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -733,7 +721,7 @@
 	var/maptext_prefix = "<span class='c pixel sh'>Value:\n<span class='vga'>"
 	var/maptext_suffix = "</span></span>"
 	var/ding_on_change = 0
-	var/ding_sound = "sound/machines/ping.ogg"
+	var/ding_sound = 'sound/machines/ping.ogg'
 	var/update_delay = 0
 	var/require_var_or_list = 1
 
@@ -918,7 +906,7 @@
 				// no! how did you even get here. jesus
 				return
 
-			return call(src.effective_callee, src.monitored_proc)(src.monitored_args)
+			return call(src.effective_callee, src.monitored_proc)(arglist(src.monitored_args))
 
 
 		emergency_shuttle
@@ -983,6 +971,38 @@
 				set_loc(null)
 
 
+
+	health
+		require_var_or_list = 0
+		maptext_prefix = ""
+		maptext_suffix = ""
+
+		validate_monitored()
+			return iscarbon(monitored)
+
+		get_value()
+			. = scan_health_generate_text(monitored)
+
+
+		constantly_overhead
+			appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
+
+			New()
+				..()
+				src.pixel_y += 34
+
+				var/atom/movable/home = src.loc
+				// Put it inside something to make it constantly show its location.
+				if (istype(home))
+					home.vis_contents += src
+				else
+					// if we are not home then we are gone, bye
+					qdel(src)
+					return
+				src.monitored = src.loc
+				set_loc(null)
+
+
 	stats
 		monitored_list = "stats"
 		ding_on_change = 1
@@ -999,27 +1019,27 @@
 		deaths
 			monitored_var = "deaths"
 			maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
-			ding_sound = "sound/misc/lose.ogg"
+			ding_sound = 'sound/misc/lose.ogg'
 
 			players
 				monitored_var = "playerdeaths"
 				maptext_prefix = "<span class='c pixel sh'>Deaths:\n<span class='vga'>"
-				ding_sound = "sound/misc/lose.ogg"
+				ding_sound = 'sound/misc/lose.ogg'
 
 		adminhelps
 			monitored_var = "adminhelps"
 			maptext_prefix = "<span class='c pixel sh'>Adminhelps:\n<span class='vga'>"
-			ding_sound = "sound/voice/screams/mascream6.ogg"
+			ding_sound = 'sound/voice/screams/mascream6.ogg'
 
 		mentorhelps
 			monitored_var = "mentorhelps"
 			maptext_prefix = "<span class='c pixel sh'>Mentorhelps:\n<span class='vga'>"
-			ding_sound = "sound/voice/animal/mouse_squeak.ogg"
+			ding_sound = 'sound/voice/animal/mouse_squeak.ogg'
 
 		prayers
 			monitored_var = "prayers"
 			maptext_prefix = "<span class='c pixel sh'>Prayers:\n<span class='vga'>"
-			ding_sound = "sound/voice/heavenly.ogg"
+			ding_sound = 'sound/voice/heavenly.ogg'
 
 		violence
 			monitored_var = "violence"
@@ -1030,6 +1050,20 @@
 			monitored_var = "clones"
 			maptext_prefix = "<span class='c pixel sh'>Clones:\n<span class='vga'>"
 
+
+		last_death
+			require_var_or_list = 0
+			maptext_prefix = "<span class='c pixel sh'>Last Death:<br><span class='vga'>"
+			maptext_suffix = "</span>"
+			ding_sound = 'sound/misc/lose.ogg'
+
+			get_value()
+				if (!src.monitored["stats"]["lastdeath"])
+					return "None... yet</span>"
+				return "[src.monitored["stats"]["lastdeath"]["name"]]</span><br>[src.monitored["stats"]["lastdeath"]["whereText"]]"
+
+
+
 	budget
 		New()
 			src.monitored = wagesystem
@@ -1038,7 +1072,7 @@
 		display_mode = "round"
 		monitored_var = "station_budget"
 		maptext_prefix = "<span class='c pixel sh'>Station Budget:\n<span class='vga'>$"
-		ding_sound = "sound/misc/cashregister.ogg"
+		ding_sound = 'sound/misc/cashregister.ogg'
 
 		station
 			// the default, but explicit...
@@ -1377,7 +1411,7 @@ Other Goonstation servers:[serverList]</span>"})
 	icon_state = "cowbrush"
 	desc = "A huge rotary brush attached to a wall. Supposedly, cows love it."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		src.icon_state = "cowbrush[src.on ? "_on" : ""]"
 
@@ -1453,3 +1487,33 @@ Other Goonstation servers:[serverList]</span>"})
 			victim.gib()
 
 		qdel(src)
+
+
+	fast
+		t100		// ~10 sec
+			gib_time = 100
+		t1000		// ~100 sec
+			gib_time = 1000
+		t3000		// ~300 sec (5 min)
+			gib_time = 3000
+		t6000		// ~600 sec (10 min)
+			gib_time = 6000
+
+		countdown()
+			do
+				sleep(0.1 SECOND)
+				gib_time--
+				switch (gib_time)
+					if (100 to INFINITY)
+						maptext = "<span class='vb c ol ps2p'>[round(gib_time)]</span>"
+					else
+						maptext = "<span class='vb c ol ps2p' style='color: #ff4444;'>[round(gib_time)]</span>"
+
+			while (gib_time > 0 && !src.qdeled && !victim.qdeled)
+
+			if (victim && !victim.qdeled)
+				victim.vis_contents -= src
+				src.maptext = null
+				victim.gib()
+
+			qdel(src)

@@ -46,6 +46,7 @@
 /datum/artifact/container
 	associated_object = /obj/artifact/container
 	type_name = "Container"
+	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
@@ -70,7 +71,7 @@
 				shake_camera(N, 6, 16)
 		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
 		O.ArtifactFaultUsed(user)
-		playsound(O.loc, "sound/effects/warp2.ogg", 50, 1)
+		playsound(O.loc, 'sound/effects/warp2.ogg', 50, 1)
 		O.remove_artifact_forms()
 		artifact_controls.artifacts -= src
 		qdel(O)

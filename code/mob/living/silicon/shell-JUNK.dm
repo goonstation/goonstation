@@ -62,7 +62,7 @@
 		..()
 		if (health < 0 && !isdead(src))
 			setdead(src)
-			death(0)
+			death(FALSE)
 
 	swap_hand(var/switchto = 0)
 		if (!switchto)

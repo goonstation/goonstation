@@ -98,25 +98,25 @@
 		onclose(user, windowName)
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
 			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-			boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
 			account = FindBankAccountByName(I:registered)
 			if(account)
-				var/enterpin = usr.enter_pin("Card Reader")
+				var/enterpin = user.enter_pin("Card Reader")
 				if (enterpin == I:pin)
-					boutput(usr, "<span class='notice'>Card authorized.</span>")
+					boutput(user, "<span class='notice'>Card authorized.</span>")
 					src.scan = I
 				else
-					boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
 			else
-				boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 		if(dialogue != null)
@@ -497,13 +497,13 @@
 		hikeperc = (hikeperc / H.price) * 100
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
-			if (hikeperc <= negatol)
+			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
 				src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 				src.temp += src.errormsgs[5]
 				H.haggleattempts++
 				return
 		else
-			if (hikeperc >= src.hiketolerance) // we're selling, so check hike for positive
+			if (hikeperc >= src.hiketolerance || askingprice > H.baseprice * 5) // we're selling, so check hike for positive
 				src.temp = src.errormsgs[5]
 				H.haggleattempts++
 				return
@@ -533,7 +533,7 @@
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 		var/datum/db_record/account = null
-		if(get_dist(O,user) > 1) return
+		if(BOUNDS_DIST(O, user) > 0) return
 		if(!isliving(user)) return
 		if(!barter)
 			if(!src.scan)
@@ -1074,7 +1074,7 @@
 
 	// OKAY we're tryin to do something here with the medal for the rescue allright?
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/coin/bombini))
 			for(var/mob/M in AIviewers(src))
 				boutput(M, "<B>[src.name]</B> buzzes excitedly! \"BZZ?? BZZ!!\"")
@@ -1114,12 +1114,14 @@
 		src.goods_sell += new /datum/commodity/costume/utena(src)
 		src.goods_sell += new /datum/commodity/costume/roller_disco(src)
 		src.goods_sell += new /datum/commodity/costume/werewolf(src)
+		src.goods_sell += new /datum/commodity/costume/vampire(src)
 		src.goods_sell += new /datum/commodity/costume/abomination(src)
 		src.goods_sell += new /datum/commodity/costume/hotdog(src)
 		src.goods_sell += new /datum/commodity/costume/purpwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mintwitch(src)
 		src.goods_sell += new /datum/commodity/costume/mime(src)
 		src.goods_sell += new /datum/commodity/costume/mime/alt(src) //suspenders and such
+		src.goods_sell += new /datum/commodity/costume/jester(src)
 		src.goods_sell += new /datum/commodity/backpack/breadpack(src)
 		src.goods_sell += new /datum/commodity/backpack/bearpack(src)
 		src.goods_sell += new /datum/commodity/backpack/turtlebrown(src)
@@ -1171,7 +1173,7 @@
 
 		pickupdialoguefailure = "You need to BUY things before you pick them up!"
 
-/obj/npc/trader/exclown/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/trader/exclown/attackby(obj/item/W, mob/living/user)
 	if (!src.honk && user.mind && user.mind.assigned_role == "Clown" && istype(W, /obj/item/toy/diploma))
 		src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W]. [src] nods knowingly.</span>")
 		src.spawncrate(/obj/item/storage/box/banana_grenade_kit)

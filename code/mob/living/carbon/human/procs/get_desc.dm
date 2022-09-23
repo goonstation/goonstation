@@ -3,7 +3,7 @@
 
 	var/ignore_checks = isobserver(usr)
 	var/examine_stopper = src.bioHolder?.HasEffect("examine_stopper")
-	if (!ignore_checks && examine_stopper && get_dist(usr.client.eye, src) > 3 - 2 * examine_stopper)
+	if (!ignore_checks && examine_stopper && GET_DIST(usr.client.eye, src) > 3 - 2 * examine_stopper)
 		return "<br><span class='alert'>You can't seem to make yourself look at [src.name] long enough to observe anything!</span>"
 
 	if (src.simple_examine || isghostdrone(usr))
@@ -15,18 +15,19 @@
 	. = list()
 	if (isalive(usr))
 		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
-		sleep(get_dist(usr.client.eye, src) + 1)
+		sleep(GET_DIST(usr.client.eye, src) + 1)
 		if (!usr.client.eye)
 			return // heh heh
 
 	if (!istype(usr, /mob/dead/target_observer))
-		if (!ignore_checks && (get_dist(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
+		if (!ignore_checks && (GET_DIST(usr.client.eye, src) > 7 && (!usr.client || !usr.client.eye || !usr.client.holder || usr.client.holder.state != 2)))
 			return "[jointext(., "")]<br><span class='alert'><B>[src.name]</B> is too far away to see clearly.</span>"
 
-	try
-		. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
-	catch
-		//nop
+	if(src.face_visible() && src.bioHolder.mobAppearance.flavor_text)
+		try
+			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
+		catch
+			//nop
 
 	. +=  "<br><span class='notice'>*---------*</span>"
 
@@ -50,11 +51,10 @@
 
 	// unfortunately byond can't handle "[src.slot.blood_DNA ? "a bloody" : "\an"] [src.slot.name]" because then the \an is like "where the fuck is the thing I'm supposed to do something to???"
 	// thanks, byondbama.
+	if (src.hasStatus("handcuffed"))
+		. +=  "<br><b class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</b>"
 	if (src.w_uniform)
 		. += "<br><span class='[src.w_uniform.blood_DNA ? "alert" : "notice"]'>[src.name] is wearing [bicon(src.w_uniform)] \an [src.w_uniform.name].</span>"
-
-	if (src.hasStatus("handcuffed"))
-		. +=  "<br><span class='notice'>[src.name] is [bicon(src.handcuffs)] handcuffed!</span>"
 
 	if (src.wear_suit)
 		. += "<br><span class='[src.wear_suit.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.wear_suit)] \an [src.wear_suit.name] on.</span>"
@@ -93,7 +93,7 @@
 	if (src.belt)
 		. += "<br><span class='[src.belt.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.belt)] [src.belt.blood_DNA ? "a bloody [src.belt.name]" : "\an [src.belt.name]"] on [t_his] belt.</span>"
 
-	if (src.gloves)
+	if (src.gloves && !src.gloves.nodescripition)
 		. += "<br><span class='[src.gloves.blood_DNA ? "alert" : "notice"]'>[src.name] has [bicon(src.gloves)] [src.gloves.name] on [t_his] hands.</span>"
 	else if (src.blood_DNA)
 		. += "<br><span class='alert'>[src.name] has bloody hands!</span>"
@@ -117,6 +117,34 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
+
+	if (src.arrestIcon?.icon_state && ishuman(usr))
+		var/mob/living/carbon/human/H = usr
+
+		if (istype(H.glasses, /obj/item/clothing/glasses/sunglasses/sechud))
+			var/datum/db_record/sec_record = data_core.security.find_record("name", src.name)
+			if(sec_record)
+				var/sechud_flag = sec_record["sec_flag"]
+				if (lowertext(sechud_flag) != "none")
+					. += "<br><span class='notice'>[src.name] has a Security HUD flag set:</span> <span class='alert'>[sechud_flag]</span>"
+
+	if (locate(/obj/item/implant/projectile/body_visible/dart) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/dart/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
+
+	if (locate(/obj/item/implant/projectile/body_visible/syringe) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/syringe/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
+
+	if (locate(/obj/item/implant/projectile/body_visible/arrow) in src.implant)
+		var/count = 0
+		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
+			count++
+		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -192,7 +220,7 @@
 					else
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONER) // assive ass wound? and not a skeleton?
+				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?
@@ -291,7 +319,7 @@
 	if (C?.in_fakedeath)
 		changeling_fakedeath = 1
 
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("paralysis")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else
@@ -319,21 +347,21 @@
 				. += "<br>[src.name] seems to be staring blankly into space."
 
 	switch (src.decomp_stage)
-		if (1)
+		if (DECOMP_STAGE_BLOATED)
 			. += "<br><span class='alert'>[src] looks bloated and smells a bit rotten!</span>"
-		if (2)
+		if (DECOMP_STAGE_DECAYED)
 			. += "<br><span class='alert'>[src]'s flesh is starting to rot away from [t_his] bones!</span>"
-		if (3)
+		if (DECOMP_STAGE_HIGHLY_DECAYED)
 			. += "<br><span class='alert'>[src]'s flesh is almost completely rotten away, revealing parts of [t_his] skeleton!</span>"
-		if (4)
+		if (DECOMP_STAGE_SKELETONIZED)
 			. += "<br><span class='alert'>[src]'s remains are completely skeletonized.</span>"
 
 	if(usr.traitHolder && (usr.traitHolder.hasTrait("observant") || istype(usr, /mob/dead/observer)))
 		if(src.traitHolder && length(src.traitHolder.traits))
 			. += "<br><span class='notice'>[src] has the following traits:</span>"
 			for(var/id in src.traitHolder.traits)
-				var/obj/trait/T = src.traitHolder.traits[id]
-				. += "<br><span class='notice'>[T.cleanName]</span>"
+				var/datum/trait/T = src.traitHolder.traits[id]
+				. += "<br><span class='notice'>[T.name]</span>"
 		else
 			. += "<br><span class='notice'>[src] does not appear to possess any special traits.</span>"
 
@@ -351,20 +379,9 @@
 
 	. += "<br><span class='notice'>*---------*</span>"
 
-	if (get_dist(usr, src) < 4 && ishuman(usr))
-		var/mob/living/carbon/human/H = usr
-		if (istype(H.glasses, /obj/item/clothing/glasses/healthgoggles))
-			var/obj/item/clothing/glasses/healthgoggles/G = H.glasses
-			if (G.scan_upgrade && G.health_scan)
-				. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-				scan_health_overhead(src, usr)
-			update_medical_record(src)
-		else if (H.organ_istype("left_eye", /obj/item/organ/eye/cyber/prodoc) && H.organ_istype("right_eye", /obj/item/organ/eye/cyber/prodoc)) // two prodoc eyes = scan upgrade because that's cool
-			. += "<br><span class='alert'>Your ProDocs analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
-			scan_health_overhead(src, usr)
-			update_medical_record(src)
-		else if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/medic))
-			. += "<br><span class='alert'>Your health monitor analyzes [src]'s vitals.</span><br>[scan_health(src, 0, 0)]"
+	if (GET_DIST(usr, src) < 4)
+		if (GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH) || GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))
+			. += "<br><span class='alert'>You analyze [src]'s vitals.</span><br>[scan_health(src, 0, 0, syndicate = GET_ATOM_PROPERTY(usr,PROP_MOB_EXAMINE_HEALTH_SYNDICATE))]"
 			scan_health_overhead(src, usr)
 			update_medical_record(src)
 

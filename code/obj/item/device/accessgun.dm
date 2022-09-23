@@ -73,7 +73,7 @@
 
 		src.eject_id_card(user)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			var/obj/item/card/id/ID = C
 			if (src.ID_card)
@@ -134,7 +134,7 @@
 			O.set_access_list(list(ID_card.access))
 		else
 			O.set_access_list(ID_card.access)
-		playsound(src, "sound/machines/reprog.ogg", 70, 1)
+		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
 
 
 /datum/action/bar/icon/access_reprog
@@ -152,19 +152,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
@@ -198,17 +198,17 @@
 			return
 		if(target.deconstruct_flags & DECON_BUILT)
 			if (isnull(scanned_access))
-				playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 				boutput(user, "<span class='notice'>[src] has no access requirements loaded.</span>")
 				return
 			if (length(door_reqs.req_access))
-				playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
 				return
 			. = ..()
 			return
 		if(is_restricted(door_reqs))
-			playsound(src, "sound/machines/airlock_deny.ogg", 35, 1, 0, 2)
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
 			boutput(user, "<span class='notice'>[src] can't scan [door_reqs.name]</span>")
 			return
 		scanned_access = door_reqs.req_access
@@ -219,9 +219,9 @@
 	reprogram(obj/O,mob/user)
 		if (!isnull(scanned_access))
 			O.set_access_list(scanned_access)
-		playsound(src, "sound/machines/reprog.ogg", 70, 1)
+		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			return
 		. = ..()

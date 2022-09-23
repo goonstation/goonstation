@@ -15,8 +15,8 @@ change the direction of created objects.<br>
 	var/objpath = null
 	var/cinematic = "Blink"
 	var/delete_area = 0
-	var/turf/A = null
-	var/image/marker = null
+	var/tmp/turf/A = null
+	var/tmp/image/marker = null
 
 	deselected()
 		..()

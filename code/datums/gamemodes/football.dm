@@ -220,7 +220,7 @@ var/global/list/list/datum/mind/football_players = list("blue" = list(), "red" =
 			return
 
 		if (is_new)
-			SHOW_FOOTBALL_TIPS(footballer)
+			footballer.show_antag_popup("football")
 			if (football_players["blue"].len == football_players["red"].len)
 				team = pick("red", "blue")
 			else if (football_players["blue"].len < football_players["red"].len)

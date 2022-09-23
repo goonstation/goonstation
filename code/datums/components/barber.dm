@@ -90,7 +90,7 @@ TYPEINFO(/datum/component/barber)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "haircut"))
-		logTheThing("combat", user, M, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "tried to cut [constructTarget(M,"combat")]'s hair but failed at [log_loc(user)].")
 		return ATTACK_PRE_DONT_ATTACK
 
 	if(non_murderous_failure)
@@ -165,7 +165,7 @@ TYPEINFO(/datum/component/barber)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!mutant_barber_fluff(M, user, "shave"))
-		logTheThing("combat", user, M, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "tried to shave [constructTarget(M,"combat")]'s hair but failed due to target's [M?.mutantrace?.name] mutant race at [log_loc(user)].")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(non_murderous_failure)
@@ -208,6 +208,8 @@ TYPEINFO(/datum/component/barber)
 	if(M.stat || issilicon(user))
 		barbery_conditions = 100
 	else
+		if (M.buckled)
+			barbery_conditions += 10
 		if(istype(M.buckled, /obj/stool/chair/comfy/barber_chair))
 			barbery_conditions += 30
 
@@ -232,15 +234,17 @@ TYPEINFO(/datum/component/barber)
 			if(user.bioHolder.HasEffect("clumsy"))
 				barbery_conditions -= 20
 
-	var/degree_of_success = 0 // 0 - 3, 0 being failure, 3 being catastrophic hair success
+	var/degree_of_success = 0
 	if(prob(clamp(barbery_conditions, 10, 100)))
-		degree_of_success = 3
-	else // oh no we fucked up!
-		if(prob(50))
-			degree_of_success = 2
-		else
-			degree_of_success = rand(0,1)
-	//and then just jam all the vars into the action bar and let it handle the rest!
+		degree_of_success = 3 // success
+	else
+		switch(max(barbery_conditions, 0))
+			if (0 to 20)
+				degree_of_success = 0 // destroy all hair
+			if (20 to 50)
+				degree_of_success = 1 // cut hair off as wig
+			else
+				degree_of_success = 2 // fine haircut, but wrong style
 
 	return degree_of_success
 
@@ -251,40 +255,40 @@ TYPEINFO(/datum/component/barber)
 	if(!ishuman(M))
 		if(issilicon(M))
 			if(barbery_type == "haircut")
-				playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] scissors around [M]'s [isAI(M) ? "core" : "metallic upper housing"], snipping at nothing!",\
-											M, "[user] snips [his_or_her(user)] scissors around your [isAI(M) ? "core" : "head"].",\
-									user, "You snip at a piece of lint stuck in a seam on [M]'s [isAI(M) ? "core" : "head"] plates.")
+				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s [isAI(M) ? "core" : "metallic upper housing"], snipping at nothing!",\
+											"[user] snips [his_or_her(user)] scissors around your [isAI(M) ? "core" : "head"].",\
+									"You snip at a piece of lint stuck in a seam on [M]'s [isAI(M) ? "core" : "head"] plates.")
 			else
-				user.tri_message("[user] slides [his_or_her(user)] razor scross [M]'s [isAI(M) ? "screen" : "cold metal face analogue"], cutting at nothing!",\
-											M, "[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
-									user, "You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
+				M.tri_message(user, "[user] slides [his_or_her(user)] razor scross [M]'s [isAI(M) ? "screen" : "cold metal face analogue"], cutting at nothing!",\
+											"[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
+									"You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
 	else if(!M.mutantrace || M.hair_override)
 		return 1 // is human or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
-		if (user?.mutantrace)
+		if (ishuman(user) && user?.mutantrace)
 			mutant_us = user.mutantrace.name
 		switch(mutant)
 			if("blob")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-					user.tri_message("[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
-												M, "[user] snips at something on the upper hemisphere of your macrocellular structure!",\
-										user, "You snip at a patch of fuzz stuck to [M]'s gooey outer membrane... thing.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
+												"[user] snips at something on the upper hemisphere of your macrocellular structure!",\
+										"You snip at a patch of fuzz stuck to [M]'s gooey outer membrane... thing.")
 				else
-					user.tri_message("[user] waves [his_or_her(user)] razor around [M]'s head, slashing at nothing!",\
-												M, "[user] cuts at something on the upper hemisphere of your macrocellular structure!",\
-										user, "You razor at a patch of fuzz stuck to [M]'s gooey outer membrane... thing.")
+					M.tri_message(user, "[user] waves [his_or_her(user)] razor around [M]'s head, slashing at nothing!",\
+												"[user] cuts at something on the upper hemisphere of your macrocellular structure!",\
+										"You razor at a patch of fuzz stuck to [M]'s gooey outer membrane... thing.")
 				return 0
 			if("flubber")
 				playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 				user.drop_item_throw()
-				user.tri_message("[M]'s flubbery body flings [user]'s [barbery_type == "haircut" ? "scissors" : "razor"] out of [his_or_her(user)] hand!",\
-											M, "[user] pokes you with [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"], flinging them out of their hand",\
-									 user, "[M]'s flubbery body flings the [barbery_type == "haircut" ? "scissors" : "razor"] out of your hand!")
+				M.tri_message(user, "[M]'s flubbery body flings [user]'s [barbery_type == "haircut" ? "scissors" : "razor"] out of [his_or_her(user)] hand!",\
+											"[user] pokes you with [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"], flinging them out of their hand",\
+									 "[M]'s flubbery body flings the [barbery_type == "haircut" ? "scissors" : "razor"] out of your hand!")
 				return 0
 			if("flashy")
 				boutput(user, "[M]'s bright, flashing skin hurts your eyes.")
@@ -298,21 +302,21 @@ TYPEINFO(/datum/component/barber)
 				return 1
 			if("grey")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-					user.tri_message("[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
-												M, "You can sense the [mutant_us]'s polite intentions as it pretends that you are not completely bald.",\
-										user, "You snip your scissors around [M]'s bald head, ignoring the fact that [he_or_she(user)] is very, very bald.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
+												"You can sense the [mutant_us]'s polite intentions as it pretends that you are not completely bald.",\
+																					"You snip your scissors around [M]'s bald head, ignoring the fact that [he_or_she(user)] is very, very bald.")
 				else
-					user.tri_message("[user] waves [his_or_her(user)] razor around [M]'s head, cutting at nothing!",\
-												M, "You can sense the [mutant_us]'s polite intentions as it pretends that you are completely incapable of having facial hair.",\
-										user, "You wave your razor around [M]'s hairless face, ignoring the fact that [he_or_she(user)] is very, very hairless.")
+					M.tri_message(user, "[user] waves [his_or_her(user)] razor around [M]'s head, cutting at nothing!",\
+												"You can sense the [mutant_us]'s polite intentions as it pretends that you are completely incapable of having facial hair.",\
+																					"You wave your razor around [M]'s hairless face, ignoring the fact that [he_or_she(user)] is very, very hairless.")
 				return 0
 			if("lizard")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
-											M, "[user] gives your scales a trim.",\
-									 user, "You find a few overgrown scales on [M] head and give them a trim.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
+											"[user] gives your scales a trim.",\
+									 "You find a few overgrown scales on [M] head and give them a trim.")
 				return 0
 			if("zombie")
 				boutput(user, "Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.")
@@ -322,71 +326,71 @@ TYPEINFO(/datum/component/barber)
 				return 1
 			if("skeleton")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s skull, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your skull.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s exposed skull, knocking loose some space dust.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s skull, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your skull.",\
+									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s exposed skull, knocking loose some space dust.")
 				return 0
 			if("Homo nostalgius")
-				user.tri_message("[user] tries to cut [M]'s hair, years before that feature was implemented!",\
-											M, "[user] tries to violate your vow of oldest-school existence, but fails!",\
-									 user, "You try to cut [M]'s hair, but suddenly realize that it could cause a temporal-runtime paradox that would erase all of history!")
+				M.tri_message(user, "[user] tries to cut [M]'s hair, years before that feature was implemented!",\
+											"[user] tries to violate your vow of oldest-school existence, but fails!",\
+									 "You try to cut [M]'s hair, but suddenly realize that it could cause a temporal-runtime paradox that would erase all of history!")
 				return 0
 			if("abomination")
 				user.emote("scream")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s writhing, monstrous form!",\
-											M, "[user] patronizes us by trying to alter our appearance.",\
-									 user, "You muster your courage and manage to give one of the many scraggly, wriggling, <i>familiar</i> patches of hair scattered across [M] a trim!")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s writhing, monstrous form!",\
+											"[user] patronizes us by trying to alter our appearance.",\
+									 "You muster your courage and manage to give one of the many scraggly, wriggling, <i>familiar</i> patches of hair scattered across [M] a trim!")
 				return 0
 			if("werewolf")
 				M.emote("scream")
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to [barbery_type == "haircut" ? "trim its hair" : "shave it"]!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
-									 user, "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on [M]'s head, but end up cutting its ear!")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to [barbery_type == "haircut" ? "trim its hair" : "shave it"]!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
+									 "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on [M]'s head, but end up cutting its ear!")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("hunter")
 				M.emote("scream")
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				user.tri_message("[user] cuts one of [M]'s dreads too deep!",\
-											M, "[user] cuts off one of your head protrusions! <span class='alert'>FUCK</span>",\
-									 user, "You try to cut [M]'s hair, but find that much of it is part of their head! Gross.")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				M.tri_message(user, "[user] cuts one of [M]'s dreads too deep!",\
+											"[user] cuts off one of your head protrusions! <span class='alert'>FUCK</span>",\
+									 "You try to cut [M]'s hair, but find that much of it is part of their head! Gross.")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("ithillid")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
+									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
 			if("monkey", "sea monkey")
 				M.emote("scream")
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
-									 user, "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on the top of [M]'s head, but end up slicing its ear!")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
+									 "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on the top of [M]'s head, but end up slicing its ear!")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("martian")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, [barbery_type == "haircut" ? "snipping" : "slashing"] at nothing!",\
-											M, "You can sense the [mutant_us] judging your lack of hair and head-shape as it pretends to do its job.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s bald, oddly-shaped head, ignoring the fact that it is very, very bald.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, [barbery_type == "haircut" ? "snipping" : "slashing"] at nothing!",\
+											"You can sense the [mutant_us] judging your lack of hair and head-shape as it pretends to do its job.",\
+									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s bald, oddly-shaped head, ignoring the fact that it is very, very bald.")
 				return 0
 			if("stupid alien baby")
 				M.emote("scream")
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] one of [M]'s antenna-things!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] your stupid alien dealie-bobbers! <span class='alert'>FUCK</span>",\
-									 user, "You nick one of the things sticking out of [M]'s head while pretending to cut at nothing!")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] one of [M]'s antenna-things!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your stupid alien dealie-bobbers! <span class='alert'>FUCK</span>",\
+									 "You nick one of the things sticking out of [M]'s head while pretending to cut at nothing!")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
@@ -397,44 +401,44 @@ TYPEINFO(/datum/component/barber)
 				M.emote("scream")
 				user.vomit()
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s horrible, disgusting, head-shaped mass of gore, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
-									 user, "You suppress waves of nausea trying to [barbery_type == "haircut" ? "snip" : "cut"] your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head-shaped clump of decayed meat.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s horrible, disgusting, head-shaped mass of gore, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
+									 "You suppress waves of nausea trying to [barbery_type == "haircut" ? "snip" : "cut"] your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head-shaped clump of decayed meat.")
 				return 0
 			if("cyclops")
 				boutput(user, "You mind [M]'s enormous fucking eyeball.")
 			if("cat")
 				M.emote("scream")
-				playsound(M.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
-				user.tri_message("[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim its hair!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
-									 user, "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on [M]'s head, but end up slicing its ear!")
+				playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
+				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim its hair!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
+									 "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on [M]'s head, but end up slicing its ear!")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
-									 user, "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s massive frog head, knocking loose some... dead spaceflies?")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
+									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s massive frog head, knocking loose some... dead spaceflies?")
 				return 0
 			if("kudzu")
 				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
 			if("cow")
 				if(barbery_type == "haircut")
-					playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				user.tri_message("[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
-											M, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head, obviouly pretending to be a hairstylist.",\
-									 user, "You perform a one-sided LARP with [M], pretending to be an experienced barber working on someone who actually has hair.")
+					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
+											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head, obviouly pretending to be a hairstylist.",\
+									 "You perform a one-sided LARP with [M], pretending to be an experienced barber working on someone who actually has hair.")
 				return 0
 			if("roach")
 				M.emote("scream")
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				user.tri_message("[user] cuts one of [M]'s antennae!",\
-											M, "[user] cuts into your stupid insect dealie-bobbers! <span class='alert'>FUCK</span>",\
-									 user, "You slice one of the things sticking out of [M]'s head while pretending to cut at nothing!")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				M.tri_message(user, "[user] cuts one of [M]'s antennae!",\
+											"[user] cuts into your stupid insect dealie-bobbers! <span class='alert'>FUCK</span>",\
+									 "You slice one of the things sticking out of [M]'s head while pretending to cut at nothing!")
 				M.TakeDamage("head", rand(5,10), 0)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
@@ -473,21 +477,21 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		src.degree_of_success = succ
 		src.new_style = nustyle
 		src.which_part = whichp
-		user.tri_message("[user] begins [cutting] [M]'s hair.",\
-		user, "<span class='notice'>You begin [cutting] [M]'s hair.</span>",\
-		M, "<span class='notice'>[user] begins [cutting] your hair.</span>")
-		playsound(user, "sound/items/Scissor.ogg", 100, 1)
+		M.tri_message(user, "[user] begins [cutting] [M]'s hair.",\
+			"<span class='notice'>[user] begins [cutting] your hair.</span>",\
+			"<span class='notice'>You begin [cutting] [M]'s hair.</span>")
+		playsound(user, 'sound/items/Scissor.ogg', 100, 1)
 		..()
 
 	onUpdate()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, M) > 1 || M == null || owner == null)
+		if(BOUNDS_DIST(owner, M) > 0 || M == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -495,11 +499,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		var/list/hair_list = src.getHairStyles()
 		switch (degree_of_success)
 			if (0) // cut their head up and hair off
-				playsound(M, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
-				logTheThing("combat", user, M, "mangles (barbery failure with moderate damage) [constructTarget(M,"combat")]'s head at [log_loc(user)].")
-				user.tri_message("<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
-				M, "<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
-				user, "<span class='alert'>You mangle the absolute fuck out of [M]'s head!</span>")
+				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, user, "mangles (barbery failure with moderate damage) [constructTarget(M,"combat")]'s head at [log_loc(user)].")
+				M.tri_message(user, "<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
+					"<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
+					"<span class='alert'>You mangle the absolute fuck out of [M]'s head!</span>")
 				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 				M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
@@ -507,11 +511,11 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (1) // same, but it makes a wig
-				playsound(M, "sound/impact_sounds/Slimy_Cut_1.ogg", 100, 1)
-				logTheThing("combat", user, M, "cuts all of [constructTarget(M,"combat")]'s hair off (barbery failure with small damage) at [log_loc(user)].")
-				user.tri_message("<span class='alert'>[user] [cuts] all of [M]'s hair off!.</span>",\
-				M, "<span class='alert'>[user] [cuts] all of your hair off!</span>",\
-				user, "<span class='alert'>You [cut] all of [M]'s hair off!</span>")
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair off (barbery failure with small damage) at [log_loc(user)].")
+				M.tri_message(user, "<span class='alert'>[user] [cuts] all of [M]'s hair off!.</span>",\
+					"<span class='alert'>[user] [cuts] all of your hair off!</span>",\
+					"<span class='alert'>You [cut] all of [M]'s hair off!</span>")
 				var/obj/item/wig = M.create_wig()
 				wig.set_loc(M.loc)
 				M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
@@ -521,8 +525,8 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
-				playsound(M, "sound/items/Scissor.ogg", 100, 1)
-				logTheThing("combat", user, M, "cuts [constructTarget(M,"combat")]'s hair into a random one at [log_loc(user)].")
+				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair into a random one at [log_loc(user)].")
 				var/hair_type = pick(hair_list)
 				new_style = new hair_type
 				switch(rand(1,3))
@@ -532,26 +536,26 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 						M.bioHolder.mobAppearance.customization_second = new_style
 					if(3)
 						M.bioHolder.mobAppearance.customization_third = new_style
-				user.tri_message("[user] [cuts] [M]'s hair.",\
-											M, "<span class='notice'>[user] [cuts] your hair.</span>",\
-										user, "<span class='notice'>You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?</span>")
+				M.tri_message(user, "[user] [cuts] [M]'s hair.",\
+											"<span class='notice'>[user] [cuts] your hair.</span>",\
+																					"<span class='notice'>You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?</span>")
 			if (3) // you did it !!
-				playsound(M, "sound/items/Scissor.ogg", 100, 1)
+				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
 				if (src.which_part == ALL_HAIR)
-					logTheThing("combat", user, M, "cuts all of [constructTarget(M,"combat")]'s hair into a wig at [log_loc(user)].")
-					user.tri_message("[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
-					M, "<span class='notice'>[user] [cuts] all your hair off and makes it into a wig.</span>",\
-					user, "<span class='notice'>You [cut] all of [M]'s hair off and make it into a wig.</span>")
+					logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair into a wig at [log_loc(user)].")
+					M.tri_message(user, "[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
+						"<span class='notice'>[user] [cuts] all your hair off and makes it into a wig.</span>",\
+						"<span class='notice'>You [cut] all of [M]'s hair off and make it into a wig.</span>")
 					var/obj/item/wig = M.create_wig()
 					wig.set_loc(M.loc)
 					M.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 					M.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 					M.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 				else
-					logTheThing("combat", user, M, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
-					user.tri_message("[user] [cuts] [M]'s hair.",\
-					M, "<span class='notice'>[user] [cuts] your hair.</span>",\
-					user, "<span class='notice'>You [cut] [M]'s hair.</span>")
+					logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair at [log_loc(user)].")
+					M.tri_message(user, "[user] [cuts] [M]'s hair.",\
+						"<span class='notice'>[user] [cuts] your hair.</span>",\
+						"<span class='notice'>You [cut] [M]'s hair.</span>")
 					switch(which_part)
 						if (BOTTOM_DETAIL)
 							M.bioHolder.mobAppearance.customization_first = new_style

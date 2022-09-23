@@ -3,6 +3,8 @@
 
 /area/station/shield_zone
 	icon_state = "shield_zone"
+	expandable = 0
+	do_not_irradiate = 1
 
 /* ==================== Generator ==================== */
 
@@ -126,7 +128,7 @@
 				src.post_reply("SGEN_DACTVD", target)
 
 	// for testing atm
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & (NOPOWER|BROKEN) || !src.link)
 			user.show_text("[src] seems inoperable, as pressing the button does nothing.")
 			return
@@ -144,7 +146,7 @@
 				src.activate()
 				user.show_text("Shields Activated.")
 			message_admins("<span class='internal'>[key_name(user)] [src.active ? "activated" : "deactivated"] shields</span>")
-			logTheThing("station", null, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
+			logTheThing(LOG_STATION, null, "[key_name(user)] [src.active ? "activated" : "deactivated"] shields")
 		else
 			user.show_text("<span class='alert'><b>That is still not ready to be used again.</b></span>")
 
@@ -407,13 +409,13 @@
 						src.print_text("<b>Alert:</b> Shield generator activated.")
 						if (usr)
 							message_admins("<span class='internal'>[key_name(usr)] activated shields</span>")
-							logTheThing("station", null, null, "[key_name(usr)] activated shields")
+							logTheThing(LOG_STATION, null, "[key_name(usr)] activated shields")
 
 					if ("sgen_dactvd")
 						src.print_text("<b>Alert:</b> Shield generator deactivated.")
 						if (usr)
 							message_admins("<span class='internal'>[key_name(usr)] deactivated shields</span>")
-							logTheThing("station", null, null, "[key_name(usr)] deactivated shields")
+							logTheThing(LOG_STATION, null, "[key_name(usr)] deactivated shields")
 				return
 		return
 

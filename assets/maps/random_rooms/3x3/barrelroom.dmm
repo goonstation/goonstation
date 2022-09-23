@@ -1,0 +1,104 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/obj/item/card_group/plain,
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/stool/chair/comfy/blue{
+	desc = "It's all ripped and grimy. Gross.";
+	dir = 8;
+	name = "grody blue chair"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/scorched,
+/turf/simulated/floor/plating/damaged2,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/storage/crate,
+/obj/decal/cleanable/dirt,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/device/igniter,
+/obj/item/clothing/head/cowboy,
+/obj/item/clothing/shoes/cowboy,
+/obj/item/clothing/under/misc/tourist/max_payne,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/blood/splatter{
+	name = "probably ketchup"
+	},
+/obj/item/cigbutt,
+/obj/decal/cleanable/generic{
+	desc = "Some jerk idiot has been stamping on sauce packets back here.";
+	name = "broken sauce packets"
+	},
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/woodclutter,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/item/reagent_containers/food/snacks/condiment/hotsauce,
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2"
+	},
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag19";
+	layer = 4;
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/item/cigbutt,
+/obj/item/reagent_containers/food/snacks/condiment/mayo{
+	desc = "All congealed and dusty. Ugh!";
+	name = "old mayonnaise";
+	quality = -80
+	},
+/obj/decal/cleanable/generic{
+	desc = "Who did this?";
+	name = "stomped-upon condiments"
+	},
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-blue";
+	name = "ratty blue couch"
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/burning_barrel,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/scorched,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+G
+S
+"}
+(2,1,1) = {"
+L
+u
+a
+"}
+(3,1,1) = {"
+C
+q
+r
+"}

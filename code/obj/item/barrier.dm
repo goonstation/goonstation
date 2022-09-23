@@ -1,6 +1,6 @@
 /obj/item/barrier
 	name = "barrier"
-	desc = "A personal barrier. Activate this item with both hands free to use it."
+	desc = "A personal barrier. Activate this item inhand to deploy it."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "barrier_0"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -17,8 +17,10 @@
 	stamina_crit_chance = 0
 	hitsound = 0
 
-	can_disarm = 1
+	can_disarm = 0
 	two_handed = 0
+
+	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.
 	var/use_two_handed = 0
 
 	var/status = 0
@@ -87,7 +89,7 @@
 
 		..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		..()
 		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 0.1, 0, 2)
 

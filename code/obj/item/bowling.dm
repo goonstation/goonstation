@@ -45,7 +45,7 @@
 		src.icon_state = "bowling_ball_spin"
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if(user)
 			src.icon_state = "bowling_ball"
@@ -55,7 +55,7 @@
 
 		src.icon_state = "bowling_ball"
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
@@ -71,3 +71,38 @@
 						else
 							src.hitWeak(hitMob, user)
 		return
+
+/obj/item/armadillo_ball
+	name = "armadillo ball"
+	desc = "Just keep rollin' rollin'."
+	icon_state = "armadillo_ball"
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = THROW_NORMAL, allow_anchored = 0, bonus_throwforce = 0)
+		if(!ismob(target))
+			throw_unlimited = 1
+		..()
+		src.icon = initial(src.icon)
+		src.icon_state = "armadillo_spin"
+
+	attack_hand(mob/user)
+		..()
+		if(user)
+			src.icon = initial(src.icon)
+			src.icon_state = "armadillo_ball"
+
+	relaymove(mob/user as mob)
+		if(user.stat)
+			return
+		var/mob/living/critter/small_animal/armadillo/A = user
+		if(istype(A))
+			A.ball_up(FALSE)
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		var/mob/living/carbon/human/user = usr
+		src.icon_state = "armadillo_ball"
+
+		if(hit_atom)
+			if (ismob(hit_atom))
+				var/mob/hitMob = hit_atom
+				if (ishuman(hitMob))
+					hitMob.visible_message("<span class='alert'>[hitMob] is hit by [user]'s [src]!</span>")

@@ -227,7 +227,5 @@ var/global/datum/mob_stat_thinker/mobStat = new
 	if (is_near_gauntlet())
 		gauntlet_controller.Stat()
 
-	if (is_near_colosseum())
-		colosseum_controller.Stat()
 
 #undef saveStat

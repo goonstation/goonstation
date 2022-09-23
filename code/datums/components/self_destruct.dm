@@ -2,6 +2,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/mob/tracked_mob = null
 
+TYPEINFO(/datum/component/self_destruct)
+	initialization_args = list()
+
 /datum/component/self_destruct/Initialize(tracked_mob)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE

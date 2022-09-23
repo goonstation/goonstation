@@ -52,7 +52,7 @@
 		return null
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -63,7 +63,7 @@
 					holder.target = pick(possible)
 
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			if (dist >= 1)
 				if (prob(80))
 					holder.move_to(holder.target,0)
@@ -90,7 +90,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -101,7 +101,7 @@
 					holder.target = pick(possible)
 
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			if(dist <= 1)
 				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
@@ -144,7 +144,7 @@
 			. = 1
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -155,7 +155,7 @@
 					holder.target = pick(possible)
 
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			if(dist <= 1)
 				holder.ownhuman.set_a_intent(INTENT_DISARM)
 				holder.ownhuman.set_dir(get_dir(holder.ownhuman, holder.target))
@@ -180,7 +180,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -190,7 +190,7 @@
 				if (possible.len)
 					holder.target = pick(possible)
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			if (dist >= 1)
 				if (prob(80))
 					holder.move_to(holder.target,0)
@@ -231,7 +231,7 @@
 
 	on_tick()
 
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -241,7 +241,7 @@
 				if (possible.len)
 					holder.target = pick(possible)
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			if (dist >= 1)
 				if (prob(80))
 					holder.move_to(holder.target,0)
@@ -274,7 +274,7 @@
 								holder.ownhuman.drop_item()
 
 							if (G.state <= GRAB_PASSIVE)
-								G.attack_self(holder.ownhuman)
+								G.AttackSelf(holder.ownhuman)
 							else
 								holder.ownhuman.emote("flip")
 								holder.move_away(holder.target,1)
@@ -294,7 +294,7 @@
 	var/last_seek = 0
 
 	on_tick()
-		if (HAS_MOB_PROPERTY(holder.ownhuman, PROP_CANTMOVE) || !isalive(holder.ownhuman))
+		if (HAS_ATOM_PROPERTY(holder.ownhuman, PROP_MOB_CANTMOVE) || !isalive(holder.ownhuman))
 			return
 
 		if(!holder.target)
@@ -304,7 +304,7 @@
 				if (possible.len)
 					holder.target = pick(possible)
 		if(holder.target && holder.target.z == holder.ownhuman.z)
-			var/dist = get_dist(holder.ownhuman, holder.target)
+			var/dist = GET_DIST(holder.ownhuman, holder.target)
 			holder.ownhuman.set_a_intent(INTENT_GRAB)
 			if (dist >= 1)
 				if (prob(80))

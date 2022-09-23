@@ -17,10 +17,11 @@
 	name = "Railgun"
 	desc = "Bzooom"
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "railgun"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	health = 10
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
@@ -31,7 +32,7 @@
 		if(isturf(target))
 			target_r = new/obj/railgun_trg_dummy(target)
 
-		playsound(src, "sound/weapons/railgun.ogg", 40, 1)
+		playsound(src, 'sound/weapons/railgun.ogg', 40, 1)
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
 

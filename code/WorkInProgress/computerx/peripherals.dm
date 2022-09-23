@@ -56,7 +56,7 @@
 		src.id = "\ref[src]"
 
 	disposing()
-		host?.peripherals.Remove(src)
+		host?.peripherals?.Remove(src)
 		..()
 
 
@@ -553,6 +553,7 @@
 			if(2)
 				prize = new /obj/item/device/radio/beacon( prize_location )
 				prize.name = "electronic blink toy game"
+				prize.anchored = FALSE
 				prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo( prize_location )
@@ -740,7 +741,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -772,7 +773,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -855,7 +856,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -954,7 +955,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1070,7 +1071,7 @@
 						if(M.client)
 							M.show_message(text("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>"), 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						qdel(src)
 						return

@@ -33,9 +33,9 @@
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", "spacket")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Self-Only Messages","toggleSelfOnly")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Mainframe Registration","toggleMainframeReg")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", .proc/spacket)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Self-Only Messages",.proc/toggleSelfOnly)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Mainframe Registration",.proc/toggleMainframeReg)
 
 	disposing()
 		if(src.link)

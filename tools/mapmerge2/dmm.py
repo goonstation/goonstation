@@ -339,6 +339,7 @@ def _parse(map_raw_text):
     comment_trigger = False
 
     in_quote_block = False
+    curly_block = False
     in_key_block = False
     in_data_block = False
     in_varedit_block = False
@@ -430,8 +431,14 @@ def _parse(map_raw_text):
                         curr_datum = curr_datum + char
 
                     elif char == "}":
-                        curr_datum = curr_datum + char
-                        in_varedit_block = False
+                        if curly_block:
+                            curly_block = False
+                        else:
+                            curr_datum = curr_datum + char
+                            in_varedit_block = False
+
+                    elif char == "{":
+                        curly_block = True
 
                     else:
                         curr_datum = curr_datum + char

@@ -127,7 +127,7 @@ datum/controller/pathogen
 			return replacetext(CDC.patient_zero_kname, "%holder%", "\ref[topic_holder]")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/key = usr.ckey
 		var/th = locate(href_list["topic_holder"])
 		switch(href_list["action"])
@@ -977,7 +977,7 @@ datum/pathogen
 		generate_components(cdc, strength)
 		generate_attributes(strength)
 
-		logTheThing("pathology", null, null, "Pathogen [name] created by randomization.")
+		logTheThing(LOG_PATHOLOGY, null, "Pathogen [name] created by randomization.")
 
 	proc/setup(status, var/datum/pathogen/origin, may_mutate, var/datum/pathogendna/sample = null)
 		if (status == 0 && !origin)
@@ -1362,7 +1362,7 @@ proc/num2hexoc(num, pad)
 			else
 				var/digit = num
 				if (digit > 7)
-					logTheThing("pathology", null, null, "Num2hexoc error: overflow on [num].")
+					logTheThing(LOG_PATHOLOGY, null, "Num2hexoc error: overflow on [num].")
 				if (neg)
 					digit += 8
 				return "[num2hex(digit,0)][ret]"

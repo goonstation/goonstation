@@ -7,7 +7,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	throw_speed = 2
 	throw_range = 8
-	max_wclass = 2 // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
+	max_wclass = W_CLASS_SMALL // medbot.dm modifies attackby() for firstaid, which effectively reduces max_wclass to 1, EXCEPT for non-chemmaster pill bottles
 	var/list/kit_styles = null
 
 	New()
@@ -36,7 +36,7 @@
 		/obj/item/reagent_containers/patch/bruise,\
 		/obj/item/reagent_containers/patch/burn,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine)
 
 	emergency
@@ -44,7 +44,7 @@
 		/obj/item/item_box/medical_patches/mini_silver_sulf,\
 		/obj/item/reagent_containers/pill/menthol,\
 		/obj/item/reagent_containers/pill/salicylic_acid,\
-		/obj/item/device/analyzer/healthanalyzer/borg,\
+		/obj/item/device/analyzer/healthanalyzer/upgraded,\
 		/obj/item/reagent_containers/emergency_injector/epinephrine,\
 		/obj/item/reagent_containers/emergency_injector/atropine)
 

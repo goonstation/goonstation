@@ -86,6 +86,7 @@
 					H.unkillable = 0
 				if(!M.stat) M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
+				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
 				M.firegib() // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
@@ -108,6 +109,7 @@
 	temperature = 10+T0C
 
 	Entered(var/mob/M)
+		. = ..()
 		if (istype(M,/mob/dead) || istype(M,/mob/wraith) || istype(M,/mob/living/intangible) || istype(M, /obj/lattice))
 			return
 		if(!ismob(M))
@@ -124,13 +126,13 @@
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and spontaniously combusts from the heat!</span>")
 					H.set_burning(500)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 				if (isrobot(M))
 					M.canmove = 0
 					M.TakeDamage("chest", pick(5,10), 0, DAMAGE_BURN)
 					M.emote("scream")
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					boutput(M, "You get too close to the edge of the lava and spontaniously combust from the heat!")
 					visible_message("<span class='alert'>[M] gets too close to the edge of the lava and their internal wiring suffers a major burn!</span>")
 					M.changeStatus("stunned", 6 SECONDS)
@@ -141,7 +143,7 @@
 					M.changeStatus("weakened", 10 SECONDS)
 					M.set_body_icon_dirty()
 					H.set_burning(1000)
-					playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					M.emote("scream")
 					if (H.limbs.l_leg && H.limbs.r_leg)
 						if (H.limbs.l_leg)
@@ -159,7 +161,7 @@
 					R.canmove = 0
 					R.TakeDamage("chest", pick(20,40), 0, DAMAGE_BURN)
 					R.emote("scream")
-					playsound(R.loc, "sound/effects/mag_fireballlaunch.ogg", 50, 0)
+					playsound(R.loc, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
 					R.changeStatus("stunned", 10 SECONDS)
 					R.part_leg_r.holder = null
 					qdel(R.part_leg_r)
@@ -493,7 +495,7 @@
 	anchored = 1
 	density = 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>[src] crumbles into dust!</b></span>")
@@ -509,7 +511,7 @@
 	density = 1
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/mining_tool/power_pick))
 			boutput(user, "You hit the [src] a few times with the [W]!")
 			src.visible_message("<span class='notice'><b>After a few hits [src] crumbles into smaller rocks.</b></span>")
@@ -644,243 +646,6 @@
 		light.attach(src)
 		light.enable()
 
-/*
-/obj/decal/fakeobjects/Azarakaltar
-	name = "altar"
-	desc = "TEMP"
-	icon_state = "altar"
-	icon = 'icons/obj/large/64x96.dmi'
-	density = 1
-	anchored = 1
-
-	attackby(obj/item/W as obj, mob/user as mob, params)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (!G.affecting || G.affecting.buckled)
-				return
-			if (!G.state)
-				boutput(user, "<span class='alert'>You need a tighter grip!</span>")
-				return
-			G.affecting.set_loc(src.loc)
-			if (user.a_intent == "harm")
-				if (!G.affecting.hasStatus("weakened"))
-					G.affecting.changeStatus("weakened", 4 SECONDS)
-				src.visible_message("<span class='alert'><b>[G.assailant] slams [G.affecting] onto \the [src]!</b></span>")
-				playsound(src, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, G.assailant, G.affecting, src)
-			else
-				if (!G.affecting.hasStatus("weakened"))
-					G.affecting.changeStatus("weakened", 2 SECONDS)
-				src.visible_message("<span class='alert'>[G.assailant] puts [G.affecting] on \the [src].</span>")
-
-	place_on(obj/item/W as obj, mob/user as mob, params)
-		..()
-		if (. == 1) // successfully put thing on table, make a noise because we are a fancy special glass table
-			return 1
-
-/obj/cave_entrance
-	name = "cave entrance"
-	desc = "temp"
-	icon = 'icons/misc/AzungarAdventure.dmi'
-	icon_state = "cave_entrance"
-	anchored = 1
-	density = 0
-	var/id = null
-
-	New()
-		..()
-		if (!id)
-			id = "generic"
-
-		src.tag = "cave[id][src.icon_state == "cave_entrance" ? 0 : 1]"
-
-	attack_hand(mob/user as mob)
-		if (user.stat || user.getStatusDuration("weakened") || get_dist(user, src) > 1)
-			return
-
-		var/obj/cave_entrance/otherEntrance = locate("cave[id][src.icon_state == "cave_entrance"]")
-		if (!istype(otherEntrance))
-			return
-
-		user.visible_message("", "You climb [src.icon_state == "cave_entrance" ? "down" : "up"] the stairs to the [src.icon_state == "cave_entrance" ? "cave" : "surface"]. ")
-		user.set_loc(get_turf(otherEntrance))
-
-
-/MOVE THIS INTO REAGENTS-EXPLOSIVEFIRE.DM LATER//
-
-		//combustible/nitrogentriiodide/dry/hellshroom
-			//name = "Hellshroom Extract"
-			//id = "hellshroom"
-			//description = "An organic substance that is extremely volatile due to it being so dry. Rather fascinating."
-
-//MOVE THIS TO SEEDS.DM LATER//
-
-/obj/item/seed/alien/hellshroom
-	New()
-		..()
-		src.planttype = HY_get_species_from_path(/datum/plant/artifact/hellshroom, src)
-
-//MOVE THIS TO SNACKS.DM LATER//
-
-/obj/item/reagent_containers/food/snacks/hellshroom
-	name = "hellshroom"
-	desc = "TEMP"
-	icon = 'icons/misc/AzungarAdventure.dmi'
-	icon_state = "hellshroom_produce"
-	amount = 1
-	heal_amt = 0
-	initial_reagents = list("hellshroom_extract"=6)
-
-//MOVE THIS TO PLANTS_ALIEN.DM LATER//
-
-/datum/plant/artifact/hellshroom
-	name = "Hellshroom"
-	growthmode = "weed"
-	category = "Miscellaneous"
-	seedcolor = "#FF0000"
-	override_icon_state = "hellshroom"
-	crop = /obj/item/reagent_containers/food/snacks/hellshroom
-	starthealth = 10
-	nothirst = 1
-	starthealth = 20
-	growtime = 180
-	harvtime = 250
-	harvests = 10
-	endurance = 20
-	cropsize = 2
-	force_seed_on_harvest = 1
-	vending = 2
-	genome = 30
-	assoc_reagents = list("hellshroom_extract")
-
-//MOVE THIS TO MISC_WEAPONS.DM LATER//
-
-/obj/item/dagger/azarakknife
-	name = "sacrificial knife"
-	icon = 'icons/misc/AzungarAdventure.dmi'
-	icon_state = "sacknife"
-	inhand_image_icon = 'icons/misc/AzungarAdventure.dmi'
-	item_state = "sacknife"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
-	tool_flags = TOOL_CUTTING
-	hit_type = DAMAGE_CUT
-	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 5.0
-	throwforce = 15.0
-	throw_range = 5
-	desc = "TEMP"
-	pickup_sfx = "sound/items/blade_pull.ogg"
-	stamina_damage = 15
-	stamina_cost = 15
-	stamina_crit_chance = 50
-
-//MOVE TO SMALL_ANIMALS.DM LATER//
-
-/obj/critter/bat/hellbat
-	name = "hellbat"
-	desc = "TEMP"
-	icon = 'icons/misc/AzungarAdventure.dmi'
-	icon_state = "hellbat"
-	health = 35
-	aggressive = 1
-	defensive = 1
-	wanderer = 1
-	atkcarbon = 1
-	atksilicon = 1
-	brutevuln = 0.7
-	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-	seekrange = 5
-	flying = 1
-	density = 1 // so lasers can hit them
-	angertext = "screeches at"
-
-	seek_target()
-		src.anchored = 0
-		for (var/mob/living/C in hearers(src.seekrange,src))
-			if (src.target)
-				src.task = "chasing"
-				break
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (iscarbon(C) && !src.atkcarbon) continue
-			if (issilicon(C) && !src.atksilicon) continue
-			if (C.health < 0) continue
-			if (C in src.friends) continue
-			if (C.name == src.attacker) src.attack = 1
-			if (iscarbon(C) && src.atkcarbon) src.attack = 1
-			if (issilicon(C) && src.atksilicon) src.attack = 1
-
-			if (src.attack)
-				src.target = C
-				src.oldtarget_name = C.name
-				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [C.name]!</span>")
-				src.task = "chasing"
-				break
-			else
-				continue
-
-	ChaseAttack(mob/M)
-		src.visible_message("<span class='combat'><B>[src]</B> launches itself at [M]!</span>")
-		if (prob(30)) M.changeStatus("weakened", 2 SECONDS)
-
-	CritterAttack(mob/M)
-		src.attacking = 1
-		src.visible_message("<span class='combat'><B>[src]</B> bites and claws at [src.target]!</span>")
-		random_brute_damage(src.target, rand(3,5))
-		random_burn_damage(src.target, rand(2,3))
-		SPAWN(1 SECOND)
-			src.attacking = 0
-
-
-//MOVE TO HEART.DM LATER//
-
-/obj/item/organ/heart/eldritchadventure
-	name = "tainted heart"
-	desc = "TEMP"
-	icon = 'icons/misc/AzungarAdventure.dmi'
-	icon_state = "artifact_eldritchHeart"
-	edible = 0
-
-/mob/living/carbon/human/npc/cultist
-	name = "Crazed cultist"
-	real_name = "Crazed cultist"
-	ai_aggressive = 1
-	unobservable = 1
-
-	New()
-		..()
-		SPAWN(0)
-			bioHolder.mobAppearance.underwear = "briefs"
-			JobEquipSpawned("DO NOT USE THIS JOB")
-			update_clothing()
-			//src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, slot_shoes)
-			//src.equip_new_if_possible(/obj/item/clothing/under/suit/purple, slot_w_uniform)
-			//src.equip_new_if_possible(/obj/item/clothing/suit/cultistblack/cursed, slot_wear_suit)
-			//src.equip_new_if_possible(/obj/item/clothing/mask/eldritchskull {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_wear_mask)
-			//src.equip_new_if_possible(/obj/item/dagger/azarakknife {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_r_hand)
-
-			var/obj/item/organ/heart/eldritchadventure/H = new /obj/item/organ/heart/eldritchadventure
-			receive_organ(H, "heart", 0, 1)
-			return
-
-
-
-
-/datum/job/special/DONOTUSETHISJOB
-	name = "DO NOT USE THIS JOB"
-	limit = 0
-	wages = 0
-	slot_jump = /obj/item/clothing/under/suit/purple
-	slot_foot = /obj/item/clothing/shoes/dress_shoes
-	slot_rhan = null
-	slot_back = null
-	slot_card = null
-	slot_ears = null
-	slot_poc1 = null
-	slot_poc2 = null
-
-*/
-
 /obj/syndicateholoemitter
 	name = "Holo-emitter"
 	desc = "A compact holo emitter pre-loaded with a holographic image."
@@ -911,7 +676,7 @@
 
 		light = new /datum/light/point
 		light.attach(src)
-		light.set_color(0.50, 0.60, 0.94)
+		light.set_color(0.5, 0.6, 0.94)
 		light.set_brightness(0.7)
 		light.enable()
 
@@ -948,7 +713,7 @@
 	icon_state = "dispenser_handcuffs"
 	var/amount = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/handcuffs))
 			user.u_equip(W)
 			qdel(W)
@@ -956,7 +721,7 @@
 			boutput(user, "<span class='notice'>You put a pair of handcuffs in the [src]. [amount] left in the dispenser.</span>")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		if (src.amount >= 1)
 			src.amount--
@@ -978,10 +743,10 @@
 	bound_width = 96
 	layer = EFFECTS_LAYER_BASE
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (can_reach(user,src))
 			boutput(user, "<span class='alert'>You attempt to open the container but its doors are sealed tight. It doesn't look like you'll be able to open it.</span>")
-			playsound(src.loc, "sound/machines/door_locked.ogg", 50, 1, -2)
+			playsound(src.loc, 'sound/machines/door_locked.ogg', 50, 1, -2)
 
 	yellow
 		icon_state = "mantayellow"
@@ -1042,7 +807,7 @@
 		UpdateIcon()
 		var/real_run_time = rand(src.run_time - 10, src.run_time + 10)
 		sleep(real_run_time - 10)
-		playsound(src.loc, "sound/items/coindrop.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		sleep(1 SECOND)
 
 		src.last_result = rand(0,36)
@@ -1170,7 +935,7 @@
 
 	Bumped(mob/user as mob)
 		if(busy) return
-		if(get_dist(user, src) > 1 || user.z != src.z) return
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
@@ -1269,7 +1034,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "ntcrate"
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if (istype(I, /obj/item/rpcargotele))
 			actions.start(new /datum/action/bar/icon/scenariocrate(src, I, 300), user)
 
@@ -1296,7 +1061,7 @@
 
 	onUpdate()
 		..()
-		if (thecrate == null || the_tool == null || owner == null || get_dist(owner, thecrate) > 1)
+		if (thecrate == null || the_tool == null || owner == null || BOUNDS_DIST(owner, thecrate) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -1305,7 +1070,7 @@
 
 	onStart()
 		..()
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1314,4 +1079,4 @@
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(thecrate, "sound/machines/click.ogg", 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)

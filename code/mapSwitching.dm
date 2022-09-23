@@ -43,14 +43,16 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				if (mapNames[map]["MinPlayersAllowed"])
 					if (total_clients() < mapNames[map]["MinPlayersAllowed"])
 						continue
+				#ifndef UPSCALED_MAP
 				if (mapNames[map]["MaxPlayersAllowed"])
 					if (total_clients() > mapNames[map]["MaxPlayersAllowed"])
 						continue
+				#endif
 
 				src.playerPickable[map] += mapNames[map]
 
 		if (!src.active)
-			logTheThing("debug", null, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
+			logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
 			return
 
 
@@ -167,7 +169,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.previousVotes["vote[src.voteIndex]"] = reportData
 		src.previousVotes["vote_tally[src.voteIndex]"] = votes
 
-		logTheThing("debug", null, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
 
 		//reset votes holders
 		src.passiveVotes = new()
@@ -197,7 +199,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 		//handle ties
 		if (tiedMaps.len)
-			logTheThing("debug", null, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
+			logTheThing(LOG_DEBUG, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
 			src.voteChosenMap = pick(tiedMaps)
 
 		//trigger map switch using voteChosenMap
@@ -208,8 +210,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			try
 				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
 			catch (var/exception/e)
-				logTheThing("admin", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-				logTheThing("diary", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
+				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
+				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
 				return
 
 		//announce winner
@@ -221,8 +223,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		out(world, msg)
 
 		//log this
-		logTheThing("admin", null, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
-		logTheThing("diary", null, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
+		logTheThing(LOG_ADMIN, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
+		logTheThing(LOG_DIARY, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
 		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
 
 	//rudely cancel the vote without counting votes/doing anything

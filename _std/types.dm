@@ -1,6 +1,9 @@
 #define childrentypesof(x) (typesof(x) - x)
 // consider declaring the base type abstract instead and using concrete_typesof instead of childrentypesof
 
+/// nulls a var if its value doesn't match the var's type
+#define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
+
 #define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
 #define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
 /*
@@ -35,31 +38,32 @@ if there are any violations).
 /datum/New()
 	..()
 	if(IS_ABSTRACT(src.type))
-		logTheThing("debug", src, null, "Attempt to instantiate abstract type '[src.type]'.")
+		logTheThing(LOG_DEBUG, src, "Attempt to instantiate abstract type '[src.type]'.")
 #endif
 
 var/global/list/cached_concrete_types
 
 /**
-	* typesof() but only for concrete (not abstract) types,
-	* it caches the result so you don't need to worry about doing that manually
-	* so subsequent calls on the same type will be very fast.
-	*
-	* just don't modify the result of the call directly
-	* OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
-	*
-	* ALSO OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*
-	* NOT OKAY:
-	* ```dm
-	* var/list/hats = concrete_typesof(/obj/item/clothing/head)
-	* hats -= /obj/item/clothing/head/hosberet
-	* ```
-	*/
+ * [/proc/typesof()] but only for concrete (not abstract) types,
+ * it caches the result so you don't need to worry about doing that manually
+ * so subsequent calls on the same type will be very fast.
+ *
+ * just don't modify the result of the call directly
+ *
+ * OKAY: `var/list/hats = concrete_typesof(/obj/item/clothing/head) - /obj/item/clothing/head/hosberet`
+ *
+ * ALSO OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head).Copy()
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ *
+ * NOT OKAY:
+ * ```dm
+ * var/list/hats = concrete_typesof(/obj/item/clothing/head)
+ * hats -= /obj/item/clothing/head/hosberet
+ * ```
+ */
 proc/concrete_typesof(type, cache=TRUE)
 	if(isnull(cached_concrete_types))
 		cached_concrete_types = list()
@@ -105,9 +109,7 @@ proc/filtered_concrete_typesof(type, filter)
 		cached_filtered_types[type] = list()
 	cached_filtered_types[type][filter] = .
 
-/**
-	* Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
-	*/
+/// Gets the instance of a singleton type (or a non-singleton type if you decide to use it on one).
 proc/get_singleton(type)
 	RETURN_TYPE(type)
 	if(!(type in singletons))
@@ -202,8 +204,14 @@ var/list/list/by_cat = list()
 #define TR_CAT_ARTIFACTS "artifacts"
 #define TR_CAT_NUKE_OP_STYLE "nukie_style_items" //Items that follow the nuke op color scheme and are generally associated with ops. For recoloring!
 #define TR_CAT_HUNTER_GEAR "hunter_gear"
+#define TR_CAT_FLOCK_STRUCTURE "flock_structure"
+#define TR_CAT_AREA_PROCESS "process_area"
 // powernets? processing_items?
 // mobs? ai-mobs?
+
+#ifndef LIVE_SERVER
+#define TR_CAT_DELETE_ME "delete_me" // Things we delete after setup if we're on a local and the relevant compile options are uncommented
+#endif
 
 
 /// type-level information type
@@ -229,6 +237,8 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+
 /**
  * Declares typeinfo for some type.
  *
@@ -253,6 +263,7 @@ var/list/list/by_cat = list()
 	} \
 	/typeinfo ## TYPE
 
+#define TYPEINFO_NEW(TYPE) /typeinfo ## TYPE/New()
 
 /// var storing the subtype of /typeinfo relevant for this object
 /datum/var/typeinfo_type = /typeinfo/datum
@@ -307,3 +318,137 @@ proc/get_type_typeinfo(type)
 			else
 				return /datum
 	return text2path(copytext(string_type, 1, last_slash))
+
+
+/// Finds some instance of a type in the world. Returns null if none found.
+proc/find_first_by_type(type)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				return global.by_type[ancestor][1]
+			else
+				return null
+		ancestor = type2parent(ancestor)
+	. = locate(type)
+
+/**
+ *	Finds all instance of a type in the world.
+ *	Returns a list of the instances if no procedure is given.
+ *	Otherwise, calls the procedure for each instance and returns an assoc list of the form list(instance = procedure(instance, arguments...), ...)
+ *	`procedure_src` is the src for the proc call. If it is null, a global proc is called.
+ *	If it is the string "instance" the output list will be instead list(instance = instance.procedure(arguments...), ...)
+ */
+proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, lagcheck=TRUE)
+	RETURN_TYPE(type)
+	var/ancestor = type
+	while(ancestor != null)
+		if(ancestor in global.by_type)
+			if(length(global.by_type[ancestor]))
+				if(ancestor == type)
+					. = global.by_type[ancestor].Copy()
+				else
+					. = list()
+					for(var/D in global.by_type[ancestor])
+						if(istype(D, type))
+							. += D
+			else
+				return list()
+		ancestor = type2parent(ancestor)
+
+	if(.)
+		if(!isnull(procedure))
+			if(procedure_src == "instance")
+				for(var/instance in .)
+					.[instance] = call(instance, procedure)(arglist(arguments))
+			else if(procedure_src && length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure_src, procedure)(arglist(mod_args))
+			else if(procedure_src)
+				for(var/instance in .)
+					.[instance] = call(procedure_src, procedure)(instance)
+			else if(length(arguments))
+				for(var/instance in .)
+					var/mod_args = list(instance) + arguments
+					.[instance] = call(procedure)(arglist(mod_args))
+			else
+				for(var/instance in .)
+					.[instance] = call(procedure)(instance)
+		return
+
+	var/atom_base = /datum
+	ancestor = type
+	while(ancestor != null)
+		if(ancestor in list(/obj, /mob, /area, /turf, /atom/movable, /atom, /datum))
+			atom_base = ancestor
+			break
+		ancestor = type2parent(ancestor)
+
+	. = list()
+	#define IT_TYPE(T) if(T) {\
+			if(!isnull(procedure) && procedure_src == "instance") {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(instance, procedure)(arglist(arguments)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src && length(arguments)) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure_src, procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure) && procedure_src) {\
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure_src, procedure)(instance); \
+					} \
+				} \
+			} else if(!isnull(procedure) && length(arguments)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						var/mod_args = list(instance) + arguments; \
+						.[instance] = call(procedure)(arglist(mod_args)); \
+					} \
+				} \
+			} else if(!isnull(procedure)) { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						.[instance] = call(procedure)(instance); \
+					} \
+				} \
+			} else { \
+				for(var ## T/instance) {\
+					if(lagcheck) LAGCHECK(LAG_LOW); \
+					if(istype(instance, type)) {\
+						. += instance; \
+					} \
+				} \
+			} \
+		}
+	// the escaped newlines are currently necessary because of https://github.com/SpaceManiac/SpacemanDMM/issues/306
+	switch(atom_base)
+		IT_TYPE(/obj) \
+		IT_TYPE(/mob) \
+		IT_TYPE(/area) \
+		IT_TYPE(/turf) \
+		IT_TYPE(/atom/movable) \
+		IT_TYPE(/atom) \
+		IT_TYPE(/datum)
+	#undef IT_TYPE
+
+/// istype but for checking a list of types
+proc/istypes(datum/dat, list/types)
+	// based on the size of the types list this could be optimizable later by pre-generating and caching a concatenation of typesof() of them
+	for(var/type in types)
+		if(istype(dat, type))
+			return TRUE
+	return FALSE

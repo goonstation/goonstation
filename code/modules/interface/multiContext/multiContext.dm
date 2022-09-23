@@ -4,6 +4,10 @@
 
 /mob/proc/checkContextActions(atom/target)
 	. = list()
+
+	if (isobj(target) && (isghostcritter(src) && target:object_flags & NO_GHOSTCRITTER))
+		return
+
 	if(length(target?.contextActions))
 		for(var/datum/contextAction/C as anything in target.contextActions)
 			var/action = C.checkRequirements(target, src)
@@ -24,6 +28,8 @@
 				. += C
 
 /mob/proc/showContextActions(list/datum/contextAction/applicable, atom/target, datum/contextLayout/customContextLayout)
+	if(!src.client)
+		return
 	if(length(contextButtons))
 		closeContextActions()
 		return
@@ -73,13 +79,17 @@
 		else if (isAI(src))
 			var/mob/living/silicon/ai/A = src
 			if (isAIeye(src))
-				var/mob/dead/aieye/AE = src
+				var/mob/living/intangible/aieye/AE = src
 				A = AE.mainframe
 			A.hud.remove_screen(C)
 
 		else if (ishivebot(src))
 			var/mob/living/silicon/hivebot/hivebot = src
 			hivebot.hud.remove_screen(C)
+
+		else if (istype(src, /mob/living/intangible/flock))
+			var/mob/living/intangible/flock/flock_entity = src
+			flock_entity.render_special.remove_screen(C)
 
 		contextButtons.Remove(C)
 		if(C.overlays)

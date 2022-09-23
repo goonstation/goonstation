@@ -77,7 +77,7 @@
 		if (..())
 			return 1
 
-		if (href_list["dipsw"] && src.panel_open && get_dist(usr, src) < 2)
+		if (href_list["dipsw"] && src.panel_open && GET_DIST(usr, src) < 2)
 			var/switchNum = text2num_safe(href_list["dipsw"])
 			if (switchNum < 1 || switchNum > 8)
 				return 1
@@ -215,7 +215,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() && !(status & NOPOWER)) //Allow them to remove tapes even if the power's out.
 			return
 
@@ -269,7 +269,7 @@
 				return
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -331,7 +331,7 @@
 		src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, src.setup_tape_type) && setup_accept_tapes) //INSERT SOME TAPES
 			if (src.tape)
 				boutput(user, "<span class='alert'>There is already a [src.setup_tape_tag] in the drive.</span>")
@@ -349,7 +349,7 @@
 			return
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.locked = !src.locked
 			src.panel_open = !src.locked
 			boutput(user, "You [src.locked ? "secure" : "unscrew"] the cover.")
@@ -422,7 +422,7 @@
 					sessionid = 0
 
 				if (setup_access_click)
-					playsound(src.loc, "sound/machines/driveclick.ogg", 25, 0, -2)
+					playsound(src.loc, 'sound/machines/driveclick.ogg', 25, 0, -2)
 				switch(data["command"])
 					if("sync")
 						if (!src.tape)
@@ -722,11 +722,11 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tank))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.locked ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -735,14 +735,14 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -784,7 +784,7 @@
 		if (href_list["tank"])
 
 			//Ai/cyborgs cannot physically remove a tape from a room away.
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 				return
 
@@ -885,7 +885,7 @@
 
 			var/turf/B = pick_landmark(vr_landmark)
 			if(!B)
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				src.visible_message("[src] emits a somber ping.")
 				return
 
@@ -925,7 +925,7 @@
 					VT.icon_state = initial(VT.icon_state)
 				for(var/turf/unsimulated/wall/bombvr/VT in to_reset)
 					VT.icon_state = initial(VT.icon_state)
-					VT.opacity = 1
+					VT.set_opacity(1)
 					VT.set_density(1)
 
 			if(results)
@@ -1038,7 +1038,7 @@
 
 #define DISARM_CUTOFF 10 //Can't disarm past this point! OH NO!
 
-	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "DEN-3" = 15) //haha this is a bad idea
+	mats = list("POW-3" = 27, "MET-3" = 25, "CON-2" = 13, "CRY-2" = 15) //haha this is a bad idea
 	deconstruct_flags = DECON_NONE
 	is_syndicate = 1 //^ Agreed
 
@@ -1054,7 +1054,7 @@
 					src.link = test_link
 					src.link.master = src
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || status & NOPOWER)
 			return
 
@@ -1139,7 +1139,7 @@
 				src.detonate()
 				return
 			if(src.time == DISARM_CUTOFF)
-				playsound_global(world, "sound/misc/airraid_loop_short.ogg", 90)
+				playsound_global(world, 'sound/misc/airraid_loop_short.ogg', 90)
 			if(src.time <= DISARM_CUTOFF)
 				src.icon_state = "net_nuke2"
 				boutput(world, "<span class='alert'><b>[src.time] seconds until nuclear charge detonation.</b></span>")
@@ -1170,9 +1170,9 @@
 
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1276,14 +1276,13 @@
 							admessage += "<b> ([T.x],[T.y],[T.z])</b>"
 						message_admins(admessage)
 						//World announcement.
-						if(station_or_ship() == "ship")
-							command_alert("The ship's self-destruct sequence has been activated, please evacuate the ship or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
-						if(station_or_ship() == "station")
-							command_alert("The station's self-destruct sequence has been activated, please evacuate the station or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated")
-							playsound_global(world, "sound/machines/engine_alert2.ogg", 40)
-							return
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s self-destruct sequence has been activated at coordinates (<b>X</b>: [src.x], <b>Y</b>: [src.y], <b>Z</b>: [src.z]), please evacuate the [station_or_ship()] or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Self-Destruct Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
+						else
+							command_alert("A nuclear charge at [get_area(src)] has been activated, please stay clear or abort the sequence as soon as possible. Detonation in T-[src.time] seconds", "Nuclear Charge Activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/airraid_loop.ogg', 25)
+						return
 					if("deact")
 						if(data["auth"] != netpass_heads)
 							src.post_status(target,"command","term_message","data","command=status&status=badauth&session=[sessionid]")
@@ -1323,7 +1322,7 @@
 		return
 
 	proc/detonate()
-		playsound_global(world, "sound/effects/kaboom.ogg", 70)
+		playsound_global(world, 'sound/effects/kaboom.ogg', 70)
 		//explosion(src, src.loc, 10, 20, 30, 35)
 		explosion_new(src, get_turf(src), 10000)
 		//dispose()
@@ -1385,7 +1384,7 @@
 	proc/add_frequency(newFreq)
 		frequencies["[newFreq]"] = MAKE_DEFAULT_RADIO_PACKET_COMPONENT("f[newFreq]", newFreq)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1427,9 +1426,9 @@
 		onclose(user,"net_radio")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1691,6 +1690,7 @@
 #define MAX_PRINTBUFFER_SIZE 10
 
 	New()
+		START_TRACKING
 		..()
 		src.AddComponent(/datum/component/obj_projectile_damage)
 		if(!print_id)
@@ -1709,8 +1709,12 @@
 			src.UpdateIcon() //Update the icon
 		return
 
+	disposing()
+		STOP_TRACKING
+		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper)) //Load up the printer!
 			if (sheets_remaining >= MAX_SHEETS)
 				boutput(user, "<span class='alert'>The tray is full!</span>")
@@ -1755,7 +1759,7 @@
 			return
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -1767,10 +1771,10 @@
 	onDestroy()
 		if (src.powered())
 			elecflash(src, power = 2)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -1814,7 +1818,7 @@
 
 		if (href_list["unjam"])
 			if(src.jam)
-				if(get_dist(src,usr) > 1)
+				if(BOUNDS_DIST(src, usr) > 0)
 					boutput(usr, "You are too far away to unjam it.")
 					return
 				src.jam = 0
@@ -2029,7 +2033,7 @@
 			sheets_remaining--
 
 			flick("printer-printing",src)
-			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 50, 1)
 			SPAWN(3.2 SECONDS)
 
 				if (istype(print_text, /datum/computer/file/image)) // trying to print a photo! :I
@@ -2106,7 +2110,7 @@
 		print_alert()
 			blinking = 1
 			src.UpdateIcon()
-			playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 			src.visible_message("<span class='alert'>[src] pings!</span>")
 			return
 
@@ -2162,14 +2166,14 @@
 		if (!dd_hasprefix(uppertext(src.bank_id),"SC-"))
 			src.bank_id = "SC-[bank_id]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(status & (NOPOWER|BROKEN))
 			return
 
 		if(user.lying || user.stat)
 			return 1
 
-		if ((get_dist(src, user) > 1 || !istype(src.loc, /turf)) && !issilicon(user))
+		if ((BOUNDS_DIST(src, user) > 0 || !istype(src.loc, /turf)) && !issilicon(user))
 			return 1
 
 		src.add_dialog(user)
@@ -2199,7 +2203,7 @@
 		onclose(user,"scanner")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper) || istype(W, /obj/item/photo))
 			if (scanned_thing)
 				boutput(user, "<span class='alert'>There is already something in the scanner!</span>")
@@ -2223,7 +2227,7 @@
 		src.add_dialog(usr)
 
 		if (href_list["document"])
-			if(issilicon(usr) && get_dist(src, usr) > 1)
+			if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 				boutput(usr, "<span class='alert'>There is no electronic control over the actual document.</span>")
 				return
 
@@ -2309,7 +2313,7 @@
 			if (src.tape.root.add_file( scanned ))
 				scan_buffer = scanned
 				src.sync(src.host_id)
-				playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 			else
 				scanned.dispose()
 
@@ -2325,7 +2329,7 @@
 			if (src.tape.root.add_file( scanned ))
 				scan_buffer = scanned
 				src.sync(src.host_id)
-				playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 			else
 				scanned.dispose()
 
@@ -2430,7 +2434,7 @@
 
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -2542,7 +2546,7 @@
 							src.post_status(src.host_id,"command","term_message","data","command=statechange&state=alert")
 
 						src.UpdateIcon(3)
-						playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 						return
 
 				return
@@ -2637,14 +2641,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
@@ -2701,7 +2705,7 @@
 			UpdateIcon(2)
 			if (src.host_id)
 				src.post_status(src.host_id,"command","term_message","data","command=statechange&state=onguard")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		assess_threat(mob/living/threat as mob) //Default scanners just check for humans without proper access and aliens.
@@ -2728,7 +2732,7 @@
 
 	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2784,7 +2788,7 @@
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	event_handler_flags = USE_FLUID_ENTER
 
@@ -2892,11 +2896,11 @@
 		src.telecrystals.len = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -2905,7 +2909,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3146,15 +3150,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
@@ -3207,7 +3211,7 @@
 	//var/obj/beam/h7_beam/next = null
 	var/obj/machinery/networked/h7_emitter/master = null
 	limit = 48
-	anchored = 1.0
+	anchored = 1
 	flags = TABLEPASS
 	var/datum/light/light
 
@@ -3304,7 +3308,7 @@
 				if (1 to 3)
 					//telehop + radiation
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 100 SECONDS)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 						hitMob.changeStatus("weakened", 2 SECONDS)
 					telehop(hitMob, src.power, src.power > 2)
 					return
@@ -3312,7 +3316,7 @@
 				if (4)
 					//big telehop + might leave parts behind.
 					if (iscarbon(hitMob))
-						hitMob.changeStatus("radiation", 100 SECONDS)
+						hitMob.take_radiation_dose(3 SIEVERTS)
 
 						random_brute_damage(hitMob, 25)
 						hitMob.changeStatus("weakened", 2 SECONDS)
@@ -3403,12 +3407,12 @@
 			src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/raw_material/telecrystal))
 			return attack_hand(user)
 
 		else if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			boutput(user, "You [src.panel_open ? "secure" : "unscrew"] the maintenance panel.")
 			src.panel_open = !src.panel_open
 			src.updateUsrDialog()
@@ -3417,7 +3421,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
@@ -3450,7 +3454,7 @@
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		if (!istype(O,/obj/) || O.anchored) return
-		if (get_dist(src,O) > 1 || !isturf(O.loc)) return
+		if (BOUNDS_DIST(src, O) > 0 || !isturf(O.loc)) return
 		if (!in_interact_range(user, O) || !in_interact_range(user, src) || !isalive(user)) return
 		if (src.dragload)
 			if (src.contents.len)
@@ -3461,7 +3465,7 @@
 			src.UpdateIcon()
 		else return
 
-	MouseDrop(obj/over_object as obj, src_location, over_location)
+	mouse_drop(obj/over_object as obj, src_location, over_location)
 		ejectContents(usr, over_object)
 
 	verb/eject()
@@ -3474,7 +3478,7 @@
 
 	proc/ejectContents(var/mob/unloader, var/target_location)
 		if (!istype(target_location, /turf/)) return
-		if (get_dist(src,target_location) > 1) return
+		if (BOUNDS_DIST(src, target_location) > 0) return
 		if (!in_interact_range(unloader, target_location) || !in_interact_range(unloader, src) || !isalive(unloader)) return
 		if (src.active)
 			boutput(unloader, "<span class='alert'>You can't unload it while it's active!</span>")
@@ -3618,15 +3622,15 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
@@ -3758,19 +3762,19 @@
 				if (istype(to_toss))
 					to_toss.set_loc(src.loc)
 					src.visible_message("<b>[src.name]</b> launches [to_toss]!")
-					playsound(src.loc, "sound/effects/syringeproj.ogg", 50, 1)
+					playsound(src.loc, 'sound/effects/syringeproj.ogg', 50, 1)
 					to_toss.throw_at(get_edge_target_turf(src, src.dir), throw_strength, throw_strength/50, bonus_throwforce=throw_strength/4)
 
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
 					src.active = 0
-					playsound(src, "sound/machines/buzz-two.ogg", 50, 1)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
 					src.UpdateIcon()
 				return
 
 			src.visible_message("<b>[src.name]</b> pings.")
 			src.active = 0
-			playsound(src, "sound/machines/chime.ogg", 50, 1)
+			playsound(src, 'sound/machines/chime.ogg', 50, 1)
 			src.UpdateIcon()
 
 		return
@@ -3848,10 +3852,10 @@
 						src.setup_base_icon_state = "impactstand"
 						flick("impactpad-extend",src)
 						src.UpdateIcon()
-						playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
+						playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					else
 						src.visible_message("<span class='alert'><b>[src.name]</b> clanks and clatters noisily!</span>")
-						playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 1)
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1)
 					message_host("command=ack")
 				else if (standval == 0 && src.density == 1)
 					src.visible_message("<b>[src.name]</b> retracts its stand.")
@@ -3859,7 +3863,7 @@
 					src.setup_base_icon_state = "impactpad"
 					flick("impactstand-retract",src)
 					src.UpdateIcon()
-					playsound(src.loc, "sound/effects/pump.ogg", 50, 1)
+					playsound(src.loc, 'sound/effects/pump.ogg', 50, 1)
 					message_host("command=ack")
 				else
 					message_host("command=ack")
@@ -3950,7 +3954,7 @@
 			src.sensed[1] = "???"
 			src.sensed[2] = "0"
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src.loc, "sound/machines/chime.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 
 	proc/impactpad_senseforce_shot(var/obj/I, var/datum/projectile/P)
 		if (istype(I.artifact,/datum/artifact/))
@@ -3971,7 +3975,7 @@
 			src.sensed[2] = "0"
 
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src, "sound/machines/chime.ogg", 50, 1)
+		playsound(src, 'sound/machines/chime.ogg', 50, 1)
 
 /obj/machinery/networked/test_apparatus/electrobox
 	name = "Electrical Testing Apparatus"
@@ -4011,7 +4015,7 @@
 		if (!src.contents.len && src.active)
 			src.active = 0
 			src.visible_message("<b>[src.name]</b> buzzes angrily and stops operating!")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 			src.UpdateIcon()
 			return
 
@@ -4023,7 +4027,7 @@
 				src.active = 0
 				src.timer = -1
 				src.visible_message("<b>[src.name]</b> emits a buzz and shuts down.")
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				src.UpdateIcon()
 				return
 			src.electrify_contents()
@@ -4380,7 +4384,7 @@
 
 					SPAWN(5 SECONDS)
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
-						playsound(src, "sound/machines/chime.ogg", 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, 1)
 						active = 0
 						src.UpdateIcon()
 				else
@@ -4481,7 +4485,7 @@
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0
 				src.visible_message("<b>[src.name]</b> reaches its target temperature and shuts down.")
-				playsound(src.loc, "sound/machines/chime.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/chime.ogg', 50, 1)
 		else
 			use_power(20)
 			if (src.temperature > 310)
@@ -4807,14 +4811,14 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", "fire0")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire3")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire4")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire5")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire6")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire7")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

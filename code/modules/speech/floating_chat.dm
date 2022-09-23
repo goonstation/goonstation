@@ -64,13 +64,13 @@
 	proc/measure(var/client/who)
 		var/measured = 8
 		// MeasureText sleeps and that fucks up a lot, removing for now
-		return measured * (1 + round(length(src.maptext_width) / 128))
+		return measured * (1 + round(length(src.maptext_width) / 32))
 
 proc/make_chat_maptext(atom/target, msg, style = "", alpha = 255, force = 0, time = 40)
 	var/image/chat_maptext/text = new /image/chat_maptext
 	animate(text, maptext_y = 28, time = 0.01) // this shouldn't be necessary but it keeps breaking without it
 	if (!force)
-		msg = copytext(msg, 1, 128) // 4 lines, seems fine to me
+		msg = copytext(msg, 1, 256) // 4 lines, seems fine to me
 		text.maptext = "<span class='pixel c ol' style=\"[style]\">[msg]</span>"
 	else
 		// force whatever it is to be shown. for not chat tings. honk.

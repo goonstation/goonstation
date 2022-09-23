@@ -734,6 +734,7 @@
 		if ("[access_dwaine_superuser]" in accessList)
 			if(signal_program(1, list("command"=DWAINE_COMMAND_UGROUP, "group"=0)) == ESIG_SUCCESS)
 				message_user("You are now authorized.")
+				usr.unlock_medal("I'm in", 1)
 			else
 				message_user("Error: Unable to authorize.")
 		else

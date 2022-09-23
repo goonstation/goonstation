@@ -9,7 +9,7 @@
 	pointCost = 0
 	when_stunned = 1
 	not_when_handcuffed = 0
-	restricted_area_check = 1
+	restricted_area_check = 0
 
 	unlock_message = "You have gained Bat Form. When toggled on, you will be able to enter Bat Form by sprinting."
 
@@ -44,7 +44,7 @@
 				M.special_sprint |= SPRINT_BAT_CLOAKED
 				icon_state = "mist"
 
-		boutput(M, __blue("Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)"))
+		boutput(M, "<span class='notice'>Bat Form toggled [(M.special_sprint & SPRINT_BAT || M.special_sprint & SPRINT_BAT_CLOAKED ) ? "on" : "off"]. (Hold Sprint to activate - consumes stamina)</span>")
 
 		return 0
 
@@ -90,5 +90,5 @@
 		SPAWN(src.duration)
 			if (H) H.locked = 0
 
-		logTheThing("combat", M, null, "uses mist form at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses mist form at [log_loc(M)].")
 		return 0

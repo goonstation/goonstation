@@ -7,7 +7,7 @@
 	density = 0
 	mats = 25
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	_health = 50
+	_health = 25
 	color = null
 	var/can_talk_across_z_levels = 0
 	var/phone_id = null
@@ -90,7 +90,7 @@
 		..()
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		if(src.answered == 1)
 			return
@@ -101,7 +101,7 @@
 
 		src.icon_state = "[answeredicon]"
 		UpdateIcon()
-		playsound(user, "sound/machines/phones/pick_up.ogg", 50, 0)
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
 
 		if(src.ringing == 0) // we are making an outgoing call
 			if(src.connected == 1)
@@ -116,13 +116,13 @@
 			src.ringing = 0
 			src.linked.ringing = 0
 			if(src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_answer.ogg",50,0)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 		return
 
 	attack_ai(mob/user as mob)
 		return
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P, /obj/item/phone_handset))
 			var/obj/item/phone_handset/PH = P
 			if(PH.parent == src)
@@ -130,7 +130,7 @@
 				qdel(PH)
 				hang_up()
 			return
-		if(istype(P,/obj/item/wirecutters))
+		if(issnippingtool(P))
 			if(src.connected == 1)
 				if(user)
 					boutput(user,"You cut the phone line leading to the phone.")
@@ -140,7 +140,7 @@
 					boutput(user,"You repair the line leading to the phone.")
 				src.connected = 1
 			return
-		if(istype(P,/obj/item/device/multitool))
+		if(ispulsingtool(P))
 			if(src.labelling == 1)
 				return
 			src.labelling = 1
@@ -155,6 +155,9 @@
 		..()
 		src._health -= P.force
 		attack_particle(user,src)
+		user.lastattacked = src
+		hit_twitch(src)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
@@ -173,7 +176,7 @@
 
 	process()
 		if(src.emagged == 1)
-			playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,100,1)
+			playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,100,1)
 			if(src.answered == 0)
 				src.icon_state = "[ringingicon]"
 				UpdateIcon()
@@ -191,10 +194,10 @@
 				if(src.last_ring >= 2)
 					src.last_ring = 0
 					if(src.handset && src.handset.holder)
-						src.handset.holder.playsound_local(src.handset.holder,"sound/machines/phones/ring_outgoing.ogg" ,40,0)
+						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
-					playsound(src.loc,"sound/machines/phones/ring_incoming.ogg" ,40,0)
+					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
 					src.icon_state = "[ringingicon]"
 					UpdateIcon()
 					src.last_ring = 0
@@ -207,7 +210,7 @@
 				src.linked.icon_state = "[src.linked.phoneicon]"
 				src.linked.UpdateIcon()
 			else if(src.linked.handset && src.linked.handset.holder)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,"sound/machines/phones/remote_hangup.ogg",50,0)
+				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = 0
 			src.linked.linked = null
 			src.linked = null
@@ -215,7 +218,7 @@
 		src.handset = null
 		src.icon_state = "[phoneicon]"
 		UpdateIcon()
-		playsound(src.loc,"sound/machines/phones/hang_up.ogg" ,50,0)
+		playsound(src.loc,'sound/machines/phones/hang_up.ogg' ,50,0)
 
 	// This makes phones do that thing that phones do
 	proc/call_other(var/obj/machinery/phone/target)
@@ -223,11 +226,11 @@
 		if(!src.handset)
 			return
 		src.dialing = 1
-		src.handset.holder?.playsound_local(src.handset.holder,"sound/machines/phones/dial.ogg" ,50,0)
+		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		SPAWN(4 SECONDS)
 			// Is it busy?
 			if(target.answered || target.linked || target.connected == 0)
-				playsound(src.loc,"sound/machines/phones/phone_busy.ogg" ,50,0)
+				playsound(src.loc,'sound/machines/phones/phone_busy.ogg' ,50,0)
 				src.dialing = 0
 				return
 
@@ -288,7 +291,7 @@
 	var/obj/machinery/phone/parent = null
 	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 	New(var/obj/machinery/phone/parent_phone, var/mob/living/picker_upper)
 		if(!parent_phone)
@@ -319,7 +322,7 @@
 		if(!src.parent)
 			qdel(src)
 			return
-		if(src.parent.answered == 1 && get_dist(src,src.parent) > 1)
+		if(src.parent.answered == 1 && BOUNDS_DIST(src, src.parent) > 0)
 			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
 			src.holder.drop_item(src)
 			src.parent.hang_up()
@@ -328,7 +331,7 @@
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(get_dist(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
+		if(GET_DIST(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
@@ -340,7 +343,7 @@
 				I.talk_into(M, text, null, M.real_name, lang_id)
 
 	// Attempt to pick up the handset
-	attack_hand(mob/living/user as mob)
+	attack_hand(mob/living/user)
 		..(user)
 		holder = user
 
@@ -421,7 +424,7 @@
 	New()
 		..()
 
-	attackby(obj/item/P as obj, mob/living/user as mob)
+	attackby(obj/item/P, mob/living/user)
 		if(istype(P,/obj/item/card/id))
 			if(src.activated)
 				if(alert("Do you want to un-register this phone?","yes","no") == "yes")

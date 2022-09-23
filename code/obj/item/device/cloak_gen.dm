@@ -33,7 +33,7 @@
 		boutput(usr, "<span class='alert'>I need to place it on the ground to use it.</span>")
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !istype(W, /obj/item/remote/cloak_gen/))
 			..()
 			return
@@ -43,7 +43,7 @@
 				user.show_text("Connection to [src.name] established", "blue")
 				R.my_gen = src
 			else
-				var/choice = alert("Remote is already linked to a generator. Reset and establish new connection?", "Connection override", "Yes", "No")
+				var/choice = tgui_alert(user, "Remote is already linked to a generator. Reset and establish new connection?", "Connection override", list("Yes", "No"))
 				if (choice == "Yes")
 					R.my_gen = src
 					user.show_text("Connection to [src.name] established", "blue")
@@ -81,6 +81,7 @@
 			O.anchored = 1
 			O.set_density(0)
 			O.name = T.name
+			O.mouse_opacity = FALSE // let people click through the field
 
 	proc/turn_off()
 		if (!active) return

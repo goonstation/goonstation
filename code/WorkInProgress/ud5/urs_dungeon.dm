@@ -130,6 +130,7 @@
 	target = null
 	var/my_portal = null
 	var/start_on = 0
+	var/invisible_portal = 0
 
 	var/static/list/triggeracts = list("Disable" = "off", "Do nothing" = "nop", "Enable" = "on")
 
@@ -151,6 +152,8 @@
 					return
 				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
 				P.target = get_turf(target)
+				if(src.invisible_portal)
+					P.invisibility = 20
 				src.my_portal = P
 				return
 			if ("off")
@@ -169,6 +172,7 @@
 	color = "#550000"
 	var/target = null
 	var/doing_login = 0
+	var/turf/origin = null
 
 	New()
 		..()
@@ -184,6 +188,7 @@
 		if(!(user == usr))
 			return
 		if(istype(H) && slot == SLOT_GLASSES)
+			origin = get_turf(H)
 			SPAWN(1 SECOND)
 				enter_urs_dungeon(user)
 		return
@@ -195,7 +200,7 @@
 			doing_login = 1
 
 			H.u_equip(src)
-			src.set_loc(get_turf(H))
+			src.set_loc(origin)
 			H.unequip_all()
 
 			var/mob/living/carbon/human/V = new(get_turf(src.target),H.client.preferences.AH, H.client.preferences, TRUE)
@@ -209,9 +214,9 @@
 			V.update_colorful_parts()
 			for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
 			H.emote("scream")
-			playsound(H.loc, "sound/weapons/flashbang.ogg", 25, 1)
+			playsound(H.loc, 'sound/weapons/flashbang.ogg', 25, 1)
 			for (var/mob/N in viewers(src, null))
-				if (get_dist(N, src) <= 6)
+				if (GET_DIST(N, src) <= 6)
 					N.apply_flash(20, 1)
 				if (N.client)
 					shake_camera(N, 6, 32)
@@ -219,9 +224,13 @@
 			if (V.client)
 				shake_camera(V, 6, 32)
 			H.mind.transfer_to(V)
-			playsound(V.loc, "sound/ambience/music/VRtunes_edited.ogg", 10, 0)
+			playsound(V.loc, 'sound/ambience/music/VRtunes_edited.ogg', 10, 0)
 			H.elecgib()
 			doing_login = 0
+
+			H.u_equip(src)
+			H.drop_item(src)
+			src.set_loc(origin)
 
 /obj/item/clothing/glasses/urs_dungeon_exit
 	name = "\improper VR goggles"
@@ -229,9 +238,11 @@
 	icon_state = "vr"
 	item_state = "sunglasses"
 	color = "#00CCCC"
+	var/turf/origin = null
 
 	New()
 		..()
+		origin = get_turf(src)
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -244,7 +255,8 @@
 	proc/exit_urs_dungeon(var/mob/living/carbon/human/H)
 
 		H.u_equip(src)
-		src.set_loc(get_turf(H))
+		src.set_loc(origin)
+		H.drop_item(src)
 
 		var/list/L = list()
 		for (var/turf/T3 in get_area_turfs(/area/station/crew_quarters,0))
@@ -269,15 +281,21 @@
 						L += T3
 
 		for(var/mob/O in AIviewers(H, null)) O.show_message("<span class='alert'>[H.name] disappears in a flash of light!!</span>", 1)
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 		for (var/mob/N in viewers(H, null))
-			if (get_dist(N, src) <= 6)
+			if (GET_DIST(N, src) <= 6)
 				N.apply_flash(20, 1)
 			if (N.client)
 				shake_camera(N, 6, 32)
 
 		H.set_loc(pick(L))
+
+		H.unlock_medal("Virtual Ascension",1)
+
+		H.u_equip(src)
+		H.drop_item(src)
+		src.set_loc(origin)
 
 		return
 
@@ -503,10 +521,10 @@
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/shovel))
 			user.visible_message("<span class='notice'>[user] digs in [src] with [W]!</span>")
 			src.open()
@@ -520,9 +538,9 @@
 	icon_state = "urs_prize"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	var/ursium = 0
-	var/s_time = 1.0
+	var/s_time = 1
 	var/content = null
 
 /obj/item/ursium/proc/convert2energy(var/M)
@@ -601,7 +619,7 @@
 	qdel(src)
 	return
 /*
-/obj/item/ursium/attack(mob/M as mob, mob/user as mob)
+/obj/item/ursium/attack(mob/M, mob/user)
 	if (user != M)
 		user.visible_message("<span class='alert'>[user] is trying to force [M] to eat the [src.content]!</span>")
 		if (do_mob(user, M, 40))
@@ -613,7 +631,7 @@
 		src.injest(M)
 */
 
-var/johnbill_ursdungeon_code = 0420
+var/johnbill_ursdungeon_code = "0420"
 
 /area/diner/arcade/New()
 		..()

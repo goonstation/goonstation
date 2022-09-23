@@ -36,10 +36,14 @@
 	// obviously a specific goal will have specific requirements for targets
 	. = list()
 
+///Is the target VALID?
+/datum/aiTask/sequence/goalbased/proc/valid_target(var/atom/target)
+	return FALSE
+
 /datum/aiTask/sequence/goalbased/proc/score_target(var/atom/target)
 	. = 0
 	if(target)
-		return max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
+		return 100*(max_dist - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/max_dist //normalize distance weighting
 
 /datum/aiTask/sequence/goalbased/proc/precondition()
 	// useful for goals that have a requirement, return 0 to instantly make this state score 0 and not be picked
@@ -57,7 +61,7 @@
 	..()
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())
-	if(subtask_index == 1) // MOVE TASK
+	if(istype(subtasks[subtask_index], /datum/aiTask/succeedable/move)) // MOVE TASK
 		// make sure we both set our target and move to our target correctly
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
@@ -70,9 +74,6 @@
 					if(M.move_target)
 						return
 			M.move_target = target_turf
-
-/datum/aiTask/sequence/goalbased/on_reset()
-	holder.target = null
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
@@ -90,10 +91,8 @@
 	// thanks byond forums for letting me know that the byond native implentation FUCKING SUCKS
 	holder.owner.move_dir = pick(alldirs)
 	holder.owner.process_move()
-
-/datum/aiTask/timed/wander/on_tick()
-	. = ..()
 	holder.stop_move()
+	holder.owner.move_dir = null // clear out direction so it doesn't get latched when client is attached
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // TARGETED TASK
@@ -121,14 +120,15 @@
 /datum/aiTask/timed/targeted/proc/score_target(var/atom/target)
 	. = 0
 	if(target)
-		return target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target))
+		return 100*(target_range - GET_MANHATTAN_DIST(get_turf(holder.owner), get_turf(target)))/target_range //normalize distance weighting
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MOVE TASK
 // target: holder target assigned by a sequence task
 /datum/aiTask/succeedable/move
 	name = "moving"
-	max_fails = 5
+	max_fails = 2
+	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
 	var/atom/move_target = null
 
@@ -137,7 +137,7 @@
 	if(!move_target)
 		fails++
 		return
-	src.found_path = get_path_to(holder.owner, move_target, 60, 0)
+	src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0)
 	if(!src.found_path) // no path :C
 		fails++
 
@@ -146,30 +146,23 @@
 	src.move_target = null
 
 /datum/aiTask/succeedable/move/on_tick()
-	walk(holder.owner, 0)
-	if(src.found_path)
-		if(src.found_path.len > 0)
-			// follow the path
-			src.found_path.Cut(1, 2)
-			var/turf/next
-			if(src.found_path.len >= 1)
-				next = src.found_path[1]
-			else
-				next = move_target
-			walk_to(holder.owner, next, 0, 4)
-			if(get_dist(get_turf(holder.owner), next) <= 1)
-				fails = 0
-			else
-				// we aren't where we ought to be
-				fails++
-				get_path()
-	else
-		// get a path
+	if(!src.move_target)
+		fails++
+		return
+	if(!length(src.found_path))
 		get_path()
+	if(length(src.found_path))
+		holder.move_to_with_path(move_target,src.found_path,0)
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		return ((get_dist(get_turf(holder.owner), get_turf(move_target)) == 0) || (src.found_path && src.found_path.len <= 0))
+		. = (GET_DIST(holder.owner, src.move_target) == 0)
+		return
+
+/datum/aiTask/succeedable/move/failed()
+	if(!move_target || !src.found_path)
+		fails++
+	return fails >= max_fails
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WAIT TASK
@@ -208,3 +201,76 @@
 		M.registered_area = get_area(M)
 		if(M.registered_area)
 			M.registered_area.registered_mob_critters |= M
+
+//AI: Follower
+// You will have to code your own exit conditions and your own code for setting "following"
+/datum/aiTask/timed/targeted/follower
+	name = "follow"
+	minimum_task_ticks = 10000
+	maximum_task_ticks = 10000
+	target_range = 10
+	frustration_threshold = 3
+	var/last_seek = null
+	var/following = null
+
+/datum/aiTask/timed/targeted/follower/proc/precondition()
+	. = 0
+	if(following)
+		if(IN_RANGE(holder.owner, following, target_range))
+			. = 1
+
+/datum/aiTask/timed/targeted/follower/frustration_check()
+	.= 0
+	if (!IN_RANGE(holder.owner, holder.target, target_range))
+		return 1
+
+	if (ismob(holder.target))
+		var/mob/M = holder.target
+		. = !(holder.target && !isdead(M))
+	else
+		. = !(holder.target)
+
+/datum/aiTask/timed/targeted/follower/score_target(atom/target)
+	. = ..()
+
+/datum/aiTask/timed/targeted/follower/evaluate()
+	..()
+	. = precondition() * 4 //FOLLOW_PRIORITY = 4
+
+/datum/aiTask/timed/targeted/follower/on_tick()
+	var/mob/living/critter/owncritter = holder.owner
+	if (HAS_ATOM_PROPERTY(owncritter, PROP_MOB_CANTMOVE))
+		return
+
+	if(length(holder.owner.grabbed_by) > 1)
+		holder.owner.resist()
+
+	if(!holder.target)
+		if (world.time > last_seek + 4 SECONDS)
+			last_seek = world.time
+			var/list/possible = get_targets()
+			if (possible.len)
+				holder.target = pick(possible)
+	if(holder.target && holder.target.z == owncritter.z)
+		var/mob/living/M = holder.target
+		if(!isalive(M))
+			holder.target = null
+			holder.target = get_best_target(get_targets())
+			if(!holder.target)
+				return ..() // try again next tick
+			else
+				M = holder.target
+
+		var/dist = get_dist(owncritter, M)
+		if (dist > 1)
+			holder.move_to(M,1)
+	..()
+
+/datum/aiTask/timed/targeted/follower/get_targets()
+	. = list()
+	. += following
+
+/datum/aiTask/timed/targeted/follower/on_reset()
+	..()
+	holder.target = null
+	holder.stop_move()

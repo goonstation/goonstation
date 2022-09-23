@@ -44,7 +44,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!activated)
 			return
 
@@ -88,7 +88,7 @@ var/sound/helldrone_wakeup_sound = null
 			grump_guard.wakeup()
 
 	if (helldrone_awake != 2)
-		logTheThing("debug", null, null, "<b>Halloween Event Error</b>: Unable to locate helldrone areas.")
+		logTheThing(LOG_DEBUG, null, "<b>Halloween Event Error</b>: Unable to locate helldrone areas.")
 		return
 
 	return

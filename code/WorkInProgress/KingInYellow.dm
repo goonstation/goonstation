@@ -64,16 +64,16 @@
 		src.set_dir(get_dir(src, target))
 		SPAWN(0.5 SECONDS) update()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		vanish()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		vanish()
 
 	proc/update()
 		if(!target) vanish()
 		if(!(src in view(7, target)) && (world.time - created) > 40) vanish()
-		if(get_dist(src,target) <= 2) vanish()
+		if(GET_DIST(src,target) <= 2) vanish()
 		src.set_dir(get_dir(src, target))
 		SPAWN(0.5 SECONDS) update()
 

@@ -6,7 +6,7 @@ Right Mouse Button on mob/obj/turf = Revert block (with 2 clicks)<br>
 Ctrl + RMB on buildmode button     = Reset selection<br>
 ***********************************************************"}
 	icon_state = "revertturf"
-	var/turf/A
+	var/tmp/turf/A
 
 	deselected()
 		..()

@@ -42,7 +42,7 @@
 	..()
 	src.tetris = new /datum/game/tetris(src)
 
-/obj/machinery/computer/tetris/attack_hand(mob/user as mob)
+/obj/machinery/computer/tetris/attack_hand(mob/user)
 	if(..())
 		return
 	src.add_dialog(user)
@@ -109,4 +109,4 @@ ABSTRACT_TYPE(/datum/game)
 
 	end_game()
 		if(istype(src.owner, /obj/machinery/computer/tetris))
-			src.owner.desc = "Instructions: Left/Right Arrows: move, Up Arrow: turn, Down Arrow: faster, Space: auto place<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"
+			src.owner.desc = "Instructions: Left/Right Arrows: Move, Up Arrow/W/R: Turn CW, Q: Turn CCW, Down Arrow/S: Soft Drop, Space: Hard Drop<br><br><b>Highscore: [highscore] by [highscoreholder]</b>"

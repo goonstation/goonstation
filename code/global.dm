@@ -14,7 +14,7 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'xfont.ttf', 'code/statusdisp.ttf')
+var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/fonts/ibmvga9.ttf', 'interface/fonts/xfont.ttf', 'interface/fonts/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
 
@@ -77,7 +77,7 @@ var/global
 
 	list/factions = list()
 
-	list/obj/trait/traitList = list() //List of trait objects
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -243,6 +243,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -270,6 +271,7 @@ var/global
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
@@ -315,52 +317,50 @@ var/global
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
 
-	///////////////
+	//
 	//cyberorgan damage thresholds for emagging without emag
 	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
-	///////////////
-	list/logs = list ( //Loooooooooogs
-		"admin_help" = list (  ),
-		"speech" = list (  ),
-		"ooc" = list (  ),
-		"combat" = list (  ),
-		"station" = list (  ),
-		"pdamsg" = list (  ),
-		"admin" = list (  ),
-		"mentor_help" = list (  ),
-		"telepathy" = list (  ),
-		"bombing" = list (  ),
-		"signalers" = list (  ),
-		"atmos" = list (  ),
-		"debug" = list (  ),
-		"pathology" = list (  ),
-		"deleted" = list (  ),
-		"vehicle" = list (  ),
-		"tgui" = list (), //me 2
-		"computers" = list(),
-		"audit" = list()//im a rebel, i refuse to add that gross SPACING
+	/// Loooooooooogs
+	list/logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_PDAMSG		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
+		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_TOPIC		=	list(),
 	)
-	savefile/compid_file 	//The file holding computer ID information
-	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/bypassCapCkeys = list(  )
+	/// The file holding computer ID information
+	savefile/compid_file
+
+	/// Should we be analysing the comp IDs of new clients?
+	do_compid_analysis = 1
+
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
 	datum/player_panel/player_panel = new()
 
 	list/prisonwarped = list()	//list of players already warped
-	list/wormholeturfs = list()
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
 
 	// Controllers
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
 	datum/configuration/config = null
 	datum/sun/sun = null
@@ -386,6 +386,9 @@ var/global
 
 	narrator_mode = 0
 
+	// Zam note: this is horrible
+	forced_desussification = 0
+
 	disable_next_click = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
@@ -410,9 +413,6 @@ var/global
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
-
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
 	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
@@ -423,14 +423,15 @@ var/global
 	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
 	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
 	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindslave = image('icons/mob/antag_overlays.dmi', icon_state = "mindslave")
+	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
+	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
 	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
 	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
 	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
 	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
 	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
 	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyslave = image('icons/mob/antag_overlays.dmi', icon_state = "spyslave")
+	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
 	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
 	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
 	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
@@ -505,6 +506,9 @@ var/global
 	)
 
 	hardRebootFilePath = "data/hard-reboot"
+
+	/// The map object used to display the AI station map
+	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])

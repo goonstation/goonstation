@@ -105,7 +105,7 @@
 /obj/machinery/portable_atmospherics/scrubber/return_air()
 	return air_contents
 
-/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
 		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
@@ -131,65 +131,51 @@
 
 
 /obj/machinery/portable_atmospherics/scrubber/attack_ai(var/mob/user as mob)
-	if(!src.connected_port && get_dist(src, user) > 7)
+	if(!src.connected_port && GET_DIST(src, user) > 7)
 		return
 	return src.Attackhand(user)
 
-/obj/machinery/portable_atmospherics/scrubber/attack_hand(var/mob/user as mob)
+/obj/machinery/portable_atmospherics/scrubber/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "PortableScrubber", name)
+		ui.open()
 
-	src.add_dialog(user)
-	var/holding_text
+/obj/machinery/portable_atmospherics/scrubber/ui_data(mob/user)
+	. = list(
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"on" = src.on,
+		"connected" = !!src.connected_port,
+		"inletFlow" = src.inlet_flow
+	)
 
-	if(holding)
-		holding_text = {"<BR><B>Tank Pressure</B>: [MIXTURE_PRESSURE(holding.air_contents)] KPa<BR>
-<A href='?src=\ref[src];remove_tank=1'>Remove Tank</A><BR>
-"}
-	var/output_text = {"<TT><B>[name]</B><BR>
-Pressure: [MIXTURE_PRESSURE(air_contents)] KPa<BR>
-Port Status: [(connected_port)?("Connected"):("Disconnected")]
-[holding_text]
-<BR>
-Power Switch: <A href='?src=\ref[src];power=1'>[on?("On"):("Off")]</A><BR>
-Inlet flow: <A href='?src=\ref[src];volume_adj=-10'>-</A> <A href='?src=\ref[src];volume_adj=-1'>-</A> <A href='?src=\ref[src];volume_set=1'>[inlet_flow]</A>% <A href='?src=\ref[src];volume_adj=1'>+</A> <A href='?src=\ref[src];volume_adj=10'>+</A><BR>
-<HR>
-<A href='?action=mach_close&window=scrubber'>Close</A><BR>
-"}
+	.["holding"] = isnull(holding) ? null : list(
+		"name" = src.holding.name,
+		"pressure" = MIXTURE_PRESSURE(src.holding.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
 
-	user.Browse(output_text, "window=scrubber;size=600x300")
-	onclose(user, "scrubber")
-	return
+/obj/machinery/portable_atmospherics/scrubber/ui_static_data(mob/user)
+	. = list(
+		"minFlow" = 0,
+		"maxFlow" = 100,
+		"maxPressure" = src.maximum_pressure
+	)
 
-/obj/machinery/portable_atmospherics/scrubber/Topic(href, href_list)
-	if(..())
+/obj/machinery/portable_atmospherics/scrubber/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(.)
 		return
-	if (usr.stat || usr.restrained())
-		return
-
-	if (((get_dist(src, usr) <= 1) && istype(src.loc, /turf)))
-		src.add_dialog(usr)
-
-		if(href_list["power"])
-			on = !on
-
-		if (href_list["remove_tank"])
-			if(holding)
-				holding.set_loc(loc)
-				usr.put_in_hand_or_eject(holding) // try to eject it into the users hand, if we can
-				holding = null
-
-		if (href_list["volume_adj"])
-			var/diff = text2num_safe(href_list["volume_adj"])
-			inlet_flow = clamp(inlet_flow+diff, 0, 100)
-
-		else if (href_list["volume_set"])
-			var/change = input(usr,"Target inlet flow (0-[100]):","Enter target inlet flow",inlet_flow) as num
-			if(!isnum(change)) return
-			inlet_flow = clamp(change, 0, 100)
-
-		src.updateUsrDialog()
-		src.add_fingerprint(usr)
-		UpdateIcon()
-	else
-		usr.Browse(null, "window=scrubber")
-		return
-	return
+	switch(action)
+		if("toggle-power")
+			src.on = !src.on
+			src.UpdateIcon()
+			. = TRUE
+		if("set-inlet-flow")
+			var/new_inlet_flow = params["inletFlow"]
+			if(isnum(new_inlet_flow))
+				src.inlet_flow = clamp(new_inlet_flow, 0, 100)
+				. = TRUE
+		if("eject-tank")
+			src.eject_tank()
+			. = TRUE

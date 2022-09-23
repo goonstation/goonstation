@@ -21,13 +21,13 @@
 			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 			if(record)
 				var/criminal = record["criminal"]
-				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released")
+				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
 					arrestState = criminal
 			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
 				arrestState = "*Arrest*"
 
 			if (arrestState != "*Arrest*") // Contraband overrides non-arrest statuses, now check for contraband
-				if (locate(/obj/item/implant/antirev) in H.implant)
+				if (locate(/obj/item/implant/counterrev) in H.implant)
 					if (ticker.mode && ticker.mode.type == /datum/game_mode/revolution)
 						var/datum/game_mode/revolution/R = ticker.mode
 						if (H.mind && H.mind.special_role == ROLE_HEAD_REV)

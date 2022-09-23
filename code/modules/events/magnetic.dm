@@ -2,6 +2,7 @@
 	name = "Bio-Magnetic Field"
 	centcom_headline = "Bio-Magnetic Field"
 	centcom_message = {"Strong bio-magnetic fields have been detected manifesting on the station. Personnel are advised to avoid anybody charged with the opposite magnetic charge. The fields should dissipate within a few minutes."}
+	centcom_origin = ALERT_ANOMALY
 	var/list/positive_mobs = list()
 	var/list/negative_mobs = list()
 	var/list/eligible_mobs = list()

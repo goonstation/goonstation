@@ -25,13 +25,13 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M)
 					M = holder.my_atom
+				..()
 				if (!isliving(M) || !ispath(disease))
 					return
 				if (src.volume < minimum_to_infect)
 					return
 				var/mob/living/L = M
 				L.contract_disease(disease, null, null, 1)
-				..()
 
 		disease/rainbow_fluid // Clowning Around
 			name = "rainbow fluid"
@@ -288,6 +288,11 @@ datum
 			random_chem_blacklisted = 1
 			disease = /datum/ailment/disease/necrotic_degeneration
 
+			infectious
+				name = "concentrated necrovirus"
+				id = "necrovirus_infectious"
+				disease = /datum/ailment/disease/necrotic_degeneration/can_infect_more
+
 		disease/viral_curative // Panacaea
 			name = "viral curative"
 			id = "viral curative"
@@ -311,6 +316,22 @@ datum
 			transparency = 10
 			penetrates_skin = 1
 			disease = /datum/ailment/disease/tissue_necrosis
+
+		disease/rat_plague // Rat Plague
+			name = "rat spit"
+			id = "rat_spit"
+			description = "The spit of a disease rat. Contains a whole bunch of known and unknown disease."
+			reagent_state = LIQUID
+			depletion_rate = 0.4
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/rat_plague
+
+			on_mob_life(mob/M, mult)
+				M.take_toxin_damage(1.5 * mult)
+				. = ..()
 
 		disease/plague // Space Plague
 			name = "rat venom"
@@ -474,6 +495,17 @@ datum
 			fluid_b = 120
 			transparency = 255
 
+		disease/leprosybacteria
+			name = "mycobacterium leprae"
+			id = "mycobacterium leprae"
+			description = "A bacterial strain that is known to cause leprosy in humans."
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/leprosy
+
 		// Marquesas' one stop pathology shop
 		blood/pathogen
 			name = "pathogen"
@@ -496,7 +528,7 @@ datum
 				// this is mainly so puddles from the sweating symptom can infect
 				for (var/uid in src.pathogens)
 					var/datum/pathogen/P = src.pathogens[uid]
-					logTheThing("pathology", M, null, "is splashed with [src] containing pathogen [P].")
+					logTheThing(LOG_PATHOLOGY, M, "is splashed with [src] containing pathogen [P].")
 					if(istype(M, /mob/living/carbon/human))
 						var/mob/living/carbon/human/H = M
 						if(prob(100-H.get_disease_protection()))

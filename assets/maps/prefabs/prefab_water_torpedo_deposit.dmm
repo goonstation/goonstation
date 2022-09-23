@@ -71,7 +71,7 @@
 /turf/variableTurf/clear,
 /area/noGenerate)
 "il" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/storage/pill_bottle/cyberpunk,
 /turf/variableTurf/clear,
 /area/noGenerate)

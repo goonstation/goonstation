@@ -9,9 +9,9 @@
 	layer = 2
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun
-	var/success_sound = "sound/machines/chime.ogg"
+	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
 
 	var/weapon_access = access_carrypermit
@@ -28,11 +28,13 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-	Crossed( atom/movable/O )
-		if(isliving(O) && !isintangible(O))
-			do_scan(O)
-		if (istype(O,/obj/item) && (!emagged))
-			do_scan_item(O)
+	Crossed(atom/movable/AM)
+		if(isliving(AM) && !isintangible(AM))
+			src.do_scan(AM)
+		else if (isobserver(AM) && prob(1))
+			src.do_scan(AM)
+		else if (istype(AM, /obj/item) && (!src.emagged))
+			src.do_scan_item(AM)
 		return ..()
 
 	process()
@@ -42,7 +44,7 @@
 		else
 			icon_state = "scanner_on"
 
-	attackby(obj/item/W as obj, mob/user as mob) //If we get emagged...
+	attackby(obj/item/W, mob/user) //If we get emagged...
 		if (istype(W, /obj/item/card/emag) && (!emagged))
 			src.add_fingerprint(user)
 			emagged++

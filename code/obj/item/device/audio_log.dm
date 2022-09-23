@@ -160,7 +160,7 @@
 		desc = "A wall-mounted audio log device."
 		max_lines = 30
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			return attack_self(user)
 
 		updateSelfDialog()
@@ -170,7 +170,7 @@
 		..()
 		if (user.stat || user.restrained() || user.lying)
 			return
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || get_dist(src, user) <= 1 && istype(src.loc, /turf)))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
 			src.add_dialog(user)
 
 			var/dat = "<TT><b>Audio Logger</b><br>"
@@ -194,7 +194,7 @@
 
 		return
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/audio_tape))
 			if (src.tape)
 				boutput(user, "There is already a tape loaded.")
@@ -286,6 +286,9 @@
 		var/speaker_name = speaker.real_name
 		if (real_name)
 			speaker_name = real_name
+
+		if (speaker.vdisfigured)
+			speaker_name = "Unknown"
 
 		if(ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
 			if(speaker:wear_id)

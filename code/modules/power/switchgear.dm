@@ -107,7 +107,7 @@
 
 /obj/machinery/power/switchgear/Topic(href, href_list)
 	..()
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["set_main"] )
 			var/value = text2num_safe(href_list["set_main"])
 			mainsupply = value

@@ -41,7 +41,7 @@
 
 		. = ..()
 		SPAWN(0)
-			if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
+			if (tgui_alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", list("Yes", "No")) != "Yes")
 				return
 
 			ghostdrone_candidates += M
@@ -60,7 +60,9 @@
 					if(istype(D))
 						D.visible_message("[src] scoops up [D]!",\
 						"You feel yourself being torn away from the afterlife and into [src]!")
-						droneize(D, 1)
+						if(!droneize(D, TRUE))
+							D.visible_message("There are no ghost drones available! Your soul is added back to the queue.")
+							ghostdrone_candidates += M
 
 		else
 			src.icon_state = "ghostcatcher0"
@@ -200,7 +202,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (prob(40))
 				SPAWN(0)
 					src.shake(rand(4,6))
-				playsound(src, pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
+				playsound(src, pick('sound/impact_sounds/Wood_Hit_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
 				if (!sound_list.len)
@@ -257,6 +259,9 @@ var/global/list/ghostdrone_candidates = list()
 			return
 
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 0
 			C.setdir()
 
@@ -269,11 +274,14 @@ var/global/list/ghostdrone_candidates = list()
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 1
 			C.setdir()
 
@@ -382,6 +390,9 @@ var/global/list/ghostdrone_candidates = list()
 	proc/set_conveyors(var/set_active = 0)
 		src.conveyors_active = set_active
 		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = set_active
 			C.setdir()
 

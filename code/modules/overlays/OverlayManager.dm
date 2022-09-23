@@ -344,6 +344,18 @@
 	special_blend = BLEND_SUBTRACT
 
 
+/datum/overlayComposition/weldingmask
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
+		dither.d_icon_state = "weldingmask"
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		definitions.Add(dither)
+
+		return ..()
+
+
 // temporary blindness overlay until the other one is fixed
 /datum/overlayComposition/limited_sight
 	New()
@@ -440,7 +452,7 @@
 		flockmindcircuit.d_icon = 'icons/effects/overlays/flockmindcircuit.dmi'
 		flockmindcircuit.d_icon_state = "flockmindcircuit"
 		flockmindcircuit.d_blend_mode = BLEND_DEFAULT
-		flockmindcircuit.d_alpha = 192
+		flockmindcircuit.d_alpha = 140
 		definitions.Add(flockmindcircuit)
 
 		return ..()

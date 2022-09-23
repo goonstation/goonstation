@@ -15,12 +15,12 @@ TYPEINFO(/datum/component/consume)
 
 TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 	initialization_args = list(
-		ARG_INFO("can_eat_heads", "num", "If heads are also valid food (bool)", FALSE)
+		ARG_INFO("can_eat_heads", DATA_INPUT_BOOL, "If heads are also valid food", FALSE)
 	)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
 	src.can_eat_heads = can_eat_heads
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PRE), .proc/is_it_organs)
+	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED_PRE), .proc/is_it_organs)
 
 /datum/component/consume/can_eat_inedible_organs/proc/is_it_organs(var/mob/M, var/mob/user, var/obj/item/I)
 	if (istype(I, /obj/item/skull) || (istype(I, /obj/item/organ/head) && can_eat_heads)) // skulls, heads
@@ -29,7 +29,7 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 		return 0
 
 /datum/component/consume/can_eat_inedible_organs/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED_PRE)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE)
 	. = ..()
 
 /datum/component/consume/organpoints
@@ -38,12 +38,12 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 
 TYPEINFO(/datum/component/consume/organpoints)
 	initialization_args = list(
-		ARG_INFO("target_abilityholder", "ref", "Abilityholder to handle points for")
+		ARG_INFO("target_abilityholder", DATA_INPUT_REF, "Abilityholder to handle points for")
 	)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	src.target_abilityholder = target_abilityholder
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_points)
+	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_points)
 
 /datum/component/consume/organpoints/proc/eat_organ_get_points(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !ishuman(M) || !user)
@@ -81,7 +81,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 					boutput(L, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 					return
 				if (/obj/item/skull/peculiar)
-					playsound(L, "sound/misc/meat_plop.ogg", 100, 1)
+					playsound(L, 'sound/misc/meat_plop.ogg', 100, 1)
 					L.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					L.emote("scream")
 					L.changeStatus("paralysis", 10 SECONDS)
@@ -145,7 +145,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 		L.abilityHolder.addPoints(add_these_points, target_abilityholder)
 
 /datum/component/consume/organpoints/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED)
 	. = ..()
 
 
@@ -156,12 +156,12 @@ TYPEINFO(/datum/component/consume/organpoints)
 
 TYPEINFO(/datum/component/consume/organheal)
 	initialization_args = list(
-		ARG_INFO("mod_mult", "num", "healing multiplier", 1)
+		ARG_INFO("mod_mult", DATA_INPUT_NUM, "healing multiplier", 1)
 	)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
 	src.mod_mult = mod_mult
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED), .proc/eat_organ_get_heal)
+	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_heal)
 
 /datum/component/consume/organheal/proc/eat_organ_get_heal(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !user)
@@ -195,7 +195,7 @@ TYPEINFO(/datum/component/consume/organheal)
 				if (/obj/item/skull/strange)
 					boutput(M, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 				if (/obj/item/skull/peculiar)
-					playsound(M, "sound/misc/meat_plop.ogg", 100, 1)
+					playsound(M, 'sound/misc/meat_plop.ogg', 100, 1)
 					M.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					M.emote("scream")
 					M.changeStatus("paralysis", 10 SECONDS)
@@ -254,7 +254,7 @@ TYPEINFO(/datum/component/consume/organheal)
 
 
 /datum/component/consume/organheal/UnregisterFromParent()
-	UnregisterSignal(parent, COMSIG_ITEM_CONSUMED)
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED)
 	. = ..()
 
 
@@ -265,7 +265,7 @@ TYPEINFO(/datum/component/consume/organheal)
 
 TYPEINFO(/datum/component/consume/food_effects)
 	initialization_args = list(
-		ARG_INFO("status_effects", "list", "List of status effects to apply when eaten")
+		ARG_INFO("status_effects", DATA_INPUT_LIST_BUILD, "List of status effects to apply when eaten")
 	)
 /datum/component/consume/food_effects/Initialize(var/list/_status_effects)
 	..()

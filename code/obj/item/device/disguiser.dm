@@ -71,7 +71,7 @@
 				number_of_devices += D
 		if (number_of_devices.len > 0)
 			return 0
-		RegisterSignal(user, COMSIG_DISGUISER_DEACTIVATE, .proc/deactivate)
+		RegisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE, .proc/deactivate)
 		src.active = 1
 		src.icon_state = "enshield1"
 		src.change_appearance(user, 0)
@@ -84,7 +84,7 @@
 		return 1
 
 	proc/deactivate(mob/user as mob, var/voluntary)
-		UnregisterSignal(user, COMSIG_DISGUISER_DEACTIVATE)
+		UnregisterSignal(user, COMSIG_MOB_DISGUISER_DEACTIVATE)
 		if(src.active && istype(user))
 			elecflash(src)
 			if (!voluntary)

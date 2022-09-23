@@ -26,15 +26,6 @@
 	proc/apply_to_obj(var/obj/O)
 		return
 
-/datum/material_recipe/spacelag
-	name = "spacelag"
-	result_id = "spacelag"
-	result_item = /obj/item/material_piece/spacelag
-
-	validate(var/datum/material/M)
-		if(M.hasProperty("stability") && M.getProperty("stability") <= 1) return 1
-		else return 0
-
 /datum/material_recipe/dyneema
 	name = "dyneema"
 	result_id = "dyneema"

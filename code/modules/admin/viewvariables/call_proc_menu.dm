@@ -26,7 +26,7 @@ proc/generate_procs_by_type()
 			LAGCHECK(LAG_MED)
 		subaddr++
 	for(var/type in procs_by_type)
-		procs_by_type[type] = sortList(procs_by_type[type])
+		procs_by_type[type] = sortList(procs_by_type[type], /proc/cmp_text_asc)
 		LAGCHECK(LAG_MED)
 
 /*

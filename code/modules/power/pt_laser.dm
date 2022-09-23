@@ -220,19 +220,21 @@
 /obj/machinery/power/pt_laser/proc/get_barrel_turf()
 	var/x_off = 0
 	var/y_off = 0
+	var/bw = round(bound_width / world.icon_size)
+	var/bh = round(bound_width / world.icon_size)
 	switch(dir)
 		if(1)
-			x_off = 1
-			y_off = 2
+			x_off = round((bw - 1) / 2)
+			y_off = bh - 1
 		if(2)
-			x_off = 1
+			x_off = round((bw - 1) / 2)
 			y_off = 0
 		if(4)
-			x_off = 2
-			y_off = 1
+			x_off = bw - 1
+			y_off = round((bh - 1) / 2)
 		if(8)
 			x_off = 0
-			y_off = 1
+			y_off = round((bh - 1) / 2)
 
 	var/turf/T = locate(src.x + x_off,src.y + y_off,src.z)
 
@@ -241,19 +243,21 @@
 /obj/machinery/power/pt_laser/proc/get_rear_turf()
 	var/x_off = 0
 	var/y_off = 0
+	var/bw = round(bound_width / world.icon_size)
+	var/bh = round(bound_width / world.icon_size)
 	switch(dir)
 		if(1)
-			x_off = 1
+			x_off = round((bw - 1) / 2)
 			y_off = 0
 		if(2)
-			x_off = 1
-			y_off = 2
+			x_off = round((bw - 1) / 2)
+			y_off = bh - 1
 		if(4)
 			x_off = 0
-			y_off = 1
+			y_off = round((bh - 1) / 2)
 		if(8)
-			x_off = 2
-			y_off = 1
+			x_off = bw - 1
+			y_off = round((bh - 1) / 2)
 
 	var/turf/T = locate(src.x + x_off,src.y + y_off,src.z)
 
@@ -266,16 +270,22 @@
 	firing = 1
 	UpdateIcon(1)
 
-	for(var/dist = 0, dist < range, dist += 1) // creates each field tile
-		T = get_step(T, dir)
+	var/scale_factor = round(bound_width / 96)
+	for(var/dist = 0, dist < range / scale_factor, dist += scale_factor) // creates each field tile
+		for(var/i in 1 to (dist == 0 ? 1 : scale_factor))
+			T = get_step(T, dir)
 		if(!T) break //edge of the map
 		var/obj/lpt_laser/laser = new/obj/lpt_laser(T)
-		laser.set_dir(dir)
+		laser.bound_width *= scale_factor
+		laser.bound_height *= scale_factor
+		laser.Scale(scale_factor, scale_factor)
+		laser.Translate((scale_factor - 1) * world.icon_size / 2, (scale_factor - 1) * world.icon_size / 2)
+		laser.set_dir(src.dir)
 		laser.power = round(abs(output)*PTLEFFICIENCY)
 		laser.source = src
 		laser.active = 0
 		src.laser_parts += laser
-		src.laser_turfs += T
+		src.laser_turfs += laser.locs
 
 	melt_blocking_objects()
 	update_laser()
@@ -334,7 +344,7 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor))
+		if (istype(O, /obj/machinery/door/poddoor) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
@@ -351,7 +361,7 @@
 
 	for(var/obj/lpt_laser/L in laser_parts)
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		L.alpha = clamp(((log(10, max(1,L.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -447,13 +457,13 @@
 
 /obj/machinery/power/pt_laser/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				status |= BROKEN
 				UpdateIcon()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				status |= BROKEN
 				UpdateIcon()
@@ -529,7 +539,7 @@
 		if(burn_living(L,power) && source) //returns 1 if they were gibbed
 			source.affecting_mobs -= L
 
-/obj/proc/burn_living(var/mob/living/L,var/power = 0)
+/obj/proc/burn_living(var/mob/living/L, var/power = 0)
 	if(power < 10) return
 	if(isintangible(L)) return // somehow flocktraces are still getting destroyed by the laser. maybe this will fix it
 
@@ -576,11 +586,13 @@
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
+			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
+			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
 			L.blowthefuckup(min(1+round(power/1e12),20),0)
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 

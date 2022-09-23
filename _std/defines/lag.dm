@@ -41,7 +41,7 @@
 /// max value ticklag can be
 #define OVERLOADED_WORLD_TICKLAG 1.4
 /// where to start ticklag if many players present
-#define SEMIOVERLOADED_WORLD_TICKLAG 1.0
+#define SEMIOVERLOADED_WORLD_TICKLAG 1
 /// how ticklag much to increase by when appropriate
 #define TICKLAG_DILATION_INC 0.2
 /// how much to decrease by when appropriate //MBCX I DONT KNOW WHY BUT MOST VALUES CAUSE ROUNDING ERRORS, ITS VERY IMPORTANT THAT THIS REMAINS 0.2 FIOR NOW
@@ -80,12 +80,10 @@
 #define SEMIOVERLOAD_PLAYERCOUNT 85
 /// when pcount is above this number on game load, dont generate lighting surrounding the station because it lags the map to heck
 #define OSHAN_LIGHT_OVERLOAD 18
-/// whenn pcount is <= this number, speed up Life() processing a bit
-#define FAST_LIFE_PLAYERCOUNT 25
 /// whenn pcount is >= this number, slow Life() processing a bit
-#define SLOW_LIFE_PLAYERCOUNT 65
+#define SLOW_LIFE_PLAYERCOUNT 85
 /// whenn pcount is >= this number, slow Life() processing a lot
-#define SLOWEST_LIFE_PLAYERCOUNT 85
+#define SLOWEST_LIFE_PLAYERCOUNT 120
 
 //Define clientside tick lag seperately from world.tick_lag
 //'cause smoothness looks good.

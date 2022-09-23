@@ -14,10 +14,23 @@ change the direction of created objects.<br>
 	icon_state = "buildmode2"
 	var/objpath = null
 	var/cinematic = "Blink"
-	var/matrix/mtx = matrix()
+	var/tmp/matrix/mtx = matrix()
+	var/static/list/spawn_types = list(
+		"Telepad", \
+		"Blink", \
+		"Supplydrop", \
+		"Supplydrop (no lootbox)", \
+		"Lethal Supplydrop", \
+		"Lethal Supplydrop (no lootbox)", \
+		"Spawn Heavenly", \
+		"Spawn Demonically", \
+		"Missile", \
+		"Pop in", \
+		"Beam", \
+		"None")
 	click_mode_right(var/ctrl, var/alt, var/shift)
 		if(ctrl)
-			cinematic = (input("Cinematic spawn mode") as null|anything in list("Telepad", "Blink", "Supplydrop", "Supplydrop (no lootbox)", "Lethal Supplydrop", "Lethal Supplydrop (no lootbox)", "Spawn Heavenly", "Spawn Demonically", "Missile", "None")) || cinematic
+			cinematic = (input("Cinematic spawn mode") as null|anything in spawn_types) || cinematic
 			return
 		if (!objpath)
 			objpath = /obj/critter/domestic_bee/heisenbee
@@ -134,6 +147,23 @@ change the direction of created objects.<br>
 					if (ispath(objpath, /atom/movable))
 						var/atom/movable/A = new objpath(T)
 						demonic_spawn(A)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Pop in")
+					if (ispath(objpath, /atom/movable))
+						var/atom/movable/A = new objpath(T)
+						A.Scale(0,0)
+						animate(A, transform = matrix(), time = 1 SECOND, easing = ELASTIC_EASING)
+					else if(ispath(objpath, /turf))
+						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
+					else
+						new objpath(T)
+				if("Beam")
+					if(ispath(objpath, /atom/movable))
+						var/atom/movable/AM = new objpath(T)
+						spawn_beam(AM)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else

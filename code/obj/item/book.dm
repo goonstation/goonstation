@@ -19,7 +19,7 @@ Custom Books
 	burn_point = 400
 	burn_output = 1100
 	burn_possible = 1
-	health = 30
+	health = 4
 	//
 
 	stamina_damage = 2
@@ -310,6 +310,12 @@ Custom Books
 	icon_state = "bookcc"
 	file_path = "strings/books/DNDrulebook.txt"
 
+/obj/item/paper/book/from_file/MONOrules
+	name = "MONO card game rules"
+	desc = "A pamphlet describing the rules of MONO, the family-friendly and legally distinct card game for all ages!"
+	icon_state = "paper"
+	file_path = "strings/books/MONOrules.txt"
+
 /******************** OTHER BOOKS ********************/
 /obj/item/diary
 	name = "Beepsky's private journal"
@@ -383,7 +389,7 @@ Custom Books
 	icon_state = "bookadps"
 	file_path = "strings/books/deep_blue_sea.txt"
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
@@ -427,6 +433,20 @@ Custom Books
 	name = "A SYNDIE'S GUIDE TO DOING YOUR FUCKING JOB"
 	icon_state = "syndiebook"
 	file_path = "strings/books/syndies_guide.txt"
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+	stolen //crew obtainable version
+
+		New()
+			..()
+			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
@@ -498,3 +518,10 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
 		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+
+/obj/item/paper/spaceodyssey
+	name = "strange printout"
+	info = {"<tt>Daisy, Daisy,<BR/>
+give me your answer do.<BR/>
+I'm half crazy,<BR/>
+all for the love of you.</tt>"}

@@ -21,7 +21,7 @@
 	var/flushing = 0	// true if flushing in progress
 
 	// Please keep synchronizied with these lists for easy map changes:
-	// /obj/storage/secure/closet/brig/automatic (secure_closets.dm)
+	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
 	// /obj/machinery/door_timer (door_timer.dm)
 	// /obj/machinery/door/window/brigdoor (window.dm)
 	// /obj/machinery/flasher (flasher.dm)
@@ -151,7 +151,7 @@
 					openup()
 
 	MouseDrop_T(mob/target, mob/user)
-		if (!istype(target) || target.buckled || get_dist(user, src) > 1 || get_dist(user, target) > 1 || is_incapacitated(user) || isAI(user))
+		if (!istype(target) || target.buckled || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 			return
 
 		if(open != 1)
@@ -194,7 +194,7 @@
 		boutput(user, "<span class='alert'>You cannot interface with this device.</span>")
 
 	// human interact with machine
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (open != 1)
 			return
@@ -228,6 +228,10 @@
 					boutput(M, "You feel your handcuffs being removed.")
 					M.handcuffs.drop_handcuffs(M)
 
+				//Might as well set their security record to "released"
+				var/datum/db_record/R = data_core.security.find_record("name", M.name)
+				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
+					R["criminal"] = "Released"
 	// timed process
 	// charge the gas reservoir and perform flush if ready
 	process()
@@ -261,7 +265,7 @@
 		air_contents.zero() // empty gas
 
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -308,7 +312,7 @@
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 

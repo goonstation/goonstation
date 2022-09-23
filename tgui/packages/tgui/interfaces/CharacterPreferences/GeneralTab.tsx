@@ -96,6 +96,15 @@ export const GeneralTab = (_props, context) => {
           </LabeledList.Item>
         </LabeledList>
       </Section>
+      <Section title="Other names">
+        <LabeledList>
+          <LabeledList.Item label="Preferred Cyborg Name">
+            <Button onClick={() => act('update-robotName')} color={data.robotName ? 'default' : 'grey'}>
+              {data.robotName ? data.robotName : <Box italic>None</Box>}
+            </Button>
+          </LabeledList.Item>
+        </LabeledList>
+      </Section>
       <Section title="PDA">
         <LabeledList>
           <LabeledList.Item label="Ringtone">

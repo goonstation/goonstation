@@ -14,7 +14,7 @@
 	stage_prob = 5
 	var/robo_restart = 0
 
-/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 

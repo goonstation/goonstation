@@ -261,9 +261,8 @@
 						boutput(master, "<span class='notice'>There is nothing to pull.</span>")
 					else
 						to_pull = tgui_input_list(master, "Which do you want to pull? You can also Ctrl+Click on things to pull them.", "Which thing to pull?", pullable)
-					if(!isnull(to_pull) && GET_DIST(master, to_pull) <= 1)
-						usr = master // gross
-						to_pull.pull()
+					if(!isnull(to_pull) && BOUNDS_DIST(master, to_pull) == 0)
+						to_pull.pull(master)
 
 			if ("throw")
 				var/icon_y = text2num(params["icon-y"])
@@ -376,7 +375,8 @@
 
 /// updates bleeding hud element
 /datum/hud/critter/proc/update_blood_indicator()
-	if (!src.bleeding || isdead(src.master))
+	if (!src.bleeding) return //doesn't have a hud element to update
+	if (isdead(src.master))
 		src.bleeding.icon_state = "blood0"
 		src.bleeding.tooltipTheme = "healthDam healthDam0"
 		return

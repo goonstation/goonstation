@@ -12,7 +12,7 @@
 					src.my_ship = A
 					return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/link_html = "<br>"
 		var/found = 0
 
@@ -45,7 +45,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+		if(BOUNDS_DIST(usr, src) > 0 || usr.z != src.z) return
 
 		if(href_list["send"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["send"])
@@ -89,7 +89,7 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	w_class = W_CLASS_SMALL
 	var/ship_id = "artemis"
 	var/obj/machinery/lrteleporter/planetary_teleporter/my_teleporter = null
@@ -137,7 +137,7 @@
 
 	Topic(href, href_list)
 		if(busy) return
-		if(get_dist(usr, src) != 0) return
+		if(GET_DIST(usr, src) != 0) return
 
 		if(href_list["recieve"])
 			var/obj/landmark/destination_landmark/L = locate(href_list["recieve"])

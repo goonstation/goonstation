@@ -1,8 +1,8 @@
-/*****************************************
+/*
 *
 * FUNCTION AND VAR DECLARATIONS
 *
-******************************************/
+*/
 
 var triggerError = attachErrorHandler('chatDebug', true);
 
@@ -24,7 +24,7 @@ var opts = {
     'priorChatHeight': 0, //Thing for height-resizing detection
     'restarting': false, //Is the round restarting?
     'volume': 0.5,
-    'lastMessage': '', //the last message sent to chat
+    'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
 	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
@@ -181,6 +181,12 @@ function output(message, group, skipNonEssential, forceScroll) {
     if (typeof group === 'undefined') {
         group = '';
     }
+    if (typeof skipNonEssential === 'string' || skipNonEssential instanceof String) {
+        skipNonEssential = parseInt(skipNonEssential);
+    }
+    if (typeof forceScroll === 'string' || forceScroll instanceof String) {
+        forceScroll = parseInt(forceScroll);
+    }
 
 
     //Stuff we do along with appending a message
@@ -308,7 +314,7 @@ function outputBatch(messages) {
     var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance;
 
     for (var i = 0; i < list.length; i++) {
-        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll);
+        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll || list[i].forceScroll);
     }
 }
 
@@ -489,7 +495,7 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume * 0.3; /*   Added the multiplier here because youtube is consistently   */
+                    music.volume = data.volume * 0.5; /*   Added the multiplier here because youtube is consistently   */
                     if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }

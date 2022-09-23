@@ -101,21 +101,22 @@ Contents:
 	sound_loop = 'sound/ambience/dojo/dojoambi.ogg'
 	sound_loop_vol = 50
 
+/area/dojo/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	New()
-		..()
-		SPAWN(1 SECOND)
-			process()
+/area/dojo/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	proc/process()
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(rand(125,225))
-			if (current_state == GAME_STATE_PLAYING)
-				if(!played_fx_2 && prob(10))
-					sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg','sound/ambience/nature/Biodome_Birds2.ogg','sound/ambience/nature/Biodome_Bugs.ogg')
-					for(var/mob/M in src)
-						if (M.client)
-							M.client.playAmbience(src, AMBIENCE_FX_2, 30)
+/area/dojo/area_process()
+	if(prob(15)) // originally 12-22s
+		src.sound_fx_2 = pick('sound/ambience/nature/Biodome_Birds1.ogg',\
+			'sound/ambience/nature/Biodome_Birds2.ogg',\
+			'sound/ambience/nature/Biodome_Bugs.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 30)
 
 // Mobs
 
@@ -136,12 +137,13 @@ Contents:
 	limit = 0
 	wages = 0
 //	slot_belt = /obj/item/katana_sheath
-	slot_jump = /obj/item/clothing/under/gimmick/hakama/random
-	slot_head = /obj/item/clothing/head/bandana/random_color
-	slot_foot = /obj/item/clothing/shoes/sandal
-	slot_rhan = /obj/item/katana/self_destructing
-	slot_lhan = /obj/item/dojohammer
-	slot_back = null
+	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
+	slot_head = list(/obj/item/clothing/head/bandana/random_color)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
+	slot_rhan = null
+	slot_lhan = list(/obj/item/dojohammer)
+	slot_belt = list(/obj/item/katana_sheath/reverse)
+	slot_back = list(/obj/item/storage/backpack/randoseru)
 	slot_card = null
 	slot_ears = null
 
@@ -190,7 +192,7 @@ Contents:
 	New()
 		..()
 
-	attackby(obj/item/H as obj, mob/user as mob)
+	attackby(obj/item/H, mob/user)
 		if (istype(H, /obj/item/dojohammer))
 			var/obj/table/anvil/A = locate() in get_turf(src)
 			if(A)
@@ -281,7 +283,7 @@ Contents:
 
 	onUpdate()
 		..()
-		if(get_dist(user, target) > 1 || get_dist(A, target) > 0 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || GET_DIST(A, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		target.temperature -= 5
@@ -313,14 +315,14 @@ Contents:
 			outline:color = target.color
 		icon_image.color =  target.color
 		border.UpdateOverlays(icon_image, "action_icon")
-		if(get_dist(user, target) > 1 || user == null || target == null)
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
 		return
 
 	onEnd()
-		if(get_dist(user, target) > 1 || user == null || target == null || !user.find_in_hand(H))
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(H))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -468,19 +470,19 @@ Contents:
 			K = pick(src.contents)
 			if(istype(K))
 				K.set_real_color()
-			usr.put_in_hand_or_eject(K)
+			user.put_in_hand_or_eject(K)
 
 	process(mult)
 		for(var/obj/O in contents)
 			if(istype(O,/obj/item/unfinished_katana))
 				var/obj/item/unfinished_katana/K = O
 				K.temperature = lerp(K.temperature, src.temperature, 0.3)
-				if(K.temperature >= src.temperature * 0.90)
+				if(K.temperature >= src.temperature * 0.9)
 					effect.spark_up()
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 30 && R.material.getProperty("hard") >= 15)
+					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -500,7 +502,7 @@ Contents:
 	parts_type = null
 	hulk_immune = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob, params)
+	attackby(obj/item/W, mob/user, params)
 		if (istype(W) && src.place_on(W, user, params))
 			return
 		else
@@ -519,7 +521,7 @@ Contents:
 		if(ON_COOLDOWN(src,"bellows", 2 SECOND))
 			boutput(user,"The bellows are still working...")
 		else
-			playsound(src, "sound/impact_sounds/Stone_Scrape_1.ogg", 40)
+			playsound(src, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40)
 			for(var/obj/machinery/dojo_tatara/T in orange(2))
 				src.visible_message("\The [src] breathe life into \the [T] causing it errupt in flames.", blind_message="A loud roar of air causes a fire to errupt.")
 				T.temperature = clamp(T.temperature + 150, initial(T.temperature)-150, T0C+2500)
@@ -684,14 +686,21 @@ Contents:
 // Turfs
 
 // -Walls
-
+TYPEINFO(/turf/unsimulated/wall/auto/sengoku)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
 	icon = 'icons/turf/walls_sengoku.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/sengoku)
 
+
+TYPEINFO(/turf/unsimulated/wall/auto/paper)
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
+	. = ..()
+	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
 	icon = 'icons/turf/walls_paper.dmi'
-	connects_to = list(/turf/unsimulated/wall/auto/paper)
+
 
 /turf/unsimulated/wall/sengoku_tall
 	icon = 'icons/turf/walls_sengoku.dmi'
@@ -704,8 +713,6 @@ Contents:
 	icon_state = "2"
 	can_be_auto = 0
 
-	find_icon_state()
-		return
 
 // -Floors
 

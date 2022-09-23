@@ -2,6 +2,7 @@
 	name = "Locker Entanglement"
 	centcom_headline = "Quantum Anomaly"
 	centcom_message = {"A quantum anomaly has been detected on station. Locker dimensional subspaces might have become unstable. Enter lockers at your own risk."}
+	centcom_origin = ALERT_ANOMALY
 	weight = 20
 	var/time = null
 

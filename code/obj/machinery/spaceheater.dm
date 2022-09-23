@@ -82,12 +82,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -100,7 +100,7 @@
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
 				src.remove_dialog(user)
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
@@ -109,7 +109,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -148,9 +148,9 @@
 
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -308,12 +308,12 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
@@ -330,7 +330,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -363,9 +363,9 @@
 			UpdateIcon()
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 

@@ -89,7 +89,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ambient_light = rgb(255 * 1.00, 255 * 1.00, 255 * 1.00)	// uhhhhhh
 #endif
 
-
+/area/centcom/gallery
+	name = "NT Art Gallery"
+	icon_state = "green"
 
 /area/centcom/offices
 	name = "NT Offices"
@@ -112,12 +114,21 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	atomicthumbs
 		ckey = ""
 		name = "Office of Atomicthumbs"
+	azrun
+		ckey = "azrun"
+		name = "Office of Azrun"
+	beejail
+		ckey = ""
+		name = "Bee Jail"
 	bubs
 		ckey = "insanoblan"
 		name = "Office of bubs"
 	burntcornmuffin
 		ckey = ""
 		name = "Office of BurntCornMuffin"
+	cal
+		ckey = "mexicat"
+		name = "Office of Cal"
 	cogwerks
 		ckey = "drcogwerks"
 		name = "Office of Cogwerks"
@@ -274,6 +285,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		sound_loop = 'sound/ambience/music/officebeats.ogg'
 		sound_loop_vol = 80
 		sound_group = "virva_office"
+	walpvrgis
+		ckey = "walpvrgis"
+		name = "Office of Walpvrgis"
 	wire
 		ckey = "wirewraith"
 		name = "Office of Wire"
@@ -561,6 +575,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 
 /area/centcom/offices/enakai
 	Entered(atom/movable/Obj,atom/OldLoc)
+		. = ..()
 		if (isliving(Obj))
 			var/mob/living/L = Obj
 			if (down_under_verification(L))		//The aussies are immune due to constant exposure
@@ -630,7 +645,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		L.density = TRUE
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, "sound/machines/ding.ogg", 50, 1)
+	playsound(clone, 'sound/machines/ding.ogg', 50, 1)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
