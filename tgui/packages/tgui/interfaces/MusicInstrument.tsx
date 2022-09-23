@@ -24,6 +24,8 @@ export const MusicInstrument = (_props, context) => {
   const [activeKeys, setActiveKeys] = useLocalState(context, 'keyboardActivekeys', {}); // new Array(notes.length)
   const [keyOffset, setKeyOffset] = useLocalState(context, 'keyOffset', 0);
 
+  const [mDebugIndex, setMDebugIndex] = useLocalState(context, 'debugIndex', 0);
+
   const setVolume = (value: number) => {
     act('set_volume', { value });
   };
@@ -66,7 +68,9 @@ export const MusicInstrument = (_props, context) => {
   };
 
   const getKeyboardIndex = (key: string) => {
-    return keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key) || -1;
+    const keyboardIndex = keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
+    if (keyboardIndex >= 0) return keyboardIndex;
+    return -1;
   };
 
   return (
@@ -75,6 +79,7 @@ export const MusicInstrument = (_props, context) => {
         onKeyUp={(ev) => {
           if (keybindToggle) {
             let index = getKeyboardIndex(ev.key);
+            setMDebugIndex(index);
             playNoteRelease(index);
           }
         }}
@@ -88,6 +93,7 @@ export const MusicInstrument = (_props, context) => {
             toggleKeybind();
           }
         }}>
+        <Box>Index: {mDebugIndex}</Box>
         <Box className="instrument__keyboardwrapper">
           <Box className="instrument__outerpanel">
             <Box className="instrument__speaker" />
