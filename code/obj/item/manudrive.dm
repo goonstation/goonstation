@@ -55,3 +55,9 @@
 		temp_recipe_string = list(/datum/manufacture/interdictor_frame,
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma)
+
+	cleaner_grenade //Let's janitors create more grenades after running out.
+		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
+		icon_state = "datadisk1"
+		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)
