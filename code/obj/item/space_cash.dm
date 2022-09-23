@@ -1,7 +1,6 @@
-
 /obj/item/spacecash
-	name = "1 credit"
-	real_name = "credit"
+	name = "1 frontier credit"
+	real_name = "frontier credit"
 	desc = "You gotta have money."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "cashgreen"
