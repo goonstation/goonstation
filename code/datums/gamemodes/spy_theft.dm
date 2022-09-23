@@ -155,9 +155,15 @@
 
 	var/randomizer = rand(0,6)
 	var/num_spies = 2 //minimum
+	var/num_wraiths = 0
+	var/token_wraith = 0
 
 	if (traitor_scaling)
 		num_spies = clamp(round((num_players + randomizer) / pop_divisor), 2, spies_possible)
+
+	if (num_spies > 4 && prob(10))
+		num_spies -= 1
+		num_wraiths = 1
 
 	var/list/possible_spies = get_possible_enemies(ROLE_SPY_THIEF, num_spies)
 
@@ -168,8 +174,11 @@
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
 			break
-		traitors += tplayer
-		token_players.Remove(tplayer)
+		if (num_wraiths && !(token_wraith))
+			add_token_wraith()
+		else
+			traitors += tplayer
+			token_players.Remove(tplayer)
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
@@ -179,11 +188,17 @@
 		spy.special_role = ROLE_SPY_THIEF
 		possible_spies.Remove(spy)
 
+	if (num_wraiths)
+		add_wraith()
+
 	return 1
 
 /datum/game_mode/spy_theft/post_setup()
 	var/objective_set_path = null
 	for(var/datum/mind/spy in traitors)
+		if (spy.special_role == ROLE_WRAITH)
+			generate_wraith_objectives(spy)
+
 		objective_set_path = null // Gotta reset this.
 
 		objective_set_path = pick(typesof(/datum/objective_set/spy_theft))
