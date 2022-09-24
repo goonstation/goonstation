@@ -2927,10 +2927,6 @@
 /obj/decal/poster/wallsign/chsl,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen)
-"ajb" = (
-/obj/machinery/space_heater,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "ajc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/northeast)
@@ -4397,9 +4393,6 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/firealarm{
-	pixel_y = 24
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ann" = (
@@ -4409,34 +4402,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
-"ano" = (
-/obj/rack,
-/obj/item/device/radio{
-	pixel_x = 7;
-	pixel_y = 4
-	},
-/obj/item/device/radio{
-	pixel_x = 10;
-	pixel_y = -1
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/item/device/light/flashlight{
-	pixel_x = -2;
-	pixel_y = -3
-	},
-/obj/item/crowbar,
-/obj/item/crowbar{
-	pixel_x = -3;
-	pixel_y = 2
-	},
-/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "anp" = (
@@ -5283,11 +5248,9 @@
 /area/station/maintenance/northeast)
 "apP" = (
 /obj/reagent_dispensers/foamtank,
-/obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "apQ" = (
-/obj/storage/closet/fire,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -51337,6 +51300,11 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"emU" = (
+/obj/storage/closet/fire,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "enX" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light/small/sticky{
@@ -51798,13 +51766,6 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/engine/hotloop)
-"eNU" = (
-/obj/machinery/light/worn{
-	dir = 8
-	},
-/obj/item/pen/fancy,
-/turf/simulated/floor/plating/damaged3,
-/area/station/maintenance/northeast)
 "eOj" = (
 /obj/machinery/computer/ordercomp,
 /obj/cable{
@@ -52412,11 +52373,6 @@
 	dir = 4
 	},
 /area/station/solar/west)
-"fEz" = (
-/obj/kitchenspike,
-/obj/decal/cleanable/blood/splatter,
-/turf/simulated/floor/plating/damaged1,
-/area/station/maintenance/northeast)
 "fEJ" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -52456,16 +52412,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/qm)
-"fFG" = (
-/obj/table/wood/round,
-/obj/item/clothing/mask/cigarette/dryjoint,
-/obj/item/reagent_containers/food/snacks/pickle/trash,
-/obj/random_item_spawner/junk/one,
-/obj/item/storage/pill_bottle/cyberpunk{
-	rand_pos = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "fFQ" = (
 /obj/disposalpipe/segment/ejection{
 	icon_state = "pipe-c"
@@ -52656,15 +52602,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
-"fRs" = (
-/obj/table/auto,
-/obj/decal/cleanable/generic,
-/obj/item/storage/box/beer{
-	pixel_x = 14;
-	pixel_y = -3
-	},
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "fRG" = (
 /obj/cable/brown{
 	icon_state = "1-2"
@@ -52739,6 +52676,16 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/coldloop)
+"fVJ" = (
+/obj/machinery/space_heater,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "fVM" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4;
@@ -53081,10 +53028,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
-"gsv" = (
-/obj/decal/cleanable/blood/gibs,
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "gsN" = (
 /obj/machinery/conveyor{
 	dir = 4;
@@ -54074,15 +54017,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
-"hKV" = (
-/obj/rack,
-/obj/item/item_box/swedish_bag{
-	rand_pos = 1
-	},
-/obj/item/hand_labeler,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "hLn" = (
 /obj/chicken_nesting_box,
 /obj/machinery/light/small/floor/greenish,
@@ -54706,14 +54640,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"iTE" = (
-/obj/decal/cleanable/rust/jen,
-/obj/item/storage/briefcase{
-	rand_pos = 1;
-	spawn_contents = list(null)
-	},
-/turf/simulated/floor/plating/scorched,
-/area/station/maintenance/northeast)
 "iUq" = (
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /obj/cable/brown{
@@ -55073,9 +54999,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "jsu" = (
-/obj/item/clipboard{
-	rand_pos = 1
-	},
+/obj/machinery/shitty_grill,
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northeast)
 "jsD" = (
@@ -56080,10 +56004,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/catering)
-"kQx" = (
-/obj/decoration/gibberBroken,
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "kRC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56415,28 +56335,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"lsC" = (
-/obj/table/auto,
-/obj/item/body_bag,
-/obj/item/c_tube{
-	pixel_x = -3;
-	pixel_y = 12
-	},
-/obj/item/gardentrowel,
-/obj/item/satchel/hydro{
-	pixel_x = 7;
-	pixel_y = 6;
-	rand_pos = 1
-	},
-/obj/item/toy/plush/small/monkey{
-	pixel_x = 6;
-	pixel_y = -7
-	},
-/obj/machinery/light/worn{
-	dir = 4
-	},
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "luE" = (
 /obj/cable,
 /obj/cable{
@@ -56703,19 +56601,29 @@
 	},
 /area/shuttle/arrival/station)
 "lSg" = (
-/obj/item/stick{
-	rand_pos = 1
+/obj/decal/cleanable/rust/jen,
+/obj/decal/fakeobjects/skeleton/decomposed_corpse{
+	icon_state = "body5"
 	},
-/obj/decal/cleanable/eggsplat,
-/turf/simulated/floor/plating,
+/obj/item/kitchen/utensil/knife,
+/obj/decal/cleanable/blood{
+	icon_state = "armorblood_c"
+	},
+/obj/item/skull{
+	pixel_x = 10
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/simulated/floor/grey/whitegrime/other,
 /area/station/maintenance/northeast)
 "lSN" = (
 /obj/effects/background_objects/iudicium,
 /turf/space,
 /area/space)
 "lTS" = (
-/obj/machinery/shitty_grill,
-/turf/simulated/floor/plating/scorched,
+/obj/landmark/random_room/size5x3,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "lUw" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
@@ -57130,14 +57038,6 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/crew_quarters/info)
-"mAo" = (
-/obj/item/skull,
-/obj/decal/cleanable/ketchup,
-/obj/item/clothing/head/NTberet{
-	rand_pos = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "mAs" = (
 /obj/machinery/light/small{
 	dir = 8
@@ -57635,9 +57535,6 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
-"njO" = (
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "njY" = (
 /obj/machinery/door/airlock/pyro/security{
 	name = "Security Checkpoint";
@@ -58902,14 +58799,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/science/lab)
-"pax" = (
-/obj/table/auto,
-/obj/item/furniture_parts/table/folding,
-/obj/item/furniture_parts/table/folding,
-/obj/item/furniture_parts/table/folding,
-/obj/decal/cleanable/cobweb2,
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "pbP" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/mug{
@@ -59390,10 +59279,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
-"pOG" = (
-/obj/decal/cleanable/rust/jen,
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "pQg" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -60480,14 +60365,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/ptl)
-"rix" = (
-/obj/item/cigbutt,
-/obj/stool/chair/green{
-	dir = 1
-	},
-/obj/decal/cleanable/dirt/dirt2,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "rjl" = (
 /obj/cable,
 /obj/cable{
@@ -60735,6 +60612,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"rEi" = (
+/obj/machinery/door/airlock/pyro/maintenance,
+/obj/access_spawn/bar,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "rFl" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -63023,18 +62905,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai_upload_foyer)
-"ups" = (
-/obj/decal/cleanable/ash,
-/obj/machinery/light/small/broken{
-	dir = 8
-	},
-/obj/item/body_bag{
-	desc = "A heavy bag, used for sleeping in. Hence the name. Wait, does this mean somebody was sleeping in the maintenance tunnels? Who??";
-	name = "sleeping bag";
-	open = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "uqe" = (
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs2_wide"
@@ -63342,11 +63212,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
-"uRC" = (
-/obj/decal/cleanable/dirt/dirt4,
-/obj/decal/cleanable/blood/tracks,
-/turf/simulated/floor/grey/whitegrime/other,
-/area/station/maintenance/northeast)
 "uTe" = (
 /obj/machinery/firealarm{
 	dir = 4;
@@ -64197,15 +64062,6 @@
 	name = "astroturf"
 	},
 /area/station/medical/dome)
-"vXz" = (
-/obj/machinery/door/airlock/pyro/maintenance{
-	name = "Catering Storage"
-	},
-/obj/access_spawn/kitchen,
-/obj/access_spawn/bar,
-/obj/structure/woodwall,
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "vXG" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -65317,6 +65173,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"xtD" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "xtI" = (
 /obj/window/reinforced{
 	dir = 4
@@ -65346,6 +65208,27 @@
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"xvW" = (
+/obj/rack,
+/obj/item/device/radio{
+	pixel_x = 7;
+	pixel_y = 4
+	},
+/obj/item/device/radio{
+	pixel_x = 10;
+	pixel_y = -1
+	},
+/obj/item/device/light/flashlight{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/crowbar,
+/obj/item/crowbar{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "xwZ" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -116131,7 +116014,7 @@ aek
 aeR
 agF
 acT
-ajb
+aie
 aie
 aiZ
 aiW
@@ -116433,7 +116316,7 @@ acT
 acT
 acT
 acT
-ajc
+aie
 aie
 aja
 akc
@@ -116729,13 +116612,13 @@ aag
 dHO
 qAl
 qAl
-qAl
 osC
 wZt
 pXs
 xkF
 qWO
 aeG
+aie
 aie
 aiZ
 aiZ
@@ -117031,13 +116914,13 @@ aap
 etw
 aap
 aaq
-aaq
 aeS
 aoN
 aeG
 agw
 eIc
 aeG
+aie
 aie
 aoC
 aiZ
@@ -117333,13 +117216,13 @@ aag
 etw
 aaG
 adC
-adC
 aag
 sGL
 qDX
 wAV
 icD
 aeG
+xtD
 anm
 aoD
 aiZ
@@ -117635,13 +117518,13 @@ aag
 etw
 aaG
 adC
-adC
 aag
 sTt
 oYr
 ahe
 ahZ
 wxA
+aiU
 ann
 aiU
 aiU
@@ -117937,15 +117820,15 @@ iyk
 iDm
 nzi
 adC
-adC
 aag
 sTt
 afJ
 ahe
 aia
 eay
-ano
-apN
+aie
+aie
+aie
 apO
 aie
 amj
@@ -118239,16 +118122,16 @@ iyk
 iDm
 nzi
 adC
-adC
 aag
 kek
 afL
 ahi
 aic
 aoN
-ajc
-ajc
-ajc
+fVJ
+xvW
+apN
+aie
 aie
 amj
 anf
@@ -118541,16 +118424,16 @@ iyk
 iDm
 nzi
 adC
-adC
 aag
 xge
 vKj
 aoN
 aoN
 aoN
-hKV
-pOG
-vXz
+ajc
+ajc
+ajc
+aie
 aie
 amj
 ang
@@ -118846,13 +118729,13 @@ adC
 adC
 aah
 adC
+adC
+adC
 ajc
-gsv
-eNU
 jsu
 lSg
-njO
-ajc
+tSK
+aie
 aie
 amj
 anh
@@ -119148,13 +119031,13 @@ adC
 adC
 wxk
 adC
+adC
 ajc
-kQx
-uRC
-mAo
-iTE
-fEz
 ajc
+ajc
+ajc
+ajc
+aie
 aie
 amj
 ani
@@ -119450,13 +119333,13 @@ aar
 aar
 aaq
 aaw
+adC
 ajc
-ajc
-ajc
-oPG
+aie
+aie
 lTS
-fRs
 ajc
+aie
 aie
 amj
 anj
@@ -119753,12 +119636,12 @@ adC
 adC
 aag
 aap
-aaq
-aap
+vxT
+aie
+aie
+aie
 ajc
-pax
-lsC
-ajc
+aie
 aie
 amj
 amj
@@ -120055,12 +119938,12 @@ adC
 adC
 adC
 adC
-adC
-aag
-ajc
-ajc
-ajc
-ajc
+vxT
+aie
+aie
+aie
+rEi
+aie
 aie
 apQ
 bLI
@@ -120357,12 +120240,12 @@ adC
 adC
 adC
 adC
-adC
-aag
 vxT
-ups
-apR
-tSK
+aie
+aie
+aie
+ajc
+aie
 aie
 apR
 owD
@@ -120659,12 +120542,12 @@ adC
 adC
 adC
 adC
-adC
-aag
-vxT
-rix
-fFG
+ajc
+aie
+aie
+aie
 oPG
+emU
 apP
 apS
 bLI
