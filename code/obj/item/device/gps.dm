@@ -142,7 +142,7 @@
 		src.show_HTML(user)
 
 	attack_self(mob/user as mob)
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0) || issilicon(usr) || isAIeye(usr))
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0))
 			src.show_HTML(user)
 		else
 			user.Browse(null, "window=gps_[src]")
