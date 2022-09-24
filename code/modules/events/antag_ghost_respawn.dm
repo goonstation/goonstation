@@ -51,7 +51,6 @@
 				if(isnull(W.deaths))
 					return
 
-
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
 				src.centcom_headline = initial(src.centcom_headline) // Gotta reset this.
