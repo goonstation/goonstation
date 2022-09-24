@@ -1215,7 +1215,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			if ("Rat Spit")
 				poison_id = "rat_spit"
 			if ("Grave Dust")
-				poison_id = "grave_dust"
+				poison_id = "grave dust"
 			if ("Cyanide")
 				poison_id = "cyanide"
 			if ("Loose Screws")
