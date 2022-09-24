@@ -1,4 +1,9 @@
 
+(t)sat sep 24 22
+(u)Hans
+(p)10759
+(e)|
+(*)Suit and Head slot items now stop you from seeing what they obscure in examines.
 (t)fri sep 23 22
 (u)Grokberg
 (p)10974
