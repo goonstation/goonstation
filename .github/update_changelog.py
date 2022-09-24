@@ -66,8 +66,8 @@ def parse_pr_changelog(pr):
 	if changelog_match is None:
 		return
 	lines = changelog_match.group(1).split('\n')
-	emoji = ''.join(labels_to_emoji.get(label.name, '') for label in pr.labels)
-	emoji += "|" + ', '.join(label.name for label in pr.labels if label.name in labels_to_emoji)
+	emoji = ''.join(labels_to_emoji.get(lower(label.name), '') for label in pr.labels)
+	emoji += "|" + ', '.join(label.name for label in pr.labels if lower(label.name) in labels_to_emoji)
 	for line in lines:
 		line = line.strip()
 		if not line:
