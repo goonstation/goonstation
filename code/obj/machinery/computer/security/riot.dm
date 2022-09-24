@@ -268,3 +268,5 @@
 			src.authorized_registered -= W:registered
 
 			print_auth_needed(user)
+/obj/machinery/surplusopauth
+	name = "placeholder"

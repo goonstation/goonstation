@@ -241,3 +241,5 @@ proc/splinch(var/mob/M as mob, var/probability)
 				return H.organHolder.drop_organ(part_splinched)
 
 		// owner.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+/obj/submachine/surplusopdeployer
+	name = "placeholder"
