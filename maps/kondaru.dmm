@@ -20531,7 +20531,7 @@
 /area/station/hangar/engine)
 "bjC" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bjE" = (
 /obj/machinery/camera{
@@ -21481,7 +21481,7 @@
 /area/station/crew_quarters/catering)
 "bmW" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bmX" = (
 /obj/table/auto,
@@ -24049,7 +24049,7 @@
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "bvT" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bvV" = (
 /obj/machinery/light/small{
@@ -24722,9 +24722,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/stool/chair/red{
-	dir = 4
-	},
+/obj/machinery/vending/air_vendor,
 /obj/machinery/alarm{
 	dir = 4;
 	pixel_x = -20
@@ -39538,7 +39536,7 @@
 	name = "Clowntainment"
 	})
 "cZV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/garden/owlery)
 "dae" = (
@@ -46382,7 +46380,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "jCx" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/space)
 "jDh" = (
@@ -49692,7 +49690,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mVm" = (
 /obj/machinery/atmospherics/pipe/vent{

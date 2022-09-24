@@ -99,6 +99,7 @@ TRAYS
 	name = "spoon"
 	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
 	icon_state = "spoon"
+	tool_flags = TOOL_SPOONING
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))

@@ -3586,6 +3586,7 @@
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
 "ahx" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bluegreen/corner{
 	dir = 8
 	},
@@ -45049,7 +45050,7 @@
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "hge" = (
 /obj/cable{
@@ -49416,7 +49417,7 @@
 /area/station/engine/substation/east)
 "sgq" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "shp" = (
 /obj/wingrille_spawn/auto,
@@ -50027,7 +50028,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "tDI" = (
 /obj/machinery/light{
@@ -50991,7 +50992,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "vHe" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "vJl" = (
 /obj/machinery/power/data_terminal,

@@ -1677,19 +1677,19 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	var/scale_y = -15
 	var/beam_time = 4 DECI SECONDS
 	AM.alpha = 0
+	var/turf/T = get_turf(AM)
 	var/matrix/M = matrix()
 	M.Scale(scale_x, scale_y)
-	var/obj/decal/laserbeam/beam = new(get_turf(AM))
+	var/obj/decal/laserbeam/beam = new(T)
 	beam.pixel_y =  abs(scale_y * 32)
 	beam.Scale(scale_x, 1)
 	beam.plane = PLANE_ABOVE_LIGHTING
 	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
-	playsound(AM, 'sound/weapons/hadar_impact.ogg', 30, 1)
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, 1)
 	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
 	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
 	SPAWN(beam_time / 2)
 		AM.alpha = initial(AM.alpha)
-		var/turf/T = get_turf(AM)
 		if (issimulatedturf(T))
 			var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched[rand(1,2)]")
 			burn_overlay.alpha = 200

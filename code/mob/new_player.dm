@@ -337,15 +337,8 @@ mob/new_player
 				if(!istype(JOB,/datum/job/battler) && !istype(JOB, /datum/job/football))
 					LC.Equip_Rank(JOB.name, joined_late=1)
 
-			var/miscreant = 0
-#ifdef MISCREANTS
-			if (ticker && character.mind && !character.client.using_antag_token && JOB.allow_traitors != 0 && prob(10))
-				ticker.generate_miscreant_objectives(character.mind)
-				miscreant = 1
-#endif
-
 #ifdef CREW_OBJECTIVES
-			if (ticker && character.mind && !miscreant)
+			if (ticker && character.mind)
 				ticker.generate_individual_objectives(character.mind)
 #endif
 
@@ -719,9 +712,8 @@ a.latejoin-card:hover {
 				traitormob.make_grinch()
 
 			if (ROLE_HUNTER)
-				traitor.special_role = ROLE_HUNTER
-				objective_set_path = /datum/objective_set/hunter
-				traitormob.make_hunter()
+				traitor.add_antagonist(type, do_equip = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
+				do_objectives = FALSE
 
 			if (ROLE_WEREWOLF)
 				traitor.special_role = ROLE_WEREWOLF
@@ -751,7 +743,7 @@ a.latejoin-card:hover {
 			var/obj_count = 1
 			for(var/datum/objective/objective in traitor.objectives)
 				#ifdef CREW_OBJECTIVES
-				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant)) continue
+				if (istype(objective, /datum/objective/crew)) continue
 				#endif
 				boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 				obj_count++

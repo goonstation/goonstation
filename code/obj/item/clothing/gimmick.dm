@@ -546,8 +546,8 @@
 // Vikings
 
 /obj/item/clothing/under/gimmick/viking
-	name = "Viking Hauberk"
-	desc = "A shirt of mail armor commonly utilized by space vikings."
+	name = "TN-HEIMALIS-1 Hauberk"
+	desc = "A shirt of flexible cobryl-alloy mail armor with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "viking"
 
@@ -556,8 +556,8 @@
 		setProperty("coldprot", 40)
 
 /obj/item/clothing/head/helmet/viking
-	name = "Viking Helmet"
-	desc = "A helmet, but for space vikings."
+	name = "TN-HEIMALIS-2 Helmet"
+	desc = "A cobryl-alloy armored helmet with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "vhelmet"
 
@@ -566,7 +566,8 @@
 		setProperty("coldprot", 40)
 
 /obj/item/device/energy_shield/viking
-	name = "Space Viking energy-shield"
+	name = "TN-FIDEI Energy Shield"
+	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT

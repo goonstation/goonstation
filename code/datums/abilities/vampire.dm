@@ -390,8 +390,6 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))

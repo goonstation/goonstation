@@ -840,7 +840,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/puritan
 	name = "Puritan"
-	desc = "You can not be cloned. Any attempt will end badly."
+	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
 	id = "puritan"
 	points = 2
 	category = list("cloner_stuff")
