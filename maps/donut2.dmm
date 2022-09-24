@@ -2361,6 +2361,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aiP" = (
@@ -35713,6 +35714,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"kXq" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "kXr" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -50241,6 +50246,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters)
+"xxl" = (
+/obj/machinery/light/incandescent,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "xxZ" = (
 /obj/machinery/drainage/big,
 /obj/cable{
@@ -119491,7 +119501,7 @@ adW
 dfk
 adD
 lIF
-afG
+xxl
 adq
 ahR
 adq
@@ -122530,11 +122540,11 @@ fRl
 adq
 adq
 adq
-adq
+kXq
 mKX
 upP
 xQA
-adq
+kXq
 adq
 ktE
 bNW
