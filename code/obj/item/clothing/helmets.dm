@@ -680,27 +680,30 @@
 		user.updateOverlaysClient(user.client)
 
 	proc/flip_down(var/mob/living/carbon/human/user)
-		up = FALSE
-		see_face = FALSE
-		icon_state = "welding"
-		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
 		if (ishuman(user) && (user.head == src))
+			up = FALSE
+			see_face = FALSE
+			icon_state = "welding"
+			boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
 			src.obscure(user)
 			user.update_clothing()
 
-		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
-		setProperty("meleeprot_head", 1)
-		setProperty("disorient_resist_eye", 100)
+			src.c_flags |= (COVERSEYES | BLOCKCHOKE)
+			setProperty("meleeprot_head", 1)
+			setProperty("disorient_resist_eye", 100)
+		else
+			boutput(user, "You try to flip the mask down, but it just doesn't fit on you.")
 
 	proc/flip_up(var/mob/living/carbon/human/user)
-		up = TRUE
-		see_face = TRUE
-		icon_state = "welding-up"
-		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
 		if (ishuman(user) && (user.head == src))
+			up = TRUE
+			see_face = TRUE
+			icon_state = "welding-up"
+			boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
 			src.reveal(user)
 			user.update_clothing()
-
+		else
+			boutput(user, "You try to flip the mask up, but it just doesn't fit on you.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
