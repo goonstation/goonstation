@@ -20828,7 +20828,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Engineering"
 	},
@@ -21312,7 +21312,7 @@
 	},
 /area/precursor)
 "bmG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Design Office"
@@ -22228,7 +22228,7 @@
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/iomoon)
 "boL" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Assembly Floor"
@@ -23005,7 +23005,7 @@
 /turf/unsimulated/floor/circuit,
 /area/drone/zone)
 "brd" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Drone Assembly Outpost"
@@ -36112,7 +36112,7 @@
 	name = "Thunderdome Lounge"
 	})
 "cha" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock"
 	},
 /obj/cable{

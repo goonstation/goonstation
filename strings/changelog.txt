@@ -1,5 +1,7 @@
 
 (t)sat sep 24 22
+(u)Caro
+(*)Arrivals airlocks can no longer be tampered with by welding or hacking them.
 (u)Mr. Moriarty & Arthur Holiday
 (p)10864
 (e)|

@@ -11316,8 +11316,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAE" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAF" = (
@@ -13092,7 +13091,7 @@
 	},
 /area/shuttle/arrival/station)
 "aEB" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -18952,8 +18951,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/quartersA)
 "aTi" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aTj" = (
@@ -74790,7 +74788,7 @@
 	},
 /area/space)
 "dnw" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -75234,7 +75232,7 @@
 	},
 /area/listeningpost)
 "doB" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Teleport Pad"
 	},
@@ -76205,6 +76203,10 @@
 	dir = 6
 	},
 /area/station/ranch)
+"gde" = (
+/obj/machinery/door/airlock/pyro/reinforced,
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/entry)
 "ggS" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -145282,8 +145284,8 @@ aKo
 aOn
 aOn
 aOn
-aEB
-aSi
+aOn
+gde
 aSi
 aTi
 aGV
@@ -145584,8 +145586,8 @@ aOn
 aOn
 aOn
 aOn
-aEB
-aSi
+aOn
+gde
 aSj
 aTi
 aUE

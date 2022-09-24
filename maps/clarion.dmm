@@ -2425,8 +2425,8 @@
 	},
 /obj/machinery/door_control{
 	id = "market_2";
-	pixel_y = -24;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = -24
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
@@ -3955,7 +3955,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/reinforced{
 	dir = 4
 	},
 /obj/firedoor_spawn,
@@ -5039,8 +5039,8 @@
 "ajx" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/blind_switch/area/north{
-	pixel_y = 25;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 25
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -44661,13 +44661,13 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced{
+	dir = 4
+	},
+/obj/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -45415,9 +45415,9 @@
 	icon_state = "1-4"
 	},
 /obj/blind_switch/area/north{
-	pixel_y = 28;
+	dir = 1;
 	pixel_x = 22;
-	dir = 1
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)

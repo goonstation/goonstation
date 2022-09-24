@@ -48850,7 +48850,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "czG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Listening Post"
@@ -49332,7 +49332,7 @@
 	},
 /area/listeningpost)
 "cBg" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
 	name = "Weather Satellite"
@@ -50873,7 +50873,7 @@
 	},
 /area/station/hydroponics/bay)
 "dJY" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "dKw" = (
@@ -56480,7 +56480,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "lEV" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/reinforced{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -56591,7 +56591,7 @@
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "lRv" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/reinforced{
 	dir = 4
 	},
 /turf/unsimulated/floor{

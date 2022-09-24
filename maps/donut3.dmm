@@ -22282,7 +22282,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "gkD" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -24867,7 +24867,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "gZE" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -36587,7 +36587,7 @@
 	name = "Funeral Parlor"
 	})
 "kzk" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -41979,7 +41979,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mbH" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "mbM" = (
@@ -54492,7 +54492,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -63053,7 +63053,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sab" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,

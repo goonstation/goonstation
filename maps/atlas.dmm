@@ -15787,7 +15787,7 @@
 /turf/space,
 /area/space)
 "MR" = (
-/obj/machinery/door/airlock/pyro/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "MS" = (
@@ -16430,7 +16430,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "Oq" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
 	name = "Weather Satellite"
@@ -20015,14 +20015,12 @@
 /area/station/science/lab)
 "XD" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
 "XE" = (

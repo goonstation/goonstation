@@ -58803,13 +58803,10 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
 "vFg" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cryogenics Chamber"
-	},
-/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/unsimulated/floor/circuit/vintage,
 /area/station/crewquarters/cryotron)
 "vFi" = (
