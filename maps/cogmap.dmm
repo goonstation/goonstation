@@ -5587,17 +5587,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
-"ard" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/primary/east)
 "are" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -56010,6 +55999,12 @@
 /obj/machinery/ai_status_display,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/storage/eva)
+"kCR" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "kFg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/cable{
@@ -62663,6 +62658,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
+"ubQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "ucc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp/green{
@@ -121266,8 +121270,8 @@ kiI
 kiI
 akf
 alk
-arq
-arq
+ubQ
+kCR
 arc
 arr
 aqZ
@@ -121570,7 +121574,7 @@ akf
 arq
 arq
 arq
-ard
+arc
 ars
 aqZ
 aqZ
