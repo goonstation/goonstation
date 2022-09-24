@@ -2514,7 +2514,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,
