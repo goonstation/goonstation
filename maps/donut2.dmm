@@ -2361,6 +2361,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aiP" = (
@@ -4529,9 +4530,8 @@
 	},
 /area/station/hangar/arrivals)
 "arT" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/head_of_personnel,
 /obj/access_spawn/security,
@@ -18267,14 +18267,12 @@
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bjH" = (
@@ -35713,6 +35711,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"kXq" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "kXr" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -50241,6 +50243,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters)
+"xxl" = (
+/obj/machinery/light/incandescent,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "xxZ" = (
 /obj/machinery/drainage/big,
 /obj/cable{
@@ -119491,7 +119498,7 @@ adW
 dfk
 adD
 lIF
-afG
+xxl
 adq
 ahR
 adq
@@ -122530,11 +122537,11 @@ fRl
 adq
 adq
 adq
-adq
+kXq
 mKX
 upP
 xQA
-adq
+kXq
 adq
 ktE
 bNW

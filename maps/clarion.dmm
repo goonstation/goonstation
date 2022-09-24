@@ -43849,10 +43849,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "euS" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
-	req_access = null
+	name = "Interrogation Room"
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -44150,10 +44149,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -45662,10 +45658,9 @@
 	},
 /area/station/security/main)
 "iCw" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Armory";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	name = "Armory Foyer";
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -47849,10 +47844,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
-	req_access = null
+	name = "Interrogation Room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -47971,10 +47965,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "opt" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -50315,7 +50307,7 @@
 	},
 /area/station/engine/substation/east)
 "ukC" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	name = "Interrogation Room"
 	},
 /obj/access_spawn/security,
@@ -51503,9 +51495,8 @@
 /area/station/engine/ptl)
 "xfP" = (
 /obj/disposalpipe/segment/ejection,
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Processing room";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	name = "Processing room"
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
