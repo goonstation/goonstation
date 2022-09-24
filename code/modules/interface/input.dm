@@ -159,7 +159,7 @@ var/list/dirty_keystates = list()
 		if (src.mob.mob_flags & SEE_THRU_CAMERAS)
 			if(isturf(object))
 				var/turf/T = object
-				if (!length(T.cameras))
+				if (!length(T.camera_coverage_emitters))
 					return
 				else
 					if (parameters["right"])

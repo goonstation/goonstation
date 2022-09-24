@@ -144,7 +144,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span class='notice'>Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		return 1
 	return 0

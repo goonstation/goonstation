@@ -473,7 +473,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 	operation_time = 10
 
-/obj/machinery/door/airlock/pyro/syndicate
+/obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon_state = "airlock_closed"
@@ -482,18 +482,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "airlock_welded"
 	sound_airlock = 'sound/machines/airlock.ogg'
 	operation_time = 10
-	req_access_txt = "52"
 	cant_emag = TRUE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	mats = 0
 
-/obj/machinery/door/airlock/pyro/syndicate/meteorhit()
+/obj/machinery/door/airlock/pyro/reinforced/meteorhit()
 	return
-/obj/machinery/door/airlock/pyro/syndicate/ex_act()
+/obj/machinery/door/airlock/pyro/reinforced/ex_act()
 	return
-/obj/machinery/door/airlock/pyro/syndicate/blob_act(power)
+/obj/machinery/door/airlock/pyro/reinforced/blob_act(power)
 	return
+
+/obj/machinery/door/airlock/pyro/reinforced/syndicate
+	req_access_txt = "52"
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
@@ -503,6 +505,22 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "glass_welded"
 	opacity = 0
 	visible = 0
+
+/obj/machinery/door/airlock/pyro/glass/reinforced
+	name = "reinforced glass airlock"
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
+	operation_time = 10
+	cant_emag = TRUE
+	hardened = TRUE
+	aiControlDisabled = TRUE
+	mats = 0
+
+/obj/machinery/door/airlock/pyro/glass/reinforced/meteorhit()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/ex_act()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/blob_act(power)
+	return
 
 /obj/machinery/door/airlock/pyro/glass/brig
 	req_access_txt = "2"
@@ -1505,6 +1523,9 @@ About the new airlock wires panel:
 		return
 
 	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if (src.hardened)
+			boutput(user, "<span class='alert'>Your tool is unable to weld this airlock! Huh.</span>")
+			return
 		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 
@@ -1519,7 +1540,7 @@ About the new airlock wires panel:
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened == 1)
+		if (src.hardened)
 			boutput(user, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
 			return
 		if (!src.has_panel)
@@ -1625,10 +1646,12 @@ About the new airlock wires panel:
 		src.closeOther.close(1)
 
 /obj/machinery/door/airlock/close()
-	if (src.linked_forcefield) //mbc : this sucks, but I need the forcefield to turn off even if the door is unpowered and can't close.
-		src.linked_forcefield.setactive(0)
-
-	if (src.welded || src.locked || src.operating || (!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+	//split into two sets of checks so failures to close due to lacking power will cause linked shields to deactivate
+	if ((!src.arePowerSystemsOn()) || (src.status & NOPOWER) || src.isWireCut(AIRLOCK_WIRE_OPEN_DOOR))
+		if (src.linked_forcefield)
+			src.linked_forcefield.setactive(0)
+		return
+	if (src.welded || src.locked || src.operating)
 		return
 	src.use_power(50)
 

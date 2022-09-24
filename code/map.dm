@@ -98,6 +98,7 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
+	var/datum/allocated_region/transit_region
 	var/escape_dir = SOUTH
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
@@ -178,7 +179,15 @@ var/global/list/mapNames = list(
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
 		var/dmm_suite/dmm_suite = new
-		var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
+		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
+		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
+		var/turf/transit_start
+		for(var/turf/T in landmarks[LANDMARK_SHUTTLE_TRANSIT])
+			if(transit_region.turf_in_region(T))
+				transit_start = T
+				break
+		if (!transit_start)
+			CRASH("Unable to load escape transit landmark")
 		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)

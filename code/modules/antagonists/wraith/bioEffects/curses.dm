@@ -109,7 +109,7 @@
 	OnLife(mult)
 		if (probmult(5))
 			boutput(owner, "<span class='notice'>You suddenly feel very [pick("winded", "tired")].</span>")
-			owner.changeStatus("slowed")
+			owner.changeStatus("slowed", 10 SECONDS)
 		if (probmult(3))
 			boutput(owner, pick("<span class='notice'>Your muscles tense up.</span>", "<span class='notice'>You feel light-headed.</span>", "<span class='notice'>Your legs almost give in.</span>"))
 			owner.emote("pale")

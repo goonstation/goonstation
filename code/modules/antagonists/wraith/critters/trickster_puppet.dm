@@ -26,7 +26,7 @@
 		last_life_update = TIME
 
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
-		src.abilityHolder.points = master.abilityHolder.points
+		src.abilityHolder.points = master?.abilityHolder.points
 
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)

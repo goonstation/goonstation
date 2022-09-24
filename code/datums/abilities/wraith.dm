@@ -378,7 +378,7 @@
 /datum/targetable/wraithAbility/raiseSkeleton
 	name = "Raise Skeleton"
 	icon_state = "skeleton"
-	desc = "Raise a skeletonized dead body as an indurable skeletal servant."
+	desc = "Raise a skeletonized dead body or fill a locker with an indurable skeletal servant."
 	targeted = 1
 	target_anything = 1
 	pointCost = 100
@@ -509,7 +509,7 @@
 					puppet.appearance = T.copied_appearance
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
-					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
+					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 					puppet.alpha = 0
 					animate(puppet, alpha=255, time=2 SECONDS)
 					puppet.flags &= UNCRUSHABLE
@@ -524,7 +524,7 @@
 				return 1
 			else
 				W.setStatus("corporeal", INFINITE_STATUS)
-				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 80, 0)
+				usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 			return 0
 
 
@@ -714,7 +714,7 @@
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
-		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
+		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram","Skull")
 
 		var/t = input(user, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
 
@@ -808,7 +808,7 @@
 /datum/targetable/wraithAbility/specialize
 	name = "Evolve"
 	icon_state = "evolve"
-	desc = "Choose a form to evolve into once you have grown strong enough"
+	desc = "Choose a form to evolve into once you have absorbed at least 3 souls"
 	targeted = 0
 	pointCost = 150
 	tooltip_flags = TOOLTIP_LEFT
@@ -1057,7 +1057,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			var/mob/living/carbon/human/H = target
 			var/mob/wraith/W = holder.owner
 			if (H?.bioHolder.HasEffect("rot_curse") && H?.bioHolder.HasEffect("weak_curse") && H?.bioHolder.HasEffect("blind_curse") && H?.bioHolder.HasEffect("blood_curse"))
-				W.playsound_local(W.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+				W.playsound_local(W.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 				boutput(holder.owner, "<span class='alert'>That soul is OURS!!</span>")
 				boutput(H, "<span class='alert'>The voices in your heads are reaching a crescendo!</span>")
 				H.make_jittery(300)
@@ -1180,7 +1180,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
 	pointCost = 50
-	var/list/the_poison = list("rat_spit", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
+	var/list/the_poison = list("Rat Spit", "Grave Dust", "Cyanide", "Loose Screws", "Rotting", "Bee", "Mucus")
 	var/amount_per_poison = 10
 
 	cast(mob/target)
@@ -1205,7 +1205,29 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			boutput(W, "<span class='alert'>You can't poison [target], only food items, drinks and glass containers.</span>")
 			return 1
 
-		var/poison_choice = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
+		var/poison_name = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
+		if(!poison_name)
+			return 1
+
+		var/poison_id = null
+		switch(poison_name)
+			if ("Rat Spit")
+				poison_id = "rat_spit"
+			if ("Grave Dust")
+				poison_id = "grave dust"
+			if ("Cyanide")
+				poison_id = "cyanide"
+			if ("Loose Screws")
+				poison_id = "loose_screws"
+			if ("Rotting")
+				poison_id = "rotting"
+			if ("Bee")
+				poison_id = "bee"
+			if ("Mucus")
+				poison_id = "mucus"
+			else
+				return 1
+
 
 		if (current_container && istype(current_container))
 			if (length(src.the_poison) > 1)
@@ -1216,7 +1238,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				if (current_container.reagents)
 					if (current_container.reagents.total_volume + src.amount_per_poison >= current_container.reagents.maximum_volume)
 						current_container.reagents.remove_any(current_container.reagents.total_volume + src.amount_per_poison - current_container.reagents.maximum_volume)
-					current_container.reagents.add_reagent(poison_choice, src.amount_per_poison)
+					current_container.reagents.add_reagent(poison_id, src.amount_per_poison)
 
 
 					attempt_success = 1

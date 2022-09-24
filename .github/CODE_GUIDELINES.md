@@ -105,7 +105,7 @@ Example:
 ```javascript
 ABSTRACT_TYPE(/obj/item/hat)
 /obj/item/hat
-	var/is_cool = FAKSE
+	var/is_cool = FALSE
 
 /obj/item/hat/uncool
 	name = "Uncool Hat"

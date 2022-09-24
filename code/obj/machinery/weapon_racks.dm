@@ -159,7 +159,7 @@
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
@@ -213,7 +213,7 @@
 			return
 
 		if (src.malfunction)
-			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
+			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 		if (!src.allowed(user) && !hacked)
 			boutput(user, "<span class='alert'>Access denied.</span>")

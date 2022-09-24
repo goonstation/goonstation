@@ -372,7 +372,7 @@
 					limbs_to_sever += list(src.l_leg)
 				if ("r_leg")
 					limbs_to_sever += list(src.r_leg)
-			if (limbs_to_sever.len)
+			if (length(limbs_to_sever))
 				for (var/obj/item/parts/P in limbs_to_sever)
 					P.sever(user)
 				return 1
@@ -494,6 +494,9 @@
 
 /mob/living/carbon/human/proc/is_vampiric_thrall()
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+/mob/living/carbon/human/is_open_container()
+	return !src.organHolder.head
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)

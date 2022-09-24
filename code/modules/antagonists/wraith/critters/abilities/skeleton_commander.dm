@@ -57,7 +57,7 @@
 			var/obj/critter/wraithskeleton/S = new /obj/critter/wraithskeleton(T)
 			S.alpha = 0
 			animate(S, alpha=255, time=2 SECONDS)
-			playsound(S.loc, "sound/voice/wraith/wraithhaunt.ogg", 80, 0)
+			playsound(S.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)
 			S.visible_message("<span class='alert'>[holder.owner] raises its arms and a skeleton appears in front of your eyes!</span>")
 			boutput(holder.owner, "We summon a skeleton from the void")
 			SPAWN(30 SECONDS)

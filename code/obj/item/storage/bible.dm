@@ -77,7 +77,7 @@ var/global/list/bible_contents = list()
 			chaplain = 1
 		if (!chaplain)
 			boutput(user, "<span class='alert'>The book sizzles in your hands.</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot.</span>")
@@ -135,7 +135,7 @@ var/global/list/bible_contents = list()
 	attack_hand(var/mob/user)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 25)
 			user.changeStatus("stunned", 15 SECONDS)
 			user.changeStatus("weakened", 15 SECONDS)
 			return
