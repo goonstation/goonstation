@@ -55999,6 +55999,12 @@
 /obj/machinery/ai_status_display,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/ai_monitored/storage/eva)
+"kCR" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "kFg" = (
 /obj/machinery/portable_atmospherics/canister/toxins,
 /obj/cable{
@@ -121265,7 +121271,7 @@ kiI
 akf
 alk
 ubQ
-arq
+kCR
 arc
 arr
 aqZ
