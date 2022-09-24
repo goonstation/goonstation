@@ -480,7 +480,7 @@
 	proc/prick(mob/M)
 		boutput(M, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
 		random_brute_damage(M, 3)
-		take_bleeding_damage(M,null,3,DAMAGE_STAB)
+		take_bleeding_damage(M, null, 3, DAMAGE_STAB)
 
 	attackby(obj/item/W, mob/user)
 		if (issnippingtool(W) && src.thorned)
