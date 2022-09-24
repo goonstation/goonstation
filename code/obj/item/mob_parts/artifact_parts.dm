@@ -150,25 +150,13 @@
 /obj/item/parts/artifact_parts/arm
 	can_hold_items = TRUE
 
-	getHandIconState()
-		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
-			return ..()
-		return src.pick_arm_attached_image()
-
 	getMobIcon()
 		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
 			return ..()
-		return src.pick_arm_attached_image()
-
-	proc/pick_arm_attached_image()
 		var/mob/living/carbon/human/H = holder
-		var/wearing_clothing = H.w_uniform || H.wear_suit
-		if (!wearing_clothing)
-			return image('icons/mob/human.dmi', src.handlistPart)
-		else
-			var/image/I = image('icons/mob/human.dmi', src.handlistPart)
-			I.filters += filter(type = "alpha", icon = icon('icons/mob/humanmasks.dmi', src.slot == "l_arm" ? "arm-L-mask" : "arm-R-mask"))
-			return I
+		src.handlistPart = (!H.w_uniform && !H.wear_suit) ? initial(src.handlistPart) : "[initial(src.handlistPart)]-clothing"
+		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
+		return src.standImage
 
 /obj/item/parts/artifact_parts/leg
 
