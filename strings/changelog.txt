@@ -1,8 +1,8 @@
 
 (t)sat sep 24 22
 (u)Mr. Moriarty
-(p)10996
-(e)🔧|A-Tooling
+(p)10917
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
 (+)Redesigned the Kondaru Armory, adding a phaser crate, two more night vision goggles, one additional breaching sledgehammer, and a box of flashbangs. The communications console has been moved back inside of the Armory.
 (u)Caro
 (*)Arrivals airlocks can no longer be tampered with by welding or hacking them.
