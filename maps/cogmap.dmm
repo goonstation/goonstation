@@ -5587,17 +5587,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/hallway/primary/east)
-"ard" = (
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13"
-	},
-/turf/simulated/floor/grime,
-/area/station/hallway/primary/east)
 "are" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62663,6 +62652,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/jazz)
+"ubQ" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/grime,
+/area/station/hallway/primary/east)
 "ucc" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp/green{
@@ -121266,7 +121264,7 @@ kiI
 kiI
 akf
 alk
-arq
+ubQ
 arq
 arc
 arr
@@ -121570,7 +121568,7 @@ akf
 arq
 arq
 arq
-ard
+arc
 ars
 aqZ
 aqZ
