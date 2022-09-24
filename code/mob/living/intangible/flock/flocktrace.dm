@@ -106,10 +106,10 @@
 					src.death()
 				else
 					src.dying = FALSE
-					src.flock.queued_trace_deaths--
 					boutput(src, "<span class='alert'>The Flock has gained enough compute to keep you alive!</span>")
 					src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 					src.updateOverlaysClient(src.client)
+				src.flock.queued_trace_deaths--
 
 /mob/living/intangible/flock/trace/death(gibbed, suicide = FALSE)
 	. = ..()
