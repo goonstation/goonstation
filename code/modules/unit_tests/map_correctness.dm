@@ -133,7 +133,7 @@ proc/check_duplicate_area_names()
 	var/list/names = list()
 	for (var/area/A in world)
 		LAZYLISTINIT(names[A.name])
-		names[A.name] += A.type
+		names[A.name] |= A.type
 
 	var/list/dupes = list()
 	for (var/name in names)
