@@ -877,6 +877,7 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	name = "Shuttle Subwoofers"
 	icon_state = "shuttle_transit_sound"
 	teleport_blocked = TRUE
+	requires_power = FALSE
 
 // zewaka - actual areas below //
 
@@ -1114,7 +1115,7 @@ ABSTRACT_TYPE(/area/adventure)
 	icon_state = "yellow"
 
 /area/abandonedoutpostthing
-	name = "Abandoned Outpost"
+	name = "Abandoned Laboratory"
 	icon_state = "yellow"
 
 /area/abandonedmedicalship/robot_trader
