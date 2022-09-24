@@ -2,9 +2,10 @@
 /* ==================== Area ==================== */
 
 /area/station/shield_zone
+	name = "shield protected space"
 	icon_state = "shield_zone"
-	expandable = 0
-	do_not_irradiate = 1
+	expandable = FALSE
+	do_not_irradiate = TRUE
 
 /* ==================== Generator ==================== */
 
