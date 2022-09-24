@@ -1,5 +1,9 @@
 
 (t)sat sep 24 22
+(u)Mr. Moriarty & Arthur Holiday
+(p)10864
+(e)|
+(+)Resprited scalpels, circular saws, hemostats, surgical scissors, enucleation spoons, and sutures. The wonderful circular saw sprite was kindly provided by Arthur!
 (u)DrWolfy
 (p)10926
 (e)|
