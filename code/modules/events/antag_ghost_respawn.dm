@@ -44,6 +44,13 @@
 				return
 
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			for(var/mob/wraith/W in ROLE_WRAITH)
+				if(W.deaths < 2)
+					src.antagonist_type -= list("Wraith")
+					src.antagonist_type = pick(list())
+				if(isnull(W.deaths))
+					return
+
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
