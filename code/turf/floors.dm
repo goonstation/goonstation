@@ -2131,7 +2131,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 		can_replace_with_stuff = 1
 
 		attackby(obj/item/W, mob/user)
-			if (istype(W, /obj/item/device/key))
+			if (istype(W, /obj/item/device/key/generic/coldsteel))
 				playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks

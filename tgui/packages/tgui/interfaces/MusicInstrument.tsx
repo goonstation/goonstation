@@ -66,7 +66,9 @@ export const MusicInstrument = (_props, context) => {
   };
 
   const getKeyboardIndex = (key: string) => {
-    return keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key) || -1;
+    const keyboardIndex = keyOffset + noteKeysOrder.findIndex((keyOrder) => keyOrder === key);
+    if (keyboardIndex >= 0) return keyboardIndex;
+    return -1;
   };
 
   return (

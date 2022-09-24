@@ -8430,13 +8430,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"cjG" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "cjI" = (
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -24372,8 +24365,8 @@
 /area/station/chapel/sanctuary)
 "gSp" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 4
+	dir = 4;
+	icon_state = "check1"
 	},
 /obj/stool/bench,
 /turf/simulated/floor/black/grime,
@@ -26284,8 +26277,8 @@
 /area/listeningpost)
 "huy" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 8
+	dir = 8;
+	icon_state = "check1"
 	},
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -37165,8 +37158,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 8
+	dir = 8;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check/yellow{
 	icon_state = "check1"
@@ -42881,8 +42874,8 @@
 "mri" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = -4
@@ -44129,8 +44122,8 @@
 "mKc" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = -4
@@ -45783,8 +45776,8 @@
 /area/station/medical/head)
 "nkb" = (
 /obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 6
+	dir = 6;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -50775,8 +50768,8 @@
 /area/station/maintenance/outer/north)
 "oGM" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 4
+	dir = 4;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check/yellow{
 	icon_state = "check1"
@@ -64488,23 +64481,23 @@
 "sww" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/tank/mini_oxygen{
 	pixel_x = -5;
@@ -75885,8 +75878,8 @@
 	icon_state = "line1"
 	},
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = 4;
@@ -79842,7 +79835,7 @@
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/obj/item/device/key{
+/obj/item/device/key/generic{
 	desc = "An old key that is seriously not involved with any other old, key-themed things than just ordinary doors.";
 	name = "rusty old key";
 	pixel_x = -3;
@@ -117350,13 +117343,13 @@ pEb
 rdj
 rdj
 hyr
-cjG
-cjG
-cjG
+nkb
+nkb
+nkb
 vre
-cjG
-cjG
-cjG
+nkb
+nkb
+nkb
 hyr
 ijU
 ijU
@@ -122454,7 +122447,7 @@ eBP
 sZg
 ogJ
 kuM
-cjG
+nkb
 jvq
 sGC
 sGC
@@ -126052,7 +126045,7 @@ qsR
 boj
 abD
 abI
-cjG
+nkb
 cNV
 cNV
 cNV
@@ -133877,7 +133870,7 @@ rdj
 rdj
 rdj
 rfc
-cjG
+nkb
 ppP
 xSZ
 xSZ
@@ -164973,9 +164966,9 @@ rdj
 rdj
 rdj
 rmv
-cjG
+nkb
 tPS
-cjG
+nkb
 vMs
 rdj
 rdj

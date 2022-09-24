@@ -16126,10 +16126,7 @@
 /area/upper_arctic/exterior/surface)
 "aZm" = (
 /obj/critter/spider/ice/queen,
-/obj/item/device/key{
-	desc = "What does this go to?";
-	name = "cold steel key"
-	},
+/obj/item/device/key/generic/coldsteel,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aZn" = (
@@ -37724,11 +37721,7 @@
 	},
 /area/meat_derelict/soviet)
 "clg" = (
-/obj/item/device/key{
-	desc = "It's a key made of bone.  Grody.";
-	icon_state = "key_bone";
-	name = "literal skeleton key"
-	},
+/obj/item/device/key/literal_skeleton,
 /turf/unsimulated/floor/caution/east{
 	dir = 1
 	},
@@ -40362,10 +40355,6 @@
 /turf/unsimulated/floor/black/side{
 	dir = 10
 	},
-/area/crunch/wtc)
-"csY" = (
-/obj/item/device/key,
-/turf/unsimulated/floor/void,
 /area/crunch/wtc)
 "csZ" = (
 /obj/decal/floatingtiles{
@@ -70759,6 +70748,10 @@
 /obj/decal/fakeobjects/dreambeach/palm_leaf,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"jIe" = (
+/obj/item/device/key/haunted,
+/turf/unsimulated/floor/void,
+/area/crunch)
 "jJx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -74854,8 +74847,8 @@
 "rzJ" = (
 /obj/table/wood/round,
 /obj/item/gun/kinetic/makarov{
-	pixel_y = 4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/item/ammo/bullets/nine_mm_soviet{
 	pixel_x = 6
@@ -80560,7 +80553,7 @@ bIY
 bIY
 bKw
 bKw
-bKw
+jIe
 bKw
 bKw
 bIY
@@ -96852,7 +96845,7 @@ csw
 csA
 csH
 csP
-csY
+ctb
 ctb
 ctb
 cnx
