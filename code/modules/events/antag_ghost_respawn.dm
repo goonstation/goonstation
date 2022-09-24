@@ -44,7 +44,7 @@
 				return
 
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
-			for(var/mob/wraith/W in ROLE_WRAITH)
+			for(var/mob/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
 					src.antagonist_type -= list("Wraith")
 					src.antagonist_type = pick(list())
