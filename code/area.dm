@@ -731,13 +731,11 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Biodome Lift Upper Section"
 	icon_state = "shuttle"
 	force_fullbright = 0
-	name = "Elevator"
 
 /area/shuttle/biodome_elevator/lower
 	name = "Biodome Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
-	name = "Elevator"
 
 /area/shuttle/recovery_shuttle
 	name = "Recovery Shuttle Dock"
