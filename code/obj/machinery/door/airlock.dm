@@ -543,6 +543,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon_base = "sec_glass"
 	req_access = null
 
+/obj/machinery/door/airlock/pyro/glass/security/alt
+	name = "security airlock"
+	icon_state = "sec_glassalt_closed"
+	icon_base = "sec_glassalt"
+	req_access = null
+
 /obj/machinery/door/airlock/pyro/glass/med
 	name = "medical airlock"
 	icon_state = "med_glass_closed"
