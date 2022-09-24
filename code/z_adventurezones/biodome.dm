@@ -1396,6 +1396,7 @@ var/satellite_crash_event_status = -1
 	sound_group = "drone_factory"
 
 /area/drone/zone
+	name = "Drone Assembly Outpost Entrance"
 
 /area/drone/crew_quarters
 	name = "Drone Engineer's Quarters"
