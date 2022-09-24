@@ -684,7 +684,7 @@
 		see_face = FALSE
 		icon_state = "welding"
 		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		if (user.head == src)
+		if (ishuman(user) && (user.head == src))
 			src.obscure(user)
 			user.update_clothing()
 
@@ -697,7 +697,7 @@
 		see_face = TRUE
 		icon_state = "welding-up"
 		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		if (user.head == src)
+		if (ishuman(user) && (user.head == src))
 			src.reveal(user)
 			user.update_clothing()
 
