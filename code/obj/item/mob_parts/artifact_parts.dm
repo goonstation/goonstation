@@ -464,7 +464,7 @@
 
 /datum/targetable/artifact_limb_ability/precursor_heal
 	name = "Precursor heal"
-	desc = "Use ancient power to heal a target of a heart attack or ailment, or remove any foreign material!"
+	desc = "Use ancient power to heal a target of a heart attack, relieve an ailment, or remove any foreign material!"
 	icon_state = "precursor-heal"
 	targeted = TRUE
 	cooldown = 120 SECONDS
