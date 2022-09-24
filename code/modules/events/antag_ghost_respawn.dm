@@ -49,7 +49,7 @@
 					src.antagonist_type -= list("Wraith")
 					src.antagonist_type = pick(list())
 				if(isnull(W.deaths))
-					return
+					continue
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
