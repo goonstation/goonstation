@@ -215,6 +215,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		if(prob(8)) communalbeep()
 		if(!isalive(src)) src.set_density(FALSE) //according to lizzle something in the mob life resets density so this has to be below parent-
 
+/mob/living/critter/robotic/sawfly/bippy
 
 /mob/living/critter/robotic/sawfly/ai_controlled
 

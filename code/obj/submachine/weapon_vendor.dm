@@ -210,6 +210,9 @@
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+/obj/submachine/weapon_vendor/surplus
+	desc = "It's blank."
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
