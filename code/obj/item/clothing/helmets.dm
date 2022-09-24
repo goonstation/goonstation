@@ -22,6 +22,7 @@
 	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 
@@ -499,6 +500,7 @@
 	name = "T.U.R.D.S. helmet"
 	icon_state = "turdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	item_state = "turdhelm"
 	setupProperties()
 		..()
@@ -659,6 +661,7 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = FALSE
 	item_state = "welding"
 	protective_temperature = 1300
@@ -735,6 +738,7 @@
 	icon_state = "EOD"
 	item_state = "tdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 9)
@@ -825,6 +829,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = 0
 	setupProperties()
 		..()
@@ -885,6 +890,7 @@
 	item_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 
 	setupProperties()
 		..()
@@ -914,6 +920,7 @@
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")
