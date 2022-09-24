@@ -43,8 +43,6 @@ CONTAINS:
 
 	New()
 		..()
-		if (src.icon_state == "scalpel1")
-			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
@@ -92,9 +90,9 @@ CONTAINS:
 	name = "circular saw"
 	desc = "A saw used to slice through bone in surgeries, and attackers in self defense."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw1"
+	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "saw1"
+	item_state = "saw"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
@@ -115,8 +113,6 @@ CONTAINS:
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
-		if (src.icon_state == "saw1")
-			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
@@ -1541,7 +1537,7 @@ keeping this here because I want to make something else with it eventually
 	name = "surgical scissors"
 	desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "surgical-scissors-base"
+	icon_state = "surgical-scissors"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "surgical_scissors"
 
@@ -1560,23 +1556,12 @@ keeping this here because I want to make something else with it eventually
 	throw_speed = 3
 	throw_range = 5
 	move_triggered = 1
-	var/image/handle = null
 
 	New()
 		..()
 		src.create_reagents(5)
-		handle = image('icons/obj/surgery.dmi', "")
-		if (prob(1) && prob(10))	// 1:1000 chance
-			handle.icon_state = "surgical-scissors-handle-c"
-			desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too... There's something off about this pair."
-		else
-			handle.icon_state = "surgical-scissors-handle"
-			handle.color = "#[random_hex(6)]"
-
-		src.overlays += handle
 
 	disposing()
-		handle = null
 		..()
 
 	move_trigger(var/mob/M, kindof)

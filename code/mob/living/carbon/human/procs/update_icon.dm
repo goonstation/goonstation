@@ -194,7 +194,7 @@
 		src.gloves.wear_image.filters = src.gloves.filters.Copy()
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			if (islist(gloves_overrides) && (icon_name in gloves_overrides)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+			if (islist(gloves_overrides) && ("left_[icon_name]" in gloves_overrides)) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_hands
 				no_offset = TRUE
 			else
@@ -208,7 +208,7 @@
 			UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			if (islist(gloves_overrides) && (icon_name in gloves_overrides)) //above but right glove
+			if (islist(gloves_overrides) && ("right_[icon_name]" in gloves_overrides)) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icon_hands
 				no_offset = TRUE
 			else
@@ -272,7 +272,7 @@
 		var/shoes_count = 0
 		if (src.limbs && src.limbs.l_leg && src.limbs.l_leg.accepts_normal_human_overlays)
 			shoes_count++
-			if (islist(shoe_overrides) && (wear_state in shoe_overrides)) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
+			if (islist(shoe_overrides) && ("left_[wear_state]" in shoe_overrides)) //checks if they are a mutantrace with special left shoe sprites and then replaces them if they do
 				src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
 			else
 				src.shoes.wear_image.icon = src.shoes.wear_image_icon
@@ -281,14 +281,13 @@
 		if (src.limbs && src.limbs.r_leg && src.limbs.r_leg.accepts_normal_human_overlays)
 			shoes_count++
 			if(shoes_count == 1)
-				if (islist(shoe_overrides) && (wear_state in shoe_overrides)) //like above, but for right shoes
+				if (islist(shoe_overrides) && ("right_[wear_state]" in shoe_overrides)) //like above, but for right shoes
 					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
-
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon
 				src.shoes.wear_image.icon_state = "right_[wear_state]"
 			else
-				if (islist(shoe_overrides) && (wear_state in shoe_overrides))
+				if (islist(shoe_overrides) && ("right_[wear_state]" in shoe_overrides))
 					src.shoes.wear_image.icon = src.mutantrace.clothing_icon_feet
 				else
 					src.shoes.wear_image.icon = src.shoes.wear_image_icon

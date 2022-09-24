@@ -552,9 +552,12 @@ TRAYS
 	pickup_sfx = 'sound/items/pickup_plate.ogg'
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
-
+	/// Will separate what we can put into plates/pizza boxes or not
+	var/is_plate = TRUE
 	/// The maximum amount of food you can fit on this plate
 	var/max_food = 2
+	/// Helps to track amount of food items inside the box
+	var/foods_inside = list()
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
@@ -571,25 +574,30 @@ TRAYS
 		. = FALSE
 		if (istype(food, /obj/item/plate))
 			if (food == src)
-				boutput(user, "<span class='alert>You can't stack a plate on itself!</span>")
+				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
 				return
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
-		if (length(src.contents) == max_food)
+		if (length(src.foods_inside) == max_food && src.is_plate)
 			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
-		if (!food.edible && !.) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
+			                                    // anything that isn't a plate may as well hold anything that fits the "plate"
+		if (!food.edible && !. && src.is_plate) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
-		if (food.w_class > W_CLASS_NORMAL)
-			boutput(user, "You try to think of a way to put [food] on \the [src] but it's not possible! It's too large!")
+		if (food.w_class > W_CLASS_NORMAL && !.) // same logic as above, but to check if we can stack it
+			boutput(user, "You try to think of a way to put [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
 			return
 		if (food in src.vis_contents)
-			boutput(user, "That's already on the plate!")
+			boutput(user, "That's already on the [src]!")
 			return
 
 		. = TRUE // If we got this far it's a valid plate content
+
+		if (!istype(food, /obj/item/plate/))
+			src.foods_inside += food
+
 		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
 		src.vis_contents += food
@@ -600,7 +608,7 @@ TRAYS
 		RegisterSignal(food, COMSIG_MOVABLE_SET_LOC, .proc/remove_contents)
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
-		boutput(user, "You put [food] on \the [src].")
+		boutput(user, "You put [food] [src.is_plate ? "on" : "in"] \the [src].")
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
@@ -613,6 +621,9 @@ TRAYS
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
 		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
+		if (!istype(food, /obj/item/plate/))
+			src.foods_inside -= food
+
 		src.UpdateIcon()
 
 	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
@@ -623,7 +634,7 @@ TRAYS
 	/// Called when you throw or smash the plate, throwing the contents everywhere
 	proc/shit_goes_everywhere()
 		if (length(src.contents))
-			src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
+			src.visible_message("<span class='alert'>Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!</span>")
 		for (var/atom/movable/food in src)
 			food.set_loc(get_turf(src))
 			if (istype(food, /obj/item/plate))
@@ -682,7 +693,7 @@ TRAYS
 			src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
-		if(user.a_intent == INTENT_HARM)
+		if(user.a_intent == INTENT_HARM && src.is_plate)
 			if(M == user)
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
@@ -731,6 +742,94 @@ TRAYS
 		. = ..()
 		if (ishuman(AM) && AM.throwing) // only humans have the power to smash plates with their bodies
 			src.shatter()
+
+/obj/item/plate/pizza_box
+	name = "pizza box"
+	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "pizzabox"
+	pickup_sfx = 0 // to avoid using plate SFX
+	w_class = W_CLASS_BULKY
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "pizza_box"
+	is_plate = FALSE
+	var/open = FALSE
+
+	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
+
+		if (!src.open && !istype(food, /obj/item/plate/))
+			boutput(user, "<span class='alert'>You have to open \the [src] to put something in it, silly!</span>")
+			return
+
+		if (src.open && istype(food, /obj/item/plate/))
+			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
+			return
+
+		if (length(src.foods_inside) >= src.max_food && !istype(food, src.type))
+			boutput(user, "<span class='alert'>There's no more space in \the [src]!</span>")
+			return
+
+		. = ..()
+
+	proc/toggle_box(mob/user)
+		if (length(src.contents - src.foods_inside) > 0)
+			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
+			return
+
+
+		if (src.open)
+			if(user.bioHolder.HasEffect("clumsy") && prob(10))
+				user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
+				"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
+				bleed(user, 1, 1)
+				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 0)
+				user.emote("scream") // Sounds specially painful when you get your finger stuck in a steel pizza box
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+
+			src.vis_contents = list()
+			icon_state = "pizzabox"
+			open = FALSE
+			src.UpdateIcon()
+
+		else
+			if (isnull(user))
+				icon_state = "pizzabox_open"
+				src.open = TRUE
+				playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
+				src.UpdateIcon()
+				return
+
+			if (user.bioHolder.HasEffect("clumsy") && prob(33))
+				user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
+				"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 80, 0)
+
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+			icon_state = "pizzabox_open"
+			src.open = TRUE
+			src.vis_contents = src.contents
+			src.UpdateIcon()
+
+	shatter()
+		shit_goes_everywhere()
+		return // Cardboard boxes don't shatter like plates.
+
+	shit_goes_everywhere()
+		if (!src.open)
+			toggle_box(null)
+		..()
+
+	attack_self(mob/user)
+		toggle_box(user)
+		return TRUE
 
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"

@@ -1,4 +1,41 @@
 
+(t)sat sep 24 22
+(u)Sovexe
+(p)10967
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Playable emagged firebots now how have a new skill to spray burning welding fuel, and come in less ugly colors.
+(u)Mr. Moriarty
+(p)10917
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Redesigned the Kondaru Armory, adding a phaser crate, two more night vision goggles, one additional breaching sledgehammer, and a box of flashbangs. The communications console has been moved back inside of the Armory.
+(u)Caro
+(*)Arrivals airlocks can no longer be tampered with by welding or hacking them.
+(u)ZeWaka
+(+)Added a clientside 90fps option to the top menu bar.
+(u)Mr. Moriarty & Arthur Holiday
+(p)10864
+(e)|
+(+)Resprited scalpels, circular saws, hemostats, surgical scissors, enucleation spoons, and sutures. The wonderful circular saw sprite was kindly provided by Arthur!
+(u)DrWolfy
+(p)10926
+(e)|
+(+)Equipping a cyborg module in the cyborg docking station while already having one installed will swap the two.
+(u)Ikea
+(p)10903
+(e)|
+(*)MD now spawns with an unique labcoat
+(u)Caio029
+(p)10905
+(e)|
+(*)NanoTrasen has developed a new hi-tech storage box for the containment of disc-shaped foods. Theses new boxes are available at FoodTech vendors.
+(u)Caio029
+(p)10581
+(e)|
+(+)Makes General Manufacturers capable of printing instruments.
+(u)Hans
+(p)10759
+(e)|
+(*)Suit and Head slot items now stop you from seeing what they obscure in examines.
 (t)fri sep 23 22
 (u)Grokberg
 (p)10974
@@ -8,7 +45,7 @@
 (e)|
 (*)Cleaned up a bunch of Key Stuff. Look in #imspoiler for the details.
 (u)ZeWaka
-(e)🚨📡💨🍝⚗🎩📦🧛🏗🌱⚙🗺🧱🏅💊👽🔨🔬🔒🤖💡⏰🔧💪📄⚖🐛🔎📜🧫🆕🚄💅⛔↩🔄🐛🔊🎨🎉|All of the possible emoji
+(e)🚨📡💨🍝⚗🎩📦🧛🏗🌱⚙🗺🧱🏅💊👽🔨🔬🔒🤖💡⏰🔧💪📄⚖🪲🔎📜🧫🆕🚄💅⛔↩🔄🐛🔊🎨🎉|All of the possible emoji
 (*)The Changelog now has full color Emoji support, and is expanded for the new PR labels. Contribute on GitHub today!
 (u)LeahTheTech
 (p)10956

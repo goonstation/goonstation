@@ -232,6 +232,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Miscellaneous"
 
+/datum/manufacture/saxophone
+	name = "Saxophone"
+	item_paths = list("MET-2")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/instrument/saxophone)
+	time = 7 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/whistle
+	name = "Whistle"
+	item_paths = list("MET-3")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/instrument/whistle)
+	time = 3 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/trumpet
+	name = "Trumpet"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/instrument/trumpet)
+	time = 6 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/bagpipe
+	name = "Bagpipe"
+	item_paths = list("FAB-1", "MET-2")
+	item_amounts = list(10, 25)
+	item_outputs = list(/obj/item/instrument/bagpipe)
+	time = 5 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
 /datum/manufacture/bikehorn
 	name = "Bicycle Horn"
 	item_paths = list("ALL")
@@ -2918,15 +2954,6 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	item_paths = list("MET-1")
 	item_amounts = list(5)
 	item_outputs = list(/obj/storage/crate/packing)
-	time = 10 SECONDS
-	create = 1
-	category = "Miscellaneous"
-
-/datum/manufacture/pizzabox
-	name = "Pizza Box"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
-	item_outputs = list(/obj/storage/crate/pizza)
 	time = 10 SECONDS
 	create = 1
 	category = "Miscellaneous"

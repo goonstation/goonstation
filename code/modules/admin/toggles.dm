@@ -517,7 +517,7 @@ client/proc/toggle_ghost_respawns()
 
 /datum/admins/proc/toggleooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis"
 	set name="Toggle OOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	ooc_allowed = !( ooc_allowed )
@@ -528,7 +528,7 @@ client/proc/toggle_ghost_respawns()
 
 /datum/admins/proc/togglelooc()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis"
 	set name="Toggle LOOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	looc_allowed = !( looc_allowed )
@@ -539,7 +539,7 @@ client/proc/toggle_ghost_respawns()
 
 /datum/admins/proc/toggleoocdead()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
-	set desc="Toggle dis bitch"
+	set desc="Toggle dis."
 	set name="Toggle Dead OOC"
 	NOT_IF_TOGGLES_ARE_OFF
 	dooc_allowed = !( dooc_allowed )

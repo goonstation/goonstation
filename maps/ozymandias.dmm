@@ -56908,7 +56908,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/sw,
 /area/station/security/hos)
 "peL" = (
-/obj/machinery/door/airlock/pyro/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/black,
 /area/listeningpost)
 "peN" = (

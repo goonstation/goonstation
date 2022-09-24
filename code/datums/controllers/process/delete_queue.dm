@@ -151,7 +151,7 @@ var/global/harddel_count = 0
 			// Because we have already logged it into the gc count in qdel.
 			#endif
 
-			// Delete that bitch
+			// Delete that
 
 /*
 			// fuck
