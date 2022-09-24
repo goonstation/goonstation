@@ -1,5 +1,9 @@
 
 (t)sat sep 24 22
+(u)DrWolfy
+(p)10926
+(e)|
+(+)Equipping a cyborg module in the cyborg docking station while already having one installed will swap the two.
 (u)Ikea
 (p)10903
 (e)|
