@@ -761,7 +761,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/fries = 2,
 					/obj/random_item_spawner/cola = 1)
 	cost = 200
-	containertype = /obj/storage/crate/pizza
+	containertype = /obj/storage/crate/wooden
 	containername = "Soft Soft Pizza Delivery"
 
 /datum/supply_packs/mimicry

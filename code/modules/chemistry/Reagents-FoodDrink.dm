@@ -1599,7 +1599,7 @@ datum
 					M.reagents.del_reagent("chocolate")
 					M.reagents.del_reagent("freeze")
 				if(M.bodytemperature > 0)
-					M.bodytemperature=max(M.bodytemperature-(10 * mult),0)
+					M.bodytemperature=max(M.bodytemperature-(20 * mult),0)
 				if(probmult(10))
 					boutput(M, pick("<span class='notice'><i>Brrr...</i></span>","<span class='notice'><i>Isn't it a bit chilly in here?</i></span>","<span class='notice'><i>Who left an airlock open?</i></span>"))
 				if(probmult(15))
@@ -4065,14 +4065,14 @@ datum
 						T.visible_message("<span class='alert'>The [T] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					T.setMaterial(getMaterial("pizza"))
+					T.setMaterial(getMaterial("pizza"), copy = FALSE)
 			reaction_obj(var/obj/O, var/volume)
 				if(volume < rand(5,9))
 					if(prob(5))
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					O.setMaterial(getMaterial("pizza"))
+					O.setMaterial(getMaterial("pizza"), copy = FALSE)
 
 		fooddrink/friedessence
 			name = "The Physical Manifestation Of The Very Concept Of Fried Food"

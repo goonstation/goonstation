@@ -90,10 +90,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_HUNTER
-		M.mind.assigned_role = "Hunter"
-		M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-		M.make_hunter()
+		M.mind?.add_antagonist(ROLE_HUNTER)
 
 /obj/traitorifier/werewolf
 	name = "Shadowy Dog Thing"

@@ -40,7 +40,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "aQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "aZ" = (
@@ -141,6 +141,7 @@
 	dir = 2
 	},
 /obj/machinery/light/small/floor,
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "eQ" = (
@@ -510,10 +511,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "yz" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0;
-	dir = 2
-	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)

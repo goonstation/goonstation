@@ -18,7 +18,6 @@
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	..()
 
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
 	src.flock = F || new /datum/flock()

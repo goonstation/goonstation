@@ -19,12 +19,6 @@
 	/datum/matfab_recipe/sheet,
 	/datum/matfab_recipe/cell_small,
 	/datum/matfab_recipe/cell_large,
-	/datum/matfab_recipe/simple/insbody,
-	/datum/matfab_recipe/simple/insneck,
-	/datum/matfab_recipe/simple/insmouth,
-	/datum/matfab_recipe/simple/insbell,
-	/datum/matfab_recipe/simple/insbag,
-	/datum/matfab_recipe/simple/insrod,
 	/datum/matfab_recipe/infusion,
 	/datum/matfab_recipe/spacesuit)
 	/*

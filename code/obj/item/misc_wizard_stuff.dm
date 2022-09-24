@@ -348,7 +348,7 @@
 				T += "<b>[M.current.real_name]'s objectives:</b>"
 				var/i = 1
 				for (var/datum/objective/O in M.objectives)
-					if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+					if (istype(O, /datum/objective/crew))
 						continue
 					T += "<br>#[i]: [O.explanation_text]"
 					i++

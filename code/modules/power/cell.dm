@@ -38,7 +38,7 @@
 	name = "erebite power cell"
 	desc = "A small battery/generator unit powered by the unstable mineral Erebite. Do not expose to high temperatures or fire."
 	icon_state = "erebcell"
-	maxcharge = 15000
+	maxcharge = 20000
 	genrate = 10
 	specialicon = 1
 
@@ -54,6 +54,13 @@
 	name = "AI shell power cell"
 	desc = "A rechargable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
+
+/obj/item/cell/hypercell
+	name = "hyper capacity power cell"
+	desc = "A hyper capacity power cell utilizing the latest in high density energy storage. Warning: Do no- *the rest is scratched out*"
+	icon_state = "hypercell"
+	maxcharge = 25000
+	specialicon = 1
 
 /obj/item/cell/custom
 	name = "Large power cell"
@@ -95,13 +102,16 @@
 	charge = 15000
 
 /obj/item/cell/erebite/charged
-	charge = 15000
+	charge = 20000
 
 /obj/item/cell/cerenkite/charged
 	charge = 15000
 
 /obj/item/cell/shell_cell/charged
 	charge = 4000
+
+/obj/item/cell/hypercell/charged
+	charge = 25000
 
 /obj/item/cell/New()
 	..()
@@ -232,7 +242,7 @@
 
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
-	if (user.shock(src, src.charge, user.hand == 1 ? "l_arm" : "r_arm", 1, ignores_gloves))
+	if (user.shock(src, src.charge, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, ignores_gloves))
 		boutput(user, "<span class='alert'>[src] shocks you!</span>")
 
 		for(var/mob/M in AIviewers(src))
