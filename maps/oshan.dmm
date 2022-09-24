@@ -40317,7 +40317,7 @@
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "cav" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "caw" = (
@@ -45796,6 +45796,10 @@
 	name = "not grass"
 	},
 /area/station/ranch)
+"jZw" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "keq" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -109822,7 +109826,7 @@ bAl
 bBH
 byY
 iUm
-byY
+jZw
 byZ
 cLH
 hNG

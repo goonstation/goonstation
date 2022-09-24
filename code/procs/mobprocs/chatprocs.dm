@@ -244,6 +244,8 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 
+		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
 
@@ -447,7 +449,7 @@
 		if (src.bioHolder.HasEffect("accent_comic"))
 			font_accent = "Comic Sans MS"
 
-		if (src.bioHolder && src.bioHolder.genetic_stability < 50)
+		if (src.bioHolder.genetic_stability < 50 || src.bioHolder.HasEffect("accent_thrall"))
 			speechverb = "gurgles"
 
 	if (src.get_brain_damage() >= 60)
@@ -1031,7 +1033,7 @@
 		structure_speaking = speaker
 
 	var/name = ""
-	var/class = "flocksay"
+	var/class = "flocksay sentient"
 	var/is_npc = FALSE
 	var/is_flockmind = istype(mob_speaking, /mob/living/intangible/flock/flockmind)
 
@@ -1055,7 +1057,7 @@
 			name = mob_speaking.real_name
 
 	if(is_flockmind)
-		class = "flocksay flockmindsay"
+		class = "flocksay sentient flockmind"
 	else if(is_npc)
 		class = "flocksay flocknpc"
 	else if(isnull(mob_speaking))

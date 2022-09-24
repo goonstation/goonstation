@@ -15141,7 +15141,7 @@
 /area/station/crew_quarters/pool)
 "ays" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayt" = (
 /obj/critter/turtle/sylvester/HoS,
@@ -15149,7 +15149,7 @@
 /area/station/security/hos)
 "ayu" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayv" = (
 /obj/dartboard{
@@ -24245,7 +24245,7 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSa" = (
 /obj/fudad{
@@ -30637,7 +30637,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bfD" = (
 /obj/lattice,
@@ -56749,7 +56749,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "ceW" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ceX" = (
@@ -66467,7 +66467,7 @@
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "cyO" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "cyP" = (
 /turf/simulated/shuttle/wall/cockpit/window{

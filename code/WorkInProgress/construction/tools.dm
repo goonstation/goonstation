@@ -820,8 +820,9 @@
 
 		// this has been reworked to use auto walls that i resprited a while back.
 		if (istype(T, /turf/simulated/wall/auto))
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(T.type)
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
 			var/turf/simulated/wall/auto/AT = T
-			var/connectdir = get_connected_directions_bitflag(AT.connects_to, AT.connects_to_exceptions, TRUE, AT.connect_diagonal)
 			AT.icon = src.icon
 			AT.icon_state = "[selectedmod][connectdir]"
 

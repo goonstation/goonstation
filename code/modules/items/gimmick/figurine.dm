@@ -62,10 +62,10 @@
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)))
+				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)))
+				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
 
 		if (src.icon_state == "fig-floorpills")
 			src.create_reagents(30)
@@ -828,9 +828,84 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		ckey = "ihaveteeth"
 
 	walpvrgis
-		name = "\improper Cygnus Lyedelle"
+		name = "\improper Cygnus Gwyllion"
 		icon_state = "cygnus"
 		ckey = "walpvrgis"
+
+	froggitdogget
+		name = "\improper Investigangster Klutz"
+		icon_state = "froggit"
+		ckey = "froggitdogget"
+
+	munien
+		name = "\improper Elijah Retluoc"
+		icon_state = "elijahretluoc"
+		ckey = "munien"
+
+	calliopesoups
+		name = "\improper Grup Guppy"
+		icon_state = "grupguppy"
+		ckey = "calliopesoups"
+
+	eggcereal
+		name = "\improper Litol Guy"
+		icon_state = "litol"
+		ckey = "eggcereal"
+
+	yourdadthesquid
+		name = "\improper Roxy"
+		icon_state = "roxy"
+		ckey = "yourdadthesquid"
+
+	dumbnewguy
+		name = "\improper Cackles Maniacally"
+		icon_state = "cackles"
+		ckey = "dumbnewguy"
+
+	avimour
+		name = "\improper Siva Fata"
+		icon_state = "sivafata"
+		ckey = "avimour"
+
+	aft2001
+		name = "\improper NEX-13"
+		icon_state = "nex"
+		ckey = "aft2001"
+
+	improvedname
+		name = "\improper Latex Lizard"
+		icon_state = "latexlizard"
+		ckey = "improvedname"
+
+	haydus
+		name = "\improper Sonya Azazel"
+		icon_state = "sonyaazazel"
+		ckey = "haydus"
+
+	largeamountsofscreaming
+		name = "\improper Mavis Moovenheimer"
+		icon_state = "mavis"
+		ckey = "largeamountsofscreaming"
+
+	rockinend
+		name = "\improper Rooke Ennen"
+		icon_state = "rookeennen"
+		ckey = "rockingend"
+
+	rycool
+		name = "\improper Neo Politan"
+		icon_state = "neopolitan"
+		ckey = "rycool"
+
+	konamaco
+		name = "\improper Johnathan Pepper"
+		icon_state = "jonathanpepper"
+		ckey = "konamaco"
+
+	coolcrow420
+		name = "\improper Niko Balthazar"
+		icon_state = "nikobalthazar"
+		ckey = "coolcrow420"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

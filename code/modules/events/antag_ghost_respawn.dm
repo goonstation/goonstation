@@ -239,19 +239,16 @@
 				var/mob/living/R2 = M3.humanize()
 				if (R2 && istype(R2))
 					M3 = R2
-					R2.make_werewolf(1)
+					R2.make_werewolf()
 					role = ROLE_WEREWOLF
 					objective_path = /datum/objective_set/werewolf
 				else
 					failed = 1
 
 			if ("Hunter")
-				var/mob/living/R3 = M3.humanize()
-				if (R3 && istype(R3))
-					M3 = R3
-					R3.make_hunter()
-					role = ROLE_HUNTER
-					objective_path = /datum/objective_set/hunter
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+					L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
 				else
 					failed = 1
 
@@ -348,7 +345,7 @@
 
 		var/i = 1
 		for (var/datum/objective/Obj in lucky_dude.objectives)
-			if (istype(Obj, /datum/objective/crew) || istype(Obj, /datum/objective/miscreant))
+			if (istype(Obj, /datum/objective/crew))
 				continue
 			boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 			i++
@@ -376,7 +373,7 @@
 
 		if (lucky_dude.current)
 			lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
-		message_admins("[lucky_dude.key] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+		message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 		return

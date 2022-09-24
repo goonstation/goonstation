@@ -368,7 +368,7 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return

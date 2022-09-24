@@ -524,7 +524,7 @@
 			qdel(W)
 			src.icon_state = "sarc_2"
 			src.gnome = 1
-		else if(istype(W,/obj/item/device/key/chompskey) && (src.icon_state == "sarc_0"))
+		else if(istype(W,/obj/item/device/key/generic/chompskey) && (src.icon_state == "sarc_0"))
 			user.u_equip(W)
 			qdel(W)
 			src.icon_state = "sarc_key"

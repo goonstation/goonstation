@@ -4274,8 +4274,14 @@
 /area/station/crew_quarters/cafeteria)
 "kX" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/decoration/ashtray,
-/obj/random_item_spawner/tableware,
+/obj/item/decoration/ashtray{
+	pixel_x = -4
+	},
+/obj/item_dispenser/icedispenser{
+	dir = 8;
+	pixel_x = 19;
+	pixel_y = 8
+	},
 /turf/simulated/floor/carpet{
 	dir = 1;
 	icon_state = "fred2"
@@ -18657,6 +18663,13 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
+"TP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/white/checker,
+/area/station/hallway/secondary/exit)
 "TQ" = (
 /obj/machinery/vehicle/miniputt/armed{
 	dir = 4
@@ -20092,6 +20105,10 @@
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
+"XN" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/east)
 "XO" = (
 /obj/cable{
 	d1 = 4;
@@ -74819,7 +74836,7 @@ Qa
 Qa
 Qa
 Sd
-Qa
+XN
 El
 ER
 FH
@@ -75090,7 +75107,7 @@ cR
 br
 ce
 cH
-cH
+TP
 dO
 es
 ez

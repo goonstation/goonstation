@@ -204,6 +204,10 @@ var/global/noir = 0
 			if (src.level >= LEVEL_MOD)
 				usr.client.toggle_rp_word_filtering()
 				src.show_pref_window(usr)
+		if ("toggle_uncool_word_filtering")
+			if (src.level >= LEVEL_MOD)
+				usr.client.toggle_uncool_word_filtering()
+				src.show_pref_window(usr)
 		if ("toggle_hear_prayers")
 			if (src.level >= LEVEL_MOD)
 				usr.client.holder.hear_prayers = !usr.client.holder.hear_prayers
@@ -1807,7 +1811,7 @@ var/global/noir = 0
 		if ("managetraits_remove")
 			if (src.level >= LEVEL_PA)
 				var/mob/M = locate(href_list["target"])
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				if (!M || !trait) return
 				message_admins("[key_name(usr)] removed trait [trait.name] from [key_name(M)].")
 				logTheThing(LOG_ADMIN, usr, "removed trait [trait.name] from [constructTarget(M,"admin")].")
@@ -1818,7 +1822,7 @@ var/global/noir = 0
 
 		if ("managetraits_debug_vars")
 			if (src.level >= LEVEL_PA)
-				var/obj/trait/trait = locate(href_list["trait"])
+				var/datum/trait/trait = locate(href_list["trait"])
 				usr.client.debug_variables(trait)
 			else
 				tgui_alert(usr,"You must be at least a Primary Administrator to do this!")
@@ -1831,9 +1835,9 @@ var/global/noir = 0
 				if (!M.traitHolder)
 					tgui_alert(usr,"No trait holder detected.")
 					return
-				var/list/obj/trait/all_traits = list()
+				var/list/datum/trait/all_traits = list()
 				var/list/traits_by_name = list()
-				for(var/obj/trait/trait as anything in traitList)
+				for(var/datum/trait/trait as anything in traitList)
 					all_traits[traitList[trait].name] = traitList[trait].id
 					traits_by_name.Add(traitList[trait].name)
 
@@ -1862,7 +1866,7 @@ var/global/noir = 0
 				var/list/traits = list()
 
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					traits.Add(trait_obj.name)
 
 				if(length(traits) == 0)
@@ -1875,7 +1879,7 @@ var/global/noir = 0
 
 				// get the id of the selected trait
 				for(var/trait in M.traitHolder.traits)
-					var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+					var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 					if(trait_obj.name == trait_to_remove_name)
 						M.traitHolder.removeTrait(trait_obj.id)
 						message_admins("[key_name(usr)] removed the trait [trait_to_remove_name] from [key_name(M)].")
@@ -2117,13 +2121,6 @@ var/global/noir = 0
 			if (!M) return
 
 			//independant of mode and can be traitors as well
-			if(M.mind && (M.mind in miscreants))
-				var/t = ""
-				for(var/datum/objective/O in M.mind.objectives)
-					if (istype(O, /datum/objective/miscreant))
-						t += "[O.explanation_text]\n"
-				tgui_alert(usr,"Miscreant! Objective: [t]")
-
 			var/datum/game_mode/current_mode = ticker.mode
 			if (istype(current_mode, /datum/game_mode/revolution))
 				if(M.mind in current_mode:head_revolutionaries)
@@ -2141,7 +2138,7 @@ var/global/noir = 0
 					var/datum/mind/antagonist = M.mind
 					var/t = ""
 					for(var/datum/objective/OB in antagonist.objectives)
-						if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+						if (istype(OB, /datum/objective/crew))
 							continue
 						t += "[OB.explanation_text]\n"
 					if(antagonist.objectives.len == 0)
@@ -2162,7 +2159,7 @@ var/global/noir = 0
 				var/datum/mind/antagonist = M.mind
 				var/t = ""
 				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+					if (istype(OB, /datum/objective/crew))
 						continue
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
@@ -2173,7 +2170,7 @@ var/global/noir = 0
 				var/datum/mind/antagonist = M.mind
 				var/t = ""
 				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+					if (istype(OB, /datum/objective/crew))
 						continue
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
@@ -2877,7 +2874,7 @@ var/global/noir = 0
 					if("traitlist_help")
 						var/tl_string = "<b>All Traits and their descriptions</b><hr>"
 						for(var/trait in traitList)
-							var/obj/trait/trait_obj = traitList[trait]
+							var/datum/trait/trait_obj = traitList[trait]
 							tl_string += "[trait_obj.name] - [trait_obj.desc]<br><br>"
 						usr.Browse(tl_string,"window=traitlist_help;size=500x600")
 
@@ -3123,7 +3120,7 @@ var/global/noir = 0
 								else if (P.icon_state == "pool")
 									P.icon_state = "ballpit"
 								LAGCHECK(LAG_LOW)
-							for (var/turf/simulated/pool/P in world)
+							for (var/turf/simulated/floor/pool/P in world)
 								if (atom_emergency_stop)
 									message_admins("[key_name(usr)]'s command to replace all Z1 floors and walls with wooden ones was terminated due to the atom emerygency stop!")
 									return
@@ -3575,7 +3572,7 @@ var/global/noir = 0
 
 								dat += "<tr><td>Target area:"
 								if (!isnull(NN.target_location_type))
-									dat += " [NN.target_location_name]</tr></td>"
+									dat += " [NN.concatenated_location_names]</tr></td>"
 								else
 									dat += " Unknown or not assigned</tr></td>"
 
@@ -3673,16 +3670,6 @@ var/global/noir = 0
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
-								dat += "</table>"
-
-							if(miscreants.len > 0)
-								dat += "<br><table cellspacing=5><tr><td><B>Miscreants</B></td><td></td><td></td></tr>"
-								for(var/datum/mind/miscreant in miscreants)
-									var/mob/M = miscreant.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 								dat += "</table>"
 
 							if (istype(ticker.mode, /datum/game_mode/spy_theft) || ticker.mode.spy_market)
@@ -4355,6 +4342,8 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_TELEPATHY]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_ADMIN]_log'>Admin Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_ADMIN]_log_string'><small>(Search)</small></A><BR>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_GAMEMODE]_log'>Gamemode Log</A>
+				<A href='?src=\ref[src];action=view_logs;type=[LOG_GAMEMODE]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_DEBUG]_log'>Debug Log</A>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_DEBUG]_log_string'><small>(Search)</small></A><BR>
 				<A href='?src=\ref[src];action=view_logs;type=[LOG_AHELP]_log'>Adminhelp Log</A>
@@ -4705,10 +4694,8 @@ var/global/noir = 0
 				M.show_text("<h2><font color=red><B>You have joined the ranks of the undead and are now a vampire!</B></font></h2>", "red")
 				M.make_vampire()
 			if(ROLE_HUNTER)
-				M.mind.special_role = ROLE_HUNTER
-				M.mind.assigned_role = "Hunter"
 				M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-				M.make_hunter()
+				M.mind.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = FALSE)
 			if(ROLE_WRESTLER)
 				M.mind.special_role = ROLE_WRESTLER
 				M.show_text("<h2><font color=red><B>You feel an urgent need to wrestle!</B></font></h2>", "red")
@@ -4716,7 +4703,7 @@ var/global/noir = 0
 			if(ROLE_WEREWOLF)
 				M.mind.special_role = ROLE_WEREWOLF
 				M.show_text("<h2><font color=red><B>You have become a werewolf!</B></font></h2>", "red")
-				M.make_werewolf(1)
+				M.make_werewolf()
 			if(ROLE_GRINCH)
 				M.mind.special_role = ROLE_GRINCH
 				M.make_grinch()
@@ -4756,7 +4743,7 @@ var/global/noir = 0
 				M.verbs += /client/proc/gearspawn_wizard
 				M.make_changeling()
 				M.make_vampire()
-				M.make_werewolf(1)
+				M.make_werewolf()
 				M.make_wrestler(1)
 				M.make_grinch()
 				M.show_text("<h2><font color=red><B>You have become an omnitraitor!</B></font></h2>", "red")
@@ -5287,10 +5274,10 @@ var/global/noir = 0
 		return
 	var/list/traits = list()
 	for(var/trait in M.traitHolder.traits)
-		var/obj/trait/trait_obj = M.traitHolder.traits[trait]
+		var/datum/trait/trait_obj = M.traitHolder.traits[trait]
 		traits.Add(trait_obj)
 
-	for (var/obj/trait/trait as anything in traits)
+	for (var/datum/trait/trait as anything in traits)
 		dat += {"
 			<tr>
 				<td><a href='?src=\ref[src.holder];action=managetraits_remove;target=\ref[M];trait=\ref[trait];origin=managetraits'>remove</a></td>

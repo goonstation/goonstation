@@ -22,6 +22,7 @@
 	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 
@@ -276,6 +277,7 @@
 	New()
 		..()
 		setProperty("chemprot",30)
+		setProperty("heatprot", 15)
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 
 	#ifdef MAP_OVERRIDE_POD_WARS
@@ -310,6 +312,11 @@
 		seal_hair = 0
 		see_face = 1
 		team_num = TEAM_SYNDICATE
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
+
 		#ifdef MAP_OVERRIDE_POD_WARS
 		attack_hand(mob/user)
 			if (get_pod_wars_team_num(user) == team_num)
@@ -327,6 +334,10 @@
 		desc = "A modified combat helmet for syndicate operative specialists."
 		icon_state = "syndie_specialist"
 		item_state = "syndie_specialist"
+
+		setupProperties()
+			..()
+			setProperty("exploprot", 10)
 
 		infiltrator
 			name = "specialist combat helmet"
@@ -421,7 +432,6 @@
 				..()
 				setProperty("meleeprot_head", 6)
 				setProperty("rangedprot", 1)
-				setProperty("exploprot", 10)
 				setProperty("disorient_resist_eye", 50)
 				setProperty("disorient_resist_ear", 50)
 				setProperty("space_movespeed", 0.3)
@@ -490,6 +500,7 @@
 	name = "T.U.R.D.S. helmet"
 	icon_state = "turdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	item_state = "turdhelm"
 	setupProperties()
 		..()
@@ -650,6 +661,7 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = FALSE
 	item_state = "welding"
 	protective_temperature = 1300
@@ -726,6 +738,7 @@
 	icon_state = "EOD"
 	item_state = "tdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 9)
@@ -816,6 +829,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = 0
 	setupProperties()
 		..()
@@ -876,6 +890,7 @@
 	item_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 
 	setupProperties()
 		..()
@@ -905,6 +920,7 @@
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")

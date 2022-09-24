@@ -849,7 +849,7 @@ obj/item/contract/greed
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
-						playsound(T, 'sound/items/coindrop.ogg', 100, 1)
+						playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 						new /obj/item/coin(T)
 						for (var/i = 1; i<= 8; i= i*2)
 							if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))

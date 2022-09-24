@@ -77,7 +77,7 @@ var/global
 
 	list/factions = list()
 
-	list/obj/trait/traitList = list() //List of trait objects
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -337,6 +337,7 @@ var/global
 		LOG_BOMBING		=	list(),
 		LOG_STATION		=	list(),
 		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
 		LOG_SIGNALERS	=	list(),
 		LOG_PATHOLOGY	=	list(),
 		LOG_TOPIC		=	list(),
@@ -411,9 +412,6 @@ var/global
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
 
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")

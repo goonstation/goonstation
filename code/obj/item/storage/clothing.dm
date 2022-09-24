@@ -48,7 +48,7 @@
 	name = "\improper Medical Director's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/medical_director,
 	/obj/item/clothing/under/rank/medical_director/dress,
-	/obj/item/clothing/suit/labcoat,
+	/obj/item/clothing/suit/labcoat/medical_director,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/medical_director/fancy,
 	/obj/item/clothing/suit/wintercoat/command)

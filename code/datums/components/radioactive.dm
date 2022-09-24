@@ -55,10 +55,10 @@ TYPEINFO(/datum/component/radioactive)
 	proc/do_filters()
 		var/atom/PA = parent
 		var/color = (neutron ? "#2e3ae4" : "#18e022") + num2hex(min(128, round(255 * radStrength/100)), 2) //base color + alpha
-		PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
-		if(isnull(src._backup_color))
+		if(PA.color && isnull(src._backup_color))
 			src._backup_color = PA.color
-		PA.color = null
+			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
+			PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
 		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
@@ -111,10 +111,11 @@ TYPEINFO(/datum/component/radioactive)
 		var/atom/PA = parent
 		if(ismob(PA.loc)) //if you're holding it in your hand, you're not a viewer, so special handling
 			var/mob/M = PA.loc
-			M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
+			if(!ON_COOLDOWN(M, "radiation_exposure", 0.5 SECONDS))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100))
 		for(var/mob/living/M in hearers(effect_range, parent)) //hearers is basically line-of-sight
 			if(!ON_COOLDOWN(M,"radiation_exposure", 0.5 SECONDS) && !isintangible(M)) //shorter than item tick time, so you can get multiple doses but there's a limit
-				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1))
+				M.take_radiation_dose(mult * (neutron ? 0.8 SIEVERTS: 0.2 SIEVERTS) * (radStrength/100) * 1/((GET_DIST(M, PA)/(src.effect_range+1)) + 1) * 0.8)
 		if(src.decays && prob(33))
 			src.radStrength = max(0, src.radStrength - (1 * mult))
 			src.do_filters()

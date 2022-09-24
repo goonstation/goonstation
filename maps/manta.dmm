@@ -1545,7 +1545,7 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afe" = (
@@ -37052,6 +37052,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
+"kSX" = (
+/obj/machinery/conveyor/north{
+	id = "north"
+	},
+/turf/space/fluid/manta/nospawn,
+/area/space)
 "kWs" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
@@ -70499,8 +70505,8 @@ bdV
 bIU
 bdY
 ark
-ark
-ark
+kSX
+kSX
 adx
 aaa
 aaa

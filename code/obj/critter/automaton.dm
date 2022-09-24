@@ -195,8 +195,8 @@ var/global/the_automaton = null
 				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.  It doesn't seem to want it in the state it's in.</span>")
 				return
 
-			if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
-				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			if (istype(W, /obj/item/device/key/generic))
+				user.visible_message("<span class='alert'><b>[src]</b> studies [src]'s open hand for a moment, then looks disappointed.</span>", "<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back. Maybe this key isn't special enough?</span>")
 				return
 
 			if (istype(W, /obj/item/device/key/cheget)) //I don' like yer new-fangled mumbo-jumbo
@@ -283,17 +283,13 @@ var/global/the_automaton = null
 				inserted_key(user)
 
 				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
-			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime))
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
-			if (keycount < (AUTOMATON_MAX_KEYS-1) && !pied)
-				keycount++
-				inserted_key(user)
-				pied = 1
-
-			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a pie-shaped hole in its chest. How did you not notice that before?</span>")
-			playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 50, 1)
-			qdel (W)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
 		else if (istype(W, /obj/item/skull))
 			if (keycount != AUTOMATON_MAX_KEYS)

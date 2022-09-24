@@ -13,13 +13,14 @@
 	icon_state = "tail-wolf"
 	made_from = "flesh"
 	var/tail_num = TAIL_NONE
-	var/colorful = 0 // if we need to colorize it
-	var/multipart_icon = 0 // if we need to run update_tail_icon
+	var/colorful = FALSE /// if we need to colorize it
+	var/multipart_icon = FALSE /// if we need to run update_tail_icon
 	var/icon_piece_1 = null	// For setting up the icon if its in multiple pieces
 	var/icon_piece_2 = null	// Only modifies the dropped icon
-	var/failure_ability = "clumsy"	// The organ failure ability associated with this organ.
-	var/human_getting_monkeytail = 0	// If a human's getting a monkey tail
-	var/monkey_getting_humantail = 0	// If a monkey's getting a human tail
+	var/failure_ability = "clumsy"	/// The organ failure ability associated with this organ.
+	var/human_getting_monkeytail = FALSE	/// If a human's getting a monkey tail
+	var/monkey_getting_humantail = FALSE	/// If a monkey's getting a human tail
+	var/clothing_image_icon = null	/// if the tail has clothing sprites, set this to the appropriate icon
 	// vv these get sent to update_body(). no sense having it calculate all this shit multiple times
 	var/image/tail_image_1
 	var/image/tail_image_2
@@ -63,14 +64,14 @@
 		var/boned = 0	// Tailbones just kind of pop into place
 
 		if (src.type == /obj/item/organ/tail/monkey && !ismonkey(H))	// If we are trying to attach a monkey tail to a non-monkey
-			src.human_getting_monkeytail = 1
-			src.monkey_getting_humantail = 0
+			src.human_getting_monkeytail = TRUE
+			src.monkey_getting_humantail = FALSE
 		else if(src.type != /obj/item/organ/tail/monkey && ismonkey(H))	// If we are trying to attach a non-monkey tail to a monkey
-			src.human_getting_monkeytail = 0
-			src.monkey_getting_humantail = 1
+			src.human_getting_monkeytail = FALSE
+			src.monkey_getting_humantail = TRUE
 		else	// Tail is going to someone with a natively compatible butt-height
-			src.human_getting_monkeytail = 0
-			src.monkey_getting_humantail = 0
+			src.human_getting_monkeytail = FALSE
+			src.monkey_getting_humantail = FALSE
 
 		if (!H.organHolder.tail && H.mob_flags & IS_BONEY)
 			attachment_successful = 1 // Just slap that tailbone in place, its fine
@@ -109,12 +110,12 @@
 	on_life(var/mult = 1)
 		if (!..())
 			return 0
-		if (src.get_damage() >= FAIL_DAMAGE && probmult(src.get_damage() * 0.2))
+		if (src.get_damage() >= fail_damage && probmult(src.get_damage() * 0.2))
 			src.breakme()
 		return 1
 
 	on_broken(var/mult = 1)
-		if(src.get_damage() < FAIL_DAMAGE)
+		if(src.get_damage() < fail_damage)
 			src.unbreakme()
 		if(ischangeling(src.holder.donor))
 			return
@@ -185,6 +186,7 @@
 	desc = "A long, slender tail."
 	icon_state = "tail-monkey"
 	organ_image_icon = 'icons/mob/monkey.dmi'
+	clothing_image_icon = 'icons/mob/monkey/tail.dmi'
 	tail_num = TAIL_MONKEY
 	organ_image_under_suit_1 = "monkey_under_suit"
 	organ_image_under_suit_2 = null
@@ -201,8 +203,8 @@
 	organ_image_under_suit_2 = "lizard_under_suit_2"
 	organ_image_over_suit = "lizard_over_suit"
 	tail_num = TAIL_LIZARD
-	colorful = 1
-	multipart_icon = 1
+	colorful = TRUE
+	multipart_icon = TRUE
 
 /obj/item/organ/tail/cow
 	name = "cow tail"
@@ -229,8 +231,8 @@
 	desc = "A long, fluffy tail."
 	icon_state = "tail-wolf"
 	organ_image_icon = 'icons/mob/werewolf.dmi'
-	MAX_DAMAGE = 250	// Robust tail for a robust antag
-	FAIL_DAMAGE = 240
+	max_damage = 250	// Robust tail for a robust antag
+	fail_damage = 240
 	tail_num = TAIL_WEREWOLF
 	organ_image_under_suit_1 = "wolf_under_suit"
 	organ_image_under_suit_2 = null
@@ -265,4 +267,5 @@
 	organ_image_under_suit_1 = "roach_under_suit"
 	organ_image_under_suit_2 = null
 	organ_image_over_suit = "roach_over_suit"
-	colorful = 1
+	colorful = TRUE
+

@@ -12,8 +12,8 @@
 	item_state = "brain"
 	var/datum/mind/owner = null
 	edible = 0
-	FAIL_DAMAGE = 120
-	MAX_DAMAGE = 120
+	fail_damage = 120
+	max_damage = 120
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
