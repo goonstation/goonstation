@@ -1206,7 +1206,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			return 1
 
 		var/poison_name = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
-		logTheThing(LOG_DEBUG, null, "name = [poison_name]")
 		if(!poison_name)
 			return 1
 
@@ -1228,7 +1227,6 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				poison_id = "mucus"
 			else
 				return 1
-		logTheThing(LOG_DEBUG, null, "Id =[poison_id]")
 
 
 		if (current_container && istype(current_container))
