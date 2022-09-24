@@ -1,6 +1,10 @@
 
 (t)sat sep 24 22
 (u)Caio029
+(p)10905
+(e)|
+(*)NanoTrasen has developed a new hi-tech storage box for the containment of disc-shaped foods. Theses new boxes are available at FoodTech vendors.
+(u)Caio029
 (p)10581
 (e)|
 (+)Makes General Manufacturers capable of printing instruments.
