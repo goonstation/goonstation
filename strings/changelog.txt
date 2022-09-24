@@ -1,5 +1,9 @@
 
 (t)fri sep 23 22
+(u)Grokberg
+(p)10974
+(e)|
+(+)Fixed so that the first key on the new music instrument interfaces can be pressed using the keyboard.
 (u)Emily
 (e)|
 (*)Cleaned up a bunch of Key Stuff. Look in #imspoiler for the details.
