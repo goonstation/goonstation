@@ -175,6 +175,10 @@
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		var/mob/living/intangible/flock/trace/flocktrace = pilot
+		if (flocktrace.dying)
+			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+			src.updateOverlaysClient(src.client)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -217,6 +221,10 @@
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+			var/mob/living/intangible/flock/trace/flocktrace = src.controller
+			if (flocktrace.dying)
+				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 
@@ -260,6 +268,10 @@
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		var/mob/living/intangible/flock/trace/flocktrace = src.controller
+		if (flocktrace.dying)
+			src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+			src.updateOverlaysClient(src.client)
 	controller = null
 	src.update_health_icon()
 	src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
