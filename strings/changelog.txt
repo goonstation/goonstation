@@ -1,5 +1,9 @@
 
 (t)sat sep 24 22
+(u)Sovexe
+(p)10967
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Playable emagged firebots now how have a new skill to spray burning welding fuel, and come in less ugly colors.
 (u)Mr. Moriarty
 (p)10917
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
