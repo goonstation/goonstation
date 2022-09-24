@@ -1,3 +1,8 @@
+#define FUEL_DRAIN_RATE 0.3
+#define ATMOS_DRAIN_RATE 0.02
+#define CARBON_OUTPUT_RATE 0.01 // for every part of fuel burnt
+#define OPTIMAL_MIX 0.147 // how many parts oxygen for every part of fuel
+
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
 	desc = "A portable combustion generator that burns fuel from a fuel tank, there is a port for a gas tank. A warning reads: DO NOT RUN INDOORS, OR WHILE UNSECURE."
@@ -9,14 +14,15 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
-	var/fuel_drain_rate = 0.3
-	var/atmos_drain_rate = 0.02
+
+	// 0 - 1
+	var/fuel_inlet = 0.01
+	var/atmos_inlet = 0.147
+
 	var/output_multiplier = 1 // for bigger generators?
 	var/last_output
 
 	// reagents
-
-	// think heat producing, not explosive
 	var/valid_fuels = list(
 		"dbreath" = 60000,
 		"kerosene" = 45000,
@@ -230,7 +236,7 @@
 
 		var/fuel_power = get_fuel_power(src.fuel_tank.reagents)
 		var/available_oxygen = src.check_available_oxygen()
-		if (!available_oxygen || !fuel_power)
+		if (!available_oxygen || !fuel_power || !fuel_inlet || !atmos_inlet)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
 			return
@@ -240,6 +246,12 @@
 			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
 			return
 
+		var/fuel_air_mix = (atmos_inlet / fuel_inlet) / OPTIMAL_MIX // difference between current mix and optimal mix.
+		if (fuel_air_mix > 6 || fuel_air_mix < -8) // too much or too little air or fuel
+			src.stop_engine()
+			src.visible_message("<span class='alert'>The [src] sputters for a moment and then stops, it failed to combust the reagents.</span>")
+			return
+
 		var/obj/cable/C = src.get_output_cable()
 		if (!C)
 			src.stop_engine()
@@ -247,7 +259,11 @@
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		src.last_output = (fuel_power * available_oxygen * src.output_multiplier) * mult // TODO: richer fuel mixture = more power
+		var/fuel_drain_rate = FUEL_INLET_RATE * fuel_inlet
+		var/atmos_drain_rate = ATMOS_INLET_RATE * atmos_inlet
+		var/inlet_volume = atmos_drain_rate + fuel_drain_rate
+
+		src.last_output = (fuel_power * (fuel_air_mix / 4)) * mult // TODO: richer fuel mixture = more power
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output
 
@@ -382,3 +398,8 @@
 
 		src.UpdateIcon()
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+#undef FUEL_DRAIN_RATE
+#undef ATMOS_DRAIN_RATE
+#undef CARBON_OUTPUT_RATE
+#undef OPTIMAL_MIX
