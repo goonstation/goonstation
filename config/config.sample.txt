@@ -91,7 +91,7 @@ SERVERNAME Goonstation
 SERVERREGION Development
 
 CDN http://cdn.goonhub.com
-ENV prod
+ENV dev
 
 # Spacebee API
 SPACEBEE_API_URL https://spacebee.goonhub.com
