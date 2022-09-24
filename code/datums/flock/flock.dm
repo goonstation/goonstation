@@ -18,6 +18,7 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	var/queued_trace_deaths = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind

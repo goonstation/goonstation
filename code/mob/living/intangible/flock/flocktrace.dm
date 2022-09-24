@@ -90,8 +90,9 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.flock && src.compute != 0 && src.flock.total_compute() < src.flock.used_compute && !src.dying)
+	if (src.flock && src.compute != 0 && src.flock.total_compute() - src.flock.used_compute < -FLOCKTRACE_COMPUTE_COST * src.flock.queued_trace_deaths && !src.dying)
 		src.dying = TRUE
+		src.flock.queued_trace_deaths++
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness! You will die soon!</span>")
 		src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 		src.updateOverlaysClient(src.client)
@@ -105,6 +106,7 @@
 					src.death()
 				else
 					src.dying = FALSE
+					src.flock.queued_trace_deaths--
 					boutput(src, "<span class='alert'>The Flock has gained enough compute to keep you alive!</span>")
 					src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 					src.updateOverlaysClient(src.client)
