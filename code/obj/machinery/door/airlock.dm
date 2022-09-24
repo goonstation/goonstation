@@ -473,7 +473,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	visible = 0
 	operation_time = 10
 
-/obj/machinery/door/airlock/pyro/syndicate
+/obj/machinery/door/airlock/pyro/reinforced
 	name = "reinforced external airlock"
 	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
 	icon_state = "airlock_closed"
@@ -482,18 +482,20 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "airlock_welded"
 	sound_airlock = 'sound/machines/airlock.ogg'
 	operation_time = 10
-	req_access_txt = "52"
 	cant_emag = TRUE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	mats = 0
 
-/obj/machinery/door/airlock/pyro/syndicate/meteorhit()
+/obj/machinery/door/airlock/pyro/reinforced/meteorhit()
 	return
-/obj/machinery/door/airlock/pyro/syndicate/ex_act()
+/obj/machinery/door/airlock/pyro/reinforced/ex_act()
 	return
-/obj/machinery/door/airlock/pyro/syndicate/blob_act(power)
+/obj/machinery/door/airlock/pyro/reinforced/blob_act(power)
 	return
+
+/obj/machinery/door/airlock/pyro/reinforced/syndicate
+	req_access_txt = "52"
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
@@ -503,6 +505,22 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	welded_icon_state = "glass_welded"
 	opacity = 0
 	visible = 0
+
+/obj/machinery/door/airlock/pyro/glass/reinforced
+	name = "reinforced glass airlock"
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight."
+	operation_time = 10
+	cant_emag = TRUE
+	hardened = TRUE
+	aiControlDisabled = TRUE
+	mats = 0
+
+/obj/machinery/door/airlock/pyro/glass/reinforced/meteorhit()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/ex_act()
+	return
+/obj/machinery/door/airlock/pyro/glass/reinforced/blob_act(power)
+	return
 
 /obj/machinery/door/airlock/pyro/glass/brig
 	req_access_txt = "2"
@@ -523,6 +541,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	name = "security airlock"
 	icon_state = "sec_glass_closed"
 	icon_base = "sec_glass"
+	req_access = null
+
+/obj/machinery/door/airlock/pyro/glass/security/alt
+	name = "security airlock"
+	icon_state = "sec_glassalt_closed"
+	icon_base = "sec_glassalt"
 	req_access = null
 
 /obj/machinery/door/airlock/pyro/glass/med
@@ -1505,6 +1529,9 @@ About the new airlock wires panel:
 		return
 
 	if ((isweldingtool(C) && !( src.operating ) && src.density))
+		if (src.hardened)
+			boutput(user, "<span class='alert'>Your tool is unable to weld this airlock! Huh.</span>")
+			return
 		if(!C:try_weld(user, 1, burn_eyes = 1))
 			return
 
@@ -1519,7 +1546,7 @@ About the new airlock wires panel:
 
 		return
 	else if (isscrewingtool(C))
-		if (src.hardened == 1)
+		if (src.hardened)
 			boutput(user, "<span class='alert'>Your tool can't pierce this airlock! Huh.</span>")
 			return
 		if (!src.has_panel)
