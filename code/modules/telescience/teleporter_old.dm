@@ -241,3 +241,18 @@ proc/splinch(var/mob/M as mob, var/probability)
 				return H.organHolder.drop_organ(part_splinched)
 
 		// owner.visible_message("<span class='alert'><b>[M]</b> splinches themselves and their [part_splinched] falls off!</span>")
+
+
+/obj/submachine/surplusopdeployer
+	icon = 'icons/obj/teleporter.dmi'
+	icon_state = "tele0"
+	name = "Old portal ring"
+	desc = "An outdated and unstable portal ring model, locked in to a preset location."
+	density = TRUE
+	anchored = TRUE
+	var/active = FALSE //can we go yet?
+
+	Bumped(atom/movable/M as mob|obj)
+		if(active)
+			do_teleport(M, pick_landmark(LANDMARK_PESTSTART)) //put them at the latejoin for now- CHANGE THIS LATER
+
