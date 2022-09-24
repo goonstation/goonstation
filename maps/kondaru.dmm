@@ -4123,7 +4123,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "alq" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security{
 	name = "Mini-Brig"
 	},
 /obj/access_spawn/brig,
@@ -14947,9 +14947,8 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "aQW" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Dock Checkpoint"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -14962,6 +14961,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/podbay)
 "aQX" = (
@@ -20794,7 +20794,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/checkpoint/escape)
 "bkv" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security{
 	name = "Mini-Brig"
 	},
 /obj/disposalpipe/segment/brig{
@@ -23084,9 +23084,8 @@
 	},
 /area/station/hydroponics/bay)
 "bsf" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Dock Checkpoint"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -27748,7 +27747,7 @@
 	name = "Secure Release Foyer"
 	})
 "bIc" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
 	id = "restitution_cell1";
 	name = "Cell One Restitution"
@@ -28792,7 +28791,7 @@
 	name = "Secure Release Foyer"
 	})
 "bKT" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
 	id = "restitution_cell2";
 	name = "Cell Two Restitution"
@@ -34490,7 +34489,7 @@
 	},
 /area/station/security/checkpoint/customs)
 "cdY" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
 	name = "Dock Checkpoint"
 	},
@@ -37802,7 +37801,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/customs)
 "cnv" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security{
 	name = "Mini-Brig"
 	},
 /obj/access_spawn/brig,
@@ -41822,7 +41821,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
 "fdY" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple{
@@ -44035,9 +44034,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "hal" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Holding Cell One"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/disposalpipe/segment/brig{
 	dir = 1
@@ -45890,9 +45887,7 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber)
 "iZd" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "General Population"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/machinery/secscanner{
 	pixel_y = 10
@@ -46894,7 +46889,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/east)
 "kjc" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
 /turf/simulated/floor/red/side{
@@ -46949,7 +46944,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/cargobay)
 "knt" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/cable{
@@ -47172,8 +47167,8 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Armory"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	name = "Armory Foyer"
 	},
 /obj/access_spawn/brig,
 /turf/simulated/floor/red,
@@ -50204,7 +50199,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/cafeteria)
 "ntV" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
 	id = "restitution_genpop";
 	name = "Genpop Restitution"
@@ -52490,7 +52485,7 @@
 	},
 /area/station/science/testchamber)
 "pGu" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/brig,
 /obj/firedoor_spawn,
 /obj/cable{
@@ -53717,16 +53712,6 @@
 /area/station/maintenance/storage{
 	name = "Secure Atmospherics"
 	})
-"qJV" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Holding Cell Two"
-	},
-/obj/access_spawn/brig,
-/obj/disposalpipe/segment/brig{
-	dir = 1
-	},
-/turf/simulated/floor/black,
-/area/station/security/brig/solitary)
 "qKQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -55869,7 +55854,7 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "sTo" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/access_spawn/security,
@@ -57632,9 +57617,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "uxk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Office"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/mail/vertical,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -57670,7 +57653,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "uyf" = (
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/access_spawn/brig,
@@ -121175,7 +121158,7 @@ wVV
 bQH
 bRW
 gmO
-qJV
+hal
 bVP
 tdg
 gxk

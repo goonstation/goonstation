@@ -5933,7 +5933,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "oM" = (
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6320,6 +6320,11 @@
 	name = "Security Foyer persistent notice board";
 	persistent_id = "security foyer"
 	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "pL" = (
@@ -7090,6 +7095,11 @@
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
 /obj/item/pen/pencil,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "rB" = (
@@ -7462,6 +7472,11 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7567,6 +7582,11 @@
 "sB" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "sC" = (
@@ -8108,6 +8128,11 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -8356,8 +8381,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
 /obj/machinery/door/airlock/pyro/security/alt,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "ui" = (
@@ -8427,6 +8452,11 @@
 	pixel_y = 15
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -11990,7 +12020,8 @@
 "Dh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
+	dir = 8;
+	autoclose = 0
 	},
 /obj/machinery/cashreg,
 /obj/machinery/light{

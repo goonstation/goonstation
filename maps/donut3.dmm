@@ -9470,9 +9470,7 @@
 	},
 /area/station/hallway/primary/east)
 "czj" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -16585,9 +16583,8 @@
 	},
 /area/station/chapel/sanctuary)
 "eCX" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -21420,9 +21417,8 @@
 	},
 /area/station/medical/medbay/treatment)
 "fYu" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -29362,7 +29358,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/decal/mule/dropoff,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -40768,9 +40764,8 @@
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "lMd" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -66140,9 +66135,8 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "sWy" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -70047,9 +70041,7 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "udQ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -74984,9 +74976,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade)
 "vyw" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/cable{

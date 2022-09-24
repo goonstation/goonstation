@@ -51144,7 +51144,7 @@
 /turf/space,
 /area/space)
 "dYy" = (
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "1-2"
@@ -51256,7 +51256,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
 "ejm" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/disposalpipe/segment/ejection{
@@ -57424,7 +57424,7 @@
 /area/station/maintenance/disposal)
 "nah" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
@@ -57555,10 +57555,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/cdc)
 "njY" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Security Checkpoint";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -61198,7 +61195,7 @@
 /area/station/quartermaster/office)
 "sjX" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/cable{

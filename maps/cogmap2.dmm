@@ -16196,7 +16196,7 @@
 /area/station/security/checkpoint/chapel)
 "aMA" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -27550,10 +27550,7 @@
 	},
 /area/station/hangar/sec)
 "bnw" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "brig1";
-	name = "Cell 1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/secscanner,
@@ -27581,17 +27578,6 @@
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
-/area/station/security/brig)
-"bnz" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "brig2";
-	name = "Cell 2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
-/obj/disposalpipe/segment/ejection,
-/obj/machinery/secscanner,
-/obj/access_spawn/brig,
-/turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bnA" = (
 /obj/disposalpipe/segment/transport,
@@ -29768,9 +29754,8 @@
 /turf/simulated/floor/grime,
 /area/station/routing/security)
 "bss" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Router"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -36151,7 +36136,7 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/firedoor_spawn,
@@ -40380,7 +40365,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/firedoor_spawn,
@@ -41778,7 +41763,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/engine)
 "bPn" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -42152,9 +42137,7 @@
 "bQh" = (
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Pod Bay Security Checkpoint"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -44061,7 +44044,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/station/routing/depot)
 "bUf" = (
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -44187,7 +44170,7 @@
 	name = "Security Lockdown Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4
 	},
 /obj/firedoor_spawn,
@@ -45486,10 +45469,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "bXs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "genpop";
-	name = "General Population"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/secscanner,
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
@@ -61291,7 +61271,7 @@
 /area/station/maintenance/southeast)
 "cJl" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -137746,7 +137726,7 @@ bix
 bjg
 bkv
 blV
-bnz
+bnw
 bpc
 bqM
 bsB

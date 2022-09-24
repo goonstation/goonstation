@@ -4530,9 +4530,8 @@
 	},
 /area/station/hangar/arrivals)
 "arT" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/head_of_personnel,
 /obj/access_spawn/security,
@@ -18268,14 +18267,12 @@
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bjH" = (

@@ -1439,10 +1439,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
 "adc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Genpop";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/disposalpipe/segment/brig,
 /obj/cable{
@@ -1566,10 +1563,8 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ado" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Break Room";
-	req_access_txt = "1"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -15704,10 +15699,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "West Hallway Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
@@ -29411,10 +29403,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
 "byl" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Escape Hallway Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -35801,10 +35790,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bOC" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Locker Room";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
@@ -38444,20 +38430,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bUW" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell #2";
-	req_access_txt = "1"
-	},
-/obj/access_spawn/brig,
-/obj/disposalpipe/segment/ejection,
-/obj/firedoor_spawn,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bUX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell #1";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
@@ -42934,10 +42907,7 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "ciw" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Medical Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/disposalpipe/segment/brig,
 /obj/firedoor_spawn,
@@ -91112,7 +91082,7 @@ bQB
 bRE
 bSJ
 bTP
-bUX
+bUW
 bVT
 bWE
 bXs
