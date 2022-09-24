@@ -655,100 +655,122 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "Emergency Shuttle Transit"
 	icon_state = "shuttle_escape"
 
-/area/shuttle/prison/
+/area/shuttle/prison
 	name = "Prison Shuttle"
 
 /area/shuttle/prison/station
 	icon_state = "shuttle"
 
 /area/shuttle/prison/prison
+	name = "Prison Shuttle Prison Dock"
 	icon_state = "shuttle2"
 
 /area/shuttle/brig/station
+	name = "Brig Shuttle Station Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/brig/prison
+	name = "Brig Shuttle Prison Dock"
 	icon_state = "shuttle2"
 
 /area/shuttle/brig/outpost
+	name = "Brig Shuttle Outpost Dock"
 	icon_state = "shuttle3"
 
 /area/shuttle/research/station
+	name = "Research Shuttle Station Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/research/outpost
-	icon_state = "shuttle2"
-
-/area/shuttle/attack2/prison
+	name = "Research Shuttle Outpost Dock"
 	icon_state = "shuttle2"
 
 /area/shuttle/mining/station
+	name = "Mining Shuttle Station Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/mining/diner
+	name = "Mining Shuttle Diner Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/mining/outpost
+	name = "Mining Shuttle Outpost Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/john/diner
+	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/john/owlery
+	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
 
 /area/shuttle/john/mining
+	name = "John's Bus Outpost Dock"
 	icon_state = "shuttle2"
 
 /area/shuttle/john/grillnasium
+	name = "John's Bus Factory Dock"
 	icon_state = "shuttle"
 
 /area/shuttle/icebase_elevator/upper
+	name = "Chasm Lift Upper Section"
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
 	force_fullbright = 0
 	sound_group = "ice_moon"
 
 /area/shuttle/icebase_elevator/lower
+	name = "Chasm Lift Lower Section"
 	icon_state = "shuttle2"
 	filler_turf = "/turf/simulated/floor/arctic/snow/ice"
 	force_fullbright = 0
 	sound_group = "ice_moon"
 
 /area/shuttle/biodome_elevator/upper
+	name = "Biodome Lift Upper Section"
 	icon_state = "shuttle"
 	force_fullbright = 0
 	name = "Elevator"
 
 /area/shuttle/biodome_elevator/lower
+	name = "Biodome Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
 	name = "Elevator"
 
 /area/shuttle/recovery_shuttle
+	name = "Recovery Shuttle Dock"
 	icon_state = "shuttle2"
 	name = "Recovery Shuttle"
+
 ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle
 	icon_state = "shuttle2"
-	name = "Merchant Shuttle"
-	teleport_blocked = 1
+	name = "Merchant Shuttle Dock"
+	teleport_blocked = TRUE
 
 /area/shuttle/merchant_shuttle/left_centcom
-	is_centcom = 1
+	name = "Centcom Merchant Shuttle Dock Alpha"
+	is_centcom = TRUE
 
 /area/shuttle/merchant_shuttle/right_centcom
-	is_centcom = 1
+	name = "Centcom Merchant Shuttle Dock Beta"
+	is_centcom = TRUE
 
 /area/shuttle/merchant_shuttle/diner_centcom
-	is_centcom = 1
+	name = "Centcom Merchant Shuttle Dock Gamma"
+	is_centcom = TRUE
 
 /area/shuttle/merchant_shuttle/diner_station
+	name = "Station Merchant Shuttle Dock Gamma"
 
 /area/shuttle/merchant_shuttle/left_station
+	name = "Station Merchant Shuttle Dock Alpha"
 	icon_state = "shuttle2"
 
 /area/shuttle/merchant_shuttle/right_station
+	name = "Station Merchant Shuttle Dock Beta"
 	icon_state = "shuttle2"
 
 /area/shuttle/spacebus
@@ -759,7 +781,7 @@ ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 	sound_group = "eshuttle_transit"
 	var/warp_dir = NORTH // fuck you
 
-	Entered(atom/movable/Obj,atom/OldLoc)
+	Entered(atom/movable/Obj, atom/OldLoc)
 		..()
 		if (ismob(Obj))
 			var/mob/M = Obj
@@ -828,8 +850,9 @@ ABSTRACT_TYPE(/area/shuttle_transit_space)
 
 ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 /area/shuttle_particle_spawn
+	name = "Shuttle Particles"
 	icon_state = "shuttle_transit_stars_n"
-	teleport_blocked = 1
+	teleport_blocked = TRUE
 	var/star_dir = null // particle system defaults to northbound stars
 
 	proc/start_particles()
@@ -853,8 +876,9 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	star_dir = "_w"
 
 /area/shuttle_sound_spawn
+	name = "Shuttle Subwoofers"
 	icon_state = "shuttle_transit_sound"
-	teleport_blocked = 1
+	teleport_blocked = TRUE
 
 // zewaka - actual areas below //
 
