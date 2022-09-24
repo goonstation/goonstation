@@ -419,12 +419,12 @@
 		In order to uninstall and install parts use a crowbar on a ship to open the maintenance panel, If you want to install a part, simply use the part on the ship.
 		If you want to uninstall a part simply use an empty hand on the maintenance panel. Make sure to close the panel when you are done.<br>
 		In order to use the cargo loader on a crate, simply make ensure the crate is behind the ship, and the loader will handle the rest."}
-/obj/item/paper/surplusopsdiary
-	name = "Blank sheet"
-	info ={"Odd that there's nothing written here"}
+/obj/item/paper/surplusopsdiary // so we can have a 1:1 of the actual surplus op shuttle without worrying about replacing anything
+
 /obj/item/paper/surplusopsinstructions
-	name = "Blank sheet"
-	info ={"Odd that there's nothing written here"}
+
+/obj/item/paper/surplusopslore
+
 /obj/item/paper/Map
 	name = "'Station Blueprint'"
 
