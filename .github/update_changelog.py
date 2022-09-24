@@ -43,7 +43,7 @@ labels_to_emoji = {
 	'a-traits': '💪',
 	'a-ui': '📄',
 	'c-balance': '⚖',
-	'c-bug': '🐛',
+	'c-bug': '🪲',
 	'c-code-quality': '🔎',
 	'c-documentation': '📜',
 	'c-experimental': '🧫',
