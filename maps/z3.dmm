@@ -417,11 +417,6 @@
 	dir = 8;
 	pixel_x = 2
 	},
-/obj/item/device/key{
-	desc = "A bee key.  A...kee, if you will.";
-	icon_state = "key_bee";
-	name = "bee key"
-	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abv" = (
@@ -16035,11 +16030,11 @@
 "biT" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
-/obj/item/device/key{
-	name = "studio door key"
-	},
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/device/microphone,
+/obj/item/device/key/generic{
+	name = "studio door key"
+	},
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (
