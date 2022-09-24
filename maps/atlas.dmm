@@ -2690,10 +2690,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Equipment";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor/red,
@@ -4414,10 +4411,8 @@
 	},
 /area/station/security/brig/genpop)
 "lp" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8;
-	name = "Brig";
-	req_access_txt = "27"
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -5938,10 +5933,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "oM" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6226,10 +6218,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "pz" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Brig";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/secscanner{
 	icon_state = "scanner_off";
 	pixel_y = 10
