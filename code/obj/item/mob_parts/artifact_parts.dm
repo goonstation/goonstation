@@ -149,6 +149,7 @@
 
 /obj/item/parts/artifact_parts/arm
 	can_hold_items = TRUE
+	var/update_with_clothing = FALSE
 
 	getMobIcon()
 		if (!src.update_with_clothing || !istype(holder, /mob/living/carbon/human))
@@ -211,8 +212,8 @@
 		handlistPart = "leg-eldritch-R-attached"
 
 /obj/item/parts/artifact_parts/arm/martian
-	update_with_clothing = TRUE
 	artifact_type = "martian"
+	update_with_clothing = TRUE
 
 	on_attach()
 		if (!..())
@@ -262,8 +263,8 @@
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
 /obj/item/parts/artifact_parts/arm/precursor
-	update_with_clothing = TRUE
 	artifact_type = "precursor"
+	update_with_clothing = TRUE
 
 	on_attach()
 		if (!..())

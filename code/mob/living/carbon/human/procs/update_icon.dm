@@ -39,9 +39,6 @@
 					thing.dropped(src)
 					thing.layer = initial(thing.layer)
 
-	if (src.limbs?.l_arm?.update_with_clothing || src.limbs?.r_arm?.update_with_clothing)
-		src.update_body()
-
 	src.UpdateOverlays(src.body_standing, "body")
 	src.UpdateOverlays(src.hands_standing, "hands")
 	src.UpdateOverlays(src.body_damage_standing, "body_damage")
