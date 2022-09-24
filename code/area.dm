@@ -1326,7 +1326,7 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "purple"
 
 /area/prefab/lesbeeans/interior
-	name = "Lesbian Bee Farm"
+	name = "Lesbian Bee Farm Interior"
 	icon_state = "ranch"
 
 /area/prefab/lesbeeans/exterior
