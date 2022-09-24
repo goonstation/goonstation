@@ -1297,6 +1297,7 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Sequestered Cloner"
 
 /area/prefab/sequestered_cloner/puzzle
+	name = "Sequestered Cloner Engineering"
 	requires_power = TRUE
 
 /area/prefab/von_ricken

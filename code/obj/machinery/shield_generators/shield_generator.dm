@@ -6,6 +6,7 @@
 	icon_state = "shield_zone"
 	expandable = FALSE
 	do_not_irradiate = TRUE
+	requires_power = FALSE
 
 /* ==================== Generator ==================== */
 
