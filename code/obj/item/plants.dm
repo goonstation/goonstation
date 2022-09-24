@@ -519,8 +519,6 @@
 			else
 				M.reagents?.add_reagent("capulettium", 13)
 		M.bioHolder?.AddEffect("mute", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
-		SPAWN(rand(2,4) SECONDS)
-			boutput(M, "<span class='alert'You feel woozy.</span>")
 
 /obj/item/plant/flower/rose/holorose
 	name = "holo rose"
