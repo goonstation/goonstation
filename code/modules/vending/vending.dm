@@ -58,12 +58,8 @@
 	mats = 20
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
-<<<<<<< HEAD
-	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-=======
 	object_flags = CAN_REPROGRAM_ACCESS
 	flags = TGUI_INTERACTIVE
->>>>>>> 9d83ad018ee83d6db37fdbad1b6ab1a0c7575401
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
