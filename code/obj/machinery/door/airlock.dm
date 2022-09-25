@@ -170,6 +170,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	var/aiControlDisabled = 0 //If 1, AI control is disabled until the AI hacks back in and disables the lock. If 2, the AI has bypassed the lock. If -1, the control is enabled but the AI had bypassed it earlier, so if it is disabled again the AI would have no trouble getting back in.
 	var/secondsMainPowerLost = 0 //The number of seconds until power is restored.
 	var/secondsBackupPowerLost = 0 //The number of seconds until power is restored.
+	var/cyborgBumpAccess = TRUE
 	var/spawnPowerRestoreRunning = 0
 	var/welded = null
 	var/wires = 1023 //goddd use bitflag defines please
@@ -278,6 +279,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Doorext.dmi'
 	req_access_txt = "52"
 	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
@@ -293,6 +295,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	icon = 'icons/obj/doors/Doorcom.dmi'
 	req_access_txt = "57"
 	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
@@ -356,6 +359,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 /obj/machinery/door/airlock/pyro/command/centcom
 	req_access_txt = "57"
 	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
 	hardened = TRUE
 	aiControlDisabled = TRUE
 	object_flags = BOTS_DIRBLOCK
@@ -380,10 +384,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access = null
 	hardened = TRUE
 	aiControlDisabled = TRUE
+	cyborgBumpAccess = FALSE
 
 /obj/machinery/door/airlock/pyro/weapons/noemag
 	req_access = null
 	cant_emag = TRUE
+	cyborgBumpAccess = FALSE
 
 
 
@@ -496,6 +502,7 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 
 /obj/machinery/door/airlock/pyro/reinforced/syndicate
 	req_access_txt = "52"
+	cyborgBumpAccess = FALSE
 
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
@@ -1375,7 +1382,7 @@ About the new airlock wires panel:
 	..()
 /obj/machinery/door/airlock/bumpopen(atom/movable/AM)
 	if (issilicon(AM))
-		if (src.aiControlDisabled || src.cant_emag)
+		if (!src.cyborgBumpAccess)
 			return
 		var/mob/silicon = AM
 		if (!silicon.mind)
