@@ -37,6 +37,7 @@
 	..(location, F)
 	src.rays = new /obj/effect/flock_sentinelrays
 	src.vis_contents += rays
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
@@ -114,6 +115,7 @@
 		src.charge = min(chargeamount + charge, 100)
 	else
 		charge_status = CHARGED
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()

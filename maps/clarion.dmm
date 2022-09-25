@@ -2425,8 +2425,8 @@
 	},
 /obj/machinery/door_control{
 	id = "market_2";
-	pixel_y = -24;
-	pixel_x = -1
+	pixel_x = -1;
+	pixel_y = -24
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
@@ -3586,6 +3586,7 @@
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
 "ahx" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/bluegreen/corner{
 	dir = 8
 	},
@@ -3954,7 +3955,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/reinforced{
 	dir = 4
 	},
 /obj/firedoor_spawn,
@@ -5038,8 +5039,8 @@
 "ajx" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/blind_switch/area/north{
-	pixel_y = 25;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = 25
 	},
 /turf/simulated/floor/redblack{
 	dir = 1
@@ -43848,10 +43849,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "euS" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
-	req_access = null
+	name = "Interrogation Room"
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -44149,10 +44149,7 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -44660,13 +44657,13 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4
-	},
-/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced{
+	dir = 4
+	},
+/obj/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -45049,7 +45046,7 @@
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "hge" = (
 /obj/cable{
@@ -45414,9 +45411,9 @@
 	icon_state = "1-4"
 	},
 /obj/blind_switch/area/north{
-	pixel_y = 28;
+	dir = 1;
 	pixel_x = 22;
-	dir = 1
+	pixel_y = 28
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
@@ -45661,10 +45658,9 @@
 	},
 /area/station/security/main)
 "iCw" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Armory";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	name = "Armory Foyer";
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -47848,10 +47844,9 @@
 	d2 = 8;
 	icon_state = "0-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 4;
-	name = "Interrogation Room";
-	req_access = null
+	name = "Interrogation Room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -47970,10 +47965,8 @@
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/pharmacy)
 "opt" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -49416,7 +49409,7 @@
 /area/station/engine/substation/east)
 "sgq" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "shp" = (
 /obj/wingrille_spawn/auto,
@@ -50027,7 +50020,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "tDI" = (
 /obj/machinery/light{
@@ -50314,7 +50307,7 @@
 	},
 /area/station/engine/substation/east)
 "ukC" = (
-/obj/machinery/door/airlock/pyro/glass/security{
+/obj/machinery/door/airlock/pyro/glass/security/alt{
 	name = "Interrogation Room"
 	},
 /obj/access_spawn/security,
@@ -50991,7 +50984,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "vHe" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "vJl" = (
 /obj/machinery/power/data_terminal,
@@ -51502,9 +51495,8 @@
 /area/station/engine/ptl)
 "xfP" = (
 /obj/disposalpipe/segment/ejection,
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Processing room";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	name = "Processing room"
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,

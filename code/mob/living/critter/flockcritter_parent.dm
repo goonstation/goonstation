@@ -31,6 +31,9 @@
 	var/datum/flock/flock
 
 	var/mob/living/intangible/flock/controller = null
+
+	var/atom/movable/name_tag/flock_examine_tag/flock_name_tag
+
 	// do i pay for building?
 	var/pays_to_construct = TRUE
 
@@ -89,12 +92,31 @@
 		state["area"] = "???"
 	return state
 
+/mob/living/critter/flock/get_examine_tag(mob/examiner)
+	if (isdead(src) || !src.flock || !(istype(examiner, /mob/living/intangible/flock) || istype(examiner, /mob/living/critter/flock/drone)))
+		return ..()
+	if (istype(examiner, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_intangible = examiner
+		if (src.flock != flock_intangible.flock)
+			return ..()
+	if (istype(examiner, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = examiner
+		if (src.flock != flockdrone.flock)
+			return ..()
+	return src.flock_name_tag
+
 /mob/living/critter/flock/hand_attack(atom/target, params)
 	var/datum/handHolder/HH = get_active_hand()
 	if (HH.can_attack && !HH.can_hold_items && ismob(target) && src.a_intent == INTENT_GRAB)
 		var/datum/limb/L = src.equipped_limb()
 		L.grab(target, src)
 	. = ..()
+	if (istype(target, /obj/item) && target.loc == src) //no batong for radio birds
+		target.emp_act()
+
+//trying out a world where you can't stun flockdrones
+/mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
 
 /mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -105,6 +127,8 @@
 	src.ai?.die()
 	actions.stop_all(src)
 	src.is_npc = FALSE
+	src.flock_name_tag.set_name(src.name)
+	src.flock_name_tag.set_info_tag(he_or_she(src))
 	if (!src.flock)
 		return
 
@@ -215,6 +239,8 @@
 	src.ai.die()
 	walk(src, 0)
 	src.update_health_icon()
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
 	src.flock?.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
@@ -222,6 +248,8 @@
 	if (src.flock)
 		src.update_health_icon()
 		src.flock.removeDrone(src)
+	qdel(src.flock_name_tag)
+	src.flock_name_tag = null
 	..()
 
 //////////////////////////////////////////////////////

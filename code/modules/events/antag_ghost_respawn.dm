@@ -246,12 +246,9 @@
 					failed = 1
 
 			if ("Hunter")
-				var/mob/living/R3 = M3.humanize()
-				if (R3 && istype(R3))
-					M3 = R3
-					R3.make_hunter()
-					role = ROLE_HUNTER
-					objective_path = /datum/objective_set/hunter
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+					L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
 				else
 					failed = 1
 
@@ -348,7 +345,7 @@
 
 		var/i = 1
 		for (var/datum/objective/Obj in lucky_dude.objectives)
-			if (istype(Obj, /datum/objective/crew) || istype(Obj, /datum/objective/miscreant))
+			if (istype(Obj, /datum/objective/crew))
 				continue
 			boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 			i++

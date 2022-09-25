@@ -1,3 +1,5 @@
+#define MINING_OUTPOST_NAME "Old Mining Station"
+
 /obj/machinery/computer/shuttle
 	name = "Shuttle"
 	icon_state = "shuttle"
@@ -240,11 +242,11 @@
 
 	switch(shuttle_loc)
 		if(1)
-			dat += "Shuttle Location: Station"
+			dat += "Shuttle Location: [station_name]"
 		if(2)
 			dat += "Shuttle Location: Diner"
 		if(3)
-			dat += "Shuttle Location: Mining Outpost"
+			dat += "Shuttle Location: [MINING_OUTPOST_NAME]"
 	dat += "<BR><BR>"
 
 	if(active)
@@ -255,11 +257,11 @@
 				continue
 			switch(i)
 				if(1)
-					dat += "<a href='byond://?src=\ref[src];Station=1'>Station</a><BR>"
+					dat += "<a href='byond://?src=\ref[src];Station=1'>[station_name]</a><BR>"
 				if(2)
 					dat += "<a href='byond://?src=\ref[src];Diner=1'>Diner</a><BR>"
 				if(3)
-					dat += "<a href='byond://?src=\ref[src];Mining Outpost=1'>Mining Outpost</a><BR>"
+					dat += "<a href='byond://?src=\ref[src];Mining Outpost=1'>[MINING_OUTPOST_NAME]</a><BR>"
 
 	user.Browse(dat, "window=shuttle")
 	onclose(user, "shuttle")
@@ -301,12 +303,12 @@
 			var/message_string
 			switch(target_loc)
 				if(1)
-					message_string = "the Station"
+					message_string = "[the_station_name]"
 				if(2)
 					message_string = "the Diner"
 				if(3)
-					message_string = "the Mining Outpost"
-			C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle has been sent to [message_string]!</span>")
+					message_string = "the [MINING_OUTPOST_NAME]"
+			C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle is en route to [message_string]!</span>")
 		SPAWN(10 SECONDS)
 			var/area/start_location
 			var/area/end_location
@@ -872,7 +874,7 @@ var/bombini_saved = 0
 		if(1)
 			dat += "Shuttle Location: Frontier Space Owlery"
 		if(2)
-			dat += "Shuttle Location: Old Mining Station"
+			dat += "Shuttle Location: [MINING_OUTPOST_NAME]"
 		if(3)
 			dat += "Shuttle Location: Juicer Schweet's"
 
@@ -884,7 +886,7 @@ var/bombini_saved = 0
 		if(1)
 			dat += "Shuttle Destination: Frontier Space Owlery"
 		if(2)
-			dat += "Shuttle Destination: Old Mining Station"
+			dat += "Shuttle Destination: [MINING_OUTPOST_NAME]"
 		if(3)
 			dat += "Shuttle Destination: Juicer Schweet's"
 
@@ -895,7 +897,7 @@ var/bombini_saved = 0
 		dat += "<a href='byond://?src=\ref[src];dine=1'>Set Target: Diner</a><BR>"
 		dat += "<a href='byond://?src=\ref[src];owle=1'>Set Target: Owlery</a><BR>"
 #ifndef UNDERWATER_MAP
-		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: Old Mining Station</a><BR>"
+		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: [MINING_OUTPOST_NAME]</a><BR>"
 #endif
 		if(johnbill_shuttle_fartnasium_active) // here's how you can set conditional locations
 			dat += "<a href='byond://?src=\ref[src];fart=1'>Set Target: Juicer Schweet's</a><BR>"
@@ -1036,3 +1038,5 @@ var/bombini_saved = 0
 		C.visible_message("<span class='alert'>John's Juicin' Bus has Moved!</span>")
 
 	return
+
+#undef MINING_OUTPOST_NAME

@@ -59,12 +59,7 @@
 		..()
 
 		var/mob/living/carbon/human/M = owner
-		var/datum/abilityHolder/H = transform.holder
-
-		if (M.hunter_transform() != 1)
-			boutput(M, "<span class='alert'>Gearspawn failed. Make sure you're a human and try again later.</span>")
-		else
-			H.removeAbility(/datum/targetable/hunter/hunter_gearspawn)
+		M.hunter_transform()
 
 	onInterrupt()
 		..()

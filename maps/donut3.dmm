@@ -8430,13 +8430,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"cjG" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space,
-/area/space)
 "cjI" = (
 /turf/simulated/floor/carpet/grime,
 /area/listeningpost)
@@ -9477,9 +9470,7 @@
 	},
 /area/station/hallway/primary/east)
 "czj" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -16463,7 +16454,7 @@
 /turf/simulated/floor/industrial,
 /area/station/quartermaster/refinery)
 "eBr" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "eBt" = (
 /obj/decal/tile_edge/line/green{
@@ -16592,9 +16583,8 @@
 	},
 /area/station/chapel/sanctuary)
 "eCX" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -18891,6 +18881,10 @@
 /obj/item/device/flyswatter,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
+"fkJ" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/wood/two,
+/area/station/hallway/primary/west)
 "fkZ" = (
 /obj/cable{
 	d1 = 1;
@@ -21423,9 +21417,8 @@
 	},
 /area/station/medical/medbay/treatment)
 "fYu" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -22285,7 +22278,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "gkD" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -24368,8 +24361,8 @@
 /area/station/chapel/sanctuary)
 "gSp" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 4
+	dir = 4;
+	icon_state = "check1"
 	},
 /obj/stool/bench,
 /turf/simulated/floor/black/grime,
@@ -24870,7 +24863,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "gZE" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -26280,8 +26273,8 @@
 /area/listeningpost)
 "huy" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 8
+	dir = 8;
+	icon_state = "check1"
 	},
 /obj/machinery/light/small/sticky{
 	dir = 1
@@ -29365,7 +29358,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/decal/mule/dropoff,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -36590,7 +36583,7 @@
 	name = "Funeral Parlor"
 	})
 "kzk" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -37161,8 +37154,8 @@
 	dir = 4
 	},
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 8
+	dir = 8;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check/yellow{
 	icon_state = "check1"
@@ -39911,7 +39904,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "lAh" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "lAi" = (
@@ -40771,9 +40764,8 @@
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "lMd" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -41745,7 +41737,7 @@
 /area/station/security/brig/south_side)
 "lXJ" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "lXN" = (
 /obj/cable{
@@ -41982,7 +41974,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mbH" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "mbM" = (
@@ -42877,8 +42869,8 @@
 "mri" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = -4
@@ -44125,8 +44117,8 @@
 "mKc" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = -4
@@ -45779,8 +45771,8 @@
 /area/station/medical/head)
 "nkb" = (
 /obj/lattice{
-	icon_state = "lattice-dir";
-	dir = 6
+	dir = 6;
+	icon_state = "lattice-dir"
 	},
 /turf/space,
 /area/space)
@@ -49519,6 +49511,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering/breakroom)
+"onS" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/escape,
+/area/station/hallway/secondary/exit)
 "onT" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/jen/blue,
@@ -50767,8 +50763,8 @@
 /area/station/maintenance/outer/north)
 "oGM" = (
 /obj/decal/tile_edge/check/yellow{
-	icon_state = "check1";
-	dir = 4
+	dir = 4;
+	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check/yellow{
 	icon_state = "check1"
@@ -51540,10 +51536,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/listeningpost)
-"oRh" = (
-/obj/machinery/light/runway_light/delay5,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "oRm" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -54491,7 +54483,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -61135,7 +61127,7 @@
 	amount = 3600
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "rxE" = (
 /obj/decal/mule/dropoff,
@@ -63052,7 +63044,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sab" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -64480,23 +64472,23 @@
 "sww" = (
 /obj/table/reinforced/auto,
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = -10
+	pixel_x = -10;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
 	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 10
 	},
 /obj/item/tank/emergency_oxygen{
-	pixel_y = 10;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 10
 	},
 /obj/item/tank/mini_oxygen{
 	pixel_x = -5;
@@ -66139,9 +66131,8 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "sWy" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -66509,7 +66500,7 @@
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/medbay/surgery/storage)
 "tcV" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/garden/owlery)
 "tcW" = (
@@ -66867,7 +66858,7 @@
 /area/station/medical/robotics)
 "tii" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "tiv" = (
 /obj/disposalpipe/junction/left/south,
@@ -70046,9 +70037,7 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "udQ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -74983,9 +74972,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade)
 "vyw" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/cable{
@@ -75877,8 +75864,8 @@
 	icon_state = "line1"
 	},
 /obj/item/tank/jetpack/micro{
-	pixel_y = 8;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 8
 	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = 4;
@@ -79834,7 +79821,7 @@
 	pixel_x = 7;
 	pixel_y = 3
 	},
-/obj/item/device/key{
+/obj/item/device/key/generic{
 	desc = "An old key that is seriously not involved with any other old, key-themed things than just ordinary doors.";
 	name = "rusty old key";
 	pixel_x = -3;
@@ -84758,7 +84745,7 @@
 /obj/item/beach_ball{
 	pixel_y = 7
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/spacehabitat/pool)
 "yhb" = (
 /obj/decal/cleanable/dirt/jen,
@@ -114227,7 +114214,7 @@ qph
 hFg
 tJK
 oHE
-oyc
+fkJ
 pCP
 hjI
 fFx
@@ -117342,13 +117329,13 @@ pEb
 rdj
 rdj
 hyr
-cjG
-cjG
-cjG
+nkb
+nkb
+nkb
 vre
-cjG
-cjG
-cjG
+nkb
+nkb
+nkb
 hyr
 ijU
 ijU
@@ -122446,7 +122433,7 @@ eBP
 sZg
 ogJ
 kuM
-cjG
+nkb
 jvq
 sGC
 sGC
@@ -126044,7 +126031,7 @@ qsR
 boj
 abD
 abI
-cjG
+nkb
 cNV
 cNV
 cNV
@@ -127516,7 +127503,7 @@ weI
 iJM
 eFg
 bPa
-oRh
+hBW
 hBW
 vtH
 tfk
@@ -133869,7 +133856,7 @@ rdj
 rdj
 rdj
 rfc
-cjG
+nkb
 ppP
 xSZ
 xSZ
@@ -140485,7 +140472,7 @@ wpg
 cUx
 iPz
 mxH
-mkl
+onS
 akj
 oys
 jFH
@@ -164965,9 +164952,9 @@ rdj
 rdj
 rdj
 rmv
-cjG
+nkb
 tPS
-cjG
+nkb
 vMs
 rdj
 rdj
