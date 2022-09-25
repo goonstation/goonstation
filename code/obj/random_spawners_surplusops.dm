@@ -15,16 +15,12 @@
 		/obj/item/gun/kinetic/single_action/mts_255, //ditto
 		/obj/item/gun/energy/alastor,
 		/obj/item/gun/energy/blaster_smg)
-	rare_items2spawn = list(
-	/obj/item/gun/kinetic/grenade_launcher, //A little unsure on these two
-	/obj/item/gun/kinetic/sniper)
 
 /obj/random_item_spawner/surplus/shortgun //YOU BEST PRAY TO RNJESUS, SONNY
 	amt2spawn = 1
 	rare_chance = 5
 	items2spawn = list(/obj/item/gun/kinetic/riot40mm,
 		/obj/item/gun/kinetic/pistol,
-		/obj/item/gun/kinetic/pistol/smart/mkII,
 		/obj/item/gun/kinetic/sawnoff,
 		/obj/item/gun/kinetic/silenced_22,
 		/obj/item/gun/kinetic/pistol,
@@ -108,7 +104,6 @@
 		/obj/item/remote/reinforcement_beacon,
 		/obj/item/old_grenade/spawner/sawflycluster,
 		/obj/item/storage/box/wasp_grenade_kit,
-		/obj/item/aiModule/freeform,
 		/obj/item/spongecaps/syndicate,
 		/obj/item/pipebomb/bomb/miniature_syndicate,
 		/obj/item/gun/energy/wasp,
@@ -122,9 +117,7 @@
 		/obj/item/storage/belt/wrestling,
 		/obj/item/clothing/head/bighat/syndicate,
 		/obj/item/implanter/super_mindhack,
-		/obj/item/clothing/suit/space/industrial/syndicate,
 		/obj/item/katana_sheath,
-		/obj/item/gun/kinetic/akm, //putting it here since I'm not adding a new ammo category just for the ak47, and it's pretty damn powerful
 		/obj/item/sword,
 		/obj/item/saw/syndie,
 		/obj/item/storage/box/poison, //these two aren't super expensive but should be rarer
@@ -227,11 +220,11 @@
 		/obj/item/ammo/bullets/assault_rifle,
 		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
 
-/obj/random_item_spawner/surplus/rifleroundsbig
-	amt2spawn = 2
-	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
-	items2spawn = list(
-		/obj/item/ammo/bullets/rifle_3006)
+///obj/random_item_spawner/surplus/rifleroundsbig
+//	amt2spawn = 2
+//	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
+//	items2spawn = list(
+//		/obj/item/ammo/bullets/rifle_3006)
 
 /obj/random_item_spawner/surplus/shotgunshells
 	min_amt2spawn = 4
