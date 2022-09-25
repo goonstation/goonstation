@@ -230,8 +230,6 @@
 		materiel_stock += new/datum/materiel/ammo/plinking
 		materiel_stock += new/datum/materiel/ammo/pistol
 		materiel_stock += new/datum/materiel/ammo/revolver
-		materiel_stock += new/datum/materiel/ammo/riflesmall
-		materiel_stock += new/datum/materiel/ammo/riflebig
 		materiel_stock += new/datum/materiel/ammo/shotgun
 		materiel_stock += new/datum/materiel/ammo/grenadeshells
 		materiel_stock += new/datum/materiel/ammo/energy

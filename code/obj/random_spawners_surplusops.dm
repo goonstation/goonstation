@@ -7,9 +7,8 @@
 	amt2spawn = 1
 	items2spawn = list(
 		/obj/item/gun/kinetic/spes,
-		/obj/item/gun/kinetic/assault_rifle,
 		/obj/item/gun/energy/egun,
-		/obj/item/gun/kinetic/hunting_rifle,
+		/obj/item/gun/kinetic/hunting_rifle, //this having no ammo spawner is intentional
 		/obj/item/gun/energy/plasma_gun,
 		/obj/item/gun/kinetic/riotgun, //sorta out of place but it's more out of place in the shortgun category
 		/obj/item/gun/kinetic/single_action/mts_255, //ditto
@@ -212,19 +211,6 @@
 		/obj/item/ammo/bullets/a38,
 		/obj/item/ammo/bullets/a38/AP,
 		/obj/item/ammo/bullets/a38/stun)
-
-/obj/random_item_spawner/surplus/rifleroundslittle
-	amt2spawn = 4
-	rare_items2spawn = list(/obj/item/ammo/bullets/assault_rifle)
-	items2spawn = list(/obj/item/ammo/bullets/assault_rifle,
-		/obj/item/ammo/bullets/assault_rifle,
-		/obj/item/ammo/bullets/assault_rifle/armor_piercing)
-
-///obj/random_item_spawner/surplus/rifleroundsbig
-//	amt2spawn = 2
-//	rare_items2spawn = list(/obj/item/ammo/bullets/rifle_762_NATO)
-//	items2spawn = list(
-//		/obj/item/ammo/bullets/rifle_3006)
 
 /obj/random_item_spawner/surplus/shotgunshells
 	min_amt2spawn = 4
