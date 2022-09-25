@@ -206,7 +206,7 @@
 		return 0
 
 /datum/game_mode/revolution/proc/start_gibwave()
-	command_alert("A revolution is still ongoing aboard [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update")
+	command_alert("A revolution is still ongoing aboard [station_name(1)]. All loyal members of the crew are to ensure the revolution is quelled.","Emergency Riot Update") // first warning 40 minutes in
 	sleep(10 MINUTES) // 10 minutes to clean up shop
 	command_alert("The Revolutionary heads' biometric signatures have been confirmed. Please stand by for hostile employee termination.", "Emergency Riot Update")
 	sleep(5 MINUTES) // 5 minutes until everyone dies
