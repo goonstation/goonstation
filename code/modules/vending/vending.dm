@@ -58,8 +58,12 @@
 	mats = 20
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
+<<<<<<< HEAD
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
+=======
 	object_flags = CAN_REPROGRAM_ACCESS
 	flags = TGUI_INTERACTIVE
+>>>>>>> 9d83ad018ee83d6db37fdbad1b6ab1a0c7575401
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
 
@@ -317,6 +321,108 @@
 		boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 		src.scan = null
 
+/obj/machinery/vending/proc/generate_HTML(var/update_vending = 0, var/update_wire = 0)
+	src.HTML = ""
+
+	if (!src.wire_HTML || update_wire)
+		src.generate_wire_HTML()
+	if (src.panel_open || isAI(usr))
+		src.HTML += src.wire_HTML
+
+	if (!src.vending_HTML || update_vending)
+		src.generate_vending_HTML()
+	src.HTML += src.vending_HTML
+
+	src.updateUsrDialog()
+
+/obj/machinery/vending/proc/generate_vending_HTML()
+	var/list/html_parts = list()
+	html_parts += "<b>Welcome!</b><br>"
+
+	if (src.paying_for && (!istype(src.paying_for, /datum/data/vending_product) || !src.pay))
+		src.paying_for = null
+
+	if (src.pay && src.acceptcard)
+		if (src.paying_for && !src.scan)
+			html_parts += "<B>You have selected the following item:</b><br>"
+			html_parts += "&emsp;<b>[src.paying_for.product_name]</b><br>"
+			html_parts += "Please swipe your card to authorize payment.<br>"
+			html_parts += "<B>Current ID:</B> None<BR>"
+		else if (src.scan)
+			if (src.paying_for)
+				html_parts += "<B>You have selected the following item for purchase:</b><br>"
+				html_parts += "&emsp;[src.paying_for.product_name]<br>"
+				html_parts += "<B>Please swipe your card to authorize payment.</b><br>"
+			var/datum/db_record/account = null
+			account = FindBankAccountByName(src.scan.registered)
+			html_parts += "<B>Current ID:</B> <a href='byond://?src=\ref[src];logout=1'><u>([src.scan])</u></A><BR>"
+			html_parts += "<B>Credits on Account: [account["current_money"]] Credits</B> <BR>"
+		else
+			html_parts += "<B>Current ID:</B> None<BR>"
+
+	if (!length(src.product_list) && !length(src.player_list))
+		html_parts += "<font color = 'red'>No product loaded!</font>"
+
+	else if (src.paying_for)
+		html_parts += "<a href='byond://?src=\ref[src];vend=\ref[src.paying_for]'><u><b>Continue</b></u></a>"
+		html_parts += " | <a href='byond://?src=\ref[src];cancel_payfor=1;logout=1'><u><b>Cancel</b></u></a>"
+
+	else
+		html_parts += "<table style='width: 100%; border: none; border-collapse: collapse;'><thead><tr><th>Product</th><th>Amt.</th><th>Price</th></tr></thead>"
+		for (var/datum/data/vending_product/R in src.product_list)
+			if (R.product_hidden && !src.extended_inventory)
+				continue
+			if (R.product_amount > 0)
+				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+			else
+				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
+		if (player_list)
+			var/obj/machinery/vending/player/T = src
+			for (var/datum/data/vending_product/player_product/R in src.player_list)
+				var/obj/item/productholder = R.contents[1]
+				var/nextproduct = html_encode(sanitize(productholder.name))
+				if (!T.unlocked)
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					//Player vending machines don't have "out of stock" items
+				else if (T.unlocked)
+					//Links for setting prices when player vending machines are unlocked
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
+		html_parts += "</table>";
+
+		if (src.pay)
+			html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+			if (!src.acceptcard)
+				html_parts += "<BR>This machine only takes credit bills."
+
+	src.vending_HTML = jointext(html_parts, "")
+
+
+/obj/machinery/vending/proc/generate_wire_HTML()
+	src.vendwires = list("Violet" = 1,\
+		"Orange" = 2,\
+		"Goldenrod" = 3,\
+		"Green" = 4)
+	var/list/html_parts = list()
+	html_parts = "<TT><B>The Access Panel is [src.panel_open ? "open" : "closed"]:</B><br>"
+	html_parts += "<table border=\"1\" style=\"width:100%\"><tbody><tr><td><small>"
+	for (var/wiredesc in vendwires)
+		var/is_uncut = src.wires & APCWireColorToFlag[vendwires[wiredesc]]
+		html_parts += "[wiredesc] wire: "
+		if (!is_uncut)
+			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Mend</a>"
+		else
+			html_parts += "<a href='?src=\ref[src];cutwire=[vendwires[wiredesc]]'>Cut</a> "
+			html_parts += "<a href='?src=\ref[src];pulsewire=[vendwires[wiredesc]]'>Pulse</a> "
+		html_parts += "<br>"
+
+	html_parts += "<br>"
+	html_parts += "The orange light is [(src.seconds_electrified == 0) ? "off" : "on"].<BR>"
+	html_parts += "The red light is [src.shoot_inventory ? "off" : "blinking"].<BR>"
+	html_parts += "The green light is [src.extended_inventory ? "on" : "off"].<BR>"
+	html_parts += "The [(src.wires & WIRE_SCANID) ? "purple" : "yellow"] light is on.<BR>"
+	html_parts += "The AI control indicator is [src.ai_control_enabled ? "lit" : "unlit"].<BR>"
+	html_parts += "</small></td></tr></tbody></table></TT><br>"
+	src.wire_HTML = jointext(html_parts, "")
 
 /obj/machinery/vending/attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/electronics/scanner) || istype(W,/obj/item/deconstructor)) // So people don't end up making the vending machines fall on them when they try to scan/deconstruct it
