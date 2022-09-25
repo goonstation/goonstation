@@ -1870,6 +1870,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\WorkInProgress\NewVote.dm"
 #include "code\WorkInProgress\ObjectProperties.dm"
 #include "code\WorkInProgress\Particles.dm"
+#include "code\WorkInProgress\pirate.dm"
 #include "code\WorkInProgress\PlanetCrashEvent.dm"
 #include "code\WorkInProgress\previouslyKeelinsStuff.dm"
 #include "code\WorkInProgress\racing.dm"
