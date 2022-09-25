@@ -447,11 +447,11 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/getActiveTraces()
 	var/list/active_traces = list()
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		if (T.client)
+		if (T.client && T.afk_counter < T.afk_counter_threshold)
 			active_traces += T
 		else if (istype(T.loc, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/flockdrone = T.loc
-			if (flockdrone.client)
+			if (flockdrone.client && T.afk_counter < T.afk_counter_threshold)
 				active_traces += T
 	return active_traces
 

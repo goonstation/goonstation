@@ -17,6 +17,10 @@
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
+	var/afk_counter = 0
+	var/afk_counter_threshold = 180 // 1 count per second
+	var/turf/previous_turf = null
+
 /mob/living/intangible/flock/New()
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
@@ -32,6 +36,7 @@
 	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
+	src.previous_turf = get_turf(src)
 
 /mob/living/intangible/flock/Login()
 	..()

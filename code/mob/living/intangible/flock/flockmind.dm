@@ -58,8 +58,21 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
+	if (!src.flock)
+		return
 	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
-	if (src.started && src.flock)
+	if (get_turf(src) == src.previous_turf)
+		src.afk_counter++
+		if (src.afk_counter > round(src.afk_counter_threshold / parent.schedule_interval))
+			var/list/traces = src.flock.getActiveTraces()
+			if (length(traces))
+				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
+				chosen_trace.promoteToFlockmind(FALSE)
+			src.afk_counter = 0
+	else
+		src.afk_counter = 0
+		src.previous_turf = get_turf(src)
+	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
 		for (var/obj/flock_structure/s in src.flock.structures)
