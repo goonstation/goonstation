@@ -2850,9 +2850,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay5{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right/delay5,
 /turf/space,
 /area/space)
 "agE" = (
@@ -2860,9 +2858,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay4{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left/delay4,
 /turf/space,
 /area/space)
 "agF" = (
@@ -5645,9 +5641,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay3{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
 "anm" = (
@@ -76783,9 +76777,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay3{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
 /turf/space,
 /area/space)
 "izF" = (
@@ -77193,9 +77185,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay4{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
 /turf/space,
 /area/space)
 "kiZ" = (
@@ -77432,9 +77422,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay3{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
 "lsb" = (
@@ -79021,9 +79009,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay5{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left/delay5,
 /turf/space,
 /area/space)
 "sEu" = (

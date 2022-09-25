@@ -2474,13 +2474,11 @@
 	},
 /area/station/crewquarters/cryotron)
 "afl" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_left{
 	density = 0;
-	emergency = 0;
 	id = "merchant_N";
 	pixel_y = 32;
-	req_access_txt = "";
-	connected_dock = "trader_left"
+	req_access_txt = ""
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -4198,13 +4196,11 @@
 	},
 /area/station/crewquarters/cryotron)
 "aiq" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_right{
 	density = 0;
-	emergency = 0;
 	id = "merchant_S";
 	pixel_y = 32;
-	req_access_txt = "";
-	connected_dock = "trader_right"
+	req_access_txt = ""
 	},
 /turf/simulated/floor/caution/northsouth{
 	dir = 1
@@ -43731,9 +43727,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left,
 /turf/space,
 /area/station/shield_zone)
 "ele" = (
@@ -44201,9 +44195,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right,
 /turf/space,
 /area/station/shield_zone)
 "flb" = (

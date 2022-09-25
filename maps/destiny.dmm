@@ -31578,9 +31578,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay3{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right,
 /turf/space,
 /area/space)
 "iQk" = (
@@ -41943,9 +41941,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light/delay3{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left,
 /turf/space,
 /area/space)
 "ojU" = (
@@ -44424,13 +44420,11 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
 "pCL" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_right{
 	density = 0;
-	emergency = 0;
 	id = "merchant_R";
 	pixel_y = 32;
-	req_access_txt = "";
-	connected_dock = "trader_right"
+	req_access_txt = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/starboard)
@@ -49114,13 +49108,11 @@
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "sbJ" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_left{
 	density = 0;
-	emergency = 0;
 	id = "merchant_L";
 	pixel_y = 32;
-	req_access_txt = "";
-	connected_dock = "trader_left"
+	req_access_txt = ""
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/lounge/port)
@@ -53683,9 +53675,7 @@
 	dir = 5;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light{
-	connected_dock = "trader_right"
-	},
+/obj/machinery/light/traffic_light/trader_right,
 /turf/space,
 /area/space)
 "uAP" = (
@@ -54427,9 +54417,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/traffic_light{
-	connected_dock = "trader_left"
-	},
+/obj/machinery/light/traffic_light/trader_left,
 /turf/space,
 /area/space)
 "uOB" = (

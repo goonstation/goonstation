@@ -257,6 +257,7 @@
 	name = "Airbridge Computer"
 	desc = "Used to control the airbridge."
 	id = "noodles"
+	icon = 'icons/obj/airtunnel.dmi'
 	icon_state = "airbr0"
 
 	// set this var to 1 in the map editor if you want the airbridge to establish and pressurize when the round starts
@@ -296,11 +297,11 @@
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
-			if(COMSIG_DOCK_EVENT_INCOMING)
+			if(DOCK_EVENT_INCOMING)
 				src.establish_bridge()
-			if(COMSIG_DOCK_EVENT_ARRIVED)
+			if(DOCK_EVENT_ARRIVED)
 				src.pressurize()
-			if(COMSIG_DOCK_EVENT_DEPARTED)
+			if(DOCK_EVENT_DEPARTED)
 				src.remove_bridge()
 
 	proc/get_links()
@@ -479,11 +480,15 @@
 		status |= BROKEN
 
 /obj/machinery/computer/airbr/emergency_shuttle
-	icon = 'icons/obj/airtunnel.dmi'
 	emergency = 1
 
-/* -------------------- Button -------------------- */
+/obj/machinery/computer/airbr/trader_left // matching mapping area conventions
+	connected_dock = COMSIG_DOCK_TRADER_WEST
 
+/obj/machinery/computer/airbr/trader_right
+	connected_dock = COMSIG_DOCK_TRADER_EAST
+
+/* -------------------- Button -------------------- */
 /obj/machinery/airbr_test_button
 	name = "Airbridge Button"
 	icon = 'icons/obj/objects.dmi'

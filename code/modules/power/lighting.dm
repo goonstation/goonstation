@@ -398,6 +398,7 @@
 	on = 0
 	wallmounted = 0
 	removable_bulb = 0
+	var/static/warning_color = "#da9b49"
 	var/connected_dock = null
 
 	New()
@@ -407,17 +408,17 @@
 
 	proc/dock_signal_handler(datum/holder, var/signal)
 		switch(signal)
-			if(COMSIG_DOCK_EVENT_INCOMING)
+			if(DOCK_EVENT_INCOMING)
 				src.activate()
-			if(COMSIG_DOCK_EVENT_ARRIVED)
+			if(DOCK_EVENT_ARRIVED)
 				src.deactivate()
-			if(COMSIG_DOCK_EVENT_OUTGOING)
+			if(DOCK_EVENT_OUTGOING)
 				src.activate()
-			if(COMSIG_DOCK_EVENT_DEPARTED)
+			if(DOCK_EVENT_DEPARTED)
 				src.deactivate()
 
 	proc/activate()
-		color = "#da9b49"
+		color = warning_color
 		on = 1
 		update()
 
@@ -426,18 +427,36 @@
 		on = 0
 		update()
 
-	delay2
-		icon_state = "runway20"
-		base_state = "runway2"
-	delay3
-		icon_state = "runway30"
-		base_state = "runway3"
-	delay4
-		icon_state = "runway40"
-		base_state = "runway4"
-	delay5
-		icon_state = "runway50"
-		base_state = "runway5"
+	trader_left // matching mapping area convensions
+		connected_dock = COMSIG_DOCK_TRADER_WEST
+
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	trader_right
+		connected_dock = COMSIG_DOCK_TRADER_EAST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
 
 // Traffic lights on/off is signal controlled; light switches should not affect us.
 /obj/machinery/light/traffic_light/power_change()

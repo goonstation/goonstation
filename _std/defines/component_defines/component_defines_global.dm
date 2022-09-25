@@ -36,28 +36,3 @@
 /// ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀
 #define COMSIG_GLOBAL_SUSSY_PHRASE "sussy"
 #define COMSIG_GLOBAL_UNCOOL_PHRASE "uncool_word"
-
-// ---- Generic Dock Events ----
-
-	/// Shuttle is about to arrive at a dock
-	#define COMSIG_DOCK_EVENT_INCOMING "dock_incoming"
-
-	/// Shuttle has arrived
-	#define COMSIG_DOCK_EVENT_ARRIVED "dock_arrived"
-
-	/// Shuttle is about to depart
-	#define COMSIG_DOCK_EVENT_OUTGOING "dock_outgoing"
-
-	/// Shuttle has departed from the dock
-	#define COMSIG_DOCK_EVENT_DEPARTED "dock_departed"
-
-// ---- Trader Docks ----
-
-	/// When a trader is arriving/departing at the 'left' trading area on-station
-	#define COMSIG_DOCK_TRADER_WEST "trader_left"
-
-	/// When a trader is arriving/departing at the 'right' trading area on-station
-	#define COMSIG_DOCK_TRADER_EAST "trader_right"
-
-	/// When a trader is arriving/departing at the diner trading area
-	#define COMSIG_DOCK_TRADER_DINER "trader_diner"
