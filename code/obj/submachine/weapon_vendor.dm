@@ -213,10 +213,10 @@
 
 /obj/submachine/weapon_vendor/surplus
 
-	name = "Black Jack's Swashbuckling Surplus"
+	name = "Televendor"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-surplus"
-	desc = "A secure trading interface with a space pirate turned arms dealer."
+	desc = "A hybrid between a quartermaster and a teleporter"
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
@@ -551,109 +551,100 @@
 //SURPLUS
 
 /datum/materiel/loadout/longgun
-	name = "Long gun"
+	name = "Loadout- long gun"
 	path = /obj/random_item_spawner/surplus/longgun/loadout
-	description = "Long guns that be havin' the power of thunder!"
+	description = "A loadout consisiting of a long gun, space suit, and agent card."
 
 /datum/materiel/loadout/shortgun
-	name = "Short gun"
+	name = "Loadout- short gun"
 	path = /obj/surplusopspawner/loadout_shortgun_spawner
-	description = "A shorter gun, with an' additional utility and weapon."
+	description = "A loadout consisting of a shortgun, space suit, agent card, and one additional utility."
 
 /datum/materiel/loadout/melee
-	name = "Attack item"
+	name = "Loadout- melee"
 	path = /obj/random_item_spawner/surplus/melee/loadout
-	description = "A melee item fer the experienced privateer. Ye get four utilities as change."
+	description = "A loadout consisting of a melee weapon, space suit, agent card, and one additional utility."
 
 /datum/materiel/ammo/plinking
 	name = ".22 bullets"
 	path = /obj/random_item_spawner/surplus/plinkerrounds
-	description = "Pistol bullets that be teeny tiny."
+	description = "Bullets of the .22 caliber."
 
 /datum/materiel/ammo/pistol
 	name = "Pistol bullets"
 	path = /obj/random_item_spawner/surplus/pistolrounds
-	description = "Bullets fer' yer intermediate pistols."
+	description = "Nine milimeter standard rounds"
 
 /datum/materiel/ammo/revolver
 	name = "Revolver bullets"
 	path = /obj/random_item_spawner/surplus/revolverrounds
-	description = "Revolvin' bullets. Fer the revolvin' guns."
+	description = "Revolver bullets. An intern accidentally mixed the .38 with the .375 calibers."
 
-/datum/materiel/ammo/riflesmall
-	name = "Rifle bullets- 5.56"
-	path = /obj/random_item_spawner/surplus/rifleroundslittle
-	description = "Rifle bullets o' the five five six variety."
-
-/datum/materiel/ammo/riflebig
-	name = "Rifle bullets- 308"
-	path = /obj/random_item_spawner/surplus/rifleroundsbig
-	description = "Rifle bullets o' the three oh eight variety."
 /datum/materiel/ammo/shotgun
-	name = "Bullets of shotgun"
+	name = "Shotgun shells"
 	path = /obj/random_item_spawner/surplus/shotgunshells
-	description = "Bullets fer the blunderbusses."
+	description = "A random assortment of shotgun shells."
 
 /datum/materiel/ammo/grenadeshells
-	name = "Grenade bullets"
+	name = "40mm shells"
 	path = /obj/random_item_spawner/surplus/grenadeshells
-	description = "Bullets fer various launchers. These be NOT for throwing."
+	description = "A random assortment of 40mm launcher shells."
 
 /datum/materiel/ammo/energy
-	name = "Energy bullets"
+	name = "Power cells"
 	path = /obj/random_item_spawner/surplus/energycells
-	description = "These bullets be plastic and square!"
+	description = "For use in energy weapons"
 
 /datum/materiel/utility/healing
-	name = "Healing items"
+	name = "Healing item"
 	path = /obj/random_item_spawner/surplus/medical
-	description = "Some medicinal supplies me lads have scrounged up."
+	description = "A random healing item."
 	cost = 1
 /datum/materiel/utility/grenade
 	name = "Grenades"
 	path = /obj/random_item_spawner/surplus/grenades
-	description = "Chemical, fragmentatin', explosive, firey- ye name it and it be in me storage."
+	description = "Three to four random grenades."
 	cost = 1
 
 /datum/materiel/utility/stealth
 	name = "Sneaking materials"
 	path = /obj/random_item_spawner/surplus/stealth
-	description = "Sneakin' materials, for when ye need to not get caught."
+	description = "A random item to help with infiltration."
 	cost = 2
 
 /datum/materiel/utility/defensive
 	name = "Defensive items"
 	path = /obj/random_item_spawner/surplus/defensive
-	description = "If anyone be wantin' to harm ye, this'll help."
+	description = "A random item to help extend one's lifespan."
 	cost = 1
 
 /datum/materiel/utility/melee
-	name = "Additional item of hand in hand combat"
+	name = "Additional melee item"
 	path = /obj/random_item_spawner/surplus/melee
-	description = "An additional weapon fer slashin'. Or bonkin'. Or stabbin'."
+	description = "A spare melee weapon."
 	cost = 1
 
 /datum/materiel/utility/holding
-	name = "Storing equipment"
+	name = "Additional storage"
 	path = /obj/random_item_spawner/surplus/storage
-	description = "Ye can never have enough room fer yer carryin' yer plunder!"
+	description = "Something to increase one's personal capacity."
 	cost = 1
 
 /datum/materiel/utility/backup
-	name = "Backup"
+	name = "Backup item"
 	path = /obj/random_item_spawner/surplus/backup
-	description = "Somethin' to help even the odds if ye be outnumbered."
+	description = "A force multiplier."
 	cost = 3
 /datum/materiel/utility/expensive
 	name = "Expensive toy"
 	path = /obj/random_item_spawner/surplus/expensive
-	description = "Somethin' nice an' shiny, from me private stash."
+	description = "A random 6+ TC item."
 	cost = 4
 
 /datum/materiel/utility/change
 	name = "Utility return"
 	path = /obj/item/requisition_token/syndicate/surplusutility
-	description = "If ye be needin to swap around utilities, buy this."
+	description = "Returns a single utility credit, for in-trading."
 	cost = 1
 
 // Requisition tokens
@@ -672,17 +663,13 @@
 		icon_state = "req-token"
 
 		surplus
-			name = "Prepaid check"
-			desc = "A written check of a couple thousand credits to an individual named Jack Hysen Matthews. Huh."
-			icon_state = "req-token-surplus"
-
-			giga
-				name = "Super duper check"
-				desc = "wow! this thing can buy you a lot!!!"
+			name = "Weapon credit"
+			desc = "This weapon credit's looks pretty old."
+			icon_state = "req-token"
 
 		surplusutility
-			name = "Copper dubloon"
-			desc = "A crude coin, made for intrading between space pirates. It should be enough to afford you another utility credit."
+			name = "Utility Token"
+			desc = "A returned token with the value of a single utility credit.."
 			icon_state = "req-token-surplusutil"
 		vr
 			name = "syndicoin requisition token"
