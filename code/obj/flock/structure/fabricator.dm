@@ -45,6 +45,7 @@
 			SPAWN(0.1 SECONDS)
 				if (src)
 					flock_speak(src, "ALERT: No resources available to produce.", src.flock)
+					src.icon_state = "reclaimer-off" // placeholder
 		else
 			ON_COOLDOWN(src, "resource_production", 10 SECONDS)
 
@@ -66,6 +67,7 @@
 
 		if (!src.resources_to_produce)
 			flock_speak(src, "ALERT: No resources left to produce", src.flock)
+			src.icon_state = "reclaimer-off" // placeholder
 
 	gib(atom/location)
 		if (src.resources_to_produce)
