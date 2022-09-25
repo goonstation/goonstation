@@ -51536,10 +51536,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/listeningpost)
-"oRh" = (
-/obj/machinery/light/runway_light/delay5,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "oRm" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -127507,7 +127503,7 @@ weI
 iJM
 eFg
 bPa
-oRh
+hBW
 hBW
 vtH
 tfk
