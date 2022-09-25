@@ -766,7 +766,7 @@ var/flock_signal_unleashed = FALSE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = replacementPath != /obj/flock_structure/fabricator ? new replacementPath(T) : new replacementPath(T, null, O)
+			var/obj/converted = new replacementPath(T, null, O)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))
