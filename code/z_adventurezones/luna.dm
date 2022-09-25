@@ -72,11 +72,12 @@ Contents:
 	force_fullbright = 0
 	name = "Elevator"
 
-
 /area/moon/museum/west
+	name = "Museum of Lunar History West Wing"
 	icon_state = "red"
 
 /area/moon/museum/giftshop
+	name = "Museum of Lunar History Gift Shop"
 	icon_state = "green"
 
 /area/moon/monorail_station/museum

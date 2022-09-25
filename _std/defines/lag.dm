@@ -93,9 +93,10 @@
 //fuck me, I have no idea why there's only 2 framerates that handle smooth glides for us. It's probably because byond is bugged.
 //anyway just putting this define here for the client framerate toggle button between SMOOTH AND CHUNKY OH YEAH
 #define CLIENTSIDE_TICK_LAG_CHUNKY 0.4
-
 //its the future now
 #define CLIENTSIDE_TICK_LAG_CREAMY 0.15
+//its the future now
+#define CLIENTSIDE_TICK_LAG_VELVETY 0.09
 
 #define DEFAULT_CLICK_DELAY MIN_TICKLAG //used to be 1
 #define CLICK_GRACE_WINDOW 0 //2.5

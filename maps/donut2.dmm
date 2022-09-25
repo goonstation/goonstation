@@ -2361,6 +2361,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/storage/closet/biohazard,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aiP" = (
@@ -3459,9 +3460,8 @@
 	},
 /area/shuttle/arrival/station)
 "aox" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	icon_state = "airlock_closed"
+/obj/machinery/door/airlock/pyro/reinforced{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -4385,7 +4385,7 @@
 	},
 /area/station/quartermaster/office)
 "ary" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/reinforced,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -4530,9 +4530,8 @@
 	},
 /area/station/hangar/arrivals)
 "arT" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/head_of_personnel,
 /obj/access_spawn/security,
@@ -18268,14 +18267,12 @@
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/cable{
 	icon_state = "2-8"
 	},
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
 /turf/simulated/floor/red,
 /area/station/security/main)
 "bjH" = (
@@ -25833,6 +25830,17 @@
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/crew_quarters/locker)
+"cfW" = (
+/obj/machinery/light/incandescent,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24;
+	pixel_y = 6
+	},
+/turf/unsimulated/floor/arrival{
+	dir = 8
+	},
+/area/station/hangar/arrivals)
 "cgc" = (
 /obj/machinery/deep_fryer{
 	dir = 4
@@ -26074,7 +26082,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "csy" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/reinforced,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -28610,17 +28618,17 @@
 "eyO" = (
 /obj/table/regal/auto,
 /obj/item/clothing/mask/cigarette/cigar{
-	pixel_y = 2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /obj/item/clothing/mask/cigarette/cigar{
 	pixel_x = 8;
 	pixel_y = 8
 	},
 /obj/item/device/light/zippo/gold{
-	rand_pos = 0;
+	pixel_x = -7;
 	pixel_y = 15;
-	pixel_x = -7
+	rand_pos = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/crew_quarters/stockex)
@@ -32361,7 +32369,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "hSA" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Listening Post"
@@ -32465,9 +32473,9 @@
 	rand_pos = 0
 	},
 /obj/item/genetics_injector/dna_activator{
-	pixel_y = -10;
+	name = "dna activator: deuteranopia";
 	pixel_x = -8;
-	name = "dna activator: deuteranopia"
+	pixel_y = -10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -35703,6 +35711,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
+"kXq" = (
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "kXr" = (
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	dir = 4
@@ -38873,8 +38885,8 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/window_blinds/cog2/left{
-	pixel_y = 13;
-	layer = 2.9
+	layer = 2.9;
+	pixel_y = 13
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -40591,9 +40603,8 @@
 	},
 /area/station/bridge)
 "pjE" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4;
-	icon_state = "airlock_closed"
+/obj/machinery/door/airlock/pyro/reinforced{
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -41473,12 +41484,12 @@
 /obj/machinery/light/incandescent,
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag{
-	pixel_y = 3;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 3
 	},
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag{
-	pixel_y = 5;
-	pixel_x = 7
+	pixel_x = 7;
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/green/side,
@@ -42147,12 +42158,12 @@
 /obj/table/auto,
 /obj/item/razor_blade,
 /obj/item/dye_bottle{
-	pixel_y = 12;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 12
 	},
 /obj/item/storage/pill_bottle/hairgrownium{
-	pixel_y = 5;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = 5
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/two,
@@ -45874,7 +45885,7 @@
 /turf/simulated/floor/plating/airless/asteroid/lighted,
 /area/space)
 "tAz" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
 	name = "Weather Satellite"
@@ -47587,9 +47598,9 @@
 "uWC" = (
 /obj/cable,
 /obj/machinery/power/apc{
-	pixel_y = -24;
+	areastring = "Brig";
 	name = "Brig APC";
-	areastring = "Brig"
+	pixel_y = -24
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/processing)
@@ -47847,8 +47858,8 @@
 /obj/table/reinforced/auto,
 /obj/item/wrench/gold,
 /obj/item/rocko{
-	pixel_y = 8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 8
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/orangeblack,
@@ -49196,8 +49207,8 @@
 	dir = 4
 	},
 /obj/item/reagent_containers/food/snacks/plant/cherry{
-	rand_pos = 0;
-	pixel_x = 13
+	pixel_x = 13;
+	rand_pos = 0
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge,
 /area/station/crew_quarters/stockex)
@@ -50232,6 +50243,11 @@
 	dir = 1
 	},
 /area/station/crew_quarters/quarters)
+"xxl" = (
+/obj/machinery/light/incandescent,
+/obj/storage/closet/biohazard,
+/turf/simulated/floor,
+/area/station/science/lobby)
 "xxZ" = (
 /obj/machinery/drainage/big,
 /obj/cable{
@@ -80557,7 +80573,7 @@ xuN
 xuN
 aol
 xuN
-aoM
+cfW
 xuN
 xuN
 apa
@@ -119482,7 +119498,7 @@ adW
 dfk
 adD
 lIF
-afG
+xxl
 adq
 ahR
 adq
@@ -122521,11 +122537,11 @@ fRl
 adq
 adq
 adq
-adq
+kXq
 mKX
 upP
 xQA
-adq
+kXq
 adq
 ktE
 bNW
