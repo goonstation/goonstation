@@ -680,11 +680,11 @@
 		user.updateOverlaysClient(user.client)
 
 	proc/flip_down(var/mob/living/carbon/human/user)
-		if (ishuman(user) && (user.head == src))
-			up = FALSE
-			see_face = FALSE
-			icon_state = "welding"
-			boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
+		up = FALSE
+		see_face = FALSE
+		icon_state = "welding"
+		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
+		if (user.head == src)
 			src.obscure(user)
 			user.update_clothing()
 
@@ -695,11 +695,11 @@
 			boutput(user, "You try to flip the mask down, but it just doesn't fit on you.")
 
 	proc/flip_up(var/mob/living/carbon/human/user)
-		if (ishuman(user) && (user.head == src))
-			up = TRUE
-			see_face = TRUE
-			icon_state = "welding-up"
-			boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
+		up = TRUE
+		see_face = TRUE
+		icon_state = "welding-up"
+		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
+		if (user.head == src)
 			src.reveal(user)
 			user.update_clothing()
 		else
@@ -725,8 +725,9 @@
 				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
-		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
-			toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
+		if (ishuman(user))
+			for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
+				toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
 		..()
 
 
