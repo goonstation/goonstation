@@ -141,6 +141,7 @@
 		status_signal.source = src.master
 		status_signal.transmission_method = 1
 		status_signal.data["command"] = command
+		status_signal.data["address_tag"] = "STATDISPLAY"
 
 		switch(command)
 			if("message")
