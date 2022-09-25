@@ -216,7 +216,7 @@
 	name = "Televendor"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-surplus"
-	desc = "A hybrid between a quartermaster and a teleporter"
+	desc = "A secure trading interface with a syndicate quartermaster."
 	token_accepted = /obj/item/requisition_token/syndicate
 	log_purchase = TRUE
 
