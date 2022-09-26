@@ -42,7 +42,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -104,7 +104,7 @@
 		..()
 
 	butcher(mob/user)
-		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
 		return ..(user, FALSE)
 
@@ -562,7 +562,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -654,7 +655,7 @@
 		HSD.changeling = changeling
 		H.ailments += HS
 
-		logTheThing("combat", src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))

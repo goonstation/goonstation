@@ -55,6 +55,6 @@
 	if (src.master && istype(src.master, /obj/stool/chair/e_chair))
 		var/obj/stool/chair/e_chair/C = src.master
 		if (C.buckled_guy)
-			logTheThing("signalers", usr, C.buckled_guy, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(C.buckled_guy,"signalers")] at [log_loc(C)].") // Added (Convair880).
+			logTheThing(LOG_SIGNALERS, usr, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(C.buckled_guy,"signalers")] at [log_loc(C)].") // Added (Convair880).
 		C.shock()
 	return

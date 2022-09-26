@@ -356,12 +356,12 @@ var/zapLimiter = 0
 				if (0)
 					src.repair_status = 1
 					boutput(user, "You loosen the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (1)
 					src.repair_status = 0
 					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 					return
 				if (2)
 					boutput(user, "<span class='alert'>Securing the terminals now without tuning the autotransformer could fry the control board.</span>")
@@ -372,7 +372,7 @@ var/zapLimiter = 0
 				if (4)
 					src.repair_status = 0
 					boutput(user, "You secure the screw terminals on the control board.")
-					playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 					if (!src.terminal)
 						var/obj/machinery/power/terminal/newTerm = locate(/obj/machinery/power/terminal) in src.loc
@@ -509,7 +509,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [src] [log_loc(src)]")
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
@@ -517,7 +517,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [250] power from the APC [src] [log_loc(src)]")
 			charging = chargemode
 
 		else return src.Attackhand(user)
@@ -544,12 +544,12 @@ var/zapLimiter = 0
 /obj/machinery/power/apc/proc/fix_wiring(obj/item/W, mob/user)
 	W.change_stack_amount(-4)
 	boutput(user, "You repair the autotransformer.")
-	playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 	src.repair_status = 2
 
 /obj/machinery/power/apc/proc/fix_autotransformer(mob/user)
 	boutput(user, "You tune the autotransformer.")
-	playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status = 3
 
 /obj/machinery/power/apc/attack_ai(mob/user)
@@ -694,7 +694,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC equipment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		equipment = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -717,7 +717,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC lighting power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		lighting = (val==1) ? 0 : val
 
 		UpdateIcon()
@@ -740,7 +740,7 @@ var/zapLimiter = 0
 				usr.show_text("APC offline, can't toggle power.", "red")
 			return FALSE
 
-		logTheThing("station", usr, null, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "turned the APC environment power [(val==1) ? "off" : "on"] at [log_loc(src)].")
 		environ = (val==1) ? 0 :val
 
 		UpdateIcon()
@@ -859,7 +859,7 @@ var/zapLimiter = 0
 			boutput(usr, "AI control for this APC interface has been disabled.")
 			return FALSE
 		message_admins("[key_name(usr)] overloaded the lights at [log_loc(src)].")
-		logTheThing("station", usr, null, "overloaded the lights at [log_loc(src)].")
+		logTheThing(LOG_STATION, usr, "overloaded the lights at [log_loc(src)].")
 		src.overload_lighting()
 		return TRUE
 	else
@@ -1014,7 +1014,7 @@ var/zapLimiter = 0
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))

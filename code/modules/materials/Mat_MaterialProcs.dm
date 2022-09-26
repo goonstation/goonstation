@@ -73,26 +73,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		M?.bodytemperature = 310
 		return
 
-/datum/materialProc/radioactive_on_enter
-	desc = "It glows faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.changeStatus("radiation", owner.material.getProperty("radioactive") SECONDS)
-		return
-
-/datum/materialProc/n_radioactive_on_enter
-	desc = "It glows blue faintly."
-
-	execute(var/atom/owner, var/atom/entering)
-		if(ismob(entering))
-			var/mob/M = entering
-			if(owner.material)
-				M.changeStatus("n_radiation", owner.material.getProperty("n_radioactive") SECONDS)
-		return
-
 /datum/materialProc/generic_reagent_onattacked
 	var/trigger_chance = 100
 	var/limit = 0
@@ -159,6 +139,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	desc = "It makes your hands itch."
 
 	execute(var/mob/M, var/obj/item/I, mult)
+		if(issilicon(M)) return // silicons can't get itchy
 		if(probmult(20)) M.emote(pick("twitch", "laugh", "sneeze", "cry"))
 		if(probmult(10))
 			boutput(M, "<span class='notice'><b>Something tickles!</b></span>")
@@ -325,7 +306,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				if (prob(25) && attacker == attacked)
 					fail_msg = " but you lose [owner]!"
 					attacker.drop_item(owner)
-					playsound(attacker.loc, "sound/effects/poof.ogg", 90)
+					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
 				else
 					playsound(attacker.loc, "warp", 50)
 				attacked.visible_message("<span class='alert'>[attacked] is warped away!</span>")
@@ -401,7 +382,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			playsound(location, "sound/effects/leakagentb.ogg", 50, 1, 8)
+			playsound(location, 'sound/effects/leakagentb.ogg', 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += 0.18
@@ -411,7 +392,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			playsound(location, "sound/effects/leakoxygen.ogg", 50, 1, 5)
+			playsound(location, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 			payload.oxygen = 80
 			iterations -= 1
 
@@ -446,37 +427,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/radioactive_add
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#1122EE",-1,40)
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(owner) ? 0 : 1)
 		return
 
-/datum/materialProc/radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.changeStatus("radiation", max(I.material.getProperty("radioactive") / 4, 1) SECONDS * mult)
-		return
-
-/datum/materialProc/radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.changeStatus("radiation", I.material.getProperty("radioactive") * 2 SECONDS)
+/datum/materialProc/radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/n_radioactive_add
-	execute(var/location)
-		animate_flash_color_fill_inherit(location,"#4279D1",-1,40)
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(owner) ? 0 : 1)
 		return
 
-/datum/materialProc/n_radioactive_life
-	execute(var/mob/M, var/obj/item/I, mult)
-		if(I.material)
-			M.changeStatus("n_radiation", max(I.material.getProperty("n_radioactive") / 4, 1) SECONDS * mult)
-		return
-
-/datum/materialProc/n_radioactive_pickup
-	execute(var/mob/M, var/obj/item/I)
-		if(I.material)
-			M.changeStatus("n_radiation", I.material.getProperty("n_radioactive") * 2 SECONDS)
+/datum/materialProc/n_radioactive_remove
+	execute(var/atom/location)
+		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
+		var/datum/component/radioactive/R = location.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 		return
 
 /datum/materialProc/erebite_flash
@@ -529,7 +502,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, "sound/misc/slip.ogg", 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
 		return
 
 /datum/materialProc/ice_life
@@ -643,7 +616,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				if (istype(owner, /turf/simulated/wall))
 					var/turf/simulated/wall/wall_owner = owner
 					owner.visible_message("<span class='alert'>[owner] shears apart under the force of [attackobj]! </span>","<span class='alert'>You hear a crumpling sound.</span>")
-					logTheThing("station", attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
+					logTheThing(LOG_STATION, attacker ? attacker : null, null, "bashed apart a cardboard wall ([owner.name]) using \a [attackobj] at [attacker ? get_area(attacker) : get_area(owner)] ([attacker ? showCoords(attacker.x, attacker.y, attacker.z) : showCoords(owner.x, owner.y, owner.z)])[attacker ? null : ", attacker is unknown, shown location is of the wall"][meleeorthrow == 1 ? ", this was a thrown item" : null]")
 					wall_owner.dismantle_wall(1, 0)
 
 				else if (istype(owner, /turf/simulated/floor))
@@ -678,7 +651,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>[attacker] cuts the reinforcment off [owner].</span>","You cut the reinforcement off [owner].","The sound of cutting cardboard stops.")
 			else
 				attacker.visible_message("<span class='alert'>[attacker] cuts apart the outer cover of [owner]</span>.","<span class='notice'>You cut apart the outer cover of [owner]</span>.","The sound of cutting cardboard stops.")
-				logTheThing("station", attacker, null, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard wall ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 			wall_owner.dismantle_wall(0, 0)
 		else if (istype(owner, /turf/simulated/floor))
 			var/turf/simulated/floor/floor_owner = owner
@@ -701,7 +674,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if (!floor_owner.intact)
 				var/atom/A = new /obj/item/tile(src)
 				A.setMaterial(owner.material)
-				logTheThing("station", attacker, null, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
+				logTheThing(LOG_STATION, attacker, "cut apart a cardboard floor ([owner.name]) using \a [attackobj] at [get_area(attacker)] ([log_loc(attacker)])")
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return

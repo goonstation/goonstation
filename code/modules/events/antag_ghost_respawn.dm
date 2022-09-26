@@ -56,7 +56,7 @@
 		src.message_delay = src.message_delay + src.ghost_confirmation_delay
 
 		message_admins("<span class='internal'>Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]</span>")
-		logTheThing("admin", null, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, null, "Setting up Antagonist Spawn event ([src.antagonist_type]). Source: [source ? "[source]" : "random"]")
 
 		// No need for a fancy setup here.
 		if (src.antagonist_type == "Blob (AI)")
@@ -64,7 +64,7 @@
 			if (BS)
 				new /mob/living/intangible/blob_overmind/ai(BS)
 				message_admins("Antagonist Spawn spawned an AI blob at [log_loc(BS)].")
-				logTheThing("admin", null, null, "Antagonist Spawn spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
+				logTheThing(LOG_ADMIN, null, "Antagonist Spawn spawned an AI blob at [log_loc(BS)]. Source: [source ? "[source]" : "random"]")
 				..() // Report spawn().
 				src.post_event()
 				return
@@ -103,7 +103,7 @@
 
 		if (!islist(candidates) || candidates.len <= 0)
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); no ghosts responded. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -141,7 +141,7 @@
 
 		if (!(lucky_dude && istype(lucky_dude) && lucky_dude.current))
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); candidate selection failed (had [candidates.len] candidate(s)). Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -199,6 +199,9 @@
 					role = ROLE_FLOCKMIND
 					objective_path = /datum/objective/specialist/flock
 					send_to = 3
+					if (alive_player_count() > 40) //flockmind can have a free trace, as a treat
+						SPAWN(1)
+							F.partition(TRUE)
 				else
 					failed = 1
 
@@ -236,19 +239,16 @@
 				var/mob/living/R2 = M3.humanize()
 				if (R2 && istype(R2))
 					M3 = R2
-					R2.make_werewolf(1)
+					R2.make_werewolf()
 					role = ROLE_WEREWOLF
 					objective_path = /datum/objective_set/werewolf
 				else
 					failed = 1
 
 			if ("Hunter")
-				var/mob/living/R3 = M3.humanize()
-				if (R3 && istype(R3))
-					M3 = R3
-					R3.make_hunter()
-					role = ROLE_HUNTER
-					objective_path = /datum/objective_set/hunter
+				var/mob/living/L = M3.humanize()
+				if (istype(L))
+					L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
 				else
 					failed = 1
 
@@ -325,7 +325,7 @@
 
 		if (failed != 0)
 			message_admins("Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
-			logTheThing("admin", null, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
+			logTheThing(LOG_ADMIN, null, "Couldn't set up Antagonist Spawn ([src.antagonist_type]); respawn failed. Source: [source ? "[source]" : "random"]")
 			src.post_event()
 			return
 
@@ -345,7 +345,7 @@
 
 		var/i = 1
 		for (var/datum/objective/Obj in lucky_dude.objectives)
-			if (istype(Obj, /datum/objective/crew) || istype(Obj, /datum/objective/miscreant))
+			if (istype(Obj, /datum/objective/crew))
 				continue
 			boutput(M3, "<b>Objective #[i]</b>: [Obj.explanation_text]")
 			i++
@@ -373,8 +373,8 @@
 
 		if (lucky_dude.current)
 			lucky_dude.current.show_text("<h3>You have been respawned as a random event [src.antagonist_type].</h3>", "blue")
-		message_admins("[lucky_dude.key] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
-		logTheThing("admin", lucky_dude.current, null, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+		message_admins("[key_name(lucky_dude.key)] respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, lucky_dude.current, "respawned as a random event [src.antagonist_type]. Source: [source ? "[source]" : "random"]")
 		src.post_event()
 		return
 

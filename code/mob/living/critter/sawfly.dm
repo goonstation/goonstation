@@ -18,7 +18,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/deathtimer = 0 // for catastrophic failure on death
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
-	var/isdisabled = FALSE //only used in reusable grenade- stops life() from doing anything
+	var/isdisabled = FALSE //stops life() from doing anything when in grenade form
 	speechverb_say = "whirrs"
 	speechverb_exclaim = "buzzes"
 	speechverb_ask = "hums"
@@ -55,6 +55,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		deathtimer = rand(1, 5)
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
 	setup_hands()
@@ -135,9 +136,9 @@ This file is the critter itself, and all the custom procs it needs in order to f
 					SPAWN(5)
 						if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
 							src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes"))] [user]!</b>")
-							playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
-							take_bleeding_damage(user, null, 17, DAMAGE_STAB)
-							random_brute_damage(user, 14, FALSE)
+							playsound(src, 'sound/machines/chainsaw_green.ogg', 50, 1)
+							take_bleeding_damage(user, null, 10, DAMAGE_STAB)
+							random_brute_damage(user, 14, TRUE)
 
 
 		..()

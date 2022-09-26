@@ -654,6 +654,12 @@
 		icon_state = "SCIlabcoat"
 		item_state = "SCIlabcoat"
 
+	labcoat_MD
+		name = "medical director's labcoat"
+		desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
+		icon_state = "MDlonglabcoat"
+		item_state = "MDlonglabcoat"
+
 	paramedic
 		name = "paramedic suit"
 		desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection."
@@ -1730,7 +1736,7 @@
 		name = "Medical Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/medical_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
-		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_MD
 		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern/latex

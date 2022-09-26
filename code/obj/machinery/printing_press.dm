@@ -218,7 +218,7 @@
 					boutput(user, "no good, asshole >:\[")
 					return
 			qdel(W)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else
 			..()
@@ -355,7 +355,7 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing("say", user, null, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
 				make_books()
 				return
 
@@ -466,7 +466,7 @@
 				UpdateIcon()
 				break
 
-			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
 			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))
@@ -543,7 +543,7 @@
 	desc = "Looks like this upgrade module is for letting your press customise book covers!"
 	icon_state = "press_books"
 
-/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest bitch
+/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest coder
 	name = "ink cartridge"
 	desc = "Looks like this is an ink restock cartridge for the printing press!"
 	icon_state = "press_ink"

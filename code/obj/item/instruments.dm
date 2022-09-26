@@ -19,8 +19,7 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 5
-	var/next_play = 0
-	var/note_time = 100
+	var/note_time = 10 SECONDS
 	var/randomized_pitch = 1
 	var/pitch_set = 1
 	var/list/sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
@@ -29,73 +28,67 @@
 	var/desc_sound = list("funny", "rockin'", "great", "impressive", "terrible", "awkward")
 	var/desc_music = list("riff", "jam", "bar", "tune")
 	var/volume = 50
+	var/transpose = 0
 	var/dog_bark = 1
 	var/affect_fun = 5
 	var/special_index = 0
 	var/notes = list("c4")
 	var/note = "c4"
-	var/use_new_interface = 0
+	var/use_new_interface = FALSE
 	/*At which key the notes start at*/
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
+	var/keyboard_toggle = 0
 
 	New()
 		..()
-
-
-		if (!pick_random_note)
-			if(use_new_interface == 0)
-				contextLayout = new /datum/contextLayout/instrumental()
-			else
-				contextLayout = new /datum/contextLayout/newinstrumental(KeyOffset = key_offset)
-
+		if (!pick_random_note && use_new_interface != 1)
+			contextLayout = new /datum/contextLayout/instrumental()
 			//src.contextActions = childrentypesof(/datum/contextAction/vehicle)
 
 			for(var/datum/contextAction/C as anything in src.contextActions)
 				C.dispose()
 			src.contextActions = list()
 
-			for (var/i in 1 to sounds_instrument.len)
+			for (var/i in 1 to length(sounds_instrument))
 				var/datum/contextAction/instrument/newcontext
 
 				if (special_index && i >= special_index)
 					newcontext = new /datum/contextAction/instrument/special
-				else if (findtext(sounds_instrument[i], "-"))
-					newcontext = new /datum/contextAction/instrument/black
 				else
 					newcontext = new /datum/contextAction/instrument
+
 				newcontext.note = i
 				contextActions += newcontext
 
 	proc/play_note(var/note, var/mob/user)
-		if (note != clamp(note,1,sounds_instrument.len))
-			return 0
-		if (next_play > TIME)
-			return 0
-		next_play = TIME + note_time
-		//if drunk, play off pitch?
-		if (special_index && note >= special_index)
-			next_play = TIME + 200
+		logTheThing(LOG_COMBAT, user, "plays instrument [src]")
+		if (note != clamp(note, 1, length(sounds_instrument)))
+			return FALSE
+		var/atom/player = user || src
+		if(ON_COOLDOWN(player, "instrument_play", src.note_time)) // on user or src because sometimes instruments play themselves
+			return FALSE
+
+		if (special_index && note >= special_index) // Add additional time if we just played a special note
+			player.cooldowns["instrument_play"] += 10 SECONDS
 
 		var/turf/T = get_turf(src)
 		playsound(T, sounds_instrument[note], src.volume, randomized_pitch, pitch = pitch_set)
 
-
-		if (prob(5) || sounds_instrument.len == 1)
+		if (prob(5))
 			if (src.dog_bark)
-				for_by_tcl(G, /obj/critter/dog/george)
-					if (IN_RANGE(G, T, 6) && prob(60))
-						if(ON_COOLDOWN(G, "george howl", 10 SECONDS))
+				for_by_tcl(george, /obj/critter/dog/george)
+					if (IN_RANGE(george, T, 6) && prob(60))
+						if(ON_COOLDOWN(george, "george howl", 10 SECONDS))
 							continue
-						G.howl()
+						george.howl()
 
-			src.post_play_effect(user)
-
-		.= 1
+		src.post_play_effect(user)
+		. = TRUE
 
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
-			play_note(rand(1,sounds_instrument.len),user)
+			play_note(rand(1, length(sounds_instrument)),user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -105,10 +98,66 @@
 	proc/post_play_effect(mob/user as mob)
 		return
 
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui && use_new_interface)
+			ui = new(user, src, "MusicInstrument")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"name" = src.name,
+			"notes" = src.notes,
+			"volume" = src.volume,
+			"transpose" = src.transpose,
+			"keybindToggle" = src.keyboard_toggle,
+		)
+
+	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("play_note")
+				var/note_to_play = params["note"] + 1 // 0->1 (js->dm) array index change
+				var/volume = params["volume"]
+				playsound(get_turf(src), sounds_instrument[note_to_play], volume, randomized_pitch, pitch = pitch_set)
+				. = TRUE
+			if("play_keyboard_on")
+				usr.client.apply_keybind("instrument_keyboard")
+				src.keyboard_toggle = 1
+				. = TRUE
+			if("play_keyboard_off")
+				usr.client.mob.reset_keymap()
+				src.keyboard_toggle = 0
+				. = TRUE
+			if("set_volume")
+				src.volume = clamp(params["value"], 0, 100)
+				. = TRUE
+			if("set_transpose")
+				src.transpose = clamp(params["value"], -12, 12)
+				. = TRUE
+
+	ui_close(mob/user)
+		user.reset_keymap()
+		. = ..()
+
+	ui_status(mob/user, datum/ui_state/state)
+		. = ..()
+		if(. <= UI_CLOSE || !IN_RANGE(src, user, 1))
+			user.reset_keymap()
+			return UI_CLOSE
+
+
 	attack_self(mob/user as mob)
 		..()
 		src.add_fingerprint(user)
-		src.play(user)
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
+
 
 
 /* -------------------- Large Instruments -------------------- */
@@ -123,13 +172,16 @@
 	desc_sound = list("nice", "classic", "classical", "great", "impressive", "terrible", "awkward", "striking", "grand", "majestic")
 	desc_music = list("melody", "aria", "ballad", "chorus", "concerto", "fugue", "tune")
 	volume = 100
-	note_time = 200
+	note_time = 20 SECONDS
 	affect_fun = 15 // a little higher, why not?
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
 
 	attack_hand(mob/user)
 		src.add_fingerprint(user)
-		src.play(user)
+		if(use_new_interface)
+			ui_interact(user)
+		else
+			src.play(user)
 
 	show_play_message(mob/user as mob)
 		if (user) return src.visible_message("<B>[user]</B> [islist(src.desc_verb) ? pick(src.desc_verb) : src.desc_verb] \a [islist(src.desc_sound) ? pick(src.desc_sound) : src.desc_sound] [islist(src.desc_music) ? pick(src.desc_music) : src.desc_music] on [src]!")
@@ -137,7 +189,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -283,6 +335,7 @@
 		..()
 
 
+
 /* -------------------- Bike Horn -------------------- */
 
 /obj/item/instrument/bikehorn
@@ -296,7 +349,7 @@
 	stamina_cost = 5
 	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
 	desc_verb = list("honks")
-	note_time = 8
+	note_time = 0.8 SECONDS
 	pick_random_note = 1
 
 	show_play_message(mob/user as mob)
@@ -380,7 +433,7 @@
 	item_state = "airhorn"
 	sounds_instrument = list('sound/musical_instruments/Airhorn_1.ogg')
 	volume = 100
-	note_time = 10
+	note_time = 1 SECOND
 	pick_random_note = 1
 
 /* -------------------- Harmonica -------------------- */
@@ -395,7 +448,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/musical_instruments/Harmonica_1.ogg', 'sound/musical_instruments/Harmonica_2.ogg', 'sound/musical_instruments/Harmonica_3.ogg')
 	desc_sound = list("delightful", "chilling", "upbeat")
 	pick_random_note = 1
@@ -412,7 +465,7 @@
 	throwforce = 3
 	stamina_damage = 2
 	stamina_cost = 2
-	note_time = 20
+	note_time = 2 SECONDS
 	sounds_instrument = list('sound/items/police_whistle1.ogg', 'sound/items/police_whistle2.ogg')
 	volume = 75
 	randomized_pitch = 1
@@ -472,7 +525,7 @@
 	detonator_act(event, var/obj/item/assembly/detonator/det)
 		switch (event)
 			if ("pulse")
-				playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+				playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("cut")
 				det.attachedTo.visible_message("<span class='bold' style='color:#B7410E'>The buzzing stops.</span>")
 				det.attachments.Remove(src)
@@ -481,11 +534,11 @@
 					var/times = rand(1,5)
 					for (var/i = 1, i <= times, i++)
 						SPAWN(4*i)
-							playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 50, 1)
+							playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 			if ("prime")
 				for (var/i = 1, i < 15, i++)
 					SPAWN(4*i)
-						playsound(det.attachedTo.loc, "sound/musical_instruments/Vuvuzela_1.ogg", 500, 1)
+						playsound(det.attachedTo.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 500, 1)
 
 /* -------------------- Trumpet -------------------- */
 
@@ -527,7 +580,7 @@
 	affect_fun = 200 //because come on this shit's hilarious
 
 	play(mob/user as mob)
-		if (next_play > TIME)
+		if(GET_COOLDOWN(user, "instrument_play"))
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
@@ -548,13 +601,13 @@
 			return
 		if (S.mob_flags & IS_BONEY)
 			S.visible_message("<span class='notice'><b>[S.name]</b> claks in appreciation!</span>")
-			playsound(S.loc, "sound/items/Scissor.ogg", 50, 0)
+			playsound(S.loc, 'sound/items/Scissor.ogg', 50, 0)
 			return
 		else
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
-			playsound(S, S.gender == "female" ? "sound/voice/screams/female_scream.ogg" : "sound/voice/screams/male_scream.ogg", 50, 0, 0, S.get_age_pitch())
-			playsound(S, "sound/effects/bubbles.ogg", 50, 0)
-			playsound(S, "sound/impact_sounds/Flesh_Tear_2.ogg", 50, 0)
+			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
+			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
+			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)

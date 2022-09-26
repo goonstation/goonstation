@@ -12,11 +12,13 @@ var/flock_signal_unleashed = FALSE
 	var/name
 	var/used_compute = 0
 	var/total_compute = 0
+	var/peak_compute = 0
 	var/list/all_owned_tiles = list()
 	var/list/busy_tiles = list()
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	var/queued_trace_deaths = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
@@ -46,11 +48,15 @@ var/flock_signal_unleashed = FALSE
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	processing_items |= src
-	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
-		src.unlockableStructures += new DT(src)
+	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
+/datum/flock/proc/load_structures()
+	src.unlockableStructures = list()
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
 	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
@@ -269,7 +275,7 @@ var/flock_signal_unleashed = FALSE
 			SPAWN(3 SECONDS)
 				F.client?.images -= arrow
 				qdel(arrow)
-		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmindsay" : ""]"
+		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
 		var/prefix = "<span class='bold'>\[[src.name]\] </span><span class='name'>[pinger.name]</span>"
 		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
@@ -398,7 +404,7 @@ var/flock_signal_unleashed = FALSE
 				src.active_names[name] = TRUE
 		tries++
 	if (!name_found && tries == max_tries)
-		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
 	return name
 
@@ -529,17 +535,29 @@ var/flock_signal_unleashed = FALSE
 	return (enemy_name in src.enemies)
 
 // DEATH
-
-/datum/flock/proc/perish()
+///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
+/datum/flock/proc/perish(real = TRUE)
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
-	if (src.flockmind)
-		hideAnnotations(src.flockmind)
 	for(var/obj/flock_structure/S as anything in src.structures)
 		S.gib()
+	for(var/turf/T in src.priority_tiles)
+		src.togglePriorityTurf(T)
+	for (var/name in src.busy_tiles)
+		src.unreserveTurf(src.busy_tiles[name])
+	src.unlockableStructures = list()
+	src.achievements = list()
+	src.total_compute = 0
+	src.used_compute = 0
+	src.peak_compute = 0
+	if (!real)
+		src.load_structures()
+		return
+	if (src.flockmind)
+		hideAnnotations(src.flockmind)
 	qdel(get_image_group(src))
 	annotations = null
 	all_owned_tiles = null
@@ -567,6 +585,8 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	T.AddComponent(/datum/component/flock_interest, src)
@@ -635,7 +655,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, "sound/items/Deconstruct.ogg", 40, 1)
+	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
@@ -674,11 +694,17 @@ var/flock_signal_unleashed = FALSE
 	/obj/spacevine = null
 	)
 
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
+
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return
+	if (!flockTurfAllowed(T))
+		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 

@@ -122,8 +122,8 @@
 	if (!wagesystem)
 		return
 	wagesystem.clones_for_cash = !(wagesystem.clones_for_cash)
-	logTheThing("admin", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"]")
 	boutput(world, "<b>Cloning now [wagesystem.clones_for_cash ? "requires" : "does not require"] money.</b>")
 
@@ -1283,7 +1283,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing("combat", user, M, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
@@ -1357,7 +1357,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
-			playsound(T, "sound/effects/bamf.ogg", 40, 1)
+			playsound(T, 'sound/effects/bamf.ogg', 40, 1)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
@@ -1515,7 +1515,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1524,7 +1524,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.bangfired = 1
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(user, "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
 
@@ -1810,12 +1810,12 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 								HU.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 								var/obj/item/organ/heart/heart = new /obj/item/organ/heart(src.loc)
 								heart.donor = HU
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
 								sleep(2 SECONDS)
 								src.say("Ab, uski jan meri mutti me hai! AB, USKI JAN MERI MUTTI ME HAI!")
 							else
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
 								src.visible_message("<span class='alert'><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
 								sleep(2 SECONDS)

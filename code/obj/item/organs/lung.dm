@@ -27,10 +27,10 @@
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -51,10 +51,10 @@
 
 	// on_broken()
 	// 	if (body_side == L_ORGAN)
-	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.left_lung && src.holder.left_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 	// 	else
-	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+	// 		if (src.holder.right_lung && src.holder.right_lung.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 	// 			donor.contract_disease(failure_disease,null,null,1)
 
 	proc/breathe(datum/gas_mixture/breath, underwater, mult, datum/organ/lung/status/update)
@@ -113,7 +113,7 @@
 		if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
 			var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
 			if(SA)
-				var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
+				var/SA_pp = (SA.moles/max(TOTAL_MOLES(breath),1))*breath_pressure
 				if (SA_pp > SA_para_min) // Enough to make us paralysed for a bit
 					donor.changeStatus("paralysis", 5 SECONDS/LUNG_COUNT)
 					if (SA_pp > SA_sleep_min) // Enough to make us sleep as well

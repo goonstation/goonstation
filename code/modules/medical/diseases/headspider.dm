@@ -129,7 +129,7 @@
 					changeto = null
 					affected_mob.change_misstep_chance(-INFINITY)
 					affected_mob.show_text("<h3>We have assumed control of the new host.</h3>", "blue")
-					logTheThing("combat", affected_mob, null, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
+					logTheThing(LOG_COMBAT, affected_mob, "'s headspider successfully assumes control of new host at [log_loc(affected_mob)].")
 
 					D.stealth_asymptomatic = 1 //Retain the disease but don't actually do anything with it
 					SPAWN(2 MINUTES) //Disease stays for two minutes after a complete infection, then it removes itself.

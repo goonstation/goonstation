@@ -89,7 +89,7 @@
 #define REBUILD_SPECTRO				8
 
 // blood system and item damage things
-#define DAMAGE_BLUNT 1
+#define DAMAGE_BLUNT 1 // 420
 #define DAMAGE_CUT 2
 #define DAMAGE_STAB 4
 #define DAMAGE_BURN 8

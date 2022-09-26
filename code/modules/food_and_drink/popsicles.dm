@@ -15,7 +15,7 @@
 	attack_self(mob/user)
 		if (user.find_in_hand(src) && !src.broken)
 			user.visible_message("<b>[user]</b> bends [src] a little too far back and it snaps in half. Shoot!")
-			playsound(user, "sound/impact_sounds/Flesh_Crush_1.ogg", 60, 1, 0, 2)
+			playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
 			src.name = "broken popsicle stick"
 			src.icon_state = "stick-broken"
 			src.broken = 1

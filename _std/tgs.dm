@@ -22,13 +22,13 @@
 #define TGS_NOTIFY_ADMINS(event) message_admins("TGS: [##event]")
 
 /// Write an info `message` to a server log.
-#define TGS_INFO_LOG(message) logTheThing("diary", null, null, "TGS Info: [##message]", "debug")
+#define TGS_INFO_LOG(message) logTheThing(LOG_DIARY, null, "TGS Info: [##message]", "debug")
 
 /// Write an warning `message` to a server log.
-#define TGS_WARNING_LOG(message) logTheThing("diary", null, null, "TGS Warning: [##message]", "debug")
+#define TGS_WARNING_LOG(message) logTheThing(LOG_DIARY, null, "TGS Warning: [##message]", "debug")
 
 /// Write an error `message` to a server log.
-#define TGS_ERROR_LOG(message) logTheThing("diary", null, null, "TGS ERROR: [##message]", "debug")
+#define TGS_ERROR_LOG(message) logTheThing(LOG_DIARY, null, "TGS ERROR: [##message]", "debug")
 
 /// Disallow ANYONE from reflecting a given `path`, security measure to prevent in-game use of DD -> TGS capabilities. - haha no
 #define TGS_PROTECT_DATUM(Path)
