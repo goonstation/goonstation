@@ -184,10 +184,6 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			mohawkS
 				name = "Mohawk: Stripes"
 				id = "mohawkS"
-			sparks
-				name = "Sparks"
-				id = "sparks"
-				gender = MASCULINE | FEMININE
 			mysterious
 				name = "Mysterious"
 				id = "mysterious"
@@ -217,6 +213,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			shortflip
 				name = "Punky Flip"
 				id = "shortflip"
+				gender = MASCULINE | FEMININE
+			sparks
+				name = "Sparks"
+				id = "sparks"
 				gender = MASCULINE | FEMININE
 			spiky
 				name = "Spiky"
@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Flat Bangs"
 				id = "flatbangs"
 			longwavebangs
-				name = "Long Wavey Bangs"
+				name = "Long Wavy Bangs"
 				id = "longwavebangs"
 			bedhead
 				name = "Bedhead"
@@ -367,10 +367,6 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			looselongbraidshoulder
 				name = "Loose Long Braid Over Shoulder"
 				id = "looselongbraidshoulder"
-				gender = FEMININE
-			longtwintail
-				name = "Long Twin Tails"
-				id = "longtwintail"
 				gender = FEMININE
 			longsidepart_s
 				name = "Long Flip"
@@ -497,6 +493,10 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			longtailed
 				name = "Long Mini Tail"
 				id = "longtailed"
+				gender = FEMININE
+			longtwintail
+				name = "Long Twin Tails"
+				id = "longtwintail"
 				gender = FEMININE
 			glamponytail
 				name = "Glam Ponytail"
