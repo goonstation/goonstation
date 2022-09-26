@@ -683,30 +683,28 @@
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
-		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		if (user.head == src)
-			src.obscure(user)
-			user.update_clothing()
+		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
+		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
+		setProperty("meleeprot_head", 1)
+		setProperty("disorient_resist_eye", 100)
+		if (ishuman(user))
+			if (user.head == src)
+				src.obscure(user)
+				user.update_clothing()
 
-			src.c_flags |= (COVERSEYES | BLOCKCHOKE)
-			setProperty("meleeprot_head", 1)
-			setProperty("disorient_resist_eye", 100)
-		else
-			boutput(user, "You try to flip the mask down, but it just doesn't fit on you.")
 
 	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
-		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		if (user.head == src)
-			src.reveal(user)
-			user.update_clothing()
-		else
-			boutput(user, "You try to flip the mask up, but it just doesn't fit on you.")
+		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+		if (ishuman(user))
+			if (user.head == src)
+				src.reveal(user)
+				user.update_clothing()
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -725,9 +723,8 @@
 				src.reveal(owner)
 
 	attack_self(mob/user) //let people toggle these inhand too
-		if (ishuman(user))
-			for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
-				toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
+		for(var/obj/ability_button/mask_toggle/toggle in ability_buttons)
+			toggle.execute_ability() //This is a weird way of doing it but we'd have to get the ability button to update the icon anyhow
 		..()
 
 
