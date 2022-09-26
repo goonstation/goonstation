@@ -98,20 +98,20 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
+		SHOULD_CALL_PARENT(TRUE)
 		removed = 0
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(overlay_image, id)
-		return
 
 	proc/OnRemove()  //Called when the effect is removed.
+		SHOULD_CALL_PARENT(TRUE)
 		removed = 1
 		if(overlay_image)
 			if(isliving(owner))
 				var/mob/living/L = owner
 				L.UpdateOverlays(null, id)
-		return
 
 	proc/OnMobDraw() //Called when the overlays for the mob are drawn. Children should NOT run when this returns 1
 		return removed
