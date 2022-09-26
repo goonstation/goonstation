@@ -14,7 +14,7 @@
 		..()
 
 		if(get_alive_antags_percentage() >= antags_remaing_percent)
-			message_admins("Surplus op deployment aborted- not enough antags")
+			message_admins("Surplus op deployment aborted- too many antags")
 			return
 
 
