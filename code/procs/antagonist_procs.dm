@@ -304,7 +304,7 @@
 	synd_mob.equip_if_possible(new /obj/item/clothing/under/color/grey(synd_mob), synd_mob.slot_w_uniform)
 	synd_mob.equip_if_possible(new /obj/item/clothing/shoes/black(synd_mob), synd_mob.slot_shoes)
 	synd_mob.equip_if_possible(new /obj/item/storage/backpack(synd_mob), synd_mob.slot_back)
-	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate/surplus(synd_mob), synd_mob.slot_r_store)
+	synd_mob.equip_if_possible(new /obj/item/requisition_token/syndicate(synd_mob), synd_mob.slot_r_store)
 	synd_mob.equip_if_possible(new /obj/item/paper/surplusopsinstructions(synd_mob), synd_mob.slot_l_store)
 
 

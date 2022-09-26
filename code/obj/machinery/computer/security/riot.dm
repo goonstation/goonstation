@@ -288,8 +288,13 @@
 		for_by_tcl(D, /obj/submachine/surplusopdeployer)
 			src.ourportal = D //connect to portal
 		desc = "A voting computer that allows three users to activate a certain portal frame. [auth_need] votes are left."
+		START_TRACKING
+
 		..()
 
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 
 //account for both empty and full hand authorizations

@@ -252,10 +252,6 @@
 		if (istype(token, /obj/item/requisition_token/syndicate/surplusutility))
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
 
-		else if(istype(token, /obj/item/requisition_token/syndicate/surplus/giga))
-			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=15
-			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=30
-			src.credits[WEAPON_VENDOR_CATEGORY_AMMO]+=10
 		else
 			src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]+=1
 			src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=1
@@ -659,11 +655,6 @@
 	syndicate
 		desc = "A Syndicate credit card charged with currency compatible with the Syndicate Weapons Vendor."
 		icon_state = "req-token"
-
-		surplus
-			name = "Weapon credit"
-			desc = "This weapon credit's looks pretty old."
-			icon_state = "req-token"
 
 		surplusutility
 			name = "Utility Token"

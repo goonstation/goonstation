@@ -955,8 +955,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 
 	four
-		amount_left = 2
-		max_amount = 2
+		amount_left = 4
+		max_amount = 4
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"
