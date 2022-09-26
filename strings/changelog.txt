@@ -1,4 +1,10 @@
 
+(t)mon sep 26 22
+(u)Walpvrgis
+(p)11024
+(e)🎨|C-Sprites
+(*)Added several new hairstyles + layering parts and hair fades for some existing hairstyles. Check minor changes for a list of style names.
+(+)New hairstyles: Pompom Pigtails, Untidy Ponytail, Long Twin Tails, Scruffy, Sparks, Wavy, Lionsmane, Pinion, Breezy. New Layering parts: Flat bangs and Long Wavy Bangs. New fades: Wavy Faded, Lionsmane Faded, Breezy Faded, Ripley Faded, Violet Faded, Willow Faded, Flick Faded, Rock Ponytail Faded and Afro Faded.
 (t)sat sep 24 22
 (u)Sovexe
 (p)10967
