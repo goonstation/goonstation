@@ -100,7 +100,6 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				// Deals with landmark special spawn locations.
 				if (!istype(special_spawn_location, /turf))
 					special_spawn_location = pick_landmark(special_spawn_location)
 				if (special_spawn_location != null)
