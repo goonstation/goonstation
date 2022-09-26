@@ -137,9 +137,9 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F.flock)
+	if (!F?.flock)
 		return
-	return F?.can_afford(F.flock.currentEggCost())	&& F.flock?.getComplexDroneCount() <= FLOCK_DRONE_LIMIT
+	return F.can_afford(F.flock.currentEggCost()) && F.flock.getComplexDroneCount() <= FLOCK_DRONE_LIMIT
 
 /datum/aiTask/sequence/goalbased/flock/replicate/get_targets()
 	. = list()
@@ -197,9 +197,9 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F.flock)
+	if (!F?.flock)
 		return
-	if(F?.can_afford(F.flock.currentEggCost()) && F.flock?.getComplexDroneCount() <= FLOCK_DRONE_LIMIT)
+	if(F.can_afford(F.flock.currentEggCost()) && F.flock.getComplexDroneCount() <= FLOCK_DRONE_LIMIT)
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
