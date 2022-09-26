@@ -13,7 +13,7 @@
 
 			for (var/atom/A as anything in owner.skin_process)
 
-				if (A.loc != owner)
+				if (!A || A.disposed || A.loc != owner)
 					owner.skin_process -= A
 					continue
 
