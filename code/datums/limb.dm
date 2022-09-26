@@ -248,6 +248,8 @@
 				return FALSE
 			if(BOUNDS_DIST(user, target) == 0)
 				P.was_pointblank = 1
+				P.shooter = null
+				P.mob_shooter = user
 				hit_with_existing_projectile(P, target) // Includes log entry.
 			else
 				P.launch()
