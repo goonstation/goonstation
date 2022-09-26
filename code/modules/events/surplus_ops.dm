@@ -1,15 +1,23 @@
+
 /datum/random_event/major/antag/surplusops
 	name = "Surplus ops"
 	customization_available = 0
 	required_elapsed_round_time = 40 MINUTES
 	weight = 88
 	disabled = 1
+	var/antags_remaing_percent = 0.02 //20 percent or less
 
 	required_elapsed_round_time = 5 MINUTES
 	var/ghost_confirmation_delay = 1 MINUTES
 
 	event_effect(var/source)
 		..()
+
+		if(get_alive_antags_percentage() >= antags_remaing_percent)
+			message_admins("Surplus op deployment aborted- not enough antags")
+			return
+
+
 		//set up objectives up here so they get the same ones (hopefully)
 		var/ourobjectives = new /datum/objective_set/surplusop
 
