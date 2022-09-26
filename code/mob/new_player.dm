@@ -283,8 +283,13 @@ mob/new_player
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-			else if (istype(JOB, /datum/job/special/syndicate_operative))
-				character.set_loc(pick_landmark(LANDMARK_SYNDICATE))
+			else if (istype(JOB, /datum/job))
+				var/datum/job/job = JOB
+				if (job.special_spawn_location)
+					if (!istype(job.special_spawn_location, /turf))
+						job.special_spawn_location = pick_landmark(job.special_spawn_location)
+					if (job.special_spawn_location != null)
+						character.set_loc(job.special_spawn_location)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
