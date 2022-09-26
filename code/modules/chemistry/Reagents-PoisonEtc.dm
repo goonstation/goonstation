@@ -1080,6 +1080,7 @@ datum
 				P.growth -= 5
 
 			reaction_blob(var/obj/blob/B, var/volume)
+				. = ..()
 				if (!blob_damage)
 					return
 				B.take_damage(blob_damage * min(volume, 10), 1, "mixed")
