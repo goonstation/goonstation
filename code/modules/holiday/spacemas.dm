@@ -888,9 +888,9 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	jerk = 1
 
 	sight_modifier()
-		mob.sight |= SEE_MOBS
-		mob.see_in_dark = SEE_DARK_FULL
-		mob.see_invisible = INVIS_INFRA
+		src.owner.sight |= SEE_MOBS
+		src.owner.see_in_dark = SEE_DARK_FULL
+		src.owner.see_invisible = INVIS_INFRA
 
 /mob/living/carbon/human/krampus
 	New()

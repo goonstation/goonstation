@@ -25,37 +25,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 								// but they must explicitly specify if they're overriding via this var
 	var/override_language = null // set to a language ID to replace the language of the human
 	var/understood_languages = list() // additional understood languages (in addition to override_language if set, or english if not)
-	/** Mutant Appearance Flags - used to modify how the mob is drawn
-	*
-	* For a purely static-icon mutantrace (drawn from a single, non-chunked image), use:
-	*
-	* (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
-	*
-	* NOT_DIMORPHIC tells the sprite builder not to use any female sprites or vars. If you remove this, make sure there's a torso_f and groin_f in the mutant's DMI!
-	*
-	* HAS_NO_SKINTONE, HAS_NO_EYES, HAS_NO_HEAD each prevent the renderer from trying to colorize the player's body or apply hair / eyes. They tend to be baked in.
-	*
-	* USES_STATIC_IMAGE tells the renderer to skip most of the body-sprite assembly stuff, since our sprite is already fully assembled
-	*
-	* To make a dismemberable mutant, here's an example from lizard:
-	*
-	* (NOT_DIMORPHIC | HAS_HUMAN_EYES | BUILT_FROM_PIECES | HAS_EXTRA_DETAILS | FIX_COLORS | SKINTONE_USES_PREF_COLOR_1 | HAS_SPECIAL_HAIR)
-	*
-	* SKINTONE_USES_PREF_COLOR_1 tells the renderer that the skintone will come from the appearanceholder's first customization color
-	*
-	* HAS_HUMAN_EYES tells the head builder to render their eyes
-	*
-	* HAS_EXTRA_DETAILS tells the sprite builder to apply whatever's defined in their mob_detail_1 vars to their sprite
-	*
-	* FIX_COLORS clamps the RGB values of the customization colors betwen 50 and 190. Keeps them from getting too dark or oversaturated
-	*
-	* HAS_SPECIAL_HAIR tells the hair renderer to display the sprites stored iin the head's special hair, which can be defined here (through the appearanceholder)
-	*
-	* BUILT_FROM_PIECES is important, it tells the renderer to assemble the mutant from a set of separate pieces, like a human
-	* this allows them to apppear to be missing limbs when dismembered. Check out lizard.dmi for an example of how it should be set up.
-	*
-	* SEE: appearance.dm for more flags and details!
-	*/
+
 	var/mutant_appearance_flags = (NOT_DIMORPHIC | HAS_NO_SKINTONE | HAS_NO_EYES | HAS_NO_HEAD | USES_STATIC_ICON)
 
 	/// if TRUE, allows human diseases and dna injectors to affect this mutantrace
@@ -157,7 +127,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	var/voice_override = 0
 	var/step_override = null
 
-	var/mob/living/carbon/human/mob = null	// ...is this the owner?
+	var/mob/living/carbon/human/owner = null
 
 	var/anchor_to_floor = FALSE
 
@@ -272,17 +242,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			LimbSetter(M, "set")
 			organ_mutator(M, "set")
 			src.limb_list.Add(l_limb_arm_type_mutantrace, r_limb_arm_type_mutantrace, l_limb_leg_type_mutantrace, r_limb_leg_type_mutantrace)
-			src.mob = M
-			var/list/obj/item/clothing/restricted = list(mob.w_uniform, mob.shoes, mob.wear_suit)
+			src.owner = M
+			var/list/obj/item/clothing/restricted = list(owner.w_uniform, owner.shoes, owner.wear_suit)
 			for(var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
 					if(W.compatible_species.Find(src.name) || (src.uses_human_clothes && W.compatible_species.Find("human")))
 						continue
-					src.mob.u_equip(W)
-					boutput(src.mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					src.owner.u_equip(W)
+					boutput(src.owner, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
-						W.set_loc(src.mob.loc)
-						W.dropped(src.mob)
+						W.set_loc(src.owner.loc)
+						W.dropped(src.owner)
 						W.layer = initial(W.layer)
 			M.update_colorful_parts()
 
@@ -298,29 +268,29 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return
 
 	disposing()
-		if (src.mob)
-			src.mob.mutantrace = null
-			src.mob.set_face_icon_dirty()
-			src.mob.set_body_icon_dirty()
+		if (src.owner)
+			src.owner.mutantrace = null
+			src.owner.set_face_icon_dirty()
+			src.owner.set_body_icon_dirty()
 
 			if (movement_modifier)
-				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
+				REMOVE_MOVEMENT_MODIFIER(src.owner, movement_modifier, src.type)
 			if (needs_oxy)
-				REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_BREATHLESS, src.type)
+				REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_BREATHLESS, src.type)
 
-			var/list/obj/item/clothing/restricted = list(src.mob.w_uniform, src.mob.shoes, src.mob.wear_suit)
+			var/list/obj/item/clothing/restricted = list(src.owner.w_uniform, src.owner.shoes, src.owner.wear_suit)
 			for (var/obj/item/clothing/W in restricted)
 				if (istype(W,/obj/item/clothing))
 					if (W.compatible_species.Find("human"))
 						continue
-					src.mob.u_equip(W)
-					boutput(src.mob, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
+					src.owner.u_equip(W)
+					boutput(src.owner, "<span class='alert'><B>You can no longer wear the [W.name] in your current state!</B></span>")
 					if (W)
-						W.set_loc(src.mob.loc)
-						W.dropped(src.mob)
+						W.set_loc(src.owner.loc)
+						W.dropped(src.owner)
 						W.layer = initial(W.layer)
-			if (ishuman(src.mob))
-				var/mob/living/carbon/human/H = src.mob
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
 				AppearanceSetter(H, "reset")
 				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
@@ -336,10 +306,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						H.assign_gimmick_skull() // We might have to update the skull (Convair880).
 
 			if (movement_modifier) // causes runtimes, so its down here now
-				REMOVE_MOVEMENT_MODIFIER(src.mob, movement_modifier, src.type)
+				REMOVE_MOVEMENT_MODIFIER(src.owner, movement_modifier, src.type)
 
-			src.mob.set_clothing_icon_dirty()
-			src.mob = null
+			src.owner.set_clothing_icon_dirty()
+			src.owner = null
 
 		..()
 		return
@@ -700,31 +670,31 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New()
 		..()
-		if (src.mob)
-			RegisterSignal(src.mob, COMSIG_MOVABLE_MOVED, .proc/flub)
+		if (src.owner)
+			RegisterSignal(src.owner, COMSIG_MOVABLE_MOVED, .proc/flub)
 
 	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_FULL
+		src.owner.see_in_dark = SEE_DARK_FULL
 
 	proc/flub()
-		playsound(src.mob, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
-		animate(src.mob, time = 1, pixel_y = 16, easing = ELASTIC_EASING)
+		playsound(src.owner, "sound/misc/boing/[rand(1,6)].ogg", 20, 1 )
+		animate(src.owner, time = 1, pixel_y = 16, easing = ELASTIC_EASING)
 		animate(time = 1, pixel_y = 0, easing = ELASTIC_EASING)
 
 	say_filter(var/message)
 		return pick("Wooo!!", "Whopeee!!", "Boing!!", "Čapaš!!")
 
 	onLife(var/mult = 1)
-		if (!isdead(src.mob))
-			src.mob.reagents.add_reagent("flubber", 10) //change "flubber" to whatever flubber is in code obviously
+		if (!isdead(src.owner))
+			src.owner.reagents.add_reagent("flubber", 10) //change "flubber" to whatever flubber is in code obviously
 
-		if (src.mob.health < src.mob.max_health && src.mob.health>0) //you can kill flubber with extreme measures
-			src.mob.full_heal()
+		if (src.owner.health < src.owner.max_health && src.owner.health>0) //you can kill flubber with extreme measures
+			src.owner.full_heal()
 
 	onDeath(gibbed)
-		var/turf/T = get_turf(src.mob)
+		var/turf/T = get_turf(src.owner)
 		T.fluid_react_single("flubber", 500)
-		src.mob.gib()
+		src.owner.gib()
 
 
 	say_verb()
@@ -761,8 +731,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(ishuman(src.mob))
-			src.mob.blood_color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
+		if(ishuman(src.owner))
+			src.owner.blood_color = pick("#FF0000","#FFFF00","#00FF00","#00FFFF","#0000FF","#FF00FF")
 			var/datum/abilityHolder/virtual/A = H.get_ability_holder(/datum/abilityHolder/virtual)
 			if (A && istype(A))
 				return
@@ -788,31 +758,31 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/M)
 		..()
-		if(ishuman(src.mob))
-			original_blood_color = src.mob.blood_color
-			src.mob.blood_color = "#000000"
+		if(ishuman(src.owner))
+			original_blood_color = src.owner.blood_color
+			src.owner.blood_color = "#000000"
 
 	disposing()
-		if(ishuman(src.mob))
+		if(ishuman(src.owner))
 			if(!isnull(original_blood_color))
-				src.mob.blood_color = original_blood_color
+				src.owner.blood_color = original_blood_color
 		original_blood_color = null
 		..()
 
 	sight_modifier()
-		src.mob.sight |= SEE_MOBS
-		src.mob.see_in_dark = SEE_DARK_FULL
-		src.mob.see_invisible = INVIS_CLOAK
+		src.owner.sight |= SEE_MOBS
+		src.owner.see_in_dark = SEE_DARK_FULL
+		src.owner.see_invisible = INVIS_CLOAK
 
 	emote(var/act)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> screams with [his_or_her(src.mob)] mind! Guh, that's creepy!"
-				playsound(src.mob, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+			if(src.owner.emote_allowed)
+				src.owner.emote_allowed = 0
+				message = "<B>[src.owner]</B> screams with [his_or_her(src.owner)] mind! Guh, that's creepy!"
+				playsound(src.owner, 'sound/voice/screams/Psychic_Scream_1.ogg', 80, 0, 0, clamp(1.0 + (30 - src.owner.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.owner?.emote_allowed = 1
 			return message
 		else
 			..()
@@ -867,8 +837,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			H.base_body_temp = T0C + 38
 
 	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
+		src.owner.see_in_dark = SEE_DARK_HUMAN + 1
+		src.owner.see_invisible = INVIS_INFRA
 
 	say_filter(var/message)
 		var/replace_lowercase = replacetextEx(message, "s", stutter("ss"))
@@ -876,16 +846,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return replace_uppercase
 
 	disposing()
-		if(ishuman(src.mob))
-			var/mob/living/carbon/human/L = src.mob
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/L = src.owner
 			var/datum/component/C = L.GetComponent(/datum/component/consume/organpoints)
 			C?.RemoveComponent(/datum/component/consume/organpoints)
 			var/datum/component/D = L.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
 			L.remove_lizard_powers()
-			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-			src.mob.thermoregulation_mult = initial(src.mob.thermoregulation_mult)
-			src.mob.base_body_temp = initial(src.mob.base_body_temp)
+			src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			src.owner.thermoregulation_mult = initial(src.owner.thermoregulation_mult)
+			src.owner.base_body_temp = initial(src.owner.base_body_temp)
 		. = ..()
 
 	say_verb()
@@ -922,8 +892,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/M)
 		..()
-		if(ishuman(src.mob))
-			src.add_ability(src.mob)
+		if(ishuman(src.owner))
+			src.add_ability(src.owner)
 			M.is_zombie = TRUE
 			M.max_health += 100
 			M.health = max(M.max_health, M.health)
@@ -953,8 +923,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.show_antag_popup("zombie")
 
 	on_attach()
-		if(ishuman(src.mob))
-			src.mob.antagonist_overlay_refresh(1)
+		if(ishuman(src.owner))
+			src.owner.antagonist_overlay_refresh(1)
 
 	proc/make_bubs(var/mob/living/carbon/human/M)
 		M.bioHolder.AddEffect("strong")
@@ -975,25 +945,25 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	onLife(var/mult = 1)
 		..()
 
-		src.mob.HealDamage("All", 2*mult, 2*mult)
+		src.owner.HealDamage("All", 2*mult, 2*mult)
 		if (strain == ZOMBIE_STRAIN_INFECTIOUS_BUBS)
-			src.mob.HealDamage("All", 1*mult, 1*mult)
+			src.owner.HealDamage("All", 1*mult, 1*mult)
 		else if (strain == ZOMBIE_STRAIN_INFECTIOUS_SPITTER && prob(5))//spitter, then regrow their arms possibly
-			src.mob.limbs.mend(1)
+			src.owner.limbs.mend(1)
 
 	disposing()
-		if (ishuman(src.mob))
-			src.mob.remove_stam_mod_max("zombie")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
+		if (ishuman(src.owner))
+			src.owner.remove_stam_mod_max("zombie")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "zombie")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
 		return
 
 	sight_modifier()
-		src.mob.sight |= SEE_MOBS
-		src.mob.see_in_dark = SEE_DARK_FULL
-		src.mob.see_invisible = INVIS_NONE
+		src.owner.sight |= SEE_MOBS
+		src.owner.see_in_dark = SEE_DARK_FULL
+		src.owner.see_invisible = INVIS_NONE
 
 	say_filter(var/message)
 		return pick("Urgh...", "Brains...", "Hungry...", "Kill...")
@@ -1001,12 +971,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	emote(var/act)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = FALSE
-				message = "<B>[src.mob]</B> moans!"
-				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+			if(src.owner.emote_allowed)
+				src.owner.emote_allowed = FALSE
+				message = "<B>[src.owner]</B> moans!"
+				playsound(src.owner, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.owner.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = TRUE
+					src.owner?.emote_allowed = TRUE
 			return message
 		else
 			..()
@@ -1014,24 +984,24 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	onDeath(gibbed)
 		if(gibbed)
 			return
-		src.mob.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
+		src.owner.show_message("<span class='notice'>You can feel your flesh re-assembling. You will rise once more. (This will take about one minute.)</span>")
 		SPAWN(45 SECONDS)
-			if (src.mob)
-				if (!src.mob.organHolder.brain || !src.mob.organHolder.skull || !src.mob.organHolder.head)
-					src.mob.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
+			if (src.owner)
+				if (!src.owner.organHolder.brain || !src.owner.organHolder.skull || !src.owner.organHolder.head)
+					src.owner.show_message("<span class='notice'>You fail to rise, your brain has been destroyed.</span>")
 				else
-					src.mob.full_heal()
+					src.owner.full_heal()
 
-					src.mob.emote("scream")
-					src.mob.visible_message("<span class='alert'><B>[src.mob]</B> rises from the dead!</span>")
+					src.owner.emote("scream")
+					src.owner.visible_message("<span class='alert'><B>[src.owner]</B> rises from the dead!</span>")
 
 					if (strain == ZOMBIE_STRAIN_NOT_INFECTIOUS && prob(25))	//chance to be one or the other
 						strain = pick(ZOMBIE_STRAIN_INFECTIOUS_BUBS, ZOMBIE_STRAIN_INFECTIOUS_SPITTER)
 
 						if (strain == ZOMBIE_STRAIN_INFECTIOUS_BUBS)
-							make_bubs(M)
+							make_bubs(src.owner)
 						else if (strain == ZOMBIE_STRAIN_INFECTIOUS_SPITTER)
-							make_spitter(M)
+							make_spitter(src.owner)
 
 		return TRUE
 
@@ -1043,8 +1013,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		C.addAbility(/datum/targetable/critter/zombify)
 
 	disposing()
-		if (ishuman(src.mob))
-			var/mob/living/carbon/human/H = src.mob
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
 			H.abilityHolder.removeAbility(/datum/targetable/critter/zombify)
 		..()
 
@@ -1074,17 +1044,17 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/M)
 		..()
-		if(ishuman(src.mob))
-			src.add_ability(src.mob)
+		if(ishuman(src.owner))
+			src.add_ability(src.owner)
 			M.add_stam_mod_max("vampiric_thrall", 100)
 			M.bioHolder.AddEffect("accent_thrall", magical=TRUE)
 			//APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall", 15)
 
 	disposing()
-		if (ishuman(src.mob))
-			src.mob.remove_stam_mod_max("vampiric_thrall")
-			src.mob.bioHolder.RemoveEffect("accent_thrall")
-			//REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
+		if (ishuman(src.owner))
+			src.owner.remove_stam_mod_max("vampiric_thrall")
+			src.owner.bioHolder.RemoveEffect("accent_thrall")
+			//REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "vampiric_thrall")
 		..()
 
 	proc/add_ability(var/mob/living/carbon/human/H)
@@ -1093,41 +1063,41 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	onLife(var/mult = 1)
 		..()
 
-		if (src.mob.bleeding)
-			blood_points -= blood_decay * src.mob.bleeding
+		if (src.owner.bleeding)
+			blood_points -= blood_decay * src.owner.bleeding
 
 		var/prev_blood = blood_points
 		blood_points -= blood_decay * mult
 		blood_points = max(0,blood_points)
 		cleanable_tally += (prev_blood - blood_points)
 		if (cleanable_tally > 20)
-			make_cleanable(/obj/decal/cleanable/blood,get_turf(src.mob))
+			make_cleanable(/obj/decal/cleanable/blood,get_turf(src.owner))
 			cleanable_tally = 0
 
-		src.mob.max_health = blood_points * blood_to_health_scalar
-		src.mob.max_health = max(20,src.mob.max_health)
-		health_update_queue |= src.mob
+		src.owner.max_health = blood_points * blood_to_health_scalar
+		src.owner.max_health = max(20,src.owner.max_health)
+		health_update_queue |= src.owner
 
 	emote(var/act)
 		var/message = null
 		if(act == "scream")
-			if(src.mob.emote_allowed)
-				src.mob.emote_allowed = 0
-				message = "<B>[src.mob]</B> moans!"
-				playsound(src.mob, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+			if(src.owner.emote_allowed)
+				src.owner.emote_allowed = 0
+				message = "<B>[src.owner]</B> moans!"
+				playsound(src.owner, "sound/voice/Zgroan[pick("1","2","3","4")].ogg", 80, 0, 0, clamp(1.0 + (30 - src.owner.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 				SPAWN(3 SECONDS)
-					src.mob?.emote_allowed = 1
+					src.owner?.emote_allowed = 1
 			return message
 		else
 			..()
 
 	onDeath(gibbed)
-		var/datum/abilityHolder/vampiric_thrall/abil = src.mob.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+		var/datum/abilityHolder/vampiric_thrall/abil = src.owner.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 		if (abil)
 			if (abil.master)
-				abil.master.remove_thrall(src.mob)
+				abil.master.remove_thrall(src.owner)
 			else
-				remove_mindhack_status(src.mob)
+				remove_mindhack_status(src.owner)
 		..()
 
 /datum/mutantrace/skeleton
@@ -1158,14 +1128,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			set_head(M.organHolder.head)
 
 	disposing()
-		if (ishuman(src.mob))
-			src.mob.mob_flags &= ~IS_BONEY
-			src.mob.blood_id = initial(src.mob.blood_id)
+		if (ishuman(src.owner))
+			src.owner.mob_flags &= ~IS_BONEY
+			src.owner.blood_id = initial(src.owner.blood_id)
 		. = ..()
 
 	proc/set_head(var/obj/item/organ/head/head)
 		// if the head was previous linked to someone else
-		if (isskeleton(head.linked_human) && head.linked_human != src.mob)
+		if (isskeleton(head.linked_human) && head.linked_human != src.owner)
 			var/mob/living/carbon/human/H = head.linked_human
 			var/datum/mutantrace/skeleton/S = H.mutantrace
 			if (H.eye == head)
@@ -1179,7 +1149,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			src.head_tracker.UnregisterSignal(src.head_tracker.linked_human, COMSIG_SPEECH_BUBBLE)
 			src.head_tracker.linked_human = null
 		head_tracker = head
-		head_tracker.linked_human = src.mob
+		head_tracker.linked_human = src.owner
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1254,32 +1224,32 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return ..(M)
 
 	disposing()
-		if(src.mob)
-			src.mob.remove_stam_mod_max("abomination")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "abomination")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "abomination")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "abomination")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANTSPRINT, src)
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_CANT_BE_PINNED, src)
+		if(src.owner)
+			src.owner.remove_stam_mod_max("abomination")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "abomination")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST, "abomination")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST_MAX, "abomination")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANTSPRINT, src)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_CANT_BE_PINNED, src)
 		return ..()
 
 
 	onLife(var/mult = 1)
 		//Bringing it more in line with how it was before it got broken (in a hilarious fashion)
-		if (ruff_tuff_and_ultrabuff && !(src.mob.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
-			src.mob.delStatus("disorient")
-			src.mob.delStatus("drowsy")
-			src.mob.change_misstep_chance(-INFINITY)
-			src.mob.delStatus("slowed")
-			src.mob.stuttering = 0
-			changeling_super_heal_step(src.mob, mult = mult)
+		if (ruff_tuff_and_ultrabuff && !(src.owner.getStatusDuration("burning") && prob(90))) //Are you a macho abomination or not?
+			src.owner.delStatus("disorient")
+			src.owner.delStatus("drowsy")
+			src.owner.change_misstep_chance(-INFINITY)
+			src.owner.delStatus("slowed")
+			src.owner.stuttering = 0
+			changeling_super_heal_step(src.owner, mult = mult)
 
 		if (drains_dna_on_life) //Do you continuously lose DNA points when in this form?
-			var/datum/abilityHolder/changeling/C = src.mob.get_ability_holder(/datum/abilityHolder/changeling)
+			var/datum/abilityHolder/changeling/C = src.owner.get_ability_holder(/datum/abilityHolder/changeling)
 
 			if(!C)
-				src.mob.show_text("<I><B>You cannot hold this form!</B></I>", "red")
-				src.mob.revert_from_horror_form()
+				src.owner.show_text("<I><B>You cannot hold this form!</B></I>", "red")
+				src.owner.revert_from_horror_form()
 
 			if (C?.points)
 				if (last_drain + 30 <= world.time)
@@ -1287,12 +1257,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 				switch (C.points)
 					if (-INFINITY to 0)
-						src.mob.show_text("<I><B>We cannot hold this form!</B></I>", "red")
-						src.mob.revert_from_horror_form()
+						src.owner.show_text("<I><B>We cannot hold this form!</B></I>", "red")
+						src.owner.revert_from_horror_form()
 					if (5)
-						src.mob.show_text("<I><B>Our DNA stockpile is almost depleted!</B></I>", "red")
+						src.owner.show_text("<I><B>Our DNA stockpile is almost depleted!</B></I>", "red")
 					if (10)
-						src.mob.show_text("<I><B>We cannot maintain this form much longer!</B></I>", "red")
+						src.owner.show_text("<I><B>We cannot maintain this form much longer!</B></I>", "red")
 		return
 
 	say_filter(var/message)
@@ -1305,12 +1275,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		var/message = null
 		switch (act)
 			if ("scream")
-				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[src.mob] screeches!</B></span>"
-					playsound(src.mob, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if (src.owner.emote_allowed)
+					src.owner.emote_allowed = 0
+					message = "<span class='alert'><B>[src.owner] screeches!</B></span>"
+					playsound(src.owner, 'sound/voice/creepyshriek.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = 1
+						if (src.owner) src.owner.emote_allowed = 1
 		return message
 
 /datum/mutantrace/abomination/admin //This will not revert to human form
@@ -1349,62 +1319,62 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New()
 		..()
-		if (ishuman(src.mob))
-			src.mob.AddComponent(/datum/component/consume/organheal)
-			src.mob.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
-			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
-			src.mob.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf", 40)
-			APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
-			src.mob.max_health += 50
-			health_update_queue |= src.mob
-			src.original_name = src.mob.real_name
-			src.mob.real_name = "werewolf"
-			src.mob.UpdateName()
+		if (ishuman(src.owner))
+			src.owner.AddComponent(/datum/component/consume/organheal)
+			src.owner.AddComponent(/datum/component/consume/can_eat_inedible_organs, 1) // can also eat heads
+			src.owner.mob_flags |= SHOULD_HAVE_A_TAIL
+			src.owner.add_stam_mod_max("werewolf", 40) // Gave them a significant stamina boost, as they're melee-orientated (Convair880).
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf", 9) //mbc : these increase as they feast now. reduced!
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST, "werewolf", 40)
+			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST_MAX, "werewolf", 40)
+			src.owner.max_health += 50
+			health_update_queue |= src.owner
+			src.original_name = src.owner.real_name
+			src.owner.real_name = "werewolf"
+			src.owner.UpdateName()
 
-			src.mob.bioHolder.AddEffect("protanopia", null, null, 0, 1)
-			src.mob.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
-			src.mob.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
+			src.owner.bioHolder.AddEffect("protanopia", null, null, 0, 1)
+			src.owner.bioHolder.AddEffect("accent_scoob_nerf", null, null, 0, 1)
+			src.owner.bioHolder.AddEffect("regenerator_wolf", null, null, 0, 1)
 
 	disposing()
-		if (ishuman(src.mob))
-			var/datum/component/C = src.mob.GetComponent(/datum/component/consume/organheal)
+		if (ishuman(src.owner))
+			var/datum/component/C = src.owner.GetComponent(/datum/component/consume/organheal)
 			C?.RemoveComponent(/datum/component/consume/organheal)
-			var/datum/component/D = src.mob.GetComponent(/datum/component/consume/can_eat_inedible_organs)
+			var/datum/component/D = src.owner.GetComponent(/datum/component/consume/can_eat_inedible_organs)
 			D?.RemoveComponent(/datum/component/consume/can_eat_inedible_organs)
-			src.mob.remove_stam_mod_max("werewolf")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST, "werewolf")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STUN_RESIST_MAX, "werewolf")
-			src.mob.max_health -= 50
-			health_update_queue |= src.mob
-			src.mob.bioHolder.RemoveEffect("protanopia")
-			src.mob.bioHolder.RemoveEffect("accent_scoob_nerf")
-			src.mob.bioHolder.RemoveEffect("regenerator_wolf")
+			src.owner.remove_stam_mod_max("werewolf")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST, "werewolf")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STUN_RESIST_MAX, "werewolf")
+			src.owner.max_health -= 50
+			health_update_queue |= src.owner
+			src.owner.bioHolder.RemoveEffect("protanopia")
+			src.owner.bioHolder.RemoveEffect("accent_scoob_nerf")
+			src.owner.bioHolder.RemoveEffect("regenerator_wolf")
 
 			if (!isnull(src.original_name))
-				src.mob.real_name = src.original_name
-				src.mob.UpdateName()
+				src.owner.real_name = src.original_name
+				src.owner.UpdateName()
 
-			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
 	sight_modifier()
-		if (ishuman(src.mob))
-			src.mob.sight |= SEE_MOBS
-			src.mob.see_in_dark = SEE_DARK_FULL
-			src.mob.see_invisible = INVIS_CLOAK
+		if (ishuman(src.owner))
+			src.owner.sight |= SEE_MOBS
+			src.owner.see_in_dark = SEE_DARK_FULL
+			src.owner.see_invisible = INVIS_CLOAK
 
 	// Werewolves (being a melee-focused role) are quite buff.
 	onLife(var/mult = 1)
-		if (src.mob && ismob(mob))
-			if (src.mob.hasStatus("drowsy"))
-				src.mob.changeStatus("drowsy", -10 SECONDS)
-			if (src.mob.misstep_chance)
-				src.mob.change_misstep_chance(-10 * mult)
-			if (src.mob.getStatusDuration("slowed"))
-				src.mob.changeStatus("slowed", -2 SECONDS * mult)
+		if (src.owner && ismob(owner))
+			if (src.owner.hasStatus("drowsy"))
+				src.owner.changeStatus("drowsy", -10 SECONDS)
+			if (src.owner.misstep_chance)
+				src.owner.change_misstep_chance(-10 * mult)
+			if (src.owner.getStatusDuration("slowed"))
+				src.owner.changeStatus("slowed", -2 SECONDS * mult)
 
 	say_verb()
 		return "snarls"
@@ -1416,19 +1386,19 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		var/message = null
 		switch(act)
 			if("howl", "scream")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = "<span class='alert'><B>[src.mob] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
-					playsound(src.mob, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.mob.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
+				if(src.owner.emote_allowed)
+					src.owner.emote_allowed = 0
+					message = "<span class='alert'><B>[src.owner] howls [pick("ominously", "eerily", "hauntingly", "proudly", "loudly")]!</B></span>"
+					playsound(src.owner, 'sound/voice/animal/werewolf_howl.ogg', 65, 0, 0, clamp(1.0 + (30 - src.owner.bioHolder.age)/60, 0.7, 1.2), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						src.mob?.emote_allowed = 1
+						src.owner?.emote_allowed = 1
 			if("burp")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = 0
-					message = "<B>[src.mob]</B> belches."
-					playsound(src.mob, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if(src.owner.emote_allowed)
+					src.owner.emote_allowed = 0
+					message = "<B>[src.owner]</B> belches."
+					playsound(src.owner, 'sound/voice/burp_alien.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						src.mob?.emote_allowed = 1
+						src.owner?.emote_allowed = 1
 		return message
 
 /datum/mutantrace/hunter
@@ -1455,13 +1425,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "hunter", 10)
 
 	disposing()
-		if(ishuman(src.mob))
-			src.mob.remove_stam_mod_max("hunter")
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_STAMINA_REGEN_BONUS, "hunter")
+		if(ishuman(src.owner))
+			src.owner.remove_stam_mod_max("hunter")
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "hunter")
 		return ..()
 
 	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_FULL
+		src.owner.see_in_dark = SEE_DARK_FULL
 		return
 
 	say_verb()
@@ -1544,9 +1514,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			M.mob_flags |= SHOULD_HAVE_A_TAIL
 
 	disposing()
-		if (ishuman(src.mob))
-			src.mob.remove_stam_mod_max("monkey")
-			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if (ishuman(src.owner))
+			src.owner.remove_stam_mod_max("monkey")
+			src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
 	say_verb()
@@ -1554,91 +1524,91 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	emote(var/act, var/voluntary)
 		. = null
-		var/muzzled = istype(src.mob.wear_mask, /obj/item/clothing/mask/muzzle)
+		var/muzzled = istype(src.owner.wear_mask, /obj/item/clothing/mask/muzzle)
 		switch(act)
 			if("scratch")
-				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> scratches."
+				if (!src.owner.restrained())
+					. = "<B>[src.owner.name]</B> scratches."
 			if("whimper")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> whimpers."
+					. = "<B>[src.owner.name]</B> whimpers."
 			if("yawn")
 				if (!muzzled)
-					. = "<b>[src.mob.name]</B> yawns."
+					. = "<b>[src.owner.name]</B> yawns."
 			if("roar")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> roars."
+					. = "<B>[src.owner.name]</B> roars."
 			if("tail")
-				. = "<B>[src.mob.name]</B> waves [his_or_her(src.mob)] tail."
+				. = "<B>[src.owner.name]</B> waves [his_or_her(src.owner)] tail."
 			if("paw")
-				if (!src.mob.restrained())
-					. = "<B>[src.mob.name]</B> flails [his_or_her(src.mob)] paw."
+				if (!src.owner.restrained())
+					. = "<B>[src.owner.name]</B> flails [his_or_her(src.owner)] paw."
 			if("scretch")
 				if (!muzzled)
-					. = "<B>[src.mob.name]</B> scretches."
+					. = "<B>[src.owner.name]</B> scretches."
 			if("sulk")
-				. = "<B>[src.mob.name]</B> sulks down sadly."
+				. = "<B>[src.owner.name]</B> sulks down sadly."
 			if("roll")
-				if (!src.mob.restrained())
+				if (!src.owner.restrained())
 					. = "<B>[src.name]</B> rolls."
 			if("gnarl")
 				if (!muzzled)
-					. = "<B>[src.mob]</B> gnarls and shows [his_or_her(src.mob)] teeth.."
+					. = "<B>[src.owner]</B> gnarls and shows [his_or_her(src.owner)] teeth.."
 			if("jump")
-				. = "<B>[src.mob.name]</B> jumps!"
+				. = "<B>[src.owner.name]</B> jumps!"
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> screams!"
-					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				if (src.owner.emote_check(voluntary, 50))
+					. = "<B>[src.owner]</B> screams!"
+					playsound(src.owner, src.sound_monkeyscream, 80, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
-				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
-					if (!src.mob.emote_check(voluntary, 10))
+				if(farting_allowed && (!src.owner.reagents || !src.owner.reagents.has_reagent("anti_fart")))
+					if (!src.owner.emote_check(voluntary, 10))
 						return
 					var/fart_on_other = FALSE
-					for(var/mob/living/M in src.mob.loc)
-						if(M == src.mob || !M.lying)
+					for(var/mob/living/M in src.owner.loc)
+						if(M == src.owner || !M.lying)
 							continue
-						. = "<span class='alert'><B>[src.mob]</B> farts in [M]'s face!</span>"
+						. = "<span class='alert'><B>[src.owner]</B> farts in [M]'s face!</span>"
 						fart_on_other = TRUE
 						break
 					if(!fart_on_other)
 						switch(rand(1, 27))
-							if(1) . = "<B>[src.mob]</B> farts. It smells like... bananas. Huh."
-							if(2) . = "<B>[src.mob]</B> goes apeshit! Or at least smells like it."
-							if(3) . = "<B>[src.mob]</B> releases an unbelievably foul fart."
-							if(4) . = "<B>[src.mob]</B> chimpers out of its ass."
-							if(5) . = "<B>[src.mob]</B> farts and looks incredibly amused about it."
-							if(6) . = "<B>[src.mob]</B> unleashes the king kong of farts!"
-							if(7) . = "<B>[src.mob]</B> farts and does a silly little dance."
-							if(8) . = "<B>[src.mob]</B> farts gloriously."
-							if(9) . = "<B>[src.mob]</B> plays the song of its people. With farts."
-							if(10) . = "<B>[src.mob]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
-							if(11) . = "<B>[src.mob]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
-							if(12) . = "<B>[src.mob]</B> unleashes a chain of farts by beating its chest."
-							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
-							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
-							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterial laughter."
-							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
-							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
-							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"
-							if(20) . = "<B>[src.mob]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
-							if(21) . = "<B>[src.mob]</B> performs a complex monkey divining ritual. By farting."
-							if(22) . = "<B>[src.mob]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
-							if(23) . = "<B>[src.mob]</B> farts up a methane monsoon!"
-							if(24) . = "<B>[src.mob]</B> unleashes an utterly rancid stink from its ass."
-							if(25) . = "<B>[src.mob]</B> makes a big goofy grin and farts loudly."
-							if(26) . = "<B>[src.mob]</B> hovers off the ground for a moment using a powerful fart."
-							if(27) . = "<B>[src.mob]</B> plays drums on its ass while farting."
-					playsound(src.mob.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							if(1) . = "<B>[src.owner]</B> farts. It smells like... bananas. Huh."
+							if(2) . = "<B>[src.owner]</B> goes apeshit! Or at least smells like it."
+							if(3) . = "<B>[src.owner]</B> releases an unbelievably foul fart."
+							if(4) . = "<B>[src.owner]</B> chimpers out of its ass."
+							if(5) . = "<B>[src.owner]</B> farts and looks incredibly amused about it."
+							if(6) . = "<B>[src.owner]</B> unleashes the king kong of farts!"
+							if(7) . = "<B>[src.owner]</B> farts and does a silly little dance."
+							if(8) . = "<B>[src.owner]</B> farts gloriously."
+							if(9) . = "<B>[src.owner]</B> plays the song of its people. With farts."
+							if(10) . = "<B>[src.owner]</B> screeches loudly and wildly flails its arms in a poor attempt to conceal a fart."
+							if(11) . = "<B>[src.owner]</B> clenches and bares its teeth, but only manages a sad squeaky little fart."
+							if(12) . = "<B>[src.owner]</B> unleashes a chain of farts by beating its chest."
+							if(13) . = "<B>[src.owner]</B> farts so hard a bunch of fur flies off its ass."
+							if(14) . = "<B>[src.owner]</B> does an impression of a baboon by farting until its ass turns red."
+							if(15) . = "<B>[src.owner]</B> farts out a choking, hideous stench!"
+							if(16) . = "<B>[src.owner]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterial laughter."
+							if(17) . = "<B>[src.owner]</B> farts megalomaniacally."
+							if(18) . = "<B>[src.owner]</B> rips a floor-rattling fart. Damn."
+							if(19) . = "<B>[src.owner]</B> farts. What a damn dirty ape!"
+							if(20) . = "<B>[src.owner]</B> farts. It smells like a nuclear engine. Not that you know what that smells like."
+							if(21) . = "<B>[src.owner]</B> performs a complex monkey divining ritual. By farting."
+							if(22) . = "<B>[src.owner]</B> farts out the smell of the jungle. The jungle smells gross as hell apparently."
+							if(23) . = "<B>[src.owner]</B> farts up a methane monsoon!"
+							if(24) . = "<B>[src.owner]</B> unleashes an utterly rancid stink from its ass."
+							if(25) . = "<B>[src.owner]</B> makes a big goofy grin and farts loudly."
+							if(26) . = "<B>[src.owner]</B> hovers off the ground for a moment using a powerful fart."
+							if(27) . = "<B>[src.owner]</B> plays drums on its ass while farting."
+					playsound(src.owner.loc, 'sound/voice/farts/poo2.ogg', 80, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
-					src.mob.remove_stamina(STAMINA_DEFAULT_FART_COST)
-					src.mob.stamina_stun()
+					src.owner.remove_stamina(STAMINA_DEFAULT_FART_COST)
+					src.owner.stamina_stun()
 	#ifdef DATALOGGER
 					game_stats.Increment("farts")
 	#endif
-					src.mob.expel_fart_gas(0)
-					src.mob.add_karma(0.5)
+					src.owner.expel_fart_gas(0)
+					src.owner.add_karma(0.5)
 
 
 /datum/mutantrace/monkey/seamonkey
@@ -1674,14 +1644,14 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New()
 		..()
-		if(ishuman(src.mob))
-			src.mob.real_name = pick("a", "ay", "ey", "eh", "e") + pick("li", "lee", "lhi", "ley", "ll") + pick("n", "m", "nn", "en")
+		if(ishuman(src.owner))
+			src.owner.real_name = pick("a", "ay", "ey", "eh", "e") + pick("li", "lee", "lhi", "ley", "ll") + pick("n", "m", "nn", "en")
 			if(prob(50))
-				src.mob.real_name = uppertext(src.mob.real_name)
-			src.mob.bioHolder.AddEffect("clumsy")
-			src.mob.take_brain_damage(80)
-			src.mob.stuttering = 120
-			src.mob.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
+				src.owner.real_name = uppertext(src.owner.real_name)
+			src.owner.bioHolder.AddEffect("clumsy")
+			src.owner.take_brain_damage(80)
+			src.owner.stuttering = 120
+			src.owner.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
 
 /datum/mutantrace/premature_clone
 	name = "premature clone"
@@ -1696,16 +1666,16 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New()
 		..()
-		if(ishuman(src.mob))
-			if (isitem(src.mob.l_hand))
-				var/obj/item/toDrop = src.mob.l_hand
-				src.mob.u_equip(toDrop)
+		if(ishuman(src.owner))
+			if (isitem(src.owner.l_hand))
+				var/obj/item/toDrop = src.owner.l_hand
+				src.owner.u_equip(toDrop)
 				if (toDrop)
 					toDrop.layer = initial(toDrop.layer)
-					toDrop.set_loc(src.mob.loc)
+					toDrop.set_loc(src.owner.loc)
 
-			if (src.mob.limbs && src.mob.limbs.l_arm)
-				src.mob.limbs.l_arm.delete()
+			if (src.owner.limbs && src.owner.limbs.l_arm)
+				src.owner.limbs.l_arm.delete()
 
 	say_verb()
 		return "gurgles"
@@ -1714,12 +1684,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		if(gibbed)
 			return
 		SPAWN(2 SECONDS)
-			if (ishuman(src.mob))
-				src.mob.visible_message("<span class='alert'><B>[src.mob]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
-				src.mob.changeStatus("weakened", 15 SECONDS)
-				src.mob.make_jittery(1000)
+			if (ishuman(src.owner))
+				src.owner.visible_message("<span class='alert'><B>[src.owner]</B> starts convulsing violently!</span>", "You feel as if your body is tearing itself apart!")
+				src.owner.changeStatus("weakened", 15 SECONDS)
+				src.owner.make_jittery(1000)
 				sleep(rand(40, 120))
-				src.mob.gib()
+				src.owner.gib()
 
 // some new simple gimmick junk
 
@@ -1781,15 +1751,15 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return "clicks"
 
 	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
+		src.owner.see_in_dark = SEE_DARK_HUMAN + 1
+		src.owner.see_invisible = INVIS_INFRA
 
 	disposing()
-		if(ishuman(src.mob))
-			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-			src.mob.blood_id = initial(src.mob.blood_id)
-		if(src.mob)
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_RADPROT_INT, src)
+		if(ishuman(src.owner))
+			src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			src.owner.blood_id = initial(src.owner.blood_id)
+		if(src.owner)
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_RADPROT_INT, src)
 		. = ..()
 
 /datum/mutantrace/cat // we have the sprites so ~why not add them~? (I fully expect to get shit for this)
@@ -1818,12 +1788,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return "meows"
 
 	sight_modifier()
-		src.mob.see_in_dark = SEE_DARK_HUMAN + 1
-		src.mob.see_invisible = INVIS_INFRA
+		src.owner.see_in_dark = SEE_DARK_HUMAN + 1
+		src.owner.see_invisible = INVIS_INFRA
 
 	disposing()
-		if(ishuman(src.mob))
-			src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
+		if(ishuman(src.owner))
+			src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
 		. = ..()
 
 
@@ -1861,9 +1831,9 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/M)
 		..()
-		if(ishuman(src.mob))
-			original_blood_color = src.mob.blood_color
-			src.mob.blood_color = "#22EE99"
+		if(ishuman(src.owner))
+			original_blood_color = src.owner.blood_color
+			src.owner.blood_color = "#22EE99"
 			M.bioHolder.AddEffect("mattereater")
 			M.bioHolder.AddEffect("jumpy")
 			M.bioHolder.AddEffect("vowelitis")
@@ -1871,13 +1841,13 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 
 	disposing()
-		if(ishuman(src.mob))
+		if(ishuman(src.owner))
 			if(!isnull(original_blood_color))
-				src.mob.blood_color = original_blood_color
-				src.mob.bioHolder.RemoveEffect("mattereater")
-				src.mob.bioHolder.RemoveEffect("jumpy")
-				src.mob.bioHolder.RemoveEffect("vowelitis")
-				src.mob.bioHolder.RemoveEffect("accent_chav")
+				src.owner.blood_color = original_blood_color
+				src.owner.bioHolder.RemoveEffect("mattereater")
+				src.owner.bioHolder.RemoveEffect("jumpy")
+				src.owner.bioHolder.RemoveEffect("vowelitis")
+				src.owner.bioHolder.RemoveEffect("accent_chav")
 		original_blood_color = null
 		..()
 
@@ -1885,21 +1855,21 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		var/message = null
 		switch (act)
 			if ("scream","howl","laugh")
-				if (src.mob.emote_allowed)
-					src.mob.emote_allowed = FALSE
-					message = "<span class='alert'><B>[src.mob] makes an awful noise!</B></span>"
-					playsound(src.mob, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if (src.owner.emote_allowed)
+					src.owner.emote_allowed = FALSE
+					message = "<span class='alert'><B>[src.owner] makes an awful noise!</B></span>"
+					playsound(src.owner, pick('sound/voice/screams/frogscream1.ogg','sound/voice/screams/frogscream3.ogg','sound/voice/screams/frogscream4.ogg'), 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(3 SECONDS)
-						if (src.mob) src.mob.emote_allowed = TRUE
+						if (src.owner) src.owner.emote_allowed = TRUE
 					return message
 
 			if("burp","fart","gasp")
-				if(src.mob.emote_allowed)
-					src.mob.emote_allowed = FALSE
-					message = "<B>[src.mob]</B> croaks."
-					playsound(src.mob, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				if(src.owner.emote_allowed)
+					src.owner.emote_allowed = FALSE
+					message = "<B>[src.owner]</B> croaks."
+					playsound(src.owner, 'sound/voice/farts/frogfart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
-						if (src.mob) src.mob.emote_allowed = TRUE
+						if (src.owner) src.owner.emote_allowed = TRUE
 					return message
 			else ..()
 
@@ -1921,15 +1891,15 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New()
 		..()
-		if(ishuman(src.mob))
-			src.mob.blood_color = "#91b978"
+		if(ishuman(src.owner))
+			src.owner.blood_color = "#91b978"
 
 	disposing()
-		if(ishuman(src.mob))
-			src.mob.bioHolder.RemoveEffect("mattereater")
-			src.mob.bioHolder.RemoveEffect("jumpy")
-			src.mob.bioHolder.RemoveEffect("vowelitis")
-			src.mob.bioHolder.RemoveEffect("accent_chav")
+		if(ishuman(src.owner))
+			src.owner.bioHolder.RemoveEffect("mattereater")
+			src.owner.bioHolder.RemoveEffect("jumpy")
+			src.owner.bioHolder.RemoveEffect("vowelitis")
+			src.owner.bioHolder.RemoveEffect("accent_chav")
 		..()
 
 /datum/mutantrace/kudzu
@@ -1976,7 +1946,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	custom_attack(atom/target)
 		if(ishuman(target))
-			src.mob.visible_message("<span class='alert'><B>[src.mob]</B> waves its limbs at [target] threateningly!</span>")
+			src.owner.visible_message("<span class='alert'><B>[src.owner]</B> waves its limbs at [target] threateningly!</span>")
 			return TRUE
 		return FALSE
 
@@ -1986,7 +1956,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	New(var/mob/living/carbon/human/H)
 		..(H)
 		SPAWN(0)	//ugh
-			if(ishuman(src.mob))
+			if(ishuman(src.owner))
 				H.setStatus("maxhealth-", null, -50)
 				H.add_stam_mod_max("kudzu", -100)
 				APPLY_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "kudzu", -5)
@@ -2003,8 +1973,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 
 	disposing()
-		if(ishuman(src.mob))
-			var/mob/living/carbon/human/H = src.mob
+		if(ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
 			if(H.abilityHolder)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/guide)
 				H.abilityHolder.removeAbility(/datum/targetable/kudzu/growth)
@@ -2019,30 +1989,30 @@ ABSTRACT_TYPE(/datum/mutantrace)
 /* Commented out as this bypasses restricted Z checks. We will just lazily give them xray genes instead
 	// vision modifier (see_mobs, etc i guess)
 	sight_modifier()
-		src.mob.sight |= SEE_TURFS
-		src.mob.sight |= SEE_MOBS
-		src.mob.sight |= SEE_OBJS
-		src.mob.see_in_dark = SEE_DARK_FULL
+		src.owner.sight |= SEE_TURFS
+		src.owner.sight |= SEE_MOBS
+		src.owner.sight |= SEE_OBJS
+		src.owner.see_in_dark = SEE_DARK_FULL
 */
 	//Should figure out what I'm doing with this and the onLife in the abilityHolder one day. I'm thinking, maybe move it all to the abilityholder, but idk, composites are weird.
 	onLife(var/mult = 1)
-		if (!src.mob.abilityHolder)
-			src.mob.abilityHolder = new /datum/abilityHolder/kudzu(src.mob)
+		if (!src.owner.abilityHolder)
+			src.owner.abilityHolder = new /datum/abilityHolder/kudzu(src.owner)
 
-		var/datum/abilityHolder/kudzu/KAH = src.mob.abilityHolder
+		var/datum/abilityHolder/kudzu/KAH = src.owner.abilityHolder
 		var/round_mult = max(1, round((mult)))
-		var/turf/T = get_turf(src.mob)
+		var/turf/T = get_turf(src.owner)
 		//if on kudzu, get nutrients for later use. If at max nutrients. Then heal self.
 		if (T && T.temp_flags & HAS_KUDZU)
 			if (KAH.points < KAH.MAX_POINTS)
 				KAH.points += round_mult
 			else
 				//at max points, so heal
-				src.mob.take_toxin_damage(-round_mult)
-				src.mob.HealDamage("All", round_mult, round_mult)
-				if (prob(7) && src.mob.find_ailment_by_type(/datum/ailment/malady/flatline))
-					src.mob.cure_disease_by_path(/datum/ailment/malady/heartfailure)
-					src.mob.cure_disease_by_path(/datum/ailment/malady/flatline)
+				src.owner.take_toxin_damage(-round_mult)
+				src.owner.HealDamage("All", round_mult, round_mult)
+				if (prob(7) && src.owner.find_ailment_by_type(/datum/ailment/malady/flatline))
+					src.owner.cure_disease_by_path(/datum/ailment/malady/heartfailure)
+					src.owner.cure_disease_by_path(/datum/ailment/malady/flatline)
 
 		else
 			//nutrients for a bit of grace period
@@ -2050,11 +2020,11 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				KAH.points -= 10
 			else
 				//do effects from not being on kudzu here.
-				src.mob.take_toxin_damage(2 * round_mult)
-				src.mob.changeStatus("slowed", 3 SECONDS)
-				// random_brute_damage(src.mob, 2 * mult)
+				src.owner.take_toxin_damage(2 * round_mult)
+				src.owner.changeStatus("slowed", 3 SECONDS)
+				// random_brute_damage(src.owner, 2 * mult)
 				if (prob(30))
-					src.mob.changeStatus("weakened", 3 SECONDS)
+					src.owner.changeStatus("weakened", 3 SECONDS)
 
 		return
 
@@ -2093,21 +2063,21 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 	New(var/mob/living/carbon/human/H)
 		..()
-		if(ishuman(src.mob))
-			src.mob.update_face()
-			src.mob.update_body()
-			src.mob.update_clothing()
-			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
-			src.mob.kickMessage = "stomps"
-			src.mob.traitHolder?.addTrait("hemophilia")
+		if(ishuman(src.owner))
+			src.owner.update_face()
+			src.owner.update_body()
+			src.owner.update_clothing()
+			src.owner.mob_flags |= SHOULD_HAVE_A_TAIL
+			src.owner.kickMessage = "stomps"
+			src.owner.traitHolder?.addTrait("hemophilia")
 
 			H.blood_id = "milk"
 			H.blood_color = "FFFFFF"
 
 
 	disposing()
-		if (ishuman(src.mob))
-			var/mob/living/carbon/human/H = src.mob
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
 			H.blood_id = initial(H.blood_id)
 			H.blood_color = initial(H.blood_color)
 			if (H.mob_flags & SHOULD_HAVE_A_TAIL)
@@ -2125,48 +2095,48 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> moos!"
-					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				if (src.owner.emote_check(voluntary, 50))
+					. = "<B>[src.owner]</B> moos!"
+					playsound(src.owner, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
-				if (src.mob.emote_check(voluntary))
+				if (src.owner.emote_check(voluntary))
 					.= release_milk()
 			else
 				.= ..()
 
 	proc/release_milk() //copy pasted some piss code, im sorry
-		var/obj/item/storage/toilet/toilet = locate() in src.mob.loc
-		var/obj/item/reagent_containers/glass/beaker = locate() in src.mob.loc
+		var/obj/item/storage/toilet/toilet = locate() in src.owner.loc
+		var/obj/item/reagent_containers/glass/beaker = locate() in src.owner.loc
 
 		var/can_output = FALSE
-		if (ishuman(src.mob))
-			var/mob/living/carbon/human/H = src.mob
+		if (ishuman(src.owner))
+			var/mob/living/carbon/human/H = src.owner
 			if (H.blood_volume > 0)
 				can_output = TRUE
 
 		if (!can_output)
-			.= "<B>[src.mob]</B> strains, but fails to output milk!"
-		else if (toilet && (src.mob.buckled != null))
-			for (var/obj/item/storage/toilet/T in src.mob.loc)
-				.= "<B>[src.mob]</B> dispenses milk into the toilet. What a waste."
+			.= "<B>[src.owner]</B> strains, but fails to output milk!"
+		else if (toilet && (src.owner.buckled != null))
+			for (var/obj/item/storage/toilet/T in src.owner.loc)
+				.= "<B>[src.owner]</B> dispenses milk into the toilet. What a waste."
 				T.clogged += 0.1
 				break
 		else if (beaker)
-			.= pick("<B>[src.mob]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.mob]</B> takes aim and dispenses milk into the beaker!", "<B>[src.mob]</B> fills the beaker with milk!")
-			transfer_blood(src.mob, beaker, 10)
+			.= pick("<B>[src.owner]</B> takes aim and dispenses some milk into the beaker.", "<B>[src.owner]</B> takes aim and dispenses milk into the beaker!", "<B>[src.owner]</B> fills the beaker with milk!")
+			transfer_blood(src.owner, beaker, 10)
 		else
-			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
+			var/obj/item/reagent_containers/milk_target = src.owner.equipped()
 			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
-				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
-				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
-				transfer_blood(src.mob, milk_target, 10)
+				.= ("<span class='alert'><B>[src.owner] dispenses milk into [milk_target].</B></span>")
+				playsound(src.owner, 'sound/misc/pourdrink.ogg', 50, 1)
+				transfer_blood(src.owner, milk_target, 10)
 				return
 
 			// possibly change the text colour to the gray emote text
-			.= (pick("<B>[src.mob]</B> milk fall out.", "<B>[src.mob]</B> makes a milk puddle on the floor."))
+			.= (pick("<B>[src.owner]</B> milk fall out.", "<B>[src.owner]</B> makes a milk puddle on the floor."))
 
-			var/turf/T = get_turf(src.mob)
-			bleed(src.mob, 10, 3, T)
+			var/turf/T = get_turf(src.owner)
+			bleed(src.owner, 10, 3, T)
 			T.react_all_cleanables()
 
 TYPEINFO(/datum/mutantrace/pug)
@@ -2203,21 +2173,21 @@ TYPEINFO(/datum/mutantrace/pug)
 			mutant_appearance_flags &= ~HAS_NO_SKINTONE
 			mutant_appearance_flags |= (TORSO_HAS_SKINTONE | HAS_PARTIAL_SKINTONE)
 		..()
-		if (ishuman(src.mob))
-			src.mob.mob_flags |= SHOULD_HAVE_A_TAIL
+		if (ishuman(src.owner))
+			src.owner.mob_flags |= SHOULD_HAVE_A_TAIL
 			SPAWN(0)
-				if(src.mob) //how??
-					APPLY_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
+				if(src.owner) //how??
+					APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
 		if (prob(50))
 			voice_override = "pugg"
-		RegisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
+		RegisterSignal(src.owner, COMSIG_MOB_THROW_ITEM_NEARBY, .proc/throw_response)
 
 	disposing()
-		if (ishuman(src.mob))
-			if (src.mob.mob_flags & SHOULD_HAVE_A_TAIL)
-				src.mob.mob_flags &= ~SHOULD_HAVE_A_TAIL
-			REMOVE_ATOM_PROPERTY(src.mob, PROP_MOB_FAILED_SPRINT_FLOP, src)
-		UnregisterSignal(src.mob, COMSIG_MOB_THROW_ITEM_NEARBY)
+		if (ishuman(src.owner))
+			if (src.owner.mob_flags & SHOULD_HAVE_A_TAIL)
+				src.owner.mob_flags &= ~SHOULD_HAVE_A_TAIL
+			REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_FAILED_SPRINT_FLOP, src)
+		UnregisterSignal(src.owner, COMSIG_MOB_THROW_ITEM_NEARBY)
 		..()
 
 	say_verb()
@@ -2230,51 +2200,51 @@ TYPEINFO(/datum/mutantrace/pug)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("sleuth")
-				if (src.mob.emote_check(voluntary, 5 SECONDS))
+				if (src.owner.emote_check(voluntary, 5 SECONDS))
 					. = src.sleuth()
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 5 SECONDS))
-					playsound(src.mob, "sound/voice/screams/[voice_override].ogg", 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src.mob]</B> growls!", "<I>growls</I>")
+				if (src.owner.emote_check(voluntary, 5 SECONDS))
+					playsound(src.owner, "sound/voice/screams/[voice_override].ogg", 50, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = list("<B>[src.owner]</B> growls!", "<I>growls</I>")
 			if ("sneeze")
-				if (src.mob.emote_check(voluntary, 2 SECONDS))
+				if (src.owner.emote_check(voluntary, 2 SECONDS))
 					. = src.sneeze()
 			if ("sniff")
-				if (src.mob.emote_check(voluntary, 2 SECONDS))
+				if (src.owner.emote_check(voluntary, 2 SECONDS))
 					. = src.sniff()
 			if ("snore")
-				if (src.mob.emote_check(voluntary, 3 SECONDS))
+				if (src.owner.emote_check(voluntary, 3 SECONDS))
 					. = src.snore()
 			if ("wheeze")
-				if (src.mob.emote_check(voluntary, 2 SECONDS))
-					playsound(src.mob, 'sound/voice/pug_wheeze.ogg', 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					. = list("<B>[src.mob]</B> wheezes.", "<I>wheezes</I>")
+				if (src.owner.emote_check(voluntary, 2 SECONDS))
+					playsound(src.owner, 'sound/voice/pug_wheeze.ogg', 80, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					. = list("<B>[src.owner]</B> wheezes.", "<I>wheezes</I>")
 			else
 				. = ..()
 
 	proc/sleuth()
-		if (src.mob.hasStatus("poisoned"))
-			boutput(src.mob, "<span class='alert'>You're sick and definitely aren't up for sleuthing!</span>")
+		if (src.owner.hasStatus("poisoned"))
+			boutput(src.owner, "<span class='alert'>You're sick and definitely aren't up for sleuthing!</span>")
 			return
-		var/atom/A = tgui_input_list(src.mob, "What would you like to sleuth?", "Sleuthing", src.mob.get_targets(1, "both"), 20 SECONDS)
+		var/atom/A = tgui_input_list(src.owner, "What would you like to sleuth?", "Sleuthing", src.owner.get_targets(1, "both"), 20 SECONDS)
 		if (!A)
 			return
-		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src.owner, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 		var/adjective = pick("astutely", "discerningly", "intently")
-		. = list("<B>[src.mob]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
+		. = list("<B>[src.owner]</B> sniffs [adjective].", "<I>sniffs [adjective]</I>")
 		if (ismob(A))
 			var/mob/living/M = A
 			if (M.mind)
-				boutput(src.mob, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
+				boutput(src.owner, "<span class='notice'>[M] smells like a [M.mind?.color].</span>")
 				return
 		var/list/L = A.fingerprints_full
 		if (!length(L))
-			boutput(src.mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			boutput(src.owner, "<span class='notice'>Smells like \a [A], alright.</span>")
 			return
 		var/list/print = L[pick(L)]
 		var/color = print["color"]
 		if (!color)
-			boutput(src.mob, "<span class='notice'>Smells like \a [A], alright.</span>")
+			boutput(src.owner, "<span class='notice'>Smells like \a [A], alright.</span>")
 			return
 		var/timestamp = print["timestamp"]
 		var/intensity = "faintly"
@@ -2282,33 +2252,33 @@ TYPEINFO(/datum/mutantrace/pug)
 			intensity = "strongly"
 		else if (TIME < timestamp + 10 MINUTES)
 			intensity = "kind"
-		boutput(src.mob, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
+		boutput(src.owner, "<span class='notice'>\The [A] smells [intensity] of a [color].</span>")
 
 	proc/sneeze()
-		playsound(src.mob, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> sneezes.", "<I>sneezes</I>")
-		animate(src.mob, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
+		playsound(src.owner, 'sound/voice/pug_sneeze.ogg', 50, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[src.owner]</B> sneezes.", "<I>sneezes</I>")
+		animate(src.owner, pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_PARALLEL | ANIMATION_RELATIVE)
 		animate(pixel_y=-6, time=0.2 SECONDS, flags=ANIMATION_RELATIVE)
 		animate(pixel_y=3, time=0.1 SECONDS, flags=ANIMATION_RELATIVE)
 
 	proc/sniff()
-		playsound(src.mob, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> sniffs.", "<I>sniffs</I>")
+		playsound(src.owner, 'sound/voice/pug_sniff.ogg', 50, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[src.owner]</B> sniffs.", "<I>sniffs</I>")
 
 	proc/snore()
-		playsound(src.mob, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-		. = list("<B>[src.mob]</B> snores.", "<I>snores</I>")
-		src.mob.UpdateOverlays(snore_bubble, "snore_bubble")
+		playsound(src.owner, 'sound/voice/snore.ogg', rand(5,10) * 10, 0, 0, src.owner.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+		. = list("<B>[src.owner]</B> snores.", "<I>snores</I>")
+		src.owner.UpdateOverlays(snore_bubble, "snore_bubble")
 		SPAWN(1.5 SECONDS)
-			src.mob.UpdateOverlays(null, "snore_bubble")
+			src.owner.UpdateOverlays(null, "snore_bubble")
 
 	proc/throw_response(target, item, thrower)
 		// Don't dive at things we throw; don't dive if we're stunned or dead; dive 15% of the time, 100% at limbs
-		if (src.mob == thrower || is_incapacitated(src.mob) || (prob(85) && !istype(item, /obj/item/parts)))
+		if (src.owner == thrower || is_incapacitated(src.owner) || (prob(85) && !istype(item, /obj/item/parts)))
 			return
-		src.mob.throw_at(get_turf(item), 1, 1)
-		src.mob.visible_message("<span class='alert'>[src.mob] staggers.</span>")
-		src.mob.emote("scream")
+		src.owner.throw_at(get_turf(item), 1, 1)
+		src.owner.visible_message("<span class='alert'>[src.owner] staggers.</span>")
+		src.owner.emote("scream")
 
 /datum/mutantrace/chicken
 	name = "Chicken"
@@ -2325,9 +2295,9 @@ TYPEINFO(/datum/mutantrace/pug)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
-					. = "<B>[src.mob]</B> BWAHCAWCKs!"
-					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
+				if (src.owner.emote_check(voluntary, 50))
+					. = "<B>[src.owner]</B> BWAHCAWCKs!"
+					playsound(src.owner, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.owner.get_age_pitch())
 
 #undef OVERRIDE_ARM_L
 #undef OVERRIDE_ARM_R
