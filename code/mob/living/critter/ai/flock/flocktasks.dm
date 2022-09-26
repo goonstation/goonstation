@@ -5,11 +5,11 @@
 /*
 replicate
 	-weight 7
-	-precondition: can_afford(FLOCK_LAY_EGG_COST)
+	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
 
 nest
 	-weight 6
-	-precondition: can_afford(FLOCK_LAY_EGG_COST)
+	-precondition: can_afford(FLOCK_LAY_EGG_COST) and less than FLOCK_DRONE_LIMIT drones
 
 building
 	-weight 5
@@ -136,10 +136,10 @@ stare
 	add_task(holder.get_instance(/datum/aiTask/succeedable/replicate, list(holder)))
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
-	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
-		. = TRUE
+	if (!F.flock)
+		return
+	return F?.can_afford(F.flock.currentEggCost())	&& F.flock?.getComplexDroneCount() <= FLOCK_DRONE_LIMIT
 
 /datum/aiTask/sequence/goalbased/flock/replicate/get_targets()
 	. = list()
@@ -197,7 +197,9 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(F?.can_afford(FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((F.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)))
+	if (!F.flock)
+		return
+	if(F?.can_afford(F.flock.currentEggCost()) && F.flock?.getComplexDroneCount() <= FLOCK_DRONE_LIMIT)
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE

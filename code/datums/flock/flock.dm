@@ -495,6 +495,9 @@ var/flock_signal_unleashed = FALSE
 		return 0
 	return length(src.units[/mob/living/critter/flock/drone/])
 
+/datum/flock/proc/currentEggCost()
+	return FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((src.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+
 /datum/flock/proc/toggleDeconstructionFlag(var/atom/target)
 	toggleAnnotation(target, FLOCK_ANNOTATION_DECONSTRUCT)
 	src.deconstruct_targets ^= target
