@@ -11,7 +11,7 @@
 		animate_scanning(M, "#0AEFEF")
 
 	var/death_state = M.stat
-	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
+	if (M.is_faking_death(TRUE))
 		death_state = 2
 
 	var/health_percent = round(100 * M.health / M.max_health)

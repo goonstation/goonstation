@@ -199,7 +199,7 @@
 		if (occupant)
 			. += list(
 				"hasOccupant" = TRUE,
-				"occupantStat" = occupant.stat,
+				"occupantStat" = occupant.is_faking_death(TRUE) * 2 || occupant.stat,
 				"health" = occupant.health / occupant.max_health,
 				"oxyDamage" = occupant.get_oxygen_deprivation(),
 				"toxDamage" = occupant.get_toxin_damage(),

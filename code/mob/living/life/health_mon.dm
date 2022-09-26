@@ -10,7 +10,7 @@
 			// Originally the isdead() check was only done in the other check if <0, which meant
 			// if you were dead but had > 0 HP (e.g. eaten by blob) you would still show
 			// a not-dead heart. So, now you don't.
-			if ((owner.bioHolder && owner.bioHolder.HasEffect("dead_scan")) || isdead(owner))
+			if (owner.is_faking_death(TRUE) || isdead(owner))
 				H.health_mon.icon_state = "-1"
 			else
 				// Handle possible division by zero

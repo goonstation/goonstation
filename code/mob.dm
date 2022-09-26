@@ -2492,6 +2492,9 @@
 /mob/proc/flash(duration)
 	return 0
 
+/mob/proc/is_faking_death(includes_non_empowered_pseudonecrosis)
+	return FALSE
+
 /mob/proc/take_brain_damage(var/amount)
 	if (!isnum(amount) || amount == 0)
 		return 1

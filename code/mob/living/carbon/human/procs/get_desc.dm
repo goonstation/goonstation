@@ -315,12 +315,7 @@
 			if (1500 to INFINITY) // critically high (180/110)
 				. += "<br><span class='alert'><B>[src.name] is sweating like a pig and red as a tomato!</B></span>"
 
-	var/changeling_fakedeath = 0
-	var/datum/abilityHolder/changeling/C = get_ability_holder(/datum/abilityHolder/changeling)
-	if (C?.in_fakedeath)
-		changeling_fakedeath = 1
-
-	if ((isdead(src)) || changeling_fakedeath || src.bioHolder?.HasEffect("dead_scan") == 2 || (src.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) || (src.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting")))
+	if ((isdead(src)) || src.is_faking_death())
 		if (!src.decomp_stage)
 			. += "<br><span class='alert'>[src] is limp and unresponsive, a dull lifeless look in [t_his] eyes.</span>"
 	else

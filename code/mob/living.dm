@@ -150,6 +150,14 @@
 /mob/living/flash(duration)
 	vision.flash(duration)
 
+/mob/living/is_faking_death(includes_non_empowered_pseudonecrosis)
+	var/datum/abilityHolder/changeling/ling_abilityholder = get_ability_holder(/datum/abilityHolder/changeling)
+	return (ling_abilityholder?.in_fakedeath ||\
+	src.bioHolder?.HasEffect("dead_scan") == 2 ||\
+	(src.bioHolder?.HasEffect("dead_scan") && includes_non_empowered_pseudonecrosis) ||\
+	(src?.reagents.has_reagent("capulettium") && src.getStatusDuration("weakened")) ||\
+	(src?.reagents.has_reagent("capulettium_plus") && src.hasStatus("resting"))) ? TRUE : FALSE
+
 /mob/living/disposing()
 	ai_target = null
 	ai_target_old.len = 0
@@ -600,10 +608,6 @@
 		return
 
 	if (isghostcritter(src))
-		return
-
-	if (src.reagents && src.reagents.has_reagent("capulettium_plus"))
-		src.show_text("You are completely paralysed and can't point!", "red")
 		return
 
 	if (istype(target, /obj/decal/point))

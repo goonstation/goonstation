@@ -18,17 +18,21 @@
 	src.lastattacked = M
 	if (src != M && M.getStatusDuration("burning")) //help others put out fires!!
 		src.help_put_out_fire(M)
-	else if (src == M && src.getStatusDuration("burning"))
+		return
+	if (M.getStatusDuration("burning")) //put yourself out too
 		M.resist()
-	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
-		if (src == M && src.is_bleeding())
-			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
-			src.administer_CPR(M)
-	else if (M.is_bleeding())
+		return
+	if (src == M && src.is_bleeding())
 		src.staunch_bleeding(M)
-	else if (src.health > 0)
+	if ((M.health <= 0 || M.is_faking_death() || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
+		src.administer_CPR(M)
+		return
+	if (M.is_bleeding())
+		src.staunch_bleeding(M)
+		return
+	if (M.health > 0 && !M.is_faking_death())
 		src.shake_awake(M)
+		return
 
 /mob/proc/help_put_out_fire(var/mob/living/M)
 	playsound(M.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, 0 , 0.7)

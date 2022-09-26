@@ -1648,12 +1648,12 @@ var/datum/action_controller/actions
 
 	onUpdate()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || target.health > 0 || !src.can_cpr())
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !src.can_cpr())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1678,6 +1678,8 @@ var/datum/action_controller/actions
 		src.onRestart()
 
 	proc/can_cpr()
+		if(src.target.health > 0 && !(src.target.is_faking_death() || src.target.find_ailment_by_type(/datum/ailment/malady/flatline)))
+			return FALSE
 		if (ishuman(owner))
 			var/mob/living/carbon/human/human_owner = owner
 			if (human_owner.head && (human_owner.head.c_flags & COVERSMOUTH))
@@ -1698,7 +1700,7 @@ var/datum/action_controller/actions
 				boutput(owner, "<span class='alert'>You need to take off [human_target]'s facemask before you can give CPR!</span>")
 				return FALSE
 
-		if (isdead(target))
+		if (isdead(target) || (target.is_faking_death() && target.health > 0))
 			owner.visible_message("<span class='alert'><B>[owner] tries to perform CPR, but it's too late for [target]!</B></span>")
 			return FALSE
 
