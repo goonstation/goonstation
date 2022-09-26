@@ -1,304 +1,315 @@
-"aj" = (/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/obj/stool/chair/comfy{dir = 2},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"aq" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"ar" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"az" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"aD" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"aX" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"aq" = (/obj/effects/background_objects/star_blue{pixel_x = -64; pixel_y = -64},/turf/space,/area/regina)
+"av" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"aI" = (/turf/simulated/drawbridge/floor,/area/regina)
 "aZ" = (/obj/machinery/door/airlock/pyro/maintenance{dir = 4},/turf/unsimulated/floor/plating,/area/regina)
-"bk" = (/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/left_station"},/obj/stool/chair/comfy,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"bo" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
-"bN" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"bU" = (/turf/unsimulated/floor/arctic/snow/ice,/area/space)
-"cO" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"db" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"du" = (/obj/effects/background_objects/star_blue{pixel_x = -64; pixel_y = -64},/turf/space,/area/regina)
-"dv" = (/obj/window/reinforced/east,/obj/window/reinforced/west,/obj/window/reinforced/south,/obj/window/reinforced/north,/obj/structure/girder/reinforced,/turf/simulated/floor/circuit,/area/space)
-"dy" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"dC" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"dI" = (/turf/unsimulated/wall/auto/adventure/icemoon,/area/space)
-"dP" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"dR" = (/turf/simulated/floor/airless/engine/caution/north,/area/regina)
-"dU" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"en" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"eU" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"eV" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"fx" = (/obj/table/reinforced/auto,/obj/machinery/cashreg,/turf/unsimulated/floor/minitiles/black,/area/regina)
-"fG" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"gb" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"gg" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"bw" = (/obj/decal/tile_edge/line/black{icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
+"bH" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"bX" = (/obj/machinery/door/airlock/pyro/maintenance{dir = 4},/turf/unsimulated/floor/plating,/area/space)
+"dr" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"dC" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"dR" = (/turf/unsimulated/wall/auto/adventure/icemoon,/area/space)
+"et" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"eN" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"eS" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"eU" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"fj" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/minitiles,/area/space)
+"fx" = (/turf/simulated/drawbridge/floor,/area/space)
+"gk" = (/turf/simulated/floor/airless/engine,/area/space)
+"gt" = (/turf/simulated/floor/airless/engine/caution/west,/area/regina)
+"gy" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
 "gF" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/plating,/area/shuttle/merchant_shuttle/diner_centcom)
-"gP" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"hG" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"hO" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 4},/area/regina)
-"hU" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"hV" = (/turf/unsimulated/floor/engine,/area/regina)
-"in" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"iD" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"iJ" = (/obj/machinery/door/airlock/pyro/maintenance{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
-"iQ" = (/turf/simulated/floor/airless/engine/caution/south,/area/space)
+"gT" = (/turf/simulated/floor/airless/engine/caution/north,/area/regina)
+"hs" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"hx" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"hV" = (/obj/window/reinforced/east,/obj/window/reinforced/west,/obj/window/reinforced/south,/obj/window/reinforced/north,/obj/structure/girder/reinforced,/turf/simulated/floor/circuit,/area/space)
+"ih" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 4},/area/regina)
+"iJ" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"ja" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "jd" = (/turf/unsimulated/floor/plating,/area/regina)
-"jy" = (/obj/machinery/door/airlock/pyro/maintenance/alt{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
-"ka" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"kq" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"kF" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"jn" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/floor/plating,/area/space)
+"jp" = (/obj/machinery/door/airlock/pyro/glass/engineering,/turf/unsimulated/floor/minitiles/black,/area/regina)
+"jx" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"jC" = (/obj/storage/crate/xmas,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"jD" = (/obj/decal/tile_edge/line/black{dir = 8; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"jM" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"kd" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"kv" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"kE" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"kF" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 8},/area/space)
 "kO" = (/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"kT" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/left_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "li" = (/turf/space,/area/space)
-"ll" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"lp" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"lV" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"mh" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"mu" = (/obj/machinery/door/airlock/pyro/glass/engineering,/turf/unsimulated/floor/minitiles/black,/area/regina)
-"mU" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"np" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"nL" = (/obj/machinery/door/airlock/pyro/maintenance,/turf/unsimulated/floor/minitiles,/area/regina)
-"nN" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"nO" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"nT" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"oe" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"oI" = (/obj/decal/tile_edge/line/black{dir = 8; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
-"pj" = (/obj/machinery/door/airlock/pyro/glass,/turf/unsimulated/floor/minitiles/black,/area/regina)
-"ps" = (/obj/machinery/light/small/floor,/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"pH" = (/obj/decal/tile_edge/line/black{dir = 8; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"pL" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/drawbridge/floor,/area/regina)
+"ln" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"lA" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"lJ" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"lL" = (/obj/machinery/door/airlock/pyro/glass{dir = 4},/turf/unsimulated/floor/minitiles,/area/regina)
+"lN" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"lV" = (/obj/decal/tile_edge/line/black{dir = 8; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
+"ms" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"mD" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"mG" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"mI" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"mM" = (/obj/machinery/door/airlock/pyro/maintenance,/turf/unsimulated/floor/plating,/area/regina)
+"mT" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"no" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"nt" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"nD" = (/turf/simulated/floor/airless/engine/caution/south,/area/regina)
+"nJ" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"oi" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"or" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/minitiles/black,/area/regina)
+"oA" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"oC" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"oI" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"oK" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/regina)
+"pa" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"pD" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"pH" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"pS" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
 "pT" = (/turf/space,/area/regina)
-"qn" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"qr" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"qE" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"qO" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
-"qZ" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"rg" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"rD" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 1},/area/regina)
-"rH" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"so" = (/turf/simulated/floor/airless/engine,/area/regina)
-"sz" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"sB" = (/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/diner_centcom)
-"sI" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"sZ" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"qn" = (/obj/machinery/door/airlock/pyro/maintenance{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
+"qs" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/regina)
+"qu" = (/obj/machinery/door/airlock/pyro/maintenance/alt{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
+"qy" = (/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"qN" = (/turf/simulated/floor/airless/engine/caution/east,/area/regina)
+"qO" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
+"rb" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/drawbridge/floor,/area/regina)
+"rg" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/unsimulated/floor/arctic/snow/ice,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"ri" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"sp" = (/obj/machinery/door/airlock/pyro/maintenance/alt{dir = 1},/turf/unsimulated/floor/plating,/area/regina)
+"sw" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"sz" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"sI" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"sZ" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
 "ta" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/plating,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"tc" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"tm" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"tG" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"tK" = (/obj/machinery/door/airlock/pyro/glass,/turf/unsimulated/floor/minitiles,/area/regina)
-"ul" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"un" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"uJ" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"ve" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"vg" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"vl" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"vB" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"vJ" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"wc" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"wd" = (/obj/storage/crate/xmas,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"wf" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"wv" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"wS" = (/obj/machinery/door/airlock/pyro/maintenance{name = "Atmospheric Processing"; req_access_txt = ""},/turf/unsimulated/floor/plating,/area/regina)
-"xf" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"xx" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"xD" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"xN" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"xP" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"xS" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"yw" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/minitiles,/area/regina)
-"yK" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"za" = (/turf/simulated/floor/airless/engine/caution/east,/area/regina)
-"zx" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"zG" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"Al" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"Bd" = (/obj/machinery/light/small/floor,/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"Bg" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/drawbridge/floor,/area/space)
+"tk" = (/turf/simulated/floor/airless/engine/caution/west,/area/space)
+"tm" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tq" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"tv" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"tK" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"tO" = (/obj/machinery/door/airlock/pyro/maintenance,/turf/space,/area/space)
+"uj" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"uo" = (/turf/simulated/drawbridge/wall{dir = 8; icon_state = "wall"},/area/space)
+"vg" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"vK" = (/turf/simulated/floor/airless/plating,/area/regina)
+"vY" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
+"wc" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"wL" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"wY" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"xf" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"xA" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/plating,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"xD" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/minitiles,/area/regina)
+"xP" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"yg" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"yi" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"yj" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"yv" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/regina)
+"yw" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"yW" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"zB" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"zG" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Af" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"Al" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"As" = (/obj/table/reinforced/auto,/obj/machinery/cashreg,/turf/unsimulated/floor/minitiles/black,/area/regina)
 "Bk" = (/turf/unsimulated/floor/minitiles,/area/regina)
-"Bm" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"BB" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"BH" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"BV" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"Ce" = (/turf/simulated/drawbridge/floor,/area/space)
-"Cq" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/floor/plating,/area/space)
-"Cr" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"CZ" = (/turf/simulated/floor/airless/engine/caution/west,/area/regina)
+"Bo" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"Bs" = (/obj/machinery/door/airlock/pyro/maintenance{name = "Atmospheric Processing"; req_access_txt = ""},/turf/unsimulated/floor/plating,/area/regina)
+"Bt" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"BK" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"Cq" = (/obj/machinery/door/airlock/pyro/glass,/turf/unsimulated/floor/minitiles,/area/regina)
+"CP" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"CW" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"CZ" = (/turf/simulated/drawbridge/wall,/area/regina)
 "Df" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/floor/plating,/area/regina)
-"DQ" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Ec" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"EC" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"EQ" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/wall/auto/adventure/hospital/interior,/area/regina)
-"EZ" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/unsimulated/floor/arctic/snow/ice,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Dl" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"Dw" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"DE" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Ep" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 4},/area/space)
+"Ey" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"EK" = (/obj/machinery/door/airlock/pyro/maintenance,/turf/unsimulated/floor/minitiles,/area/regina)
+"EQ" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "Fq" = (/turf/unsimulated/wall/auto/adventure/icemoon,/area/regina)
 "FI" = (/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"FJ" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/minitiles/black,/area/regina)
-"FP" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Go" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"Gs" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"GD" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"GO" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"GR" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"GV" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"He" = (/obj/decal/fakeobjects/teleport_pad,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"HM" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"Ig" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 8},/area/space)
-"JQ" = (/turf/simulated/floor/airless/engine/caution/west,/area/space)
-"JR" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Ki" = (/obj/decal/tile_edge/line/black{icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"Kl" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Kq" = (/obj/indestructible/shuttle_corner{dir = 6; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"Lg" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"Lr" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"LB" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/diner_centcom)
-"LJ" = (/obj/machinery/light/runway_light,/turf/simulated/floor/airless/plating,/area/space)
-"LY" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"LZ" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"Mg" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Mp" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
-"MB" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"MC" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"MK" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"Ni" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"NL" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"NY" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Ot" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"OC" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"OO" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 4},/area/space)
-"OT" = (/obj/machinery/door/airlock/pyro/maintenance/alt{dir = 1},/turf/unsimulated/floor/plating,/area/regina)
-"Ph" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"Pi" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"Pt" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
-"Pv" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"PN" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"PY" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
-"PZ" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 1},/area/space)
-"Qf" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 8},/area/regina)
-"Ql" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"Qn" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"QB" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"FV" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"FX" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"Ga" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"Gk" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"GB" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"GO" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"GV" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"HC" = (/obj/machinery/shuttle/engine/propulsion{dir = 1; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/space)
+"If" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"Ig" = (/turf/simulated/floor/airless/engine/caution/corner,/area/space)
+"Ii" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"Iq" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/regina)
+"II" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"IK" = (/obj/machinery/light/runway_light,/turf/simulated/floor/airless/plating,/area/space)
+"Jg" = (/obj/indestructible/shuttle_corner{dir = 10; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"Ki" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Kv" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 1},/area/regina)
+"KQ" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Lc" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"Ld" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"LY" = (/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/obj/stool/chair/comfy{dir = 2},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Mm" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"MP" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"MT" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"ND" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"NE" = (/turf/simulated/floor/airless/plating,/area/space)
+"Oz" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"OK" = (/obj/machinery/shuttle/engine/heater{dir = 8; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/diner_centcom)
+"Pe" = (/obj/machinery/door/airlock/pyro/external,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Ph" = (/turf/simulated/floor/airless/engine/caution/south,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"Pt" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Px" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"PA" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
+"PF" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"PN" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"PQ" = (/obj/machinery/door/airlock/pyro/glass/engineering{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
+"Qf" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Ql" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"QC" = (/turf/unsimulated/floor/minitiles/black,/area/space)
 "QG" = (/turf/unsimulated/floor/minitiles/black,/area/regina)
-"QH" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
+"QO" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/drawbridge/floor,/area/space)
+"QP" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
 "Rm" = (/turf/unsimulated/wall/auto/adventure/hospital/interior,/area/regina)
-"Rp" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"Ru" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"Rx" = (/obj/machinery/door/airlock/pyro/glass/engineering{dir = 4},/turf/unsimulated/floor/minitiles/black,/area/regina)
-"RM" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"RS" = (/obj/machinery/light/runway_light,/turf/simulated/floor/airless/plating,/area/regina)
-"Sj" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/plating,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"Rp" = (/obj/machinery/door/airlock/pyro/glass,/turf/unsimulated/floor/minitiles/black,/area/regina)
+"Rx" = (/turf/unsimulated/floor/plating,/area/space)
+"RQ" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/donut2)
+"RS" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/shuttle,/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"RV" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
 "Ss" = (/turf/space/dense,/area/space)
-"SH" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"SY" = (/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"Tr" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"Tz" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
-"TG" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"TI" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/diner_centcom)
-"TL" = (/turf/simulated/floor/airless/engine/caution/corner,/area/regina)
-"TO" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"TV" = (/turf/unsimulated/floor/minitiles,/area/space)
-"Uc" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"Uh" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"Uv" = (/obj/machinery/door/airlock/pyro/glass{dir = 4},/turf/unsimulated/floor/minitiles,/area/regina)
-"UG" = (/turf/simulated/floor/airless/engine/caution/south,/area/regina)
-"UL" = (/turf/simulated/drawbridge/wall{dir = 8; icon_state = "wall"},/area/regina)
-"UN" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Sw" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"SH" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"SX" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/left_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"Tg" = (/obj/machinery/shuttle/engine/heater{dir = 1; icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/regina)
+"Tr" = (/obj/machinery/light/small/floor,/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"TD" = (/turf/unsimulated/floor/minitiles,/area/space)
+"TK" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"TL" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 8},/area/regina)
+"TO" = (/turf/simulated/floor/airless/engine/caution/north,/area/space)
+"TV" = (/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"Uc" = (/turf/simulated/floor/airless/engine/caution/corner,/area/regina)
+"Uh" = (/obj/machinery/light/small/floor,/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Uu" = (/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/left_station"},/obj/stool/chair/comfy,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"Uv" = (/turf/unsimulated/floor/engine,/area/regina)
+"UG" = (/turf/simulated/drawbridge/wall{dir = 8; icon_state = "wall"},/area/regina)
+"UL" = (/obj/machinery/light/runway_light,/turf/simulated/floor/airless/plating,/area/regina)
 "UO" = (/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
-"UP" = (/turf/unsimulated/floor/plating,/area/space)
-"Va" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/donut2)
-"Vv" = (/turf/unsimulated/wall/auto/adventure/hospital/interior,/area/space)
-"VG" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"VJ" = (/obj/indestructible/shuttle_corner{dir = 9; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
-"Wn" = (/turf/simulated/floor/airless/engine,/area/space)
-"Xg" = (/turf/simulated/floor/airless/engine/caution/north,/area/space)
-"Xm" = (/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"Xx" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
-"XZ" = (/turf/simulated/drawbridge/floor,/area/regina)
-"Ys" = (/turf/simulated/floor/airless/engine/caution/corner,/area/space)
-"YQ" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
-"YT" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/donut2)
-"Zo" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
-"Zu" = (/obj/decal/fakeobjects/teleport_pad,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"ZC" = (/turf/simulated/drawbridge/wall{dir = 8; icon_state = "wall"},/area/space)
-"ZR" = (/turf/simulated/drawbridge/wall,/area/regina)
-"ZV" = (/obj/decal/tile_edge/line/black{icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
-"ZW" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"US" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/obj/machinery/light/small/floor,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"Vi" = (/obj/wingrille_spawn/reinforced/full,/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
+"Vv" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"VG" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"Wn" = (/turf/simulated/floor/airless/engine,/area/regina)
+"Ws" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"Xb" = (/turf/unsimulated/wall/auto/adventure/hospital/interior,/area/space)
+"Xd" = (/turf/simulated/floor/airless/engine/caution/south,/area/space)
+"Xg" = (/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/diner_centcom)
+"Xm" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"Xx" = (/turf/simulated/floor/airless/engine/caution/corner{dir = 1},/area/space)
+"XK" = (/obj/table/reinforced/auto,/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"XM" = (/obj/decal/tile_edge/line/black{icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"XP" = (/obj/machinery/shuttle/engine/propulsion{dir = 4; icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/diner_centcom)
+"XQ" = (/obj/indestructible/shuttle_corner{dir = 5; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"XZ" = (/obj/decal/tile_edge/line/black{dir = 1; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/regina)
+"Yb" = (/obj/machinery/shuttle/engine/propulsion{icon_state = "alt_propulsion"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"Yd" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/simulated/floor/airless/engine,/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"Yh" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"Ys" = (/obj/indestructible/shuttle_corner{dir = 8; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap)
+"Yx" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"YE" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/cogmap2)
+"YJ" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/destiny)
+"YN" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/destiny)
+"Zn" = (/obj/indestructible/shuttle_corner{icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/regina)
+"Zu" = (/obj/machinery/shuttle/engine/heater{icon_state = "alt_heater"},/turf/unsimulated/wall/auto/adventure/shuttle/dark,/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"Zx" = (/obj/indestructible/shuttle_corner{dir = 4; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"ZC" = (/obj/decal/tile_edge/line/black{dir = 4; icon_state = "tile1"},/turf/unsimulated/floor/arctic/snow/ice,/area/space)
+"ZR" = (/obj/indestructible/shuttle_corner{dir = 1; icon_state = "wall3_trans"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/left_centcom/donut2)
+"ZV" = (/obj/wingrille_spawn/auto,/turf/unsimulated/floor/engine,/area/shuttle/merchant_shuttle/diner_centcom)
+"ZW" = (/obj/stool/chair/comfy,/obj/npc/trader/random{trader_area = "/area/shuttle/merchant_shuttle/right_station"},/turf/unsimulated/floor/shuttle{icon_state = "floor2"},/area/shuttle/merchant_shuttle/diner_centcom)
 
 (1,1,1) = {"
-lilililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililili
-lilililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililili
 SsSsliSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSslililililililililililiSsSsSsSsSsSsSsSsSsSsSslilililililililililiSsSsSsSsSsSsSsSsSsSsSsSsSsSsliSsSsSsSsSsSsSsSsSsSslili
 SspTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTSslili
-SspTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTSslili
-SspTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTpTSs
-SspTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTpTSs
-SsFqbUpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTpTSs
-SsFqbUUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTdupTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTFqSs
-SsFqbUUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTFqFqSs
-SsFqbUUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTUOUOFqFqFqSs
-SsFqbUUOUOUOUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililiUOUOUOUOUOUOUOFqFqSs
-SsFqbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTDfDfDfDfDfDfDfDfDfpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTUOUOUOUOUOUOUOUOUOUObUbUbUUOUOUOUOUOUOUOUOFqSs
-SsFqbUUOKiKiKiKiKiKiKibUUOKiKiKiKiKiKiKiKiUOUOUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTDfQGQGQGQGQGQGQGDfpTpTpTpTpTpTpTpTpTpTpTUOUOUOUOUOUOKiKiKiKiKiKiKiKibUbUKiKiKiKiKiKiKiUObUdISs
-SsFqbUUhRSQfdRdRdRhORSoIUhRSQfdRdRdRdRhORSpHUOUOUOUOUOUOUOUOUOUOpTpTpTpTpTpTDfQGQGQGQGQGQGQGDfpTpTpTpTpTpTUOUOUOUOUOUOUOUOUOUOUhRSQfdRdRdRdRhORSoIPtRSQfdRdRdRhORSpHbUdISs
-SsFqbUUhQfqnazszazsZhOoIUhQfsosososososohOpHUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUODfQGQGQGQGQGQGQGDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUhQfsosososososohOoIPtIgtmwcxfwctmhOpHbUdISs
-SsFqbUUhCZazxPkqyKazzaoIUhCZsozGwvwvGVsozapHUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmQGQGQGQGQGQGQGRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUhCZsozGwvwvGVsozaoIPtJQQBRpSHTrQBzapHbUdISs
-SsFqbUUhCZazaDnTnTazzaoIUhCZsosIUcUcsIsozapHUOUOUODfDfRmRmRmRmbUbURmRmDfDfRmRmQGQGQGQGQGQGQGRmRmDfDfRmRmbUbURmRmRmRmDfDfUOUOUOUhCZsosIUcUcsIsozaoIPtJQwcXmXmZuwczapHbUdISs
-SsFqbUUhCZwfdPnTdUwfzaoIUhCZsIgPajxDBHsIzapHUOUOUODfQGQGQGQGRmRmRmRmQGQGQGQGRmRmRmpjDfpjRmRmRmQGQGQGQGRmRmRmRmQGQGQGQGDfUOUOUOUhCZsIgPajxDBHsIzaoIPtJQggxNXmkTggzapHbUdISs
-SsFqbUUhCZazaDnTnTazzaoIUhCZwvpsxDxDBdwvzapHUOUOUODfQGQGQGQGRmjdjdRmQGQGQGQGQGQGRmBkBkBkRmQGQGQGQGQGQGRmjdjdRmQGQGQGQGDfUOUOUOUhCZwvpsxDxDBdwvzaoIPtJQwcXmXmZuwczapHbUdISs
-SsFqbUUhCZGOAlkqPYGOzaoIUhCZVaaqxDxDxxVazapHUOUOUORmQGQGQGQGiJjdjdiJQGQGQGQGQGQGUvBkBkBkUvQGQGQGQGQGQGiJjdjdiJQGQGQGQGRmUOUOUOUhCZVaaqxDxDxxVazaoIPtJQwcOCSHGDwczapHbUdISs
-SsFqbUUhTLPNazszazPNrDoIUhTLLYsIEcEcsILYrDpHDfDfRmRmQGQGQGQGRmjdjdRmRmRmRmRmRmRmRmBkBkBkRmRmRmRmRmRmRmRmjdjdRmQGQGQGQGRmRmDfDfPtTLLYsIEcEcsILYrDoIPtYsllwcxfwcPhrDpHbUdISs
-SsFqbUUhRSTLZRXZZRrDRSoIUhRSYsZRXZXZZRrDRSpHDfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfPtRSYsZRXZXZZRrDRSoIPtLJTLZRXZZRrDRSpHbUdISs
-SsFqbUUOlVlVZRXZZRlVlVbUUOlVlVZRXZXZZRlVlVUODfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfbUlVlVZRXZXZZRlVlVbUbUZWlVZRXZZRlVlVUObUdISs
-SsFqbUUOUORmZRXZZRRmDfDfDfDfVvZRXZXZZRRmDfDfRmQGQGQGRmRmRmRmRmjdjdRmQGQGQGQGQGRmRmBkBkBkRmRmQGQGQGQGQGRmjdjdRmRmRmRmRmQGQGQGRmCqDfVvZRXZXZZRRmCqCqDfDfRmZRXZZRRmUOUObUdISs
-SsFqbUUOUORmRmywRmRmBkBkBkBkVvRmywywRmRmBkBkRmDfpjpjRmBkBkBkRmwSwSRmRmDfDfQGDfRmBkBkBkBkBkRmDfQGDfDfRmRmwSwSRmBkBkBkRmpjpjDfRmTVBkVvRmywywRmRmBkBkBkBkRmRmywRmRmUOUObUdISs
-SsFqbUUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkUvBkBkBkBkBkBkBkBkBkBkBkBkBkBkUvBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTVBkTVBkBkBkBkBkBkDfUOUObUFqSs
-SsFqbUUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTVBkTVBkBkBkBkBkBkDfUOUObUFqSs
-SsFqbUUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkUvBkBkBkBkBkBkBkBkBkBkBkBkBkBkUvBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTVBkTVBkBkBkBkBkBkDfUOUObUFqSs
-SsdIbUbUbURmDfDfDfRmBkBkBkBkVvVvtKtKRmRmBkBkBkRmRmRmRmRmRmRmRmwSwSRmRmRmRmRmRmRmBkBkBkBkBkRmRmRmRmRmRmRmwSwSRmRmRmRmRmRmRmRmBkBkBkRmRmtKtKRmVvTVTVTVTVRmDfDfDfRmUOUObUFqSs
-SsdIbUbUbUbUbUbUbURmDfDfDfDfVvBkBkBkBkRmRmRmRmRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdaZBkBkBkBkBkaZjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmRmRmRmRmBkBkBkBkRmCqDfDfDfRmbUbUbUbUbUbUUOFqSs
-SsdIbUbUbUbUbUbUbUbUbUbUbUbUDfBkTVBkBkDfQGQGQGRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmBkBkBkBkBkRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmQGQGQGDfBkBkBkBkDfUOUOUOUOUOUOUOUObUbUbUUOFqSs
-SsdIbUbUbUbUbUbUbUbUbUbUbUbUDfBkTVBkBkfxQGQGQGRmjdjdRmRmRmRmRmOTOTRmRmRmRmRmRmRmRmmuDfmuRmRmRmRmRmRmRmRmOTOTRmRmRmRmRmjdjdRmQGQGQGfxBkBkBkBkDfUOKiKiKiKiKiKiKibUbUbUUOFqSs
-SsFqbUbUUOKiKiKiKiKiKiKiKiUODfBkTVBkBkFJQGQGQGiJjdjdRmhVhVhVhVhVhVhVhVhVhVRxQGQGQGQGQGQGQGQGQGRxhVhVhVhVhVhVhVhVhVhVRmjdjdaZQGQGQGFJBkBkBkBkDfUhRSQfdRdRdRhORSoIbUbUUOFqSs
-SsFqbUbUUhRSQfdRdRdRdRhORSpHDfBkTVBkBkDfQGQGQGRmjdjdjyhVhVhVhVhVhVhVhVhVhVDfQGQGQGQGQGQGQGQGQGDfhVhVhVhVhVhVhVhVhVhVjyjdjdRmQGQGQGDfBkBkBkBkDfPtQfingbGogbaXhOoIbUbUUOFqSs
-SsFqbUbUUhIgsosovJtakOveOOoIRmRmBkBkBkRmRmRmRmRmjdjdRmhVhVhVhVhVhVhVhVhVhVRxQGQGQGQGQGQGQGQGQGRxhVhVhVhVhVhVhVhVhVhVRmjdjdRmRmRmRmRmBkBkBkRmRmPtCZgbvgbkRMgbzaoIbUbUUOFqSs
-SsFqbUbUUhJQvJXxQnbNeUXxZCZCZCVvBkBkBkDfQGQGQGRmjdjdRmhVhVRmDfRmhVhVRmRmRmRmQGQGQGQGQGQGQGQGQGRmRmRmRmhVhVRmDfRmhVhVRmjdjdRmQGQGQGDfBkBkBkRmULZCULgbLgSYLggbzaoIbUbUUOFqSs
-SsFqbUbUUhJQxSVGNioeoeLrCeCeCeBgBkBkBkfxQGQGQGRmjdjdRmDfDfRmdvRmDfDfRmUOUORmRmDfDfDfDfDfDfDfRmRmFqFqRmDfDfRmdvRmDfDfRmjdjdRmQGQGQGfxBkBkBkpLXZCeXZdyLgLgLgdyzaoIbUbUUOFqSs
-SsFqbUbUUhJQxSVGoeoeoeLrCeCeCeBgBkBkBkFJQGQGQGiJjdjdRmUOUORmDfRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqRmDfRmFqFqRmjdjdaZQGQGQGFJBkBkBkpLXZCeXZgbPvLgPvgbzaoIbUbUUOFqSs
-SsFqbUbUUhJQulXxtcTOrHXxZCZCZCRmBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqRmjdjdRmQGQGQGDfBkBkBkRmULZCULarYQCrPiarzaoIbUbUUOFqSs
-SsFqbUbUUhYsWnWnultakOvePZoIRmRmBkBkBkRmRmRmRmRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqRmjdjdRmRmRmRmRmBkBkBkRmRmPtTLrggbgbgbrgrDoIbUbUUOFqSs
-SsFqbUbUUhRSTLiQiQiQiQPZLJpHDfBkBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqRmjdjdRmQGQGQGDfBkBkBkBkDfPtRSTLUGUGUGrDRSoIbUbUUOFqSs
-SsFqbUbUbUZWZWZWZWZWZWZWZWbUDfTVBkBkBkfxQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmjdjdRmQGQGQGfxBkBkBkBkDfbUlVlVlVlVlVlVlVbUbUbUUOFqSs
-SsFqbUbUbUZVZVZVZVZVZVZVZVbUCqTVBkBkBkFJQGQGQGiJjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUORmjdjdaZQGQGQGFJBkBkBkBkDfbUZVZVZVZVZVZVZVbUbUbUUOFqSs
-SsFqbUbUUhRSQfXgXgXgXgOORSpHDfBkBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUORmjdjdRmQGQGQGDfBkBkBkBkDfPtRSIgXgXgXgOORSoIbUbUUOFqSs
-SsFqbUbUPtIgWnWnDQSjFIeVOOoIRmRmBkBkBkRmRmRmRmRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUORmjdjdRmRmRmRmRmBkBkBkRmRmPtQfEZkFkFkFEZhOoIbUbUUOFqSs
-SsFqbUbUPtJQDQTzNYFPMgTzZCZCZCVvBkBkBkRmjdjdRmjdjdjdRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmRmRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmjdjdjdRmjdjdRmBkBkBkRmULZCULdCNLiDUNdCzaoIbUbUUOFqSs
-SsFqbUbUPtJQfGzxJRqEqEnNCeCeCeBgBkBkBkaZjdjdjdjdjdjdaZjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdaZjdjdjdjdjdjdaZBkBkBkpLXZCeXZkFLZMKLZkFzaoIbUbUUOFqSs
-SsFqbUbUPtJQfGzxqEqEqEnNCeCeCeBgBkBkBkaZjdjdjdjdjdRmRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmRmRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmRmjdjdjdjdjdaZBkBkBkpLXZCeXZmUMKMKMKmUzaoIbUbUUOFqSs
-SsFqbUbUPtJQKlTzvBQlkaTzZCZCZCRmBkBkBkRmjdjdRmjdjdDfdvDfUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUODfdvDfjdjdRmjdjdRmBkBkBkRmULZCULkFMKMKMKkFzaoIbUbUUOFqSs
-SsFqbUbUPtYssosoKlSjFIeVPZoIRmRmBkBkBkRmRmRmRmnLnLRmRmRmUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUORmRmRmnLnLRmRmRmRmBkBkBkRmRmPtQfkFenRuVJkFzaoIbUbUUOFqSs
-SsFqbUbUUhRSTLUGUGUGUGrDLJpHDfBkBkBkBkDfUODfBkBkBkBkDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUODfBkBkBkBkDfUODfTVTVTVBkDfPtTLKqkFBBkFnprDoIbUbUUOFqSs
-SsFqbUbUbUZWZWZWZWZWZWZWZWbUCqTVBkBkTVDfUOEQBkBkBkBkDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUODfBkBkBkBkEQUODfTVTVTVTVDfUhRSTLUGUGUGPZRSbUbUbUUOFqSs
-SsFqbUbUUOKiZVZVZVZVZVZVZVbUCqTVBkBkTVDfUOEQBkBkBkBkDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUODfBkBkBkBkEQUODfTVTVTVTVDfUOlVlVlVlVlVlVlVbUbUbUFqFqSs
-SsFqbUbUUhRSIgXgXgXgXgOORSpHDfBkBkBkTVDfUOEQBkBkBkBkDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUODfBkBkBkBkEQUODfTVTVTVTVDfUOUOUOUOUOUOUOUObUbUbUFqFqSs
-SsFqbUbUUhQfsosoqOgFsBboOOoIRmRmBkBkTVRmUOEQEQBkBkDfDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUODfDfBkBkEQEQUORmRmywywRmRmUOUOUOUOUOUOUOUObUbUdIFqFqSs
-SsFqbUbUUhCZqOLBOtqrQHLBZCZCZCVvBkBkTVRmUOUODfEQDfDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUODfDfDfEQUOUORmZRXZXZZRRmUOUOUOUOUOUOUOUObUbUdIFqFqSs
-SsFqbUbUUhCZTIZoGRlplpcOCeCeCeBgBkBkTVRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUOUOKiZVZRXZXZZRZVKiUOUOUOUOUOUOUObUbUbUFqFqSs
-SsFqbUbUUhCZTIZowdlplpcOCeCeCeBgBkBkTVRmUOUOFqFqFqFqFqUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUOUhRSQfZRXZXZZRhORSpHUOUOUOUOUOUObUbUbUFqFqSs
-SsFqbUbUUhCZMpLBGsECqZLBZCZCZCRmBkBkTVRmUOFqFqFqFqFqFqUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUhQfBVmhnOnOmhBVhOpHUOUOUOUOUOUObUbUbUUOFqSs
-SsFqbUbUUhTLsosoMpgFsBboPZoIRmRmBkBkTVRmFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUhCZhGTGvlvlhUhGzapHUOUOUOUOUOUObUbUbUUOFqSs
-SsFqbUbUPtLJYsiQiQiQiQPZLJpHHMBkBkBkTVRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUhCZMCunvlvlHeMCzapHUOUOUOUOUOUObUbUbUUOFqSs
-SsFqbUbUbUZWZWZWZWZWZWZWZWbUHMBkBkBkTVRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUhCZuJYTvlMBdbtGzapHUOUOUOUOUOUObUbUbUUOFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOHMBkTVTVTVVvVvRmRmRmRmRmRmRmRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUOUhCZsomhBmBmmhsozapHUOUOUOUOUOUObUbUbUUOFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOHMBkTVTVTVVvUPjdjdjdjdjdjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUhTLsouJMCMCtGsorDpHUOUOUOUOUOUObUbUbUFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUORmRmnLnLVvRmjdjdRmjdjdRmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOUhRSTLUGUGUGUGrDRSpHUOUOUOUOUOUObUbUbUFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqUOUOUOUOUOlVlVlVlVlVlVlVlVUOUOUOUOUOUOUObUbUdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUORmRmRmRmRmRmRmRmRmRmRmRmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmRmRmRmRmRmRmFqFqFqFqFqFqFqFqUOUOUOUOUOUObUbUbUbUbUbUbUbUbUbUbUbUbUdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqUOUOUOUOUObUbUbUbUbUbUbUbUbUdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmFqFqFqFqFqRmRmRmRmRmRmRmRmRmRmRmRmBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmUOUOUOUOFqRmjdjdjdjdjdjdjdjdjdjdjdBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmUOUOUOUOUORmjdjdRmRmRmRmRmRmRmRmRmBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmRmRmRmRmRmRmjdjdRmFqFqFqFqFqFqFqRmBkBkBkBkBkRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdRmFqFqFqFqFqFqFqRmRmRmRmRmRmRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmRmRmRmRmRmRmRmRmRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqbUbUUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmRmRmRmFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIdIFqFqSs
-SsFqdIdIFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIdIFqFqSs
-SsFqdIdIFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdIdIFqSsli
-SsSsliliSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsliliSsSsli
-lilililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililili
-lilililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililili
+SsFqTVpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTpTSs
+SsFqTVUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTaqpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTpTFqSs
+SsFqTVUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTpTpTpTFqFqSs
+SsFqTVUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililipTpTpTpTUOUOFqFqFqSs
+SsFqTVUOUOUOUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTlililiUOUOUOUOUOUOUOFqFqSs
+SsFqTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOpTpTpTpTpTlipTpTpTpTpTpTpTpTpTpTDfDfDfDfDfDfDfDfDfpTpTpTpTpTpTpTpTpTpTpTpTpTpTpTUOUOUOUOUOUOUOUOUOUOTVTVTVUOUOUOUOUOUOUOUOFqSs
+SsFqTVUObwbwbwbwbwbwbwTVUObwbwbwbwbwbwbwbwUOUOUOUOUOUOpTpTpTpTpTpTpTpTpTpTpTDfQGQGQGQGQGQGQGDfpTpTpTpTpTpTpTpTpTpTpTUOUOUOUOUOUObwbwbwbwbwbwbwbwTVTVbwbwbwbwbwbwbwUOTVdRSs
+SsFqTVvYULTLgTgTgTihULjDvYULTLgTgTgTgTihULlVUOUOUOUOUOUOUOUOUOUOpTpTpTpTpTpTDfQGQGQGQGQGQGQGDfpTpTpTpTpTpTUOUOUOUOUOUOUOUOUOUOvYULTLgTgTgTgTihULjDZCULTLgTgTgTihULlVTVdRSs
+SsFqTVvYTLmDmGmImGmTihjDvYTLWnWnWnWnWnWnihlVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUODfQGQGQGQGQGQGQGDfUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOvYTLWnWnWnWnWnWnihjDZCkFnJoioCoinJihlVTVdRSs
+SsFqTVvYgtmGoIpDpHmGqNjDvYgtWnszsIsIsZWnqNlVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmQGQGQGQGQGQGQGRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOvYgtgkgkgkgkgkgkqNjDZCtktmwcxfxPtmqNlVTVdRSs
+SsFqTVvYgtmGyjywywmGqNjDvYgtWnyWzGzGyWWnqNlVUOUOUODfDfRmRmRmRmTVTVRmRmDfDfRmRmQGQGQGQGQGQGQGRmRmDfDfRmRmTVTVRmRmRmRmDfDfUOUOUOvYgtgkgkgkgkgkgkqNjDZCtkoiAlAlBKoiqNlVTVdRSs
+SsFqTVvYgtEQGOywGVEQqNjDvYgtyWKiLYPNQfyWqNlVUOUOUODfQGQGQGQGRmRmRmRmjdjdjdjdRmRmRmRpDfRpRmRmRmjdjdjdjdRmRmRmRmQGQGQGQGDfUOUOUOvYgtgkgkgkgkgkgkqNjDZCtkRSSHAlSXRSqNlVTVdRSs
+SsFqTVvYgtmGyjywywmGqNjDvYgtsITrPNPNUhsIqNlVUOUOUODfQGQGQGQGRmjdjdjdjdjdjdjdjdjdRmBkBkBkRmjdjdjdjdjdjdjdjdjdRmQGQGQGQGDfUOUOUOvYgtgkgkgkgkgkgkqNjDZCtkoiAlAlBKoiqNlVTVdRSs
+SsFqTVvYgtVvXmpDYsVvqNjDvYgtZuZRPNPNntZuqNlVUOUOUORmQGQGQGQGqnjdjdjdjdjdjdjdjdjdaZBkBkBkaZjdjdjdjdjdjdjdjdjdqnQGQGQGQGRmUOUOUOvYgtgkgkgkgkgkgkqNjDZCtkoiJgxfQloiqNlVTVdRSs
+SsFqTVvYUcIfmGmImGIfKvjDvYUclJyWPePeyWlJKvlVDfDfRmRmQGQGQGQGRmjdjdRmRmRmRmRmRmRmRmBkBkBkRmRmRmRmRmRmRmRmjdjdRmQGQGQGQGRmRmDfDfZCUcgkgkgkgkgkgkKvjDZCIgBooioCoiFXKvlVTVdRSs
+SsFqTVvYULUcCZaICZKvULjDvYULIgCZaIaICZKvULlVDfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfZCULIgnDnDnDnDKvULjDZCIKUcCZaICZKvULlVTVdRSs
+SsFqTVUOXZXZCZaICZXZXZTVUOXZXZCZaIaICZXZXZUODfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfTVXZXZXZvKvKXZXZXZTVTVVGXZCZaICZXZXZUOTVdRSs
+SsFqTVUOUORmCZaICZRmDfDfDfDfXbCZaIaICZRmDfDfRmQGQGQGRmRmRmRmRmjdjdRmQGQGQGQGQGRmRmBkBkBkRmRmQGQGQGQGQGRmjdjdRmRmRmRmRmQGQGQGRmjnDfXbUOvKvKUORmjnjnDfDfRmCZaICZRmUOUOTVdRSs
+SsFqTVUOUORmRmxDRmRmBkBkBkBkXbRmxDxDRmRmBkBkRmDfRpRpRmBkBkBkRmBsBsRmRmDfDfRpDfRmBkBkBkBkBkRmDfRpDfDfRmRmBsBsRmBkBkBkRmRpRpDfRmTDBkXbRmxDxDRmRmBkBkBkBkRmRmxDRmRmUOUOTVdRSs
+SsFqTVUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfUOUOTVFqSs
+SsFqTVUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfUOUOTVFqSs
+SsFqTVUOUODfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfUOUOTVFqSs
+SsdRTVTVTVRmDfDfDfRmBkBkBkBkXbXbCqCqRmRmBkBkBkRmRmRmRmRmRmRmRmBsBsRmRmRmRmRmRmRmBkBkBkBkBkRmRmRmRmRmRmRmBsBsRmRmRmRmRmRmRmRmBkBkBkRmRmCqCqRmXbTDTDTDTDRmDfDfDfRmUOUOTVFqSs
+SsdRTVTVTVTVTVTVTVRmDfDfDfDfXbBkBkBkBkRmRmRmRmRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdaZBkBkBkBkBkaZjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmRmRmRmRmBkBkBkBkRmjnDfDfDfRmTVTVTVTVTVTVUOFqSs
+SsdRTVTVTVTVTVTVTVTVTVTVTVTVDfBkTDBkBkDfQGQGQGRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmBkBkBkBkBkRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmQGQGQGDfBkBkBkBkDfUOUOUOUOUOUOUOUOTVTVTVUOFqSs
+SsdRTVTVTVTVTVTVTVTVTVTVTVTVDfBkTDBkBkAsQGQGQGRmjdjdRmRmRmRmRmspspRmRmRmRmRmRmRmRmjpDfjpRmRmRmRmRmRmRmRmspspRmRmRmRmRmjdjdRmQGQGQGAsBkBkBkBkDfUObwbwbwbwbwbwbwTVTVTVUOFqSs
+SsFqTVTVUObwbwbwbwbwbwbwbwUODfBkTDBkBkorQGQGQGqnjdjdRmUvUvUvUvUvUvUvUvUvUvPQQGQGQGQGQGQGQGQGQGPQUvUvUvUvUvUvUvUvUvUvRmjdjdaZQGQGQGorBkBkBkBkDfvYULTLgTgTgTihULjDTVTVUOFqSs
+SsFqTVTVvYULTLgTgTgTgTihULlVDfBkTDBkBkDfQGQGQGRmjdjdquUvUvUvUvUvUvUvUvUvUvDfQGQGQGQGQGQGQGQGQGDfUvUvUvUvUvUvUvUvUvUvqujdjdRmQGQGQGDfBkBkBkBkDfZCTLzBvgQPvgPxihjDTVTVUOFqSs
+SsFqTVTVvYkFWnWnYdtakOiJEpjDRmRmBkBkBkRmRmRmRmRmjdjdRmUvUvUvUvUvUvUvUvUvUvPQQGQGQGQGQGQGQGQGQGPQUvUvUvUvUvUvUvUvUvUvRmjdjdRmRmRmRmRmBkBkBkRmRmZCgtvgeNUuGBvgqNjDTVTVUOFqSs
+SsFqTVTVvYtkYdOzYEujjaOzuououoXbBkBkBkDfQGQGQGRmjdjdRmUvUvRmDfRmUvUvRmRmRmRmQGQGQGQGQGQGQGQGQGRmRmRmRmUvUvRmDfRmUvUvRmjdjdRmQGQGQGDfBkBkBkRmUGuoUGvgRVtvRVvgqNjDTVTVUOFqSs
+SsFqTVTVvYtkGaDwkEDlDlBtfxfxfxQOBkBkBkAsQGQGQGRmjdjdRmDfDfRmhVRmDfDfRmUOUORmRmDfDfDfDfDfDfDfRmRmFqFqRmDfDfRmhVRmDfDfRmjdjdRmQGQGQGAsBkBkBkrbaIfxaIkdRVRVRVkdqNjDTVTVUOFqSs
+SsFqTVTVvYtkGaDwDlDlDlBtfxfxfxQOBkBkBkorQGQGQGqnjdjdRmUOUORmDfRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqRmDfRmFqFqRmjdjdaZQGQGQGorBkBkBkrbaIfxaIvgGkRVGkvgqNjDTVTVUOFqSs
+SsFqTVTVvYtkeSOzeUIISwOzuououoRmBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqRmjdjdRmQGQGQGDfBkBkBkRmUGuoUGYNYxMPWsYNqNjDTVTVUOFqSs
+SsFqTVTVvYIggkgkeStakOiJXxjDRmRmBkBkBkRmRmRmRmRmjdRmRmRmTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqRmRmRmjdjdRmRmRmRmRmBkBkBkRmRmZCUcYbvgvgvgYbKvjDTVTVUOFqSs
+SsFqTVTVvYULUcXdXdXdXdXxIKlVDfBkBkBkBkDfQGQGQGRmjdDfhVDfTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqDfhVDfjdjdRmQGQGQGDfBkBkBkBkDfZCULUcnDnDnDKvULjDTVTVUOFqSs
+SsFqTVTVTVVGVGVGVGVGVGVGVGTVDfTDBkBkBkAsQGQGQGRmjdRmRmRmTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqRmRmRmjdjdRmQGQGQGAsBkBkBkBkDfTVXZXZXZXZXZXZXZTVTVTVUOFqSs
+SsFqTVTVTVXMXMXMXMXMXMXMXMTVjnTDBkBkBkorQGQGQGqnjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmjdjdaZQGQGQGorBkBkBkBkDfTVXMXMXMXMXMXMXMTVTVTVUOFqSs
+SsFqTVTVvYULTLTOTOTOTOEpULlVDfBkBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmjdjdRmQGQGQGDfBkBkBkBkDfZCULkFTOTOTOEpULjDTVTVUOFqSs
+SsFqTVTVZCkFgkgkPFxAFIjMEpjDRmRmBkBkBkRmRmRmRmRmmMmMRmUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmmMmMRmRmRmRmRmBkBkBkRmRmZCTLrgPtPtPtrgihjDTVTVUOFqSs
+SsFqTVTVZCtkPFlNZxhsNDlNuououoXbBkBkBkRmjdjdjdjdjdjdRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmRmRmRmRmRmDfDfRmRmRmRmDfDfRmRmRmRmjdjdjdjdjdjdRmBkBkBkRmUGuoUGbHYJUStKbHqNjDTVTVUOFqSs
+SsFqTVTVZCtkFVXKYhIiIiTKfxfxfxQOBkBkBkaZjdjdjdjdjdjdaZjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdaZjdjdjdjdjdjdaZBkBkBkrbaIfxaIPtDEKQDEPtqNjDTVTVUOFqSs
+SsFqTVTVZCtkFVXKIiIiIiTKfxfxfxQOBkBkBkaZjdjdjdjdjdRxbXRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxaZRxjdjdjdjdjdaZBkBkBkrbaIfxaIkvKQKQKQkvqNjDTVTVUOFqSs
+SsFqTVTVZCtkLdlNMTwLMmlNuououoRmBkBkBkRmjdjdjdjdjdRxXbXbRmRmDfDfRmRmRmRmDfDfRmRmRmRmRmRmRmRmRmDfDfRmRmRmRmDfDfRmRmXbXbRxjdjdjdjdjdRmBkBkBkRmUGuoUGPtKQKQKQPtqNjDTVTVUOFqSs
+SsFqTVTVZCIgWnWnLdxAFIjMXxjDRmRmBkBkBkRmRmRmRmRmmMtOXbTVUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdRXbEKEKRmRmRmRmRmBkBkBkRmRmZCgtPthxwYlAPtqNjDTVTVUOFqSs
+SsFqTVTVvYULUcnDnDnDnDKvIKlVDfBkBkBkBkDfQGQGQGRmjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqRmRxRxRmQGQGQGDfTDTDTDBkDfZCUcdCPtCWPtXQKvjDTVTVUOFqSs
+SsFqTVTVTVVGVGVGVGVGVGVGVGTVjnTDBkBkTDAsQGQGQGqnjdRxXbTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqdRdRXbRxRxaZQGQGQGAsTDTDTDTDDfvYULUcnDnDnDXxULjDTVTVUOFqSs
+SsFqTVTVUObwXMXMXMXMXMXMXMTVjnTDBkBkTDorQGQGQGRmjdRmRmRmTVUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqFqdRRmRmRmRxRmQGQGQGorTDTDTDBkDfTVVGVGVGVGVGVGVGTVTVTVFqFqSs
+SsFqTVTVvYULkFTOTOTOTOEpULlVDfBkBkBkTDDfQGQGQGRmjdDfhVDfTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqdRDfhVDfRxRmQGQGQGDfTDTDTDBkDfTVXMXMXMXMXMXMXMTVTVTVFqFqSs
+SsFqTVTVvYTLWnWnPAgFOKXPEpjDRmRmBkBkTDRmRmRmRmRmjdRmRmRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqFqRmRmRmRxRmRmRmRmRmTDTDTDRmRmZCULkFTOTOTOEpULjDTVdRFqFqSs
+SsFqTVTVvYgtPAXgavriswXguououoXbBkBkTDDfQGQGQGRmjdjdRmUOUOTVTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqFqFqFqFqFqFqFqFqXbRxRxRmQGQGQGDfTDTDTDRmTVZCTLgkgkgkgkgkihjDTVdRFqFqSs
+SsFqTVTVvYgtZVAfZWgygymsfxfxfxQOBkBkTDAsQGQGQGqnjdjdRmUOUORmDfRmUOUOTVTVTVTVTVTVTVTVTVTVTVTVTVdRFqFqFqFqFqRmDfRmFqFqXbRxjdaZQGQGQGAsTDTDTDrbNENEtkgkgkgkgkgkqNjDTVTVFqFqSs
+SsFqTVTVvYgtZVAfjCgygymsfxfxfxQOBkBkTDorQGQGQGRmjdjdRmDfDfRmhVRmDfDfRmTVTVXbRmDfDfDfDfDfDfDfRmRmFqFqRmDfDfRmhVRmDfDfRmjdjdRmQGQGQGorTDTDTDrbNENEtkgkgkgkgkgkqNjDTVTVFqFqSs
+SsFqTVTVvYgtqOXgEynopaXguououoRmBkBkTDDfQGQGQGRmjdjdRmUvUvRmDfRmUvUvRmRmRmRmQGQGQGQGQGQGQGQGQGRmRmRmRmUvUvRmDfRmUvUvRmjdjdRmQGQGQGDfTDTDTDRmTVZCtkgkgkgkgkgkqNjDTVTVUOFqSs
+SsFqTVTVvYUcWnWnqOgFOKXPXxjDRmRmBkBkTDRmRmRmRmRmjdjdRmUvUvUvUvUvUvUvUvUvUvPQQGQGQGQGQGQGQGQGQGPQUvUvUvUvUvUvUvUvUvUvRmjdjdRmRmRmRmRmTDTDTDRmRmZCgtgkgkgkgkgkqNjDTVTVUOFqSs
+SsFqTVTVZCIKIgXdXdXdXdXxIKlVViBkBkBkTDDfQGQGQGRmjdjdquUvUvUvUvUvUvUvUvUvUvDfQGQGQGQGQGQGQGQGQGDfUvUvUvUvUvUvUvUvUvUvqujdjdRmQGQGQGDfTDTDTDBkDfZCtkgkgkgkgkgkqNjDTVTVUOFqSs
+SsFqTVTVTVVGVGVGVGVGVGVGVGTVViBkBkBkTDAsQGQGQGqnjdjdRmUvUvUvUvUvUvUvUvUvUvPQQGQGQGQGQGQGQGQGQGPQUvUvUvUvUvUvUvUvUvUvRmjdjdaZQGQGQGAsTDTDTDTDDfZCUcgkgkgkgkgkKvjDTVTVUOFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOUOUOViBkTDTDTDorQGQGQGRmjdjdRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmjpDfjpRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmjdjdRmQGQGQGorTDTDTDTDDfvYULUcnDnDnDXxULjDTVTVUOFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOUOUOViBkTDTDTDDfQGQGQGRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdaZBkBkBkBkBkaZjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmQGQGQGDfTDTDTDTDDfUOXZXZXZXZXZXZXZTVTVTVFqFqSs
+SsdRTVTVTVTVTVTVTVXbjnjnjnjnXbTDTDTDTDXbXbXbXbXbRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxbXTDTDTDTDTDbXRxRxRxRxRxRxRxRxRxRxRxRxRxRxRxXbQCQCQCXbTDTDTDTDXbjnjnjnjnXbTVTVTVTVTVTVTVdRSs
+SsdRTVTVTVRmDfDfDfRmBkBkBkBkXbXbCqCqRmRmBkBkBkRmRmRmRmRmRmRmRmBsBsRmRmRmRmRmRmRmBkBkBkBkBkRmRmRmRmRmRmRmBsBsRmRmRmRmRmRmRmRmRmXbRmXbRmCqCqRmRmBkBkBkBkRmDfDfDfRmTVTVTVdRSs
+SsdRTVTVTVDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfTVTVTVdRSs
+SsdRTVTVTVDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfTVTVTVdRSs
+SsdRTVTVTVDfBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBklLBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkBkTDBkTDBkBkBkBkBkBkDfTVTVTVdRSs
+SsdRTVTVTVRmDfDfDfRmBkBkBkBkXbXbfjfjXbRmBkBkRmDfRpRpRmBkBkBkRmBsBsRmRmDfDfRpDfRmBkBkBkBkBkRmDfRpDfDfRmRmBsBsRmBkBkBkRmRpRpDfRmBkBkRmXbfjfjXbXbTDTDTDTDRmDfDfDfRmTVTVTVdRSs
+SsdRTVTVTVTVTVTVTVRmDfDfDfDfXbUOvKvKUORmDfDfRmQGQGQGRmRmRmRmRmjdjdRmQGQGQGQGQGRmRmBkBkBkRmRmQGQGQGQGQGRmjdjdRmRmRmRmRmQGQGQGRmDfDfRmCZaIaICZRmjnDfDfDfRmTVTVTVTVTVTVTVdRSs
+SsFqTVTVUOUOUOUOUOUOUOUOUObwbwbwvKvKbwbwbwUODfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfUObwbwCZaIaICZbwbwUOUOUOUOUOUOUOTVTVTVFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYULTLTOTOTOTOihULlVDfQGQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGDfBkBkBkDfQGQGQGQGQGQGRmjdjdRmQGQGQGQGQGQGQGDfvYULTLCZaIaICZihULlVUOUOUOUOUOUOTVTVdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYTLgkgkgkgkgkgkihlVDfDfRmRmQGQGQGQGRmjdjdRmRmRmRmRmRmRmRmBkBkBkRmRmRmRmRmRmRmRmjdjdRmQGQGQGQGRmRmDfDfvYTLHCqsoKoKqsHCihlVTVTVTVTVTVTVdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYgtWngkgkgkgkWnqNlVUOUOUORmQGQGQGQGqnjdjdjdjdjdjdjdjdjdaZBkBkBkaZjdjdjdjdjdjdjdjdjdqnQGQGQGQGRmUOUOUOvYgtTgIqyvyvZnTgqNlVTVTVTVTVTVdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYgtgkgkgkgkgkgkqNlVUOUOUODfQGQGQGQGRmjdjdjdjdjdjdjdjdjdRmBkBkBkRmjdjdjdjdjdjdjdjdjdRmQGQGQGQGDfUOUOUOvYgtyioALcLcpSyiqNlVTVTVTVTVTVdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYgtgkgkgkgkgkgkqNlVUOUOUODfQGQGQGQGRmRmRmRmRmRmRmRmRmRmRmRpDfRpRmRmRmRmRmRmRmRmRmRmRmQGQGQGQGDfUOUOUOvYgtdrtqLcjxCPetqNlVTVTVTVTVdRdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYgtgkgkgkgkgkgkqNlVUOUOUODfDfRmRmRmRmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmRmRmRmDfDfUOUOUOvYgtqyRQygygRQqyqNlVTVTVTVTVdRdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYUcgkgkgkgkgkgkKvlVUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmUOUOUOUOUOvYUcqydryiyietqyKvlVTVTVTVTVdRdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOvYULIgXdXdXdXdXxULlVUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmUOUOUOUOUOvYULUcPhPhPhPhKvULlVTVTVTVTVdRdRdRdRdRFqFqSs
+SsFqTVTVUOUOUOUOUOUOUOUOUOXZVGVGVGVGVGVGXZUOUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmUOUOUOUOUOUOXZXZlnlnlnlnXZXZUOTVTVTVTVdRdRdRdRdRFqFqSs
+liFqTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdjdRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOTVTVTVdRdRdRdRdRdRFqFqSs
+liFqTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUORmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmRmUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOTVdRdRdRdRdRdRdRdRFqFqSs
+liFqTVTVUOUOUOUOUOUOUOUOTVTVTVTVTVTVTVTVTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOTVTVTVTVdRdRdRdRdRdRdRdRdRdRdRdRFqFqSs
+liFqTVTVUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOUOFqFqFqFqdRdRdRdRdRdRdRdRdRdRdRdRdRdRdRdRFqFqSs
+liFqdRdRFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdRdRdRFqFqSs
+liFqdRdRFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqFqdRdRFqSsli
+liSsliliSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsSsliliSsSsli
 lilililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililililili
 "}
