@@ -106,6 +106,7 @@ GAUNTLET CARDS
 
 /obj/item/card/id/New()
 	..()
+	src.wear_state = icon_state // fix for missing wear states
 	src.pin = rand(1000,9999)
 	START_TRACKING
 

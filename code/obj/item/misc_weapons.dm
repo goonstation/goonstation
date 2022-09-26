@@ -1280,6 +1280,7 @@
 		if (istype(W, /obj/item/katana) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
 			item_state = ih_sheathed_state
+			wear_state = ih_sheathed_state
 			user.u_equip(W)
 			W.set_loc(src)
 			user.update_clothing()
@@ -1299,6 +1300,7 @@
 			playsound(user, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
+			wear_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()

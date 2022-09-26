@@ -5,7 +5,7 @@
 	desc = "A portable microcomputer by Thinktronic Systems, LTD. It has a slot for an ID card, and a hole to put a pen into."
 	icon = 'icons/obj/items/pda.dmi'
 	icon_state = "pda"
-	item_state = "pda"
+	//item_state = "pda" NO, STOP FIX ME SPRITING
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
