@@ -285,7 +285,7 @@
 					return
 				else if (prob(50))
 					src.visible_message("<span class='combat'>[T] catches the [src.name] but gets cut.</span>")
-					T.TakeDamage(T.hand == 1 ? "l_arm" : "r_arm", 15, 0)
+					T.TakeDamage(T.hand == LEFT_HAND ? "l_arm" : "r_arm", 15, 0)
 					take_bleeding_damage(T, null, 10, DAMAGE_CUT)
 					src.Attackhand(T)
 					return
@@ -310,10 +310,10 @@
 	if(prob(30))
 		if(prob(30))
 			boutput(user, "<span class='combat'>You accidentally cut your hand badly!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 10, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 10, 0)
 			take_bleeding_damage(user, user, 5, DAMAGE_CUT)
 		else
 			boutput(user, "<span class='combat'>You accidentally cut your hand!</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 0)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 0)
 			take_bleeding_damage(user, null, 1, DAMAGE_CUT, 0)
 

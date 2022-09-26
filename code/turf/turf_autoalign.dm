@@ -803,7 +803,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 /turf/unsimulated/wall/auto/coral
 	New()
 		..()
-		setMaterial(getMaterial("coral"))
+		setMaterial(getMaterial("coral"), copy = FALSE)
 
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
@@ -1201,7 +1201,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
@@ -1225,7 +1225,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/hedge)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial("steel"), copy = FALSE)
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."

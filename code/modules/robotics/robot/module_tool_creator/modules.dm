@@ -15,11 +15,13 @@
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/rainbow,
+		/obj/item/sponge, // To clean up drawings
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
-		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!

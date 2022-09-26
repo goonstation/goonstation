@@ -466,8 +466,8 @@
 			//Has the immigrant trait - they're hiding in a random locker
 			var/list/obj/storage/SL = list()
 			for_by_tcl(S, /obj/storage)
-				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post
-				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost))
+				// Only closed, unsecured lockers/crates on Z1 that are not inside the listening post (or the martian ship (on oshan))
+				if(S.z == 1 && !S.open && !istype(S, /obj/storage/secure) && !istype(S, /obj/storage/crate/loot) && !istype(get_area(S), /area/listeningpost) && !istype(get_area(S), /area/evilreaver))
 					var/turf/simulated/T = S.loc
 					//Simple checks done, now do some environment checks to make sure it's survivable
 					if(istype(T) && T.air && T.air.oxygen >= (MOLES_O2STANDARD - 1) && T.air.temperature >= T0C)
@@ -687,6 +687,15 @@
 					if (src.limbs.r_arm)
 						qdel(src.limbs.r_arm.remove(0))
 				boutput(src, "<b>Your singular arm makes you feel responsible for crimes you couldn't possibly have committed.</b>" )
+
+	if (src.traitHolder && src.traitHolder.hasTrait("nolegs"))
+		if (src.limbs)
+			SPAWN(6 SECONDS)
+				if (src.limbs.l_leg)
+					src.limbs.l_leg.delete()
+				if (src.limbs.r_leg)
+					src.limbs.r_leg.delete()
+			new /obj/stool/chair/comfy/wheelchair(get_turf(src))
 
 	// Special mutantrace items
 	if (src.traitHolder && src.traitHolder.hasTrait("pug"))

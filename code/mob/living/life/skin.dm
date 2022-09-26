@@ -1,6 +1,5 @@
 
 /datum/lifeprocess/skin
-	//handle_skinstuff((life_time_passed / tick_spacing))
 	process(var/datum/gas_mixture/environment)
 		if (owner.skin_process && length(owner.skin_process))
 
@@ -22,7 +21,6 @@
 					A.reagents.trans_to(owner, waste_volume/2)
 					A.reagents.remove_any(waste_volume/2)
 				else
-					if (A.reagents.total_volume <= 0)
-						owner.skin_process -= A //disposing will do this too but whatever
-						qdel(A)
+					owner.skin_process -= A //disposing will do this too but whatever
+					qdel(A)
 		..()

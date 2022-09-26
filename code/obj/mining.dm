@@ -181,7 +181,9 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -345,7 +347,9 @@
 		return 6
 
 	proc/check_for_unacceptable_content()
-		return mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	construction
 		var/marker_type = /obj/magnet_target_marker
@@ -1442,8 +1446,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(ispryingtool(W))
-			src.ReplaceWithSpace()
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
 
 	update_icon()
 
@@ -2268,9 +2273,7 @@ obj/item/clothing/gloves/concussive
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
 		if (!istype(pad)) //wuh?
 			return
-		if (pad in pads)
-			return
-		src.pads += pad
+		src.pads |= pad
 
 	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
 	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)

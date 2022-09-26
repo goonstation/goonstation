@@ -908,9 +908,7 @@
 	if(passengers)
 		find_pilot()
 	else
-		src.ion_trail.stop()
-
-
+		src.ion_trail?.stop()
 
 	logTheThing(LOG_VEHICLE, ejectee, "exits pod: <b>[constructTarget(src.name,"vehicle")]</b>")
 
@@ -1668,6 +1666,9 @@
 			boutput(usr, "[ship.ship_message("System not installed in ship!")]")
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
+
+/obj/machinery/vehicle/proc/go_home()
+	return null
 
 
 
