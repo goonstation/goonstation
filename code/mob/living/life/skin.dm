@@ -1,6 +1,5 @@
 
 /datum/lifeprocess/skin
-	//handle_skinstuff((life_time_passed / tick_spacing))
 	process(var/datum/gas_mixture/environment)
 		if (owner.skin_process && length(owner.skin_process))
 
