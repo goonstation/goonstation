@@ -496,6 +496,7 @@
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_hair"
 
 		poster_cool
