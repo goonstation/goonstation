@@ -6100,6 +6100,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -7061,6 +7062,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "cec" = (
@@ -18180,6 +18182,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "fao" = (
@@ -19655,6 +19658,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "fvT" = (
@@ -20617,6 +20621,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/brig)
 "fJN" = (
@@ -20737,6 +20742,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research_director,
 /turf/simulated/floor/greenblack{
 	dir = 1
 	},
@@ -22272,6 +22278,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/brig)
 "gha" = (
@@ -24552,6 +24559,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "gIJ" = (
@@ -26563,6 +26571,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/research_director,
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "hiJ" = (
@@ -32663,6 +32672,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	id = "witprot_door"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/brig/cell1{
 	name = "Witness Protection"
@@ -36607,6 +36617,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "jTW" = (
@@ -38946,6 +38957,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/secoffquarters)
 "kwY" = (
@@ -39496,6 +39508,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "kFw" = (
@@ -40063,6 +40076,7 @@
 	icon_state = "1-2"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/processing)
 "kNe" = (
@@ -41052,6 +41066,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/quarters)
 "lat" = (
@@ -43360,6 +43375,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -44189,6 +44205,7 @@
 	name = "Jury Sequestration Shutter";
 	opacity = 0
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/grey,
 /area/station/security/processing)
 "lNB" = (
@@ -44332,6 +44349,7 @@
 /obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/atmospherics/pipe/simple,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "lPk" = (
@@ -45151,6 +45169,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/brig)
 "lYT" = (
@@ -48365,6 +48384,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "mSh" = (
@@ -52586,6 +52606,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/grey,
 /area/station/security/interrogation)
 "oaA" = (
@@ -54803,6 +54824,7 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/mail/horizontal,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical{
 	name = "Med-Sci Security Checkpoint"
@@ -58736,6 +58758,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "pDN" = (
@@ -60711,6 +60734,7 @@
 	icon_state = "4-8"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/black,
 /area/station/security/quarters)
 "qfC" = (
@@ -61013,6 +61037,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/processing)
 "qkB" = (
@@ -66270,6 +66295,7 @@
 	id = "secfront"
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/main)
 "rCG" = (
@@ -67143,6 +67169,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/equipment)
 "rOG" = (
@@ -69087,6 +69114,7 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/security,
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "snk" = (
@@ -70918,6 +70946,7 @@
 /obj/disposalpipe/segment/brig{
 	dir = 1
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "sJz" = (
@@ -73865,6 +73894,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/east)
 "tsn" = (
@@ -83607,6 +83637,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -90196,6 +90227,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/caution/northsouth,
 /area/station/ai_monitored/armory)
 "xkJ" = (
