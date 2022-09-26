@@ -21,6 +21,6 @@
 					A.reagents.trans_to(owner, waste_volume/2)
 					A.reagents.remove_any(waste_volume/2)
 				else
-					owner.skin_process -= A //disposing will do this too but whatever
+					stack_trace("Probably disposed patch [A] ([A.type]) was in mob [owner] ([owner.type])'s skin process. Deleting.")
 					qdel(A)
 		..()
