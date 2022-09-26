@@ -955,6 +955,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\gps\gps.dm"
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\spacemas.dm"
+#include "code\modules\human_extension\appearanceHolder.dm"
+#include "code\modules\human_extension\human_extension.dm"
 #include "code\modules\hydroponics\gene_strains.dm"
 #include "code\modules\hydroponics\plant_mutations.dm"
 #include "code\modules\hydroponics\plants.dm"
