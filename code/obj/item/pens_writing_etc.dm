@@ -1148,6 +1148,21 @@
 		output += "</body></html>"
 		user << browse(output, "window=folder;size=400x600")
 
+/obj/item/folder/dirty
+	name = "filthy folder"
+	desc = "An old file folder caked with dirt and grime"
+	icon_state = "folder_dirty"
+
+/obj/item/folder/secret //For Very Secret stuff only.
+	name = "Secret folder"
+	desc = "A folder with dire warnings about unauthorized access"
+	icon_state = "folder_secret"
+
+/obj/item/folder/danger //Anything in here has contact poison that kills, incapacitates or massively debilitates if not handled with gloves!
+	name = "Foreboding folder"
+	desc = "You shouldn't be looking at this. You shouldn't know it exists"
+	icon_state = "folder_danger"
+
 /* =============== BOOKLETS =============== */
 
 /obj/item/paper_booklet
