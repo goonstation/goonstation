@@ -1158,9 +1158,9 @@
 	desc = "A folder with dire warnings about unauthorized access"
 	icon_state = "folder_secret"
 
-/obj/item/folder/danger //Anything in here has contact poison that kills, incapacitates or massively debilitates if not handled with gloves!
+/obj/item/folder/danger //Anything inside these should have some kind of contact poison that REALLY screws carbon mobs up if not handled with gloves.
 	name = "Foreboding folder"
-	desc = "You shouldn't be looking at this. You shouldn't know it exists"
+	desc = "You shouldn't be looking at this. You shouldn't even know it exists."
 	icon_state = "folder_danger"
 
 /* =============== BOOKLETS =============== */
