@@ -164,8 +164,12 @@
 	process()
 		// process fluids into stuff
 		if(reagents.has_reagent(target_fluid, create_egg_at_fluid))
-			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
-			spawnEgg()
+			if (src.flock?.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
+				spawnEgg()
+			else
+				src.reagents.reaction(get_turf(src), react_volume = create_egg_at_fluid/2)
+			reagents.remove_reagent(target_fluid, create_egg_at_fluid/2)
+
 		if(occupant && src.flock)
 			src.flock.updateEnemy(occupant)
 		// process stuff into fluids
