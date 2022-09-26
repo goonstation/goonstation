@@ -98,7 +98,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 		..()
 
 	proc/OnAdd()     //Called when the effect is added.
-		SHOULD_CALL_PARENT(TRUE)
 		removed = 0
 		if(overlay_image)
 			if(isliving(owner))
@@ -106,7 +105,6 @@ ABSTRACT_TYPE(/datum/bioEffect)
 				L.UpdateOverlays(overlay_image, id)
 
 	proc/OnRemove()  //Called when the effect is removed.
-		SHOULD_CALL_PARENT(TRUE)
 		removed = 1
 		if(overlay_image)
 			if(isliving(owner))
