@@ -1457,6 +1457,9 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 5
 	},
+/obj/landmark{
+	name = "Radio-Show-Host-Spawn"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aeF" = (

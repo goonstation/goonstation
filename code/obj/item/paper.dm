@@ -1970,3 +1970,36 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 		</ul>
 		</span>
 	"}
+
+/obj/item/paper/magnetconstruction
+	name = "How to set up a new mining magnet"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	How to build a set up a new mining magnet<br><br>
+
+	A basic guide to construction a new mineral magnet for your mining operation<br>
+	----------------------------------------<br><br>
+	Thank you for purchasing your standard Mineral Magnet.<br>
+	The following instructions should help you get your new mineral magnet constructed and configured properly.<br>
+	If any of these steps are already completed you may skip them.<br><br>
+
+	1. Build a border around the intended mining area with magnet chassis on the edge facing into mining area.<br>
+	NOTE: Internal magnet area must be either 7x7 for the small size magnet or 15x15 for normal size magnet. Border must not be part of the internal magnet area.<br><br>
+
+
+	2. Assemble magnet chassis outside of internal mining area and mining area border, facing the mining area.<br><br>
+
+	3. Use mineral magnet parts on the magnet chassis to construct the mineral magnet.<br><br>
+
+	4. Assemble mineral magnet control computer somewhere nearby that has power available.<br><br>
+
+	5. Retrieve Magnetizer device and ensure it is loaded with raw plasmastone.<br><br>
+
+	6. Link Magnetizer with assembled mineral magnet.<br><br>
+
+	7. Go to bottom left area of internal magnet area and use magnetizer on the bottom left corner<br>
+	NOTE: Must be the internal magnet area, not the border of the magnet area.<br><br>
+
+	Congrats! Your mineral magnet is now assembled and ready for use!
+	"}
