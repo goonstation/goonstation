@@ -50,10 +50,7 @@
 	var/mob/living/mob_type = /mob/living/carbon/human
 	var/datum/mutantrace/starting_mutantrace = null
 	var/change_name_on_spawn = 0
-	var/special_spawn_location = 0
-	var/spawn_x = 0
-	var/spawn_y = 0
-	var/spawn_z = 0
+	var/special_spawn_location = null
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
@@ -103,7 +100,11 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
-				M.set_loc(locate(spawn_x,spawn_y,spawn_z))
+				// Deals with landmark special spawn locations.
+				if (!istype(special_spawn_location, /turf))
+					special_spawn_location = pick_landmark(special_spawn_location)
+				if (special_spawn_location != null)
+					M.set_loc(special_spawn_location)
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -1724,22 +1725,13 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	wages = PAY_TRADESMAN
 #ifdef MAP_OVERRIDE_MANTA
 	limit = 0
-	special_spawn_location = 0
+	special_spawn_location = null
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
-	special_spawn_location = 0
-#elif defined(UPSCALED_MAP)
-	limit = 1
-	special_spawn_location = 1
-	spawn_x = 276 * 2
-	spawn_y = 257 * 2
-	spawn_z = 3
+	special_spawn_location = null
 #else
 	limit = 1
-	special_spawn_location = 1
-	spawn_x = 276
-	spawn_y = 257
-	spawn_z = 3
+	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
 #endif
 	slot_ears = list(/obj/item/device/radio/headset/command/radio_show_host)
 	slot_eyes = list(/obj/item/clothing/glasses/regular)
@@ -2272,6 +2264,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_belt = list()
 	spawn_id = 0
 	radio_announcement = FALSE
+	special_spawn_location = LANDMARK_SYNDICATE
 	var/leader = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
@@ -2290,6 +2283,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/syndicate_operative/leader
 	name = "Syndicate Operative Commander"
+	special_spawn_location = LANDMARK_SYNDICATE_BOSS
 	leader = TRUE
 
 /datum/job/special/syndicate_weak
@@ -2353,12 +2347,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		src.access = syndicate_spec_ops_access()
 
 #ifdef MAP_OVERRIDE_OSHAN
-	special_spawn_location = 0
+	special_spawn_location = null
 #else
-	special_spawn_location = 1
-	spawn_x = 96
-	spawn_y = 272
-	spawn_z = 2
+	special_spawn_location = LANDMARK_SYNDICATE
 #endif
 
 	special_setup(var/mob/living/carbon/human/M)
