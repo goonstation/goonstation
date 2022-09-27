@@ -57,7 +57,7 @@
 			if(issawflybuddy(currentuser))
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 			else
-				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //
+				heldfly.ai = new /datum/aiHolder/wanderer(heldfly)
 		else
 			heldfly.ai = null
 		qdel(src)
