@@ -277,6 +277,13 @@
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
 
+/datum/trait/nolegs
+	name = "Stumped"
+	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
+	id = "nolegs"
+	icon_state = "placeholder"
+	category = list("body")
+	points = 0
 // LANGUAGE - Yellow Border
 
 /datum/trait/swedish
@@ -512,12 +519,7 @@
 	icon_state = "placeholder"
 	points = 0
 
-/datum/trait/nolegs
-	name = "Stumped"
-	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
-	id = "nolegs"
-	icon_state = "placeholder"
-	points = 0
+
 
 // Skill - White Border
 
@@ -838,7 +840,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/puritan
 	name = "Puritan"
-	desc = "You can not be cloned. Any attempt will end badly."
+	desc = "You can not be cloned or revived except by cyborgification. Any attempt will end badly."
 	id = "puritan"
 	points = 2
 	category = list("cloner_stuff")

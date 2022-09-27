@@ -21,7 +21,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	.= 0
 
 /turf/selftilenotify()
-	if (src.active_liquid && src.active_liquid.group && !src.Enter(src.active_liquid))
+	if (src.active_liquid && src.active_liquid.group && !src.can_crossed_by(src.active_liquid))
 		src.active_liquid.group.displace(src.active_liquid)
 	else
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!

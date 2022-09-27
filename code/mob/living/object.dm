@@ -264,7 +264,7 @@
 				mind.transfer_to(src.owner)
 			else if (src.client)
 				src.client.mob = src.owner
-			else
+			else if (src.key) //This can be null in situations where owner.key is not!
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)

@@ -2758,7 +2758,7 @@
 	dir = 8;
 	icon_state = "floattiles6"
 	},
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "Av" = (
@@ -4181,6 +4181,7 @@
 /obj/item/cigbutt,
 /obj/item/cigpacket,
 /obj/item/cigpacket,
+/obj/storage/crate/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
 "Jh" = (
@@ -4799,13 +4800,8 @@
 /area/noGenerate)
 "MO" = (
 /obj/table/auto,
-/obj/item/magnetizer{
-	desc = "Some kind of old mining tool.  Looks like there's a big coil on it, maybe?";
-	loaded = 1;
-	name = "old mining gizmo";
-	pixel_x = 6;
-	pixel_y = 6
-	},
+/obj/item/magnetizer,
+/obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "MT" = (
@@ -5124,12 +5120,12 @@
 "Pb" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/splatter,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "Pd" = (
 /obj/decal/cleanable/cobweb2,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/genetics)
 "Pm" = (
@@ -5815,7 +5811,7 @@
 /obj/decal/aliencomputer{
 	pixel_x = -32
 	},
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/martian/floor,
 /area/noGenerate)
 "Ub" = (
@@ -6465,7 +6461,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "Yh" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "Yk" = (

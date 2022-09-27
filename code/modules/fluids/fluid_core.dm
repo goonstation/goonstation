@@ -809,10 +809,15 @@ var/mutable_appearance/fluid_ma
 			//	M.add_blood(F)
 			//	if (!M.anchored)
 			//		F.add_tracked_blood(M)
+	var/do_reagent_reaction = 1
+
+	if (F.my_depth_level == 1)
+		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
+			do_reagent_reaction = 0
 
 	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0
 
-	..(F, oldloc)
+	..(F, oldloc, do_reagent_reaction)

@@ -175,6 +175,10 @@
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
 		flock.addAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		var/mob/living/intangible/flock/trace/flocktrace = pilot
+		if (flocktrace.dying)
+			src.addOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+			src.updateOverlaysClient(src.client)
 	if (give_alert)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] established.\]</b></span>")
 
@@ -217,6 +221,10 @@
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+			var/mob/living/intangible/flock/trace/flocktrace = src.controller
+			if (flocktrace.dying)
+				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.z == Z_LEVEL_STATION)
 			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
 
@@ -260,6 +268,10 @@
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKTRACE_CONTROL)
+		var/mob/living/intangible/flock/trace/flocktrace = src.controller
+		if (flocktrace.dying)
+			src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
+			src.updateOverlaysClient(src.client)
 	controller = null
 	src.update_health_icon()
 	src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
@@ -1128,16 +1140,31 @@
 	proj = new/datum/projectile/energy_bolt/flockdrone
 	shots = 1
 	current_shots = 1
-	cooldown = 15
-	reload_time = 15
+	cooldown = 12
+	reload_time = 12
 	reloading_str = "recharging"
+	var/cost = 10
+	var/obj/item/ammo/power_cell/self_charging/flockdrone/cell = new
+
+/datum/limb/gun/flock_stunner/New()
+	..()
+	RegisterSignal(src.cell, COMSIG_UPDATE_ICON, .proc/update_overlay)
+
+/datum/limb/gun/flock_stunner/proc/update_overlay()
+	var/mob/living/critter/flock/drone/flockdrone = holder.holder
+	var/datum/hud/critter/flock/drone/flockhud = flockdrone.hud
+	flockhud.set_stunner_charge(src.cell.get_charge() / src.cell.max_charge)
 
 /datum/limb/gun/flock_stunner/shoot(mob/living/target, mob/living/user, point_blank = FALSE)
 	if(!target || !user)
 		return
 	if (isflockmob(target) && point_blank)
 		return
-	return ..()
+	if (src.cell.get_charge() < src.cost)
+		return
+	. = ..()
+	if (.)
+		SEND_SIGNAL(src.cell, COMSIG_CELL_USE, src.cost)
 
 /datum/limb/gun/flock_stunner/help(mob/living/target, mob/living/user)
 	src.point_blank(target, user)

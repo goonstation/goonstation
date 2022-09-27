@@ -42,7 +42,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
 	contraband = 5
-	desc = "An illegal weapon that, when activated, uses cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
+	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
 	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
@@ -801,8 +801,8 @@
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
 /obj/item/axe
-	name = "Axe"
-	desc = "An energised battle axe."
+	name = "TN-DOLORIS Axe"
+	desc = "An energised battle axe. The handle bears the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "axe0"
 	uses_multiple_icon_states = 1
@@ -1178,9 +1178,9 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
-			. = "An ornate and finely crafted blade designed only for the most competent and highly respected of NT's chain of command. Like you!"
+			. = "An ornate and finely crafted blade commissioned from Iron Belle Bladeworks. Designed only for the most competent and highly respected of NT's chain of command. Like you!"
 		else
-			. = "Looks like some sort of cheap historical recreation sword. You'd have to be a total dork to own this thing."
+			. = "Looks like some sort of historical recreation sword. The pommel is stamped with the name Iron Belle Bladeworks."
 
 	New()
 		..()
@@ -1209,7 +1209,7 @@
 /obj/item/katana/nukeop
 	icon_state = "syndie_sword"
 	name = "Syndicate Commander's Sabre"
-	desc = "A sharp sabre for the most trusted and competent syndicate operatives. Hopefully."
+	desc = "A sharp sabre for the most trusted and competent syndicate operatives. Commissioned from Iron Belle Bladeworks."
 
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 20
@@ -1344,9 +1344,9 @@
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
-			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard."
+			. = "A stylish container for your sabre. Made from the finest metals NT can afford, or so you've heard. The scabbard bears the insignia 'I.B.B'."
 		else
-			. = "A tacky container for a sword. Hey! This thing's actually just plastic painted to look like metal! What a ripoff!"
+			. = "A goofy container for a sword. What kind of nerd uses these nowadays? Sheesh!"
 
 	blue //for NTSO medal reward
 		icon_state = "blue_cap_sword_scabbard"
@@ -1370,7 +1370,7 @@
 
 /obj/item/katana_sheath/nukeop
 	name = "Syndicate Commander's Scabbard"
-	desc = "A nifty container for an evil sword. Given to the most trusted syndicate operatives."
+	desc = "A nifty container for an evil sword. Given to the most trusted syndicate operatives. The scabbard bears the insignia 'I.B.B'."
 	icon_state = "syndie_sword_scabbard"
 	item_state = "scabbard-syndie1"
 

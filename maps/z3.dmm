@@ -417,11 +417,6 @@
 	dir = 8;
 	pixel_x = 2
 	},
-/obj/item/device/key{
-	desc = "A bee key.  A...kee, if you will.";
-	icon_state = "key_bee";
-	name = "bee key"
-	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abv" = (
@@ -696,11 +691,11 @@
 	pixel_x = -22
 	},
 /obj/decal/fakeobjects{
+	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Broken Printer";
-	true_name = "printer?";
-	desc = "It looks like it was never even plugged in. Did this ever work?!"
+	true_name = "printer?"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
@@ -1461,6 +1456,9 @@
 	},
 /obj/machinery/light_switch/south{
 	pixel_x = 5
+	},
+/obj/landmark{
+	name = "Radio-Show-Host-Spawn"
 	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
@@ -15098,7 +15096,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "bgO" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bgP" = (
@@ -16035,11 +16033,11 @@
 "biT" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
-/obj/item/device/key{
-	name = "studio door key"
-	},
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/device/microphone,
+/obj/item/device/key/generic{
+	name = "studio door key"
+	},
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (
@@ -21096,7 +21094,7 @@
 /area/timewarp/ship)
 "mWO" = (
 /obj/decal/cleanable/urine,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "mXB" = (
 /turf/simulated/shuttle/wall{
@@ -21988,7 +21986,7 @@
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "pKO" = (
-/obj/landmark/spawner/loot,
+/obj/storage/crate/loot,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "pMZ" = (
@@ -22162,7 +22160,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qhW" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "qiL" = (
 /obj/rack,
@@ -24548,7 +24546,7 @@
 /area/abandonedship)
 "xjC" = (
 /obj/decal/woodclutter,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "xkn" = (
