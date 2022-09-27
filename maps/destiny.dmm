@@ -31617,7 +31617,10 @@
 /turf/simulated/floor/blue/side,
 /area/station/hydroponics/bay)
 "iRf" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "iRw" = (

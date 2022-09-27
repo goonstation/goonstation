@@ -57257,7 +57257,10 @@
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
 "qtm" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 11;
+	width = 11
+	},
 /turf/space,
 /area/mining/magnet)
 "qts" = (

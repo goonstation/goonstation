@@ -23551,7 +23551,10 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "jMP" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "jMT" = (

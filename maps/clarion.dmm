@@ -40858,7 +40858,10 @@
 	},
 /area/station/engine/ptl)
 "bJI" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bJJ" = (
