@@ -255,8 +255,8 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "aeh" = (
 /obj/lattice{
@@ -390,9 +390,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "agQ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -1265,8 +1263,8 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "asN" = (
 /obj/critter/roach,
@@ -1281,9 +1279,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ath" = (
 /obj/lattice{
 	dir = 2;
@@ -1654,8 +1650,11 @@
 /area/station/mining/staff_room)
 "ayJ" = (
 /obj/machinery/light/small/floor,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/engine/caution/westeast,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "ayN" = (
 /obj/machinery/conveyor{
 	dir = 1;
@@ -1677,9 +1676,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ayY" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -1819,6 +1816,15 @@
 /area/station/crew_quarters/toilets{
 	name = "Dockside Restroom"
 	})
+"aCd" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "aCh" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/window_blinds/cog2/middle,
@@ -1842,14 +1848,6 @@
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
-"aCn" = (
-/obj/machinery/door/airlock/pyro/maintenance,
-/obj/access_spawn/maint,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "aCA" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -2244,8 +2242,8 @@
 	pixel_y = 2
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "aHo" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
@@ -2695,9 +2693,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "aNP" = (
 /obj/shrub,
 /obj/machinery/camera{
@@ -3174,8 +3170,8 @@
 /obj/machinery/light/small,
 /obj/rack,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "aUg" = (
 /obj/machinery/light{
@@ -3640,10 +3636,6 @@
 	},
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
 /area/station/crew_quarters/hor/horprivate)
-"aZS" = (
-/obj/machinery/atmospherics/pipe/simple,
-/turf/simulated/floor/plating,
-/area/space)
 "baS" = (
 /obj/stove,
 /obj/item/soup_pot{
@@ -4538,9 +4530,7 @@
 	})
 "bqw" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bqz" = (
 /obj/table/wood/auto,
 /obj/item/paper/book/from_file/monster_manual,
@@ -4616,6 +4606,13 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/coldloop)
+"brq" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "brt" = (
 /obj/stool/chair/office/blue{
 	dir = 4
@@ -5064,7 +5061,7 @@
 "byj" = (
 /obj/critter/roach,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "byk" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -5122,7 +5119,7 @@
 "bzc" = (
 /obj/stool/chair,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "bzf" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
@@ -5138,9 +5135,7 @@
 /area/station/security/brig/genpop)
 "bzk" = (
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bzo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -5434,9 +5429,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bDX" = (
 /turf/simulated/floor/greenblack{
 	dir = 4
@@ -5533,8 +5526,8 @@
 /obj/table/wood/auto,
 /obj/item/chicken_carrier,
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bFF" = (
 /obj/machinery/atmospherics/pipe/simple,
@@ -6265,9 +6258,12 @@
 	},
 /area/station/security/processing)
 "bQC" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bQI" = (
 /obj/grille/catwalk{
@@ -6366,8 +6362,8 @@
 /area/station/security/detectives_office)
 "bRu" = (
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bRw" = (
 /obj/lattice,
@@ -6389,8 +6385,8 @@
 "bRI" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bRK" = (
 /obj/machinery/firealarm{
@@ -6633,9 +6629,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bWw" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -6654,8 +6648,8 @@
 "bWB" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bWE" = (
 /obj/grille/catwalk,
@@ -6717,8 +6711,8 @@
 	},
 /obj/machinery/coffeemaker,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "bXr" = (
 /obj/machinery/light/emergency{
@@ -6761,9 +6755,7 @@
 "bXN" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bXR" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -6810,10 +6802,11 @@
 	},
 /area/space)
 "bYq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "bYI" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -7015,8 +7008,8 @@
 	pixel_y = -2
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "caW" = (
 /obj/machinery/drone_recharger,
@@ -8852,8 +8845,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "czt" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
@@ -9596,6 +9589,15 @@
 /obj/disposalpipe/trunk/west,
 /turf/simulated/floor/wood/eight,
 /area/station/security/detectives_office)
+"cJA" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "cJF" = (
 /turf/simulated/floor{
 	desc = "";
@@ -10910,8 +10912,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "daP" = (
 /obj/table/reinforced/auto,
@@ -12101,6 +12103,10 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
+"dqT" = (
+/obj/storage/closet/wardrobe/yellow,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "dqU" = (
 /obj/disposalpipe/segment/vertical,
 /obj/machinery/camera{
@@ -12424,9 +12430,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "duI" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -12595,21 +12599,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
 /area/station/engine/power)
-"dxx" = (
-/obj/decal/poster/wallsign/stencil/left/r{
-	layer = 2;
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/decal/poster/wallsign/stencil/right/a{
-	layer = 2;
-	pixel_x = 12;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/secondary/east)
 "dxI" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -12681,8 +12670,8 @@
 	},
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "dyv" = (
 /obj/machinery/light/small{
@@ -12693,8 +12682,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "dyI" = (
 /obj/cable{
@@ -12879,7 +12868,7 @@
 	icon = 'icons/turf/walls_supernorn_smooth.dmi';
 	icon_state = "norn-3"
 	},
-/area/space)
+/area/station/maintenance/inner/ne)
 "dBA" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/machinery/atmospherics/pipe/simple,
@@ -12978,9 +12967,7 @@
 "dCG" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "dCM" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 4
@@ -13037,9 +13024,7 @@
 "dDh" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "dDs" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -14501,6 +14486,14 @@
 /area/station/routing/catering{
 	name = "Catering Router"
 	})
+"dWd" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "dWf" = (
 /obj/machinery/door/poddoor/pyro{
 	id = "funerary_driver";
@@ -14974,8 +14967,8 @@
 /area/station/engine/engineering/private)
 "edx" = (
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "edG" = (
 /obj/stool/bed,
@@ -14984,8 +14977,8 @@
 	},
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "edO" = (
 /obj/disposalpipe/segment/transport,
@@ -15164,9 +15157,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "egg" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -15447,8 +15438,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "ejE" = (
 /obj/table/auto,
@@ -17315,9 +17306,7 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "eIH" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/plating,
@@ -17518,8 +17507,8 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "eLJ" = (
 /turf/simulated/floor/blueblack{
@@ -17834,9 +17823,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ePs" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -18226,8 +18213,11 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "eVd" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -18796,8 +18786,8 @@
 /obj/table/wood/auto,
 /obj/item/chicken_carrier,
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "fdr" = (
 /obj/machinery/door/airlock/pyro/glass,
@@ -18818,8 +18808,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "fdP" = (
 /obj/cable{
@@ -20054,7 +20044,7 @@
 	pixel_y = 10
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "fvs" = (
 /obj/table/wood/auto,
 /obj/machinery/light/small{
@@ -20398,7 +20388,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/misc,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "fzy" = (
 /obj/table/round/auto,
 /obj/item/wrench,
@@ -21311,9 +21301,7 @@
 "fME" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "fMG" = (
 /obj/rack,
 /obj/item/clothing/shoes/magnetic,
@@ -21667,6 +21655,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
+"fRK" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "fRX" = (
 /obj/table/reinforced/chemistry/auto,
 /obj/item/clothing/gloves/latex,
@@ -21698,7 +21694,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "fSq" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -22430,6 +22426,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"gbL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "gbM" = (
 /turf/simulated/floor/blueblack{
 	dir = 4
@@ -23097,9 +23101,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "gjW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23285,9 +23287,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "gmO" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/transport,
@@ -23461,16 +23461,13 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "goS" = (
-/obj/decal/tile_edge/floorguide/arrow_e{
-	dir = 4
-	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
 	icon_state = "5-8"
 	},
 /turf/simulated/floor/green/side{
-	dir = 8
+	dir = 10
 	},
 /area/station/hallway/secondary/east)
 "gpb" = (
@@ -23919,10 +23916,6 @@
 	},
 /turf/space,
 /area/station/engine/core)
-"guC" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/plating,
-/area/space)
 "guD" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -24154,10 +24147,12 @@
 /area/station/crew_quarters/hor/horprivate)
 "gwU" = (
 /obj/table/wood/round/auto,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "gwZ" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light{
@@ -24904,6 +24899,12 @@
 	do_not_irradiate = 1;
 	name = "Secure Pressurization"
 	})
+"gGD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "gGE" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/bottle/tequila,
@@ -24945,9 +24946,13 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
+"gGQ" = (
+/obj/disposalpipe/junction/left/south,
+/turf/simulated/floor/sandytile,
+/area/station/ranch)
 "gGW" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -24983,6 +24988,12 @@
 	},
 /area/station/medical/research{
 	name = "Genetic Research"
+	})
+"gHb" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "gHi" = (
 /obj/disposalpipe/segment/horizontal,
@@ -25265,7 +25276,7 @@
 "gKl" = (
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "gKv" = (
 /obj/stool/chair{
 	dir = 8
@@ -25346,8 +25357,8 @@
 /obj/table/wood/auto,
 /obj/item/chicken_carrier,
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "gLm" = (
 /obj/machinery/atmospherics/portables_connector{
@@ -25616,7 +25627,7 @@
 	name = "caution sign"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "gOB" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -25828,9 +25839,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "gRq" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -26435,9 +26444,7 @@
 "hab" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/dirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "haj" = (
 /obj/machinery/light,
 /turf/simulated/floor/grey,
@@ -26780,13 +26787,9 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "heM" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -26902,19 +26905,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay)
-"hfT" = (
-/obj/decal/poster/wallsign/stencil/left/h{
-	layer = 2;
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/decal/tile_edge/floorguide/arrow_e{
-	dir = 4
-	},
-/turf/simulated/floor/black/side{
-	dir = 5
-	},
-/area/station/hallway/secondary/east)
 "hfU" = (
 /obj/machinery/door/airlock/pyro/classic,
 /turf/simulated/floor/grime,
@@ -26937,9 +26927,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/dirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "hgj" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 9
@@ -27563,12 +27551,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"hmV" = (
-/obj/machinery/light/small/floor,
-/turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
 "hne" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -28599,7 +28581,7 @@
 	pixel_x = 12
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "hAL" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -28653,6 +28635,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig/genpop)
+"hBs" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "hBu" = (
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor,
@@ -29143,8 +29130,8 @@
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "hJZ" = (
 /obj/table/reinforced/auto,
@@ -29323,12 +29310,6 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/listeningpost)
-"hLO" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 9
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "hLU" = (
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/sanitary,
@@ -30164,8 +30145,8 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "hXJ" = (
 /obj/stool/chair{
@@ -30716,9 +30697,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ihD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -31207,9 +31186,7 @@
 /obj/machinery/light/small/floor,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ipy" = (
 /obj/machinery/light{
 	dir = 8;
@@ -32420,9 +32397,7 @@
 	doants = 0
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "iED" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -32868,9 +32843,7 @@
 	dir = 6
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "iKP" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -33395,7 +33368,7 @@
 	name = "CARGO HAZARD"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "iSb" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	icon_state = "on";
@@ -33571,8 +33544,8 @@
 "iUH" = (
 /obj/machinery/vending/snack,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "iUJ" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -33635,7 +33608,7 @@
 /obj/access_spawn/maint,
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "iWn" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 10
@@ -33752,6 +33725,7 @@
 "iYc" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "iYg" = (
@@ -34221,9 +34195,12 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "jdW" = (
 /obj/machinery/chem_master{
@@ -34486,6 +34463,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"jhh" = (
+/obj/blind_switch/area/north,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "jhq" = (
 /obj/table/auto,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
@@ -34707,13 +34693,6 @@
 	dir = 9
 	},
 /area/station/maintenance/inner/hydroponics)
-"jjC" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light/small,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "jjK" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/secondary_system/orescoop,
@@ -34827,7 +34806,7 @@
 "jld" = (
 /obj/item/furniture_parts/table/reinforced,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "jle" = (
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/omni,
@@ -35072,13 +35051,12 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
+/obj/cable{
+	icon_state = "4-8"
 	},
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "jpa" = (
 /obj/machinery/light/emergency,
@@ -36325,6 +36303,7 @@
 	})
 "jEd" = (
 /obj/disposalpipe/segment/bent/west,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -36425,9 +36404,7 @@
 "jFl" = (
 /obj/disposalpipe/segment/mail/bent/east,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "jFn" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -36583,9 +36560,13 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "jIH" = (
 /obj/stool/chair/comfy{
@@ -36669,9 +36650,7 @@
 /turf/simulated/floor/grasstodirt{
 	dir = 1
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "jJo" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -36912,12 +36891,10 @@
 	pixel_x = 10;
 	pixel_y = 22
 	},
-/obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/machinery/disposal/cart_port,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "jMm" = (
 /obj/storage/secure/closet/engineering/welding,
 /turf/simulated/floor/yellow/side{
@@ -37140,8 +37117,8 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "jPu" = (
 /obj/disposalpipe/segment/mail/horizontal,
@@ -38509,6 +38486,12 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"kgK" = (
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "kgM" = (
 /obj/decal/stage_edge/alt,
 /obj/shrub{
@@ -38634,6 +38617,12 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor/sanitary/white,
 /area/station/science/storage)
+"khT" = (
+/obj/machinery/launcher_loader/east{
+	door_delay = 6
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "khW" = (
 /obj/machinery/atmospherics/valve/notify_admins/vertical{
 	name = "Air Reserve (Fitness Complex)"
@@ -39027,7 +39016,7 @@
 	powerlevel = 1
 	},
 /turf/simulated/floor/engine/caution/misc,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "kmh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -39186,9 +39175,7 @@
 /obj/disposalpipe/segment/bent/east,
 /obj/machinery/drainage,
 /turf/simulated/floor/dirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "kok" = (
 /obj/decal/stage_edge/alt,
 /obj/machinery/disposal/mail/autoname/medbay/robotics,
@@ -39229,7 +39216,7 @@
 /turf/simulated/floor/engine/caution/misc{
 	dir = 1
 	},
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "koD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39361,6 +39348,11 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quartersA)
+"kqF" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/sandytile,
+/area/station/ranch)
 "kqH" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4
@@ -40940,6 +40932,15 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quartersA)
+"kLV" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "kMj" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/drinks/tea{
@@ -41225,6 +41226,13 @@
 "kQz" = (
 /turf/simulated/floor/orangeblack/side,
 /area/station/mining/refinery)
+"kQB" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/middle,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "kQJ" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -42640,9 +42648,7 @@
 "liZ" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "lja" = (
 /obj/table/auto,
 /obj/item/device/prox_sensor{
@@ -42752,6 +42758,12 @@
 /obj/storage/closet/janitor,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
+"ljS" = (
+/obj/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "ljW" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -43403,9 +43415,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "lse" = (
 /obj/stool/chair,
 /obj/machinery/light{
@@ -43854,9 +43864,7 @@
 	pixel_x = 10
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "lzf" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44195,6 +44203,12 @@
 "lCN" = (
 /turf/simulated/floor/caution/north,
 /area/station/engine/hotloop)
+"lCX" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "lDa" = (
 /obj/decal/tile_edge/floorguide/security{
 	dir = 1
@@ -44264,9 +44278,7 @@
 /obj/rack,
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "lDF" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -44353,6 +44365,15 @@
 	dir = 1
 	},
 /area/station/hangar/qm)
+"lEd" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "lEf" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -44665,8 +44686,8 @@
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black,
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "lHx" = (
 /obj/cable{
@@ -46363,6 +46384,22 @@
 	dir = 8
 	},
 /area/station/hallway/primary/east)
+"mba" = (
+/obj/decal/tile_edge/line/black{
+	dir = 8;
+	icon_state = "line1"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/access_spawn/rancher,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "mbe" = (
 /obj/table/auto,
 /obj/item/wirecutters{
@@ -46451,9 +46488,7 @@
 "mcR" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "mcT" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
@@ -46801,9 +46836,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "mhk" = (
 /obj/stool/chair,
 /obj/machinery/light,
@@ -47130,9 +47163,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
-"mlP" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/east)
 "mlR" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood/seven,
@@ -47189,8 +47219,8 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "mmt" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -47353,7 +47383,7 @@
 	pixel_y = 16
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "moH" = (
 /obj/submachine/chef_oven,
 /turf/simulated/floor/specialroom/cafeteria,
@@ -48473,8 +48503,8 @@
 /turf/simulated/floor/stairs/wood/wide{
 	dir = 6
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "mCD" = (
 /obj/machinery/light{
@@ -48500,6 +48530,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
+"mCV" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "mDf" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet,
@@ -48669,6 +48710,13 @@
 /area/station/hydroponics/lobby{
 	name = "Hydroponics Staff Section"
 	})
+"mFk" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/cargooffice)
 "mFp" = (
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/redblack{
@@ -48960,9 +49008,7 @@
 "mJV" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "mKa" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
@@ -50217,10 +50263,14 @@
 /area/station/mining/refinery)
 "nbo" = (
 /obj/table/wood/auto,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
 /obj/machinery/computer3/generic/personal,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "nbp" = (
 /obj/wingrille_spawn/auto/crystal,
@@ -50333,9 +50383,7 @@
 "ncB" = (
 /obj/machinery/light,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ncF" = (
 /obj/machinery/door/airlock/pyro,
 /obj/disposalpipe/segment/mail/vertical,
@@ -50474,7 +50522,7 @@
 /obj/machinery/atmospherics/pipe/simple,
 /obj/firedoor_spawn,
 /turf/simulated/floor/greenblack,
-/area/space)
+/area/station/hydroponics/bay)
 "neP" = (
 /obj/table/auto,
 /obj/item/reagent_containers/glass/beaker/large/brute{
@@ -50943,7 +50991,7 @@
 	},
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "nmM" = (
 /obj/item/device/radio/intercom/science{
 	dir = 4
@@ -51128,6 +51176,10 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
+"npZ" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/sandytile,
+/area/station/ranch)
 "nqd" = (
 /obj/machinery/vending/medical,
 /obj/machinery/light/emergency{
@@ -51427,8 +51479,8 @@
 "nuu" = (
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "nuB" = (
 /turf/simulated/floor/caution/north,
@@ -51855,9 +51907,7 @@
 "nAG" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "nAM" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/orangeblack/side{
@@ -52445,6 +52495,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "nHB" = (
@@ -52674,9 +52728,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "nKh" = (
 /obj/disposalpipe/segment{
 	name = "factory pipe"
@@ -52782,8 +52834,8 @@
 /area/station/engine/elect)
 "nMq" = (
 /turf/simulated/wall/auto/supernorn/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "nMu" = (
 /obj/pool/perspective{
@@ -53088,8 +53140,8 @@
 	},
 /obj/machinery/bathtub,
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "nQc" = (
 /obj/stool/chair/office/green{
@@ -53135,6 +53187,7 @@
 	name = "autoname - SS13";
 	pixel_y = 20
 	},
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "nQw" = (
@@ -53685,8 +53738,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "nYf" = (
 /obj/machinery/light{
@@ -53927,9 +53980,9 @@
 /turf/simulated/floor/wood/seven,
 /area/station/engine/engineering/private)
 "oaX" = (
-/obj/machinery/shieldgenerator/meteorshield,
+/obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "oaY" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor/southwest,
 /obj/storage/secure/closet/personal,
@@ -54966,9 +55019,7 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/access_spawn/rancher,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "onK" = (
 /obj/table/auto,
 /obj/item/satchel/hydro,
@@ -55772,10 +55823,9 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/cart,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "oyw" = (
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 28
@@ -55792,6 +55842,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
+"ozj" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "ozk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4
@@ -56309,9 +56368,7 @@
 /obj/disposalpipe/segment/mail/vertical,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "oGN" = (
 /obj/table/auto,
 /obj/machinery/phone,
@@ -57229,7 +57286,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/storage/cart,
+/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "oSZ" = (
@@ -57530,10 +57587,12 @@
 	pixel_x = 8;
 	pixel_y = 24
 	},
+/obj/machinery/light_switch/north{
+	pixel_x = -6;
+	pixel_y = 22
+	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "oXb" = (
 /obj/lattice{
 	dir = 9;
@@ -58127,9 +58186,7 @@
 "pdV" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "pdZ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -58479,8 +58536,8 @@
 /area/station/crew_quarters/jazz)
 "pjk" = (
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "pjy" = (
 /obj/stool/chair/comfy{
@@ -58918,9 +58975,7 @@
 	doants = 0
 	},
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "poj" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -59085,7 +59140,7 @@
 "pqn" = (
 /obj/machinery/space_heater,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "pqs" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -59198,7 +59253,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "prl" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/cable{
@@ -59519,6 +59574,15 @@
 	icon = 'icons/turf/shuttle.dmi'
 	},
 /area/shuttle/arrival/station)
+"pvU" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/right{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "pvZ" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -59977,6 +60041,13 @@
 /area/station/engine/monitoring{
 	name = "Engineering Status Room"
 	})
+"pCy" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "pCD" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
@@ -60063,9 +60134,7 @@
 "pDK" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "pDL" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4
@@ -60094,8 +60163,8 @@
 	pixel_y = -4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "pDX" = (
 /obj/stool/chair/couch{
@@ -61735,8 +61804,8 @@
 /area/station/crew_quarters/kitchen)
 "qae" = (
 /turf/simulated/floor/stairs/wood/wide,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "qak" = (
 /obj/table/reinforced/bar/auto{
@@ -61768,8 +61837,8 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "qaA" = (
 /obj/cable{
@@ -61879,9 +61948,7 @@
 	anchored = 1
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "qbZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62004,9 +62071,7 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "qdz" = (
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -62020,8 +62085,8 @@
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black,
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "qdY" = (
 /obj/disposalpipe/segment/bent/east,
@@ -63830,9 +63895,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "qEc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -64147,7 +64210,7 @@
 /turf/simulated/floor/engine/caution/misc{
 	dir = 1
 	},
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "qIv" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -64315,8 +64378,8 @@
 	},
 /obj/item/clothing/suit/bedsheet/orange,
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "qKi" = (
 /obj/item/storage/wall{
@@ -64440,6 +64503,11 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment1)
+"qLz" = (
+/obj/disposalpipe/trunk/east,
+/obj/machinery/disposal,
+/turf/simulated/floor/sandytile,
+/area/station/ranch)
 "qLD" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	icon_state = "on";
@@ -65476,9 +65544,7 @@
 "qXt" = (
 /obj/chicken_nesting_box,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "qXy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -65790,9 +65856,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "rbI" = (
 /obj/stool/chair,
 /turf/simulated/floor/black,
@@ -65834,9 +65898,7 @@
 /obj/rack,
 /obj/item/reagent_containers/glass/wateringcan,
 /turf/simulated/floor/dirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "rcm" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/qm)
@@ -66267,7 +66329,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/engine/core)
 "riG" = (
-/obj/machinery/launcher_loader/south,
+/obj/machinery/launcher_loader/south{
+	door_delay = 6
+	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/inner/ne)
 "riN" = (
@@ -66622,8 +66686,8 @@
 /obj/item/fishing_rod,
 /obj/item/clothing/mask/chicken,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "roj" = (
 /obj/machinery/light{
@@ -67052,10 +67116,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"ruj" = (
-/obj/random_item_spawner/junk/one_or_zero,
-/turf/simulated/floor/plating,
-/area/space)
 "ruk" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -67425,8 +67485,8 @@
 	icon_state = "line1"
 	},
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "ryG" = (
 /turf/simulated/floor/white/grime,
@@ -68164,9 +68224,13 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "rIh" = (
 /obj/machinery/light{
@@ -68279,9 +68343,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "rKD" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1
@@ -68486,9 +68548,7 @@
 	},
 /obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "rNb" = (
 /obj/machinery/door/airlock/pyro/command,
 /obj/machinery/atmospherics/pipe/simple,
@@ -68499,8 +68559,8 @@
 "rNc" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "rNd" = (
 /turf/simulated/wall/auto/shuttle{
@@ -68842,8 +68902,8 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "rPX" = (
 /obj/table/auto,
@@ -69860,9 +69920,7 @@
 /obj/landmark/gps_waypoint,
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "sbT" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -70355,9 +70413,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "sjA" = (
 /obj/machinery/status_display{
 	pixel_y = 30
@@ -70445,8 +70501,8 @@
 /obj/table/wood/auto,
 /obj/item/game_kit,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "skD" = (
 /obj/table/auto,
@@ -71007,7 +71063,7 @@
 "sqA" = (
 /obj/item/c_tube,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "sqM" = (
 /turf/simulated/floor/neutral/side{
 	dir = 4
@@ -71088,9 +71144,7 @@
 /obj/table/wood/round/auto,
 /obj/item/sponge,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "srK" = (
 /obj/table/round/auto,
 /obj/towelbin,
@@ -71766,8 +71820,8 @@
 "sAP" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "sAT" = (
 /turf/simulated/floor/blackwhite,
@@ -72284,20 +72338,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
-"sGv" = (
-/obj/decal/poster/wallsign/stencil/left/n{
-	pixel_x = -4;
-	pixel_y = 3
-	},
-/obj/decal/poster/wallsign/stencil/right/c{
-	layer = 2;
-	pixel_x = 12;
-	pixel_y = 3
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/secondary/east)
 "sGy" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/morgue,
@@ -72413,9 +72453,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/south)
-"sHH" = (
-/turf/simulated/floor/plating,
-/area/space)
 "sHK" = (
 /obj/rack,
 /obj/item/clothing/suit/space/emerg,
@@ -72943,6 +72980,15 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"sNQ" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "sNT" = (
 /obj/machinery/drainage,
 /obj/submachine/chef_sink/chem_sink{
@@ -73043,8 +73089,8 @@
 	dir = 1
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "sPl" = (
 /obj/machinery/shower{
@@ -73441,8 +73487,8 @@
 	pixel_y = 7
 	},
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "sTi" = (
 /obj/machinery/recharge_station,
@@ -74746,8 +74792,8 @@
 "tjq" = (
 /obj/rack,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "tjs" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -75506,7 +75552,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/bottle/empty,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "tsn" = (
 /obj/lattice{
 	dir = 10;
@@ -75724,9 +75770,7 @@
 "tva" = (
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "tvg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -75977,6 +76021,15 @@
 	},
 /area/station/medical/research{
 	name = "Genetic Research"
+	})
+"tyh" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/window_blinds/cog2/left{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "tyk" = (
 /obj/item/storage/toilet{
@@ -76559,6 +76612,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering/ce)
+"tFI" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/wood,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "tFK" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
@@ -76946,14 +77007,15 @@
 	dir = 4
 	},
 /obj/access_spawn/maint,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "tLx" = (
 /obj/table/wood/round/auto,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "tLz" = (
 /obj/machinery/atmospherics/pipe/manifold/west,
 /obj/disposalpipe/segment/transport,
@@ -77542,9 +77604,12 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/wood,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "tSM" = (
 /obj/machinery/conveyor{
@@ -78843,9 +78908,7 @@
 	rand_pos = 0
 	},
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "ujD" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -79626,8 +79689,8 @@
 	dir = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "utv" = (
 /obj/cable{
@@ -80134,9 +80197,7 @@
 "uzq" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "uzr" = (
 /obj/machinery/computer/barcode/ozy{
 	dir = 8
@@ -80958,8 +81019,8 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "uIS" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -81121,6 +81182,15 @@
 /obj/decal/boxingrope,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"uKx" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/obj/machinery/light_switch/north,
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "uKE" = (
 /obj/decal/tile_edge/floorguide/evac{
 	dir = 4
@@ -81557,8 +81627,8 @@
 "uPS" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "uPZ" = (
 /obj/machinery/light/emergency,
@@ -81639,6 +81709,11 @@
 /obj/item/reagent_containers/glass/bottle/topcrop{
 	pixel_x = 5
 	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "uQO" = (
@@ -81697,8 +81772,8 @@
 /turf/simulated/floor/stairs/wood{
 	dir = 6
 	},
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "uRD" = (
 /obj/disposalpipe/segment/transport{
@@ -81909,8 +81984,8 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "uSV" = (
 /obj/table/auto,
@@ -82672,6 +82747,14 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"vbR" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "vbT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -82897,7 +82980,7 @@
 "veH" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "veK" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/lounge/port{
@@ -83045,9 +83128,7 @@
 /area/station/routing/engine)
 "vgj" = (
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "vgr" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -83271,8 +83352,8 @@
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black,
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "vjh" = (
 /obj/wingrille_spawn/auto/reinforced,
@@ -83516,13 +83597,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "vmH" = (
-/obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "vmI" = (
 /obj/stool/chair/red{
 	dir = 8
@@ -84580,8 +84661,8 @@
 "vzv" = (
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "vzx" = (
 /turf/simulated/floor,
@@ -84637,12 +84718,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/east)
-"vAd" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 6
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "vAg" = (
 /obj/table/auto,
 /obj/item/storage/box/fruit_wedges{
@@ -85135,9 +85210,7 @@
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/ranch_feed_bag,
 /turf/simulated/floor/sand,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "vFj" = (
 /obj/machinery/bathtub{
 	anchored = 1;
@@ -85940,8 +86013,8 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "vPe" = (
 /obj/machinery/light{
@@ -86005,7 +86078,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "vPK" = (
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/neutral/side{
@@ -86889,8 +86962,8 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "wby" = (
 /obj/cable{
@@ -87563,9 +87636,13 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "wkF" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 4;
+	pixel_x = -8
+	},
 /turf/simulated/floor/sanitary,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "wkH" = (
 /obj/disposalpipe/segment/vertical,
@@ -87589,9 +87666,7 @@
 	name = "Ranch Pad"
 	},
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "wlh" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -88432,6 +88507,15 @@
 "wuh" = (
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
+"wuq" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/wood/seven,
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
+	})
 "wut" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/ne)
@@ -88866,9 +88950,7 @@
 /area/station/crew_quarters/barber_shop)
 "wzm" = (
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "wzp" = (
 /obj/pool/perspective{
 	dir = 4;
@@ -88978,9 +89060,7 @@
 	pixel_x = 8
 	},
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "wAu" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
@@ -89053,9 +89133,7 @@
 "wAX" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "wAZ" = (
 /obj/cable{
 	d2 = 2;
@@ -89323,12 +89401,6 @@
 	dir = 8
 	},
 /area/station/quartermaster/cargobay)
-"wEw" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "wEC" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -89694,10 +89766,11 @@
 /obj/stool/chair{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "1-4"
+	},
 /turf/simulated/floor/grass/leafy,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "wIh" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -89800,16 +89873,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/south)
-"wJS" = (
-/obj/machinery/light/small{
-	dir = 8;
-	pixel_x = -12
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "wJX" = (
 /obj/machinery/light,
 /obj/machinery/disposal/mail/autoname/security,
@@ -89902,8 +89965,11 @@
 	icon_state = "line1"
 	},
 /obj/access_spawn/rancher,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/dirt,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "wKH" = (
 /obj/machinery/chem_master{
 	dir = 4
@@ -90628,13 +90694,9 @@
 /obj/stool/chair/wooden{
 	dir = 4
 	},
-/obj/machinery/firealarm{
-	dir = 8;
-	pixel_x = -24
-	},
 /turf/simulated/floor/wood/six,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "wTi" = (
 /obj/cable{
@@ -91592,7 +91654,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/grey,
-/area/station/maintenance/east)
+/area/station/maintenance/inner/ne)
 "xfi" = (
 /obj/stool/chair/yellow,
 /obj/machinery/light{
@@ -91728,9 +91790,13 @@
 	pixel_x = 6;
 	pixel_y = -4
 	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
 /turf/simulated/floor/wood/eight,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "xgT" = (
 /obj/machinery/light/small/floor,
@@ -92155,7 +92221,7 @@
 /obj/decal/cleanable/paper,
 /obj/item/hand_labeler,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "xmb" = (
 /obj/stool/chair{
 	dir = 4
@@ -93692,9 +93758,7 @@
 	},
 /obj/stool/chair,
 /turf/simulated/floor/grasstodirt,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "xEJ" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4
@@ -94632,7 +94696,7 @@
 "xPY" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/maintenance/inner/ne)
 "xQc" = (
 /obj/disposalpipe/segment/transport{
 	icon_state = "pipe-c"
@@ -94791,8 +94855,8 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/wood/seven,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
+/area/station/crew_quarters/quartersB{
+	name = "Tanhony Creek Station"
 	})
 "xRI" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -94801,9 +94865,7 @@
 /obj/disposalpipe/segment/horizontal,
 /obj/access_spawn/rancher,
 /turf/simulated/floor/sandytile,
-/area/station/ranch{
-	name = "Tanhony Creek Ranch"
-	})
+/area/station/ranch)
 "xRQ" = (
 /obj/machinery/ghostdrone_factory,
 /obj/machinery/conveyor/west{
@@ -155163,7 +155225,7 @@ dfD
 slB
 iNy
 tyo
-vXb
+mFk
 vXb
 vXb
 vJV
@@ -156674,7 +156736,7 @@ eLP
 cRD
 jkb
 paa
-jjC
+xNq
 jkb
 huA
 gIn
@@ -157237,11 +157299,11 @@ ybP
 ybP
 bVm
 lxg
-vaI
-vaI
-vaI
-vaI
-vaI
+ybP
+wwQ
+wwQ
+wwQ
+fzC
 sNq
 mYy
 mYy
@@ -157274,9 +157336,9 @@ dpO
 dpO
 kDF
 jPu
-dxx
+qvT
 cRD
-qMh
+dWd
 vgT
 kOW
 oXu
@@ -157539,11 +157601,11 @@ nVI
 eOk
 bWd
 lGp
-vaI
+ybP
 pqn
 bzc
 moG
-vaI
+fzC
 ihV
 mYy
 mYy
@@ -157576,7 +157638,7 @@ lwP
 hQc
 lqW
 lpN
-sGv
+nGI
 cRD
 oST
 jog
@@ -157841,11 +157903,11 @@ ybP
 ybP
 cQV
 mjX
-vaI
+ybP
 jld
-ruj
+qXJ
 nmE
-vaI
+fzC
 vJc
 mYy
 mYy
@@ -157878,7 +157940,7 @@ rRi
 hQc
 xOp
 lpN
-hfT
+qvT
 cRD
 cRD
 nQr
@@ -158143,11 +158205,11 @@ xZL
 bCa
 cXd
 mxO
-vaI
+ybP
 vPI
 byj
 xlV
-vaI
+fzC
 cvZ
 mtX
 mtX
@@ -158183,7 +158245,7 @@ lpN
 wjX
 vcb
 cRD
-fEp
+qMh
 fEp
 mcO
 sFm
@@ -158445,11 +158507,11 @@ ybP
 ybP
 evY
 dcg
-vaI
+ybP
 tsm
 sqA
 gKl
-vaI
+fzC
 peN
 pEW
 aph
@@ -158485,8 +158547,8 @@ xaC
 sBU
 qvT
 cRD
-fEp
-hPf
+qMh
+fRK
 wCU
 tSl
 sSO
@@ -158747,11 +158809,11 @@ agL
 eOk
 fwO
 gfH
-vaI
+ybP
 fvq
 gOx
 veH
-vaI
+fzC
 fzC
 xsJ
 xsJ
@@ -159049,11 +159111,11 @@ ybP
 ybP
 fGr
 ybP
-vaI
-vaI
+ybP
+wwQ
 dBq
-vaI
-vaI
+wwQ
+fzC
 prc
 jmz
 hhs
@@ -159350,12 +159412,12 @@ yfj
 aOO
 wut
 hro
-vaI
-guC
+wwQ
+drq
 xPY
-ruj
+qXJ
 vPI
-vaI
+fzC
 uQL
 hfm
 saj
@@ -159392,9 +159454,9 @@ bnv
 vjJ
 orZ
 cRD
-fEp
+qsO
 wCU
-fEp
+qsO
 jkb
 vNM
 vMU
@@ -159652,11 +159714,11 @@ yfj
 qjD
 weP
 jqC
-vaI
-vAd
-aZS
-aZS
-aZS
+wwQ
+lNe
+hxq
+hxq
+hxq
 neH
 oEh
 oEh
@@ -159694,8 +159756,8 @@ iRh
 vjJ
 qmO
 cRD
-fjW
-wCU
+dWd
+vbR
 fEp
 sSQ
 fEp
@@ -159955,11 +160017,11 @@ nll
 jqC
 lNe
 iVZ
-hLO
-sHH
+jqC
+wut
 hAC
-ruj
-vaI
+qXJ
+fzC
 vNT
 csu
 wsQ
@@ -159996,9 +160058,9 @@ bnv
 vjJ
 bAc
 cRD
-fEp
+qsO
 wCU
-fEp
+qsO
 jkb
 hPf
 hGc
@@ -160256,8 +160318,8 @@ xxp
 joE
 vTa
 vGW
-aCn
-wEw
+pri
+vTa
 fSf
 ryX
 ryX
@@ -160606,7 +160668,7 @@ jkb
 jkb
 ydz
 ydz
-ydz
+wCE
 ydz
 wCE
 xGX
@@ -160902,13 +160964,13 @@ iRh
 vjJ
 qmO
 cRD
-fEp
+dqT
 wCU
 eYV
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 xGX
@@ -161204,13 +161266,13 @@ bnv
 vjJ
 nGI
 cRD
-fEp
+qsO
 wCU
 eYV
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 xGX
@@ -161512,7 +161574,7 @@ eYV
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 xGX
@@ -161808,13 +161870,13 @@ wVR
 dgo
 msM
 cRD
-fEp
+fjW
 wCU
 jkb
 ydz
 ydz
 ydz
-ydz
+wCE
 ydz
 wCE
 xGX
@@ -162116,7 +162178,7 @@ btR
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 avG
@@ -162418,7 +162480,7 @@ btR
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 wLP
@@ -162720,7 +162782,7 @@ vaI
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 wLP
@@ -162993,24 +163055,24 @@ bGV
 bGV
 vTa
 vTa
-jog
-jog
+vTa
+vTa
 pri
-jog
-jog
-jog
-jog
-jog
-jog
-wJS
-jog
-jog
-jog
-jog
-wJS
-jog
-jog
-jog
+vTa
+vTa
+xxp
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
+vTa
 xfg
 kOD
 vnf
@@ -163022,7 +163084,7 @@ xGX
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
 asq
@@ -163295,24 +163357,24 @@ ksL
 ksL
 tYl
 tYl
-mlP
-mlP
-mlP
-eYV
-jkb
+tYl
+tYl
+tYl
+hpc
+wwQ
 eVc
-jkb
-eYV
-eYV
-eYV
-jkb
-eYV
-eYV
-eYV
-jkb
-eYV
-eYV
-eYV
+wwQ
+hpc
+hpc
+hpc
+wwQ
+hpc
+hpc
+hpc
+wwQ
+hpc
+hpc
+hpc
 cRD
 eXa
 uOZ
@@ -163324,10 +163386,10 @@ xGX
 aJu
 aJu
 aJu
-aJu
+wqf
 aJu
 fdT
-aCY
+khT
 pSG
 uVD
 ayN
@@ -163607,11 +163669,11 @@ kmf
 ydz
 ydz
 ydz
-ygY
+wCE
 ydz
 ydz
 ydz
-ygY
+wCE
 ydz
 ydz
 ydz
@@ -163622,11 +163684,11 @@ dTM
 nQT
 ydz
 ygY
-ygY
+wCE
 ydz
 ydz
 ydz
-ydz
+wCE
 ydz
 wCE
 fZx
@@ -163903,17 +163965,17 @@ psC
 iua
 gNC
 aJu
-eYV
-fEp
-eYV
+hpc
+bWM
+hpc
 aJu
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -163924,11 +163986,11 @@ nNR
 uOZ
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 fdT
 avG
@@ -164206,16 +164268,16 @@ gNC
 uFz
 aJu
 iRW
-fEp
+bWM
 iRW
 aJu
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -164226,11 +164288,11 @@ nNR
 xZy
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 fdT
 wLP
@@ -164507,17 +164569,17 @@ mYF
 psC
 gNC
 aJu
-eYV
-fEp
-eYV
+hpc
+bWM
+hpc
 aJu
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -164528,11 +164590,11 @@ nNR
 uOZ
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 fdT
 asq
@@ -164815,11 +164877,11 @@ fzo
 aJu
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -164830,11 +164892,11 @@ dTM
 lcq
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 fdT
 wLP
@@ -165111,17 +165173,17 @@ dmw
 uFz
 ygY
 ydz
-jkb
+wwQ
 eVc
-jkb
+wwQ
 ydz
 ydz
 ydz
+wCE
 ydz
 ydz
 ydz
-ydz
-ydz
+wCE
 ydz
 ydz
 ydz
@@ -165132,11 +165194,11 @@ mvc
 cRD
 ydz
 ydz
+wCE
 ydz
 ydz
 ydz
-ydz
-ydz
+wCE
 ydz
 ygY
 wLP
@@ -165413,17 +165475,17 @@ ygY
 xGX
 aJu
 aJu
-sSQ
-fEp
-sSQ
+cJA
+bWM
+cJA
 aJu
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 aJu
@@ -165434,11 +165496,11 @@ sel
 uOZ
 aJu
 aJu
+wqf
 aJu
 aJu
 aJu
-aJu
-aJu
+wqf
 aJu
 aJu
 avG
@@ -165715,32 +165777,32 @@ aJu
 wqf
 aJu
 aJu
-jkb
+wwQ
 tLv
-jkb
-btR
-btR
-btR
-vaI
-btR
-btR
-btR
-vaI
-btR
-btR
-btR
+wwQ
+mcR
+mcR
+mcR
+bqw
+mcR
+mcR
+mcR
+bqw
+mcR
+mcR
+mcR
 bqw
 onG
 mcR
 xRI
 bqw
-btR
-btR
-btR
-vaI
-btR
-btR
-aJu
+mcR
+mcR
+mcR
+bqw
+mcR
+mcR
+xGX
 aJu
 aJu
 asq
@@ -166016,10 +166078,10 @@ wqf
 aJu
 wqf
 aJu
-eYV
-eYV
-fEp
-jkb
+hpc
+hpc
+bWM
+wwQ
 gwU
 wIa
 wzm
@@ -166030,7 +166092,7 @@ wzm
 jJb
 rce
 hge
-bzk
+qLz
 oyp
 wAX
 bzk
@@ -166318,12 +166380,12 @@ wqf
 aJu
 wqf
 aJu
-eYV
+hpc
 oaX
-fEp
-jkb
+bWM
+wwQ
 xED
-wzm
+gGD
 wzm
 wzm
 wzm
@@ -166332,7 +166394,7 @@ wzm
 bDW
 koj
 liZ
-liZ
+gGQ
 liZ
 lrZ
 sbR
@@ -166612,20 +166674,20 @@ sZI
 sZI
 cxM
 lbW
-aJu
-aJu
-aJu
-aJu
-wqf
-aJu
-wqf
-aJu
-jkb
+ydz
+ydz
+ydz
+ydz
+wCE
+ydz
+wCE
+ydz
+wwQ
 vmH
-fEp
-jkb
+bWM
+wwQ
 bXN
-wzm
+gGD
 wzm
 wzm
 wzm
@@ -166922,12 +166984,12 @@ wqf
 aJu
 wqf
 aJu
-eYV
-fEp
-fEp
-jkb
+hpc
+wut
+bWM
+wwQ
 ujx
-wzm
+gGD
 bWu
 wzm
 wzm
@@ -166943,7 +167005,7 @@ uzq
 vgj
 vgj
 pdV
-vgj
+uzq
 vgj
 ePr
 vgj
@@ -167224,21 +167286,21 @@ wqf
 aJu
 wqf
 aJu
-eYV
-fEp
-fEp
+hpc
+qXJ
+lEd
 wKD
 bYq
+lCX
 wzm
 wzm
-nAG
 wzm
 nAG
 wzm
 aND
 fME
 bzk
-wAX
+kqF
 ePr
 vgj
 vgj
@@ -167526,10 +167588,10 @@ wqf
 aJu
 wqf
 aJu
-eYV
-iVE
-iMt
-jkb
+hpc
+hWj
+bWM
+wwQ
 wAr
 wzm
 wzm
@@ -167545,7 +167607,7 @@ vgj
 vgj
 ePr
 vgj
-vgj
+uzq
 vgj
 vgj
 vgj
@@ -167828,13 +167890,13 @@ wqf
 aJu
 wqf
 aJu
-bqw
+hBs
+nMq
+mba
 nMq
 nMq
-nMq
-nMq
-mcR
-mcR
+pvU
+sNQ
 nMq
 czs
 utt
@@ -168130,7 +168192,7 @@ wqf
 aJu
 wqf
 aJu
-mcR
+pCy
 lHo
 joI
 dys
@@ -168140,10 +168202,10 @@ mmn
 nMq
 skx
 pjk
-hmV
+pjk
 uRz
 fME
-bzk
+npZ
 wAX
 pdV
 uzq
@@ -168424,25 +168486,25 @@ lVb
 lVb
 mGx
 lbW
-aJu
-aJu
-aJu
-aJu
-wqf
-aJu
-wqf
-aJu
-mcR
+ydz
+ydz
+ydz
+ydz
+wCE
+ydz
+wCE
+ydz
+kQB
 sTf
-bQC
+tFI
 bQC
 tSG
-pjk
+mCV
 sAP
 nMq
-day
+uKx
 pjk
-pjk
+gHb
 uRz
 fME
 wkS
@@ -168734,17 +168796,17 @@ wqf
 aJu
 wqf
 aJu
-mcR
+brq
 jIG
 fdo
 bWB
 nMq
-pjk
+gbL
 pjk
 sPk
 pjk
 pjk
-hmV
+pjk
 uRz
 fME
 bzk
@@ -169036,12 +169098,12 @@ wqf
 aJu
 wqf
 aJu
-bqw
+hBs
 nMq
 nMq
 nMq
 nMq
-pjk
+jhh
 pjk
 nMq
 uIQ
@@ -169338,7 +169400,7 @@ wqf
 aJu
 wqf
 aJu
-mcR
+pCy
 qdJ
 wTf
 edG
@@ -169346,9 +169408,9 @@ nMq
 jdR
 pjk
 nMq
-mcR
+aCd
 vPb
-mcR
+aCd
 nMq
 jMf
 vgj
@@ -169640,12 +169702,12 @@ wqf
 aJu
 wqf
 aJu
-mcR
+kQB
 gGM
 edx
 edx
 jPt
-pjk
+gbL
 pjk
 nMq
 bXl
@@ -169659,7 +169721,7 @@ vgj
 vgj
 ePr
 vgj
-vgj
+uzq
 vgj
 vgj
 vgj
@@ -169942,14 +170004,14 @@ wqf
 aJu
 wqf
 aJu
-mcR
+brq
 rHZ
 gLi
 uPS
 nMq
+wuq
 pjk
-pjk
-mcR
+ljS
 rPR
 pjk
 pjk
@@ -170244,19 +170306,19 @@ wqf
 aJu
 wqf
 aJu
-bqw
+hBs
 nMq
 nMq
 nMq
 nMq
-jdR
+ozj
 pjk
-mcR
+ljS
 fdK
 pjk
 pjk
 tjq
-mcR
+pCy
 vgj
 pdV
 uzq
@@ -170546,19 +170608,19 @@ wqf
 aJu
 wqf
 aJu
-mcR
+ljS
 vje
 heJ
 qKh
 nMq
-pjk
+kgK
 pjk
 nMq
 dyv
 pjk
 pjk
 nuu
-mcR
+brq
 vgj
 pdV
 vgj
@@ -170848,7 +170910,7 @@ wqf
 aJu
 wqf
 aJu
-mcR
+kQB
 asL
 bRu
 bRu
@@ -171150,19 +171212,19 @@ wqf
 aJu
 wqf
 aJu
-mcR
+brq
 xgS
 bFs
 vzv
 nMq
-jdR
+ozj
 pjk
 nMq
 uSR
 nYe
 nYe
 pjk
-mcR
+pCy
 vgj
 pdV
 uzq
@@ -171172,7 +171234,7 @@ uzq
 sjx
 vgj
 pdV
-vgj
+uzq
 vgj
 vgj
 vgj
@@ -171452,19 +171514,19 @@ wqf
 aJu
 wqf
 aJu
-bqw
+hBs
 nMq
 nMq
 nMq
 nMq
 hJY
 pjk
-mcR
+ljS
 wbv
 pDQ
 xRw
 pjk
-mcR
+brq
 vgj
 pdV
 vgj
@@ -171743,25 +171805,25 @@ ydz
 ydz
 kud
 lZh
-mcp
-aJu
-aJu
-aJu
-aJu
-aJu
-aJu
-wqf
-aJu
-wqf
-aJu
-bqw
+aII
+ydz
+ydz
+ydz
+ydz
+ydz
+ydz
+wCE
+ydz
+wCE
+ydz
+hBs
 nPY
 bRI
 wkF
 hXA
 pjk
 pjk
-mcR
+ljS
 aeg
 day
 pjk
@@ -172056,8 +172118,8 @@ wqf
 aJu
 wqf
 aJu
-bqw
-bqw
+hBs
+hBs
 qav
 ejx
 nMq
@@ -172356,34 +172418,34 @@ aJu
 aJu
 wqf
 aJu
-wqf
-aJu
-aJu
-vaI
-vaI
-vaI
-vaI
-btR
-btR
-vaI
-vaI
-btR
-btR
-vaI
-vaI
-btR
-btR
-vaI
-btR
-btR
-btR
-vaI
-btR
-btR
-btR
-vaI
-btR
-btR
+fdT
+ydz
+ygY
+hBs
+hBs
+hBs
+hBs
+tyh
+kLV
+hBs
+hBs
+tyh
+kLV
+hBs
+hBs
+mcR
+mcR
+bqw
+mcR
+mcR
+mcR
+bqw
+mcR
+mcR
+mcR
+bqw
+mcR
+mcR
 aJu
 aJu
 aJu
