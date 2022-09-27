@@ -312,10 +312,11 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as anything in hud.mobs)
-				if (M != user)
-					M.detach_hud(hud)
-			hud.update(user)
+			if (hud)
+				for (var/mob/M as anything in hud.mobs)
+					if (M != user)
+						M.detach_hud(hud)
+				hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()

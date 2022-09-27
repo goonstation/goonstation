@@ -39422,7 +39422,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "bxF" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 8;
 	name = "Listening Post"
@@ -39430,7 +39430,7 @@
 /turf/simulated/floor/delivery,
 /area/listeningpost)
 "bxG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 8;
 	name = "Weather Satellite"

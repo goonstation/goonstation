@@ -10823,10 +10823,9 @@
 /area/station/turret_protected/ai)
 "aUB" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -19618,10 +19617,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -35740,10 +35738,8 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Security Checkpoint";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -56186,10 +56182,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor,

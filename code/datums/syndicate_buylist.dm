@@ -1048,6 +1048,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/gun/kinetic/akm
 	cost = 12
 	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
+	can_buy = null
 
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"

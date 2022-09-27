@@ -1403,20 +1403,26 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "green"
 
 /area/wrecknsspolaris
-	name = "Wreck of NSS Polaris"
+	name = "Wreck of the NSS Polaris"
 	icon_state = "green"
 	sound_group = "polaris"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/loop/Polarisloop.ogg'
 
 /area/wrecknsspolaris/vault
+	name = "NSS Polaris Vault"
 	requires_power = 0
 
 /area/wrecknsspolaris/outside
+	name = "Ouside the Wreck"
 	icon_state = "blue"
 	ambient_light = OCEAN_LIGHT
+
 /area/wrecknsspolaris/outside/teleport
+	name = "Outer Wreck (with teleport)"
+
 /area/wrecknsspolaris/outside/back
+	name = "Back of the Wreck"
 
 /obj/item/parts/human_parts/arm/right/polaris
 	name = "misplaced right arm"
