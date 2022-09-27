@@ -26,7 +26,7 @@
 	var/disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
-	var/cast_in_storage = FALSE
+	var/cast_in_storage = TRUE //used if
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()

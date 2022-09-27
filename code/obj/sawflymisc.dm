@@ -74,10 +74,11 @@
 				overlays += "open-overlay"
 		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
 			insertbrain( W, src, heldfly)
+			boutput(user, "You insert the [W] into the [src]. Please wait a maximum of 1 minute for the [heldfly]'s systems to initalize.")
 
 	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)//mob/user,
 		//var/success = TRUE
-		//	boutput(user, "You insert the [brain] into the [sawflygrenade]. Please wait a maximum of 20 seconds for the [heldfly]'s systems to initalize.")
+		//
 		src.currentbrain = brain
 		var/ghost_delay = 100
 		var/list/text_messages = list()
@@ -93,20 +94,20 @@
 			sawflygrenade.visible_message("The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
 			src.ejectbrain(currentbrain)
 			return
+
 		var/datum/mind/lucky_dude = pick(candidates)
-
-
 		if (lucky_dude)
 
-			playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
+			playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
 			src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
 
-			 SPAWN(2 SECONDS)//incredibly hacky workaround time- make a new sawfly, inherit name, place on ground
+			SPAWN(2 SECONDS)// incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
 				src.set_loc(get_turf(src))
 				oursawfly = new /mob/living/critter/robotic/sawfly(place)
 				oursawfly.name = src.name
 				lucky_dude.transfer_to(oursawfly)
 				brain.set_loc(oursawfly)
+
 				oursawfly.foldself()
 				lucky_dude.special_role = ROLE_SAWFLY
 				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
@@ -252,23 +253,26 @@
 	name = "(Un)deploy"
 	desc = "Toggle your mob/item state! Can also be used to escape containers."
 	icon_state = "sawfly-deploy"
-	cooldown = 0
-	cast_in_storage = TRUE
+	cooldown = 10
+
 
 	cast(mob/target)
 
 		var/mob/living/critter/robotic/sawfly/M = holder.owner
 
-		if(istype(M.ourgrenade.loc, /obj/item/storage))
-			actions.start(/datum/action/bar/private/icon/sawflyescape, src)
+
 
 		if(M.isgrenade == TRUE) //we're in a grenade, time to un-grenade ourselfes!
-			M.visible_message("<span class='alert'>[M] suddenly springs open as its engine purrs to a start!</span>")
-			playsound(M, pick(M.beeps), 40, 1)
-			if(get_turf(M))
-				M.ourgrenade.prime()
-				//M.isgrenade = FALSE
-				//M.set_loc(get_turf(M))
+			if(istype(M.ourgrenade.loc, /obj/item/storage))
+				actions.start(/datum/action/bar/private/icon/sawflyescape, src)
+				return
+			else
+				M.visible_message("<span class='alert'>[M] suddenly springs open as its engine purrs to a start!</span>")
+				playsound(M, pick(M.beeps), 40, 1)
+				if(get_turf(M))
+					M.ourgrenade.prime()
+					//M.isgrenade = FALSE
+					//M.set_loc(get_turf(M))
 		else
 			M.foldself()
 
@@ -287,12 +291,6 @@
 
 		var/mob/living/critter/robotic/sawfly/M = owner
 		boutput(M, "<span class='notice'>You start to make your way out of [M.loc].</span>")
-
-	onUpdate()
-		. = ..()
-		if(!owner.hasStatus("handcuffed"))
-			interrupt(INTERRUPT_ALWAYS)
-			return
 
 	onInterrupt(var/flag)
 		..()

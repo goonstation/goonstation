@@ -230,3 +230,8 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		src.is_npc = TRUE
 		src.isgrenade = FALSE
 		src.ai = new /datum/aiHolder/sawfly(src)
+
+/mob/living/critter/robotic/sawfly/standalone // for when you want to spawn a normal, set up sawfly.
+	New()
+		src.isgrenade = FALSE
+		..()
