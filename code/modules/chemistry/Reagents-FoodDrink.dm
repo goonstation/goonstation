@@ -2864,7 +2864,7 @@ datum
 			transparency = 250
 			taste = "herbal"
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if(!volume_passed || method != INGEST)
 					return
@@ -2872,13 +2872,13 @@ datum
 					return
 
 				if(M.get_oxygen_deprivation() && prob(45))
-					M.take_oxygen_deprivation(-1 * mult)
+					M.take_oxygen_deprivation(-1)
 				if(M.get_toxin_damage() && prob(45))
-					M.take_toxin_damage(-1 * mult)
+					M.take_toxin_damage(-1)
 				if(M.losebreath && prob(85))
-					M.losebreath -= (1 * mult)
+					M.losebreath -= (1)
 				if(prob(45))
-					M.HealDamage("All", 6 * mult, 6 * mult)
+					M.HealDamage("All", 6, 6)
 				//M.UpdateDamageIcon()
 				return
 
