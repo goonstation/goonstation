@@ -1,5 +1,19 @@
 
+(t)mon sep 26 22
+(u)Walpvrgis
+(p)11024
+(e)🎨|C-Sprites
+(*)Added several new hairstyles + layering parts and hair fades for some existing hairstyles. Check minor changes for a list of style names.
+(+)New hairstyles: Pompom Pigtails, Untidy Ponytail, Long Twin Tails, Scruffy, Sparks, Wavy, Lionsmane, Pinion, Breezy. New Layering parts: Flat bangs and Long Wavy Bangs. New fades: Wavy Faded, Lionsmane Faded, Breezy Faded, Ripley Faded, Violet Faded, Willow Faded, Flick Faded, Rock Ponytail Faded and Afro Faded.
 (t)sat sep 24 22
+(u)Sovexe
+(p)10967
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Playable emagged firebots now how have a new skill to spray burning welding fuel, and come in less ugly colors.
+(u)Mr. Moriarty
+(p)10917
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Redesigned the Kondaru Armory, adding a phaser crate, two more night vision goggles, one additional breaching sledgehammer, and a box of flashbangs. The communications console has been moved back inside of the Armory.
 (u)Caro
 (*)Arrivals airlocks can no longer be tampered with by welding or hacking them.
 (u)ZeWaka

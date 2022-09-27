@@ -697,3 +697,46 @@
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "[to_log]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "admin")
 		system.reply("[user] [to_log]")
+
+/datum/spacebee_extension_command/antagtokens
+	name = "antagtokens"
+	help_message = "Get antag tokens for a player"
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+
+	execute(user, ckey)
+		for(var/client/C)
+			if (C.ckey == ckey)
+				system.reply("Current tokens for [ckey]: [C.antag_tokens]", user)
+				return
+		system.reply("Could not locate [ckey].", user)
+
+/datum/spacebee_extension_command/state_based/confirmation/setantagtokens
+	name = "setantagtokens"
+	help_message = "Set antag tokens for a player(<1 to clear). E.g., `;;setantagtokens zewaka 3`"
+	argument_types = list(/datum/command_argument/string/ckey = "player", /datum/command_argument/the_rest = "tokens")
+	server_targeting = COMMAND_TARGETING_SINGLE_SERVER
+	var/client/target_client = null
+	var/token_amt = null
+
+	prepare(user, player, tokens)
+		var/mob/playermob = ckey_to_mob(player)
+		src.target_client = playermob.client
+		src.token_amt = tokens
+		return "You are about to set [target_client]'s antag tokens to: [token_amt]. Current: [target_client.antag_tokens]"
+
+	do_it(user)
+		if(isnull(src.target_client) || isnull(src.token_amt))
+			return
+		target_client.set_antag_tokens(token_amt)
+		var/success_msg = null
+		if (token_amt <= 0)
+			logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(target_client,"admin")]")
+			logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(target_client,"diary")]", "admin")
+			success_msg = "<span class='internal'>[key_name(user)] removed all antag tokens from [key_name(target_client)]</span>"
+		else
+			logTheThing(LOG_ADMIN, usr, "Set [constructTarget(target_client,"admin")]'s Antag tokens to [token_amt].")
+			logTheThing(LOG_DIARY, usr, "Set [constructTarget(target_client,"diary")]'s Antag tokens to [token_amt].")
+			success_msg = "<span class='internal'>[key_name(user)] set [key_name(target_client)]'s Antag tokens to [token_amt].</span>"
+		message_admins(success_msg)
+		system.reply("Antag tokens for [target_client] successfully [(token_amt <= 0) ? "cleared" : "set to " + token_amt]")

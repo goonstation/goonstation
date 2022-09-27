@@ -12485,9 +12485,7 @@
 	name = "iceelefall"
 	},
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/icebase_elevator/lower{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/lower)
 "aOQ" = (
 /obj/spacevine{
 	density = 1;
@@ -17338,18 +17336,14 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bcA" = (
 /obj/grille/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bcB" = (
 /obj/lattice{
 	dir = 5;
@@ -17542,18 +17536,14 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bda" = (
 /obj/grille/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bdb" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -70828,9 +70818,7 @@
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
 	},
-/obj/stool/chair/comfy{
-	dir = 2
-	},
+/obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -74472,10 +74460,12 @@
 /area/centcom/lobby)
 "qXt" = (
 /obj/table/auto,
-/obj/item/decoration/ashtray{
-	icon_state = "ashtray4"
-	},
 /obj/machinery/light/small/floor,
+/obj/item/paper/gallery{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/decoration/ashtray,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "qYW" = (
