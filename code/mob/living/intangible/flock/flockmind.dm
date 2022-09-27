@@ -64,7 +64,7 @@
 	if (src.afk_counter > src.afk_counter_threshold)
 		var/list/traces = src.flock.getActiveTraces()
 		if (length(traces))
-			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience detected. Self-instructed routines promoting new Flockmind.\]</b></span>")
+			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience detected. Self-programmed routines promoting new Flockmind.\]</b></span>")
 			var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
 			chosen_trace.promoteToFlockmind(FALSE)
 		src.afk_counter = 0
