@@ -88,7 +88,7 @@
 
 		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
 		if (!candidates)
-			sawflygrenade.visible_message("<span class='alert'> The [src.heldfly] ejects the [currentbrain] and beeps- \improper could not initialize consciousness pool! Please try again later.")
+			sawflygrenade.visible_message("<span class='alert'> The [src.heldfly] ejects the [currentbrain] and beeps: \" could not initialize consciousness pool! Please try again later. \"")
 			src.ejectbrain(currentbrain)
 			return
 
