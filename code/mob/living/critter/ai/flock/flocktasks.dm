@@ -94,6 +94,14 @@ stare
 	src.subtasks = list() //get rid of the move and replace it with flockmove
 	add_task(holder.get_instance(/datum/aiTask/succeedable/move/flock, list(holder)))
 
+///The amount of resources a drone needs to be eligible to lay an egg (eggs still only cost FLOCK_LAY_EGG_COST)
+/datum/aiTask/sequence/goalbased/flock/proc/current_egg_cost()
+	var/mob/living/critter/flock/flockcritter = src.holder.owner
+	if (!flockcritter?.flock)
+		return 100
+	return FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+
+
 /datum/aiTask/sequence/goalbased/flock/switched_to()
 	. = ..()
 	var/mob/living/critter/flock/drone/D = holder.owner
@@ -139,7 +147,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if (!F?.flock)
 		return
-	return F.can_afford(F.flock.currentEggCost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
+	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
 /datum/aiTask/sequence/goalbased/flock/replicate/get_targets()
 	. = list()
@@ -199,7 +207,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if (!F?.flock)
 		return
-	if(F.can_afford(F.flock.currentEggCost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
+	if(F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
