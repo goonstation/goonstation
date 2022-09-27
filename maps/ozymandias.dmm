@@ -55743,6 +55743,12 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
+"oxm" = (
+/obj/landmark/spawner{
+	name = "dolly"
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "oxs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -166704,7 +166710,7 @@ wwQ
 bXN
 gGD
 wzm
-wzm
+oxm
 wzm
 wzm
 wzm
