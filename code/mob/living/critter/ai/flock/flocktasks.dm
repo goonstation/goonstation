@@ -98,8 +98,8 @@ stare
 /datum/aiTask/sequence/goalbased/flock/proc/current_egg_cost()
 	var/mob/living/critter/flock/flockcritter = src.holder.owner
 	if (!flockcritter?.flock)
-		return 100
-	return FLOCK_CONVERT_COST + FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
+		return FLOCK_LAY_EGG_COST
+	return FLOCK_LAY_EGG_COST + clamp((flockcritter.flock.getComplexDroneCount() - FLOCK_MIN_DESIRED_POP) * FLOCK_ADDITIONAL_RESOURCE_RESERVATION_PER_DRONE, 0, FLOCK_LAY_EGG_COST * 2)
 
 
 /datum/aiTask/sequence/goalbased/flock/switched_to()
@@ -207,7 +207,7 @@ stare
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if (!F?.flock)
 		return
-	if(F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
+	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
 		for(var/turf/simulated/floor/feather/T in view(max_dist, holder.owner))
 			return FALSE
