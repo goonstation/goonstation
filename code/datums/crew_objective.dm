@@ -457,7 +457,23 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
 		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+		/obj/item/reagent_containers/food/snacks/healgoo, // might be fun to have the trench mob drops available when it's oshan
+		/obj/item/reagent_containers/food/snacks/greengoo,
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
