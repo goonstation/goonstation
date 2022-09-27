@@ -33,7 +33,7 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
-	var/list/clothes = list()
+	var/list/static/clothes = list()
 
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
@@ -262,7 +262,9 @@
 		src.eject_brain(fling = TRUE) //EJECT
 		if (length(src.clothes))
 			for (var/obj/item/A as anything in src.clothes)
-				clothes[A].set_loc(src.loc)
+				src.clothes[A].set_loc(src.loc)
+		//Clear list as it is of static type
+		src.clothes = list()
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
