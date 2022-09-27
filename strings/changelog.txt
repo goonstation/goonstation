@@ -1,4 +1,9 @@
 
+(t)tue sep 27 22
+(u)Roddy
+(p)10736
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(+)Adds in ratatouille to the game. Combine eggplant, cucumber, garlic, and tomato in the oven.
 (t)mon sep 26 22
 (u)Walpvrgis
 (p)11024
