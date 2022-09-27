@@ -168,8 +168,8 @@
 				spawnEgg()
 			else
 				var/obj/item/flockcache/cube = new(get_turf(src))
-				cube.resources = create_egg_at_fluid / 2
-			reagents.remove_reagent(target_fluid, create_egg_at_fluid / 2)
+				cube.resources = create_egg_at_fluid
+			reagents.remove_reagent(target_fluid, create_egg_at_fluid)
 
 		if(occupant && src.flock)
 			src.flock.updateEnemy(occupant)
