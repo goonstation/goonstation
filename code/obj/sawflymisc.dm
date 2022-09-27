@@ -93,24 +93,24 @@
 			return
 
 		var/datum/mind/lucky_dude = pick(candidates)
-			playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
-			src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
+		playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
+		src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
 
-			SPAWN(2 SECONDS) //wait two seconds for
-				if (lucky_dude) // incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
-					src.set_loc(get_turf(src))
-					oursawfly = new /mob/living/critter/robotic/sawfly(place)
-					oursawfly.name = src.name
-					lucky_dude.transfer_to(oursawfly)
-					brain.set_loc(oursawfly)
-					oursawfly.foldself()
-					lucky_dude.special_role = ROLE_SAWFLY
-					boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
-					oursawfly.antagonist_overlay_refresh(1, 0)
-					qdel(src)
-				else
-					sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
-					src.ejectbrain(currentbrain)
+		SPAWN(2 SECONDS) //wait two seconds for
+			if (lucky_dude) // incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
+				src.set_loc(get_turf(src))
+				oursawfly = new /mob/living/critter/robotic/sawfly(place)
+				oursawfly.name = src.name
+				lucky_dude.transfer_to(oursawfly)
+				brain.set_loc(oursawfly)
+				oursawfly.foldself()
+				lucky_dude.special_role = ROLE_SAWFLY
+				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
+				oursawfly.antagonist_overlay_refresh(1, 0)
+				qdel(src)
+			else
+				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
+				src.ejectbrain(currentbrain)
 
 	proc/ejectbrain(/obj/item/organ/brain/currentbrain)
 		if(!isopen)
