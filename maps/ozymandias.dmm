@@ -16549,6 +16549,15 @@
 /obj/landmark/halloween,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/north)
+"exG" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "exH" = (
 /obj/stool/chair/yellow{
 	dir = 8
@@ -86881,6 +86890,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/grey,
 /area/station/security/processing)
+"wav" = (
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/ne)
 "waw" = (
 /obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/white,
@@ -166985,8 +167000,8 @@ aJu
 wqf
 aJu
 hpc
-wut
-bWM
+wav
+exG
 wwQ
 ujx
 gGD
