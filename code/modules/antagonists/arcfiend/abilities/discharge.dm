@@ -21,12 +21,12 @@
 			var/mob/M = target
 			M.shock(src.holder.owner, src.wattage, ignore_gloves = TRUE)
 			target.add_fingerprint(src.holder.owner)
-			logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else if (istype(target, /obj/machinery/door/airlock))
 			var/obj/machinery/door/airlock/airlock = target
 			airlock.loseMainPower()
 			target.add_fingerprint(src.holder.owner)
-			playsound(src.holder.owner, "sound/effects/electric_shock.ogg", 50, TRUE)
+			playsound(src.holder.owner, 'sound/effects/electric_shock.ogg', 50, TRUE)
 			boutput(src.holder.owner, "<span class='alert'>You run a powerful current into [target], temporarily cutting its power!</span>")
 		else
 			return TRUE

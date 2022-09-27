@@ -68,12 +68,13 @@
 			if(src.found_path)
 				walk_rand(src,4)
 				holder.move_to_with_path(holder.target, src.found_path, 1)
-				owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
-				owncritter.hand_attack(holder.target, dummy_params)
-			//frustration++ //if frustration gets too high, the task is ended and re-evaluated
+				if(in_interact_range(owncritter, holder.target))
+					owncritter.set_dir(get_dir(owncritter, holder.target)) //attack regardless
+					owncritter.hand_attack(holder.target, dummy_params)
 		else
-			owncritter.set_dir(get_dir(owncritter, holder.target))
-			owncritter.hand_attack(holder.target, dummy_params)
+			if(in_interact_range(owncritter, holder.target))
+				owncritter.set_dir(get_dir(owncritter, holder.target))
+				owncritter.hand_attack(holder.target, dummy_params)
 
 	if(!holder.target)
 		holder.target = get_best_target(get_targets())

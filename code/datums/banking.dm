@@ -43,13 +43,13 @@
 				continue
 
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
 		for(var/occupation in assistant_occupations)
 			// If its not already in the list add it
-			if (!(jobs.Find(occupation)))
+			if (!(occupation in jobs))
 				// 0.0 is the default wage
 				jobs[occupation] = 0
 
@@ -254,7 +254,7 @@
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
-			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			logTheThing(LOG_DIARY, user, "deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
@@ -427,7 +427,7 @@
 					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
 					usr.client.add_to_bank(-amount)
 					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
-					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
+					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
@@ -443,7 +443,7 @@
 				if(!usr.client.bank_can_afford(amount))
 					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 				else
-					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
+					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
@@ -580,7 +580,7 @@
 		if(..())
 			return
 		var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
+		if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (usr_is_robot))
 			src.add_dialog(usr)
 			if (href_list["temp"])
 				src.temp = null
@@ -638,7 +638,7 @@
 					if (t1 > 10000)
 						t1 = 10000
 						boutput(usr, "<span class='alert'>Maximum wage is $10,000.</span>")
-					logTheThing("station", usr, null, "sets <b>[R["name"]]</b>'s wage to $[t1].")
+					logTheThing(LOG_STATION, usr, "sets <b>[R["name"]]</b>'s wage to $[t1].")
 					R["wage"] = t1
 				else if(href_list["Fmoney"])
 					var/datum/db_record/R = locate(href_list["Fmoney"])
@@ -655,7 +655,7 @@
 						if (t1 < 1) return
 						R["current_money"] -= t1
 						wagesystem.station_budget += t1
-						logTheThing("station", usr, null, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
+						logTheThing(LOG_STATION, usr, "adds $[t1] to the station budget from <b>[R["name"]]</b>'s account.")
 						boutput(usr, "<span class='notice'>$[t1] added to station budget from [R["name"]]'s account.</span>")
 					else if (t2 == "Deposit")
 						avail = wagesystem.station_budget
@@ -663,7 +663,7 @@
 						if (t1 < 1) return
 						R["current_money"] += t1
 						wagesystem.station_budget -= t1
-						logTheThing("station", usr, null, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
+						logTheThing(LOG_STATION, usr, "adds $[t1] to <b>[R["name"]]</b>'s account from the station budget.")
 						boutput(usr, "<span class='notice'>$[t1] added to [R["name"]]'s account from station budget.</span>")
 					else boutput(usr, "<span class='alert'>Error selecting withdraw/deposit mode.</span>")
 				else if(href_list["payroll"])
@@ -674,11 +674,11 @@
 						return
 					if (wagesystem.pay_active)
 						wagesystem.pay_active = 0
-						logTheThing("station", usr, null, "suspends the station payroll.")
+						logTheThing(LOG_STATION, usr, "suspends the station payroll.")
 						command_alert("The payroll has been suspended until further notice. No further wages will be paid until the payroll is resumed.","Payroll Announcement", alert_origin = ALERT_STATION)
 					else
 						wagesystem.pay_active = 1
-						logTheThing("station", usr, null, "resumes the station payroll.")
+						logTheThing(LOG_STATION, usr, "resumes the station payroll.")
 						command_alert("The payroll has been resumed. Wages will now be paid into employee accounts normally.","Payroll Announcement", alert_origin = ALERT_STATION)
 				else if(href_list["transfer"])
 					var/transfrom = input("Transfer from which?", "Budgeting", null, null) in list("Payroll", "Shipping", "Research")
@@ -799,7 +799,7 @@
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
-			logTheThing("diary",user,null,"deposits a spacebux token worth [SB.amount].")
+			logTheThing(LOG_DIARY, user, "deposits a spacebux token worth [SB.amount].")
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
@@ -807,11 +807,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src,"sound/impact_sounds/Glass_Hit_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
@@ -963,7 +963,7 @@
 					boutput(C, "<span class='notice'><B>[usr.name] sent you [amount] spacebux!</B></span>")
 					usr.client.add_to_bank(-amount)
 					boutput(usr, "<span class='notice'><B>Transaction successful!</B></span>")
-					logTheThing("diary",usr,null,"sent [amount] spacebux to [C].")
+					logTheThing(LOG_DIARY, usr, "sent [amount] spacebux to [C].")
 					src.updateUsrDialog()
 					return
 				boutput(usr, "<span class='alert'><B>No online player with that ckey found!</B></span>")
@@ -979,7 +979,7 @@
 				if(!usr.client.bank_can_afford(amount))
 					boutput(usr, "<span class='alert'>Insufficient Funds</span>")
 				else
-					logTheThing("diary",usr,null,"withdrew a spacebux token worth [amount].")
+					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
 					var/obj/item/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)

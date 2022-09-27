@@ -303,7 +303,7 @@
 		if (!usesPoints)
 			return 1
 		if (src.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			src.points = 0
 		if (cost > points)
 			boutput(owner, notEnoughPointsMessage)
@@ -911,7 +911,7 @@
 		// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 		tryCast(atom/target, params)
 			if (!holder || !holder.owner)
-				logTheThing("debug", usr, null, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
+				logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
 				return 1
 			if (src.holder.locked == 1 && src.ignore_holder_lock != 1)
 				boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
@@ -1196,7 +1196,7 @@
 			if (H.topBarRendered && H.rendered)
 				var/list/stats = H.onAbilityStat()
 				for (var/x in stats)
-					var/line_length = length(x) + 1 + length(stats[x])
+					var/line_length = length(x) + 1 + length(num2text(stats[x]))
 					longest_line = max(longest_line, line_length)
 					msg += "[x] [stats[x]]<br>"
 					i++

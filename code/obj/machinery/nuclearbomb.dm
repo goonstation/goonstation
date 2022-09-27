@@ -126,7 +126,7 @@
 			var/area/TA = src.target_override
 			target_name = initial(TA.name)
 		else if(!target_name && istype(gamemode))
-			target_name = gamemode?.target_location_name
+			target_name = gamemode?.concatenated_location_names
 
 		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
 				(ispath(target_area) && istype(get_area(src), target_area)) || \
@@ -164,8 +164,8 @@
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
-			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = FALSE
 
 		#undef NUKE_AREA_CHECK
@@ -198,8 +198,8 @@
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
 						ticker.mode.shuttle_available = 1
 
-				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
-				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
+				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
+				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
 				W.set_loc(src)
 				src.disk = W
@@ -254,7 +254,7 @@
 				if (60 to INFINITY)
 					src.take_damage(W.force / 7) // Esword has 60 force.
 
-			logTheThing("combat", user, null, "attacks [src] with [W] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "attacks [src] with [W] at [log_loc(src)].")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
@@ -320,7 +320,7 @@
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				gamemode = ticker.mode
 				gamemode.the_bomb = null
-				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
+				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
 			qdel(src)
 
@@ -375,7 +375,7 @@
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
 			sleep(30 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
+			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
 /datum/action/bar/icon/unanchorNuke
@@ -422,7 +422,7 @@
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
-				logTheThing("bombing", owner, null, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
+				logTheThing(LOG_GAMEMODE, owner, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
 
 /obj/machinery/nuclearbomb/event
 	anyone_can_activate = 1

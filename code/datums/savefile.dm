@@ -355,9 +355,9 @@
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
-			src.traitPreferences.calcTotal()
 			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 
+		src.traitPreferences.updateTotal()
 
 		if(!src.radio_music_volume) // We can take this out some time, when we're decently sure that most people will have this var set to something
 			F["[profileNum]_sounds"] >> src.radio_music_volume
@@ -431,7 +431,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -451,7 +451,7 @@
 			if (IsGuestKey( user.key ))
 				return 0
 			if (save_to)
-				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
+				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the other")
 
 		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
 		var/exported = save.ExportText()
@@ -464,7 +464,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -483,7 +483,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		user.player.cloudsaves.Remove( name )

@@ -361,7 +361,7 @@
 
 	for(var/obj/lpt_laser/L in laser_parts)
 		L.power = round(abs(src.output)*PTLEFFICIENCY)
-		L.alpha = clamp(((log(10, L.power) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
+		L.alpha = clamp(((log(10, max(1,L.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
 
 /obj/machinery/power/pt_laser/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -586,13 +586,13 @@
 			make_cleanable( /obj/decal/cleanable/ash,src.loc)
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is vaporised by the [src]!</b>")
-			logTheThing("combat", L, null, "was elecgibbed by the PTL at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was elecgibbed by the PTL at [log_loc(L)].")
 			L.elecgib()
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 		if(1e11+1 to INFINITY) //you really, REALLY fucked up this time buddy
 			L.unlock_medal("For Your Ohm Good", 1)
 			L.visible_message("<b>[L.name] is detonated by the [src]!</b>")
-			logTheThing("combat", L, null, "was explosively gibbed by the PTL at [log_loc(L)].")
+			logTheThing(LOG_COMBAT, L, "was explosively gibbed by the PTL at [log_loc(L)].")
 			L.blowthefuckup(min(1+round(power/1e12),20),0)
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 

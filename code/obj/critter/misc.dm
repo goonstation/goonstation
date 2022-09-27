@@ -167,7 +167,7 @@
 	desc = "It looks rather crumbly."
 	icon = 'icons/mob/human_decomp.dmi'
 	icon_state = "decomp4"
-	health = 1
+	health = 25
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -438,12 +438,12 @@
 			if(prob(20))
 				src.visible_message("<span class='notice'>[src] chitters happily at the [W], and seems a little friendlier with [M]!</span>")
 				friends += M
-				playsound(src.loc, "sound/misc/bugchitter.ogg", 50, 0)
+				playsound(src.loc, 'sound/misc/bugchitter.ogg', 50, 0)
 				src.task = "thinking"
 			else
 				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
 				random_brute_damage(M, rand(6,12),1)
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
 				M.emote("scream")
 			M.drop_item()
 			qdel(W)
@@ -473,12 +473,12 @@
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents?.add_reagent("neurotoxin", 15)
 				M.reagents?.add_reagent("toxin", 6)
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 				M.emote("scream")
 			else
 				random_brute_damage(M, rand(5,10),1)
 				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 
@@ -489,18 +489,18 @@
 				M.visible_message("<span class='combat'><B>[src]</B> stings [src.target]!</span>")
 				M.reagents?.add_reagent("neurotoxin", 15)
 				M.reagents?.add_reagent("toxin", 6)
-				playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 				M.emote("scream")
 			else
 				random_brute_damage(M, rand(5,10),1)
 				M.visible_message("<span class='combat'><B>[src]</B> tackles [src.target] with its pincers!</span>")
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
 				M.changeStatus("weakened", 4 SECONDS)
 				M.force_laydown_standup()
 		else
 			take_bleeding_damage(M, M, rand(3,6), DAMAGE_STAB, 1)
 			M.visible_message("<span class='combat'><B>[src]</B> snips [src.target] with its pincers!</span>")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 0)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 0)
 
 
 
@@ -544,10 +544,10 @@
 
 	New()
 		..()
-		playsound(src.loc, "sound/items/Scissor.ogg", 50, 0)
+		playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
 
 	Move()
-		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 0)
+		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 0)
 		. = ..()
 
 	attackby(obj/item/W, mob/living/user)
@@ -578,7 +578,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			src.visible_message("<span class='combat'><b>[src]</b> charges towards [Cc.name]!</span>")
-			playsound(src.loc, "sound/items/Scissor.ogg", 50, 0)
+			playsound(src.loc, 'sound/items/Scissor.ogg', 50, 0)
 			src.task = "chasing"
 			return
 
@@ -610,7 +610,7 @@
 			H.was_harmed(src)
 		if(!M.stat)
 			M.visible_message("<span class='combat'><B>[src]</B> pummels [src.target] mercilessly!</span>")
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			if(prob(10)) // lowered probability slightly
 				M.visible_message("<span class='combat'><B>[M]</B> staggers!</span>")
 				M.changeStatus("stunned", 2 SECONDS)
@@ -731,7 +731,7 @@
 		var/mob/living/carbon/human/H = M
 		if (istype(M) && (H.traitHolder.hasTrait("training_chaplain"))) return
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		if(M.reagents)
 			if(src.reagents && src.reagents.total_volume)
 
@@ -743,7 +743,7 @@
 		..()
 
 		src.visible_message("<span class='combat'><b>[src]</b> bursts into a puff of smoke!</span>")
-		logTheThing("combat", src, null, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "died, causing [src.reagents.get_master_reagent_name()] smoke at [log_loc(src)].")
 		src.reagents.smoke_start(12)
 		invisibility = INVIS_ALWAYS_ISH
 		SPAWN(5 SECONDS)
@@ -789,7 +789,7 @@
 				src.visible_message("<span class='combat'><b>[src]</b> points at [C.name]!</span>")
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<b>[src]</b> says, \"HALT!\"", 2)
-				playsound(src.loc, "sound/voice/guard_halt.ogg", 50, 0)
+				playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 				src.task = "chasing"
 				return
 			else
@@ -808,7 +808,7 @@
 				src.visible_message("<span class='combat'><b>[src]</b> points at [C.name]!</span>")
 				for(var/mob/O in hearers(src, null))
 					O.show_message("<b>[src]</b> says, \"HALT!\"", 2)
-				playsound(src.loc, "sound/voice/guard_halt.ogg", 50, 0)
+				playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 				src.task = "chasing"
 				return
 
@@ -817,7 +817,7 @@
 	ChaseAttack(mob/M)
 		if(iscarbon(M) && prob(15))
 			..()
-			playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
 			random_brute_damage(M, rand(0,3))//this is weak enough as it is without being nerfed by armor - Tarm
 			M.changeStatus("stunned", 2 SECONDS)
 			M.changeStatus("weakened", 2 SECONDS)
@@ -827,7 +827,7 @@
 	CritterAttack(mob/M)
 		for(var/mob/O in viewers(src, null))
 			O.show_message("<b>[src]</b> says, \"HALT!\"", 2)
-		playsound(src.loc, "sound/voice/guard_halt.ogg", 50, 0)
+		playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 		src.attacking = 1
 		if(istype(M,/obj/critter))
 			var/obj/critter/C = M
@@ -869,7 +869,7 @@
 			if (src.target)
 				for(var/mob/O in viewers(src, null))
 					O.show_message("<b>[src]</b> says, \"HALT!\"", 2)
-				playsound(src.loc, "sound/voice/guard_halt.ogg", 50, 0)
+				playsound(src.loc, 'sound/voice/guard_halt.ogg', 50, 0)
 		return ..()
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard
@@ -939,7 +939,7 @@
 
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/effects/ghost2.ogg", 30, 1, -1)
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 30, 1, -1)
 		attacking = 1
 		if(iscarbon(M))
 			if(prob(30))
@@ -970,7 +970,7 @@
 	ai_think()
 		if(!locate(/obj/decal/cleanable/blood) in src.loc)
 			if(prob(50))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
 				make_cleanable( /obj/decal/cleanable/blood,loc)
 		return ..()
 
@@ -978,7 +978,7 @@
 		if (!src.alive)
 			return
 		..()
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1, -1)
 		new /obj/decal/cleanable/blood(src.loc)
 		qdel(src)
 
@@ -1006,7 +1006,7 @@
 
 	CritterAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 
 	ChaseAttack(mob/M)
 		..()
@@ -1170,8 +1170,8 @@
 				return
 
 			src.visible_message("<span class='combat'><b>In a whirling flurry of tendrils, [src] rends down [src.target]! Holy shit!</b></span>")
-			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			doomedMob.ghostize()
 			new /obj/decal/fakeobjects/skeleton(doomedMob.loc)
 			doomedMob.gib()
@@ -1445,7 +1445,7 @@
 			src.target = Cc
 			src.oldtarget_name = Cc.name
 			//src.visible_message("<span class='combat'><b>[src]</b> charges at [Cc.name]!</span>")
-			playsound(src.loc, "sound/voice/animal/cat_hiss.ogg", 25, 1, -1) // cat hiss, snake hiss - basically the same thing, right?
+			playsound(src.loc, 'sound/voice/animal/cat_hiss.ogg', 25, 1, -1) // cat hiss, snake hiss - basically the same thing, right?
 			src.task = "chasing"
 			return
 
@@ -1458,7 +1458,7 @@
 		contents_check()
 		src.attacking = 1
 		M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		random_brute_damage(M, rand(src.attack_damage, src.attack_damage + 5))
 		SPAWN(1 SECOND)
 			src.attacking = 0
@@ -1490,6 +1490,7 @@
 	dead_state = "rattlesnake_dead"
 	density = 1
 	health = 20
+	maxhealth = 50
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
@@ -1525,10 +1526,10 @@
 						icon_state = "rattlesnake"
 						if (iscarbon(C) && src.atkcarbon) src.attack = 1
 						if (issilicon(C) && src.atksilicon) src.attack = 1
-						if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
+						if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> bites [C.name]!</span>")
 							C.reagents?.add_reagent("viper_venom", rand(25,35))
-							playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 							C.emote("scream")
 					if (1 to 2)
 						src.mobile = 0
@@ -1536,7 +1537,7 @@
 						icon_state = "rattlesnake_rattle"
 						if(!ON_COOLDOWN(src, "Rattle", 6 SECONDS))
 							C.visible_message("<span class='combat'><B>[src]</B> is rattling, better not get much closer!</span>")
-							playsound(src.loc, "sound/musical_instruments/tambourine/tambourine_4.ogg", 80, 0, 0, 0.75)
+							playsound(src.loc, 'sound/musical_instruments/tambourine/tambourine_4.ogg', 80, 0, 0, 0.75)
 					if (2 to 3)
 						src.mobile = 0
 						src.task = "thinking"
@@ -1554,12 +1555,46 @@
 				src.task = "chasing"
 				break
 
+	attackby(obj/item/W, mob/M)
+		if(istype(W, /obj/item/reagent_containers/food/snacks) && !(M in src.friends))
+			if(prob(25))
+				src.visible_message("<span class='notice'>[src] munches happily on the [W], and seems a little friendlier with [M]!</span>")
+				src.friends += M
+				src.task = "thinking"
+			else
+				src.visible_message("<span class='notice'>[src] hated the [W]! It bit [M]'s hand!</span>")
+				M.reagents?.add_reagent("viper_venom", rand(15,30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				M.emote("scream")
+			M.drop_item()
+			qdel(W)
+			src.health = min(src.maxhealth, src.health + health_gain_from_food)
+			eat_twitch(src)
+		else
+			..()
+
+	attack_hand(mob/M)
+		if ((M.a_intent != INTENT_HARM) && (M in src.friends))
+			if(M.a_intent == INTENT_HELP && src.aggressive)
+				src.visible_message("<span class='notice'>[M] pats [src] on the head in a soothing way. It won't attack anyone now.</span>")
+				src.aggressive = FALSE
+				src.mobile = TRUE
+				icon_state = "rattlesnake"
+				src.task = "thinking"
+				return
+			else if((M.a_intent == INTENT_DISARM || M.a_intent == INTENT_GRAB) && !src.aggressive)
+				src.visible_message("<span class='notice'>[M] shakes [src] to awaken it's killer instincts!</span>")
+				src.aggressive = TRUE
+				src.task = "thinking"
+				return
+		..()
+
 	ChaseAttack(mob/M)
 		..()
-		if(!ON_COOLDOWN(src, "snake bite", 15 SECONDS))
+		if(!ON_COOLDOWN(src, "snake bite", 8 SECONDS))
 			M.visible_message("<span class='combat'><B>[src]</B> bites [src.target]!</span>")
 			M.reagents?.add_reagent("viper_venom", rand(15,30))
-			playsound(src.loc, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 			M.emote("scream")
 		src.task = "chasing"
 
@@ -1601,7 +1636,7 @@
 			CritterDeath()
 
 		if (prob(70))
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 30, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
 			make_cleanable(/obj/decal/cleanable/blood/splatter,src.loc)
 		..()
 

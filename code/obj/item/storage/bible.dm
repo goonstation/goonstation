@@ -45,6 +45,22 @@ var/global/list/bible_contents = list()
 					H.cure_disease_by_path(/datum/ailment/disease/cluwneing_around/cluwne)
 				if(prob(25))
 					H.cure_disease_by_path(/datum/ailment/disability/clumsy/cluwne)
+				//Wraith curses
+				if(prob(75) && ishuman(H))
+					var/mob/living/carbon/human/target = H
+					if(target.bioHolder?.HasEffect("blood_curse") || target.bioHolder?.HasEffect("blind_curse") || target.bioHolder?.HasEffect("weak_curse") || target.bioHolder?.HasEffect("rot_curse"))
+						target.bioHolder.RemoveEffect("blood_curse")
+						target.bioHolder.RemoveEffect("blind_curse")
+						target.bioHolder.RemoveEffect("weak_curse")
+						target.bioHolder.RemoveEffect("rot_curse")
+						target.visible_message("[target] screams as some black smoke exits their body.")
+						target.emote("scream")
+						var/turf/T = get_turf(target)
+						if (T && isturf(T))
+							var/datum/effects/system/bad_smoke_spread/S = new /datum/effects/system/bad_smoke_spread/(T)
+							if (S)
+								S.set_up(5, 0, T, null, "#000000")
+								S.start()
 			M.HealDamage("All", heal_amt, heal_amt)
 			if(prob(40))
 				JOB_XP(user, "Chaplain", 1)
@@ -61,7 +77,7 @@ var/global/list/bible_contents = list()
 			chaplain = 1
 		if (!chaplain)
 			boutput(user, "<span class='alert'>The book sizzles in your hands.</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 10)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 10)
 			return
 		if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> fumbles and drops [src] on [his_or_her(user)] foot.</span>")
@@ -81,7 +97,7 @@ var/global/list/bible_contents = list()
 				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 			else
 				playsound(src.loc, "punch", 25, 1, -1)
-			logTheThing("combat", user, M, "biblically smote [constructTarget(M,"combat")]")
+			logTheThing(LOG_COMBAT, user, "biblically smote [constructTarget(M,"combat")]")
 
 		else if (!isdead(M))
 			var/mob/H = M
@@ -94,7 +110,7 @@ var/global/list/bible_contents = list()
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
 				else
 					playsound(src.loc, "punch", 25, 1, -1)
-				logTheThing("combat", user, M, "biblically healed [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, user, "biblically healed [constructTarget(M,"combat")]")
 			else
 				if (ishuman(M) && !istype(M:head, /obj/item/clothing/head/helmet))
 					if (M.traitHolder?.hasTrait("atheist"))
@@ -102,7 +118,7 @@ var/global/list/bible_contents = list()
 					else
 						M.take_brain_damage(10)
 					boutput(M, "<span class='alert'>You feel dazed from the blow to the head.</span>")
-				logTheThing("combat", user, M, "biblically injured [constructTarget(M,"combat")]")
+				logTheThing(LOG_COMBAT, user, "biblically injured [constructTarget(M,"combat")]")
 				M.visible_message("<span class='alert'><B>[user] beats [M] over the head with [src]!</B></span>")
 				if (narrator_mode)
 					playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
@@ -119,7 +135,7 @@ var/global/list/bible_contents = list()
 	attack_hand(var/mob/user)
 		if (isvampire(user) || user.bioHolder.HasEffect("revenant"))
 			user.visible_message("<span class='alert'><B>[user] tries to take the [src], but their hand bursts into flames!</B></span>", "<span class='alert'><b>Your hand bursts into flames as you try to take the [src]! It burns!</b></span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 25)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 25)
 			user.changeStatus("stunned", 15 SECONDS)
 			user.changeStatus("weakened", 15 SECONDS)
 			return
@@ -184,13 +200,13 @@ var/global/list/bible_contents = list()
 
 	proc/smite(mob/M)
 		M.visible_message("<span class='alert'>[M] farts on the bible.<br><b>A mysterious force smites [M]!</b></span>")
-		logTheThing("combat", M, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		logTheThing(LOG_COMBAT, M, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		var/turf/T = get_turf(M)
 		showlightning_bolt(T)
 		playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
 		M.unequip_all()
 		M.emote("scream")
-		M.biblegib()
+		M.gib()
 
 /obj/item/storage/bible/evil
 	name = "frayed bible"
@@ -218,7 +234,7 @@ var/global/list/bible_contents = list()
 			return TRUE
 
 		user.visible_message("<span class='alert'>[user] farts on the bible.<br><b>A mysterious force smites [user]!</b></span>")
-		logTheThing("combat", user, null, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
+		logTheThing(LOG_COMBAT, user, "farted on [src] at [log_loc(src)] last touched by <b>[src.fingerprintslast ? src.fingerprintslast : "unknown"]</b>.")
 		smite(user)
 		return TRUE
 

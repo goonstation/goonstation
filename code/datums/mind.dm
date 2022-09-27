@@ -226,7 +226,7 @@ datum/mind
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
 		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
@@ -238,7 +238,7 @@ datum/mind
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo))
+				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
 				src.current.antagonist_overlay_refresh(TRUE, FALSE)
 				return !isnull(src.get_antagonist(role_id))
 		return FALSE
@@ -267,7 +267,7 @@ datum/mind
 		return length(src.antagonists) <= 0
 
 	disposing()
-		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
+		logTheThing(LOG_DEBUG, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
 		src.brain?.owner = null
 		if(src.current)
@@ -278,7 +278,7 @@ datum/mind
 	proc/on_ticker_add_log()
 		var/list/traits = list()
 		for(var/trait_id in src.current.traitHolder.traits)
-			var/obj/trait/trait = src.current.traitHolder.traits[trait_id]
+			var/datum/trait/trait = src.current.traitHolder.traits[trait_id]
 			traits += trait.name
 		. = "<br>Traits: [jointext(traits, ", ")]"
 

@@ -49,6 +49,11 @@
 	if (src.flock)
 		if(building == /obj/flock_structure/relay)
 			src.flock.relay_in_progress_or_finished = TRUE
+			src.uses_health_icon = FALSE
+			src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+			src.info_tag?.set_tag_offset(64, -4) // see comments for same numbers in relay file
+
+	src.info_tag?.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/disposing()
 	if (src.flock)
@@ -91,6 +96,7 @@
 		return
 
 	updatealpha()
+	src.info_tag.set_info_tag("Resources: [src.currentmats]/[src.goal]")
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
@@ -102,5 +108,5 @@
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
 	flock_speak(src, "Tealprint derealizing", flock)
-	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 40, 1)
+	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, 1, extrarange = -10)
 	qdel(src)

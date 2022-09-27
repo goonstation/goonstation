@@ -96,7 +96,7 @@
 			else if(length(W.ammobag_magazines) == 1)
 				ammo = W.ammobag_magazines[1]
 				if(!W.ammobag_spec_required)
-					ammo_cost = W.ammobag_restock_cost - 1
+					ammo_cost = clamp(W.ammobag_restock_cost - 1, 0, 99)
 				else
 					ammo_cost = W.ammobag_restock_cost
 

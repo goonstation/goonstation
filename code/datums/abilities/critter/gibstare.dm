@@ -38,7 +38,7 @@
 
 		for(var/mob/O in AIviewers(owner))
 			O.show_message("<span class='alert'><B>[owner]</B> stares at [target]!</span>", 1)
-		playsound(owner.loc, "sound/effects/mindkill.ogg", 50, 1)
+		playsound(owner.loc, 'sound/effects/mindkill.ogg', 50, 1)
 		boutput(target, "<span class='alert'>You feel a horrible pain in your head!</span>")
 		target.changeStatus("stunned", 1 SECOND)
 
@@ -50,7 +50,7 @@
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if(owner && target && (target in view(owner)) && IN_RANGE(owner, target, max_range) && (!ability || ability.cooldowncheck()))
-			logTheThing("combat", owner, target, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
+			logTheThing(LOG_COMBAT, owner, "gibs [constructTarget(target,"combat")] using Martian gib stare.")
 			for(var/mob/O in AIviewers(owner))
 				O.show_message("<span class='alert'><b>[target.name]'s</b> head explodes!</span>", 1)
 			if (target == owner)

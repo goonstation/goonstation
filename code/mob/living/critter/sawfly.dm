@@ -24,6 +24,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	is_npc = FALSE
 	var/isplayercontrolled = FALSE //don't mess with this unless you know what you're doing
 
+	var/isdisabled = FALSE //stops life() from doing anything when in grenade form
 	speechverb_say = "whirrs"
 	speechverb_exclaim = "buzzes"
 	speechverb_ask = "hums"
@@ -61,6 +62,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
 		abilityHolder.addAbility(/datum/targetable/critter/sawflydeploy)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
 	setup_equipment_slots()
@@ -133,22 +135,22 @@ This file is the critter itself, and all the custom procs it needs in order to f
 //note: due to the AIholder's timed nature, they can still priority attack you if you're already targeted, but it's incredibly rare. Frankly I think it adds to the challenge.
 //doublenote: the absolute agony that was trying to get this to function in any way that wasn't incredibly obtuse and hacky without going back to the projectile.
 	attackby(obj/item/W as obj, mob/living/user as mob)
-		if(!(issawflybuddy(user) || (user in src.friends)) || (user.health < 40))//are you an eligible target: nonantag or healthy enough?
-			if(prob(15) && isalive(src))//now that you're eligible, are WE eligible?
-				if(ai)
-					if((ai.target != user))
-						ai.interrupt()//even though the AI doing this is nigh impossible, we'll still want to tell the AI that something's happening
-				src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
-				playsound(src, pick(src.beeps), 40, 1)					//first attack is with the hand, so the sawfly can't triple attack if it was just now harming somone
-				src.set_dir(get_dir(src, user))
-				src.hand_attack(user, dummy_params)
-				//second attack is hardcoded, since the limb has a cooldown of 1 seconds between attacks that interferes otherwise
-				SPAWN(5)
-					if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
-						src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes"))] [user]!</b>")
-						playsound(src, "sound/machines/chainsaw_green.ogg", 50, 1)
-						take_bleeding_damage(user, null, 17, DAMAGE_STAB)
-						random_brute_damage(user, 14, FALSE)
+		if(!(istraitor(user) || isnukeop(user) || isspythief(user) || (user in src.friends)) || (user.health < 40))//are you an eligible target: nonantag or healthy enough?
+			if(prob(50) && isalive(src))//now that you're eligible, are WE eligible?
+				if((ai.target != user))
+					ai.interrupt()//even though the AI doing this is nigh impossible, we'll still want to tell the AI that something's happening
+					src.visible_message("<span class='alert'><b>[src]'s targeting subsystems identify [user] as a high priority threat!</b></span>")
+					playsound(src, pick(src.beeps), 40, 1)
+					//first attack is with the hand, so the sawfly can't triple attack if it was just now harming somone
+					src.set_dir(get_dir(src, user))
+					src.hand_attack(user, dummy_params)
+					//second attack is hardcoded, since the limb has a cooldown of 1 seconds between attacks that interferes otherwise
+					SPAWN(5)
+						if(isalive(src) && IN_RANGE(src, user, 1)) //account for SPAWN() jank
+							src.visible_message("<b class='alert'>[src] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes"))] [user]!</b>")
+							playsound(src, 'sound/machines/chainsaw_green.ogg', 50, 1)
+							take_bleeding_damage(user, null, 10, DAMAGE_STAB)
+							random_brute_damage(user, 14, TRUE)
 		..()
 
 	death(var/gibbed)

@@ -77,9 +77,9 @@ var/global/list/mapNames = list(
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
 
-	var/walls = /turf/simulated/wall
-	var/rwalls = /turf/simulated/wall/r_wall
-	var/auto_walls = FALSE
+	var/walls = /turf/simulated/wall/auto
+	var/rwalls = /turf/simulated/wall/auto/reinforced
+	var/auto_walls = TRUE
 
 	var/windows = /obj/window
 	var/windows_thin = /obj/window
@@ -98,11 +98,14 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
+	var/datum/allocated_region/transit_region
 	var/escape_dir = SOUTH
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
 	var/shuttle_map_turf = /turf/space
 	var/space_turf_replacement = null
+
+	var/has_hotspots = FALSE
 
 	var/merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
@@ -176,7 +179,15 @@ var/global/list/mapNames = list(
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
 		var/dmm_suite/dmm_suite = new
-		var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
+		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
+		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
+		var/turf/transit_start
+		for(var/turf/T in landmarks[LANDMARK_SHUTTLE_TRANSIT])
+			if(transit_region.turf_in_region(T))
+				transit_start = T
+				break
+		if (!transit_start)
+			CRASH("Unable to load escape transit landmark")
 		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
@@ -215,8 +226,12 @@ var/global/list/mapNames = list(
 		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the bridge" = list(/area/station/bridge),
 		"the crew lounge" = list(/area/station/crew_quarters/quarters),
-		"the main brig area" = list(/area/station/security/brig),
+		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
 		"the main station pod bay" = list(/area/station/hangar/main))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/donut3
 	name = "DONUT3"
@@ -227,7 +242,6 @@ var/global/list/mapNames = list(
 
 	escape_dir = NORTH
 	default_shuttle = "donut3"
-	auto_windows = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -260,9 +274,16 @@ var/global/list/mapNames = list(
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
 	escape_dir = SOUTH
+	walls = /turf/simulated/wall
+	rwalls = /turf/simulated/wall/r_wall
+	auto_walls = FALSE
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
@@ -274,7 +295,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -313,12 +333,15 @@ var/global/list/mapNames = list(
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -357,6 +380,10 @@ var/global/list/mapNames = list(
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/destiny
 	name = "DESTINY"
 	display_name = "NSS Destiny"
@@ -368,7 +395,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
@@ -412,7 +438,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -447,7 +472,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/horizon"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -514,7 +538,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/manta"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
+
 	style = "ship"
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -558,7 +582,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
+
 	airlock_style = "pyro"
 
 	windows = /obj/window/auto
@@ -578,6 +602,9 @@ var/global/list/mapNames = list(
 	name = "TRUNKMAP"
 	goonhub_map = "https://goonhub.com/maps/trunkmap"
 	escape_dir = NORTH
+	walls = /turf/simulated/wall
+	rwalls = /turf/simulated/wall/r_wall
+	auto_walls = FALSE
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/destiny
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/destiny
@@ -594,7 +621,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
+
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
@@ -629,7 +656,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/kondaru"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -672,12 +698,15 @@ var/global/list/mapNames = list(
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the aviary" = list( /area/station/garden/aviary))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
 	goonhub_map = "https://i.imgur.com/COYgNvN.jpg"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
@@ -726,7 +755,7 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/bellerophon fleet"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
+
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
@@ -763,7 +792,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/density"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -802,7 +830,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/cogmap"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -838,7 +865,6 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -886,7 +912,6 @@ var/global/list/mapNames = list(
 	name = "WRESTLEMAP"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 
 	arrivals_type = MAP_SPAWN_CRYO
 
@@ -928,7 +953,6 @@ var/global/list/mapNames = list(
 	goonhub_map = "https://goonhub.com/maps/pod_wars"
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = TRUE
 	style = "spess"
 
 
@@ -960,6 +984,7 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list()
 
+
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"
 	donut2
@@ -972,6 +997,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_merch_l-dest"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
+
 /area/shuttle/merchant_shuttle/left_station
 	#ifdef UNDERWATER_MAP
 	ambient_light = OCEAN_LIGHT
@@ -987,6 +1013,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_merch_l-dest"
 	sealab
 		icon_state = "shuttle_merch_l-sealab"
+
 /area/shuttle/merchant_shuttle/right_centcom
 	icon_state = "shuttle_merch_r"
 	donut2
@@ -999,6 +1026,7 @@ var/global/list/mapNames = list(
 		icon_state = "shuttle_merch_r-dest"
 	sealab
 		icon_state = "shuttle_merch_r-sealab"
+
 /area/shuttle/merchant_shuttle/right_station
 	#ifdef UNDERWATER_MAP
 	ambient_light = OCEAN_LIGHT

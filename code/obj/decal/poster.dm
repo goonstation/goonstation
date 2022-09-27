@@ -496,11 +496,13 @@
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_hair"
 
 		poster_cool
 			name = "cool poster"
 			desc = "There's a couple people pictured on this poster, looking pretty cool."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			random_icon_states = list("wall_poster_cool", "wall_poster_cool2", "wall_poster_cool3")
 
@@ -576,18 +578,20 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			pixel_var = 1
-			random_icon_states = list("wall_poster_cool",
-																"wall_poster_cool2",
-																"wall_poster_cool3",
-																"wall_poster_hair",
-																"wall_poster_human",
-																"wall_poster_borg",
-																"wall_poster_sol",
-																"wall_poster_clown",
-																"wall_poster_beach",
-																"wall_poster_discount",
-																"wall_poster_octocluwne",
-																"wall_poser_eyetest")
+			random_icon_states = list(
+				"wall_poster_cool",
+				"wall_poster_cool2",
+				"wall_poster_cool3",
+				"wall_poster_hair",
+				"wall_poster_human",
+				"wall_poster_borg",
+				"wall_poster_sol",
+				"wall_poster_clown",
+				"wall_poster_beach",
+				"wall_poster_discount",
+				"wall_poster_octocluwne",
+				"wall_poster_eyetest"
+			)
 
 		poster_mining
 			name = "mining poster"
@@ -913,7 +917,7 @@
 						user.put_in_hand_or_drop(G)
 
 					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						var/obj/item/award_item = locate(award_type) in src
 						if(award_item)
 							award_item.desc = src.desc
@@ -929,7 +933,7 @@
 
 				if (src.usage_state == 2)
 					if (istype(W, award_type))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						user.u_equip(W)
 						W.set_loc(src)
 						user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
@@ -939,7 +943,7 @@
 				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							user.u_equip(W)
 							qdel(W)
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
@@ -1084,6 +1088,7 @@
 	icon_state = "banner_base"
 	popup_win = 0
 	var/colored = FALSE
+	var/static/image/banner_holder = image('icons/obj/decals/banners.dmi', "banner_holder")
 	var/chosen_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
 	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
@@ -1100,7 +1105,6 @@
 
 	New()
 		. = ..()
-		var/static/image/banner_holder = image(src.icon, "banner_holder")
 		banner_holder.appearance_flags = RESET_COLOR
 		src.underlays.Add(banner_holder)
 
@@ -1113,7 +1117,7 @@
 				new_overlay.appearance_flags = RESET_COLOR
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 				if(istype(W,/obj/item/pen/crayon/rainbow))
 					var/obj/item/pen/crayon/rainbow/R = W

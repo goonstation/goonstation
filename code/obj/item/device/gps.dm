@@ -173,7 +173,7 @@
 				if(!t)
 					return
 				src.identifier = t
-				logTheThing("station", usr, null, "sets a GPS identification name to [t].")
+				logTheThing(LOG_STATION, usr, "sets a GPS identification name to [t].")
 			if(href_list["help"])
 				if(!distress)
 					boutput(usr, "<span class='alert'>Sending distress signal.</span>")
@@ -289,7 +289,7 @@
 		var/sender = signal.data["sender"]
 
 		if (lowertext(signal.data["distress_alert"]))
-			var/senderName = signal.data["identifier"]
+			var/senderName = strip_html(signal.data["identifier"])
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))

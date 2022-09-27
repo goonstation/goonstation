@@ -101,6 +101,13 @@ toxic - poisons
 	power = 45
 	dissipation_rate = 6
 
+/datum/projectile/energy_bolt/diffuse
+	sname = "diffuse energy bolt"
+	max_range = 7
+	dissipation_delay = 1
+	dissipation_rate = 2
+	cost = 25
+
 /datum/projectile/energy_bolt/burst
 	shot_number = 3
 	cost = 75
@@ -126,13 +133,22 @@ toxic - poisons
 			L.emote("twitch_v")
 		return
 
-/datum/projectile/energy_bolt/tasershotgun //Projectile for Azungar's taser shotgun.
+/datum/projectile/energy_bolt/tasershotgun //Projectile for taser shotgun.
 	cost = 10
-	power = 17.5
-	dissipation_delay = 1
+	power = 18
+	dissipation_delay = 2
 	dissipation_rate = 2
 	max_range = 6
 	icon_state = "spark"
+
+/datum/projectile/energy_bolt/tasershotgunslug
+	name = "heavy energy bolt"
+	sname = "energy slug"
+	cost = 33
+	power = 30
+	dissipation_rate = 2
+	dissipation_delay = 4
+	icon_state = "taser_projectile-big"
 
 //////////// VUVUZELA
 /datum/projectile/energy_bolt_v
@@ -261,7 +277,7 @@ toxic - poisons
 			new /obj/effects/energy_bolt_aoe_burst(get_turf(O))
 
 		for (var/mob/M in range(1, O)) //direct hit power is a 'bonus for aim', so we want this to hit the target
-			if (isliving(M) && M != P.shooter) //don't stun ourself while shooting in close quarters
+			if (isliving(M) && !check_target_immunity(M, FALSE, src) && M != P.shooter) //don't stun ourself while shooting in close quarters
 				var/mob/living/L = M
 				L.changeStatus("slowed", 2 SECONDS)
 				L.do_disorient(stamina_damage = 40, weakened = 0, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)

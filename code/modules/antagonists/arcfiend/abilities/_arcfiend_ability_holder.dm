@@ -13,19 +13,30 @@
 		..()
 		. = list()
 		.["Energy:"] = round(src.points)
-		.["Total:"] = round(src.lifetime_energy)
+		var/total_display = round(src.lifetime_energy)
+		if (total_display >= 10000)
+			total_display = "[round(total_display / 1000, 1.1)]k"
+		.["Total:"] = total_display
 
 	addPoints(add_points, target_ah_type = src.type)
-		src.lifetime_energy += add_points
 		var/points = min((MAX_ARCFIEND_POINTS - src.points), add_points)
-		if (points > 0 && ishuman(src.owner))
-			var/mob/living/carbon/human/H = src.owner
-			if (H.sims)
-				H.sims.affectMotive("Thirst", points * 0.1)
-				H.sims.affectMotive("Hunger", points * 0.1)
+		if (points > 0)
+			src.lifetime_energy += points
+			if (ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				if (H.sims)
+					H.sims.affectMotive("Thirst", points * 0.1)
+					H.sims.affectMotive("Hunger", points * 0.1)
 		. = ..(points, target_ah_type)
 		src.updateText()
 		src.updateButtons()
+
+	onLife()
+		..()
+		//failsafe to ensure arcfiends always have SMES human
+		if (!src.owner.bioHolder.HasEffect("resist_electric"))
+			src.owner.bioHolder.AddEffect("resist_electric", power = 2, magical = TRUE)
+			src.owner.ClearSpecificOverlays("resist_electric")
 
 ABSTRACT_TYPE(/datum/targetable/arcfiend)
 /datum/targetable/arcfiend
@@ -48,7 +59,7 @@ ABSTRACT_TYPE(/datum/targetable/arcfiend)
 			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return FALSE
 		return TRUE
-	
+
 	cast(atom/target)
 		. = ..()
 		// updateButtons is already called automatically in the parent ability's tryCast

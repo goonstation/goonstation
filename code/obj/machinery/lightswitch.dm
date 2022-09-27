@@ -90,9 +90,9 @@
 
 	if(user)
 		src.add_fingerprint(user)
-		logTheThing("station", user, null, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
+		logTheThing(LOG_STATION, user, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
-	playsound(src, "sound/misc/lightswitch.ogg", 50, 1)
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
@@ -101,7 +101,7 @@
 
 /obj/machinery/light_switch/attack_hand(mob/user)
 	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-		toggle(null)
+		toggle(user)
 
 /obj/machinery/light_switch/power_change()
 

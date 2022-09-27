@@ -1,6 +1,5 @@
 
 /datum/lifeprocess/skin
-	//handle_skinstuff((life_time_passed / tick_spacing))
 	process(var/datum/gas_mixture/environment)
 		if (owner.skin_process && length(owner.skin_process))
 
@@ -17,12 +16,12 @@
 					owner.skin_process -= A
 					continue
 
-				if (A.reagents && A.reagents.total_volume)
-					A.reagents.reaction(owner, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate"))
+				if (A.reagents?.total_volume)
+					A.reagents.reaction(owner, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
 					A.reagents.trans_to(owner, waste_volume/2)
 					A.reagents.remove_any(waste_volume/2)
 				else
-					if (A.reagents.total_volume <= 0)
-						owner.skin_process -= A //disposing will do this too but whatever
-						qdel(A)
+					if (!A.disposed)
+						stack_trace("Disposed patch [A] ([A.type]) was in mob [owner] ([owner.type])'s skin process. Deleting.")
+					qdel(A)
 		..()

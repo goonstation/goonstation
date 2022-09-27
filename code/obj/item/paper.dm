@@ -156,8 +156,11 @@
 		boutput(user, "<span class='alert'>You don't know how to read.</span>")
 		return UI_CLOSE
 	if(istype(src.loc, /obj/item/clipboard))
-		var/mob/living/M = user
-		return M.shared_living_ui_distance(src, viewcheck = FALSE)
+		if (isliving(user))
+			var/mob/living/L = user
+			return L.shared_living_ui_distance(src, viewcheck = FALSE)
+		else
+			return UI_UPDATE // ghosts always get updates
 	. = max(..(), UI_DISABLED)
 	if(IN_RANGE(user, src, 8))
 		. = max(., UI_UPDATE)
@@ -183,7 +186,7 @@
 				stamp(stamp_x, stamp_y, stamp_r, stamp.current_state, stamp.icon_state)
 				update_static_data(usr, ui)
 				boutput(usr, "<span class='notice'>[ui.user] stamps [src] with \the [stamp.name]!</span>")
-				playsound(usr.loc, "sound/misc/stamp_paper.ogg", 50, 0.5)
+				playsound(usr.loc, 'sound/misc/stamp_paper.ogg', 50, 0.5)
 			else
 				boutput(usr, "There is no where else you can stamp!")
 			. = TRUE
@@ -201,7 +204,7 @@
 				// the javascript was modified, somehow, outside of
 				// byond.  but right now we are logging it as
 				// the generated html might get beyond this limit
-				logTheThing("debug", src, null, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
+				logTheThing(LOG_DEBUG, src, "PAPER: [key_name(ui.user)] writing to paper [name], and overwrote it by [paper_len-PAPER_MAX_LENGTH]")
 			if(paper_len == 0)
 				boutput(ui.user, pick("Writing block strikes again!", "You forgot to write anthing!"))
 			else
@@ -316,7 +319,7 @@
 		return // Normaly you just stamp, you don't need to read the thing
 	else if (issnippingtool(P))
 		boutput(user, "<span class='notice'>You cut the paper into a mask.</span>")
-		playsound(src.loc, "sound/items/Scissor.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Scissor.ogg', 30, 1)
 		var/obj/item/paper_mask/M = new /obj/item/paper_mask(get_turf(src.loc))
 		user.put_in_hand_or_drop(M)
 		user.u_equip(src)
@@ -1475,7 +1478,7 @@ as it may become compromised.
 /obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M,"sound/misc/gulp.ogg", 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
@@ -1919,7 +1922,7 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 		..()
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
 
-obj/item/paper/donut2smesinstructions
+/obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
 	info = {"
@@ -1945,4 +1948,58 @@ obj/item/paper/donut2smesinstructions
 
 	Keep that power flowing,<br>
 	S.L.
+	"}
+
+/obj/item/paper/gallery
+	name = "Gallery submission guide"
+	info = {"
+		<span style="color:null;font-family:Georgia;"><p>Thank you for your interest in making a submission to the Nanotrasen Applied Paints Art Gallery!</p>
+		<p>To make a submission:</p>
+		<ol>
+		<li>Use your completed canvas in hand on any gallery exhibit</li>
+		<li>Pay the fee (see pricing below)</li>
+		<li>(Optional) Title your submission and publicly display your BYOND key as the submitter</li>
+		</ol>
+		<p>Your artwork will remain on display indefinitely unless another artist decides to purchase your exhibit.</p>
+		<p>Pricing (in Spacebux):</p>
+		<ul>
+		<li>Lowend (6x available) - 5,000</li>
+		<li>Midrange (6x available) - 10,000</li>
+		<li>Highend (2x available) - 25,000 </li>
+		<li>Premium (1x available) - 50,000</li>
+		</ul>
+		</span>
+	"}
+
+/obj/item/paper/magnetconstruction
+	name = "How to set up a new mining magnet"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	How to build a set up a new mining magnet<br><br>
+
+	A basic guide to construction a new mineral magnet for your mining operation<br>
+	----------------------------------------<br><br>
+	Thank you for purchasing your standard Mineral Magnet.<br>
+	The following instructions should help you get your new mineral magnet constructed and configured properly.<br>
+	If any of these steps are already completed you may skip them.<br><br>
+
+	1. Build a border around the intended mining area with magnet chassis on the edge facing into mining area.<br>
+	NOTE: Internal magnet area must be either 7x7 for the small size magnet or 15x15 for normal size magnet. Border must not be part of the internal magnet area.<br><br>
+
+
+	2. Assemble magnet chassis outside of internal mining area and mining area border, facing the mining area.<br><br>
+
+	3. Use mineral magnet parts on the magnet chassis to construct the mineral magnet.<br><br>
+
+	4. Assemble mineral magnet control computer somewhere nearby that has power available.<br><br>
+
+	5. Retrieve Magnetizer device and ensure it is loaded with raw plasmastone.<br><br>
+
+	6. Link Magnetizer with assembled mineral magnet.<br><br>
+
+	7. Go to bottom left area of internal magnet area and use magnetizer on the bottom left corner<br>
+	NOTE: Must be the internal magnet area, not the border of the magnet area.<br><br>
+
+	Congrats! Your mineral magnet is now assembled and ready for use!
 	"}

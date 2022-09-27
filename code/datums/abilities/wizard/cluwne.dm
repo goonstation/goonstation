@@ -9,9 +9,9 @@
 	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/CluwneGrim.ogg"
-	voice_fem = "sound/voice/wizard/CluwneFem.ogg"
-	voice_other = "sound/voice/wizard/CluwneLoud.ogg"
+	voice_grim = 'sound/voice/wizard/CluwneGrim.ogg'
+	voice_fem = 'sound/voice/wizard/CluwneFem.ogg'
+	voice_other = 'sound/voice/wizard/CluwneLoud.ogg'
 	maptext_colors = list("#3fb54f", "#9eee80", "#d3cb21", "#b97517")
 
 	cast(mob/target)
@@ -69,7 +69,7 @@
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("NWOLC EGNEVER", spell.maptext_style, spell.maptext_colors)
+			M.say("NWOLC EGNEVER", FALSE, spell.maptext_style, spell.maptext_colors)
 		if(ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
@@ -83,7 +83,7 @@
 		smoke.set_up(5, 0, target.loc)
 		smoke.attach(target)
 		smoke.start()
-		logTheThing("combat", M, target, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, M, "casts a Cluwne spell on [constructTarget(target,"combat")] at [log_loc(target)].")
 		if (target.job != "Cluwne")
 			boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 			target.take_brain_damage(50)
@@ -93,7 +93,7 @@
 			target.job = "Cluwne"
 			target.real_name = "cluwne"
 			target.UpdateName()
-			playsound(target, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
+			playsound(target, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - target.bioHolder.age)/50, 0.7, 1.4))
 			target.change_misstep_chance(60)
 
 			animate_clownspell(target)

@@ -1560,11 +1560,11 @@ Returns:
 	New()
 		..()
 		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -2296,7 +2296,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2606,34 +2606,34 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/user = thr.user
-		if(hit_atom == user)
-			if(prob(prob_clonk))
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
-				user.force_laydown_standup()
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				if(prob(prob_clonk))
+					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+					user.changeStatus("stunned", 5 SECONDS)
+					user.changeStatus("weakened", 3 SECONDS)
+					user.changeStatus("paralysis", 2 SECONDS)
+					user.force_laydown_standup()
+				else
+					src.Attackhand(user)
+				return
 			else
-				src.Attackhand(user)
-			return
-		else
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
-				if(safari)
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
+				if(ishuman(hit_atom))
+					var/mob/living/carbon/human/H = hit_atom
+					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
+						H.changeStatus("stunned", 4 SECONDS)
+						H.changeStatus("weakened", 2 SECONDS)
+						H.force_laydown_standup()
+						//H.paralysis++
+						playsound(H.loc, "swing_hit", 50, 1)
 
-				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN(2 SECONDS)
-					prob_clonk = max(prob_clonk - 5, 0)
+					prob_clonk = min(prob_clonk + 5, 40)
+					SPAWN(2 SECONDS)
+						prob_clonk = max(prob_clonk - 5, 0)
 
-		return ..(hit_atom)
+			return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -2685,8 +2685,8 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
-			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
+			logTheThing(LOG_ADMIN, usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
+			logTheThing(LOG_DIARY, usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
@@ -2766,7 +2766,7 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
-				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+				logTheThing(LOG_COMBAT, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -2809,7 +2809,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
@@ -2823,7 +2823,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
@@ -3163,7 +3163,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 

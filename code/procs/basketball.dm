@@ -60,7 +60,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -123,7 +123,7 @@
 
 	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
-	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
+	playsound(M.loc, 'sound/voice/heavenly.ogg', 50, 1)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -146,7 +146,7 @@
 			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
-	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
+	playsound(M.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 /mob/proc/blitz_slam()
 	set category = "Spells"
@@ -205,7 +205,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -231,7 +231,7 @@
 		B.item_state = "bball"
 
 	playsound(target.loc, "explosion", 50, 1)
-	playsound(target.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+	playsound(target.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -323,8 +323,8 @@
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
-
-	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
+	logTheThing(LOG_COMBAT, M, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -334,7 +334,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
@@ -362,7 +362,7 @@
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)
 	sleep(30 SECONDS)
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
@@ -375,6 +375,7 @@
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")
 	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
