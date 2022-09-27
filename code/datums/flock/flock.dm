@@ -552,7 +552,6 @@ var/flock_signal_unleashed = FALSE
 	src.achievements = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	src.peak_compute = 0
 	if (!real)
 		src.load_structures()
 		return
