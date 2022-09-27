@@ -73,7 +73,7 @@
 				isopen = TRUE
 				overlays += "open-overlay"
 		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
-			insertbrain( W, src, heldfly)//user,
+			insertbrain( W, src, heldfly)
 
 	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)//mob/user,
 		//var/success = TRUE
@@ -95,22 +95,27 @@
 			return
 		var/datum/mind/lucky_dude = pick(candidates)
 
-		SPAWN(1)
 
-			if (lucky_dude) //time to do some WHACKY HACKY workarounds!
+		if (lucky_dude)
+
+			playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE)
+			src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
+
+			 SPAWN(2 SECONDS)//incredibly hacky workaround time- make a new sawfly, inherit name, place on ground
+				src.set_loc(get_turf(src))
 				oursawfly = new /mob/living/critter/robotic/sawfly(place)
+				oursawfly.name = src.name
 				lucky_dude.transfer_to(oursawfly)
 				brain.set_loc(oursawfly)
 				oursawfly.foldself()
-				src.visible_message("The [oursawfly] emits a pleasant chime as glows with sapience!")
 				lucky_dude.special_role = ROLE_SAWFLY
 				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
 				oursawfly.antagonist_overlay_refresh(1, 0)
 				qdel(src)
 
-			else
-				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
-				src.ejectbrain(currentbrain)
+		else
+			sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
+			src.ejectbrain(currentbrain)
 
 
 
@@ -127,18 +132,9 @@
 
 			currentbrain.set_loc(get_turf(src))
 			src.playercontrolled = FALSE
-
-/obj/item/old_grenade/sawfly/firsttime//super important
-	New()
-
-		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
-		heldfly.ourgrenade = src
-		heldfly.set_loc(src)
-		..()
-
 /datum/random_event/major/antag/sawflytest
-	name = "SAWFLY TEST"
-	required_elapsed_round_time = 26.6 MINUTES
+	name = "Sawfly grenade test"
+	disabled = TRUE
 	var/place = null
 	var/obj/item/old_grenade/sawfly/firsttime/baby = null
 	var/obj/item/organ/brain/latejoin/brain = null
@@ -149,6 +145,15 @@
 		brain = new /obj/item/organ/brain/latejoin(place)
 		SPAWN(1)
 			baby.insertbrain(brain, baby, baby.heldfly)
+
+/obj/item/old_grenade/sawfly/firsttime//super important
+	New()
+
+		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
+		heldfly.ourgrenade = src
+		heldfly.set_loc(src)
+		..()
+
 /obj/item/old_grenade/sawfly/firsttime/withremote // for traitor menu
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
