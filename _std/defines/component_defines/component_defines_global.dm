@@ -35,3 +35,4 @@
 /// ⠀⠀⠀⠀⠀⠀⠀⢿⣿⣦⣄⣀⣠⣴⣿⣿⠁⠀⠈⠻⣿⣿⣿⣿⡿⠏⠀⠀⠀⠀
 /// ⠀⠀⠀⠀⠀⠀⠀⠈⠛⠻⠿⠿⠿⠿⠋⠁⠀⠀⠀⠀
 #define COMSIG_GLOBAL_SUSSY_PHRASE "sussy"
+#define COMSIG_GLOBAL_UNCOOL_PHRASE "uncool_word"

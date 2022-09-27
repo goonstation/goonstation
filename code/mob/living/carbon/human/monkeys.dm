@@ -255,6 +255,17 @@
 						things_to_pick += M
 				if(!length(things_to_pick))
 					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands", "healingtouch")) // this monkey's all gene'd up
+					var/atom/thing_to_poke = pick(things_to_pick)
+					var/datum/bioEffect/power/healing_touch/healing_touch = src.bioHolder.GetEffect("healing_touch")
+					var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
+					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands")
+					if (ismob(thing_to_poke) && healing_touch?.ability.last_cast < world.time)
+						healing_touch.ability.handleCast(thing_to_poke)
+					else if (!ismob(thing_to_poke) && midas_touch?.ability.last_cast < world.time)
+						midas_touch.ability.handleCast(thing_to_poke)
+					else
+						ink_glands?.ability.handleCast(thing_to_poke)
 				else if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
@@ -314,6 +325,7 @@
 				src.emote("scream")
 			if(src.client)
 				break
+
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 

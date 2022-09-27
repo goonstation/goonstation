@@ -198,10 +198,10 @@ var/datum/explosion_controller/explosions
 		logMe(power)
 
 		for(var/client/C in clients)
-			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
+			if(C.mob && (C.mob.z == epicenter.z) && power > 20)
 				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
-				playsound(C.mob, explosions.distant_sound, 100, 0)
+				playsound(C.mob, explosions.distant_sound, 70, 0)
 
 		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)

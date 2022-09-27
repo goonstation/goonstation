@@ -187,7 +187,9 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -351,7 +353,9 @@
 		return 6
 
 	proc/check_for_unacceptable_content()
-		return mining_controls.magnet_area.check_for_unacceptable_content()
+		if(mining_controls.magnet_area)
+			return mining_controls.magnet_area.check_for_unacceptable_content()
+		return 1
 
 	construction
 		var/marker_type = /obj/magnet_target_marker
@@ -1448,8 +1452,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(ispryingtool(W))
-			src.ReplaceWithSpace()
+		if (istype(W, /obj/item/tile/))
+			var/obj/item/tile/tile = W
+			tile.build(src)
 
 	update_icon()
 
