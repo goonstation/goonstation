@@ -2,8 +2,10 @@
 #define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
 
-/area/station/pirate_ship
+/area/pirate_ship
 	name = "Peregrine"
+	icon_state = "red"
+	teleport_blocked = 1
 	do_not_irradiate = TRUE
 
 // These are needed because Load Area seems to have issues with ordinary var-edited landmarks.
@@ -69,6 +71,7 @@
 	allow_traitors = FALSE
 	allow_spy_theft = FALSE
 	cant_spawn_as_rev = TRUE
+	special_spawn_location = LANDMARK_PIRATE
 	slot_card = /obj/item/card/id
 	slot_belt = list()
 	slot_back = list(/obj/item/storage/backpack)
@@ -80,7 +83,6 @@
 	slot_poc1 = list()
 	slot_poc2 = list()
 	var/random_clothing = TRUE
-	var/spawn_landmark = LANDMARK_PIRATE
 
 	New()
 		..()
@@ -103,17 +105,14 @@
 
 		M.traitHolder.addTrait("training_drinker")
 
-		var/spawn_loc = pick_landmark(spawn_landmark)
-		if (spawn_loc)
-			M.set_loc(pick_landmark(spawn_landmark))
-
 
 	first_mate
 		name = "Space Pirate First Mate"
 		slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
+		slot_suit = list(/obj/item/clothing/suit/gimmick/guncoat/tan)
 		slot_head = list(/obj/item/clothing/head/pirate_brn)
 		random_clothing = FALSE
-		spawn_landmark = LANDMARK_PIRATE_FIRST_MATE
+		special_spawn_location = LANDMARK_PIRATE_FIRST_MATE
 
 	captain
 		name = "Space Pirate Captain"
@@ -122,4 +121,4 @@
 		slot_head = list(/obj/item/clothing/head/pirate_captain)
 		slot_foot = list(/obj/item/clothing/shoes/swat/heavy)
 		random_clothing = FALSE
-		spawn_landmark = LANDMARK_PIRATE_CAPTAIN
+		special_spawn_location = LANDMARK_PIRATE_CAPTAIN
