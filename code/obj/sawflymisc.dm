@@ -21,7 +21,7 @@
 	icon_state = "sawfly"
 	icon_state_armed = "sawflyunfolding"
 	sound_armed = 'sound/machines/sawflyrev.ogg'
-	//inhand_image_icon = 'icons/mob/inhand/tools/omnitool.dmi' // could be better but it's distinct enough
+
 	is_dangerous = TRUE
 	is_syndicate = TRUE
 	issawfly = TRUE //used to tell the sawfly remote if it can or can't prime() the grenade
@@ -30,7 +30,6 @@
 	overlays = null
 
 	//used in dictating behavior when deployed from grenade
-	//var/fresh = TRUE
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 	var/obj/item/organ/brain/currentbrain = null
 	var/mob/currentuser = null
@@ -41,10 +40,10 @@
 		user = currentuser
 		if(isopen)
 			if(playercontrolled)
-				//if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
-				//ejectbrain(currentbrain)
+				if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
+					ejectbrain(currentbrain)
 			else
-				//bungus gungus
+				return //eventually this will be something, but for now simply return
 		else
 			..()
 
@@ -58,7 +57,7 @@
 			if(issawflybuddy(currentuser))
 				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
 			else
-				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //todo: give them pet AI
+				heldfly.ai = new /datum/aiHolder/sawfly(heldfly) //
 		else
 			heldfly.ai = null
 		qdel(src)
@@ -76,9 +75,7 @@
 			insertbrain( W, src, heldfly)
 			boutput(user, "You insert the [W] into the [src]. Please wait a maximum of 1 minute for the [heldfly]'s systems to initalize.")
 
-	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)//mob/user,
-		//var/success = TRUE
-		//
+	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)
 		src.currentbrain = brain
 		var/ghost_delay = 100
 		var/list/text_messages = list()
@@ -91,37 +88,31 @@
 
 		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
 		if (!candidates)
-			sawflygrenade.visible_message("The [src.heldfly] emits a grumpy beep and ejects the [currentbrain]")
+			sawflygrenade.visible_message("The [src.heldfly] ejects the [currentbrain]- could not initialize consciousness!")
 			src.ejectbrain(currentbrain)
 			return
 
 		var/datum/mind/lucky_dude = pick(candidates)
-		if (lucky_dude)
-
 			playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
 			src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
 
-			SPAWN(2 SECONDS)// incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
-				src.set_loc(get_turf(src))
-				oursawfly = new /mob/living/critter/robotic/sawfly(place)
-				oursawfly.name = src.name
-				lucky_dude.transfer_to(oursawfly)
-				brain.set_loc(oursawfly)
-
-				oursawfly.foldself()
-				lucky_dude.special_role = ROLE_SAWFLY
-				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
-				oursawfly.antagonist_overlay_refresh(1, 0)
-				qdel(src)
-
-		else
-			sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
-			src.ejectbrain(currentbrain)
-
-
+			SPAWN(2 SECONDS) //wait two seconds for
+				if (lucky_dude) // incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
+					src.set_loc(get_turf(src))
+					oursawfly = new /mob/living/critter/robotic/sawfly(place)
+					oursawfly.name = src.name
+					lucky_dude.transfer_to(oursawfly)
+					brain.set_loc(oursawfly)
+					oursawfly.foldself()
+					lucky_dude.special_role = ROLE_SAWFLY
+					boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
+					oursawfly.antagonist_overlay_refresh(1, 0)
+					qdel(src)
+				else
+					sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
+					src.ejectbrain(currentbrain)
 
 	proc/ejectbrain(/obj/item/organ/brain/currentbrain)
-		//bungus
 		if(!isopen)
 			isopen = TRUE
 		if(currentbrain)
@@ -147,7 +138,7 @@
 		SPAWN(1)
 			baby.insertbrain(brain, baby, baby.heldfly)
 
-/obj/item/old_grenade/sawfly/firsttime//super important
+/obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
 		heldfly = new /mob/living/critter/robotic/sawfly(src.loc)
@@ -271,8 +262,6 @@
 				playsound(M, pick(M.beeps), 40, 1)
 				if(get_turf(M))
 					M.ourgrenade.prime()
-					//M.isgrenade = FALSE
-					//M.set_loc(get_turf(M))
 		else
 			M.foldself()
 
