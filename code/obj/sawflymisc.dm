@@ -73,9 +73,9 @@
 				overlays += "open-overlay"
 		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
 			insertbrain( W, src, heldfly)
-			boutput(user, "You insert the [W] into the [src]. Please wait a maximum of 1 minute for the [heldfly]'s systems to initalize.")
+			boutput(user, "You insert the [W] into the [src]. Please wait a maximum of 40 seconds for the [heldfly]'s systems to initalize.")
 
-	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade)
+	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade, mob/living/user)
 		src.currentbrain = brain
 		var/ghost_delay = 100
 		var/list/text_messages = list()
@@ -88,15 +88,15 @@
 
 		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
 		if (!candidates)
-			sawflygrenade.visible_message("The [src.heldfly] ejects the [currentbrain]- could not initialize consciousness!")
+			sawflygrenade.visible_message("<span class='alert'> The [src.heldfly] ejects the [currentbrain] and beeps- \improper could not initialize consciousness pool! Please try again later.")
 			src.ejectbrain(currentbrain)
 			return
 
 		var/datum/mind/lucky_dude = pick(candidates)
 		playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
-		src.visible_message("The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
+		boutput(user, "<span class='success'> The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
 
-		SPAWN(2 SECONDS) //wait two seconds for
+		SPAWN(2 SECONDS) //wait two seconds for recognition
 			if (lucky_dude) // incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
 				src.set_loc(get_turf(src))
 				oursawfly = new /mob/living/critter/robotic/sawfly(place)
@@ -107,10 +107,14 @@
 				lucky_dude.special_role = ROLE_SAWFLY
 				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
 				oursawfly.antagonist_overlay_refresh(1, 0)
+				user.put_in_hand_or_drop(oursawfly.ourgrenade) //certified ref moment
 				qdel(src)
 			else
-				sawflygrenade.visible_message("The [oursawfly] makes an upset beep! Something went wrong!")
+				sawflygrenade.visible_message("<span class='alert'>The [oursawfly] makes an upset beep! Something went wrong!")
 				src.ejectbrain(currentbrain)
+				return
+		if(!oursawfly.mind)
+			sawflygrenade.visible_message("<h1>Something went SUPER wrong!!! Contact #imcoder, make a bug report, and/or ping Millian!")
 
 	proc/ejectbrain(/obj/item/organ/brain/currentbrain)
 		if(!isopen)
