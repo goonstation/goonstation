@@ -230,14 +230,14 @@ datum
 					description = initial(description)
 					taste = initial(taste)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				var/mytemp = holder.total_temperature
 				if(!volume_passed) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
-							M.take_toxin_damage(-5 * mult)
+							M.take_toxin_damage(-5)
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
