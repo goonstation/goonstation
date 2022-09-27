@@ -866,7 +866,7 @@
 	if(isnull(src.flock))
 		boutput(src, "<span class='alert'>You do not have flockmind authorization to synthesize eggs.</span>")
 		return
-	if(src.flock.getComplexDroneCount() > FLOCK_DRONE_LIMIT)
+	if(src.flock.getComplexDroneCount() >= FLOCK_DRONE_LIMIT)
 		boutput(src, "<span class='alert'>Flock complexity too high, unable to support additional drones.</span>")
 		return
 	if(src.resources < FLOCK_LAY_EGG_COST)
