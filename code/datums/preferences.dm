@@ -326,7 +326,7 @@ datum/preferences
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
-					if(!isnull(new_name) && length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
@@ -1865,6 +1865,15 @@ proc/ismasc(datum/customization_style/style)
 var/global/list/hair_details = list("einstein" = /datum/customization_style/hair/short/einalt,\
 	"80s" = /datum/customization_style/hair/long/eightiesfade,\
 	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
+	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
+	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
+	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
+	"violet" = /datum/customization_style/hair/long/violet_fade,\
+	"willow" = /datum/customization_style/hair/long/willow_fade,\
+	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
+	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
+	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
+	"flick" = /datum/customization_style/hair/short/flick_fade,\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\

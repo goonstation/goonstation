@@ -522,8 +522,8 @@
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/bang_gun
-		projectile_type = /datum/projectile/bullet/ak47
-		current_projectile = new/datum/projectile/bullet/ak47
+		projectile_type = /datum/projectile/bullet/akm
+		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
 		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()

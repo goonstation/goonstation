@@ -289,11 +289,7 @@
 		src.pixel_y = rand(-20,-8)
 		src.pixel_x = rand(-8,8)
 
-	do_missing()
-		..()
-
 	on_removal()
-		donor.flags |= OPENCONTAINER
 		src.transplanted = 1
 		if (src.linked_human)
 			src.RegisterSignal(src.linked_human, COMSIG_CREATE_TYPING, .proc/create_typing_indicator)
@@ -429,7 +425,7 @@
 					return ..()
 
 			// spoon surgery
-			else if (istype(W, /obj/item/surgical_spoon) || istype(W, /obj/item/kitchen/utensil/spoon))
+			else if (isspooningtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
 					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\

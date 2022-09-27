@@ -26,7 +26,7 @@
 
 /turf/simulated/floor/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	light = new /datum/light/point
 	light.set_brightness(src.brightness)
 	light.set_color(col_r, col_g, col_b)
@@ -195,7 +195,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 
 /turf/simulated/wall/auto/feather/New()
 	..()
-	setMaterial(getMaterial("gnesis"))
+	setMaterial(getMaterial("gnesis"), copy = FALSE)
 	src.health = src.max_health
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -299,10 +299,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	for (var/i = 1 to rand(3, 6))
 		if (prob(70))
 			B = new /obj/item/raw_material/scrap_metal(T)
-			B.setMaterial(getMaterial("gnesis"))
+			B.setMaterial(getMaterial("gnesis"), copy = FALSE)
 		else
 			B = new /obj/item/raw_material/shard(T)
-			B.setMaterial(getMaterial("gnesisglass"))
+			B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
 
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 
@@ -324,7 +324,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("gnesis"))
+		src.setMaterial(getMaterial("gnesis"), copy = FALSE)
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
 	src.health += health_given
 	return ceil(health_given / src.repair_per_resource)

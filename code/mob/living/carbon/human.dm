@@ -372,7 +372,7 @@
 					limbs_to_sever += list(src.l_leg)
 				if ("r_leg")
 					limbs_to_sever += list(src.r_leg)
-			if (limbs_to_sever.len)
+			if (length(limbs_to_sever))
 				for (var/obj/item/parts/P in limbs_to_sever)
 					P.sever(user)
 				return 1
@@ -395,15 +395,20 @@
 			if("r_leg")
 				. = r_leg
 
-	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1)
+	proc/replace_with(var/target, var/new_type, var/mob/user, var/show_message = 1, var/no_drop = FALSE)
 		if (!target || !new_type || !src.holder)
 			return 0
 		if (istext(target) && ispath(new_type))
 			if (target == "both_arms" || target == "l_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/l_held_item
 					if (src.l_arm)
+						if (no_drop && src.holder.l_hand)
+							l_held_item = src.holder.l_hand
 						src.l_arm.delete()
 					src.l_arm = new new_type(src.holder)
+					if (l_held_item)
+						src.holder.equip_if_possible(l_held_item, SLOT_L_HAND)
 				else // need to make an item arm
 					if (src.l_arm)
 						src.l_arm.delete()
@@ -418,9 +423,14 @@
 
 			if (target == "both_arms" || target == "r_arm")
 				if (ispath(new_type, /obj/item/parts/human_parts/arm) || ispath(new_type, /obj/item/parts/robot_parts/arm))
+					var/r_held_item
 					if (src.r_arm)
+						if (no_drop && src.holder.r_hand)
+							r_held_item = src.holder.r_hand
 						src.r_arm.delete()
 					src.r_arm = new new_type(src.holder)
+					if (r_held_item)
+						src.holder.equip_if_possible(r_held_item, SLOT_R_HAND)
 				else // need to make an item arm
 					if (src.r_arm)
 						src.r_arm.delete()
@@ -484,6 +494,9 @@
 
 /mob/living/carbon/human/proc/is_vampiric_thrall()
 	return get_ability_holder(/datum/abilityHolder/vampiric_thrall)
+
+/mob/living/carbon/human/is_open_container()
+	return !src.organHolder.head
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)

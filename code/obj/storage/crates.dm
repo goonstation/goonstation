@@ -322,19 +322,6 @@
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
 
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
-
 /obj/storage/crate/bee
 	name = "Bee crate"
 	desc = "A crate with a picture of a bee on it. Buzz."

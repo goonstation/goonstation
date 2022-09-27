@@ -98,6 +98,7 @@ var/global/list/mapNames = list(
 	var/escape_centcom = /area/shuttle/escape/centcom
 	var/escape_transit = /area/shuttle/escape/transit
 	var/escape_station = /area/shuttle/escape/station
+	var/datum/allocated_region/transit_region
 	var/escape_dir = SOUTH
 	var/default_shuttle = null // null = auto, otherwise name of the dmm file without .dmm
 
@@ -178,7 +179,15 @@ var/global/list/mapNames = list(
 		shuttlePrefab.applyTo(start, overwrite_args=DMM_OVERWRITE_OBJS)
 
 		var/dmm_suite/dmm_suite = new
-		var/turf/transit_start = pick_landmark(LANDMARK_SHUTTLE_TRANSIT)
+		src.transit_region = get_singleton(/datum/mapPrefab/allocated/shuttle_transit).load()
+		logTheThing(LOG_DEBUG, usr, "<b>Shuttle Transit</b>: Got bottom left corner [log_loc(src.transit_region.bottom_left)]")
+		var/turf/transit_start
+		for(var/turf/T in landmarks[LANDMARK_SHUTTLE_TRANSIT])
+			if(transit_region.turf_in_region(T))
+				transit_start = T
+				break
+		if (!transit_start)
+			CRASH("Unable to load escape transit landmark")
 		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
@@ -220,6 +229,10 @@ var/global/list/mapNames = list(
 		"the brig" = list(/area/station/security/processing, /area/station/security/brig),
 		"the main station pod bay" = list(/area/station/hangar/main))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/donut3
 	name = "DONUT3"
 	goonhub_map = "http://goonhub.com/maps/donut3"
@@ -260,6 +273,10 @@ var/global/list/mapNames = list(
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -316,6 +333,10 @@ var/global/list/mapNames = list(
 		"the central room of the crew lounge" = list(/area/station/crew_quarters/quarters),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
+
 /datum/map_settings/cogmap2
 	name = "COGMAP2"
 	goonhub_map = "https://goonhub.com/maps/cogmap2"
@@ -358,6 +379,10 @@ var/global/list/mapNames = list(
 		"the mining staff room" = list(/area/station/mining/staff_room),
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -672,6 +697,10 @@ var/global/list/mapNames = list(
 		"the news office" = list(/area/station/crew_quarters/radio/news_office),
 		"the central warehouse" = list(/area/station/storage/warehouse),
 		"the aviary" = list( /area/station/garden/aviary))
+
+	job_limits_override = list(
+		/datum/job/civilian/rancher = 2,
+	)
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"

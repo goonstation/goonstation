@@ -1323,7 +1323,7 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 	sound_group = "owl_banjo"
 
 /area/owlery/solars
-	name = "Listening Post Solar Array"
+	name = "Owlery Solar Array"
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1

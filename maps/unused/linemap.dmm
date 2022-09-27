@@ -14524,12 +14524,12 @@
 /area/station/crew_quarters/pool)
 "aHG" = (
 /obj/poolwater,
-/turf/simulated/pool,
+/turf/simulated/floor/pool,
 /area/station/crew_quarters/pool)
 "aHH" = (
 /obj/poolwater,
 /obj/critter/walrus,
-/turf/simulated/pool,
+/turf/simulated/floor/pool,
 /area/station/crew_quarters/pool)
 "aHI" = (
 /obj/pool{
@@ -14782,7 +14782,7 @@
 "aIm" = (
 /obj/poolwater,
 /obj/critter/sealpup,
-/turf/simulated/pool,
+/turf/simulated/floor/pool,
 /area/station/crew_quarters/pool)
 "aIn" = (
 /obj/pool{

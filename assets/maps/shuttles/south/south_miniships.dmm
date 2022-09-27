@@ -15,6 +15,7 @@
 	density = 0;
 	dir = 4
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "bt" = (
@@ -45,7 +46,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "ce" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "co" = (
@@ -135,6 +136,7 @@
 	density = 0;
 	dir = 4
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "jP" = (
@@ -541,8 +543,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "GI" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	density = 0;
+/obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
 /turf/unsimulated/floor/shuttle,

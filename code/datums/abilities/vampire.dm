@@ -390,8 +390,6 @@
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))
@@ -409,7 +407,6 @@
 				VZ.master = src
 
 			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
-			M.show_antag_popup("mindhack")
 			M.antagonist_overlay_refresh(1)
 			owner.antagonist_overlay_refresh(1)
 

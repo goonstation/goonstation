@@ -289,7 +289,7 @@
 		var/sender = signal.data["sender"]
 
 		if (lowertext(signal.data["distress_alert"]))
-			var/senderName = signal.data["identifier"]
+			var/senderName = strip_html(signal.data["identifier"])
 			if (!senderName)
 				return
 			if (lowertext(signal.data["distress_alert"] == "help"))
