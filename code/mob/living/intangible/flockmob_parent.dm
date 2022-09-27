@@ -18,7 +18,7 @@
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
 	var/afk_counter = 0
-	var/afk_counter_threshold = 180 // 1 count per second
+	var/afk_counter_threshold = 180 SECONDS
 	var/turf/previous_turf = null
 
 /mob/living/intangible/flock/New()
@@ -66,11 +66,16 @@
 			plane.alpha = 0
 	..()
 
-/mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
+/mob/living/intangible/flock/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return 1
 	if (src.client)
 		src.antagonist_overlay_refresh(0, 0)
+	if (get_turf(src) == src.previous_turf)
+		src.afk_counter += parent.schedule_interval
+	else
+		src.afk_counter = 0
+		src.previous_turf = get_turf(src)
 
 /mob/living/intangible/flock/is_spacefaring() return 1
 /mob/living/intangible/flock/say_understands() return 1

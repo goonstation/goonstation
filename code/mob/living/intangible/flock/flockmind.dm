@@ -61,17 +61,13 @@
 	if (!src.flock)
 		return
 	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
-	if (get_turf(src) == src.previous_turf)
-		src.afk_counter++
-		if (src.afk_counter > round(src.afk_counter_threshold / parent.schedule_interval))
-			var/list/traces = src.flock.getActiveTraces()
-			if (length(traces))
-				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
-				chosen_trace.promoteToFlockmind(FALSE)
-			src.afk_counter = 0
-	else
+	if (src.afk_counter > src.afk_counter_threshold)
+		var/list/traces = src.flock.getActiveTraces()
+		if (length(traces))
+			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience detected. Self-instructed routines promoting new Flockmind.\]</b></span>")
+			var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
+			chosen_trace.promoteToFlockmind(FALSE)
 		src.afk_counter = 0
-		src.previous_turf = get_turf(src)
 	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
