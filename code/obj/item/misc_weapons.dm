@@ -1229,6 +1229,21 @@
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
+/obj/item/katana/pirate
+	icon_state = "pirate_sword"
+	name = "Pirate's Sabre"
+	desc = "A sharp sabre for the most feared of all space pirates. Commissioned from Iron Belle Bladeworks."
+
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	force = 20
+	throwforce = 5
+	delimb_prob = 20
+	contraband = 4
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
 /obj/item/katana_sheath
 	name = "katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
@@ -1379,6 +1394,24 @@
 	ih_sheathed_state = "scabbard-syndie1"
 	ih_sheath_state = "scabbard-syndie0"
 	sword_path = /obj/item/katana/nukeop
+
+	attackby(obj/item/W, mob/user)
+		if (!istype(W, sword_path))
+			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
+			return
+		..()
+
+/obj/item/katana_sheath/pirate
+	name = "Pirate's Scabbard"
+	desc = "A nifty container for a ruthless sword. Given to the most feared space pirates, or stolen from the previous most feared space pirate. The scabbard bears the insignia 'I.B.B'."
+	icon_state = "pirate_sword_scabbard"
+	item_state = "scabbard-pirate1"
+
+	sheathed_state = "pirate_sword_scabbard"
+	sheath_state = "pirate_scabbard"
+	ih_sheathed_state = "scabbard-pirate1"
+	ih_sheath_state = "scabbard-pirate0"
+	sword_path = /obj/item/katana/pirate
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
@@ -1702,3 +1735,27 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+/obj/item/sord
+	name = "gross sord"
+	desc = "oh no"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "longsword"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	color = "#4a996c"
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	force = 10
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	is_syndicate = TRUE
+	contraband = 10 // absolutely illegal
+	w_class = W_CLASS_NORMAL
+	hitsound = 'sound/voice/farts/fart7.ogg'
+	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
