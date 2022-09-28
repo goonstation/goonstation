@@ -25,7 +25,7 @@
 				M.summons = list()
 			M.summons += src
 
-
+		src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_voidhound)

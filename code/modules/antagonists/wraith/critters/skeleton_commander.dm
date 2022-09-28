@@ -26,6 +26,7 @@
 				M.summons = list()
 			M.summons += src
 
+		src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/rally)
 		abilityHolder.addAbility(/datum/targetable/critter/skeleton_commander/summon_lesser_skeleton)
 

@@ -29,6 +29,7 @@
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
+		src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhound/cloak)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 

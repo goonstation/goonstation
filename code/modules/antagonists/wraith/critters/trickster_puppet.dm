@@ -25,6 +25,7 @@
 
 		last_life_update = TIME
 
+		src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = master?.abilityHolder.points
 
