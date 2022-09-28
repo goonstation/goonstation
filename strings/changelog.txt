@@ -1,5 +1,8 @@
 
 (t)wed sep 28 22
+(u)Sord
+(e)⚙
+(*)Sords, errr, Swords have received some backend changes. Please make a bug report if any common swords (katanas, captains sword, etc) behave strangely.
 (u)Walpvrgis
 (p)11058
 (e)🎨|C-Sprites
