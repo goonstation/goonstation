@@ -1274,5 +1274,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

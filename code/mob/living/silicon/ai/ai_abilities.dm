@@ -327,6 +327,7 @@
 
 /datum/targetable/ai/module/nanite_repair
 	icon_state = "nanites"
+	desc = "Send out targeted nanites to repair a silicon being or a camera."
 	targeted = TRUE
 	cooldown = 15 SECONDS
 

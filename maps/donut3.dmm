@@ -9470,9 +9470,7 @@
 	},
 /area/station/hallway/primary/east)
 "czj" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -16585,9 +16583,8 @@
 	},
 /area/station/chapel/sanctuary)
 "eCX" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -21420,9 +21417,8 @@
 	},
 /area/station/medical/medbay/treatment)
 "fYu" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -22282,7 +22278,7 @@
 	},
 /area/station/crew_quarters/quarters)
 "gkD" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -24867,7 +24863,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "gZE" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -29362,7 +29358,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/security,
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/decal/mule/dropoff,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -36587,7 +36583,7 @@
 	name = "Funeral Parlor"
 	})
 "kzk" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -40768,9 +40764,8 @@
 /turf/simulated/floor/wood/five,
 /area/station/hydroponics/bay)
 "lMd" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -41979,7 +41974,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mbH" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "mbM" = (
@@ -51541,10 +51536,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/listeningpost)
-"oRh" = (
-/obj/machinery/light/runway_light/delay5,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "oRm" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -54492,7 +54483,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
@@ -63053,7 +63044,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "sab" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "Listening Post"
 	},
 /obj/decal/mule/dropoff,
@@ -66140,9 +66131,8 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "sWy" = (
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 4;
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -70047,9 +70037,7 @@
 	},
 /area/station/medical/medbay/surgery/storage)
 "udQ" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/decal/mule/dropoff,
@@ -74984,9 +74972,7 @@
 /turf/simulated/wall/auto/reinforced/jen,
 /area/station/crew_quarters/arcade)
 "vyw" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 1
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /obj/cable{
@@ -127517,7 +127503,7 @@ weI
 iJM
 eFg
 bPa
-oRh
+hBW
 hBW
 vtH
 tfk
