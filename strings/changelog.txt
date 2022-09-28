@@ -1,5 +1,9 @@
 
 (t)wed sep 28 22
+(u)Walpvrgis
+(p)11058
+(e)🎨|C-Sprites
+(*)Added a few extra hair options intended for layering; Ignite: Shaved, Bangs: Flat Shorter, Bangs: Short Wavy, Bangs: Sides and Bangs: Mysterious.
 (u)Mr. Moriarty
 (p)11019
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
