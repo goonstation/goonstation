@@ -61,6 +61,25 @@
 			eye_covered = "R"
 		src.icon_state = "eyepatch-[eye_covered]"
 
+/obj/item/gun/energy/pulse_rifle/modified
+	name = "modified pulse rifle"
+	desc = "A heavily modified pulse rifle; it looks as if the gun has been affixed to the EMP setting, and the power setting tuned down."
+
+	New()
+		..()
+		set_current_projectile(new/datum/projectile/energy_bolt/electromagnetic_pulse/weak)
+		projectiles = list(new/datum/projectile/energy_bolt/electromagnetic_pulse/weak)
+
+/datum/projectile/energy_bolt/electromagnetic_pulse/weak
+	cost = 30
+
+	on_hit(atom/hit, angle, var/obj/projectile/P)
+		var/turf/T = get_turf(hit)
+		for(var/atom/movable/O in T.contents)
+			if(!istype(O, /obj/machinery/nuclearbomb))
+				O.emp_act()
+		elecflash(T)
+
 /datum/job/special/pirate
 	linkcolor = "#880000"
 	name = "Space Pirate"
