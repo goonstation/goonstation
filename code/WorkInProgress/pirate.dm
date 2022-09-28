@@ -92,7 +92,7 @@
 	cant_spawn_as_rev = TRUE
 	special_spawn_location = LANDMARK_PIRATE
 	slot_card = /obj/item/card/id
-	slot_belt = list(/obj/item/katana_sheath/pirate)
+	slot_belt = list(/obj/item/swords_sheaths/pirate)
 	slot_back = list(/obj/item/storage/backpack)
 	slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
