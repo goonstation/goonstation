@@ -41238,7 +41238,7 @@
 /area/afterlife/arena)
 "cvB" = (
 /obj/rack/iomoon,
-/obj/item/bloodthirsty_blade,
+/obj/item/swords/bloodthirsty_blade,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
