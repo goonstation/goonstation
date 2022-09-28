@@ -92,14 +92,14 @@
 	cant_spawn_as_rev = TRUE
 	special_spawn_location = LANDMARK_PIRATE
 	slot_card = /obj/item/card/id
-	slot_belt = list()
+	slot_belt = list(/obj/item/katana_sheath/pirate)
 	slot_back = list(/obj/item/storage/backpack)
 	slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_head = list(/obj/item/clothing/head/bandana/red)
 	slot_eyes = list(/obj/item/clothing/glasses/eyepatch/pirate)
 	slot_ears = list(/obj/item/device/radio/headset/syndicate)
-	slot_poc1 = list()
+	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list()
 	var/random_clothing = TRUE
 
