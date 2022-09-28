@@ -1,0 +1,166 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/space,
+/area/allowGenerate)
+"f" = (
+/obj/decal/cleanable/blood{
+	icon_state = "armorblood_c"
+	},
+/turf/unsimulated/floor/greenblack,
+/area/noGenerate)
+"l" = (
+/obj/chicken_nesting_box,
+/turf/unsimulated/floor/greenblack/corner{
+	dir = 1
+	},
+/area/noGenerate)
+"n" = (
+/mob/living/critter/small_animal/ranch_base/chicken,
+/turf/unsimulated/floor/greenblack/corner{
+	dir = 8
+	},
+/area/noGenerate)
+"o" = (
+/obj/decal/cleanable/blood,
+/turf/unsimulated/floor/greenblack/corner{
+	dir = 1
+	},
+/area/noGenerate)
+"p" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 4
+	},
+/area/noGenerate)
+"r" = (
+/mob/living/critter/small_animal/ranch_base/chicken,
+/turf/unsimulated/floor/greenblack{
+	dir = 9
+	},
+/area/noGenerate)
+"s" = (
+/obj/submachine/chicken_incubator,
+/obj/machinery/light/small/broken{
+	dir = 4
+	},
+/turf/unsimulated/floor/greenblack/corner{
+	dir = 4
+	},
+/area/noGenerate)
+"x" = (
+/turf/unsimulated/floor/green,
+/area/noGenerate)
+"y" = (
+/obj/machinery/light/small/broken,
+/turf/unsimulated/floor/greenblack{
+	dir = 1
+	},
+/area/noGenerate)
+"A" = (
+/obj/decoration/syndcorpse10,
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/unsimulated/floor/greenblack,
+/area/noGenerate)
+"B" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	req_access_txt = null
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/noGenerate)
+"D" = (
+/mob/living/critter/small_animal/ranch_base/chicken,
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/unsimulated/floor/green,
+/area/noGenerate)
+"G" = (
+/turf/simulated/wall/auto/supernorn,
+/area/noGenerate)
+"I" = (
+/obj/decoration/syndcorpse5,
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/unsimulated/floor/greenblack/corner{
+	dir = 4
+	},
+/area/noGenerate)
+"L" = (
+/turf/unsimulated/floor/greenblack{
+	dir = 1
+	},
+/area/noGenerate)
+"Q" = (
+/mob/living/critter/small_animal/ranch_base/chicken,
+/turf/unsimulated/floor/greenblack/corner,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+G
+a
+G
+a
+a
+"}
+(2,1,1) = {"
+G
+G
+B
+G
+G
+G
+"}
+(3,1,1) = {"
+G
+Q
+p
+p
+n
+G
+"}
+(4,1,1) = {"
+G
+A
+x
+x
+y
+G
+"}
+(5,1,1) = {"
+G
+f
+x
+x
+L
+G
+"}
+(6,1,1) = {"
+G
+s
+D
+r
+l
+G
+"}
+(7,1,1) = {"
+G
+G
+I
+o
+G
+G
+"}
+(8,1,1) = {"
+a
+G
+G
+G
+G
+a
+"}

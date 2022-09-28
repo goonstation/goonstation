@@ -96,7 +96,7 @@
 /turf/space,
 /area/allowGenerate)
 "U" = (
-/obj/decal/skeleton,
+/obj/decal/fakeobjects/skeleton,
 /obj/item/saw,
 /turf/unsimulated/floor/grass/random,
 /area/noGenerate)

@@ -109,3 +109,66 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 		prefabSizeX = 15
 		prefabSizeY = 15
 		required_biomes = list(/datum/biome/mudlands)
+
+	artifact
+		maxNum = 5
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_artifact_small.dmm"
+		prefabSizeX = 3
+		prefabSizeY = 3
+
+	cargo_crate
+		maxNum = 5
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_lost_cargo.dmm"
+		prefabSizeX = 3
+		prefabSizeY = 3
+
+	dead_nt
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_dead_nt.dmm"
+		prefabSizeX = 4
+		prefabSizeY = 3
+
+	dead_syndicate
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_dead_synd.dmm"
+		prefabSizeX = 4
+		prefabSizeY = 4
+
+	rogue_syndicate
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/prefab_planet_rogue_synd.dmm"
+		prefabSizeX = 4
+		prefabSizeY = 3
+
+	monkeys
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_monkeys.dmm"
+		prefabSizeX = 5
+		prefabSizeY = 4
+
+	beer_cave
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_beer_cave.dmm"
+		prefabSizeX = 6
+		prefabSizeY = 6
+
+	birds
+		maxNum = 2
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_birds.dmm"
+		prefabSizeX = 5
+		prefabSizeY = 3
+
+	angry_birds
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_planet_angry_birds.dmm"
+		prefabSizeX = 8
+		prefabSizeY = 6
