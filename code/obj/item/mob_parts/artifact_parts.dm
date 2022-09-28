@@ -387,10 +387,11 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		if (get_dist(holder.owner, target) > 6)
+		var/dist = GET_DIST(holder.owner, target)
+		if (dist > 6)
 			boutput(holder.owner, "<span class='alert'>The target is too far away!</span>")
 			return TRUE
-		if (get_dist(holder.owner, target) <= 1)
+		if (dist <= 1)
 			boutput(holder.owner, "<span class='alert'>You're already next to the target!</span>")
 			return TRUE
 		if (isrestrictedz(holder.owner.z))
@@ -414,12 +415,13 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 				continue
 
 			var/turf/T = tentacle.loc
+			dist = GET_DIST(holder.owner, T)
 
 			if (T.density)
-				if (get_dist(holder.owner, T) <= 1)
-					if (get_dist(holder.owner, T) <= 0)
+				if (dist <= 1)
+					if (dist <= 0)
 						continue
-					if (get_dist(holder.owner, T) == 1)
+					if (dist == 1)
 						tentacle.invisibility = INVIS_ALWAYS_ISH
 						boutput(holder.owner, "<span class='alert'>You're already next to [T]!</span>")
 						done_early = TRUE
@@ -433,10 +435,10 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			for (var/atom/A as anything in T)
 				if (!A.density)
 					continue
-				if (get_dist(holder.owner, T) <= 1)
-					if (get_dist(holder.owner, A) <= 0)
+				if (dist <= 1)
+					if (dist <= 0)
 						break
-					if (get_dist(holder.owner, A) == 1)
+					if (dist == 1)
 						tentacle.invisibility = INVIS_ALWAYS_ISH
 						boutput(holder.owner, "<span class='alert'>You're already next to [A]!</span>")
 						done_early = TRUE
@@ -504,7 +506,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			src.allowed_ailments[ailment] = FALSE
 
 	cast(atom/target)
-		if (get_dist(holder.owner, target) > 1)
+		if (GET_DIST(holder.owner, target) > 1)
 			boutput(holder.owner, "<span class='alert'>The target is too far away!</span>")
 			return TRUE
 		if (!isliving(target) || issilicon(target) || isintangible(target) || islivingobject(target))
