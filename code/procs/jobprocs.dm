@@ -793,6 +793,8 @@
 
 // Convert mob to generic hard mode traitor or alternatively agimmick
 proc/antagify(mob/H, var/traitor_role, var/agimmick)
+	if(isnpc(H))
+		return
 	if (!(H.mind))
 		message_admins("Attempted to antagify [H] but could not find mind")
 		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
