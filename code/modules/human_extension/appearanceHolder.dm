@@ -253,8 +253,10 @@
 			src.parentHolder = null
 		..()
 
-	// Disabling this for now as I have no idea how to fit it into hex strings
-	// I'm help -Spy
+	// i want to disable these 2 staggered copy procs since theyre just used to interpolate appearance copying for stable mutagen
+	// maybe using animate() to do that??
+	// maybe the solution is just to have features "pop in" for stable mutagen copy
+	// for now i will leave it
 	proc/StaggeredCopyOther(var/datum/appearanceHolder/toCopy, var/progress = 1)
 		var/adjust_denominator = 11 - progress
 
