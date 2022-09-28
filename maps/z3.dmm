@@ -1959,6 +1959,11 @@
 "ahN" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/diner/hallway)
 "ahR" = (
@@ -3119,13 +3124,6 @@
 /area/diner/motel)
 "aod" = (
 /turf/simulated/wall/auto/reinforced/old,
-/area/diner/motel)
-"aok" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
 /area/diner/motel)
 "aon" = (
 /obj/stool/chair{
@@ -5863,6 +5861,17 @@
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
+"aCG" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/diner/hallway)
 "aCI" = (
 /turf/simulated/floor/shuttlebay/flock{
 	dir = 8
@@ -17469,6 +17478,11 @@
 /area/radiostation/studio)
 "bYA" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/diner/motel/observatory)
 "bYC" = (
@@ -17783,6 +17797,10 @@
 	},
 /area/bee_trader)
 "cWa" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
 "cWB" = (
@@ -18323,6 +18341,13 @@
 	dir = 4
 	},
 /area/h7/crew)
+"fav" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "fbg" = (
 /obj/stool/chair/couch/green{
 	dir = 4;
@@ -18862,6 +18887,10 @@
 	dir = 8;
 	icon_state = "chair_couch-yellow"
 	},
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "gyi" = (
@@ -19058,6 +19087,11 @@
 /turf/simulated/floor/plating,
 /area/diner/dining)
 "hkX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/diner/hallway)
 "hlO" = (
@@ -19268,19 +19302,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"hQP" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "hSH" = (
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
@@ -19682,6 +19703,11 @@
 /area/diner/motel/chemstorage)
 "iZq" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/diner/hallway)
 "iZr" = (
@@ -20139,14 +20165,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/hallway)
-"kos" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/reinforced/old,
-/area/diner/hallway)
 "kov" = (
 /obj/decal/timeplug{
 	dir = 5
@@ -20465,15 +20483,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"lnt" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -20658,6 +20667,12 @@
 	icon_state = "fred2"
 	},
 /area/timewarp/ship)
+"lMB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "lNV" = (
 /obj/stool,
 /obj/machinery/light/incandescent/netural{
@@ -20859,6 +20874,16 @@
 "miz" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
+"miC" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "mnS" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
@@ -21802,6 +21827,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
+"pjx" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "pjN" = (
 /obj/lattice{
 	dir = 2;
@@ -22498,11 +22529,6 @@
 	},
 /area/bee_trader)
 "rdx" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/decal/cleanable/ripped_poster,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway)
@@ -22620,18 +22646,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"rAh" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "rBu" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -23273,6 +23287,12 @@
 "tkr" = (
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"tli" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "tlX" = (
 /obj/storage/cart,
 /turf/simulated/floor/white/grime,
@@ -23674,6 +23694,11 @@
 	d2 = 8;
 	icon_state = "2-8"
 	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
 "uzw" = (
@@ -23835,6 +23860,13 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"uUk" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/carpet/grime,
+/area/diner/motel)
 "uUU" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -24233,13 +24265,6 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"wgE" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/diner/motel/observatory)
 "wjS" = (
 /obj/machinery/vending/cola/red,
 /obj/decal/cleanable/dirt,
@@ -24463,6 +24488,11 @@
 	},
 /area/diner/dining)
 "wIp" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
 /area/diner/hallway)
 "wIr" = (
@@ -24514,6 +24544,12 @@
 "wSz" = (
 /turf/simulated/floor/scorched,
 /area/diner/hangar)
+"xdk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "xfi" = (
 /obj/decal/poster/wallsign/stencil/right/t,
 /obj/decal/poster/wallsign/stencil/left/u,
@@ -78680,8 +78716,8 @@ pjN
 pjN
 pjN
 pjN
-boO
-boO
+pjN
+pjN
 boO
 apU
 akd
@@ -78982,9 +79018,9 @@ pjN
 pjN
 pjN
 pjN
+pjN
+pjN
 boP
-aod
-aod
 skq
 ake
 aoT
@@ -79285,11 +79321,11 @@ aaa
 aaa
 aaa
 aaa
-aod
-aok
+aaa
+aaa
 rdx
-rAh
-lnt
+jyD
+aoU
 crC
 aaa
 aaa
@@ -79888,7 +79924,7 @@ sdM
 amP
 aod
 gxH
-sdM
+uUk
 esi
 aod
 lUg
@@ -80190,7 +80226,7 @@ sdM
 usy
 aod
 lcR
-sdM
+fav
 sdM
 aod
 lvW
@@ -80492,7 +80528,7 @@ usy
 ajM
 aod
 aod
-usy
+pjx
 rRi
 aob
 wqS
@@ -80780,7 +80816,7 @@ aaa
 aaa
 aaa
 ahT
-ahT
+lRy
 grK
 ahW
 iob
@@ -80794,7 +80830,7 @@ fkr
 aih
 aod
 soj
-usy
+pjx
 tBH
 aod
 wsg
@@ -81096,7 +81132,7 @@ izy
 cRb
 aod
 aod
-vem
+miC
 eFq
 aod
 xZo
@@ -81386,7 +81422,7 @@ aaa
 ahT
 dVm
 hKm
-ahW
+tli
 bYA
 ahN
 wIp
@@ -81398,7 +81434,7 @@ iZq
 iZq
 wIp
 wIp
-wIp
+aCG
 wIp
 wIp
 hkX
@@ -81688,7 +81724,7 @@ aaa
 ahT
 enz
 aEE
-ahW
+lMB
 rEz
 alO
 knj
@@ -81990,7 +82026,7 @@ aaa
 ahT
 lBY
 xfN
-ahW
+lMB
 vFH
 aod
 aod
@@ -82290,9 +82326,9 @@ aaa
 aaa
 aaa
 ahT
-ahT
+lRy
 cWa
-ahW
+xdk
 gmp
 aod
 ajh
@@ -83815,11 +83851,11 @@ aaa
 aaa
 aaa
 aaa
-lRy
-wgE
-kos
-bFR
-hQP
+aaa
+aaa
+apU
+wqS
+ste
 huF
 lHd
 xsh
@@ -84116,9 +84152,9 @@ pjN
 pjN
 pjN
 pjN
+pjN
+pjN
 boO
-lRy
-lRy
 apU
 wqS
 ste
@@ -84418,8 +84454,8 @@ pjN
 pjN
 pjN
 pjN
-boP
-boP
+pjN
+gzA
 boP
 crC
 bxI
