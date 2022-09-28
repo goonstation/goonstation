@@ -45,6 +45,10 @@ var/datum/explosion_controller/explosions
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
 
+	proc/highest_explosion_power(obj/object)
+		for (var/turf/T in object.locs)
+			. = max(., queued_turfs[T])
+
 	proc/kaboom()
 		defer_powernet_rebuild = 1
 		defer_camnet_rebuild = 1
@@ -80,7 +84,7 @@ var/datum/explosion_controller/explosions
 				for (var/obj/O in T)
 					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
 						continue
-					O.ex_act(1, explosion.last_touched, p)
+					O.ex_act(1, explosion.last_touched, highest_explosion_power(O))
 					O.last_explosion = explosion
 					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
@@ -88,7 +92,7 @@ var/datum/explosion_controller/explosions
 				for (var/obj/O in T)
 					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
 						continue
-					O.ex_act(2, explosion.last_touched, p)
+					O.ex_act(2, explosion.last_touched, highest_explosion_power(O))
 					O.last_explosion = explosion
 					if (istype(O, /obj/cable))
 						needrebuild = 1
@@ -96,7 +100,7 @@ var/datum/explosion_controller/explosions
 				for (var/obj/O in T)
 					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
 						continue
-					O.ex_act(3, explosion.last_touched, p)
+					O.ex_act(3, explosion.last_touched, highest_explosion_power(O))
 					O.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
