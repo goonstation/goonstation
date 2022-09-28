@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 /obj/item/parts/artifact_parts
 	name = "artifact parts"
 	icon = 'icons/obj/artifacts/artifactLimbs.dmi'
@@ -147,6 +148,7 @@
 	proc/on_remove()
 		return ishuman(src.holder)
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm)
 /obj/item/parts/artifact_parts/arm
 	can_hold_items = TRUE
 	var/update_with_clothing = FALSE
@@ -159,8 +161,10 @@
 		src.standImage = image('icons/mob/human.dmi', src.handlistPart)
 		return src.standImage
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg)
 /obj/item/parts/artifact_parts/leg
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/eldritch)
 /obj/item/parts/artifact_parts/arm/eldritch
 	limb_type = /datum/limb/eldritch
 	artifact_type = "eldritch"
@@ -179,6 +183,7 @@
 		icon_state = "arm-eldritch-R"
 		handlistPart = "arm-eldritch-R-attached"
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/eldritch)
 /obj/item/parts/artifact_parts/leg/eldritch
 	artifact_type = "eldritch"
 
@@ -211,6 +216,7 @@
 		icon_state = "leg-eldritch-R"
 		handlistPart = "leg-eldritch-R-attached"
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/martian)
 /obj/item/parts/artifact_parts/arm/martian
 	artifact_type = "martian"
 	update_with_clothing = TRUE
@@ -241,6 +247,7 @@
 		icon_state = "arm-martian-R"
 		handlistPart = "arm-martian-R-attached"
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/martian)
 /obj/item/parts/artifact_parts/leg/martian
 	artifact_type = "martian"
 
@@ -262,6 +269,7 @@
 		partlistPart = "leg-martian-R-attached"
 		movement_modifier = /datum/movement_modifier/martian_legs/right
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/arm/precursor)
 /obj/item/parts/artifact_parts/arm/precursor
 	artifact_type = "precursor"
 	update_with_clothing = TRUE
@@ -292,6 +300,7 @@
 		icon_state = "arm-precursor-R"
 		handlistPart = "arm-precursor-R-attached"
 
+ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 /obj/item/parts/artifact_parts/leg/precursor
 	artifact_type = "precursor"
 
