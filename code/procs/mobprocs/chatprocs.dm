@@ -449,7 +449,7 @@
 		if (src.bioHolder.HasEffect("accent_comic"))
 			font_accent = "Comic Sans MS"
 
-		if (src.bioHolder && src.bioHolder.genetic_stability < 50)
+		if (src.bioHolder.genetic_stability < 50 || src.bioHolder.HasEffect("accent_thrall"))
 			speechverb = "gurgles"
 
 	if (src.get_brain_damage() >= 60)

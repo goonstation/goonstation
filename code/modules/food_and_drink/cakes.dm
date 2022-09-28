@@ -481,7 +481,7 @@
 				return
 			else
 				..()
-		else if(istype(W,/obj/item/kitchen/utensil/spoon) || istool(W,TOOL_SPOONING))
+		else if(isspooningtool(W))
 			if(!src.sliced)
 				return
 			else

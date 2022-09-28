@@ -2021,7 +2021,7 @@
 /obj/pool_springboard{
 	dir = 4
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aOm" = (
 /obj/machinery/door/airlock/pyro{
@@ -10440,7 +10440,7 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ehY" = (
 /obj/rack,
@@ -14181,7 +14181,7 @@
 /area/station/maintenance/east)
 "fNh" = (
 /obj/item/inner_tube/duck,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "fNi" = (
 /obj/decal/poster/wallsign/chsc,
@@ -22449,7 +22449,7 @@
 /turf/simulated/floor/delivery/caution,
 /area/station/quartermaster/office)
 "joQ" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "jpb" = (
@@ -33618,7 +33618,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/engineering/ce)
 "ohJ" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ohS" = (
 /obj/rack,
@@ -34131,7 +34131,7 @@
 /area/station/security/brig)
 "osj" = (
 /obj/item/inner_tube/flamingo,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "osk" = (
 /obj/shrub,
@@ -36617,7 +36617,7 @@
 /area/station/engine/engineering/ce)
 "pCu" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "pCv" = (
 /obj/disposalpipe/segment/horizontal,
@@ -40541,7 +40541,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "rgC" = (
 /obj/grille/catwalk{
@@ -43112,7 +43112,7 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "sip" = (
 /obj/stool/bench/red/auto,
@@ -43273,7 +43273,7 @@
 /area/station/science/chemistry)
 "slr" = (
 /obj/machinery/light,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "smf" = (
 /obj/grille/catwalk{
@@ -43404,7 +43404,7 @@
 /area/station/com_dish/comdish)
 "soR" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "spc" = (
 /obj/machinery/power/apc/autoname_north,

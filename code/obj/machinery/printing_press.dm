@@ -547,7 +547,7 @@
 	desc = "Looks like this upgrade module is for letting your press customise book covers!"
 	icon_state = "press_books"
 
-/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest bitch
+/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest coder
 	name = "ink cartridge"
 	desc = "Looks like this is an ink restock cartridge for the printing press!"
 	icon_state = "press_ink"

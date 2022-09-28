@@ -529,9 +529,9 @@ var/reverse_mode = 0
 		if (prob(15))
 			if (weapon_name)
 				if (narrator_mode)
-					my_target << sound('sound/vox/weapon.ogg')
+					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 50, 0)
 				else
-					my_target << sound(pick('sound/impact_sounds/Generic_Hit_1.ogg', 'sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Generic_Hit_3.ogg'))
+					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 50, 1)
 				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
@@ -539,9 +539,9 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 			else
 				if (narrator_mode)
-					my_target << sound('sound/vox/hit.ogg')
+					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 50, 0)
 				else
-					my_target << pick(sounds_punch)
+					my_target.playsound_local(my_target.loc, pick(sounds_punch), 50, 1)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)

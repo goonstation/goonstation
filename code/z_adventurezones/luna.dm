@@ -72,11 +72,12 @@ Contents:
 	force_fullbright = 0
 	name = "Elevator"
 
-
 /area/moon/museum/west
+	name = "Museum of Lunar History West Wing"
 	icon_state = "red"
 
 /area/moon/museum/giftshop
+	name = "Museum of Lunar History Gift Shop"
 	icon_state = "green"
 
 /area/moon/monorail_station/museum
@@ -1299,7 +1300,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		word-break: break-all;
 		background-color:#111F10;
 		color:#31C131;
-		font-family: Glass_TTY_VT220;
+		font-family: Glass_TTY_VT220 !important;
 		font-size: 14pt;
 	}
 
