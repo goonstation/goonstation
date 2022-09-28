@@ -83,6 +83,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'>Planet Composition:</b></span>"}
@@ -211,6 +212,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Home sweet home.  For some definition of sweet and some definition of home.</b></span>"}
@@ -281,6 +283,7 @@
 		..()
 		//animate_wave(src, 1)
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Hot Hot Hot Hot Hot Hot</b></span>"}
@@ -392,6 +395,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>Oh... look... a black hole.  Neat!</b></span>"}
@@ -476,6 +480,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/datum/galactic_object/asteroid/M = master
@@ -561,6 +566,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	artemis_scan(var/mob/pilot, var/obj/artemis/ship)
 		var/dat = {"<span class='alert'><b>DON'T <i>FUCKING</i> TOUCH ME.</b></span>"}
@@ -596,6 +602,7 @@
 	New()
 		..()
 		flags |= HAS_ARTEMIS_SCAN
+		mouse_opacity = 1
 
 	on_load()
 		//src.icon_state = "eh_moon_idle"
