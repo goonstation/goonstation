@@ -33,7 +33,7 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
-	var/static/list/clothes = list()
+	var/list/obj/item/clothes = list()
 
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
