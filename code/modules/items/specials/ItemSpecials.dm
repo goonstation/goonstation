@@ -1459,11 +1459,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 	var/secondhit_delay = 1
 	var/stamina_damage = 80
-	var/obj/item/katana/K
+	var/obj/item/swords/katana/K
 	var/reversed = 0
 
 	onAdd()
-		if(istype(master, /obj/item/katana))
+		if(istype(master, /obj/item/swords/katana))
 			K = master
 		return
 
