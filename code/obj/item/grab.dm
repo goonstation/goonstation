@@ -767,9 +767,11 @@
 		..()
 
 	proc/shoot()
-		shot = 1
+		if(shot)
+			return
 
-		if (affecting && assailant && isitem(src.loc))
+		shot = 1
+		if (!shot && affecting && assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 

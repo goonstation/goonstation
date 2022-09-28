@@ -99,7 +99,7 @@
 	attack_self(mob/user as mob)
 		if (user.bioHolder.HasEffect("clumsy") && prob(50))
 			user.visible_message("<span class='alert'><b>[user]</b> accidentally grabs the blade of [src].</span>")
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 5, 5)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 5, 5)
 			JOB_XP(user, "Clown", 1)
 		src.active = !( src.active )
 		if (src.active)

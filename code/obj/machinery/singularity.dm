@@ -44,10 +44,9 @@ Contains:
 		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension = min(smallestdimension, gen.shortestlink)
+				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
 	if (goodgenerators>=4)
-
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
@@ -171,7 +170,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-
+	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
@@ -182,23 +181,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				var/checkpointC = 0
 				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 					checkpointC++
-				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained at [log_loc(src)]")
-					message_admins("[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+
+		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
-			message_admins("[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
@@ -894,7 +894,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))

@@ -1,9 +1,16 @@
+///This amount of potential target locations are picked, up to every defined plant spot for the map
+#define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
+
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	shuttle_available = 2
-	var/target_location_name = null // The name of our target area. Used for text output.
-	var/list/target_location_type = list() // Our area.type, which can be multiple (e.g. medbay).
+	/// The name of our target area(s). Used for text output.
+	var/list/target_location_names = list()
+	/// Our area.type, which can be multiple per plant location (e.g. medbay).
+	var/list/target_location_type = list()
+	/// An output ready summation of every 1 to n plant locations, for the couple of places outside of this file that care for that.
+	var/concatenated_location_names
 	var/agent_number = 1
 	var/list/datum/mind/syndicates = list()
 	var/finished = 0
@@ -19,6 +26,7 @@
 	var/token_players_assigned = 0
 
 	do_antag_random_spawns = 0
+	antag_token_support = TRUE
 	escape_possible = 0
 
 /datum/game_mode/nuclear/announce()
@@ -118,15 +126,27 @@
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
 		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
-
-
-	target_location_name = pick(target_locations)
-	if (!target_location_name)
+	//bomb plant location strings
+	if (length(target_locations) > AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS)
+		do
+			var/thing = pick(target_locations)
+			if (!(thing in target_location_names))
+				target_location_names += thing //no duplicates pls
+		while (length(target_location_names) < AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS)
+	else //would love to just copy the list but it's associative so
+		for(var/i in 1 to length(target_locations))
+			target_location_names += target_locations[i]
+	if (!target_location_names)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
 		return 0
 
-	target_location_type = target_locations[target_location_name]
+	//bomb plant location typepaths
+	if (length(target_location_names) == 1)
+		target_location_type = target_locations[target_location_names[1]]
+	else //Add every single typepath into a list
+		for(var/i in 1 to length(target_location_names))
+			target_location_type += target_locations[target_location_names[i]]
 	if (!target_location_type)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
 		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
@@ -174,6 +194,26 @@
 
 	var/datum/mind/leader_mind = src.pick_leader()
 
+	//Building the plant location strings
+	var/to_store_in_mind
+	var/to_output
+	concatenated_location_names = target_location_names[1]
+	//Note: (almost) every location name string already has a leading "the"
+	switch(length(target_location_names))
+		if(1) //Classic, the strings we're all familiar with
+			to_store_in_mind = "The bomb must be armed in <B>[src.target_location_names[1]]</B>."
+			to_output = "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_names[1]]</B> to obliterate [station_name(1)]."
+		if(2) //Worth making some nice adjusted strings for
+			concatenated_location_names += " or [src.target_location_names[2]]"
+			to_store_in_mind = "The bomb must be armed in <B>[src.target_location_names[1]]</B> or <B>[src.target_location_names[2]]</B>."
+			to_output = "We have identified two major structural weaknesses in the [station_or_ship()]'s design. Arm the bomb in either <B>[src.target_location_names[1]]</B> or <B>[src.target_location_names[2]]</B> to obliterate [station_name(1)]."
+		if(3 to INFINITY) //Alright now you're just getting list slop
+			for(var/i in 2 to length(target_location_names)) //The first entry is already added above the switch
+				concatenated_location_names += (((i != length(target_location_names)) ? ", " : " or ") + target_location_names[i])
+
+			to_store_in_mind = "The bomb must be armed in one of the following:<B>[concatenated_location_names]</B>."
+			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
+
 	for(var/datum/mind/synd_mind in syndicates)
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
@@ -183,8 +223,8 @@
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-		synd_mind.store_memory("The bomb must be armed in <B>[src.target_location_name]</B>.", 0, 0)
-		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
+		synd_mind.store_memory(to_store_in_mind, 0, 0)
+		boutput(synd_mind.current, to_output)
 
 		if(synd_mind == leader_mind)
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
@@ -192,7 +232,7 @@
 				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
-			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
+			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
 			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
 			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
@@ -325,8 +365,6 @@
 #ifdef CREW_OBJECTIVES
 			if (istype(objective, /datum/objective/crew)) continue
 #endif
-			if (istype(objective, /datum/objective/miscreant)) continue
-
 			if (objective.check_completion())
 				if (!isnull(objective.medal_name) && !isnull(M.current))
 					M.current.unlock_medal(objective.medal_name, objective.medal_announce)
@@ -472,3 +510,4 @@ var/syndicate_name = null
 
 /obj/cairngorm_stats/right
 	icon_state = "memorial_right"
+#undef AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS

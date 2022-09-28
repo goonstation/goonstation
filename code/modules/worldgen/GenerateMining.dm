@@ -54,11 +54,11 @@ var/list/miningModifiers = list()
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
-	name = ""
+	name = "BLOCK GENERATION"
 	icon_state = "blockgen"
 
 /area/allowGenerate //Areas of this type do not block asteroid/cavern generation.
-	name = ""
+	name = "ALLOW GENERATION"
 	icon_state = "allowgen"
 
 	trench

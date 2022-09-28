@@ -761,9 +761,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
-	bullet_nine_mm_NATO
-		name = "9mm NATO round"
-		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
+	bullet_9mm
+		name = "9mm round"
+		desc = "An extremely common bullet fired by a myriad of different cartridges."
 
 	ninemmplastic
 		name = "9mm Plastic round"

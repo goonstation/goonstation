@@ -413,9 +413,6 @@ var/global
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
-
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
 	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
 	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")

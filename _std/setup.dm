@@ -54,8 +54,6 @@
 
 #define CREW_OBJECTIVES
 
-#define MISCREANTS
-
 //#define RESTART_WHEN_ALL_DEAD 1
 
 //#define PLAYSOUND_LIMITER

@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	real_name = "John Bill"
 	interesting = "Found in a coffee can at age fifteen. Went to jail for fraud. Recently returned to the can."
 	gender = MALE
+	is_npc = TRUE
 	var/talk_prob = 7
 	var/greeted_murray = 0
 	var/list/snacks = null

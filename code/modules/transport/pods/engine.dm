@@ -93,6 +93,9 @@
 			beacons[W.name] = W
 #else
 	for(var/obj/warp_beacon/W in by_type[/obj/warp_beacon])
+		if(W.encrypted)
+			if(QDELETED(ship.com_system) || !(W.encrypted in ship.com_system.access_type))
+				continue
 		count[W.name]++
 		beacons["[W.name][count[W.name] == 1 ? null : " #[count[W.name]]"]"] = W
 #endif
