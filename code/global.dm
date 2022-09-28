@@ -316,6 +316,7 @@ var/global
 	netpass_banking = null
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
+	netpass_centcom = null //Used to authorize direct file sending
 
 	//
 	//cyberorgan damage thresholds for emagging without emag

@@ -957,6 +957,9 @@
 					if(!src.message_on)
 						return
 
+					if(signal.data["batt_adjust"] != netpass_centcom)
+						return
+
 					var/autoshare = ((islist(signalTag) && ("auto_fileshare" in signalTag)) || signalTag == "auto_fileshare")
 
 					if(sender != last_filereq_id && !autoshare)
