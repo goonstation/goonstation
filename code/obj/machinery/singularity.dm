@@ -170,7 +170,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-
+	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
@@ -181,23 +181,24 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				var/checkpointC = 0
 				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 					checkpointC++
-				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing(LOG_STATION, null, "[src] has been contained at [log_loc(src)]")
-					message_admins("[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+
+		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing(LOG_STATION, null, "[src] has become loose at [log_loc(src)]")
-			message_admins("[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()

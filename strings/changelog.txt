@@ -1,4 +1,27 @@
 
+(t)wed sep 28 22
+(u)Sord
+(e)⚙
+(*)Sords, errr, Swords have received some backend changes. Please make a bug report if any common swords (katanas, captains sword, etc) behave strangely.
+(u)Walpvrgis
+(p)11058
+(e)🎨|C-Sprites
+(*)Added a few extra hair options intended for layering; Ignite: Shaved, Bangs: Flat Shorter, Bangs: Short Wavy, Bangs: Sides and Bangs: Mysterious.
+(u)Mr. Moriarty
+(p)11019
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Added two additional night vision goggles to the Donut3 Armoury, alongside making the riot gas pipe visible overfloor.
+(t)tue sep 27 22
+(u)Roddy
+(p)10736
+(e)🆕🎨🍝|C-Feature, C-Sprites, A-Catering
+(+)Adds in ratatouille to the game. Combine eggplant, cucumber, garlic, and tomato in the oven.
+(t)mon sep 26 22
+(u)Walpvrgis
+(p)11024
+(e)🎨|C-Sprites
+(*)Added several new hairstyles + layering parts and hair fades for some existing hairstyles. Check minor changes for a list of style names.
+(+)New hairstyles: Pompom Pigtails, Untidy Ponytail, Long Twin Tails, Scruffy, Sparks, Wavy, Lionsmane, Pinion, Breezy. New Layering parts: Flat bangs and Long Wavy Bangs. New fades: Wavy Faded, Lionsmane Faded, Breezy Faded, Ripley Faded, Violet Faded, Willow Faded, Flick Faded, Rock Ponytail Faded and Afro Faded.
 (t)sat sep 24 22
 (u)Sovexe
 (p)10967
