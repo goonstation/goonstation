@@ -44776,6 +44776,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/trackimp_kit2,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNd" = (

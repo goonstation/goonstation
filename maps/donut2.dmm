@@ -6122,9 +6122,6 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/item/decoration/incenseholder{
-	pixel_y = 10
-	},
 /obj/item/device/light/candle/small{
 	pixel_x = 9;
 	pixel_y = -6;
@@ -8594,10 +8591,6 @@
 "aFk" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
-/obj/item/decoration/incenseholder{
-	pixel_x = 13;
-	pixel_y = 9
-	},
 /obj/item/device/light/candle/small{
 	pixel_x = -1;
 	pixel_y = -1
@@ -47424,11 +47417,6 @@
 /obj/decal/tile_edge/line/black{
 	dir = 6;
 	icon_state = "line2"
-	},
-/obj/item/decoration/incenseholder{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 7
 	},
 /obj/item/device/light/candle{
 	pixel_x = 9;

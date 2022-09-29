@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
-	item = /obj/item/katana_sheath
+	item = /obj/item/swords_sheaths/katana
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF

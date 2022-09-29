@@ -108,7 +108,7 @@ var/datum/job_controller/job_controls
 		dat += "<A href='?src=\ref[src];EditWages=1'>Wages Per Payday:</A> [src.job_creator.wages]<br>"
 		dat += "<A href='?src=\ref[src];EditLimit=1'>Job Limit:</A> [src.job_creator.limit]<br>"
 		dat += "<A href='?src=\ref[src];ChangeName=1'>Can Change Name on Spawn:</A> [src.job_creator.change_name_on_spawn ? "Yes":"No"]<br>"
-		dat += "<A href='?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location ? locate(src.job_creator.spawn_x,src.job_creator.spawn_y,src.job_creator.spawn_z) : "Default"]<br>"
+		dat += "<A href='?src=\ref[src];SetSpawnLoc=1'>Spawn Location:</A> [src.job_creator.special_spawn_location]<br>"
 		dat += "<A href='?src=\ref[src];SpawnId=1'>Spawns with ID:</A> [src.job_creator.spawn_id ? "Yes" : "No"]<br>"
 		dat += "<A href='?src=\ref[src];EditObjective=1'>Custom Objective:</A> [src.job_creator.objective][src.job_creator.objective ? (" (Crew Objective)") : ""]<br>"
 		dat += "<A href='?src=\ref[src];ToggleAnnounce=1'>Head of Staff-style Announcement:</A> [src.job_creator.announce_on_join?"Yes":"No"]<br>"
@@ -893,10 +893,7 @@ var/datum/job_controller/job_controls
 					alert("Please move to the target location and then press OK.")
 					var/atom/trg = get_turf(usr)
 					if(trg)
-						src.job_creator.special_spawn_location = 1
-						src.job_creator.spawn_x = trg.x
-						src.job_creator.spawn_y = trg.y
-						src.job_creator.spawn_z = trg.z
+						src.job_creator.special_spawn_location = trg
 			src.job_creator()
 
 		if(href_list["CreateJob"])
@@ -934,9 +931,6 @@ var/datum/job_controller/job_controls
 				JOB.access = JOB.access | src.job_creator.access
 				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
 				JOB.special_spawn_location = src.job_creator.special_spawn_location
-				JOB.spawn_x = src.job_creator.spawn_x
-				JOB.spawn_y = src.job_creator.spawn_y
-				JOB.spawn_z = src.job_creator.spawn_z
 				JOB.bio_effects = src.job_creator.bio_effects
 				JOB.objective = src.job_creator.objective
 				JOB.announce_on_join = src.job_creator.announce_on_join
