@@ -2,7 +2,7 @@
 /datum/component/flock_ping
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 
-	var/const/duration = 5 SECOND
+	var/duration = 5 SECONDS
 	var/end_time = -1
 	var/obj/dummy = null
 	var/outline_color = "#00ff9d"
@@ -58,3 +58,7 @@
 ///Used to mark objects blocking the construction of a flock tealprint
 /datum/component/flock_ping/obstruction
 	outline_color = "#910707"
+
+/datum/component/flock_ping/sapper_power
+	duration = 2 SECONDS
+	outline_color = "#040694"

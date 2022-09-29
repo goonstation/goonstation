@@ -22,11 +22,15 @@
 	var/range = 4
 	/// The wattage of the arcflash
 	var/wattage = 6000
+	/// can chain to an extra target
+	var/extra_chain = FALSE
 	var/powered = FALSE
 
 
 	// flockdrones can pass through this
 	passthrough = TRUE
+
+	accepts_sapper_power = TRUE
 
 	var/online_compute_cost = 20
 	compute = 0 //targetting consumes compute
@@ -88,7 +92,7 @@
 				arcFlash(src, mobtohit, wattage, 1.1)
 				logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(mobtohit)].")
 				hit += mobtohit
-				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
+				for(var/i in 1 to (rand(5,6) + (src.extra_chain ? 1 : 0)))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in view(2, mobtohit.loc))
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
@@ -116,6 +120,17 @@
 	else
 		charge_status = CHARGED
 	src.info_tag.set_info_tag("Charge: [src.charge]%")
+
+/obj/flock_structure/sentinel/sapper_power()
+	if (!src.powered || !..())
+		return FALSE
+	src.accepts_sapper_power = FALSE
+	src.extra_chain = TRUE
+	SPAWN(10 SECONDS)
+		if (src)
+			src.accepts_sapper_power = TRUE
+			src.extra_chain = FALSE
+	return TRUE
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()
