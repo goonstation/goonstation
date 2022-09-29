@@ -10,7 +10,7 @@
 			var/use_volume = 0.5 * mult //amount applied via touch
 			var/waste_volume = use_volume * max(length(owner.skin_process) * 0.75, 1) //amount that gets removed from the patch. Half of this gets transferred into the body
 
-			for (var/atom/A as anything in owner.skin_process)
+			for (var/atom/movable/A as anything in owner.skin_process)
 
 				if (A.loc != owner)
 					owner.skin_process -= A
