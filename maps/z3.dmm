@@ -18815,7 +18815,6 @@
 	dir = 8;
 	icon_state = "chair_couch-yellow"
 	},
-/obj/machinery/power/apc/autoname_north/nopoweralert,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
 "gyi" = (
