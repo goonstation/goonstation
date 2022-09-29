@@ -191,7 +191,7 @@
 		parentTurret.info_tag.set_info_tag("Gnesis: [parentTurret.reagents.total_volume]/[parentTurret.fluid_level_max]")
 
 /obj/item/implant/projectile/body_visible/syringe/syringe_barbed/gnesis_nanites
-	name = "barbed crystaline spike"
+	name = "barbed crystalline spike"
 	desc = "A hollow teal crystal, like some sort of weird alien syringe. It has a barbed tip. Nasty!"
 	New()
 		. = ..()
