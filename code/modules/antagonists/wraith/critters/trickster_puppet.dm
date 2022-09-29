@@ -25,7 +25,7 @@
 
 		last_life_update = TIME
 
-		src.bioHolder.AddEffect("nightvision", 0, 0, 0, 1)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = master?.abilityHolder.points
 
