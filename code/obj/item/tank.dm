@@ -297,7 +297,7 @@ Contains:
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
 	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81
+	distribute_pressure = 110
 
 	New()
 		..()
