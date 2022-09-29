@@ -5333,7 +5333,7 @@
 	name = "The Warrens"
 	})
 "cKI" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	name = "Weather Satellite"
 	},
@@ -14114,7 +14114,7 @@
 /obj/fluid_spawner{
 	amount = 2100
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "heB" = (
 /obj/machinery/light/small/floor/netural,
@@ -27451,7 +27451,7 @@
 	name = "Warrens Hall"
 	})
 "nvj" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
@@ -42741,7 +42741,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "vDf" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "vDk" = (
 /obj/table/reinforced/auto,
@@ -46480,7 +46480,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "xKk" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "xKn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
