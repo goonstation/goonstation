@@ -41,11 +41,10 @@
 		. = product_base64_cache[path]
 		if(isnull(.))
 			var/atom/dummy_atom = new path // people demand overlays on their vending machine bottles
-			SPAWN(0)
-				var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
-				qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
-				. = icon2base64(dummy_icon)
-				product_base64_cache[path] = .
+			var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
+			qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
+			. = icon2base64(dummy_icon)
+			product_base64_cache[path] = .
 
 
 /obj/machinery/vending
@@ -58,7 +57,7 @@
 	mats = 20
 	layer = OBJ_LAYER - 0.1 // so items get spawned at 3, don't @ me
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	flags = TGUI_INTERACTIVE
 	var/freestuff = 0
 	var/obj/item/card/id/scan = null
