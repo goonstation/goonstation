@@ -77,31 +77,24 @@ var/datum/explosion_controller/explosions
 		LAGCHECK(LAG_HIGH)
 
 		for (var/turf/T as anything in queued_turfs)
-			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
-			//boutput(world, "P1 [p]")
-			if (p >= 6)
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
-						continue
-					O.ex_act(1, explosion.last_touched, highest_explosion_power(O))
-					O.last_explosion = explosion
+			for (var/obj/O in T)
+				if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
+					continue
+				var/power = highest_explosion_power(O)
+				var/severity
+				if (power >= 6)
+					severity = 1
 					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-			else if (p > 3)
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
-						continue
-					O.ex_act(2, explosion.last_touched, highest_explosion_power(O))
-					O.last_explosion = explosion
+				else if (power > 3)
+					severity = 2
 					if (istype(O, /obj/cable))
 						needrebuild = 1
-			else
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
-						continue
-					O.ex_act(3, explosion.last_touched, highest_explosion_power(O))
-					O.last_explosion = explosion
+				else
+					severity = 3
+				O.ex_act(severity, explosion.last_touched, power)
+				O.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
 
