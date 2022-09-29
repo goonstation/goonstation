@@ -16,8 +16,6 @@
 	var/fluid_gen_amt = 5
 	///gnesis fluid ID - change this to do exciting things like having a turret that fires QGP
 	var/fluid_gen_type = "flockdrone_fluid"
-	///how much of the stored fluid should be in each shot
-	var/fluid_shot_amt
 	//internals for turret targetting and accuracy
 	var/target = null
 	var/range = 8
@@ -37,7 +35,6 @@
 		..(location, F)
 		ensure_reagent_holder()
 		src.current_projectile = new /datum/projectile/syringe/syringe_barbed/gnesis(src)
-		src.fluid_shot_amt = src.current_projectile.cost
 		src.current_projectile.shot_number = 4
 		src.info_tag.set_info_tag("Gnesis: [src.reagents.total_volume]/[src.fluid_level_max]")
 
@@ -109,7 +106,7 @@
 			src.compute = -base_compute
 			src.update_flock_compute("apply")
 
-		if(src.reagents.total_volume >= fluid_shot_amt*src.current_projectile.shot_number)
+		if(src.reagents.total_volume >= src.current_projectile.cost*src.current_projectile.shot_number)
 			//shamelessly stolen from deployable_turret.dm
 			if(!src.target && !src.seek_target()) //attempt to set the target if no target
 				return
