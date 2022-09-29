@@ -114,7 +114,9 @@
 			currentNote = scale[currentIndex] + num2text(currentOctave)
 			notes += currentNote
 			currentIndex++
-			if(currentIndex > length(scale))	// If we've reached the end of the scale, start over with the next octave
+
+			// If we've reached the end of the scale, start over with the next octave
+			if(currentIndex > length(scale))
 				currentIndex = 1
 				currentOctave++
 		return notes
