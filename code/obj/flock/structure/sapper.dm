@@ -16,7 +16,7 @@
 	passthrough = TRUE
 
 	var/mode = CHARGING_BITS
-	var/mode_cooldowns = list(CHARGING_BITS = 10 SECONDS, CHARGING_DRONES = 5 SECONDS, CHARGING_STRUCTURES = 5 SECONDS) // 20, 25, 30
+	var/mode_cooldowns = list(CHARGING_BITS = 20 SECONDS, CHARGING_DRONES = 30 SECONDS, CHARGING_STRUCTURES = 30 SECONDS)
 
 	var/obj/machinery/power/apc/linked_apc = null
 	var/mob/living/critter/flock/drone/target_flockdrone = null
