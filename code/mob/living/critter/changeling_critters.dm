@@ -31,10 +31,11 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
+		src.original_bodypart.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return

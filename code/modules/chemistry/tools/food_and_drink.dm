@@ -688,7 +688,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (src.splash_all_contents)
 				splash_volume = src.reagents.maximum_volume
 			else
-				splash_volume = min(src.amount_per_transfer_from_this, src.reagents.total_volume)
+				splash_volume = src.amount_per_transfer_from_this
+
+			splash_volume = min(splash_volume, src.reagents.total_volume)
 
 			src.reagents.reaction(target, TOUCH, splash_volume)
 

@@ -3689,6 +3689,13 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Rental Office"
 	icon_state = "purple"
 
+/// new merchant areas
+
+/area/regina
+	name = "Regina Anchorage"
+	requires_power = 0
+	sound_environment = 2
+	teleport_blocked = 1
 
 
 /* ================================================== */

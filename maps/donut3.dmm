@@ -4594,7 +4594,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bgh" = (
@@ -11891,7 +11891,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "dlb" = (
@@ -12077,9 +12077,7 @@
 /area/station/maintenance/outer/ne)
 "dmU" = (
 /obj/storage/secure/closet/security/armory,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southeast,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "dmY" = (
@@ -23679,7 +23677,7 @@
 	},
 /area/station/medical/medbay)
 "gGr" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "gGE" = (
@@ -23889,7 +23887,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "gLB" = (
@@ -51536,10 +51534,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/listeningpost)
-"oRh" = (
-/obj/machinery/light/runway_light/delay5,
-/turf/simulated/floor/specialroom/gym,
-/area/station/crew_quarters/fitness)
 "oRm" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/reinforced/jen,
@@ -55041,6 +55035,9 @@
 	desc = "What? Security has moments of weakness too!";
 	name = "emergency alcohol dispenser"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "pRW" = (
@@ -57652,23 +57649,38 @@
 /area/station/hallway/primary/west)
 "qyp" = (
 /obj/rack,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -3;
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
 	pixel_y = 3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /obj/item/clothing/glasses/thermal{
 	pixel_x = -1;
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_x = 1;
+	pixel_x = 2;
 	pixel_y = -1
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 5;
+	pixel_y = -4
 	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "qyH" = (
@@ -76614,7 +76626,7 @@
 	},
 /obj/item/clothing/mask/gas{
 	pixel_x = 7;
-	pixel_y = 9
+	pixel_y = 10
 	},
 /obj/item/clothing/head/helmet/EOD{
 	pixel_x = -7;
@@ -76622,7 +76634,7 @@
 	},
 /obj/item/clothing/head/helmet/EOD{
 	pixel_x = 7;
-	pixel_y = 8
+	pixel_y = 9
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
@@ -84564,7 +84576,8 @@
 	},
 /obj/access_spawn/security,
 /obj/machinery/turret{
-	dir = 8
+	dir = 8;
+	name = "armory turret"
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -127507,7 +127520,7 @@ weI
 iJM
 eFg
 bPa
-oRh
+hBW
 hBW
 vtH
 tfk
