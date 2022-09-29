@@ -568,7 +568,7 @@
 
 /obj/machinery/vending/ui_data(mob/user)
 	var/bankaccount = FindBankAccountByName(src.scan?.registered)
-	 . = list(
+	. = list(
 		"windowName" = src.name,
 		"wiresOpen" = src.panel_open ? TRUE : null,
 		"bankMoney" = bankaccount ? bankaccount["current_money"] : 0,
