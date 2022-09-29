@@ -27,7 +27,7 @@
 
 /obj/flock_structure/compute/sapper_power()
 	src.update_flock_compute("remove", FALSE)
-	src.compute += 2
+	src.compute += 1
 	src.update_flock_compute("apply")
 	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 	return TRUE
@@ -49,7 +49,7 @@
 
 /obj/flock_structure/compute/mainframe/sapper_power()
 	src.update_flock_compute("remove", FALSE)
-	src.compute += 6
+	src.compute += 3
 	src.update_flock_compute("apply")
 	src.info_tag.set_info_tag("Compute provided: [src.compute]")
 	return TRUE
