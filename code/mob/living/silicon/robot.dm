@@ -263,8 +263,6 @@
 		if (length(src.clothes))
 			for (var/obj/item/A as anything in src.clothes)
 				src.clothes[A].set_loc(src.loc)
-		//Clear list as it is of static type
-		src.clothes = list()
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
