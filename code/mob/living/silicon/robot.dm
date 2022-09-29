@@ -260,9 +260,8 @@
 			src.remove_syndicate("death")
 		src.borg_death_alert()
 		src.eject_brain(fling = TRUE) //EJECT
-		if (length(src.clothes))
-			for (var/obj/item/A as anything in src.clothes)
-				src.clothes[A].set_loc(src.loc)
+		for (var/obj/item/slot as anything in src.clothes)
+			src.clothes[slot].set_loc(src.loc)
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
