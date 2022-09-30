@@ -1,5 +1,9 @@
 
 (t)fri sep 30 22
+(u)Mr. Moriarty
+(p)10628
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Chameleon outfits now have the option to create new and delete existing outfit sets.
 (u)Sord
 (+)Security and Medical have had their clothing lockers replaced with new clothing vendors.
 (u)LeahTheTech
