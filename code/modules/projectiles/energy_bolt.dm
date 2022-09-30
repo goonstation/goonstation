@@ -387,7 +387,11 @@ toxic - poisons
 			var/turf/T = get_turf(hit)
 			for(var/atom/movable/O in T.contents)
 				if(!istype(O, /obj/machinery/nuclearbomb))
-					O.emp_act()
+					if(istype(O, /obj/machinery/door/airlock))
+						var/obj/machinery/door/airlock/airlock = O
+						airlock.loseMainPower()
+					else
+						O.emp_act()
 			elecflash(T)
 
 /datum/projectile/energy_bolt/signifer_tase

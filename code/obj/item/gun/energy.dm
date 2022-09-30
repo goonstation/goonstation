@@ -1629,7 +1629,7 @@
 
 	modified
 		name = "modified pulse rifle"
-		desc = "A heavily modified pulse rifle; it looks as if the gun has been affixed to the EMP setting, and the power setting tuned down."
+		desc = "A heavily modified pulse rifle; it looks as if the gun has been affixed to the EMP setting, and the power setting tuned down. Ideal for depowering doors quickly."
 
 		New()
 			..()
