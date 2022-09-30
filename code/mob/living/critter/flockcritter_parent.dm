@@ -241,7 +241,11 @@
 	src.update_health_icon()
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
-	src.flock?.removeDrone(src)
+	if (src.flock)
+		src.flock.drone_deaths++
+		if (src.flock.drone_deaths == 100)
+			src.flock.achieve(FLOCK_ACHIEVEMENT_DRONE_DEATHS)
+		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()

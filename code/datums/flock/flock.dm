@@ -34,6 +34,7 @@ var/flock_signal_unleashed = FALSE
 	var/static/list/annotation_imgs = null
 	var/list/obj/flock_structure/structures = list()
 	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
+	var/drone_deaths = 0
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
@@ -550,6 +551,7 @@ var/flock_signal_unleashed = FALSE
 		src.unreserveTurf(src.busy_tiles[name])
 	src.unlockableStructures = list()
 	src.achievements = list()
+	src.drone_deaths = 0
 	src.total_compute = 0
 	src.used_compute = 0
 	src.peak_compute = 0
