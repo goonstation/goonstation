@@ -243,7 +243,7 @@
 	src.flock_name_tag = null
 	if (src.flock)
 		src.flock.drone_deaths++
-		if (src.flock.drone_deaths == 100)
+		if (src.flock.drone_deaths == 10)
 			src.flock.achieve(FLOCK_ACHIEVEMENT_DRONE_DEATHS)
 		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
