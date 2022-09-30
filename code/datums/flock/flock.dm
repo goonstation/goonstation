@@ -549,9 +549,9 @@ var/flock_signal_unleashed = FALSE
 		src.togglePriorityTurf(T)
 	for (var/name in src.busy_tiles)
 		src.unreserveTurf(src.busy_tiles[name])
-	src.unlockableStructures = list()
-	src.achievements = list()
 	src.drone_deaths = 0
+	src.achievements = list()
+	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
 	src.peak_compute = 0
