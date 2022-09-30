@@ -1676,7 +1676,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 
 /datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
+	return ..() && !(istype(M.get_id(), /obj/item/card/id/syndicate) || isnukeopgunbot(M) || istype(M, /mob/living/critter/robotic/sawfly))
 
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
