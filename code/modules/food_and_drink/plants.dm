@@ -966,6 +966,46 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else
 			..()
 
+obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
+	name = "spice pumpkin"
+	desc = "Autumny!"
+	icon_state = "pumpkin"
+	edible = 0
+	food_color = "#CC6600"
+	validforhat = 1
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
+			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
+			P.name = "carved [src.name]"
+			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src], mindful of the whipped cream.")
+			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
+			bowl.reagents.add_reagent("pumpkinspicelatte", 30)
+			qdel(src)
+
+/obj/item/clothing/head/pumpkin/latte
+	name = "carved spice pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkin"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = 0
+	item_state = "pumpkin"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			..()
+
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
 	desc = "A very sour green fruit."

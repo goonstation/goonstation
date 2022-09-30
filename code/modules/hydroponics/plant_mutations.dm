@@ -235,6 +235,13 @@
 	chance = 10
 	assoc_reagents = list("ghostchilijuice")
 
+// Pumpkin Mutations
+	name = "Spice Pumpkin"
+	name_prefix = "Spiced"
+	iconmod = "SpicePumpkin"
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
+	assoc_reagents = list("pumpkinspicelatte")
+
 // Eggplant Mutations
 
 /datum/plantmutation/eggplant/literal
