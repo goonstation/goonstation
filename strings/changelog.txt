@@ -1,4 +1,9 @@
 
+(t)fri sep 30 22
+(u)LeahTheTech
+(p)11077
+(e)🪲🧛‍♂️|C-Bug, A-Gamemodes
+(+)The Hydra smart pistol is now slightly smarter and no longer targets sawflies or nukeop gunbots.
 (t)thu sep 29 22
 (u)LeahTheTech
 (p)11066
