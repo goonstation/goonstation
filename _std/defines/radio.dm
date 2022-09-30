@@ -9,7 +9,6 @@
 #define RADIOC_RESEARCH "#732DCE"
 #define RADIOC_CIVILIAN "#A10082"
 #define RADIOC_SYNDICATE "#962121"
-#define RADIOC_PIRATE "#962121"
 #define RADIOC_OTHER "#800080"
 
 // Radio (headset etc) css classes.
@@ -23,7 +22,6 @@
 #define RADIOCL_RESEARCH "rresearch"
 #define RADIOCL_CIVILIAN "rcivilian"
 #define RADIOCL_SYNDICATE "rsyndicate"
-#define RADIOCL_PIRATE "rpirate"
 #define RADIOCL_OTHER "rother"
 
 // Frequency defines for headsets & intercoms (Convair880).
@@ -88,7 +86,7 @@ proc/default_frequency_color(freq)
 		if(R_FREQ_SYNDICATE)
 			return RADIOC_SYNDICATE
 		if(R_FREQ_PIRATE)
-			return RADIOC_PIRATE
+			return RADIOC_SYNDICATE
 		if(R_FREQ_GANG)
 			return RADIOC_SYNDICATE
 		if(R_FREQ_INTERCOM_MEDICAL)

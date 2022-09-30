@@ -460,9 +460,9 @@
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
 	icon_state = "headset"
-	chat_class = RADIOCL_PIRATE
+	chat_class = RADIOCL_SYNDICATE
 	secure_frequencies = list("p" = R_FREQ_PIRATE)
-	secure_classes = list(RADIOCL_PIRATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1
 	icon_override = "pirate"
 	icon_tooltip = "Space Pirate"
