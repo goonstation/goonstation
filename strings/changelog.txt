@@ -1,6 +1,10 @@
 
 (t)fri sep 30 22
 (u)Mr. Moriarty
+(p)11086
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Clarion Armoury's equipment.
+(u)Mr. Moriarty
 (p)10628
 (e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
 (+)Chameleon outfits now have the option to create new and delete existing outfit sets.
