@@ -156,6 +156,10 @@ var/datum/explosion_controller/explosions
 /obj
 	var/datum/explosion/last_explosion = null
 
+/obj/disposing()
+	src.last_explosion = null
+	..()
+
 /datum/explosion
 	var/atom/source
 	var/turf/epicenter
