@@ -6,15 +6,16 @@
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/PandemoniumGrim.ogg"
-	voice_fem = "sound/voice/wizard/PandemoniumFem.ogg"
-	voice_other = "sound/voice/wizard/PandemoniumLoud.ogg"
+	voice_grim = 'sound/voice/wizard/PandemoniumGrim.ogg'
+	voice_fem = 'sound/voice/wizard/PandemoniumFem.ogg'
+	voice_other = 'sound/voice/wizard/PandemoniumLoud.ogg'
+	maptext_colors = list("#FF0000", "#00FF00", "#FFFF00", "#0000FF", "#00FFFF", "#FF00FF")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("WATT LEHFUQUE")
+			holder.owner.say("WARR LEHFUQUE", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/available_effects = list("babel", "boost", "roar", "signaljam", "grilles", "meteors")
@@ -47,7 +48,7 @@
 			if("fireburst")
 				spell_result = "fireburst"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a wave of burning heat!</span>")
-				playsound(W, "sound/effects/bamf.ogg", 80, 1)
+				playsound(W, 'sound/effects/bamf.ogg', 80, 1)
 				for (var/mob/living/carbon/human/H in range(6, W))
 					if ((H == W) && protectuser)
 						continue
@@ -58,7 +59,7 @@
 			if("babel")
 				spell_result = "babel accents"
 				W.visible_message("<span class='alert'><B>[W]</B> emits a faint smell of cheese!</span>")
-				playsound(W, "sound/voice/farts/superfart.ogg", 80, 1)
+				playsound(W, 'sound/voice/farts/superfart.ogg', 80, 1)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
@@ -71,7 +72,7 @@
 			if("tripballs")
 				spell_result = "hallucinogenic aura"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a confusing aura!</span>")
-				playsound(W, "sound/effects/bionic_sound.ogg", 80, 1)
+				playsound(W, 'sound/effects/bionic_sound.ogg', 80, 1)
 				for (var/mob/living/carbon/human/H in range(25, W))
 					if ((H == W) && protectuser)
 						continue
@@ -84,9 +85,9 @@
 			if("flashbang")
 				spell_result = "flashbang"
 				W.visible_message("<span class='alert'><B>[W]</B> explodes into a brilliant flash of light!</span>")
-				playsound(W.loc, "sound/weapons/flashbang.ogg", 50, 1)
+				playsound(W.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 				for(var/mob/M in AIviewers(W, null))
-					if(get_dist(M, W) <= 6)
+					if(GET_DIST(M, W) <= 6)
 						if(M != W)
 							if (targetSpellImmunity(M, FALSE, 0))
 								continue
@@ -104,7 +105,7 @@
 			if("screech")
 				spell_result = "screech"
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrible shriek!</span>")
-				playsound(W.loc, "sound/effects/screech.ogg", 50, 1, -1)
+				playsound(W.loc, 'sound/effects/screech.ogg', 50, 1, -1)
 				for (var/mob/living/M in hearers(W, null))
 					if ((M == W) && protectuser)
 						continue
@@ -118,12 +119,12 @@
 			if("boost")
 				spell_result = "arcane boost"
 				W.audible_message("<span class='alert'><B>[W]</B> glows with magical power!</span>")
-				playsound(W.loc, "sound/mksounds/boost.ogg", 25, 1, -1)
+				playsound(W.loc, 'sound/mksounds/boost.ogg', 25, 1, -1)
 				W.bioHolder.AddEffect("arcane_power", timeleft = 60)
 			if("roar")
 				spell_result = "roar"
 				W.audible_message("<span class='alert'><B>[W]</B> emits a horrific reverberating roar!</span>")
-				playsound_global(world, "sound/effects/mag_pandroar.ogg", 50)
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 50)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
@@ -135,7 +136,7 @@
 			if("signaljam")
 				spell_result = "signal loss"
 				W.visible_message("<span class='alert'><B>[W]</B> emits a wave of electrical interference!</span>")
-				playsound(W.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+				playsound(W.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 				for (var/client/C)
 					if (!ishuman(C.mob))
 						continue
@@ -146,9 +147,9 @@
 					signal_loss -= 100
 			if("grilles")
 				spell_result = "metal grilles"
-				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around \him!</span>")
-				playsound(W.loc, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 25, 1, -1)
+				W.visible_message("<span class='alert'><B>[W]</B> reshapes the metal around [him_or_her(W)]!</span>")
+				playsound(W.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 25, 1, -1)
 				for(var/turf/simulated/floor/T in view(W,7))
 					if (prob(33))
 						new /obj/grille/steel(T)
-		logTheThing("combat", W, null, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")
+		logTheThing(LOG_COMBAT, W, "'s Pandemonium caused a [spell_result] effect at [log_loc(W)].")

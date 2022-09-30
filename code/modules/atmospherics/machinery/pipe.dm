@@ -370,17 +370,17 @@ obj/machinery/atmospherics/pipe
 
 		ex_act(severity) // cogwerks - adding an override so pda bombs aren't quite so ruinous in the engine
 			switch(severity)
-				if(1.0)
+				if(1)
 					if(prob(5))
 						qdel(src)
 					else
 						rupture(destroy=TRUE)
-				if(2.0)
+				if(2)
 					if(prob(10))
 						rupture(destroy=TRUE)
 					else
 						rupture()
-				if(3.0)
+				if(3)
 					if (prob(50))
 						rupture()
 			return
@@ -798,30 +798,6 @@ obj/machinery/atmospherics/pipe
 				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
 				..()
-
-		rad_particles
-			icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
-			name = "Pressure Tank (Nuclear Exhaust)"
-
-			north
-				dir = NORTH
-			east
-				dir = EAST
-			south
-				dir = SOUTH
-			west
-				dir = WEST
-
-			New()
-				air_temporary = new /datum/gas_mixture
-				air_temporary.volume = volume
-				air_temporary.temperature = T0C
-
-				var/datum/gas/rad_particles/trace_gas = air_temporary.get_or_add_trace_gas_by_type(/datum/gas/rad_particles)
-				trace_gas.moles = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
-
-				..()
-
 
 		oxygen
 			icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi'

@@ -7,7 +7,7 @@
 	var/obj/item/device/triggering_device = null
 	var/obj/item/device/igniter/igniter = null
 	var/obj/item/chem_grenade/payload = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/mob/attacher = "Unknown"
@@ -129,7 +129,7 @@
 	var/turf/bombturf = get_turf(src)
 	var/bombarea = bombturf.loc.name
 
-	logTheThing("bombing", null, null, "Chemical ([src]) Bomb triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
+	logTheThing(LOG_BOMBING, null, "Chemical ([src]) Bomb triggered in [bombarea] with device attacher: [attacher]. Last touched by: [src.fingerprintslast]")
 	message_admins("Chemical Bomb ([src]) triggered in [bombarea] with device attacher: [attacher]. Last touched by: [key_name(src.fingerprintslast)]")
 
 	//boutput(world, "sent explode() to [src.payload]")

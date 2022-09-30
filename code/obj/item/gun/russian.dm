@@ -35,20 +35,36 @@
 	proc/fire_gun(mob/user as mob)
 		if(src.shotsLeft > 1)
 			src.shotsLeft--
-			playsound(user, "sound/weapons/Gunclick.ogg", 80, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 80, 1)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
-					O.show_message("<span class='alert'>[user] points the gun at \his head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
+					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
 
 			inventory_counter.update_number(1)
 			return 0
 		else if(src.shotsLeft == 1)
-			src.shotsLeft = 0
-			playsound(user, "sound/weapons/Gunshot.ogg", 100, 1)
-			user.tri_message("<span class='alert'><B>BOOM!</B></span>", "<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>", "<span class='alert'>You hear someone's head explode.</span>", 2)
-			user.TakeDamage("head", 300, 0)
+			if(ishuman(user))
+				var/list/nearby_turfs = list()
+				for(var/turf/T in view(5, user))
+					nearby_turfs += T
+				var/mob/living/carbon/human/H = user
+				var/obj/brain = H.organHolder.drop_organ("brain")
+				var/obj/l_eye = H.organHolder.drop_organ("left_eye")
+				var/obj/r_eye = H.organHolder.drop_organ("right_eye")
+				var/obj/head = H.organHolder.drop_organ("head")
+				brain.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				l_eye.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				r_eye.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				qdel(head)
+			else
+				user.TakeDamage("head", 300, 0)
 			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
-			logTheThing("combat", user, null, "shoots themselves with [src] at [log_loc(user)].")
+			src.shotsLeft = 0
+			playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+			user.visible_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>",\
+				"<span class='alert'><B>BOOM!</B></span>",\
+				"<span class='alert'>You hear someone's head explode.</span>")
+			logTheThing(LOG_COMBAT, user, "shoots themselves with [src] at [log_loc(user)].")
 			inventory_counter.update_number(0)
 			return 1
 		else

@@ -90,10 +90,7 @@
 	color = "#FF0000"
 
 	makeAntag(mob/M as mob)
-		M.mind.special_role = ROLE_HUNTER
-		M.mind.assigned_role = "Hunter"
-		M.show_text("<h2><font color=red><B>You have become a hunter!</B></font></h2>", "red")
-		M.make_hunter()
+		M.mind?.add_antagonist(ROLE_HUNTER)
 
 /obj/traitorifier/werewolf
 	name = "Shadowy Dog Thing"
@@ -192,7 +189,7 @@
 		color = "#000000"
 
 		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_werewolf(1)
+			M.make_werewolf()
 			boutput(M, "<span class='combat'>Awooooooo!</span>")
 
 	wrestler
@@ -232,6 +229,7 @@
 		icon = 'icons/obj/power.dmi'
 		icon_state = "apc0"
 
-		makeAntag(mob/living/carbon/human/M as mob)
-			M.make_arcfiend()
-			boutput(M, "<span class='combat'>The simulation grants you a small portion of it's power.</span>")
+		makeAntag(mob/living/carbon/human/M)
+			boutput(M, "<span class='combat'>The simulation grants you a small portion of its power.</span>")
+			// No need to specify other arguments here; pseudo does most of this on its own
+			M.mind?.add_antagonist(ROLE_ARCFIEND, do_pseudo = TRUE)

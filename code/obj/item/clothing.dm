@@ -4,6 +4,11 @@
 	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
+	///Makes it so the item doesn't show up upon examining, currently only applied for gloves
+	var/nodescripition = FALSE
+
+	//for clothing that covers other clothing from examines
+	var/hides_from_examine = 0
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
@@ -14,7 +19,6 @@
 	var/color_b = 1
 
 	var/protective_temperature = 0
-	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
@@ -75,6 +79,20 @@
 			src.stains = list()
 			src.UpdateName()
 
+	// here for consistency; not all clothing can be ripped up
+	proc/try_rip_up(mob/user)
+		boutput(user, "You begin ripping up [src].")
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_rip_up, list(user), null, null, "You rip up [src].", null)
+		return TRUE
+
+	proc/finish_rip_up(mob/user)
+		for (var/i in 1 to 3)
+			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			CF.pixel_x = rand(-4,4)
+			CF.pixel_y = rand(-4,4)
+			CF.set_loc(get_turf(src))
+		user.u_equip(src)
+		qdel(src)
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)

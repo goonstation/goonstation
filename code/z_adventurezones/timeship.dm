@@ -9,90 +9,40 @@ Decals that float, including clocks
 Turfs and decal for the space rift
 */
 
-var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gong.ogg','sound/ambience/industrial/Timeship_Glitchy3.ogg','sound/ambience/industrial/Timeship_Glitchy1.ogg','sound/ambience/industrial/Timeship_Glitchy2.ogg','sound/ambience/industrial/Timeship_Malfunction.ogg')
-
 /area/timewarp
 	requires_power = 0
 	luminosity = 1
 	force_fullbright = 1
 	name = "Strange Place"
 	icon_state = "shuttle2"
-	var/sound/ambientSound = 'sound/ambience/industrial/Timeship_Atmospheric.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
-
-	New()
-		..()
-		//fxlist =
-		if (ambientSound)
-
-			SPAWN(6 SECONDS)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
-
-				soundSubscribers = list()
-				process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN(sound_delay)
-							H << S
-
+	sound_group = "timeship"
+	sound_loop = 'sound/ambience/industrial/Timeship_Atmospheric.ogg'
+	sound_loop_vol = 60
 
 /area/timewarp/ship
 	name = "Strange Craft"
 	icon_state = "shuttle"
 	force_fullbright = 0
-	ambientSound = 'sound/ambience/industrial/Timeship_Tones.ogg'
+	sound_loop = 'sound/ambience/industrial/Timeship_Tones.ogg'
 
-	New()
-		..()
-		fxlist = timewarp_interior_sounds
+/area/timewarp/ship/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+
+/area/timewarp/ship/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
+
+/area/timewarp/ship/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/industrial/Timeship_Gong.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy1.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy2.ogg',\
+		'sound/ambience/industrial/Timeship_Glitchy3.ogg',\
+		'sound/ambience/industrial/Timeship_Malfunction.ogg')
+
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"
@@ -320,7 +270,6 @@ var/list/timewarp_interior_sounds = list('sound/ambience/industrial/Timeship_Gon
 		bioHolder.AddEffect("psy_resist") // Heh
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
 		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/device/key {name = "futuristic key"; desc = "It appears to be made of some kind of space-age material.  Like really fancy aluminium or something.";} , slot_l_store)
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp

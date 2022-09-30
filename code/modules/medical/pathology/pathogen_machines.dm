@@ -561,7 +561,7 @@
 					if (bit != "|")
 						src.manip.analysis_list += bit
 				src.manip.analysis_list -= src.manip.analysis_list[1]
-				src.manip.analysis_list = sortList(src.manip.analysis_list)
+				sortList(src.manip.analysis_list, /proc/cmp_text_asc)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
 				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
@@ -954,7 +954,7 @@
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
 					// how about some more feedback for what went wrong? :)
 					var/reason = ""
@@ -1104,7 +1104,7 @@
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
 			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
-			logTheThing("pathology", user, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
 		else
@@ -1746,9 +1746,10 @@
 		flags |= NOSPLASH
 
 	update_icon()
-		src.overlays -= src.icon_beaker
 		if (src.target)
-			src.overlays += src.icon_beaker
+			icon_state = "incubator_on"
+		else
+			icon_state = "incubator"
 
 	attack_hand(mob/user)
 		if(isnull(user.equipped()))

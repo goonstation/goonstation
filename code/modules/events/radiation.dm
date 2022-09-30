@@ -19,7 +19,7 @@
 
 		SPAWN(0)
 			for (var/pulses = pulse_amt, pulses > 0, pulses--)
-				pulseloc = pick(wormholeturfs)
+				pulseloc = pick(random_floor_turfs)
 				pulse_lifespan = rand(min_pulse_lifespan,max_pulse_lifespan)
 				pick(prob(90); new /obj/anomaly/radioactive_burst(pulseloc,lifespan = pulse_lifespan), prob(50); new /obj/anomaly/neutron_burst(pulseloc,lifespan = pulse_lifespan))
 				sleep(pulse_delay)
@@ -35,7 +35,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun2.ogg'
-	var/rad_strength = 25
+	var/rad_strength = (25/40) SIEVERTS
 	var/pulse_range = 5
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
@@ -71,7 +71,7 @@
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("radiation", (rad_strength) SECONDS, 3)
+			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
@@ -87,7 +87,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
-	var/rad_strength = 10
+	var/rad_strength = (50/40) SIEVERTS
 	var/pulse_range = 3
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
@@ -122,8 +122,8 @@
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
-		for (var/atom/A in T.contents)
-			A.changeStatus("n_radiation", (rad_strength) SECONDS, 3)
+		for (var/mob/A in T.contents)
+			A.take_radiation_dose(rad_strength)
 			if(iscarbon(A))
 				var/mob/living/carbon/M = A
 				if (prob(mutate_prob) && M.bioHolder)

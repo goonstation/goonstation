@@ -66,3 +66,21 @@
 			src.icon_state = "ashtray3"
 		else
 			src.icon_state = "ashtray4"
+
+/obj/item/beach_ball
+	icon = 'icons/misc/beach.dmi'
+	icon_state = "ball"
+	name = "beach ball"
+	item_state = "clown"
+	density = 0
+	anchored = 0
+	w_class = W_CLASS_TINY
+	force = 0
+	throwforce = 0
+	throw_speed = 1
+	throw_range = 20
+	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		user.drop_item()
+		src.throw_at(target, throw_range, throw_speed)

@@ -1,4 +1,3 @@
-
 /obj/item/spacecash
 	name = "1 credit"
 	real_name = "credit"
@@ -8,9 +7,9 @@
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -234,9 +233,9 @@
 
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
@@ -359,3 +358,15 @@
 	thousand
 		amount = 1000
 
+//not a good spot for this but idc
+/obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
+	name = "stamped bullion"
+	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "stamped_gold"
+	force = 4
+	throwforce = 6
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

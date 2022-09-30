@@ -42,7 +42,7 @@ var/global/lastStationNameChange = 0 //timestamp
 		return station_or_ship
 	if (map_settings)
 		station_or_ship = map_settings.style
-	else if (ismap("DESTINY") || ismap("CLARION"))
+	else if (ismap("DESTINY") || ismap("CLARION") || ismap("HORIZON") || ismap("ATLAS"))
 		station_or_ship = "ship"
 	else
 		station_or_ship = "station"
@@ -60,17 +60,27 @@ var/global/lastStationNameChange = 0 //timestamp
 
 	if (map_settings && istext(map_settings.display_name))
 		name += map_settings.display_name
+
 	else
-		if (prob(10))
+		// Prefix
+		if (prob(20))
 			name += pick_string("station_name.txt", "prefixes1")
-			name += pick("Mercury", "Venus", "Earth", "Mars", "Jupiter", "Saturn", "Uranus", "Neptune", "Ceres", "Pluto", "Haumea", "Makemake", "Eris", "Luna", "engineering", "Gen", "gen", "Co", "You", "Galactic", "Node", "Capital", "Moon", "Main", "Labs", "Lab", "trasen", "tum")
-		else if (prob(10))
+			name += pick_string("station_name.txt", "prefixes2")
+			name += " "
+		else if (prob(15))
 			name += pick_string("station_name.txt", "prefixes2")
 			name += " "
 
-		// Prefix
-		name += pick_string("station_name.txt", "prefixes3")
-		if (name)
+		// Location
+		if (prob(50))
+			name += pick_string("station_name.txt", "frontierLocations")
+			name += " "
+			if (prob(40))
+				name += pick_string("station_name.txt", "prefixes3")
+				name += " "
+		// Type
+		else
+			name += pick_string("station_name.txt", "prefixes3")
 			name += " "
 
 		// Suffix
@@ -78,21 +88,21 @@ var/global/lastStationNameChange = 0 //timestamp
 		name += " "
 
 		// ID Number
-		if (prob(40))
+		if (prob(50))
 			name += "[rand(1, 99)]"
-		else if (prob(5))
+		else if (prob(3))
 			name += "3000"
-		else if (prob(5))
+		else if (prob(3))
 			name += "9000"
-		else if (prob(5))
+		else if (prob(1))
 			name += "14000000000"
-		else if (prob(5))
+		else if (prob(10))
 			name += "205[pick(1, 3)]"
 		else if (prob(50))
 			name += pick_string("station_name.txt", "greek")
-		else if (prob(30))
-			name += pick_string("station_name.txt", "romanNum")
 		else if (prob(40))
+			name += pick_string("station_name.txt", "romanNum")
+		else if (prob(20))
 			name += pick_string("station_name.txt", "militaryLetters")
 		else
 			name += pick_string("station_name.txt", "numbers")
@@ -104,6 +114,10 @@ var/global/lastStationNameChange = 0 //timestamp
 	var/list/whitelist_lists = list(
 		"prefixes" = "Prefixes",
 		"adjectives" = "Adjectives",
+		"frontierLocations" = "Frontier Locations",
+		"frontierBodies" = "Frontier Bodies",
+		"solBodies" = "Sol System Bodies",
+		"organizations" = "Organizations",
 		"countries" = "Countries",
 		"directions" = "Directions",
 		"suffixes" = "Suffixes",
@@ -120,11 +134,11 @@ var/global/lastStationNameChange = 0 //timestamp
 		"nouns" = "Nouns"
 	)
 
-	whitelist_lists = sortList(whitelist_lists)
+	sortList(whitelist_lists, /proc/cmp_text_asc)
 
 	for (var/section in whitelist_lists)
 		var/list/words = strings("station_name_whitelist.txt", section)
-		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words))
+		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
 			station_name_whitelist += lowertext(word)
@@ -196,8 +210,8 @@ var/global/lastStationNameChange = 0 //timestamp
 		the_station_name = name
 
 		if (user)
-			logTheThing("admin", user, null, "changed the station name to: [name]")
-			logTheThing("diary", user, null, "changed the station name to: [name]", "admin")
+			logTheThing(LOG_ADMIN, user, "changed the station name to: [name]")
+			logTheThing(LOG_DIARY, user, "changed the station name to: [name]", "admin")
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()

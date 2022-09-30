@@ -108,10 +108,10 @@
 				D = null
 
 			if (out_amount > 0)//No animation and beep if nothing processed
-				playsound(src.loc, "sound/effects/pop.ogg", 40, 1)
+				playsound(src.loc, 'sound/effects/pop.ogg', 40, 1)
 				flick("fab3-work",src)
 			else
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 40, 1)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 40, 1)
 		return
 
 	attackby(var/obj/item/W, mob/user)
@@ -272,7 +272,7 @@
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -348,7 +348,7 @@
 		light.set_color(0.4, 0.8, 1)
 
 	attack_hand(mob/user)
-		var/html = ""
+		var/list/html = list("")
 		html += "<div style=\"margin: auto;text-align:center\">[first_part ? "<a href='?src=\ref[src];remove=\ref[first_part]'>[first_part.name]</a>" : "EMPTY"] <i class=\"icon-plus\"></i> [second_part ? "<a href='?src=\ref[src];remove=\ref[second_part]'>[second_part.name]</a>" : "EMPTY"]   <i class=\"icon-double-angle-right\"></i> [resultName]</div><br>"
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
 
@@ -358,7 +358,7 @@
 			if(second_part == I) continue
 			html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];select_l=\ref[I]'><i class=\"icon-arrow-left\"></i></a> <a href='?src=\ref[src];eject=\ref[I]'>[I.name]</a> <a href='?src=\ref[src];select_r=\ref[I]'><i class=\"icon-arrow-right\"></i></a></div><br>"
 
-		user.Browse(html, "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
+		user.Browse(html.Join(), "window=crucible;size=500x650;title=Nano-crucible;fade_in=0", 1)
 		return
 
 	Topic(href, href_list)
@@ -399,9 +399,6 @@
 							merged = getMaterial(RE.result_id)
 
 					var/obj/item/piece = new newtype(src)
-
-					if(istype(FP.material, /datum/material/fissile) && istype(SP.material, /datum/material/fissile))
-						merged = merge_mat_nuke(merged, FP.material, SP.material)
 
 					if(apply_material)
 						piece.setMaterial(merged)
@@ -510,7 +507,7 @@
 	w_class = W_CLASS_SMALL
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(get_dist(src, target) <= world.view)
+		if(GET_DIST(src, target) <= world.view)
 			animate_scanning(target, "#597B6D")
 			var/atom/W = target
 			if(!W.material)

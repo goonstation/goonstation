@@ -130,15 +130,18 @@ var/static/master_filter_info = list(
 			"size" = 1
 		)
 	),
-	/* Not supported because making a proper matrix editor is more complicated than it seems.
-		Uncomment if you ever implement it
 	"color" = list(
 		"defaults" = list(
-			"color" = matrix(),
-			"space" = FILTER_COLOR_RGB
+			"color" = COLOR_WHITE,
+			"space" = COLORSPACE_RGB
+			),
+		"space" = list(
+			"RGB" = COLORSPACE_RGB,
+			"HSV" = COLORSPACE_HSV,
+			"HSL" = COLORSPACE_HSL,
+			"HCY" = COLORSPACE_HCY
 		)
 	),
-	*/
 	"displace" = list(
 		"defaults" = list(
 			"x" = 0,

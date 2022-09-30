@@ -10,6 +10,7 @@
 * Don't use `goto`. Bad.
 * Don't use the `:` operator to override type safety checks. Instead, cast the variable to the proper type.
 * Don't use `del`, it's horrendously slow. Use `qdel()`.
+* Don't use `<>`, it's completely unused in the land of SS13. Use `!=` instead, as it's infinitely more sane.
 
 ## Stuff To Use
 
@@ -104,7 +105,7 @@ Example:
 ```javascript
 ABSTRACT_TYPE(/obj/item/hat)
 /obj/item/hat
-	var/is_cool = FAKSE
+	var/is_cool = FALSE
 
 /obj/item/hat/uncool
 	name = "Uncool Hat"
@@ -254,6 +255,88 @@ proc/feed_person_food(mob/person_feeding, mob/person_eating, obj/item/food/fed_f
 proc/move_ghost_to_turf(mob/dead/ghost/target, turf/T)
 ```
 
+## Flowchart: Check distances between things
+```mermaid
+%%{init: {'themeVariables': { 'fontSize': '26px'}}}%%
+flowchart TD
+    root([I need to check something's distance to some other thing])
+    literal([I need the literal range value])
+    diag([Diagonal Moves Allowed])
+    tile([Tile-Based])
+    notile([Non-Tile-Based])
+    ndiag([Diagonal Moves Not Allowed])
+    adj([I need to check if two things are literally touching/directly adjacent])
+    touch([I need to check if a mob can touch something])
+    goto([I need to check if a mob go to a tile])
+    subgraph in_interact_range["in_interact_range(atom/target, mob/user)" - can i use a thing]
+        direction RL
+        IIR("Checks that a mob is in range to interact with a target.
+        Accounts for corner cases like telekinesis, silicon
+        machinery interactions, and bibles.")
+    end
+    subgraph GET_DIST["GET_DIST(atom/A, atom/B) - distance in tiles"]
+        direction RL
+        GD("Gets the distance in tiles between A and B.
+        The position of objects is equivalent to the position of 
+        the turf the object is on, through any number of layers
+        (a pen in a bag on a person on a tile is calculated as being on the tile).
+        Different Z levels returns INFINITY.")
+    end
+    subgraph euclidean["Euclidean Distance - direct line distance"]
+        direction RL
+        subgraph euclidean_dist["GET_EUCLIDEAN_DIST"]
+            ED("The exact euclidean distance from A to B.")
+        end
+        subgraph squared_euclidean_dist["GET_SQUARED_EUCLIDEAN_DIST"]
+            SED("The squared euclidean distance sqrt(x^2 + y^2) from A to B.<br>Avoids a square root which saves on performance,<br>so this should be used if possible (such as if you're<br>calculating a ratio of squared distances).<br>Different Z levels returns INFINITY.")
+        end
+    end
+    subgraph manhattan["GET_MANHATTAN_DIST(A, B) - distance in city blocks"]
+        direction RL
+        MAN("The exact manhattan distance from A to B.")
+    end
+    subgraph BOUNDS_DIST["BOUNDS_DIST(atom/A, atom/B) - distance in pixels"]
+        direction RL
+        BD("Wrapper around BYOND's 'bounds_dist' built-in proc.
+        Returns the number of pixels A would have to move to be touching B,
+        Returning a negative value if they are already overlapping.
+        We don't ordinarily care about pixel distances, so this should
+        only be used to check adjacency.
+        Notably, functions fine for large (2x2 tile, 3x3 tile, etc) objects.")
+        subgraph bounds_dist_notouch["BOUNDS_DIST(A, B) > 0"]
+            BDNT("returns TRUE if A and B are not adjacent or overlapping.")
+        end
+        subgraph bounds_dist_touch["BOUNDS_DIST(A, B) == 0"]
+            BDT("returns TRUE if A and B are adjacent or overlapping.")
+        end
+    end
+    subgraph pathfind["get_path_to(atom/movable/mover, atom/target, ...optional args)" - can i go somewhere]
+        direction RL
+        PA("Attempts to pathfind a mover to the turf the target(s) is on.
+        Returns a list of turfs from the caller to the target or
+        a list of lists of the former if multiple targets are specified.
+        If no paths were found, returns an empty list.")
+    end
+    
+    root ------> literal
+    literal --> tile
+    tile --> diag
+    diag --> GET_DIST
+    tile --> ndiag
+    ndiag --> manhattan
+    literal --> notile
+    notile ---> euclidean
+    root --> adj
+    adj ---> BOUNDS_DIST
+    root --> touch
+    touch --> in_interact_range
+    root --> goto
+    goto ----> pathfind
+```
+
+## Flowchart: Get things in an area around a thing
+![](https://mermaid.ink/img/pako:eNqlVm2L20YQ_iuDvtgGNUfJt6NcKdw1OWhaOB8JoS7HSjuyt5F23d2VXRPy3zMzK1mS7RxHog-2NDuvz7zsfM5KpzG7zqra7cuN8hEeb1cW6PHOxfnfq-weLKKG6GCNERTUJkRwFeAO_SFujF2DsRBcg6A8qhxUWTqvmU4yQt9g60nKlKvsn0XSnn53Jhhnk5WSpEEVro0deWAulS0wIArnO7dTRY0B4kZFPoICgQ-h8q7pHImu-aXwN_Pl8ufX5PF6E9kfrfwniyGACWBdFE9bGym6yvnFxB4pZGN3HCQ0rhis0clgJMkkqQ0qfxYKE8n0mM-rvSY0Equz9WHMT4fAp8qWOBaKra_COB38PWYokQIR-3APe2UjzBJpBspqMDFA6ejb0gvlhTAztqxbTboofXGD4DG0NZ1KguemIkKNO9K0-HUEjeh8OqA48xHV5uzMOj76c3yitH4S6m9aw8zN2AM2SXF6KSb-2HpXglWE7NztDO5zcF7ZNeaAsVyMYw1tsfZquwFmI638N-9Ryzs_WCKx86ONxzJSVcHDHwN1oujJFf8-Ma6kMangOqGME_2K6ROF_Lz_8NfjfJU9IJ3aMOqNpq_RveEOkfB6_87qdqpTipj5e6uzAFsXDPueiz4qXQhbLI2qu07hzAaj0SvmCq-mGj-6lrEtyKMDlXxsVU0vUiIcNvowX7xaZYtBCq3-FkbUClN4uDkuAPPuh3CZapPmLg7CTdbyrnK5o5U99Bh41G3KsPOg2nVDPgoeJ3DcV4NJCsA1JtIEyEk-eStzTZq7N9i3_YtBKmtDxk9wSsQLUHVD8Fm8BBt2J2kZPJroWprG1Mr33UUTZUftUNBYofkG-w3BuEeZNlO5xh3nz_6yIXbAci8Yq83OaKohRubHoD2N5SK6x5cJxFS0Xd9z-Q6tz7qvXt7_7z8sCfclz5xwoHL5H1QQ_fNFws2fpmSQpS5iCML0ZpC4xP4Qz3kIMtcoAPn_fvcf3oyqZgTu0F2jCuWJURka98cUdXO3K1KWfM5nvskS7N3b9_v99uGy30ck2QIM_Kdejgv9OMLyUWpCaJu-a9xW_dfKOCVPAhS1Kz_RBd5a_Vy0wkaxyv-c5_CVXFa53LxXJPCSQB9_p0Afyfu-oeXa7i_c17edNxorY3E0To6XQLogKUwy2AnPZfoFs8PFqP2WwmiCSNEuR1DVWBGazlv0OdzxDpBOo9uC55VoEn9ayobVD36i56ZfxU7JnKAJ8aZfa85Y06YyWveE-7jSXToh-sniB8kX3I8XtCOR8j9ZrTp_qLeGzQx6t4W5t4r7ZFOKayASzxm9k53Qx3vPQOft6Bsn1p2sSqJO1qPJpidkKY4szxr0jTKatvTPzLLKKIsNbYfX9Mor7Spb2S_E1261ininTXQ-u65UHTDPVBvd8mDLIyFx3RpFhd501C9fAcvH5nU?bgColor=5B5F67)
+
 # Whack BYOND shit
 
 ## Startup/Runtime trade-offs with lists and the "hidden" init() proc
@@ -297,6 +380,29 @@ As long as you don't want to filter out between specific children types of a by_
 So, where possible, it's advised to use DM's syntax. (Note: the to keyword is inclusive, so it automatically defaults to replacing `<=`; if you want `<` then you should write it as `1 to some_value-1`).
 
 **Be Warned:** if either `some_value` or `i` changes within the body of the for (underneath the `for(...)`) or if you are looping over a list and changing the length of the list then you cannot use this type of for-loop!
+
+## for-in loop copying
+
+Almost all of the time when iterating through lists, we use the `for (var/i in some_list)` syntax. However, in __some very few__ cases, we run into a performance issue.
+
+Internally, BYOND copies the `some_list` for this operation, so that when you are iterating through the list, you don't skip items or run into things twice if you modify the list inside the loop.
+
+However, this can cause performance issues with large lists of *complex* objects, generally greater than ~5000.
+There exists a performance optimization, but bear in mind it's **only applicable if you are traversing less than half of the list**.
+Perhaps you are breaking after a found item that's randomly in the list, or you only want to process the first 20 entries or something.
+
+Code that avoids this list copying would look like:
+```csharp
+/proc/direct_iteration()
+	var/list/some_list = list() // just say this has 10,000 objs in it
+
+	for (var/i in 1 to length(some_list))
+	var/obj/mine = some_list[i]
+
+	// do stuff with this object
+	if (condition)
+		break
+```
 
 ## Default Return (`.`)
 
@@ -387,7 +493,6 @@ proc/give_mob_item(mob/person as mob, obj/item/gift as obj)
 <span style="color: green">Good:</span>
 ```csharp
 proc/give_mob_item(mob/person, obj/item/gift)
-    
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
@@ -411,6 +516,17 @@ Guide to the categories:
 * Overtime: How much was spent past 100 tick_usage. This results in what we know as 'lag'.
 
 If total cpu and real time are the same the proc never sleeps, otherwise real time will be higher as it counts the time while the proc is waiting.
+
+## Even Better Profiler
+There exists a project to provide an incredibly more advanced real-time profiler for DM, named [byond-tracy](https://github.com/mafemergency/byond-tracy), capable of providing incredible resolution.
+
+![](https://i.imgur.com/1CEwo0g.png)
+
+To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+* The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
+* The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+
+If you're on Linux you need to compile both yourself manually, obviously.
 
 ## Target Dummy
 You can spawn in a target dummy (`/mob/living/carbon/human/tdummy`) to more easily test things that do damage - they have the ass day health percent and damage popups visible even if your build isn't set to ass day.

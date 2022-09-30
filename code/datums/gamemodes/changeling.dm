@@ -3,6 +3,7 @@
 	config_tag = "changeling"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING)
+	antag_token_support = TRUE
 
 	var/const/changelings_possible = 4
 
@@ -42,7 +43,7 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 		//num_changelings = max(0, num_changelings - 1)
 

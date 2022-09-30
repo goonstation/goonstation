@@ -142,7 +142,7 @@
 								"You weren't there! You didn't see what I-",
 								"Your tone is not appreciated.  If you are unable to control yourself I suggest you leave.",
 								"In fact, I insist.  Our business is concluded-",
-								"Speak with me face to face you son of a bitch!",
+								"Speak with me face to face you son of a gun!",
 								"So you can murder me with whatever plague you have engineered in my labs? Using MY funds?",
 								"If you are not willing to leave I will have security escort you out, with neither suit nor shuttle to shield you.",
 								"Think carefully, Bruce.")
@@ -286,6 +286,9 @@
 		var/speaker_name = speaker.real_name
 		if (real_name)
 			speaker_name = real_name
+
+		if (speaker.vdisfigured)
+			speaker_name = "Unknown"
 
 		if(ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
 			if(speaker:wear_id)

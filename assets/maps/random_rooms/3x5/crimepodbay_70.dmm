@@ -1,0 +1,121 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/machinery/manufacturer/hangar,
+/obj/railing/orange/reinforced,
+/turf/simulated/floor/caution/corner/sw,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/railing/orange/reinforced,
+/obj/table/reinforced/industrial/auto,
+/obj/item/cable_coil/black,
+/turf/simulated/floor/caution/corner/se,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -7
+	},
+/turf/simulated/floor/shuttlebay,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/decoration/ashtray{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/caution/east,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/machinery/shieldgenerator/energy_shield,
+/obj/storage/crate/wooden,
+/turf/simulated/floor/shuttlebay,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/stairs,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/cable/black,
+/turf/simulated/floor/plating/damaged3,
+/area/dmm_suite/clear_area)
+"C" = (
+/turf/simulated/floor/shuttlebay,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/beacon_deployer/sketchy,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/cable/black{
+	icon_state = "0-2"
+	},
+/obj/item/tile/steel{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/cable/black{
+	icon_state = "1-2"
+	},
+/obj/item/crowbar/red{
+	pixel_x = 5;
+	pixel_y = -5
+	},
+/obj/item/device/t_scanner{
+	pixel_x = -7
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/shuttlebay,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/item/rods/steel{
+	amount = 12;
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/caution/west,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+Z
+h
+o
+C
+M
+"}
+(2,1,1) = {"
+T
+w
+V
+A
+a
+"}
+(3,1,1) = {"
+q
+i
+v
+W
+E
+"}

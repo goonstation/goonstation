@@ -1283,6 +1283,9 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 				pieName += " "
 
 			custom_pie.w_class = max(custom_pie.w_class, T.w_class) //Well, that huge thing you put into it isn't going to shrink, you know
+			custom_pie.throw_range = min(custom_pie.throw_range, T.throw_range)
+			custom_pie.throw_speed = min(custom_pie.throw_speed, T.throw_speed)
+			custom_pie.contraband = max(custom_pie.contraband, T.contraband - 1)
 
 			count++
 
@@ -1481,7 +1484,7 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 			return null
 
 		var/fruitcake = new /obj/item/reagent_containers/food/snacks/fruit_cake
-		playsound(ourCooker.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(ourCooker.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 		return fruitcake
 
@@ -1824,6 +1827,23 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	item4 = /obj/item/reagent_containers/food/snacks/ingredient/egg/hardboiled
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/curry_udon_bowl
+
+
+/datum/cookingrecipe/cheesewheel
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item3 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	item4 = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	cookbonus = 14
+	output = /obj/item/reagent_containers/food/snacks/cheesewheel
+
+/datum/cookingrecipe/ratatouille
+	item1 = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	item2 = /obj/item/reagent_containers/food/snacks/plant/tomato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/eggplant
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/ratatouille
 
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 

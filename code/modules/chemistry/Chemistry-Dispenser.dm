@@ -7,6 +7,7 @@
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
 	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -65,11 +66,11 @@
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src,"sound/impact_sounds/Metal_Clang_2.ogg",50,1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
 				src.take_damage(damage)
 				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
 			else
-				playsound(src,"sound/impact_sounds/Generic_Stab_1.ogg",50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
 				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
 			return
 
@@ -122,11 +123,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				SPAWN(0)
 					src.take_damage(400)
 				return
-			if(2.0)
+			if(2)
 				SPAWN(0)
 					src.take_damage(150)
 				return

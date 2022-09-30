@@ -6,7 +6,7 @@
 	cost = 20
 	dissipation_rate = 2
 	dissipation_delay = 4
-	ks_ratio = 0.0
+	ks_ratio = 0
 	sname = "dewraithize"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -27,10 +27,7 @@
 	on_hit(atom/hit)
 		if(istype(hit, /mob/wraith))
 			var/mob/wraith/W = hit
-			if(!W.density)
-				W.makeCorporeal()
-				SPAWN(1.5 SECONDS)
-					W.makeIncorporeal()
+			W.changeStatus("corporeal", 1.5 SECONDS, TRUE)
 			W.TakeDamage(null, 0, src.power)
 		// kyle TODO: add Spooktober stuff, sucking energy from ghosts or something
 		// add some flavourful harmless interaction when hitting humans?

@@ -7,8 +7,8 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
 	icon = 'icons/obj/syndieturret.dmi'
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -119,7 +119,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	New(var/loc, var/direction)
 		..()
-		src.set_dir(direction)
+		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -134,6 +134,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		processing_items |= src
 		if(active)
 			set_projectile()
+
+		#ifdef LOW_SECURITY
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
 
 	disposing()
 		processing_items.Remove(src)
@@ -195,7 +199,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
-			  src.anchored ? "You unweld the turret from the floor." : "You weld the turret to the floor.", \
+			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isweldingtool(W) && (src.active))
@@ -208,7 +212,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			user.show_message("You start to repair the turret.")
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
-			  "You repair some of the turret's damage.", \
+			  "[user] repairs some of the turret's damage.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if  (iswrenchingtool(W))
@@ -221,13 +225,13 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 			else
 				user.show_message("You begin to disassemble the turret.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
-				  "You disassemble the turret.", \
+				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isscrewingtool(W))
@@ -240,15 +244,15 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 
 			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
-			  "You power the turret [src.active ? "off" : "on"].", \
+			  "[user] powers the turret [src.active ? "off" : "on"].", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
 			src.health = src.health - W.force
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 			attack_particle(user,src)
 			src.check_health()
 			..()
@@ -281,7 +285,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
 		src.anchored = 1
 		src.active = 1
@@ -315,7 +319,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				damage_words = "to be on the verge of falling apart!"
 
 	proc/die()
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
@@ -336,7 +340,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			if (!isnull(C) && src.target_valid(C))
 				src.target_list += C
-				var/distance = get_dist(C.loc,src.loc)
+				var/distance = GET_DIST(C.loc,src.loc)
 				src.target_list[C] = distance
 
 			else
@@ -352,12 +356,12 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			src.icon_state = "[src.icon_tag]_active"
 
-			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
+			playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
 
 		return src.target
 
 	proc/target_valid(var/mob/living/C)
-		var/distance = get_dist(get_turf(C),get_turf(src))
+		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
 			return 0
@@ -436,7 +440,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	projectile_type = /datum/projectile/bullet/ak47
+	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 

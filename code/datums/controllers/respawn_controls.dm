@@ -177,12 +177,12 @@ var/datum/respawn_controls/respawn_controller
 	proc/doRespawn()
 		if(checkValid() != RESPAWNEE_STATE_ELIGIBLE)
 			SPAWN(0)
-				alert("You are not eligible for a respawn, bub!")
+				tgui_alert(usr, "You are not eligible for a respawn, bub!", "Cannot respawn")
 
 			return
 
-		logTheThing("debug", usr, null, "used a timed respawn.")
-		logTheThing("diary", usr, null, "used a timed respawn.", "game")
+		logTheThing(LOG_DEBUG, usr, "used a timed respawn.")
+		logTheThing(LOG_DIARY, usr, "used a timed respawn.", "game")
 
 		var/mob/new_player/M = new()
 		M.adminspawned = 1

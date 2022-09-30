@@ -10,6 +10,18 @@
 			else
 				var/changelogHtml = grabResource("html/changelog.html")
 				var/data = changelog:html
+				var/fontcssdata = {"
+				<style type="text/css">
+				@font-face {
+					font-family: 'Twemoji';
+					src: url('[resource("css/fonts/Twemoji.eot")]');
+					src: url('[resource("css/fonts/Twemoji.eot")]') format('embedded-opentype'),
+						 url('[resource("css/fonts/Twemoji.ttf")]') format('truetype');
+					text-rendering: optimizeLegibility;
+				}
+				</style>
+				"}
+				changelogHtml = replacetext(changelogHtml, "<!-- CSS INJECT GOES HERE -->", fontcssdata)
 				changelogHtml = replacetext(changelogHtml, "<!-- HTML GOES HERE -->", "[data]")
 				src.Browse(changelogHtml, "window=changes;size=500x650;title=Changelog;", 1)
 				src.changes = 1
@@ -70,18 +82,6 @@
 			set desc = "Open the Forum in your browser"
 			set hidden = 1
 			src << link("https://forum.ss13.co")
-
-		savetraits()
-			set hidden = 1
-			set name = ".savetraits"
-			set instant = 1
-
-			if(preferences)
-				if(preferences.traitPreferences.isValid())
-					preferences.ShowChoices(usr)
-				else
-					alert(usr, "Invalid trait setup. Please make sure you have 0 or more points available.")
-					preferences.traitPreferences.showTraits(usr)
 
 	proc
 		set_macro(name)

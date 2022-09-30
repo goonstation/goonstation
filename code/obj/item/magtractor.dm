@@ -7,10 +7,10 @@
 	icon_state = "magtractor"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -70,7 +70,7 @@
 
 		if (istype(W, /obj/item/magtractor))
 			var/turf/T = get_ranged_target_turf(user, turn(user.dir, 180), 7)
-			playsound(user.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			user.visible_message("<span class='combat bold'>\The [src]'s magnets violently repel as they counter a similar magnetic field!</span>")
 			user.throw_at(T, 7, 10)
 			user.changeStatus("stunned", 2 SECONDS)
@@ -213,7 +213,7 @@
 		src.UpdateOverlays(I, "magField")
 		src.updateHeldOverlay(W)
 
-		playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"
@@ -260,5 +260,9 @@
 		src.processHeld = 0
 
 		return 1
+
+	Exited(Obj, newloc) // handles the held item going byebye
+		if(Obj == src.holding  && src.holder)
+			actions.stopId("magpickerhold", src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

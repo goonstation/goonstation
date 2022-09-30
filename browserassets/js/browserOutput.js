@@ -1,8 +1,8 @@
-/*****************************************
+/*
 *
 * FUNCTION AND VAR DECLARATIONS
 *
-******************************************/
+*/
 
 var triggerError = attachErrorHandler('chatDebug', true);
 
@@ -24,7 +24,7 @@ var opts = {
     'priorChatHeight': 0, //Thing for height-resizing detection
     'restarting': false, //Is the round restarting?
     'volume': 0.5,
-    'lastMessage': '', //the last message sent to chat
+    'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
 	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
@@ -35,7 +35,7 @@ var opts = {
     'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
-    'twemoji': false, // whether Twemoji are used instead of the default emoji
+    'twemoji': true, // whether Twemoji are used instead of the default emoji
     'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display

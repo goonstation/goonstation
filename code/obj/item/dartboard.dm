@@ -17,7 +17,7 @@
 			M.pixel_x += rand(-8,8)
 			last_score = rand(1,60)
 			src.throwing = 0
-			playsound(src.loc, "sound/effects/syringeproj.ogg", 100, 1)
+			playsound(src.loc, 'sound/effects/syringeproj.ogg', 100, 1)
 			src.visible_message("<span class='notice'>Score: [last_score].</span>")
 		if (src.last_score == 50)
 			src.visible_message("<span class='alert'>It's a bullseye!</span>")

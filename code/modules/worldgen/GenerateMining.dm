@@ -45,11 +45,11 @@ var/list/miningModifiers = list()
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
-	name = ""
+	name = "BLOCK GENERATION"
 	icon_state = "blockgen"
 
 /area/allowGenerate //Areas of this type do not block asteroid/cavern generation.
-	name = ""
+	name = "ALLOW GENERATION"
 	icon_state = "allowgen"
 
 	trench
@@ -213,6 +213,7 @@ var/list/miningModifiers = list()
 		numAsteroidSeed *= 4
 		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
+			logTheThing(LOG_DEBUG, null, "Generating asteroid #[i+1]/[numAsteroidSeed].")
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
@@ -226,7 +227,8 @@ var/list/miningModifiers = list()
 
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
-			while(edgeTiles.len)
+			logTheThing(LOG_DEBUG, null, "Setting up tile lists for asteroid.")
+			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
 
@@ -251,14 +253,16 @@ var/list/miningModifiers = list()
 					edgeTiles.Add(west)
 				LAGCHECK(LAG_REALTIME)
 
+			logTheThing(LOG_DEBUG, null, "Placing asteroid turfs for asteroid.")
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid)
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
 
+			logTheThing(LOG_DEBUG, null, "Seeding ores and events.")
 			if(prob(15))
 				Turfspawn_Asteroid_SeedOre(placed, rand(2,6), rand(0,40))
 			else
@@ -266,9 +270,10 @@ var/list/miningModifiers = list()
 
 			Turfspawn_Asteroid_SeedEvents(placed)
 
-			if(placed.len)
+			logTheThing(LOG_DEBUG, null, "Making holes or something idk.")
+			if(length(placed))
 				generated.Add(placed)
-				if(placed.len > 9)
+				if(length(placed) > 9)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
@@ -280,6 +285,8 @@ var/list/miningModifiers = list()
 							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
 							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
+			logTheThing(LOG_DEBUG, null, "Sucessfully generated asteroid #[i+1]/[numAsteroidSeed].")
+
 		return miningZ
 
 /proc/makeMiningLevel()
@@ -311,13 +318,13 @@ var/list/miningModifiers = list()
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				count++
 				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
 		else break
 
 	var/datum/mapGenerator/D
@@ -342,8 +349,10 @@ var/list/miningModifiers = list()
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
+	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
 	hotspot_controller.generate_map()
 
 var/global/datum/bioluminescent_algae/bioluminescent_algae
