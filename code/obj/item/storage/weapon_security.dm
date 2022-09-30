@@ -66,13 +66,13 @@
 	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
-/obj/item/storage/box/ak47 // cogwerks, terrorism update
-	name = "rifle box"
+/obj/item/storage/box/akm // cogwerks, terrorism update
+	name = "AKM box"
 	icon_state = "hard_case"
-	desc = "A box containing a syndicate rifle and some ammo."
+	desc = "A box containing a surplus AKM and 3 magazines."
 	// this might be a terrible idea giving them so much ammo, but whatevs
-	spawn_contents = list(/obj/item/gun/kinetic/ak47,\
-	/obj/item/ammo/bullets/ak47 = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/akm,\
+	/obj/item/ammo/bullets/akm = 2)
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
@@ -268,7 +268,7 @@
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -348,10 +348,11 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)
-	
+
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

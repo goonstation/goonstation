@@ -35,7 +35,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	new /datum/bank_purchaseable/bp_itabag,\
 
 	new /datum/bank_purchaseable/limbless,\
-	new /datum/bank_purchaseable/legless,\
 	new /datum/bank_purchaseable/space_diner,\
 	new /datum/bank_purchaseable/mail_order,\
 	new /datum/bank_purchaseable/missile_arrival,\
@@ -434,27 +433,6 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				return 1
 			return 0
 
-	legless
-		name = "No Legs"
-		cost = 5000
-		path = /obj/item/furniture_parts/wheelchair
-		icon = 'icons/obj/furniture/chairs.dmi'
-		icon_state = "wheelchair"
-		icon_dir = EAST
-
-		Create(var/mob/living/M)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
-				SPAWN(6 SECONDS)
-					if (H.limbs)
-						if (H.limbs.l_leg)
-							H.limbs.l_leg.delete()
-						if (H.limbs.r_leg)
-							H.limbs.r_leg.delete()
-						boutput( H, "<span class='notice'><b>You haven't got a leg to stand on!</b></span>" )
-				return 1
-			return 0
-
 	space_diner
 		name = "Space Diner Patron"
 		cost = 5000
@@ -514,7 +492,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			SPAWN(1 SECOND)
 				froggo.real_name = input(M.client, "Name your frog:", "Name your frog!", "frog")
 				phrase_log.log_phrase("name-frog", froggo.real_name, TRUE)
-				logTheThing("station", M, null, "named their adopted frog [froggo.real_name]")
+				logTheThing(LOG_STATION, M, "named their adopted frog [froggo.real_name]")
 				froggo.name = froggo.real_name
 			return 1
 

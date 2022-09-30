@@ -1,4 +1,5 @@
-obj/effects/tatara
+
+/obj/effects/tatara
 	var/obj/spark_generator/sparks = new/obj/spark_generator
 
 	New()
@@ -8,13 +9,13 @@ obj/effects/tatara
 		sparks.particles.spawning = 0
 
 	proc/spark_up()
-		if(!ON_COOLDOWN(src,"spark_up",2.0 SECONDS))
+		if(!ON_COOLDOWN(src,"spark_up",2 SECONDS))
 			sparks.particles.spawning = 16
-			playsound(src, "sound/impact_sounds/burn_sizzle.ogg", 30)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 30)
 			SPAWN(1 SECONDS)
 				sparks.particles.spawning = 0
 
-obj/effects/welding
+/obj/effects/welding
 	appearance_flags = RESET_COLOR | RESET_ALPHA
 	vis_flags = VIS_INHERIT_DIR
 	var/emitters = list(new/obj/spark_generator, new/obj/spark_generator/flame)
@@ -40,7 +41,7 @@ obj/effects/welding
 		emitters = list(new/obj/spark_generator/directed, new/obj/spark_generator/flame)
 
 
-obj/spark_generator
+/obj/spark_generator
 	particles = new/particles/spark
 	plane = PLANE_NOSHADOW_ABOVE
 	alpha = 200
@@ -55,7 +56,7 @@ obj/spark_generator
 		particles = new/particles/spark/directed
 
 
-particles/spark
+/particles/spark
 	width = 32     // 500 x 500 image to cover a moderately sized map
 	height = 32
 	count = 32    // 2500 particles

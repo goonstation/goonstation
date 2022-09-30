@@ -14,9 +14,10 @@
 	anchored = TRUE
 	mats = 20
 	power_usage = 200
+	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 
 	// General stuff
@@ -204,14 +205,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				for(var/atom/movable/A as mob|obj in src)
 					A.set_loc(src.loc)
 					A.ex_act(severity)
 				src.take_damage(rand(100,120))
-			if(2.0)
+			if(2)
 				src.take_damage(rand(40,80))
-			if(3.0)
+			if(3)
 				src.take_damage(rand(20,40))
 		return
 
@@ -954,7 +955,7 @@
 					C.use(1)
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (src.health >= 50)
 						boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -970,7 +971,7 @@
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
 					src.dismantle_stage = 1
@@ -986,7 +987,7 @@
 
 		else if (ispryingtool(W) && src.dismantle_stage == 1)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.dismantle_stage = 2
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
@@ -996,7 +997,7 @@
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
@@ -1349,46 +1350,50 @@
 						// bohr hardness = 33
 						switch(secondpart)
 							if(2)
-								return mat.getProperty("hard") >= 15
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 10
 							if(3 to INFINITY)
-								return mat.getProperty("hard") >= 30
+								return mat.getProperty("hard") * 2 + mat.getProperty("density") >= 15
 							else
 								return TRUE
 				if ("CRY")
-					return (mat.material_flags & MATERIAL_CRYSTAL)
+					if (mat.material_flags & MATERIAL_CRYSTAL)
+
+						switch(secondpart)
+							if(2)
+								return mat.getProperty("density") >= 7
+							else
+								return TRUE
 				if ("REF")
-					return (mat.getProperty("reflective") >= 50)
+					return (mat.getProperty("reflective") >= 6)
 				if ("CON")
 					switch(secondpart)
 						if(2)
-							return (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 75) && (mat.material_flags & MATERIAL_CRYSTAL) //Wow! Claretine has a use again!
+							return (mat.getProperty("electrical") >= 8)
 						else
-							return (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_METAL) || (mat.getProperty("electrical") >= 50) && (mat.material_flags & MATERIAL_CRYSTAL)
+							return (mat.getProperty("electrical") >= 6)
 				if ("INS")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 20 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 2 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 						else
-							return mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_CLOTH) || mat.getProperty("electrical") <= 47 && (mat.material_flags & MATERIAL_RUBBER)
+							return mat.getProperty("electrical") <= 4 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 				if ("DEN")
 					switch(secondpart)
-						if(3)
-							return mat.getProperty("density") >= 75  && (mat.material_flags & MATERIAL_CRYSTAL)
 						if(2)
-							return mat.getProperty("density") >= 60  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 6
 						else
-							return mat.getProperty("density") >= 40  && (mat.material_flags & MATERIAL_CRYSTAL)
+							return mat.getProperty("density") >= 4
 				if ("POW")
 					if (mat.material_flags & MATERIAL_ENERGY)
 						switch(secondpart)
 							if(3)
-								return mat.getProperty("radioactive") >= 55 //soulsteel and erebite basically
+								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
 							if(2)
-								return mat.getProperty("radioactive") >= 10
+								return mat.getProperty("radioactive") >= 2
 							else
 								return TRUE
 				if ("FAB")
-					return mat.material_flags & MATERIAL_CLOTH || mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+					return mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
 		else if (pattern == mat.mat_id) // specific material id
 			return TRUE
 		return FALSE
@@ -1905,7 +1910,7 @@
 					src.update_resource_amount(P.material.mat_id, free_resource_amt * 10)
 			free_resource_amt = 0
 		else
-			logTheThing("debug", null, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
@@ -1979,6 +1984,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/light_bulb,
 		/datum/manufacture/red_bulb,
 		/datum/manufacture/yellow_bulb,
@@ -2003,7 +2009,9 @@
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/saxophone,
+		/datum/manufacture/trumpet)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -2013,7 +2021,9 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler)
+		/datum/manufacture/stapler,
+		/datum/manufacture/bagpipe,
+		/datum/manufacture/whistle)
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -2057,6 +2067,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/wrench,
 		/datum/manufacture/screwdriver,
@@ -2167,6 +2178,7 @@
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
+		/datum/manufacture/floppydisk,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,
@@ -2205,6 +2217,7 @@
 		/datum/manufacture/welder,
 		/datum/manufacture/patch,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/artifactforms,
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
@@ -2258,9 +2271,11 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
@@ -2401,7 +2416,8 @@
 		/datum/manufacture/o2_can,
 		/datum/manufacture/co2_can,
 		/datum/manufacture/n2_can,
-		/datum/manufacture/plasma_can)
+		/datum/manufacture/plasma_can,
+		/datum/manufacture/red_o2_grenade)
 
 // a blank manufacturer for mechanics
 
@@ -2498,7 +2514,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,

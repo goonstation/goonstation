@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1
@@ -41,7 +41,7 @@
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
 		else
@@ -122,16 +122,16 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//gib(src.loc) NO.
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				for(var/x in src.verbs)
 					src.verbs -= x

@@ -37,6 +37,7 @@
 	..(location, F)
 	src.rays = new /obj/effect/flock_sentinelrays
 	src.vis_contents += rays
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
@@ -49,13 +50,21 @@
 
 /obj/flock_structure/sentinel/process(mult)
 	updatefilter()
-	src.compute = 0
+
 	if(!src.flock)//if it dont exist it off
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
 	else if(src.flock.can_afford_compute(online_compute_cost))//if it has atleast 0 or more free compute, the poweruse is already calculated in the group
-		powered = TRUE
 		src.compute = -online_compute_cost
-	else//if there isnt enough juice
+		if (!powered)
+			src.update_flock_compute("apply")
+			powered = TRUE
+	else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)//if there isnt enough juice
+		if (powered)
+			src.update_flock_compute("remove")
+		src.compute = 0
 		powered = FALSE
 
 	if(powered == 1)
@@ -77,13 +86,16 @@
 						break//found target
 				if(!mobtohit) return//if no target stop
 				arcFlash(src, mobtohit, wattage, 1.1)
+				logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to flock [src.flock?.name] fires an arcflash at [constructTarget(mobtohit)].")
 				hit += mobtohit
 				for(var/i in 1 to rand(5,6))//this facilitates chaining. legally distinct from the loop above
 					for(var/mob/nearbymob in view(2, mobtohit.loc))
 						if(nearbymob != mobtohit && !isflockmob(nearbymob) && !(nearbymob in hit) && isturf(nearbymob.loc) && src.flock?.isEnemy(nearbymob) && isalive(loopmob) && !isintangible(loopmob))
 							arcFlash(mobtohit, nearbymob, wattage/1.5, 1.1)
+							logTheThing(LOG_COMBAT, src, "Flock sentinel at [log_loc(src)] belonging to [src.flock?.name] hits [constructTarget(nearbymob)] with a chained arcflash.")
 							hit += nearbymob
 							mobtohit = nearbymob
+
 				hit.len = 0//clean up
 				charge = 1
 				var/filter = src.rays.get_filter("flock_sentinel_rays")
@@ -103,6 +115,7 @@
 		src.charge = min(chargeamount + charge, 100)
 	else
 		charge_status = CHARGED
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 
 /obj/flock_structure/sentinel/proc/updatefilter()

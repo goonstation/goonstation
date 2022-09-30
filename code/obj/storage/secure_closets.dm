@@ -1,6 +1,7 @@
 /obj/storage/secure/closet
 	name = "secure locker"
 	desc = "A card-locked storage locker."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 5
 	can_flip_bust = 1
 	p_class = 3
@@ -32,7 +33,7 @@
 				if (user)
 					user.show_text("What exactly are you gunna secure [src] to?", "red")
 				return
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			user.visible_message("<b>[user]</b> begins to [src.bolted ? "unbolt the [src.name] from" : "bolt the [src.name] to"] [get_turf(src)].")
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, .proc/toggle_bolts, user, I.icon, I.icon_state,"", null)
 			return
@@ -143,13 +144,13 @@
 						shooter_data = V.pilot
 					vehicle = 1
 				if(shooter_data)
-					logTheThing("combat", shooter_data, src, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 				else
-					logTheThing("combat", src, null, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 			else if (M)
-				logTheThing("combat", M, null, "broke open [src] with [I] at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, M, "broke open [src] with [I] at [log_loc(src)]")
 			else
-				logTheThing("combat", src, null, "was broken open by an unknown cause at [log_loc(src)]")
+				logTheThing(LOG_COMBAT, src, "was broken open by an unknown cause at [log_loc(src)]")
 			break_open()
 
 	proc/break_open(var/obj/projectile/P)
@@ -247,7 +248,8 @@
 	/obj/item/stamp/hop,
 	/obj/item/device/radio/headset/command/hop,
 	/obj/item/device/accessgun,
-	/obj/item/clipboard)
+	/obj/item/clipboard,
+	/obj/item/clothing/suit/hopjacket)
 
 /obj/storage/secure/closet/command/research_director
 	name = "\improper Research Director's locker"
@@ -377,12 +379,7 @@
 	req_access = list(access_maxsec)
 	spawn_contents = list(/obj/item/requisition_token/security = 2,
 	/obj/item/requisition_token/security/assistant = 2,
-	/obj/item/turret_deployer/riot = 2,
-	/obj/item/clothing/glasses/nightvision = 2,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/clothing/glasses/sunglasses,
-	/obj/item/ammo/bullets/abg,
-	/obj/item/ammo/bullets/abg,)
+	/obj/item/turret_deployer/riot = 2)
 
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
@@ -473,7 +470,7 @@
 						break
 				if (!src.our_timer)
 					message_admins("Automatic locker: couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] in [get_area(src)].")
-					logTheThing("debug", null, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
+					logTheThing(LOG_DEBUG, null, "<b>Convair880:</b> couldn't find brig timer with ID [isnull(src.id) ? "*null*" : "[src.id]"] for automatic locker at [log_loc(src)].")
 		return
 
 	disposing()
@@ -491,7 +488,7 @@
 		if (BOUNDS_DIST(src, usr) > 0)
 			usr.show_text("You are too far away to do this!", "red")
 			return
-		if (get_dist(over_object, src) > 5)
+		if (GET_DIST(over_object, src) > 5)
 			usr.show_text("The [src.name] is too far away from the target!", "red")
 			return
 		if (!istype(over_object, /obj/machinery/door_timer))
@@ -749,6 +746,9 @@
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+#ifdef MAP_OVERRIDE_OSHAN
+	/obj/item/clothing/shoes/stomp_boots,
+#endif
 	/obj/item/engivac,
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/storage/backpack/engineering,
@@ -805,7 +805,8 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4)
+	/obj/item/caution = 4,\
+	/obj/item/disk/data/floppy/manudrive/cleaner_grenade = 1)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"

@@ -5,6 +5,7 @@
 	targeted = 0
 	cooldown = 1800
 	pointCost = 50
+	not_when_in_an_object = FALSE
 	when_stunned = 0
 	not_when_handcuffed = 0
 	var/duration = 300
@@ -36,5 +37,5 @@
 				OTHER_STOP_TRACKING_CAT(M, TR_CAT_RADIO_JAMMERS)
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, null, "uses radio interference at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses radio interference at [log_loc(M)].")
 		return 0

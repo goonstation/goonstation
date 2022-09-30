@@ -344,6 +344,49 @@
 		user.closeContextActions()
 		return 0
 
+/datum/contextAction/wraith_evolve_button
+	name = "Specialize"
+	desc = "Ascend into a stronger form"
+	icon = 'icons/mob/wraith_ui.dmi'
+	icon_state = "minus"
+	icon_background = ""
+	var/ability_code = 0
+
+	New(code as num)
+		..()
+		src.ability_code = code
+		switch(code)
+			if (1)
+				name = "Plaguebringer"
+				desc = "Become a disease spreading spirit."
+				icon_state = "choose_plague"
+			if (2)
+				name = "Harbinger"
+				desc = "Lead an army of otherwoldly foes."
+				icon_state = "choose_harbinger"
+			if (3)
+				name = "Trickster"
+				desc = "Fool the crew with illusions and let them tear themselves apart."
+				icon_state = "choose_trickster"
+
+	checkRequirements(atom/target, mob/user)
+		. = TRUE
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				if (!A.cooldowncheck())
+					return FALSE
+
+	execute(atom/target, mob/user)
+		if (istype(target, /atom/movable/screen/ability/topBar/wraith))
+			var/atom/movable/screen/ability/topBar/wraith/B = target
+			if (istype(B.owner, /datum/targetable/wraithAbility/specialize))
+				var/datum/targetable/wraithAbility/specialize/A = B.owner
+				A.evolve(ability_code)
+				A.doCooldown()
+		user.closeContextActions()
+		return 0
 
 /datum/contextAction/genebooth_product
 	icon = 'icons/ui/context32x32.dmi'
@@ -431,7 +474,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iswrenchingtool(I))
 					user.show_text("You wrench [target]'s bolts.", "blue")
-					playsound(target, "sound/items/Ratchet.ogg", 50, 1)
+					playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
 					return ..()
 
 	cut
@@ -443,7 +486,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (iscuttingtool(I) || issnippingtool(I))
 					user.show_text("You cut some vestigial wires from [target].", "blue")
-					playsound(target, "sound/items/Wirecutter.ogg", 50, 1)
+					playsound(target, 'sound/items/Wirecutter.ogg', 50, 1)
 					return ..()
 	weld
 		name = "Weld"
@@ -466,7 +509,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispryingtool(I))
 					user.show_text("You pry on [target] without remorse.", "blue")
-					playsound(target, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(target, 'sound/items/Crowbar.ogg', 50, 1)
 					return ..()
 
 	screw
@@ -478,7 +521,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (isscrewingtool(I))
 					user.show_text("You unscrew some of the screws on [target].", "blue")
-					playsound(target, "sound/items/Screwdriver.ogg", 50, 1)
+					playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
 					return ..()
 
 	pulse
@@ -490,7 +533,7 @@
 			for (var/obj/item/I in user.equipped_list())
 				if (ispulsingtool(I))
 					user.show_text("You pulse [target]. In a general sense.", "blue")
-					playsound(target, "sound/items/penclick.ogg", 50, 1)
+					playsound(target, 'sound/items/penclick.ogg', 50, 1)
 					return ..()
 
 /datum/contextAction/vehicle
@@ -1168,34 +1211,34 @@
 		name = "Move"
 		desc = "Go somwhere."
 		icon_state = "flock_move"
-		task_type = /datum/aiTask/sequence/goalbased/rally
+		task_type = /datum/aiTask/sequence/goalbased/flock/rally
 
 	convert
 		name = "Convert"
 		desc = "Convert this thing"
 		icon_state = "flock_convert"
-		task_type = /datum/aiTask/sequence/goalbased/build/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..() && target.resources >= FLOCK_CONVERT_COST
 
 	capture
 		name = "Capture"
 		desc = "Capture this enemy"
 		icon_state = "flock_capture"
-		task_type = /datum/aiTask/sequence/goalbased/flockdrone_capture/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 
 		checkRequirements(var/mob/living/critter/flock/drone/target, var/mob/living/intangible/flock/user)
-			return ..() && target.resources > 20
+			return ..()
 
 	barricade
 		name = "Barricade"
 		desc = "Build a barricade"
 		icon_state = "flock_barricade"
-		task_type = /datum/aiTask/sequence/goalbased/barricade/targetable
+		task_type = /datum/aiTask/sequence/goalbased/flock/barricade/targetable
 
 		checkRequirements(mob/living/critter/flock/drone/target, mob/living/intangible/flock/user)
-			return ..() && target.resources > 25
+			return ..() && target.resources >= FLOCK_BARRICADE_COST
 
 	shoot
 		name = "Shoot"

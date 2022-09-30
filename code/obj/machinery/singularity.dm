@@ -41,15 +41,14 @@ Contains:
 	var/smallestdimension = 13//determines the radius of the produced singularity,starts higher than is possible
 
 	for_by_tcl(gen, /obj/machinery/field_generator)//this loop checks for valid field generators
-		if(get_dist(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
+		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension = min(smallestdimension, gen.shortestlink)
+				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
 	if (goodgenerators>=4)
-
 		// Did you know this thing still works? And wasn't logged (Convair880)?
-		logTheThing("bombing", src.fingerprintslast, null, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")
 
 		var/turf/T = get_turf(src)
@@ -57,7 +56,7 @@ Contains:
 			src.visible_message("<span class='notice'>[src] refuses to activate in this place. Odd.</span>")
 			qdel(src)
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		if (src.bhole)
 			new /obj/bhole(T, 3000)
 		else
@@ -71,16 +70,16 @@ Contains:
 	if (iswrenchingtool(W))
 		if (!anchored)
 			anchored = 1
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the [src.name] to the floor.")
 			src.anchored = 1
 		else if (anchored)
 			anchored = 0
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You unsecure the [src.name].")
 			src.anchored = 0
 
-		logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+		logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 		return
 	else
 		return ..()
@@ -138,7 +137,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.Dtime = Ti
 
 	var/offset = rand(1000)
-	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.20, color="#c0c", x=0, y=0))
+	add_filter("loose rays", 1, rays_filter(size=1, density=10, factor=0, offset=offset, threshold=0.2, color="#c0c", x=0, y=0))
 	animate(get_filter("loose rays"), offset=offset+60, time=5 MINUTES, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=-1)
 
 	..()
@@ -171,7 +170,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if (prob(20))//Chance for it to run a special event
 		event()
-
+	var/containment_min = max(MIN_TO_CONTAIN,(radius*8))
 	if (active == 1)
 		move()
 		SPAWN(1.1 SECONDS) // slowing this baby down a little -drsingh
@@ -182,30 +181,33 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				var/checkpointC = 0
 				for (var/obj/machinery/containment_field/X in orange(radius+2,src))
 					checkpointC++
-				if (checkpointC > max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+				if (checkpointC >= containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 					src.active = FALSE
 					animate(get_filter("loose rays"), size=1, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 					maxradius = radius + 1
-					logTheThing("station", null, null, "[src] has been contained at [log_loc(src)]")
-					message_admins("[src] has been contained at [log_loc(src)]")
+					logTheThing(LOG_STATION, null, "[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
+					message_admins("[src] has been contained ([checkpointC] >= [containment_min] fields) at [log_loc(src)]")
 
 	else//this should probably be modified to use the enclosed test of the generator
 		var/checkpointC = 0
 		for (var/obj/machinery/containment_field/X in orange(maxradius+2,src))
 			checkpointC ++
-		if (checkpointC < max(MIN_TO_CONTAIN,(radius*8)))//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
+
+		if (checkpointC < containment_min)//as radius of a 5x5 should be 2, 16 tiles are needed to hold it in, this allows for 4 failures before the singularity is loose
 			src.active = TRUE
 			animate(get_filter("loose rays"), size=100, time=5 SECONDS, easing=LINEAR_EASING, flags=ANIMATION_PARALLEL, loop=1)
 			maxradius = INFINITY
-			logTheThing("station", null, null, "[src] has become loose at [log_loc(src)]")
-			message_admins("[src] has become loose at [log_loc(src)]")
+			logTheThing(LOG_STATION, null, "[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
+			message_admins("[src] has become loose ([checkpointC] < [containment_min] fields) at [log_loc(src)]")
 
 
 /obj/machinery/the_singularity/emp_act()
 	return // No action required this should be the one doing the EMPing
 
 /obj/machinery/the_singularity/proc/eat()
-	for (var/X in range(grav_pull, src.get_center()))
+
+	var/turf/sing_center = src.get_center()
+	for (var/X in range(grav_pull, sing_center))
 		if (!X)
 			continue
 		if (X == src)
@@ -221,7 +223,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				continue
 
 		if (!isarea(X))
-			if (get_dist(src.get_center(), X) <= radius) // why was this a switch before ffs
+			if(IN_EUCLIDEAN_RANGE(sing_center, X, radius+0.5))
 				src.Bumped(A)
 			else if (istype(X, /atom/movable))
 				var/atom/movable/AM = X
@@ -311,7 +313,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		else
 			var/obj/O = A
 			O.set_loc(src.get_center())
-			O.ex_act(1.0)
+			O.ex_act(1)
 			if (O)
 				qdel(O)
 			gain = 2
@@ -344,7 +346,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 /obj/machinery/the_singularity/proc/grow()
 	if(radius<maxradius)
 		radius++
-		SafeScale((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5))
+		SafeScaleAnim((radius+0.5)/(radius-0.5),(radius+0.5)/(radius-0.5), anim_time=3 SECONDS, anim_easing=CUBIC_EASING|EASE_OUT)
 		grav_pull = max(grav_pull, radius)
 
 // totally rewrote this proc from the ground-up because it was puke but I want to keep this comment down here vvv so we can bask in the glory of What Used To Be - haine
@@ -372,34 +374,34 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/proc/Toxmob()
-
-	for (var/mob/living/carbon/M in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.wear_suit)
-				return
-		M.take_toxin_damage(12)
-		M.changeStatus("radiation", 4*(radius+1) SECONDS)
+	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+		M.take_radiation_dose(clamp(0.2 SIEVERTS*(radius+1), 0, 2 SIEVERTS))
 		M.show_text("You feel odd.", "red")
 
 /obj/machinery/the_singularity/proc/Mezzer()
-
-	for (var/mob/living/carbon/M in oviewers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	for (var/mob/living/carbon/M in hearers(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
+			if (H.bioHolder?.HasEffect("blind") || H.blinded)
+				return
+			else if (istype(H.glasses,/obj/item/clothing/glasses/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
+				return
+			// remaining eye(s) meson cybereyes?
+			else if((!H.organHolder?.left_eye || istype(H.organHolder?.left_eye, /obj/item/organ/eye/cyber/meson)) && (!H.organHolder?.right_eye || istype(H.organHolder?.right_eye, /obj/item/organ/eye/cyber/meson)))
+				M.show_text("You look directly into [src.name], good thing your eyes are protected!", "green")
 				return
 		M.changeStatus("stunned", 7 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] stares blankly at [src]!</B></span>",\
 		"<B>You look directly into [src]!<br><span class='alert'>You feel weak!</span></B>")
 
 /obj/machinery/the_singularity/proc/BHolerip()
-
-	for (var/turf/T in orange(radius*EVENT_GROWTH+EVENT_MINIMUM, src.get_center()))
+	var/turf/sing_center = src.get_center()
+	for (var/turf/T in orange(radius*EVENT_GROWTH, sing_center))
 		if (prob(70))
 			continue
-		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (get_dist(src.get_center(),T) == radius+1 || get_dist(src.get_center(),T) == radius+2)) // I'm very tired and this is the least dumb thing I can make of what was here for now.   This needs to get updated for the variable size singularity at some point
+
+		if (T && !(T.turf_flags & CAN_BE_SPACE_SAMPLE) && (IN_EUCLIDEAN_RANGE(sing_center, T, radius+EVENT_GROWTH+0.5)))
 			if (T.turf_flags & IS_TYPE_SIMULATED)
 				if (istype(T,/turf/simulated/floor) && !istype(T,/turf/simulated/floor/plating))
 					var/turf/simulated/floor/F = T
@@ -455,7 +457,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/Varedit_start = 0
 	var/Varpower = 0
 	var/active = 0
@@ -494,7 +496,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				set_active(1)
 				icon_state = "Field_Gen +a"
 				boutput(user, "You turn on the field generator.")
-				logTheThing("station", user, null, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
+				logTheThing(LOG_STATION, user, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
 		else
 			boutput(user, "The controls are locked!")
 	else
@@ -509,7 +511,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.set_active(1)
 			icon_state = "Field_Gen +a"
 			boutput(user, "You turn on the field generator.")
-			logTheThing("station", user, null, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
+			logTheThing(LOG_STATION, user, "activated a [src.name] at [log_loc(src)].") // Hmm (Convair880).
 	else
 		boutput(user, "The field generator needs to be firmly secured to the floor first.")
 	src.add_fingerprint(user)
@@ -647,7 +649,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			desc = "Projects an energy field when active. It has been bolted to the floor."
 			src.anchored = 1
@@ -655,7 +657,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			desc = "Projects an energy field when active."
 			src.anchored = 0
@@ -877,7 +879,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		shock_damage = min(rand(10,20),rand(10,20))*prot
 
 	// Added (Convair880).
-	logTheThing("combat", user, null, "was shocked by a containment field at [log_loc(src)].")
+	logTheThing(LOG_COMBAT, user, "was shocked by a containment field at [log_loc(src)].")
 
 	if (user?.bioHolder)
 		if (user.bioHolder.HasEffect("resist_electric_heal"))
@@ -892,7 +894,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 			return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))
@@ -904,7 +906,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(user.get_burn_damage() >= 500) //This person has way too much BURN, they've probably been shocked a lot! Let's destroy them!
 		user.visible_message("<span style=\"color:red;font-weight:bold;\">[user.name] was disintegrated by the [src.name]!</span>")
-		logTheThing("user", user, null, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "was elecgibbed by [src] ([src.type]) at [log_loc(user)].")
 		user.elecgib()
 		return
 	else
@@ -948,7 +950,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	req_access = list(access_engineering_engine)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/active = 0
 	var/power = 20
 	var/fire_delay = 100
@@ -992,14 +994,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.active = 0
 					icon_state = "Emitter"
 					boutput(user, "You turn off the emitter.")
-					logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
 					message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 			else
 				if(tgui_alert(user, "Turn on the emitter?", "Emitter controls", list("Yes", "No")) == "Yes")
 					src.active = 1
 					icon_state = "Emitter +a"
 					boutput(user, "You turn on the emitter.")
-					logTheThing("station", user, null, "activated emitter at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
 					src.shot_number = 0
 					src.fire_delay = 100
 					message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
@@ -1017,14 +1019,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				src.active = 0
 				icon_state = "Emitter"
 				boutput(user, "You turn off the emitter.")
-				logTheThing("station", user, null, "deactivated active emitter at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "deactivated active emitter at [log_loc(src)].")
 				message_admins("[key_name(user)] deactivated active emitter at [log_loc(src)].")
 		else
 			if(tgui_alert(user, "Turn on the emitter?","Switch",list("Yes","No")) == "Yes")
 				src.active = 1
 				icon_state = "Emitter +a"
 				boutput(user, "You turn on the emitter.")
-				logTheThing("station", user, null, "activated emitter at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "activated emitter at [log_loc(src)].")
 				src.shot_number = 0
 				src.fire_delay = 100
 				message_admins("[key_name(user)] activated emitter at [log_loc(src)].")
@@ -1075,7 +1077,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			desc = "Shoots a high power laser when active, it has been bolted to the floor."
@@ -1083,7 +1085,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			desc = "Shoots a high power laser when active."
@@ -1110,7 +1112,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
 			if (!src.locked)
-				logTheThing("station", user, null, "unlocked emitter at at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "unlocked emitter at at [log_loc(src)].")
 		else
 			boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -1143,7 +1145,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		src.get_link()
 		desc = "Shoots a high power laser when active, it has been bolted and welded to the floor."
 		boutput(user, "You weld the emitter to the floor.")
-		logTheThing("station", user, null, "welds an emitter to the floor at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "welds an emitter to the floor at [log_loc(src)].")
 	else if(state == WELDED)
 		state = WRENCHED
 		if(src.link) //Time to clear our link.
@@ -1151,7 +1153,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			src.link = null
 		desc = "Shoots a high power laser when active, it has been bolted to the floor."
 		boutput(user, "You cut the emitter free from the floor.")
-		logTheThing("station", user, null, "unwelds an emitter from the floor at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "unwelds an emitter from the floor at [log_loc(src)].")
 
 //Send a signal over our link, if possible.
 /obj/machinery/emitter/proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -1232,6 +1234,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/active = 0
 	var/obj/item/tank/plasma/P = null
 	var/obj/machinery/power/collector_control/CU = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	mats = 20
 
 /obj/machinery/power/collector_array/New()
 	..()
@@ -1295,14 +1299,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
-			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/tank/plasma))
 		if(src.P)
 			boutput(user, "<span class='alert'>There appears to already be a plasma tank loaded!</span>")
@@ -1361,6 +1365,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	var/obj/machinery/power/collector_array/CAE = null
 	var/obj/machinery/power/collector_array/CAW = null
 	var/list/obj/machinery/the_singularity/S = null
+	deconstruct_flags = DECON_WELDER | DECON_MULTITOOL | DECON_CROWBAR | DECON_WRENCH
+	mats = 25
 
 /obj/machinery/power/collector_control/New()
 	..()
@@ -1522,14 +1528,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput("<span class='alert'>The [src.name] must be turned off first!</span>")
 		else
 			if (!src.anchored)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the [src.name] to the floor.")
 				src.anchored = 1
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You unsecure the [src.name].")
 				src.anchored = 0
-			logTheThing("station", user, null, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
+			logTheThing(LOG_STATION, user, "[src.anchored ? "bolts" : "unbolts"] a [src.name] [src.anchored ? "to" : "from"] the floor at [log_loc(src)].") // Ditto (Convair880).
 	else if(istype(W, /obj/item/device/analyzer/atmospheric))
 		boutput(user, "<span class='notice'>The analyzer detects that [lastpower]W are being produced.</span>")
 
@@ -1551,7 +1557,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	anchored = 0
 	density = 1
 	var/state = UNWRENCHED
-	var/timing = 0.0
+	var/timing = 0
 	var/time = 30
 	var/last_tick = null
 	var/mob/activator = null // For logging purposes.
@@ -1566,14 +1572,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 		if(state == UNWRENCHED)
 			state = WRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You secure the external reinforcing bolts to the floor.")
 			src.anchored = 1
 			return
 
 		else if(state == WRENCHED)
 			state = UNWRENCHED
-			playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 			boutput(user, "You undo the external reinforcing bolts.")
 			src.anchored = 0
 			return
@@ -1592,7 +1598,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "You start to weld the bomb to the floor.")
 			sleep(5 SECONDS)
 
-			logTheThing("station", user, null, "welds a [src.name] to the floor at [log_loc(src)].") // Like here (Convair880).
+			logTheThing(LOG_STATION, user, "welds a [src.name] to the floor at [log_loc(src)].") // Like here (Convair880).
 
 			if ((user.loc == T && user.equipped() == W))
 				state = WELDED
@@ -1610,7 +1616,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			boutput(user, "You start to cut the bomb free from the floor.")
 			sleep(5 SECONDS)
 
-			logTheThing("station", user, null, "cuts a [src.name] from the floor at [log_loc(src)].") // Hmm (Convair880).
+			logTheThing(LOG_STATION, user, "cuts a [src.name] from the floor at [log_loc(src)].") // Hmm (Convair880).
 			if (src.activator)
 				src.activator = null
 
@@ -1646,7 +1652,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							src.icon_state = "portgen2"
 
 							// And here (Convair880).
-							logTheThing("bombing", usr, null, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
+							logTheThing(LOG_BOMBING, usr, "activated [src.name] ([src.time] seconds) at [log_loc(src)].")
 							message_admins("[key_name(usr)] activated [src.name] ([src.time] seconds) at [log_loc(src)].")
 							if (ismob(usr))
 								src.activator = usr
@@ -1659,7 +1665,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 							src.icon_state = "portgen1"
 
 							// And here (Convair880).
-							logTheThing("bombing", usr, src.activator, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
+							logTheThing(LOG_BOMBING, usr, "deactivated [src.name][src.activator ? " (primed by [constructTarget(src.activator,"bombing")]" : ""] at [log_loc(src)].")
 							message_admins("[key_name(usr)] deactivated [src.name][src.activator ? " (primed by [key_name(src.activator)])" : ""] at [log_loc(src)].")
 
 						else
@@ -1736,7 +1742,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		boutput(M, "<span class='bold alert'>The contaiment field on \the [src] begins destabilizing!</span>")
 		shake_camera(M, 5, 16)
 	for (var/turf/TF in range(4,T))
-		animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+		animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 	particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(T))
 
 	SPAWN(3 SECONDS)
@@ -1745,10 +1751,10 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			shake_camera(M, 5, 16)
 
 		// And most importantly here (Convair880)!
-		logTheThing("bombing", src.activator, null, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
+		logTheThing(LOG_BOMBING, src.activator, "A [src.name] (primed by [src.activator ? "[src.activator]" : "*unknown*"]) detonates at [log_loc(src)].")
 		message_admins("A [src.name] (primed by [src.activator ? "[key_name(src.activator)]" : "*unknown*"]) detonates at [log_loc(src)].")
 
-		playsound(T, 'sound/machines/satcrash.ogg', 100, 0, 5, 0.5)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 5)
 		if (bhole)
 			var/obj/B = new /obj/bhole(get_turf(src.loc), rand(1600, 2400), rand(75, 100))
 			B.name = "gravitational singularity"

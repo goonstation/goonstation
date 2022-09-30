@@ -8,7 +8,7 @@
 	name = "floor"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "floor"
-	thermal_conductivity = 0.040
+	thermal_conductivity = 0.04
 	heat_capacity = 225000
 
 
@@ -497,7 +497,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("pharosium"))
+		setMaterial(getMaterial("pharosium"), copy = FALSE)
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -541,12 +541,6 @@
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cloth")
-	mat_changename = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("cloth"))
 
 /turf/unsimulated/floor/carpet/grime
 	icon = 'icons/turf/floors.dmi'
@@ -767,7 +761,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("wood"))
+		setMaterial(getMaterial("wood"), copy = FALSE)
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -983,7 +977,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("synthrubber"))
+		setMaterial(getMaterial("synthrubber"), copy = FALSE)
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -1014,11 +1008,6 @@
 	step_priority = STEP_PRIORITY_MED
 
 /////////////////////////////////////////
-
-#define FLOOR_AUTO_EDGE_PRIORITY_DIRT 50
-#define FLOOR_AUTO_EDGE_PRIORITY_GRASS 100
-#define FLOOR_AUTO_EDGE_PRIORITY_WATER 200
-
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
 
@@ -1137,7 +1126,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("ice"))
+		setMaterial(getMaterial("ice"), copy = FALSE)
 		name = initial(name)
 
 /turf/unsimulated/floor/auto/water/ice/rough
@@ -1202,7 +1191,3 @@
 		. = ..()
 		if(prob(10))
 			src.icon_state = "snow_rough[rand(1,3)]"
-
-#undef FLOOR_AUTO_EDGE_PRIORITY_DIRT
-#undef FLOOR_AUTO_EDGE_PRIORITY_GRASS
-#undef FLOOR_AUTO_EDGE_PRIORITY_WATER

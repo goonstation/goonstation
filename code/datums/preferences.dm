@@ -12,6 +12,7 @@ datum/preferences
 	var/name_first
 	var/name_middle
 	var/name_last
+	var/robot_name
 	var/gender = MALE
 	var/age = 30
 	var/pin = null
@@ -118,6 +119,27 @@ datum/preferences
 			qdel(src.preview)
 			src.preview = null
 
+	ui_static_data(mob/user)
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits[trait.id] = list(
+				"id" = trait.id,
+				"name" = trait.name,
+				"desc" = trait.desc,
+				"category" = categories,
+				"img" = icon2base64(icon(trait.icon, trait.icon_state)),
+				"points" = trait.points,
+			)
+
+		. = list(
+			"traitsData" = traits
+		)
+
 	ui_data(mob/user)
 		if (isnull(src.preview))
 			src.preview = new(user.client, "preferences", "preferences_character_preview")
@@ -144,8 +166,20 @@ datum/preferences
 				cloud_saves += name
 
 		sanitize_null_values()
-		user << browse_rsc(icon(cursors_selection[target_cursor]), "tcursor_[src.target_cursor].png")
-		user << browse_rsc(icon(hud_style_selection[hud_style], "preview"), "hud_preview_[src.hud_style].png")
+
+		var/list/traits = list()
+		for (var/datum/trait/trait as anything in src.traitPreferences.getTraits(user))
+			var/selected = (trait.id in traitPreferences.traits_selected)
+			var/list/categories
+			if (islist(trait.category))
+				categories = trait.category.Copy()
+				categories.Remove(src.traitPreferences.hidden_categories)
+
+			traits += list(list(
+				"id" = trait.id,
+				"selected" = selected,
+				"available" = src.traitPreferences.isAvailableTrait(trait.id, selected)
+			))
 
 		. = list(
 			"isMentor" = client.is_mentor(),
@@ -161,6 +195,7 @@ datum/preferences
 			"nameFirst" = src.name_first,
 			"nameMiddle" = src.name_middle,
 			"nameLast" = src.name_last,
+			"robotName" = src.robot_name,
 			"randomName" = src.be_random_name,
 			"gender" = src.gender == MALE ? "Male" : "Female",
 			"pronouns" = isnull(AH.pronouns) ? "Default" : AH.pronouns.name,
@@ -197,7 +232,9 @@ datum/preferences
 			"autoCapitalization" = src.auto_capitalization,
 			"localDeadchat" = src.local_deadchat,
 			"hudTheme" = src.hud_style,
+			"hudThemePreview" = icon2base64(icon(hud_style_selection[hud_style], "preview")),
 			"targetingCursor" = src.target_cursor,
+			"targetingCursorPreview" = icon2base64(icon(cursors_selection[target_cursor])),
 			"tooltipOption" = src.tooltip_option,
 			"tguiFancy" = src.tgui_fancy,
 			"tguiLock" = src.tgui_lock,
@@ -208,6 +245,9 @@ datum/preferences
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
 			"preferredMap" = src.preferred_map,
+			"traitsAvailable" = traits,
+			"traitsMax" = src.traitPreferences.max_traits,
+			"traitsPointsTotal" = src.traitPreferences.point_total,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -256,11 +296,6 @@ datum/preferences
 				ui.close()
 				return TRUE
 
-			if ("open-traits-window")
-				traitPreferences.showTraits(usr)
-				ui.close()
-				return TRUE
-
 			if ("save")
 				var/index = params["index"]
 				if (isnull(src.profile_name) || is_blank_string(src.profile_name))
@@ -291,7 +326,7 @@ datum/preferences
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
 					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
-					if(!isnull(new_name) && length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
+					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
 						var/ret = src.cloudsave_save(usr.client, new_name)
@@ -424,6 +459,25 @@ datum/preferences
 					src.profile_modified = TRUE
 					return TRUE
 
+			if ("update-robotName")
+				var/new_name = input(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name) as null|text
+				if (isnull(new_name))
+					return
+				if (is_blank_string(new_name))
+					src.robot_name = ""
+					src.profile_modified = TRUE
+					return TRUE
+
+				new_name = strip_html(new_name, MOB_NAME_MAX_LENGTH, 1)
+				if (!length(new_name))
+					tgui_alert(usr, "That name was too short after removing bad characters from it. Please choose a different name.", "Name too short")
+					return
+
+				if (new_name)
+					src.robot_name = new_name
+					src.profile_modified = TRUE
+					return TRUE
+
 			if ("update-gender")
 				if (src.gender == MALE)
 					src.gender = FEMALE
@@ -518,7 +572,7 @@ datum/preferences
 				if(!length(selectable_ringtones))
 					src.pda_ringtone_index = "Two-Beep"
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
-					logTheThing("debug", usr, null, "get_all_character_setup_ringtones() didn't return anything!")
+					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
 					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
 					if (!(src.pda_ringtone_index in selectable_ringtones))
@@ -851,6 +905,19 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
+			if ("select-trait")
+				src.profile_modified = src.traitPreferences.selectTrait(params["id"])
+				return TRUE
+
+			if ("unselect-trait")
+				src.profile_modified = src.traitPreferences.unselectTrait(params["id"])
+				return TRUE
+
+			if ("reset-traits")
+				src.traitPreferences.resetTraits()
+				src.profile_modified = TRUE
+				return TRUE
+
 			if ("reset")
 				src.profile_modified = TRUE
 
@@ -943,7 +1010,7 @@ datum/preferences
 
 	proc/randomizeLook() // im laze
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 		randomize_look(AH, 0, 0, 0, 0, 0, 0) // keep gender/bloodtype/age/name/underwear/bioeffects
 		if (prob(1))
@@ -973,12 +1040,12 @@ datum/preferences
 
 	proc/update_preview_icon()
 		if (!AH)
-			logTheThing("debug", usr ? usr : null, null, "a preference datum's appearence holder is null!")
+			logTheThing(LOG_DEBUG, usr ? usr : null, null, "a preference datum's appearence holder is null!")
 			return
 
 		var/datum/mutantrace/mutantRace = null
 		for (var/ID in traitPreferences.traits_selected)
-			var/obj/trait/T = getTraitById(ID)
+			var/datum/trait/T = getTraitById(ID)
 			if (T?.mutantRace)
 				mutantRace = T.mutantRace
 				break
@@ -1519,10 +1586,6 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
-		if (link_tags["traitswindow"])
-			traitPreferences.showTraits(user)
-			return
-
 		if (link_tags["closejobswindow"])
 			user.Browse(null, "window=mob_occupation")
 			src.ShowChoices(user)
@@ -1802,6 +1865,15 @@ proc/ismasc(datum/customization_style/style)
 var/global/list/hair_details = list("einstein" = /datum/customization_style/hair/short/einalt,\
 	"80s" = /datum/customization_style/hair/long/eightiesfade,\
 	"glammetal" = /datum/customization_style/hair/long/glammetalO,\
+	"lionsmane" = /datum/customization_style/hair/long/lionsmane_fade,\
+	"longwaves" = /datum/customization_style/hair/long/longwaves_fade,\
+	"ripley" = /datum/customization_style/hair/long/ripley_fade,\
+	"violet" = /datum/customization_style/hair/long/violet_fade,\
+	"willow" = /datum/customization_style/hair/long/willow_fade,\
+	"rockponytail" = /datum/customization_style/hair/hairup/rockponytail_fade,\
+	"pompompigtail" = /datum/customization_style/hair/long/flatbangs, /datum/customization_style/hair/long/twobangs_long,\
+	"breezy" = /datum/customization_style/hair/long/breezy_fade,\
+	"flick" = /datum/customization_style/hair/short/flick_fade,\
 	"mermaid" = /datum/customization_style/hair/long/mermaidfade,\
 	"smoothwave" = /datum/customization_style/hair/long/smoothwave_fade,\
 	"longbeard" = /datum/customization_style/beard/longbeardfade,\

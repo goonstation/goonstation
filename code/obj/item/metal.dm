@@ -17,8 +17,8 @@ MATERIAL
 	flags = FPRINT | TABLEPASS| CONDUCT
 	health = 3
 	w_class = W_CLASS_NORMAL
-	force = 9.0
-	throwforce = 15.0
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -129,7 +129,8 @@ MATERIAL
 					src.amount -= 2
 					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					logTheThing("station", user, null, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
+					logTheThing(LOG_STATION, user, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
+					G.add_fingerprint(user)
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -149,7 +150,7 @@ MATERIAL
 	icon_state = "sheet"
 	desc = "A heavy sheet of metal."
 	m_amt = 3750
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL
@@ -312,7 +313,7 @@ MATERIAL
 					src.amount -= 2
 					var/atom/A = new /obj/storage/closet( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([log_loc(usr)])")
+					logTheThing(LOG_STATION, usr, "builds a Closet in [usr.loc.loc] ([log_loc(usr)])")
 				if("fl_tiles")
 					var/maketiles = round(src.amount * 4)
 					if (maketiles > 80) maketiles = 80
@@ -346,7 +347,7 @@ MATERIAL
 					src.amount -= 5
 					var/atom/A = new /obj/computerframe( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Console Frame in [usr.loc.loc] ([log_loc(usr)])")
+					logTheThing(LOG_STATION, usr, "builds a Console Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("hcomputer")
 					if(src.amount < 5)
 						boutput(usr, text("<span class='alert'>You need at least five metal to make a computer frame.</span>"))
@@ -354,7 +355,7 @@ MATERIAL
 					src.amount -= 5
 					var/atom/A = new /obj/computer3frame( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Computer Frame in [usr.loc.loc] ([log_loc(usr)])")
+					logTheThing(LOG_STATION, usr, "builds a Computer Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("tcomputer")
 					if(src.amount < 3)
 						boutput(usr, text("<span class='alert'>You need at least three metal to make a terminal computer frame.</span>"))
@@ -362,7 +363,7 @@ MATERIAL
 					src.amount -= 3
 					var/atom/A = new /obj/computer3frame/terminal( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Terminal Frame in [usr.loc.loc] ([log_loc(usr)])")
+					logTheThing(LOG_STATION, usr, "builds a Terminal Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("construct")
 					if (src.amount < 2)
 						boutput(usr, text("<span class='alert'>You need at least two metal to build wall girders.</span>"))
@@ -377,7 +378,7 @@ MATERIAL
 						src.amount -= 2
 						var/atom/A = new /obj/structure/girder(location)
 						A.setMaterial(src.material)
-						logTheThing("station", usr, null, "builds Wall Girders in [usr.loc.loc] ([log_loc(usr)])")
+						logTheThing(LOG_STATION, usr, "builds Wall Girders in [usr.loc.loc] ([log_loc(usr)])")
 
 			if (src.amount <= 0)
 				usr << browse(null, "window=met_sheet")
@@ -399,10 +400,10 @@ MATERIAL
 	desc = "A very heavy sheet of metal."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-r"
-	force = 5.0
+	force = 5
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = 15
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_NORMAL

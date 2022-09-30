@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 
@@ -392,7 +391,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 /datum/objective/crew/bartender/shotgun
 	explanation_text = "Don't lose your shotgun!"
 	check_completion()
-		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/riotgun))
+		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/sawnoff))
 			return TRUE
 		else
 			return FALSE

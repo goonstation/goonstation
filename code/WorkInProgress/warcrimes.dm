@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	real_name = "John Bill"
 	interesting = "Found in a coffee can at age fifteen. Went to jail for fraud. Recently returned to the can."
 	gender = MALE
+	is_npc = TRUE
 	var/talk_prob = 7
 	var/greeted_murray = 0
 	var/list/snacks = null
@@ -278,7 +279,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 			var/list/grills = list()
 
 			var/obj/machinery/bot/guardbot/old/tourguide/murray = pick(by_type[/obj/machinery/bot/guardbot/old/tourguide])
-			if (murray && get_dist(src,murray) > 7)
+			if (murray && GET_DIST(src,murray) > 7)
 				murray = null
 			if (istype(murray))
 				if (!findtext(murray.name, "murraycompliment"))
@@ -494,7 +495,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 
 		for (var/mob/SB in by_cat[TR_CAT_SHITTYBILLS])
 			var/mob/living/carbon/human/biker/S = SB
-			if (get_dist(S,src) <= 7)
+			if (GET_DIST(S,src) <= 7)
 				if(!(S.ai_active) || (prob(25)))
 					S.say("That's my brother, you [JOHN_PICK("insults")]!")
 					M.add_karma(-1)
@@ -649,7 +650,7 @@ Urs' Hauntdog critter
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
-			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
 			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
 			return "<span class='emote'><b>[src]</b> screeeams!</span>"
 		return null
@@ -667,7 +668,7 @@ Urs' Hauntdog critter
 			var/turf/T = get_turf(src)
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
-			var/hogg = pick("sound/voice/hagg_vorbis.ogg","sound/voice/hogg_vorbis.ogg","sound/voice/hogg_vorbis_the.ogg","sound/voice/hogg_vorbis_screams.ogg","sound/voice/hogg_with_scream.ogg","sound/voice/hoooagh2.ogg","sound/voice/hoooagh.ogg",)
+			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
 			playsound(T, hogg, 60, 1)
 			user.add_karma(1.5)
 
@@ -699,7 +700,6 @@ Urs' Hauntdog critter
 	is_npc = 1
 	uses_mobai = 1
 	real_name = "Juicer Gene"
-	gender = NEUTER
 	max_health = 50
 
 	New()

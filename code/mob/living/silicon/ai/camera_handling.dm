@@ -22,7 +22,7 @@
 			continue	//	different viewing plane
 		if(!C.camera_status)
 			continue	//	ignore disabled cameras
-		var/dist = get_dist(src, C)
+		var/dist = GET_DIST(src, C)
 		if(dist < best_dist)
 			best_dist = dist
 			best_cam = C
@@ -51,7 +51,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 
 	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
@@ -70,7 +70,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI())
+	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/list/candidates = list()
 
 	for(var/C in creatures)
@@ -213,13 +213,13 @@
 		process() //Process now!!!
 
 	proc/cease_track()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 		tracking = null
 		delay = success_delay
 		owner.hud.update_tracking()
 
 	proc/cease_track_temporary()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 
 	proc/process()
 		if(!tracking || !owner || ( ( (last_track + delay) > world.timeofday ) && (world.timeofday > last_track) ) )
@@ -234,7 +234,7 @@
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
 			var/turf/T = get_turf(tracking)
-			if (T.cameras && length(T.cameras))
+			if (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
 				failedToTrack = 0
 		#endif
 
@@ -244,7 +244,7 @@
 			delay = fail_delay
 		else
 			delay = success_delay
-			owner.eyecam.set_loc(tracking)
+			owner.eyecam.observeMob(tracking)
 
 		owner.hud.update_tracking()
 		owner.eyecam.update_statics()

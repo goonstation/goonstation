@@ -27,7 +27,7 @@
 
 		if(!H.in_fakedeath)
 			boutput(holder.owner, "<span class='notice'>Repairing our wounds.</span>")
-			logTheThing("combat", holder.owner, null, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
+			logTheThing(LOG_COMBAT, holder.owner, "enters regenerative stasis as a changeling [log_loc(holder.owner)].")
 			var/list/implants = list()
 			for (var/obj/item/implant/I in holder.owner) //Still preserving implants
 				implants += I
@@ -47,17 +47,24 @@
 					C.HealDamage("All", 1000, 1000)
 					C.take_brain_damage(-INFINITY)
 					C.take_toxin_damage(-INFINITY)
+					C.change_misstep_chance(-INFINITY)
 					C.take_oxygen_deprivation(-INFINITY)
+					C.delStatus("drowsy")
+					C.delStatus("passing_out")
+					C.delStatus("n_radiation")
 					C.delStatus("paralysis")
+					C.delStatus("slowed")
 					C.delStatus("stunned")
 					C.delStatus("weakened")
 					C.delStatus("radiation")
+					C.take_radiation_dose(-INFINITY)
+					C.delStatus("disorient")
 					C.health = 100
 					C.reagents.clear_reagents()
 					C.lying = 0
 					C.canmove = 1
 					boutput(C, "<span class='notice'>We have regenerated.</span>")
-					logTheThing("combat", C, null, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
+					logTheThing(LOG_COMBAT, C, "[C] finishes regenerative statis as a changeling [log_loc(C)].")
 					C.visible_message("<span class='alert'><B>[C] appears to wake from the dead, having healed all wounds.</span></span>")
 					for(var/obj/item/implant/I in implants)
 						if (istype(I, /obj/item/implant/projectile))
@@ -66,6 +73,11 @@
 							C.implant.Remove(I)
 							I.set_loc(C.loc)
 							continue
+					if(C.bioHolder?.effects && length(C.bioHolder.effects))
+						for(var/bioEffectId in C.bioHolder.effects)
+							var/datum/bioEffect/gene = C.bioHolder.GetEffect(bioEffectId)
+							if (gene.curable_by_mutadone && gene.effectType == EFFECT_TYPE_DISABILITY)
+								C.bioHolder.RemoveEffect(gene.id)
 
 				C.set_clothing_icon_dirty()
 				H.in_fakedeath = 0

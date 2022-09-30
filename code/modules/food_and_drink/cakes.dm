@@ -22,6 +22,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	bites_left = 1
 	heal_amt = 2
 	initial_volume = 5
@@ -480,7 +481,7 @@
 				return
 			else
 				..()
-		else if(istype(W,/obj/item/kitchen/utensil/spoon) || istool(W,TOOL_SPOONING))
+		else if(isspooningtool(W))
 			if(!src.sliced)
 				return
 			else

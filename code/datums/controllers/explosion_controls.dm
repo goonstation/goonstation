@@ -1,5 +1,6 @@
 var/datum/explosion_controller/explosions
 #define RSS_SCALE 2
+//#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
 	var/list/turf/queued_turfs = list()
@@ -135,7 +136,6 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
-		world.updateCameraVisibility()
 		next_turf_safe = FALSE
 
 	proc/process()
@@ -187,20 +187,20 @@ var/datum/explosion_controller/explosions
 				if(power > 10 && (source?.fingerprintslast || M?.last_ckey) && !istype(A, /area/mining/magnet) && !istype(source, /obj/machinery/vehicle/escape_pod))
 					message_admins(logmsg)
 				if (source?.fingerprintslast)
-					logTheThing("bombing", source.fingerprintslast, null, logmsg)
-					logTheThing("diary", source.fingerprintslast, null, logmsg, "combat")
+					logTheThing(LOG_BOMBING, source.fingerprintslast, logmsg)
+					logTheThing(LOG_DIARY, source.fingerprintslast, logmsg, "combat")
 				else
-					logTheThing("bombing", user, null, logmsg)
-					logTheThing("diary", user, null, logmsg, "combat")
+					logTheThing(LOG_BOMBING, user, logmsg)
+					logTheThing(LOG_DIARY, user, logmsg, "combat")
 
 	proc/explode()
 		logMe(power)
 
 		for(var/client/C in clients)
-			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
+			if(C.mob && (C.mob.z == epicenter.z) && power > 20)
 				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
-				playsound(C.mob, explosions.distant_sound, 100, 0)
+				playsound(C.mob, explosions.distant_sound, 70, 0)
 
 		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)
@@ -244,6 +244,8 @@ var/datum/explosion_controller/explosions
 				if (!target) continue // woo edge of map
 				if( target.loc:sanctuary ) continue
 				var/new_value = dir & (dir-1) ? value2 : value
+				if(((get_dir(T, epicenter) in ordinal) && (dir & ~get_dir(epicenter, T)))	|| ((get_dir(T, epicenter) in cardinal) && !(dir & get_dir(epicenter, T))))
+					new_value = new_value / 3 - 1
 				if(width < 360)
 					var/diff = abs(angledifference(get_angle(epicenter, target), angle))
 					if(diff > width)

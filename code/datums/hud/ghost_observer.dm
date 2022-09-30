@@ -40,5 +40,8 @@
 		for(var/obj/ability_button/B in master.client.screen)
 			master.client.screen -= B
 
+		for(var/atom/movable/screen/ability/B in master.client.screen)
+			master.client.screen -= B
+
 		if (master.abilityHolder) //abilities come first. no overlap from the upcoming buttons!
 			master.abilityHolder.updateButtons()

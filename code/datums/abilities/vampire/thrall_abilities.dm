@@ -7,6 +7,7 @@
 	max_range = 1
 	cooldown = 0
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 1
 	not_when_handcuffed = 0
 	restricted_area_check = 0
@@ -28,7 +29,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", M, M.name, "[message]")
+		logTheThing(LOG_SAY, M, "[message]")
 
 		if (!H.master)
 			boutput(M, "<span class='alert'>Your link to your master has been severed!</span>")

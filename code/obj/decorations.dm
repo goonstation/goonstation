@@ -46,7 +46,7 @@
 	name = "Tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
-	icon_state = "tree" // changed from 0.0
+	icon_state = "tree" // changed from 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -197,7 +197,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, -1)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -232,7 +232,7 @@
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
-				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
@@ -276,7 +276,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
@@ -291,7 +291,7 @@
 			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
 
 		eat_twitch(user)
-		playsound(user, "sound/items/eatfood.ogg", rand(10,50), 1)
+		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
 
 		if (is_plastic)
 			user.setStatus("weakened", 3 SECONDS)
@@ -316,7 +316,7 @@
 	proc/destroy()
 		src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
 		new /obj/decal/cleanable/leaves(get_turf(src))
-		playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
 		qdel(src)
 
 	random
@@ -346,7 +346,7 @@
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "shrub"
+	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
 	anchored = 1
 	density = 1
@@ -357,8 +357,9 @@
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
+		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
 		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
 		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
 		if(length(afterlife_turfs))
@@ -401,7 +402,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -432,7 +433,7 @@
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 0)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 0)
 		// The bonsai goes to the deadbar so I guess the ship in a bottle does too lol
 		var/obj/captain_bottleship/C = new /obj/captain_bottleship
 		C.overlays += image('icons/misc/32x64.dmi',"halo")
@@ -557,10 +558,10 @@
 	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
-			src.opacity = 1
+			src.set_opacity(1)
 		else
 			src.icon_state = "[src.base_state]-o"
-			src.opacity = 0
+			src.set_opacity(0)
 
 	left
 		icon_state = "blindsH-L-o"
@@ -867,6 +868,12 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	mors
+		icon_state = "mors"
+		name = "Mors"
+		pixel_x = -256
+		pixel_y = -256
+
 	station
 		name = "Space Station 14"
 		desc = "Another Nanotrasen station passing by your orbit."
@@ -998,7 +1005,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1262,7 +1269,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4
@@ -1290,8 +1297,8 @@ obj/decoration/gibberBroken
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "table_parts"
 	density = 1
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -1362,7 +1369,7 @@ obj/decoration/gibberBroken
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1407,7 +1414,7 @@ obj/decoration/gibberBroken
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -1425,7 +1432,7 @@ obj/decoration/gibberBroken
 			if (P && src.material)
 				P.setMaterial(src.material)
 		else
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			var/obj/item/sheet/S = new (src.loc)
 			if (src.material)
 				S.setMaterial(src.material)
@@ -1451,3 +1458,64 @@ obj/decoration/pottedfern
 	icon_state = "plant_fern"
 	anchored = 1
 	density = 1
+
+/obj/burning_barrel
+	name = "burning barrel"
+	desc = "cozy."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "barrel1"
+	density = 1
+	anchored = 1
+	opacity = 0
+
+	var/datum/light/light
+
+	New()
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
+		light = new /datum/light/point
+		light.attach(src)
+		light.set_brightness(1)
+		light.set_color(0.5, 0.3, 0)
+		light.enable()
+		..()
+
+	disposing()
+		light.disable()
+		light.detach()
+		light = null
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/C = W
+			if(!C.on)
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
+
+/obj/fireworksbox
+	name = "Box of Fireworks"
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
+	density = 0
+	anchored = 0
+	opacity = 0
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "fireworksbox"
+	var/fireworking = 0
+
+	attack_hand(mob/user)
+		if(fireworking) return
+		fireworking = 1
+		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		anchored = 1
+
+		SPAWN(0)
+			for(var/i=0, i<rand(15,25), i++)
+				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
+				sleep(rand(2, 15))
+
+			for(var/mob/O in oviewers(world.view, src))
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
+
+			qdel(src)
+		return

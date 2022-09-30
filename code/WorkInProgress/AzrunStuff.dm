@@ -574,7 +574,7 @@
 			boutput(holder.owner, "Clearing active turret target.")
 		else if(!isdead(M) && (iscarbon(M) || !ismobcritter(M)))
 			expansion.turret.target = M
-			logTheThing("combat", holder.owner, target, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
+			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(holder.owner)].")
 
 			boutput(holder.owner, "Deployable turret now targeting: [M.name].")
 		else
@@ -589,7 +589,7 @@
 		var/obj/item/aiModule/ability_expansion/friend_turret/expansion = get_law_module()
 		expansion.turret.lasers = !expansion.turret.lasers
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
-		logTheThing("combat", holder.owner, null, "[key_name(holder.owner)] set deployable turret to [mode].")
+		logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] set deployable turret to [mode].")
 		boutput(holder.owner, "Turret now set to [mode].")
 		expansion.turret.power_change()
 
@@ -608,3 +608,139 @@
 		power_change()
 	..()
 	return
+
+
+/turf/unsimulated/floor
+
+	proc/update_ambient()
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			if(A.color=="#222222")
+				animate(A, color="#666666", time=10 SECONDS)
+			else
+				animate(A, color="#222222", time=10 SECONDS)
+
+	proc/lightning(fadeout=3 SECONDS, flash_color="#ccf")
+		var/obj/ambient/A = locate() in vis_contents
+		if(A)
+			var/old_color = A.color
+			var/first_flash_low = "#666666"
+			var/list/L1 = hex_to_rgb_list(A.color)
+			var/list/L2 = hex_to_rgb_list(flash_color)
+			if(!isnull(L1) && !isnull(L2))
+				first_flash_low = rgb(lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8), lerp(L1[1],L2[1],0.8))
+
+			A.color = flash_color
+			animate(A, color=flash_color, time=0.5)
+			animate(color=first_flash_low, time=0.75 SECONDS, easing = SINE_EASING)
+			animate(color=flash_color, time=0.75)
+			animate(color=old_color, time = fadeout, easing = SINE_EASING)
+			playsound(src, pick('sound/effects/thunder.ogg','sound/ambience/nature/Rain_ThunderDistant.ogg'), 75, 1)
+			SPAWN(fadeout + (1.5 SECONDS))
+				A.color = old_color
+
+	proc/color_shift_lights(colors, durations)
+		var/obj/ambient/A = locate() in vis_contents
+		if(A && length(colors) && length(durations))
+			var/iterations = min(length(colors), length(durations))
+			for(var/i in 1 to iterations)
+				if(i==1)
+					animate(A, color=colors[i], time=durations[i])
+				else
+					animate(color=colors[i], time=durations[i])
+
+	proc/sunset()
+		color_shift_lights(list("#AAA", "#c53a8b", "#b13333", "#444","#222"), list(0, 25 SECONDS, 25 SECONDS, 20 SECONDS, 25 SECONDS))
+
+	proc/sunrise()
+		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
+
+
+/proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
+	var/list/nodes = list()
+
+	var/index_open = 1
+	var/list/open = list(epicenter)
+	var/list/next_open = list()
+	var/list/heuristics = list() //caching is only valid if we arn't calculating based on the open node
+	nodes[epicenter] = radius
+	var/i = 0
+	while (index_open <= length(open) || length(next_open))
+		if(i++ % 500 == 0)
+			LAGCHECK(LAG_HIGH)
+		if(index_open > length(open))
+			open = next_open
+			next_open = list()
+			index_open = 1
+		var/turf/T = open[index_open++]
+		var/value = nodes[T] - (1)
+		var/value2 = nodes[T] - (1.4)
+		if (heuristic) // Only use a custom hueristic if we were passed one
+			if(isnull(heuristics[T]))
+				heuristics[T] = call(heuristic)(T, heuristic_args)
+			if(heuristics[T])
+				value -= heuristics[T]
+				value2 -= heuristics[T]
+		if (value < 0)
+			continue
+		for (var/dir in alldirs)
+			var/turf/target = get_step(T, dir)
+			if (!target) continue // woo edge of map
+			var/new_value = dir & (dir-1) ? value2 : value
+			if(width < 360)
+				var/diff = abs(angledifference(get_angle(epicenter, target), angle))
+				if(diff > width)
+					continue
+				else if(diff > width/2)
+					new_value = new_value / 3 - 1
+			if ((nodes[target] && nodes[target] >= new_value))
+				continue
+
+			nodes[target] = new_value
+			next_open[target] = 1
+
+	for (var/turf/T as anything in nodes)
+		if(nodes[T]<=0)
+			nodes -= T
+
+	return nodes
+
+/datum/mutex
+	var/locked
+
+	proc/unlock()
+		locked = FALSE
+
+	proc/lock()
+		while(!trylock())
+			sleep(1)
+
+	proc/trylock()
+		if(!locked)
+			locked = TRUE
+			. = TRUE
+
+	limited
+		var/iterations
+		var/maxIterations
+
+		New(maxItrs)
+			..()
+			maxIterations = maxItrs
+
+		trylock()
+			if(iterations <= 0 && locked)
+				locked = FALSE
+			. = ..()
+			if(.)
+				iterations = maxIterations
+			else
+				iterations--
+
+		unlock()
+			iterations = 0
+			..()
+
+
+
+

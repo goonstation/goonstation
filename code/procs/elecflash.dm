@@ -24,11 +24,11 @@ var/global/mutable_appearance/elecflash_ma = null
 		if (1)
 			sound = "sparks"
 		if (2)
-			sound = "sound/effects/electric_shock_short.ogg"
+			sound = 'sound/effects/electric_shock_short.ogg'
 		if (3,4)
-			sound = "sound/effects/electric_shock.ogg"
+			sound = 'sound/effects/electric_shock.ogg'
 		else
-			sound = "sound/effects/elec_bzzz.ogg"
+			sound = 'sound/effects/elec_bzzz.ogg'
 	var/atom/E = null
 
 	var/list/chain_to = list()
@@ -107,7 +107,7 @@ var/global/mutable_appearance/elecflash_ma = null
 /atom/proc/electric_expose(var/power = 1)
 
 /mob/living/electric_expose(var/power = 1)
-	if (check_target_immunity(src))
+	if (isintangible(src) || check_target_immunity(src))
 		return
 	if (power > 1) // pretty light damage and stam damage :)
 		if (src.bioHolder.HasEffect("resist_electric"))
@@ -117,4 +117,4 @@ var/global/mutable_appearance/elecflash_ma = null
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 0, stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		else
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
-		src.TakeDamage("chest", 0, rand(0,1.00) * power * 0.2, damage_type=DAMAGE_BURN)
+		src.TakeDamage("chest", 0, rand(0,1) * power * 0.2, damage_type=DAMAGE_BURN)

@@ -19,9 +19,13 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	var/build_time = 6 // in seconds
 	var/health = 30
 	var/health_max = 30
+	var/repair_per_resource = 5
+	var/uses_health_icon = TRUE
 	var/bruteVuln = 1.2
 	///Should it twitch on being hit?
 	var/hitTwitch = TRUE
+
+	var/atom/movable/name_tag/flock_examine_tag/info_tag
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
@@ -54,11 +58,20 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 
+	src.info_tag = new
+	src.info_tag.set_name(src.flock_id)
+	src.vis_contents += src.info_tag
+
+	src.update_health_icon()
+
 /obj/flock_structure/disposing()
 	STOP_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
 	if (flock)
+		src.update_health_icon()
 		flock.removeStructure(src)
 	flock = null
+	qdel(src.info_tag)
+	src.info_tag = null
 	..()
 
 /obj/flock_structure/proc/describe_state()
@@ -92,6 +105,22 @@ ABSTRACT_TYPE(/obj/flock_structure)
 /obj/flock_structure/proc/compute_provided()
 	return src.compute
 
+/obj/flock_structure/proc/update_flock_compute(application, update_hud_compute = TRUE)
+	if (!src.compute)
+		return
+	if (application == "apply")
+		if (src.compute < 0)
+			src.flock.used_compute += abs(src.compute)
+		else
+			src.flock.total_compute += src.compute
+	else if (application == "remove")
+		if (src.compute < 0)
+			src.flock.used_compute -= abs(src.compute)
+		else
+			src.flock.total_compute -= src.compute
+	if (update_hud_compute)
+		src.flock.update_computes()
+
 /obj/flock_structure/proc/building_specific_info()
 	return ""
 
@@ -117,8 +146,50 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	checkhealth()
 
 /obj/flock_structure/proc/checkhealth()
+	src.update_health_icon()
 	if(src.health <= 0)
 		src.gib()
+
+/obj/flock_structure/proc/update_health_icon()
+	if (!src.flock)
+		return
+	if (!src.uses_health_icon)
+		return
+	if (src.health <= 0 || src.disposed)
+		src.flock.removeAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+		return
+
+	var/list/annotations = flock.getAnnotations(src)
+	if (!annotations[FLOCK_ANNOTATION_HEALTH])
+		src.flock.addAnnotation(src, FLOCK_ANNOTATION_HEALTH)
+	var/image/annotation = annotations[FLOCK_ANNOTATION_HEALTH]
+	annotation.icon_state = "hp-[round(src.health / src.health_max * 10) * 10]"
+
+/obj/flock_structure/MouseEntered(location, control, params)
+	var/mob/M = usr
+	M.atom_hovered_over = src
+	if(M.client.check_key(KEY_EXAMINE))
+		var/atom/movable/name_tag/tag_to_show = src.get_examine_tag(M)
+		tag_to_show?.show_images(M.client, FALSE, TRUE)
+
+/obj/flock_structure/MouseExited(location, control, params)
+	var/mob/M = usr
+	M.atom_hovered_over = null
+	var/atom/movable/name_tag/tag_to_show = src.get_examine_tag(M)
+	tag_to_show?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
+
+/obj/flock_structure/get_examine_tag(mob/examiner)
+	if (!src.flock || !(istype(usr, /mob/living/intangible/flock) || istype(usr, /mob/living/critter/flock/drone)))
+		return null
+	if (istype(examiner, /mob/living/intangible/flock))
+		var/mob/living/intangible/flock/flock_intangible = examiner
+		if (src.flock != flock_intangible.flock)
+			return null
+	if (istype(examiner, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = examiner
+		if (src.flock != flockdrone.flock)
+			return null
+	return src.info_tag
 
 /obj/flock_structure/proc/deconstruct()
 	visible_message("<span class='alert'>[src.name] suddenly dissolves!</span>")
@@ -152,8 +223,11 @@ ABSTRACT_TYPE(/obj/flock_structure)
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
 	qdel(src)
 
-/obj/flock_structure/proc/repair()
-	src.health = min(src.health + 50, src.health_max)
+/obj/flock_structure/proc/repair(resources_available)
+	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.health_max - src.health)
+	src.health += health_given
+	src.update_health_icon()
+	return ceil(health_given / src.repair_per_resource)
 
 /obj/flock_structure/attack_hand(var/mob/user)
 	attack_particle(user, src)
@@ -166,7 +240,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 			user.visible_message("<span class='alert'><b>[user]</b> punches [src]! It's very ineffective!</span>")
 			src.report_attack()
 			src.takeDamage("brute", 1)
-			playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 
 	else
 		var/action = ""
@@ -193,9 +267,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	if (src.hitTwitch)
 		hit_twitch(src)
 	if (W.force < 5)
-		playsound(src.loc, "sound/impact_sounds/Crystal_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
 	else
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 50, 1)
 
 
 /obj/flock_structure/proc/report_attack()
@@ -261,9 +335,14 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 	takeDamage("mixed", damage)
 
-/obj/flock_structure/Cross(atom/movable/mover)
+/obj/flock_structure/Crossed(atom/movable/mover)
 	. = ..()
 	var/mob/living/critter/flock/drone/drone = mover
 	if(src.passthrough && istype(drone) && !drone.floorrunning)
 		animate_flock_passthrough(mover)
 		. = TRUE
+	else if(istype(mover,/mob/living/critter/flock))
+		. = TRUE
+
+/obj/flock_structure/Cross(atom/movable/mover)
+	return istype(mover,/mob/living/critter/flock)

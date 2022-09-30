@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/projectile/bullet)
 //How many tiles till it starts to lose power
 	dissipation_delay = 5
 //Kill/Stun ratio
-	ks_ratio = 1.0
+	ks_ratio = 1
 //name of the projectile setting, used when you change a guns setting
 	sname = "single shot"
 //file location for the sound you want it to play
@@ -76,7 +76,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/Gunshot.ogg'
 	power = 10
 	cost = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = null
@@ -121,7 +121,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/assrifle.ogg'  // todo: single shot sound?
 	power = 45
 	cost = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 1
@@ -132,6 +132,7 @@ toxic - poisons
 	armor_piercing
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
+		armor_ignored = 0.66
 
 /datum/projectile/bullet/assault_rifle/burst
 	sname = "burst fire"
@@ -142,6 +143,7 @@ toxic - poisons
 	armor_piercing
 		damage_type = D_PIERCING
 		hit_type = DAMAGE_STAB
+		armor_ignored = 0.66
 
 //0.308
 /datum/projectile/bullet/minigun
@@ -152,7 +154,7 @@ toxic - poisons
 	shot_number = 10
 	shot_delay = 0.07 SECONDS
 	dissipation_delay = 7
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"
@@ -163,15 +165,16 @@ toxic - poisons
 	power = 15
 	dissipation_delay = 8
 
-/datum/projectile/bullet/ak47
+/datum/projectile/bullet/akm
 	name = "bullet"
-	shot_sound = 'sound/weapons/ak47shot.ogg'
-	power = 40
+	shot_sound = 'sound/weapons/akm.ogg'
+	power = 40  // BEFORE YOU TWEAK THESE VALUES: This projectile is also used by the Syndicate Ballistic Drone and Nukie NAS-T turret
 	cost = 3
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	shot_number = 3
+	shot_delay = 120 MILLI SECONDS
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
@@ -180,6 +183,7 @@ toxic - poisons
 	name = "bullet"
 	power = 85
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
@@ -207,6 +211,7 @@ toxic - poisons
 	power = 70
 	icon_state = "sniper_bullet"
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
@@ -278,7 +283,7 @@ toxic - poisons
 	shot_number = 8
 	shot_delay = 0.1 SECONDS
 	dissipation_delay = 12
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	impact_image_state = "bhole-small"
@@ -359,6 +364,16 @@ toxic - poisons
 	shot_volume = 66
 	sname = "full auto"
 
+/datum/projectile/bullet/nine_mm_soviet
+	name = "bullet"
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	power = 15
+	impact_image_state = "bhole-small"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+
 //0.357
 /datum/projectile/bullet/revolver_357
 	name = "bullet"
@@ -372,6 +387,7 @@ toxic - poisons
 /datum/projectile/bullet/revolver_357/AP
 	power = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_357AP
 
@@ -379,6 +395,7 @@ toxic - poisons
 /datum/projectile/bullet/revolver_357/AP
 	power = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_357AP
 */
@@ -387,7 +404,7 @@ toxic - poisons
 	name = "bullet"
 	sname = "execute"
 	power = 35
-	ks_ratio = 1.0
+	ks_ratio = 1
 	implanted = /obj/item/implant/projectile/bullet_38
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
@@ -399,12 +416,13 @@ toxic - poisons
 	power = 35
 	implanted = /obj/item/implant/projectile/bullet_38AP
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
 	power = 20
-	ks_ratio = 0.0
+	ks_ratio = 0
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
 	ie_type = "T"
@@ -484,6 +502,7 @@ toxic - poisons
 	dissipation_delay = 1
 	dissipation_rate = 50
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	hit_ground_chance = 100
 	implanted = /obj/item/implant/projectile/bullet_41
@@ -495,7 +514,7 @@ toxic - poisons
 /datum/projectile/bullet/revolver_45
 	name = "bullet"
 	power = 35
-	ks_ratio = 1.0
+	ks_ratio = 1
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_45
 	impact_image_state = "bhole-small"
@@ -506,6 +525,7 @@ toxic - poisons
 	name = "bullet"
 	power = 100
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/flintlock
 	shot_sound = 'sound/weapons/flintlock.ogg'
@@ -534,7 +554,7 @@ toxic - poisons
 	icon_state = "buckshot"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 70
-	ks_ratio = 1.0
+	ks_ratio = 1
 	dissipation_delay = 2//2
 	dissipation_rate = 10
 	damage_type = D_KINETIC
@@ -620,11 +640,42 @@ toxic - poisons
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
 
+//for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
+
+/datum/projectile/bullet/improvplasglass
+	name = "plasmaglass fragments"
+	sname = "plasmaglass fragments"
+	icon_state = "plasglass"
+	dissipation_delay = 3
+	dissipation_rate = 2
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	implanted = null
+	power = 6
+
+/datum/projectile/bullet/improvglass
+	name = "glass"
+	sname = "glass"
+	icon_state = "glass"
+	dissipation_delay = 2
+	dissipation_rate = 2
+	implanted = null
+	power = 4
+
+/datum/projectile/bullet/improvscrap
+	name = "fragments"
+	sname = "fragments"
+	icon_state = "trace"
+	dissipation_delay = 4
+	dissipation_rate = 1
+	implanted = /obj/item/implant/projectile/shrapnel
+	power = 8
+
 /datum/projectile/bullet/aex
 	name = "explosive slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	power = 25 // the damage should be more from the explosion
-	ks_ratio = 1.0
+	ks_ratio = 1
 	dissipation_delay = 6
 	dissipation_rate = 10
 	implanted = null
@@ -746,7 +797,7 @@ toxic - poisons
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	power = 20
 	cost = 1
-	ks_ratio = 1.0
+	ks_ratio = 1
 	damage_type = D_BURNING
 	hit_type = null
 	brightness = 1
@@ -780,6 +831,7 @@ toxic - poisons
 	window_pass = 0
 	icon_state = "20mmAPHE"
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
 	power = 150
 	dissipation_delay = 1
@@ -789,7 +841,7 @@ toxic - poisons
 	shot_volume = 130
 	implanted = null
 
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/cannon
 	pierces = 4
@@ -884,7 +936,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -1006,7 +1058,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 
@@ -1033,7 +1085,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
@@ -1078,12 +1130,12 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 10
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	hit_type = DAMAGE_BLUNT
-	hit_mob_sound = "sound/misc/splash_1.ogg"
-	hit_object_sound = "sound/misc/splash_1.ogg"
+	hit_mob_sound = 'sound/misc/splash_1.ogg'
+	hit_object_sound = 'sound/misc/splash_1.ogg'
 	implanted = null
 
 
@@ -1136,7 +1188,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 20
 	cost = 1
 	shot_sound = 'sound/weapons/launcher.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/grenade
 	implanted = null
@@ -1248,7 +1300,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 
 	on_hit(atom/hit)
@@ -1271,6 +1323,107 @@ datum/projectile/bullet/autocannon
 			explosion_new(null, T, 36, 0.45)
 		return
 
+/datum/projectile/bullet/homing
+    var/min_speed = 0
+    var/max_speed = 2
+    var/start_speed = 2
+    var/easemult = 0.
+
+    var/auto_find_targets = 1
+    var/homing_active = 1
+
+    var/desired_x = 0
+    var/desired_y = 0
+
+    var/rotate_proj = 1
+    var/face_desired_dir = 0
+
+    precalculated = FALSE
+
+    on_launch(var/obj/projectile/P)
+        ..()
+        P.internal_speed = start_speed
+
+        if (auto_find_targets)
+            P.targets = list()
+            for(var/mob/M in view(P,15))
+                if (M == P.shooter) continue
+                P.targets += M
+
+    proc/calc_desired_x_y(var/obj/projectile/P)
+        .= 0
+        if (P.targets && P.targets.len && P.targets[1])
+            var/atom/closest = P.targets[1]
+
+            for (var/atom in P.targets)
+                var/atom/A = atom
+                if (A.disposed)
+                    P.targets -= A
+                if (GET_DIST(P,A) < GET_DIST(P,closest))
+                    closest = A
+
+            desired_x = closest.x - P.x - P.pixel_x/32
+            desired_y = closest.y - P.y - P.pixel_y/32
+
+            .= 1
+
+    tick(var/obj/projectile/P)
+        if (!P || !src.homing_active)
+            return
+
+        desired_x = 0
+        desired_y = 0
+        if (calc_desired_x_y(P))
+            var/magnitude = vector_magnitude(desired_x,desired_y)
+            if (magnitude != 0)
+                var/angle_diff = arctan(desired_y, desired_x) - arctan(P.yo, P.xo)
+                if (angle_diff > 180)
+                    angle_diff -= 360
+                else if (angle_diff < -180)
+                    angle_diff += 360
+                angle_diff = -clamp(angle_diff, -1, 1)
+                P.rotateDirection(angle_diff)
+
+        ..()
+
+/datum/projectile/bullet/homing/mrl
+	name = "MRL rocket"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	dissipation_delay = 30
+	shot_sound = 'sound/weapons/rocket.ogg'
+	ks_ratio = 1
+	impact_image_state = "bhole-large"
+	shot_number = 1
+	cost = 1
+	power = 15
+	icon_state = "mininuke"
+	max_speed = 10
+	start_speed = 10
+	shot_delay = 1 SECONDS
+
+	on_hit(atom/hit)
+		var/turf/T = get_turf(hit)
+		if (T)
+			for (var/mob/living/carbon/human/M in view(hit, 2))
+				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
+				if (M.get_ranged_protection()>=1.5)
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
+				else
+					var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
+					implanted.owner = M
+					M.implant += implanted
+					implanted.implanted(M, null, 2)
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
+					if (!M.stat)
+						M.emote("scream")
+
+			T.hotspot_expose(700,125)
+			explosion_new(null, T, 15, 0.45)
+		return
+
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
 	window_pass = 0
@@ -1282,7 +1435,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	implanted = null
 
@@ -1312,7 +1465,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 30
 	cost = 1
 	shot_sound = 'sound/weapons/rocket.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	impact_image_state = "bhole-large"
 	implanted = null
 
@@ -1330,7 +1483,7 @@ datum/projectile/bullet/autocannon
 	name = "airburst"
 	shot_sound = 'sound/weapons/airzooka.ogg'
 	power = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	dissipation_delay = 15
@@ -1354,7 +1507,7 @@ datum/projectile/bullet/autocannon
 	name = "plasmaburst"
 	shot_sound = 'sound/weapons/airzooka.ogg'
 	power = 15
-	ks_ratio = 1.0
+	ks_ratio = 1
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "40mmgatling"
 	dissipation_delay = 15
@@ -1380,6 +1533,7 @@ datum/projectile/bullet/autocannon
 	name = "shrapnel"
 	power = 10
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_type = DAMAGE_CUT
 	window_pass = 0
 	icon = 'icons/obj/scrap.dmi'
@@ -1427,7 +1581,7 @@ datum/projectile/bullet/autocannon
 	dissipation_delay = 12
 	cost = 1
 	shot_sound = 'sound/effects/glitchshot.ogg'
-	ks_ratio = 1.0
+	ks_ratio = 1
 	casing = null
 	impact_image_state = null
 
@@ -1442,7 +1596,7 @@ datum/projectile/bullet/autocannon
 		for(var/atom/a in hit)
 			a.icon_state = pick(icon_states(a.icon))
 
-		playsound(hit, "sound/machines/glitch3.ogg", 50, 1)
+		playsound(hit, 'sound/machines/glitch3.ogg', 50, 1)
 
 /datum/projectile/bullet/glitch/gun
 	power = 1
@@ -1497,7 +1651,7 @@ datum/projectile/bullet/autocannon
 			if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
 				clown_tally += 1
 			if(clown_tally > 0)
-				playsound(H, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)

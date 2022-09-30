@@ -106,6 +106,14 @@
 	bites_left = 2
 	heal_amt = 3
 
+/obj/item/reagent_containers/food/snacks/condiment/matcha
+	name = "matcha"
+	desc = "A powder created from dried tea leaves."
+	icon_state = "matcha"
+	initial_volume = 10
+	initial_reagents = "matcha"
+	food_color = "#74A12E"
+
 /obj/item/reagent_containers/food/snacks/condiment/chocchips
 	name = "chocolate chips"
 	desc = "Mmm! Little bits of chocolate! Or rabbit droppings. Either or."

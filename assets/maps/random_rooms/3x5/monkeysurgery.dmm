@@ -1,0 +1,112 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/surgery_tray,
+/obj/decal/cleanable/dirt/dirt2,
+/obj/random_item_spawner/med_tool/two,
+/obj/item/reagent_containers/food/snacks/ingredient/meatpaste,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/machinery/drainage,
+/obj/item/parts/human_parts/arm/left{
+	pixel_y = -2;
+	pixel_x = -17
+	},
+/turf/simulated/floor/damaged2,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/decal/cleanable/blood/gibs/body,
+/obj/decal/cleanable/blood/splatter,
+/obj/item/parts/human_parts/leg/left,
+/obj/item/parts/human_parts/leg/right{
+	dir = 8;
+	pixel_y = 3;
+	pixel_x = -5
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/storage/crate/bloody,
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/obj/item/clothing/suit/monkey,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/machinery/computer3/generic/med_data,
+/obj/machinery/light/incandescent/harsh{
+	dir = 1
+	},
+/turf/simulated/floor/damaged2,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/surgery_tray,
+/obj/random_item_spawner/medicine/one,
+/obj/random_item_spawner/med_kit/one,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/blood,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/machinery/light/incandescent/harsh,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/decal/cleanable/blood/drip/high,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/machinery/optable,
+/obj/item/toy/plush/small/monkey,
+/obj/decal/cleanable/blood/gibs/body,
+/turf/simulated/floor/scorched2,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/machinery/drainage,
+/obj/item/parts/human_parts/arm/right{
+	pixel_y = -2;
+	pixel_x = 16
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+m
+Q
+Y
+a
+A
+"}
+(2,1,1) = {"
+O
+w
+S
+i
+W
+"}
+(3,1,1) = {"
+l
+x
+e
+s
+u
+"}

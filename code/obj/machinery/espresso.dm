@@ -102,10 +102,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -142,7 +142,7 @@
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
-	icon_state = "coffeemaker-eng"
+	icon_state = "coffeemaker-gen"
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
@@ -219,10 +219,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -266,6 +266,10 @@
 /obj/machinery/coffeemaker/research
 	icon_state = "coffeemaker-sci"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/research
+
+/obj/machinery/coffeemaker/engineering
+	icon_state = "coffeemaker-eng"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */

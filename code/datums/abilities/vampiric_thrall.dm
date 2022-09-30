@@ -106,7 +106,7 @@
 				var/datum/mutantrace/vampiric_thrall/V = M.mutantrace
 				if (V.blood_points < 0)
 					V.blood_points = 0
-					if (haine_blood_debug) logTheThing("debug", M, null, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
+					if (haine_blood_debug) logTheThing(LOG_DEBUG, M, "<b>HAINE BLOOD DEBUG:</b> [M]'s blood_points dropped below 0 and was reset to 0")
 
 				if (set_null)
 					V.blood_points = 0
@@ -123,6 +123,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampiric_thrall
 	var/when_stunned = 1 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	New()

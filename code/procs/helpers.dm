@@ -87,7 +87,7 @@ var/global/obj/flashDummy
 	if (!flashDummy)
 		flashDummy = new /obj(null)
 		flashDummy.set_density(0)
-		flashDummy.opacity = 0
+		flashDummy.set_opacity(0)
 		flashDummy.anchored = 1
 		flashDummy.mouse_opacity = 0
 	return flashDummy
@@ -95,7 +95,7 @@ var/global/obj/flashDummy
 /proc/arcFlashTurf(var/atom/from, var/turf/target, var/wattage, var/volume = 30)
 	var/obj/O = getFlashDummy()
 	O.set_loc(target)
-	playsound(target, "sound/effects/elec_bigzap.ogg", volume, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', volume, 1)
 
 	var/list/affected = DrawLine(from, O, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -128,19 +128,14 @@ var/global/obj/flashDummy
 		target_r = O
 	if(wattage && isliving(target)) //Grilles can reroute arcflashes
 		for(var/obj/grille/L in range(target,1)) // check for nearby grilles
+			var/arcprob = L.material?.getProperty("electrical") >= 6 ? 60 : 30
 			if(!L.ruined && L.anchored)
-				if (L.material?.hasProperty("electrical"))
-					if (prob(L.material?.getProperty("electrical")/2) && L.get_connection())
-						target = L
-						target_r = L
-						continue
-				else
-					if (prob(30) && L.get_connection()) // hopefully half the default is low enough
-						target = L
-						target_r = L
-						continue
+				if (prob(arcprob) && L.get_connection()) // hopefully half the default is low enough
+					target = L
+					target_r = L
+					continue
 
-	playsound(target, "sound/effects/elec_bigzap.ogg", 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -332,19 +327,6 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
-// This function is literally the exact same as sanitize(). ???
-/proc/sanitize_noencode(var/t)
-	var/index = findtext(t, "\n")
-	while(index)
-		t = copytext(t, 1, index) + "#" + copytext(t, index+1)
-		index = findtext(t, "\n")
-
-	index = findtext(t, "\t")
-	while(index)
-		t = copytext(t, 1, index) + "#" + copytext(t, index+1)
-		index = findtext(t, "\t")
-	return t
-
 /proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0)
 	t = html_decode(copytext(t,1,limit))
 	if (no_fucking_autoparse == 1)
@@ -390,11 +372,11 @@ proc/get_angle(atom/a, atom/b)
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
-/proc/add_zero(t, u)
-	t = "[t]"
-	while (length(t) < u)
-		t = "0[t]"
-	. = t
+/proc/add_zero(text, desired_length)
+	text = "[text]" // ensure it's a string
+	if ((desired_length - length(text)) <= 0)
+		return text
+	return (num2text(0, desired_length - length(text), 10) + text)
 
 /proc/add_lspace(t, u)
 	// why????? because if you pass this a number,
@@ -413,39 +395,6 @@ proc/get_angle(atom/a, atom/b)
 	while(length(t) < u)
 		t = "[t] "
 	. = t
-
-/proc/sortList(var/list/L)
-	if(L.len < 2)
-		return L
-	var/middle = L.len / 2 + 1 // Copy is first,second-1
-	. = mergeLists(sortList(L.Copy(0,middle)), sortList(L.Copy(middle))) //second parameter null = to end of list
-
-/proc/sortNames(var/list/L)
-	var/list/Q = new()
-	for(var/atom/x in L)
-		Q[x.name] = x
-	. = sortList(Q)
-
-/proc/mergeLists(var/list/L, var/list/R)
-	var/Li=1
-	var/Ri=1
-	. = list()
-	while(Li <= L.len && Ri <= R.len)
-		if(sorttext(L[Li], R[Ri]) < 1)
-			var/key = R[Ri]
-			var/ass = !isnum(key) ? R[key] : null //Associative lists. (also hurf durf)
-			. += R[Ri++]
-			if(ass) .[key] = ass
-		else
-			var/key = L[Li]
-			var/ass = !isnum(key) ? L[key] : null //Associative lists. (also hurf durf)
-			. += L[Li++]
-			if(ass) .[key] = ass
-
-	if(Li <= L.len)
-		. += L.Copy(Li, 0)
-	else
-		. += R.Copy(Ri, 0)
 
 /proc/dd_file2list(file_path, separator, can_escape=0)
 	if(separator == null)
@@ -497,29 +446,6 @@ proc/get_angle(atom/a, atom/b)
 		message = copytext(message, 2)
 
 	return list(prefix, message)
-
-/**
-	* Given a list, returns a text string representation of the list's contents.
-	*/
-/proc/english_list(var/list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
-	var/total = length(input)
-	if (!total)
-		return "[nothing_text]"
-	else if (total == 1)
-		return "[input[1]]"
-	else if (total == 2)
-		return "[input[1]][and_text][input[2]]"
-	else
-		var/output = ""
-		var/index = 1
-		while (index < total)
-			if (index == total - 1)
-				comma_text = final_comma_text
-
-			output += "[input[index]][comma_text]"
-			index++
-
-		return "[output][and_text][input[index]]"
 
 /proc/dd_centertext(message, length)
 	. = length(message)
@@ -1117,7 +1043,8 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		for(var/i=0, i<duration, i++)
 			var/off_x = (rand(0, strength) * (prob(50) ? -1:1))
 			var/off_y = (rand(0, strength) * (prob(50) ? -1:1))
-			animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
+			if(client)
+				animate(client, pixel_x = off_x, pixel_y = off_y, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			animate(pixel_x = off_x*-1, pixel_y = off_y*-1, easing = LINEAR_EASING, time = 1, flags = ANIMATION_RELATIVE)
 			sleep(delay)
 
@@ -1579,7 +1506,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 		current_range++
 		total_distance = 0
 		for (var/turf/T in range(size,center))
-			if (get_dist(T,center) == current_range)
+			if (GET_DIST(T,center) == current_range)
 				total_distance = abs(center.x - T.x) + abs(center.y - T.y) + (current_range / 2)
 				if (total_distance > corner_range)
 					continue
@@ -1849,7 +1776,7 @@ proc/countJob(rank)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
-		var/ghost_timestamp = world.time
+		var/ghost_timestamp = TIME
 
 		// Preliminary work.
 		var/text_alert = "Would you like to be respawned? Your name will be added to the list of eligible candidates and may be selected at random by the game."
@@ -1881,12 +1808,12 @@ proc/countJob(rank)
 					continue
 
 				SPAWN(0) // Don't lock up the entire proc.
-					M.current.playsound_local(M.current, "sound/misc/lawnotify.ogg", 50, flags=SOUND_IGNORE_SPACE)
+					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
-
-					var/response = tgui_alert(M.current, text_alert, "Respawn", list("Yes", "No", "Stop these"), timeout = ghost_timestamp + confirmation_spawn - world.time)
+					var/list/ghost_button_prompts = list("Yes", "No", "Stop these")
+					var/response = tgui_alert(M.current, text_alert, "Respawn", ghost_button_prompts, (ghost_timestamp + confirmation_spawn - TIME), autofocus = FALSE)
 					if (response == "Yes")
-						if (ghost_timestamp && world.time > ghost_timestamp + confirmation_spawn)
+						if (ghost_timestamp && (TIME > ghost_timestamp + confirmation_spawn))
 							if (M.current) boutput(M.current, text_chat_toolate)
 							return
 						if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
@@ -1902,7 +1829,7 @@ proc/countJob(rank)
 					else
 						return
 
-		while (ghost_timestamp && world.time < ghost_timestamp + confirmation_spawn)
+		while (ghost_timestamp && TIME < ghost_timestamp + confirmation_spawn)
 			sleep(30 SECONDS)
 
 		// Filter list again.
@@ -2014,39 +1941,39 @@ proc/countJob(rank)
 	return is_immune
 
 // Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
-/proc/remove_mindslave_status(var/mob/M, var/slave_type ="", var/removal_type ="")
-	if (!M || !M.mind || !slave_type || !removal_type)
+/proc/remove_mindhack_status(var/mob/M, var/hack_type ="", var/removal_type ="")
+	if (!M || !M.mind || !hack_type || !removal_type)
 		return
 
 	// Find our master's mob reference (if any).
 	var/mob/mymaster = ckey_to_mob(M.mind.master)
 
-	switch (slave_type)
-		if ("mslave")
+	switch (hack_type)
+		if ("mindhack")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing(LOG_COMBAT, M, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
 				else
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
+				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
 				ticker.mode.former_antagonists += M.mind
 
 		if ("vthrall")
 			switch (removal_type)
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
+					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
 				else
-					logTheThing("combat", M, mymaster, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
+					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
 
 			remove_antag(M, null, 1, 0)
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
@@ -2054,43 +1981,43 @@ proc/countJob(rank)
 					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
 				ticker.mode.former_antagonists += M.mind
 
-		// This is only used for spy slaves and mindslaved antagonists at the moment.
-		if ("otherslave")
+		// This is only used for spy minions and mindhacked antagonists at the moment.
+		if ("otherhack")
 			switch (removal_type)
 				if ("expired")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
 				if ("surgery")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
 				if ("override")
-					logTheThing("combat", M, mymaster, "'s mindslave implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
+					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
 				if ("death")
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindslave status.")
+					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
 				else
-					logTheThing("combat", M, mymaster, "(enslaved by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindslave status.")
+					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindhack status.")
 
-			// Fix for mindslaved traitors etc losing their antagonist status.
-			if (M.mind && (M.mind.special_role == "spyslave"))
+			// Fix for mindhacked traitors etc losing their antagonist status.
+			if (M.mind && (M.mind.special_role == "spyminion"))
 				remove_antag(M, null, 1, 0)
 			else
 				M.mind.master = null
 			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_MINDSLAVE))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDSLAVE)
+				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
+					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
 				ticker.mode.former_antagonists += M.mind
 
 		else
-			logTheThing("debug", M, null, "<b>Convair880</b>: [M] isn't a mindslave or vampire thrall, can't remove mindslave status.")
+			logTheThing(LOG_DEBUG, M, "<b>Convair880</b>: [M] isn't mindhacked or vampire thrall, can't remove mindhack status.")
 			return
 
 	if (removal_type == "death")
-		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer a mindslave! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		M.show_antag_popup("mindslavedeath")
+		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer mindhacked! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
+		M.show_antag_popup("mindhackdeath")
 	else if (removal_type == "override")
-		boutput(M, "<h2><span class='alert'>Your mindslave implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		M.show_antag_popup("mindslaveoverride")
+		boutput(M, "<h2><span class='alert'>Your mindhack implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
+		M.show_antag_popup("mindhackoverride")
 	else
 		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		M.show_antag_popup("mindslaveexpired")
+		M.show_antag_popup("mindhackexpired")
 
 	return
 
@@ -2176,7 +2103,7 @@ var/global/lastDectalkUse = 0
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
 			return
 
 		return list("audio" = response.body, "message" = msg)
@@ -2263,7 +2190,7 @@ var/global/list/allowed_restricted_z_areas
 	for (var/S in smash)
 		if (S == "window" || S == "r_window")
 			for (var/obj/window/W in view(CT, range))
-				if (prob(get_dist(W, CT) * 6))
+				if (prob(GET_DIST(W, CT) * 6))
 					continue
 				//W.health = 0
 				//W.smash()
@@ -2633,12 +2560,12 @@ proc/can_act(var/mob/M, var/include_cuffs = 1)
 
 /// Returns true if the given mob is incapacitated
 proc/is_incapacitated(mob/M)
-	return (\
+	return (M &&(\
 		M.hasStatus("stunned") || \
 		M.hasStatus("weakened") || \
 		M.hasStatus("paralysis") || \
 		M.hasStatus("pinned") || \
-		M.stat)
+		M.stat))
 
 /// sets up the list of ringtones players can select through character setup
 proc/get_all_character_setup_ringtones()

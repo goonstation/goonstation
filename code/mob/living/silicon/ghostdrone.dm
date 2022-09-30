@@ -102,6 +102,9 @@
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
 
+	track_blood()
+		return
+
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
 		if (!src.canmove)
@@ -135,7 +138,7 @@
 				src.client.images.Add(I)
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
@@ -149,6 +152,9 @@
 				ghost.verbs -= /mob/dead/observer/proc/reenter_corpse
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
+
+		//Don't be on the list of available drones
+		available_ghostdrones -= src
 
 		//So the drone cant pick up an item and then die, sending the item ~to the void~
 		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.tools
@@ -362,12 +368,12 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
 
-		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
+		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
 		var/obj/item/equipped = src.equipped()
@@ -429,7 +435,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.90
+		hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -505,7 +511,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -929,7 +935,7 @@
 				return
 
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1126,16 +1132,16 @@
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
-			if (1.0)
+			if (1)
 				SPAWN(0)
 					src.gib(1)
 
-			if (2.0)
+			if (2)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
-			if (3.0)
+			if (3)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
@@ -1271,7 +1277,7 @@
 	var/mob/living/silicon/ghostdrone/G
 	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
-			if (T.newDrone)
+			if (T.newDrone && !isdead(T))
 				G = T
 				break
 			else // why are you in this list
