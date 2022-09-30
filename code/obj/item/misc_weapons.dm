@@ -1717,7 +1717,6 @@ obj/item/whetstone
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
 
-<<<<<<< HEAD
 
 // Halberd- Experimental weapon by NightmareChamillian
 /obj/item/halberd
@@ -1832,7 +1831,6 @@ obj/item/whetstone
 		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		src.setItemSpecial(/datum/item_special/simple)
 		src.buildTooltipContent()
-=======
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
@@ -1856,4 +1854,3 @@ obj/item/whetstone
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
->>>>>>> ea64e289dabc0f0c1011427677103beef0b132b9
