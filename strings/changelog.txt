@@ -1,5 +1,9 @@
 
 (t)fri sep 30 22
+(u)LeahTheTech
+(p)11064
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The flock relay now takes the correct amount of explosion damage.
 (u)tarmunora
 (+)Drinking glasses no longer shatter when thrown.
 (+)Balloons need to be tied off before being thrown.
