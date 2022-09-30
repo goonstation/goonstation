@@ -28523,7 +28523,13 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/medbay)
 "bjD" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/hypospray,
+/obj/item/reagent_containers/glass/beaker/large/antitox,
+/obj/item/reagent_containers/glass/beaker/large/burn,
+/obj/item/reagent_containers/glass/beaker/large/epinephrine,
+/obj/item/reagent_containers/glass/beaker/large/brute,
+/obj/item/spraybottle/cleaner,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bjE" = (
@@ -28531,13 +28537,6 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/hypospray,
-/obj/item/reagent_containers/glass/beaker/large/brute,
-/obj/item/reagent_containers/glass/beaker/large/epinephrine,
-/obj/item/reagent_containers/glass/beaker/large/burn,
-/obj/item/reagent_containers/glass/beaker/large/antitox,
-/obj/item/spraybottle/cleaner,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "bjF" = (
@@ -48461,7 +48460,7 @@
 "pvG" = (
 /obj/disposalpipe/segment,
 /obj/machinery/light,
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "pwv" = (

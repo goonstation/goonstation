@@ -10053,7 +10053,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "aJY" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
 "aJZ" = (
@@ -47810,7 +47810,6 @@
 	},
 /area/station/medical/robotics)
 "vlL" = (
-/obj/storage/closet/medicalclothes,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -48305,7 +48304,7 @@
 /area/station/maintenance/scidisposal)
 "vIA" = (
 /obj/machinery/light/incandescent,
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},

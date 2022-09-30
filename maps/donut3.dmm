@@ -12129,9 +12129,8 @@
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
 "dnF" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/storage/secure/closet/brig,
 /obj/decal/mule/beacon,
-/obj/item/clothing/gloves/fingerless,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "dnG" = (
@@ -17040,12 +17039,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eJg" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/item/clothing/gloves/fingerless,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "eJu" = (
@@ -39275,12 +39273,6 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/security/checkpoint/west)
-"lqk" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/breakroom)
 "lqn" = (
 /obj/railing/red{
 	dir = 4
@@ -46024,6 +46016,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersA)
+"nnC" = (
+/obj/machinery/vending/jobclothing/security,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/black,
+/area/station/security/equipment)
 "nnD" = (
 /obj/cable{
 	d2 = 8;
@@ -73650,7 +73647,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "veW" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -76473,6 +76470,11 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
+"vSL" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/breakroom)
 "vSO" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -109133,7 +109135,7 @@ sUM
 xMz
 iRc
 yiy
-dnF
+nnC
 htz
 bxt
 htz
@@ -124853,8 +124855,8 @@ njW
 ucb
 rUN
 veW
-lqk
 tXj
+vSL
 bIe
 jrH
 mRY
