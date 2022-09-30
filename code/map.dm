@@ -124,21 +124,6 @@ var/global/list/mapNames = list(
 	var/job_limits_from_landmarks = FALSE /// if TRUE each job with a landmark will get as many slots as many landmarks there are (jobs without a landmark left on default)
 	var/list/job_limits_override = list() /// assoc list of the form `job_type=limit` to override other job settings, works on gimmick jobs too
 
-	/// special parallax position overrides, x y positions per zlevel
-
-	/// most of this is disabled (0,0) unless a map needs it
-	var/X0_coords = list(list(0,0)) /// plasma giant
-	var/mundus_coords = list(list(0,0))
-	var/fortuna_coords = list(list(0,0))
-	var/iudicium_coords = list(list(0,0))
-	var/iustitia_coords = list(list(0,0))
-	var/star_red_coords = list(list(0,0),list(0,0),list(157,219),list(0,0),list(205,110))
-	var/star_blue_coords = list(list(0,0),list(0,0),list(225,76),list(0,0),list(74,290))
-	var/ss14_coords = list(list(0,0))
-	var/ss12_coords = list(list(0,0))
-	var/ss10_coords = list(list(0,0),list(0,0),list(173,266))
-	var/X3_coords = list(list(0,0))
-	var/X5_coords = list(list(0,0))
 
 	proc/get_shuttle_path()
 		var/dirname = dir_to_dirname(escape_dir)
@@ -267,11 +252,6 @@ var/global/list/mapNames = list(
 		"the central room in security" = list(/area/station/security/main),
 		"the hydroponics bay" = list(/area/station/hydroponics/bay))
 
-	X0_coords = list(list(59,162))
-	X3_coords = list(list(227,157))
-	X5_coords = list(list(195,76))
-	ss10_coords = list(list(178,94),list(0,0),list(173,266))
-	ss12_coords = list(list(153,121))
 
 /datum/map_settings/cogmap_old
 	name = "COGMAP_OLD"
@@ -370,16 +350,6 @@ var/global/list/mapNames = list(
 		"the bridge" = list(/area/station/bridge),
 		"the central warehouse, next to the refinery" = list(/area/station/storage/warehouse))
 
-	X0_coords = list(list(240,148))
-	iudicium_coords = list(list(116,65))
-	iustitia_coords = list(list(80,127))
-	mundus_coords = list(list(42,25))
-	fortuna_coords = list(list(252,46))
-	ss14_coords = list(list(178,205))
-	star_blue_coords = list(list(106,78),list(0,0),list(225,76),list(0,0),list(74,290))
-	star_red_coords = list(list(0,0),list(0,0),list(157,219),list(0,0),list(205,110))
-	 /// this map doesnt have the red star on z1, but still has it on z3 and z5
-	iustitia_coords = list(list(80,127))
 
 /datum/map_settings/destiny
 	name = "DESTINY"
@@ -648,16 +618,6 @@ var/global/list/mapNames = list(
 		"the telescience lab" = list(/area/station/science/teleporter),
 		"the genetics lab" = list(/area/station/medical/research, /area/station/medical/medbay/cloner))
 
-	/// most of this is disabled (both coordinates are 0)
-	X0_coords = list(list(0,0))
-	X5_coords = list(list(157,154))
-	X3_coords = list(list(201,192))
-	mundus_coords = list(list(0,0))
-	fortuna_coords = list(list(0,0))
-	iudicium_coords = list(list(0,0))
-	iustitia_coords = list(list(0,0))
-	star_red_coords = list(list(0,0),list(0,0),list(188,95),list(0,0),list(205,110))
-	star_blue_coords = list(list(0,0),list(0,0),list(225,76),list(0,0),list(74,290))
 
 /datum/map_settings/kondaru
 	name = "KONDARU"

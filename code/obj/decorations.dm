@@ -758,6 +758,14 @@
 	density = 0
 	plane = PLANE_SPACE
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	x3
 		icon_state = "moon-green"
 		name = "X3"

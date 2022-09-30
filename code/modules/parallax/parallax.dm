@@ -1,128 +1,61 @@
 
-/// before doing this, i had no idea what tuples even were. i still dont know, but now i know not to question what they are.
-#define PARALLAX_GET_COORDS TUPLE_GET_1
-#define PARALLAX_GET_ICON TUPLE_GET_2
-#define PARALLAX_GET_ICON_STATE TUPLE_GET_3
-#define PARALLAX_GET_SCALE TUPLE_GET_4
-#define PARALLAX_GET_SIZE TUPLE_GET_5
-#define PARALLAX_GET_LAYER TUPLE_GET_6
-
-#define PARALLAX_PLANET(p) createPlanet(PARALLAX_GET_COORDS(p),PARALLAX_GET_ICON(p),PARALLAX_GET_ICON_STATE(p),PARALLAX_GET_SCALE(p),PARALLAX_GET_SIZE(p),PARALLAX_GET_LAYER(p))
-
-#define PARALLAX_OBJ_COUNT 21
-/// guide to the format here: | Coordinates | icon to use              |    icon      |scale|size|layer
-// planets
-#define PARALLAX_OBJ_1(x) x(map_settings.X0_coords, 'icons/misc/1024x1024.dmi',"plasma_giant", 0.1, 1, 1)
-#define PARALLAX_OBJ_2(x) x(map_settings.X5_coords, 'icons/misc/512x512.dmi',"moon-green", 0.25, 1, 1)
-#define PARALLAX_OBJ_3(x) x(list(list(0,0),list(23,292),list(0,0),list(0,0),list(71,43)), 'icons/obj/large/160x160.dmi',"bigasteroid_1", 0.25, 2, 1)
-#define PARALLAX_OBJ_4(x) x(map_settings.X3_coords, 'icons/misc/512x512.dmi',"moon-chunky", 0.25, 1, 1)
-#define PARALLAX_OBJ_5(x) x(list(list(0,0),list(0,0),list(277, 282)), 'icons/misc/512x512.dmi',"domusDei", 0.25, 1, 1)
-#define PARALLAX_OBJ_6(x) x(list(list(0,0),list(0,0),list(72, 119)), 'icons/misc/512x512.dmi',"quadriga", 0.25, 1, 1)
-#define PARALLAX_OBJ_7(x) x(map_settings.mundus_coords, 'icons/misc/512x512.dmi',"mundus", 0.25, 1, 1)
-#define PARALLAX_OBJ_8(x) x(map_settings.iustitia_coords, 'icons/misc/512x512.dmi',"iustitia", 0.25, 1, 1)
-#define PARALLAX_OBJ_9(x) x(map_settings.iudicium_coords, 'icons/misc/512x512.dmi',"iudicium", 0.25, 1, 1)
-#define PARALLAX_OBJ_10(x) x(map_settings.fortuna_coords, 'icons/misc/512x512.dmi',"fortuna", 0.25, 1, 1)
-#define PARALLAX_OBJ_11(x) x(list(list(0,0),list(0,0),list(161,215)), 'icons/misc/512x512.dmi',"fatuus", 0.25, 1, 1)
-#define PARALLAX_OBJ_12(x) x(list(list(0,0),list(0,0),list(0,0),list(0,0),list(198,116)), 'icons/misc/512x512.dmi',"magus", 0.25, 1, 1)
-#define PARALLAX_OBJ_13(x) x(list(list(0,0),list(0,0),list(0,0),list(0,0),list(195,188)), 'icons/misc/512x512.dmi',"regis", 0.25, 1, 1)
-#define PARALLAX_OBJ_14(x) x(list(list(0,0),list(0,0),list(0,0),list(0,0),list(76,280)), 'icons/misc/512x512.dmi',"amantes", 0.25, 1, 1)
-#define PARALLAX_OBJ_15(x) x(list(list(0,0),list(0,0),list(21,29)), 'icons/misc/512x512.dmi',"antistes", 0.25, 1, 1)
-#define PARALLAX_OBJ_16(x) x(list(list(0,0)), 'icons/misc/512x512.dmi',"moon-ice", 0.25, 1, 1)
-/// stations
-#define PARALLAX_OBJ_17(x) x(map_settings.ss14_coords, 'icons/obj/backgrounds.dmi',"ss14", 0.28, 1, 2)
-#define PARALLAX_OBJ_18(x) x(map_settings.ss12_coords, 'icons/obj/backgrounds.dmi',"ss12-broken", 0.28, 1, 2)
-#define PARALLAX_OBJ_19(x) x(map_settings.ss10_coords, 'icons/obj/backgrounds.dmi',"ss10", 0.28, 1, 2)
-// stars
-#define PARALLAX_OBJ_20(x) x(map_settings.star_red_coords, 'icons/misc/galactic_objects_large.dmi',"star-red", 0.08, 1, 0)
-#define PARALLAX_OBJ_21(x) x(map_settings.star_blue_coords, 'icons/misc/galactic_objects_large.dmi',"star-blue", 0.08, 1, 0)
-
-
+// before doing this, i had no idea what tuples even were. i still dont know, but now i know not to question what they are.
+#define PARALLAX_VIEW_WIDTH (WIDE_TILE_WIDTH + 4)
+#define PARALLAX_VIEW_HEIGHT (SQUARE_TILE_WIDTH + 4)
 
 /// this is a hud that when given to a client will add parallax to their view.
 /datum/hud/parallax
-	var/list/parallax_objects = list(list(),list(),list(),list(),list())
-	var/list/hidden_objects = list(list(),list(),list(),list(),list())
-	var/list/parallax_coords = list(list(),list(),list(),list(),list())
-	var/list/scale = list()
-	var/list/size = list()
-	var/list/iconsize = list()
+	var/list/parallax_objects = list()
+	// planet position is tracked relative to when initialized
 
+	var/layers = list()
+	var/static/list/layerscale = list(0.12,0.09,0.08,0.05) // closest to farthest scroll speed
 	var/mob/master
 	var/active = TRUE
 	var/lastzlevel
 
 	var/atom/movable/screen/hud/background
+
+	// backgrounds that get stretched
 	var/BGicon = "background"
+	var/Voidicon = "voidbackground"
 
 	/// generate parallax_objects list out of settings
-	proc/createPlanet(var/pCoords,var/Picon,var/Picon_state,var/Pscale,var/Psize,var/Player)
-		var/atom/movable/screen/hud/N = create_screen(null,null, Picon,Picon_state, "CENTER,CENTER", HUD_LAYER)
-		N.plane = PLANE_SPACE
-		N.layer = HUD_LAYER + Player
-		N.appearance_flags += TILE_BOUND
-		N.mouse_opacity = 0
-
-		var/icon/Picon2 = icon(Picon)
-		/// iconsize is half the width/height of the icon in tiles
-		iconsize[N] = list(Picon2.Width()/64,Picon2.Height()/64)
-		N.screen_loc = "CENTER:[-Picon2.Width()/2],CENTER:[-Picon2.Height()/2]"
-
-		/// generate visible / hidden on zlevel lists for z1 to z5
-		for(var/i in 1 to 5)
-			if (length(pCoords) >= i)
-				parallax_coords[i][N] = pCoords[i]
-				if (pCoords[i][1] == 0 || pCoords[i][2] == 0)
-					hidden_objects[i][N] = N
-				else
-					parallax_objects[i][N] = N
-			else
-				hidden_objects[i][N] = N
-
-		scale[N] = Pscale
-		size[N] = Psize
-
-		N.transform = matrix(0,0,0,0,0,0)
+	proc/createPlanets(var/pCoords,var/Picon,var/Picon_state,var/Pscale,var/Psize,var/Player)
+		parallax_objects = list()
+		for_by_tcl(O, /obj/effects/background_objects)
+			O.plane = PLANE_PARALLAX_PLANETS
+			if(istype(O,/obj/effects/background_objects/station))
+				O.plane = PLANE_PARALLAX_STATIONS
+			else if(istype(O,/obj/effects/background_objects/star_red) || istype(O,/obj/effects/background_objects/star_blue))
+				O.plane = PLANE_PARALLAX_STARS
+			else if(istype(O,/obj/effects/background_objects/x0))
+				O.plane = PLANE_PARALLAX_GIANT
+			O.layer = HUD_LAYER
+			O.mouse_opacity = 0
+			parallax_objects += O
 
 	New(M)
 		..()
 		if(isnull(M))
 			CRASH("parallax HUD created with no master")
 		master = M
-		RegisterSignal(M,"mov_moved", .proc/update)
-		RegisterSignal(M,"mob_move_vehicle", .proc/update)
 		clients += master.client
 
 		/// background setup, this will be "in" every zlevel, but wont necessarily be visible
 		background = create_screen("background", "Space", 'icons/effects/overlays/parallaxBackground.dmi', "background", "1,1", HUD_LAYER-1)
 		background.transform = matrix(0,0,0,0,0,0)
 		background.screen_loc = "CENTER"
-		background.plane = PLANE_SPACE
+		background.plane = PLANE_SPACE // sorry not sorry
+		background.layer = HUD_LAYER
 		background.appearance_flags += TILE_BOUND
 		background.mouse_opacity = 0
-		background.icon_state = BGicon
 
-		/// parallax settings setup
-		PARALLAX_PLANET(PARALLAX_OBJ_1)
-		PARALLAX_PLANET(PARALLAX_OBJ_2)
-		PARALLAX_PLANET(PARALLAX_OBJ_3)
-		PARALLAX_PLANET(PARALLAX_OBJ_4)
-		PARALLAX_PLANET(PARALLAX_OBJ_5)
-		PARALLAX_PLANET(PARALLAX_OBJ_6)
-		PARALLAX_PLANET(PARALLAX_OBJ_7)
-		PARALLAX_PLANET(PARALLAX_OBJ_8)
-		PARALLAX_PLANET(PARALLAX_OBJ_9)
-		PARALLAX_PLANET(PARALLAX_OBJ_10)
-		PARALLAX_PLANET(PARALLAX_OBJ_11)
-		PARALLAX_PLANET(PARALLAX_OBJ_12)
-		PARALLAX_PLANET(PARALLAX_OBJ_13)
-		PARALLAX_PLANET(PARALLAX_OBJ_14)
-		PARALLAX_PLANET(PARALLAX_OBJ_15)
-		PARALLAX_PLANET(PARALLAX_OBJ_16)
-		PARALLAX_PLANET(PARALLAX_OBJ_17)
-		PARALLAX_PLANET(PARALLAX_OBJ_18)
-		PARALLAX_PLANET(PARALLAX_OBJ_19)
-		PARALLAX_PLANET(PARALLAX_OBJ_20)
-		PARALLAX_PLANET(PARALLAX_OBJ_21)
+		background.icon_state = BGicon //todo actually get a better sprite
+		if (derelict_mode)
+			background.icon_state = Voidicon //todo actually get a better sprite
+
+		src.createPlanets()
 
 		src.update()
 
@@ -136,64 +69,51 @@
 		if (lastzlevel != master_turf?.z)
 			lastzlevel = master_turf.z
 			zlevelchanged = TRUE
-			for(var/atom/movable/screen/hud/Ph as anything in hidden_objects[master_turf.z])
-				Ph.alpha = 0
-				continue
 
 		/// background scrolling and oshan handling
 		#ifdef UNDERWATER_MAP
 		if (master_turf.z != 2)
 			background.alpha = 0
 			return
-		#else
-		if (background)
-			background.transform = matrix(master.client?.widescreen ? 2.61 : 2.5,0,(150-master_turf.x)/2,0,2.5,(150-master_turf.y)/2)
 		#endif
 
-		var/Hsw = master.client.widescreen ? 10 : 7
-		var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,0.01),world.tick_lag)
-		/// list of objects that are intended to show up on this zlevel
-		for(var/atom/movable/screen/hud/P as anything in parallax_objects[master_turf.z])
+		if (background)
+			background.transform = matrix(master.client?.widescreen ? 2.61 : 2.5,0,(150-master_turf.x)/2,0,2.5,(150-master_turf.y)/2)
 
-			var/coordx = parallax_coords[master_turf.z][P][1]
-			var/coordy = parallax_coords[master_turf.z][P][2]
 
-			/// half screen width
+		var/smoothtime = round(world.icon_size/max(master.glide_size*world.tick_lag,1),world.tick_lag)
 
-			var/offsetX = ((coordx-master_turf.x)*scale[P])
-			var/offsetY = ((coordy-master_turf.y)*scale[P])
+		for(var/atom/movable/screen/plane_parent/P as anything in src.layers)
 
-			/// if the object is far enough away, we can hide it
-			if ((offsetX < -(Hsw+iconsize[P][1])) || (offsetY < -(7+iconsize[P][2])))
-				P.alpha = 0
-				continue
-			else if ((offsetX > (Hsw+iconsize[P][1])) || (offsetY > (7+iconsize[P][2])))
-				P.alpha = 0
-				continue
+			var/offsetX = ((world.maxx/2-master_turf.x))*layerscale[P.plane-PLANE_SPACE]
+			var/offsetY = ((world.maxy/2-master_turf.y))*layerscale[P.plane-PLANE_SPACE]
+			var/matrix/matrix = matrix(1, 0, offsetX*32, 0, 1, offsetY*32)
 
-			var/matrix/matrix = matrix(size[P], 0, offsetX*32, 0, size[P], offsetY*32)
-
-			/// zlevelchanged means the master's zlevel changed
-			if (zlevelchanged == TRUE || P.alpha == 0)
-				P.transform = matrix
-				P.alpha = 255
-				continue
-
-			/// smooth out the stuff if we didnt change zlevel
-			animate(P,transform=matrix,time=smoothtime)
+			animate(P,transform=matrix,time=smoothtime/4)
 
 			continue
 
 	/// turns parallax on or off so update() doesnt have to loop through extra stuff
 	proc/toggle()
-		var/setting = master?.client?.parallax
-		var/turf/master_turf = get_turf(master.loc)
-		if(!setting)
-			var/Slist = parallax_objects[master_turf.z]
-			for(var/atom/movable/screen/hud/P as anything in Slist)
-				P.alpha = 0
+		var/setting = master.client?.parallax
+		if(!setting) // turn it off
+			for(var/atom/movable/screen/plane_parent/P as anything in src.layers)
+				P.transform = matrix()
+				qdel(P)
+			background.invisibility = INVIS_ALWAYS
 			active = FALSE
-			background.transform = matrix(0,0,0,0,0,0)
-		else
+			UnregisterSignal(master,"mov_moved")
+			UnregisterSignal(master,"mob_move_vehicle")
+			UnregisterSignal(master,"mov_set_loc")
+		else // turn it on
+			if (!length(src.layers)) // no unnecessary planes on the client please
+				layers += master.client?.get_plane(PLANE_PARALLAX_STARS)
+				layers += master.client?.get_plane(PLANE_PARALLAX_GIANT)
+				layers += master.client?.get_plane(PLANE_PARALLAX_PLANETS)
+				layers += master.client?.get_plane(PLANE_PARALLAX_STATIONS)
+			RegisterSignal(master,"mov_moved", .proc/update)
+			RegisterSignal(master,"mob_move_vehicle", .proc/update)
+			RegisterSignal(master,"mov_set_loc", .proc/update)
+			background.invisibility = 0
 			active = TRUE
 			src.update(TRUE)

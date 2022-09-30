@@ -1,5 +1,9 @@
 #define PLANE_UNDERFLOOR -120 // that's where floorcluwnes live
 #define PLANE_SPACE -115
+#define PLANE_PARALLAX_STARS -114 // parallax planes, between the station and space
+#define PLANE_PARALLAX_GIANT -113
+#define PLANE_PARALLAX_PLANETS -112
+#define PLANE_PARALLAX_STATIONS -111
 #define PLANE_FLOOR -110
 #define PLANE_WALL -105
 #define PLANE_NOSHADOW_BELOW -101
@@ -97,6 +101,10 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX_STARS, mouse_opacity = 0, name = "PARALLAX1", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX_GIANT, mouse_opacity = 0, name = "PARALLAX2", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX_PLANETS, mouse_opacity = 0, name = "PARALLAX3", is_screen = 1))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_PARALLAX_STATIONS, mouse_opacity = 0, name = "PARALLAX4", is_screen = 1))
 
 
 #ifdef COOL_PLANE_STUFF
