@@ -17,7 +17,6 @@
 	var/checkers_powered = FALSE
 
 	var/checker_radius = 2
-	var/checkers_on = FALSE
 	var/list/projectile_checkers = null
 
 	New(atom/location, datum/flock/F = null)
@@ -29,7 +28,6 @@
 		for (var/turf/T as anything in turfs)
 			src.projectile_checkers += new /obj/annihilator_projectile_checker(T, src)
 
-		//ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
 		src.info_tag.set_info_tag("Not generating bolt")
 
 	building_specific_info()
