@@ -1,0 +1,135 @@
+/obj/flock_structure/annihilator
+	icon_state = "annihilator-off" // placeholder sprites
+	name = "gnesis fountain"
+	desc = "Some sort of gnesis fountain. The gnesis appears very active."
+	flock_desc = "A defense turret that fires high speed gnesis bolts at nearby projectiles, annihilating them."
+	flock_id = "Annihilator"
+	health = 50
+	health_max = 50
+	repair_per_resource = 2.5
+	resourcecost = 100
+	passthrough = TRUE
+
+	compute = 0
+	var/online_compute_cost = 30
+
+	var/powered = FALSE
+	var/checkers_powered = FALSE
+
+	var/checker_radius = 2
+	var/checkers_on = FALSE
+	var/list/projectile_checkers = null
+
+	New(atom/location, datum/flock/F = null)
+		..()
+		var/turf/src_turf = get_turf(src)
+		var/list/turfs = block(locate(max(src_turf.x - src.checker_radius, 1), max(src_turf.y - src.checker_radius, 1), src_turf.z), locate(min(src_turf.x + src.checker_radius, world.maxx), min(src_turf.y + src.checker_radius, world.maxy), src_turf.z))
+
+		src.projectile_checkers = list()
+		for (var/turf/T as anything in turfs)
+			src.projectile_checkers += new /obj/annihilator_projectile_checker(T, src)
+
+		//ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
+		src.info_tag.set_info_tag("Not generating bolt")
+
+	building_specific_info()
+		return !src.powered ? "Not generating bolt." : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds." : "Bolt ready."
+
+	process(mult)
+		if (!src.flock)
+			if (src.powered)
+				src.update_flock_compute("remove")
+				if (src.checkers_powered)
+					src.power_projectile_checkers("off")
+			src.compute = 0
+			src.powered = FALSE
+		else if (src.flock.can_afford_compute(src.online_compute_cost))
+			src.compute = -src.online_compute_cost
+			if (!src.powered)
+				ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
+				src.update_flock_compute("apply")
+				src.powered = TRUE
+		else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)
+			if (src.powered)
+				src.update_flock_compute("remove")
+				if (src.checkers_powered)
+					src.power_projectile_checkers("off")
+			src.compute = 0
+			src.powered = FALSE
+
+		if (src.powered)
+			if (GET_COOLDOWN(src, "bolt_gen_time"))
+				src.icon_state = "annihilator-generating"
+				if (src.checkers_powered)
+					src.power_projectile_checkers("off")
+			else
+				src.icon_state = "annihilator-ready"
+				if (!src.checkers_powered)
+					src.power_projectile_checkers("on")
+		else
+			src.icon_state = "annihilator-off"
+
+		src.info_tag.set_info_tag(!src.powered ? "Not generating bolt" : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds" : "Bolt ready")
+
+	proc/power_projectile_checkers(state)
+		var/on = state == "off" ? FALSE : TRUE
+		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
+			checker.on = on
+		src.checkers_powered = on
+
+	disposing()
+		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
+			qdel(checker)
+		..()
+
+
+/obj/annihilator_projectile_checker
+	name = null
+	desc = null
+	anchored = TRUE
+	density = FALSE
+	flags = UNCRUSHABLE
+	event_handler_flags = IMMUNE_SINGULARITY
+	invisibility = INVIS_ALWAYS
+	opacity = FALSE
+	mouse_opacity = 0
+
+	var/on = FALSE
+	var/obj/flock_structure/annihilator/connected_structure = null
+
+	New(turf/T, obj/flock_structure/annihilator/annihilator)
+		..()
+		src.connected_structure = annihilator
+
+	Cross(atom/movable/mover)
+		if (!src.on || !src.connected_structure)
+			return ..()
+		if (!istype(mover, /obj/projectile))
+			return ..()
+		var/obj/projectile/bullet = mover
+		if (!istype(bullet.proj_data, /datum/projectile/bullet))
+			return ..()
+		for (var/obj/flock_structure/annihilator/annihilator in view(src.connected_structure.checker_radius, src))
+			if (src.connected_structure == annihilator)
+				ON_COOLDOWN(src.connected_structure, "bolt_gen_time", 10 SECONDS)
+				src.connected_structure.icon_state = "annihilator-generating"
+				var/list/gnesis_bolt_objs = DrawLine(src.connected_structure, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
+				SPAWN(0.25 SECONDS)
+					for (var/obj/line_obj/gnesis_bolt/gnesis_bolt_obj as anything in gnesis_bolt_objs)
+						qdel(gnesis_bolt_obj)
+				playsound(src.connected_structure, 'sound/weapons/railgun.ogg', 50, TRUE) // placeholder sound
+				qdel(bullet)
+				return
+		..()
+
+	ex_act(severity)
+		return
+
+/obj/line_obj/gnesis_bolt
+	name = "gnesis bolt"
+	desc = null
+	anchored = TRUE
+	density = FALSE
+	flags = UNCRUSHABLE
+	event_handler_flags = IMMUNE_SINGULARITY
+	opacity = FALSE
