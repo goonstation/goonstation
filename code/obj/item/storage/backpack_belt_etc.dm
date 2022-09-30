@@ -619,7 +619,7 @@
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar/yellow,
-	/obj/item/weldingtool,
+	/obj/item/weldingtool/yellow,
 	/obj/item/wirecutters/yellow,
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,
