@@ -237,7 +237,7 @@
 		sounds_instrument = list()
 		for (var/i in 1 to length(notes))
 			note = notes[i]
-			sounds_instrument += "sound/musical_instruments/piano/songs/[note].ogg" // [i]
+			sounds_instrument += "sound/musical_instruments/piano/notes/[note].ogg" // [i]
 
 		..()
 
