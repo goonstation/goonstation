@@ -982,17 +982,16 @@ obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
 			qdel(src)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully cut the top off of [src], mindful of the whipped cream.")
-			var/obj/item/reagent_containers/food/drinks/pumpkinlatte = new /obj/item/reagent_containers/food/drinks/pumpkinlatte(user.loc)
 			reagents.add_reagent("pumpkinspicelatte", 30)
 			qdel(src)
 
-/obj/item/clothing/head/pumpkin/latte
+/obj/item/clothing/head/pumpkinlatte
 	name = "carved spiced pumpkin"
 	desc = "Cute!"
-	icon_state = "pumpkin"
+	icon_state = "pumpkinlatte"
 	c_flags = COVERSEYES | COVERSMOUTH
 	see_face = 0
-	item_state = "pumpkin"
+	item_state = "pumpkinlatte"
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/light/flashlight))

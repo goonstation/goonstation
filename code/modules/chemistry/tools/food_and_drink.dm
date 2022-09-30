@@ -1856,7 +1856,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	name = "Spiced Pumpkin"
 	desc = "Oh, a delicious, mysterious pumpkin spice latte!"
 	icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "pumpkin"
+	icon_state = "pumpkinlatte"
 	item_state = "drink_glass"
 	g_amt = 30
 	initial_volume = 50

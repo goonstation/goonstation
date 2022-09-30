@@ -205,7 +205,6 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 4
 	endurance = 10
 	genome = 19
-	mutations = list(/datum/plantmutation/pumpkin/latte)
 	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
 	assoc_reagents = list("juice_pumpkin")
 
