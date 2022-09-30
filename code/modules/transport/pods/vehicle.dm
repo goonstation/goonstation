@@ -1667,6 +1667,9 @@
 	else
 		boutput(usr, "<span class='alert'>Uh-oh you aren't in a ship! Report this.</span>")
 
+/obj/machinery/vehicle/proc/go_home()
+	return null
+
 
 
 

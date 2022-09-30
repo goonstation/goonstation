@@ -1837,6 +1837,14 @@ ABSTRACT_TYPE(/datum/cookingrecipe)
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cheesewheel
 
+/datum/cookingrecipe/ratatouille
+	item1 = /obj/item/reagent_containers/food/snacks/plant/cucumber
+	item2 = /obj/item/reagent_containers/food/snacks/plant/tomato
+	item3 = /obj/item/reagent_containers/food/snacks/plant/eggplant
+	item4 = /obj/item/reagent_containers/food/snacks/plant/garlic
+	cookbonus = 6
+	output = /obj/item/reagent_containers/food/snacks/ratatouille
+
 // Recipe for zongzi is a WIP; we're gonna need rice balls or something
 
 /datum/cookingrecipe/beefood

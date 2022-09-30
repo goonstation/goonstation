@@ -346,7 +346,9 @@
 	icon_off = "stuncane"
 	item_on = "cane"
 	item_off = "cane"
-	cell_type = /obj/item/ammo/power_cell
+	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	can_swap_cell = 0
+	rechargable = 0
 	mats = list("MET-3"=10, "CON-2"=10, "gem"=1, "gold"=1)
 
 /obj/item/baton/classic

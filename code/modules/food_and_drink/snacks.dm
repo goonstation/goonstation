@@ -789,14 +789,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"
 	desc = "A bowl of colorful breakfast cereal, each piece sharp enough to slice the roof of your mouth into meat confetti."
-	icon_state = "cereal_bowl"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	bites_left = 5
 	heal_amt = 1
 	var/dry = 1
 	var/hasPrize = 0
 	food_effects = list("food_refreshed")
 
-	New(loc, prize_inside)
+	New(loc, prize_inside, var/obj/item/reagent_containers/food/drinks/bowl/bowl)
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+		src.UpdateOverlays(image(icon = 'icons/obj/foodNdrink/food_meals.dmi', icon_state = src.icon_state + "_cereal"), "cereal")
 		..()
 		hasPrize = (prize_inside == 1)
 
@@ -2673,8 +2679,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#f6ad58"
-	var/open = 0
-	var/fortune = 0
+	var/open = FALSE
+	var/fortune = FALSE
 
 	attack_self(mob/user as mob)
 		if (!open)
@@ -2686,11 +2692,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.desc = "Half of a fortune cookie."
 			icon_state = "fortune-open"
 			B.icon_state = "fortune-top"
-			open = 1
-			B.open = 1
-			fortune = 1
+			open = TRUE
+			B.open = TRUE
+			fortune = TRUE
+		else
+			return ..()
 
-	attack_hand(mob/user, unused, flag)
+	attack_hand(mob/user)
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"
@@ -2698,9 +2706,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.set_loc(user)
 
 			user.put_in_hand_or_drop(B)
-			fortune = 0
+			fortune = FALSE
 		else
-			..()
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/healgoo
 	name = "weird goo"
@@ -2921,4 +2929,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
-
+/obj/item/reagent_containers/food/snacks/ratatouille
+    name = "ratatouille"
+    desc = "Stewed and caramalized vegetables. Remy not included."
+    icon = 'icons/obj/foodNdrink/food_meals.dmi'
+    icon_state = "ratatouille"
+    needspoon = true
+    heal_amt = 2
+    bites_left = 3
+    food_effects = list("food_refreshed","food_warm")

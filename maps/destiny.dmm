@@ -2365,7 +2365,7 @@
 	},
 /area/station/crew_quarters/heads)
 "ajv" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ajw" = (
 /obj/wingrille_spawn/auto,
@@ -10823,10 +10823,9 @@
 /area/station/turret_protected/ai)
 "aUB" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -16164,7 +16163,7 @@
 	},
 /area/listeningpost)
 "bBs" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bBw" = (
@@ -19563,7 +19562,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dbz" = (
 /obj/table/reinforced/auto,
@@ -19618,10 +19617,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -20659,7 +20657,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dCK" = (
 /obj/disposalpipe/segment/mail{
@@ -25812,11 +25810,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "fNJ" = (
-/obj/stool/bench/red/auto,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "fOb" = (
@@ -35740,10 +35738,8 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Security Checkpoint";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -37381,7 +37377,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "lWn" = (
 /obj/cable{
@@ -37643,7 +37639,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mdn" = (
 /obj/firedoor_spawn,
@@ -39661,6 +39657,7 @@
 /obj/disposalpipe/junction{
 	dir = 1
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "neD" = (
@@ -41400,7 +41397,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
 "nXS" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/vending/air_vendor,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -44779,6 +44776,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/trackimp_kit2,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNd" = (
@@ -51314,7 +51312,7 @@
 	name = "Crew Quarters P04"
 	})
 "tkJ" = (
-/obj/machinery/vending/air_vendor,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "tkQ" = (
@@ -56185,10 +56183,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor,

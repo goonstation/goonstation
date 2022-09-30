@@ -36,6 +36,11 @@
 		..()
 		JobEquipSpawned("Research Director")
 
+/mob/living/carbon/human/normal/medicaldirector
+	New()
+		..()
+		JobEquipSpawned("Medical Director")
+
 /mob/living/carbon/human/normal/headofsecurity
 	New()
 		..()
