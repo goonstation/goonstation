@@ -347,7 +347,6 @@
 	item_state = "weldingtool-off-yellow"
 	icon_state_variant_suffix = "-yellow"
 	uses_multiple_icon_states = 1
-	capacity = 45
 
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"
