@@ -1719,7 +1719,7 @@ obj/item/whetstone
 	throwforce = 30 //yeet like spear
 	stamina_crit_chance = 5
 
-	//these combat variables change depending on the stance- starts with help intent vars
+	//these combat variables change depending on intent- starts with help intent vars
 	force = 28
 	stamina_damage = 10
 	stamina_cost = 7
@@ -1738,18 +1738,19 @@ obj/item/whetstone
 
 	setupProperties()
 		. = ..()
-		setProperty("deflection", 33)
+		setProperty("deflection", 60)
+		setProperty("block", 40)
 
 
 	intent_switch_trigger(mob/user as mob)
 		if(guard != user.a_intent)
 			change_guard(user,user.a_intent)
 
-	proc/change_guard(var/mob/user,var/intent)
+	proc/change_guard(var/mob/user,var/intent) //heavily modified kendo code
 		guard = intent
 		switch(guard)
 			if("help") //light swing with the axe
-				force = 28
+				force = 24
 				stamina_damage = 10
 				stamina_cost = 7
 				item_state = "halberd1"
@@ -1805,3 +1806,14 @@ obj/item/whetstone
 	dropped(mob/user as mob)
 		..()
 		stat_reset()
+
+	proc/stat_reset() //sets it to normal
+		src.force = 24
+		src.stamina_damage = 10
+		src.stamina_cost = 7
+		src.item_state = "halberd1"
+		src.hit_type = DAMAGE_CUT
+		src.click_delay = COMBAT_CLICK_DELAY * 0.75
+		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		src.setItemSpecial(/datum/item_special/simple)
+		src.buildTooltipContent()
