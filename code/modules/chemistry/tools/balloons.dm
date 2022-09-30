@@ -100,10 +100,10 @@
 		var/list/actions = list()
 		if (user.mind && user.mind.assigned_role == "Clown")
 			actions += "Make balloon animal"
-		if (src.reagents.total_volume > 0)
+		if (src.reagents.total_volume > 0 && !src.tied)
 			actions += "Inhale"
 			actions += "Tie off"
-		if (H.urine >= 2)
+		if (H.urine >= 2 && !src.tied)
 			actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
