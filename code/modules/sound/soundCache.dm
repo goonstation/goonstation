@@ -433,6 +433,7 @@ var/global/list/soundCache = list(
  	"sound/items/can_crush-2.ogg" = 'sound/items/can_crush-2.ogg',\
  	"sound/items/can_crush-3.ogg" = 'sound/items/can_crush-3.ogg',\
  	"sound/items/can_open.ogg" = 'sound/items/can_open.ogg',\
+ 	"sound/items/capsule_pop.ogg" = 'sound/items/capsule_pop.ogg',\
  	"sound/items/CocktailShake.ogg" = 'sound/items/CocktailShake.ogg',\
  	"sound/items/coindrop.ogg" = 'sound/items/coindrop.ogg',\
  	"sound/items/Crowbar.ogg" = 'sound/items/Crowbar.ogg',\

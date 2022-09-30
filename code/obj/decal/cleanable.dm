@@ -1530,6 +1530,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "magnesium"
 	sample_verb = "scrape"
+	color = "#434343" // distinguish from salt
 	var/on_fire = null
 	var/burn_time = 4
 

@@ -44,10 +44,9 @@ Contains:
 		if(GET_DIST(gen,loc)<(SINGULARITY_MAX_DIMENSION/2)+1)
 			if(gen.active_dirs >= 2)
 				goodgenerators++
-				smallestdimension = min(smallestdimension, gen.shortestlink)
+				smallestdimension = clamp(gen.shortestlink, 1, smallestdimension)
 
 	if (goodgenerators>=4)
-
 		// Did you know this thing still works? And wasn't logged (Convair880)?
 		logTheThing(LOG_BOMBING, src.fingerprintslast, "A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
 		message_admins("A [src.name] was activated, spawning a singularity at [log_loc(src)]. Last touched by: [key_name(src.fingerprintslast)]")

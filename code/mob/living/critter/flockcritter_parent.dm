@@ -111,6 +111,12 @@
 		var/datum/limb/L = src.equipped_limb()
 		L.grab(target, src)
 	. = ..()
+	if (istype(target, /obj/item) && target.loc == src) //no batong for radio birds
+		target.emp_act()
+
+//trying out a world where you can't stun flockdrones
+/mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
+	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
 
 /mob/living/critter/flock/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()

@@ -1279,8 +1279,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (master)
 				if(istype(master,/obj/item/device/light/zippo) && master:on)
 					var/obj/item/device/light/zippo/Z = master
-					if (Z.reagents.get_reagent_amount("fuel"))
-						Z.reagents.remove_reagent("fuel", 1)
+					if (Z.infinite_fuel || Z.reagents?.get_reagent_amount("fuel"))
+						Z.reagents?.remove_reagent("fuel", 1)
 						flame_succ = 1
 					else
 						flame_succ = 0

@@ -43,7 +43,6 @@
 		num_traitors -= 1
 		num_wraiths = 1
 
-
 	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
 	if (!possible_traitors.len)
@@ -54,11 +53,7 @@
 		if (!token_players.len)
 			break
 		if (num_wraiths && !(token_wraith))
-			token_wraith = 1 // only allow 1 wraith to spawn
-			var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
-			traitors += twraith
-			token_players.Remove(twraith)
-			twraith.special_role = ROLE_WRAITH
+			add_token_wraith()
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
@@ -75,12 +70,7 @@
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_enemies(ROLE_WRAITH, num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = ROLE_WRAITH, amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = ROLE_WRAITH
-			possible_wraiths.Remove(wraith)
+		add_wraith()
 
 	return 1
 

@@ -29,7 +29,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	/// Can only special-ammo ammobags restock these?
 	var/ammobag_spec_required = FALSE
 	/// How many charges it costs an ammobag to fabricate ammo for this gun
-	var/ammobag_restock_cost = 0
+	var/ammobag_restock_cost = 1
 	/// Does this gun have a special sound it makes when loading instead of the assigned ammo sound?
 	var/sound_load_override = null
 
@@ -592,6 +592,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
+	ammobag_restock_cost = 3
 
 	New()
 		ammo = new default_magazine
@@ -1514,6 +1515,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		New()
 			..()
 			ammo.amount_left = 6
+			UpdateIcon()
 			return
 
 /obj/item/gun/kinetic/antisingularity

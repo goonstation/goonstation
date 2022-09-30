@@ -746,6 +746,9 @@
 	name = "\improper Engineer's locker"
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
+#ifdef MAP_OVERRIDE_OSHAN
+	/obj/item/clothing/shoes/stomp_boots,
+#endif
 	/obj/item/engivac,
 	/obj/item/storage/box/clothing/engineer,
 	/obj/item/storage/backpack/engineering,
@@ -802,7 +805,8 @@
 	/obj/item/reagent_containers/glass/bottle/acetone/janitors = 1,\
 	/obj/item/reagent_containers/glass/bottle/ammonia/janitors = 1,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/caution = 4)
+	/obj/item/caution = 4,\
+	/obj/item/disk/data/floppy/manudrive/cleaner_grenade = 1)
 
 /obj/storage/secure/closet/civilian/hydro
 	name = "\improper Botanical supplies locker"
