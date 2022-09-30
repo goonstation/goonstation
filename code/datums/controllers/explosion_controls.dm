@@ -153,12 +153,11 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 
 
-/obj
-	var/datum/explosion/last_explosion = null
+/obj/var/datum/explosion/last_explosion = null
 
 /obj/disposing()
 	src.last_explosion = null
-	..()
+	. = ..()
 
 /datum/explosion
 	var/atom/source
