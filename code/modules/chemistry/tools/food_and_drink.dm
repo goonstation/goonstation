@@ -1852,6 +1852,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
 
+/obj/item/reagent_containers/food/drinks/pumpkinlatte
+	name = "Spiced Pumpkin"
+	desc = "Oh, a delicious, mysterious pumpkin spice latte!"
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkin"
+	item_state = "drink_glass"
+	g_amt = 30
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("pumpkinspicelatte"=30)
+
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"
 	desc = {"Do you want to get PUMPED UP? Try this 100% NATURAL shake FRESH from the press!

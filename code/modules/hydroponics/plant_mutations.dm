@@ -236,9 +236,10 @@
 	assoc_reagents = list("ghostchilijuice")
 
 // Pumpkin Mutations
+/datum/plantmutation/pumpkin/latte
 	name = "Spice Pumpkin"
-	name_prefix = "Spiced"
-	iconmod = "SpicePumpkin"
+	name_prefix = "Spiced "
+	iconmod = "PumpkinLatte"
 	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
 	assoc_reagents = list("pumpkinspicelatte")
 

@@ -967,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			..()
 
 obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
-	name = "spice pumpkin"
+	name = "spiced pumpkin"
 	desc = "Autumny!"
 	icon_state = "pumpkin"
 	edible = 0
@@ -977,17 +977,17 @@ obj/item/reagent_containers/food/snacks/plant/pumpkin/latte
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
-			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
+			var/obj/item/clothing/head/pumpkinlatte/P = new /obj/item/clothing/head/pumpkinlatte(user.loc)
 			P.name = "carved [src.name]"
 			qdel(src)
 		else if (isspooningtool(W))
-			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src], mindful of the whipped cream.")
-			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
-			bowl.reagents.add_reagent("pumpkinspicelatte", 30)
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully cut the top off of [src], mindful of the whipped cream.")
+			var/obj/item/reagent_containers/food/drinks/pumpkinlatte = new /obj/item/reagent_containers/food/drinks/pumpkinlatte(user.loc)
+			reagents.add_reagent("pumpkinspicelatte", 30)
 			qdel(src)
 
 /obj/item/clothing/head/pumpkin/latte
-	name = "carved spice pumpkin"
+	name = "carved spiced pumpkin"
 	desc = "Cute!"
 	icon_state = "pumpkin"
 	c_flags = COVERSEYES | COVERSMOUTH
