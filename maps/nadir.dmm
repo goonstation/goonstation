@@ -548,15 +548,6 @@
 /obj/decal/tile_edge/floorguide/arrow_s,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"amo" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "amr" = (
 /obj/stool/chair{
 	dir = 4
@@ -12986,9 +12977,6 @@
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
 "gEt" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
 /obj/disposalpipe/segment/transport{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -26281,6 +26269,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/landmark/spawner{
+	name = "monkeyspawn_normal"
+	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "mPl" = (
@@ -36222,9 +36213,6 @@
 	},
 /area/station/medical/staff)
 "soM" = (
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -95900,7 +95888,7 @@ dNI
 mGp
 qwq
 bUC
-rHP
+bUC
 tot
 qxi
 mGp
@@ -96203,7 +96191,7 @@ mNL
 bUC
 bUC
 mGp
-rHP
+bUC
 bUC
 bUC
 reK
@@ -96507,7 +96495,7 @@ agx
 aaF
 aaF
 aaF
-amo
+aaF
 aaF
 cYd
 hmy
@@ -96805,7 +96793,7 @@ cNI
 dNI
 mZd
 bUC
-rHP
+bUC
 sOa
 bUC
 mGp
@@ -97111,7 +97099,7 @@ jOe
 soM
 gGi
 gEt
-bUC
+rHP
 vdv
 cCw
 dBU
