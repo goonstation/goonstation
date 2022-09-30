@@ -1819,6 +1819,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "pirate_brn"
 	item_state = "pirate_brn"
 
+/obj/item/clothing/head/pirate_captain
+	name = "pirate captain's hat"
+	desc = "A traditional pirate tricorne, adorned with a crimson feather, just to tell everyone who's boss."
+	icon_state = "pirate_captain"
+	item_state = "pirate_captain"
+
 //Lesbian Hat
 
 /obj/item/clothing/head/lesbian_hat

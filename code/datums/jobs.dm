@@ -2358,6 +2358,70 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		antagify(M, "Syndicate Agent", 0)
 		M.show_text("<b>The assault has begun! Head over to the station and kill any and all Nanotrasen personnel you encounter!</b>", "red")
 
+/datum/job/special/pirate
+	linkcolor = "#880000"
+	name = "Space Pirate"
+	limit = 0
+	wages = 0
+	add_to_manifest = FALSE
+	radio_announcement = FALSE
+	allow_traitors = FALSE
+	allow_spy_theft = FALSE
+	cant_spawn_as_rev = TRUE
+	special_spawn_location = LANDMARK_PIRATE
+	slot_card = /obj/item/card/id
+	slot_belt = list(/obj/item/swords_sheaths/pirate)
+	slot_back = list(/obj/item/storage/backpack)
+	slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
+	slot_head = list(/obj/item/clothing/head/bandana/red)
+	slot_eyes = list(/obj/item/clothing/glasses/eyepatch/pirate)
+	slot_ears = list(/obj/item/device/radio/headset/pirate)
+	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_poc2 = list()
+	var/random_clothing = TRUE
+
+	New()
+		..()
+		src.access = list(access_maint_tunnels, access_syndicate_shuttle)
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+
+		if (random_clothing == TRUE)
+			slot_jump = list(pick(/obj/item/clothing/under/gimmick/waldo,
+							/obj/item/clothing/under/misc/serpico,
+							/obj/item/clothing/under/gimmick/guybrush,
+							/obj/item/clothing/under/misc/dirty_vest))
+			slot_head = list(pick(/obj/item/clothing/head/red,
+							/obj/item/clothing/head/bandana/red,
+							/obj/item/clothing/head/pirate_brn))
+
+		M.traitHolder.addTrait("training_drinker")
+
+
+	first_mate
+		name = "Space Pirate First Mate"
+		slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
+		slot_suit = list(/obj/item/clothing/suit/gimmick/guncoat/tan)
+		slot_head = list(/obj/item/clothing/head/pirate_brn)
+		slot_ears = list(/obj/item/device/radio/headset/pirate/first_mate)
+		random_clothing = FALSE
+		special_spawn_location = LANDMARK_PIRATE_FIRST_MATE
+
+	captain
+		name = "Space Pirate Captain"
+		slot_jump = list(/obj/item/clothing/under/shirt_pants_b)
+		slot_suit = list(/obj/item/clothing/suit/armor/pirate_captain_coat)
+		slot_head = list(/obj/item/clothing/head/pirate_captain)
+		slot_foot = list(/obj/item/clothing/shoes/swat/heavy)
+		slot_ears = list(/obj/item/device/radio/headset/pirate/captain)
+		random_clothing = FALSE
+		special_spawn_location = LANDMARK_PIRATE_CAPTAIN
+
 /datum/job/special/juicer_specialist
 	linkcolor = "#cc8899"
 	name = "Juicer Security"

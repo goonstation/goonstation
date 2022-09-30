@@ -3280,6 +3280,13 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 // end station areas //
 
+// Pirate ship:
+/area/pirate_ship
+	name = "Peregrine"
+	icon_state = "red"
+	teleport_blocked = 1
+	do_not_irradiate = TRUE
+
 /// Nukeops listening post
 /area/listeningpost
 	name = "Listening Post"

@@ -380,6 +380,16 @@ toxic - poisons
 			H.do_disorient(stamina_damage = 30, weakened = 0, stunned = 0, disorient = 6 SECONDS, remove_stamina_below_zero = 0)
 		elecflash(T)
 
+	weak
+		cost = 30
+
+		on_hit(atom/hit, angle, var/obj/projectile/P)
+			var/turf/T = get_turf(hit)
+			for(var/atom/movable/O in T.contents)
+				if(!istype(O, /obj/machinery/nuclearbomb))
+					O.emp_act()
+			elecflash(T)
+
 /datum/projectile/energy_bolt/signifer_tase
 	name = "signifer spark"
 	icon = 'icons/obj/projectiles.dmi'
