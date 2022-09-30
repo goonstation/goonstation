@@ -124,7 +124,7 @@
 
 	proc/seek_target()
 		var/list/target_list = list()
-		for (var/mob/living/C in hearers(src.range,src.loc))
+		for (var/mob/living/C in oviewers(src.range,src.loc))
 			if (!isnull(C) && src.target_valid(C))
 				target_list += C
 				var/distance = GET_DIST(C.loc,src.loc)
