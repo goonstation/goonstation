@@ -1027,6 +1027,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
+	var/smash_on_throw = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1332,7 +1333,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		src.smash(A)
+		if(src.smash_on_throw)
+			src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
 		if(!istype(target, /obj/table))
@@ -1449,6 +1451,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
+	smash_on_throw = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"

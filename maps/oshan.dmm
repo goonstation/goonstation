@@ -4764,12 +4764,6 @@
 	dir = 8
 	},
 /area/station/medical/staff)
-"alh" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "ali" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -5774,7 +5768,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -18403,7 +18397,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aTa" = (
@@ -98242,7 +98236,7 @@ ajQ
 ait
 akS
 ktR
-alh
+oXV
 anu
 aog
 aoY

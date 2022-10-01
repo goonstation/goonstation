@@ -2176,6 +2176,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		var/datum/bioEffect/power/be = M.bioHolder.AddEffect("adrenaline", do_stability=0)
 		be.safety = 1
 		be.altered = 1
+		M?.mind?.miranda = "Evildoer! You have been apprehended by a hero of space justice!"
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
