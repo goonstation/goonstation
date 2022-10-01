@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/plant/herb)
 					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
 				for (var/plantReagent in assoc_reagents) //amount of delivered chems is based on potency
 					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
-				M.visible_message("<span class='notice'>You feel something brush against you.</span>")
+				boutput(M, "<span class='notice'>You feel something brush against you.</span>")
 
 	HYPharvested_proc(var/obj/machinery/plantpot/POT,var/mob/user) //better not try to harvest these without gloves
 		..()
