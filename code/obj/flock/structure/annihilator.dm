@@ -55,7 +55,7 @@
 			if (src.powered)
 				src.update_flock_compute("remove")
 				if (src.checkers_powered)
-					src.power_projectile_checkers("off")
+					src.power_projectile_checkers(FALSE)
 			src.compute = 0
 			src.powered = FALSE
 
@@ -63,21 +63,20 @@
 			if (GET_COOLDOWN(src, "bolt_gen_time"))
 				src.icon_state = "annihilator-generating"
 				if (src.checkers_powered)
-					src.power_projectile_checkers("off")
+					src.power_projectile_checkers(FALSE)
 			else
 				src.icon_state = "annihilator-ready"
 				if (!src.checkers_powered)
-					src.power_projectile_checkers("on")
+					src.power_projectile_checkers(TRUE)
 		else
 			src.icon_state = "annihilator-off"
 
 		src.info_tag.set_info_tag(!src.powered ? "Not generating bolt" : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds" : "Bolt ready")
 
 	proc/power_projectile_checkers(state)
-		var/on = state == "off" ? FALSE : TRUE
 		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
-			checker.on = on
-		src.checkers_powered = on
+			checker.on = state
+		src.checkers_powered = state
 
 	disposing()
 		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
