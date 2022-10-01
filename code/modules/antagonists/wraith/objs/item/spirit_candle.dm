@@ -30,14 +30,6 @@
 					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 				else
 					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")
-			for(var/mob/wraith/poltergeist/P in orange(4, user))
-				if ((P.last_spirit_candle_time + (P.forced_haunt_duration + 6 SECONDS)) < TIME)
-					P.last_spirit_candle_time = TIME
-					P.setStatus("corporeal", P.forced_haunt_duration, TRUE)
-					boutput(P, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
-				else
-					boutput(user, "<span class='notice'>[src] vibrates slightly in your hand. A hostile entity lurks nearby but resisted our attempts to reveal it!</span>")
-
 			var/turf/T = get_turf(src)
 			playsound(src.loc, "sound/voice/chanting.ogg", 50, 0)
 			new /obj/overlay/darkness_field(T, 10 SECOND, radius = 5.5, max_alpha = 250)
