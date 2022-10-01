@@ -2185,10 +2185,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	attack_self(mob/user)
 		if (src.broke_open)
-			src.icon_state = "coachgun"
 			src.broke_open = FALSE
 		else
-			src.icon_state = "coachgun-empty"
 			src.broke_open = TRUE
 			src.casings_to_eject = src.shells_to_eject
 
@@ -2198,6 +2196,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
+		update_icon()
 		..()
 
 	attackby(obj/item/I, mob/user)
