@@ -105,8 +105,8 @@
 		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
 		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
 		<A href='?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR>
-		<b>Fuel: </b><A href='?src=\ref[src];fuel_inlet=-0.10'>\<\<</A><A href='?src=\ref[src];fuel_inlet=-0.01'>\<</A>[fuel_inlet]<A href='?src=\ref[src];fuel_inlet=0.01'>\></A><A href='?src=\ref[src];fuel_inlet=0.1'>\>\></A><BR>
-		<b>Air: </b><A href='?src=\ref[src];air_inlet=-0.10'>\<\<</A><A href='?src=\ref[src];air_inlet=-0.01'>\<</A>[atmos_inlet]<A href='?src=\ref[src];air_inlet=0.01'>\></A><A href='?src=\ref[src];air_inlet=0.1'>\>\></A>
+		<b>Fuel: </b><A href='?src=\ref[src];fuel_inlet=-0.10'>\<\<</A> <A href='?src=\ref[src];fuel_inlet=-0.01'>\<</A> [fuel_inlet] <A href='?src=\ref[src];fuel_inlet=0.01'>\></A> <A href='?src=\ref[src];fuel_inlet=0.1'>\>\></A><BR>
+		<b>Air: </b><A href='?src=\ref[src];air_inlet=-0.10'>\<\<</A> <A href='?src=\ref[src];air_inlet=-0.01'>\<</A> [atmos_inlet] <A href='?src=\ref[src];air_inlet=0.01'>\></A> <A href='?src=\ref[src];air_inlet=0.1'>\>\></A>
 		"}
 
 		if (user.client.tooltipHolder)
@@ -161,8 +161,8 @@
 				src.eject_inlet_tank(usr)
 
 			else
-				var/obj/item/I = usr.equipped()
-				if (I.type in src.valid_tanks)
+				var/obj/item/tank/I = usr.equipped()
+				if (istype(I) && (I.type in src.valid_tanks))
 					if (!src.check_tank_oxygen(I))
 						boutput(usr, "<span class='alert'>The [I.name] doesn't contain any oxygen.</span>")
 						return
@@ -188,7 +188,7 @@
 			if (!change_by)
 				return
 
-			var/change_to = src.fuel_inlet + change_by
+			var/change_to = src.atmos_inlet + change_by
 			src.atmos_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
 
 		src.updateUsrDialog()
@@ -199,7 +199,7 @@
 		src.add_fingerprint(user)
 
 		// atmos tank
-		if (W.type in src.valid_tanks)
+		if (istype(W, /obj/item/tank) && (W.type in src.valid_tanks))
 			if (src.inlet_tank)
 				boutput(user, "<span class='alert'>There appears to be a tank loaded already!</span>")
 				return
