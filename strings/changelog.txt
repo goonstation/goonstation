@@ -1,4 +1,9 @@
 
+(t)sat oct 01 22
+(u)FlameArrow57 and DimWhat
+(p)9043
+(e)🆕🎨🔬|C-Feature, C-Sprites, A-Science
+(*)Added an artifact limb variant to the surgery machine artifact, with six types of artifact limbs!
 (t)fri sep 30 22
 (u)aloe
 (*)You can now write.... <span style='color:#FF0000;'>IN BLOOD!</span> and also any other reagent. Just dip your pen or crayon into some reagents. Only coats the pen in enough for one piece of writing per dip.
