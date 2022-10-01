@@ -438,6 +438,10 @@
 	inactive_stamina_dmg = 30
 	hit_type = DAMAGE_BLUNT
 
+	New()
+		..()
+		src.special.damageMult = 1
+
 	can_reflect()
 		return FALSE
 
