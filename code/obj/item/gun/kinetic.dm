@@ -2169,7 +2169,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	update_icon()
 		. = ..()
-		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (src.broke_open ? "" : "-empty" )
+		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot()
 		if (!src.broke_open)
