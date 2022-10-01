@@ -29,6 +29,7 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
 
@@ -508,7 +509,7 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY)
+	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
@@ -1623,7 +1624,7 @@
 
 /// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
-/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label, respect_view_tint_settings = FALSE)
 	if (!cmatrix || !label)
 		return
 
@@ -1632,10 +1633,10 @@
 
 	src.color_matrices[label] = cmatrix
 
-	src.update_active_matrix()
+	src.update_active_matrix(respect_view_tint_settings)
 
 /// Removes whichever matrix is associated with the label. Must be a string!
-/mob/proc/remove_color_matrix(var/label)
+/mob/proc/remove_color_matrix(var/label, respect_view_tint_settings = FALSE)
 	if (!label || !length(src.color_matrices))
 		return
 
@@ -1646,11 +1647,11 @@
 	else
 		src.color_matrices -= label
 
-	src.update_active_matrix()
+	src.update_active_matrix(respect_view_tint_settings)
 
 /// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
 /// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
-/mob/proc/update_active_matrix()
+/mob/proc/update_active_matrix(respect_view_tint_settings)
 	if (!src.color_matrices.len)
 		src.active_color_matrix = null
 	else
@@ -1665,7 +1666,11 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.set_color(src.active_color_matrix)
+	if (src.client)
+		if (!src.respect_view_tint_settings)
+			src.client.set_color(src.active_color_matrix)
+		else
+			src.client.set_color(src.client.view_tint ? src.active_color_matrix : null)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
