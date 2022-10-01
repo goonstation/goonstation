@@ -192,3 +192,6 @@
 #define FIRESOURCE_OPEN_FLAME 1
 /// Firesource can not cause fires on its own when dropped
 #define FIRESOURCE_IGNITER 2
+
+// for pen reagent dipping
+#define PEN_REAGENT_CAPACITY 5
