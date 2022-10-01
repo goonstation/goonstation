@@ -1,5 +1,9 @@
 
 (t)sat oct 01 22
+(u)LeahTheTech
+(p)10992
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(*)Silicons can now use space GPSs
 (u)glowbold
 (p)10907
 (e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
