@@ -107,7 +107,7 @@
 		for (var/obj/flock_structure/annihilator/annihilator in view(src.connected_structure.checker_radius, src))
 			if (src.connected_structure == annihilator)
 				ON_COOLDOWN(src.connected_structure, "bolt_gen_time", 10 SECONDS)
-				src.connected_structure.icon_state = "annihilator-generating"
+				src.connected_structure.process(1)
 				var/list/gnesis_bolt_objs = DrawLine(src.connected_structure, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
 				SPAWN(0.25 SECONDS)
 					for (var/obj/line_obj/gnesis_bolt/gnesis_bolt_obj as anything in gnesis_bolt_objs)
