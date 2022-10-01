@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_PISTOL_22)
 	max_ammo_capacity = 10
 	auto_eject = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
 	has_empty_state = 1
 	fire_animation = TRUE
@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_DART_ALL)
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
@@ -1736,7 +1736,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_TRANQ_9MM)
 	max_ammo_capacity = 15
 	auto_eject = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 	fire_animation = TRUE

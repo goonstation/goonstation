@@ -195,3 +195,10 @@
 
 // for pen reagent dipping
 #define PEN_REAGENT_CAPACITY 5
+
+/// The default, the attack is animated, a message is given, and particles are shown (most items)
+#define ATTACK_VISIBLE 0
+/// The attack is fully hidden. No animation, no message, no particles (sleepy pen, silenced .22)
+#define ATTACK_FULLY_HIDDEN 1
+/// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
+#define ATTACK_PARTIALLY_HIDDEN 2

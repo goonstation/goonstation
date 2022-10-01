@@ -43,7 +43,7 @@
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
