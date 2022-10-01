@@ -148,6 +148,8 @@
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
 #define LIMB_SKELLY   (1<<16)
+/// Limb is an artifact limb
+#define LIMB_ARTIFACT (1<<17)
 
 // islimb macros
 #define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
