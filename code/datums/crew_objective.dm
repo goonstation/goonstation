@@ -466,8 +466,10 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/wonton_spawner,
 		/obj/item/reagent_containers/food/snacks/agar_block,
 		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
-		/obj/item/reagent_containers/food/snacks/healgoo, // might be fun to have the trench mob drops available when it's oshan
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
 		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
 		/obj/item/reagent_containers/food/snacks/snowball,
 		/obj/item/reagent_containers/food/snacks/burger/vr,
 		/obj/item/reagent_containers/food/snacks/slimjim,
