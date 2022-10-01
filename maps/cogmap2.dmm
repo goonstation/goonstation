@@ -42510,7 +42510,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "bQZ" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bot,
 /area/station/security/main)
@@ -71024,10 +71024,6 @@
 /obj/storage/closet/office,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/medbay)
-"dfd" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/medbay)
 "dfe" = (
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/medbay)
@@ -79677,7 +79673,7 @@
 /turf/simulated/floor/airless/caution/northsouth,
 /area/station/hangar/science)
 "vxs" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "vyj" = (
@@ -116055,7 +116051,7 @@ dbJ
 dcK
 cQC
 cTG
-dfd
+dfe
 dfe
 dgb
 cHZ
