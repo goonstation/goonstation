@@ -1109,6 +1109,12 @@
 	col_g = 0.69
 	col_b = 0.27
 	var/infinite_fuel = 0 //1 is infinite fuel. Borgs use this apparently.
+	/// exposure temp when heating reagents
+	var/reagent_expose_temp = 4000
+	/// exposure temp of passive enviromental heating
+	var/enviromental_expose_temp = 700
+	/// the maximum temperature the lighter is capable or heating to
+	var/adiabatic_flame_temperature = 1000
 
 	New()
 		..()
@@ -1227,7 +1233,7 @@
 
 		else if (!ismob(O) && src.on && O.reagents)
 			user.show_text("You heat [O].", "blue")
-			O.reagents.temperature_reagents(4000,10)
+			O.reagents.temperature_reagents(reagent_expose_temp,10)
 		else
 			return ..()
 
@@ -1240,7 +1246,7 @@
 					location = M.loc
 			var/turf/T = get_turf(src.loc)
 			if (T)
-				T.hotspot_expose(700,5)
+				T.hotspot_expose(enviromental_expose_temp,5)
 
 			if (infinite_fuel) //skip all fuel checks
 				return
@@ -1260,7 +1266,7 @@
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-		if (exposed_temperature > 1000)
+		if (exposed_temperature > adiabatic_flame_temperature)
 			return ..()
 		return
 
@@ -1313,7 +1319,7 @@
 	infinite_fuel = 1
 
 /obj/item/device/light/zippo/syndicate
-	desc = "A sleek black lighter with a red stripe."
+	desc = "A sleek black lighter with a red stripe and an incredibly hot flame."
 	icon_state = "syndie_zippo"
 	icon_off = "syndie_zippo"
 	icon_on = "syndie_zippoon"
@@ -1324,6 +1330,9 @@
 	col_g = 0.658
 	col_b = 0
 	is_syndicate = 1
+	reagent_expose_temp = 20000
+	enviromental_expose_temp = 3500
+	adiabatic_flame_temperature = 5000
 
 	New()
 		. = ..()

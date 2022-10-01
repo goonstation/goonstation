@@ -592,7 +592,7 @@ This is basically useless for anyone but miners.
 	name = "Hotbox Lighter"
 	item = /obj/item/device/light/zippo/syndicate
 	cost = 1
-	desc = "The unique fuel mixture gives this lighter a unique flame capable of creating a much denser smoke when burning piles of herbs compared to any normal lighter!"
+	desc = "The unique fuel mixture both burns five times hotter than a normal flame and produces a much thicker smoke than normal when burning herbs!"
 	job = list("Botanist")
 	can_buy = UPLINK_TRAITOR
 
