@@ -97,7 +97,7 @@
 		src.connected_structure = annihilator
 
 	Crossed(atom/movable/AM)
-		if (!src.on || !src.connected_structure)
+		if (!src.on || !src.connected_structure || AM.disposed)
 			return ..()
 		if (!istype(AM, /obj/projectile))
 			return ..()
