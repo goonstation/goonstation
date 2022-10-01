@@ -218,7 +218,7 @@
 		for (var/i in 1 to rand(1,3))
 			the_crate = pick(crates)
 			the_enemy = pick(enemies)
-			if (floors.len)
+			if (length(floors))
 				var/obj/storage/crate/new_crate = new the_crate
 				var/mob/living/critter/small_animal/new_enemy = new the_enemy
 				new_crate.set_loc(pick(floors))
