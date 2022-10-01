@@ -1,7 +1,10 @@
 #define FUEL_DRAIN_RATE 0.3
 #define ATMOS_DRAIN_RATE 0.02
 #define CARBON_OUTPUT_RATE 0.01 // for every part of fuel burnt
-#define OPTIMAL_MIX 0.147 // how many parts oxygen for every part of fuel
+#define OPTIMAL_MIX 14.7 // how many parts oxygen for every part of fuel
+
+#define INLET_MAX 1
+#define INLET_MIN 0
 
 /obj/machinery/power/combustion_generator
 	name = "Portable Combustion Generator"
@@ -17,7 +20,7 @@
 
 	// 0 - 1
 	var/fuel_inlet = 0.01
-	var/atmos_inlet = 0.147
+	var/atmos_inlet = 0.14
 
 	var/output_multiplier = 1 // for bigger generators?
 	var/last_output
@@ -102,6 +105,8 @@
 		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
 		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
 		<A href='?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR>
+		<b>Fuel: </b><A href='?src=\ref[src];fuel_inlet=-0.10'>\<\<</A><A href='?src=\ref[src];fuel_inlet=-0.01'>\<</A>[fuel_inlet]<A href='?src=\ref[src];fuel_inlet=0.01'>\></A><A href='?src=\ref[src];fuel_inlet=0.1'>\>\></A><BR>
+		<b>Air: </b><A href='?src=\ref[src];air_inlet=-0.10'>\<\<</A><A href='?src=\ref[src];air_inlet=-0.01'>\<</A>[atmos_inlet]<A href='?src=\ref[src];air_inlet=0.01'>\></A><A href='?src=\ref[src];air_inlet=0.1'>\>\></A>
 		"}
 
 		if (user.client.tooltipHolder)
@@ -168,6 +173,23 @@
 					src.inlet_tank = I
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+		// Add checks after input
+		else if (href_list["fuel_inlet"])
+			var/change_by = text2num_safe(href_list["fuel_inlet"])
+			if (!change_by)
+				return
+
+			var/change_to = src.fuel_inlet + change_by
+			src.fuel_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
+
+		else if (href_list["air_inlet"])
+			var/change_by = text2num_safe(href_list["air_inlet"])
+			if (!change_by)
+				return
+
+			var/change_to = src.fuel_inlet + change_by
+			src.atmos_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
 
 		src.updateUsrDialog()
 		return
@@ -246,8 +268,8 @@
 			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
 			return
 
-		var/fuel_air_mix = (atmos_inlet / fuel_inlet) / OPTIMAL_MIX // difference between current mix and optimal mix.
-		if (fuel_air_mix > 6 || fuel_air_mix < -8) // too much or too little air or fuel
+		var/fuel_air_mix = (atmos_inlet / fuel_inlet) // difference between current mix and optimal mix.
+		if (fuel_air_mix < 8 || fuel_air_mix > 20) // too much or too little air or fuel
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src] sputters for a moment and then stops, it failed to combust the reagents.</span>")
 			return
@@ -259,27 +281,25 @@
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
-		var/fuel_drain_rate = FUEL_INLET_RATE * fuel_inlet
-		var/atmos_drain_rate = ATMOS_INLET_RATE * atmos_inlet
-		var/inlet_volume = atmos_drain_rate + fuel_drain_rate
+		var/mix_multiplier = OPTIMAL_MIX / fuel_air_mix
+		var/inlet_multiplier = fuel_inlet + atmos_inlet
+		var/oxygen_multiplier = clamp(available_oxygen * 5, 0, 3)
 
-		src.last_output = (fuel_power * (fuel_air_mix / 4)) * mult // TODO: richer fuel mixture = more power
-		var/datum/powernet/P = C.get_powernet()
-		P.newavail += src.last_output
+		src.last_output = fuel_power * mix_multiplier * inlet_multiplier * oxygen_multiplier * src.output_multiplier * mult
 
-		var/turf/simulated/T = get_turf(src)
+		var/turf/simulated/T = get_turf(src.loc)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = (src.atmos_drain_rate * src.output_multiplier) * mult // TODO: richer fuel mixture = more CO2
-			payload.temperature = T20C
+			payload.carbon_dioxide = CARBON_OUTPUT_RATE * mix_multiplier * inlet_multiplier  * output_multiplier * mult
+			payload.temperature = 323.15 // bit hotter since its exhaust
 			T.assume_air(payload)
 
-		if (src.inlet_tank)
-			src.inlet_tank.air_contents.remove((src.atmos_drain_rate * src.output_multiplier) * mult) // TODO: adjustable fuel/air ratio
-		else
-			T.air.remove((src.atmos_drain_rate * src.output_multiplier) * mult)
+		if (src.check_tank_oxygen(src.inlet_tank))
+			src.inlet_tank.remove_air(ATMOS_DRAIN_RATE * mix_multiplier * inlet_multiplier * output_multiplier * mult)
+		else if (istype(T))
+			T.remove_air(ATMOS_DRAIN_RATE * mix_multiplier * inlet_multiplier * mult)
 
-		src.fuel_tank.reagents.remove_any((src.fuel_drain_rate * src.output_multiplier) * mult) // TODO: adjustable fuel/air ratio
+		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * mix_multiplier * inlet_multiplier * output_multiplier * mult) // TODO: adjustable fuel/air ratio
 
 		src.UpdateIcon()
 		src.updateDialog()
@@ -403,3 +423,5 @@
 #undef ATMOS_DRAIN_RATE
 #undef CARBON_OUTPUT_RATE
 #undef OPTIMAL_MIX
+#undef INLET_MAX
+#undef INLET_MIN
