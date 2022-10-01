@@ -2879,7 +2879,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
-	req_access = list(access_securitylockers)
+	req_access = list(access_security)
 
 	create_products()
 		..()
@@ -2914,7 +2914,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_medical)
 
 	create_products()
 		..()
