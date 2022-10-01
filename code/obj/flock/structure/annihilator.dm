@@ -96,12 +96,12 @@
 		..()
 		src.connected_structure = annihilator
 
-	Cross(atom/movable/mover)
+	Crossed(atom/movable/AM)
 		if (!src.on || !src.connected_structure)
 			return ..()
-		if (!istype(mover, /obj/projectile))
+		if (!istype(AM, /obj/projectile))
 			return ..()
-		var/obj/projectile/bullet = mover
+		var/obj/projectile/bullet = AM
 		if (!istype(bullet.proj_data, /datum/projectile/bullet))
 			return ..()
 		for (var/obj/flock_structure/annihilator/annihilator in view(src.connected_structure.checker_radius, src))
