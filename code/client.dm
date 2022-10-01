@@ -647,8 +647,6 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	// Set parallax
 	parallax = winget( src, "menu.set_parallax", "is-checked" ) == "true"
 
-	if(mob.parallax && !parallax)
-		mob.parallax.toggle()
 
 /client/proc/ip_cid_conflict_check(log_it=TRUE, alert_them=TRUE, only_if_first=FALSE, message_who=null)
 	var/static/list/list/ip_to_ckeys = list()
