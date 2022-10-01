@@ -38,22 +38,16 @@
 		return !src.powered ? "Not generating bolt." : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds." : "Bolt ready."
 
 	process(mult)
-		if (!src.flock)
-			if (src.powered)
-				src.update_flock_compute("remove")
-				if (src.checkers_powered)
-					src.power_projectile_checkers("off")
-			src.compute = 0
-			src.powered = FALSE
-		else if (src.flock.can_afford_compute(src.online_compute_cost))
+		if (src.flock?.can_afford_compute(src.online_compute_cost))
 			src.compute = -src.online_compute_cost
 			if (!src.powered)
 				ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
 				src.update_flock_compute("apply")
 				src.powered = TRUE
-		else if (src.flock.used_compute > src.flock.total_compute() || !src.powered)
+		else if (!src.flock || src.flock.used_compute > src.flock.total_compute() || !src.powered)
 			if (src.powered)
-				src.update_flock_compute("remove")
+				if (src.flock)
+					src.update_flock_compute("remove")
 				if (src.checkers_powered)
 					src.power_projectile_checkers(FALSE)
 			src.compute = 0
