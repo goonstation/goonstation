@@ -398,6 +398,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/pickpocket
+	name = "Pickpocket Gun"
+	item = /obj/item/gun/energy/pickpocket
+	cost = 3
+	vr_allowed = 0
+	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/surplus
 	name = "Surplus Crate"
 	item = /obj/storage/crate/syndicate_surplus
@@ -702,16 +711,6 @@ This is basically useless for anyone but miners.
 	job = list("Engineer", "Chief Engineer", "Mechanic")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/pickpocket
-	name = "Pickpocket Gun"
-	item = /obj/item/gun/energy/pickpocket
-	cost = 3
-	vr_allowed = 0
-	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	br_allowed = TRUE
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
 /datum/syndicate_buylist/traitor/poisonbottle
 	name = "Poison Bottle"
 	item = /obj/item/reagent_containers/glass/bottle/poison
@@ -893,7 +892,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
-	job = list("Quartermaster","Miner","Engineer")
+	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/telegun
