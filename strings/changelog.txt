@@ -1,5 +1,9 @@
 
 (t)sat oct 01 22
+(u)Amylizzle
+(p)11071
+(e)🪲⚖🧛‍♂️📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
+(+)Substantially buffed the Flock's Gnesis Turret.
 (u)ZWRh3
 (p)11101
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes
