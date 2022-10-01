@@ -151,22 +151,36 @@
 			src.material_uses = initial(src.material_uses)
 
 	afterattack(atom/target, mob/user)
-		if (target.is_open_container() && target.reagents && src.can_dip)
-			if (target.reagents.total_volume)
-				boutput(user, "<span class='hint'>You dip [src] in [target].</span>")
-				target.reagents.trans_to(src, min(PEN_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
-				src.add_filter("reagent_coloration", 1, color_matrix_filter(normalize_color_to_matrix(src.reagents.get_average_rgb())))
-				src.color = src.reagents.get_average_color()
-				src.font_color = src.color
-				src.color_name = get_nearest_color(src.reagents.get_average_color()) // why the fuck are there 3 vars for this
+		if (target.is_open_container())
+			if (src.reagents.maximum_volume <= src.reagents.total_volume)
+				boutput(user, "<span class='alert'>The pen is totally coated!</span>")
+				return
 
-				if (src.material)
-					src.removeMaterial() // no
-					src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
-			else
-				boutput(user, "<span class='alert'>[target] is empty!</span>")
+			if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne))
+				var/obj/fluid/F = target
+				F.group.reagents.skip_next_update = TRUE
+				F.group.update_amt_per_tile()
+				var/amt = min(F.group.amt_per_tile, src.reagents.maximum_volume - src.reagents.total_volume)
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
+			else if (target.reagents && src.can_dip)
+				if (target.reagents.total_volume)
+					boutput(user, "<span class='hint'>You dip [src] in [target].</span>")
+					target.reagents.trans_to(src, min(PEN_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
+				else
+					boutput(user, "<span class='alert'>[target] is empty!</span>")
 		else
 			return ..()
+
+		if (src.reagents.total_volume)
+			src.add_filter("reagent_coloration", 1, color_matrix_filter(normalize_color_to_matrix(src.reagents.get_average_rgb())))
+			src.color = src.reagents.get_average_color()
+			src.font_color = src.color
+			src.color_name = get_nearest_color(src.reagents.get_average_color()) // why the fuck are there 3 vars for this
+
+			if (src.material)
+				src.removeMaterial() // no
+				src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
 
 	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
 		. = ..()
