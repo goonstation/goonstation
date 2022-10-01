@@ -18,7 +18,6 @@
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
 
 	var/afk_counter = 0
-	var/afk_counter_threshold = 180 SECONDS
 	var/turf/previous_turf = null
 
 /mob/living/intangible/flock/New()

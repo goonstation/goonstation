@@ -61,10 +61,10 @@
 	if (!src.flock)
 		return
 	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
-	if (src.afk_counter > src.afk_counter_threshold * 3 / 4)
-		if (!ON_COOLDOWN(src, "afk_message", src.afk_counter_threshold))
+	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
+		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
 			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
-		if (src.afk_counter > src.afk_counter_threshold)
+		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 			var/list/traces = src.flock.getActiveTraces()
 			if (length(traces))
 				boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b></span>")
