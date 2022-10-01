@@ -9,6 +9,7 @@
 	icon_state = "armor"
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -27,6 +28,7 @@
 	item_state = "armorvest"
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	New()
 		..()
@@ -93,6 +95,7 @@
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	var/obj/item/clothing/suit/armor/vest/part_vest = null
 	var/obj/item/assembly/anal_ignite/part_igniter = null // Just for show. Doesn't do anything here or in the igniter code.
@@ -273,6 +276,7 @@
 	icon_state = "makeshift"
 	item_state = "makeshift"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -298,6 +302,7 @@
 	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
 	icon_state = "capcoat"
 	item_state = "capcoat"
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -311,6 +316,7 @@
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
@@ -337,6 +343,7 @@
 	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
 	icon_state = "centcoat"
 	item_state = "centcoat"
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("coldprot", 35)
@@ -353,6 +360,7 @@
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
+	hides_from_examine = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
@@ -410,6 +418,7 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
@@ -417,6 +426,7 @@
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
@@ -428,6 +438,7 @@
 	icon_state = "eod"
 	item_state = "eod"
 	w_class = W_CLASS_NORMAL
+	hides_from_examine = C_UNIFORM|C_GLOVES
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
@@ -441,6 +452,7 @@
 	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
+	hides_from_examine = 0
 	setupProperties()
 		..()
 		setProperty("meleeprot", 3)

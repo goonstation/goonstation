@@ -396,7 +396,7 @@
 
 /obj/item/storage/fanny
 	name = "fanny pack"
-	desc = "No, 'fanny' as in 'butt.' Not the other thing."
+	desc = "Be the butt of jokes with this simple storage device."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "fanny"
 	item_state = "fanny"
@@ -619,7 +619,7 @@
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar/yellow,
-	/obj/item/weldingtool,
+	/obj/item/weldingtool/yellow,
 	/obj/item/wirecutters/yellow,
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,

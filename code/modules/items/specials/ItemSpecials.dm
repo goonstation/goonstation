@@ -1279,8 +1279,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			if (master)
 				if(istype(master,/obj/item/device/light/zippo) && master:on)
 					var/obj/item/device/light/zippo/Z = master
-					if (Z.reagents.get_reagent_amount("fuel"))
-						Z.reagents.remove_reagent("fuel", 1)
+					if (Z.infinite_fuel || Z.reagents?.get_reagent_amount("fuel"))
+						Z.reagents?.remove_reagent("fuel", 1)
 						flame_succ = 1
 					else
 						flame_succ = 0
@@ -1459,11 +1459,11 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 	var/secondhit_delay = 1
 	var/stamina_damage = 80
-	var/obj/item/katana/K
+	var/obj/item/swords/katana/K
 	var/reversed = 0
 
 	onAdd()
-		if(istype(master, /obj/item/katana))
+		if(istype(master, /obj/item/swords/katana))
 			K = master
 		return
 

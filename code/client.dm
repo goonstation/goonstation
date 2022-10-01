@@ -623,6 +623,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -1426,6 +1428,8 @@ var/global/curr_day = null
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 

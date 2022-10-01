@@ -827,11 +827,13 @@
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
 				if (module)
-					if (R.module)
-						boutput(user, "<span class='alert'>[R] already has a module installed!</span>")
-					else
-						R.set_module(module)
-						src.modules.Remove(module)
+					if (R.module) // Remove installed module to make room for new module
+						var/obj/item/robot_module/removed_module = R.remove_module()
+						src.modules.Add(removed_module)
+						removed_module.set_loc(src)
+
+					R.set_module(module)
+					src.modules.Remove(module)
 					R.update_appearance()
 			. = TRUE
 		if("module-remove")

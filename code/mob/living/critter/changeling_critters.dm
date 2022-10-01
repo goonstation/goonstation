@@ -31,10 +31,11 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
+		src.original_bodypart.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -562,7 +563,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))

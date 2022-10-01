@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/kitchen/utensil/fork) || istype(W,/obj/item/kitchen/utensil/spoon))
+		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
 				var/obj/item/kitchen/utensil/S = W
 				S.break_utensil(user)
@@ -191,8 +191,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-					else if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
+					else if (src.needspoon && isspooningtool(user.equipped()))
+						utensil = user.equipped()
 
 					// If it's a plastic fork we've found then test if we've broken it
 					var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
@@ -688,7 +688,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			if (src.splash_all_contents)
 				splash_volume = src.reagents.maximum_volume
 			else
-				splash_volume = min(src.amount_per_transfer_from_this, src.reagents.total_volume)
+				splash_volume = src.amount_per_transfer_from_this
+
+			splash_volume = min(splash_volume, src.reagents.total_volume)
 
 			src.reagents.reaction(target, TOUCH, splash_volume)
 
@@ -718,12 +720,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	var/image/fluid_image = null
 
+	New()
+		..()
+		ENSURE_IMAGE(src.fluid_image, src.icon, src.icon_state + "_fluid")
+
 	on_reagent_change()
 		..()
 		if (reagents.total_volume)
-			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
-			//if (!src.fluid_image)
-				//src.fluid_image = image('icons/obj/kitchen.dmi', "fluid")
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
@@ -734,7 +737,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/cereal_box))
 			var/obj/item/reagent_containers/food/snacks/cereal_box/cbox = W
 
-			var/obj/newcereal = new /obj/item/reagent_containers/food/snacks/soup/cereal(get_turf(src), cbox.prize)
+			var/obj/newcereal = new /obj/item/reagent_containers/food/snacks/soup/cereal(get_turf(src), cbox.prize, src)
+			newcereal.pixel_x = src.pixel_x
+			newcereal.pixel_y = src.pixel_y
 			cbox.prize = 0
 			newcereal.reagents = src.reagents
 
@@ -771,8 +776,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user,"<span class='alert'>There's already something in the bowl!</span>")
 				return
 
-			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup)
-
+			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
 			L.my_soup = null
@@ -787,6 +791,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else
 			..()
+
+/obj/item/reagent_containers/food/drinks/bowl/pumpkin
+	name = "pumpkin bowl"
+	desc = "Aww, it's all hallowed out."
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkin"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "pumpkin"
+	can_recycle = FALSE
+
 
 /* ======================================================= */
 /* -------------------- Drink Bottles -------------------- */
@@ -1013,6 +1027,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
+	var/smash_on_throw = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1318,7 +1333,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		src.smash(A)
+		if(src.smash_on_throw)
+			src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
 		if(!istype(target, /obj/table))
@@ -1435,6 +1451,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
+	smash_on_throw = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"

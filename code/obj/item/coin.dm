@@ -1,6 +1,6 @@
 /obj/item/coin
-	name = "coin"
-	desc = "A small gold coin with an alien head on one side and a monkey buttocks on the other."
+	name = "luna coin"
+	desc = "An old coin from the Lunar Reserve Bank, with graphics of lunar phases on the heads side and famous crater cities on the tails side."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "coin"
 	item_state = "coin"
@@ -36,14 +36,14 @@
 		if(prob(1))
 			src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
 		else if(prob(50))
-			src.visible_message("<span class='notice'>The coin comes up heads.</span>")
+			src.visible_message("<span class='notice'>The coin comes up Moons.</span>")
 		else
-			src.visible_message("<span class='notice'>The coin comes up tails.</span>")
+			src.visible_message("<span class='notice'>The coin comes up Craters.</span>")
 		return
 	if(prob(49))
-		src.visible_message("<span class='notice'>The coin comes up heads.</span>")
+		src.visible_message("<span class='notice'>The coin comes up Moons.</span>")
 	else if(prob(49))
-		src.visible_message("<span class='notice'>The coin comes up tails.</span>")
+		src.visible_message("<span class='notice'>The coin comes up Craters.</span>")
 	else
 		src.visible_message("<span class='notice'>The coin lands on its side. Fuck.</span>")
 
