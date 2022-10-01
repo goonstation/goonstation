@@ -211,17 +211,21 @@ ABSTRACT_TYPE(/datum/plant/herb)
 
 /datum/plant/herb/stinging_nettle
 	name = "Stinging Nettle"
+	override_icon_state = "Nettle"
 	seedcolor = "#2ecc43"
+	crop = /obj/item/plant/herb/nettle
 	cropsize = 3
 	starthealth = 20
 	growtime = 40
-	harvtime = 60
+	harvtime = 100
 	cropsize = 4
-	harvests = 1
+	harvests = 3
 	special_proc = 1
+	harvested_proc = 1
 	force_seed_on_harvest = 1
 	vending = 2
-	genome = 10
+	genome = 7
+	assoc_reagents = list("histamine")
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
@@ -234,11 +238,33 @@ ABSTRACT_TYPE(/datum/plant/herb)
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(sting_prob)) //how frequently it injects people is based on endurance
 			for (var/mob/living/M in range(1,POT))
 				if (ishuman(M))
-					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits
-				M.reagents?.add_reagent("itching", chem_protection) //comes separate and in small amounts because we don't want people splicing it with other stuff
+					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
 				for (var/plantReagent in assoc_reagents) //amount of delivered chems is based on potency
-					M.reagents?.add_reagent(plantReagent, 3 * chem_protection * round(max(1,(1 + DNA.potency / (10 * length(assoc_reagents))))))
+					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
 				M.visible_message("<span class='notice'>You feel something brush against you.</span>")
+
+	HYPharvested_proc(var/obj/machinery/plantpot/POT,var/mob/user) //better not try to harvest these without gloves
+		..()
+		if (.) return
+		var/datum/plantgenes/DNA = POT.plantgenes
+		var/mob/living/carbon/human/H = user
+
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				..()
+				return
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				..()
+				return
+		if(istype(H))
+			if(H.gloves)
+				..()
+				return
+		boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
+		for (var/plantReagent in assoc_reagents)
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
+		H.changeStatus("weakened", 4 SECONDS)
 
 /datum/plant/herb/tobacco
 	name = "Tobacco"
