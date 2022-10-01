@@ -1146,7 +1146,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 //////////////////////// Breaching charges //////////////////////////////////
 
 /obj/item/breaching_charge
-	desc = "It is set to detonate in 5 seconds."
 	name = "Breaching Charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"

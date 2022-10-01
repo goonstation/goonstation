@@ -50,7 +50,6 @@
 
 #ifdef DEBUG_LIGHTING_UPDATES
 /obj/maptext_junk/RL_counter
-	icon = null
 	maptext = ""
 	anchored = 2
 	var/applies = 0
