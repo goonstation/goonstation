@@ -1,4 +1,26 @@
 
+(t)fri sep 30 22
+(u)Mr. Moriarty
+(p)11086
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Clarion Armoury's equipment.
+(u)Mr. Moriarty
+(p)10628
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Chameleon outfits now have the option to create new and delete existing outfit sets.
+(u)Sord
+(+)Security and Medical have had their clothing lockers replaced with new clothing vendors.
+(u)LeahTheTech
+(p)11064
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The flock relay now takes the correct amount of explosion damage.
+(u)tarmunora
+(+)Drinking glasses no longer shatter when thrown.
+(+)Balloons need to be tied off before being thrown.
+(u)LeahTheTech
+(p)11077
+(e)🪲🧛‍♂️|C-Bug, A-Gamemodes
+(+)The Hydra smart pistol is now slightly smarter and no longer targets sawflies or nukeop gunbots.
 (t)thu sep 29 22
 (u)LeahTheTech
 (p)11066

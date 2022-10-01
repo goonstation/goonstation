@@ -43760,7 +43760,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "piK" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/machinery/vending/jobclothing/security,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -46972,7 +46972,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "qSl" = (
-/obj/table/reinforced/auto,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "qSv" = (
@@ -47884,7 +47884,6 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -53467,7 +53466,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery/storage)
 "uvA" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -53684,7 +53682,6 @@
 	name = "autoname - SS13"
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
