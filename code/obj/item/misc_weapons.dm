@@ -447,7 +447,6 @@
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	is_special = 1
 	if (active)
 		hit_type = DAMAGE_BURN
 	else
