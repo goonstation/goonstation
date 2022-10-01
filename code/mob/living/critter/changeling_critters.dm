@@ -645,6 +645,7 @@
 		var/mob/living/carbon/human/H = M
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
 		H.setStatusMin("paralysis", 10 SECONDS)
 
