@@ -1,5 +1,10 @@
 
 (t)sat oct 01 22
+(u)glowbold
+(p)10907
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Destiny and Clarion's airbridges now extend, pressurize, and retract automatically for traders
+(+)Cogmap2's trader docks now light up when traders are set to arrive and depart
 (u)Sord
 (e)⚙|C-Bug
 (+)The Security and Medical job clothing vendors can now be accessed by anyone who has access to those departments.
