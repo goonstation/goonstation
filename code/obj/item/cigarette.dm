@@ -1113,8 +1113,6 @@
 	var/reagent_expose_temp = 4000
 	/// exposure temp of passive enviromental heating
 	var/enviromental_expose_temp = 700
-	/// the maximum temperature the lighter is capable or heating to
-	var/adiabatic_flame_temperature = 1000
 
 	New()
 		..()
@@ -1266,7 +1264,7 @@
 			//sleep(1 SECOND)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
-		if (exposed_temperature > adiabatic_flame_temperature)
+		if (exposed_temperature > 1000)
 			return ..()
 		return
 
@@ -1332,7 +1330,6 @@
 	is_syndicate = 1
 	reagent_expose_temp = 20000
 	enviromental_expose_temp = 3500
-	adiabatic_flame_temperature = 5000
 
 	New()
 		. = ..()
