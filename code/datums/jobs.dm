@@ -2130,12 +2130,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	allow_traitors = 0
-	allow_spy_theft = 0
-	cant_spawn_as_rev = 1
-	receives_miranda = 1
-	slot_ears = list(/obj/item/device/radio/headset/security)
-	slot_eyes = list(/obj/item/clothing/glasses/sunglasses/sechud/superhero)
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_glov = list(/obj/item/clothing/gloves/latex/blue)
 	slot_jump = list(/obj/item/clothing/under/gimmick/superhero)
 	slot_foot = list(/obj/item/clothing/shoes/tourist)
@@ -2152,7 +2148,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		M.traitHolder.addTrait("training_security")
 		if(prob(60))
 			var/aggressive = pick("eyebeams","cryokinesis")
 			var/defensive = pick("fire_resist","cold_resist","rad_resist","breathless") // no thermal resist, gotta have some sort of comic book weakness
