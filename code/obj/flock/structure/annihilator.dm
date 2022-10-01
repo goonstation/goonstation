@@ -13,10 +13,14 @@
 	compute = 0
 	var/online_compute_cost = 30
 
+	/// if the annihilator has enough compute to work
 	var/powered = FALSE
+	/// if the annihilator's projectile checkers are checking for projectiles
 	var/checkers_powered = FALSE
 
+	/// projectile destroying radius of the annihilator
 	var/checker_radius = 2
+	/// list of projectile checker objects the annihilator uses to work
 	var/list/projectile_checkers = null
 
 	New(atom/location, datum/flock/F = null)
