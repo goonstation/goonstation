@@ -43,6 +43,15 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
+	// stats stuff, if not listed above
+	var/drones_made = 0
+	var/bits_made = 0
+	var/deaths = 0
+	var/net_resources_gained = 0
+	var/partitions_made = 0
+	var/tiles_converted = 0
+	var/structures_made = 0
+
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
@@ -130,6 +139,7 @@ var/flock_signal_unleashed = FALSE
 	state["drones"] = list()
 	state["structures"] = list()
 	state["enemies"] = list()
+	state["stats"] = list()
 	state["category_lengths"] = list(
 		"traces" = length(src.traces),
 		"drones" = length(src.units[/mob/living/critter/flock/drone]),
@@ -168,6 +178,21 @@ var/flock_signal_unleashed = FALSE
 				else
 					// enemy no longer exists, let's do something about that
 					src.enemies -= name
+
+		if ("stats")
+			var/list/stats = list(
+				"Drones realized: " = src.drones_made,
+				"Bits formed: " = src.bits_made,
+				"Net deaths: " = src.deaths,
+				"Total resources gained: " = src.net_resources_gained,
+				"Net partitions: " = src.partitions_made,
+				"Tiles converted: " = src.tiles_converted,
+				"Structures created: " = src.structures_made,
+				"Highest compute: " = src.peak_compute
+				)
+
+			for (var/stat in stats)
+				state["stats"] += list(list("name" = stat, "value" = stats[stat]))
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()
@@ -588,6 +613,8 @@ var/flock_signal_unleashed = FALSE
 		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+	if (isfeathertile(T))
+		src.tiles_converted++
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
