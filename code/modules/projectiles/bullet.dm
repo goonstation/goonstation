@@ -523,7 +523,7 @@ toxic - poisons
 //0.58
 /datum/projectile/bullet/flintlock
 	name = "bullet"
-	power = 100
+	power = 50
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
 	hit_type = DAMAGE_STAB
@@ -537,13 +537,8 @@ toxic - poisons
 		if(ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			if(power > 40)
-#ifdef USE_STAMINA_DISORIENT
-				M.do_disorient(75, weakened = 40, stunned = 40, disorient = 60, remove_stamina_below_zero = 0)
-#else
-				M.changeStatus("stunned", 4 SECONDS)
-				M.changeStatus("weakened", 3 SECONDS)
-#endif
-			if(power > 80)
+				M.changeStatus("slowed", 3 SECONDS)
+			if(power > 70)
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
 		..()
