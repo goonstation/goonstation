@@ -41238,7 +41238,7 @@
 /area/afterlife/arena)
 "cvB" = (
 /obj/rack/iomoon,
-/obj/item/bloodthirsty_blade,
+/obj/item/swords/bloodthirsty_blade,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
@@ -61440,7 +61440,7 @@
 	icon_state = "blue"
 	})
 "dAN" = (
-/obj/item/bat,
+/obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
 	pixel_x = 6;
 	pixel_y = 24

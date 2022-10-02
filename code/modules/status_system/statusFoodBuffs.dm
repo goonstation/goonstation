@@ -50,31 +50,6 @@
 				break
 #undef DIGESTION_PER_LIFE_TICK
 
-//TODO MOVE
-/mob/living/proc/handle_skinstuff(var/mult = 1)
-	if (src.skin_process && length(src.skin_process))
-
-		//you absorb shit faster if you have lots of patches stacked
-		//gives patches a way to heal quickly if you slap on a whole bunch, also makes long heals over time less viable
-
-		var/multi_process_mult = skin_process.len > 1 ? (skin_process.len * 1.5) : 1
-		var/use_volume = 0.35 * mult * multi_process_mult
-
-		for (var/atom/A as anything in skin_process)
-
-			if (A.loc != src)
-				skin_process -= A
-				continue
-
-			if (A.reagents && A.reagents.total_volume)
-				A.reagents.reaction(src, TOUCH, react_volume = use_volume, paramslist = (A.reagents.total_volume == A.reagents.maximum_volume) ? 0 : list("silent", "nopenetrate", "ignore_chemprot"))
-				A.reagents.trans_to(src, use_volume/2)
-				A.reagents.remove_any(use_volume/2)
-			else
-				if (A.reagents.total_volume <= 0)
-					src.skin_process -= A //disposing will do this too but whatever
-					qdel(A)
-
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
 	..()

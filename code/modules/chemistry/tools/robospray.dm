@@ -22,7 +22,7 @@
 	var/image/fluid_image
 	var/extra_refill = 0
 
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	inventory_counter_enabled = 1
 
 	New()

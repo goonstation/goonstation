@@ -6122,9 +6122,6 @@
 	dir = 10;
 	icon_state = "line2"
 	},
-/obj/item/decoration/incenseholder{
-	pixel_y = 10
-	},
 /obj/item/device/light/candle/small{
 	pixel_x = 9;
 	pixel_y = -6;
@@ -8594,10 +8591,6 @@
 "aFk" = (
 /obj/table/wood/auto,
 /obj/machinery/light/incandescent,
-/obj/item/decoration/incenseholder{
-	pixel_x = 13;
-	pixel_y = 9
-	},
 /obj/item/device/light/candle/small{
 	pixel_x = -1;
 	pixel_y = -1
@@ -9516,6 +9509,7 @@
 	dir = 4;
 	level = -1
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -10059,7 +10053,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/dome)
 "aJY" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
 "aJZ" = (
@@ -10875,9 +10869,8 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Cloning Foyer"
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -11639,7 +11632,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
+/obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4
 	},
 /obj/access_spawn/robotics,
@@ -11930,7 +11923,7 @@
 	},
 /area/station/security/detectives_office)
 "aPL" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "aPN" = (
@@ -11966,7 +11959,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/surgery)
 "aPS" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/robotics,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black/side{
@@ -12124,11 +12117,8 @@
 	dir = 4;
 	pixel_y = 0
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -12145,7 +12135,7 @@
 /turf/space,
 /area/space)
 "aQy" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2{
 	dir = 8
 	},
@@ -12314,7 +12304,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aRa" = (
-/obj/wingrille_spawn/auto/tuff,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
@@ -13227,7 +13217,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aUb" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -13236,7 +13226,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/staff)
 "aUc" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /obj/window_blinds/cog2{
 	dir = 8
 	},
@@ -13633,11 +13623,8 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aVg" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -13867,7 +13854,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aVZ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/surgery)
 "aWa" = (
@@ -14014,7 +14001,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "aWt" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/medical/medbay/psychiatrist)
 "aWu" = (
@@ -14402,6 +14389,7 @@
 	},
 /obj/item/remote/porter/port_a_nanomed,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aXD" = (
@@ -15007,6 +14995,7 @@
 /obj/item/device/analyzer/healthanalyzer,
 /obj/item/clothing/glasses/healthgoggles,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZi" = (
@@ -15210,6 +15199,7 @@
 	pixel_x = 3;
 	pixel_y = 9
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZM" = (
@@ -15225,6 +15215,7 @@
 	name = "lobby health status screen";
 	pixel_y = -4
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/specialroom/medbay{
 	dir = 2
 	},
@@ -15239,6 +15230,7 @@
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/medical,
+/obj/firedoor_spawn,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZP" = (
@@ -15437,11 +15429,8 @@
 	icon_state = "scanner_on";
 	pixel_x = -20
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "donut2_exit";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -15642,11 +15631,7 @@
 /obj/disposalpipe/segment{
 	dir = 1
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment,
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -15695,11 +15680,8 @@
 	icon_state = "scanner_on";
 	pixel_x = -20
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "donut2_exit";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -16335,7 +16317,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bcZ" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
 /obj/cable{
@@ -16517,9 +16499,7 @@
 	},
 /area/station/medical/research)
 "bdE" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Genetics"
-	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/medlab,
 /obj/firedoor_spawn,
 /obj/cable{
@@ -20949,11 +20929,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -29314,6 +29291,10 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"faR" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/station/medical/medbay)
 "faU" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -34836,10 +34817,8 @@
 	},
 /area/station/security/processing)
 "kjH" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "cloning_exit";
-	name = "Cloning Foyer"
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -38872,7 +38851,7 @@
 /area/station/science/teleporter)
 "nIG" = (
 /obj/window_blinds/cog2,
-/obj/wingrille_spawn/auto/tuff,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/medical/head)
 "nJf" = (
@@ -44906,7 +44885,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "sJD" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "sJN" = (
@@ -44935,11 +44914,7 @@
 	},
 /area/station/hydroponics/bay)
 "sKW" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/disposalpipe/segment,
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -46461,11 +46436,8 @@
 	},
 /area/station/wreckage)
 "ubD" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	id = "medbay_front";
-	name = "Medical Bay";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -47071,10 +47043,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
 "uFI" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Monkey Pen";
-	req_access_txt = ""
-	},
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/access_spawn/medlab,
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment{
@@ -47424,11 +47393,6 @@
 /obj/decal/tile_edge/line/black{
 	dir = 6;
 	icon_state = "line2"
-	},
-/obj/item/decoration/incenseholder{
-	dir = 8;
-	pixel_x = -4;
-	pixel_y = 7
 	},
 /obj/item/device/light/candle{
 	pixel_x = 9;
@@ -47846,7 +47810,6 @@
 	},
 /area/station/medical/robotics)
 "vlL" = (
-/obj/storage/closet/medicalclothes,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
@@ -48341,7 +48304,7 @@
 /area/station/maintenance/scidisposal)
 "vIA" = (
 /obj/machinery/light/incandescent,
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -50165,10 +50128,7 @@
 	},
 /area/station/hangar/arrivals)
 "xvf" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Medical Director";
-	req_access_txt = null
-	},
+/obj/machinery/door/airlock/pyro/command/alt,
 /obj/access_spawn/medical_director,
 /obj/firedoor_spawn,
 /obj/cable{
@@ -67037,10 +66997,10 @@ emP
 aUD
 ghP
 mgz
-bae
-bae
+faR
+faR
 aYp
-bae
+faR
 bbM
 aUB
 baS
@@ -67339,7 +67299,7 @@ eCb
 qnC
 vng
 gna
-bae
+faR
 bbf
 aYq
 pQI

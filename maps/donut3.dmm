@@ -4594,7 +4594,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bgh" = (
@@ -11891,7 +11891,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "dlb" = (
@@ -12077,9 +12077,7 @@
 /area/station/maintenance/outer/ne)
 "dmU" = (
 /obj/storage/secure/closet/security/armory,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southeast,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "dmY" = (
@@ -12131,9 +12129,8 @@
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
 "dnF" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/storage/secure/closet/brig,
 /obj/decal/mule/beacon,
-/obj/item/clothing/gloves/fingerless,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "dnG" = (
@@ -17042,12 +17039,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eJg" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/item/clothing/gloves/fingerless,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "eJu" = (
@@ -23679,7 +23675,7 @@
 	},
 /area/station/medical/medbay)
 "gGr" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "gGE" = (
@@ -23889,7 +23885,7 @@
 	d2 = 4;
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor,
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "gLB" = (
@@ -39277,12 +39273,6 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/security/checkpoint/west)
-"lqk" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/breakroom)
 "lqn" = (
 /obj/railing/red{
 	dir = 4
@@ -46026,6 +46016,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersA)
+"nnC" = (
+/obj/machinery/vending/jobclothing/security,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/black,
+/area/station/security/equipment)
 "nnD" = (
 /obj/cable{
 	d2 = 8;
@@ -55037,6 +55032,9 @@
 	desc = "What? Security has moments of weakness too!";
 	name = "emergency alcohol dispenser"
 	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "pRW" = (
@@ -57648,23 +57646,38 @@
 /area/station/hallway/primary/west)
 "qyp" = (
 /obj/rack,
-/obj/decal/mule/beacon/no_auto_dropoff_spawn,
-/obj/item/clothing/glasses/thermal{
-	pixel_x = -3;
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
 	pixel_y = 3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal{
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /obj/item/clothing/glasses/thermal{
 	pixel_x = -1;
-	pixel_y = 1
+	pixel_y = 2
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_x = 1;
+	pixel_x = 2;
 	pixel_y = -1
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_x = 3;
-	pixel_y = -3
+	pixel_x = 5;
+	pixel_y = -4
 	},
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "qyH" = (
@@ -73634,7 +73647,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "veW" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -76457,6 +76470,11 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
+"vSL" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/breakroom)
 "vSO" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -76610,7 +76628,7 @@
 	},
 /obj/item/clothing/mask/gas{
 	pixel_x = 7;
-	pixel_y = 9
+	pixel_y = 10
 	},
 /obj/item/clothing/head/helmet/EOD{
 	pixel_x = -7;
@@ -76618,7 +76636,7 @@
 	},
 /obj/item/clothing/head/helmet/EOD{
 	pixel_x = 7;
-	pixel_y = 8
+	pixel_y = 9
 	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /turf/simulated/floor/engine,
@@ -84560,7 +84578,8 @@
 	},
 /obj/access_spawn/security,
 /obj/machinery/turret{
-	dir = 8
+	dir = 8;
+	name = "armory turret"
 	},
 /obj/machinery/light/incandescent/warm/very{
 	dir = 4
@@ -109116,7 +109135,7 @@ sUM
 xMz
 iRc
 yiy
-dnF
+nnC
 htz
 bxt
 htz
@@ -124836,8 +124855,8 @@ njW
 ucb
 rUN
 veW
-lqk
 tXj
+vSL
 bIe
 jrH
 mRY

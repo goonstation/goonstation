@@ -14,7 +14,6 @@
 	active = 0
 	name = "Robustco Communication Array"
 	desc = "Enables long-distance communications and interfacing with pod bay door controls."
-	power_used = 10
 	system = "Communications"
 	icon_state = "com"
 	color = "#16CC77"
