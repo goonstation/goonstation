@@ -2207,7 +2207,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	desc = "It's like a donut, but long."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "churro"
-	bites_left = 1
+	bites_left = 3
 	heal_amt = 1
 	food_effects = list("food_energized")
 
