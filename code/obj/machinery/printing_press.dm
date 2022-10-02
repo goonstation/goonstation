@@ -1,5 +1,5 @@
 /obj/machinery/printing_press //this makes books
-	name = "\improper Aurora printing press"
+	name = "\improper Academy automated printing press"
 	desc = "This is an Aurora Lithographics 'Academy' model automated printing press, used to reproduce books and pamphlets. This doesn't still use stone plates, does it?"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "printing_press" //proper icon is set in UpdateIcon
