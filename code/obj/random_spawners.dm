@@ -840,6 +840,7 @@
 	/obj/item/storage/toolbox/emergency,
 	/obj/item/tank/air,
 	/obj/item/tank/emergency_oxygen,
+	/obj/item/tank/mini_oxygen,
 	/obj/item/weldingtool,
 	/obj/item/wrench)
 
@@ -1376,7 +1377,8 @@
 		/obj/item/clothing/under/gimmick/hakama/random,
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
-		/obj/item/clothing/under/gimmick/ziggy)
+		/obj/item/clothing/under/gimmick/ziggy,
+		/obj/item/clothing/under/gimmick/jcdenton)
 
 	one
 		amt2spawn = 1
@@ -1822,7 +1824,7 @@
 			closet_check_spawn()
 
 	closet_check_spawn(var/new_x,var/new_y)
-		var/obj/item/K = new /obj/item/device/key/chompskey
+		var/obj/item/K = new /obj/item/device/key/generic/chompskey
 
 		if(new_x && new_y)
 			K.set_loc(locate(new_x,new_y,src.z))

@@ -666,6 +666,9 @@
 		icon_state = "nightvisionsechud"
 		mats = 12
 		desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights. This version also has built in SecHUD functionality."
+		color_r = 1
+		color_g = 0.5
+		color_b = 0.5
 
 		equipped(var/mob/user, var/slot)
 			..()
@@ -679,7 +682,7 @@
 
 		flashblocking //Admin or gimmick spawn option
 			name = "SUPER night vision sechud goggles"
-			mats = 15 //expensive if someone scans them
+			mats = 25 //expensive if someone scans them because I can do what I want
 			desc = "Goggles with separate built-in image-intensifier tubes to allow vision in the dark AND SecHUDs AND with darkened lenses? Wowee!"
 
 			setupProperties()

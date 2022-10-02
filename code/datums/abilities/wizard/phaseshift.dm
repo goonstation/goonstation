@@ -152,6 +152,8 @@
 		return
 	if (!H.canmove)
 		return
+	if(isrestrictedz(H.loc.z))
+		return
 
 	if (isliving(H))
 		var/mob/living/owner = H
@@ -324,6 +326,9 @@
 		actions.interrupt(user, INTERRUPT_MOVE)
 
 		.= delay
+
+	mob_flip_inside(mob/user)
+		animate_spin(src, pick("L", "R"), 1, FALSE)
 
 	ex_act(severity)
 		dispel(1)

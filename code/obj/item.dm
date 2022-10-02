@@ -45,8 +45,7 @@
 
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
-						//If 2, play the attack animation but hide the attack particles.
+	var/hide_attack = ATTACK_VISIBLE
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -1154,7 +1153,7 @@
 		if (src.ArtifactSanityCheck())
 			src.ArtifactTouched(user)
 
-	if (hide_attack != 1)
+	if (hide_attack != ATTACK_FULLY_HIDDEN)
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else

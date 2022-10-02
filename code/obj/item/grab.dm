@@ -511,7 +511,7 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -521,14 +521,14 @@
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
+		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 || !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -729,7 +729,7 @@
 
 
 /obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
-	src.hide_attack = 1
+	src.hide_attack = ATTACK_FULLY_HIDDEN
 
 	if (..())
 		for (var/mob/O in AIviewers(user, null))
@@ -767,9 +767,10 @@
 		..()
 
 	proc/shoot()
-		shot = 1
-
-		if (affecting && assailant && isitem(src.loc))
+		if(src.shot)
+			return
+		src.shot = TRUE
+		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
@@ -783,7 +784,7 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 
 
 	New()

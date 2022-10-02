@@ -96,21 +96,18 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/mechanics/clonepod
 	name = "cloning pod"
-	item_amounts = list(6,5,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonepod
 
 /datum/manufacture/mechanics/clonegrinder
 	name = "enzymatic reclaimer"
-	item_amounts = list(3,3,4)
 	time = 18 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clonegrinder
 
 /datum/manufacture/mechanics/clone_scanner
 	name = "cloning machine scanner"
-	item_amounts = list(5,6,4)
 	time = 30 SECONDS
 	create = 1
 	frame_path = /obj/machinery/clone_scanner
@@ -232,6 +229,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/reagent_containers/food/drinks/bottle/soda)
 	time = 4 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/saxophone
+	name = "Saxophone"
+	item_paths = list("MET-2")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/instrument/saxophone)
+	time = 7 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/whistle
+	name = "Whistle"
+	item_paths = list("MET-3")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/instrument/whistle)
+	time = 3 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/trumpet
+	name = "Trumpet"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/instrument/trumpet)
+	time = 6 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/bagpipe
+	name = "Bagpipe"
+	item_paths = list("FAB-1", "MET-2")
+	item_amounts = list(10, 25)
+	item_outputs = list(/obj/item/instrument/bagpipe)
+	time = 5 SECONDS
 	create = 1
 	category = "Miscellaneous"
 
@@ -788,6 +821,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/cleaner_grenade
+	name = "Cleaner Grenade"
+	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
+	item_amounts = list(8, 8, 10, 10)
+	item_outputs = list(/obj/item/chem_grenade/cleaner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 /******************** Medical **************************/
 
 /datum/manufacture/scalpel
@@ -1327,6 +1369,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/powercellH
+	name = "Hyper Capacity Power Cell"
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(5,10,10)
+	item_outputs = list(/obj/item/cell/hypercell)
+	time = 120 SECONDS
+	create = 1
+	category = "Component"
+
 /datum/manufacture/core_frame
 	name = "AI Core Frame"
 	item_paths = list("MET-2")
@@ -1860,8 +1911,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialarmor
 	name = "Industrial Space Armor Set"
-	item_paths = list("MET-3","CON-2","DEN-2")
-	item_amounts = list(15,7,3)
+	item_paths = list("MET-3","CON-2","CRY-2")
+	item_amounts = list(15,10,5)
 	item_outputs = list(/obj/item/clothing/suit/space/industrial,/obj/item/clothing/head/helmet/space/industrial)
 	time = 90 SECONDS
 	create = 1
@@ -1869,8 +1920,6 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/industrialboots
 	name = "Mechanised Boots"
-	item_paths = list("MET-2","CON-2","POW-1")
-	item_amounts = list(15,7,3)
 	item_outputs = list(/obj/item/clothing/shoes/industrial)
 	time = 40 SECONDS
 	create = 1
@@ -1968,10 +2017,19 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/jetpack
 	name = "Jetpack"
-	item_paths = list("MET-3","CON-1")
-	item_amounts = list(2,10)
+	item_paths = list("MET-3","CON-2")
+	item_amounts = list(10,20)
 	item_outputs = list(/obj/item/tank/jetpack)
 	time = 60 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/microjetpack
+	name = "Micro Jetpack"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(5,10)
+	item_outputs = list(/obj/item/tank/jetpack/micro)
+	time = 30 SECONDS
 	create = 1
 	category = "Clothing"
 
@@ -2900,15 +2958,6 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
-/datum/manufacture/pizzabox
-	name = "Pizza Box"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
-	item_outputs = list(/obj/storage/crate/pizza)
-	time = 10 SECONDS
-	create = 1
-	category = "Miscellaneous"
-
 /datum/manufacture/wooden
 	name = "Wooden Crate"
 	item_paths = list("MET-1")
@@ -3007,7 +3056,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Colt SAA"
 	item_paths = list("MET-2")
 	item_amounts = list(7)
-	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	time = 30 SECONDS
 	create = 1
 	category = "Weapon"

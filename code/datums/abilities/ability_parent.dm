@@ -1196,7 +1196,7 @@
 			if (H.topBarRendered && H.rendered)
 				var/list/stats = H.onAbilityStat()
 				for (var/x in stats)
-					var/line_length = length(x) + 1 + length(stats[x])
+					var/line_length = length(x) + 1 + length(num2text(stats[x]))
 					longest_line = max(longest_line, line_length)
 					msg += "[x] [stats[x]]<br>"
 					i++

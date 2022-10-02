@@ -38,7 +38,7 @@ var/datum/station_zlevel_repair/station_repair = new
 			src.station_generator.generate_terrain(turfs, reuse_seed=TRUE, flags=gen_flags)
 
 			if(clear)
-				clear_out_turfs(turfs)
+				clear_out_turfs(turfs, ignore_contents=TRUE)
 
 		SPAWN(overlay_delay)
 			for(var/turf/T as anything in turfs)
@@ -104,7 +104,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		var/list/turfs_to_fix = shippingmarket.get_path_to_market()
 		clear_out_turfs(turfs_to_fix)
 
-	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list)
+	proc/clear_out_turfs(list/turf/to_clear, list/ignore_list, ignore_contents=FALSE)
 		for(var/turf/T as anything in to_clear)
 			//Wacks asteroids and skip normal turfs that belong
 			if(istype(T, /turf/simulated/wall/auto/asteroid))
@@ -115,13 +115,14 @@ var/datum/station_zlevel_repair/station_repair = new
 				continue
 
 			//Uh, make sure we don't block the shipping lanes!
-			for(var/atom/A in T)
-				if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
-					continue
-				if(A.density)
-					if(A in ignore_list)
+			if(!ignore_contents)
+				for(var/atom/A in T)
+					if(ismob(A) || iscritter(A)) // Lets not just KILL people... ha hahah HA
 						continue
-					qdel(A)
+					if(A.density)
+						if(A in ignore_list)
+							continue
+						qdel(A)
 
 			if(station_repair.allows_vehicles)
 				T.allows_vehicles = station_repair.allows_vehicles

@@ -1984,6 +1984,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/light_bulb,
 		/datum/manufacture/red_bulb,
 		/datum/manufacture/yellow_bulb,
@@ -2008,7 +2009,9 @@
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/saxophone,
+		/datum/manufacture/trumpet)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -2018,7 +2021,9 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler)
+		/datum/manufacture/stapler,
+		/datum/manufacture/bagpipe,
+		/datum/manufacture/whistle)
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -2062,6 +2067,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/wrench,
 		/datum/manufacture/screwdriver,
@@ -2265,9 +2271,11 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
@@ -2506,7 +2514,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,

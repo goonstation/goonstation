@@ -230,14 +230,14 @@ datum
 					description = initial(description)
 					taste = initial(taste)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				var/mytemp = holder.total_temperature
 				if(!volume_passed) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
-							M.take_toxin_damage(-5 * mult)
+							M.take_toxin_damage(-5)
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
@@ -507,7 +507,7 @@ datum
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.changeStatus("paralysis", 3 SECONDS)
+								M.setStatusMin("paralysis", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -767,8 +767,8 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Ugh! Why did you drink that?!</span>")
-					M.changeStatus("stunned", 3 SECONDS)
-					M.changeStatus("weakened", 3 SECONDS)
+					M.setStatusMin("stunned", 3 SECONDS)
+					M.setStatusMin("weakened", 3 SECONDS)
 					if (prob(25))
 
 						M.visible_message("<span class='alert'>[M] horks all over [himself_or_herself(M)]. Gross!</span>")
@@ -1162,8 +1162,8 @@ datum
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
-					M.changeStatus("stunned", 3 SECONDS)
-					M.changeStatus("weakened", 3 SECONDS)
+					M.setStatusMin("stunned", 3 SECONDS)
+					M.setStatusMin("weakened", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 					if (prob(10))
@@ -1599,7 +1599,7 @@ datum
 					M.reagents.del_reagent("chocolate")
 					M.reagents.del_reagent("freeze")
 				if(M.bodytemperature > 0)
-					M.bodytemperature=max(M.bodytemperature-(10 * mult),0)
+					M.bodytemperature=max(M.bodytemperature-(20 * mult),0)
 				if(probmult(10))
 					boutput(M, pick("<span class='notice'><i>Brrr...</i></span>","<span class='notice'><i>Isn't it a bit chilly in here?</i></span>","<span class='notice'><i>Who left an airlock open?</i></span>"))
 				if(probmult(15))
@@ -1984,9 +1984,9 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, "<span class='alert'>What stunning texture!</span>")
-							M.changeStatus("paralysis", 6 SECONDS)
-							M.changeStatus("stunned", 7 SECONDS)
-							M.changeStatus("weakened", 8 SECONDS)
+							M.setStatusMin("paralysis", 6 SECONDS)
+							M.setStatusMin("stunned", 7 SECONDS)
+							M.setStatusMin("weakened", 8 SECONDS)
 							M.stuttering += 20
 
 		fooddrink/capsaicin
@@ -2034,7 +2034,7 @@ datum
 							boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
 							M.emote("scream")
 							M.stuttering += 30
-							M.changeStatus("weakened", 5 SECONDS)
+							M.setStatusMin("weakened", 5 SECONDS)
 						else if (volume_passed >= 40 && volume_passed < 80)
 							boutput(M, "<span class='alert'>HOT!!!!</span>")
 							M.emote("cough")
@@ -2059,7 +2059,7 @@ datum
 							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
 							M.take_eye_damage(1, 1)
 						M.change_eye_blurry(3)
-						M.changeStatus("stunned", 2 SECONDS)
+						M.setStatusMin("stunned", 2 SECONDS)
 						M.change_misstep_chance(10)
 
 
@@ -2864,7 +2864,7 @@ datum
 			transparency = 250
 			taste = "herbal"
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if(!volume_passed || method != INGEST)
 					return
@@ -2872,13 +2872,13 @@ datum
 					return
 
 				if(M.get_oxygen_deprivation() && prob(45))
-					M.take_oxygen_deprivation(-1 * mult)
+					M.take_oxygen_deprivation(-1)
 				if(M.get_toxin_damage() && prob(45))
-					M.take_toxin_damage(-1 * mult)
+					M.take_toxin_damage(-1)
 				if(M.losebreath && prob(85))
-					M.losebreath -= (1 * mult)
+					M.losebreath -= (1)
 				if(prob(45))
-					M.HealDamage("All", 6 * mult, 6 * mult)
+					M.HealDamage("All", 6, 6)
 				//M.UpdateDamageIcon()
 				return
 
@@ -4010,8 +4010,8 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Ugh! Eating that was a terrible idea!</span>")
-					M.changeStatus("stunned", 2 SECONDS)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.setStatusMin("stunned", 2 SECONDS)
+					M.setStatusMin("weakened", 2 SECONDS)
 					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 		fooddrink/fakecheese
@@ -4065,14 +4065,14 @@ datum
 						T.visible_message("<span class='alert'>The [T] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					T.setMaterial(getMaterial("pizza"))
+					T.setMaterial(getMaterial("pizza"), copy = FALSE)
 			reaction_obj(var/obj/O, var/volume)
 				if(volume < rand(5,9))
 					if(prob(5))
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					O.setMaterial(getMaterial("pizza"))
+					O.setMaterial(getMaterial("pizza"), copy = FALSE)
 
 		fooddrink/friedessence
 			name = "The Physical Manifestation Of The Very Concept Of Fried Food"

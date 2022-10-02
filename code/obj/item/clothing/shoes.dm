@@ -43,10 +43,10 @@
 					. += "The laces are cut."
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/emergency_oxygen) || istype(W, /obj/item/tank/jetpack))
+		if (istype(W, /obj/item/tank/air) || istype(W, /obj/item/tank/oxygen) || istype(W, /obj/item/tank/mini_oxygen) || istype(W, /obj/item/tank/jetpack))
 			var/uses = 0
 
-			if(istype(W, /obj/item/tank/emergency_oxygen)) uses = 2
+			if(istype(W, /obj/item/tank/mini_oxygen)) uses = 2
 			else if(istype(W, /obj/item/tank/air)) uses = 4
 			else if(istype(W, /obj/item/tank/oxygen)) uses = 4
 			else if(istype(W, /obj/item/tank/jetpack)) uses = 6
@@ -223,7 +223,7 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	mats = 12
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
@@ -498,7 +498,7 @@
 
 	New()
 		..()
-		src.tank = new /obj/item/tank/emergency_oxygen(src)
+		src.tank = new /obj/item/tank/mini_oxygen(src)
 
 	setupProperties()
 		..()
@@ -515,7 +515,7 @@
 			if (src.tank)
 				boutput(user, "<span class='alert'>There's already a tank installed!</span>")
 				return
-			if (!istype(W, /obj/item/tank/emergency_oxygen))
+			if (!istype(W, /obj/item/tank/mini_oxygen))
 				boutput(user, "<span class='alert'>[W] doesn't fit!</span>")
 				return
 			boutput(user, "<span class='notice'>You install [W] into [src].</span>")

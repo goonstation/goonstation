@@ -111,7 +111,7 @@
 			if (O.density)
 				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
 				return TRUE
-
+	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
 	F.spawnEgg()
 
 /////////////////////////////////////////
@@ -128,7 +128,7 @@
 		return TRUE
 	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
-	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
+	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)) || !flockTurfAllowed(T))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
 		return TRUE
 	if(isfeathertile(T))
@@ -164,6 +164,8 @@
 
 	if (!flock)
 		return TRUE
+
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
 
 	if (flock.isEnemy(M))
 		flock.removeEnemy(M)
@@ -221,6 +223,7 @@
 	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
 	target.HealDamage("All", 200, 200)
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst on [constructTarget(target)] at [log_loc(src.holder.owner)].")
 	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
 
 /////////////////////////////////////////
@@ -247,6 +250,7 @@
 		boutput(F, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 		return TRUE
 	boutput(F, "<span class='notice'>You diffract the drone.</span>")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts diffract drone on [constructTarget(target)] at [log_loc(src.holder.owner)].")
 	target.split_into_bits()
 
 
@@ -269,6 +273,7 @@
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
+		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts gatecrash at [log_loc(src.holder.owner)].")
 		sleep(1.5 SECONDS)
 		for(var/obj/machinery/door/airlock/A in targets)
 			A.open()
@@ -298,6 +303,7 @@
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
+		logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts radio stun burst at [log_loc(src.holder.owner)].")
 		for(var/mob/living/M in targets)
 			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
@@ -358,9 +364,10 @@
 		holder.owner.name = "Unknown"
 		R.talk_into(holder.owner, messages, 0, "Unknown")
 		holder.owner.name = name
-	else
+	if (!R)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>That isn't a valid target.</span>")
 		return TRUE
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts narrowbeam transmission on radio [constructTarget(R)][ismob(target) ? " worn by [constructTarget(target)]" : ""] with message [message] at [log_loc(src.holder.owner)].")
 
 /////////////////////////////////////////
 

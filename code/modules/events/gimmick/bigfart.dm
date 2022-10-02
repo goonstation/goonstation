@@ -178,7 +178,7 @@
 				return 0
 		else if((HAS_FLAG(F,LIMB_ABOM)) || (HAS_FLAG(F,LIMB_BEAR)))
 			return 0 // Not even magic wants to get near these things
-		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)))
+		else if((HAS_FLAG(F,LIMB_BRULLBAR)) || (HAS_FLAG(F,LIMB_WOLF)) || (HAS_FLAG(F,LIMB_STONE)) || (HAS_FLAG(F,LIMB_ARTIFACT)))
 			return 2 // Both sturdy and scary
 
 /// returns some flufftext as to why their limb didnt come off. Or came off anyway.
@@ -301,6 +301,20 @@
 					boutput(H, "<span class='alert'>It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!</span>")
 				else
 					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] grounds the energy!</span>")
+
+		else if(HAS_FLAG(F, LIMB_ARTIFACT))
+			if(magical)
+				boutput(H, "<span class='alert'>An invisible hand clamps down around [ch ? "our" : "your"] [L] and yanks it with a powerful, otherworldly force!</span>")
+				if(severed)
+					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] is ripped off!</span>")
+				else
+					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] resists it!</span>")
+			else
+				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
+				if(severed)
+					boutput(H, "<span class='alert'>It bursts through [ch ? "our" : "your"] [armleg == "arm" ? "armpit" : "hip"] like a celestial zit, launching [ch ? "our" : "your"] [L] off with the force of a thousand suns!</span>")
+				else
+					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [L] absorbs the energy!</span>")
 
 		else
 			if(magical)

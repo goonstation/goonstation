@@ -378,15 +378,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Janitorial Supplies"
 
 /datum/supply_packs/hydronutrient
-	name = "Hydroponics: Nutrient Pack"
-	desc = "x15 Nutrient Formulas"
+	name = "Hydroponics: Nutrient Crate"
+	desc = "Five bulk jugs of the most essential plant nutrients"
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/glass/bottle/fruitful = 3,
-					/obj/item/reagent_containers/glass/bottle/mutriant = 3,
-					/obj/item/reagent_containers/glass/bottle/groboost = 3,
-					/obj/item/reagent_containers/glass/bottle/topcrop = 3,
-					/obj/item/reagent_containers/glass/bottle/powerplant = 3)
-	cost = 1000
+	contains = list(/obj/item/reagent_containers/glass/jug/saltpetrebulk,
+					/obj/item/reagent_containers/glass/jug/ammoniabulk,
+					/obj/item/reagent_containers/glass/jug/potashbulk,
+					/obj/item/reagent_containers/glass/jug/mutadonebulk,
+					/obj/item/reagent_containers/glass/jug/mutagenicbulk)
+	cost = 2000
 	containertype = /obj/storage/crate
 	containername = "Hydroponics: Nutrient Crate"
 
@@ -532,7 +532,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "x4 Floor Bot, x4 Gas Tanks, x4 Gas Mask, x4 Emergency Space Suit Set"
 	contains = list(/obj/machinery/bot/floorbot = 4,
 	/obj/item/clothing/mask/gas = 4,
-	/obj/item/tank/emergency_oxygen = 2,
+	/obj/item/tank/mini_oxygen = 4,
 	/obj/item/tank/air = 2,
 	/obj/item/clothing/head/emerg = 4,
 	/obj/item/clothing/suit/space/emerg = 4)
@@ -761,7 +761,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/fries = 2,
 					/obj/random_item_spawner/cola = 1)
 	cost = 200
-	containertype = /obj/storage/crate/pizza
+	containertype = /obj/storage/crate/wooden
 	containername = "Soft Soft Pizza Delivery"
 
 /datum/supply_packs/mimicry
@@ -1409,10 +1409,11 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 #ifndef UNDERWATER_MAP
 /datum/supply_packs/complex/mini_magnet_kit
 	name = "Small Magnet Kit"
-	desc = "1x Magnetizer, 1x Low Performance Magnet Kit, 1x Magnet Chassis Frame"
+	desc = "1x Magnetizer, 1x Low Performance Magnet Kit, 1x Magnet Chassis Frame, 1x Instructions Manual"
 	category = "Engineering Department"
 	contains = list(/obj/item/magnetizer,
-					/obj/item/magnet_parts/construction/small)
+					/obj/item/magnet_parts/construction/small,
+					/obj/item/paper/magnetconstruction)
 	frames = list(/obj/machinery/magnet_chassis,
 					/obj/machinery/computer/magnet)
 	cost = 10000
@@ -1421,10 +1422,11 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 
 /datum/supply_packs/complex/magnet_kit
 	name = "Magnet Kit"
-	desc = "1x Magnetizer, 1x High Performance Magnet Kit, 1x Magnet Chassis Frame"
+	desc = "1x Magnetizer, 1x High Performance Magnet Kit, 1x Magnet Chassis Frame, 1x Instructions Manual"
 	category = "Engineering Department"
 	contains = list(/obj/item/magnetizer,
-					/obj/item/magnet_parts/construction)
+					/obj/item/magnet_parts/construction,
+					/obj/item/paper/magnetconstruction)
 	frames = list(/obj/machinery/magnet_chassis,
 					/obj/machinery/computer/magnet)
 	cost = 75000

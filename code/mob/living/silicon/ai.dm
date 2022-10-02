@@ -41,7 +41,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
-	var/datum/hud/ai/hud
+	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
 	var/classic_move = 1 //Ordinary AI camera movement
@@ -261,6 +261,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 
 	SPAWN(0)
 		src.botcard.access = get_all_accesses()
+		src.botcard.registered = "AI"
+		src.botcard.assignment = "AI"
 		src.cell.charge = src.cell.maxcharge
 		src.radio1.name = "Primary Radio"
 		src.radio2.name = "AI Intercom Monitor"
@@ -2323,7 +2325,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/turf/T = get_turf(M)
-		if(!T.cameras || !length(T.cameras))
+		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
 			continue
 
 		var/name = M.name
