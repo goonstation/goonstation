@@ -1,5 +1,9 @@
 
 (t)sat oct 01 22
+(u)glowbold
+(p)10805
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The mining magnet can rarely pull in a chunk of rock from the depths of Abzu.
 (u)LeahTheTech
 (p)10992
 (e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
