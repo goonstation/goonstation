@@ -3435,11 +3435,12 @@ var/global/noir = 0
 					if("the_great_switcharoo")
 						if(src.level >= LEVEL_ADMIN) //Will be SG when tested
 							if (tgui_alert(usr,"Do you really wanna do the great switcharoo?", "Awoo, awoo", list("Yes", "No")) == "Yes")
+								var/silicons_too = (tgui_alert(usr, "Include silicons?", "Silicons", list("Yes", "No")) == "Yes")
 
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
+									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || (issilicon(L) && silicons_too)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
