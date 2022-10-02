@@ -58411,6 +58411,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "owN" = (
@@ -60677,6 +60678,7 @@
 "rEi" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rFl" = (
@@ -61331,6 +61333,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "spT" = (
@@ -63922,6 +63925,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "vGo" = (
