@@ -1027,7 +1027,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
-	var/smash_on_throw = FALSE
+	var/throw_safe = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1312,12 +1312,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!T)
 			qdel(src)
 			return
-		if (src.reagents) // haine fix for cannot execute null.reaction()
-			var/amt = max(10, src.gulp_size)
-			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
-			src.reagents.remove_any(amt)
-			src.reagents.reaction(T)
-
+		src.dump_reagents(A, T)
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1331,10 +1326,27 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.wedge = null
 		qdel(src)
 
+	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
+		. = ..()
+		if (!src.reagents || src.throw_safe)
+			return
+		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
+		if(isliving(thrown_by))
+			thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
+			"<span class='alert'>Everything in [src] spills all over you! <b>[curse]!</b></span>")
+		src.dump_reagents(isliving(thrown_by) ? thrown_by : get_turf(src), isturf(thrown_from) ? thrown_from : get_turf(src))
+		src.reagents.clear_reagents()
+
+	proc/dump_reagents(var/atom/target, var/turf/T)
+		if(src.reagents)
+			var/amt = max(10, src.gulp_size)
+			src.reagents.reaction(target, react_volume = min(amt, src.reagents.total_volume))
+			src.reagents.remove_any(amt)
+			src.reagents.reaction(T)
+
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if(src.smash_on_throw)
-			src.smash(A)
+		src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
 		if(!istype(target, /obj/table))
@@ -1451,7 +1463,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
-	smash_on_throw = TRUE
+	throw_safe = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"

@@ -1,5 +1,7 @@
 
 (t)sun oct 02 22
+(u)tarmunora
+(+)Drinking glasses shatter when thrown, but spill their chems on the thrower instead of the target.
 (u)Herbert
 (p)11038
 (e)🗺💅|A-Mapping, C-QoL
