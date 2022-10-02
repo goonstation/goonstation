@@ -136,8 +136,10 @@
 	src.flock.removeDrone(src)
 
 /mob/living/critter/flock/projCanHit(datum/projectile/P)
-	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
+	if (istype(P, /datum/projectile/energy_bolt/flockdrone))
 		return FALSE
+	if (!isalive(src)) //we cant_lie but still want to have projectiles act as if we are lying when dead
+		return prob(P.hit_ground_chance)
 	return ..()
 
 /mob/living/critter/flock/bullet_act(var/obj/projectile/P)
