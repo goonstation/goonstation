@@ -133,8 +133,8 @@
 			src.icon_state = "snake_double"
 			var/mob/living/critter/small_animal/snake/old_snake = stick
 			old_snake.expiration_id = 0 // we don't want it to expire inside us
-			if(old_snake.contents.len)
-				stick = old_snake.contents[1]
+			if(old_snake.my_stick)
+				stick = old_snake.my_stick
 			// so until the end of the proc stick is actually the real stick inside the snake, keep that in mind
 			do_stick_overlay = 1
 		else if(istype(stick, /obj/critter/domestic_bee))
