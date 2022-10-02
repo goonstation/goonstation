@@ -913,7 +913,6 @@ datum
 
 			else
 				. += "<span class='notice'>Nothing in it.</span>"
-			return
 
 
 		proc/get_exact_description(mob/user)

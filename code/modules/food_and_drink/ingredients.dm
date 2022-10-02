@@ -1,5 +1,6 @@
 // Ingredients
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient
 	name = "ingredient"
 	desc = "you shouldnt be able to see this"

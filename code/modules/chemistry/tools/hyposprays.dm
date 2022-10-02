@@ -26,7 +26,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	inventory_counter_enabled = 1
 
 	emagged

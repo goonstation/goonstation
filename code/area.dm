@@ -740,7 +740,6 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/recovery_shuttle
 	name = "Recovery Shuttle Dock"
 	icon_state = "shuttle2"
-	name = "Recovery Shuttle"
 
 ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle
