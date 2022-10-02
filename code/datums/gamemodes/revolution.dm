@@ -174,11 +174,11 @@
 	command_alert("Relevant biometric signatures of Command have been identified. To aid with the ongoing revolution, station command can now be tracked through the transmitted PDA program.", "Unregistered Signal Insertion", alert_origin = "Egeria Providence Array Broadcast")
 	var/datum/signal/signal1 = get_free_signal()
 	signal1.data_file = (new /datum/computer/file/pda_program/revheadtracker)
-	signal1.data = list("command"="file_send", "file_name" = "Revolutionary Leader Locater", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender_name"="Central Command Distribution Line", "sender"="00000000", "batt_adjust" = netpass_centcom)
+	signal1.data = list("command"="file_send", "file_name" = "Revolutionary Leader Locater", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender_name"="Central Command Distribution Line", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal1)
 	var/datum/signal/signal2 = get_free_signal()
 	signal2.data_file = (new /datum/computer/file/pda_program/headtracker)
-	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000", "batt_adjust" = netpass_centcom)
+	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
 
 /datum/game_mode/revolution/process()

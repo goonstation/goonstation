@@ -1332,7 +1332,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 /datum/computer/file/pda_program/revheadtracker
 	name = "Revolutionary Leader Locater"
-	size = 1
+	size = 0
 	var/turf/nearest_head_location = null
 	var/direction
 	var/distance
@@ -1388,7 +1388,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 /datum/computer/file/pda_program/headtracker
 	name = "Nanotrasen Command Tracker"
-	size = 1
+	size = 0
 	var/turf/nearest_head_location = null
 	var/direction
 	var/distance
