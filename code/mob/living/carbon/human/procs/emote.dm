@@ -96,7 +96,7 @@
 
 			if ("fart")
 				var/oxyplasmafart = 0
-				if (src.emote_check(voluntary) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
+				if (src.emote_check(voluntary, 50) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
 					if (!src.get_organ("butt"))
 						m_type = 1
 						if (prob(10))
@@ -1848,7 +1848,7 @@
 						src.chest_item_dump_reagents_on_flip()
 
 			if ("burp")
-				if (src.emote_check(voluntary))
+				if (src.emote_check(voluntary, 50))
 					if ((src.charges >= 1) && (!muzzled))
 						for (var/mob/O in viewers(src, null))
 							O.show_message("<B>[src]</B> burps.")
@@ -2284,17 +2284,17 @@
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	gas.vacuum()
 	if(oxyplasmafart == 1)
-		gas.toxins += 1
+		gas.toxins += 5
 	if(oxyplasmafart == 2)
-		gas.oxygen += 1
+		gas.oxygen += 5
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		gas.farts = 6.9
+		gas.farts = 42.0
 	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 2.69
+		gas.farts = 13.37
 	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 1.69
+		gas.farts = 9.001
 	else
-		gas.farts = 0.69
+		gas.farts = 4.20
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)
