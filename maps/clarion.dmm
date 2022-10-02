@@ -8681,16 +8681,6 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/machinery/power/apc{
-	areastring = "Pod Bay";
-	dir = 1;
-	name = "Pod Bay APC";
-	pixel_x = 24
-	},
-/obj/cable{
-	d2 = 2;
-	icon_state = "0-2"
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "apT" = (
@@ -11818,7 +11808,6 @@
 	dir = 4;
 	pixel_x = 10
 	},
-/obj/machinery/light_switch/east,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -12374,6 +12363,7 @@
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -29782,6 +29772,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/security/brig)
+"bmv" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "bmC" = (
 /obj/machinery/optable,
 /obj/disposalpipe/segment{
@@ -46057,10 +46051,15 @@
 /turf/simulated/floor/black,
 /area/station/security/main)
 "juU" = (
+/obj/machinery/power/apc{
+	areastring = "Pod Bay";
+	dir = 1;
+	name = "Pod Bay APC";
+	pixel_x = 24
+	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -47638,15 +47637,6 @@
 /obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
-"nkF" = (
-/obj/decal/tile_edge/line/green{
-	icon_state = "line1"
-	},
-/obj/machinery/camera{
-	dir = 10
-	},
-/turf/simulated/floor/grass/random,
-/area/station/hydroponics/bay)
 "nmx" = (
 /obj/cable{
 	d1 = 4;
@@ -50410,6 +50400,15 @@
 "uja" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering/ce/private)
+"ujm" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/machinery/camera{
+	dir = 10
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "uky" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -85531,7 +85530,7 @@ oLc
 oLc
 awF
 axw
-nkF
+ujm
 aym
 azy
 azw
@@ -86299,7 +86298,7 @@ atj
 atP
 auC
 auC
-auC
+bmv
 gXP
 axw
 sZi
@@ -89888,7 +89887,7 @@ jmW
 aoK
 jmW
 apS
-aqB
+asm
 iMu
 aqu
 asl
