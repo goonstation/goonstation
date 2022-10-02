@@ -61,6 +61,10 @@ TYPEINFO(/datum/component/barber)
 	initialization_args = list()
 
 /datum/component/barber
+	var/mob/barber
+	var/mob/barbee
+	var/cut_or_shave
+
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
@@ -176,7 +180,10 @@ TYPEINFO(/datum/component/barber)
 			return 0
 
 	SPAWN(0)
+		src.barbee = M
 
+		src.ui_interact(user)
+		/*
 		var/list/region = list(
 			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
 			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
@@ -197,7 +204,7 @@ TYPEINFO(/datum/component/barber)
 			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
 		else
 			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
-
+		*/
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/get_barbery_conditions(mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -448,6 +455,29 @@ TYPEINFO(/datum/component/barber)
 
 
 
+/datum/component/barber/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "CuttingHair")
+		ui.open()
+/datum/component/barber/ui_data(mob/user)
+	. = list()
+
+/datum/component/barber/ui_static_data(mob/user)
+	var/all_hairs = list()
+
+	switch(cut_or_shave)
+		if(HAIRCUT)
+
+			var/first_hair_color = src.bioHolder.mobAppearance.customization_first_color
+			var/second_hair_color = src.bioHolder.mobAppearance.customization_second_color
+			var/third_hair_color = src.bioHolder.mobAppearance.customization_third_color
+
+			for(var/hair_sytle in list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/hair)) // basically all hair types we want
+				var/hair_name = hair_style.name
+				var/hair_icon = icon('/icons/mob/human_hair.dmi', hair_style.id, frame=1) // doing this in 2 parts to avoid large one-liners
+
+	. = list("hair_styles" = all_hairs)
 
 /datum/component/barber/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_PRE)
