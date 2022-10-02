@@ -34425,6 +34425,7 @@
 	icon_state = "delivery2";
 	tag = ""
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/greenblack{
 	dir = 6
 	},

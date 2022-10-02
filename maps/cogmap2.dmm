@@ -76041,6 +76041,17 @@
 /obj/item/shipcomponent/mainweapon/phaser,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"fqO" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "fuP" = (
 /obj/cable{
 	d1 = 4;
@@ -105404,7 +105415,7 @@ arT
 aeX
 auF
 awe
-azo
+fqO
 azn
 aAH
 aFG

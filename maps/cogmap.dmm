@@ -65724,6 +65724,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"ydh" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "yeH" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -126981,7 +126987,7 @@ qUI
 avj
 xdC
 arn
-arn
+ydh
 mPp
 mPp
 adC
