@@ -767,6 +767,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				boutput(user, "<span class='alert'>There's nothing in the bowl to dip!</span>")
 
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/churro))
+			if (reagents.total_volume)
+				boutput(user, "You dip [W] into the bowl.")
+				reagents.trans_to(W, 10)
+			else
+				boutput(user, "<span class='alert'>There's nothing in the bowl to dip!</span>")
+
 		else if (istype(W, /obj/item/ladle))
 			var/obj/item/ladle/L = W
 			if(!L.my_soup)

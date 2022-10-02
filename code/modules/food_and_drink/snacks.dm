@@ -540,6 +540,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		else
 			..()
 
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/reagent_containers/food/snacks/churro))
+			if (bites_left <= 1)
+				boutput(user, "You scoop up the last of [src] with the [W.name].")
+			else
+				boutput(user, "You scoop some of [src] with the [W.name].")
+
+			if (src.reagents)
+				src.reagents.trans_to(W, src.reagents.total_volume/bites_left)
+
+			src.bites_left--
+			if (!bites_left)
+				qdel(src)
+		else
+			..()
+
 /obj/item/reagent_containers/food/snacks/soup/tomato
 	name = "tomato soup"
 	desc = "A rich and creamy soup made from tomatoes."
@@ -2181,6 +2197,29 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		..()
 		if (src.reagents && src.reagents.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "tortilla-chip-overlay")
+			dip.color = src.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(dip, "dip")
+		else
+			src.UpdateOverlays(null, "dip")
+
+/obj/item/reagent_containers/food/snacks/churro
+	name = "churro"
+	desc = "It's like a donut, but long."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "churro"
+	bites_left = 1
+	heal_amt = 1
+	food_effects = list("food_energized")
+
+	New()
+		..()
+		src.pixel_x = rand(-6, 6)
+		src.pixel_y = rand(-6, 6)
+
+	on_reagent_change()
+		..()
+		if (src.reagents && src.reagents.total_volume)
+			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "churro-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()
 			src.UpdateOverlays(dip, "dip")
 		else
