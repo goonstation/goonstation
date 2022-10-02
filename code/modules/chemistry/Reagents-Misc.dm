@@ -4007,7 +4007,7 @@ datum
 					return
 				if(issilicon(M)) // Its not that type of oil
 					return
-				var/cleaning_amt = (clamp(volume_passed, 0, 100))
+				var/cleaning_amt = volume_passed
 				var/mob/living/carbon/human/H = M
 
 				if(H.sims && H.sims.getValue("Hygiene") < 100)
