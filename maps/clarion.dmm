@@ -8331,6 +8331,13 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "apj" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	pixel_x = 10;
+	pixel_y = -5
+	},
 /turf/simulated/floor/grasstodirt{
 	dir = 10
 	},
@@ -8663,12 +8670,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "apR" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname  - SS13";
-	pixel_y = 21
-	},
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
@@ -11125,6 +11126,12 @@
 	},
 /obj/submachine/seed_manipulator{
 	dir = 8
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname  - SS13";
+	tag = ""
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
@@ -47631,6 +47638,15 @@
 /obj/access_spawn,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"nkF" = (
+/obj/decal/tile_edge/line/green{
+	icon_state = "line1"
+	},
+/obj/machinery/camera{
+	dir = 10
+	},
+/turf/simulated/floor/grass/random,
+/area/station/hydroponics/bay)
 "nmx" = (
 /obj/cable{
 	d1 = 4;
@@ -85515,7 +85531,7 @@ oLc
 oLc
 awF
 axw
-sZi
+nkF
 aym
 azy
 azw
