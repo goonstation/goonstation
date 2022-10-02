@@ -4,13 +4,17 @@
 	cast_while_dead = 1
 	/// total souls absorbed by this wraith so far
 	var/corpsecount = 0
+	var/possession_points = 0
 	/// number of souls required to evolve into a specialized wraith subclass
 	var/absorbs_to_evolve = 3
 	onAbilityStat()
 		..()
 		.= list()
 		.["Points:"] = round(src.points)
-		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
+		if(istype(owner, /mob/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
+			.["Possess:"] = round(src.possession_points)
+		else
+			.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
@@ -1324,8 +1328,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		if (..())
 			return 1
 		if (istype(holder.owner, /mob/wraith/wraith_trickster))
+			var/datum/abilityHolder/wraith/AH = holder
 			var/mob/wraith/wraith_trickster/W = holder.owner
-			if (W.possession_points > W.points_to_possess)
+			if (AH.possession_points > W.points_to_possess)
 				if (ishuman(target) && !isdead(target))
 					var/mob/living/carbon/human/H = target
 					if (H.traitHolder.hasTrait("training_chaplain"))
@@ -1379,7 +1384,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							WG.verbs += list(/mob/verb/setdnr)
 							WG.mind.transfer_to(H)
 							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
-						W.possession_points = 0
+						AH.possession_points = 0
 						logTheThing("debug", null, null, "step 5")
 						qdel(WG)
 						H.take_brain_damage(30)
@@ -1387,7 +1392,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
 					return FALSE
 			else
-				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
+				boutput(holder.owner, "You cannot possess with only [AH.possession_points] possession power. You'll need at least [(W.points_to_possess - AH.possession_points)] more.")
 				return 1
 
 /datum/targetable/wraithAbility/hallucinate

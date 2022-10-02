@@ -17,6 +17,7 @@
 	var/hauntBonus = 0
 	var/last_life_update = 0
 	var/traps_laid = 0
+	var/datum/abilityHolder/wraith/AH = null
 
 	New(var/turf/T, var/mob/wraith/wraith_trickster/M = null)
 		..(T)
@@ -26,7 +27,10 @@
 		last_life_update = TIME
 
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
-		src.abilityHolder.points = master?.abilityHolder.points
+		AH = src.abilityHolder
+		var/datum/abilityHolder/wraith/master_ability_holder = master.abilityHolder
+		AH.points = master_ability_holder.points
+		AH.possession_points = master_ability_holder.possession_points
 
 		src.addAbility(/datum/targetable/wraithAbility/decay)
 		src.addAbility(/datum/targetable/wraithAbility/command)
@@ -50,7 +54,7 @@
 			if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 				src.hauntBonus += 6
 				if(master != null)
-					master.possession_points++
+					AH.possession_points++
 
 		if (master != null && master.next_area_change != null)
 			if (master.next_area_change < TIME)
@@ -77,10 +81,12 @@
 	disposing()
 		if(master != null)
 			src.master.set_loc(get_turf(src))
-			master.abilityHolder.points = src.abilityHolder.points
+			var/datum/abilityHolder/wraith/master_ability_holder = master.abilityHolder
+			master_ability_holder.points = AH.points
+			master_ability_holder.possession_points = AH.possession_points
 			master.setStatus("corporeal", master.forced_haunt_duration)
 			src.mind.transfer_to(master)
-			var/datum/targetable/ability = master.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
+			var/datum/targetable/ability = master_ability_holder.getAbility(/datum/targetable/wraithAbility/haunt)
 			ability.doCooldown()
 			src.master = null
 		playsound(src, "sound/voice/wraith/wraithspook[pick("1","2")].ogg", 60, 0)
@@ -89,7 +95,9 @@
 	proc/demanifest()
 		if(master != null)
 			src.master.set_loc(get_turf(src))
-			master.abilityHolder.points = src.abilityHolder.points
+			var/datum/abilityHolder/wraith/master_ability_holder = master.abilityHolder
+			master_ability_holder.points = AH.points
+			master_ability_holder.possession_points = AH.possession_points
 			src.mind.transfer_to(master)
 			src.master = null
 		qdel(src)
