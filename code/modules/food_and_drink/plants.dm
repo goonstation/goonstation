@@ -982,7 +982,7 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			qdel(src)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
-			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/cup = new /obj/item/reagent_containers/food/drinks/pumpkinlatte(user.loc)
+			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(user.loc)
 			qdel(src)
 
 /obj/item/clothing/head/pumpkinlatte
