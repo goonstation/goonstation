@@ -89,4 +89,5 @@
 #define AMMO_DERRINGER_LITERAL "spawner_derringer"
 #define AMMO_HOWITZER "howitzer"
 #define AMMO_FLINTLOCK "flintlock"
+#define AMMO_FLINTLOCK_RIFLE "flintlock_rifle"
 #define AMMO_COILGUN "coilgun"

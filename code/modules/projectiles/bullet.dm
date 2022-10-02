@@ -540,8 +540,12 @@ toxic - poisons
 				M.changeStatus("slowed", 3 SECONDS)
 			if(power > 70)
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				M.throw_at(target, 2, 2, throw_type = THROW_GUNIMPACT)
+				M.throw_at(target, 3, 3, throw_type = THROW_GUNIMPACT)
 		..()
+
+	rifle
+		power = 80
+		impact_image_state = "bhole-large"
 
 //0.72
 /datum/projectile/bullet/a12

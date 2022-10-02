@@ -692,6 +692,17 @@
 		amount_left = 1
 		max_amount = 1
 
+/obj/item/ammo/bullets/flintlock/rifle
+	sname = ".58 Flintlock"
+	name = ".58 Flintlock"
+	ammo_type = new/datum/projectile/bullet/flintlock/rifle
+	icon_state = "12" // Temporary.
+	ammo_cat = AMMO_FLINTLOCK_RIFLE
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //0.72
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"

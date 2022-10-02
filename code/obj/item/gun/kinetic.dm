@@ -1080,6 +1080,31 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		SPAWN(0.3 SECONDS)
 			..()
 
+/obj/item/gun/kinetic/single_action/flintlock_rifle
+	name = "flintlock rifle"
+	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "flintlock_rifle"
+	item_state = "flintlock_rifle"
+	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
+	max_ammo_capacity = 1
+	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	w_class = W_CLASS_BULKY
+	fire_animation = TRUE
+	has_uncocked_state = TRUE
+	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
+		..()
+
+	shoot()
+		SPAWN(0.3 SECONDS)
+			..()
 
 //0.72
 /obj/item/gun/kinetic/spes
