@@ -2,7 +2,7 @@
 (t)sun oct 02 22
 (u)Sord
 (e)⚙|C-Bug
-(+)Mineral magnetetizer device on mining z-level spawns loaded with plasmastone again
+(+)Mineral magnetizer device on mining z-level spawns loaded with plasmastone again
 (u)callaghanrs
 (p)11116
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
