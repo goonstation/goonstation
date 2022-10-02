@@ -41,12 +41,10 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	icon_state = "lootcrime"
 	icon_opened = "lootcrimeopen"
 	icon_closed = "lootcrime"
-	soundproofing = 3
-	throwforce = 50 //ouch
-	can_flip_bust = 1
-	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
+	can_flip_bust = 0
 	anchored = 1
-	var/static/obj/gangloot_master/lootMaster = new /obj/gangloot_master()
+
+	var/static/obj/lootgen_master/lootMaster = new /obj/lootgen_master()
 
 	only_gimmicks
 		New()
@@ -156,6 +154,16 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			lootMaster.set_size(4,3)
 			lootMaster.generate_loot(src,contents)
 			..()
+	guns_and_gear_unlocked
+		New()
+			var/contents[10]
+			contents[GANG_CRATE_GEAR] = 3
+			contents[GANG_CRATE_GUN_WEAK] = 3
+			lootMaster.set_size(4,3)
+			lootMaster.generate_loot(src,contents)
+			anchored = 0
+			src.light = image('icons/obj/large_storage.dmi',"lootcratelocklight")
+			UpdateIcon()
 	only_guns
 		New()
 			var/contents[10]
@@ -171,7 +179,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	item_state = "bowling"
 	var/hidden = 1
 	level = 1
-	var/static/obj/gangloot_master/lootMaster = new /obj/gangloot_master()
+	var/static/obj/lootgen_master/lootMaster = new /obj/lootgen_master()
 
 
 	proc/update()
@@ -294,7 +302,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		user.u_equip(src)
 		qdel(src)
 
-/obj/gangloot_instance //data class representing a single loot item
+/obj/loot_instance //data class representing a single loot item
 	var/size_x=0
 	var/size_y=0
 	var/offset_x=0
@@ -302,7 +310,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	var/tier=1
 	var/set_layer=0
 
-/obj/gangloot_master
+/obj/lootgen_master
 	var/list/lootInstances
 	var/max_loot_x = 4 //X grid size for loot items
 	var/max_loot_y = 3 //Y grid size for loot items
@@ -359,7 +367,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	//Chooses the size of loot to spawn, given a max and min
 	proc/choose_loot_size(largestX,largestY)
 		var/size = list(1,1)
-		while (size[1] < largestX && prob(60-(10*size[1]))) //weird probability calc - but we prefer smaller drops
+		while (size[1] < largestX && prob(80-(15*size[1]))) //weird probability calc
 			size[1]++
 		while (size[2] < largestY && prob(40))
 			size[2]++
@@ -373,7 +381,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			for (var/y=1 to sizeY)
 				lootGrid[xPos-1+x][yPos+y-1] = 1
 
-		var/obj/gangloot_instance/loot = new /obj/gangloot_instance
+		var/obj/loot_instance/loot = new /obj/loot_instance
 		loot.size_x = sizeX
 		loot.size_y = sizeY
 		loot.set_layer = 3+(max_loot_y-yPos)
@@ -382,7 +390,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		return loot
 
 	//Adds a predefined loot instance
-	proc/add_loot_instance(xPos,yPos,var/obj/gangloot_instance/lootObject)
+	proc/add_loot_instance(xPos,yPos,var/obj/loot_instance/lootObject)
 		for (var/x=1 to lootObject.size_x) //mark lootGrid as used
 			for (var/y=1 to lootObject.size_y)
 				lootGrid[xPos-1+x][yPos+y-1] = 1
@@ -407,7 +415,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			var/maxSize = get_largest_space(cursor_x,cursor_y)
 			var/lootSize = choose_loot_size(maxSize[1],maxSize[2])
 
-			var/obj/gangloot_instance/loot = add_random_loot_instance(cursor_x,cursor_y,lootSize[1],lootSize[2])
+			var/obj/loot_instance/loot = add_random_loot_instance(cursor_x,cursor_y,lootSize[1],lootSize[2])
 			spawnedLootInstances += loot
 			//move cursor to the next unoccupied space
 			while (!done && lootGrid[cursor_x][cursor_y] == 1)
@@ -425,7 +433,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		var/lootPot[] = lootInstances.Copy(1,0)
 		var/lootValues[0] //all types of loot to spawn, in descending priority
 		var/lootValue
-		var/obj/gangloot_instance/lootObject
+		var/obj/loot_instance/lootObject
 
 		//populate lootValues
 		for (var/lootType=lootTypes.len, lootType>0, lootType--)
@@ -448,8 +456,8 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 			if (refund)
 				lootValues += refund
 
-	//spawns loot for a given gangloot_instance
-	proc/create_loot(var/C, var/obj/gangloot_instance/I)
+	//spawns loot for a given loot_instance
+	proc/create_loot(var/C, var/obj/loot_instance/I)
 		var/obj/randomloot_spawner/lootSpawner = spawners[I.size_x][I.size_y]
 		var/refund_token = lootSpawner.create_loot(C, I)
 		//del(loot)
@@ -534,7 +542,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 	New()
 
 	attack_hand(mob/user as mob)
-		var instance = new /obj/gangloot_instance()
+		var instance = new /obj/loot_instance()
 		src.create_loot(get_turf(user),instance)
 		del(src)
 		return refund_token
@@ -555,7 +563,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 
 
 	//create loot for a given instance
-	proc/create_loot(var/C, var/obj/gangloot_instance/I)
+	proc/create_loot(var/C, var/obj/loot_instance/I)
 		if (!populated)
 			populate()
 			populated = true
@@ -563,7 +571,7 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		weightedSpawner.create_loot(C,I)
 
 	//spawn a given item with the 'transform on pickup' component
-	proc/spawn_item(loc,var/obj/gangloot_instance/I,path,off_x=0,off_y=0, rot=0, scale_x=1,scale_y=1)
+	proc/spawn_item(loc,var/obj/loot_instance/I,path,off_x=0,off_y=0, rot=0, scale_x=1,scale_y=1)
 		var/obj/lootObject = new path(loc)
 		lootObject.transform = lootObject.transform.Scale(scale_x,scale_y)
 		lootObject.transform = lootObject.transform.Turn(rot)
@@ -928,12 +936,11 @@ var/strong_stims = list("omnizine","enriched_msg","triplemeth", "fliptonium","co
 		alastor
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/gun/energy/alastor,rot=45,scale_x=0.8,scale_y=0.8)
+				spawn_item(C,I,/obj/item/gun/energy/alastor,rot=45,off_y=-2,scale_x=0.8,scale_y=0.8)
 		riotgun
 			tier = GANG_CRATE_GUN_WEAK
 			create_loot(var/C,var/I)
-				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=4)
-				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=-4)
+				spawn_item(C,I,/obj/item/gun/kinetic/riotgun,off_x=-8,off_y=0)
 
 		//MID
 		utility_belt
