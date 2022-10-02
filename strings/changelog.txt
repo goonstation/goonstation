@@ -1,5 +1,9 @@
 
 (t)sun oct 02 22
+(u)callaghanrs
+(p)11116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The coachgun can now be gilded with the appropriate medal.
 (u)tarmunora
 (+)Drinking glasses shatter when thrown, but reagent contents are not preserved.
 (u)Herbert
