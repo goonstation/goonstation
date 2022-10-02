@@ -1064,7 +1064,6 @@ TYPEINFO(/datum/mutantrace)
 	New(var/mob/living/carbon/human/M)
 		..()
 		if(ishuman(src.mob))
-			M:decomp_stage = DECOMP_STAGE_NO_ROT
 			M:update_face()
 			M:update_body()
 			M:update_clothing()
