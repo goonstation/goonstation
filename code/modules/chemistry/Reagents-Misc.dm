@@ -3989,6 +3989,33 @@ datum
 						var/mob/bipbip = holder.my_atom
 						bipbip.playsound_local(bipbip.loc, 'sound/musical_instruments/Vuvuzela_1.ogg', 50, 1)
 
+		roseoil
+			name = "Rose oil"
+			id = "roseoil"
+			description = "Concentrated rose, smells amazing!"
+			reagent_state = LIQUID
+			fluid_r = 255
+			fluid_g = 50
+			fluid_b = 220
+			hygiene_value = 3
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
+				if(!volume_passed)
+					return
+				if(!isliving(M)) // Corpses aren't well known for their hygiene
+					return
+				if(issilicon(M)) // Its not that type of oil
+					return
+				var/cleaning_amt = (clamp(volume_passed, 0, 100))
+				var/mob/living/carbon/human/H = M
+
+				if(H.sims && H.sims.getValue("Hygiene") < 100)
+					var/hygiene_initial = H.sims.getValue("Hygiene")
+					H.sims.affectMotive("Hygiene", cleaning_amt) // cleans you even if you have jumpsuit on
+					cleaning_amt = max(0, ((hygiene_initial + cleaning_amt) - 100))
+				H.setStatus("perfumed", (cleaning_amt * 6) SECONDS)
+
 		sakuride
 			name = "sakuride"
 			id = "sakuride"

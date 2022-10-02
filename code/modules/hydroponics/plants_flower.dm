@@ -20,6 +20,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	force_seed_on_harvest = 1
 	mutations = list()
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
+	assoc_reagents = list("roseoil")
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		..()

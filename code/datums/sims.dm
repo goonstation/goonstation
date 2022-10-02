@@ -247,6 +247,12 @@
 
 		var/protection = 20
 
+		modifyValue(var/amt)
+			if(amt < 0 && holder.owner.hasStatus("perfumed"))
+				holder.owner.changeStatus("perfumed", (amt SECONDS))
+				return 0
+			..()
+
 		mayStandardDeplete()
 			if (..())
 				if (protection > 0)

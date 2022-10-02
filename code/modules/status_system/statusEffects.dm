@@ -1657,6 +1657,29 @@
 			else
 				. += " You will take toxic damage."
 
+/datum/statusEffect/perfumed
+	id = "perfumed"
+	name = "Perfumed"
+	desc = "You have perfume on you and smell wonderful, you feel extra resistant to miasma and other gross things."
+	icon_state = "perfumed"
+	unique = 1
+	maxDuration = 10 MINUTES
+
+	onUpdate()
+		if(owner.reagents.get_reagent_amount("miasma"))
+			owner.reagents.remove_reagent("miasma", 5)
+			owner.changeStatus("perfumed", -5 SECONDS)
+
+		var/mult = 1
+		if(probmult(5))
+			for(var/mob/living/carbon/C in view(2,get_turf(owner)))
+				if (C == owner)
+					continue
+				if (ispug(C))
+					boutput(C, "<span class='alert'>Wow, [owner] smells [pick("amazing", "incredible", "great")]!")
+				else
+					boutput(C, "<span class='alert'>Someone nearby smells really nice!")
+
 /datum/statusEffect/dripping_paint
 	id = "marker_painted"
 	name = "Dripping with Paint"

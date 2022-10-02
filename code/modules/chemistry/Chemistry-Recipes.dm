@@ -4258,3 +4258,10 @@ datum
 			mix_phrase = "The mixture comes together slowly. It doesn't seem like it wants to be here."
 			required_reagents = list("poor_cement" = 1, "silicon_dioxide" = 5, "water" = 1)
 			result_amount = 7
+
+		roseoil
+			name = "roseoil"
+			id = "roseoil"
+			mix_phrase = null
+			mix_sound = null
+			required_reagents = list("roseoil" = 1, "miasma" = 2)
