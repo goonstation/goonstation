@@ -1,5 +1,9 @@
 
 (t)sat oct 01 22
+(u)DrWolfy
+(p)11120
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Add maintenance access to Cogmap1 North-East maintenance doors.
 (u)glowbold
 (p)10805
 (e)🆕🗺|C-Feature, A-Mapping
