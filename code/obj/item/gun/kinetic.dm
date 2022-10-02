@@ -1080,6 +1080,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		SPAWN(0.3 SECONDS)
 			..()
 
+	shoot(var/target, var/start, var/mob/user)
+		..()
+
+	shoot_point_blank(atom/target, var/mob/user, second_shot)
+		..()
+
 /obj/item/gun/kinetic/single_action/flintlock_rifle
 	name = "flintlock rifle"
 	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."

@@ -166,3 +166,15 @@
 	gravity = list(0, 1, 0)
 	friction = 0.5
 	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/flintlock_smoke
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("8x8square")
+	color = "#ffffff"
+	spawning = 10
+	count = 10
+	lifespan = 30
+	fade = 5 SECONDS
+	grow = list(0.1, 0.1)
+	friction = generator("num", 0.1, 0.3, NORMAL_RAND)
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
