@@ -45120,15 +45120,11 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-<<<<<<< HEAD
 /obj/storage/secure/closet/civilian/hydro,
 /turf/simulated/floor/green/side{
 	dir = 8
 	},
 /area/station/hydroponics/bay)
-=======
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "gZw" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -45139,7 +45135,6 @@
 	dir = 9
 	},
 /area/station/science/chemistry)
->>>>>>> 68262a9047909b7ffaad66c242489da998d71409
 "hcb" = (
 /obj/disposalpipe/segment/mail,
 /obj/cable{
