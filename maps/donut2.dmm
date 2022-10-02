@@ -9600,6 +9600,14 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "aIC" = (
@@ -9826,6 +9834,14 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4;
 	icon_state = "pipe-s"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor,
 /area/station/bridge)
@@ -13767,13 +13783,6 @@
 "aVJ" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
@@ -13781,13 +13790,6 @@
 /obj/disposalpipe/segment/mail,
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
@@ -13956,13 +13958,6 @@
 	icon_state = "1-2"
 	},
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "aWn" = (
@@ -14287,6 +14282,12 @@
 	},
 /obj/table/reinforced/bar/auto{
 	name = "table"
+	},
+/obj/machinery/door_control{
+	id = "bridge_blast";
+	name = "Bridge Entrance Lockdown";
+	pixel_x = 24;
+	pixel_y = 8
 	},
 /turf/simulated/floor/carpet{
 	dir = 8;
@@ -16473,6 +16474,14 @@
 	dir = 4
 	},
 /obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
 "bdy" = (
@@ -30935,6 +30944,18 @@
 /obj/machinery/phone/wall,
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
+"gBN" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "gBO" = (
 /obj/table/wood/auto,
 /obj/item/plate{
@@ -31285,20 +31306,17 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "gRP" = (
-/obj/disposalpipe/segment/mail,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
+	dir = 4;
 	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/hallway/primary/east)
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "gSx" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -31484,6 +31502,14 @@
 	},
 /obj/cable{
 	icon_state = "0-2"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
@@ -32529,14 +32555,6 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "ibh" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge_blast";
-	name = "Bridge Security Shutters";
-	opacity = 0
-	},
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8
 	},
@@ -38714,13 +38732,6 @@
 /area/station/engine/ptl)
 "nDi" = (
 /obj/wingrille_spawn/auto,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "nDk" = (
@@ -40504,6 +40515,14 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
 "pfp" = (
@@ -40557,14 +40576,6 @@
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "pjr" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 4;
-	icon_state = "pdoor0";
-	id = "bridge_blast";
-	name = "Bridge Security Shutters";
-	opacity = 0
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -42671,13 +42682,6 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "qXv" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "lockdown";
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
 /obj/machinery/door/airlock/pyro/glass,
 /obj/firedoor_spawn,
 /turf/simulated/floor,
@@ -43255,6 +43259,18 @@
 	dir = 4
 	},
 /area/station/hydroponics/bay)
+"rzq" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 1;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "rzr" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/arrival{
@@ -43508,6 +43524,18 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"rLz" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 5;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "rMl" = (
 /obj/machinery/computer/teleporter{
 	dir = 4
@@ -45052,20 +45080,8 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/door_control{
-	id = "bridge_blast";
-	name = "Bridge Entrance Lockdown";
-	pixel_x = 24;
-	pixel_y = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/machinery/door_control{
-	id = "lockdown";
-	name = "Bridge Hallway Lockdown";
-	pixel_x = 24;
-	pixel_y = -8
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -47681,6 +47697,14 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	name = "Bridge Security Shutters";
+	opacity = 0
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/heads)
@@ -92061,7 +92085,7 @@ wXs
 aTc
 aUr
 aQM
-gRP
+aVK
 aQM
 aQf
 rWe
@@ -95998,7 +96022,7 @@ baH
 bba
 baF
 aVb
-aUw
+rzq
 aaa
 adQ
 aaa
@@ -96287,7 +96311,7 @@ aaa
 aaa
 aaa
 aaA
-aUw
+rzq
 aVe
 aVT
 aWM
@@ -96300,7 +96324,7 @@ baI
 bbe
 aZx
 bcd
-aUw
+rzq
 acG
 acK
 acG
@@ -96589,20 +96613,20 @@ aaa
 aaa
 aaa
 abZ
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
-aUw
+rLz
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gRP
+gBN
 aaa
 aaa
 aaa
