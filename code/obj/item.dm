@@ -285,15 +285,8 @@
 
 /obj/item/New()
 	// this is dumb but it won't let me initialize vars to image() for some reason
-
-	// this is here so things wont be dumb
-	var/wstate = icon_state
-	if (wear_state)
-		wstate = wear_state
-
 	wear_image = image(wear_image_icon)
-	wear_image.icon_state = wstate //Why was this null until someone actually wore it? Made manipulation impossible.
-
+	wear_image.icon_state = icon_state || wear_state
 	inhand_image = image(inhand_image_icon)
 	if (src.rand_pos)
 		if (!src.pixel_x) // just in case
