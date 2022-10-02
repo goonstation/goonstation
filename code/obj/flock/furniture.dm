@@ -285,7 +285,7 @@ TYPEINFO_NEW(/obj/table/flock)
 	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	qdel(src)
 
-/obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
+/obj/machinery/light/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
