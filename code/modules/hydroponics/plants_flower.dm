@@ -8,7 +8,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 /datum/plant/flower/rose
 	name = "Rose"
 	seedcolor = "#AA2222"
-	crop = /obj/item/plant/flower/rose
+	crop = /obj/item/clothing/head/rose
 	starthealth = 20
 	growtime = 30
 	harvtime = 100

@@ -1636,6 +1636,97 @@ ABSTRACT_TYPE(/obj/item/clothing/head/hairbow)
 	icon_state = "rafflesiahat"
 	item_state = "rafflesiahat"
 
+	New()
+		..()
+		make_reagents()
+
+	proc/make_reagents()
+		if (!src.reagents)
+			src.create_reagents(100)
+
+/obj/item/clothing/head/rose
+	name = "rose"
+	desc = "By any other name, would smell just as sweet. This one likes to be called "
+	icon_state = "rosehat"
+	item_state = "rosehat"
+
+	var/thorned = 1
+	var/backup_name_txt = "names/first.txt"
+
+	proc/possible_rose_names()
+		var/list/possible_names = list()
+		for(var/mob/M in mobs)
+			if(!M.mind)
+				continue
+			if(ishuman(M))
+				if(iswizard(M))
+					continue
+				if(isnukeop(M))
+					continue
+				possible_names += M
+		return possible_names
+
+	New()
+		..()
+		make_reagents()
+		var/list/possible_names = possible_rose_names()
+		var/rose_name
+		if(!length(possible_names))
+			rose_name = pick_string_autokey(backup_name_txt)
+		else
+			var/mob/chosen_mob = pick(possible_names)
+			rose_name = chosen_mob.real_name
+		desc = desc + rose_name + "."
+
+	proc/make_reagents()
+		if (!src.reagents)
+			src.create_reagents(100)
+
+	attack_hand(mob/user)
+		var/mob/living/carbon/human/H = user
+		if(src.thorned)
+			if (H.hand)//gets active arm - left arm is 1, right arm is 0
+				if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+					..()
+					return
+			else
+				if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+					..()
+					return
+			if(istype(H))
+				if(H.gloves)
+					..()
+					return
+			if(ON_COOLDOWN(src, "prick_hands", 1 SECOND))
+				return
+			boutput(user, "<span class='alert'>You prick yourself on [src]'s thorns trying to pick it up!</span>")
+			random_brute_damage(user, 3)
+			take_bleeding_damage(user,null,3,DAMAGE_STAB)
+		else
+			..()
+
+	attackby(obj/item/W, mob/user)
+		if (issnippingtool(W) && src.thorned)
+			boutput(user, "<span class='notice'>You snip off [src]'s thorns.</span>")
+			src.thorned = 0
+			src.desc += " Its thorns have been snipped off."
+			return
+		..()
+		return
+
+obj/item/clothing/head/rose/holorose
+	name = "holo rose"
+	desc = "A holographic display of a Rose. This one likes to be called "
+	icon_state = "holorosehat"
+	item_state = "holorosehat"
+	backup_name_txt = "names/ai.txt"
+
+	possible_rose_names()
+		var/list/possible_names = list()
+		for(var/mob/living/silicon/M in mobs)
+			possible_names += M
+		return possible_names
+
 /obj/item/clothing/head/deerstalker
 	name = "deerstalker hat"
 	desc = "A hat for hunting space deer or solving a mystery."

@@ -774,4 +774,4 @@
 	name = "Holo Rose"
 	iconmod = "HoloRose"
 	dont_rename_crop = true
-	crop = /obj/item/plant/flower/rose/holorose
+	crop = /obj/item/clothing/head/rose/holorose

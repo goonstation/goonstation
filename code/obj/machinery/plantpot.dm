@@ -1265,6 +1265,11 @@
 					B.reagents.maximum_volume = B.reagents.maximum_volume + DNA.endurance // more endurance = larger and more sturdy balloons!
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
+				else if(istype(CROP,/obj/item/clothing/head))
+					var/obj/item/clothing/head/B = CROP
+					B.reagents.maximum_volume = B.reagents.maximum_volume + DNA.endurance
+					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
+
 				else if(istype(CROP,/obj/item/spacecash)) // Ugh
 					var/obj/item/spacecash/S = CROP
 					S.amount = max(1, DNA.potency * rand(2,4))
