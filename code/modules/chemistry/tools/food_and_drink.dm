@@ -1314,7 +1314,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			return
 		if(src.reagents && splash_on_smash)
 			var/amt = max(10, src.gulp_size)
-			src.reagents.reaction(target, react_volume = min(amt, src.reagents.total_volume))
+			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
 			src.reagents.remove_any(amt)
 			src.reagents.reaction(T)
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
