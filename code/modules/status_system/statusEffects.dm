@@ -1670,8 +1670,7 @@
 			owner.reagents.remove_reagent("miasma", 5)
 			owner.changeStatus("perfumed", -5 SECONDS)
 
-		var/mult = 1
-		if(probmult(5))
+		if(prob(5))
 			for(var/mob/living/carbon/C in view(2,get_turf(owner)))
 				if (C == owner)
 					continue
