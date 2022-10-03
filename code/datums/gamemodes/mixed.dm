@@ -58,17 +58,17 @@
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
 #endif
 
-	var/major_threat_chance = length(src.major_threats) * 10
+	var/major_threat_chance = length(src.major_threats) * 20
 	if ((num_enemies >= 4 && prob(major_threat_chance)) || debug_mixed_forced_wraith || debug_mixed_forced_blob || debug_mixed_forced_flock)
 		var/chosen = weighted_pick(src.major_threats)
 		if (chosen == ROLE_WRAITH || debug_mixed_forced_wraith)
 			num_enemies = max(num_enemies - 2, 1)
 			num_wraiths = 1
 		else if (chosen == ROLE_BLOB || debug_mixed_forced_blob)
-			num_enemies = max(num_enemies - 4, 1)
+			num_enemies = max(num_enemies - 3, 1)
 			num_blobs = 1
 		else if (chosen == ROLE_FLOCKMIND || debug_mixed_forced_flock)
-			num_enemies = max(num_enemies - 3, 1)
+			num_enemies = max(num_enemies - 2, 1)
 			num_flockminds = 1
 	for(var/j = 0, j < num_enemies, j++)
 		if(has_wizards && prob(10)) // powerful combat roles
