@@ -1,6 +1,10 @@
 
 (t)mon oct 03 22
 (u)LeahTheTech
+(p)11090
+(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(*)Mixed "major threat" antagonists (Blob, Flock and Wraith) are now twice as common and replace fewer normal antagonists.
+(u)LeahTheTech
 (p)11140
 (e)🪲⚖🧛‍♂️|C-Bug, C-Balance, A-Gamemodes
 (+)Flockdrone corpses no longer block 100% of shots
