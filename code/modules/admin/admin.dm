@@ -1625,7 +1625,7 @@ var/global/noir = 0
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
-					pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
+				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
 				var/pick_id
