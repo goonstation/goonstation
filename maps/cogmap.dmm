@@ -11581,7 +11581,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aGy" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "aGz" = (
@@ -50444,12 +50444,15 @@
 /turf/simulated/floor/plating,
 /area/station/medical/robotics)
 "dkF" = (
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_y = 21
 	},
 /obj/decal/tile_edge/stripe/big,
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
 /turf/simulated/floor,
 /area/station/medical/staff)
 "dmC" = (
@@ -51881,12 +51884,9 @@
 /area/station/crew_quarters/stockex)
 "eWa" = (
 /obj/item/storage/wall/medical_wear,
-/obj/storage/closet/medicalclothes,
-/obj/decal/tile_edge/stripe/big,
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
+/turf/simulated/floor/bluewhite{
+	dir = 1
 	},
-/turf/simulated/floor,
 /area/station/medical/staff)
 "eWf" = (
 /obj/cable{
@@ -58411,6 +58411,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "owN" = (
@@ -60677,6 +60678,7 @@
 "rEi" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rFl" = (
@@ -61331,6 +61333,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "spT" = (
@@ -63922,6 +63925,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "vGo" = (
@@ -65720,6 +65724,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"ydh" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "yeH" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -94362,7 +94372,7 @@ bgl
 aCA
 aDQ
 awM
-aGy
+aHB
 aHB
 aHB
 aHB
@@ -126977,7 +126987,7 @@ qUI
 avj
 xdC
 arn
-arn
+ydh
 mPp
 mPp
 adC

@@ -327,6 +327,9 @@
 
 		.= delay
 
+	mob_flip_inside(mob/user)
+		animate_spin(src, pick("L", "R"), 1, FALSE)
+
 	ex_act(severity)
 		dispel(1)
 		if(owner) owner.ex_act(severity)
