@@ -41888,7 +41888,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/rose{
 	name = "Rose of Demeter"
 	},
 /turf/simulated/floor/wood/seven,
@@ -42244,7 +42244,7 @@
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/rose{
 	name = "Rose of Apollo"
 	},
 /turf/simulated/floor/wood/seven,
