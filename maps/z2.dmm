@@ -61440,7 +61440,7 @@
 	icon_state = "blue"
 	})
 "dAN" = (
-/obj/item/bat,
+/obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
 	pixel_x = 6;
 	pixel_y = 24
