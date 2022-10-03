@@ -225,10 +225,9 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	force_seed_on_harvest = 1
 	vending = 2
 	genome = 7
-	assoc_reagents = list("histamine")
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
-		..()
+		. = ..()
 		if (.) return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
@@ -239,29 +238,28 @@ ABSTRACT_TYPE(/datum/plant/herb)
 			for (var/mob/living/M in range(1,POT))
 				if (ishuman(M))
 					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
 				for (var/plantReagent in assoc_reagents) //amount of delivered chems is based on potency
 					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
 				boutput(M, "<span class='notice'>You feel something brush against you.</span>")
 
 	HYPharvested_proc(var/obj/machinery/plantpot/POT,var/mob/user) //better not try to harvest these without gloves
-		..()
+		. = ..()
 		if (.) return
 		var/datum/plantgenes/DNA = POT.plantgenes
 		var/mob/living/carbon/human/H = user
 
 		if (H.hand)//gets active arm - left arm is 1, right arm is 0
 			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
-				..()
 				return
 		else
 			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
-				..()
 				return
 		if(istype(H))
 			if(H.gloves)
-				..()
 				return
 		boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
+		H.reagents?.add_reagent("histamine", 5)
 		for (var/plantReagent in assoc_reagents)
 			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA.potency / (10 * (length(assoc_reagents) ** 0.5))))))
 		H.changeStatus("weakened", 4 SECONDS)
