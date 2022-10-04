@@ -357,7 +357,7 @@
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/M = victim
+			var/mob/living/carbon/human/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -406,8 +406,7 @@
 
 			thralls += M
 
-			var/mob/living/carbon/human/M_human = victim
-			M_human.decomp_stage = DECOMP_STAGE_NO_ROT
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
