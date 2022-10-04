@@ -120,15 +120,8 @@
 			var/newY = changeY/speed*32
 			var/matrix/matrix = matrix(1, 0, round(curX-newX,0.1), 0, 1, round(curY-newY,0.1))
 
-			if (instantchange) // instant sliding
-				P.transform = matrix
-			else
-				P.transform = matrix
-				//animate(P,transform=matrix,time=smoothtime*dfps) // smoothing
+			P.transform = matrix
 
-			if (P.plane == PLANE_PARALLAX_PLANETS) // DEBUG, REMOVE LATER
-				boutput(master,"[P.transform.c],[P.transform.f]")
-			continue
 
 		lastturf = master_turf
 		instantchange = FALSE
