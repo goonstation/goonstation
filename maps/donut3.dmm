@@ -1340,6 +1340,7 @@
 /area/station/science/bot_storage)
 "agU" = (
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "ahg" = (
@@ -4617,6 +4618,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/cobweb2,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bgq" = (
@@ -12054,6 +12056,7 @@
 	dir = 1
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "dmD" = (
@@ -12129,9 +12132,8 @@
 /turf/simulated/wall/auto/jen,
 /area/station/maintenance/outer/north)
 "dnF" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/storage/secure/closet/brig,
 /obj/decal/mule/beacon,
-/obj/item/clothing/gloves/fingerless,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "dnG" = (
@@ -14382,6 +14384,12 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"dVV" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "dWn" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -17040,12 +17048,11 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "eJg" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/decal/mule/beacon,
 /obj/machinery/light/incandescent/warm{
 	dir = 1
 	},
-/obj/item/clothing/gloves/fingerless,
+/obj/storage/secure/closet/brig,
 /turf/simulated/floor/black,
 /area/station/security/equipment)
 "eJu" = (
@@ -39275,12 +39282,6 @@
 	},
 /turf/simulated/floor/redwhite,
 /area/station/security/checkpoint/west)
-"lqk" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/bluewhite{
-	dir = 4
-	},
-/area/station/medical/breakroom)
 "lqn" = (
 /obj/railing/red{
 	dir = 4
@@ -40337,6 +40338,7 @@
 "lFo" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "lFw" = (
@@ -40420,6 +40422,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "lGB" = (
@@ -46024,6 +46027,11 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/jen,
 /area/station/crew_quarters/quartersA)
+"nnC" = (
+/obj/machinery/vending/jobclothing/security,
+/obj/decal/mule/beacon,
+/turf/simulated/floor/black,
+/area/station/security/equipment)
 "nnD" = (
 /obj/cable{
 	d2 = 8;
@@ -60353,6 +60361,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"rlV" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/north)
 "rmq" = (
 /obj/shrub{
 	dir = 6
@@ -64371,6 +64385,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "suy" = (
@@ -73650,7 +73665,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "veW" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -76473,6 +76488,11 @@
 	},
 /turf/simulated/floor/carpet/red/fancy,
 /area/station/security/hos)
+"vSL" = (
+/turf/simulated/floor/bluewhite{
+	dir = 4
+	},
+/area/station/medical/breakroom)
 "vSO" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -109133,7 +109153,7 @@ sUM
 xMz
 iRc
 yiy
-dnF
+nnC
 htz
 bxt
 htz
@@ -124853,8 +124873,8 @@ njW
 ucb
 rUN
 veW
-lqk
 tXj
+vSL
 bIe
 jrH
 mRY
@@ -125108,7 +125128,7 @@ vBq
 vBq
 vBq
 vBq
-mai
+rlV
 gcg
 kLi
 xye
@@ -130202,7 +130222,7 @@ huC
 kkV
 kkV
 voK
-bzZ
+dVV
 umX
 qGq
 gJt
@@ -139869,7 +139889,7 @@ cqV
 czN
 aUm
 xna
-bzZ
+dVV
 aUm
 vqz
 rdj

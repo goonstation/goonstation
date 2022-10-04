@@ -21365,6 +21365,7 @@
 	dir = 4;
 	pixel_x = -6
 	},
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -25806,7 +25807,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "kNX" = (
-/obj/machinery/hydro_growlamp,
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},

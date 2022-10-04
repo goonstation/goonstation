@@ -46,7 +46,7 @@
 					if (!W.hide_attack)
 						attack_particle(user,src)
 						attack_twitch(user, anim_mult, anim_mult)
-					else if (W.hide_attack == 2)
+					else if (W.hide_attack == ATTACK_PARTIALLY_HIDDEN)
 						attack_twitch(user, anim_mult, , anim_mult)
 
 

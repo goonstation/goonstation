@@ -619,7 +619,7 @@
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar/yellow,
-	/obj/item/weldingtool,
+	/obj/item/weldingtool/yellow,
 	/obj/item/wirecutters/yellow,
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,
@@ -628,7 +628,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/mini_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
