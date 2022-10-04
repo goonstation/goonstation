@@ -38,10 +38,11 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 				E.explode()
 
-	proc/queue_damage(var/list/new_turfs)
+	proc/queue_damage(var/list/new_turfs, var/list/new_blame)
 		var/c = 0
 		for (var/turf/T as anything in new_turfs)
 			queued_turfs[T] += new_turfs[T]
+			queued_turfs_blame[T] = new_blame[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
 
@@ -153,7 +154,7 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 
 
-/obj/var/datum/explosion/last_explosion = null
+/obj/var/datum/explosion/last_explosion = 1 //gross hack detected
 
 /obj/disposing()
 	src.last_explosion = null
@@ -277,7 +278,6 @@ var/datum/explosion_controller/explosions
 				C.lying = 1
 				C.set_clothing_icon_dirty()
 
-		explosions.queue_damage(nodes)
-		explosions.queued_turfs_blame += blame
+		explosions.queue_damage(nodes, blame)
 
 #undef RSS_SCALE
