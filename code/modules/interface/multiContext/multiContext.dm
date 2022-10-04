@@ -164,6 +164,13 @@
 			background.appearance_flags = RESET_COLOR
 			src.underlays += background
 
+		if (length(A.text))
+			src.maptext = "<span class='vga l vt ol'>[A.text] </span>"
+			src.maptext_y = -16
+
+		if (A.color)
+			src.color = A.color
+
 	MouseEntered(location,control,params)
 		if (usr != user)
 			return
