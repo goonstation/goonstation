@@ -201,9 +201,11 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
-				owner.decomp_stage(DECOMP_STAGE_NO_ROT)
-				owner.update_face()
-				owner.update_body()
+				if (ishuman(owner)) // oof
+					var/mob/living/carbon/human/owner_human = owner
+					owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
+					owner_human.update_face()
+					owner_human.update_body()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
@@ -404,7 +406,8 @@
 
 			thralls += M
 
-			M.decomp_stage(DECOMP_STAGE_NO_ROT)
+			var/mob/living/carbon/human/M_human = victim
+			M_human.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
