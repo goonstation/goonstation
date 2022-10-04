@@ -201,9 +201,9 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
-				owner:decomp_stage = DECOMP_STAGE_NO_ROT
-				owner:update_face()
-				owner:update_body()
+				owner.decomp_stage = DECOMP_STAGE_NO_ROT
+				owner.update_face()
+				owner.update_body()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
