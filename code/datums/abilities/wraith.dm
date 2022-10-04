@@ -818,6 +818,9 @@
 
 
 	New()
+		if (istype(ticker.mode, /datum/game_mode/disaster)) //For Disaster wraith
+			desc = "Choose a form to evolve into using the power of the void"
+
 		..()
 
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)
