@@ -1185,7 +1185,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 
 			if (C.amount >= 3000) // coffins
 				FP = /obj/storage/closet/coffin
-				FP_name = "Slutstation"
+				FP_name = "Likkista"
 				C.amount -= 3000
 
 			else if (C.amount >= 1700) // segways
@@ -1568,7 +1568,7 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 	sealed = 1
 	info = {"<small<i>This looks quite tattered and ripped up. You can't read everything around the edges because of all the holes and tears in the paper.</i></small<br><br>
 <b><i>Produkt</i></b> - <i>Pris</i><br>
-<b>Slutstation</b> - 3000<small>SSEK</small><br>
+<b>Likkista</b> - 3000<small>SSEK</small><br>
 <b>Fart</b> - 1700<small>SSEK</small><br>
 <b>Arbetsplatsolycka</b> - 330<small>SSEK</small><br>
 <b>Fyllehund</b> - 320<small>SSEK</small><br>
