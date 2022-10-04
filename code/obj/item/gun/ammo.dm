@@ -681,9 +681,10 @@
 //0.58
 /obj/item/ammo/bullets/flintlock
 	sname = ".58 Flintlock"
-	name = ".58 Flintlock"
+	name = ".58 flintlock pouch"
+	desc = "A small pouch containing .58 lead balls for flintlock pistols."
 	ammo_type = new/datum/projectile/bullet/flintlock
-	icon_state = "12" // Temporary.
+	icon_state = "flintlock_ammo_pouch"
 	amount_left = 10
 	max_amount = 10
 	ammo_cat = AMMO_FLINTLOCK
@@ -693,10 +694,11 @@
 		max_amount = 1
 
 /obj/item/ammo/bullets/flintlock/rifle
-	sname = ".58 Flintlock"
-	name = ".58 Flintlock"
+	sname = ".75 Flintlock"
+	name = ".75 flintlock pouch"
+	desc = "A small pouch containing .75 lead balls for flintlock rifles."
 	ammo_type = new/datum/projectile/bullet/flintlock/rifle
-	icon_state = "12" // Temporary.
+	icon_state = "flintlock_rifle_ammo_pouch"
 	ammo_cat = AMMO_FLINTLOCK_RIFLE
 
 	single
