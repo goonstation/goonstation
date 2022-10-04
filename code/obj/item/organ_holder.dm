@@ -1618,9 +1618,9 @@
 			src.icon_state = "[initial(src.icon_state)]_cd"
 
 /datum/targetable/organAbility/sacredheart
-	name = "Sacred Heart"
+	name = "Heartlight Blade"
 	desc = "Draw a knife of pure light from your chest. It's safer to do so than it sounds."
-	icon_state = "cyberkidney"
+	icon_state = "sacredheart"
 	targeted = FALSE
 	cooldown = 30 SECONDS
 

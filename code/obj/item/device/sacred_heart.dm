@@ -1,10 +1,9 @@
-#define HEART 1
+#define HEART 1 // I couldn't find a way to make this work without the define, my coding is very primitive however.
 
 /obj/item/device/sacred_heart_scroll
-	name = "Sacred Heart Scroll"
+	name = "Hardlight Heart Scroll"
 	icon_state = "sacred_heart_scroll-"
-	desc = "A dusty old scroll containing some rather enlightening knowlege from a time of cloak and dagger."
-	w_class = 2
+	desc = "A dusty old scroll containing some rather enlightening knowlege from a time of cloak and dagger, adapted for modern technology."
 	is_syndicate = TRUE
 	var/implant = /obj/item/organ/heart/sacred
 	var/implants_available = HEART
@@ -32,10 +31,8 @@
 			bodypart = H.get_organ(part_loc)
 			if(bodypart)
 				parts_to_remove += part_loc
-		boutput(H, "<span class='alert'>This will take some time to read!</span>")
-		SPAWN(1 SECOND)
-			playsound(H.loc, "sound/items/ocular_implanter_start.ogg", 50, 0, -1)
-			SETUP_GENERIC_ACTIONBAR(H, src, 10 SECONDS, /obj/item/device/sacred_heart_scroll/proc/end_replace_heart, list(target, H), src.icon, src.icon_state,"[src] Teaches you much about the faith.", null)
+		boutput(H, "<span class='alert'>You fill your heart with keen light !</span>")
+		end_replace_heart(HEART, H)
 
 	proc/end_replace_heart(var/target, var/mob/living/carbon/human/H)
 		if(!H)

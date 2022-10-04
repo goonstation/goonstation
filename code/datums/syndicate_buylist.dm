@@ -497,10 +497,10 @@ This is basically useless for anyone but miners.
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/scroll
-	name = "Scroll of the Sacred Heart"
+	name = "Scroll of the Hardlight Heart"
 	item = /obj/item/device/sacred_heart_scroll
 	cost = 6
-	desc = "A scroll from ages past, sure to fill your heart with radiating light... and knives, lots and lots of knives."
+	desc = "A scroll from ages past, sure to fill your heart with pure light... and knives, lots and lots of knives."
 	job = list("Chaplain")
 	not_in_crates = TRUE
 	vr_allowed = FALSE
