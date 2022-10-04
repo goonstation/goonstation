@@ -2370,16 +2370,16 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = TRUE
 	special_spawn_location = LANDMARK_PIRATE
 	slot_card = /obj/item/card/id
-	slot_belt = list(/obj/item/swords_sheaths/pirate)
-	slot_back = list(/obj/item/storage/backpack)
-	slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
-	slot_head = list(/obj/item/clothing/head/bandana/red)
-	slot_eyes = list(/obj/item/clothing/glasses/eyepatch/pirate)
-	slot_ears = list(/obj/item/device/radio/headset/pirate)
-	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
+	slot_belt = list()
+	slot_back = list()
+	slot_jump = list()
+	slot_foot = list()
+	slot_head = list()
+	slot_eyes = list()
+	slot_ears = list()
+	slot_poc1 = list()
 	slot_poc2 = list()
-	var/random_clothing = TRUE
+	var/rank = ROLE_PIRATE
 
 	New()
 		..()
@@ -2391,35 +2391,21 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
-		if (random_clothing == TRUE)
-			slot_jump = list(pick(/obj/item/clothing/under/gimmick/waldo,
-							/obj/item/clothing/under/misc/serpico,
-							/obj/item/clothing/under/gimmick/guybrush,
-							/obj/item/clothing/under/misc/dirty_vest))
-			slot_head = list(pick(/obj/item/clothing/head/red,
-							/obj/item/clothing/head/bandana/red,
-							/obj/item/clothing/head/pirate_brn))
-
-		M.traitHolder.addTrait("training_drinker")
+		for (var/datum/antagonist/antag in M.mind.antagonists)
+			if (antag.id == ROLE_PIRATE || antag.id == ROLE_PIRATE_FIRST_MATE || antag.id == ROLE_PIRATE_CAPTAIN)
+				antag.give_equipment()
+				return
+		M.mind.add_antagonist(rank)
 
 
 	first_mate
 		name = "Space Pirate First Mate"
-		slot_jump = list(/obj/item/clothing/under/gimmick/guybrush)
-		slot_suit = list(/obj/item/clothing/suit/gimmick/guncoat/tan)
-		slot_head = list(/obj/item/clothing/head/pirate_brn)
-		slot_ears = list(/obj/item/device/radio/headset/pirate/first_mate)
-		random_clothing = FALSE
+		rank = ROLE_PIRATE_FIRST_MATE
 		special_spawn_location = LANDMARK_PIRATE_FIRST_MATE
 
 	captain
 		name = "Space Pirate Captain"
-		slot_jump = list(/obj/item/clothing/under/shirt_pants_b)
-		slot_suit = list(/obj/item/clothing/suit/armor/pirate_captain_coat)
-		slot_head = list(/obj/item/clothing/head/pirate_captain)
-		slot_foot = list(/obj/item/clothing/shoes/swat/heavy)
-		slot_ears = list(/obj/item/device/radio/headset/pirate/captain)
-		random_clothing = FALSE
+		rank = ROLE_PIRATE_CAPTAIN
 		special_spawn_location = LANDMARK_PIRATE_CAPTAIN
 
 /datum/job/special/juicer_specialist
