@@ -834,7 +834,7 @@
 
 	proc/evolve(var/effect as text)
 		var/datum/abilityHolder/wraith/AH = holder
-		if (AH.corpsecount < AH.absorbs_to_evolve)
+		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
 			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
 			return 1
 		if (holder.points < pointCost)
