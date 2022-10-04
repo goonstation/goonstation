@@ -7,8 +7,8 @@
 	var/list/parallax_objects = list()
 	var/layers = list()
 
-	// tiles per tile of visual change
-	var/static/list/speeds = list(64,48,32,16) // farthest to closest
+	// tiles per 32 pixels of visual change
+	var/static/list/speeds = list(320,160,64,40) // farthest to closest
 	var/mob/master // the nerd with this hud
 	var/active = FALSE // turns active if the client has it on
 	var/turf/lastturf // for tracking the change between moves
@@ -24,26 +24,30 @@
 		parallax_objects = list()
 		for_by_tcl(O, /obj/effects/background_objects)
 			var/atom/movable/screen/hud/parallax/N = create_screen(icon=O.icon,state=O.icon_state,layer=HUD_LAYER,customType=/atom/movable/screen/hud/parallax)
+			N.plane = O.plane
+			var/distancemod = 1 // hack to try and spread out the planets plane
 
-
-			N.plane = PLANE_PARALLAX_PLANETS
 			if(istype(O,/obj/effects/background_objects/station))
 				N.plane = PLANE_PARALLAX_STATIONS
 			else if(istype(O,/obj/effects/background_objects/star_red) || istype(O,/obj/effects/background_objects/star_blue))
 				N.plane = PLANE_PARALLAX_STARS
 			else if(istype(O,/obj/effects/background_objects/x0))
 				N.plane = PLANE_PARALLAX_GIANT
+			else
+				N.plane = PLANE_PARALLAX_PLANETS
+				N.Scale(0.5,0.5)
+				distancemod = 8 // distance the planets out a bit
 
-			N.mouse_opacity = 1
+			N.mouse_opacity = 0
 			N.appearance_flags = TILE_BOUND
 			N.invisibility = INVIS_ALWAYS
-
 			N.zlevel = O.z
 			parallax_objects += N
 
+			var/icon/I = icon(O.icon)
 			var/speed = speeds[N.plane-PLANE_SPACE]
-			var/pX = (O.x-master.x)/speed
-			var/pY = (O.y-master.y)/speed
+			var/pX = (O.x-lastturf.x)*distancemod/speed-I.Width()/64
+			var/pY = (O.y-lastturf.y)*distancemod/speed-I.Height()/64
 			N.screen_loc = "CENTER:[round(pX*32,1)],CENTER:[round(pY*32,1)]"
 
 	New(M)
@@ -69,10 +73,10 @@
 			layers += master.client?.get_plane(PLANE_PARALLAX_GIANT)
 			layers += master.client?.get_plane(PLANE_PARALLAX_PLANETS)
 			layers += master.client?.get_plane(PLANE_PARALLAX_STATIONS)
-
+		lastturf = locate(150,150,1)
 		src.createPlanets()
 		src.update()
-		lastturf = get_turf(master)
+
 
 	/// updates parallax object transform values
 	proc/update()
@@ -103,19 +107,18 @@
 					P.invisibility = INVIS_NONE
 
 		// the difference between where we are and where we were earlier
-		var/deltaX = (master_turf.x-lastturf.x)
-		var/deltaY = (master_turf.y-lastturf.y)
+		var/changeX = (master_turf.x-lastturf.x)
+		var/changeY = (master_turf.y-lastturf.y)
 
 		for(var/atom/movable/screen/plane_parent/P as anything in src.layers)
 			var/curX = P.transform.c // values from earlier
 			var/curY = P.transform.f
 			// used for scroll speed, plane size
-			var/speed = 1/speeds[P.plane-PLANE_SPACE]
+			var/speed = speeds[P.plane-PLANE_SPACE]
 
-			var/offsetX = round(deltaX / speed*32,1) // apply speed and icon scaling
-			var/offsetY = round(deltaY / speed*32,1)
-
-			var/matrix/matrix = matrix(1, 0, curX-offsetX, 0, 1, curY-offsetY)
+			var/newX = changeX/speed*32 // apply speed and icon scaling
+			var/newY = changeY/speed*32
+			var/matrix/matrix = matrix(1, 0, round(curX-newX,0.1), 0, 1, round(curY-newY,0.1))
 
 			if (instantchange) // instant sliding
 				P.transform = matrix
@@ -142,7 +145,7 @@
 		var/turf/master_turf = get_turf(master)
 		if (!master_turf) return
 
-		if(!setting) // turn it off
+		if(!setting && active) // turn it off
 			for (var/atom/movable/screen/hud/parallax/P as anything in parallax_objects)
 				P.invisibility = INVIS_ALWAYS
 			background.invisibility = INVIS_ALWAYS
@@ -150,7 +153,7 @@
 			UnregisterSignal(master,"mov_moved")
 			UnregisterSignal(master,"mob_move_vehicle")
 			UnregisterSignal(master,"mov_set_loc")
-		else // turn it on
+		else if (setting && !active) // turn it on
 			if (master.client && !length(src.layers)) // update proc wont work without these
 				layers += master.client?.get_plane(PLANE_PARALLAX_STARS)
 				layers += master.client?.get_plane(PLANE_PARALLAX_GIANT)
