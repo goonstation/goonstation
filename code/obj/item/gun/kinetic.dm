@@ -1084,6 +1084,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	name = "flintlock rifle"
 	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon = 'icons/obj/large/64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "flintlock_rifle"
 	item_state = "flintlock_rifle"
 	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
