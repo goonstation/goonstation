@@ -61845,7 +61845,7 @@
 	icon_state = "blue"
 	})
 "dBw" = (
-/obj/critter/snake,
+/mob/living/critter/small_animal/snake,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "dBx" = (
@@ -73202,7 +73202,7 @@
 	pixel_y = -7;
 	spawn_chance = 32
 	},
-/obj/critter/snake{
+/mob/living/critter/small_animal/snake{
 	aggressive = 0;
 	color = "#5cd14f";
 	desc = "An extremely illegal snake. Hiss!";
