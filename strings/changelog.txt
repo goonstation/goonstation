@@ -1,5 +1,9 @@
 
 (t)mon oct 03 22
+(u)Wisemonster
+(p)11157
+(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(*)Disaster round wraiths can now evolve without having to absorb any corpses.
 (u)LeahTheTech
 (p)11090
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes
