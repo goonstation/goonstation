@@ -41238,7 +41238,7 @@
 /area/afterlife/arena)
 "cvB" = (
 /obj/rack/iomoon,
-/obj/item/bloodthirsty_blade,
+/obj/item/swords/bloodthirsty_blade,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
@@ -61440,7 +61440,7 @@
 	icon_state = "blue"
 	})
 "dAN" = (
-/obj/item/bat,
+/obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
 	pixel_x = 6;
 	pixel_y = 24
@@ -70818,9 +70818,7 @@
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
 	},
-/obj/stool/chair/comfy{
-	dir = 2
-	},
+/obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -74462,10 +74460,12 @@
 /area/centcom/lobby)
 "qXt" = (
 /obj/table/auto,
-/obj/item/decoration/ashtray{
-	icon_state = "ashtray4"
-	},
 /obj/machinery/light/small/floor,
+/obj/item/paper/gallery{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/decoration/ashtray,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "qYW" = (

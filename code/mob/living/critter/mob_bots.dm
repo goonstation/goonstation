@@ -139,7 +139,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot)
 	icon_state = "clean_mop"
 	targeted = TRUE
 	target_anything = TRUE
-	cooldown = 3 SECONDS
+	cooldown = 1.5 SECONDS
 	max_range = 1
 
 	cast(atom/target)

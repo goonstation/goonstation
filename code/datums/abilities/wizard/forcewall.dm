@@ -50,7 +50,6 @@
 				qdel(forcefield5)
 
 /obj/forcefield
-	desc = "A space wizard's magic wall."
 	name = "Forcewall"
 	desc = "An impenetrable magic barrier. Its only flaw is that it cannot last long."
 	icon = 'icons/obj/wizard.dmi'

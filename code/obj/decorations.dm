@@ -1298,7 +1298,6 @@ obj/decoration/gibberBroken
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
-	var/list/proj_impacts = list()
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 
