@@ -2266,6 +2266,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	radio_announcement = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
 	var/leader = FALSE
+	add_to_manifest = FALSE
+
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2304,6 +2306,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
 	slot_rhan = list(/obj/item/gun/kinetic/pistol)
+	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2341,6 +2344,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/device/pda2,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
+	add_to_manifest = FALSE
 
 	New()
 		..()
@@ -2367,6 +2371,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	add_to_manifest = FALSE
 
 	slot_back = list(/obj/item/gun/energy/blaster_cannon)
 	slot_belt = list(/obj/item/storage/fanny)
@@ -2504,6 +2509,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_card = null
 	slot_back = list()
 	items_in_backpack = list()
+	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2800,6 +2806,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
 		team = 2
+		add_to_manifest = FALSE
 
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)
