@@ -1,5 +1,9 @@
 
 (t)mon oct 03 22
+(u)Amylizzle
+(p)11129
+(e)🗺🔎📦📡⚙|A-Mapping, C-Code-Quality, A-Game-Objects, A-AI, A-Internal
+(+)Sticks-to-snakes spell snakes are mobs now. You can set them on fire and poison them.
 (u)Wisemonster
 (p)11157
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes
