@@ -4800,7 +4800,9 @@
 /area/noGenerate)
 "MO" = (
 /obj/table/auto,
-/obj/item/magnetizer,
+/obj/item/magnetizer{
+	loaded = 1
+	},
 /obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)

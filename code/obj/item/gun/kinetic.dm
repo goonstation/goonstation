@@ -2153,6 +2153,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	can_dual_wield = FALSE
 	two_handed = FALSE
 	add_residue = TRUE
+	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 
 	var/broke_open = FALSE
@@ -2165,6 +2166,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new/obj/item/ammo/bullets/abg/two
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot()
 		if (!src.broke_open)
@@ -2180,10 +2185,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	attack_self(mob/user)
 		if (src.broke_open)
-			src.icon_state = "coachgun"
 			src.broke_open = FALSE
 		else
-			src.icon_state = "coachgun-empty"
 			src.broke_open = TRUE
 			src.casings_to_eject = src.shells_to_eject
 
@@ -2193,6 +2196,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
+		update_icon()
 		..()
 
 	attackby(obj/item/I, mob/user)
