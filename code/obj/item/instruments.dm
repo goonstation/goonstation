@@ -39,6 +39,10 @@
 	/*1=C,2=C#,3=D,4=D#,5=E,F=6,F#=7,G=8,G#=9,A=10,A#=11,B=12*/
 	var/key_offset = 1
 	var/keyboard_toggle = 0
+	/*Default keybinds (c2-c7)*/
+	var/default_keys_string = "1!2@34$5%6^78*9(0qQwWeErtTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
+	/*A string representing the keybinds used in keyboard mode*/
+	var/note_keys_string = "tTyYuiIoOpPasSdDfgGhHjJklLzZxcCvVbBnm"
 
 	New()
 		..()
@@ -121,6 +125,24 @@
 				currentOctave++
 		return notes
 
+	// Creates a string that is converted into the instrument keybinds for the interface
+	// proc/generate_keybinds(var/list/noteRange)
+	// 	var/list/bleh
+	// 	var/result
+	// 	var/lowerBound = noteRange[0]
+	// 	var/upperBound = noteRange[noteRange.len]
+
+	// 	// Delete the list entries in the noteRange list below the lower bound and above the upper bound
+	// 	var/start = (text2ascii(copytext(lowerBound, 1, 2)) - text2ascii("a")) + (copytext(lowerBound, 2) * 12)
+	// 	var/end = (text2ascii(copytext(upperBound, 1, 2)) - text2ascii("a")) + (copytext(upperBound, 2) * 12)
+
+	// 	for(var/i in start to end)
+	// 		bleh.Add(noteRange[i])
+
+	// 	result = bleh.Join()
+
+	// 	return result
+
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui && use_new_interface)
@@ -134,6 +156,7 @@
 			"volume" = src.volume,
 			"transpose" = src.transpose,
 			"keybindToggle" = src.keyboard_toggle,
+			"noteKeysString": src.note_keys_string,
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
