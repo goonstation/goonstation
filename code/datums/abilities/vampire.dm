@@ -201,7 +201,7 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
-				owner.decomp_stage = DECOMP_STAGE_NO_ROT
+				owner.decomp_stage(DECOMP_STAGE_NO_ROT)
 				owner.update_face()
 				owner.update_body()
 			else
@@ -404,7 +404,7 @@
 
 			thralls += M
 
-			M.decomp_stage = DECOMP_STAGE_NO_ROT
+			M.decomp_stage(DECOMP_STAGE_NO_ROT)
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
