@@ -5,8 +5,10 @@
 	var/name = ""
 	var/desc = ""
 	var/tooltip_flags = null
-	var/use_tooltip = 1
-	var/close_clicked = 1
+	var/use_tooltip = TRUE
+	var/close_clicked = TRUE
+	///Does the action close when the mob moves
+	var/close_moved = TRUE
 	var/flick_on_click = null
 	var/text = ""
 	var/color = null
@@ -1302,7 +1304,8 @@
 		mode = RCD_MODE_LIGHTTUBES
 
 /datum/contextAction/reagent
-	icon_state = "white"
+	icon_background = "whitebg"
+	icon_state = "note"
 	var/reagent_id = ""
 
 	New(var/reagent_id)
@@ -1316,6 +1319,7 @@
 		src.name = capitalize(reagent.name)
 
 /datum/contextAction/reagent/robospray
+	close_moved = FALSE
 	checkRequirements(var/obj/item/robospray/robospray, var/mob/user)
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
