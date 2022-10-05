@@ -34706,7 +34706,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/storage/secure/closet/medical/uniforms,
+/obj/machinery/vending/jobclothing/medical,
 /obj/item/device/radio/intercom/medical{
 	dir = 4;
 	pixel_x = -21;
@@ -39343,7 +39343,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "cRB" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "cRL" = (

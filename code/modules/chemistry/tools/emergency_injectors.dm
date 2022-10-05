@@ -17,7 +17,7 @@
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	on_reagent_change()
 		..()
