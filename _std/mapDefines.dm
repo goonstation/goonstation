@@ -56,6 +56,9 @@
 #define UNDERWATER_MAP 1
 #define RUNTIME_CHECKING 1
 #define PREFAB_CHECKING 1
+
+#elif defined(MAP_OVERRIDE_NEON)
+#define UNDERWATER_MAP 1
 //Entry below is the "default" map
 #else
 

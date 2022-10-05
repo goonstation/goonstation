@@ -179,6 +179,7 @@ var/maniac_previous_victim = "Unknown"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/spooky/Evilreaver_Ambience.ogg'
 #ifdef MAP_OVERRIDE_OSHAN
+#elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif
 

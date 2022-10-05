@@ -1106,6 +1106,7 @@ ABSTRACT_TYPE(/area/adventure)
 	name ="Martian Trade Outpost"
 	sound_environment = 8
 #ifdef MAP_OVERRIDE_OSHAN
+#elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif
 
@@ -1161,6 +1162,7 @@ ABSTRACT_TYPE(/area/adventure)
 	force_fullbright = 1
 #endif
 #ifdef MAP_OVERRIDE_OSHAN
+#elif defined(MAP_OVERRIDE_NEON)
 	requires_power = FALSE
 #endif
 
@@ -2113,6 +2115,10 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/bridge/customs
 	name = "Customs"
 	icon_state = "yellow"
+
+/area/station/bridge/execrestroom
+	name = "Executive Restroom"
+	icon_state = "blue"
 
 ABSTRACT_TYPE(/area/station/crew_quarters)
 /area/station/crew_quarters

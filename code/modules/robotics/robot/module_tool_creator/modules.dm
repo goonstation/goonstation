@@ -129,6 +129,7 @@
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		#ifdef MAP_OVERRIDE_OSHAN
+		#elif defined(MAP_OVERRIDE_NEON)
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
 		/datum/robot/module_tool_creator/item_type/amount/steel_tile,

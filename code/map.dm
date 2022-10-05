@@ -38,6 +38,7 @@ var/global/list/mapNames = list(
 	"Wrestlemap" = 			list("id" = "WRESTLEMAP", 	"settings" = "wrestlemap", 		"playerPickable" = FALSE),
 	"pod_wars" = 			list("id" = "POD_WARS", 	"settings" = "pod_wars", 		"playerPickable" = FALSE),
 	"Event" = 			list("id" = "EVENT", 		"settings" = "destiny/clarion", 		"playerPickable" = FALSE),
+	"Neon" = 			list("id" = "NEON", 		"settings" = "neon", 		"playerPickable" = TRUE,				"MaxPlayersAllowed" = 35),
 	"blank" = 			list("id" = "BLANK", "settings" = "", "playerPickable" = FALSE),
 	"blank_underwater" =  list("id" = "BLANK_UNDERWATER", "settings" = "", "playerPickable" = FALSE)
 )
@@ -984,6 +985,39 @@ var/global/list/mapNames = list(
 
 	valid_nuke_targets = list()
 
+/datum/map_settings/neon
+	name = "NEON"
+//	goonhub_map = "" //todo
+
+	arrivals_type = MAP_SPAWN_CRYO
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = EAST
+	default_shuttle = "oshan"
+	shuttle_map_turf = /turf/space/fluid
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+//	valid_nuke_targets = list()) // todo
 
 /area/shuttle/merchant_shuttle/left_centcom
 	icon_state = "shuttle_merch_l"

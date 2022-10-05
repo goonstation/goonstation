@@ -747,6 +747,7 @@
 	req_access = list(access_engineering_engine)
 	spawn_contents = list(/obj/item/storage/toolbox/mechanical,
 #ifdef MAP_OVERRIDE_OSHAN
+#elif defined(MAP_OVERRIDE_NEON)
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
 	/obj/item/engivac,

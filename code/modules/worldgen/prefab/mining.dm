@@ -273,6 +273,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 #endif
 
 #if defined(MAP_OVERRIDE_OSHAN)
+#elif defined(MAP_OVERRIDE_NEON)
 	elevator
 		required = 1
 		underwater = 1
