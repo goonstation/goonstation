@@ -977,12 +977,12 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
 			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
-			var/obj/item/clothing/head/pumpkinlatte/P = new /obj/item/clothing/head/pumpkinlatte(user.loc)
+			var/obj/item/clothing/head/pumpkinlatte/P = new(get_turf(user))
 			P.name = "carved [src.name]"
 			qdel(src)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
-			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(user.loc)
+			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(get_turf(user))
 			qdel(src)
 
 /obj/item/clothing/head/pumpkinlatte
@@ -1003,7 +1003,7 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			W.item_state = "pumpkin"
 			qdel(src)
 		else
-			..()
+			. = ..()
 
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
