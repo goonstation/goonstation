@@ -94,3 +94,6 @@
 			node = null
 
 		return null
+
+/obj/machinery/atmospherics/unary/pipeline_expansion()
+	return list(node)

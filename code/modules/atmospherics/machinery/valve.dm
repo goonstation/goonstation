@@ -1,4 +1,4 @@
-obj/machinery/atmospherics/valve
+/obj/machinery/atmospherics/valve
 	icon = 'icons/obj/atmospherics/valve.dmi'
 	icon_state = "valve0"
 	name = "manual valve"
@@ -13,6 +13,7 @@ obj/machinery/atmospherics/valve
 	var/obj/machinery/atmospherics/node2
 	var/datum/pipe_network/network_node1
 	var/datum/pipe_network/network_node2
+
 
 	vertical
 		dir = NORTH

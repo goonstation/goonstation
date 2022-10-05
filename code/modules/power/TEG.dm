@@ -1372,7 +1372,6 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 /obj/machinery/atmospherics/unary/furnace_connector
 	icon = 'icons/obj/atmospherics/heat_reservoir.dmi'
 	icon_state = "intact_off"
-	density = 1
 
 	name = "Furnace Connector"
 	desc = "Used to connect a furnace to a pipe network."

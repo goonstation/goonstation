@@ -1,6 +1,6 @@
-datum/pipeline
+/datum/pipeline
 	var/datum/gas_mixture/air
-//
+
 	var/list/obj/machinery/atmospherics/pipe/members
 	var/list/obj/machinery/atmospherics/pipe/edges //Used for building networks
 
