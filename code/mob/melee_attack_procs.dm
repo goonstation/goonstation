@@ -1173,6 +1173,11 @@
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
 		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
 
+	var/datum/ailment_data/AD = find_ailment_by_type(/datum/ailment/disease/chronic_exposure/mercury)
+	if (AD)
+		var/debuff_coeff = 1 - (AD.stage * 0.25) // the more progressed the disease, the bigger the modifier
+		msgs.stamina_target *= debuff_coeff
+		msgs.damage *= debuff_coeff
 
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()

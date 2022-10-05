@@ -310,6 +310,15 @@ datum
 			result_amount = 3
 			mix_phrase = "The mixture bubbles slightly before settling down."*/
 
+		edta
+			name = "EDTA"
+			id = "edta"
+			result = "edta"
+			required_reagents = list("formaldehyde" = 3, "cyanide" = 2, "ammonia" = 2, "ethanol" = 1, "sodium" = 1, "chlorine" = 1)
+			required_temperature = T0C + 100
+			result_amount = 5
+			mix_phrase = "The solution condenses into a white solid."
+
 		synthflesh
 			name = "Synthetic Flesh"
 			id = "synthflesh"

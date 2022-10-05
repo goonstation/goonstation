@@ -63,6 +63,7 @@
 	var/brain_data = null
 	// var/heart_data = null		//Moving this to organ_data for now. -kyle
 	var/reagent_data = null
+	var/trace_reagent_data = null
 	var/pathogen_data = null
 	var/disease_data = null
 	var/implant_data = null
@@ -205,6 +206,10 @@
 		rad_data = "&emsp;<span class='alert'>The subject is [R.howMuch]irradiated. Dose: [M.radiation_dose] Sv</span>"
 
 	for (var/datum/ailment_data/A in M.ailments)
+		if (istype(A.master, /datum/ailment/disease/chronic_exposure))
+			var/datum/ailment/disease/chronic_exposure/C = A.master
+			if(C.require_upgraded_scanner && !(verbose_reagent_info && organ_scan))
+				continue
 		if (disease_detection >= A.detectability)
 			disease_data += "<br>[A.scan_info()]"
 
@@ -218,6 +223,11 @@
 			var/total_amt = ephe_amt + epi_amt + atro_amt
 			if (total_amt)
 				reagent_data = "<span class='notice'>Bloodstream Analysis located [total_amt] units of rejuvenation chemicals.</span>"
+
+	if (ishuman(M) && verbose_reagent_info)
+		var/mob/living/carbon/human/H = M
+		if(H.trace_reagents)
+			trace_reagent_data = scan_trace_reagents(H)
 
 	if (!ishuman) // vOv
 		if (M.get_brain_damage() >= 100)
@@ -243,6 +253,7 @@
 	[implant_data ? "<br>[implant_data]" : null]\
 	[organ_data ? "<br>[organ_data]" : null]\
 	[reagent_data ? "<br>[reagent_data]" : null]\
+	[trace_reagent_data ? "<br>[trace_reagent_data]" : null]\
 	[pathogen_data ? "<br>[pathogen_data]" : null]\
 	[disease_data ? "[disease_data]" : null]\
 	[interesting_data ? "<br><i>Historical analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
@@ -502,6 +513,22 @@
 	else
 		data = "<span class='notice'>No significant chemical agents found in [A].</span>"
 
+	return data
+
+/// Used to scan for reagents in human mobs' trace_reagents list
+/proc/scan_trace_reagents(var/atom/A as turf|obj|mob)
+	if(!ishuman(A))
+		return
+	var/data = null
+	var/mob/living/carbon/human/H = A
+	if(!H.trace_reagents)
+		data += "<span class='notice'>No trace reagents found in [A].</span>"
+		return data
+	var/reagents_length = length(H.trace_reagents)
+	data += "<span class='notice'>[reagents_length] trace reagent[reagents_length > 1 ? "s" : ""] found in [A]:</span><br>"
+	for(var/reagent in H.trace_reagents)
+		var/amount = H.trace_reagents[reagent]
+		data += "<span class='notice'>&emsp;[reagent] - [amount]</span><br>"
 	return data
 
 // Should make it easier to maintain the detective's scanner and PDA program (Convair880).

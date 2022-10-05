@@ -94,6 +94,9 @@
 	var/spiders = 0 // SPIDERS
 	var/makeup = null // for when you wanna look pretty
 	var/makeup_color = null
+	/// Keeps track of how much of specific reagents are 'trapped' in the body
+	/// Used for heavy metal poisoning/other exposure-related effects
+	var/trace_reagents = list()
 
 	var/gunshot_residue = 0 // Fire a kinetic firearm and get forensic evidence all over you (Convair880).
 
@@ -3444,6 +3447,21 @@
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
 		H?.bioHolder?.mobAppearance.UpdateMob()
+
+/// Called (normally by Life()) to try to start a chronic exposure disease if there's enough in trace_reagents
+/// Also regularly calls the diseases to update their progress/regress
+/mob/living/carbon/human/proc/chronic_exposure_check()
+	if(length(trace_reagents) == 0)
+		return // it's empty, why bother checking
+	var/datum/ailment_data/AD = src.find_ailment_by_type(/datum/ailment/disease/chronic_exposure/mercury)
+	if(!AD)
+		var/mercury = trace_reagents["mercury"]
+		if((mercury > 5) && (prob((mercury - 5) * 5))) // i'm p sure bypassing disease resist makes sense here?
+			src.contract_disease(/datum/ailment/disease/chronic_exposure/mercury, null, null, TRUE)
+	else
+		var/datum/ailment/disease/chronic_exposure/mercury/illness = AD.master
+		illness.progress_check(src, AD)
+	AD = null // so further similar checks to the above using if(!AD)/else would work as intended
 
 /mob/living/carbon/human/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)

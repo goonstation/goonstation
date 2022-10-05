@@ -338,7 +338,7 @@ datum
 		mercury
 			name = "mercury"
 			id = "mercury"
-			description = "A chemical element."
+			description = "Metallic element which is liquid at room temperature. Has industrial applications and poses serious long-term health risks."
 			reagent_state = LIQUID
 			fluid_r = 160
 			fluid_g = 160
@@ -350,13 +350,20 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(prob(70))
+				if(prob(10)) // low chance, most of the danger comes from long-term exposure!
 					M.take_brain_damage(1*mult)
 				if (probmult(5) && isliving(M)) //folk treatment for the black plague- drinking mercury
 					var/mob/living/L = M
 					var/datum/ailment_data/disease/plague = L.find_ailment_by_type(/datum/ailment/disease/space_plague)
 					if (istype(plague))
 						L.cure_disease(plague)
+				// We absorb a fraction of the metabolized mercury to make poisoning people not as trivial
+				// Flushing does NOT increase absorption rate; using charcoal won't poison you faster
+				if(ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(isnull(H.trace_reagents["mercury"]))
+						H.trace_reagents += list("mercury" = 0)
+					H.trace_reagents["mercury"] += (depletion_rate*mult / 5)
 				..()
 
 			on_plant_life(var/obj/machinery/plantpot/P)

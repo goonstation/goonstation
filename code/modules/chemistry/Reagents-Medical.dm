@@ -321,6 +321,11 @@ datum
 					M.vomit()
 				if(probmult(4))
 					M.emote("piss")
+				if(ishuman(M)) // calomel *is* made of mercury after all
+					var/mob/living/carbon/human/H = M
+					if(isnull(H.trace_reagents["mercury"]))
+						H.trace_reagents += list("mercury" = 0)
+					H.trace_reagents["mercury"] += (depletion_rate*mult / 4)
 				..()
 				return
 
@@ -344,6 +349,40 @@ datum
 					M.take_toxin_damage(2)
 				return  */
 
+		medical/edta
+			name = "EDTA"
+			id = "edta"
+			description = "A water-soluble white solid that binds to metals. Used in industry and as a medical purgative for toxic metals."
+			reagent_state = SOLID
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 255
+			transparency = 255
+			/// Targeted reagents. Will purge from bloodstream, and trace_reagents in human mobs
+			var/chems2flush = list(
+				"mercury",
+				"silver",
+				"copper",
+				"chromium",
+				"iron",
+				"magnesium",
+				"nickel",
+				"platinum")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				flush(M, 8 * mult, chems2flush)
+				if(!ishuman(M))
+					..()
+					return
+				var/mob/living/carbon/human/H = M
+				for(var/toxin in H.trace_reagents)
+					if(!(toxin in chems2flush))
+						continue
+					H.trace_reagents[toxin] -= (0.2 * mult) // we remove 0.2u absorbed toxin per second
+					if(H.trace_reagents[toxin] <= 0)
+						H.trace_reagents -= toxin
+				..()
 
 		medical/yobihodazine // COGWERKS CHEM REVISION PROJECT. probably just a magic drug, i have no idea what this is supposed to be
 			name = "yobihodazine"

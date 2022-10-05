@@ -337,6 +337,8 @@
 
 	src.handle_pathogens()
 
+	src.chronic_exposure_check()
+
 	last_human_life_tick = TIME
 
 /mob/living/critter/Life(datum/controller/process/mobs/parent)
