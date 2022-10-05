@@ -11,10 +11,9 @@
 		..()
 		.= list()
 		.["Points:"] = round(src.points)
+		.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 		if(istype(owner, /mob/wraith/wraith_trickster) || istype(owner, /mob/living/critter/wraith/trickster_puppet))
 			.["Possess:"] = round(src.possession_points)
-		else
-			.["Gen. rate:"] = round(src.regenRate + src.lastBonus)
 
 /atom/movable/screen/ability/topBar/wraith
 	tens_offset_x = 19
