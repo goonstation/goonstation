@@ -21591,11 +21591,9 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/switch_junction{
-	dir = 8;
-	icon_state = "pipe-sj2";
-	mail_tag = "engineering";
-	name = "engineering mail router"
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -21606,10 +21604,6 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -21626,10 +21620,6 @@
 	dir = 1;
 	icon_state = "ebulb1"
 	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},
@@ -21644,19 +21634,11 @@
 	},
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "bwZ" = (
 /obj/cable{
 	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -22050,6 +22032,10 @@
 	dir = 4;
 	icon_state = "power"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/yellow/corner{
 	dir = 4
 	},
@@ -22060,6 +22046,10 @@
 	},
 /obj/stool/chair/yellow{
 	dir = 8
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -27694,7 +27684,7 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
-	icon_state = "pipe-s"
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
@@ -32409,6 +32399,14 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/locker)
+"hWv" = (
+/obj/disposalpipe/switch_junction{
+	dir = 1;
+	mail_tag = "engineering";
+	name = "artlab mail router"
+	},
+/turf/simulated/floor,
+/area/station/hallway/primary/south)
 "hWx" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
@@ -37045,6 +37043,10 @@
 "miB" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -42657,6 +42659,13 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"qWz" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/yellow,
+/area/station/engine/engineering)
 "qWA" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
@@ -44673,6 +44682,10 @@
 /area/station/turret_protected/ai)
 "sDo" = (
 /obj/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
 "sDr" = (
@@ -79119,7 +79132,7 @@ buG
 bvK
 bwV
 bxI
-bhn
+hWv
 bhn
 bhn
 bAR
@@ -79421,7 +79434,7 @@ buH
 bvM
 bwW
 bzW
-bhm
+bwR
 bhm
 bhm
 bhm
@@ -80628,7 +80641,7 @@ bmY
 bmY
 bvP
 dRq
-bxa
+qWz
 byt
 bzi
 qyM
