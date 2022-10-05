@@ -1,4 +1,9 @@
 
+(t)wed oct 05 22
+(u)Roddy, Meow Meow
+(p)11108
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Adds a new pumpkin spice latte mutation to the pumpkin. Infuse capsaicin to see it in action, and use a spoon on the finished product for a cute, drinkable pumpkin version.
 (t)tue oct 04 22
 (u)Sovexe
 (p)11093
