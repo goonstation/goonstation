@@ -241,8 +241,7 @@
 	desc = "You feel strangely warm and relaxed just looking at it."
 	icon = 'icons/misc/janstuff.dmi'
 	icon_state = "heartbottle"
-	var/icon_style = "heartbottle"
-	var/image/fluid_image
+	icon_style = "heartbottle"
 	initial_volume = 50
 	initial_reagents = "love"
 
