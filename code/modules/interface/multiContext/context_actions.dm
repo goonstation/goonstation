@@ -1315,7 +1315,7 @@
 		if (!istype(reagent))
 			return
 		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
-		src.text = copytext(capitalize(reagent.name), 1, 3)
+		src.text = reagent_shorthands[reagent_id] || copytext(capitalize(reagent.name), 1, 3)
 		src.name = capitalize(reagent.name)
 
 /datum/contextAction/reagent/robospray
