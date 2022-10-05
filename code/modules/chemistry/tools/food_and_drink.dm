@@ -1027,7 +1027,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
-	var/smash_on_throw = FALSE
+	var/splash_on_smash = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1312,12 +1312,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!T)
 			qdel(src)
 			return
-		if (src.reagents) // haine fix for cannot execute null.reaction()
+		if(src.reagents && splash_on_smash)
 			var/amt = max(10, src.gulp_size)
 			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
 			src.reagents.remove_any(amt)
 			src.reagents.reaction(T)
-
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1333,8 +1332,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
-		if(src.smash_on_throw)
-			src.smash(A)
+		src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
 		if(!istype(target, /obj/table))
@@ -1451,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
-	smash_on_throw = TRUE
+	splash_on_smash = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"

@@ -31571,6 +31571,14 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"iPT" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "iQk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41925,6 +41933,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"ojO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "ojU" = (
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -44401,9 +44417,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
 "pCL" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_right{
 	density = 0;
-	emergency = 0;
 	id = "merchant_R";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -49090,9 +49105,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "sbJ" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_left{
 	density = 0;
-	emergency = 0;
 	id = "merchant_L";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -53652,6 +53666,14 @@
 /obj/machinery/bot/guardbot/mail,
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
+"uAd" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "uAP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
@@ -54385,6 +54407,14 @@
 	dir = 9
 	},
 /area/station/science/lobby)
+"uOv" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "uOB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -103912,9 +103942,9 @@ aaa
 crG
 aaa
 aaa
-aaa
+ojO
 oTy
-aaa
+uOv
 aaa
 gEl
 rKX
@@ -109952,9 +109982,9 @@ aaa
 cCx
 aaa
 aaa
-aaa
+uAd
 cAY
-aaa
+iPT
 aaa
 aaa
 apR

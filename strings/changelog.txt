@@ -1,5 +1,66 @@
 
+(t)tue oct 04 22
+(u)Sovexe
+(p)11093
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)The botanist traitor exclusive hotbox lighter now burns 5 times hotter than a normal zippo in addition to it's normal effect of improved hotboxing.
+(t)mon oct 03 22
+(u)Amylizzle
+(p)10296
+(e)🪲📄📦|C-Bug, A-UI, A-Game-Objects
+(*)TGUI'd the Plantmaster. Now with multi-agent infusion!
+(u)Amylizzle
+(p)11129
+(e)🗺🔎📦📡⚙|A-Mapping, C-Code-Quality, A-Game-Objects, A-AI, A-Internal
+(+)Sticks-to-snakes spell snakes are mobs now. You can set them on fire and poison them.
+(u)Wisemonster
+(p)11157
+(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(*)Disaster round wraiths can now evolve without having to absorb any corpses.
+(u)LeahTheTech
+(p)11090
+(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(*)Mixed "major threat" antagonists (Blob, Flock and Wraith) are now twice as common and replace fewer normal antagonists.
+(u)LeahTheTech
+(p)11140
+(e)🪲⚖🧛‍♂️|C-Bug, C-Balance, A-Gamemodes
+(+)Flockdrone corpses no longer block 100% of shots
+(t)sun oct 02 22
+(u)Sord
+(e)⚙|C-Bug
+(+)Mineral magnetizer device on mining z-level spawns loaded with plasmastone again
+(u)callaghanrs
+(p)11116
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)The coachgun can now be gilded with the appropriate medal.
+(u)tarmunora
+(+)Drinking glasses shatter when thrown, but reagent contents are not preserved.
+(u)Herbert
+(p)11038
+(e)🗺💅|A-Mapping, C-QoL
+(+)The botanical mister has been added to maps previously missing it. Hooray!
+(u)Grokberg
+(p)11079
+(e)🔊|C-Sound
+(+)Updates the fiddle with the new interface and new sounds.
 (t)sat oct 01 22
+(u)DrWolfy
+(p)11120
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Add maintenance access to Cogmap1 North-East maintenance doors.
+(u)glowbold
+(p)10805
+(e)🆕🗺|C-Feature, A-Mapping
+(+)The mining magnet can rarely pull in a chunk of rock from the depths of Abzu.
+(u)LeahTheTech
+(p)10992
+(e)💅📦🤖|C-QoL, A-Game-Objects, A-Silicons
+(*)Silicons can now use space GPSs
+(u)glowbold
+(p)10907
+(e)🆕🗺📦|C-Feature, A-Mapping, A-Game-Objects
+(*)Destiny and Clarion's airbridges now extend, pressurize, and retract automatically for traders
+(+)Cogmap2's trader docks now light up when traders are set to arrive and depart
 (u)Sord
 (e)⚙|C-Bug
 (+)The Security and Medical job clothing vendors can now be accessed by anyone who has access to those departments.
