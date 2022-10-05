@@ -383,7 +383,7 @@
 				if ("Cheese sandwich")
 					new /obj/item/reagent_containers/food/snacks/sandwich/cheese(get_turf(src))
 				if ("Snack")
-					if (emagged_robot && (rand(1, 3) == 3)):
+					if (emagged_robot && (rand(1, 3) == 3))
 						var/pick_poison = rand(1, 4)
 						switch(pick_poison)
 							if(1)
