@@ -11,7 +11,7 @@
 	var/close_moved = TRUE
 	var/flick_on_click = null
 	var/text = ""
-	var/color = null
+	var/background_color = null
 
 	/// Is this action even allowed to show up under the given circumstances? TRUE=yes, FALSE=no
 	proc/checkRequirements(atom/target, mob/user)
@@ -1314,7 +1314,7 @@
 		var/datum/reagent/reagent = reagents_cache[reagent_id]
 		if (!istype(reagent))
 			return
-		src.color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
+		src.background_color = rgb(reagent.fluid_r, reagent.fluid_g, reagent.fluid_b)
 		src.text = copytext(capitalize(reagent.name), 1, 3)
 		src.name = capitalize(reagent.name)
 
