@@ -922,7 +922,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 			if("term_message","term_file")
-				var/message = signal.data["data"]
+				var/message = strip_html(signal.data["data"])
 				if (message)
 					message = replacetext(message, "|n", "<br>")
 

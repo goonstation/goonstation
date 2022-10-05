@@ -1536,13 +1536,13 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/katana_sheath/reverse
+	item_path = /obj/item/swords_sheaths/katana/reverse
 /datum/gang_item/ninja/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
-	item_path = /obj/item/katana_sheath
+	item_path = /obj/item/swords_sheaths/katana
 
 /datum/gang_item/ninja/shuriken
 	name = "Shuriken"

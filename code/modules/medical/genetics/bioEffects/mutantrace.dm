@@ -28,7 +28,6 @@
 					H.bioHolder.RemoveEffect(ID)
 			if (!istype(H.mutantrace, src.mutantrace_path))
 				H.set_mutantrace(src.mutantrace_path)
-		return
 
 	OnRemove()
 		..()
@@ -36,7 +35,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace,src.mutantrace_path))
 				H.set_mutantrace(null)
-		return
 
 	OnLife()
 		if(..()) return
@@ -44,7 +42,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (!istype(H.mutantrace, src.mutantrace_path))
 				holder.RemoveEffect(id)
-		return
 
 /datum/bioEffect/mutantrace/flashy
 	name = "Bioluminescent Overdrive"

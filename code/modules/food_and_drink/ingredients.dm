@@ -1,5 +1,6 @@
 // Ingredients
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient
 	name = "ingredient"
 	desc = "you shouldnt be able to see this"
@@ -417,16 +418,6 @@
 			user.u_equip(src)
 			user.put_in_hand_or_drop(P)
 			qdel(src)
-		else if (iscuttingtool(W) || issawingtool(W))
-			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
-			if (prob(25))
-				JOB_XP(user, "Chef", 1)
-			if(prob(1))
-				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
-			for(var/i = 1, i <= 2, i++)
-				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
-			qdel(src)
 		else if (istype(W, /obj/item/kitchen/utensil/fork))
 			boutput(user, "<span class='notice'>You stab holes in the dough. How vicious.</span>")
 			if (prob(25))
@@ -437,6 +428,16 @@
 			var/obj/item/reagent_containers/food/snacks/ingredient/holey_dough/H = new /obj/item/reagent_containers/food/snacks/ingredient/holey_dough(W.loc)
 			user.u_equip(src)
 			user.put_in_hand_or_drop(H)
+			qdel(src)
+		else if (iscuttingtool(W) || issawingtool(W))
+			boutput(user, "<span class='notice'>You cut the dough into two strips.</span>")
+			if (prob(25))
+				JOB_XP(user, "Chef", 1)
+			if(prob(1))
+				playsound(src.loc, 'sound/voice/screams/male_scream.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message("<span class='alert'><B>The [src] screams!</B></span>")
+			for(var/i = 1, i <= 2, i++)
+				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
 			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")

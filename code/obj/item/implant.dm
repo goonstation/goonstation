@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 

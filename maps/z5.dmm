@@ -4801,12 +4801,9 @@
 "MO" = (
 /obj/table/auto,
 /obj/item/magnetizer{
-	desc = "Some kind of old mining tool.  Looks like there's a big coil on it, maybe?";
-	loaded = 1;
-	name = "old mining gizmo";
-	pixel_x = 6;
-	pixel_y = 6
+	loaded = 1
 	},
+/obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "MT" = (

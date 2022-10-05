@@ -1625,7 +1625,7 @@ var/global/noir = 0
 				for (var/current_id in reagents.reagent_list)
 					var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 					target_reagents += current_reagent.name
-					pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
+				pick = tgui_input_list(usr, "Select Reagent:", "Select", target_reagents)
 				if (!pick)
 					return
 				var/pick_id
@@ -2121,13 +2121,6 @@ var/global/noir = 0
 			if (!M) return
 
 			//independant of mode and can be traitors as well
-			if(M.mind && (M.mind in miscreants))
-				var/t = ""
-				for(var/datum/objective/O in M.mind.objectives)
-					if (istype(O, /datum/objective/miscreant))
-						t += "[O.explanation_text]\n"
-				tgui_alert(usr,"Miscreant! Objective: [t]")
-
 			var/datum/game_mode/current_mode = ticker.mode
 			if (istype(current_mode, /datum/game_mode/revolution))
 				if(M.mind in current_mode:head_revolutionaries)
@@ -2145,7 +2138,7 @@ var/global/noir = 0
 					var/datum/mind/antagonist = M.mind
 					var/t = ""
 					for(var/datum/objective/OB in antagonist.objectives)
-						if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+						if (istype(OB, /datum/objective/crew))
 							continue
 						t += "[OB.explanation_text]\n"
 					if(antagonist.objectives.len == 0)
@@ -2166,7 +2159,7 @@ var/global/noir = 0
 				var/datum/mind/antagonist = M.mind
 				var/t = ""
 				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+					if (istype(OB, /datum/objective/crew))
 						continue
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
@@ -2177,7 +2170,7 @@ var/global/noir = 0
 				var/datum/mind/antagonist = M.mind
 				var/t = ""
 				for(var/datum/objective/OB in antagonist.objectives)
-					if (istype(OB, /datum/objective/crew) || istype(OB, /datum/objective/miscreant))
+					if (istype(OB, /datum/objective/crew))
 						continue
 					t += "[OB.explanation_text]\n"
 				if(antagonist.objectives.len == 0)
@@ -3442,11 +3435,12 @@ var/global/noir = 0
 					if("the_great_switcharoo")
 						if(src.level >= LEVEL_ADMIN) //Will be SG when tested
 							if (tgui_alert(usr,"Do you really wanna do the great switcharoo?", "Awoo, awoo", list("Yes", "No")) == "Yes")
+								var/silicons_too = (tgui_alert(usr, "Include silicons?", "Silicons", list("Yes", "No")) == "Yes")
 
 								var/list/mob/living/people_to_swap = list()
 
 								for(var/mob/living/L in mobs) //Build the swaplist
-									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || issilicon(L)))
+									if(L?.key && L.mind && !isdead(L) && (ishuman(L) || (issilicon(L) && silicons_too)))
 										people_to_swap += L
 									LAGCHECK(LAG_LOW)
 
@@ -3677,16 +3671,6 @@ var/global/noir = 0
 									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
 									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
 									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>([M?.mind?.special_role])</A></td></tr>"
-								dat += "</table>"
-
-							if(miscreants.len > 0)
-								dat += "<br><table cellspacing=5><tr><td><B>Miscreants</B></td><td></td><td></td></tr>"
-								for(var/datum/mind/miscreant in miscreants)
-									var/mob/M = miscreant.current
-									if(!M) continue
-									dat += "<tr><td><a href='?src=\ref[src];action=adminplayeropts;target=\ref[M]'>[M.real_name]</a>[M.client ? "" : " <i>(logged out)</i>"][isdeadplayer(M) ? " <b><font color=red>(DEAD)</font></b>" : ""]</td>"
-									dat += "<td><a href='?action=priv_msg&target=[M.ckey]'>PM</A></td>"
-									dat += "<td><A HREF='?src=\ref[src];action=traitor;target=\ref[M]'>Show Objective</A></td></tr>"
 								dat += "</table>"
 
 							if (istype(ticker.mode, /datum/game_mode/spy_theft) || ticker.mode.spy_market)

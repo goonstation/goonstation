@@ -818,6 +818,9 @@
 
 
 	New()
+		if (istype(ticker.mode, /datum/game_mode/disaster)) //For Disaster wraith
+			desc = "Choose a form to evolve into using the power of the void"
+
 		..()
 
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)
@@ -834,7 +837,7 @@
 
 	proc/evolve(var/effect as text)
 		var/datum/abilityHolder/wraith/AH = holder
-		if (AH.corpsecount < AH.absorbs_to_evolve)
+		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
 			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
 			return 1
 		if (holder.points < pointCost)
@@ -1180,7 +1183,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	target_nodamage_check = 1
 	cooldown = 50 SECONDS
 	pointCost = 50
-	var/list/the_poison = list("rat_spit", "grave_dust", "cyanide", "loose_screws", "rotting", "bee", "mucus")
+	var/list/the_poison = list("Rat Spit", "Grave Dust", "Cyanide", "Loose Screws", "Rotting", "Bee", "Mucus")
 	var/amount_per_poison = 10
 
 	cast(mob/target)
@@ -1205,7 +1208,29 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			boutput(W, "<span class='alert'>You can't poison [target], only food items, drinks and glass containers.</span>")
 			return 1
 
-		var/poison_choice = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
+		var/poison_name = tgui_input_list(holder.owner, "Select the target poison: ", "Target Poison", the_poison)
+		if(!poison_name)
+			return 1
+
+		var/poison_id = null
+		switch(poison_name)
+			if ("Rat Spit")
+				poison_id = "rat_spit"
+			if ("Grave Dust")
+				poison_id = "grave dust"
+			if ("Cyanide")
+				poison_id = "cyanide"
+			if ("Loose Screws")
+				poison_id = "loose_screws"
+			if ("Rotting")
+				poison_id = "rotting"
+			if ("Bee")
+				poison_id = "bee"
+			if ("Mucus")
+				poison_id = "mucus"
+			else
+				return 1
+
 
 		if (current_container && istype(current_container))
 			if (length(src.the_poison) > 1)
@@ -1216,7 +1241,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				if (current_container.reagents)
 					if (current_container.reagents.total_volume + src.amount_per_poison >= current_container.reagents.maximum_volume)
 						current_container.reagents.remove_any(current_container.reagents.total_volume + src.amount_per_poison - current_container.reagents.maximum_volume)
-					current_container.reagents.add_reagent(poison_choice, src.amount_per_poison)
+					current_container.reagents.add_reagent(poison_id, src.amount_per_poison)
 
 
 					attempt_success = 1

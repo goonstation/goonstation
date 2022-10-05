@@ -509,7 +509,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [src] [log_loc(src)]")
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
@@ -517,7 +517,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [250] power from the APC [src] [log_loc(src)]")
 			charging = chargemode
 
 		else return src.Attackhand(user)

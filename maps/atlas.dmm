@@ -2486,7 +2486,6 @@
 /turf/unsimulated/floor/blue,
 /area/station/crewquarters/cryotron)
 "gC" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -2500,7 +2499,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "gG" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -2690,10 +2689,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "hk" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Equipment";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor/red,
@@ -4414,10 +4410,8 @@
 	},
 /area/station/security/brig/genpop)
 "lp" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 8;
-	name = "Brig";
-	req_access_txt = "27"
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -5938,10 +5932,7 @@
 /turf/simulated/floor,
 /area/station/storage/eva)
 "oM" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -6226,10 +6217,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "pz" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Brig";
-	req_access_txt = "27"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/secscanner{
 	icon_state = "scanner_off";
 	pixel_y = 10
@@ -6331,6 +6319,11 @@
 	name = "Security Foyer persistent notice board";
 	persistent_id = "security foyer"
 	},
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "pL" = (
@@ -7101,6 +7094,11 @@
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
 /obj/item/pen/pencil,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "rB" = (
@@ -7473,6 +7471,11 @@
 	dir = 4
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 9;
 	icon_state = "fblue2"
@@ -7578,6 +7581,11 @@
 "sB" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cell_charger,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	autoclose = 0;
+	dir = 4
+	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/secwing)
 "sC" = (
@@ -8119,6 +8127,11 @@
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fblue2"
@@ -8367,8 +8380,8 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/access_spawn/security,
 /obj/machinery/door/airlock/pyro/security/alt,
+/obj/access_spawn/security,
 /turf/simulated/floor,
 /area/station/security/secwing)
 "ui" = (
@@ -8438,6 +8451,11 @@
 	pixel_y = 15
 	},
 /obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	autoclose = 0
+	},
+/obj/access_spawn/heads,
 /turf/simulated/floor/carpet{
 	dir = 10;
 	icon_state = "fblue2"
@@ -12001,7 +12019,8 @@
 "Dh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8
+	dir = 8;
+	autoclose = 0
 	},
 /obj/machinery/cashreg,
 /obj/machinery/light{
@@ -12191,6 +12210,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"DQ" = (
+/obj/storage/secure/closet/fridge/blood,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "DS" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -12906,7 +12929,7 @@
 	},
 /area/station/medical/medbay)
 "FE" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -15787,7 +15810,7 @@
 /turf/space,
 /area/space)
 "MR" = (
-/obj/machinery/door/airlock/pyro/syndicate,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate,
 /turf/simulated/floor/red,
 /area/listeningpost)
 "MS" = (
@@ -16430,7 +16453,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost)
 "Oq" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 4;
 	name = "Weather Satellite"
@@ -18740,6 +18763,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"Ub" = (
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "Uc" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -20015,14 +20041,12 @@
 /area/station/science/lab)
 "XD" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/simulated/floor,
 /area/station/crewquarters/cryotron)
 "XE" = (
@@ -20823,10 +20847,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ZH" = (
-/obj/storage/secure/closet/fridge/blood,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "ZJ" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -69401,7 +69421,7 @@ VT
 Bw
 PJ
 yF
-BC
+DQ
 Bx
 Fx
 Gl
@@ -69703,7 +69723,7 @@ Bx
 Bx
 PK
 yF
-ZH
+Ea
 Bx
 Uu
 WG
@@ -70005,7 +70025,7 @@ Ug
 Fy
 PL
 wb
-Ea
+Ub
 yg
 Fz
 Gn

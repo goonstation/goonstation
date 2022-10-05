@@ -574,9 +574,6 @@ var/global/list/module_editors = list()
 			if (istype(O, /datum/objective/crew))
 				src.mind.objectives -= O
 				qdel(O)
-			if (istype(O, /datum/objective/miscreant))
-				src.mind.objectives -= O
-				qdel(O)
 		src.syndicate = TRUE
 		return TRUE
 

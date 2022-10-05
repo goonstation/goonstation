@@ -12485,9 +12485,7 @@
 	name = "iceelefall"
 	},
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/icebase_elevator/lower{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/lower)
 "aOQ" = (
 /obj/spacevine{
 	density = 1;
@@ -16126,10 +16124,7 @@
 /area/upper_arctic/exterior/surface)
 "aZm" = (
 /obj/critter/spider/ice/queen,
-/obj/item/device/key{
-	desc = "What does this go to?";
-	name = "cold steel key"
-	},
+/obj/item/device/key/generic/coldsteel,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aZn" = (
@@ -17341,18 +17336,14 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bcA" = (
 /obj/grille/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bcB" = (
 /obj/lattice{
 	dir = 5;
@@ -17545,18 +17536,14 @@
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bda" = (
 /obj/grille/catwalk{
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
 /turf/unsimulated/floor/delivery,
-/area/shuttle/icebase_elevator/upper{
-	name = "Elevator Shaft"
-	})
+/area/shuttle/icebase_elevator/upper)
 "bdb" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -20831,7 +20818,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Engineering"
 	},
@@ -21315,7 +21302,7 @@
 	},
 /area/precursor)
 "bmG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Design Office"
@@ -22231,7 +22218,7 @@
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/iomoon)
 "boL" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Assembly Floor"
@@ -23008,7 +22995,7 @@
 /turf/unsimulated/floor/circuit,
 /area/drone/zone)
 "brd" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 4;
 	name = "Drone Assembly Outpost"
@@ -36115,7 +36102,7 @@
 	name = "Thunderdome Lounge"
 	})
 "cha" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	name = "reinforced internal airlock"
 	},
 /obj/cable{
@@ -37724,11 +37711,7 @@
 	},
 /area/meat_derelict/soviet)
 "clg" = (
-/obj/item/device/key{
-	desc = "It's a key made of bone.  Grody.";
-	icon_state = "key_bone";
-	name = "literal skeleton key"
-	},
+/obj/item/device/key/literal_skeleton,
 /turf/unsimulated/floor/caution/east{
 	dir = 1
 	},
@@ -40363,10 +40346,6 @@
 	dir = 10
 	},
 /area/crunch/wtc)
-"csY" = (
-/obj/item/device/key,
-/turf/unsimulated/floor/void,
-/area/crunch/wtc)
 "csZ" = (
 /obj/decal/floatingtiles{
 	dir = 8
@@ -41259,7 +41238,7 @@
 /area/afterlife/arena)
 "cvB" = (
 /obj/rack/iomoon,
-/obj/item/bloodthirsty_blade,
+/obj/item/swords/bloodthirsty_blade,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
@@ -61461,7 +61440,7 @@
 	icon_state = "blue"
 	})
 "dAN" = (
-/obj/item/bat,
+/obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
 	pixel_x = 6;
 	pixel_y = 24
@@ -61866,7 +61845,7 @@
 	icon_state = "blue"
 	})
 "dBw" = (
-/obj/critter/snake,
+/mob/living/critter/small_animal/snake,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "dBx" = (
@@ -63674,7 +63653,7 @@
 /area/centcom/lounge)
 "dIv" = (
 /obj/table/wood/round/auto,
-/obj/storage/crate/pizza,
+/obj/storage/crate/wooden,
 /turf/unsimulated/floor/carpet{
 	dir = 8;
 	icon_state = "fpurple1"
@@ -70759,6 +70738,10 @@
 /obj/decal/fakeobjects/dreambeach/palm_leaf,
 /turf/unsimulated/floor/dream/beach,
 /area/titlescreen)
+"jIe" = (
+/obj/item/device/key/haunted,
+/turf/unsimulated/floor/void,
+/area/crunch)
 "jJx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -70835,9 +70818,7 @@
 /obj/npc/trader/random{
 	trader_area = "/area/shuttle/merchant_shuttle/right_station"
 	},
-/obj/stool/chair/comfy{
-	dir = 2
-	},
+/obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -73221,7 +73202,7 @@
 	pixel_y = -7;
 	spawn_chance = 32
 	},
-/obj/critter/snake{
+/mob/living/critter/small_animal/snake{
 	aggressive = 0;
 	color = "#5cd14f";
 	desc = "An extremely illegal snake. Hiss!";
@@ -74479,10 +74460,12 @@
 /area/centcom/lobby)
 "qXt" = (
 /obj/table/auto,
-/obj/item/decoration/ashtray{
-	icon_state = "ashtray4"
-	},
 /obj/machinery/light/small/floor,
+/obj/item/paper/gallery{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/decoration/ashtray,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/gallery)
 "qYW" = (
@@ -74854,8 +74837,8 @@
 "rzJ" = (
 /obj/table/wood/round,
 /obj/item/gun/kinetic/makarov{
-	pixel_y = 4;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 4
 	},
 /obj/item/ammo/bullets/nine_mm_soviet{
 	pixel_x = 6
@@ -80560,7 +80543,7 @@ bIY
 bIY
 bKw
 bKw
-bKw
+jIe
 bKw
 bKw
 bIY
@@ -96852,7 +96835,7 @@ csw
 csA
 csH
 csP
-csY
+ctb
 ctb
 ctb
 cnx
