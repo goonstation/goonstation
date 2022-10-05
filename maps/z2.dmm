@@ -41238,7 +41238,7 @@
 /area/afterlife/arena)
 "cvB" = (
 /obj/rack/iomoon,
-/obj/item/bloodthirsty_blade,
+/obj/item/swords/bloodthirsty_blade,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
 /obj/map/light/dimred,
@@ -61440,7 +61440,7 @@
 	icon_state = "blue"
 	})
 "dAN" = (
-/obj/item/bat,
+/obj/item/swords/sord,
 /obj/item/ammo/bullets/abg{
 	pixel_x = 6;
 	pixel_y = 24
@@ -61845,7 +61845,7 @@
 	icon_state = "blue"
 	})
 "dBw" = (
-/obj/critter/snake,
+/mob/living/critter/small_animal/snake,
 /turf/unsimulated/floor/carpet/grime,
 /area/centcom/offices/flaborized)
 "dBx" = (
@@ -73202,7 +73202,7 @@
 	pixel_y = -7;
 	spawn_chance = 32
 	},
-/obj/critter/snake{
+/mob/living/critter/small_animal/snake{
 	aggressive = 0;
 	color = "#5cd14f";
 	desc = "An extremely illegal snake. Hiss!";

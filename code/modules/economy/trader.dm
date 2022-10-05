@@ -339,6 +339,7 @@
 						account["current_money"] += tradetype.price * src.sellitem.amount
 					else
 						barter_customers[usr]  += tradetype.price * src.sellitem.amount
+					sold_item(tradetype, sellitem)
 					qdel (src.sellitem)
 					src.sellitem = null
 					src.add_fingerprint(usr)
@@ -526,6 +527,11 @@
 		else
 			src.temp += pick(src.hagglemsgs)
 
+	///////////////////////////////////////////////
+	////// special handling for selling an item ///
+	///////////////////////////////////////////////
+	proc/sold_item(datum/commodity/C, obj/S)
+		return
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -569,10 +575,11 @@
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/sellitem in O.contents)
+				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += tradetype.price
+						cratevalue += tradetype.price * sellitem.amount
+						sold_item(tradetype, sellitem)
 						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")

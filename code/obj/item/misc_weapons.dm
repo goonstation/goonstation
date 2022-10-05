@@ -447,7 +447,6 @@
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	is_special = 1
 	if (active)
 		hit_type = DAMAGE_BURN
 	else
@@ -1027,6 +1026,7 @@
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
 	var/delimb_prob = 1
+	custom_suicide = 1
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1091,6 +1091,20 @@
 			return ..()
 	..()
 
+/obj/item/swords/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
+		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
+		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+		user.TakeDamage("chest", 100, 0)
+		SPAWN(10 SECONDS)
+		if (user)
+			user.suiciding = 0
+		return 1
+
 /// Checks if the target is facing in some way away from the user. Or they're lying down
 /obj/item/swords/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
 	if(ismob(target) && (BOUNDS_DIST(target, user) == 0) && (target.dir == user.dir || target.lying))
@@ -1110,7 +1124,6 @@
 
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
-	custom_suicide = 1
 	var/obj/itemspecialeffect/katana_dash/start/start
 	var/obj/itemspecialeffect/katana_dash/mid/mid1
 	var/obj/itemspecialeffect/katana_dash/mid/mid2
@@ -1189,20 +1202,6 @@
 
 	red
 		icon_state = "red_cap_sword"
-
-/obj/item/swords/captain/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
-	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	else
-		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
-		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
-		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
-		user.TakeDamage("chest", 100, 0)
-		SPAWN(10 SECONDS)
-		if (user)
-			user.suiciding = 0
-		return 1
 
 /obj/item/swords/nukeop
 	icon_state = "syndie_sword"

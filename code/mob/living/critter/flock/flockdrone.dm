@@ -230,7 +230,7 @@
 
 		controller = null
 		src.update_health_icon()
-		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
+		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
 	if(!src.flock)
 		src.dormantize()
 
