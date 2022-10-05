@@ -15430,7 +15430,8 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "donut2_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -15681,7 +15682,8 @@
 	pixel_x = -20
 	},
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "donut2_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,
@@ -34818,7 +34820,8 @@
 /area/station/security/processing)
 "kjH" = (
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	id = "cloning_exit"
 	},
 /obj/access_spawn/medical,
 /obj/firedoor_spawn,

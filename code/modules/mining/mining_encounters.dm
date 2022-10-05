@@ -171,6 +171,59 @@
 				var/obj/item/G = new the_gem
 				G.set_loc(pick(floors))
 
+/datum/mining_encounter/seafloor
+	name = "Hydroscopic Asteroid"
+	rarity_tier = 3
+	var/static/list/crates = list(
+			/obj/storage/crate/trench_loot/meds,
+			/obj/storage/crate/trench_loot/meds2,
+			/obj/storage/crate/trench_loot/ore3,
+			/obj/storage/crate/trench_loot/rad,
+			/obj/storage/crate/trench_loot/drug,
+			/obj/storage/crate/trench_loot/clothes,
+			/obj/storage/crate/trench_loot/tools2,
+			/obj/storage/crate/trench_loot/weapons4,
+			)
+	var/static/list/enemies = list(
+			/mob/living/critter/small_animal/trilobite/ai_controlled,
+			/mob/living/critter/small_animal/hallucigenia/ai_controlled,
+			/mob/living/critter/small_animal/pikaia/ai_controlled
+	)
+
+	generate(var/obj/magnet_target_marker/target)
+		if (..())
+			return
+
+		var/magnetic_center = mining_controls.magnetic_center
+		var/area_restriction = /area/mining/magnet
+		var/quality = rand(-101,101)
+
+		if (target)
+			magnetic_center = target.magnetic_center
+			area_restriction = null
+
+		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/algae, 7, TRUE, area_restriction)
+		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
+			AST.quality = quality
+			AST.space_overlays()
+			AST.top_overlays()
+			AST.build_icon()
+
+		var/list/floors = list()
+		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
+			floors += T
+
+		var/the_crate = null
+		var/the_enemy = null
+		for (var/i in 1 to rand(1,3))
+			the_crate = pick(crates)
+			the_enemy = pick(enemies)
+			if (length(floors))
+				var/obj/storage/crate/new_crate = new the_crate
+				var/mob/living/critter/small_animal/new_enemy = new the_enemy
+				new_crate.set_loc(pick(floors))
+				new_enemy.set_loc(pick(floors))
+
 /////////////TELESCOPE ENCOUNTERS BELOW
 
 /datum/mining_encounter/tel_miraclium

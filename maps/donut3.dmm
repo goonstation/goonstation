@@ -1340,6 +1340,7 @@
 /area/station/science/bot_storage)
 "agU" = (
 /obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/east)
 "ahg" = (
@@ -4617,6 +4618,7 @@
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/cobweb2,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
 "bgq" = (
@@ -12054,6 +12056,7 @@
 	dir = 1
 	},
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "dmD" = (
@@ -14381,6 +14384,12 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"dVV" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/rust/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/ne)
 "dWn" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/decal/cleanable/rust/jen,
@@ -40329,6 +40338,7 @@
 "lFo" = (
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/west)
 "lFw" = (
@@ -40412,6 +40422,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/decal/cleanable/dirt/jen,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/sw)
 "lGB" = (
@@ -60350,6 +60361,12 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
+"rlV" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/inner/north)
 "rmq" = (
 /obj/shrub{
 	dir = 6
@@ -64368,6 +64385,7 @@
 /obj/decal/cleanable/dirt/jen,
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
 "suy" = (
@@ -125110,7 +125128,7 @@ vBq
 vBq
 vBq
 vBq
-mai
+rlV
 gcg
 kLi
 xye
@@ -130204,7 +130222,7 @@ huC
 kkV
 kkV
 voK
-bzZ
+dVV
 umX
 qGq
 gJt
@@ -139871,7 +139889,7 @@ cqV
 czN
 aUm
 xna
-bzZ
+dVV
 aUm
 vqz
 rdj
