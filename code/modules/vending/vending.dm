@@ -2374,6 +2374,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	name = "Necromancer Zoldorf"
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
+	icon_fallen = "hfortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2397,6 +2398,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "fortuneteller"
 	icon_vend = "fortuneteller-vend"
+	icon_fallen = "fortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",

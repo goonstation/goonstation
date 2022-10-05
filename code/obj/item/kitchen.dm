@@ -564,6 +564,8 @@ TRAYS
 	var/hit_sound = 'sound/items/plate_tap.ogg'
 	/// Can this be stacked with other stackable plates?
 	var/stackable = TRUE
+	/// Do we have a plate stacked on us?
+	var/plate_stacked = FALSE
 
 	New()
 		..()
@@ -575,6 +577,9 @@ TRAYS
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
+				return
+			if (src.plate_stacked)
+				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
@@ -595,7 +600,9 @@ TRAYS
 
 		. = TRUE // If we got this far it's a valid plate content
 
-		if (!istype(food, /obj/item/plate/))
+		if (istype(food, /obj/item/plate/))
+			src.plate_stacked = TRUE
+		else
 			src.foods_inside += food
 
 		src.place_on(food, user, click_params) // this handles pixel positioning
@@ -621,7 +628,9 @@ TRAYS
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
 		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
-		if (!istype(food, /obj/item/plate/))
+		if (istype(food, /obj/item/plate/))
+			src.plate_stacked = TRUE
+		else
 			src.foods_inside -= food
 
 		src.UpdateIcon()
@@ -632,7 +641,7 @@ TRAYS
 			src.Attackhand(user)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
-	proc/shit_goes_everywhere()
+	proc/shit_goes_everywhere(depth = 1)
 		if (length(src.contents))
 			src.visible_message("<span class='alert'>Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!</span>")
 		for (var/atom/movable/food in src)
@@ -640,7 +649,7 @@ TRAYS
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
-					not_food?.shatter()
+					not_food?.shatter(depth)
 			else
 				food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 
@@ -660,17 +669,18 @@ TRAYS
 		src.shatter()
 
 	/// The plate shatters into shards and tosses its contents around.
-	proc/shatter()
+	proc/shatter(depth = 1)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		for (var/i in 1 to 2)
-			var/obj/O = new /obj/item/raw_material/shard/glass
-			O.set_loc(T)
-			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
-			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+		if(log(2, depth) == round(log(2, depth)))
+			for (var/i in 1 to 2)
+				var/obj/O = new /obj/item/raw_material/shard/glass
+				O.set_loc(T)
+				if(src.material)
+					O.setMaterial(copyMaterial(src.material))
+				O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
-		src.shit_goes_everywhere()
+		src.shit_goes_everywhere(depth + 1)
 
 		qdel(src)
 
