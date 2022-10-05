@@ -68535,6 +68535,21 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base)
+"fgJ" = (
+/obj/table/auto/desk,
+/obj/item/paper/book/from_file/cookbook{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/item/pen/fancy{
+	pixel_x = 1;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/glass/bottle/holywater,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fgY" = (
 /obj/submachine/weapon_vendor/syndicate,
 /obj/machinery/light,
@@ -68913,6 +68928,19 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/hospital/samostrel)
+"fXk" = (
+/obj/decal/poster/wallsign/portrait_scientist,
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"fYy" = (
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fZr" = (
 /obj/machinery/vending/snack,
 /turf/unsimulated/floor{
@@ -69180,6 +69208,14 @@
 /turf/unsimulated/floor/grey/side{
 	dir = 10
 	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"gwN" = (
+/obj/admin_plaque{
+	name = "Fleur DeLaCreme's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -70148,6 +70184,23 @@
 	dir = 9
 	},
 /area/centcom)
+"ixw" = (
+/obj/stool/chair/couch/yellow{
+	icon_state = "chair_couch_ew-yellow";
+	pixel_x = -7
+	},
+/obj/item/toy/plush/small/bee/cute{
+	pixel_x = -5;
+	pixel_y = -7;
+	name = "Abeille";
+	desc = "A well-loved friend."
+	},
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "ixz" = (
 /obj/decal/cleanable/oil,
 /obj/decal/cleanable/robot_debris{
@@ -70891,6 +70944,11 @@
 "jXJ" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon)
+"jXL" = (
+/turf/simulated/floor/airless/carpet/regalcarpet/border,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kbf" = (
 /obj/tree1{
 	pixel_x = -37;
@@ -71188,6 +71246,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/efrem)
+"kKC" = (
+/obj/stool/chair/comfy/yellow,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kMt" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/blood,
@@ -71898,6 +71962,29 @@
 /obj/machinery/chem_dispenser/soda,
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"mlf" = (
+/obj/table/wood/auto/desk{
+	icon_state = "1"
+	},
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase3";
+	pixel_y = 11;
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/espressocup{
+	pixel_x = -5;
+	pixel_y = 6;
+	reagents = "mocha"
+	},
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mmr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
@@ -73778,6 +73865,31 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pHp" = (
+/obj/storage/closet/dresser,
+/obj/item/card/id/pod_wars/syndicate{
+	desc = "Huh, it's all banged up. Looks like it's been through a propellor or something.";
+	name = "Syndicate Pod Driver's License"
+	},
+/obj/item/clothing/suit/security_badge{
+	desc = "This has seen some rough times, but it's still shiny.";
+	name = "Fleur DeLaCreme's Head of Security Badge"
+	},
+/obj/item/clothing/under/misc/casdresswht,
+/obj/item/clothing/head/chefhat{
+	desc = "A tag on the inside says "Le Cordon Rouge";
+	name = "Toque Blanche"
+	},
+/obj/item/pen/crayon/lipstick{
+	name = "cerise lipstick";
+	font_color = "#de3163 "
+	},
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "pHO" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -75092,6 +75204,19 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"rUv" = (
+/obj/machinery/light,
+/obj/stool/chair/couch/yellow{
+	icon_state = "chair_couch_ew-yellow";
+	dir = 4;
+	pixel_x = -7
+	},
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "rUx" = (
 /obj/shrub{
 	dir = 4;
@@ -75224,6 +75349,11 @@
 	name = "plating"
 	},
 /area/hospital/underground)
+"scF" = (
+/turf/simulated/floor/airless/carpet/regalcarpet,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "scU" = (
 /obj/admin_plaque{
 	name = "Pali's Office"
@@ -75621,6 +75751,16 @@
 /turf/unsimulated/floor/grey/corner{
 	dir = 4
 	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"sTL" = (
+/obj/stove{
+	icon_state = "stove2";
+	pixel_y = 10;
+	density = 0
+	},
+/turf/unsimulated/floor/wood/six,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -76322,6 +76462,13 @@
 /obj/item/gun/russianrevolver/fake357,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uHQ" = (
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uId" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -77026,6 +77173,13 @@
 /obj/shrub/dead,
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"wge" = (
+/turf/simulated/floor/airless/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "wgP" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -154640,11 +154794,11 @@ aES
 aES
 aES
 wel
-dvW
-dvW
-dvW
-xXm
-wel
+fgJ
+fYy
+ixw
+rUv
+gwN
 sJH
 vij
 wel
@@ -154942,10 +155096,10 @@ aES
 aES
 aES
 niP
-dvW
-dvW
-dvW
-dvW
+sTL
+wge
+scF
+jXL
 rUz
 sJH
 mVF
@@ -155243,11 +155397,11 @@ aES
 aES
 aES
 aES
-wel
-dvW
-dvW
-dvW
-dvW
+fXk
+kKC
+mlf
+uHQ
+pHp
 wel
 sJH
 elx
