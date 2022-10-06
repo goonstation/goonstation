@@ -729,7 +729,7 @@
 
 
 /obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
-	src.hide_attack = 1
+	src.hide_attack = ATTACK_FULLY_HIDDEN
 
 	if (..())
 		for (var/mob/O in AIviewers(user, null))
@@ -767,9 +767,10 @@
 		..()
 
 	proc/shoot()
-		shot = 1
-
-		if (affecting && assailant && isitem(src.loc))
+		if(src.shot)
+			return
+		src.shot = TRUE
+		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
@@ -783,7 +784,7 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 
 
 	New()

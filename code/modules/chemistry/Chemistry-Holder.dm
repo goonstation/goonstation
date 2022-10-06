@@ -565,9 +565,10 @@ datum
 					del_reagent(current_id)
 					update_total()
 
-		/// deletes a reagent from a container
-		/// the first argument is the reagent id
-		/// the second whether or not the total volume of the container should update, which may be undesirable in the update_total proc
+		/**	Deletes a reagent from a container.
+			The first argument is the reagent id, the second whether or not the total volume of the container should update,
+			which may be undesirable in the update_total proc.
+			*/
 		proc/del_reagent(var/reagent, var/update_total = TRUE)
 			if(src.disposed)
 				CRASH("Attempting to delete [reagent] from disposed /datum/reagents.")
@@ -912,7 +913,6 @@ datum
 
 			else
 				. += "<span class='notice'>Nothing in it.</span>"
-			return
 
 
 		proc/get_exact_description(mob/user)

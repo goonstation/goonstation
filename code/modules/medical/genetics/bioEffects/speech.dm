@@ -803,3 +803,27 @@
 			return ""
 		message = scoobify(message, 1)
 		return message
+
+/datum/bioEffect/speech/thrall
+	name = "Frontal Gyrus Alteration Type-V"
+	desc = "Forces the language center of the subject's brain to emit gurgling, raspy speech."
+	id = "accent_thrall"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Your throat gurgles with blood."
+	msgLose = "You feel your throat clear."
+	probability = 0
+	occur_in_genepools = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	acceptable_in_mutini = 1
+
+	OnSpeak(message)
+		if (!istext(message))
+			return ""
+		return thrall_parse(message)

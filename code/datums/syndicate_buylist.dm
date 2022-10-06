@@ -241,7 +241,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 
 /datum/syndicate_buylist/generic/katana
 	name = "Katana"
-	item = /obj/item/katana_sheath
+	item = /obj/item/swords_sheaths/katana
 	cost = 7
 	desc = "A Japanese sword created in the fire of a dying star. Comes with a sheath for easier storage"
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP | UPLINK_SPY_THIEF
@@ -296,7 +296,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/spongecaps/syndicate
 	cost = 3
 	desc = "A pack of sponge capsules that react with water and produce nasty critters."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/bomb
 	name = "Syndicates in Pipebomb"
@@ -318,7 +317,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/device/disguiser
 	cost = 2
 	desc = "A device capable of disguising your identity temporarily. Beware of flashes and projectiles!"
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/areacloak
 	name = "Cloaking Field Generator"
@@ -376,7 +374,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	vr_allowed = 0
 	desc = "This miniaturized explosive packs a decent punch and will detonate upon the unintentional death of the host. Do not swallow and keep out of reach of children."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/traitor/lightbreaker
 	name = "Light Breaker"
@@ -398,6 +395,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	item = /obj/item/storage/sonic_grenade_pouch
 	cost = 2
 	desc = "A pouch filled with five sonic grenades, each one packs enough power to shatter reinforced windows and pop eardrums. No more being cornered by an angry mob! Comes with earplugs."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/traitor/pickpocket
+	name = "Pickpocket Gun"
+	item = /obj/item/gun/energy/pickpocket
+	cost = 3
+	vr_allowed = 0
+	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -595,7 +601,7 @@ This is basically useless for anyone but miners.
 	name = "Hotbox Lighter"
 	item = /obj/item/device/light/zippo/syndicate
 	cost = 1
-	desc = "The unique fuel mixture gives this lighter a unique flame capable of creating a much denser smoke when burning piles of herbs compared to any normal lighter!"
+	desc = "The unique fuel mixture both burns five times hotter than a normal flame and produces a much thicker smoke than normal when burning herbs!"
 	job = list("Botanist")
 	can_buy = UPLINK_TRAITOR
 
@@ -703,16 +709,6 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
 	job = list("Engineer", "Chief Engineer", "Mechanic")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/pickpocket
-	name = "Pickpocket Gun"
-	item = /obj/item/gun/energy/pickpocket
-	cost = 3
-	vr_allowed = 0
-	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	br_allowed = TRUE
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -847,7 +843,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/vuvuzela_gun
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	br_allowed = TRUE
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -897,7 +892,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
-	job = list("Quartermaster","Miner","Engineer")
+	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/telegun
@@ -982,6 +977,16 @@ This is basically useless for anyone but miners.
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/ai_laser
+	name = "AI Camera Laser Module"
+	item = /obj/item/aiModule/ability_expansion/laser
+	cost = 6
+	vr_allowed = FALSE
+	not_in_crates = TRUE
+	desc = "An AI module that upgrades any AI connected to the installed law rack access to the lasers installed in the cameras."
+	job = list("Captain", "Head of Personnel", "Research Director", "Medical Director", "Chief Engineer")
+	can_buy = UPLINK_TRAITOR
+
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
 
 ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
@@ -1036,6 +1041,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 		not_in_crates = TRUE
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
+/datum/syndicate_buylist/surplus/akm
+	name = "AKM Assault Rifle"
+	item = /obj/item/gun/kinetic/akm
+	cost = 12
+	desc = "A Cold War relic, loaded with thirty rounds of 7.62x39."
+	can_buy = null
+
 /datum/syndicate_buylist/surplus/bananagrenades
 	name = "Banana Grenades"
 	item = /obj/item/storage/banana_grenade_pouch
@@ -1055,7 +1067,6 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	item = /obj/item/storage/box/turbo_flash_kit
 	cost = 1
 	desc = "A box full of common stun weapons with power cells hastily wired into them. Looks dangerous."
-	br_allowed = TRUE
 
 /datum/syndicate_buylist/surplus/syndicate_armor
 	name = "Syndicate Command Armor"
@@ -1168,6 +1179,13 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/commander)
 	item = /obj/item/remote/nuke_summon_remote
 	cost = 1
 	desc = "Did you lose the nuke? Have no fear, with this handy one-use remote, you can immediately call it back to you!"
+	category = "Main"
+
+/datum/syndicate_buylist/commander/mrl
+	name = "Fomalhaut MRL"
+	item = /obj/item/gun/kinetic/mrl/loaded
+	cost = 3
+	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles. Warning: Can and will target other Operatives."
 	category = "Main"
 
 /////////////////////////////////////////// Telecrystals //////////////////////////////////////////////////

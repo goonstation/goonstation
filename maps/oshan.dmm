@@ -1439,10 +1439,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/brig)
 "adc" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Genpop";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/disposalpipe/segment/brig,
 /obj/cable{
@@ -1566,10 +1563,8 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "ado" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Break Room";
-	req_access_txt = "1"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
@@ -4769,12 +4764,6 @@
 	dir = 8
 	},
 /area/station/medical/staff)
-"alh" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "ali" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -5779,7 +5768,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -15704,10 +15693,7 @@
 /obj/machinery/secscanner{
 	pixel_y = 10
 	},
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "West Hallway Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/red,
@@ -16518,7 +16504,7 @@
 	},
 /area/listeningpost)
 "aOh" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	name = "Weather Satellite"
 	},
@@ -18056,7 +18042,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "aSj" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
@@ -18117,7 +18103,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "aSs" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
@@ -18411,7 +18397,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aTa" = (
@@ -29411,10 +29397,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/hallway/secondary/exit)
 "byl" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Escape Hallway Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
@@ -34201,11 +34184,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/oshan_arrivals)
 "bJZ" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/glass/reinforced,
+/obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
 "bKa" = (
@@ -34213,7 +34196,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/oshan_arrivals)
 "bKb" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
@@ -35801,10 +35784,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "bOC" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Locker Room";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = 10
@@ -35929,17 +35909,14 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/oshan_arrivals)
 "bOU" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
 "bOV" = (
@@ -35954,11 +35931,8 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Arrivals"
-	},
-/obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma,
+/obj/machinery/door/airlock/pyro/glass/reinforced,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/oshan_arrivals)
 "bOX" = (
@@ -38450,20 +38424,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bUW" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell #2";
-	req_access_txt = "1"
-	},
-/obj/access_spawn/brig,
-/obj/disposalpipe/segment/ejection,
-/obj/firedoor_spawn,
-/turf/simulated/floor/red,
-/area/station/security/brig)
-"bUX" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Cell #1";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/access_spawn/brig,
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
@@ -40317,7 +40278,7 @@
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "cav" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "caw" = (
@@ -42940,10 +42901,7 @@
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/medical)
 "ciw" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	name = "Medical Security Checkpoint";
-	req_access_txt = "1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/access_spawn/security,
 /obj/disposalpipe/segment/brig,
 /obj/firedoor_spawn,
@@ -45796,6 +45754,10 @@
 	name = "not grass"
 	},
 /area/station/ranch)
+"jZw" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
 "keq" = (
 /obj/disposalpipe/segment/morgue,
 /obj/cable{
@@ -91114,7 +91076,7 @@ bQB
 bRE
 bSJ
 bTP
-bUX
+bUW
 bVT
 bWE
 bXs
@@ -98274,7 +98236,7 @@ ajQ
 ait
 akS
 ktR
-alh
+oXV
 anu
 aog
 aoY
@@ -109822,7 +109784,7 @@ bAl
 bBH
 byY
 iUm
-byY
+jZw
 byZ
 cLH
 hNG

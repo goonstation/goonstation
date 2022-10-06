@@ -35,6 +35,7 @@
 	..(location, F)
 	src.rays = new /obj/effect/flock_sentinelrays
 	src.vis_contents += src.rays
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/disposing()
 	qdel(src.rays)
@@ -130,6 +131,7 @@
 
 /obj/flock_structure/sentinel/proc/charge(chargeamount)
 	src.charge = clamp(src.charge + chargeamount, 0, 100)
+	src.info_tag.set_info_tag("Charge: [src.charge]%")
 
 /obj/flock_structure/sentinel/proc/updatefilter()
 	var/dm_filter/filter = src.rays.get_filter("flock_sentinel_rays")

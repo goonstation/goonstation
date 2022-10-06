@@ -240,7 +240,7 @@
 		desc = "What happens when you put an assault rifle in the microwave."
 		setup_charge_maximum = 100000
 		setup_charge_percentage = 100
-		setup_gun = /obj/item/gun/kinetic/ak47
+		setup_gun = /obj/item/gun/kinetic/akm
 		health = 100
 		ammofab = 1
 		shotcount = 3 // Never stop firing, never start spawning

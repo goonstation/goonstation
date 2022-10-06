@@ -28,6 +28,8 @@
 	#define COMSIG_FULLAUTO_MOUSEDOWN "fullauto_mousedown"
 	/// Mouse down when shooting full auto
 	#define COMSIG_FULLAUTO_MOUSEDRAG "fullauto_mousedrag"
+	/// MouseMove over a fullauto hud object
+	#define COMSIG_FULLAUTO_MOUSEMOVE "fullauto_mousemove"
 	/// Gun projectile changed while in fullauto mode
 	#define COMSIG_GUN_PROJECTILE_CHANGED "gun_proj_changed"
 
@@ -91,3 +93,31 @@
 
 	/// Return whether an action by a thing (/atom) that can optionally be intentional (boolean) is denied because it would harm a flock.
 	#define COMSIG_FLOCK_ATTACK "flock_attack"
+
+// ---- Dock Signals and Events ----
+// Docks are categorized by the shuttle that uses them. Docks are not interchangable.
+// Registered listeners recieve a signal for each shuttle state change.
+// When handling the signal, the provided argument will match a dock event define.
+
+	// ---- Dock Events ----
+		/// Shuttle is about to arrive at a dock
+		#define DOCK_EVENT_INCOMING "dock_incoming"
+
+		/// Shuttle has arrived
+		#define DOCK_EVENT_ARRIVED "dock_arrived"
+
+		/// Shuttle is about to depart
+		#define DOCK_EVENT_OUTGOING "dock_outgoing"
+
+		/// Shuttle has departed
+		#define DOCK_EVENT_DEPARTED "dock_departed"
+
+	// ---- "Travelling Trader" random event docks ----
+		/// The 'left' trading area on-station
+		#define COMSIG_DOCK_TRADER_WEST "trader_left"
+
+		/// The 'right' trading area on-station
+		#define COMSIG_DOCK_TRADER_EAST "trader_right"
+
+		/// The diner trading area
+		#define COMSIG_DOCK_TRADER_DINER "trader_diner"

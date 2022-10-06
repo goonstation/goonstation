@@ -935,6 +935,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
 			P.name = "carved [src.name]"
 			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
+			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
+			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
 	New()
@@ -960,6 +965,46 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			qdel(src)
 		else
 			..()
+
+obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	name = "spiced pumpkin"
+	desc = "Autumny!"
+	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
+	edible = 0
+	food_color = "#CC6600"
+	validforhat = 1
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
+			var/obj/item/clothing/head/pumpkinlatte/P = new(get_turf(user))
+			P.name = "carved [src.name]"
+			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
+			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(get_turf(user))
+			qdel(src)
+
+/obj/item/clothing/head/pumpkinlatte
+	name = "carved spiced pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkinlatte"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = 0
+	item_state = "pumpkinlatte"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			. = ..()
 
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
