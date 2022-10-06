@@ -272,11 +272,10 @@ datum
 					counter = max(counter, 12)
 				return
 
-			on_mob_life(var/mob/M, var/mult = 1) // -cogwerks. previous version
+			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				M.take_toxin_damage(0.5 * mult)  // a bit of tox to show you that something is indeed, not alright
-				M.change_misstep_chance(2 * mult) //stumbling a tad bit
 
 				if (holder.get_reagent_amount("space_drugs") < 5) //amyl nitrate inhibits cyanide's effects IRL, space drugs is pretty close
 					counter = max(0.5, counter + ( holder.get_reagent_amount(src.id) ** 0.36 / 2) * mult) //speed of poisoning scales nonlinearly
@@ -306,8 +305,13 @@ datum
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
 							if (H.organHolder)                    //chance of damage starts at 15 and rises
-								H.organHolder.damage_organs(0, 0, 3*mult, target_organs, min((counter * 0.6), 60))
-
+								H.organHolder.damage_organs(0, 0, 2 * mult, target_organs, min((counter * 0.6), 60))
+								if(H.organHolder.heart.get_damage() > 30) //bad things will happen if you don't treat this stuff
+									H.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+								if(H.organHolder.left_lung.get_damage() > 30)
+									H.contract_disease(/datum/ailment/disease/respiratory_failure/left, null, null, 1)
+								if(H.organHolder.right_lung.get_damage() > 30)
+									H.contract_disease(/datum/ailment/disease/respiratory_failure/right, null, null, 1)
 
 				..()
 				return
