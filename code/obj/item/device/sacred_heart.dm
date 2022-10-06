@@ -10,7 +10,7 @@
 	var/list/parts_to_remove = list()
 	var/list/parts_to_add = list()
 
-	attack_self(mob/user)
+	attack_self(mob/user) //I don't know why but this refuses to work with an early return, if anyone wants to fix this so its streamlined, I'd suggest also applying that patch to ocular implanter code, which this is based on
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			src.add_fingerprint(H)

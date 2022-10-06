@@ -121,6 +121,7 @@
 	item_state = "sacred_heart"
 	icon_state = "sacred_heart"
 	transplant_XP = 8
+	squeeze_sound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	organ_abilities = list(/datum/targetable/organAbility/sacredheart)
 
 /obj/item/organ/heart/synth
