@@ -35,6 +35,11 @@
 	add_abilities = list(/datum/targetable/critter/bite/tomato_bite,
 						/datum/targetable/critter/slam_polymorph)
 
+	New()
+		..()
+		src.create_reagents(100)
+		src.reagents.add_reagent("juice_tomato", 10)
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
@@ -67,6 +72,7 @@
 			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,src.loc)
 			B.name = "ruined tomato"
+			src.reagents.reaction(get_turf(src))
 			ghostize()
 			qdel(src)
 		else

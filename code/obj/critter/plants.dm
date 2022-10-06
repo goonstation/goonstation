@@ -110,6 +110,11 @@
 	meat_type = /obj/item/reagent_containers/food/snacks/plant/tomato/incendiary
 	generic = 0
 
+	New()
+		..()
+		src.create_reagents(100)
+		src.reagents.add_reagent("juice_tomato", 10)
+
 	seek_target()
 		src.anchored = 0
 		for (var/mob/living/C in hearers(src.seekrange,src))
@@ -146,4 +151,5 @@
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,src.loc)
 		B.name = "ruined tomato"
+		src.reagents.reaction(get_turf(src))
 		qdel (src)

@@ -147,11 +147,19 @@
 		..()
 		light_c = src.AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
 		light_c.update(0)
+		src.create_reagents(20)
+		src.reagents.add_reagent("radium", 10)
 
-	proc/burst()
+	proc/burst(var/mob/target = null)
 		var/turf/T = get_turf(src.loc)
 		make_cleanable( /obj/decal/cleanable/generic,T)
-		make_cleanable( /obj/decal/cleanable/greenglow,T)
+		if (!target && ismob(src.loc))
+			target = src.loc
+		if (target)
+			src.reagents?.reaction(target)
+			target.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid all over <b>[target]</b>!</span>")
+		else
+			src.reagents?.reaction(T)
 		qdel(src)
 
 	proc/turnon()
@@ -165,28 +173,20 @@
 			user.visible_message("<span class='alert'><b>[user]</b> heats [src] with [W].</span>")
 			src.heated += 1
 			if (src.heated >= 3 || prob(5 + (heated * 20)))
-				user.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid all over <b>[user]</b>! What a [pick("moron", "dummy", "chump", "doofus", "punk", "jerk", "bad idea")]!</span>")
-				if (user.reagents)
-					user.reagents.add_reagent("radium", 8, null, T0C + heated * 200)
-				burst()
+				burst(user)
 		else
 			return ..()
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if((temperature > T0C+400) && on)
-			if(iscarbon(src.loc))
-				if (src.loc.reagents)
-					src.loc.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			src.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [src.loc]!</span>")
 			burst()
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		if (heated > 0 && on && prob(30 + (heated * 20)))
-			if(iscarbon(A))
-				if (A.reagents)
-					A.reagents.add_reagent("radium", 5, null, T0C + heated * 200)
-			A.visible_message("<span class='alert'>[src] bursts open, spraying hot liquid on [A]!</span>")
-			burst()
+			if (ismob(A))
+				burst(A)
+			else
+				burst()
 
 	attack_self(mob/user as mob)
 		if (!on)

@@ -1248,9 +1248,11 @@
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
 				else if(istype(CROP,/obj/critter/))
-					// If it's a critter we don't need to do reagents or shit like that but
-					// we do need to make sure they don't attack the botanist that grew it.
+					// We need to make sure they don't attack the botanist that grew it
+					// and we'll try to assign reagents if it accepts them
 					var/obj/critter/C = CROP
+					if (C.reagents)
+						HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 					C.friends = C.friends | src.contributors
 
 				else if (istype(CROP,/obj/item/organ))
@@ -1276,6 +1278,7 @@
 					newstick.turnon()
 					qdel(CROP)
 					CROP = newstick
+					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 				if(((growing.isgrass || growing.force_seed_on_harvest) && prob(80)) && !istype(CROP,/obj/item/seed/) && !HYPCheckCommut(DNA,/datum/plant_gene_strain/seedless))
 					// Same shit again. This isn't so much the crop as it is giving you seeds
 					// incase you couldn't get them otherwise, though.
