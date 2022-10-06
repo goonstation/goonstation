@@ -1,5 +1,9 @@
 
 (t)wed oct 05 22
+(u)ithebinman
+(p)11075
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Replaced and added piano samples with new A0 to C8 keys so that a full high quality 88 key range is possible!
 (u)Roddy, Meow Meow
 (p)11108
 (e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
