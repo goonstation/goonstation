@@ -17802,6 +17802,7 @@
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -26773,7 +26774,7 @@
 /obj/access_spawn/hos,
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/security/alt{
-	aiHacking = 1
+	aiControlDisabled = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
