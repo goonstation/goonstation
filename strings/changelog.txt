@@ -1,5 +1,9 @@
 
 (t)wed oct 05 22
+(u)Bartimeus973
+(p)10990
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Cyborgs now drop their clothing on death.
 (u)ithebinman
 (p)11075
 (e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
