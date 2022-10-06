@@ -277,10 +277,10 @@ datum
 				if (!counter) counter = 1
 				M.take_toxin_damage(0.5 * mult)  // a bit of tox to show you that something is indeed, not alright
 
-				if (holder.get_reagent_amount("space_drugs") < 5) //amyl nitrate inhibits cyanide's effects IRL, space drugs is pretty close
-					counter = max(0.5, counter + ( holder.get_reagent_amount(src.id) ** 0.36 / 2) * mult) //speed of poisoning scales nonlinearly
-				else                                                                                        //with dosage
+				if (holder.get_reagent_amount("space_drugs") > 5) //amyl nitrate inhibits cyanide's effects IRL, space drugs is pretty close
 					counter += 0.25 * mult
+				else
+					counter += max(0.5, (holder.get_reagent_amount(src.id) ** 0.36 / 2) * mult)//speed of poisoning scales nonlinearly with dosage
 
 				switch(counter)
 					if (1 to 25)
