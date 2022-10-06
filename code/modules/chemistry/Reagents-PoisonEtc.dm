@@ -280,7 +280,7 @@ datum
 				if (holder.get_reagent_amount("space_drugs") > 5) //amyl nitrate inhibits cyanide's effects IRL, space drugs is pretty close
 					counter += 0.25 * mult
 				else
-					counter += max(0.5, (holder.get_reagent_amount(src.id) ** 0.36 / 2) * mult)//speed of poisoning scales nonlinearly with dosage
+					counter += max(0.5, (holder.get_reagent_amount(src.id) ** 0.36 / 1.75) * mult)//speed of poisoning scales nonlinearly with dosage
 
 				switch(counter)
 					if (1 to 25)
