@@ -24555,47 +24555,14 @@
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
-"bHv" = (
-/obj/machinery/manufacturer/mining,
-/turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
 "bHw" = (
 /obj/cable{
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
-"bHx" = (
-/obj/machinery/power/apc{
-	dir = 2;
-	name = "S APC";
-	pixel_y = -24
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/ore_cloud_storage_container,
-/turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
-"bHy" = (
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/processor,
-/turf/simulated/floor/grime,
-/area/station/quartermaster/magnet)
 "bHz" = (
-/obj/table/auto,
-/obj/machinery/recharger,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	icon_state = "camera";
-	name = "autoname  - SS13";
-	network = "SS13";
-	tag = ""
-	},
+/obj/machinery/manufacturer/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "bHA" = (
@@ -24843,23 +24810,27 @@
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
-"bHY" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/regular,
-/obj/item/storage/firstaid/regular,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/obj/item/device/matanalyzer,
-/turf/simulated/floor/plating/airless,
-/area/station/quartermaster/magnet)
 "bIa" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "bIb" = (
 /obj/table/auto,
-/obj/item/storage/toolbox/emergency,
-/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/device/appraisal{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/device/appraisal{
+	pixel_x = -4
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/obj/item/device/matanalyzer{
+	pixel_x = 7;
+	pixel_y = 3
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/quartermaster/magnet)
 "bIc" = (
@@ -26947,6 +26918,18 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/wood/three,
 /area/station/crew_quarters/fitness)
+"dko" = (
+/obj/table/auto,
+/obj/item/paper/book/from_file/matsci_guide,
+/obj/item/storage/firstaid/regular{
+	pixel_y = 6
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/emergency,
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/magnet)
 "dkS" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
@@ -29283,6 +29266,17 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"fan" = (
+/obj/machinery/power/apc{
+	dir = 2;
+	name = "S APC";
+	pixel_y = -24
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/magnet)
 "faR" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -30057,6 +30051,13 @@
 	dir = 8
 	},
 /area/station/crew_quarters/locker)
+"fJb" = (
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/magnet)
 "fJi" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4;
@@ -31355,7 +31356,6 @@
 /turf/simulated/floor/yellow/side,
 /area/station/mining/staff_room)
 "gUq" = (
-/obj/machinery/light/incandescent,
 /obj/grille/catwalk{
 	dir = 5;
 	icon_state = "catwalk_cross"
@@ -36903,7 +36903,6 @@
 /area/station/hallway/primary/north)
 "mdv" = (
 /obj/storage/crate,
-/obj/item/lamp_manufacturer/organic,
 /obj/item/sheet/steel/fullstack,
 /obj/item/storage/box/lightbox/bulbs,
 /obj/decal/poster/wallsign/poster_sol{
@@ -45460,6 +45459,14 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"tgx" = (
+/obj/grille/catwalk,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/station/quartermaster/magnet)
 "tgF" = (
 /obj/grille/catwalk{
 	dir = 5;
@@ -46621,6 +46628,10 @@
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"uiu" = (
+/obj/machinery/ore_cloud_storage_container,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/magnet)
 "uiX" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -47006,6 +47017,18 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
+"uBv" = (
+/obj/machinery/processor,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	icon_state = "camera";
+	name = "autoname  - SS13";
+	network = "SS13";
+	tag = ""
+	},
+/turf/simulated/floor/plating/airless,
+/area/station/quartermaster/magnet)
 "uBA" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/junction/left/west,
@@ -50489,6 +50512,11 @@
 	},
 /turf/simulated/floor,
 /area/station/science/artifact)
+"xLK" = (
+/obj/table/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/grime,
+/area/station/quartermaster/magnet)
 "xMe" = (
 /obj/storage/crate,
 /obj/item/device/light/glowstick{
@@ -79765,8 +79793,8 @@ hFm
 mro
 mro
 mro
-eSy
 mro
+eSy
 mro
 mro
 mro
@@ -80063,13 +80091,13 @@ aaa
 aaa
 aaa
 gUq
+tgx
 uof
 uof
 uof
 fHS
 fRe
 xzf
-mro
 mro
 mro
 tgF
@@ -80364,6 +80392,7 @@ ulZ
 hpu
 aaa
 aaa
+aaA
 bGU
 bGV
 bGV
@@ -80375,7 +80404,6 @@ bGU
 pou
 hqn
 bGU
-aaa
 aaa
 aaa
 aaa
@@ -80667,18 +80695,18 @@ acG
 acG
 acG
 bGU
-bHk
-bHq
-bHv
 bGU
-iLc
+xLK
+bHq
+bOY
+bGU
+bHO
 bHS
 jhA
 tia
 tia
 kxs
 acv
-aaa
 aaa
 aaa
 aaa
@@ -80970,6 +80998,7 @@ aaa
 aaa
 bGV
 vqG
+fQm
 bHr
 bHw
 hty
@@ -80985,7 +81014,6 @@ aaa
 aaa
 aaa
 acf
-aaa
 aaa
 aaa
 aaa
@@ -81271,9 +81299,10 @@ aaa
 aaa
 aaa
 bGV
-kPQ
+uiu
 fQm
-bHx
+kPQ
+fan
 bGU
 tbg
 bHO
@@ -81288,7 +81317,6 @@ acG
 acG
 cXg
 acF
-aaa
 aaa
 aaa
 aaa
@@ -81573,9 +81601,10 @@ aaa
 aaa
 aaa
 bGV
-vjI
+bHk
 fQm
-bHy
+vjI
+fJb
 bGU
 bHO
 bHO
@@ -81589,7 +81618,6 @@ aaa
 aaa
 aaa
 ace
-aaa
 aaa
 aaa
 aaa
@@ -81878,6 +81906,7 @@ bGV
 vqG
 fQm
 fQm
+fQm
 xmL
 bHO
 bHO
@@ -81886,7 +81915,6 @@ tia
 bIa
 snf
 acy
-aaa
 aaa
 aaa
 aaa
@@ -82177,17 +82205,17 @@ acG
 acG
 acG
 bGU
-bOY
-bHt
-bHz
 bGU
-iLc
+uBv
+bHz
+bHt
+bGU
+bHO
 bHO
 bHW
-bHY
 bIb
+dko
 rqk
-aaa
 aaa
 aaa
 aaa
@@ -82478,6 +82506,7 @@ aaa
 aaa
 aaa
 aaa
+aaa
 bGU
 bGU
 bGV
@@ -82490,7 +82519,6 @@ bGU
 bGU
 bGU
 oMU
-aaa
 aaa
 aaa
 aaa
@@ -82781,7 +82809,8 @@ aaa
 aaa
 aaa
 aaa
-acd
+aaa
+bGU
 xtE
 sZG
 wvT
@@ -82790,9 +82819,8 @@ iCO
 wUy
 mdZ
 xtE
-acd
+bGU
 acy
-aaa
 aaa
 aaa
 aaa
@@ -83083,6 +83111,7 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aaA
 xtE
 xtE
@@ -83093,7 +83122,6 @@ qEP
 xtE
 xtE
 apU
-aaa
 aaa
 aaa
 aaa
@@ -83385,6 +83413,7 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aaA
 xtE
 xtE
@@ -83395,7 +83424,6 @@ xtE
 oWl
 xtE
 apU
-aaa
 aaa
 aaa
 aaa
@@ -83686,6 +83714,7 @@ acG
 acG
 acG
 acG
+acG
 viW
 aas
 xtE
@@ -83698,7 +83727,6 @@ xtE
 xtE
 aas
 acv
-aaa
 aaa
 aaa
 aaa
@@ -83988,19 +84016,19 @@ aaa
 aaa
 aaa
 aaa
-aaA
-acd
-ead
-xtE
-xtE
-xtE
-xtE
-xtE
-xtE
-ead
-acd
-bCq
 aaa
+aaA
+bGU
+ead
+xtE
+xtE
+xtE
+xtE
+xtE
+xtE
+ead
+bGU
+bCq
 aaa
 aaa
 aaa
@@ -84290,19 +84318,19 @@ aaa
 aaa
 aaa
 aaa
+aaa
 aaA
-acd
-acd
+bGU
+bGU
 aas
 acy
 aaa
 aaa
 abZ
 aas
-acd
-acd
+bGU
+bGU
 bCq
-aaa
 aaa
 aaa
 aaa
@@ -84592,6 +84620,7 @@ acG
 acG
 acG
 acG
+acG
 aai
 aai
 kOY
@@ -84604,7 +84633,6 @@ abZ
 kOY
 aai
 acy
-aaa
 aaa
 aaa
 aaa
