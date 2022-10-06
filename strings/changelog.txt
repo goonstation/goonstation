@@ -1,5 +1,9 @@
 
 (t)wed oct 05 22
+(u)Ikea & Mr. Moriarty
+(p)11088
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited pulse rifles and pulse rifle racks.
 (u)Bartimeus973
 (p)10990
 (e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
