@@ -1,4 +1,21 @@
 
+(t)wed oct 05 22
+(u)Ikea & Mr. Moriarty
+(p)11088
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Resprited pulse rifles and pulse rifle racks.
+(u)Bartimeus973
+(p)10990
+(e)🆕⚖🤖|C-Feature, C-Balance, A-Silicons
+(+)Cyborgs now drop their clothing on death.
+(u)ithebinman
+(p)11075
+(e)🆕🔊📦|C-Feature, C-Sound, A-Game-Objects
+(+)Replaced and added piano samples with new A0 to C8 keys so that a full high quality 88 key range is possible!
+(u)Roddy, Meow Meow
+(p)11108
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Adds a new pumpkin spice latte mutation to the pumpkin. Infuse capsaicin to see it in action, and use a spoon on the finished product for a cute, drinkable pumpkin version.
 (t)tue oct 04 22
 (u)Sovexe
 (p)11093
