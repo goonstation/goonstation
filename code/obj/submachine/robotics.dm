@@ -320,9 +320,27 @@
 	var/last_use = 0
 
 	attack_self(var/mob/user as mob)
+		var/emagged_robot = FALSE
+		if (isrobot(user))
+			var/mob/living/silicon/robot/R = user
+			if (R.emagged) emagged_robot = TRUE
+
 		if (!vend_this)
 			var/holder = src.loc
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
+
+			var/vend_selections = list("Burger", "Cheeseburger",)
+			if (emagged_robot) vend_selections += list("Burger?")
+			vend_selections += list("Meat sandwich", "Cheese sandwich", "Snack")
+#ifdef CANADADAY
+			if (emagged_robot) vend_selections += list("Pancakes")
+#endif
+			if (emagged_robot) vend_selections += list("Pie", "Soda")
+			vend_selections += list("Cola", "Water")
+#ifdef XMAS
+			if (emagged_robot) vend_selections += list("Eggnog")
+#endif
+
+			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in vend_selections
 			if (src.loc != holder)
 				return
 			src.vend_this = pickme
@@ -340,29 +358,102 @@
 					new /obj/item/reagent_containers/food/snacks/burger/synthburger(get_turf(src))
 				if ("Cheeseburger")
 					new /obj/item/reagent_containers/food/snacks/burger/cheeseburger(get_turf(src))
+				if ("Burger?")
+					var/pick_borger = rand(1, 7)
+					switch(pick_borger)
+						if(1)
+							new /obj/item/reagent_containers/food/snacks/burger/monsterburger(get_turf(src))
+						if(2)
+							new /obj/item/reagent_containers/food/snacks/burger/brainburger(get_turf(src))
+						if(3)
+							new /obj/item/reagent_containers/food/snacks/burger/buttburger(get_turf(src))
+						if(4)
+							if (rand(1, 3) == 3)
+								new /obj/item/reagent_containers/food/snacks/burger/cheeseborger(get_turf(src))
+							else
+								new /obj/item/reagent_containers/food/snacks/burger/roburger(get_turf(src))
+						if(5)
+							new /obj/item/reagent_containers/food/snacks/burger/mysteryburger(get_turf(src))
+						if(6)
+							new /obj/item/reagent_containers/food/snacks/burger/heartburger(get_turf(src))
+						if(7)
+							new /obj/item/reagent_containers/food/snacks/burger/aburgination(get_turf(src))
 				if ("Meat sandwich")
 					new /obj/item/reagent_containers/food/snacks/sandwich/meat_s(get_turf(src))
 				if ("Cheese sandwich")
 					new /obj/item/reagent_containers/food/snacks/sandwich/cheese(get_turf(src))
 				if ("Snack")
-					var/pick_snack = rand(1,6)
-					switch(pick_snack)
+					if (emagged_robot && (rand(1, 3) == 3)):
+						var/pick_poison = rand(1, 4)
+						switch(pick_poison)
+							if(1)
+								new /obj/item/reagent_containers/food/snacks/snack_cake(get_turf(src))
+							if(2)
+								new /obj/item/reagent_containers/food/snacks/snack_cake/golden(get_turf(src))
+							if(3)
+								new /obj/item/reagent_containers/food/snacks/burrito(get_turf(src))
+							if(4)
+								new /obj/item/reagent_containers/food/drinks/noodlecup(get_turf(src))
+					else
+						var/pick_snack = rand(1, 6)
+						switch(pick_snack)
+							if(1)
+								new /obj/item/reagent_containers/food/snacks/fries(get_turf(src))
+							if(2)
+								new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
+							if(3)
+								new /obj/item/reagent_containers/food/snacks/donut(get_turf(src))
+							if(4)
+								new /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom(get_turf(src))
+							if(5)
+								new /obj/item/reagent_containers/food/snacks/candy/negativeonebar(get_turf(src))
+							if(6)
+								new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
+				if ("Pancakes")
+					new /obj/item/reagent_containers/food/snacks/pancake(get_turf(src))
+					new /obj/item/reagent_containers/food/snacks/condiment/syrup(get_turf(src))
+				if ("Pie")
+					var/pick_pie = rand(1, 5)
+					switch(pick_pie)
 						if(1)
-							new /obj/item/reagent_containers/food/snacks/fries(get_turf(src))
+							new /obj/item/reagent_containers/food/snacks/pie/cream(get_turf(src))
 						if(2)
-							new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
+#ifdef HALLOWEEN
+							new /obj/item/reagent_containers/food/snacks/pie/pumpkin(get_turf(src))
+#else
+							new /obj/item/reagent_containers/food/snacks/pie/apple(get_turf(src))
+#endif
 						if(3)
-							new /obj/item/reagent_containers/food/snacks/donut(get_turf(src))
+							new /obj/item/reagent_containers/food/snacks/pie/slurry(get_turf(src))
 						if(4)
-							new /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom(get_turf(src))
+							new /obj/item/reagent_containers/food/snacks/pie/ass(get_turf(src))
 						if(5)
-							new /obj/item/reagent_containers/food/snacks/candy/negativeonebar(get_turf(src))
-						if(6)
-							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
+							new /obj/item/reagent_containers/food/snacks/pie/weed(get_turf(src))
+				if ("Soda")
+#ifdef XMAS
+					if(rand(1,3) == 3)
+						new /obj/item/reagent_containers/food/drinks/bottle/soda/xmas(get_turf(src))
+					else
+						new /obj/item/reagent_containers/food/drinks/bottle/soda/grones(get_turf(src))
+#else
+					new /obj/item/reagent_containers/food/drinks/bottle/soda/grones(get_turf(src))
+#endif
 				if ("Cola")
+#ifdef HALLOWEEN
+					if(emagged_robot && rand(1,3) == 3)
+						if(rand(1,3) == 3)
+							new /obj/item/reagent_containers/food/drinks/bottle/soda/spooky2(get_turf(src))
+						else
+							new /obj/item/reagent_containers/food/drinks/bottle/soda/spooky(get_turf(src))
+					else
+						new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
+#else
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
+#endif
 				if ("Water")
 					new /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater(get_turf(src))
+				if ("Eggnog")
+					new /obj/item/reagent_containers/food/drinks/eggnog(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
 					logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
