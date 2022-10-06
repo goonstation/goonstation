@@ -1,4 +1,9 @@
 
+(t)thu oct 06 22
+(u)ZWRh3
+(p)11076
+(e)🪲🗺💅|C-Bug, A-Mapping, C-QoL
+(+)The main ring on wrestlemap is no longer damageable (mostly).
 (t)wed oct 05 22
 (u)Ikea & Mr. Moriarty
 (p)11088
