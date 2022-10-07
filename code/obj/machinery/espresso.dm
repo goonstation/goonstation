@@ -9,6 +9,7 @@
 	density = 1
 	anchored = 1
 	flags = FPRINT | NOSPLASH
+	event_handler_flags = NO_MOUSEDROP_QOL
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
@@ -35,6 +36,19 @@
 				user.show_text ("You place the [src.cup_name] into the [src].")
 				src.update()
 				return ..()
+
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!istype(O, /obj/item/reagent_containers/food/drinks/espressocup))
+			return
+
+		if (!isliving(user))
+			boutput(user, "<span class='alert'>How are you planning on drinking coffee as a ghost!?</span>")
+			return
+
+		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
+			return
+
+		src.attackby(O, user)
 
 	attack_hand(mob/user)
 		if (can_reach(user,src))
