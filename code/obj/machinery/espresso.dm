@@ -26,7 +26,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
 			if (src.contents.len >= src.cupslimit)
-				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
+				user.show_text("The [src.name] can't hold any more [src.cup_name]s, doofus!")
 				return ..()
 			else
 				src.cupinside = 1
