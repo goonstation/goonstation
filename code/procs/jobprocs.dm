@@ -512,7 +512,7 @@
 
 		// This should be here (overriding most other things), probably? - #11215
 		// Vampires spawning in the chapel is bad. :(
-		if (istype(get_turf(src).loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
+		if (istype(src.loc.loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
