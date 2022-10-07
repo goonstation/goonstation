@@ -59,7 +59,7 @@
 			if (emergency_shuttle.online)
 				return
 		message_admins("<span class='internal'>Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]</span>")
-		logTheThing("admin", null, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
+		logTheThing(LOG_ADMIN, null, "Setting up Sleeper Agent event. Source: [source ? "[source]" : "random"]")
 		SPAWN(0)
 			src.lock = 1
 			do_event(source=="spawn_antag", source)
@@ -113,7 +113,7 @@
 	proc/awaken_sleeper_agent(var/mob/living/carbon/human/H, var/source)
 		H.mind.add_antagonist(ROLE_SLEEPER_AGENT, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 		message_admins("[key_name(H)] awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
-		logTheThing("admin", H, null, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
+		logTheThing(LOG_ADMIN, H, "awakened as a sleeper agent antagonist. Source: [source ? "[source]" : "random event"]")
 
 	proc/gen_numbers()
 		var/num_numbers = length(numbers)
@@ -132,7 +132,7 @@
 			for (var/obj/item/device/radio/Hs in H)
 				if (Hs.frequency == frequency)
 					listeners += H
-					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs].</span>")
+					boutput(H, "<span class='notice'>A peculiar noise intrudes upon the radio frequency of your [Hs.name].</span>")
 					if (H.client && !checktraitor(H) && !isVRghost(H) && (H.client.preferences.be_traitor || src.override_player_pref))
 						var/datum/job/J = find_job_in_controller_by_string(H?.mind.assigned_role)
 						if (J?.allow_traitors)

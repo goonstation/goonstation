@@ -12,6 +12,7 @@
 	config_tag = "revolution"
 	shuttle_available = 0
 
+	antag_token_support = TRUE
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
@@ -64,7 +65,7 @@
 		head_revolutionaries += tplayer
 		token_players.Remove(tplayer)
 		rev_number--
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
@@ -211,7 +212,7 @@
 
 		src.revolutionaries += rev_mind
 		src.update_rev_icons_added(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "was made a member of the revolution.")
 		. = 1
 
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
@@ -229,7 +230,7 @@
 
 		src.revolutionaries -= rev_mind
 		src.update_rev_icons_removed(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "is no longer a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "is no longer a member of the revolution.")
 
 		for (var/mob/living/M in view(rev_mind.current))
 			M.show_text("<b>[rev_mind.current] looks like they just remembered their real allegiance!</b>", "blue")
@@ -513,7 +514,7 @@
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	item_state = "revsign"
 
 	w_class = W_CLASS_BULKY

@@ -158,7 +158,7 @@
 	New()
 		var/poison = pick_string("chemistry_tools.txt", "traitor_poison_bottle")
 		src.initial_reagents = poison
-		logTheThing("debug", src, null, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
+		logTheThing(LOG_DEBUG, src, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
 		..()
 
 // gannets - large poison bottles for nuke op medics.
@@ -425,6 +425,6 @@
 	name = "cleaner bottle"
 	desc = "A bottle filled with cleaning fluid."
 	icon_state = "largebottle-labeled"
-	initial_volume = 50
+	initial_volume = 100
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10

@@ -116,7 +116,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 /client/proc/audit(var/category, var/message, var/target)
 	if(src.holder && (src.holder.audit & category))
-		logTheThing("audit", src, target, message)
+		logTheThing(LOG_AUDIT, src, message)
 
 /client/proc/updateXpRewards()
 	if(qualifiedXpRewards == null)
@@ -140,7 +140,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	if (current_state < GAME_STATE_FINISHED)
 		ircbot.event("logout", src.key)
 	*/
-	logTheThing("admin", src, null, " has disconnected.")
+	logTheThing(LOG_ADMIN, src, " has disconnected.")
 
 	src.images.Cut() //Probably not needed but eh.
 
@@ -160,7 +160,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 /client/New()
 	Z_LOG_DEBUG("Client/New", "New connection from [src.ckey] from [src.address] via [src.connection]")
-	logTheThing("diary", null, src, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
+	logTheThing(LOG_DIARY, null, "Login attempt: [src.ckey] from [src.address] via [src.connection], compid [src.computer_id]", "access")
 
 	login_success = 0
 
@@ -171,7 +171,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		del(src)
 		return
 
-	logTheThing("admin", src, null, " has connected.")
+	logTheThing(LOG_ADMIN, src, " has connected.")
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Connected")
 
@@ -198,7 +198,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 /*
 	SPAWN(rand(4,18))
 		if(proxy_check(src.address))
-			logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
+			logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
 			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
 			boutput(src, "You may not connect through TOR.")
 			SPAWN(0) del(src)
@@ -278,7 +278,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 	if (isbanned)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
-		logTheThing("diary", null, src, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
+		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
 		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
 		var/banstring = {"
 							<!doctype html>
@@ -310,37 +310,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 //vpn check (for ban evasion purposes)
 #ifdef DO_VPN_CHECKS
 	if (vpn_blacklist_enabled)
-		var/vpn_kick_string = {"
-						<!doctype html>
-						<html>
-							<head>
-								<title>VPN or Proxy Detected</title>
-							</head>
-							<body>
-								<h1>Warning: VPN or proxy connection detected</h1>
-
-                                Please disable your VPN or proxy, close the game, and rejoin.<br>
-                                <h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-								If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
-							</body>
-						</html>
-					"}
 		var/is_vpn_address = global.vpn_ip_checks["[src.address]"]
 
 		// We have already checked this user this round and they are indeed on a VPN, kick em
 		if (is_vpn_address)
-			logTheThing("admin", src, null, "[src.address] is using a vpn that they've already logged in with during this round.")
-			logTheThing("diary", src, null, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
-			message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
-			if(do_compid_analysis)
-				do_computerid_test(src) //Will ban yonder fucker in case they are prix
-				check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
-			if (src)
-				src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-				sleep(3 SECONDS)
-				if (src)
-					del(src)
-				return
+			src.vpn_bonk(repeat_attempt = TRUE)
+			return
 
 		// Client has not been checked for VPN status this round, go do so, but only for relatively new accounts
 		// NOTE: adjust magic numbers here if we approach vpn checker api rate limits
@@ -350,12 +325,12 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 				data = apiHandler.queryAPI("vpncheck", list("ip" = src.address, "ckey" = src.ckey), 1, 1, 1)
 				// Goonhub API error encountered
 				if (data["error"])
-					logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["error"]]")
-					logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
+					logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["error"]]")
+					logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["error"]]", "debug")
 
 				// Successful Goonhub API query
 				else
-					var/result = dpi(data)
+					var/result = postscan(data)
 					if (result == 2 || data["whitelisted"])
 						// User is explicitly whitelisted from VPN checks, ignore
 						global.vpn_ip_checks["[src.address]"] = false
@@ -369,35 +344,21 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 							// Reasoning: The goonhub API has cached the VPN checker error response for the foreseeable future and further queries won't change that
 							//			  so we want to avoid spamming the goonhub API this round for literally no gain
 							global.vpn_ip_checks["[src.address]"] = false
-							logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [data["message"]]")
-							logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
+							logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [data["message"]]")
+							logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [data["message"]]", "debug")
 
 						// Successful VPN check
 						// IP is a known VPN, cache locally and kick
-						else if (result || ((data["vpn"] == true || data["tor"] == true) && data["fraud_score"] > 75))
-							global.vpn_ip_checks["[src.address]"] = true
-							addPlayerNote(src.ckey, "VPN Blocker", "[src.address] attempted to connect via vpn or proxy. Info: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
-							logTheThing("admin", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]")
-							logTheThing("diary", src, null, "[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]]", "admin")
-							message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked! VPN info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]")
-							ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg="[src.address] is using a vpn. vpn info: host: [data["host"]], ASN: [data["ASN"]], org: [data["organization"]], fraud score: [data["fraud_score"]]"))
-							if(do_compid_analysis)
-								do_computerid_test(src) //Will ban yonder fucker in case they are prix
-								check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
-							if (src)
-								src.mob.Browse(vpn_kick_string, "window=vpnbonked")
-								sleep(3 SECONDS)
-								if (src)
-									del(src)
-								return
-
+						else if (result || (((data["vpn"] == true) || (data["tor"] == true)) && (data["fraud_score"] > 75)))
+							vpn_bonk(data["host"], data["asn"], data["organization"], data["fraud_score"])
+							return
 						// IP is not a known VPN
 						else
 							global.vpn_ip_checks["[src.address]"] = false
 
 			catch(var/exception/e)
-				logTheThing("admin", src, null, "unable to check VPN status of [src.address] because: [e.name]")
-				logTheThing("diary", src, null, "unable to check VPN status of [src.address] because: [e.name]", "debug")
+				logTheThing(LOG_ADMIN, src, "unable to check VPN status of [src.address] because: [e.name]")
+				logTheThing(LOG_DIARY, src, "unable to check VPN status of [src.address] because: [e.name]", "debug")
 #endif
 
 	//admins and mentors can enter a server through player caps.
@@ -589,7 +550,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		SPAWN(-1)
 			src.chatOutput.start()
 
-	logTheThing("diary", null, src.mob, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
+	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
 	if (config.log_access)
 		src.ip_cid_conflict_check()
@@ -662,6 +623,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -706,8 +669,8 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 					offenders_log += found_ckey
 					offenders_message += found_ckey
 			if(log_it)
-				logTheThing("admin", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]")
-				logTheThing("diary", src.mob, null, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
+				logTheThing(LOG_ADMIN, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]")
+				logTheThing(LOG_DIARY, src.mob, "The following have the same [what]: [jointext(offenders_log, ", ")]", "access")
 			if(global.IP_alerts)
 				var/message = "<span class='alert'><B>Notice: </B></span><span class='internal'>The following have the same [what]: [jointext(offenders_message, ", ")]</span>"
 				if(isnull(message_who))
@@ -783,7 +746,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
 		var/failed = cloud_put( "antag_tokens", antag_tokens )
 		if( failed )
-			logTheThing( "debug", src, null, "Failed to store antag tokens in the ~cloud~: [failed]" )
+			logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
 		else
 			AT[ckey] << null
 
@@ -791,6 +754,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	antag_tokens = amt
 	if( cloud_available() )
 		cloud_put( "antag_tokens", amt )
+		. = TRUE
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -798,42 +762,29 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	AT[ckey] << antag_tokens*/
 
 /client/proc/use_antag_token()
-	src.set_antag_tokens(--antag_tokens)
+	if( src.set_antag_tokens(--antag_tokens) )
+		logTheThing(LOG_DEBUG, src, "Antag token used. [antag_tokens] tokens remaining.")
 
 
 /client/proc/load_persistent_bank()
-	//var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
-	//if (!PB)
-	//	if( cloud_available() )
-	//		persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-
-	//var/bank = 0
-	//PB[ckey] >> bank
-	//if (!bank)
-
 	persistent_bank_valid = cloud_available()
 
-	persistent_bank = cloud_get( "persistent_bank" ) ? text2num(cloud_get( "persistent_bank" )) : 0
-	//	return
-	//else
-	//	persistent_bank = bank
-	if( !persistent_bank && cloud_available() )
-		logTheThing( "debug", src, null, "first cloud_get failed but cloud is available!" )
-		persistent_bank += text2num( cloud_get( "persistent_bank" ) || "0" )
+	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
+
+	if(!persistent_bank && cloud_available())
+		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
+		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
 		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if( failed )
-			logTheThing( "debug", src, null, "Failed to store persistent cash in the ~cloud~: [failed]" )
-		//else
-		//	PB[ckey] << null
+		if(failed)
+			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
 
-	persistent_bank_item = cloud_get( "persistent_bank_item" )
+	persistent_bank_item = cloud_get("persistent_bank_item")
 
-	if( !persistent_bank_item && cloud_available() )
-		persistent_bank_item = cloud_get( "persistent_bank_item" )
+	if(!persistent_bank_item && cloud_available())
+		persistent_bank_item = cloud_get("persistent_bank_item")
 		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if( failed )
-			logTheThing( "debug", src, null, "Failed to store persistent bank item in the ~cloud~: [failed]" )
+		if(failed)
+			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
 
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
@@ -883,7 +834,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		return 0
 
 /client/proc/is_mentor()
-	return player.mentor
+	return player?.mentor
 
 /client/proc/can_see_mentor_pms()
 	return (src.player?.mentor || src.holder) && src.player?.see_mentor_pms
@@ -919,8 +870,8 @@ var/global/curr_day = null
 	if (deliver_warning)
 		var/msg = "(IP: [address], ID: [computer_id]) has a recent join date of [jd]."
 		message_admins("[key_name(src)] [msg]")
-		logTheThing("admin", src, null, msg)
-		logTheThing("diary", src, null, msg, "admin")
+		logTheThing(LOG_ADMIN, src, msg)
+		logTheThing(LOG_DIARY, src, msg, "admin")
 		var/addr = address
 		var/ck = ckey
 		var/cid = computer_id
@@ -934,7 +885,7 @@ var/global/curr_day = null
 				addData["akey"] = "Marquesas"
 				addData["mins"] = 0
 				var/slt = rand(600, 3000)
-				logTheThing("admin", null, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
+				logTheThing(LOG_ADMIN, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
 				message_admins("Autobanning evader [key] in [slt / 10] seconds.")
 				sleep(slt)
 				addBan(addData)
@@ -953,10 +904,10 @@ var/global/curr_day = null
 	var/asshole_proxy_provider = "AnchorFree"
 
 	//if (findtext(jd, c_text) && findtext(jd, r_text) && findtext(jd, i_text))
-	//	logTheThing("admin", null, null, "Banned location: Argentina, Entre Rios, Federal for IP [addr].")
+	//	logTheThing(LOG_ADMIN, null, "Banned location: Argentina, Entre Rios, Federal for IP [addr].")
 	//	return 1
 	if (findtext(jd, asshole_proxy_provider))
-		logTheThing("admin", null, null, "Banned proxy: AnchorFree Hotspot Shield [addr].")
+		logTheThing(LOG_ADMIN, null, "Banned proxy: AnchorFree Hotspot Shield [addr].")
 		return 1
 	return 0
 
@@ -971,7 +922,7 @@ var/global/curr_day = null
 	var/datum/http_response/response = request.into_response()
 
 	if (response.errored || !response.body)
-		logTheThing("debug", null, null, "setJoinDate: Failed to get join date response for [src.ckey].")
+		logTheThing(LOG_DEBUG, null, "setJoinDate: Failed to get join date response for [src.ckey].")
 		return
 
 	var/savefile/save = new
@@ -1064,8 +1015,8 @@ var/global/curr_day = null
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[target] (Discord)</b>: [t]</span>")
-			logTheThing("admin_help", src, null, "<b>PM'd [target]</b>: [t]")
-			logTheThing("diary", src, null, "PM'd [target]: [t]", "ahelp")
+			logTheThing(LOG_AHELP, src, "<b>PM'd [target]</b>: [t]")
+			logTheThing(LOG_DIARY, src, "PM'd [target]: [t]", "ahelp")
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
@@ -1098,8 +1049,8 @@ var/global/curr_day = null
 			if (!( t ))
 				return
 			boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target] (Discord)</b>: <span class='message'>[t]</span></span>")
-			logTheThing("mentor_help", src, null, "<b>Mentor PM'd [target]</b>: [t]")
-			logTheThing("diary", src, null, "Mentor PM'd [target]: [t]", "admin")
+			logTheThing(LOG_MHELP, src, "<b>Mentor PM'd [target]</b>: [t]")
+			logTheThing(LOG_DIARY, src, "Mentor PM'd [target]: [t]", "admin")
 
 			var/ircmsg[] = new()
 			ircmsg["key"] = src.mob && src ? src.key : ""
@@ -1140,19 +1091,19 @@ var/global/curr_day = null
 
 				if (src.holder)
 					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 				else
 					if (M.client && M.client.holder)
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					else
 						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, "sound/misc/mentorhelp.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
 
-				logTheThing("mentor_help", src.mob, M, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
-				logTheThing("diary", src.mob, M, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
+				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
 
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
@@ -1292,6 +1243,44 @@ var/global/curr_day = null
 
 	C.screen += M
 
+/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE)
+	var/vpn_kick_string = {"
+				<!doctype html>
+				<html>
+					<head>
+						<title>VPN or Proxy Detected</title>
+					</head>
+					<body>
+						<h1>Warning: VPN or proxy connection detected</h1>
+
+						Please disable your VPN or proxy, close the game, and rejoin.<br>
+						<h2>Not using a VPN or proxy / Having trouble connecting?</h2>
+						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
+					</body>
+				</html>
+			"}
+
+	if (repeat_attempt)
+		logTheThing(LOG_ADMIN, src, "[src.address] is using a vpn that they've already logged in with during this round.")
+		logTheThing(LOG_DIARY, src, "[src.address] is using a vpn that they've already logged in with during this round.", "admin")
+		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
+	else
+		global.vpn_ip_checks["[src.address]"] = true
+		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
+
+		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
+		logTheThing(LOG_ADMIN, src, msg_txt)
+		logTheThing(LOG_DIARY, src, msg_txt, "admin")
+		message_admins("[key_name(src)] [msg_txt]")
+		ircbot.export_async("admin", list(key="VPN Blocker", name="[src.key]", msg=msg_txt))
+	if(do_compid_analysis)
+		do_computerid_test(src) //Will ban yonder fucker in case they are prix
+		check_compid_list(src) //Will analyze their computer ID usage patterns for aberrations
+	src.Browse(vpn_kick_string, "window=vpnbonked")
+	sleep(3 SECONDS)
+	if (src)
+		del(src)
+	return
 
 /client/verb/apply_depth_shadow()
 	set hidden = 1
@@ -1439,6 +1428,8 @@ var/global/curr_day = null
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CHUNKY
 	else if (winget( src, "menu.fps_creamy", "is-checked" ) == "true")
 		src.tick_lag = CLIENTSIDE_TICK_LAG_CREAMY
+	else if (winget( src, "menu.fps_velvety", "is-checked" ) == "true")
+		src.tick_lag = CLIENTSIDE_TICK_LAG_VELVETY
 	else
 		src.tick_lag = CLIENTSIDE_TICK_LAG_SMOOTH
 
@@ -1592,7 +1583,7 @@ if([removeOnFinish])
 	"}, "window=pregameBrowser")
 
 #ifndef SECRETS_ENABLED
-/client/proc/dpi(list/data)
+/client/proc/postscan(list/data)
 	return
 #endif
 

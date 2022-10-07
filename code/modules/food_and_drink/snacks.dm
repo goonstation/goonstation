@@ -88,7 +88,7 @@
 
 	New()
 		..()
-		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0, copy = FALSE)
 		if (prob(1))
 			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")
@@ -186,7 +186,7 @@
 				var/mob/living/carbon/human/H = M
 				H.implant.Add(src)
 				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Cut_1.ogg", 100, 1)
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
 				src.set_loc(M)
 				src.transfer_all_reagents(M)
@@ -789,14 +789,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 /obj/item/reagent_containers/food/snacks/soup/cereal
 	name = "dry cereal"
 	desc = "A bowl of colorful breakfast cereal, each piece sharp enough to slice the roof of your mouth into meat confetti."
-	icon_state = "cereal_bowl"
+	icon = 'icons/obj/kitchen.dmi'
+	icon_state = "bowl"
 	bites_left = 5
 	heal_amt = 1
 	var/dry = 1
 	var/hasPrize = 0
 	food_effects = list("food_refreshed")
 
-	New(loc, prize_inside)
+	New(loc, prize_inside, var/obj/item/reagent_containers/food/drinks/bowl/bowl)
+		if (bowl)
+			src.icon = bowl.icon
+			src.icon_state = bowl.icon_state
+			src.dropped_item = bowl.type
+		src.UpdateOverlays(image(icon = 'icons/obj/foodNdrink/food_meals.dmi', icon_state = src.icon_state + "_cereal"), "cereal")
 		..()
 		hasPrize = (prize_inside == 1)
 
@@ -1051,7 +1057,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if(16 to 20)
 					boutput(M, "<span class='alert'>AGHBGLBLGHLGBGLHGHBLGH</span>")
 					M.visible_message("<span class='alert'>[M] pukes their guts out!</span>")
-					playsound(M.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 					M.changeStatus("weakened", 4 SECONDS)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1174,7 +1180,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 				if (H.a_intent == INTENT_HARM && (H.job == "Chef" || H.job == "Sous-Chef") && H.bioHolder?.HasEffect("accent_swedish"))
 					src.visible_message("<span class='alert'><b>[H] hits the [src] with [W]!<b></span>")
 					src.visible_message("<span class='alert'>The [src] barks at [H]!</span>")
-					playsound(src, "sound/voice/animal/dogbark.ogg", 40, 1)
+					playsound(src, 'sound/voice/animal/dogbark.ogg', 40, 1)
 					SPAWN(0.75 SECONDS)
 						if (src && H)
 							src.visible_message("<span class='alert'>The [src] takes a bite out of [H]!</span>")
@@ -1551,7 +1557,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	New()
 		..()
 		flick("ectoplasm-a", src)
-		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("ectoplasm"), appearance = 0, setname = 0, copy = FALSE)
 
 	heal(mob/M)
 		..()
@@ -2673,8 +2679,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	food_color = "#f6ad58"
-	var/open = 0
-	var/fortune = 0
+	var/open = FALSE
+	var/fortune = FALSE
 
 	attack_self(mob/user as mob)
 		if (!open)
@@ -2686,11 +2692,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.desc = "Half of a fortune cookie."
 			icon_state = "fortune-open"
 			B.icon_state = "fortune-top"
-			open = 1
-			B.open = 1
-			fortune = 1
+			open = TRUE
+			B.open = TRUE
+			fortune = TRUE
+		else
+			return ..()
 
-	attack_hand(mob/user, unused, flag)
+	attack_hand(mob/user)
 		if (fortune)
 			desc = "Half of a fortune cookie."
 			icon_state = "fortune-bottom"
@@ -2698,9 +2706,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			B.set_loc(user)
 
 			user.put_in_hand_or_drop(B)
-			fortune = 0
+			fortune = FALSE
 		else
-			..()
+			return ..()
 
 /obj/item/reagent_containers/food/snacks/healgoo
 	name = "weird goo"
@@ -2892,3 +2900,41 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	initial_volume = 20
 	initial_reagents = "currypowder"
 	food_effects = list("food_hp_up","food_refreshed","food_warm")
+
+
+/obj/item/reagent_containers/food/snacks/cheesewheel
+	name = "cheese wheel"
+	desc = "A giant wheel of cheese. It seems a slice is already missing."
+	icon = 'icons/obj/foodNdrink/food_meals.dmi'
+	icon_state = "cheesewheel"
+	throwforce = 6
+	real_name = "cheesewheel"
+	throw_speed = 2
+	throw_range = 5
+	stamina_cost = 5
+	stamina_damage = 2
+	sliceable = TRUE
+	slice_amount = 4
+	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/cheese
+	initial_volume = 40
+	initial_reagents = "cheese"
+	food_effects = list("food_warm")
+
+	attack(mob/M, mob/user, def_zone)
+		if (user == M)
+			boutput(user, "<span class='alert'>You can't just cram that in your mouth, you greedy beast!</span>")
+			user.visible_message("<b>[user]</b> stares at [src] in a confused manner.")
+			return
+		else
+			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
+			return
+
+/obj/item/reagent_containers/food/snacks/ratatouille
+    name = "ratatouille"
+    desc = "Stewed and caramalized vegetables. Remy not included."
+    icon = 'icons/obj/foodNdrink/food_meals.dmi'
+    icon_state = "ratatouille"
+    needspoon = true
+    heal_amt = 2
+    bites_left = 3
+    food_effects = list("food_refreshed","food_warm")

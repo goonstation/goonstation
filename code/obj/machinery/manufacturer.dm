@@ -14,9 +14,10 @@
 	anchored = TRUE
 	mats = 20
 	power_usage = 200
+	// req_access is used to lock out specific featurs and not limit deconstruciton therefore DECON_NO_ACCESS is required
 	req_access = list(access_heads)
 	event_handler_flags = NO_MOUSEDROP_QOL
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 	flags = NOSPLASH | FLUID_SUBMERGE
 
 	// General stuff
@@ -954,7 +955,7 @@
 					C.use(1)
 					src.take_damage(-10)
 					user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					if (src.health >= 50)
 						boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -970,7 +971,7 @@
 				user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
 				src.load_item(W,user)
 			else
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.dismantle_stage == 0)
 					user.visible_message("<b>[user]</b> loosens [src]'s external plating bolts.")
 					src.dismantle_stage = 1
@@ -986,7 +987,7 @@
 
 		else if (ispryingtool(W) && src.dismantle_stage == 1)
 			user.visible_message("<b>[user]</b> pries off [src]'s plating.")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.dismantle_stage = 2
 			new /obj/item/sheet/steel/reinforced(src.loc)
 			src.build_icon()
@@ -996,7 +997,7 @@
 				if (src.shock(user,100))
 					return
 			user.visible_message("<b>[user]</b> disconnects [src]'s cabling.")
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 			src.dismantle_stage = 3
 			src.status |= NOPOWER
 			var/obj/item/cable_coil/cut/C = new /obj/item/cable_coil/cut(src.loc)
@@ -1909,7 +1910,7 @@
 					src.update_resource_amount(P.material.mat_id, free_resource_amt * 10)
 			free_resource_amt = 0
 		else
-			logTheThing("debug", null, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
+			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
 
 	proc/get_output_location(atom/A)
 		if (!src.output_target)
@@ -1983,6 +1984,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/light_bulb,
 		/datum/manufacture/red_bulb,
 		/datum/manufacture/yellow_bulb,
@@ -2007,7 +2009,9 @@
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/saxophone,
+		/datum/manufacture/trumpet)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -2017,7 +2021,9 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler)
+		/datum/manufacture/stapler,
+		/datum/manufacture/bagpipe,
+		/datum/manufacture/whistle)
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -2061,6 +2067,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/wrench,
 		/datum/manufacture/screwdriver,
@@ -2171,6 +2178,7 @@
 		/datum/manufacture/implanter,
 		/datum/manufacture/implant_health,
 		/datum/manufacture/implant_antirot,
+		/datum/manufacture/floppydisk,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/extinguisher,
 		/datum/manufacture/cyberappendix,
@@ -2263,9 +2271,11 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
+		/datum/manufacture/microjetpack,
 		/datum/manufacture/jetpack,
 		/datum/manufacture/geoscanner,
 		/datum/manufacture/geigercounter,
@@ -2504,7 +2514,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,

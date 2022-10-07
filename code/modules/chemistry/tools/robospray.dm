@@ -22,7 +22,7 @@
 	var/image/fluid_image
 	var/extra_refill = 0
 
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	inventory_counter_enabled = 1
 
 	New()
@@ -92,7 +92,7 @@
 
 		user.visible_message("<span class='notice'><B>[user] injects [M] with [amt_prop] units of [propername].</B></span>",\
 		"<span class='notice'>You inject [amt_prop] units of [propername]. [src] now contains [botreagents[currentreagent] - amt_prop] units.</span>")
-		logTheThing("combat", user, M, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a cybernetic hypospray to inject [constructTarget(M,"combat")] with [amt_prop] units of [propername] at [log_loc(user)].")
 
 		M.reagents.add_reagent(currentreagent, amt_prop)
 		botreagents[currentreagent] = botreagents[currentreagent] - amt_prop

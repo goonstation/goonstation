@@ -14,18 +14,18 @@
 		..()
 		AddBlobSteps(src)
 		src.region = get_singleton(/datum/mapPrefab/allocated/blob_tutorial).load()
-		logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
+		logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				initial_turf = T
 				break
 		if (!initial_turf)
-			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
+			logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
 			throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
 
 	Start()
 		if (!initial_turf)
-			logTheThing("debug", usr, null, "<b>Blob Tutorial</b>: Failed setup.")
+			logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Failed setup.")
 			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
 			qdel(src)
 			return
@@ -586,7 +586,7 @@ proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
 
 	New()
 		..()
-		overlays += image('icons/mob/inhand/hand_weapons.dmi', "flamethrower1-R")
+		overlays += image('icons/mob/inhand/hand_guns.dmi', "flamethrower1-R")
 		L.set_loc(src)
 		L.lit = 1
 

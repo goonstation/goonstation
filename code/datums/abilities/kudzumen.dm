@@ -342,7 +342,7 @@
 		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
-		logTheThing("say", holder.owner, holder.owner.name, "[message]")
+		logTheThing(LOG_SAY, holder.owner, "[message]")
 		.= holder.owner.say_kudzu(message, holder)
 
 		return 0
@@ -511,7 +511,7 @@
 	cast()
 		var/mob/owner = holder?.owner
 		if (!istype(owner))
-			logTheThing("debug", null, null, "no owner for this kudzu ability. [src]")
+			logTheThing(LOG_DEBUG, null, "no owner for this kudzu ability. [src]")
 			return 1
 		//turn on
 		if (!active)
@@ -621,7 +621,7 @@
 			amount = length(K.kudzu)
 		else
 			boutput(usr, "messed up kudzu controller call 1-800-CODER")
-			logTheThing("debug", null, null, "Messed up kudzu controller for kudzuman")
+			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
 		kudzu_controller = null

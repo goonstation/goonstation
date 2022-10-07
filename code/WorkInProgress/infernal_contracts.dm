@@ -90,7 +90,7 @@ proc/is_weak_rollable_contract(type)
 		H.stuttering = 120
 		H.mind?.assigned_role = "Horse"
 		H.contract_disease(/datum/ailment/disability/clumsy,null,null,1)
-		playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
+		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
 		H.change_misstep_chance(66)
 		animate_clownspell(H)
 		H.drop_from_slot(H.wear_suit)
@@ -161,12 +161,12 @@ proc/is_weak_rollable_contract(type)
 		else
 			asize++
 		acount++
-	src.playsound_local(C.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(C.loc,'sound/effects/screech.ogg', 50, 1)
 	if(C.mind)
 		shake_camera(C, 20, 16)
 		boutput(C, "<font color=red>[screamstring]</font>")
 		boutput(C, "<span style=\"color:purple; font-size:150%\"><i><b><font face = Tempus Sans ITC>You have sold your soul and become a Faustian cluwne! Oh no!</font></b></i></span>")
-		logTheThing("admin", src, null, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
+		logTheThing(LOG_ADMIN, src, "has signed a contract and turned into a Faustian cluwne at [log_loc(C)]!")
 		C.choose_name(3)
 	else
 		return
@@ -205,7 +205,7 @@ proc/is_weak_rollable_contract(type)
 		..()
 
 	attack(target, mob/user)
-		playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -406,7 +406,7 @@ END GUIDE
 			boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 			return 0
 		src.visible_message("<span class='alert'><b>[user] signs [his_or_her(user)] name in blood upon [src]!</b></span>")
-		logTheThing("admin", user, null, "signed a [src.type] contract at [log_loc(user)]!")
+		logTheThing(LOG_ADMIN, user, "signed a [src.type] contract at [log_loc(user)]!")
 		. = user.sell_soul(100, 0, 1)
 		if(!.)
 			boutput(badguy, "[user] signed [src] but had no soul to give!")
@@ -436,13 +436,18 @@ END GUIDE
 			if (isnpc(M))
 				boutput(user, "<span class='notice'>They don't have a soul to sell!</span>")
 				return
-			else if (M == user)
+			if (M == user)
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
-			else if (!M.literate)
+			if (!M.literate)
 				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
 				return
-			else if (src.inuse != 1)
+			if (ismobcritter(M))
+				var/mob/living/critter/C = M
+				if (C.is_npc)
+					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you their soul!</span>")
+					return
+			if (src.inuse != 1)
 				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)
 
 		else
@@ -490,6 +495,11 @@ END GUIDE
 		if (!isliving(target) || isghostdrone(target) || issilicon(target) || isintangible(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (ismobcritter(target))
+			var/mob/living/critter/C = target
+			if (C.is_npc)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || my_contract == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
@@ -519,7 +529,7 @@ END GUIDE
 	onEnd()
 		. = ..()
 		target.visible_message("<span class='alert'>[owner] forces [target] to sign [my_contract]!</span>")
-		logTheThing("combat", owner, target, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, owner, "forces [target] to sign a [my_contract] at [log_loc(owner)].")
 		my_contract.MagicEffect(target, owner)
 		SPAWN(1 DECI SECOND)
 			my_contract.inuse = 0
@@ -839,7 +849,7 @@ obj/item/contract/greed
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
-						playsound(T, "sound/items/coindrop.ogg", 100, 1)
+						playsound(T, 'sound/items/coindrop.ogg', 30, 1)
 						new /obj/item/coin(T)
 						for (var/i = 1; i<= 8; i= i*2)
 							if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))

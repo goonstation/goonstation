@@ -21,7 +21,7 @@
 	var/image/fluid_image
 	var/image/image_inj_dr
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -168,7 +168,7 @@
 						user.show_text("[src] doesn't contain any reagents.", "red")
 						return
 					if (target != user)
-						logTheThing("combat", user, target, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
+						logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(target,"combat")] with a [src] [log_reagents(src)] at [log_loc(user)].")
 						user.visible_message("<span class='alert'><B>[user] is trying to inject [target] with [src]!</B></span>")
 						actions.start(new/datum/action/bar/icon/syringe(target, src, src.icon, src.icon_state), user)
 						user.update_inhands()
@@ -185,7 +185,7 @@
 						P.medical = 0
 
 				if (src?.reagents && target?.reagents)
-					logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 					// Convair880: Seems more efficient than separate calls. I believe this shouldn't clutter up the logs, as the number of targets you can inject is limited.
 					// Also wraps up injecting food (advertised in the 'Tip of the Day' list) and transferring chems to other containers (i.e. brought in line with beakers and droppers).
 					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
@@ -210,7 +210,7 @@
 				src.reagents.reaction(target, INGEST, src.amount_per_transfer_from_this)
 				src.reagents.trans_to(target, src.amount_per_transfer_from_this)
 				target.visible_message("<span class='alert'>[user] injects [target] with the [src]!</span>")
-				logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

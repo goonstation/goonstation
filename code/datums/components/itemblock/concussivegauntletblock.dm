@@ -33,14 +33,14 @@
 		charged = 1
 		conc.punch_damage_modifier += 10
 		conc.setSpecialOverride(/datum/item_special/slam, null)
-		playsound(conc, "sound/items/miningtool_on.ogg", 20, 1, 0, 1.3)
+		playsound(conc, 'sound/items/miningtool_on.ogg', 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/used_special(obj/item/clothing/gloves/concussive/conc, mob/user)
 	if(charged)
 		conc.setSpecialOverride(null, 0)
 		conc.punch_damage_modifier -= 10
 		charged = 0
-		playsound(conc, "sound/items/miningtool_off.ogg", 20, 1, 0, 1.3)
+		playsound(conc, 'sound/items/miningtool_off.ogg', 20, 1, 0, 1.3)
 
 /datum/component/wearertargeting/unarmedblock/concussive/proc/append_to_tooltip(parent, list/tooltip)
 	tooltip += itemblock_tooltip_entry("special.png", "Absorbs attacks to charge up a kinetic slam attack.")

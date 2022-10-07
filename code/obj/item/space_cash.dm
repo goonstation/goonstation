@@ -1,4 +1,3 @@
-
 /obj/item/spacecash
 	name = "1 credit"
 	real_name = "credit"

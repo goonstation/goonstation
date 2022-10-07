@@ -313,7 +313,7 @@
 						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
+			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
@@ -321,19 +321,6 @@
 	New()
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
-
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/bee
 	name = "Bee crate"

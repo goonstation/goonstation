@@ -20,7 +20,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	var/assigned_by = ANTAGONIST_SOURCE_ROUND_START
 	/// Pseudo antagonists are not "real" antagonists, as determined by the round. They have the abilities, but do not have objectives and ideally should not considered antagonists for the purposes of griefing rules, etc.
 	var/pseudo = FALSE
-	
+
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup)
 		. = ..()
 		if (!istype(new_owner))
@@ -54,11 +54,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/remove_self(take_gear = TRUE, silent)
 		if (take_gear)
 			src.remove_equipment()
-		
+
 		if (!silent)
 			src.announce_removal()
 
-	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here. 
+	/// Returns TRUE if this antagonist can be assigned to the given mind, and FALSE otherwise. This is intended to be special logic, overriden by subtypes; mutual exclusivity and other selection logic is not performed here.
 	proc/is_compatible_with(datum/mind/mind)
 		return TRUE
 
@@ -85,7 +85,9 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_equip)
 			src.give_equipment()
-		
+		else
+			src.alt_equipment()
+
 		if (src.pseudo) // For pseudo antags, objectives and announcements don't happen
 			return
 
@@ -97,14 +99,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 			src.assign_objectives()
 			if (!silent)
 				src.announce_objectives()
-		
+
 		if (do_relocate)
 			src.relocate()
 
 	/// Equip the antagonist with abilities, custom equipment, and so on.
 	proc/give_equipment()
 		return
-	
+
+	/// Fallback in case the antag must have some level of initalization even with no equipment.
+	proc/alt_equipment()
+		return
+
 	/// The inverse of give_equipment(). Remove things like changeling abilities, etc. Non-innate things like items should probably be kept.
 	proc/remove_equipment()
 		return
@@ -121,7 +127,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/announce_objectives()
 		var/obj_count = 1
 		for (var/datum/objective/objective in owner.objectives)
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+			if (istype(objective, /datum/objective/crew))
 				continue
 			boutput(owner.current, "<b>Objective #[obj_count]:</b> [objective.explanation_text]")
 			obj_count++
@@ -138,11 +144,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/do_popup(override)
 		if (has_info_popup || override)
 			owner.current.show_antag_popup(!override ? id : override)
-	
+
 	/// Returns whether or not this antagonist is considered to have succeeded. By default, this checks all antagonist-specific objectives.
 	proc/check_success()
 		for (var/datum/objective/objective as anything in owner.objectives)
-			if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+			if (istype(objective, /datum/objective/crew))
 				continue
 			if (!objective.check_completion())
 				return FALSE
@@ -164,18 +170,18 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)
-				if (istype(objective, /datum/objective/crew) || istype(objective, /datum/objective/miscreant))
+				if (istype(objective, /datum/objective/crew))
 					continue
 				if (objective.check_completion())
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='success'><b>Success!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, null,"completed objective: [objective.explanation_text]")
+						logTheThing(LOG_DIARY, owner, "completed objective: [objective.explanation_text]")
 						if (!isnull(objective.medal_name) && !isnull(owner.current))
 							owner.current.unlock_medal(objective.medal_name, objective.medal_announce)
 				else
 					. += "<b>Objective #[obj_count]:</b> [objective.explanation_text] <span class='alert'><b>Failure!</b></span>"
 					if (log_data)
-						logTheThing("diary", owner, null, "failed objective: [objective.explanation_text]. Womp womp.")
+						logTheThing(LOG_DIARY, owner, "failed objective: [objective.explanation_text]. Womp womp.")
 				obj_count++
 		if (src.check_success())
 			. += "<span class='success'><b>\The [src.display_name] has succeeded!</b></span>"

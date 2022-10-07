@@ -27,14 +27,14 @@
 
 	var/lasterr = 0
 
-	var/mutation_sfx = "sound/effects/plant_mutation.ogg"
+	var/mutation_sfx = 'sound/effects/plant_mutation.ogg'
 
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
 		if (POT.dead || !POT.current) return 302
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc_override = 0
 		return lasterr
 
@@ -43,7 +43,7 @@
 		if (!POT) lasterr = 401
 		if (POT.dead || !POT.current) lasterr = 402
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc_override = FALSE
 		return lasterr
 
@@ -52,7 +52,7 @@
 		if (!POT) lasterr = 501
 		if (POT.dead || !POT.current) lasterr = 502
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc_override = 0
 		return lasterr
 
@@ -186,7 +186,7 @@
 		var/thud_prob = clamp(DNA.endurance / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT, "sound/effects/exlow.ogg", 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
 			animate_wiggle_then_reset(POT)
 
 
@@ -234,6 +234,15 @@
 	PTrange = list(75,null)
 	chance = 10
 	assoc_reagents = list("ghostchilijuice")
+
+// Pumpkin Mutations
+
+/datum/plantmutation/pumpkin/latte
+	name = "Spice Pumpkin"
+	name_prefix = "Spiced "
+	iconmod = "PumpkinLatte"
+	crop = /obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	assoc_reagents = list("pumpkinspicelatte")
 
 // Eggplant Mutations
 
@@ -285,7 +294,7 @@
 	dont_rename_crop = true
 	crop = /obj/item/clothing/head/butt/synth
 	special_proc_override = TRUE
-	mutation_sfx = "sound/voice/farts/fart6.ogg"
+	mutation_sfx = 'sound/voice/farts/fart6.ogg'
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()
@@ -297,7 +306,7 @@
 
 		if (POT.growth > (P.growtime - DNA.growtime) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT, "sound/voice/farts/poo2.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -333,7 +342,7 @@
 	dont_rename_crop = true
 	iconmod = "SynthButts"
 	crop = /obj/machinery/bot/buttbot
-	mutation_sfx = "sound/voice/virtual_gassy.ogg"
+	mutation_sfx = 'sound/voice/virtual_gassy.ogg'
 
 /datum/plantmutation/synthmeat/lung
 	name = "Synthlung"
@@ -402,7 +411,7 @@
 	crop = /obj/item/plant/herb/contusine/quivering
 	assoc_reagents = list("histamine")
 	chance = 10
-	mutation_sfx = "sound/impact_sounds/Bush_Hit.ogg"
+	mutation_sfx = 'sound/impact_sounds/Bush_Hit.ogg'
 
 // Nureous Mutations
 
@@ -619,7 +628,7 @@
 	name_prefix = "Smoldering "
 	iconmod = "RadweedRed"
 	assoc_reagents = list("infernite")
-	mutation_sfx = "sound/effects/fireworks1.ogg"
+	mutation_sfx = 'sound/effects/redweedpop.ogg'
 
 // Slurrypod Mutations
 
@@ -680,7 +689,7 @@
 	iconmod = "TreeDogwood"
 	special_proc_override = TRUE
 	attacked_proc_override = 1
-	mutation_sfx = "sound/voice/animal/dogbark.ogg"
+	mutation_sfx = 'sound/voice/animal/dogbark.ogg'
 
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
@@ -691,7 +700,7 @@
 
 		if (POT.growth > (P.growtime + DNA.growtime) && prob(5))
 			POT.visible_message("<span class='combat'><b>[POT.name]</b> [pick("howls","bays","whines","barks","croons")]!</span>")
-			playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+			playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 
 	HYPattacked_proc_M(var/obj/machinery/plantpot/POT,var/mob/user)
 		..()
@@ -700,7 +709,7 @@
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth < (P.growtime + DNA.growtime)) return 0
-		playsound(POT, pick("sound/voice/animal/howl1.ogg","sound/voice/animal/howl2.ogg","sound/voice/animal/howl3.ogg","sound/voice/animal/howl4.ogg","sound/voice/animal/howl5.ogg","sound/voice/animal/howl6.ogg"), 30, 1,-1)
+		playsound(POT, pick('sound/voice/animal/howl1.ogg','sound/voice/animal/howl2.ogg','sound/voice/animal/howl3.ogg','sound/voice/animal/howl4.ogg','sound/voice/animal/howl5.ogg','sound/voice/animal/howl6.ogg'), 30, 1,-1)
 		boutput(user, "<span class='alert'>[POT.name] angrily bites you!</span>")
 		random_brute_damage(user, 3)
 		return prob(50) // fights back, but doesn't always succeed
@@ -720,6 +729,13 @@
 	iconmod = "TreeSassafras"
 	assoc_reagents = list("safrole")
 	crop = /obj/item/plant/herb/sassafras
+
+/datum/plantmutation/tree/glowstick
+	name = "Glowstick Tree"
+	dont_rename_crop = true
+	name_prefix = "Glowstick "
+	iconmod = "TreeGlow"
+	crop = /obj/item/device/light/glowstick
 
 //peanuuts
 

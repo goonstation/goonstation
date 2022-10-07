@@ -117,7 +117,7 @@
 			return 1
 		var/mob/MT = target
 		MT.apply_flash(10, 10, stamina_damage = 100, eyes_blurry = 5, eyes_damage = 5)
-		playsound(holder.owner, "sound/weapons/flash.ogg", 100, 1)
+		playsound(holder.owner, 'sound/weapons/flash.ogg', 100, 1)
 
 /datum/targetable/critter/control_owner
 	name = "Return to body"
