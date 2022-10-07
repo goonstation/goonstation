@@ -2507,6 +2507,11 @@ proc/get_mobs_trackable_by_AI()
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (W.material.material_flags & MATERIAL_METAL) // metal sheets

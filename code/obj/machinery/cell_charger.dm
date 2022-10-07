@@ -86,3 +86,9 @@
 	use_power(added / CELLRATE)
 
 	src.UpdateIcon()
+
+
+/obj/machinery/cell_charger/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.charging)
+		src.charging = null
