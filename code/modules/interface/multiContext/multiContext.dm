@@ -4,6 +4,10 @@
 
 /mob/proc/checkContextActions(atom/target)
 	. = list()
+
+	if (isobj(target) && (isghostcritter(src) && target:object_flags & NO_GHOSTCRITTER))
+		return
+
 	if(length(target?.contextActions))
 		for(var/datum/contextAction/C as anything in target.contextActions)
 			var/action = C.checkRequirements(target, src)
@@ -24,6 +28,8 @@
 				. += C
 
 /mob/proc/showContextActions(list/datum/contextAction/applicable, atom/target, datum/contextLayout/customContextLayout)
+	if(!src.client)
+		return
 	if(length(contextButtons))
 		closeContextActions()
 		return

@@ -191,8 +191,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
@@ -710,8 +710,8 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && length(theTurf.cameras))
-				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+			if(theTurf.camera_coverage_emitters && length(theTurf.camera_coverage_emitters))
+				img.app.overlays = list(src.makeText(length(theTurf.camera_coverage_emitters)))
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0

@@ -59,7 +59,7 @@
 			boutput(src, "Deploy to an AI Eye first to create a hologram.")
 			return
 
-		if (!istype(T) || !istype(T.cameras) || T.cameras.len == 0)
+		if (!istype(T) || length(T?.camera_coverage_emitters) == 0)
 			boutput(eyecam, "No camera available to project a hologram from.")
 			return
 
@@ -74,7 +74,7 @@
 			if(src.holoHolder.text_expansion)
 				for(var/te in src.holoHolder.text_expansion)
 					holo_sentences += strings("hologram.txt", "sentences_[te]")
-			holo_sentences = sortList(holo_sentences)
+			holo_sentences = sortList(holo_sentences, /proc/cmp_text_asc)
 			var/text = tgui_input_list(usr, "Select a word:", "Hologram Text", holo_sentences, allowIllegal=TRUE)
 			if(!text)
 				return
@@ -85,15 +85,15 @@
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_actions += strings("hologram.txt", "verbs_[te]")
-					holo_actions = sortList(holo_actions)
+					holo_actions = sortList(holo_actions, /proc/cmp_text_asc)
 					var/selection = tgui_input_list(usr, "Select a word:", text, holo_actions, allowIllegal=TRUE)
 					text = replacetext(text, "...", selection)
 				else
-					holo_nouns = sortList(strings("hologram.txt", "nouns"))
+					holo_nouns = strings("hologram.txt", "nouns")
 					if(src.holoHolder.text_expansion)
 						for(var/te in src.holoHolder.text_expansion)
 							holo_nouns += strings("hologram.txt", "nouns_[te]")
-					holo_nouns = sortList(holo_nouns)
+					holo_nouns = sortList(holo_nouns, /proc/cmp_text_asc)
 					var/blank_found = findtext(text,"...")
 					while(blank_found)
 						var/selection = tgui_input_list(usr, "Select a word:", text, holo_nouns, allowIllegal=TRUE)
@@ -106,7 +106,7 @@
 			new /obj/hologram(T, owner=src, holo_type=holo_type)
 
 	proc/show_hologram_context(var/turf/T)
-		showContextActions(hologramContextActions, T, contextLayout)
+		src.eyecam.showContextActions(hologramContextActions, T, contextLayout)
 
 /datum/contextAction/ai_hologram
 	var/mob/living/silicon/ai/mainframe

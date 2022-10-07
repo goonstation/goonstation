@@ -1717,7 +1717,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -2219,7 +2219,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Teleporter Pad"
@@ -2781,7 +2781,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Teleporter Pad";
@@ -3612,7 +3612,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/cable{
@@ -3636,7 +3636,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/cable{
@@ -4085,7 +4085,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "0-4";
@@ -4120,7 +4120,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/securearea{
@@ -11093,7 +11093,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-	
+
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -12945,7 +12945,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/carpet/grime,
@@ -32309,7 +32309,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-	
+
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,

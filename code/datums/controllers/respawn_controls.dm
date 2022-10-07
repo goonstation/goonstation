@@ -181,8 +181,8 @@ var/datum/respawn_controls/respawn_controller
 
 			return
 
-		logTheThing("debug", usr, null, "used a timed respawn.")
-		logTheThing("diary", usr, null, "used a timed respawn.", "game")
+		logTheThing(LOG_DEBUG, usr, "used a timed respawn.")
+		logTheThing(LOG_DIARY, usr, "used a timed respawn.", "game")
 
 		var/mob/new_player/M = new()
 		M.adminspawned = 1

@@ -3,6 +3,7 @@
 	name = "gang"
 	config_tag = "gang"
 
+	antag_token_support = TRUE
 	var/list/leaders = list()
 	var/list/gangs = list()
 
@@ -71,7 +72,7 @@
 			break
 		leaders += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_leader = antagWeighter.choose(pool = leaders_possible, role = ROLE_GANG_LEADER, amount = num_teams, recordChosen = 1)
@@ -431,7 +432,7 @@
 			top_gang = G
 
 	if (!top_gang)
-		logTheThing("debug", null, null, "No winning gang chosen for kidnapping event. Something's broken.")
+		logTheThing(LOG_DEBUG, null, "No winning gang chosen for kidnapping event. Something's broken.")
 		message_admins("No winning gang chosen for kidnapping event. Something's broken.")
 		return 0
 
@@ -442,7 +443,7 @@
 			potential_targets += H
 
 	if (!potential_targets.len)
-		logTheThing("debug", null, null, "No players found to be kidnapping targets.")
+		logTheThing(LOG_DEBUG, null, "No players found to be kidnapping targets.")
 		message_admins("No kidnapping target has been chosen for kidnapping event. This should be pretty unlikely, unless there's only like 1 person on.")
 		return 0
 
@@ -720,7 +721,7 @@
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -729,7 +730,7 @@
 			return
 
 		if(prob(15))
-			playsound(target_turf, "sound/machines/hiss.ogg", 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")
@@ -1535,13 +1536,13 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "A discount japanese sword. Only folded 2 times. The blade is on the wrong side..."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/katana_sheath/reverse
+	item_path = /obj/item/swords_sheaths/katana/reverse
 /datum/gang_item/ninja/katana
 	name = "Katana"
 	desc = "It's the real McCoy. Folded so many times."
 	class2 = "weapon"
 	price = 25000
-	item_path = /obj/item/katana_sheath
+	item_path = /obj/item/swords_sheaths/katana
 
 /datum/gang_item/ninja/shuriken
 	name = "Shuriken"
@@ -1618,7 +1619,7 @@ proc/get_gang_gear(var/mob/living/carbon/human/user)
 	desc = "It shoots bullets."
 	class2 = "weapon"
 	price = 7000
-	item_path = /obj/item/gun/kinetic/colt_saa
+	item_path = /obj/item/gun/kinetic/single_action/colt_saa
 /datum/gang_item/country_western/colt_45_bullet
 	name = "Colt .45 Speedloader"
 	desc = "A speedloader containing 7 rounds of Colt .45 ammunition.."

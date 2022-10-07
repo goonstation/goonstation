@@ -70,7 +70,7 @@ TRAYS
 	proc/break_utensil(mob/living/carbon/user as mob, var/spawnatloc = 0)
 		var/location = get_turf(src)
 		user.visible_message("<span style=\"color:red\">[src] breaks!</span>")
-		playsound(user.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 30, 1)
+		playsound(user.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 30, 1)
 		user.u_equip(src)
 		var/replacethis
 		switch(src.type)
@@ -86,8 +86,8 @@ TRAYS
 		var/utensil_color = replacetext(src.icon_state,replacethis,"")
 		var/obj/item/kitchen/utensil/knife/plastic/k = new /obj/item/kitchen/utensil/knife/plastic
 		k.icon_state = "snapped_[utensil_color]"
-		k.snapped = 1
-		k.name = "snapped [k.name]"
+		k.snapped = TRUE
+		k.name = "snapped [src.name]"
 		if(spawnatloc)
 			k.set_loc(location)
 		else
@@ -99,6 +99,7 @@ TRAYS
 	name = "spoon"
 	desc = "A metal object that has a handle and ends in a small concave oval. Used to carry liquid objects from the container to the mouth."
 	icon_state = "spoon"
+	tool_flags = TOOL_SPOONING
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (user?.bioHolder.HasEffect("clumsy") && prob(50))
@@ -107,7 +108,7 @@ TRAYS
 		if (!spoon_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -175,7 +176,7 @@ TRAYS
 		if(!scalpel_surgery(M,user))
 			return ..()
 
-	custom_suicide = 1
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if(!src.user_can_suicide(user))
 			return 0
@@ -190,6 +191,7 @@ TRAYS
 	desc = "A cheap plastic spoon, prone to breaking. Used to carry liquid objects from the container to the mouth."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -219,6 +221,7 @@ TRAYS
 	desc = "A cheap plastic fork, prone to breaking. Helps with eating some foods."
 	force = 1
 	throwforce = 1
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -245,9 +248,10 @@ TRAYS
 /obj/item/kitchen/utensil/knife/plastic
 	name = "plastic knife"
 	icon_state = "knife_plastic"
+	desc = "A long bit plastic that is serrated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
 	force = 1
 	throwforce = 1
-	desc = "A long bit plastic that is serated on one side, prone to breaking. It is used for cutting foods. Also useful for butchering dead animals, somehow."
+	w_class = W_CLASS_TINY
 
 	New()
 		..()
@@ -291,9 +295,8 @@ TRAYS
 			k.set_loc(get_turf(user))
 			s.set_loc(get_turf(user))
 			user.u_equip(src)
-			src.set_loc(user)
 			if(prob(30))
-				user.show_text("<b>The plastic silverware go EVERYWHERE!</b>","red")
+				user.show_text("<b>The plastic silverware goes EVERYWHERE!</b>","red")
 				var/list/throw_targets = list()
 				for (var/i=1, i<=3, i++)
 					throw_targets += get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
@@ -466,7 +469,7 @@ TRAYS
 		..()
 		SPAWN(1 SECOND)
 			if(!ispath(src.contained_food))
-				logTheThing("debug", src, null, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_food, \"[src.contained_food]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
 
@@ -546,18 +549,23 @@ TRAYS
 	throw_range = 8
 	force = 2
 	rand_pos = 0
-	pickup_sfx = "sound/items/pickup_plate.ogg"
+	pickup_sfx = 'sound/items/pickup_plate.ogg'
 	event_handler_flags = NO_MOUSEDROP_QOL
 	tooltip_flags = REBUILD_DIST
-
+	/// Will separate what we can put into plates/pizza boxes or not
+	var/is_plate = TRUE
 	/// The maximum amount of food you can fit on this plate
 	var/max_food = 2
+	/// Helps to track amount of food items inside the box
+	var/foods_inside = list()
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
-	var/hit_sound = "sound/items/plate_tap.ogg"
+	var/hit_sound = 'sound/items/plate_tap.ogg'
 	/// Can this be stacked with other stackable plates?
 	var/stackable = TRUE
+	/// Do we have a plate stacked on us?
+	var/plate_stacked = FALSE
 
 	New()
 		..()
@@ -568,25 +576,35 @@ TRAYS
 		. = FALSE
 		if (istype(food, /obj/item/plate))
 			if (food == src)
-				boutput(user, "<span class='alert>You can't stack a plate on itself!</span>")
+				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
+				return
+			if (src.plate_stacked)
+				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
-		if (length(src.contents) == max_food)
+		if (length(src.foods_inside) == max_food && src.is_plate)
 			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
-		if (!food.edible && !.) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
+			                                    // anything that isn't a plate may as well hold anything that fits the "plate"
+		if (!food.edible && !. && src.is_plate) // plates aren't edible, so we check if we're adding a valid plate as well (. is TRUE if so)
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
-		if (food.w_class > W_CLASS_NORMAL)
-			boutput(user, "You try to think of a way to put [food] on \the [src] but it's not possible! It's too large!")
+		if (food.w_class > W_CLASS_NORMAL && !.) // same logic as above, but to check if we can stack it
+			boutput(user, "You try to think of a way to put [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
 			return
 		if (food in src.vis_contents)
-			boutput(user, "That's already on the plate!")
+			boutput(user, "That's already on the [src]!")
 			return
 
 		. = TRUE // If we got this far it's a valid plate content
+
+		if (istype(food, /obj/item/plate/))
+			src.plate_stacked = TRUE
+		else
+			src.foods_inside += food
+
 		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
 		src.vis_contents += food
@@ -597,7 +615,7 @@ TRAYS
 		RegisterSignal(food, COMSIG_MOVABLE_SET_LOC, .proc/remove_contents)
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
-		boutput(user, "You put [food] on \the [src].")
+		boutput(user, "You put [food] [src.is_plate ? "on" : "in"] \the [src].")
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
@@ -610,6 +628,11 @@ TRAYS
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
 		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
+		if (istype(food, /obj/item/plate/))
+			src.plate_stacked = TRUE
+		else
+			src.foods_inside -= food
+
 		src.UpdateIcon()
 
 	/// Used to pick the plate up by click dragging some food to you, in case the plate is covered by big foods
@@ -618,15 +641,15 @@ TRAYS
 			src.Attackhand(user)
 
 	/// Called when you throw or smash the plate, throwing the contents everywhere
-	proc/shit_goes_everywhere()
+	proc/shit_goes_everywhere(depth = 1)
 		if (length(src.contents))
-			src.visible_message("<span class='alert'>Everything on \the [src] goes flying!</span>")
+			src.visible_message("<span class='alert'>Everything [src.is_plate ? "on" : "in"] \the [src] goes flying!</span>")
 		for (var/atom/movable/food in src)
 			food.set_loc(get_turf(src))
 			if (istype(food, /obj/item/plate))
 				var/obj/item/plate/not_food = food
 				SPAWN(0.1 SECONDS) // This is rude but I want a small delay in smashing nested plates. More satisfying
-					not_food?.shatter()
+					not_food?.shatter(depth)
 			else
 				food.throw_at(get_offset_target_turf(src.loc, rand(throw_dist)-rand(throw_dist), rand(throw_dist)-rand(throw_dist)), 5, 1)
 
@@ -638,7 +661,7 @@ TRAYS
 		if(src.cant_drop == TRUE)
 			if (istype(user, /mob/living/carbon/human))
 				var/mob/living/carbon/human/H = user
-				H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 		else
 			user.drop_item()
 			src.set_loc(get_turf(M))
@@ -646,17 +669,18 @@ TRAYS
 		src.shatter()
 
 	/// The plate shatters into shards and tosses its contents around.
-	proc/shatter()
-		playsound(src, "sound/impact_sounds/plate_break.ogg", 50, 1)
+	proc/shatter(depth = 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		for (var/i in 1 to 2)
-			var/obj/O = new /obj/item/raw_material/shard/glass
-			O.set_loc(T)
-			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
-			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+		if(log(2, depth) == round(log(2, depth)))
+			for (var/i in 1 to 2)
+				var/obj/O = new /obj/item/raw_material/shard/glass
+				O.set_loc(T)
+				if(src.material)
+					O.setMaterial(copyMaterial(src.material))
+				O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
-		src.shit_goes_everywhere()
+		src.shit_goes_everywhere(depth + 1)
 
 		qdel(src)
 
@@ -679,12 +703,12 @@ TRAYS
 			src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
-		if(user.a_intent == INTENT_HARM)
+		if(user.a_intent == INTENT_HARM && src.is_plate)
 			if(M == user)
 				boutput(user, "<span class='alert'><B>You smash [src] over your own head!</b></span>")
 			else
 				M.visible_message("<span class='alert'><B>[user] smashes [src] over [M]'s head!</B></span>")
-				logTheThing("combat", user, M, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
+				logTheThing(LOG_COMBAT, user, "smashes [src] over [constructTarget(M,"combat")]'s head! ")
 
 			unique_attack_garbage_fuck(M, user)
 
@@ -712,7 +736,7 @@ TRAYS
 		else
 			M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
 			playsound(src, src.hit_sound, 30, 1)
-			logTheThing("combat", user, M, "taps [constructTarget(M,"combat")] over the head with [src].")
+			logTheThing(LOG_COMBAT, user, "taps [constructTarget(M,"combat")] over the head with [src].")
 
 	dropped(mob/user)
 		..()
@@ -728,6 +752,94 @@ TRAYS
 		. = ..()
 		if (ishuman(AM) && AM.throwing) // only humans have the power to smash plates with their bodies
 			src.shatter()
+
+/obj/item/plate/pizza_box
+	name = "pizza box"
+	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "pizzabox"
+	pickup_sfx = 0 // to avoid using plate SFX
+	w_class = W_CLASS_BULKY
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "pizza_box"
+	is_plate = FALSE
+	var/open = FALSE
+
+	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
+
+		if (!src.open && !istype(food, /obj/item/plate/))
+			boutput(user, "<span class='alert'>You have to open \the [src] to put something in it, silly!</span>")
+			return
+
+		if (src.open && istype(food, /obj/item/plate/))
+			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
+			return
+
+		if (length(src.foods_inside) >= src.max_food && !istype(food, src.type))
+			boutput(user, "<span class='alert'>There's no more space in \the [src]!</span>")
+			return
+
+		. = ..()
+
+	proc/toggle_box(mob/user)
+		if (length(src.contents - src.foods_inside) > 0)
+			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
+			return
+
+
+		if (src.open)
+			if(user.bioHolder.HasEffect("clumsy") && prob(10))
+				user.visible_message("<span class='alert'>[user] gets their finger caught in \the [src] when closing it. That thing is made out of cardboard! How is that possible?!</span>", \
+				"<span class='alert'>You close \the [src] with your finger in it! Yeow!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage((pick(TRUE, FALSE) ? "l_arm" : "r_arm"), 2, 0, 0, DAMAGE_BLUNT)
+				bleed(user, 1, 1)
+				playsound(user.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 0)
+				user.emote("scream") // Sounds specially painful when you get your finger stuck in a steel pizza box
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+
+			src.vis_contents = list()
+			icon_state = "pizzabox"
+			open = FALSE
+			src.UpdateIcon()
+
+		else
+			if (isnull(user))
+				icon_state = "pizzabox_open"
+				src.open = TRUE
+				playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
+				src.UpdateIcon()
+				return
+
+			if (user.bioHolder.HasEffect("clumsy") && prob(33))
+				user.visible_message("<span class='alert'>[user] hits their head on the back of \the [src].</span>", \
+				"<span class='alert'>You hit the back of \the [src] on your own head! Ouch!</span>")
+				user.setStatus("stunned", 1 SECOND)
+				user.TakeDamage("head", 2, 0, 0, DAMAGE_BLUNT)
+				playsound(user.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 80, 0)
+
+			else
+				playsound(user.loc, 'sound/machines/click.ogg', 30, 0)
+
+			icon_state = "pizzabox_open"
+			src.open = TRUE
+			src.vis_contents = src.contents
+			src.UpdateIcon()
+
+	shatter()
+		shit_goes_everywhere()
+		return // Cardboard boxes don't shatter like plates.
+
+	shit_goes_everywhere()
+		if (!src.open)
+			toggle_box(null)
+		..()
+
+	attack_self(mob/user)
+		toggle_box(user)
+		return TRUE
 
 /obj/item/plate/tray //this is the big boy!
 	name = "serving tray"
@@ -791,13 +903,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, "sound/weapons/trayhit.ogg", 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, "sound/impact_sounds/Metal_Hit_Light_1.ogg", 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return

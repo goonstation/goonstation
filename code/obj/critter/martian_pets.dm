@@ -144,7 +144,7 @@
 CritterAttack(atom/M)
   if(target)
     src.attacking = 1
-    //playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+    //playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
     src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
     var/tturf = get_turf(M)
@@ -165,7 +165,7 @@ CritterAttack(atom/M)
 /obj/critter/velvet_worm/ChaseAttack(atom/M)
   if(target)
     src.attacking = 1
-    //playsound(src.loc, "sound/machines/whistlebeep.ogg", 55, 1)
+    //playsound(src.loc, 'sound/machines/whistlebeep.ogg', 55, 1)
     src.visible_message("<span class='alert'><b>[src]</b> fires at [M]!</span>")
 
     var/tturf = get_turf(M)

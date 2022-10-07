@@ -164,7 +164,7 @@ GAUNTLET CARDS
 		. = ..()
 		if(!touched && user.job != "Captain")
 			touched = TRUE
-			logTheThing("station", user, null, "is the first non-Captain to pick up [src] at [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "is the first non-Captain to pick up [src] at [log_loc(src)]")
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
@@ -250,7 +250,7 @@ GAUNTLET CARDS
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		SPAWN(3.5 SECONDS) qdel(O)
-		logTheThing("combat", user, null, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "was gibbed by the explosive Captain's Spare at [log_loc(user)].")
 		user.gib()
 
 /obj/item/card/id/attack_self(mob/user as mob)
@@ -273,6 +273,8 @@ GAUNTLET CARDS
 		if (istype(src, /obj/item/card/id/syndicate)) // Nuke ops unable to exit their station (Convair880).
 			src.access += access_syndicate_shuttle
 		DEBUG_MESSAGE("[get_access_desc(new_access)] added to [src]")
+	user.show_text("You run [E] over [src], scrambling its access.", "red")
+	logTheThing(LOG_STATION, user, "emagged [src], scrambling its access and granting random access at [log_loc(user)].")
 	src.emagged = 1
 	return TRUE
 
@@ -435,21 +437,21 @@ GAUNTLET CARDS
 		if(!owner) return
 		if(!owner.contains(src))
 			boutput(owner, "<h3><span class='alert'>You have lost your license to kill!</span></h3>")
-			logTheThing("combat",owner,null,"dropped their license to kill")
-			logTheThing("admin",owner,null,"dropped their license to kill")
+			logTheThing(LOG_COMBAT, owner, "dropped their license to kill")
+			logTheThing(LOG_ADMIN, owner, "dropped their license to kill")
 			message_admins("[key_name(owner)] dropped their license to kill")
 			owner = null
 
 	pickup(mob/user as mob)
 		if(user != owner)
-			logTheThing("combat",user,null,"picked up a license to kill")
-			logTheThing("admin",user,null,"picked up a license to kill")
+			logTheThing(LOG_COMBAT, user, "picked up a license to kill")
+			logTheThing(LOG_ADMIN, user, "picked up a license to kill")
 			message_admins("[key_name(user)] picked up a license to kill")
 			boutput(user, "<h3><span class='alert'>You now have a license to kill!</span></h3>")
 			if(owner)
 				boutput(owner, "<h2>You have lost your license to kill!</h2>")
-				logTheThing("combat",user,null,"dropped their license to kill")
-				logTheThing("admin",user,null,"dropped their license to kill")
+				logTheThing(LOG_COMBAT, user, "dropped their license to kill")
+				logTheThing(LOG_ADMIN, user, "dropped their license to kill")
 				message_admins("[key_name(user)] dropped their license to kill")
 			owner = user
 		..()

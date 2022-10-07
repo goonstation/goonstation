@@ -48,7 +48,7 @@
 	name = "\improper Medical Director's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/medical_director,
 	/obj/item/clothing/under/rank/medical_director/dress,
-	/obj/item/clothing/suit/labcoat,
+	/obj/item/clothing/suit/labcoat/medical_director,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/medical_director/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
@@ -244,6 +244,7 @@
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
+	in_list_or_max = TRUE
 	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown

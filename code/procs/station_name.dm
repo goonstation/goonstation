@@ -134,11 +134,11 @@ var/global/lastStationNameChange = 0 //timestamp
 		"nouns" = "Nouns"
 	)
 
-	whitelist_lists = sortList(whitelist_lists)
+	sortList(whitelist_lists, /proc/cmp_text_asc)
 
 	for (var/section in whitelist_lists)
 		var/list/words = strings("station_name_whitelist.txt", section)
-		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words))
+		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
 			station_name_whitelist += lowertext(word)
@@ -210,8 +210,8 @@ var/global/lastStationNameChange = 0 //timestamp
 		the_station_name = name
 
 		if (user)
-			logTheThing("admin", user, null, "changed the station name to: [name]")
-			logTheThing("diary", user, null, "changed the station name to: [name]", "admin")
+			logTheThing(LOG_ADMIN, user, "changed the station name to: [name]")
+			logTheThing(LOG_DIARY, user, "changed the station name to: [name]", "admin")
 			message_admins("[key_name(user)] changed the station name to: [name]")
 
 			var/ircmsg[] = new()

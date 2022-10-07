@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -464,7 +464,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	//yeah that sound outright doesn't exist
 	if (!S)
-		logTheThing("debug", null, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
+		logTheThing(LOG_DEBUG, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
 		return
 
 	S.falloff = 9999//(world.view + extrarange) / 3.5
@@ -532,7 +532,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	sound_playing[ S.channel ][1] = S.volume
 	sound_playing[ S.channel ][2] = VOLUME_CHANNEL_AMBIENT
 	S.volume *= getVolume( VOLUME_CHANNEL_AMBIENT ) / 100
-	S.status = SOUND_UPDATE | SOUND_STREAM // playing one at a time, update
+	S.status = SOUND_STREAM // playing one at a time
 	if (pass_volume != 0)
 		S.volume *= attenuate_for_location(A)
 		EARLY_RETURN_IF_QUIET(S.volume)

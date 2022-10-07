@@ -147,11 +147,11 @@
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 1 SECONDS))
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
-			playsound(user, "sound/machines/chainsaw_green.ogg", 50, 1)
+			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, 1)
 			if(prob(3))
 				user.communalbeep()
-			take_bleeding_damage(target, null, 17, DAMAGE_STAB)
-			random_brute_damage(target, 14, FALSE)
+			take_bleeding_damage(target, null, 10, DAMAGE_STAB)
+			random_brute_damage(target, 14, TRUE)
 			target.was_harmed(user)
 
 	attack_hand(atom/target, var/mob/user, var/reach)

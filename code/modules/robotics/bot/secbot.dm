@@ -322,7 +322,7 @@
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 			src.updateUsrDialog()
-			logTheThing("station", usr, null, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "turns [src] [src.on ? "on" : "off"] at [log_loc(src)].")
 
 		switch(href_list["operation"])
 			if ("idcheck")
@@ -412,7 +412,7 @@
 			if(user)
 				src.oldtarget_name = user.name
 				ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.oldtarget_name]", src.last_target_cooldown)
-			logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 			return 1
 		return 0
 
@@ -440,31 +440,33 @@
 			src.explode()
 		return
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
-			if (src.allowed(user))
+	attackby(obj/item/I, mob/M)
+		if (istype(I, /obj/item/device/pda2) && I:ID_card)
+			I = I:ID_card
+		if (istype(I, /obj/item/card/id))
+			if (src.allowed(M))
 				src.locked = !src.locked
-				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(M, "<span class='alert'>Access denied.</span>")
 
-		else if (isscrewingtool(W))
+		else if (isscrewingtool(I))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+				src.visible_message("<span class='alert'>[M] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
 		else
-			switch(W.hit_type)
+			switch(I.hit_type)
 				if (DAMAGE_BURN)
-					src.health -= W.force * 0.75
+					src.health -= I.force * 0.75
 				else
-					src.health -= W.force * 0.5
+					src.health -= I.force * 0.5
 			if (src.health <= 0)
+				if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] with [I] at [log_loc(src)]")
 				src.explode()
-			else if (W.force) // Prioritize your safety, cant kill crime if you're dead!
-				src.EngageTarget(user, 1, 1)
+			else if (I.force) // Prioritize your safety, cant kill crime if you're dead!
+				src.EngageTarget(M, 1, 1)
 			..()
 
 	bullet_act(var/obj/projectile/P)
@@ -479,6 +481,10 @@
 			src.health -= damage
 
 		if (src.health <= 0)
+			if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+				if (ismob(P.shooter))
+					var/mob/living/M = P.shooter
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" : ""]")
 			src.explode()
 			return
 
@@ -520,7 +526,7 @@
 
 		if(src.exploding) return
 		src.exploding = 1
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		for(var/mob/O in hearers(src, null))
 			O.show_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
 		var/turf/Tsec = get_turf(src)
@@ -585,7 +591,7 @@
 				stuncount--
 				if (check_target_immunity(M))
 					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
-					playsound(src, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 				else
 					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
@@ -760,7 +766,7 @@
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
 						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
-					playsound(C, "sound/impact_sounds/Wood_Hit_1.ogg", 15, 1, -3)
+					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
@@ -890,7 +896,7 @@
 		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src, 'sound/machines/siren_police.ogg', 50, 1)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -1275,12 +1281,12 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/weapons/handcuffs.ogg", 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
 			master.visible_message("<span class='alert'><B>...vigorously!</B></span>")
-			playsound(master, "sound/misc/winding.ogg", 30, 1, -2)
+			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
 
 	onInterrupt()
 		..()
@@ -1377,10 +1383,10 @@
 		master.baton_charging = 1
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
-			playsound(master, "sound/machines/ArtifactBee2.ogg", 30, 1, -2)
+			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, 1, -2)
 			duration = round(duration * 0.6)
 		else
-			playsound(master, "sound/effects/electric_shock_short.ogg", 30, 1, -2)
+			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, 1, -2)
 
 	onEnd()
 		..()

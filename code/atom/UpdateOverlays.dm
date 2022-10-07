@@ -163,8 +163,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			overlay_refs -= key
 	return 1
 
-/atom/proc/ClearAllOverlays(var/retain_cache=0) //Some men just want to watch the world burn
-	if(src.overlays.len)
+/atom/proc/ClearAllOverlays(retain_cache = FALSE) //Some men just want to watch the world burn
+	if(length(src.overlays))
 		if (!src.overlay_refs)
 			src.overlay_refs = list()
 		src.overlays.Cut()

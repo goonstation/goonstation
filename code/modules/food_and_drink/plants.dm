@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		var/turf/T = get_turf(A)
 		..()
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
 		if(istype(splat) && src.reagents)
 			src.reagents.trans_to(splat,5) //could be deleted immediately
@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			H.update_burning(DNA.potency * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
 		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		var/obj/decal/cleanable/tomatosplat/splat = new /obj/decal/cleanable/tomatosplat(T)
 		if(istype(splat) && src.reagents)
 			src.reagents.trans_to(splat,5) //could be deleted immediately
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 		popping = 1
 		src.visible_message("<span class='alert'>[src] pops violently!</span>")
-		playsound(src.loc, "sound/effects/pop.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 		flick("cornsplode", src)
 		SPAWN(1 SECOND)
 			new /obj/item/reagent_containers/food/snacks/popcorn(get_turf(src))
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 				HYPpassplantgenes(DNA,PDNA)
 			qdel(W)
 			qdel(src)
-		else if (istype(W, /obj/item/axe) || istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/sword) || istype(W,/obj/item/saw) || istype(W,/obj/item/knife/butcher) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
+		else if (iscuttingtool(W) || issawingtool(W) && !istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 			if (istype (src, /obj/item/reagent_containers/food/snacks/plant/orange/wedge))
 				boutput(user, "<span class='alert'>You can't cut wedges into wedges! What kind of insanity is that!?</span>")
 				return
@@ -479,7 +479,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if (ismob(hit_atom) && prob(50))
 			var/mob/M = hit_atom
 			hit_atom.visible_message("<span class='alert'>[src] explodes from the sheer force of the blow!</span>")
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 100, 1)
 			random_brute_damage(M, 10)//armour won't save you from George Melons
 			if (iscarbon(M))
 				M.changeStatus("paralysis", 3 SECONDS)
@@ -549,7 +549,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		var/mob/living/carbon/human/user = usr
 
 		if(hit_atom)
-			playsound(src.loc, "sound/effects/exlow.ogg", 65, 1)
+			playsound(src.loc, 'sound/effects/exlow.ogg', 65, 1)
 			if (ismob(hit_atom))
 				var/mob/hitMob = hit_atom
 				if (ishuman(hitMob))
@@ -935,6 +935,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			var/obj/item/clothing/head/pumpkin/P = new /obj/item/clothing/head/pumpkin(user.loc)
 			P.name = "carved [src.name]"
 			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
+			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
+			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
 	New()
@@ -960,6 +965,46 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			qdel(src)
 		else
 			..()
+
+obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	name = "spiced pumpkin"
+	desc = "Autumny!"
+	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
+	edible = 0
+	food_color = "#CC6600"
+	validforhat = 1
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
+			var/obj/item/clothing/head/pumpkinlatte/P = new(get_turf(user))
+			P.name = "carved [src.name]"
+			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
+			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(get_turf(user))
+			qdel(src)
+
+/obj/item/clothing/head/pumpkinlatte
+	name = "carved spiced pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkinlatte"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = 0
+	item_state = "pumpkinlatte"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			. = ..()
 
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
@@ -1249,7 +1294,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		src.UnregisterSignal(L, COMSIG_MOVABLE_THROW_END)
 		if(L.loc == src.loc)
 			L.visible_message("<span class='alert'>[L] lands on the [src] and breaks it!</span>", "<span class='alert'>You land on the [src] and break it!</span>")
-			playsound(src, "sound/impact_sounds/coconut_break.ogg", 70, vary=TRUE)
+			playsound(src, 'sound/impact_sounds/coconut_break.ogg', 70, vary=TRUE)
 			var/are_there_other_nuts = FALSE
 			for(var/obj/item/reagent_containers/food/snacks/plant/coconut/other_nut in src.loc)
 				if(other_nut != src)

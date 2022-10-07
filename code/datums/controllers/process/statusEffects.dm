@@ -42,11 +42,11 @@
 					if(!(S.owner in notifyUiUpdate))
 						notifyUiUpdate.Add(S.owner)
 			else
-				logTheThing("debug", null, null, "Deleting orphaned status effect - type:[S.type], duration:[S.duration], OwnerInfo(was):[S.archivedOwnerInfo]")
+				logTheThing(LOG_DEBUG, null, "Deleting orphaned status effect - type:[S.type], duration:[S.duration], OwnerInfo(was):[S.archivedOwnerInfo]")
 				try
 					S.onRemove()
 				catch()
-					logTheThing("debug", null, null, "Orphaned onRemove failed - type:[S.type]")
+					logTheThing(LOG_DEBUG, null, "Orphaned onRemove failed - type:[S.type]")
 				globalStatusInstances -= S
 
 		for(var/atom/A in notifyUiUpdate)

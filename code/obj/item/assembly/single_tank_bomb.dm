@@ -12,7 +12,7 @@
 
 	if (is_dud == 1)
 		message_admins("A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [key_name(bomb.fingerprintslast)]")
-		logTheThing("bombing", null, null, "A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [bomb.fingerprintslast ? "[bomb.fingerprintslast]" : "*null*"]")
+		logTheThing(LOG_BOMBING, null, "A [type] single tank bomb would have opened at [log_loc(bomb)] but was forced to dud! Last touched by: [bomb.fingerprintslast ? "[bomb.fingerprintslast]" : "*null*"]")
 		return
 
 	var/obj/item/tank/T = null
@@ -33,7 +33,7 @@
 	if (!T || !istype(T, /obj/item/tank))
 		return
 
-	logTheThing("bombing", user, null, "[welded_or_unwelded == 0 ? "welded" : "unwelded"] a [type] single tank bomb [log_atmos(T)] at [log_loc(user)].")
+	logTheThing(LOG_BOMBING, user, "[welded_or_unwelded == 0 ? "welded" : "unwelded"] a [type] single tank bomb [log_atmos(T)] at [log_loc(user)].")
 	if (welded_or_unwelded == 0)
 		message_admins("[key_name(user)] welded a [type] single tank bomb [alert_atmos(T)] at [log_loc(user)].")
 
@@ -110,7 +110,7 @@
 
 /obj/item/assembly/proximity_bomb/attack_self(mob/user as mob)
 
-	playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+	playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return
@@ -240,7 +240,7 @@
 
 	if (src.part1)
 		src.part1.attack_self(user, 1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 	src.add_fingerprint(user)
 	return
 
@@ -324,7 +324,7 @@
 /obj/item/assembly/radio_bomb/attack_self(mob/user as mob)
 
 	if (src.part1)
-		playsound(src.loc, "sound/weapons/armbomb.ogg", 100, 1)
+		playsound(src.loc, 'sound/weapons/armbomb.ogg', 100, 1)
 		src.part1.attack_self(user, 1)
 	src.add_fingerprint(user)
 	return

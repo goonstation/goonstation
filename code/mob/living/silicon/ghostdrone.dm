@@ -138,7 +138,7 @@
 				src.client.images.Add(I)
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
@@ -368,7 +368,7 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
@@ -511,7 +511,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -935,7 +935,7 @@
 				return
 
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)

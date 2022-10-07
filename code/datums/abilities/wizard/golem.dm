@@ -8,9 +8,9 @@
 	requires_being_on_turf = TRUE
 	offensive = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/GolemGrim.ogg"
-	voice_fem = "sound/voice/wizard/GolemFem.ogg"
-	voice_other = "sound/voice/wizard/GolemLoud.ogg"
+	voice_grim = 'sound/voice/wizard/GolemGrim.ogg'
+	voice_fem = 'sound/voice/wizard/GolemFem.ogg'
+	voice_other = 'sound/voice/wizard/GolemLoud.ogg'
 	maptext_colors = list("#fcdf74", "#d75015")
 
 	cast()
@@ -64,6 +64,6 @@
 		qdel(TheReagents)
 		qdel(AnItem)
 		boutput(holder.owner, "<span class='notice'>You conjure up [TheGolem]!</span>")
-		logTheThing("combat", holder.owner, null, "created a [constructTarget(TheGolem,"combat")] at [log_loc(holder.owner)].")
+		logTheThing(LOG_COMBAT, holder.owner, "created a [constructTarget(TheGolem,"combat")] at [log_loc(holder.owner)].")
 		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [TheGolem]!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

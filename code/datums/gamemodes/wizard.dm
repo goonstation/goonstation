@@ -2,6 +2,7 @@
 	name = "wizard"
 	config_tag = "wizard"
 	shuttle_available = 2
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1
 	latejoin_antag_roles = list(ROLE_CHANGELING, ROLE_VAMPIRE)
@@ -39,7 +40,7 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*--num_wizards
 		num_wizards = max(num_wizards, 0)*/
