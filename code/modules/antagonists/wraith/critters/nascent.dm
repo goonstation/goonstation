@@ -25,7 +25,7 @@
 				M.summons = list()
 			M.summons += src
 
-
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		//Let us spawn as stuff
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_spiker)
 		abilityHolder.addAbility(/datum/targetable/critter/nascent/become_voidhound)
