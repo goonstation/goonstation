@@ -2,6 +2,10 @@
 (t)fri oct 07 22
 (u)Flourish
 (*)The Remy, bumblespider, and crow Spooktober jobs are now available for anyone who has played over 50 rounds. If people are consistently griefy they'll get removed.
+(u)Ikea
+(p)10898
+(e)💅📦|C-QoL, A-Game-Objects
+(*)Medical doctors, directors and specialists now come with a belt filled with automenders, one empty hypospray, a health analyzer and a defib.
 (t)thu oct 06 22
 (u)ZWRh3
 (p)11076
