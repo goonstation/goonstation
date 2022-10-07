@@ -2374,6 +2374,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	name = "Necromancer Zoldorf"
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
+	icon_fallen = "hfortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2397,6 +2398,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "fortuneteller"
 	icon_vend = "fortuneteller-vend"
+	icon_fallen = "fortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2879,7 +2881,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
-	req_access = list(access_securitylockers)
+	req_access = list(access_security)
 
 	create_products()
 		..()
@@ -2914,7 +2916,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
-	req_access = list(access_medical_lockers)
+	req_access = list(access_medical)
 
 	create_products()
 		..()
@@ -2923,6 +2925,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/medical, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/genetics, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/robotics, 2)

@@ -39046,6 +39046,7 @@
 /area/station/ai_monitored/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	name = "Armory";
 	req_access_txt = "37"
 	},
@@ -44024,6 +44025,7 @@
 /area/station/engine/storage)
 "clX" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	dir = 4;
 	name = "Armory";
 	req_access_txt = "37"

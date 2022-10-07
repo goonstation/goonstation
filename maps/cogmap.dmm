@@ -56682,7 +56682,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -58411,6 +58411,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "owN" = (
@@ -58883,6 +58884,7 @@
 	pixel_x = 3;
 	pixel_y = 11
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "pdT" = (
@@ -59402,13 +59404,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"pTr" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 3
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/cdc)
 "pUw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -60677,6 +60672,7 @@
 "rEi" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "rFl" = (
@@ -61238,9 +61234,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -61331,6 +61324,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "spT" = (
@@ -61911,7 +61905,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -63922,6 +63916,7 @@
 /obj/firedoor_spawn,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/entry)
 "vGo" = (
@@ -64017,6 +64012,7 @@
 	pixel_x = -7;
 	pixel_y = 18
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "vOf" = (
@@ -65720,6 +65716,12 @@
 /obj/storage/cart,
 /turf/simulated/floor/grime,
 /area/station/storage/hydroponics)
+"ydh" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "yeH" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -100200,7 +100202,7 @@ kfp
 mRI
 sfM
 vMs
-pTr
+cxe
 mOn
 cyr
 cyA
@@ -101105,7 +101107,7 @@ kAM
 jwL
 xCr
 pbP
-pTr
+cxe
 cxJ
 cxV
 cxp
@@ -126977,7 +126979,7 @@ qUI
 avj
 xdC
 arn
-arn
+ydh
 mPp
 mPp
 adC
