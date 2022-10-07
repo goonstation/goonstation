@@ -65465,6 +65465,7 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/cauldron/jellybean,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/lobby)
 "dMV" = (
@@ -68590,6 +68591,13 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/ne,
 /area/centcom/offices/sovexe)
+"fhA" = (
+/obj/machinery/light{
+	dir = 1
+	},
+/obj/cauldron/candy,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "fiv" = (
 /obj/table/auto,
 /obj/item/clothing/mask/cigarette/cigarillo/juicer/exploding,
@@ -75832,6 +75840,12 @@
 	},
 /turf/unsimulated/floor/void,
 /area/diner/cow)
+"ugj" = (
+/obj/cauldron/jellybean,
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/centcom/lobby)
 "uiu" = (
 /obj/securearea{
 	desc = "A warning sign which reads 'Biohazard'";
@@ -76650,6 +76664,11 @@
 	dir = 8
 	},
 /area/diner/cow)
+"vTd" = (
+/obj/machinery/light,
+/obj/cauldron/candy,
+/turf/unsimulated/floor/wood/two,
+/area/centcom/lobby)
 "vTG" = (
 /turf/unsimulated/floor/arrival{
 	dir = 1
@@ -146761,7 +146780,7 @@ aES
 aES
 dKL
 dMu
-dMu
+ugj
 dMu
 dKL
 aES
@@ -148267,7 +148286,7 @@ dHr
 dHr
 dKy
 dKL
-dLg
+fhA
 dLh
 dLY
 dMy
@@ -148275,7 +148294,7 @@ dMX
 dMy
 dNG
 dLh
-dOh
+vTd
 dKL
 dMu
 dMu

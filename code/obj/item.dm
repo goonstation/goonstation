@@ -301,16 +301,9 @@
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
 
-	src.set_health()
-	..()
-
-/obj/item/proc/set_health()
 	if (isnull(initial(src.health))) // if not overridden
-		switch (src.w_class)
-			if (W_CLASS_TINY to W_CLASS_NORMAL)
-				src.health = src.w_class + 1
-			else
-				src.health = src.w_class + 2
+		src.health = get_initial_item_health(src.type)
+	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
