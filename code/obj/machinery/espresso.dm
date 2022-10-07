@@ -11,6 +11,7 @@
 	flags = FPRINT | NOSPLASH
 	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
+	var/cupslimit = 2
 	var/cupinside = 0 //true or false
 	var/top_on = 1 //screwed on or screwed off
 	var/cup_name = "espresso cup"
@@ -24,12 +25,12 @@
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
-			if (src.cupinside == 1)
+			if (src.contents.len >= src.cupslimit)
 				user.show_text("The [src] can't hold any more [src.cup_name]s, doofus!")
 				return ..()
-			if (src.cupinside == 0)
-				user.drop_item()
+			else
 				src.cupinside = 1
+				user.drop_item()
 				W.set_loc(src)
 				user.show_text ("You place the [src.cup_name] into the [src].")
 				src.update()
@@ -38,7 +39,7 @@
 	attack_hand(mob/user)
 		if (can_reach(user,src))
 			src.add_fingerprint(user)
-			if (src.cupinside == 1) //freaking spacing errors made me waste hours on this
+			if (src.contents.len > 0) //freaking spacing errors made me waste hours on this
 				if(!(status & (NOPOWER|BROKEN)))
 					switch(tgui_alert(user, "What would you like to do with [src]?", "Espresso machine", list("Make espresso", "Remove cup", "Nothing")))
 						if ("Make espresso")
