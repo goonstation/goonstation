@@ -118,7 +118,6 @@
 			if (src.fuel >= src.maxfuel)
 				boutput(user, "<span class='alert'>The furnace is already full!</span>")
 				return
-			var/staystill = user.loc
 
 			if (istype(O, /obj/storage/crate/))
 				var/obj/storage/crate/crate = O
@@ -135,6 +134,8 @@
 				playsound(src, 'sound/machines/click.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
 				return
+
+			var/staystill = user.loc
 
 			// else, just stuff
 			for(var/obj/W in oview(1,user))
