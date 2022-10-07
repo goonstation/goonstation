@@ -30,6 +30,10 @@
 	var/last_oxygen = 0
 	var/last_fuel = 0
 
+	var/frequency = FREQ_GENERATOR
+	var/net_id = null
+	var/device = "COMBUST_GEN"
+
 	// reagents
 	var/valid_fuels = list(
 		"dbreath" = 60000,
@@ -63,6 +67,65 @@
 	// images
 	var/image/fuel_tank_image
 	var/image/inlet_tank_image
+
+	New()
+		..()
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", src.frequency)
+
+	receive_signal(var/datum/signal/signal, receive_method, receive_param, connection_id)
+		if(!signal || !src.net_id || signal.encryption)
+			return
+
+		var/sender = signal.data["sender"] // what we send responses to
+
+		if (signal.data["address_1"] != src.net_id)
+			if (signal.data["address_1"] == "ping")
+				src.post_status(sender, "command", "ping_reply", "netid", src.net_id, "device", src.device)
+				return
+
+			return
+
+		switch (signal.data["command"])
+			if ("engine_on")
+				if (src.start_engine())
+					src.post_status(sender, "command", "error", "data", "ENGINE_START_FAILED")
+					return
+
+				src.send_status()
+				return
+
+			if ("engine_off")
+				src.stop_engine()
+				src.post_status(sender, "command", "status", "data", "engine=0")
+
+				src.send_status()
+				return
+
+			if ("status")
+				src.send_status(sender)
+
+			if ("set_fuel_inlet")
+				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
+
+				if (!set_to)
+					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
+					return
+
+				src.fuel_inlet = set_to
+				src.send_status(sender)
+
+			if ("set_air_inlet")
+				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
+
+				if (!set_to)
+					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
+					return
+
+				src.atmos_inlet = set_to
+				src.send_status(sender)
 
 	update_icon()
 		if (src.active)
@@ -197,6 +260,7 @@
 			var/change_to = src.atmos_inlet + change_by
 			src.atmos_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
 
+		src.send_status()
 		src.updateUsrDialog()
 		return
 
@@ -220,6 +284,7 @@
 			src.inlet_tank = W
 			src.UpdateIcon()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			src.send_status()
 
 
 		// fuel tank
@@ -238,6 +303,7 @@
 			src.fuel_tank = W
 			src.UpdateIcon()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+			src.send_status()
 
 		else if (iswrenchingtool(W))
 			if (src.anchored)
@@ -254,6 +320,7 @@
 			src.anchored = TRUE
 			src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			src.send_status()
 
 		else if (ispulsingtool(W))
 			if (!src.active)
@@ -277,28 +344,32 @@
 		if (!src || !src.active)
 			return
 
-		src.last_fuel = get_fuel_power(src.fuel_tank.reagents)
+		src.last_fuel = src.get_fuel_power(src.fuel_tank.reagents)
 		src.last_oxygen = src.check_available_oxygen()
 		if (!src.last_oxygen || !src.last_fuel || !src.fuel_inlet || !src.atmos_inlet)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
+			src.post_status(null, "command", "error", "data", "COMBUSTION_FAILURE", multicase = 1)
 			return
 
 		if (!src.anchored)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
+			src.post_status(null, "command", "error", "data", "UNANCHORED", multicase = 1)
 			return
 
 		var/fuel_air_mix = (src.atmos_inlet / src.fuel_inlet) // difference between current mix and optimal mix.
 		if (fuel_air_mix < 8 || fuel_air_mix > 20) // too much or too little air or fuel
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src] sputters for a moment and then stops, it failed to combust the reagents.</span>")
+			src.post_status(null, "command", "error", "data", "INVALID_MIX", multicase = 1)
 			return
 
 		var/obj/cable/C = src.get_output_cable()
 		if (!C)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!</span>")
+			src.post_status(null, "command", "error", "data", "NO_POWER_OUTLET", multicase = 1)
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
@@ -307,6 +378,8 @@
 		var/oxygen_multiplier = clamp(src.last_oxygen * 5, 0, 3)
 
 		src.last_output = src.last_fuel * src.last_mix * src.last_inlet * oxygen_multiplier * src.output_multiplier * mult
+		var/datum/powernet/P = C.get_powernet()
+		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src.loc)
 		if (istype(T))
@@ -324,6 +397,36 @@
 
 		src.UpdateIcon()
 		src.updateDialog()
+		src.send_status()
+
+	proc/send_status(var/target_id = null)
+		if (!src.active)
+			src.post_status(target_id, "command", "status", "data", "anchored=[src.anchored]&engine=0&fuel=[src.fuel_tank ? src.get_fuel_power(src.fuel_tank.reagents) : 0]&oxygen=[src.check_available_oxygen()]&fuel_inlet=[fuel_inlet]&air_inlet=[atmos_inlet]", multicast = 1)
+			return
+
+		else
+			src.post_status(target_id, "command", "status", "data", "anchored=1&engine=1&fuel=[src.last_fuel]&oxygen=[src.last_oxygen]&fuel_inlet=[fuel_inlet]&air_inlet=[atmos_inlet]&power=[src.last_output]&inlet=[src.last_inlet / 2]&mix=[src.last_mix]", multicast = 1)
+			return
+
+	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3, var/multicast)
+		if (!target_id && !multicast)
+			return
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["sender"] = src.net_id
+
+		signal.data[key] = value
+		if (target_id)
+			signal.data["address_1"] = target_id
+		if (multicast)
+			signal.data["address_tag"] = device
+		if (key2)
+			signal.data[key2] = value2
+		if (key3)
+			signal.data[key3] = value3
+
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	proc/get_fuel_power(datum/reagents/R)
 		if (!R || !R.total_volume)
