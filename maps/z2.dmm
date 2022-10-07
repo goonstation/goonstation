@@ -11994,9 +11994,7 @@
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aNs" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/spacevine{
 	density = 1;
 	icon_state = "vine-hvy3";
@@ -13074,9 +13072,7 @@
 	density = 1;
 	icon_state = "vine-med1"
 	},
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
 "aQr" = (
@@ -15248,9 +15244,7 @@
 /turf/unsimulated/grasstodirt,
 /area/marsoutpost)
 "aWZ" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/spacevine,
 /turf/unsimulated/grasstodirt{
 	dir = 10
@@ -16451,9 +16445,7 @@
 /turf/space/fluid/cenote,
 /area/crater)
 "baa" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/south)
 "bab" = (
@@ -21423,9 +21415,7 @@
 /turf/unsimulated/floor/caution/east,
 /area/drone/office)
 "bmX" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/nicegrass/random{
 	color = "#aaaaaa";
 	density = 1;
@@ -27737,9 +27727,7 @@
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
 "bGH" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/map/light/graveyard,
 /turf/unsimulated/dirt,
 /area/crypt/graveyard)
@@ -27810,9 +27798,7 @@
 	},
 /area/iomoon)
 "bGT" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
 	dir = 8
@@ -28994,9 +28980,7 @@
 /turf/unsimulated/floor/grass/leafy,
 /area/crypt/graveyard)
 "bKl" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/map/light/graveyard,
 /turf/unsimulated/floor/grass/leafy,
 /area/crypt/graveyard)
@@ -29142,9 +29126,7 @@
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
 "bKI" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
@@ -48959,15 +48941,11 @@
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/owleryhall)
 "cOD" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "cOE" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /obj/critter/moonspy{
 	desc = "It's probably an owl perch or something.";
 	name = "\proper some old owl furniture thing"
@@ -62586,9 +62564,7 @@
 	icon_state = "blue"
 	})
 "dFl" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
 "dFm" = (
@@ -62597,9 +62573,7 @@
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/lab)
 "dFn" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/grass,
 /area/centcom/lounge)
 "dFo" = (
@@ -66133,9 +66107,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/lobby)
 "dOv" = (
-/obj/tree1{
-	icon_state = "snowtree"
-	},
+/obj/tree1,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dOw" = (
