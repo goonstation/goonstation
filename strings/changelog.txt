@@ -1,5 +1,7 @@
 
 (t)fri oct 07 22
+(u)Sord
+(+)Med and Sec clothing vendors now sell PDAs and headsets for those departments. They also have shoes for free.
 (u)DrWolfy
 (p)11218
 (e)🪲🗺|C-Bug, A-Mapping
