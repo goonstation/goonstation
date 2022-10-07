@@ -970,6 +970,7 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 	name = "spiced pumpkin"
 	desc = "Autumny!"
 	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1

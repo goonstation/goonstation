@@ -390,15 +390,14 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_belt = list(/obj/item/storage/belt/medical)
-	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/medical_director)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical_director)
 	slot_ears = list(/obj/item/device/radio/headset/command/md)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
-	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
+	items_in_backpack = list(/obj/item/device/flash)
 
 	New()
 		..()
@@ -662,16 +661,15 @@ ABSTRACT_TYPE(/datum/job/research)
 	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_belt = list(/obj/item/storage/belt/medical)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical)
 	slot_foot = list(/obj/item/clothing/shoes/red)
-	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -1409,7 +1407,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
 	slot_card = /obj/item/card/id/research
-	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
@@ -1417,6 +1415,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/bouffant)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
+	slot_poc1 = list(/obj/item/device/pda2/medical_director)
 	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
 	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
 
@@ -2181,7 +2180,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	requires_whitelist = 1
+	rounds_needed_to_play = 50
 	allow_traitors = 0
 	slot_ears = list()
 	slot_card = null
@@ -2189,8 +2188,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
+	rounds_needed_to_play = 0
 	limit = 1
-	requires_whitelist = 0
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

@@ -267,6 +267,7 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
 					else
 						failed = 1
