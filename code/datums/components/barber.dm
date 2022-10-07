@@ -61,9 +61,10 @@ TYPEINFO(/datum/component/barber)
 	initialization_args = list()
 
 /datum/component/barber
-	var/mob/barber
 	var/mob/barbee
-	var/cut_or_shave
+	var/mob/barber
+	var/datum/character_preview/preview
+	var/datum/appearanceHolder/new_AH
 
 /datum/component/barber/Initialize()
 	if(!istype(parent, /obj/item))
@@ -180,6 +181,7 @@ TYPEINFO(/datum/component/barber)
 			return 0
 
 	SPAWN(0)
+		src.barber = user
 		src.barbee = M
 
 		src.ui_interact(user)
@@ -460,24 +462,90 @@ TYPEINFO(/datum/component/barber)
 	if(!ui)
 		ui = new(user, src, "CuttingHair")
 		ui.open()
+
 /datum/component/barber/ui_data(mob/user)
-	. = list()
+	if (isnull(src.preview))
+		src.preview = new /datum/character_preview(barbee, "barber", "barber_[src.barbee.name]")
+		src.preview.add_background("#101010")
+		src.preview.update_appearance(barbee.bioHolder.mobAppearance)
+
+	// Checking if we are cutting hair or shaving hair
+
+	var/cut_or_shave
+
+	if (istype(src.barber.equipped(), /obj/item/scissors))
+		cut_or_shave = "cut"
+	if else(istype(src.barber.equipped(), /obj/item/razor_blade))
+		cut_or_shave = "shave"
+	else
+		// ???? what do we do??????
+		cut_or_shave = "none"
+
+	. = list("preview" = src.preview.preview_id, "available_options" = cut_or_shave)
 
 /datum/component/barber/ui_static_data(mob/user)
-	var/all_hairs = list()
+	// Preparing both lists
+	var/all_hairs = list("haircuts" = list(), "shaves" = list())
 
-	switch(cut_or_shave)
-		if(HAIRCUT)
+	// just so we get a special icon sprite for no hair
+	all_hairs["haircuts"] += list("None" = list("none", icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
+	all_hairs["shaves"] += list("None" = list("none", icon2base64(icon('icons/map-editing/landmarks.dmi', "x"))))
 
-			var/first_hair_color = src.bioHolder.mobAppearance.customization_first_color
-			var/second_hair_color = src.bioHolder.mobAppearance.customization_second_color
-			var/third_hair_color = src.bioHolder.mobAppearance.customization_third_color
+	for (var/datum/customization_style/hair_style as anything in concrete_typesof(/datum/customization_style/hair))
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, frame=1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		all_hairs["haircuts"] += list(hair_style.name = list(hair_style.id, hair_icon))
 
-			for(var/hair_sytle in list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/hair)) // basically all hair types we want
-				var/hair_name = hair_style.name
-				var/hair_icon = icon('/icons/mob/human_hair.dmi', hair_style.id, frame=1) // doing this in 2 parts to avoid large one-liners
+	for (var/datum/customization_style/hair_style as anything in concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns))
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', hair_style.id, frame=1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		all_hairs["shave"] += list(hair_style.name = list(hair_style.id, hair_icon))
 
 	. = list("hair_styles" = all_hairs)
+
+/datum/component/barber/ui_act(var/action, var/params)
+	. = ..()
+	if (.)
+		return
+
+	switch(action)
+
+		if("do_hair")
+			if(params["cut_or_shave"] == HAIRCUT)
+				actions.start(new/datum/action/bar/barber/haircut(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), params["new_style"], params["which_part"]), src.barber)
+			else
+				actions.start(new/datum/action/bar/barber/shave(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), params["new_style"], params["which_part"]), src.barber)
+
+			return TRUE
+
+		if("update_preview")
+
+			switch(params["what_to_do"])
+				if("new_first_hair")
+					src.new_AH = barbee.bioHolder.mobAppearance
+					src.new_AH.customization_first = params["new_hair"]
+					preview.update_appearance(src.new_AH)
+				if("new_second_hair")
+					src.new_AH = barbee.bioHolder.mobAppearance
+					src.new_AH.customization_second = params["new_hair"]
+					src.preview.update_appearance(new_AH)
+				if("new_third_hair")
+					src.new_AH = barbee.bioHolder.mobAppearance
+					src.new_AH.customization_third = params["new_hair"]
+					src.preview.update_appearance(src.new_AH)
+				if("change_direction")
+					// This is so we don't have to deal with numbers in the TGUI part.
+					var/map_of_directions = list(
+						"south" = SOUTH,
+						"east"  = EAST,
+						"west"  = WEST,
+						"north" = NORTH
+					)
+
+					if(isnull(src.new_AH))
+						src.new_AH = barbee.bioHolder.mobAppearance
+
+					src.preview.update_appearance(new_AH, direction=params[map_of_directions[params["direction"]]])
+
+			return TRUE
 
 /datum/component/barber/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_PRE)
