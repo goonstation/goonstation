@@ -1,5 +1,9 @@
 
 (t)fri oct 07 22
+(u)Bartimeus
+(p)11063
+(e)🆕🧛‍♂️|C-Feature, A-Gamemodes
+(+)The harbinger wraith's summons now see in the dark and so does the trickster wraith.
 (u)Sord
 (+)Med and Sec clothing vendors now sell PDAs and headsets for those departments. They also have shoes for free.
 (u)DrWolfy
