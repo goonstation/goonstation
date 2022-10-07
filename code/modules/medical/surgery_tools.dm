@@ -994,7 +994,7 @@ CONTAINS:
 
 	disposing()
 		for(var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 		..()
 
 	update_icon()

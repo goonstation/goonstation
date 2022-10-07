@@ -56682,7 +56682,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -58884,6 +58884,7 @@
 	pixel_x = 3;
 	pixel_y = 11
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "pdT" = (
@@ -59403,13 +59404,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"pTr" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 3
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/cdc)
 "pUw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -61240,9 +61234,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -61914,7 +61905,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -64021,6 +64012,7 @@
 	pixel_x = -7;
 	pixel_y = 18
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "vOf" = (
@@ -100210,7 +100202,7 @@ kfp
 mRI
 sfM
 vMs
-pTr
+cxe
 mOn
 cyr
 cyA
@@ -101115,7 +101107,7 @@ kAM
 jwL
 xCr
 pbP
-pTr
+cxe
 cxJ
 cxV
 cxp
