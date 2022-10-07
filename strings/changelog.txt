@@ -1,5 +1,9 @@
 
 (t)fri oct 07 22
+(u)Azrun
+(p)10536
+(e)⚖🧫📄💊⚗🔬|C-Balance, C-Experimental, A-UI, A-Medical, A-Chemistry, A-Science
+(*)Chem groups have been reworked to be recordings of actions performed.
 (u)Flourish
 (*)The Remy, bumblespider, and crow Spooktober jobs are now available for anyone who has played over 50 rounds. If people are consistently griefy they'll get removed.
 (u)Ikea
