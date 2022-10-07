@@ -24,7 +24,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aaf" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "aag" = (
@@ -2850,7 +2850,7 @@
 	dir = 9;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay5,
+/obj/machinery/light/traffic_light/trader_right/delay5,
 /turf/space,
 /area/space)
 "agE" = (
@@ -2858,7 +2858,7 @@
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay4,
+/obj/machinery/light/traffic_light/trader_left/delay4,
 /turf/space,
 /area/space)
 "agF" = (
@@ -5641,7 +5641,7 @@
 	dir = 8;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
+/obj/machinery/light/traffic_light/trader_left/delay3,
 /turf/space,
 /area/space)
 "anm" = (
@@ -9382,6 +9382,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "awB" = (
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -11315,8 +11316,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAE" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAF" = (
@@ -13091,7 +13091,7 @@
 	},
 /area/shuttle/arrival/station)
 "aEB" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -16196,9 +16196,7 @@
 /area/station/security/checkpoint/chapel)
 "aMA" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Checkpoint"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -18193,7 +18191,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aRo" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aRp" = (
 /obj/pool_springboard,
@@ -18658,20 +18656,20 @@
 /area/station/crew_quarters/pool)
 "aSv" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSw" = (
 /obj/landmark/spawner{
 	icon_state = "chimp-start";
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSx" = (
 /obj/item/rubberduck{
 	pixel_y = 6
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSy" = (
 /obj/disposalpipe/segment/food,
@@ -18951,8 +18949,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/quartersA)
 "aTi" = (
-/obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aTj" = (
@@ -19216,13 +19213,13 @@
 /area/station/crew_quarters/pool)
 "aTL" = (
 /obj/item/beach_ball,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTM" = (
 /obj/fluid_spawner{
 	amount = 2550
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aTN" = (
 /obj/critter/seagull,
@@ -23779,7 +23776,7 @@
 /turf/space,
 /area/space)
 "beu" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /obj/item/seed/cannabis,
 /obj/item/seed/cannabis,
 /turf/simulated/floor/airless/scorched,
@@ -23828,7 +23825,7 @@
 /area/station/catwalk/north)
 "beB" = (
 /obj/disposalpipe/segment/morgue,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/grime,
 /area/station/wreckage{
 	name = "Restricted Area"
@@ -27553,10 +27550,7 @@
 	},
 /area/station/hangar/sec)
 "bnw" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "brig1";
-	name = "Cell 1"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/disposalpipe/segment/ejection,
 /obj/machinery/secscanner,
@@ -27584,17 +27578,6 @@
 	},
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/engine,
-/area/station/security/brig)
-"bnz" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "brig2";
-	name = "Cell 2"
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
-/obj/disposalpipe/segment/ejection,
-/obj/machinery/secscanner,
-/obj/access_spawn/brig,
-/turf/simulated/floor/delivery,
 /area/station/security/brig)
 "bnA" = (
 /obj/disposalpipe/segment/transport,
@@ -29660,7 +29643,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical,
 /obj/access_spawn/security,
 /turf/simulated/floor/delivery,
@@ -29771,9 +29754,8 @@
 /turf/simulated/floor/grime,
 /area/station/routing/security)
 "bss" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Router"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -36154,9 +36136,8 @@
 /obj/disposalpipe/segment/food{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Office"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/cable{
@@ -40384,9 +40365,8 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Office"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/cable{
@@ -41783,9 +41763,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/engine)
 "bPn" = (
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Office"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
@@ -42132,9 +42111,8 @@
 /area/station/security/checkpoint/podbay)
 "bQf" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Mini-Brig";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/security{
+	name = "Pod Bay Security Checkpoint"
 	},
 /obj/cable{
 	d1 = 4;
@@ -42159,9 +42137,7 @@
 "bQh" = (
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Pod Bay Security Checkpoint"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -42534,7 +42510,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "bQZ" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/bot,
 /area/station/security/main)
@@ -44068,9 +44044,7 @@
 /turf/simulated/floor/plating/damaged1,
 /area/station/routing/depot)
 "bUf" = (
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Router"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/disposalpipe/segment/ejection{
 	dir = 8;
 	icon_state = "pipe-c"
@@ -44196,9 +44170,8 @@
 	name = "Security Lockdown Doors";
 	opacity = 0
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Router"
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/cable{
@@ -45496,10 +45469,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/brig)
 "bXs" = (
-/obj/machinery/door/airlock/pyro/glass{
-	id = "genpop";
-	name = "General Population"
-	},
+/obj/machinery/door/airlock/pyro/glass/security,
 /obj/machinery/secscanner,
 /obj/disposalpipe/segment/ejection,
 /obj/firedoor_spawn,
@@ -47061,9 +47031,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass{
-	dir = 4;
-	name = "Security Locker Room"
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
 	},
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -61302,9 +61271,7 @@
 /area/station/maintenance/southeast)
 "cJl" = (
 /obj/firedoor_spawn,
-/obj/machinery/door/airlock/pyro/glass{
-	name = "Security Checkpoint"
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
 	icon_state = "pdoor0";
@@ -68614,7 +68581,6 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/space)
 "cZv" = (
@@ -70064,9 +70030,7 @@
 	dir = 4
 	},
 /obj/machinery/bot/secbot,
-/turf/simulated/floor/arrival{
-	dir = 10
-	},
+/turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "dcE" = (
 /obj/disposalpipe/segment/transport{
@@ -71057,10 +71021,6 @@
 /area/station/medical/medbay)
 "dfc" = (
 /obj/storage/closet/office,
-/turf/simulated/floor/carpet/arcade,
-/area/station/medical/medbay)
-"dfd" = (
-/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/carpet/arcade,
 /area/station/medical/medbay)
 "dfe" = (
@@ -72492,7 +72452,7 @@
 /area/research_outpost)
 "diq" = (
 /obj/item/raw_material/rock,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "dir" = (
@@ -74791,7 +74751,7 @@
 	},
 /area/space)
 "dnw" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Listening Post"
 	},
@@ -75235,7 +75195,7 @@
 	},
 /area/listeningpost)
 "doB" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	dir = 4;
 	name = "Teleport Pad"
 	},
@@ -75939,6 +75899,9 @@
 "evw" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/light,
+/obj/machinery/status_display{
+	pixel_y = -30
+	},
 /turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "ewr" = (
@@ -76078,6 +76041,17 @@
 /obj/item/shipcomponent/mainweapon/phaser,
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
+"fqO" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "fuP" = (
 /obj/cable{
 	d1 = 4;
@@ -76203,6 +76177,10 @@
 	dir = 6
 	},
 /area/station/ranch)
+"gde" = (
+/obj/machinery/door/airlock/pyro/reinforced,
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/entry)
 "ggS" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -76773,6 +76751,14 @@
 /obj/item/tank/jetpack/micro,
 /turf/simulated/floor/bot,
 /area/station/ai_monitored/storage/eva)
+"iwD" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay3,
+/turf/space,
+/area/space)
 "izF" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -77173,6 +77159,14 @@
 /obj/access_spawn/research,
 /turf/simulated/floor,
 /area/station/hangar/science)
+"kiP" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right/delay4,
+/turf/space,
+/area/space)
 "kiZ" = (
 /obj/cable,
 /obj/cable{
@@ -77402,6 +77396,14 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quarters_west)
+"lqm" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay3,
+/turf/space,
+/area/space)
 "lsb" = (
 /obj/cable{
 	d1 = 4;
@@ -77884,11 +77886,9 @@
 /area/station/ranch)
 "ndb" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/light/emergency/exitsign,
-/obj/machinery/status_display{
-	pixel_y = -30
+/turf/simulated/floor/arrival/corner{
+	dir = 8
 	},
-/turf/simulated/floor/arrival,
 /area/station/hallway/secondary/exit)
 "nfB" = (
 /turf/unsimulated/floor/shuttle,
@@ -78958,6 +78958,12 @@
 	icon_state = "blue5"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"sqD" = (
+/obj/machinery/vending/air_vendor,
+/turf/simulated/floor/arrival{
+	dir = 10
+	},
+/area/station/hallway/secondary/exit)
 "srd" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
@@ -78981,6 +78987,14 @@
 	dir = 4
 	},
 /area/shuttle/arrival/station)
+"svA" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left/delay5,
+/turf/space,
+/area/space)
 "sEu" = (
 /obj/cable{
 	d1 = 4;
@@ -79443,6 +79457,7 @@
 "tXw" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "ubH" = (
@@ -79614,6 +79629,11 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"vht" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/machinery/light/emergency/exitsign,
+/turf/simulated/floor/arrival,
+/area/station/hallway/secondary/exit)
 "viq" = (
 /turf/simulated/floor/plating/airless/shuttlebay{
 	name = "landing pad plating"
@@ -79695,7 +79715,7 @@
 /turf/simulated/floor/airless/caution/northsouth,
 /area/station/hangar/science)
 "vxs" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "vyj" = (
@@ -102360,14 +102380,14 @@ aaa
 aaa
 aaa
 aaa
-agD
+svA
 aaa
 ahg
 ahg
 ahg
 ahg
 aaa
-agD
+svA
 aaa
 aaa
 aaa
@@ -103081,14 +103101,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+kiP
 dax
 dax
 dax
 dax
 dax
 dax
-aao
+kiP
 aaa
 aaa
 aaa
@@ -103383,14 +103403,14 @@ aaa
 aaa
 aaa
 aaa
-agE
+aao
 dax
 dax
 dax
 dax
 dax
 dax
-agE
+aao
 aaa
 aaa
 aaa
@@ -103685,14 +103705,14 @@ aaa
 aaa
 aaa
 aaa
-aao
+iwD
 dax
 dax
 dax
 dax
 dax
 dax
-aao
+iwD
 aaa
 aaa
 aaa
@@ -104172,7 +104192,7 @@ aaa
 aaa
 aaa
 aaa
-afA
+lqm
 aaa
 afI
 aiE
@@ -104296,7 +104316,7 @@ dcj
 dcj
 dbu
 aaa
-afA
+aao
 aaa
 aaa
 aaa
@@ -105395,7 +105415,7 @@ arT
 aeX
 auF
 awe
-azo
+fqO
 azn
 aAH
 aFG
@@ -116073,7 +116093,7 @@ dbJ
 dcK
 cQC
 cTG
-dfd
+dfe
 dfe
 dgb
 cHZ
@@ -137744,7 +137764,7 @@ bix
 bjg
 bkv
 blV
-bnz
+bnw
 bpc
 bqM
 bsB
@@ -142616,7 +142636,7 @@ aaa
 cie
 cmn
 cnY
-cpJ
+vht
 cie
 aaI
 aaa
@@ -142919,7 +142939,7 @@ cie
 cmn
 cnY
 cpJ
-cie
+ckG
 aaI
 aaa
 aaa
@@ -143523,9 +143543,9 @@ ckE
 cmo
 cnY
 evw
-ckG
-aaI
-aaa
+cie
+cie
+cie
 aaa
 qaU
 qaU
@@ -143825,9 +143845,9 @@ ckF
 cmn
 cnY
 ndb
-cie
-cie
-cie
+crz
+sqD
+izF
 aaa
 qaU
 qaU
@@ -144126,8 +144146,8 @@ aaa
 cie
 deJ
 cnY
-cpJ
-crz
+cpF
+cmk
 dcD
 izF
 aaa
@@ -145271,8 +145291,8 @@ aKo
 aOn
 aOn
 aOn
-aEB
-aSi
+aOn
+gde
 aSi
 aTi
 aGV
@@ -145573,8 +145593,8 @@ aOn
 aOn
 aOn
 aOn
-aEB
-aSi
+aOn
+gde
 aSj
 aTi
 aUE

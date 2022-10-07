@@ -917,7 +917,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 
 	//NEW VARS
 	var/mining_health = 120
@@ -1050,11 +1050,39 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			default_ore = /obj/item/raw_material/cerenkite
 			hardness = 10
 
+	algae
+		name = "sea foam"
+		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		stone_color = "#6090a0"
+		fullbright = 0
+		luminosity = 1
+
+		space_overlays()
+			. = ..()
+			if (!length(space_overlays)) // Are we on the edge of a chunk wall
+				return
+			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
+			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
+			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
+			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			UpdateOverlays(algea, "glow_algae")
+			add_medium_light("glow_algae", color_vals)
+
+		destroy_asteroid(dropOre)
+			ClearSpecificOverlays("glow_algae")
+			remove_medium_light("glow_algae")
+			var/list/turf/neighbors = getNeighbors(src, alldirs)
+			for (var/turf/T as anything in neighbors)
+				if (!length(T.medium_lights)) continue
+				T.update_medium_light_visibility()
+			return ..()
+
 	consider_superconductivity(starting)
 		return FALSE
 
 
 	New(var/loc)
+		src.space_overlays = list()
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
 		..()
@@ -1394,7 +1422,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1421,6 +1449,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 	New()
 		..()
+		src.space_overlays = list()
 		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
@@ -2273,9 +2302,7 @@ obj/item/clothing/gloves/concussive
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
 		if (!istype(pad)) //wuh?
 			return
-		if (pad in pads)
-			return
-		src.pads += pad
+		src.pads |= pad
 
 	/// Remove a pad from the global pads list. Do nothing if the pad is already in the pads list.
 	proc/remove_pad(datum/holder, obj/submachine/cargopad/pad)

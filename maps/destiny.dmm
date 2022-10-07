@@ -2365,7 +2365,7 @@
 	},
 /area/station/crew_quarters/heads)
 "ajv" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ajw" = (
 /obj/wingrille_spawn/auto,
@@ -10823,10 +10823,9 @@
 /area/station/turret_protected/ai)
 "aUB" = (
 /obj/disposalpipe/segment,
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -16164,7 +16163,7 @@
 	},
 /area/listeningpost)
 "bBs" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bBw" = (
@@ -19563,7 +19562,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dbz" = (
 /obj/table/reinforced/auto,
@@ -19618,10 +19617,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	dir = 8;
-	name = "Security";
-	req_access = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4;
+	name = "Processing room"
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -20659,7 +20657,7 @@
 	icon_state = "x3";
 	name = "peststart"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "dCK" = (
 /obj/disposalpipe/segment/mail{
@@ -25812,11 +25810,11 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "fNJ" = (
-/obj/stool/bench/red/auto,
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 11
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/west)
 "fOb" = (
@@ -31573,6 +31571,14 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"iPT" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "iQk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35740,10 +35746,8 @@
 	dir = 9;
 	icon_state = "line1"
 	},
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4;
-	name = "Security Checkpoint";
-	req_access_txt = null
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 4
 	},
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
@@ -37381,7 +37385,7 @@
 /obj/machinery/light/small/floor/blueish{
 	pixel_y = 15
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "lWn" = (
 /obj/cable{
@@ -37643,7 +37647,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_tanhony"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "mdn" = (
 /obj/firedoor_spawn,
@@ -39661,6 +39665,7 @@
 /obj/disposalpipe/junction{
 	dir = 1
 	},
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
 "neD" = (
@@ -41400,7 +41405,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/medbay/lobby)
 "nXS" = (
-/obj/machinery/vending/cola/blue,
+/obj/machinery/vending/air_vendor,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -41928,6 +41933,14 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/gas)
+"ojO" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "ojU" = (
 /obj/decal/tile_edge/line/blue{
 	color = "#485e81";
@@ -43763,7 +43776,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "piK" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/machinery/vending/jobclothing/security,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -44404,9 +44417,8 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/head)
 "pCL" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_right{
 	density = 0;
-	emergency = 0;
 	id = "merchant_R";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -44779,6 +44791,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
+/obj/item/storage/box/trackimp_kit2,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNd" = (
@@ -46974,7 +46987,7 @@
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "qSl" = (
-/obj/table/reinforced/auto,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor,
 /area/station/medical/cdc)
 "qSv" = (
@@ -47886,7 +47899,6 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/storage/closet/medicalclothes,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 8
 	},
@@ -49093,9 +49105,8 @@
 /turf/simulated/floor/darkblue,
 /area/station/crew_quarters/pool)
 "sbJ" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_left{
 	density = 0;
-	emergency = 0;
 	id = "merchant_L";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -51314,7 +51325,7 @@
 	name = "Crew Quarters P04"
 	})
 "tkJ" = (
-/obj/machinery/vending/air_vendor,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor,
 /area/station/crew_quarters/lounge/port)
 "tkQ" = (
@@ -53469,7 +53480,6 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery/storage)
 "uvA" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 21
@@ -53656,6 +53666,14 @@
 /obj/machinery/bot/guardbot/mail,
 /turf/simulated/floor/bot,
 /area/station/science/bot_storage)
+"uAd" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/space)
 "uAP" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
@@ -53686,7 +53704,6 @@
 	name = "autoname - SS13"
 	},
 /obj/disposalpipe/segment/morgue,
-/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite/corner{
 	dir = 1
 	},
@@ -54390,6 +54407,14 @@
 	dir = 9
 	},
 /area/station/science/lobby)
+"uOv" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/space)
 "uOB" = (
 /obj/disposalpipe/segment/mail{
 	dir = 1;
@@ -56185,10 +56210,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/security{
-	name = "Security";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/security/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/security,
 /turf/simulated/floor,
@@ -103920,9 +103942,9 @@ aaa
 crG
 aaa
 aaa
-aaa
+ojO
 oTy
-aaa
+uOv
 aaa
 gEl
 rKX
@@ -109960,9 +109982,9 @@ aaa
 cCx
 aaa
 aaa
-aaa
+uAd
 cAY
-aaa
+iPT
 aaa
 aaa
 apR

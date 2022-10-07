@@ -761,9 +761,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
-	bullet_nine_mm_NATO
-		name = "9mm NATO round"
-		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
+	bullet_9mm
+		name = "9mm round"
+		desc = "An extremely common bullet fired by a myriad of different cartridges."
 
 	ninemmplastic
 		name = "9mm Plastic round"
@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 

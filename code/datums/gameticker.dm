@@ -593,21 +593,6 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	else
 		boutput(world, "<B>Nobody completed all of their Crew Objectives!</B>")
 #endif
-#ifdef MISCREANTS
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying miscreants")
-	boutput(world, "<B>Miscreants:</B>")
-	if(miscreants.len == 0) boutput(world, "None!")
-	for(var/datum/mind/miscreantMind in miscreants)
-		if(!miscreantMind.objectives.len)
-			continue
-
-		var/miscreant_info = "[miscreantMind.displayed_key]"
-		if(miscreantMind.current) miscreant_info = "[miscreantMind.current.real_name] ([miscreantMind.displayed_key])"
-
-		boutput(world, "<B>[miscreant_info] was a miscreant!</B>")
-		for (var/datum/objective/miscreant/O in miscreantMind.objectives)
-			boutput(world, "Objective: [O.explanation_text] <B>Maybe</B>")
-#endif
 
 	// DO THE PERSISTENT_BANK STUFF
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] processing spacebux updates")

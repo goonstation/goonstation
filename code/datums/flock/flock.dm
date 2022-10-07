@@ -18,6 +18,7 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	var/queued_trace_deaths = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
@@ -551,7 +552,6 @@ var/flock_signal_unleashed = FALSE
 	src.achievements = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	src.peak_compute = 0
 	if (!real)
 		src.load_structures()
 		return
@@ -703,7 +703,7 @@ var/flock_signal_unleashed = FALSE
 	if (!flockTurfAllowed(T))
 		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 

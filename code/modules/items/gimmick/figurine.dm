@@ -907,6 +907,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "nikobalthazar"
 		ckey = "coolcrow420"
 
+	comradeinput
+		name = "\improper Ezra Callison"
+		icon_state = "ezracallison"
+		ckey = "comradeinput"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
@@ -944,7 +949,9 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 			src.UpdateOverlays(src.cap_image, "cap")
 
 	attack_self(mob/user as mob)
-		if (open && item_amount == 0)
+		if (!ON_COOLDOWN(user, "capsule_pop", 1 SECOND) && open == 0)
+			playsound(user.loc, 'sound/items/capsule_pop.ogg', 30, 1)
+		else if (open && item_amount == 0)
 			user.playsound_local(user, 'sound/items/can_crush-3.ogg', 50, 1)
 			boutput(user, "<span class='notice'>You crush the empty capsule into an insignificant speck.</span>")
 			qdel(src)
