@@ -1,5 +1,9 @@
 
 (t)fri oct 07 22
+(u)DrWolfy
+(p)11218
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Disable roundstart AI Control in Donut2 and Oshan armory doors.
 (u)Azrun
 (p)10536
 (e)⚖🧫📄💊⚗🔬|C-Balance, C-Experimental, A-UI, A-Medical, A-Chemistry, A-Science
