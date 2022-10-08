@@ -1666,11 +1666,7 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	if (src.client)
-		if (!src.respect_view_tint_settings)
-			src.client.set_color(src.active_color_matrix)
-		else
-			src.client.set_color(src.client.view_tint ? src.active_color_matrix : null)
+	src.client?.set_color(src.active_color_matrix, src.mob.respect_view_tint_settings || respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
