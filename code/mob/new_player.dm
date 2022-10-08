@@ -597,6 +597,11 @@ a.latejoin-card:hover {
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
+		if(force_random_names)
+			src.client.preferences.be_random_name = 1
+		if(force_random_looks)
+			src.client.preferences.be_random_look = 1
+
 		var/mob/new_character = null
 		if (J)
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
