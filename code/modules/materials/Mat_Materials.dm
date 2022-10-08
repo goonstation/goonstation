@@ -591,7 +591,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated it produces a powerful plasma fire catalyst."
+		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 		New()
 			..()

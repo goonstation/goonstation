@@ -358,7 +358,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/temp, var/agent_b=FALSE)
+	max_generations = 1
+	execute(var/atom/owner, var/atom/location, var/temp, var/agent_b=FALSE)
+		if(!istype(owner.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = owner.material
 		var/turf/target = get_turf(location)
 		if(molitz.iterations <= 0) return
 		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
@@ -408,14 +412,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 
 /datum/materialProc/molitz_temp/agent_b
-	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/temp)
+	max_generations = 1
+	execute(var/atom/location, var/temp)
 		..(location, temp, TRUE)
 		return
 
 /datum/materialProc/molitz_exp
+	max_generations = 1
 	var/maxexplode = 1
-	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/sev)
-		if(maxexplode <= 0) return
+	execute(var/atom/owner, var/atom/location, var/sev)
+		if(!istype(owner.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = owner.material
+		if(maxexplode <= 0)
+			return
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
@@ -426,12 +436,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			if(molitz.unexploded == 1)
 				molitz.iterations = 2
 				molitz.unexploded -= 1
-				desc = "All the big pockets of air are gone now, however the small pockets look loose."
+				desc = "All the big pockets of gas are gone now, however the small pockets of gas look loose."
 
 
 /datum/materialProc/molitz_on_hit
-	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/obj/attackobj)
-		molitz.triggerTemp(molitz, 1500)
+	max_generations = 1
+	execute(var/atom/owner, var/obj/attackobj)
+		owner.material.triggerTemp(owner, 1500)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
