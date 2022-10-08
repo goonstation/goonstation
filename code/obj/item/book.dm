@@ -448,6 +448,13 @@ Custom Books
 			..()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
 
+/obj/item/paper/book/from_file/fleurscookbook
+	name = "Fleur's Cookbook"
+	desc = "A life's work in progress."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "cookbook-fleur"
+	file_path = "strings/books/fleurs_cookbook.txt"
+
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
 	desc = "It looks bedraggled."

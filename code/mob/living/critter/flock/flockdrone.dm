@@ -66,6 +66,7 @@
 		else
 			emote("beep")
 			say(pick_string("flockmind.txt", "flockdrone_created"))
+		src.flock?.drones_made++
 	var/datum/contextLayout/experimentalcircle/layout = new
 	layout.center = TRUE
 	src.contextLayout = layout
@@ -230,7 +231,7 @@
 
 		controller = null
 		src.update_health_icon()
-		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task.name))
+		src.flock_name_tag.set_info_tag(capitalize(src.ai.current_task?.name))
 	if(!src.flock)
 		src.dormantize()
 
@@ -635,6 +636,7 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
+	src.flock?.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
 	aH.updateResources(src.resources)
@@ -1248,10 +1250,7 @@
 		if (I.health > 0)
 			return
 		if (I.amount > 1 && !flock_owner.absorber.ignore_amount)
-			if (initial(I.health))
-				I.health = initial(I.health)
-			else
-				I.set_health()
+			I.health = get_initial_item_health(I.type)
 			I.change_stack_amount(-1)
 			return
 

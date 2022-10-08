@@ -720,7 +720,7 @@
 						src.icon_state = "pack_smart"
 					if("contest-other2")
 						src.name = "Mindhacker Device Poster"
-						src.icon_state = "mindhacker"
+						src.icon_state = "mindhacked"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -863,6 +863,11 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		eiffelposter //for Jan's office
+			desc = "A poster of the Eiffel Tower in Paris, France."
+			name = "Eiffel Poster"
+			icon = 'icons/misc/janstuff.dmi'
+			icon_state = "poster_eiffel"
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS

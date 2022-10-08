@@ -450,7 +450,7 @@
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
-		if(src.client && src.client.preferences)
+		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
 		var/obj/item/device/pda2/pda = locate() in src
@@ -704,6 +704,9 @@
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
 	if(istype(get_area(src),/area/afterlife))
 		rank = "Captain"
