@@ -4,7 +4,7 @@
 			return
 		if (!owner.holder)
 			return
-		if (if(!issawfly(owner)) && (!isturf(usr.loc)))
+		if ((!issawfly(usr)) && (!isturf(usr.loc))) //gives sawflies special exemption
 			return
 		..()
 
