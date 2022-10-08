@@ -365,7 +365,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = owner.material
 		var/turf/target = get_turf(owner)
 		if(molitz.iterations <= 0) return
-		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
+		if(ON_COOLDOWN(owner, "molitz_gas_generate", 10 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -395,20 +395,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			target.assume_air(payload)
 
-		if(molitz.iterations == 2 && molitz.unexploded == 0)
-			desc = "All the big pockets of air are gone now, however the small pockets look loose."
-		else if(molitz.iterations == 1 && molitz.unexploded == 0)
-			desc = "There's just a tiny bit more gas in the crystal."
-		else if(molitz.iterations == 0 && molitz.unexploded == 0)
-			desc = "All the gas in the crystal is completely gone."
-		else if(molitz.iterations >= 3)
-			desc = "It looks like it still has plenty of gas trapped inside of it."
-		else if(molitz.iterations == 2)
-			desc = "It definitely contains less gas pockets then normal but still contains a fair amount."
-		else if(molitz.iterations == 1)
-			desc = "All the big pockets of gas are nearly gone, there are still plenty of small pockets of gas that still contain more gas."
-		else if(molitz.iterations == 0)
-			desc = "All the big pockets of gas are gone, yet the small pockets of gas refuse to vent."
 
 
 /datum/materialProc/molitz_temp/agent_b
@@ -433,7 +419,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 			molitz.iterations = 2
 			molitz.unexploded = 0
-			desc = "All the big pockets of gas are gone now, however the small pockets of gas look loose."
 
 
 /datum/materialProc/molitz_on_hit
