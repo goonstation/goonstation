@@ -4,6 +4,8 @@
 			return
 		if (!owner.holder)
 			return
+		if (if(!issawfly(owner)) && (!isturf(usr.loc)))
+			return
 		..()
 
 /datum/abilityHolder/critter
