@@ -358,15 +358,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		owner.material.triggerTemp(locate(owner))
 
 /datum/materialProc/molitz_temp
-	var/unresonant = 1
-	var/iterations = 4 // big issue I had was that with the strat that Im designing this for (teleporting crystals in and out of engine) one crystal could last you for like, 50 minutes, I didnt want to keep on reducing total amount as itd nerf agent b collection hard. So instead I drastically reduced amount and drastically upped output. This would speed up farming agent b to 3 minutes per crystal, which Im fine with
-	execute(var/atom/location, var/temp, var/agent_b=FALSE)
+	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/temp, var/agent_b=FALSE)
 		var/turf/target = get_turf(location)
-		if(owner.hasProperty("resonance"))
-			if(unresonant == 1)
-				iterations = max(iterations, 2)
-				unresonant -= 1
-		if(iterations <= 0) return
+		if(molitz.iterations <= 0) return
 		if(ON_COOLDOWN(location, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
@@ -378,34 +372,49 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 		if(agent_b && air.temperature > 500 && air.toxins > MINIMUM_REACT_QUANTITY )
 			var/datum/gas/oxygen_agent_b/trace_gas = payload.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-			payload.temperature = T0C // Greatly reduce temperature to simulate an endothermic reaction
-			// Itr: .18 Agent B, 20 oxy, 1.3 minutes per iteration, realisticly around 7-8 minutes per crystal.
+			payload.temperature = T0C
 
 			animate_flash_color_fill_inherit(location,"#ff0000",4, 2 SECONDS)
-			playsound(location, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			playsound(location, 'sound/effects/leakagentb.ogg', 50, 1, 8, flags = SOUND_IGNORE_SPACE)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, location))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(location))
 			trace_gas.moles += 0.18
-			iterations -= 1
-			payload.oxygen = 20
+			molitz.iterations -= 1
+			payload.oxygen = 10
 
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(location,"#0000FF",4, 2 SECONDS)
-			playsound(location, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			playsound(location, 'sound/effects/leakoxygen.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
 			payload.oxygen = 80
-			iterations -= 1
+			molitz.iterations -= 1
 
 			target.assume_air(payload)
 
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			desc = "All the big pockets of air are gone now, however the small pockets look loose."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			desc = "There's just a tiny bit more gas in the crystal."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			desc = "All the gas in the crystal is completely gone."
+		else if(molitz.iterations >= 3)
+			desc = "It looks like it still has plenty of gas trapped inside of it."
+		else if(molitz.iterations == 2)
+			desc = "It definitely contains less gas pockets then normal but still contains a fair amount."
+		else if(molitz.iterations == 1)
+			desc = "All the big pockets of gas are nearly gone, there are still plenty of small pockets of gas that still contain more gas."
+		else if(molitz.iterations == 0)
+			desc = "All the big pockets of gas are gone, yet the small pockets of gas refuse to vent."
+
+
 /datum/materialProc/molitz_temp/agent_b
-	execute(var/atom/location, var/temp)
+	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/temp)
 		..(location, temp, TRUE)
 		return
 
 /datum/materialProc/molitz_exp
 	var/maxexplode = 1
-	execute(var/atom/location, var/sev)
+	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/atom/location, var/sev)
 		if(maxexplode <= 0) return
 		var/turf/target = get_turf(location)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
@@ -414,12 +423,15 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.temperature = T20C
 			target.assume_air(payload)
 			maxexplode -= 1
-			if(owner)
-				owner.setProperty("resonance", 1)
+			if(molitz.unexploded == 1)
+				molitz.iterations = 2
+				molitz.unexploded -= 1
+				desc = "All the big pockets of air are gone now, however the small pockets look loose."
+
 
 /datum/materialProc/molitz_on_hit
-	execute(var/atom/owner, var/obj/attackobj)
-		owner.material.triggerTemp(owner, 1500)
+	execute(var/datum/material/crystal/molitz/molitz = owner.material, var/obj/attackobj)
+		molitz.triggerTemp(molitz, 1500)
 
 /datum/materialProc/miracle_add
 	execute(var/location)
