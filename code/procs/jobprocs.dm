@@ -704,6 +704,9 @@
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
 	if(istype(get_area(src),/area/afterlife))
 		rank = "Captain"
