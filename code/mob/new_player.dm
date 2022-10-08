@@ -847,7 +847,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -872,7 +872,7 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			//src.mind.dnr=1
+			src.mind.dnr = 1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			if(observer?.client)
