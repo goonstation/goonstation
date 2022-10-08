@@ -29,6 +29,7 @@
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhound/cloak)
 		abilityHolder.addAbility(/datum/targetable/critter/voidhount/rushdown)
 

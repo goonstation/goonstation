@@ -17,7 +17,7 @@
 	var/image/fluid_image
 	var/empty = 0
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	on_reagent_change()
 		..()
@@ -272,6 +272,12 @@
 	initial_reagents = "penteticacid"
 	label = "purple"
 	desc = "A high-capacity auto-injector containing pentetic acid, an experimental and aggressive chelation agent."
+
+/obj/item/reagent_containers/emergency_injector/high_capacity/charcoal
+	name = "high-capacity auto-injector (charcoal)"
+	initial_reagents = "charcoal"
+	label = "green"
+	desc = "A high-capacity auto-injector containing charcoal, a reliable anti-tox medicine and poison depletor."
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/mannitol
 	name = "high-capacity auto-injector (mannitol)"

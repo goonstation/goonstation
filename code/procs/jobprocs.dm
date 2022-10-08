@@ -450,7 +450,7 @@
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
-		if(src.client && src.client.preferences)
+		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
 		var/obj/item/device/pda2/pda = locate() in src

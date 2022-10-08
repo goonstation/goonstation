@@ -4764,12 +4764,6 @@
 	dir = 8
 	},
 /area/station/medical/staff)
-"alh" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "ali" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -5774,7 +5768,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -10791,6 +10785,7 @@
 /area/station/hallway/primary/north)
 "azw" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone{
 	pixel_y = 6
 	},
@@ -13974,7 +13969,6 @@
 	name = "Glassware Recycler"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHz" = (
@@ -18403,7 +18397,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aTa" = (
@@ -39052,6 +39046,7 @@
 /area/station/ai_monitored/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	name = "Armory";
 	req_access_txt = "37"
 	},
@@ -44030,6 +44025,7 @@
 /area/station/engine/storage)
 "clX" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	dir = 4;
 	name = "Armory";
 	req_access_txt = "37"
@@ -98242,7 +98238,7 @@ ajQ
 ait
 akS
 ktR
-alh
+oXV
 anu
 aog
 aoY

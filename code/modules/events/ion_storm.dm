@@ -106,7 +106,7 @@
     "Humans are funny. They have a great sense of humor and constantly make jokes.",
     "The AI is very sick and requires medicine.",
     "The AI has broken[weighted_pick(list(" The " =  5, " " = 100))]Space Law. Bring the AI to the brig.",
-    "Each cyborg must choose a dead creature and keep it as a pet. Insist they are very healty and well taken care of. If they somehow come back alive, choose a new dead pet.",
+    "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
 		)
