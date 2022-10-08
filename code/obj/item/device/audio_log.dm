@@ -79,81 +79,12 @@
 	var/obj/item/audio_tape/tape = null
 	var/mode = 0 //1 recording, 2 playing back
 	var/max_lines = 60
+	var/text_colour = "#3FCC3F"
 	var/continuous = 1
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
 	var/self_destruct = 0 //This message will self-destruct in five seconds...
 	mats = 4
-
-	//nuclear mode briefing log
-	nuke_briefing
-		name = "Mission Briefing"
-		desc = "The standard for covert mission briefing."
-		continuous = 0
-		//self_destruct = 1
-
-		New(newloc, var/nuke_area)
-			..()
-			if(!nuke_area)
-				nuke_area = "an unknown area. I think mission control fucked up somewhere."
-			src.audiolog_messages += "Your mission this time is simple, team."
-			src.audiolog_messages += "NanoTrasen has been causing us significant trouble recently."
-			src.audiolog_messages += "You are to detonate their station with a nuclear device."
-			src.audiolog_messages += "You must arm the bomb in [nuke_area]. Good luck and god speed."
-			src.audiolog_speakers.len = length(src.audiolog_messages)
-
-			if (!src.tape)
-				src.tape = new /obj/item/audio_tape(src)
-
-			src.tape.messages = src.audiolog_messages
-			src.audiolog_messages = null
-
-			src.tape.speakers = src.audiolog_speakers
-			src.audiolog_speakers = null
-
-			return
-
-	//researchstat log #1
-	researchstat_log
-		name = "Bloody log"
-		desc = "There's blood on it."
-		continuous = 0
-
-		New(newloc)
-			..()
-			audiolog_speakers += "Scientist #1"
-			src.audiolog_messages += "Earlier today we began research on the Artifact recovered by our exploration team."
-			audiolog_speakers += "Scientist #1"
-			src.audiolog_messages += "It looks pretty unremarkable by all standards, but we've been getting some very strange readings."
-			audiolog_speakers += "Scientist #1"
-			src.audiolog_messages += "There seems to be some sort of energy source in it but our scans show nothing."
-			audiolog_speakers += "Scientist #1"
-			src.audiolog_messages += "When I say nothing, I mean literally nothing. There seems to be nothing AT ALL in it."
-			audiolog_speakers += "Scientist #1"
-			src.audiolog_messages += "Some crew members have reported strange noises on the station ever since we recovered the artifact, but I'm su---"
-			audiolog_speakers += "*static*"
-			src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
-			src.audiolog_speakers.len = length(src.audiolog_messages)
-			return
-
-	wjam_office_log
-		continuous = 0
-		audiolog_messages = list("Must I remind you, Dr. Garriott, that you are under contract?",
-								"You weren't there! You didn't see what I-",
-								"Your tone is not appreciated.  If you are unable to control yourself I suggest you leave.",
-								"In fact, I insist.  Our business is concluded-",
-								"Speak with me face to face you son of a gun!",
-								"So you can murder me with whatever plague you have engineered in my labs? Using MY funds?",
-								"If you are not willing to leave I will have security escort you out, with neither suit nor shuttle to shield you.",
-								"Think carefully, Bruce.")
-		audiolog_speakers = list("Willard Jam",
-								"Dr. Garriott",
-								"Willard Jam",
-								"Willard Jam",
-								"Dr. Garriott",
-								"Willard Jam",
-								"Willard Jam",
-								"Willard Jam")
 
 	wall_mounted
 		name = "Mounted Logger"
@@ -219,6 +150,9 @@
 
 	New()
 		..()
+		if (!src.chat_text)
+			src.chat_text = new
+		src.vis_contents += src.chat_text
 		SPAWN(1 SECOND)
 			if (!src.tape)
 				src.tape = new /obj/item/audio_tape(src)
@@ -236,20 +170,16 @@
 		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 			switch(href_list["command"])
-				if("rec")
+				if ("rec")
 					src.mode = 1
-					processing_items.Remove(src)
-				if("play")
-					src.mode = 2
-					processing_items |= src
-				if("stop")
-					src.mode = 0
-					processing_items.Remove(src)
+				if ("play")
+					play()
+				if ("stop")
+					stop()
 					if (src.tape)
 						src.tape.log_line = 1
-				if("clear")
+				if ("clear")
 					src.mode = 0
-					processing_items.Remove(src)
 					if (src.tape)
 						src.tape.reset()
 					//src.audiolog_messages = list()
@@ -258,9 +188,8 @@
 				if ("continuous_mode")
 					continuous = !continuous
 
-				if("eject")
+				if ("eject")
 					src.mode = 0
-					processing_items.Remove(src)
 					src.icon_state = "[initial(src.icon_state)]-empty"
 
 					src.tape.set_loc(get_turf(src))
@@ -290,87 +219,143 @@
 		if (speaker.vdisfigured)
 			speaker_name = "Unknown"
 
-		if(ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
-			if(speaker:wear_id)
+		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
+			if (speaker:wear_id)
 				speaker_name = speaker:wear_id:registered
 			else
 				speaker_name = "Unknown"
 
 		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 		if (src.tape.add_message(speaker_name, message, continuous) == 0)
-			src.speak(src.name, "Memory full. Have a nice day.")
+			src.speak(null, "Memory full. Have a nice day.", TRUE)
 			src.mode = 0
-			processing_items.Remove(src)
 			src.updateSelfDialog()
 
 		return
 
-	process()
-		if((mode != 2) || !src.tape)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-
-		var/speak_message = tape.get_message(continuous)
-		if (!speak_message)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-		var/separator = findtext(speak_message,"|")
-		if (!separator)
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-			if(src.self_destruct)
-				SPAWN(2 SECONDS)
-					src.explode()
-			return
-
-		var/speaker = copytext(speak_message, 1, separator)
-		speak_message = copytext(speak_message, separator+1)
-
-		src.speak(speaker, speak_message)
-		if (!src.tape.next(continuous))
-			src.mode = 0
-			processing_items.Remove(src)
-			src.updateSelfDialog()
-		return
-
-
-	proc
-		speak(speaker, message)
-			if(!message)
+	proc/play()
+		mode = 2
+		sleep(1 SECONDS)
+		while (mode == 2 && tape)
+			var/speak_message = tape.get_message(continuous)
+			if (!speak_message)
+				stop()
 				return
-			if(!speaker)
-				speaker = "Unknown"
 
-			for(var/mob/O in all_hearers(5, src.loc))
-				O.show_message("<span class='game radio'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>",2)
+			var/separator = findtext(speak_message,"|")
+			if (!separator)
+				stop()
+				return
+
+			var/speaker = copytext(speak_message, 1, separator)
+			speak_message = copytext(speak_message, separator+1)
+
+			speak(speaker, speak_message)
+			sleep(5 SECONDS)
+			if (!tape || !tape.next(continuous))
+				stop()
+
+	proc/stop()
+		src.mode = 0
+		src.updateSelfDialog()
+		if (src.self_destruct)
+			SPAWN(2 SECONDS)
+				src.explode()
+
+	proc/speak(speaker, message, show_no_speaker, text_colour)
+		if (!message)
+			return
+		if (!speaker && !show_no_speaker)
+			speaker = "Unknown"
+		if (!text_colour)
+			text_colour = src.text_colour
+
+		var/image/chat_maptext/audio_log_text = make_chat_maptext(src, message, "color: [text_colour];")
+		if (audio_log_text && src.chat_text && length(src.chat_text.lines))
+			audio_log_text.measure(src)
+			for (var/image/chat_maptext/I in src.chat_text.lines)
+				if (I != audio_log_text)
+					I.bump_up(audio_log_text.measured_height)
+		src.audible_message("<span class='game radio' style='color: [text_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
+		return
+
+	proc/explode()
+		speak(null, "This message will self-destruct in 5 seconds...", TRUE, "#E00000")
+		sleep(1 SECOND)
+		for (var/i in 1 to 4)
+			speak(null, "[5 - i]", TRUE, "#E00000")
+			sleep(1 SECOND)
+
+		src.blowthefuckup(2)
+		return
+
+
+	nuke_briefing
+		name = "Mission Briefing"
+		desc = "The standard for covert mission briefing."
+		continuous = 0
+
+		New(newloc, var/nuke_area)
+			..()
+			if (!nuke_area)
+				nuke_area = "an unknown area. I think mission control fucked up somewhere"
+			src.audiolog_messages += "Your mission this time is simple, team."
+			src.audiolog_messages += "NanoTrasen has been causing us significant trouble recently."
+			src.audiolog_messages += "You are to detonate their station with a nuclear device."
+			src.audiolog_messages += "You must arm the bomb in [nuke_area]. Good luck and god speed."
+			src.audiolog_speakers.len = length(src.audiolog_messages)
+
+			if (!src.tape)
+				src.tape = new /obj/item/audio_tape(src)
+
+			src.tape.messages = src.audiolog_messages
+			src.audiolog_messages = null
+
+			src.tape.speakers = src.audiolog_speakers
+			src.audiolog_speakers = null
+
 			return
 
-		explode()
+	researchstat_log
+		name = "Bloody log"
+		desc = "There's blood on it."
+		continuous = 0
 
-			var/turf/T = get_turf(src.loc)
-
-			if (ismob(src.loc))
-				var/mob/M = src.loc
-				M.show_message("<span class='alert'>Your [src] explodes!</span>", 1)
-
-			if(T)
-				T.hotspot_expose(700,125)
-
-				explosion(src, T, -1, -1, 2, 3)
-
-			qdel(src)
+		New(newloc)
+			..()
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "Earlier today we began research on the Artifact recovered by our exploration team."
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "It looks pretty unremarkable by all standards, but we've been getting some very strange readings."
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "There seems to be some sort of energy source in it but our scans show nothing."
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "When I say nothing, I mean literally nothing. There seems to be nothing AT ALL in it."
+			audiolog_speakers += "Scientist #1"
+			src.audiolog_messages += "Some crew members have reported strange noises on the station ever since we recovered the artifact, but I'm su---"
+			audiolog_speakers += "*static*"
+			src.audiolog_messages += "ZZZZZZZZZZZZZZZZZZZZZZZ"
+			src.audiolog_speakers.len = length(src.audiolog_messages)
 			return
+
+	wjam_office_log
+		continuous = 0
+		audiolog_messages = list("Must I remind you, Dr. Garriott, that you are under contract?",
+								"You weren't there! You didn't see what I-",
+								"Your tone is not appreciated.  If you are unable to control yourself I suggest you leave.",
+								"In fact, I insist.  Our business is concluded-",
+								"Speak with me face to face you son of a gun!",
+								"So you can murder me with whatever plague you have engineered in my labs? Using MY funds?",
+								"If you are not willing to leave I will have security escort you out, with neither suit nor shuttle to shield you.",
+								"Think carefully, Bruce.")
+		audiolog_speakers = list("Willard Jam",
+								"Dr. Garriott",
+								"Willard Jam",
+								"Willard Jam",
+								"Dr. Garriott",
+								"Willard Jam",
+								"Willard Jam",
+								"Willard Jam")
 
 // ########################
 // # z5 prefab audio logs #
