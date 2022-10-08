@@ -1624,7 +1624,7 @@
 
 /// Adds a 20-length color matrix to the mob's list of color matrices
 /// cmatrix is the color matrix (must be a 16-length list!), label is the string to be used for dupe checks and removal
-/mob/proc/apply_color_matrix(var/list/cmatrix, var/label, respect_view_tint_settings = FALSE)
+/mob/proc/apply_color_matrix(var/list/cmatrix, var/label)
 	if (!cmatrix || !label)
 		return
 
@@ -1633,10 +1633,10 @@
 
 	src.color_matrices[label] = cmatrix
 
-	src.update_active_matrix(respect_view_tint_settings)
+	src.update_active_matrix()
 
 /// Removes whichever matrix is associated with the label. Must be a string!
-/mob/proc/remove_color_matrix(var/label, respect_view_tint_settings = FALSE)
+/mob/proc/remove_color_matrix(var/label)
 	if (!label || !length(src.color_matrices))
 		return
 
@@ -1647,11 +1647,11 @@
 	else
 		src.color_matrices -= label
 
-	src.update_active_matrix(respect_view_tint_settings)
+	src.update_active_matrix()
 
 /// Multiplies all of the mob's color matrices together and puts the result into src.active_color_matrix
 /// This matrix will be applied to the mob at the end of this proc, and any time the client logs in
-/mob/proc/update_active_matrix(respect_view_tint_settings)
+/mob/proc/update_active_matrix()
 	if (!src.color_matrices.len)
 		src.active_color_matrix = null
 	else
@@ -1666,7 +1666,7 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.set_color(src.active_color_matrix, src.mob.respect_view_tint_settings || respect_view_tint_settings)
+	src.client?.set_color(src.active_color_matrix, src.mob.respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
