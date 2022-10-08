@@ -1749,6 +1749,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.fluid_image.color = average.to_rgba()
 		src.UpdateOverlays(src.fluid_image, "fluid")
 
+/obj/item/reagent_containers/food/drinks/pinkmug //for Jan's office
+	name = "pink latte mug"
+	desc = "Whoever owns this drinks a lot of lattes."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "pinkmug_full"
+	initial_volume = 50
+	initial_reagents = list("espresso"=40, "milk"=5, "chocolate"=5)
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+		if (src.reagents.total_volume == 0)
+			update_icon()
+			icon_state = "pinkmug_empty"
+		else
+			update_icon()
+			icon_state = "pinkmug_full"
+		return
+
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
@@ -1852,6 +1872,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
+
+/obj/item/reagent_containers/food/drinks/pumpkinlatte
+	name = "Spiced Pumpkin"
+	desc = "Oh, a delicious, mysterious pumpkin spice latte!"
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkinlatte"
+	item_state = "drink_glass"
+	g_amt = 30
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("pumpkinspicelatte"=30)
 
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"

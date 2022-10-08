@@ -528,3 +528,35 @@
 			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
 			sleep(0.1 SECONDS)
+
+/obj/cauldron
+	name = "cauldron"
+	desc = "An empty cast-iron cauldron."
+	icon = 'icons/misc/halloween.dmi'
+	icon_state = "cauldron"
+	anchored = 1
+	density = 1
+
+	candy
+		name = "candy-filled cauldron"
+		desc = "It's full of candy! Treats... or tricks?"
+		icon_state = "cauldron-candy"
+
+		attack_hand(mob/user)
+			var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
+			var/newcandy_path = pick(candytypes)
+			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path
+			user.put_in_hand_or_drop(newcandy)
+			if (prob(5))
+				newcandy.razor_blade = 1
+			boutput(user, "You grab [newcandy] from the cauldron!")
+
+	jellybean
+		name = "jellybean-filled cauldron"
+		desc = "It's full of jellybeans! Wonder what's in these..."
+		icon_state = "cauldron-jellybean"
+
+		attack_hand(mob/user)
+			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new
+			user.put_in_hand_or_drop(B)
+			boutput(user, "You grab [B] from the cauldron!")
