@@ -848,6 +848,13 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	regina
+		icon = 'icons/obj/large/320x320.dmi'
+		icon_state = "regina"
+		name = "Regina"
+		pixel_x = -110
+		pixel_y = -170
+
 	amantes
 		icon_state = "amantes"
 		name = "Amantes"

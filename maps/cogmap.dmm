@@ -56682,7 +56682,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -61234,9 +61234,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -61908,7 +61905,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)

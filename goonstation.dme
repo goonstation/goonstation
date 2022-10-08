@@ -1441,6 +1441,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\flock\structure\collector.dm"
 #include "code\obj\flock\structure\compute.dm"
 #include "code\obj\flock\structure\egg.dm"
+#include "code\obj\flock\structure\fabricator.dm"
 #include "code\obj\flock\structure\flock_structure_ghost.dm"
 #include "code\obj\flock\structure\flock_structure_parent.dm"
 #include "code\obj\flock\structure\gnesisturret.dm"
