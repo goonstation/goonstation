@@ -2205,7 +2205,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		C.flags = null
 
 /datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
@@ -2215,7 +2216,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/spider/nice)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
+		C.flags = null
 
 /datum/job/special/halloween/critter/crow
 	name = "Crow"
@@ -2225,7 +2227,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/bird/crow)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
+		C.flags = null
 
 // end halloween jobs
 #endif
