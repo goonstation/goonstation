@@ -68697,6 +68697,16 @@
 	},
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"fzZ" = (
+/obj/machinery/door/unpowered/wood{
+	dir = 1;
+	icon = 'icons/obj/doors/door_office.dmi';
+	lock_dir = 4
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "fAc" = (
 /obj/item/clothing/under/gimmick/princess{
 	color = "#8c0b0b"
@@ -70518,6 +70528,12 @@
 	},
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
+"jib" = (
+/obj/stool/chair/comfy/yellow,
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "jir" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -70791,6 +70807,18 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/centcom/outside)
+"jNP" = (
+/obj/stool/chair/couch/yellow{
+	icon_state = "chair_couch_ew-yellow";
+	dir = 4;
+	pixel_x = -7
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 8
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "jPv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-2"
@@ -71218,6 +71246,14 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"kPC" = (
+/obj/decal/poster/wallsign/eiffelposter{
+	pixel_y = -3
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "kPR" = (
 /obj/submachine/foodprocessor,
 /turf/unsimulated/outdoors/grass,
@@ -71247,6 +71283,13 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"kRA" = (
+/obj/decal/tile_edge/flowers{
+	icon_state = "flowers3";
+	dir = 8
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "kUZ" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -71257,6 +71300,27 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
+"kWN" = (
+/obj/table/auto/desk,
+/obj/item/pen/fancy{
+	pixel_x = 1;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/glass/flask/heartbottle{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/obj/item/paper/book/from_file/fleurscookbook{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lav" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-41"
@@ -71696,6 +71760,14 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"lMG" = (
+/obj/admin_plaque{
+	name = "Fleur DeLaCreme's Office"
+	},
+/turf/unsimulated/wall/auto/lead/blue,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "lMN" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -71879,6 +71951,28 @@
 	icon_state = "bloodfloor_3"
 	},
 /area/meat_derelict/guts)
+"mgQ" = (
+/obj/table/wood/auto/desk{
+	icon_state = "1"
+	},
+/obj/item/reagent_containers/food/snacks/croissant{
+	pixel_y = 9
+	},
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase3";
+	pixel_y = 13;
+	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/drinks/pinkmug{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 5
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "mhv" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -72903,6 +72997,16 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"nUo" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 4
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "nUK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-3"
@@ -73113,6 +73217,11 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"oqj" = (
+/turf/unsimulated/floor/carpet/regalcarpet,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "orM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -73179,6 +73288,17 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"oAH" = (
+/obj/stove{
+	icon_state = "stove2";
+	pixel_y = 10;
+	density = 0;
+	desc = "Whatever is cooking smells heavenly."
+	},
+/turf/unsimulated/floor/wood/six,
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "oAZ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -73611,6 +73731,13 @@
 	},
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/assault_pod)
+"psh" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 1
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "psH" = (
 /obj/table/auto,
 /obj/cable,
@@ -74117,6 +74244,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"qgm" = (
+/obj/decal/tile_edge/flowers{
+	icon_state = "flowers3"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
 "qgr" = (
 /obj/decal/poster/wallsign/stencil/left/o,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -74922,6 +75055,11 @@
 /turf/unsimulated/floor/grey/side{
 	dir = 4
 	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
+"rFb" = (
+/turf/unsimulated/floor/carpet/regalcarpet/border,
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -76283,6 +76421,23 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/centcom/offices/sovexe)
+"uAi" = (
+/obj/stool/chair/couch/yellow{
+	icon_state = "chair_couch_ew-yellow";
+	pixel_x = -7
+	},
+/obj/item/toy/plush/small/bee/cute{
+	pixel_x = -5;
+	pixel_y = -7;
+	name = "Abeille";
+	desc = "A well-loved friend."
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 9
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uAX" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -76336,6 +76491,28 @@
 /obj/item/gun/russianrevolver/fake357,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/hufflaw)
+"uIc" = (
+/obj/machinery/light/incandescent/warm,
+/obj/table/endtable_classic{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/decoration/flower_vase/vase7{
+	icon_state = "vase4";
+	pixel_y = 21;
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/regular{
+	desc = "She doesn't wear glasses. Whose were these?";
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 10
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "uId" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -76493,6 +76670,18 @@
 	opacity = 0
 	},
 /area/centcom/gallery)
+"uYi" = (
+/obj/map/light/yellow,
+/turf/unsimulated/wall{
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "leadwindow_2";
+	name = "window";
+	opacity = 0
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "vab" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-45"
@@ -77691,6 +77880,44 @@
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/grass/random,
 /area/afterlife/heaven)
+"xsc" = (
+/obj/decal/tile_edge/flowers{
+	icon_state = "flowers4"
+	},
+/turf/unsimulated/outdoors/grass,
+/area/centcom/outside)
+"xvJ" = (
+/obj/storage/closet/dresser,
+/obj/item/card/id/pod_wars/syndicate{
+	desc = "Huh, it's all banged up. Looks like it's been through a propellor or something.";
+	name = "Syndicate Sub Pilot's License"
+	},
+/obj/item/clothing/suit/security_badge{
+	desc = "This has seen some rough times, but it's still shiny.";
+	name = "Head of Security Badge";
+	badge_owner_job = "Head of Security";
+	badge_owner_name = "Fleur DeLaCreme"
+	},
+/obj/item/clothing/head/chefhat{
+	desc = "A tag on the inside says 'Le Cordon Rouge'";
+	name = "Fleur's Toque Blanche";
+	pixel_x = 9;
+	pixel_y = 16
+	},
+/obj/item/pen/crayon/lipstick{
+	font_color = "#de0c62";
+	name = "cerise lipstick"
+	},
+/obj/item/clothing/under/misc/casdresswht,
+/obj/item/storage/backpack/satchel/brown,
+/obj/item/clothing/shoes/bootsbrn,
+/obj/item/clothing/head/barrette/gold,
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/centcom/offices{
+	icon_state = "blue"
+	})
 "xxK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -154657,13 +154884,13 @@ dFl
 aES
 aES
 aES
-aES
+kRA
 wel
-dvW
-dvW
-dvW
-xXm
-wel
+kWN
+uAi
+jNP
+uIc
+lMG
 sJH
 vij
 wel
@@ -154959,13 +155186,13 @@ aES
 aES
 aES
 aES
-aES
-niP
-dvW
-dvW
-dvW
-dvW
-rUz
+qgm
+uYi
+oAH
+psh
+oqj
+rFb
+fzZ
 sJH
 mVF
 wmb
@@ -155261,12 +155488,12 @@ aES
 aES
 aES
 aES
-aES
-wel
-dvW
-dvW
-dvW
-dvW
+xsc
+kPC
+jib
+mgQ
+nUo
+xvJ
 wel
 sJH
 elx
