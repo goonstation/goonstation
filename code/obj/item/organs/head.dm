@@ -289,6 +289,18 @@
 		src.pixel_y = rand(-20,-8)
 		src.pixel_x = rand(-8,8)
 
+	on_transplant(mob/M)
+		. = ..()
+		// at this point in time, the head's "donor" is M, but the head's donor_appearance is the last person it was attached to's bioholder's mobappearance
+		if(!src.donor?.bioHolder?.mobAppearance)
+			return
+
+		var/datum/appearanceHolder/currentHeadAppearanceOwner = src.donor_appearance
+
+		// we will move the head's appearance onto its new owner's mobappearance and then update its appearance reference to that
+		src.donor.bioHolder.mobAppearance.CopyOtherHeadAppearance(currentHeadAppearanceOwner)
+		src.donor_appearance = src.donor.bioHolder.mobAppearance
+
 	on_removal()
 		src.transplanted = 1
 		if (src.linked_human)
