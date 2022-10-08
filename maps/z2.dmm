@@ -68704,9 +68704,7 @@
 	lock_dir = 4
 	},
 /turf/unsimulated/floor/wood/six,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "fAc" = (
 /obj/item/clothing/under/gimmick/princess{
 	color = "#8c0b0b"
@@ -70531,9 +70529,7 @@
 "jib" = (
 /obj/stool/chair/comfy/yellow,
 /turf/unsimulated/floor/wood/six,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "jir" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -70816,9 +70812,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 8
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "jPv" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-2"
@@ -71318,9 +71312,7 @@
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/wood/six,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "lav" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-41"
@@ -71762,9 +71754,12 @@
 /area/iomoon)
 "lMG" = (
 /obj/admin_plaque{
-	name = "Fleur DeLaCreme's Office"
+	name = "Fleur DeLaCreme's Office";
+	pixel_y = 32
 	},
-/turf/unsimulated/wall/auto/lead/blue,
+/turf/unsimulated/floor/grey/side{
+	dir = 1
+	},
 /area/centcom/offices{
 	icon_state = "blue"
 	})
@@ -71970,9 +71965,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 5
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "mhv" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -73004,9 +72997,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 4
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "nUK" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-3"
@@ -73219,9 +73210,7 @@
 /area/centcom/gallery)
 "oqj" = (
 /turf/unsimulated/floor/carpet/regalcarpet,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "orM" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -73296,9 +73285,7 @@
 	desc = "Whatever is cooking smells heavenly."
 	},
 /turf/unsimulated/floor/wood/six,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "oAZ" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -73735,9 +73722,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 1
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "psH" = (
 /obj/table/auto,
 /obj/cable,
@@ -75060,9 +75045,7 @@
 	})
 "rFb" = (
 /turf/unsimulated/floor/carpet/regalcarpet/border,
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "rFc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -76435,9 +76418,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 9
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "uAX" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -76510,9 +76491,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 10
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "uId" = (
 /obj/machinery/light/emergency{
 	dir = 4
@@ -77915,9 +77894,7 @@
 /turf/unsimulated/floor/carpet/regalcarpet/border{
 	dir = 6
 	},
-/area/centcom/offices{
-	icon_state = "blue"
-	})
+/area/centcom/offices/janantilles)
 "xxK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -154890,8 +154867,8 @@ kWN
 uAi
 jNP
 uIc
+wel
 lMG
-sJH
 vij
 wel
 wel
