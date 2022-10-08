@@ -28,6 +28,7 @@
 	mats = list("MET-2"=7, "CON-1"=7, "POW-1"=5)
 	contraband = 2
 	overlays = null
+	state = 0
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
@@ -36,16 +37,25 @@
 	var/isopen = FALSE
 	var/playercontrolled = FALSE
 
-	attack_self(mob/user)
+	attack_self(mob/user as mob) //full on overriding priming in hopes of no jank
+		logGrenade(user)
 		user = currentuser
 		if(isopen)
 			if(playercontrolled)
 				if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
 					ejectbrain(currentbrain)
+					return
 			else
 				return //eventually this will be something, but for now simply return
 		else
-			..()
+			boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
+			icon_state = icon_state_armed
+			playsound(src.loc, src.sound_armed, 75, 1, -3)
+			src.add_fingerprint(user)
+			SPAWN(src.det_time)
+				if (src) prime(user)
+				return
+
 
 	prime()
 		var/turf/T =  get_turf(src)
@@ -231,7 +241,7 @@
 		if(!ON_COOLDOWN(user, "sawfly_attackCD", 0.8 SECONDS))
 			if(issawflybuddy(target))
 				return
-			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
+			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "carves", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
 			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, 1)
 			if(prob(3))
 				user.communalbeep()
