@@ -65,9 +65,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
-	setup_equipment_slots()
-		equipment += new /datum/equipmentHolder/ears/intercom/syndicate(src)
-
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]

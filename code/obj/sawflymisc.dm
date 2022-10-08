@@ -41,12 +41,7 @@
 		logGrenade(user)
 		user = currentuser
 		if(isopen)
-			if(playercontrolled)
-				if(tgui_alert(src, "Are you sure you want to eject the conciousness?", "Sawfly Brain", list("Yes", "No")) == "Yes")
-					ejectbrain(currentbrain)
-					return
-			else
-				return //eventually this will be something, but for now simply return
+			return
 		else
 			boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 			icon_state = icon_state_armed
@@ -81,76 +76,6 @@
 			else
 				isopen = TRUE
 				overlays += "open-overlay"
-		if((istype(W, /obj/item/organ/brain/latejoin)) && isopen)
-			insertbrain( W, src, heldfly)
-			boutput(user, "You insert the [W] into the [src]. Please wait a maximum of 40 seconds for the [heldfly]'s systems to initalize.")
-
-	proc/insertbrain( obj/item/brain, obj/item/sawflygrenade, mob/living/user)
-		src.currentbrain = brain
-		var/ghost_delay = 100
-		var/list/text_messages = list()
-		var/place = get_turf(src)
-		var/mob/living/critter/robotic/sawfly/oursawfly = null
-
-		text_messages.Add("Would you like to be resurrected as a traitor's sawfly? You may be randomly selected from the list of candidates.")
-		text_messages.Add("You are eligible to be resurrected as a traitor's sawfly. You have [ghost_delay / 10] seconds to respond to the offer.")
-		text_messages.Add("You have been added to the list of eligible candidates. Please wait for the game to choose, good luck!")
-
-		var/list/datum/mind/candidates = dead_player_list(1, ghost_delay, text_messages, allow_dead_antags = 1)
-		if (!candidates)
-			sawflygrenade.visible_message("<span class='alert'> The [src.heldfly] ejects the [currentbrain] and beeps: \" could not initialize consciousness pool! Please try again later. \"")
-			src.ejectbrain(currentbrain)
-			return
-
-		var/datum/mind/lucky_dude = pick(candidates)
-		playsound(src.loc, 'sound/machines/tone_beep.ogg', 30, FALSE) //intentionally use the same sound mechscanners do to avoid detection
-		boutput(user, "<span class='success'> The [oursawfly] emits a pleasant chime as begins to glow with sapience!")
-
-		SPAWN(2 SECONDS) //wait two seconds for recognition
-			if (lucky_dude) // incredibly hacky workaround time- I have just not had any luck transfering the mind to the existing sawfly in the grenade.
-				src.set_loc(get_turf(src))
-				oursawfly = new /mob/living/critter/robotic/sawfly(place)
-				oursawfly.name = src.name
-				lucky_dude.transfer_to(oursawfly)
-				brain.set_loc(oursawfly)
-				oursawfly.foldself()
-				lucky_dude.special_role = ROLE_SAWFLY
-				boutput(oursawfly, "<h1><font color=red>You have awoken as a sawfly! Your duty is to serve your master to the best of your ability!")
-				oursawfly.antagonist_overlay_refresh(1, 0)
-				user.put_in_hand_or_drop(oursawfly.ourgrenade) //certified ref moment
-				qdel(src)
-			else
-				sawflygrenade.visible_message("<span class='alert'>The [oursawfly] makes an upset beep! Something went wrong!")
-				src.ejectbrain(currentbrain)
-				return
-		if(!oursawfly.mind)
-			sawflygrenade.visible_message("<h1>Something went SUPER wrong!!! Contact #imcoder, make a bug report, and/or ping Millian!")
-
-	proc/ejectbrain(/obj/item/organ/brain/currentbrain)
-		if(!isopen)
-			isopen = TRUE
-		if(currentbrain)
-			if(currentbrain.owner)
-				boutput(currentbrain.owner, "You have been booted from your sawfly and are now a disconnected ghost!")
-				SPAWN(1) //give them a second to read
-					heldfly.ghostize()
-					currentbrain.owner = null
-
-			currentbrain.set_loc(get_turf(src))
-			src.playercontrolled = FALSE
-/datum/random_event/major/antag/sawflytest
-	name = "Sawfly grenade test"
-	disabled = TRUE
-	var/place = null
-	var/obj/item/old_grenade/sawfly/firsttime/baby = null
-	var/obj/item/organ/brain/latejoin/brain = null
-
-	event_effect()
-		place = pick_landmark(LANDMARK_LATEJOIN)
-		baby = new /obj/item/old_grenade/sawfly(place)
-		brain = new /obj/item/organ/brain/latejoin(place)
-		SPAWN(1)
-			baby.insertbrain(brain, baby, baby.heldfly)
 
 /obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
 	New()
@@ -164,7 +89,6 @@
 	New()
 		new /obj/item/remote/sawflyremote(src.loc)
 		..()
-
 
 /obj/item/old_grenade/spawner/sawflycluster
 	name = "Cluster sawfly"
@@ -231,10 +155,8 @@
 			else
 				continue
 
-
 // ---------------limb---------------
 /datum/limb/sawfly_blades
-
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
