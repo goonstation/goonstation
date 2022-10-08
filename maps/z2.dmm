@@ -76651,7 +76651,7 @@
 /area/centcom/offices/enakai)
 "vbY" = (
 /obj/table/auto/desk,
-/obj/item/plant/flower/rose,
+/obj/item/clothing/head/rose,
 /turf/unsimulated/floor/void,
 /area/centcom/offices/lyra)
 "vdq" = (
@@ -76788,7 +76788,7 @@
 /obj/kudzu_marker{
 	icon_state = "kudzu-benign-3"
 	},
-/obj/item/plant/flower/rose{
+/obj/item/clothing/head/rose{
 	burning = 0;
 	desc = "By any other name, would smell just as sweet. This one likes to be called Lily. Or ";
 	name = "extra-beautiful rose"
