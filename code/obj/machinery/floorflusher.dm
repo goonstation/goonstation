@@ -19,6 +19,8 @@
 	var/flush = 0	// true if triggered
 	var/obj/disposalpipe/trunk/trunk = null // the attached pipe trunk, if none reject user
 	var/flushing = 0	// true if flushing in progress
+	var/mail_tag = null // mail_tag to apply on next flush
+	var/mail_id = null // id for linking a flusher for mail tagging
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/storage/secure/closet/brig_automatic (secure_closets.dm)
@@ -259,6 +261,7 @@
 		closeup()
 		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
+		H.mail_tag = src.mail_tag // apply mail_tag
 
 		H.init(src)	// copy the contents of disposer to holder
 

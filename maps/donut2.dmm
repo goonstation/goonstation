@@ -2314,7 +2314,7 @@
 "aiG" = (
 /obj/disposalpipe/switch_junction{
 	dir = 4;
-	mail_tag = "station";
+	mail_tag = list("station","bridge","captain","cargo","chapel","chief_engineer","detective","electronics","engineering","genetics","hydroponics","kitchen","medbay","robotics","security","shuttlebay","storage");
 	name = "station mail router"
 	},
 /turf/simulated/floor/green/side,
@@ -2328,10 +2328,7 @@
 /turf/simulated/floor,
 /area/station/science/lobby)
 "aiJ" = (
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-s"
-	},
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/neutral/corner,
 /area/station/science/lobby)
 "aiK" = (
@@ -2516,6 +2513,7 @@
 /turf/space,
 /area/shuttle/arrival/station)
 "ajK" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -2808,6 +2806,7 @@
 /area/station/crew_quarters/observatory)
 "akJ" = (
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -3001,6 +3000,7 @@
 	name = "Outpost Camera";
 	network = "Zeta"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/bluegreen/corner,
 /area/station/science/lobby)
 "alE" = (
@@ -3053,6 +3053,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -3107,6 +3108,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "alY" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -3176,6 +3178,7 @@
 /area/space)
 "amF" = (
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -3382,6 +3385,7 @@
 /area/space)
 "aoc" = (
 /obj/machinery/floorflusher/industrial{
+	mail_id = "zeta";
 	name = "mail loading chute"
 	},
 /obj/disposalpipe/trunk/mail{
@@ -3500,6 +3504,7 @@
 "aoC" = (
 /obj/disposaloutlet{
 	desc = "An outlet for the pneumatic mail system.";
+	flusher_id = "station";
 	name = "mail outlet"
 	},
 /obj/disposalpipe/trunk/mail{
@@ -7910,6 +7915,7 @@
 /obj/disposaloutlet{
 	desc = "An outlet for the pneumatic mail system.";
 	dir = 4;
+	flusher_id = "zeta";
 	name = "mail outlet"
 	},
 /obj/disposalpipe/trunk/mail{
@@ -9136,6 +9142,7 @@
 	dir = 8
 	},
 /obj/machinery/floorflusher/industrial{
+	mail_id = "station";
 	name = "mail loading chute"
 	},
 /turf/simulated/floor/plating/airless,
@@ -26086,6 +26093,7 @@
 /obj/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/access_spawn/research_foyer,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -28393,15 +28401,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/ai_monitored/armory)
 "epT" = (
-/obj/disposaloutlet{
-	desc = "An outlet for the pneumatic mail system.";
-	dir = 1;
-	mailgroup = "science";
-	message = "Delivery alert in Outpost.";
-	name = "mail outlet"
-	},
-/obj/disposalpipe/trunk/mail{
-	dir = 8
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
@@ -29291,6 +29293,7 @@
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/neutral/side{
 	dir = 4
 	},
@@ -30685,6 +30688,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "gni" = (
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/corner{
 	dir = 4
 	},
@@ -32019,7 +32023,7 @@
 	},
 /obj/disposalpipe/switch_junction{
 	icon_state = "pipe-sj2";
-	mail_tag = "research";
+	mail_tag = list("research","artlab","buddy_depot","chemistry","research_director","research_hangar","telesci","toxins","zeta_sec");
 	name = "outpost mail router"
 	},
 /turf/simulated/floor,
@@ -48611,6 +48615,7 @@
 /area/station/chapel/sanctuary)
 "vMe" = (
 /obj/machinery/light_switch/east,
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
