@@ -1,5 +1,9 @@
 
 (t)sun oct 09 22
+(u)Mr. Moriarty
+(p)11192
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Cogmap2 Armoury.
 (u)LeahTheTech
 (p)11031
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes
