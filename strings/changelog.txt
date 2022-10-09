@@ -1,5 +1,9 @@
 
 (t)sat oct 08 22
+(u)112358sam
+(p)11258
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Made changes to the Donut 2 mail system to allow the station and Zeta to send mail to any room on the other
 (u)Flourish
 (*)The Remy, bumblespider, and crow Spooktober jobs are now restricted to mentors only. Please ahelp if you see people still being griefy.
 (u)Bartimeus
