@@ -53,7 +53,7 @@
 					if(1)
 						new/obj/candle_light(T)
 					if(2)
-						new/obj/spook(T)
+						new/obj/item/spook(T)
 					if(3)
 						new/obj/critter/floateye(T)
 					if(4)

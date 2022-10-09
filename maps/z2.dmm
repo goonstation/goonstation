@@ -30676,7 +30676,7 @@
 	pixel_y = 8
 	},
 /obj/decal/cleanable/blood/splatter,
-/obj/spook,
+/obj/item/spook,
 /obj/window/cubicle{
 	dir = 2
 	},
@@ -33721,7 +33721,7 @@
 /turf/unsimulated/floor/white,
 /area/crunch)
 "bZO" = (
-/obj/spook,
+/obj/item/spook,
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
 	},
@@ -34768,7 +34768,7 @@
 "cdo" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton,
-/obj/spook,
+/obj/item/spook,
 /turf/unsimulated/floor/white,
 /area/crunch)
 "cdp" = (

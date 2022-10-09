@@ -14939,7 +14939,7 @@
 /area/space)
 "bgz" = (
 /obj/decal/cleanable/blood,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
