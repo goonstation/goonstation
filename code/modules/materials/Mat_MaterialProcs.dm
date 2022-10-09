@@ -365,7 +365,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/datum/material/crystal/molitz/molitz = owner.material
 		var/turf/target = get_turf(owner)
 		if(molitz.iterations <= 0) return
-		if(ON_COOLDOWN(owner, "molitz_gas_generate", 10 SECONDS)) return
+		if(ON_COOLDOWN(owner, "molitz_gas_generate", 30 SECONDS)) return
 
 		var/datum/gas_mixture/air = target.return_air()
 		if(!air) return
@@ -384,7 +384,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 			trace_gas.moles += 0.18
 			molitz.iterations -= 1
-			payload.oxygen = 10
+			payload.oxygen = 15
 
 			target.assume_air(payload)
 		else
@@ -413,6 +413,10 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
+			if(molitz.iterations >= 1)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
+			if(molitz.iterations = 0)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C

@@ -233,7 +233,23 @@
 		return ..()
 
 	get_desc()
-		..()
+		if(!istype(src.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = src.material
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			. += " All the big pockets of air are gone now, however the small pockets look loose."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			. += " There's just a tiny bit more gas left in the crystal."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			. += " All the gas in the crystal is completely gone."
+		else if(molitz.iterations >= 3)
+			. += " It looks like the crystal has plenty of gas trapped inside of it."
+		else if(molitz.iterations == 2)
+			. += " The crystal's large gas pockets look smaller then usual"
+		else if(molitz.iterations == 1)
+			. += " All of the big pockets of gas are nearly gone, however there are still plenty of small pockets of gas that contain more gas."
+		else if(molitz.iterations == 0)
+			. += " All the big pockets of gas are gone, yet the small pockets of gas refuse to vent."
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
