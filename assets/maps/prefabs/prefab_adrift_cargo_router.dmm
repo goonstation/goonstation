@@ -492,7 +492,8 @@
 	},
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
-	})
+	},
+/area/prefab/adrift_cargorouter)
 "JY" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/adrift_cargorouter)
