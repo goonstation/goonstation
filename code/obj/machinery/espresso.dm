@@ -67,7 +67,7 @@
 						usr.put_in_hand_or_drop(target)
 					else
 						target.set_loc(src.loc)
-				usr.show_text("You have removed the [src.cup_name] from the [src].")
+				usr.show_text("You have removed the [src.cup_name] from [src].")
 				src.cupsinside -= 1
 				src.update()
 				. = TRUE
