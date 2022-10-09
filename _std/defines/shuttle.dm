@@ -20,7 +20,7 @@
 
 /// Default; shuttle can be called or auto-calls
 #define SHUTTLE_CALL_ENABLED 0
-/// Shuttle cannot be called manually, only automatically
+/// Shuttle cannot be called manually, only automatically or by admins
 #define SHUTTLE_CALL_MANUAL_CALL_DISABLED 1
 /// Shuttle will not be called, period
 #define SHUTTLE_CALL_FULLY_DISABLED 2
