@@ -385,6 +385,86 @@
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/traffic_light
+	name = "warning light"
+	desc = "A small light used to warn when shuttle traffic is expected."
+	icon_state = "runway10"
+	base_state = "runway1"
+	fitting = "bulb"
+	brightness = 0.5
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	plane = PLANE_NOSHADOW_BELOW
+	on = 0
+	wallmounted = 0
+	removable_bulb = 0
+	var/static/warning_color = "#da9b49"
+	var/connected_dock = null
+
+	New()
+		..()
+		if(src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(DOCK_EVENT_INCOMING)
+				src.activate()
+			if(DOCK_EVENT_ARRIVED)
+				src.deactivate()
+			if(DOCK_EVENT_OUTGOING)
+				src.activate()
+			if(DOCK_EVENT_DEPARTED)
+				src.deactivate()
+
+	proc/activate()
+		color = warning_color
+		on = 1
+		update()
+
+	proc/deactivate()
+		color = null
+		on = 0
+		update()
+
+	trader_left // matching mapping area convensions
+		connected_dock = COMSIG_DOCK_TRADER_WEST
+
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	trader_right
+		connected_dock = COMSIG_DOCK_TRADER_EAST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+// Traffic lights on/off is signal controlled; light switches should not affect us.
+/obj/machinery/light/traffic_light/power_change()
+	if(src.loc)
+		var/area/A = get_area(src)
+		var/state = src.on && A.power_light
+		seton(state)
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."
@@ -404,7 +484,7 @@
 		if (issilicon(user))
 			return
 
-		if (istype(W, /obj/item/wrench))
+		if (iswrenchingtool(W))
 
 			add_fingerprint(user)
 			src.anchored = !src.anchored
@@ -597,7 +677,7 @@
 			if(on && current_lamp.rigged)
 				if (current_lamp.rigger)
 					message_admins("[key_name(current_lamp.rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", current_lamp.rigger, null, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, current_lamp.rigger, "'s rigged bulb exploded in [current_lamp.rigger.loc.loc] ([log_loc(src)])")
 				explode()
 			if(on && prob(current_lamp.breakprob))
 				current_lamp.light_status = LIGHT_BURNED
@@ -605,7 +685,7 @@
 				on = 0
 				light.disable()
 				elecflash(src,radius = 1, power = 2, exclude_center = 0)
-				logTheThing("station", null, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
+				logTheThing(LOG_STATION, null, "Light '[name]' burnt out (breakprob: [current_lamp.breakprob]) at ([log_loc(src)])")
 
 
 // attempt to set the light's on/off status
@@ -731,7 +811,7 @@
 				return
 			if (candismantle)
 				boutput(user, "You begin to unscrew the fixture from the wall...")
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				if (!do_after(user, 2 SECONDS))
 					return
 				boutput(user, "You unscrew the fixture from the wall.")
@@ -756,7 +836,7 @@
 		if(prob(1+W.force * 5))
 
 			boutput(user, "You hit the light, and it smashes!")
-			logTheThing("station", user, null, "smashes a light at [log_loc(src)]")
+			logTheThing(LOG_STATION, user, "smashes a light at [log_loc(src)]")
 			for(var/mob/M in AIviewers(src))
 				if(M == user)
 					continue
@@ -832,7 +912,7 @@
 				return
 			boutput(user, "You try to remove the light [fitting], but you burn your hand on it!")
 			H.UpdateDamageIcon()
-			H.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, 5)
+			H.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, 5)
 			return				// if burned, don't remove the light
 
 	// create a light tube/bulb item and put it in the user's hand
@@ -845,11 +925,11 @@
 		return
 
 	if(current_lamp.light_status == LIGHT_OK || current_lamp.light_status == LIGHT_BURNED)
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 
 	if(!nospark)
 		if(on)
-			logTheThing("station", null, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
+			logTheThing(LOG_STATION, null, "Light '[name]' was on and has been broken, spewing sparks everywhere ([log_loc(src)])")
 			elecflash(src,radius = 1, power = 2, exclude_center = 0)
 	current_lamp.light_status = LIGHT_BROKEN
 	current_lamp.update()
@@ -889,14 +969,14 @@
 			if(prob(1))
 				if (rigger)
 					message_admins("[key_name(rigger)]'s rigged bulb exploded in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb exploded in [rigger.loc.loc] ([log_loc(src)])")
 				explode()
 				rigged = 0
 				rigger = null
 			else if(prob(2))
 				if (rigger)
 					message_admins("[key_name(rigger)]'s rigged bulb tried to explode but failed in [src.loc.loc], [log_loc(src)].")
-					logTheThing("combat", rigger, null, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
+					logTheThing(LOG_COMBAT, rigger, "'s rigged bulb tried to explode but failed in [rigger.loc.loc] ([log_loc(src)])")
 				rigged = 0
 				rigger = null
 */
@@ -1343,7 +1423,7 @@
 		boutput(user, "You inject the solution into the [src].")
 
 		if(S.reagents.has_reagent("plasma", 1))
-			logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+			logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 			rigged = 1
 			rigger = user
 
@@ -1366,7 +1446,7 @@
 		boutput(user, "The [name] shatters!")
 		light_status = LIGHT_BROKEN
 		force = 5
-		playsound(src.loc, "sound/impact_sounds/Glass_Hit_1.ogg", 75, 1)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Hit_1.ogg', 75, 1)
 		update()
 
 /obj/machinery/light/get_power_wire()

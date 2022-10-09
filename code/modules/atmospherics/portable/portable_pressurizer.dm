@@ -285,7 +285,7 @@
 
 		// Flashbang pressure wave is 30,000 psi thus 206 MPa
 		var/volume = clamp(pressure KILO PASCALS / 206 MEGA PASCAL * 35, 15, 70)
-		playsound(src, "sound/effects/exlow.ogg", volume, 1)
+		playsound(src, 'sound/effects/exlow.ogg', volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))

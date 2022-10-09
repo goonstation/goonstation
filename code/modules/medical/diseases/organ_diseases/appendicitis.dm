@@ -50,7 +50,7 @@
 				H.visible_message("<span class='alert'>[H] suddenly and violently vomits!</span>")
 			else if (probmult(2))
 				H.visible_message("<span class='alert'>[H] vomits blood!</span>")
-				playsound(H.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))
 				bleed(H, rand(5,8), 5)
 			if (probmult(8)) H.emote(pick("pale", "groan"))

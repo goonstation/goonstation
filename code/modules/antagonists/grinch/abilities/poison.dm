@@ -68,7 +68,7 @@
 
 		if (attempt_success == 1)
 			boutput(M, "<span class='notice'>You successfully poisoned [target].</span>")
-			logTheThing("combat", M, null, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
 			return 0
 		else
 			boutput(M, "<span class='alert'>You failed to poison [target].</span>")

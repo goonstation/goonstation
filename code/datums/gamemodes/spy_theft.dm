@@ -8,6 +8,7 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
@@ -120,7 +121,7 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
-			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
+			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
@@ -169,7 +170,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = ROLE_SPY_THIEF, amount = num_spies, recordChosen = 1)
@@ -618,7 +619,7 @@
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
 		if (big_station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
 		// Pick an item type then check if it is valid
@@ -657,7 +658,7 @@
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
 		if (station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
 		// Pick an item type then check if it is valid

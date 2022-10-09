@@ -271,7 +271,7 @@ proc/Create_Tommyname()
 				if(reagents_cache[RID])
 					output = analyze_single(output, RID)
 				else
-					logTheThing("debug", null, null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
+					logTheThing(LOG_DEBUG, null, "<B>SpyGuy/spectro:</B> attempted to analyze invalid reagent id: [RID]")
 
 			return output
 
@@ -472,6 +472,8 @@ proc/Create_Tommyname()
 	proc/displayInterface(var/mob/target, var/initData)
 		INIT_CHECK //Initialize the SpyGUI instance on use
 		if((target in connecting))
+			return
+		if(!target.client)
 			return
 		connecting[target] = initData
 		var/retries = max_retries
@@ -768,7 +770,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
@@ -807,7 +809,7 @@ proc/Create_Tommyname()
 	src.icon = initial(T.icon)
 	src.icon_state = initial(T.icon_state)
 	src.set_density(initial(T.density))
-	src.opacity = initial(T.opacity)
+	src.set_opacity(initial(T.opacity))
 	src.set_dir(initial(T.dir))
 	src.layer = initial(T.layer)
 	src.invisibility = INVIS_NONE
@@ -1069,8 +1071,8 @@ proc/Create_Tommyname()
 /proc/trigger_anti_cheat(var/mob/M, var/message, var/external_alert = 1)
 	if(M)
 		message_admins("[key_name(M)] [message].")
-		logTheThing("admin", M, null, message)
-		logTheThing("diary", M, null, message, "admin")
+		logTheThing(LOG_ADMIN, M, message)
+		logTheThing(LOG_DIARY, M, message, "admin")
 
 		if(external_alert)
 			//IRCbot alert, for fun

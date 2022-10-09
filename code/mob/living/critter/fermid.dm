@@ -5,7 +5,7 @@
 /datum/limb/small_critter/fermid // can hold slightly larger things than base small critter
   max_wclass = W_CLASS_NORMAL
   actions = list("jabs", "prods", "pokes", "taps")
-  sound_attack = "sound/impact_sounds/Flesh_Stab_1.ogg"
+  sound_attack = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 /datum/limb/mouth/small/fermid
   dam_low = 1
@@ -83,11 +83,11 @@
   switch (act)
     if ("scream","hiss","chitter")
       if (src.emote_check(voluntary, 50))
-        playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<b>[src]</b> chitters!"
     if ("snap","clack","click","clak")
       if (src.emote_check(voluntary, 50))
-        playsound(src, "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<span class='alert'><b>[src]</b> claks!</span>"
   return null
 
@@ -156,11 +156,11 @@
   switch (act)
     if ("scream","hiss","chitter")
       if (src.emote_check(voluntary, 50))
-        playsound(src, "sound/voice/animal/bugchitter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<b>[src]</b> chitters!"
     if ("snap","clack","click","clak")
       if (src.emote_check(voluntary, 50))
-        playsound(src, "sound/items/Scissor.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+        playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
         return "<span class='alert'><b>[src]</b> claks!</span>"
   return null
 

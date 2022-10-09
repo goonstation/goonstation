@@ -42,6 +42,7 @@
 	var/artifact_resupply_amount = 0
 	/// an artifact crate is already "on the way"
 	var/artifacts_on_the_way = FALSE
+	var/static/launch_distance = 0
 
 	New()
 		..()
@@ -75,6 +76,18 @@
 
 		time_between_shifts = 4500 // 7.5 minutes base.
 		time_until_shift = time_between_shifts + rand(-1500,1500)
+
+		var/turf/spawnpoint
+		for(var/turf/T in get_area_turfs(/area/supply/spawn_point))
+			spawnpoint = T
+			break
+
+		var/turf/target
+		for(var/turf/T in get_area_turfs(/area/supply/delivery_point))
+			target = T
+			break
+
+		src.launch_distance = get_dist(spawnpoint, target)
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -419,7 +432,7 @@
 						for(var/datum/rc_itemreward/giftback in contract.item_rewarders)
 							var/reward = giftback.build_reward()
 							if(reward) sell_crate.contents += reward
-							else logTheThing("debug",null,null,"QM contract [contract.type] failed to build [giftback.type]")
+							else logTheThing(LOG_DEBUG, null, "QM contract [contract.type] failed to build [giftback.type]")
 					else if(success == REQ_RETURN_FULLSALE)
 						return_handling = RET_NOSENDBACK
 
@@ -482,11 +495,11 @@
 			break
 
 		if (!spawnpoint)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No spawn turfs found! Can't deliver crate")
 			return
 
 		if (!target)
-			logTheThing("debug", null, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
+			logTheThing(LOG_DEBUG, null, "<b>Shipping: </b> No target turfs found! Can't deliver crate")
 			return
 
 		shipped_thing.set_loc(spawnpoint)
@@ -499,7 +512,7 @@
 
 		for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 			if (P.id == "qm_dock")
-				playsound(P.loc, "sound/machines/bellalert.ogg", 50, 0)
+				playsound(P.loc, 'sound/machines/bellalert.ogg', 50, 0)
 				SPAWN(SUPPLY_OPEN_TIME)
 					if (P?.density)
 						P.open()
@@ -507,7 +520,7 @@
 					if (P && !P.density)
 						P.close()
 
-		shipped_thing.throw_at(target, 100, 1)
+		shipped_thing.throw_at(target, src.launch_distance, 1)
 
 	proc/get_path_to_market()
 		var/list/bounds = get_area_turfs(/area/supply/delivery_point)

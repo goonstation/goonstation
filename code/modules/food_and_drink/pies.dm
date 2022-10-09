@@ -1,4 +1,4 @@
-
+ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
@@ -45,25 +45,10 @@
 	icon_state = "limepie"
 	bites_left = 3
 	heal_amt = 4
-	var/has_key = 0
-	var/static/had_key = 0
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=15)
 
-	New()
-		..()
-		if (prob(6) && !had_key)
-			had_key = 1
-			src.has_key = 1
-		return
 
-	heal(var/mob/M)
-		..()
-		if (has_key)
-			src.has_key = 0
-			M.visible_message("<span class='alert'>[M] pulls a key out of [src]!</span>","<span class='alert'>You discover an iron key in [src]! Gross!</span>")
-			new /obj/item/device/key/haunted(get_turf(src))
-		return
 
 /obj/item/reagent_containers/food/snacks/pie/lemon
 	name = "lemon meringue pie"
@@ -123,7 +108,7 @@
 			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 				var/mob/M = hit_atom
 				if (M == thr.user)
 					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
@@ -184,7 +169,7 @@
 	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("sugar"=20,"hugs"=10)
-	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"

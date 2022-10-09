@@ -70,7 +70,6 @@ var/datum/score_tracker/score_tracker
 #ifdef CREW_OBJECTIVES
 				if (istype(objective, /datum/objective/crew)) continue
 #endif
-				if (istype(objective, /datum/objective/miscreant)) continue
 				if (!objective.check_completion())
 					traitor_objectives_failed++
 
@@ -426,7 +425,7 @@ var/datum/score_tracker/score_tracker
 	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
 
 	if (!score_tracker.tickets_text)
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
 
 		score_tracker.tickets_text = score_tracker.inspector_report
 
@@ -460,7 +459,7 @@ var/datum/score_tracker/score_tracker
 						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
 		else
 			score_tracker.tickets_text += "No fines were issued!<br><br>"
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
 
 	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
 	return

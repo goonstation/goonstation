@@ -7,9 +7,9 @@
 	requires_robes = 1
 	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/IceBurstGrim.ogg"
-	voice_fem = "sound/voice/wizard/IceBurstFem.ogg"
-	voice_other = "sound/voice/wizard/IceBurstLoud.ogg"
+	voice_grim = 'sound/voice/wizard/IceBurstGrim.ogg'
+	voice_fem = 'sound/voice/wizard/IceBurstFem.ogg'
+	voice_other = 'sound/voice/wizard/IceBurstLoud.ogg'
 	maptext_colors = list("#55eec2", "#62a5ee", "#3c6dc3", "#12135b", "#3c6dc3", "#62a5ee")
 
 	cast()
@@ -47,7 +47,7 @@
 				boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
 				continue
 
-			playsound(holder.owner.loc, "sound/effects/mag_iceburstlaunch.ogg", 25, 1, -1)
+			playsound(holder.owner.loc, 'sound/effects/mag_iceburstlaunch.ogg', 25, 1, -1)
 			if ((!holder.owner.wizard_spellpower(src) && count >= 1) || (count >= moblimit)) break
 			count++
 			SPAWN(0)
@@ -73,7 +73,7 @@
 					if (GET_DIST(A,M) == 0)
 						boutput(M, text("<span class='notice'>You are chilled by a burst of magical ice!</span>"))
 						M.visible_message("<span class='alert'>[M] is struck by magical ice!</span>")
-						playsound(holder.owner.loc, "sound/effects/mag_iceburstimpact.ogg", 25, 1, -1)
+						playsound(holder.owner.loc, 'sound/effects/mag_iceburstimpact.ogg', 25, 1, -1)
 						M.bodytemperature = 0
 						M.lastattacker = holder.owner
 						M.lastattackertime = world.time
@@ -116,8 +116,8 @@
 
 		src.health *= (rand(10,20)/10)
 
-		processing_items.Add(src)
-
+		for(var/mob/M in src)
+			src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, .proc/PassiveCool)
 
 	disposing()
 		processing_items.Remove(src)
@@ -126,6 +126,7 @@
 				var/mob/M = AM
 				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 				M.last_cubed = world.time
+				UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
 			AM.set_loc(src.loc)
 
 		if (steam_on_death)
@@ -161,11 +162,10 @@
 			src.pixel_x = 0
 			src.pixel_y = 0
 
-	proc/process()
-		for(var/mob/M in src)
-			if (M.bodytemperature > 0)
-				M.bodytemperature = max(M.bodytemperature-40,0)
-				takeDamage(1)
+	proc/PassiveCool(var/mob/M, mult)
+		if(M.bodytemperature >= 0)
+			M.bodytemperature = max(M.bodytemperature - (20 * mult),0)
+			takeDamage(1 * mult)
 
 	attack_hand(mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")

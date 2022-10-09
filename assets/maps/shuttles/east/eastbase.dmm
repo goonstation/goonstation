@@ -44,7 +44,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "aQ" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -75,8 +75,8 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "cd" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4
 	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
@@ -592,7 +592,7 @@
 	},
 /area/centcom/outside)
 "wT" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "xw" = (
@@ -700,6 +700,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 4
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -712,6 +713,7 @@
 	dir = 4;
 	name = "Secure Transport"
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},

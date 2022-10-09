@@ -17,7 +17,7 @@
 	stamina_crit_chance = 0
 	hitsound = 0
 
-	can_disarm = 1
+	can_disarm = 0
 	two_handed = 0
 
 	/// Potentially could be used for subtypes; set it to 1 so that the object occupies two hands when activated.

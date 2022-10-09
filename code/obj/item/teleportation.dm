@@ -304,7 +304,7 @@ Frequency:
 
 		user.visible_message("<span class='notice'>Portal opened.</span>")
 		SEND_SIGNAL(src, COMSIG_CELL_USE, src.power_cost)
-		logTheThing("station", user, null, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "creates a hand tele portal (<b>Destination:</b> [src.our_target ? "[log_loc(src.our_target)]" : "*random coordinates*"]) at [log_loc(user)].")
 
 		SPAWN(30 SECONDS)
 			if (P)

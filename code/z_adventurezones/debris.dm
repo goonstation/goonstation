@@ -19,7 +19,7 @@
 		var/obj/item/martianSeed/S = C
 		if(S)
 			S.plant(src)
-			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 	else
 		..()

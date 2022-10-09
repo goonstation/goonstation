@@ -132,9 +132,9 @@
 			var/obj/item/storage/S_temp = src.loc
 			var/datum/hud/storage/H_temp = S_temp.hud
 			H_temp.remove_object(src)
-		if(istype(src.loc, /obj/critter/snake))
+		if(istype(src.loc, /mob/living/critter/small_animal/snake))
 			var/atom/movable/snake = src
-			while(istype(snake.loc, /obj/critter/snake))
+			while(istype(snake.loc, /mob/living/critter/small_animal/snake))
 				snake = snake.loc
 			snake.set_loc(get_turf(M))
 			M.show_text("Staff snake summoned successfully. You can find it on the floor at your current location.", "blue")
@@ -187,7 +187,7 @@
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				JOB_XP(M, "Chaplain", 2)
 				return
 
@@ -348,7 +348,7 @@
 				T += "<b>[M.current.real_name]'s objectives:</b>"
 				var/i = 1
 				for (var/datum/objective/O in M.objectives)
-					if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+					if (istype(O, /datum/objective/crew))
 						continue
 					T += "<br>#[i]: [O.explanation_text]"
 					i++

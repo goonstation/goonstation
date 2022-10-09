@@ -56,7 +56,7 @@
 			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()
 
-		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/targetable/wrestler/kick/fake

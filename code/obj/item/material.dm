@@ -76,7 +76,7 @@
 				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, "sound/machines/chime.ogg", 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -86,7 +86,7 @@
 				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
-					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
+					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
 			return
@@ -323,7 +323,7 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				logTheThing(LOG_COMBAT, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
 				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -338,7 +338,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_COMBAT, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
 			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -608,8 +608,7 @@
 				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
 				step_on(H)
 			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-
+				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
 				if (H.mutantrace?.can_walk_on_shards)
 					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
@@ -910,7 +909,7 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
-		else if (W.cant_drop)
+		else if (W?.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 		else if (load_reclaim(W, user))

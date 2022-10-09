@@ -41,7 +41,7 @@
 			boutput(M, "<span class='alert'>[target] needs to be lying on the ground first.</span>")
 			return 1
 
-		logTheThing("combat", M, target, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "starts to maul [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_feast(target, src), M)
 		return 0
 
@@ -80,7 +80,7 @@
 
 			var/mob/living/carbon/human/H = target
 			//If they are at the decay or greater decomp stage, no eat
-			if (istype(H) && H.decomp_stage >= 2)
+			if (istype(H) && H.decomp_stage >= DECOMP_STAGE_DECAYED)
 				boutput(M, "<span class='alert'>Urgh, this cadaver tastes horrible. Better find some fresh meat.</span>")
 				return
 
@@ -104,7 +104,7 @@
 			ON_COOLDOWN(M, "ww feast", 2.5 SECONDS) // Enough time between attacks for them to happen 9 times
 			times_attacked += 1
 
-		if (HH.decomp_stage <= 2 && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
+		if (HH.decomp_stage <= DECOMP_STAGE_DECAYED && !(isnpcmonkey(HH)) && (times_attacked >= 7)) // Can't farm npc monkeys.
 			src.do_we_get_points = TRUE
 
 	onEnd()
