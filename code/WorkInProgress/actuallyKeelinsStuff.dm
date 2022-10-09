@@ -2868,7 +2868,7 @@ var/list/lag_list = new/list()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
-/obj/spook
+/obj/item/spook
 	var/active = 0
 	invisibility = INVIS_ALWAYS_ISH
 	anchored = 1
@@ -2892,7 +2892,8 @@ var/list/lag_list = new/list()
 		if(!active)
 			for(var/mob/living/L in hearers(world.view, src))
 				if(prob(20))
-					spook(L)
+					SPAWN(0)
+						spook(L)
 				break
 
 	proc/spook(var/mob/living/L)

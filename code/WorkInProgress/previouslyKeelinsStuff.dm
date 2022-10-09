@@ -329,7 +329,7 @@ var/reverse_mode = 0
 			new/obj/critter/spirit( get_turf(src) )
 
 		if (prob(3) && prob(50))
-			var/obj/o = new/obj/spook( get_turf(src) )
+			var/obj/o = new/obj/item/spook( get_turf(src) )
 			SPAWN(1 MINUTE)
 				qdel(o)
 
