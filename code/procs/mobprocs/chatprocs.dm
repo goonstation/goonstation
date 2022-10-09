@@ -1062,7 +1062,7 @@
 		if (istype(mob_speaking, /mob/living/intangible/flock/flockmind))
 			class += " flockmind"
 	else if(is_npc)
-		class +=" flocknpc"
+		class += " flocknpc"
 	else if(isnull(mob_speaking))
 		class += " bold italics"
 		name = "\[SYSTEM\]"
