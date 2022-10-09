@@ -629,7 +629,7 @@ TRAYS
 		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
 		if (istype(food, /obj/item/plate/))
-			src.plate_stacked = TRUE
+			src.plate_stacked = FALSE
 		else
 			src.foods_inside -= food
 

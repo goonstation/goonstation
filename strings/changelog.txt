@@ -1,6 +1,10 @@
 
 (t)sun oct 09 22
 (u)Mr. Moriarty
+(p)11277
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Oshan Armoury.
+(u)Mr. Moriarty
 (p)11192
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
 (+)Standardised the Cogmap2 Armoury.
