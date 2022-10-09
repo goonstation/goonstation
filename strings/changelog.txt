@@ -1,5 +1,9 @@
 
 (t)sat oct 08 22
+(u)ZeWaka
+(p)11223
+(e)🪲💡|C-Bug, A-Station-Systems
+(+)Quick-loading from crates into furnaces has been fixed.
 (u)LeahTheTech
 (p)11197
 (e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
