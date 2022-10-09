@@ -104,3 +104,6 @@
 			ui = new(user, src, "Freezer")
 			ui.set_autoupdate(TRUE)
 			ui.open()
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/W, mob/user)
+	return
