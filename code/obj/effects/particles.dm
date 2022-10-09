@@ -173,14 +173,28 @@
 	color = "#ffffff"
 	width = 200
 	height = 200
-	spawning = 20
-	count = 20
+	spawning = 10
+	count = 10
 	lifespan = 30
 	fade = 30
 	position = list(0, 0, 0)
 	velocity = generator("box", list(50,-0.5,0), list(40,0.5,0), UNIFORM_RAND)
 	friction = generator("num", 0.8, 0.4, UNIFORM_RAND)
 	drift = generator("box", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
-	scale = list(5, 5)
-	grow = generator("vector", list(1,1,0), list(0.2,0,0), UNIFORM_RAND)
+	scale = list(1, 1)
+	grow = generator("vector", list(0.1,0.1,0), list(0,0,0), UNIFORM_RAND)
 	fadein = 5
+
+/obj/effects/flintlock_smoke
+	plane = PLANE_NOSHADOW_ABOVE
+	particles = new/particles/flintlock_smoke
+
+	New()
+		..()
+		src.particles.spawning = 0
+
+	proc/on_fire()
+		src.particles.spawning = 20
+
+	proc/stop_fire()
+		src.particles.spawning = 0

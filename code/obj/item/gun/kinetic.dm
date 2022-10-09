@@ -1070,21 +1070,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_FLINTLOCK)
 	max_ammo_capacity = 1
 	default_magazine = /obj/item/ammo/bullets/flintlock/single
+	var/obj/effects/flintlock_smoke/smoke
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
+		smoke = new
+		src.vis_contents += smoke
 		..()
 
 	shoot()
 		SPAWN(0.3 SECONDS)
 			..()
-
-	shoot(var/target, var/start, var/mob/user)
-		..()
-
-	shoot_point_blank(atom/target, var/mob/user, second_shot)
-		..()
+		smoke.on_fire()
+		SPAWN(0.5 SECONDS)
+		smoke.stop_fire()
 
 /obj/item/gun/kinetic/single_action/flintlock_rifle
 	name = "flintlock rifle"
