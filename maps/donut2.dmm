@@ -10135,7 +10135,7 @@
 	},
 /area/station/hallway/primary/north)
 "aKm" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aKo" = (
@@ -41541,7 +41541,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "qdU" = (
@@ -43200,7 +43200,7 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "rrM" = (
-/obj/spook,
+/obj/item/spook,
 /obj/cable{
 	icon_state = "1-8"
 	},

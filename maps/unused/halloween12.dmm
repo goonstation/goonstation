@@ -9811,7 +9811,7 @@
 /area/station/crew_quarters/quarters)
 "atm" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/crate,
 /obj/item/clothing/under/gimmick/princess,
@@ -27378,7 +27378,7 @@
 /area/station/crew_quarters/juryroom)
 "bcc" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/juryroom)
@@ -27714,7 +27714,7 @@
 "bcM" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -31175,7 +31175,7 @@
 	},
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/radio/signaler{
 	pixel_x = 2;
@@ -41910,7 +41910,7 @@
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
 "bIZ" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
 "bJa" = (
@@ -42884,7 +42884,7 @@
 	sd_ColorGreen = 0.3;
 	tag = "icon-bulb1 (EAST)"
 	},
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -46267,7 +46267,7 @@
 /turf/simulated/floor/grime,
 /area/evilreaver)
 "bTl" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
@@ -56676,7 +56676,7 @@
 /turf/simulated/floor/white,
 /area/crunch)
 "cqd" = (
-/obj/spook,
+/obj/item/spook,
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
 	},
@@ -57258,7 +57258,7 @@
 	pixel_y = 8
 	},
 /obj/decal/cleanable/blood/splatter,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/carpet,
 /area/crunch)
 "rqv" = (
@@ -57289,14 +57289,14 @@
 	opacity = 1;
 	tag = "icon-body2"
 	},
-/obj/spook,
+/obj/item/spook,
 /obj/effect_sparker,
 /turf/simulated/floor/grime,
 /area/evilreaver)
 "vNG" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/white,
 /area/crunch)
 "wdb" = (

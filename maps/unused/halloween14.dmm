@@ -15433,7 +15433,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aFo" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "aFp" = (
@@ -17112,7 +17112,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aID" = (
@@ -36358,7 +36358,7 @@
 	d1 = 1;
 	d2 = 2
 	},
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "buV" = (
@@ -68113,7 +68113,7 @@
 	pixel_y = 8
 	},
 /obj/decal/cleanable/blood/splatter,
-/obj/spook,
+/obj/item/spook,
 /obj/window/cubicle{
 	tag = "icon-cubicle";
 	icon_state = "cubicle";
@@ -71947,7 +71947,7 @@
 /turf/simulated/floor/white,
 /area/crunch)
 "cSt" = (
-/obj/spook,
+/obj/item/spook,
 /obj/decal/fakeobjects/apc_broken{
 	pixel_y = 24
 	},
@@ -73348,7 +73348,7 @@
 "cVM" = (
 /obj/decal/cleanable/blood/splatter,
 /obj/decal/fakeobjects/skeleton,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/white,
 /area/crunch)
 "cVN" = (
@@ -83550,7 +83550,7 @@
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
 "dsI" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/grime,
 /area/evilreaver/security)
 "dsJ" = (
@@ -84585,7 +84585,7 @@
 	sd_ColorGreen = 0.3;
 	tag = "icon-bulb1 (EAST)"
 	},
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -85409,7 +85409,7 @@
 	opacity = 1;
 	tag = "icon-body2"
 	},
-/obj/spook,
+/obj/item/spook,
 /obj/effect_sparker,
 /turf/simulated/floor/grime,
 /area/evilreaver)
@@ -88106,7 +88106,7 @@
 /turf/simulated/floor/grime,
 /area/evilreaver)
 "dCU" = (
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/chapel{
 	dir = 8
 	},
