@@ -110,7 +110,7 @@
 			if ("set_fuel_inlet")
 				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
 
-				if (!set_to)
+				if (isnull(set_to))
 					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
 					return
 
@@ -120,7 +120,7 @@
 			if ("set_air_inlet")
 				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
 
-				if (!set_to)
+				if (isnull(set_to))
 					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
 					return
 
@@ -246,7 +246,7 @@
 		// Add checks after input
 		else if (href_list["fuel_inlet"])
 			var/change_by = text2num_safe(href_list["fuel_inlet"])
-			if (!change_by)
+			if (isnull(change_by))
 				return
 
 			var/change_to = src.fuel_inlet + change_by
@@ -254,7 +254,7 @@
 
 		else if (href_list["air_inlet"])
 			var/change_by = text2num_safe(href_list["air_inlet"])
-			if (!change_by)
+			if (isnull(change_by))
 				return
 
 			var/change_to = src.atmos_inlet + change_by
@@ -349,27 +349,27 @@
 		if (!src.last_oxygen || !src.last_fuel || !src.fuel_inlet || !src.atmos_inlet)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src]'s engine fails to run, it has nothing to combust!</span>")
-			src.post_status(null, "command", "error", "data", "COMBUSTION_FAILURE", multicase = 1)
+			src.post_status(null, "command", "error", "data", "COMBUSTION_FAILURE", multicast = 1)
 			return
 
 		if (!src.anchored)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src] makes a horrible racket and shuts down, it has become unanchored!</span>")
-			src.post_status(null, "command", "error", "data", "UNANCHORED", multicase = 1)
+			src.post_status(null, "command", "error", "data", "UNANCHORED", multicast = 1)
 			return
 
 		var/fuel_air_mix = (src.atmos_inlet / src.fuel_inlet) // difference between current mix and optimal mix.
 		if (fuel_air_mix < 8 || fuel_air_mix > 20) // too much or too little air or fuel
 			src.stop_engine()
 			src.visible_message("<span class='alert'>The [src] sputters for a moment and then stops, it failed to combust the reagents.</span>")
-			src.post_status(null, "command", "error", "data", "INVALID_MIX", multicase = 1)
+			src.post_status(null, "command", "error", "data", "INVALID_MIX", multicast = 1)
 			return
 
 		var/obj/cable/C = src.get_output_cable()
 		if (!C)
 			src.stop_engine()
 			src.visible_message("<span class='alert'>Electricity begins to arc off the [src] causing it to shutdown, it has nothing to output to!</span>")
-			src.post_status(null, "command", "error", "data", "NO_POWER_OUTLET", multicase = 1)
+			src.post_status(null, "command", "error", "data", "NO_POWER_OUTLET", multicast = 1)
 			elecflash(src.loc, 0, power = 3, exclude_center = 0)
 			return
 
