@@ -1,5 +1,9 @@
 
 (t)sat oct 08 22
+(u)Bartimeus
+(p)11195
+(e)🆕⚖🧛‍♂️|C-Feature, C-Balance, A-Gamemodes
+(+)Trickster wraiths now have access to a slippery trap.
 (u)Waffleloffle
 (p)11233
 (e)💅📦|C-QoL, A-Game-Objects
