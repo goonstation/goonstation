@@ -156,6 +156,12 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 	density = 1
 */
 
+/obj/decal/nav_danger
+	name = "DANGER"
+	desc = "This navigational marker indicates a hazardous zone of space."
+	icon = 'icons/obj/decals/misc.dmi'
+	icon_state = "mule_dropoff"
+
 obj/decal/fakeobjects
 	layer = OBJ_LAYER
 	plane = PLANE_DEFAULT
