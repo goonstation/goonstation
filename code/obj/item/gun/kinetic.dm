@@ -221,9 +221,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
-		..()
+		. = ..()
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(var/target, var/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
 		if (src.canshoot() && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
@@ -245,7 +245,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				flick(flick_state, src)
 
-		..()
+		. = ..()
 
 	proc/ejectcasings()
 		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
@@ -293,8 +293,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			return FALSE
 
-	shoot(var/target, var/start, var/mob/user)
-		..()
+	shoot(var/target, var/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
 
@@ -1070,23 +1070,25 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_FLINTLOCK)
 	max_ammo_capacity = 1
 	default_magazine = /obj/item/ammo/bullets/flintlock/single
-	var/obj/effects/flintlock_smoke/smoke
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
-		smoke = new
-		src.vis_contents += smoke
 		..()
 
-	shoot()
-		SPAWN(0.3 SECONDS)
-			..()
-		smoke.on_fire()
-		SPAWN(0.5 SECONDS)
-		smoke.stop_fire()
+	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+		sleep(0.3)
+		. = ..()
+		if (.)
+			var/obj/effects/flintlock_smoke/E = new /obj/effects/flintlock_smoke(get_turf(src))
+			var/dir_x = target.x + POX/32 - start.x - POY/32
+			var/dir_y = target.y - start.y
+			var/len = vector_magnitude(dir_x, dir_y)
+			dir_x /= len
+			dir_y /= len
+			E.setdir(dir_x, dir_y)
 
-/obj/item/gun/kinetic/single_action/flintlock_rifle
+/obj/item/gun/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
 	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon = 'icons/obj/large/64x32.dmi'
@@ -1104,13 +1106,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
 
 	New()
-		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 		..()
-
-	shoot()
-		SPAWN(0.3 SECONDS)
-			..()
 
 //0.72
 /obj/item/gun/kinetic/spes

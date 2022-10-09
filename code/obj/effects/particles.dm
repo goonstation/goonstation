@@ -168,22 +168,22 @@
 	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
 
 /particles/flintlock_smoke
-	icon = 'icons/effects/particles.dmi'
-	icon_state = list("8x8square")
+	icon = 'icons/effects/64x64.dmi'
+	icon_state = "smoke"
 	color = "#ffffff"
 	width = 200
 	height = 200
 	spawning = 10
-	count = 10
+	count = 20
 	lifespan = 30
 	fade = 30
 	position = list(0, 0, 0)
-	velocity = generator("box", list(50,-0.5,0), list(40,0.5,0), UNIFORM_RAND)
 	friction = generator("num", 0.8, 0.4, UNIFORM_RAND)
 	drift = generator("box", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
 	scale = list(1, 1)
 	grow = generator("vector", list(0.1,0.1,0), list(0,0,0), UNIFORM_RAND)
 	fadein = 5
+	spawning = 20
 
 /obj/effects/flintlock_smoke
 	plane = PLANE_NOSHADOW_ABOVE
@@ -191,10 +191,11 @@
 
 	New()
 		..()
-		src.particles.spawning = 0
+		SPAWN(0.5 SECONDS)
+			src.particles.spawning = 0
+			sleep(src.particles.lifespan)
+			qdel(src)
 
-	proc/on_fire()
-		src.particles.spawning = 20
-
-	proc/stop_fire()
-		src.particles.spawning = 0
+	// takes x and y of a normalized vector to set direction of smoke
+	proc/setdir(var/dir_x, var/dir_y)
+		particles.velocity = generator("box", list(50*dir_x - 0.5, 50*dir_y - 0.5, 0), list(40*dir_x + 0.5, 40*dir_y + 0.5, 0), UNIFORM_RAND)
