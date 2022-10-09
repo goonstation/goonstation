@@ -89,6 +89,7 @@ Pipelines + Other Objects -> Pipe network
 	if(isweldingtool(W) && user.a_intent == INTENT_HARM)
 		if(!W:try_weld(user, 2, noisy=2))
 			return
-		itemify()
+		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/proc/itemify, list(), src.icon, src.icon_state, \
+			"<span class='notice'>[user] repairs the [src.name].</span>", INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION)
 
 
