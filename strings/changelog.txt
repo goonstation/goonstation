@@ -1,5 +1,9 @@
 
 (t)sat oct 08 22
+(u)Waffleloffle
+(p)11233
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Renamed the red space suit to the syndicate space suit.
 (u)ZeWaka
 (p)11223
 (e)🪲💡|C-Bug, A-Station-Systems
