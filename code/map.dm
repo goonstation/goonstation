@@ -943,8 +943,8 @@ var/global/list/mapNames = list(
 		"outside the Ringularity" = list(/area/station/engine/inner),
 		"the courtroom" = list(/area/station/storage/warehouse),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
-		"the security lobby" = list(/area/station/chapel/sanctuary),
-		"the chapel" = list(/area/station/security/secwing),
+		"the security lobby" = list(/area/station/security/secwing),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
 /datum/map_settings/pod_wars
