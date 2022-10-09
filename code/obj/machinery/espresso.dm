@@ -84,43 +84,31 @@
 					if ("Espresso")
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso",10)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Latte") // 5:1 milk:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 1.6)
 							C.reagents.add_reagent("milk", 8.4)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Mocha") // 3:1:3 espresso:milk:chocolate
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 4.3)
 							C.reagents.add_reagent("milk", 1.4)
 							C.reagents.add_reagent("chocolate", 4.3)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Cappuchino") // 1:1:1 milk foam:milk:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 3.5)
 							C.reagents.add_reagent("milk", 6.5)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Americano") // 3:2 water:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 4)
 							C.reagents.add_reagent("water", 6)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Decaf") // 1 decaf espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("decafespresso", 10)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
-						return
 					if ("Flat White") // 3:2 milk:espresso
 						for(var/obj/item/reagent_containers/food/drinks/espressocup/C in src.contents)
 							C.reagents.add_reagent("espresso", 4)
 							C.reagents.add_reagent("milk", 6)
-							playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+				playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
@@ -131,7 +119,7 @@
 				src.cupsinside += 1
 				user.drop_item()
 				W.set_loc(src)
-				user.show_text ("You place the [src.cup_name] into the [src].")
+				user.show_text ("You place the [src.cup_name] into [src].")
 				src.update()
 				tgui_process.update_uis(src)
 				return ..()
