@@ -1,5 +1,9 @@
 
 (t)sat oct 08 22
+(u)Ikea
+(p)11231
+(e)🆕📦|C-Feature, A-Game-Objects
+(+)Pods now require some plasma in the fuel tank in order for the engine to run.
 (u)112358sam
 (p)11258
 (e)🪲🗺|C-Bug, A-Mapping
