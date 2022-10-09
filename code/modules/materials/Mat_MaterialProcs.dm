@@ -415,7 +415,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(molitz.iterations >= 1)
 				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
-			if(molitz.iterations = 0)
+			if(molitz.iterations == 0)
 				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
