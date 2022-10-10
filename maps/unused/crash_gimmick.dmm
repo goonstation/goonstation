@@ -18332,6 +18332,7 @@
 /area/built_zone)
 "ciS" = (
 /obj/machinery/manufacturer/general{
+	free_resource_amt = 999;
 	mats = 999
 	},
 /turf/simulated/floor/plating/random{
@@ -18348,6 +18349,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
+	free_resource_amt = 999;
 	mats = 999
 	},
 /obj/machinery/camera{
