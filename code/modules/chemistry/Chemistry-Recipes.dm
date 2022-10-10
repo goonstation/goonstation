@@ -1633,7 +1633,7 @@ datum
 
 		cocktail_grasshopper/grasshopper2
 			id = "grasshopper2"
-			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla " = 1)
+			required_reagents = list("mint" = 1, "vodka" = 1, "sugar" = 1, "chocolate" = 1, "vanilla" = 1)
 			result_amount = 5
 
 		cocktail_freeze
