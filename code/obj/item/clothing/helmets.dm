@@ -671,6 +671,10 @@
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
 
+	show_buttons()	//Hide the button from non-human mobs
+		if (ishuman(the_mob))
+			..()
+
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
 		user.updateOverlaysClient(user.client)
