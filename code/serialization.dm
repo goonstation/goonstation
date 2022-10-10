@@ -18,13 +18,13 @@
 	var/icon/icon
 	var/icon_state
 
-/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState)
+/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState, var/dont_load_existing_file = 0)
 	var/iname
 	var/datum/iconDeserializerData/IDS = new()
 	IDS.icon = defaultIcon
 	IDS.icon_state = defaultState
 	F["[path].icon"] >> iname
-	if (!fexists(iname))
+	if (dont_load_existing_file || !fexists(iname))
 		if ("[defaultIcon]" == iname) // fuck off byond fuck you
 			F["[path].icon_state"] >> IDS.icon_state
 		else

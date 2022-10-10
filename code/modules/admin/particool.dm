@@ -186,6 +186,16 @@ var/list/master_particle_info = list()
 		if("remove_particle")
 			target.remove_particle()
 			. = TRUE
+		if("load_particle")
+			target.add_particle() // starting from a clean slate
+			target.particles.particleset_deserialize_dialog()
+			. = TRUE
+		if("save_particle")
+			target.particles.particleset_serialize_dialog(dont_serialize_icon = 1)
+			. = TRUE
+		if("save_particle_with_icon")
+			target.particles.particleset_serialize_dialog(dont_serialize_icon = 0)
+			. = TRUE
 		if("modify_particle_value")
 			target.modify_particle_value(params["new_data"]["name"], translate_value(params["new_data"]))
 			. = TRUE
