@@ -1365,6 +1365,11 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/art_workshop
 	name = "The Pastel Space Workshop"
 	icon_state = "purple"
+
+/area/prefab/adrift_cargorouter
+	name = "Adrift Cargo Router"
+	icon_state = "yellow"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room

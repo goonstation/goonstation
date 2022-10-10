@@ -250,6 +250,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_artist_studio.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 18
+
+	adrift_cargorouter
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_adrift_cargo_router.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 16
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
