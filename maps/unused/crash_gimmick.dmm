@@ -18331,7 +18331,7 @@
 	},
 /area/built_zone)
 "ciS" = (
-/obj/machinery/manufacturer{
+/obj/machinery/manufacturer/general{
 	mats = 999
 	},
 /turf/simulated/floor/plating/random{
@@ -21911,12 +21911,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"cvE" = (
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "cvS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22278,9 +22272,6 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "Main Hallway"
 	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random{
@@ -38819,15 +38810,6 @@
 	name = "steel plating"
 	},
 /area/built_zone)
-"dHA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "dHP" = (
 /obj/cable{
 	d2 = 8;
@@ -38837,7 +38819,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "dIo" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor{
@@ -39317,7 +39299,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "dVS" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44738,7 +44720,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "gQW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44819,13 +44801,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"gRT" = (
-/obj/machinery/light/small/floor/harsh/very,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "gSd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -66253,7 +66228,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "rnw" = (
 /obj/landmark/start{
 	name = "Engineer"
@@ -67485,7 +67460,7 @@
 "rQU" = (
 /obj/decal/poster/wallsign/warning1,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/built_zone)
 "rRl" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -77663,7 +77638,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "xMs" = (
 /turf/simulated/wall/auto/asteroid/lighted{
 	color = "#d1e6ff";
@@ -131951,7 +131926,7 @@ dGb
 kHC
 kHC
 dGb
-dHA
+dHb
 dGb
 dGb
 dGb
@@ -132545,9 +132520,9 @@ dGb
 dFl
 dGb
 rQU
-boR
-boR
-boR
+wVX
+wVX
+wVX
 rQU
 dGb
 dGb
@@ -132846,11 +132821,11 @@ dGb
 dGb
 dFl
 dGb
-boR
+wVX
 gQS
-cvE
+cue
 gQS
-boR
+wVX
 dGb
 dGb
 wVX
@@ -133148,10 +133123,10 @@ dGb
 dGb
 dFl
 dGb
-boR
+wVX
 xMr
-gRT
-cvE
+rNv
+cue
 rmW
 dGb
 dGb
@@ -133450,11 +133425,11 @@ dGb
 dGb
 dGb
 dGb
-boR
+wVX
 gQS
-cvE
+cue
 gQS
-boR
+wVX
 dGb
 dGb
 wVX
@@ -133753,9 +133728,9 @@ dGb
 dGb
 dGb
 rQU
-boR
-boR
-boR
+wVX
+wVX
+wVX
 rQU
 dGb
 dGb
@@ -134365,7 +134340,7 @@ dGb
 dGb
 dGl
 dGb
-dHA
+dHb
 dGb
 dGb
 dGb
