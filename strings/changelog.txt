@@ -4,7 +4,6 @@
 (p)11229
 (e)🆕|C-Feature
 (*)Most tree mutations now require reagent infusions.
-(*)Rubber items now melt into liquid rubber above 180C.
 (t)sun oct 09 22
 (u)aloe
 (*) You can now use the 'analyze' button on the ChemMaster to view the recipes of (non-secret) reagents.

@@ -266,7 +266,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/paper)
 			if ("wolfsbane")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/dog)
-			if ("rubber")
+			if ("glue")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/rubber)
 
 

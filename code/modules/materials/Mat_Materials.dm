@@ -1460,7 +1460,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		. = ..()
 		material_flags |= MATERIAL_RUBBER
 		setProperty("electrical", 3)
-		addTrigger(triggersTemp, new /datum/materialProc/rubber_temp())
 
 /datum/material/rubber/latex
 	mat_id = "latex"
