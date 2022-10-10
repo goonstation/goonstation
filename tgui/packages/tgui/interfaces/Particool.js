@@ -646,7 +646,8 @@ export const Particool = (props, context) => {
           }
           buttons={
             <>
-              { !!hasParticles && <>
+              { !!hasParticles
+              && <>
                 <Button
                   icon="save"
                   content="Save Particle"
