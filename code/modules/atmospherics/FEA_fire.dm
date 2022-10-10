@@ -188,6 +188,10 @@
 #endif
 	set_loc() // hotspots apparently start somewhere wacky
 		..()
+		src.update_overlay_blocking()
+		src.update_perspective_overlays()
+
+	proc/update_overlay_blocking()
 		for (var/dir in cardinal) // borrowed from fluids and heavily modified
 			var/turf/t = get_step( src, dir )
 			blocked_perspective_objects["[dir]"] = 0
@@ -201,8 +205,6 @@
 						if (IS_PERSPECTIVE_BLOCK(thing))
 							blocked_perspective_objects["[dir]"] = 1
 						break
-		src.update_perspective_overlays()
-
 	proc/perform_exposure()
 		var/turf/simulated/floor/location = loc
 		if(!istype(location))
@@ -289,6 +291,8 @@
 				for(var/turf/simulated/possible_target in possible_spread)
 					if(!possible_target.active_hotspot)
 						possible_target.hotspot_expose(radiated_temperature, CELL_VOLUME/4)
+						src.update_overlay_blocking()
+						src.update_perspective_overlays()
 
 		else
 			if (volume > (CELL_VOLUME * 0.4))
