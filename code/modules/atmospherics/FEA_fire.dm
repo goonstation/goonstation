@@ -188,14 +188,20 @@
 #endif
 	set_loc() // hotspots apparently start somewhere wacky
 		..()
-		for (var/dir in cardinal) // borrowed from fluids
+		for (var/dir in cardinal) // borrowed from fluids and heavily modified
 			var/turf/t = get_step( src, dir )
+			blocked_perspective_objects["[dir]"] = 0
 			if (!t) //the fuck? how
 				continue
 			if (IS_PERSPECTIVE_WALL(t))
 				blocked_perspective_objects["[dir]"] = 1
 			else
-				blocked_perspective_objects["[dir]"] = 0
+				for (var/obj/thing in t.contents)
+					if( thing.density || (thing.flags & FLUID_DENSE) )
+						if (IS_PERSPECTIVE_BLOCK(thing))
+							blocked_perspective_objects["[dir]"] = 1
+						break
+		src.update_perspective_overlays()
 
 	proc/perform_exposure()
 		var/turf/simulated/floor/location = loc
