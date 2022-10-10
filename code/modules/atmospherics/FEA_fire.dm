@@ -98,6 +98,8 @@
 	var/bypassing = 0
 	var/catalyst_active = FALSE
 
+	var/list/wall_overlay_images = list()
+	var/list/blocked_perspective_objects = list()
 	New()
 		..()
 		START_TRACKING
@@ -108,7 +110,6 @@
 		light.attach(src)
 		// note: light is left disabled until the color is set
 #endif
-
 	disposing()
 		STOP_TRACKING
 #ifndef HOTSPOT_MEDIUM_LIGHTS
@@ -185,6 +186,16 @@
 #else
 			add_medium_light("hotspot", list(red, green, blue, 100))
 #endif
+	set_loc() // hotspots apparently start somewhere wacky
+		..()
+		for (var/dir in cardinal) // borrowed from fluids
+			var/turf/t = get_step( src, dir )
+			if (!t) //the fuck? how
+				continue
+			if (IS_PERSPECTIVE_WALL(t))
+				blocked_perspective_objects["[dir]"] = 1
+			else
+				blocked_perspective_objects["[dir]"] = 0
 
 	proc/perform_exposure()
 		var/turf/simulated/floor/location = loc
@@ -260,10 +271,10 @@
 
 		if (catalyst_active) catalyst_active = FALSE
 		if (location.wet) location.wet = 0
-
 		if (bypassing)
 			icon_state = "3"
 			location.burn_tile()
+			src.update_perspective_overlays()
 
 			//Possible spread due to radiated heat
 			if(location.air.temperature > FIRE_MINIMUM_TEMPERATURE_TO_SPREAD)
@@ -276,10 +287,66 @@
 		else
 			if (volume > (CELL_VOLUME * 0.4))
 				icon_state = "2"
+				src.update_perspective_overlays()
 			else
 				icon_state = "1"
+				src.update_perspective_overlays()
 
 		return 1
+
+	// these 3 procs were borrowed from fluids and tweaked a bit
+	proc/display_overlay(var/overlay_key, var/pox, var/poy)
+		var/image/overlay = 0
+		if (!wall_overlay_images)
+			wall_overlay_images = list()
+
+		if (wall_overlay_images[overlay_key])
+			overlay = wall_overlay_images[overlay_key]
+		else
+			overlay = image('icons/effects/fire.dmi', "blank")
+
+		var/over_obj = !(istype(src.loc, /turf/simulated/wall) || istype(src.loc,/turf/unsimulated/wall/)) //HEY HEY MBC THIS SMELLS THINK ABOUT IT LATER
+		overlay.layer = over_obj ? 4 : src.layer
+		overlay.icon_state = "wall_[overlay_key]_[icon_state]"
+		overlay.pixel_x = pox
+		overlay.pixel_y = poy
+		wall_overlay_images[overlay_key] = overlay
+
+		src.UpdateOverlays(overlay, overlay_key)
+
+	proc/clear_overlay(var/key = 0)
+		if (!key)
+			src.ClearAllOverlays()
+		else if(key && wall_overlay_images && wall_overlay_images[key])
+			src.ClearSpecificOverlays(key)
+
+	proc/update_perspective_overlays() // fancy perspective overlaying
+		var/blocked = 0
+		for( var/dir in cardinal )
+			if (dir == SOUTH) //No south perspective
+				continue
+
+			if (blocked_perspective_objects["[dir]"])
+				blocked = 1
+				if (dir == NORTH)
+					display_overlay("[dir]",0,32)
+				else
+					display_overlay("[dir]",(dir == EAST) ? 32 : -32,0)
+			else
+				clear_overlay("[dir]")
+
+		if (!blocked) //Nothing adjacent!
+			clear_overlay()
+
+		if (src.overlay_refs && length(src.overlay_refs))
+			if (src.overlay_refs["1"] && src.overlay_refs["8"]) //north, east
+				display_overlay("9",-32,32) //northeast
+			else
+				clear_overlay("9")  //northeast
+			if (src.overlay_refs["1"] && src.overlay_refs["4"]) //north, west
+				display_overlay("5",32,32) //northwest
+			else
+				clear_overlay("5") //northwest
 
 	ex_act()
 		return
