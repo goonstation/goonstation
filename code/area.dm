@@ -3300,6 +3300,15 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	luminosity = 1
 
+// Salvager Spawn
+/area/salvager
+	name = "Salvager Vessel Magpie"
+	icon_state = "red"
+	sanctuary = 1
+
+/area/salvager/lower
+	icon_state = "orange"
+
 /// Nukeops spawn station
 /area/syndicate_station
 	name = "Syndicate Station"
