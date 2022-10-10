@@ -680,3 +680,14 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				return
 
 
+/datum/materialProc/rubber_temp
+	execute(var/atom/location, var/temp)
+		if (istype(owner.owner, /obj/cable) || istype(owner.owner, /obj/item/cable_coil) || isturf(owner.owner)) //let's just not deal with that
+			return
+		if (temp >= T0C + 180) //wikipedia told me rubber melts at 180C
+			var/datum/reagents/temp_reagents = new(10)
+			temp_reagents.add_reagent("rubber", 10)
+			temp_reagents.set_reagent_temp(temp)
+			temp_reagents.reaction(get_turf(owner.owner))
+			qdel(temp_reagents)
+			qdel(owner.owner)
