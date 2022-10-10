@@ -1,5 +1,20 @@
 
+(t)mon oct 10 22
+(u)Mr. Moriarty
+(p)11285
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Expanded and standardised the Destiny Armoury.
+(u)Zelda4040404
+(p)11201
+(e)🗺|A-Mapping
+(+)Added a new space prefab, an adrift cargo router.
+(u)LeahTheTech
+(p)11229
+(e)🆕|C-Feature
+(*)Most tree mutations now require reagent infusions.
 (t)sun oct 09 22
+(u)aloe
+(*) You can now use the 'analyze' button on the ChemMaster to view the recipes of (non-secret) reagents.
 (u)Mr. Moriarty
 (p)11277
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL

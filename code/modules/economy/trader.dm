@@ -336,10 +336,9 @@
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
 					if(account)
-						account["current_money"] += tradetype.price * src.sellitem.amount
+						account["current_money"] += sold_item(tradetype, sellitem) * src.sellitem.amount
 					else
-						barter_customers[usr]  += tradetype.price * src.sellitem.amount
-					sold_item(tradetype, sellitem)
+						barter_customers[usr]  += sold_item(tradetype, sellitem) * src.sellitem.amount
 					qdel (src.sellitem)
 					src.sellitem = null
 					src.add_fingerprint(usr)
@@ -531,7 +530,7 @@
 	////// special handling for selling an item ///
 	///////////////////////////////////////////////
 	proc/sold_item(datum/commodity/C, obj/S)
-		return
+		. = C.price
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
@@ -578,8 +577,7 @@
 				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += tradetype.price * sellitem.amount
-						sold_item(tradetype, sellitem)
+						cratevalue += sold_item(tradetype, sellitem) * sellitem.amount
 						qdel(sellitem)
 				if(cratevalue)
 					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
