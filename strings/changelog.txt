@@ -1,5 +1,11 @@
 
 (t)mon oct 10 22
+(u)DrWolfy
+(p)11266
+(e)🆕🎨💅📄🤖🍝|C-Feature, C-Sprites, C-QoL, A-UI, A-Silicons, A-Catering
+(*)Add some features to the espresso machine and given it a TGUI.
+(+)Two cups can be put in the espresso machine and filled at the same time.
+(+)The espresso cups can now be dragged into the machine for silicon usage.
 (u)Mr. Moriarty
 (p)11285
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
