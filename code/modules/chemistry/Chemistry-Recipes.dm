@@ -350,7 +350,7 @@ datum
 			//required_temperature = T0C + 400 // commenting out for now so you can actually make this, maybe
 			result_amount = 12
 			mix_phrase = "The mixture reduces into a fine crystalline powder and an unbelievably delicious smell wafts upwards."
-			hiden = TRUE
+			hidden = TRUE
 
 /*		argine
 			name = "Argine"
@@ -1060,7 +1060,7 @@ datum
 			mix_phrase = "The substance mixes together, emitting a rank piratey odor and seemingly dissolving some of the container..."
 			mix_sound = 'sound/misc/drinkfizz.ogg'
 			drinkrecipe = 1
-			secret = TRUE
+			hidden = TRUE
 
 		cocktail_beepskybeer
 			name = "Beepskybräu Security Schwarzbier"
