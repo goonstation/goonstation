@@ -830,9 +830,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
-	if(src.material)
-		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
+		if(src.material)
+			src.material.triggerTemp(src ,1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
