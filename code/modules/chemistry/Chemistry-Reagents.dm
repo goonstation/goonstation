@@ -344,7 +344,7 @@ datum
 			for (var/datum/chemical_reaction/recipe in chem_reactions_by_result[src.id])
 				. += "<b>Recipe for [recipe.result_amount] unit[recipe.result_amount > 1 ? "s": ""] of [reagents_cache[recipe.result] || "NULL"]:</b>"
 				if (recipe.hidden && !allow_secret)
-					. += "<br>&emsp;<b>\[RECIPE REDACTED\]"
+					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
 				else
 					if (recipe.required_temperature != -1)
 						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
