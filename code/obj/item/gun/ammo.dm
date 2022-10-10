@@ -693,18 +693,6 @@
 		amount_left = 1
 		max_amount = 1
 
-/obj/item/ammo/bullets/flintlock/rifle
-	sname = ".75 Flintlock"
-	name = ".75 flintlock pouch"
-	desc = "A small pouch containing .75 lead balls for flintlock rifles."
-	ammo_type = new/datum/projectile/bullet/flintlock/rifle
-	icon_state = "flintlock_rifle_ammo_pouch"
-	ammo_cat = AMMO_FLINTLOCK_RIFLE
-
-	single
-		amount_left = 1
-		max_amount = 1
-
 //0.72
 /obj/item/ammo/bullets/a12
 	sname = "12ga Buckshot"
@@ -826,6 +814,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_LOW
 	icon_dynamic = 0
 	icon_empty = "flare-0"
+
+	single
+		amount_left = 1
+		max_amount = 1
+
+//0.75
+/obj/item/ammo/bullets/flintlock/rifle
+	sname = ".75 Flintlock"
+	name = ".75 flintlock pouch"
+	desc = "A small pouch containing .75 lead balls for flintlock rifles."
+	ammo_type = new/datum/projectile/bullet/flintlock/rifle
+	icon_state = "flintlock_rifle_ammo_pouch"
+	ammo_cat = AMMO_FLINTLOCK_RIFLE
 
 	single
 		amount_left = 1
