@@ -62,6 +62,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 20
 	health_burn_vuln = 1
 
+	//Brain slug stuff in case we are infested
+	var/mob/living/critter/brain_slug/slug = null
+
 	var/fur_color = 0
 	var/eye_color = 0
 
