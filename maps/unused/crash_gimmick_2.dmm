@@ -59,6 +59,7 @@
 /area/space)
 "cm" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "cN" = (
@@ -132,6 +133,7 @@
 /area/shuttle/arrival/station)
 "gL" = (
 /obj/machinery/lawrack,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "hB" = (
@@ -260,6 +262,12 @@
 /area/space)
 "lA" = (
 /obj/storage/closet/emergency,
+/obj/machinery/light/small/floor/harsh/very,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"lE" = (
+/obj/landmark/start/latejoin,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "lR" = (
@@ -278,6 +286,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "mg" = (
@@ -524,11 +533,16 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
+"vv" = (
+/obj/machinery/light/small/floor/harsh/very,
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "vM" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	icon_state = "manifold";
 	level = 2
 	},
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "vZ" = (
@@ -579,12 +593,23 @@
 /obj/item/fuel_pellet/cerenkite,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/suit/rad,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "yB" = (
 /obj/machinery/portable_reclaimer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"yL" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/machinery/light/beacon,
+/turf/simulated/floor/shuttlebay{
+	desc = " It is made of steel.";
+	name = "steel shuttle bay plating"
+	},
+/area/space)
 "yX" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/shuttlebay,
@@ -657,6 +682,12 @@
 	name = "steel plating"
 	},
 /area/built_zone)
+"Cv" = (
+/obj/machinery/light/small/floor/harsh/very,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_south"
+	},
+/area/shuttle/arrival/station)
 "CP" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -819,6 +850,7 @@
 /area/built_zone)
 "Ge" = (
 /obj/machinery/recharge_station,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "HG" = (
@@ -945,6 +977,7 @@
 "KL" = (
 /obj/item/storage/toolbox/emergency,
 /obj/machinery/recharge_station,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "KP" = (
@@ -969,6 +1002,12 @@
 	name = "steel shuttle bay plating"
 	},
 /area/shuttle/mining/station)
+"Ms" = (
+/obj/machinery/light/small/floor/harsh/very,
+/turf/simulated/floor/shuttlebay{
+	icon_state = "engine_caution_north"
+	},
+/area/shuttle/arrival/station)
 "MD" = (
 /obj/machinery/vending/cola,
 /turf/simulated/floor/shuttle,
@@ -1200,6 +1239,12 @@
 /obj/item/device/matanalyzer,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"Uj" = (
+/obj/landmark/map{
+	name = "CRASH"
+	},
+/turf/space,
+/area/space)
 "Ut" = (
 /obj/lattice{
 	dir = 1;
@@ -1649,7 +1694,7 @@ ay
 ay
 ay
 ay
-ay
+Uj
 "}
 (2,1,1) = {"
 ay
@@ -47018,13 +47063,13 @@ Ta
 cm
 tK
 xY
+lE
 xY
-xY
+tK
+vv
 tK
 tK
-tK
-tK
-tK
+vv
 Yn
 wG
 tK
@@ -47616,7 +47661,7 @@ Vb
 si
 xY
 xY
-xY
+lE
 xY
 xY
 xY
@@ -47916,17 +47961,17 @@ ay
 ay
 Vb
 si
+lE
 xY
 xY
 xY
 xY
-xY
-xY
+lE
 KI
 SL
 mz
 Kh
-wo
+Ms
 Zr
 hG
 SL
@@ -48229,7 +48274,7 @@ SL
 Fz
 mz
 wo
-Zr
+Cv
 hG
 SL
 OH
@@ -50335,7 +50380,7 @@ ay
 ay
 ay
 ay
-AG
+yL
 LJ
 LJ
 LJ
@@ -50646,7 +50691,7 @@ LJ
 LJ
 LJ
 bi
-Yw
+Kl
 ay
 ay
 ay
@@ -51854,7 +51899,7 @@ LJ
 LJ
 LJ
 av
-HG
+fp
 ay
 ay
 ay
@@ -52147,7 +52192,7 @@ ay
 ay
 ay
 ay
-AG
+yL
 LJ
 LJ
 LJ
