@@ -124,7 +124,7 @@
 			src.mode = mode_select
 			src.info_tag.set_info_tag("Mode: [src.mode]")
 
-	proc/try_link_apc()//
+	proc/try_link_apc()
 		var/obj/machinery/power/apc/apc_to_link = get_local_apc(src)
 		if (!apc_to_link)
 			return null
