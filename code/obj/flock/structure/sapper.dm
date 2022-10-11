@@ -1,6 +1,6 @@
-#define CHARGING_BITS "Assisting Flockbits"
-#define CHARGING_DRONES "Assisting Flockdrones"
-#define CHARGING_STRUCTURES "Assisting structures"
+#define CHARGING_BITS "Speed up Flockbits"
+#define CHARGING_DRONES "Charge incapacitors"
+#define CHARGING_STRUCTURES "Enhance structures"
 
 /obj/flock_structure/sapper
 	icon_state = "sapper-off" // current sprites are placeholders
