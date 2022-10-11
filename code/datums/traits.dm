@@ -895,7 +895,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	points = 1
 
 	onLife(var/mob/owner, var/mult)
-		if(!owner.stat && !owner.equipped() && !owner.lying && can_act(owner) && probmult(6))
+		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
 			for(var/obj/item/I in view(1, owner))
 				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
 					I.Attackhand(owner)
