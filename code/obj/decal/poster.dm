@@ -663,10 +663,6 @@
 				..()
 
 				var/which = pick(
-					// old contest winners
-					10;"tea1",
-					10;"tea2",
-					10;"tea3",
 					// the fuck II poster
 					30;"fuckII",
 					// new contest winners
@@ -685,17 +681,6 @@
 					5 ;"contest-other7"
 					)
 				switch(which)
-					if("tea1")
-						src.name = "Tea Hell and Back"
-						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if("tea2")
-						src.icon_state = "teaparty2"
-						src.name = "It Came from the Void"
-						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if("tea3")
-						src.icon_state = "teaparty3"
-						src.name = "Afterlife Activity"
-						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
 					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
