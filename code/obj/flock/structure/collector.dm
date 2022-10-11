@@ -7,7 +7,7 @@
 	flock_desc = "Provides compute power based on the number of Flock floor tiles it is connected to."
 	flock_id = "Collector"
 	health = 60
-	resourcecost = 10
+	resourcecost = 200
 	/// does it draw from the local apc if its strong enough.
 	var/drawfromgrid = FALSE
 	/// is it active?
