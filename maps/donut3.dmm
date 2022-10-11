@@ -6372,6 +6372,9 @@
 /area/station/crew_quarters/garden)
 "bGk" = (
 /obj/stool/chair/office,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "bGm" = (
@@ -34798,6 +34801,9 @@
 /area/station/turret_protected/AIsat)
 "jUx" = (
 /obj/machinery/light/emergency,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "jUz" = (
@@ -42410,6 +42416,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "miS" = (
@@ -42956,6 +42965,12 @@
 	icon_state = "R2"
 	},
 /area/space)
+"msD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "msQ" = (
 /obj/rack,
 /obj/item/circuitboard/arcade{
@@ -43528,6 +43543,8 @@
 "mAm" = (
 /obj/table/wood/auto,
 /obj/machinery/computer3/generic/personal,
+/obj/machinery/power/data_terminal,
+/obj/cable,
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
@@ -46440,6 +46457,12 @@
 "nsT" = (
 /turf/simulated/floor/carpet/grime,
 /area/station/security/quarters)
+"ntc" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/heads)
 "ntd" = (
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1"
@@ -47338,6 +47361,9 @@
 /obj/access_spawn/head_of_personnel,
 /obj/firedoor_spawn,
 /obj/decal/mule/dropoff,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/heads)
 "nIe" = (
@@ -117901,7 +117927,7 @@ rdj
 nMc
 kgL
 iRy
-hle
+ntc
 bGk
 mAm
 prh
@@ -118505,7 +118531,7 @@ nMc
 xhd
 nqg
 okq
-hle
+msD
 nMc
 raU
 bpp

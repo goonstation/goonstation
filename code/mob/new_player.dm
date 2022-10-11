@@ -238,6 +238,9 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!(src.ckey in NT))
 				return 0
+		if (JOB.mentor_only)
+			if (!(src.ckey in mentors))
+				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
 		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
@@ -596,6 +599,11 @@ a.latejoin-card:hover {
 			src.set_loc(locate(midx,midy,1))
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+
+		if(force_random_names)
+			src.client.preferences.be_random_name = 1
+		if(force_random_looks)
+			src.client.preferences.be_random_look = 1
 
 		var/mob/new_character = null
 		if (J)
