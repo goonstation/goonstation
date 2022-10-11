@@ -1408,6 +1408,10 @@
 		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
 		say_language = mask.new_language
 
+	if (src.wear_mask && src.wear_mask.vtranslate)
+		var/obj/item/clothing/mask/monkey_translator/mask = src.wear_mask
+		say_language = mask.vtranslate.new_language
+
 	message = copytext(message, 1, MAX_MESSAGE_LEN)
 
 	if (src.fakedead)

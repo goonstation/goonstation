@@ -6,6 +6,7 @@
 	wear_image_icon = 'icons/mob/clothing/mask.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_headgear.dmi'
 	var/obj/item/voice_changer/vchange = 0
+	var/obj/item/clothing/mask/monkey_translator/vtranslate = 0
 	body_parts_covered = HEAD
 	compatible_species = list("human", "cow", "werewolf")
 	wear_layer = MOB_HEAD_LAYER1
@@ -27,33 +28,44 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
+// When interacting with the mask
 /obj/item/clothing/mask/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/voice_changer))
-		if (src.see_face)
+	var/is_vchanger = istype(W, /obj/item/voice_changer)
+	var/is_vtranslator = istype(W, /obj/item/clothing/mask/monkey_translator)
+	var/vobject = src.vchange || src.vtranslate
+	if (is_vchanger || is_vtranslator) // Only relevant for voice changer and translator
+		if (is_vtranslator && src.c_flags & MASKINTERNALS)
+			user.show_text("The internals inside [src] are too big for [W] to fit!", "red")
+			return
+		else if (is_vchanger && src.see_face)
 			user.show_text("You can't find a way to attach [W] where it isn't really, really obvious. That'd kinda defeat the purpose of putting [W] in there, wouldn't it?", "red")
 			return
-		else if (src.vchange)
-			user.show_text("[src] already has a voice changer in it!", "red")
+		else if (vobject)
+			user.show_text("[src] already has a [vobject] in it!", "red")
 			return
-		else if (!src.see_face && !src.vchange)
+		else if (!vobject)
 			user.show_text("You begin installing [W] into [src].", "blue")
 			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
-			user.show_text("You install [W] into [src].", "green")
-			src.vchange = W
+			user.show_text("You successfully install [W] into [src].", "green")
+			if (is_vchanger)
+				src.vchange = W
+			else if (is_vtranslator)
+				src.vtranslate = W
 			W.set_loc(src)
 			user.u_equip(W)
 			return
 	else if (issnippingtool(W))
-		if (src.vchange)
-			user.show_text("You begin removing [src.vchange] from [src].", "blue")
+		if (vobject)
+			user.show_text("You begin removing [vobject] from [src].", "blue")
 			if (!do_after(user, 2 SECONDS))
 				user.show_text("You were interrupted!", "red")
 				return
-			user.show_text("You remove [src.vchange] from [src].", "green")
-			user.put_in_hand_or_drop(src.vchange)
+			user.show_text("You successfully remove [vobject] from [src].", "green")
+			user.put_in_hand_or_drop(vobject)
 			src.vchange = null
+			src.vtranslate = null
 			return
 		else
 			return ..()
