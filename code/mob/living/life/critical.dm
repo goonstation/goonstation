@@ -31,7 +31,8 @@
 					if (isalive(owner))
 						if (owner?.mind)
 							owner.lastgasp() // if they were ok before dropping below zero health, call lastgasp() before setting them unconscious
-					owner.setStatusMin("paralysis", 1.5 SECONDS * mult)
+					if (probmult(60))
+						owner.setStatusMin("paralysis", 1.5 SECONDS)
 				if (-99 to -80)
 					owner.take_oxygen_deprivation(1 * mult)
 					if (probmult(4))
