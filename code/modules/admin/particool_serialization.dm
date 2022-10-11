@@ -31,11 +31,10 @@
 	usr << ftp(target)
 
 /// Prompts user to select a file to which a particle set was earlier serialized, to load it into the particle set object this proc is attached to.
-/particles/proc/particleset_deserialize_dialog()
-	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.ckey].sav"
-	var/target = input("Select the saved particle setup to load.", "Particle upload", null) as null|file
+/particles/proc/particleset_deserialize_file(var/target)
 	if (!target)
 		return
+	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.ckey].sav"
 	if (fexists(fname))
 		fdel(fname)
 	var/savefile/saveFile = new /savefile(fname)
@@ -51,7 +50,7 @@
 			if(value == null) // no icon was saved
 				continue
 			var/datum/sandbox/sandbox = new /datum/sandbox()
-			var/datum/iconDeserializerData/IDS = icon_deserializer(saveFile, "particool_icon", sandbox, null, null, dont_load_existing_file = 1)
+			var/datum/iconDeserializerData/IDS = icon_deserializer(saveFile, "particool_icon", sandbox, null, null, grab_file_reference_from_rsc_cache = 1)
 			src.icon = IDS.icon
 			src.icon_state = IDS.icon_state
 		else
