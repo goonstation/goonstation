@@ -571,6 +571,13 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+	proc/check_height()
+		. = 1
+		var/obj/item/plate/curr = src
+		while(istype(curr.loc, /obj/item/plate))
+			curr = curr.loc
+			.++
+
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
@@ -581,6 +588,10 @@ TRAYS
 			if (src.plate_stacked)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
+			if (src.check_height() >= 7)
+				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
+				return
+
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
@@ -672,13 +683,12 @@ TRAYS
 	proc/shatter(depth = 1)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		if(log(2, depth) == round(log(2, depth)))
-			for (var/i in 1 to 2)
-				var/obj/O = new /obj/item/raw_material/shard/glass
-				O.set_loc(T)
-				if(src.material)
-					O.setMaterial(copyMaterial(src.material))
-				O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+		for (var/i in 1 to (2 - (depth > 1)))
+			var/obj/O = new /obj/item/raw_material/shard/glass
+			O.set_loc(T)
+			if(src.material)
+				O.setMaterial(copyMaterial(src.material))
+			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
 
