@@ -260,7 +260,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		return 0	//If the tile has an active liquid already, there is no requirement
 
 	for (var/obj/decal/cleanable/C in cleanables)
-		if (C?.reagents)
+		if (C?.reagents?.total_volume)
 			for(var/reagent_id in C.reagents.reagent_list)
 				if (reagent_id in ban_stacking_into_fluid) return
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
