@@ -1092,12 +1092,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_WEAR_SUIT
 	cost = PAY_DOCTORATE/3
 
-/datum/clothingbooth_item/costume/nanoagent
-	name = "Nano-Augmented Agent Outfit"
-	path = /obj/item/clothing/under/gimmick/jcdenton
-	slot = SLOT_W_UNIFORM
-	cost = PAY_TRADESMAN/2
-
 /datum/clothingbooth_item/costume/russsianmob
 	name = "Russian Mobster Suit"
 	path = /obj/item/clothing/under/misc/rusmob
@@ -1113,18 +1107,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 /datum/clothingbooth_item/costume/dinerdress_pink
 	name = "Pink Diner Waitress's Dress"
 	path = /obj/item/clothing/under/gimmick/dinerdress_pink
-
-/datum/clothingbooth_item/costume/plague
-	name = "Plague Doctor Mask"
-	path = /obj/item/clothing/mask/gas/plague
-	slot = SLOT_WEAR_MASK
-	cost = PAY_DOCTORATE/4
-
-/datum/clothingbooth_item/costume/kitsune
-	name = "Kitsune Mask"
-	path = /obj/item/clothing/mask/kitsune
-	slot = SLOT_WEAR_MASK
-	cost = PAY_TRADESMAN/5
 
 /datum/clothingbooth_item/costume/waitresshat
 	name = "Diner Waitress's Hat"
@@ -1239,5 +1221,4 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 	brown
 		name = "Brown Cowboy Boots"
 		path = /obj/item/clothing/shoes/westboot/brown
-
 
