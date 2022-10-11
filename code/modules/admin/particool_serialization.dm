@@ -6,8 +6,6 @@
 /particles/proc/particleset_serialize_dialog(var/dont_serialize_icon = 0)
 	var/datum/sandbox/sandbox = new /datum/sandbox()
 	var/fname = "adventure/PARTICOOL_TEMP_SAVE_[usr.client.ckey].sav"
-	//if (fexists(fname))
-	//	fdel(fname)
 	var/savefile/saveFile = new /savefile()
 
 	saveFile["DM_VERSION"] << DM_VERSION
@@ -66,12 +64,12 @@
 					value = "#FFFFFF"
 				else
 					value = 0 // "null" is ignored by particles and just continues its previous operation, this explicitly zeroes the setting
-			if (findtext(value,"generator")==0) // plain regular value
+			if (findtext(value,"generator") == 0) // plain regular value
 				src.vars[variable] = value
 			else // generators - manual handling
 				src.vars[variable] = binobj_to_generator(value)
 
-		// clean up the file after using it
+	// clean up the file after using it
 	if (fexists(fname))
 		fdel(fname)
 
@@ -109,7 +107,7 @@ proc/binobj_to_generator(var/binobj)
 	generatorType = replacetext(generatorType, "\"", "")
 	randomDistributionType = trim(randomDistributionType)
 	A = trim(A)
-	if (findtext(A,",")!=0) // dealing with a comma separated list
+	if (findtext(A,",") != 0) // dealing with a comma separated list
 		var/list/l = list()
 		var/list/split_values = splittext(A, ",")
 		for(var/i = 1 to length(split_values))
@@ -118,7 +116,7 @@ proc/binobj_to_generator(var/binobj)
 	else
 		A = text2num_safe(A)
 	B = trim(B)
-	if (findtext(B,",")!=0) // dealing with a comma separated list
+	if (findtext(B,",") != 0) // dealing with a comma separated list
 		var/list/l = list()
 		var/list/split_values = splittext(B, ",")
 		for(var/i = 1 to length(split_values))
