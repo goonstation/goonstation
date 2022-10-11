@@ -198,12 +198,10 @@ var/list/master_particle_info = list()
 					target.particles.particleset_deserialize_file(targetFile)
 			. = TRUE
 		if("save_particle")
-			if(target.particles)
-				target.particles.particleset_serialize_dialog(dont_serialize_icon = 1)
+			target.particles?.particleset_serialize_dialog(dont_serialize_icon = 1)
 			. = TRUE
 		if("save_particle_with_icon")
-			if(target.particles)
-				target.particles.particleset_serialize_dialog(dont_serialize_icon = 0)
+			target.particles?.particleset_serialize_dialog(dont_serialize_icon = 0)
 			. = TRUE
 		if("modify_particle_value")
 			target.modify_particle_value(params["new_data"]["name"], translate_value(params["new_data"]))
