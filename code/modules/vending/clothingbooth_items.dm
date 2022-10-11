@@ -1222,3 +1222,4 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		name = "Brown Cowboy Boots"
 		path = /obj/item/clothing/shoes/westboot/brown
 
+
