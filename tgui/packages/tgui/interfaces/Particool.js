@@ -657,7 +657,7 @@ export const Particool = (props, context) => {
                   icon="file-image"
                   content="Save Particle + Icon"
                   onClick={() => act('save_particle_with_icon')}
-                />
+                /> {/* eslint-disable-next-line */}
               </>}
               <Button
                 icon="upload"
