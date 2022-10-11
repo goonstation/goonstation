@@ -103,6 +103,7 @@
 /area/built_zone)
 "fj" = (
 /obj/cryotron,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "fp" = (
@@ -116,6 +117,18 @@
 	name = "steel shuttle bay plating"
 	},
 /area/space)
+"fB" = (
+/obj/machinery/door/airlock/external,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
+/turf/simulated/floor/shuttle,
+/area/shuttle/arrival/station)
 "fU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker,
@@ -651,6 +664,9 @@
 	name = "Hangar Door";
 	tag = "icon-bdoorright1 (NORTH)"
 	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "AG" = (
@@ -798,6 +814,9 @@
 	name = "Hangar Door";
 	tag = "icon-bdoorleft1 (NORTH)"
 	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
 /turf/simulated/floor/shuttlebay,
 /area/shuttle/arrival/station)
 "Er" = (
@@ -853,6 +872,15 @@
 /obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
+"Gz" = (
+/obj/submachine/ATM/atm_alt{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	name = "steel plating"
+	},
+/area/built_zone)
 "HG" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -1066,6 +1094,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/forcefield/energyshield/perma{
+	dir = 4
+	},
 /turf/simulated/floor/plating/random{
 	desc = " It is made of steel.";
 	name = "steel plating"
@@ -1192,6 +1223,7 @@
 /area/space)
 "RB" = (
 /obj/reagent_dispensers/watertank/big,
+/obj/machinery/light/small/floor/harsh/very,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "Sl" = (
@@ -45560,7 +45592,7 @@ JL
 SL
 SL
 SL
-aq
+fB
 nN
 YD
 Ya
@@ -46141,7 +46173,7 @@ kQ
 qG
 zH
 Fg
-zH
+Gz
 UQ
 ay
 ay
@@ -48580,7 +48612,7 @@ zS
 SL
 SL
 SL
-aq
+fB
 Lw
 YP
 pG
