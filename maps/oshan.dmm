@@ -23342,9 +23342,8 @@
 "bjb" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
-	pixel_y = 4
+	pixel_y = 6
 	},
-/obj/item/plate,
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjd" = (
