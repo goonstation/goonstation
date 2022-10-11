@@ -17906,7 +17906,6 @@
 /area/station/engine/inner)
 "biz" = (
 /obj/machinery/computer/robotics,
-,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIbasecore1{
 	name = "Upload Station"
