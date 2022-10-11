@@ -135,7 +135,8 @@
 			G.pixel_y = rand(-4,4)
 		if (src.reagents.total_volume)
 			G.color = src.reagents.get_average_rgb()
-			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
+			G.sample_reagent = src.reagents.get_master_reagent_id()
+			G.sample_amt = PEN_REAGENT_CAPACITY
 
 		src.remove_filter("reagent_coloration")
 		src.color_name = initial(src.color_name)
