@@ -65058,7 +65058,7 @@
 "qRy" = (
 /obj/machinery/computer/robotics{
 	dir = 8;
-	perma = 1
+	
 	},
 /obj/cable,
 /obj/cable{
@@ -74736,10 +74736,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"thF" = (
-/obj/machinery/hydro_mister,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/hydroponics)
 "thT" = (
 /obj/machinery/light{
 	dir = 4;
@@ -162162,7 +162158,7 @@ ryX
 wth
 wth
 ufA
-thF
+beb
 rie
 ryX
 ran

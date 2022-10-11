@@ -17578,9 +17578,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/status_display{
