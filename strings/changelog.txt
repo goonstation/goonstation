@@ -1,5 +1,9 @@
 
 (t)tue oct 11 22
+(u)Ryou
+(p)11297
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added espresso machine and cups to the bar in Oshan Laboratory.
 (u)Garash
 (p)9963
 (e)🆕💅📄|C-Feature, C-QoL, A-UI
