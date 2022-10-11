@@ -1,5 +1,9 @@
 
 (t)tue oct 11 22
+(u)Ryou
+(p)11308
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed a bug that allowed Kleptomaniacs to pick up items while lying down.
 (u)LeahTheTech
 (p)11300
 (e)🪲🗺|C-Bug, A-Mapping
