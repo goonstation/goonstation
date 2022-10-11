@@ -884,7 +884,7 @@
 				icon_state = "drunk[how_drunk]"
 
 		getTooltip()
-			. =  "You are [how_drunk == 2 ? "very": ""][how_drunk == 3 ? ", very" : ""] drunk."
+			. =  "You are [how_drunk >= 2 ? "very": ""][how_drunk >= 3 ? ", very" : ""] drunk."
 
 	blinded
 		id = "blinded"
@@ -1563,6 +1563,15 @@
 	id = "thirsty"
 	name = "Thirsty"
 	desc = "You really need some water!"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5
+
+/datum/statusEffect/staminaregen/cursed
+	id = "weakcurse"
+	name = "Enfeebled"
+	desc = "You feel really weak"
 	icon_state = "stam-"
 	duration = INFINITE_STATUS
 	maxDuration = null

@@ -21,7 +21,7 @@
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
 
-	var/datum/hud/robot/hud
+	var/datum/hud/silicon/robot/hud
 
 // Pieces and parts
 	var/obj/item/parts/robot_parts/head/part_head = null
@@ -33,7 +33,7 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
-	var/list/clothes = list()
+	var/list/obj/clothes = list()
 
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
@@ -260,6 +260,8 @@
 			src.remove_syndicate("death")
 		src.borg_death_alert()
 		src.eject_brain(fling = TRUE) //EJECT
+		for (var/slot in src.clothes)
+			src.clothes[slot].set_loc(src.loc)
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)
@@ -695,7 +697,7 @@
 
 		if (brute)
 			if (brute < 75)
-				. += "<span class='alert'>[src.name] looks slightly dented</span><br>"
+				. += "<span class='alert'>[src.name] looks slightly dented.</span><br>"
 			else
 				. += "<span class='alert'><B>[src.name] looks severely dented!</B></span><br>"
 		if (burn)
@@ -1739,13 +1741,17 @@
 	special_movedelay_mod(delay,space_movement,aquatic_movement)
 		. = delay
 		if (!src.part_leg_l)
-			. += 3.5
+			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST
 			if (src.part_arm_l)
-				. -= 1
+				. += ROBOT_MISSING_LEG_ARM_OFFSET
 		if (!src.part_leg_r)
-			. += 3.5
+			. += ROBOT_MISSING_LEG_MOVEMENT_ADJUST
 			if (src.part_arm_r)
-				. -= 1
+				. += ROBOT_MISSING_LEG_ARM_OFFSET
+		for (var/obj/item/parts/robot_parts/arm as anything in list(src.part_arm_l, src.part_arm_r))
+			if (!arm)
+				. += ROBOT_MISSING_ARM_MOVEMENT_ADJUST
+
 
 		if (total_weight > 0)
 			if (istype(src.part_leg_l,/obj/item/parts/robot_parts/leg/left/treads) && istype(src.part_leg_r,/obj/item/parts/robot_parts/leg/right/treads))
@@ -2375,7 +2381,8 @@
 		if (src.get_ear_damage(1)) src.take_ear_damage(-INFINITY, 1)
 		src.lying = 0
 		src.set_density(1)
-		if(src.stat) src.camera.camera_status = 0
+		if(src.stat)
+			src.camera.set_camera_status(FALSE)
 
 	use_power()
 		..()
@@ -2929,7 +2936,6 @@
 		..()
 
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
-		if(!part) return
 
 		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
 		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
@@ -2974,6 +2980,7 @@
 		//var/loseslot = part.slot //ZeWaka: Fix for null.slot
 		if(part.robot_movement_modifier)
 			REMOVE_MOVEMENT_MODIFIER(src, part.robot_movement_modifier, part.type)
+
 		src.update_bodypart()
 		//src.update_bodypart(loseslot)
 		qdel(part)
@@ -3055,7 +3062,7 @@
 				return 1
 			else
 				return 0
-		else if (this_hand == "left" || this_hand == 1)
+		else if (this_hand == "left" || this_hand == LEFT_HAND)
 			if (src.module_states[1] && src.module_states[1] == I)
 				return 1
 			else
@@ -3089,7 +3096,7 @@
 				return 1
 			else
 				return 0
-		else if (this_hand == "left" || this_hand == 1)
+		else if (this_hand == "left" || this_hand == LEFT_HAND)
 			if (src.module_states[1] && istype(src.module_states[1], I))
 				return 1
 			else
@@ -3113,7 +3120,7 @@
 			i = 3
 		else if (hand == "middle" || hand == 2)
 			i = 2
-		else if (hand == "left" || hand == 1)
+		else if (hand == "left" || hand == LEFT_HAND)
 			i = 1
 		if (i)
 			var/obj/item/I = src.module_states[i]

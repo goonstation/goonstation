@@ -21,7 +21,7 @@
 	var/image/fluid_image
 	var/image/image_inj_dr
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()

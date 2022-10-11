@@ -18,6 +18,7 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	var/queued_trace_deaths = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
@@ -42,16 +43,29 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
+	// stats stuff, if not listed above
+	var/drones_made = 0
+	var/bits_made = 0
+	var/deaths = 0
+	var/resources_gained = 0
+	var/partitions_made = 0
+	var/tiles_converted = 0
+	var/structures_made = 0
+
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	processing_items |= src
-	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
-		src.unlockableStructures += new DT(src)
+	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
+/datum/flock/proc/load_structures()
+	src.unlockableStructures = list()
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
 	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
@@ -125,6 +139,7 @@ var/flock_signal_unleashed = FALSE
 	state["drones"] = list()
 	state["structures"] = list()
 	state["enemies"] = list()
+	state["stats"] = list()
 	state["category_lengths"] = list(
 		"traces" = length(src.traces),
 		"drones" = length(src.units[/mob/living/critter/flock/drone]),
@@ -163,6 +178,21 @@ var/flock_signal_unleashed = FALSE
 				else
 					// enemy no longer exists, let's do something about that
 					src.enemies -= name
+
+		if ("stats")
+			var/list/stats = list(
+				"Drones realized: " = src.drones_made,
+				"Bits formed: " = src.bits_made,
+				"Total deaths: " = src.deaths,
+				"Resources gained: " = src.resources_gained,
+				"Partitions created: " = src.partitions_made,
+				"Tiles converted: " = src.tiles_converted,
+				"Structures created: " = src.structures_made,
+				"Highest compute: " = src.peak_compute
+				)
+
+			for (var/stat in stats)
+				state["stats"] += list(list("name" = stat, "value" = stats[stat]))
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()
@@ -547,8 +577,8 @@ var/flock_signal_unleashed = FALSE
 	src.achievements = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	src.peak_compute = 0
 	if (!real)
+		src.load_structures()
 		return
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
@@ -579,8 +609,12 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+	if (isfeathertile(T))
+		src.tiles_converted++
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -683,14 +717,33 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/machinery/vending = /obj/flock_structure/fabricator,
+	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
+	/obj/submachine/seed_vendor = /obj/flock_structure/fabricator,
+	/obj/machinery/dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/disposal_pipedispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chem_dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chemicompiler_stationary = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/foamtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/watertank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/fueltank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
+
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return
+	if (!flockTurfAllowed(T))
+		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 
@@ -740,7 +793,7 @@ var/flock_signal_unleashed = FALSE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
+			var/obj/converted = new replacementPath(T, null, O)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))

@@ -348,7 +348,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	muzzle_flash = null
 
@@ -1210,7 +1210,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	mats = 100 //yeah no, you can do it if you REALLY want to
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
@@ -1301,7 +1301,7 @@
 
 /obj/item/gun/energy/alastor
 	name = "\improper Alastor pattern laser rifle"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "alastor100"
 	item_state = "alastor"
 	icon = 'icons/obj/large/38x38.dmi'
@@ -1330,12 +1330,6 @@
 			return
 
 ///////////////////////////////////////////////////
-/obj/item/gun/energy/lawbringer/old
-	name = "antique Lawbringer"
-	icon = 'icons/obj/items/gun.dmi'
-	icon_state = "old-lawbringer0"
-	old = 1
-
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
 	icon = 'icons/obj/items/gun.dmi'
@@ -1560,11 +1554,6 @@
 			return 1
 		return 0
 
-	proc/make_antique()
-		icon_state = "old-lawbringer0"
-		old = 1
-		UpdateIcon()
-
 	shoot(var/target,var/start,var/mob/user)
 		if (canshoot())
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
@@ -1757,11 +1746,14 @@
 
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
-	desc = "It's a shotgun? Or an assault rifle? You can't tell."
+	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
 	icon = 'icons/obj/large/48x32.dmi'
 	muzzle_flash = "muzzle_flash_bluezap"
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
 	force = 9

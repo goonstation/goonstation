@@ -3,7 +3,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun
 	name = "gun"
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT | USEDELAY | EXTRADELAY
 	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER

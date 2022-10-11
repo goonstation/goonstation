@@ -509,7 +509,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [src] [log_loc(src)]")
 			else
 				donor_cell.charge -= 250
 				recipient_cell.charge += 250
@@ -517,7 +517,7 @@ var/zapLimiter = 0
 					user.visible_message("<span class='notice'>[user] transfers some of their power to [src]!</span>", "<span class='notice'>You transfer 250 charge.</span>")
 				else
 					user.visible_message("<span class='notice'>[user] transfers some of the power from [src] to yourself!</span>", "<span class='notice'>You transfer 250 charge.</span>")
-
+					logTheThing(LOG_STATION, user, "drains [250] power from the APC [src] [log_loc(src)]")
 			charging = chargemode
 
 		else return src.Attackhand(user)
@@ -570,7 +570,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && !isAI(user))
+	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.UpdateIcon()
@@ -1014,7 +1014,7 @@ var/zapLimiter = 0
 		boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 		return
 
-	user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+	user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 	boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 	user.unlock_medal("HIGH VOLTAGE", 1)
 	if (isliving(user))

@@ -14,6 +14,7 @@
 	var/ghost_respawns = 1
 	var/adminwho_alerts = 1
 	var/rp_word_filtering = 0
+	var/uncool_word_filtering = 1
 	var/auto_stealth = 0
 	/// toogle that determines whether or not clouddata for auto alt key and stealth is per server or global
 	var/auto_alias_global_save = FALSE
@@ -142,6 +143,7 @@
 		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Alerts For \"Low RP\" Words?: <a href='?src=\ref[src];action=toggle_rp_word_filtering'>[(src.rp_word_filtering ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Receive Alerts For Uncool Words?: <a href='?src=\ref[src];action=toggle_uncool_word_filtering'>[(src.uncool_word_filtering ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>See Prayers?: <a href='?src=\ref[src];action=toggle_hear_prayers'>[(src.hear_prayers ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Audible Prayers?: <a href='?src=\ref[src];action=toggle_audible_prayers'>[list("No", "Yes", "Dectalk")[src.audible_prayers + 1]]</a></b><br>"
 		HTML += "<b>Audible Admin Helps?: <a href='?src=\ref[src];action=toggle_audible_ahelps'>[src.audible_ahelps ? (src.audible_ahelps == PM_DECTALK_ALERT ? "Dectalk" : "Yes") : "No"]</a></b><br>"
@@ -218,6 +220,15 @@
 		if (saved_rp_word_filtering == 1 && rp_word_filtering != 1)
 			src.owner:toggle_rp_word_filtering()
 		rp_word_filtering = saved_rp_word_filtering
+
+		var/saved_uncool_word_filtering = AP["uncool_word_filtering"]
+		if (isnull(saved_uncool_word_filtering))
+			saved_uncool_word_filtering = 1
+		if (saved_uncool_word_filtering == 0 && uncool_word_filtering != 0)
+			src.owner:toggle_uncool_word_filtering()
+		else
+			src.owner.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_UNCOOL_PHRASE, /client/proc/message_one_admin)
+		uncool_word_filtering = saved_uncool_word_filtering
 
 		var/saved_auto_alias_global_save = AP["auto_alias_global_save"]
 		if (isnull(saved_auto_alias_global_save))
@@ -331,6 +342,7 @@
 		AP["animtoggle"] = animtoggle
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
+		AP["uncool_word_filtering"] = uncool_word_filtering
 		AP["ghost_respawns"] = ghost_respawns
 		AP["adminwho_alerts"] = adminwho_alerts
 		AP["hear_prayers"] = hear_prayers

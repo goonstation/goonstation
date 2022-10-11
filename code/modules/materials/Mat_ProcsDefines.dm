@@ -133,24 +133,24 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/getMaterialPrefixList(datum/material/base)
 	. = list()
 
-	for(var/datum/material_property/P in base.properties)
+	for(var/datum/material_property/P as anything in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
 			. |= P.getAdjective(base)
-			continue
 		else if(base.properties[P] <= P.prefix_low_max)
 			. |= P.getAdjective(base)
-			continue
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/copy = TRUE, var/use_descriptors = FALSE)
-	if(!mat1 ||!istype(mat1, /datum/material)) return
-	if(copy) mat1 = copyMaterial(mat1)
+/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)
+	if(!mat1 ||!istype(mat1, /datum/material))
+		return
+	if(copy)
+		mat1 = copyMaterial(mat1)
+
 	var/traitDesc = get_material_trait_desc(mat1)
 	var/strPrefix = jointext(mat1.prefixes, " ")
 	var/strSuffix = jointext(mat1.suffixes, " ")
 
-	if(src.material)
-		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	if(length(mat1?.triggersOnEntered))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
@@ -495,7 +495,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	return null
 
 /// Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
-/proc/applyCableMaterials(var/atom/C, var/datum/material/insulator, var/datum/material/conductor)
+/proc/applyCableMaterials(atom/C, datum/material/insulator, datum/material/conductor, copy_material = TRUE)
 	if(!conductor) return // silly
 
 	if(istype(C, /obj/cable))
@@ -504,24 +504,24 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		cable.conductor = conductor
 
 		if (cable.insulator)
-			cable.setMaterial(cable.insulator)
+			cable.setMaterial(cable.insulator, copy = copy_material)
 			cable.name = "[cable.insulator.name]-insulated [cable.conductor.name]-cable"
 			cable.color = cable.insulator.color
 		else
-			cable.setMaterial(cable.conductor)
+			cable.setMaterial(cable.conductor, copy = copy_material)
 			cable.name = "uninsulated [cable.conductor.name]-cable"
 			cable.color = cable.conductor.color
 
-	if(istype(C, /obj/item/cable_coil))
+	else if(istype(C, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = C
 
 		coil.insulator = insulator
 		coil.conductor = conductor
 
 		if (coil.insulator)
-			coil.setMaterial(coil.insulator)
+			coil.setMaterial(coil.insulator, copy = copy_material)
 			coil.color = coil.insulator.color
 		else
-			coil.setMaterial(coil.conductor)
+			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()

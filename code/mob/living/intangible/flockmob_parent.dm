@@ -21,6 +21,7 @@
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
 	src.blend_mode = BLEND_ADD
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_FLOCK)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
@@ -180,6 +181,9 @@
 
 	flock_speak(src, message, src.flock)
 
+/mob/living/intangible/flock/get_tracked_examine_atoms()
+	return ..() + src.flock.structures
+
 // why this isn't further up the tree i have no idea
 /mob/living/intangible/flock/emote(var/act, var/voluntary = 0)
 
@@ -216,7 +220,7 @@
 
 
 /mob/living/intangible/flock/proc/createstructure(obj/flock_structure/structure_type, resources = 0)
-	new /obj/flock_structure/ghost(get_turf(src), structure_type, src.flock, resources)
+	new /obj/flock_structure/ghost(get_turf(src), src.flock, structure_type, resources)
 
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()

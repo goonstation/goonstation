@@ -496,11 +496,13 @@
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_hair"
 
 		poster_cool
 			name = "cool poster"
 			desc = "There's a couple people pictured on this poster, looking pretty cool."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			random_icon_states = list("wall_poster_cool", "wall_poster_cool2", "wall_poster_cool3")
 
@@ -576,18 +578,20 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			pixel_var = 1
-			random_icon_states = list("wall_poster_cool",
-																"wall_poster_cool2",
-																"wall_poster_cool3",
-																"wall_poster_hair",
-																"wall_poster_human",
-																"wall_poster_borg",
-																"wall_poster_sol",
-																"wall_poster_clown",
-																"wall_poster_beach",
-																"wall_poster_discount",
-																"wall_poster_octocluwne",
-																"wall_poser_eyetest")
+			random_icon_states = list(
+				"wall_poster_cool",
+				"wall_poster_cool2",
+				"wall_poster_cool3",
+				"wall_poster_hair",
+				"wall_poster_human",
+				"wall_poster_borg",
+				"wall_poster_sol",
+				"wall_poster_clown",
+				"wall_poster_beach",
+				"wall_poster_discount",
+				"wall_poster_octocluwne",
+				"wall_poster_eyetest"
+			)
 
 		poster_mining
 			name = "mining poster"
@@ -716,7 +720,7 @@
 						src.icon_state = "pack_smart"
 					if("contest-other2")
 						src.name = "Mindhacker Device Poster"
-						src.icon_state = "mindhacker"
+						src.icon_state = "mindhacked"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -859,6 +863,11 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		eiffelposter //for Jan's office
+			desc = "A poster of the Eiffel Tower in Paris, France."
+			name = "Eiffel Poster"
+			icon = 'icons/misc/janstuff.dmi'
+			icon_state = "poster_eiffel"
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS

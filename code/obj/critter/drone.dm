@@ -522,8 +522,8 @@
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/bang_gun
-		projectile_type = /datum/projectile/bullet/ak47
-		current_projectile = new/datum/projectile/bullet/ak47
+		projectile_type = /datum/projectile/bullet/akm
+		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
 		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()
@@ -1144,8 +1144,8 @@
 /obj/critter/gunbot/drone/iridium/whydrone/horse
 	name = "Horseman"
 	desc = "What the hell is this thing!? Oh God, is that a MOUTH?"
-	health = 8000 //glitch drone tough
-	maxhealth = 8000 // you aren't killing the apocalypse easily
+	health = 5000
+	maxhealth = 5000
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "horsedrone"
 	bound_height = 96

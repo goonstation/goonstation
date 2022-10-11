@@ -38,12 +38,17 @@ var/datum/explosion_controller/explosions
 				next_turf_safe |= E.turf_safe
 				E.explode()
 
-	proc/queue_damage(var/list/new_turfs)
+	proc/queue_damage(var/list/new_turfs, var/list/new_blame)
 		var/c = 0
 		for (var/turf/T as anything in new_turfs)
 			queued_turfs[T] += new_turfs[T]
+			queued_turfs_blame[T] = new_blame[T]
 			if(c++ % 100 == 0)
 				LAGCHECK(LAG_HIGH)
+
+	proc/highest_explosion_power(obj/object)
+		for (var/turf/T in object.locs)
+			. = max(., queued_turfs[T])
 
 	proc/kaboom()
 		defer_powernet_rebuild = 1
@@ -53,48 +58,44 @@ var/datum/explosion_controller/explosions
 
 		var/needrebuild = 0
 		var/p
-		var/last_touched
+		var/datum/explosion/explosion
 
 		for (var/turf/T as anything in queued_turfs)
 			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
 			p = queued_turfs[T]
-			last_touched = queued_turfs_blame[T]
+			explosion = queued_turfs_blame[T]
 			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/mob/M in T)
-					M.ex_act(1, last_touched, p)
+					M.ex_act(1, explosion?.last_touched, p)
 			else if (p > 3)
 				for (var/mob/M in T)
-					M.ex_act(2, last_touched, p)
+					M.ex_act(2, explosion?.last_touched, p)
 			else
 				for (var/mob/M in T)
-					M.ex_act(3, last_touched, p)
+					M.ex_act(3, explosion?.last_touched, p)
 
 		LAGCHECK(LAG_HIGH)
 
 		for (var/turf/T as anything in queued_turfs)
-			p = queued_turfs[T]
-			last_touched = queued_turfs_blame[T]
-			//boutput(world, "P1 [p]")
-			if (p >= 6)
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
-						continue
-					O.ex_act(1, last_touched, p)
+			explosion = queued_turfs_blame[T]
+			for (var/obj/O in T)
+				if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window) || O.last_explosion == explosion)
+					continue
+				var/power = highest_explosion_power(O)
+				var/severity
+				if (power >= 6)
+					severity = 1
 					if (istype(O, /obj/cable)) // these two are hacky, newcables should relieve the need for this
 						needrebuild = 1
-			else if (p > 3)
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
-						continue
-					O.ex_act(2, last_touched, p)
+				else if (power > 3)
+					severity = 2
 					if (istype(O, /obj/cable))
 						needrebuild = 1
-			else
-				for (var/obj/O in T)
-					if(istype(O, /obj/overlay) || next_turf_safe && istype(O, /obj/window))
-						continue
-					O.ex_act(3, last_touched, p)
+				else
+					severity = 3
+				O.ex_act(severity, explosion?.last_touched, power)
+				O.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
 
@@ -105,7 +106,7 @@ var/datum/explosion_controller/explosions
 				continue
 #endif
 			p = queued_turfs[T]
-			last_touched = queued_turfs_blame[T]
+			explosion = queued_turfs_blame[T]
 			//boutput(world, "P2 [p]")
 #ifdef EXPLOSION_MAPTEXT_DEBUGGING
 			if (p >= 6)
@@ -122,7 +123,7 @@ var/datum/explosion_controller/explosions
 					continue // they can break even on severity 3
 				else if(istype(T, /turf/simulated))
 					severity = max(severity, 3)
-			T.ex_act(severity, last_touched)
+			T.ex_act(severity, explosion?.last_touched)
 #endif
 		LAGCHECK(LAG_HIGH)
 
@@ -136,23 +137,28 @@ var/datum/explosion_controller/explosions
 			makepowernets()
 
 		rebuild_camera_network()
-		world.updateCameraVisibility()
 		next_turf_safe = FALSE
 
 	proc/process()
 		if (exploding)
 			return
-		else if (queued_turfs.len)
+		else if (length(queued_turfs))
 			kaboom()
 
-		if (queued_explosions.len)
+		if (length(queued_explosions))
 			var/datum/explosion/E
-			while (queued_explosions.len)
+			while (length(queued_explosions))
 				E = queued_explosions[1]
 				queued_explosions -= E
 				E.explode()
 				next_turf_safe |= E.turf_safe
 
+
+/obj/var/datum/explosion/last_explosion = 1 //gross hack detected
+
+/obj/disposing()
+	src.last_explosion = null
+	. = ..()
 
 /datum/explosion
 	var/atom/source
@@ -163,6 +169,7 @@ var/datum/explosion_controller/explosions
 	var/width
 	var/user
 	var/turf_safe
+	var/last_touched = "*null*"
 
 	New(atom/source, turf/epicenter, power, brisance, angle, width, user, turf_safe=FALSE)
 		..()
@@ -198,10 +205,10 @@ var/datum/explosion_controller/explosions
 		logMe(power)
 
 		for(var/client/C in clients)
-			if(C.mob && (C.mob.z == epicenter.z) && power > 15)
+			if(C.mob && (C.mob.z == epicenter.z) && power > 20)
 				shake_camera(C.mob, 8, 24) // remove if this is too laggy
 
-				playsound(C.mob, explosions.distant_sound, 100, 0)
+				playsound(C.mob, explosions.distant_sound, 70, 0)
 
 		playsound(epicenter.loc, "explosion", 100, 1, round(power, 1) )
 		if(power > 10)
@@ -211,11 +218,8 @@ var/datum/explosion_controller/explosions
 
 		var/radius = round(sqrt(power), 1) * brisance
 
-		var/last_touched
 		if (istype(source)) // Cannot read null.fingerprintslast
 			last_touched = source.fingerprintslast
-		else
-			last_touched = "*null*"
 
 		var/list/nodes = list()
 		var/list/blame = list()
@@ -262,7 +266,7 @@ var/datum/explosion_controller/explosions
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / ((radius-nodes[T])**2)
 			nodes[T] = p**RSS_SCALE
-			blame[T] = last_touched
+			blame[T] = src
 			p = min(p, 10)
 			if(prob(1))
 				LAGCHECK(LAG_HIGH)
@@ -274,7 +278,6 @@ var/datum/explosion_controller/explosions
 				C.lying = 1
 				C.set_clothing_icon_dirty()
 
-		explosions.queue_damage(nodes)
-		explosions.queued_turfs_blame += blame
+		explosions.queue_damage(nodes, blame)
 
 #undef RSS_SCALE

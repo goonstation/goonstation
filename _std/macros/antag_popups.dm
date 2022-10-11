@@ -70,7 +70,12 @@
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
 	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
-	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
+	<a href='?src=\ref[src];action=salvager'>Salvagers</a> |
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a> |
+	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
+	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
+	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
+	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
 	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
@@ -249,22 +254,32 @@
 				filename = "html/traitorTips/battleTips.html"
 			if ("martian")
 				window_title = "Being a Martian 101!"
-				filename = "html/traitorTips/martianInfiltrator.html"
+				filename = "html/traitorTips/martianInfiltratorTips.html"
 			if ("kudzu")
 				window_title = "You've been absorbed into the Kudzu!"
-				filename = "html/traitorTips/kudzu.html"
+				filename = "html/traitorTips/kudzuTips.html"
+			if ("salvager")
+				filename = "html/traitorTips/salvager.html"
 			if ("slasher")
 				window_title = "You've been made a Slasher!"
 				filename = "html/traitorTips/slasherTips.html"
 			if ("arcfiend")
 				window_title = "Arcfiend Tips!"
 				filename = "html/traitorTips/arcfiendTips.html"
+			if ("plaguebringer")
+				filename = "html/traitorTips/plaguebringerTips.html"
+			if ("plaguerat")
+				filename = "html/traitorTips/plagueratTips.html"
+			if ("trickster")
+				filename = "html/traitorTips/tricksterTips.html"
+			if ("harbinger")
+				filename = "html/traitorTips/harbingerTips.html"
 			if ("football")
 				window_title = "Go for the endzone!"
-				filename = "html/traitorTips/football.html"
+				filename = "html/traitorTips/footballTips.html"
 			if ("podwars")
 				window_title = "Fight for your team!"
-				filename = "html/traitorTips/pod_wars.html"
+				filename = "html/traitorTips/pod_warsTips.html"
 			if ("zombie")
 				window_title = "Zombie Basics"
 				filename = "html/traitorTips/zombieTips.html"

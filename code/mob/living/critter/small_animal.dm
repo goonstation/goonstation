@@ -57,10 +57,10 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	butcherable = 1
 	name_the_meat = 1
 	max_skins = 1
-	var/health_brute = 20 // moved up from birds since more than just they can use this, really
-	var/health_brute_vuln = 1
-	var/health_burn = 20
-	var/health_burn_vuln = 1
+	health_brute = 20 // moved up from birds since more than just they can use this, really
+	health_brute_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 1
 
 	var/fur_color = 0
 	var/eye_color = 0
@@ -225,6 +225,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	icon_state_dead = "remy-dead"
 	health_brute = 33
 	health_burn = 33
+	fits_under_table = 0
 	pull_w_class = W_CLASS_NORMAL
 
 	setup_overlays()
@@ -1231,6 +1232,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	death_text = "%src% lets out a final weak caw and keels over."
 	feather_color = "#212121"
 	good_grip = 1
+	fits_under_table = 0
 	species = "crow"
 	add_abilities = list(/datum/targetable/critter/peck/crow)
 
@@ -2861,10 +2863,10 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)))
+				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)))
+				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
 
 	death(var/gibbed)
 		. = ..()
@@ -2992,6 +2994,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			M.visible_message("\The [src] jumps into [M]'s pocket.", "\The [src] jumps into your pocket.")
 		boutput(M, "You can click on the status effect in the top right to kick the mouse out.")
 		boutput(src, "<span style='color:red; font-size:1.5em'><b>You are now in someone's pocket and can talk to them and click on their screen to ping in the place where you're ctrl+clicking. This is a feature meant for teaching and helping players. Do not abuse it by using it to just chat with your friends!</b></span>")
+		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 		var/mob/dead/target_observer/mentor_mouse_observer/obs = new(M, src.is_admin)
 		obs.set_observe_target(M)
 		obs.my_mouse = src
@@ -3001,7 +3004,6 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		else if(src.client)
 			obs.client = src.client
 		M.setStatus(src.status_name, duration = null)
-		logTheThing(LOG_ADMIN, src, "jumps into [constructTarget(M, "admin")]'s pocket as a mentor mouse at [log_loc(M)].")
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
@@ -3059,7 +3061,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		var/mob/living/M = holder.owner
 		if (!holder)
 			return 1
-		logTheThing("admin", src, null, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
+		logTheThing(LOG_ADMIN, src, "turned from a mentor mouse to a ghost") // I can remove this but it seems like a good thing to have
 		M.visible_message("<span class='alert'><B>[M] does a funny little jiggle with their body and then vanishes into thin air!</B></span>") // MY ASCENSION BEGINS
 		animate_bouncy(src)
 		SPAWN(0.5 SECONDS)

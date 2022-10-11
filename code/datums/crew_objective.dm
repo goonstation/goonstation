@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 
@@ -458,7 +457,25 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
 		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
