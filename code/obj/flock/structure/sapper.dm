@@ -115,7 +115,7 @@
 		ON_COOLDOWN(src, src.mode, src.mode_cooldowns[src.mode])
 		src.linked_apc.cell.use(src.linked_apc.cell.maxcharge * 0.1)
 		for (var/atom/A as anything in targets)
-			A.AddComponent(/datum/component/flock_ping/sapper_power)
+			A.AddComponent(/datum/component/flock_ping/sapper_power, src.mode_cooldowns[src.mode] / 2)
 
 	Click(location, control, params)
 		if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))

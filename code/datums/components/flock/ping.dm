@@ -7,9 +7,11 @@
 	var/obj/dummy = null
 	var/outline_color = "#00ff9d"
 
-	Initialize()
+	Initialize(duration)
 		if (!ismovable(parent) && !isturf(parent))
 			return COMPONENT_INCOMPATIBLE
+		if (duration)
+			src.duration = duration
 
 	RegisterWithParent()
 		//this cast looks horribly unsafe, but we've guaranteed that parent is a type with vis_contents in Initialize
@@ -60,5 +62,4 @@
 	outline_color = "#910707"
 
 /datum/component/flock_ping/sapper_power
-	duration = 2 SECONDS
 	outline_color = "#040694"
