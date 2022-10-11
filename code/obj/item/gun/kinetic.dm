@@ -1104,8 +1104,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
 
 	New()
-		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 		..()
+		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 
 //0.72
 /obj/item/gun/kinetic/spes
