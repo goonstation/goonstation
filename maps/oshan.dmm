@@ -23334,13 +23334,14 @@
 /area/station/crew_quarters/bar)
 "bja" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/machinery/espresso_machine{
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjb" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
@@ -23590,15 +23591,15 @@
 /area/station/crew_quarters/kitchen)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/drink_rack/mug{
-	pixel_y = 30
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
+/obj/drink_rack/cup{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
@@ -23618,6 +23619,9 @@
 "bjT" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "bjU" = (
