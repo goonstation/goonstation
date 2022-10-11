@@ -1223,3 +1223,41 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		path = /obj/item/clothing/shoes/westboot/brown
 
 
+// Ancient
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/ancient)
+/datum/clothingbooth_item/ancient
+	name = "ancient"
+	category = "Ancient"
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/ancient/greekhat
+	name = "Greek Helmet"
+	path = /obj/item/clothing/head/helmet/greek
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/ancient/greek
+	name = "Greek Armor"
+	path = /obj/item/clothing/suit/greek
+	slot = SLOT_WEAR_SUIT
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/ancient/toga
+	name = "Toga"
+	path = /obj/item/clothing/under/gimmick/toga
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/ancient/vikinghat
+	name = "Viking Helmet"
+	path = /obj/item/clothing/head/helmet/viking
+	slot = SLOT_HEAD
+	cost = PAY_UNTRAINED/2
+
+/datum/clothingbooth_item/ancient/viking
+	name = "Viking Armor"
+	path = /obj/item/clothing/under/gimmick/viking
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
