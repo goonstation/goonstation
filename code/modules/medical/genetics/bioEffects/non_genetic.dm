@@ -197,8 +197,8 @@
 
 	OnLife(var/mult)
 		if(..()) return
-		if (probmult(10))
-			for(var/mob/living/carbon/C in view(6,get_turf(owner)))
+		if (probmult(5))
+			for(var/mob/living/carbon/C in view(3,get_turf(owner)))
 				if (C == owner)
 					continue
 				if (ispug(C))

@@ -101,6 +101,7 @@
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
+		src.flock?.structures_made++
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()
