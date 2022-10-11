@@ -174,14 +174,15 @@
 	width = 200
 	height = 200
 	spawning = 10
-	count = 20
-	lifespan = 30
-	fade = 30
+	count = 10
+	lifespan = 50
+	fade = 50
 	position = list(0, 0, 0)
-	friction = generator("num", 0.8, 0.4, UNIFORM_RAND)
+	friction = generator("num", 0.9, 0.4, UNIFORM_RAND)
 	drift = generator("box", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
-	scale = list(1, 1)
-	grow = generator("vector", list(0.1,0.1,0), list(0,0,0), UNIFORM_RAND)
+	scale = list(0.1, 0.1)
+	rotation = generator("num", 0, 360, UNIFORM_RAND)
+	grow = generator("vector", list(0.08,0.08,0), list(0.03,0.03,0), UNIFORM_RAND)
 	fadein = 5
 	spawning = 20
 
