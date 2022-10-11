@@ -29,5 +29,5 @@
 #define isprematureclone(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/premature_clone))
 #define iskudzuman(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/kudzu))
 #define isnukeopgunbot(x) (istype(x, /mob/living/critter/robotic/gunbot/syndicate) && x:mind && x:mind:special_role == ROLE_NUKEOP_GUNBOT)
-#define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly) && x:mind && x:mind:special_role == ROLE_SAWFLY)
+#define issawfly(x) (istype(x, /mob/living/critter/robotic/sawfly))
 #define iszombie(x) (istype(x, /mob/living/carbon/human) && x:mutantrace && istype(x:mutantrace, /datum/mutantrace/zombie))

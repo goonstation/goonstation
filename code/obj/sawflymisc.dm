@@ -57,26 +57,10 @@
 		if (T)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
-			heldfly.isgrenade = FALSE
-		if(!playercontrolled)
-			if(issawflybuddy(currentuser))
-				heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
-			else
-				heldfly.ai = new /datum/aiHolder/wanderer(heldfly)
-		else
-			heldfly.ai = null
+			heldfly.dontdolife = FALSE
+			heldfly.ai = new /datum/aiHolder/sawfly(heldfly)
+
 		qdel(src)
-
-	attackby(obj/item/W, mob/user)
-
-		if (isscrewingtool(W)) //basic open/close actions
-			if(isopen)
-				isopen = FALSE
-				overlays -= "open-overlay"
-			else
-				isopen = TRUE
-				overlays += "open-overlay"
-
 /obj/item/old_grenade/sawfly/firsttime//super important- traitor uplinks and sawfly pouches use this specific version
 	New()
 
@@ -175,55 +159,3 @@
 		if (ismob(target))
 			..()
 		..()
-//sawfly ability
-/datum/targetable/critter/sawflydeploy
-	name = "(Un)deploy"
-	desc = "Toggle your mob/item state! Can also be used to escape containers."
-	icon_state = "sawfly-deploy"
-	cooldown = 10
-
-
-	cast(mob/target)
-
-		var/mob/living/critter/robotic/sawfly/M = holder.owner
-
-
-
-		if(M.isgrenade == TRUE) //we're in a grenade, time to un-grenade ourselfes!
-			if(istype(M.ourgrenade.loc, /obj/item/storage))
-				actions.start(/datum/action/bar/private/icon/sawflyescape, src)
-				return
-			else
-				M.visible_message("<span class='alert'>[M] suddenly springs open as its engine purrs to a start!</span>")
-				playsound(M, pick(M.beeps), 40, 1)
-				if(get_turf(M))
-					M.ourgrenade.prime()
-		else
-			M.foldself()
-
-/datum/action/bar/private/icon/sawflyescape
-	duration = 200
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
-	id = "sawflyescape"
-	icon_state = "backpack"
-	icon = 'icons/mob/inhand/hand_storage.dmi'
-	New(var/dur)
-		duration = dur
-		..()
-
-	onStart()
-		..()
-
-		var/mob/living/critter/robotic/sawfly/M = owner
-		boutput(M, "<span class='notice'>You start to make your way out of [M.loc].</span>")
-
-	onInterrupt(var/flag)
-		..()
-		boutput(owner, "<span class='alert'>Your attempt to escape was interrupted!</span>")
-		if(!(flag & INTERRUPT_ACTION))
-			src.resumable = FALSE
-
-	onEnd()
-		..()
-		var/mob/living/critter/robotic/sawfly/M = owner
-		M.ourgrenade.loc = get_turf(M.ourgrenade.loc)//thanks to the precondition for calling this, we can be sure their loc is going to be in a container

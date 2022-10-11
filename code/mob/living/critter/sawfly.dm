@@ -19,10 +19,11 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	var/isnew = TRUE // for seeing whether or not they will make a new name on redeployment
 	var/sawflynames = list("A", "B", "C", "D", "E", "F", "V", "W", "X", "Y", "Z", "Alpha", "Beta", "Gamma", "Lambda", "Delta")
 
-	var/isgrenade = TRUE // these two will be enabled and disabled at the grenade's leisure.
-	var/obj/item/old_grenade/sawfly/ourgrenade = null
+	var/dontdolife = TRUE // these two will be enabled and disabled at the grenade's leisure.
 	is_npc = FALSE
-	var/isplayercontrolled = FALSE //don't mess with this unless you know what you're doing
+	var/obj/item/old_grenade/sawfly/ourgrenade = null
+
+
 
 	var/isdisabled = FALSE //stops life() from doing anything when in grenade form
 	speechverb_say = "whirrs"
@@ -61,7 +62,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		deathtimer = rand(1, 5)
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works
-		abilityHolder.addAbility(/datum/targetable/critter/sawflydeploy)
 		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity") //prevents them from having movespeed slowdown when injured
 		START_TRACKING
 
@@ -97,7 +97,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 			N.desc = "A self-deploying antipersonnel robot. This one has seen some use."
 			//N.tempname = src.name
 			src.is_npc = FALSE
-			src.isgrenade = TRUE
+			src.dontdolife = TRUE
 			src.ourgrenade = N
 			N.heldfly = src
 			src.set_loc(N)
@@ -213,7 +213,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		..()
 
 	Life()
-		if(src.isgrenade) //prevents them from doing much of anything when in grenade form
+		if(src.dontdolife) //prevents them from doing much of anything when in grenade form
 			return
 		..()
 		if(prob(8)) communalbeep()
@@ -225,10 +225,10 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		// gotta get the AI chuggin' along
 		src.mob_flags |= HEAVYWEIGHT_AI_MOB
 		src.is_npc = TRUE
-		src.isgrenade = FALSE
+		src.dontdolife = FALSE
 		src.ai = new /datum/aiHolder/sawfly(src)
 
 /mob/living/critter/robotic/sawfly/standalone // for when you want to spawn a normal, set up sawfly.
 	New()
-		src.isgrenade = FALSE
+		src.dontdolife = FALSE
 		..()
