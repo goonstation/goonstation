@@ -61,5 +61,9 @@
 /datum/component/flock_ping/obstruction
 	outline_color = "#910707"
 
+/datum/component/flock_ping/apc_power
+	duration = 5 SECONDS
+	outline_color = "#ffff00"
+
 /datum/component/flock_ping/sapper_power
 	outline_color = "#040694"
