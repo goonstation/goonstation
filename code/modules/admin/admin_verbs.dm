@@ -1485,7 +1485,7 @@ var/list/fun_images = list()
 
 	if (!msg)
 		return
-	flock_speak(src.mob, msg, null, 1)
+	flock_speak(src.mob, msg, null, speak_as_admin = TRUE)
 
 
 /client/proc/cmd_dectalk()
