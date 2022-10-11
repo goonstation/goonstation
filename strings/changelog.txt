@@ -1,5 +1,9 @@
 
 (t)tue oct 11 22
+(u)LeahTheTech
+(p)11300
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Robotics consoles on Kondaru and Donut 2 have had their safety screws removed due to budget cuts.
 (u)Ryou
 (p)11297
 (e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
