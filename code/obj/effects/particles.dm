@@ -180,7 +180,7 @@
 	position = list(0, 0, 0)
 	friction = generator("num", 0.9, 0.4, UNIFORM_RAND)
 	drift = generator("box", list(1,1,0), list(-1,-1,0), UNIFORM_RAND)
-	scale = list(0.1, 0.1)
+	scale = list(0.15, 0.15)
 	rotation = generator("num", 0, 360, UNIFORM_RAND)
 	grow = generator("vector", list(0.08,0.08,0), list(0.03,0.03,0), UNIFORM_RAND)
 	fadein = 5
