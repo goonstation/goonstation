@@ -111,9 +111,10 @@
 				if (!target.sapper_power())
 					return
 
-		arcFlash(src.linked_apc, src, 0)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 30, 1) // placeholder
 		ON_COOLDOWN(src, src.mode, src.mode_cooldowns[src.mode])
 		src.linked_apc.cell.use(src.linked_apc.cell.maxcharge * 0.1)
+		src.linked_apc.AddComponent(/datum/component/flock_ping/sapper_power, 5 SECONDS)
 		for (var/atom/A as anything in targets)
 			A.AddComponent(/datum/component/flock_ping/sapper_power, src.mode_cooldowns[src.mode] / 2)
 
