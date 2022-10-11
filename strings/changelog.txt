@@ -1,4 +1,9 @@
 
+(t)tue oct 11 22
+(u)Garash
+(p)9963
+(e)🆕💅📄|C-Feature, C-QoL, A-UI
+(+)New UI for the material sheet's in-hand construction menu.
 (t)mon oct 10 22
 (u)DrWolfy
 (p)11266
