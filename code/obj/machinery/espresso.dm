@@ -98,7 +98,10 @@
 							src.update()
 						if ("Nothing")
 							return
-			else return ..()
+			else {
+				user.show_text ("You first need to place a cup into the [src]. Obviously.")
+			}
+			return ..()
 
 	ex_act(severity)
 		switch(severity)
