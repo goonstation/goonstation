@@ -65,7 +65,7 @@
 			src.is_npc = FALSE
 		else
 			emote("beep")
-			say(pick_string("flockmind.txt", "flockdrone_created"))
+			say(pick_string("flockmind.txt", "flockdrone_created"), TRUE)
 		src.flock?.drones_made++
 	var/datum/contextLayout/experimentalcircle/layout = new
 	layout.center = TRUE
@@ -188,7 +188,7 @@
 	src.is_npc = TRUE
 	if (give_alerts && src.z == Z_LEVEL_STATION)
 		emote("beep")
-		say(pick_string("flockmind.txt", "flockdrone_player_kicked"))
+		say(pick_string("flockmind.txt", "flockdrone_player_kicked"), TRUE)
 	if(src.client && !controller)
 		if(src.flock)
 			controller = new/mob/living/intangible/flock/trace(src, src.flock)
@@ -696,7 +696,7 @@
 	if (!isdead(src) && src.flock)
 		if (!src.flock.isEnemy(M))
 			emote("scream")
-			say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]")
+			say("[pick_string("flockmind.txt", "flockdrone_enemy")] [M]", TRUE)
 		src.flock.updateEnemy(M)
 
 /mob/living/critter/flock/drone/bullet_act(var/obj/projectile/P)
@@ -719,7 +719,7 @@
 	if(!isdead(src) && src.is_npc)
 		if(prev_damaged != src.damaged && src.damaged > 0) // damaged to a new state
 			src.emote("scream")
-			say("[pick_string("flockmind.txt", "flockdrone_hurt")]")
+			say("[pick_string("flockmind.txt", "flockdrone_hurt")]", TRUE)
 			src.ai.interrupt()
 
 /mob/living/critter/flock/drone/proc/check_health()
@@ -773,11 +773,11 @@
 	if(!src.dormant)
 		if(src.is_npc)
 			emote("scream")
-			say(pick_string("flockmind.txt", "flockdrone_death"))
+			say(pick_string("flockmind.txt", "flockdrone_death"), TRUE)
 			src.is_npc = FALSE // stop ticking the AI for this mob
 		else
 			emote("scream")
-			say("\[System notification: drone lost.\]")
+			say("\[System notification: drone lost.\]", TRUE)
 	var/obj/item/organ/heart/flock/core = src.organHolder.get_organ("heart")
 	if(core)
 		core.resources = src.resources
@@ -828,7 +828,7 @@
 		src.end_floorrunning()
 	src.ai?.die()
 	emote("scream")
-	say("\[System notification: drone diffracting.\]")
+	say("\[System notification: drone diffracting.\]", TRUE)
 	if(src.controller)
 		src.release_control()
 	var/datum/flock/F = src.flock
