@@ -36,7 +36,8 @@ var/list/basic_elements = list(
 
 	New()
 		..()
-		src.dispensable_reagents = basic_elements
+		if (!src.dispensable_reagents)
+			src.dispensable_reagents = basic_elements
 		update_account()
 		recording_queue = list()
 
