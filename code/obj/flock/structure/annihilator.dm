@@ -105,9 +105,9 @@
 		src.connected_structure = annihilator
 
 	Crossed(atom/movable/AM)
-		if (!src.on || !src.connected_structure || AM.disposed)
+		if (!istype(AM, /obj/projectile) || AM.disposed)
 			return ..()
-		if (!istype(AM, /obj/projectile))
+		if (!src.on || !src.connected_structure)
 			return ..()
 		var/obj/projectile/bullet = AM
 		if (!istype(bullet.proj_data, /datum/projectile/bullet))
