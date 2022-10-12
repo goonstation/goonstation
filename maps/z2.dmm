@@ -1164,7 +1164,7 @@
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/white,
 /area/hospital)
 "adX" = (
@@ -15141,7 +15141,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/research)
 "aWL" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/research)
 "aWM" = (
@@ -16785,7 +16785,7 @@
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bba" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/white,
 /area/upper_arctic/pod1)
 "bbb" = (
@@ -32099,7 +32099,7 @@
 	layer = 2.8;
 	mouse_opacity = 0
 	},
-/obj/machinery/chem_dispenser{
+/obj/machinery/chem_dispenser/chemical{
 	desc = "Unlike other chem dispensers, this one's mostly just made for plants.";
 	dispensable_reagents = list("mutadone","saltpetre","ammonia","potash","poo","space_fungus","weedkiller","mutagen");
 	name = "botany dispenser"
@@ -41922,7 +41922,7 @@
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cxt" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/black,
 /area/owlery/lab)
 "cxu" = (
@@ -60010,7 +60010,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/engine/caution/south,
 /area/centcom/offices/mordent)
 "dwi" = (
@@ -63875,7 +63875,7 @@
 	},
 /area/centcom/lounge)
 "dIZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1

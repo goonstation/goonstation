@@ -16257,7 +16257,7 @@
 /turf/simulated/floor/carpet/purple/decal/outercross,
 /area/station/chapel/sanctuary)
 "eyP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "eyX" = (
@@ -19177,7 +19177,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "foQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -5;
 	pixel_y = 1
@@ -24811,7 +24811,7 @@
 	},
 /area/station/engine/singcore)
 "gYK" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -35468,7 +35468,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = 6;
 	pixel_y = 1
@@ -49976,7 +49976,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "otu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -80532,7 +80532,7 @@
 	},
 /area/station/chapel/sanctuary)
 "wXr" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},

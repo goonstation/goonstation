@@ -1193,7 +1193,7 @@
 	},
 /area/station/science/lobby)
 "afe" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -1445,7 +1445,7 @@
 /turf/space,
 /area/shuttle/research/outpost)
 "afZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/purplewhite{
 	dir = 8
@@ -14152,7 +14152,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aWH" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)
@@ -46767,7 +46767,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "uke" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical{
 	dir = 8
 	},
@@ -47130,7 +47130,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "uAu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/science{
 	dir = 8
 	},
