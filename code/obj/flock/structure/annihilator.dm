@@ -35,7 +35,7 @@
 		src.info_tag.set_info_tag("Not generating bolt")
 
 	building_specific_info()
-		return !src.powered ? "Not generating bolt." : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds." : "Bolt ready."
+		return src.check_bolt_status() + "."
 
 	process(mult)
 		if (src.flock?.can_afford_compute(src.online_compute_cost))
@@ -65,12 +65,20 @@
 		else
 			src.icon_state = "annihilator-off"
 
-		src.info_tag.set_info_tag(!src.powered ? "Not generating bolt" : GET_COOLDOWN(src, "bolt_gen_time") ? "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds" : "Bolt ready")
+		src.info_tag.set_info_tag(src.check_bolt_status())
 
 	proc/power_projectile_checkers(state)
 		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
 			checker.on = state
 		src.checkers_powered = state
+
+	proc/check_bolt_status()
+		if (!src.powered)
+			return "Not generating bolt"
+		else if (GET_COOLDOWN(src, "bolt_gen_time"))
+			return "Generation time left: [round(GET_COOLDOWN(src, "bolt_gen_time") / 10)] seconds"
+		else
+			return "Bolt ready"
 
 	disposing()
 		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
