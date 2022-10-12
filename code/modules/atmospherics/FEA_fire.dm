@@ -188,15 +188,14 @@
 #endif
 	set_loc() // hotspots apparently start somewhere wacky
 		..()
-		src.update_overlay_blocking()
-		src.update_perspective_overlays()
+		if (loc)
+			src.update_overlay_blocking()
+			src.update_perspective_overlays()
 
 	proc/update_overlay_blocking()
 		for (var/dir in cardinal) // borrowed from fluids and heavily modified
 			var/turf/t = get_step( src, dir )
 			blocked_perspective_objects["[dir]"] = 0
-			if (!t) //the fuck? how
-				continue
 			if (IS_PERSPECTIVE_WALL(t))
 				blocked_perspective_objects["[dir]"] = 1
 			else
