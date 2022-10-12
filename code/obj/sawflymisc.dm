@@ -32,16 +32,10 @@
 
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
-	var/obj/item/organ/brain/currentbrain = null
-	var/mob/currentuser = null
-	var/isopen = FALSE
-	var/playercontrolled = FALSE
 
 	attack_self(mob/user as mob) //full on overriding priming in hopes of no jank
 		logGrenade(user)
 		user = currentuser
-		if(isopen)
-			return
 		else
 			boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 			icon_state = icon_state_armed
@@ -144,7 +138,7 @@
 
 	//due to not having intent hotkeys and also being AI controlled we only need the one proc
 	harm(mob/living/target, var/mob/living/critter/robotic/sawfly/user) //will this cause issues down the line when someone eventually makes a child of this? hopefully not
-		if(!ON_COOLDOWN(user, "sawfly_attackCD", 0.8 SECONDS))
+		if(!ON_COOLDOWN(user, "sawfly_attackCD", 1 SECONDS))
 			if(issawflybuddy(target))
 				return
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "carves", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
