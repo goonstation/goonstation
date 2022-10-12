@@ -116,8 +116,10 @@
 	Click(location, control, params)
 		if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
 			return ..()
-		var/mode_select = tgui_input_list(usr, "Select mode", "Option select", list(CHARGING_BITS, CHARGING_DRONES, CHARGING_STRUCTURES))
-		if (!mode_select || mode_select == src.mode)
+		var/mode_select = tgui_input_list(usr, "Select mode", "Option select", list(CHARGING_BITS, CHARGING_DRONES, CHARGING_STRUCTURES, "Cancel"))
+		if (!mode_select || mode_select == "Cancel")
+			return
+		if (mode_select == src.mode)
 			return
 		if (mode_select != "Remove target")
 			ON_COOLDOWN(src, mode_select, src.mode_cooldowns[mode_select])
