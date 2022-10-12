@@ -281,7 +281,6 @@
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
 	spawn_contents = list(/obj/item/storage/box/salvager_frame_compartment,
-						  /obj/item/storage/box/starter/withO2,
 						  /obj/item/deconstructor,
 						  /obj/item/tool/omnitool,
 						  /obj/item/weldingtool,
@@ -392,4 +391,4 @@
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 
-/obj/item/clothing/head/helmet/space/salvager
+/obj/item/clothing/head/helmet/space/engineer/salvager
