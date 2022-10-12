@@ -156,6 +156,9 @@
 	/// forces the mob to display their special hair, even if their flags tell them not to
 	var/special_hair_override = 0 // only really works if they have any special hair
 
+	/// Keeps track of the brain slug inside us, if any.
+	var/mob/living/critter/brain_slug/slug = null
+
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
 	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r", "nosepick")
 
