@@ -1,3 +1,11 @@
+var/list/basic_elements = list(
+		"aluminium","barium","bromine","calcium","carbon","chlorine", \
+		"chromium","copper","ethanol","fluorine","hydrogen", \
+		"iodine","iron","lithium","magnesium","mercury","nickel", \
+		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
+		"radium","silicon","silver","sodium","sugar","sulfur","water"
+	)
+
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
@@ -12,13 +20,7 @@
 	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
-	var/list/dispensable_reagents = list(
-		"aluminium","barium","bromine","calcium","carbon","chlorine", \
-		"chromium","copper","ethanol","fluorine","hydrogen", \
-		"iodine","iron","lithium","magnesium","mercury","nickel", \
-		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
-		"radium","silicon","silver","sodium","sugar","sulfur","water"
-	)
+	var/list/dispensable_reagents = null
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
@@ -34,6 +36,7 @@
 
 	New()
 		..()
+		src.dispensable_reagents = basic_elements
 		update_account()
 		recording_queue = list()
 
