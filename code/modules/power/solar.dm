@@ -50,7 +50,10 @@
 		id = "aisat"
 	New()
 		..()
-		for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
+		SPAWN(1 SECOND)
+		if (!istype(powernet))
+			src.get_direct_powernet()
+		for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
 			if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
 			var/obj/machinery/computer/solar_control/S = test_link?.master
 			if(S.tracker) break // if there's already a tracker, dont connect
@@ -130,12 +133,15 @@
 /obj/machinery/power/solar/New()
 	..()
 	SPAWN(1 SECOND)
-		for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
-			if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
-			control = test_link?.master // we need to be able to find a control console
-			break
-		if(control.cdir)
-			ndir = control.cdir
+		if (current_state == GAME_STATE_PLAYING)
+			if (!istype(powernet))
+				powernet = src.get_direct_powernet()
+			for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
+				if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+				control = test_link?.master // we need to be able to find a control console
+				break
+			if(control?.cdir)
+				ndir = control.cdir
 		UpdateIcon()
 		update_solar_exposure()
 
@@ -291,23 +297,27 @@
 		if(!powernet) return
 		for(var/obj/machinery/power/solar/S in powernet.nodes)
 			if(S.control) continue
+			if(current_state != GAME_STATE_PLAYING && S.id != src.solar_id)
+				continue // some solars are weird
 			S.control = src
-			cdir = S.adir
+			src.cdir = S.adir
 		for(var/obj/machinery/power/tracker/S in powernet.nodes)
 			if(S.control) continue
+			if(current_state != GAME_STATE_PLAYING && S.id != src.solar_id)
+				continue // some solars are weird
 			S.control = src
-			tracker = S
+			src.tracker = S
 			break
 		var/turf/T = get_turf(src)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
-		if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+		if (!test_link) test_link = new /obj/machinery/power/data_terminal(T)
+		if(!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			test_link.master = src
 		set_panels(cdir)
 
 /obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels
 	var/datum/powernet/powernet = src.get_direct_powernet()
-	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
+	for(var/obj/machinery/power/solar/S in powernet?.nodes)
 		if(S.control == src)
 			S.control = null
 	..()
