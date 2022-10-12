@@ -51,15 +51,14 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-		if (!istype(powernet))
-			src.get_direct_powernet()
-		for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
-			if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
-			var/obj/machinery/computer/solar_control/S = test_link?.master
-			if(S.tracker) break // if there's already a tracker, dont connect
-			control = S
-			control.tracker = src // otherwise, we are now the tracker
-			break
+			powernet = src.get_direct_powernet()
+			for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
+				if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+				var/obj/machinery/computer/solar_control/controller = test_link?.master
+				if(controller?.tracker) break // if there's already a tracker, dont connect
+				control = controller
+				control.tracker = src // otherwise, we are now the tracker
+				break
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
 		sun_angle = angle
@@ -134,8 +133,7 @@
 	..()
 	SPAWN(1 SECOND)
 		if (current_state == GAME_STATE_PLAYING)
-			if (!istype(powernet))
-				powernet = src.get_direct_powernet()
+			powernet = src.get_direct_powernet()
 			for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
 				if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
 				control = test_link?.master // we need to be able to find a control console
@@ -261,7 +259,7 @@
 	var/trackrate = 600		// 300-900 seconds
 	var/trackdir = 1		// 0 =CCW, 1=CW
 	var/nexttime = 0
-	var/obj/machinery/tracker
+	var/obj/machinery/power/tracker/tracker
 
 	north
 		solar_id = "north"
@@ -293,33 +291,20 @@
 /obj/machinery/computer/solar_control/New()
 	..()
 	SPAWN(1.5 SECONDS)
-		var/datum/powernet/powernet = src.get_direct_powernet()
-		if(!powernet) return
-		for(var/obj/machinery/power/solar/S in powernet.nodes)
-			if(S.control) continue
-			if(current_state != GAME_STATE_PLAYING && S.id != src.solar_id)
-				continue // some solars are weird
-			S.control = src
-			src.cdir = S.adir
-		for(var/obj/machinery/power/tracker/S in powernet.nodes)
-			if(S.control) continue
-			if(current_state != GAME_STATE_PLAYING && S.id != src.solar_id)
-				continue // some solars are weird
-			S.control = src
-			src.tracker = S
-			break
 		var/turf/T = get_turf(src)
 		var/obj/machinery/power/data_terminal/test_link = locate() in T
 		if (!test_link) test_link = new /obj/machinery/power/data_terminal(T)
 		if(!DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
 			test_link.master = src
-		set_panels(cdir)
+		set_panels(cdir) // this finds all the solars
 
 /obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels
 	var/datum/powernet/powernet = src.get_direct_powernet()
-	for(var/obj/machinery/power/solar/S in powernet?.nodes)
-		if(S.control == src)
-			S.control = null
+	for(var/obj/machinery/power/solar/Solar in powernet?.nodes)
+		if(Solar.control == src)
+			Solar.control = null
+	if (tracker) // we track the solar tracker now
+		tracker.control = null
 	..()
 
 /obj/machinery/computer/solar_control/process()
@@ -412,24 +397,28 @@
 		if(src.trackrate) nexttime = world.timeofday + 3600/abs(trackrate)
 		track = text2num_safe(href_list["track"])
 		if(track == 2)
-			var/obj/machinery/power/tracker/T = locate() in machine_registry[MACHINES_POWER]
-			if(T)
-				cdir = T.sun_angle
+			if(tracker) // we keep track of the tracker now
+				cdir = tracker.sun_angle
 
 	src.updateUsrDialog()
 	return
 
 /obj/machinery/computer/solar_control/proc/set_panels(var/cdir=null)
 	var/datum/powernet/powernet = src.get_direct_powernet()
-	if(!powernet) return
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if(S.control != src) continue
-		if(cdir)
-			S.ndir = cdir
-
-	for(var/obj/machinery/power/tracker/T in powernet.nodes)
-		if(T.control) continue
-		T.control = src
+	if (!powernet) return
+	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+		if(Solar.control) continue
+		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
+			continue // some solars are weird
+		Solar.control = src
+		src.cdir = Solar.adir
+	for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
+		if(Tracker.control) continue
+		if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+			continue // some solars are weird
+		Tracker.control = src
+		src.tracker = Tracker
+		break
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
@@ -442,12 +431,12 @@
 
 	var/closest_solar_id = 1
 	var/closest_solar_distance = null
-	for(var/obj/machinery/power/solar/S in powernet.nodes)
-		if (closest_solar_distance != null && GET_DIST(src, S) >= closest_solar_distance)
+	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+		if (closest_solar_distance != null && GET_DIST(src, Solar) >= closest_solar_distance)
 			continue
 
-		closest_solar_id = S.id
-		closest_solar_distance = GET_DIST(src, S)
+		closest_solar_id = Solar.id
+		closest_solar_distance = GET_DIST(src, Solar)
 
 	src.solar_id = closest_solar_id
 	set_panels(cdir)
