@@ -24948,7 +24948,10 @@
 	},
 /area/station/solar/south)
 "bIg" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bIi" = (
