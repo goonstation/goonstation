@@ -8468,6 +8468,7 @@
 /area/station/science/storage)
 "auh" = (
 /obj/machinery/light/incandescent/harsh/very,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aui" = (
