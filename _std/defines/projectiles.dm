@@ -90,4 +90,5 @@
 #define AMMO_HOWITZER "howitzer"
 #define AMMO_FLINTLOCK "flintlock"
 #define AMMO_FLINTLOCK_RIFLE "flintlock_rifle"
+#define AMMO_FLINTLOCK_MORTAR "flintlock_hand_mortar"
 #define AMMO_COILGUN "coilgun"

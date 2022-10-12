@@ -1107,6 +1107,21 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 
+/obj/item/gun/kinetic/single_action/flintlock/mortar
+	name = "hand mortar"
+	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "hand_mortar"
+	item_state = "hand_mortar"
+	ammo_cats = list(AMMO_FLINTLOCK_MORTAR)
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	default_magazine = /obj/item/ammo/bullets/flintlock/mortar/single
+
+	New()
+		..()
+		set_current_projectile(new/datum/projectile/bullet/flintlock/mortar)
+
 //0.72
 /obj/item/gun/kinetic/spes
 	name = "SPES-12"

@@ -1100,6 +1100,19 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+//2.5
+/obj/item/ammo/bullets/flintlock/mortar
+	sname = "2.5 Mortar"
+	name = "2.5 mortar grenades"
+	desc = "Ancient 63.5mm grenades, meant for use in a hand mortar."
+	ammo_type = new/datum/projectile/bullet/flintlock/mortar
+	icon_state = "flintlock_rifle_ammo_pouch"
+	ammo_cat = AMMO_FLINTLOCK_MORTAR
+
+	single
+		amount_left = 1
+		max_amount = 1
+
 //3.0
 /obj/item/ammo/bullets/gun
 	name = "Briefcase of guns"
