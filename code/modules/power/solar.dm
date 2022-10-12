@@ -20,7 +20,7 @@
 	var/id = 1 // nolonger used, kept for map compatibility
 	var/sun_angle = 0		// sun angle as set by sun datum
 	var/obj/machinery/computer/solar_control/control
-	mats = list("MET-2"=15, "CON-1"=15)
+	mats = list("CRY-1"=15, "CON-1"=20)
 
 	north
 		id = "north"
@@ -446,6 +446,7 @@
 
 /obj/machinery/power/solar/owl_cheat
 	id = "owl"
+	mats = 0
 
 	update_solar_exposure()
 		if(isnull(sun))	return
