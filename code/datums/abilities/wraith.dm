@@ -1372,6 +1372,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						sleep(20 SECONDS)
 						if(!H?.loc && !W.loc) return //Everyone's dead, go home
 						if(!W.loc) //wraith got gibbed, kick them into the aether and put the human back
+							boutput(H, "<span class='alert'>You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost.</span>")
 							H.ghostize()
 							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 							if (human_mind)
@@ -1379,6 +1380,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
 								playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+								boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
 							return
 						if(!H?.loc) //Human gibbed, put the wraith back into their body
 							var/mob/M2 = ckey_to_mob(wraith_key)
