@@ -44,6 +44,15 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
+	// stats stuff, if not listed above
+	var/drones_made = 0
+	var/bits_made = 0
+	var/deaths = 0
+	var/resources_gained = 0
+	var/partitions_made = 0
+	var/tiles_converted = 0
+	var/structures_made = 0
+
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
@@ -131,6 +140,7 @@ var/flock_signal_unleashed = FALSE
 	state["drones"] = list()
 	state["structures"] = list()
 	state["enemies"] = list()
+	state["stats"] = list()
 	state["category_lengths"] = list(
 		"traces" = length(src.traces),
 		"drones" = length(src.units[/mob/living/critter/flock/drone]),
@@ -169,6 +179,21 @@ var/flock_signal_unleashed = FALSE
 				else
 					// enemy no longer exists, let's do something about that
 					src.enemies -= name
+
+		if ("stats")
+			var/list/stats = list(
+				"Drones realized: " = src.drones_made,
+				"Bits formed: " = src.bits_made,
+				"Total deaths: " = src.deaths,
+				"Resources gained: " = src.resources_gained,
+				"Partitions created: " = src.partitions_made,
+				"Tiles converted: " = src.tiles_converted,
+				"Structures created: " = src.structures_made,
+				"Highest compute: " = src.peak_compute
+				)
+
+			for (var/stat in stats)
+				state["stats"] += list(list("name" = stat, "value" = stats[stat]))
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()
@@ -554,7 +579,6 @@ var/flock_signal_unleashed = FALSE
 	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	src.peak_compute = 0
 	if (!real)
 		src.load_structures()
 		return
@@ -591,6 +615,8 @@ var/flock_signal_unleashed = FALSE
 		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+	if (isfeathertile(T))
+		src.tiles_converted++
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -693,6 +719,19 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/machinery/vending = /obj/flock_structure/fabricator,
+	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
+	/obj/submachine/seed_vendor = /obj/flock_structure/fabricator,
+	/obj/machinery/dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/disposal_pipedispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chem_dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chemicompiler_stationary = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/foamtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/watertank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/fueltank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
 
@@ -756,7 +795,7 @@ var/flock_signal_unleashed = FALSE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
+			var/obj/converted = new replacementPath(T, null, O)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))

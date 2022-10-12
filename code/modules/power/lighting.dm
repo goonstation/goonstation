@@ -385,6 +385,86 @@
 		icon_state = "runway50"
 		base_state = "runway5"
 
+/obj/machinery/light/traffic_light
+	name = "warning light"
+	desc = "A small light used to warn when shuttle traffic is expected."
+	icon_state = "runway10"
+	base_state = "runway1"
+	fitting = "bulb"
+	brightness = 0.5
+	light_type = /obj/item/light/bulb
+	allowed_type = /obj/item/light/bulb
+	plane = PLANE_NOSHADOW_BELOW
+	on = 0
+	wallmounted = 0
+	removable_bulb = 0
+	var/static/warning_color = "#da9b49"
+	var/connected_dock = null
+
+	New()
+		..()
+		if(src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
+
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(DOCK_EVENT_INCOMING)
+				src.activate()
+			if(DOCK_EVENT_ARRIVED)
+				src.deactivate()
+			if(DOCK_EVENT_OUTGOING)
+				src.activate()
+			if(DOCK_EVENT_DEPARTED)
+				src.deactivate()
+
+	proc/activate()
+		color = warning_color
+		on = 1
+		update()
+
+	proc/deactivate()
+		color = null
+		on = 0
+		update()
+
+	trader_left // matching mapping area convensions
+		connected_dock = COMSIG_DOCK_TRADER_WEST
+
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+	trader_right
+		connected_dock = COMSIG_DOCK_TRADER_EAST
+		delay2
+			icon_state = "runway20"
+			base_state = "runway2"
+		delay3
+			icon_state = "runway30"
+			base_state = "runway3"
+		delay4
+			icon_state = "runway40"
+			base_state = "runway4"
+		delay5
+			icon_state = "runway50"
+			base_state = "runway5"
+
+// Traffic lights on/off is signal controlled; light switches should not affect us.
+/obj/machinery/light/traffic_light/power_change()
+	if(src.loc)
+		var/area/A = get_area(src)
+		var/state = src.on && A.power_light
+		seton(state)
+
 /obj/machinery/light/beacon
 	name = "tripod light"
 	desc = "A large portable light tripod."

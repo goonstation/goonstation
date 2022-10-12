@@ -40,3 +40,5 @@
 #define FLOCK_DRONE_COMPUTE_HIBERNATE 15
 // how many times a drone must wander in a row before it hibernates
 #define FLOCK_DRONE_WANDER_PAUSE_COUNT 5
+// maximum number of flockdrones allowed
+#define FLOCK_DRONE_LIMIT 75

@@ -1,7 +1,7 @@
 #ifdef XMAS
-INCLUDE_MAP("../unused/crash_gimmick.dmm")
+INCLUDE_MAP("../unused/crash_gimmick_2.dmm")
 #else
-INCLUDE_MAP("../unused/crash_gimmick.dmm")
+INCLUDE_MAP("../unused/crash_gimmick_2.dmm")
 #endif
 INCLUDE_MAP("../z2.dmm")
 INCLUDE_MAP("../z3.dmm")

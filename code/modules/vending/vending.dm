@@ -2374,6 +2374,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	name = "Necromancer Zoldorf"
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
+	icon_fallen = "hfortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2397,6 +2398,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "fortuneteller"
 	icon_vend = "fortuneteller-vend"
+	icon_fallen = "fortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2868,3 +2870,90 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 				boutput(usr, "<span class='alert'>Insufficient funds.</span>")
 			else
 				boutput(usr, "<span class='alert'>There is no tank to fill up!</span>")
+
+ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
+
+/obj/machinery/vending/jobclothing/security
+	name = "Security Apparel"
+	desc = "A vending machine that vends Security clothing."
+	icon_state = "secclothing"
+	icon_panel = "snack-panel"
+	icon_off = "secclothing-off"
+	icon_broken = "secclothing-broken"
+	icon_fallen = "secclothing-fallen"
+	req_access = list(access_security)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/red, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/assistant, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/lawyer/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/jersey/red, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/dirty_vest, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/tourist, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/tourist/max_payne, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/police, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/serpico, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/serpico, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/red, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/flatcap, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/policecap, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/bobby, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/siren, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/security, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/forensic, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/security, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/security/april_fools, 1, hidden=1)
+
+/obj/machinery/vending/jobclothing/medical
+	name = "Medical Apparel"
+	desc = "A vending machine that vends Medical clothing."
+	icon_state = "medclothing"
+	icon_panel = "snack-panel"
+	icon_off = "medclothing-off"
+	icon_broken = "medclothing-broken"
+	icon_fallen = "medclothing-fallen"
+	req_access = list(access_medical)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/roboticist, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/geneticist, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/medical, 3)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/genetics, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/robotics, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/nursedress, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 10)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical_shield, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/red, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/white, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/white, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/blue, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headmirror, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/traditionalnursehat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nursehat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/medical, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/medical, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/medical/robotics, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/genetics, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/medic, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/medic, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/robotics, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/robotics, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/genetics, 1)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/genetics, 1)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical/april_fools, 2, hidden=1)

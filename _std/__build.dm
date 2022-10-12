@@ -34,6 +34,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
+//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+
 //#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
