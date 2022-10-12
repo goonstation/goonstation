@@ -74,14 +74,13 @@
 
 			if (CHARGING_DRONES)
 				var/mob/living/critter/flock/drone/target
-				var/list/nearby_mobs = range(4, src)
-				shuffle_list(nearby_mobs)
-				for (var/mob/living/critter/flock/drone/flockdrone in nearby_mobs)
+				var/list/nearby_mobs = list()
+				for (var/mob/living/critter/flock/drone/flockdrone in range(4, src))
 					if (flockdrone.flock == src.flock)
-						target = flockdrone
-						break
-				if (!target)
+						nearby_mobs += flockdrone
+				if (!length(nearby_mobs))
 					return
+				target = pick(nearby_mobs)
 				targets += target
 
 				var/datum/handHolder/HH = target.hands[3]
@@ -96,8 +95,9 @@
 			if (CHARGING_STRUCTURES)
 				var/obj/flock_structure/target
 				var/list/area_structures = list()
+				var/area/structure_area = get_area(src)
 				for (var/obj/flock_structure/structure as anything in src.flock.structures)
-					if (structure.accepts_sapper_power && get_area(structure) == get_area(src))
+					if (structure.accepts_sapper_power && get_area(structure) == structure_area)
 						area_structures += structure
 				if (!length(area_structures))
 					return
