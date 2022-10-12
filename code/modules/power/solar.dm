@@ -52,13 +52,14 @@
 		..()
 		SPAWN(1 SECOND)
 			powernet = src.get_direct_powernet()
-			for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
-				if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
-				var/obj/machinery/computer/solar_control/controller = test_link?.master
-				if(controller?.tracker) break // if there's already a tracker, dont connect
-				control = controller
-				control.tracker = src // otherwise, we are now the tracker
-				break
+			if (powernet)
+				for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
+					if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+					var/obj/machinery/computer/solar_control/controller = test_link?.master
+					if(controller?.tracker) break // if there's already a tracker, dont connect
+					control = controller
+					control.tracker = src // otherwise, we are now the tracker
+					break
 	// called by datum/sun/calc_position() as sun's angle changes
 	proc/set_angle(var/angle)
 		sun_angle = angle
@@ -134,12 +135,13 @@
 	SPAWN(1 SECOND)
 		if (current_state == GAME_STATE_PLAYING)
 			powernet = src.get_direct_powernet()
-			for(var/obj/machinery/power/data_terminal/test_link in powernet?.data_nodes) // plug and play
-				if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
-				control = test_link?.master // we need to be able to find a control console
-				break
-			if(control?.cdir)
-				ndir = control.cdir
+			if(powernet)
+				for(var/obj/machinery/power/data_terminal/test_link in powernet.data_nodes) // plug and play
+					if(!istype(test_link?.master,/obj/machinery/computer/solar_control)) continue
+					control = test_link?.master // we need to be able to find a control console
+					break
+				if(control?.cdir)
+					ndir = control.cdir
 		UpdateIcon()
 		update_solar_exposure()
 
@@ -300,11 +302,12 @@
 
 /obj/machinery/computer/solar_control/disposing() // it would probably be best if we unlink all our panels
 	var/datum/powernet/powernet = src.get_direct_powernet()
-	for(var/obj/machinery/power/solar/Solar in powernet?.nodes)
-		if(Solar.control == src)
-			Solar.control = null
-	if (tracker) // we track the solar tracker now
-		tracker.control = null
+	if (powernet)
+		for(var/obj/machinery/power/solar/Solar in powernet.nodes)
+			if(Solar.control == src)
+				Solar.control = null
+		if (tracker) // we track the solar tracker now
+			tracker.control = null
 	..()
 
 /obj/machinery/computer/solar_control/process()
