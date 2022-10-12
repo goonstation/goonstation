@@ -2178,3 +2178,20 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/derevving //Status effect for converting a rev to a not rev
+	id = "derevving"
+	name = "De-revving"
+	desc = "An implant is attempting to convert you from the revolution! Remove the implant, or heal it's damage!"
+	icon_state = "mindhack" //TODO: Make a more fitting icon for this
+	maxDuration = 30 SECONDS
+
+	onAdd()
+		. = ..()
+
+	onUpdate(timePassed)
+		. = ..()
+		var/mult = timePassed / (2 SECONDS)
+		var/mob/living/L = owner
+		L.TakeDamage("chest", 5*mult, 5*mult, 0)
+
