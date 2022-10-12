@@ -80,6 +80,17 @@
 		else
 			return "Bolt ready"
 
+	proc/activate(obj/projectile/bullet)
+		ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
+		src.icon_state = "annihilator-generating"
+		src.power_projectile_checkers(FALSE)
+		var/list/gnesis_bolt_objs = DrawLine(src, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
+		SPAWN(0.25 SECONDS)
+			for (var/obj/line_obj/gnesis_bolt/gnesis_bolt_obj as anything in gnesis_bolt_objs)
+				qdel(gnesis_bolt_obj)
+		playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE) // placeholder sound
+		qdel(bullet)
+
 	disposing()
 		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
 			qdel(checker)
@@ -109,19 +120,14 @@
 			return ..()
 		if (!src.on || !src.connected_structure)
 			return ..()
+		if (GET_COOLDOWN(src.connected_structure, "bolt_gen_time"))
+			return ..()
 		var/obj/projectile/bullet = AM
 		if (!istype(bullet.proj_data, /datum/projectile/bullet))
 			return ..()
 		for (var/obj/flock_structure/annihilator/annihilator in view(src.connected_structure.checker_radius, src))
 			if (src.connected_structure == annihilator)
-				ON_COOLDOWN(src.connected_structure, "bolt_gen_time", 10 SECONDS)
-				src.connected_structure.process(1)
-				var/list/gnesis_bolt_objs = DrawLine(src.connected_structure, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
-				SPAWN(0.25 SECONDS)
-					for (var/obj/line_obj/gnesis_bolt/gnesis_bolt_obj as anything in gnesis_bolt_objs)
-						qdel(gnesis_bolt_obj)
-				playsound(src.connected_structure, 'sound/weapons/railgun.ogg', 50, TRUE) // placeholder sound
-				qdel(bullet)
+				src.connected_structure.activate(bullet)
 				return
 		..()
 
