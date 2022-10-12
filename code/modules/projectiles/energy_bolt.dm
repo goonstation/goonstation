@@ -138,7 +138,7 @@ toxic - poisons
 	power = 18
 	dissipation_delay = 2
 	dissipation_rate = 2
-	max_range = 6
+	max_range = 8
 	icon_state = "spark"
 
 /datum/projectile/energy_bolt/tasershotgunslug
