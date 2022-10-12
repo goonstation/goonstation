@@ -34,6 +34,8 @@ ABSTRACT_TYPE(/obj/machinery/traymachine)
 	density = TRUE
 	anchored = TRUE
 	power_usage = TRAYMACHINE_DEFAULT_DRAW
+	deconstruct_flags = DECON_NONE
+
 
 	//tray related variables
 	var/obj/machine_tray/my_tray = null
