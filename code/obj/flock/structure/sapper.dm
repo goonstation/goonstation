@@ -57,13 +57,24 @@
 
 		switch(src.mode)
 			if (CHARGING_BITS)
-				var/list/nearby_mobs = range(4, src)
-				shuffle_list(nearby_mobs)
-				for (var/mob/living/critter/flock/bit/flockbit in nearby_mobs)
-					if (flockbit.flock == src.flock)
-						targets += flockbit
-						if (length(targets) == 3)
-							break
+				var/list/nearby_bits = list()
+				var/area/src_area = get_area(src)
+				var/perform_lag_check = length(src.flock.units[/mob/living/critter/flock/bit]) > 10
+				for (var/mob/living/critter/flock/bit/flockbit as anything in src.flock.units[/mob/living/critter/flock/bit])
+					if (perform_lag_check)
+						LAGCHECK(LAG_MED)
+					if (GET_DIST(src, flockbit) < 7 || get_area(flockbit) == src_area)
+						nearby_bits += flockbit
+				if (!length(nearby_bits))
+					return
+
+				var/mob/living/critter/flock/bit/chosen_bit
+				for (var/i in 1 to 3)
+					chosen_bit = pick(nearby_bits)
+					nearby_bits -= chosen_bit
+					targets += chosen_bit
+					if (!length(nearby_bits))
+						break
 				if (!length(targets))
 					return
 
