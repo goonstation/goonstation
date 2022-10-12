@@ -1061,7 +1061,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 //0.58
 /obj/item/gun/kinetic/single_action/flintlock
 	name = "flintlock pistol"
-	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
+	desc = "In recent years, flintlocks have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon_state = "flintlock"
 	item_state = "flintlock"
 	fire_animation = TRUE
@@ -1090,7 +1090,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 /obj/item/gun/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
-	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon = 'icons/obj/large/64x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "flintlock_rifle"
@@ -1109,7 +1108,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 /obj/item/gun/kinetic/single_action/flintlock/mortar
 	name = "hand mortar"
-	desc = "In recent years, flintlock pistols have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "hand_mortar"
 	item_state = "hand_mortar"

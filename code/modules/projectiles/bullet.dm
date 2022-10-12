@@ -568,8 +568,8 @@ toxic - poisons
 				var/turf/target = get_edge_target_turf(M, dirflag)
 				M.throw_at(target, 6, 2, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
-				sleep(0.5 SECONDS) // Wait until the target is at rest before exploding.
-				explosion_new(null, get_turf(hit), 4, 1.75)
+				SPAWN(0.5 SECONDS) // Wait until the target is at rest before exploding.
+					explosion_new(null, get_turf(hit), 4, 1.75)
 			else
 				explosion_new(null, get_turf(hit), 4, 1.75)
 			..()
