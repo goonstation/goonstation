@@ -33,18 +33,6 @@
 	//used in dictating behavior when deployed from grenade
 	var/mob/living/critter/robotic/sawfly/heldfly = null
 
-	attack_self(mob/user as mob) //full on overriding priming in hopes of no jank
-		logGrenade(user)
-		user = currentuser
-		else
-			boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
-			icon_state = icon_state_armed
-			playsound(src.loc, src.sound_armed, 75, 1, -3)
-			src.add_fingerprint(user)
-			SPAWN(src.det_time)
-				if (src) prime(user)
-				return
-
 
 	prime()
 		var/turf/T =  get_turf(src)
