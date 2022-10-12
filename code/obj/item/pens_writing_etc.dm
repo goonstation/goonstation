@@ -137,7 +137,7 @@
 			G.color = src.reagents.get_average_rgb()
 			G.sample_reagent = src.reagents.get_master_reagent_id()
 			G.sample_amt = PEN_REAGENT_CAPACITY
-			src.reagents.remove_reagent(G.sample_reagent, PEN_REAGENT_CAPACITY)
+			src.reagents.clear_reagents()
 
 		src.remove_filter("reagent_coloration")
 		src.color_name = initial(src.color_name)
