@@ -1769,6 +1769,18 @@ proc/countJob(rank)
 		return
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
+/// Returns a list of eligible dead players that COULD choose to respawn or whatever
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE)
+	. = list()
+	for (var/datum/mind/M in ticker.minds)
+		if (M.current && M.current.client)
+			var/client/C = M.current.client
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+				continue
+			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
+				continue
+			. += M
+
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
