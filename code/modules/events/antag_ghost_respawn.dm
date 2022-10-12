@@ -54,6 +54,12 @@
 				return
 
 			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			for(var/mob/wraith/W in ticker.mode.traitors)
+				if(W.deaths < 2)
+					src.antagonist_type -= list("Wraith")
+					src.antagonist_type = pick(list())
+				if(isnull(W.deaths))
+					continue
 
 		switch (src.antagonist_type)
 			if ("Blob", "Blob (AI)")
@@ -267,6 +273,7 @@
 				if ("Salvager")
 					var/mob/living/L = M3.humanize(equip_rank=FALSE)
 					if (istype(L))
+						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
 					else
 						failed = 1

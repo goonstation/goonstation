@@ -137,9 +137,10 @@
 			G.color = src.reagents.get_average_rgb()
 			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
 
-		src.remove_filter("reagent_coloration")
-		src.color_name = initial(src.color_name)
-		src.font_color = initial(src.font_color)
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
+
 		src.in_use = 0
 
 	onMaterialChanged()
@@ -702,9 +703,9 @@
 			G.color = src.reagents.get_average_rgb()
 			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
 
-		src.remove_filter("reagent_coloration")
-		src.color_name = initial(src.color_name)
-		src.font_color = initial(src.font_color)
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
 
 	get_desc()
 		. = ..()
