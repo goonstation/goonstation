@@ -439,6 +439,12 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/effects/sparks6.ogg'
 
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 0, weakened = 1 SECOND, stunned = 1 SECOND, disorient = 0, remove_stamina_below_zero = 0)
+
 /datum/projectile/energy_bolt/raybeam
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
