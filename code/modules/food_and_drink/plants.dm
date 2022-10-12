@@ -938,6 +938,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
 			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
+			bowl.reagents.add_reagent("juice_pumpkin", 30)
 			src.reagents.trans_to(bowl, src.reagents.maximum_volume)
 			qdel(src)
 
