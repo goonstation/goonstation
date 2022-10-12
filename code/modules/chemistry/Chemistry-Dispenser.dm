@@ -6,6 +6,7 @@ var/list/basic_elements = list(
 		"radium","silicon","silver","sodium","sugar","sulfur","water"
 	)
 
+ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
 	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
@@ -36,8 +37,6 @@ var/list/basic_elements = list(
 
 	New()
 		..()
-		if (!src.dispensable_reagents)
-			src.dispensable_reagents = basic_elements
 		update_account()
 		recording_queue = list()
 
@@ -427,7 +426,12 @@ var/list/basic_elements = list(
 			if ("clear_recording")
 				src.recording_queue = list()
 
-/obj/machinery/chem_dispenser/med_test
+/obj/machinery/chem_dispenser/chemical
+	New()
+		..()
+		src.dispensable_reagents = basic_elements
+
+/obj/machinery/chem_dispenser/chemical/med_test
 	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
 								/datum/reagent_group/default/styptic,
 								/datum/reagent_group/default/silver_sulfadiazine)
