@@ -76,7 +76,7 @@
 				var/mob/living/critter/flock/drone/target
 				var/list/nearby_mobs = list()
 				for (var/mob/living/critter/flock/drone/flockdrone in range(4, src))
-					if (flockdrone.flock == src.flock)
+					if (!flockdrone.ai_paused && flockdrone.flock == src.flock)
 						nearby_mobs += flockdrone
 				if (!length(nearby_mobs))
 					return
