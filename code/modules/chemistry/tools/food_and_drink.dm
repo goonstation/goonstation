@@ -800,6 +800,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pumpkin"
 	can_recycle = FALSE
+	initial_reagents = list("juice_pumpkin"=30)
 
 
 /* ======================================================= */
