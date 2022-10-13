@@ -27426,6 +27426,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/light_switch/north,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge/hos)
 "bHk" = (
@@ -50169,7 +50170,6 @@
 	pixel_x = 5
 	},
 /obj/item/device/radio/intercom/bridge,
-/obj/blind_switch/area/west,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/station/bridge/hos)
 "njL" = (
@@ -55774,6 +55774,7 @@
 	dir = 4;
 	pixel_x = -20
 	},
+/obj/blind_switch/area/south,
 /turf/simulated/floor/sanitary,
 /area/station/bridge/hos)
 "sJN" = (
