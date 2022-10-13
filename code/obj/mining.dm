@@ -240,31 +240,36 @@
 			if (!T)
 				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
-			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
+			var/isterrain = locate(/datum/component/buildable_turf) in T.datum_components && istype(T,/turf/unsimulated)
+			if ((!istype(T, /turf/space) && isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
@@ -299,6 +304,7 @@
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		var/isterrain = (locate(/datum/component/buildable_turf) in target.datum_components) && istype(target,/turf/unsimulated)
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -314,7 +320,7 @@
 					magnet = null
 				else
 					boutput(user, "<span class='notice'>Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
-		else if (istype(target, /turf/space) && magnet)
+		else if ((istype(target, /turf/space) || isterrain) && magnet)
 			if (!loaded)
 				boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
 			if (magnet.target)

@@ -61,7 +61,7 @@
 				generated_turfs = Turfspawn_Asteroid_DegradeFromCenter(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 10, area_restriction)
 			if (2)
 				var/list/turfs_near_center = list()
-				for(var/turf/space/S in orange(4,magnetic_center))
+				for(var/turf/S in orange(4,magnetic_center))
 					turfs_near_center += S
 
 				if (length(turfs_near_center) > 0) //Wire note: Fix for pick() from empty list
@@ -690,7 +690,7 @@
 				return 1
 	return 0
 
-/proc/Turfspawn_CheckForFreeSpace(var/turf/space/center,var/size)
+/proc/Turfspawn_CheckForFreeSpace(var/turf/center,var/size)
 	if (!istype(center))
 		return list()
 	if (!isnum(size))
@@ -699,7 +699,7 @@
 	var/list/acceptable_turfs = list()
 	var/loopbroken = 0
 
-	for (var/turf/space/TF in range(center,size))
+	for (var/turf/TF in range(center,size))
 		loopbroken = 0
 		if (TF.loc.type != /area)
 			asteroid_blocked_turfs += TF
@@ -739,7 +739,7 @@
 
 // Generators
 
-/proc/Turfspawn_Asteroid_DegradeFromCenter(var/turf/space/center, var/base_rock = /turf/simulated/wall/auto/asteroid, var/size = 8, var/degradation = 10, var/area/area_restriction = null)
+/proc/Turfspawn_Asteroid_DegradeFromCenter(var/turf/center, var/base_rock = /turf/simulated/wall/auto/asteroid, var/size = 8, var/degradation = 10, var/area/area_restriction = null)
 	if (!istype(center))
 		return list()
 	if (!isnum(size) || size < 1)
@@ -759,7 +759,7 @@
 	while (current_range < size - 1)
 		current_range++
 		current_chance -= degradation
-		for (var/turf/space/S in range(current_range,A))
+		for (var/turf/S in range(current_range,A))
 			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue
@@ -774,7 +774,7 @@
 
 	return generated_turfs
 
-/proc/Turfspawn_Asteroid_Round(var/turf/space/center, var/base_rock = /turf/simulated/wall/auto/asteroid, var/size = 8, var/hollow = 0, var/area/area_restriction = null)
+/proc/Turfspawn_Asteroid_Round(var/turf/center, var/base_rock = /turf/simulated/wall/auto/asteroid, var/size = 8, var/hollow = 0, var/area/area_restriction = null)
 	if (!istype(center))
 		return list()
 	if (!isnum(size) || size < 1)
@@ -803,7 +803,7 @@
 	while (current_range < size - 1)
 		current_range++
 		total_distance = 0
-		for (var/turf/space/S in range(current_range,A))
+		for (var/turf/S in range(current_range,A))
 			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue
@@ -828,7 +828,7 @@
 
 	return generated_turfs
 
-/proc/Turfspawn_Wreckage(var/turf/space/center,var/size = 6,var/area/area_restriction = null)
+/proc/Turfspawn_Wreckage(var/turf/center,var/size = 6,var/area/area_restriction = null)
 	if (!istype(center))
 		return list()
 	if (!isnum(size) || size < 1)
@@ -846,7 +846,7 @@
 	while (current_range < size - 1)
 		current_range++
 		current_chance = clamp(current_chance - 25, 2, 100)
-		for (var/turf/space/S in range(current_range,A))
+		for (var/turf/S in range(current_range,A))
 			if (GET_DIST(S,A) == current_range)
 				if (S in asteroid_blocked_turfs)
 					continue

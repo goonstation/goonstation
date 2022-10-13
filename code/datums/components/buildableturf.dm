@@ -50,6 +50,8 @@ TYPEINFO(/datum/component/buildable_turf)
 						clear_edge_overlays(location)
 						T.vis_contents -= station_repair.ambient_obj
 					return TRUE
+	if(istype(I,/obj/item/magnetizer))
+		return
 
 /datum/component/buildable_turf/proc/clear_edge_overlays(turf/location)
 	for (var/turf/T in orange(location,1))
