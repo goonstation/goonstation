@@ -1448,7 +1448,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\flock\structure\gnesisturret.dm"
 #include "code\obj\flock\structure\interceptor.dm"
 #include "code\obj\flock\structure\relay.dm"
-#include "code\obj\flock\structure\mitigator.dm"
 #include "code\obj\flock\structure\rift.dm"
 #include "code\obj\flock\structure\sentinel.dm"
 #include "code\obj\item\ai_modules.dm"
