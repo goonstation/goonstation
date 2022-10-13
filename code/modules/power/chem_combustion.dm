@@ -331,7 +331,7 @@
 			<hr>
 			<span class='notice'><b>You take readings from the [src]'s engine control system:</b></span><br><br>
 			<span class='notice'>Stoichiometric: [src.last_mix]</span><br>
-			<span class='notice'>Inlet Flow: [(src.last_inlet * 100) / 2]%</span><br>
+			<span class='notice'>Inlet Flow: [src.last_inlet * 100]%</span><br>
 			<span class='notice'>Oxygen Purity: [src.last_oxygen * 100]%</span><br>
 			<span class='notice'>Fuel Quality: [src.last_fuel]W</span>
 			<hr>
@@ -374,26 +374,26 @@
 			return
 
 		src.last_mix = OPTIMAL_MIX / fuel_air_mix
-		src.last_inlet = src.fuel_inlet + src.atmos_inlet
+		src.last_inlet = (src.fuel_inlet + src.atmos_inlet) / 2
 		var/oxygen_multiplier = clamp(src.last_oxygen * 5, 0, 3)
 
-		src.last_output = src.last_fuel * src.last_mix * src.last_inlet * oxygen_multiplier * src.output_multiplier * mult
+		src.last_output = src.last_fuel * (src.last_mix * 2) * src.last_inlet * oxygen_multiplier * src.output_multiplier * mult
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output
 
 		var/turf/simulated/T = get_turf(src.loc)
 		if (istype(T))
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
-			payload.carbon_dioxide = CARBON_OUTPUT_RATE * src.last_mix * src.last_inlet * src.output_multiplier * mult
+			payload.carbon_dioxide = CARBON_OUTPUT_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult
 			payload.temperature = 323.15 // bit hotter since its exhaust
 			T.assume_air(payload)
 
 		if (src.check_tank_oxygen(src.inlet_tank))
-			src.inlet_tank.remove_air(ATMOS_DRAIN_RATE * src.last_mix * src.last_inlet * src.output_multiplier * mult)
+			src.inlet_tank.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult)
 		else if (istype(T))
-			T.remove_air(ATMOS_DRAIN_RATE * src.last_mix * src.last_inlet * mult)
+			T.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * mult)
 
-		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * src.last_mix * src.last_inlet * src.output_multiplier * mult) // TODO: adjustable fuel/air ratio
+		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult) // TODO: adjustable fuel/air ratio
 
 		src.UpdateIcon()
 		src.updateDialog()
