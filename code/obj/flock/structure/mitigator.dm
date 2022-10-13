@@ -1,9 +1,9 @@
-/obj/flock_structure/annihilator
-	icon_state = "annihilator-off" // placeholder sprites
+/obj/flock_structure/mitigator
+	icon_state = "mitigator-off" // placeholder sprites
 	name = "gnesis fountain"
 	desc = "Some sort of gnesis fountain. The gnesis appears very active."
 	flock_desc = "A defense turret that fires high speed gnesis bolts at nearby projectiles, annihilating them."
-	flock_id = "Annihilator"
+	flock_id = "mitigator"
 	health = 50
 	health_max = 50
 	repair_per_resource = 2.5
@@ -13,14 +13,14 @@
 	compute = 0
 	var/online_compute_cost = 30
 
-	/// if the annihilator has enough compute to work
+	/// if the mitigator has enough compute to work
 	var/powered = FALSE
-	/// if the annihilator's projectile checkers are checking for projectiles
+	/// if the mitigator's projectile checkers are checking for projectiles
 	var/checkers_powered = FALSE
 
-	/// projectile destroying radius of the annihilator
+	/// projectile destroying radius of the mitigator
 	var/checker_radius = 2
-	/// list of projectile checker objects the annihilator uses to work
+	/// list of projectile checker objects the mitigator uses to work
 	var/list/projectile_checkers = null
 
 	New(atom/location, datum/flock/F = null)
@@ -30,7 +30,7 @@
 
 		src.projectile_checkers = list()
 		for (var/turf/T as anything in turfs)
-			src.projectile_checkers += new /obj/annihilator_projectile_checker(T, src)
+			src.projectile_checkers += new /obj/mitigator_projectile_checker(T, src)
 
 		src.info_tag.set_info_tag("Not generating bolt")
 
@@ -55,20 +55,20 @@
 
 		if (src.powered)
 			if (GET_COOLDOWN(src, "bolt_gen_time"))
-				src.icon_state = "annihilator-generating"
+				src.icon_state = "mitigator-generating"
 				if (src.checkers_powered)
 					src.power_projectile_checkers(FALSE)
 			else
-				src.icon_state = "annihilator-ready"
+				src.icon_state = "mitigator-ready"
 				if (!src.checkers_powered)
 					src.power_projectile_checkers(TRUE)
 		else
-			src.icon_state = "annihilator-off"
+			src.icon_state = "mitigator-off"
 
 		src.info_tag.set_info_tag(src.check_bolt_status())
 
 	proc/power_projectile_checkers(state)
-		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
+		for (var/obj/mitigator_projectile_checker/checker as anything in src.projectile_checkers)
 			checker.on = state
 		src.checkers_powered = state
 
@@ -82,7 +82,7 @@
 
 	proc/activate(obj/projectile/bullet)
 		ON_COOLDOWN(src, "bolt_gen_time", 10 SECONDS)
-		src.icon_state = "annihilator-generating"
+		src.icon_state = "mitigator-generating"
 		src.power_projectile_checkers(FALSE)
 		var/list/gnesis_bolt_objs = DrawLine(src, bullet, /obj/line_obj/gnesis_bolt, 'icons/obj/projectiles.dmi', "WholeGnesisBolt", TRUE, TRUE, "HalfStartGnesisBolt", "HalfEndGnesisBolt")
 		SPAWN(0.25 SECONDS)
@@ -92,12 +92,12 @@
 		qdel(bullet)
 
 	disposing()
-		for (var/obj/annihilator_projectile_checker/checker as anything in src.projectile_checkers)
+		for (var/obj/mitigator_projectile_checker/checker as anything in src.projectile_checkers)
 			qdel(checker)
 		..()
 
 
-/obj/annihilator_projectile_checker
+/obj/mitigator_projectile_checker
 	name = null
 	desc = null
 	anchored = TRUE
@@ -109,11 +109,11 @@
 	mouse_opacity = 0
 
 	var/on = FALSE
-	var/obj/flock_structure/annihilator/connected_structure = null
+	var/obj/flock_structure/mitigator/connected_structure = null
 
-	New(turf/T, obj/flock_structure/annihilator/annihilator)
+	New(turf/T, obj/flock_structure/mitigator/mitigator)
 		..()
-		src.connected_structure = annihilator
+		src.connected_structure = mitigator
 
 	Crossed(atom/movable/AM)
 		if (!istype(AM, /obj/projectile) || AM.disposed)
@@ -125,8 +125,8 @@
 		var/obj/projectile/bullet = AM
 		if (!istype(bullet.proj_data, /datum/projectile/bullet))
 			return ..()
-		for (var/obj/flock_structure/annihilator/annihilator in view(src.connected_structure.checker_radius, src))
-			if (src.connected_structure == annihilator)
+		for (var/obj/flock_structure/mitigator/mitigator in view(src.connected_structure.checker_radius, src))
+			if (src.connected_structure == mitigator)
 				src.connected_structure.activate(bullet)
 				return
 		..()

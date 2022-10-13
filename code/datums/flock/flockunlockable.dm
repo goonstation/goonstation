@@ -64,8 +64,8 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
-/datum/unlockable_flock_structure/annihilator
-	structType = /obj/flock_structure/annihilator
+/datum/unlockable_flock_structure/mitigator
+	structType = /obj/flock_structure/mitigator
 
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_DRONE_DEATHS)
