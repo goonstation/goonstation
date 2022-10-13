@@ -10,8 +10,9 @@
 // during sunrise/sunset
 
 // #define OCEAN_LIGHT  rgb(0.160 * 255, 0.60 * 255, 1.00 * 255, 0.65 * 255)
-
-#if (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 12 == 0)
+#if defined(MAP_OVERRIDE_NADIR)
+	#define OCEAN_LIGHT  rgb(0,0,50)
+#elif (BUILD_TIME_HOUR == 0) || (BUILD_TIME_HOUR - 12 == 0)
 	#define OCEAN_LIGHT  rgb(0.160 *   0, 0.60 *   0, 1.00 *   0, 0.65 * 255)
 #elif (BUILD_TIME_HOUR == 1) || (BUILD_TIME_HOUR - 12 == 1)
 	#define OCEAN_LIGHT  rgb(0.160 *  18, 0.60 *  18, 1.00 *  18, 0.65 * 255)

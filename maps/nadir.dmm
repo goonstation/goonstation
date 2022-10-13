@@ -5895,8 +5895,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "cXH" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
+/obj/decal/poster/wallsign/warning1{
+	desc = "A sign warning you of a nearby acid hazard.";
 	name = "ACID HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -8523,8 +8523,8 @@
 	name = "Net Cafe"
 	})
 "evX" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
+/obj/decal/poster/wallsign/warning1{
+	desc = "A sign warning you of a nearby acid hazard.";
 	name = "ACID HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -16978,9 +16978,7 @@
 /area/station/maintenance/north)
 "ium" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/right_station/cogmap{
-	ambient_light = "#000032a5"
-	})
+/area/shuttle/merchant_shuttle/right_station/cogmap)
 "iuy" = (
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/blueblack/corner{
@@ -17713,9 +17711,7 @@
 /area/station/science/chemistry)
 "iMT" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/escape/station{
-	ambient_light = "#000032a5"
-	})
+/area/shuttle/escape/station)
 "iNo" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22730,8 +22726,8 @@
 	name = "Drop Capsule"
 	})
 "lgO" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
+/obj/decal/poster/wallsign/warning1{
+	desc = "A sign warning you of a nearby acid hazard.";
 	name = "ACID HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -29737,8 +29733,8 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "oKQ" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
+/obj/decal/poster/wallsign/warning1{
+	desc = "A sign warning you of a nearby acid hazard.";
 	name = "ACID HAZARD"
 	},
 /turf/unsimulated/wall/setpieces/leadwall/gray{
@@ -30717,8 +30713,8 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "poa" = (
-/obj/decal/poster/wallsign/biohazard{
-	desc = "A warning sign which reads 'ACID HAZARD'.";
+/obj/decal/poster/wallsign/warning1{
+	desc = "A sign warning you of a nearby acid hazard.";
 	name = "ACID HAZARD"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -45356,9 +45352,7 @@
 /area/station/hallway/primary/southwest)
 "xgs" = (
 /turf/space/fluid/acid/clear,
-/area/shuttle/merchant_shuttle/left_station/cogmap{
-	ambient_light = "#000032a5"
-	})
+/area/shuttle/merchant_shuttle/left_station/cogmap)
 "xgM" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable{
