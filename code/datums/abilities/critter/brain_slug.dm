@@ -22,8 +22,8 @@
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"
-	//Todo add a sound
 	cast()
+		playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 30, 1, 1, 1.2)
 		holder.owner.AddComponent(/datum/component/floor_slime, "superlube", 50, 75)
 		var/datum/component/C = holder.owner.GetComponent(/datum/component/floor_slime)
 		spawn(7 SECONDS)
@@ -40,52 +40,34 @@
 	desc = "Take control of a living animal host or a freshly dead human."
 	icon = 'icons/mob/critter_ui.dmi'
 	icon_state = "ratbite"
-	cooldown = 20 SECOND
+	cooldown = 30 SECOND
 	targeted = 1
 	start_on_cooldown = 1
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"
-//Todo add small_animals mobs + critters. Make sure they can all die.
-//Turn obj critters into mob critters, not gonna be pretty.
-//Turn corpses back into a living thing and add counter + abilities. Kill the revived corpse when the counter ends.
-//Abilities should cost the same points that keep the body alive.
-//
-//maybe ban boogiebots and morty?
-//Ban mentormouse and adminmouse.
-//Ability to spread? Think it over. Prolly not.
+	var/is_transfer = FALSE
+	//todo add counter + abilities.
+	//Abilities should cost the same points that keep the body alive.
 	cast(atom/target)
 		if (target == holder.owner)
 			return FALSE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to infest.</span>")
 			return FALSE
-		if (!istype(target, /mob/living))
-			boutput(holder.owner, "<span class='alert'>That isnt something you can possess.</span>")
-			return FALSE
-		var/mob/living/mob_target = target
-		//This is horribly inneficient, but i cant think of a better way to do this until obj/critters on station are replaced with mob critters..
-		//This should be changed to use mob critters once the mobbening has happened..
-
-		//Small animals are fair game except mentormice and adminmice for obvious reasons.
-		if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && isalive(mob_target))
-			var/mob/living/critter/small_animal/animal_target = mob_target
-			if (animal_target.mind == null)
-				actions.start(new/datum/action/bar/private/icon/brain_slug_infest(animal_target, FALSE, src), holder.owner)
+		//If we're not a slug, we're already in a mob so it's a transfer and it'll take longer to perform
+		if (!istype(holder.owner, /mob/living/critter/brain_slug))
+			is_transfer = TRUE
+		if (istype(target, /mob/living))
+			var/mob/living/M = target
+			if(check_host_eligibility(M, holder.owner))
+				actions.start(new/datum/action/bar/private/icon/brain_slug_infest(target, is_transfer, src), holder.owner)
+				return TRUE
 			else
-				boutput(holder.owner, "<span class='notice'>This creature looks much too lively to infest.</span>")
+				return FALSE
+		else
+			boutput(holder.owner, "<span class='alert'>That's not something you can infest!</span>")
+			return FALSE
 
-		//Todo, check if they still got a head
-		else if (istype(mob_target, /mob/living/carbon/human))
-			if(isalive(mob_target))
-				boutput(holder.owner, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
-				return FALSE
-			var/mob/living/carbon/human/human_target = mob_target
-			if (human_target.decomp_stage >= DECOMP_STAGE_HIGHLY_DECAYED)
-				boutput(holder.owner, "<span class='notice'>That body is sadly too decomposed to use.</span>")
-				return FALSE
-			//Todo check if they are a changeling or something, might be op if we take control of an antag body
-			actions.start(new/datum/action/bar/private/icon/brain_slug_infest(human_target, FALSE, src), holder.owner)
-		return FALSE
 
 	onAttach(datum/abilityHolder/holder)
 		..()
@@ -103,8 +85,8 @@
 	var/mob/living/critter/brain_slug/the_slug = null
 	var/is_transfer = FALSE
 
-	New(var/mob/M, var/B = FALSE, source)
-		is_transfer = B
+	New(var/mob/M, var/transfer = FALSE, source)
+		is_transfer = transfer
 		current_target = M
 		..()
 
@@ -141,7 +123,7 @@
 
 		var/mob/living/caster = owner
 
-		if (caster == null || !isalive(caster) || !can_act(caster) || current_target == null)
+		if (caster == null || !isalive(caster) || !can_act(caster) || current_target == null || BOUNDS_DIST(caster, current_target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -163,10 +145,8 @@
 			var/mob/living/carbon/human/T = current_target
 			T.slug = the_slug
 		current_target.addAbility(/datum/targetable/brain_slug/exit_host)
-		current_target.addAbility(/datum/targetable/brain_slug/transfer_host)
+		current_target.addAbility(/datum/targetable/brain_slug/infest_host)
 		hit_twitch(current_target)
-		//Todo add human corpses here
-		//Todo add obj critters here
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
 
 		if (is_transfer) //Handle the old body
@@ -175,12 +155,12 @@
 				var/mob/living/critter/small_animal/S = caster
 				S.slug = null
 				S.removeAbility(/datum/targetable/brain_slug/exit_host)
-				S.removeAbility(/datum/targetable/brain_slug/transfer_host)
+				S.removeAbility(/datum/targetable/brain_slug/infest_host)
 			if(istype(caster, /mob/living/carbon/human))
 				var/mob/living/carbon/human/S = caster
 				S.slug = null
 				S.removeAbility(/datum/targetable/brain_slug/exit_host)
-				S.removeAbility(/datum/targetable/brain_slug/transfer_host)
+				S.removeAbility(/datum/targetable/brain_slug/infest_host)
 
 			spawn(5 SECONDS)
 				caster.death(gibbed = FALSE)
@@ -192,7 +172,6 @@
 		boutput(caster, "<span class='alert'>You were interrupted!</span>")
 
 /datum/targetable/brain_slug/exit_host
-	//todo exiting a human body should gib/make it unrecoverable/pop its fucking head off like some hellspawn
 	name = "Dissociate"
 	desc = "Leave behind this worthless body."
 	icon = 'icons/mob/critter_ui.dmi'
@@ -216,7 +195,7 @@
 			var/datum/targetable/ability = caster.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 			ability.doCooldown()
 			caster.removeAbility(/datum/targetable/brain_slug/exit_host)
-			caster.removeAbility(/datum/targetable/brain_slug/transfer_host)
+			caster.removeAbility(/datum/targetable/brain_slug/infest_host)
 			caster.slug = null
 			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
 				caster.death(gibbed = FALSE)
@@ -225,17 +204,29 @@
 			if (!human_host.slug)
 				boutput(holder.owner, "<span class='notice'>You have no parasite to expel... uh.</span>")
 				return TRUE
-			human_host.mind.transfer_to(human_host.slug)
-			human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
-			human_host.slug.set_loc(get_turf(human_host))
-			//Dont immediately infest something again.
-			var/datum/targetable/ability = human_host.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
-			ability.doCooldown()
-			human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-			human_host.removeAbility(/datum/targetable/brain_slug/transfer_host)
-			human_host.slug = null
-			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
-				human_host.death(gibbed = FALSE)
+			human_host.make_jittery(20)
+			human_host.emote("scream")
+			spawn(3 SECONDS)
+				//Drop the slug on the floor and control it agani
+				human_host.mind.transfer_to(human_host.slug)
+				human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
+				human_host.slug.set_loc(get_turf(human_host))
+				//Dont immediately infest something again.
+				var/datum/targetable/ability = human_host.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+				ability.doCooldown()
+				if (human_host.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
+					var/obj/head = human_host.organHolder.drop_organ("head")
+					qdel(head)
+					make_cleanable( /obj/decal/cleanable/blood/gibs,human_host.loc)
+					playsound(human_host.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50)
+					gibs(human_host.loc, headbits = 0)
+					human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
+				//Cleanup
+				human_host.death(gibbed = false)
+				human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
+				human_host.removeAbility(/datum/targetable/brain_slug/infest_host)
+				human_host.slug = null
+
 		else if (istype(holder.owner, /mob/living/critter/brain_slug))
 			var/mob/living/critter/brain_slug/the_slug = holder.owner
 			if (istype(the_slug.loc,/mob/))
@@ -255,45 +246,6 @@
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
 
-/datum/targetable/brain_slug/transfer_host
-	name = "Transfer hosts"
-	desc = "Exchange this body for another."
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "eat_filth"
-	cooldown = 50 SECONDS
-	start_on_cooldown = 1
-	targeted = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
-
-	cast(atom/target)
-		if (target == holder.owner)
-			return FALSE
-		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, "<span class='alert'>That is too far away to infest.</span>")
-			return FALSE
-		if (!istype(target, /mob/living))
-			boutput(holder.owner, "<span class='alert'>That isn't something you can infest.</span>")
-			return FALSE
-		var/mob/living/new_host = target
-		//Todo turn this into a proc call
-		if (istype(new_host, /mob/living/critter/small_animal) && !istype(new_host, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(new_host, /mob/living/critter/small_animal/mouse/weak/mentor/admin))
-			var/mob/living/critter/small_animal/animal_target = new_host
-			if (animal_target.mind == null)
-				actions.start(new/datum/action/bar/private/icon/brain_slug_infest(animal_target, TRUE, src), holder.owner)
-			else
-				boutput(holder.owner, "<span class='notice'>This creature looks much too lively to infest.</span>")
-		else if (istype(new_host, /mob/living/carbon/human))
-			if(isalive(new_host))
-				boutput(holder.owner, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
-				return FALSE
-			var/mob/living/carbon/human/human_target = new_host
-			if (human_target.decomp_stage >= DECOMP_STAGE_HIGHLY_DECAYED)
-				boutput(holder.owner, "<span class='notice'>That body is sadly too decomposed to use.</span>")
-				return FALSE
-			//Todo check if they are a changeling or something, might be op if we take control of an antag body
-			actions.start(new/datum/action/bar/private/icon/brain_slug_infest(human_target, FALSE, src), holder.owner)
-		return 0
 
 	onAttach(datum/abilityHolder/holder)
 		..()
@@ -322,8 +274,78 @@
 			hit_twitch(the_mob)
 			spawn(3 SECONDS)
 				violent_standup_twitch(the_mob)
+				playsound(M.loc, 'sound/effects/bones_break.ogg', 30, 1)
 				spawn(2 SECONDS)
 					the_slug.mind.transfer_to(the_mob)
 					the_mob.full_heal()
-					violent_standup_twitch(the_mob)
+					hit_twitch(the_mob)
 					return FALSE
+
+//Checks if a thing can be infested
+//Returns false if it cant be.
+proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
+	//Small animals are fair game except mentormice and adminmice for obvious reasons.
+	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && isalive(mob_target))
+		var/mob/living/critter/small_animal/animal_target = mob_target
+		if (animal_target.mind == null)
+			return TRUE
+		else
+			boutput(caster, "<span class='notice'>This creature looks much too lively to infest.</span>")
+			return FALSE
+
+	//Human corpses are also prime targets, if they are fresh
+	else if (istype(mob_target, /mob/living/carbon/human))
+		if (isalive(mob_target))
+			boutput(caster, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
+			return FALSE
+		var/mob/living/carbon/human/human_target = mob_target
+		if (!mob_target.organHolder.head)
+			boutput(caster, "<span class='notice'>Try as you might, you just can't find a head to crawl into.</span>")
+			return FALSE
+		if (human_target.decomp_stage >= DECOMP_STAGE_HIGHLY_DECAYED)
+			boutput(caster, "<span class='notice'>That body is sadly too decomposed to use.</span>")
+			return FALSE
+
+		if (human_target.abilityHolder)
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/changeling))
+				boutput(caster, "<span class='notice'>That one's insides are all... wrong. You can't seem to make sense of it, much less so control it.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/werewolf))
+				boutput(caster, "<span class='notice'>This body doesnt look normal. You decide to leave it alone.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/arcfiend))
+				boutput(caster, "<span class='notice'>This body crackles faintly with electricity. You'd get zapped if you decided to control it.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/vampire))
+				boutput(caster, "<span class='notice'>This body's blood smells like poison and it emanates ominous dark magic. Best not to mess with it</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/vampiric_thrall))
+				boutput(caster, "<span class='notice'>This body's insides are all messed up and it seems to be leaking blood at an alarming rate. Best to leave it there.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/wizard))
+				boutput(caster, "<span class='notice'>Some residual magical energy resists your attempt to invade this body.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/composite))
+				var/datum/abilityHolder/composite/composite_holder = human_target.abilityHolder
+				for (var/datum/holder in composite_holder.holders)
+					if (istype(holder,/datum/abilityHolder/changeling))
+						boutput(caster, "<span class='notice'>That one's insides are all... wrong. You can't seem to make sense of it, much less so control it.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/werewolf))
+						boutput(caster, "<span class='notice'>This body doesnt look normal. You decide to leave it alone.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/arcfiend))
+						boutput(caster, "<span class='notice'>This body crackles faintly with electricity. You'd get zapped if you decided to control it.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/vampire))
+						boutput(caster, "<span class='notice'>This body's blood smells like poison and it emanates ominous dark magic. Best not to mess with it</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/vampiric_thrall))
+						boutput(caster, "<span class='notice'>This body's insides are all messed up and it seems to be leaking blood at an alarming rate. Best to leave it there.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/wizard))
+						boutput(caster, "<span class='notice'>Some residual magical energy resists your attempt to invade this body.</span>")
+						return FALSE
+		return TRUE
+
+	return FALSE
