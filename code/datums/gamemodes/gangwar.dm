@@ -123,7 +123,7 @@
 
 /datum/game_mode/gang/proc/force_shuttle()
 	if (!emergency_shuttle.online)
-		emergency_shuttle.disabled = 0
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 		emergency_shuttle.incall()
 		command_alert("Centcom is very disappointed in you all for this 'gang' silliness. The shuttle has been called.","Emergency Shuttle Update")
 

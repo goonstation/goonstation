@@ -1556,6 +1556,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				trap_choice = /obj/machinery/wraith/runetrap/stunning
 			if("Sleepyness")
 				trap_choice = /obj/machinery/wraith/runetrap/sleepyness
+			if("Slipperiness")
+				trap_choice = /obj/machinery/wraith/runetrap/slipping
 
 		if(P != null)
 			new trap_choice(T, P.master)
