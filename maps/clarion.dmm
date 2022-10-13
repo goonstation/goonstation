@@ -8985,23 +8985,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
-"aqC" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "aqE" = (
 /obj/machinery/manufacturer/hangar,
 /turf/simulated/floor/redblack{
@@ -45940,22 +45923,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
-"juU" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	areastring = "Public Market";
-	dir = 4;
-	name = "Public Market APC";
-	pixel_x = 24
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "jvE" = (
 /obj/cable{
 	d2 = 4;
@@ -89800,7 +89767,7 @@ anF
 aoK
 ale
 apS
-aqC
+aqU
 aqB
 aqu
 asl
@@ -90057,7 +90024,7 @@ ale
 aoJ
 ale
 apT
-juU
+arA
 aqU
 arz
 asm
