@@ -9398,7 +9398,8 @@
 /area/space)
 "asi" = (
 /obj/item/device/radio/intercom{
-	dir = 8 frequency = 1447;
+	dir = 8;
+	frequency = 1447;
 	broadcasting = 1
 	},
 /obj/machinery/light/small{
