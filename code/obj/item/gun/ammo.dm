@@ -1106,8 +1106,13 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "2.5 mortar grenades"
 	desc = "Ancient 63.5mm grenades, meant for use in a hand mortar."
 	ammo_type = new/datum/projectile/bullet/flintlock/mortar
-	icon_state = "flintlock_rifle_ammo_pouch"
+	icon_state = "mortar-10"
+	icon_empty = "mortar-0"
+	icon_dynamic = TRUE
+	icon_short = "mortar"
 	ammo_cat = AMMO_FLINTLOCK_MORTAR
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
 
 	single
 		amount_left = 1
