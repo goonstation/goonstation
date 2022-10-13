@@ -866,7 +866,7 @@
 		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
 
 
-var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left", "r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left")
+var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
 /mob/living/carbon/human/update_body()
 	..()

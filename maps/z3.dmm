@@ -10775,7 +10775,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTd" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTf" = (
@@ -14939,7 +14939,7 @@
 /area/space)
 "bgz" = (
 /obj/decal/cleanable/blood,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -14962,11 +14962,7 @@
 /turf/space,
 /area/space)
 "bgE" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/space,
 /area/space)
@@ -16279,11 +16275,7 @@
 	},
 /area/salyut)
 "bkj" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/simulated/floor/plating/airless,
 /area/space)

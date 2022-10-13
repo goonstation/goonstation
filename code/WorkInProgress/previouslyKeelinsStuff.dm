@@ -304,33 +304,34 @@ var/reverse_mode = 0
 	icon_state = "relic"
 	name = "strange relic"
 	desc = "It feels cold..."
-	var/active = 0
 	var/using = 0
 	var/beingUsed = 0
 
-	New()
-		..()
-		loop()
+	pickup(mob/living/M)
+		SPAWN(1 MINUTE)
+			processing_items.Add(src)
 
-	proc/loop()
-		if (!active)
-			SPAWN(1 SECOND) loop()
-			return
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
+	process()
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
 			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
-				if (prob(25)) L.broken()
+				if (prob(25))
+					L.broken()
 
 		if (prob(1) && prob(50) && !using)
 			new/obj/critter/spirit( get_turf(src) )
 
 		if (prob(3) && prob(50))
-			var/obj/o = new/obj/spook( get_turf(src) )
-			SPAWN(1 MINUTE) qdel(o)
+			var/obj/o = new/obj/item/spook( get_turf(src) )
+			SPAWN(1 MINUTE)
+				qdel(o)
 
 		if (prob(25))
 			for(var/obj/storage/L in range(6, get_turf(src)))
@@ -339,13 +340,10 @@ var/reverse_mode = 0
 
 		if (prob(25))
 			for(var/obj/stool/chair/L in range(6, get_turf(src)))
-				if (prob(15)) L.rotate()
+				if (prob(15))
+					L.rotate()
 
-		SPAWN(1 SECOND) loop()
-		return
 
-	pickup(var/mob/living/M)
-		SPAWN(1 MINUTE) active = 1
 
 	attack_self(var/mob/user)
 		if (user != loc)

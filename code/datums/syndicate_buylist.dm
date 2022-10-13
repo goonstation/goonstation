@@ -398,6 +398,15 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+/datum/syndicate_buylist/traitor/pickpocket
+	name = "Pickpocket Gun"
+	item = /obj/item/gun/energy/pickpocket
+	cost = 3
+	vr_allowed = 0
+	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
+	br_allowed = TRUE
+	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
 /datum/syndicate_buylist/traitor/surplus
 	name = "Surplus Crate"
 	item = /obj/storage/crate/syndicate_surplus
@@ -592,7 +601,7 @@ This is basically useless for anyone but miners.
 	name = "Hotbox Lighter"
 	item = /obj/item/device/light/zippo/syndicate
 	cost = 1
-	desc = "The unique fuel mixture gives this lighter a unique flame capable of creating a much denser smoke when burning piles of herbs compared to any normal lighter!"
+	desc = "The unique fuel mixture both burns five times hotter than a normal flame and produces a much thicker smoke than normal when burning herbs!"
 	job = list("Botanist")
 	can_buy = UPLINK_TRAITOR
 
@@ -700,16 +709,6 @@ This is basically useless for anyone but miners.
 	cost = 1
 	desc = "This implant turns you into a living (or dying) generator, zapping those around you with a volume of electricity that scales with the number of implants upon your demise."
 	job = list("Engineer", "Chief Engineer", "Mechanic")
-	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
-
-/datum/syndicate_buylist/traitor/pickpocket
-	name = "Pickpocket Gun"
-	item = /obj/item/gun/energy/pickpocket
-	cost = 3
-	vr_allowed = 0
-	desc = "A stealthy claw gun capable of stealing and planting items, and severely messing with people."
-	br_allowed = TRUE
-	job = list("Engineer", "Chief Engineer", "Mechanic", "Clown", "Staff Assistant")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/poisonbottle
@@ -844,7 +843,6 @@ This is basically useless for anyone but miners.
 	item = /obj/item/gun/energy/vuvuzela_gun
 	cost = 3
 	desc = "<b>BZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ</b>"
-	br_allowed = TRUE
 	job = list("Assistant","Technical Assistant","Medical Assistant","Staff Assistant", "Clown")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -894,7 +892,7 @@ This is basically useless for anyone but miners.
 	cost = 3
 	vr_allowed = 0
 	desc = "A modified cargo transporter which teleports containers to a random spot in space and welds them shut."
-	job = list("Quartermaster","Miner","Engineer")
+	job = list("Quartermaster","Miner","Engineer","Chief Engineer")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
 /datum/syndicate_buylist/traitor/telegun

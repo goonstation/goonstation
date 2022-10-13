@@ -417,7 +417,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "tanbed"
 	var/id = 2 //this gets used when the tanning computer links to the bed
 	powerdraw_use = 1000 //power cost while tanning
-	mats = 30
+	//mats = 30
 
 	icon_trayopen = "tanbed"
 	icon_unoccupied = "tanbed"
@@ -594,7 +594,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	name = "tanning computer"
 	desc = "Used to control a tanning bed."
 	icon = 'icons/obj/stationobjs.dmi'
-	mats = 20
+	//mats = 20
 	id = 2
 	icon_state = "tanconsole"
 	var/state_str = ""

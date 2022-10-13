@@ -348,7 +348,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1 // No conspicuous text messages, please (Convair880).
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
 	muzzle_flash = null
 
@@ -504,7 +504,7 @@
 	force = 12
 	two_handed = 1
 	can_dual_wield = 0
-	shoot_delay = 8 DECI SECONDS
+	shoot_delay = 6 DECI SECONDS
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()
@@ -1210,7 +1210,7 @@
 	is_syndicate = 1
 	mats = list("MET-1"=5, "CON-2"=5, "POW-2"=10)
 	silenced = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	mats = 100 //yeah no, you can do it if you REALLY want to
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null

@@ -14,7 +14,7 @@
 /turf/simulated/floor,
 /area/prefab/helianthus)
 "e" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor,
 /area/prefab/helianthus)
 "f" = (

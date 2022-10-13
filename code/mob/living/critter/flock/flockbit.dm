@@ -27,6 +27,8 @@
 	src.flock_name_tag.set_name(src.real_name)
 	src.vis_contents += src.flock_name_tag
 
+	src.flock?.bits_made++
+
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
 

@@ -214,7 +214,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -226,7 +226,7 @@
 	icon_state = "4-8"
 	},
 /obj/landmark/boxing_ring,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -236,7 +236,7 @@
 	},
 /obj/machinery/light/small/floor,
 /obj/item/reagent_containers/food/drinks/water,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -1677,7 +1677,7 @@
 /obj/decal/boxingropeenter{
 	dir = 8
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -1898,7 +1898,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -1954,7 +1954,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -2508,7 +2508,7 @@
 	icon_state = "5-10"
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -6138,7 +6138,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "cAn" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
 	tag = ""
@@ -6674,7 +6674,7 @@
 "cLq" = (
 /obj/machinery/atmospherics/pipe/simple/horizontal,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -8497,7 +8497,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "dxR" = (
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -10690,7 +10690,7 @@
 	d2 = 4;
 	icon_state = "1-6"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -12276,7 +12276,7 @@
 	d2 = 4;
 	icon_state = "9-10"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -13265,7 +13265,7 @@
 /area/station/hallway/primary/south)
 "fvF" = (
 /obj/decal/boxingrope,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -13416,7 +13416,7 @@
 /area/station/maintenance/northeast)
 "fzh" = (
 /obj/disposalpipe/segment/brig,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -16146,7 +16146,7 @@
 /turf/space,
 /area/space)
 "gIB" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/carpet/green/standard/edge/west,
 /area/station/crew_quarters/bar)
 "gIE" = (
@@ -16592,7 +16592,7 @@
 /area/space)
 "gSA" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -17092,7 +17092,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -17562,7 +17562,7 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -20621,7 +20621,7 @@
 	d2 = 4;
 	icon_state = "5-10"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -21365,6 +21365,7 @@
 	dir = 4;
 	pixel_x = -6
 	},
+/obj/machinery/hydro_growlamp,
 /turf/simulated/floor/grey/side{
 	dir = 8
 	},
@@ -21825,7 +21826,7 @@
 	mail_tag = "market";
 	name = "Jazz Lounge Mail Router"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -21977,7 +21978,7 @@
 	dir = 4
 	},
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -23236,7 +23237,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -23551,7 +23552,10 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "jMP" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "jMT" = (
@@ -24279,7 +24283,7 @@
 /obj/machinery/light/small/floor,
 /obj/item/clothing/gloves/boxing,
 /obj/decal/boxingrope,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -24537,7 +24541,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_mrmuggles"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -25806,7 +25810,7 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "kNX" = (
-/obj/machinery/hydro_growlamp,
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -28079,7 +28083,7 @@
 /area/station/storage/warehouse)
 "lLS" = (
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -29451,7 +29455,7 @@
 	name = "Ticket Office"
 	})
 "mrP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -29630,7 +29634,7 @@
 	icon_state = "4-8"
 	},
 /obj/item/reagent_containers/food/drinks/water,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -31048,7 +31052,7 @@
 	d2 = 4;
 	icon_state = "9-10"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -32068,7 +32072,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -36309,7 +36313,7 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -39304,7 +39308,7 @@
 	icon_state = "5-8"
 	},
 /obj/stool/chair/moveable,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -39459,7 +39463,7 @@
 	d2 = 4;
 	icon_state = "2-9"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -39590,7 +39594,7 @@
 /obj/decal/boxingropeenter{
 	dir = 4
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -41513,7 +41517,7 @@
 	})
 "rBD" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 8;
 	pixel_x = -10
@@ -42509,7 +42513,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -48957,7 +48961,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 10
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -49116,7 +49120,7 @@
 "uRh" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -49521,7 +49525,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -49947,7 +49951,7 @@
 /obj/stool/chair/boxingrope_corner{
 	dir = 6
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -52201,7 +52205,7 @@
 	d2 = 4;
 	icon_state = "8-9"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -54418,7 +54422,7 @@
 	d2 = 4;
 	icon_state = "5-6"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -54998,7 +55002,7 @@
 /area/station/maintenance/west)
 "xnh" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon15,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -56489,7 +56493,7 @@
 	icon_state = "pipe-c"
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -56653,7 +56657,7 @@
 	},
 /obj/machinery/atmospherics/pipe/simple/horizontal,
 /obj/machinery/light/small/floor,
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})
@@ -57087,7 +57091,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/specialroom/gym,
+/turf/unsimulated/floor/specialroom/gym,
 /area/station/crew_quarters/quarters{
 	name = "The Ring"
 	})

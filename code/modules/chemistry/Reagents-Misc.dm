@@ -2308,9 +2308,11 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (!istype(T, /turf/space))
-					if (volume >= 10)
+					if (volume >= 10 && holder.total_temperature < T0C + 180)
 						if (!locate(/obj/item/material_piece/rubber/latex) in T)
 							new /obj/item/material_piece/rubber/latex(T)
+					else
+						return TRUE
 
 		flubber
 			name = "Liquified space rubber"
