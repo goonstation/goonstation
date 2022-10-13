@@ -415,13 +415,15 @@
 			continue // some solars are weird
 		Solar.control = src
 		Solar.ndir = src.cdir
-	for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
-		if(Tracker.control != src) continue
-		if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
-			continue // some solars are weird
-		Tracker.control = src
-		src.tracker = Tracker
-		break
+
+	if (!src.tracker)
+		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
+			if(Tracker.control != src) continue
+			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+				continue // some solars are weird
+			Tracker.control = src
+			src.tracker = Tracker
+			break
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
