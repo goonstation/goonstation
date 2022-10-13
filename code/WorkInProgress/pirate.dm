@@ -66,3 +66,11 @@
 					I.set_loc(get_turf(src))
 					ThrowRandom(I, 3, 1)
 			qdel(src)
+
+/obj/item/pinpointer/gold_bee
+	name = "pinpointer (Gold Bee Statue)"
+	desc = "Points in the direction of the Gold Bee Statue."
+	icon_state = "disk_pinoff"
+	icon_type = "disk"
+	target_criteria = /obj/gold_bee
+	hudarrow_color = "#e1940d"
