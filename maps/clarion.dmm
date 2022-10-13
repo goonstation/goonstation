@@ -2437,7 +2437,7 @@
 "afe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "aff" = (
 /obj/machinery/light{
@@ -2885,13 +2885,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "agj" = (
-/obj/machinery/power/apc{
-	areastring = "Crew Quarters S02";
-	cell_type = 1000;
-	dir = 8;
-	name = "Crew Quarters S02 APC";
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	d2 = 4;
 	dir = 0;
