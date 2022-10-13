@@ -1,5 +1,9 @@
 
 (t)thu oct 13 22
+(u)LeahTheTech
+(p)11330
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Added basic chemicals to the chemical request console.
 (u)DrWolfy
 (p)11344
 (e)💅🤖|C-QoL, A-Silicons
