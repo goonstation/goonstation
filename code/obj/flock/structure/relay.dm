@@ -50,7 +50,7 @@
 		if (emergency_shuttle.direction == 1 && emergency_shuttle.location != SHUTTLE_LOC_STATION && emergency_shuttle.location != SHUTTLE_LOC_TRANSIT)
 			emergency_shuttle.recall()
 			command_alert("Emergency shuttle approach aborted due to anomalous radio signal interference. The shuttle has been returned to base as a precaution.")
-			emergency_shuttle.disabled = TRUE
+			emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 		else if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
 			emergency_shuttle.settimeleft(src.charge_time_length + SHUTTLELEAVETIME)
 			src.shuttle_departure_delayed = TRUE
@@ -84,7 +84,7 @@
 	if (!src.finished)
 		F?.death(relay_destroyed = TRUE)
 	if (!src.shuttle_departure_delayed)
-		emergency_shuttle.disabled = FALSE
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
 /obj/flock_structure/relay/get_desc()
 	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
@@ -153,7 +153,7 @@
 		M.flash(3 SECONDS)
 	if (!src.shuttle_departure_delayed)
 		SPAWN(1 SECOND)
-			emergency_shuttle.disabled = FALSE
+			emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 			emergency_shuttle.incall()
 			emergency_shuttle.can_recall = FALSE
 			emergency_shuttle.settimeleft(60) // cut the time down to keep some sense of urgency

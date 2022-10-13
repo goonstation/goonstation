@@ -14,7 +14,7 @@
 	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, .proc/handle_flock_attack)
 
 /// If flockdrone is in our flock, deny the attack, otherwise scream and cry
-/datum/component/flock_interest/proc/handle_flock_attack(source, atom/attacker, var/intentional)
+/datum/component/flock_interest/proc/handle_flock_attack(atom/source, atom/attacker, var/intentional)
 	if(!istype(attacker))
 		return
 
@@ -36,8 +36,18 @@
 	if(!snitch)
 		return
 
+	var/report_name = source
+	if (istype(source, /mob/living/critter/flock/bit))
+		var/mob/M = source
+		report_name = M.real_name
+	else if (istype(source, /obj/flock_structure))
+		var/obj/flock_structure/structure = source
+		report_name = "the " + structure.flock_id
+	else if (hasvar(source, "flock_id"))
+		report_name = "the " + source.vars["flock_id"]
+
 	if (!snitch.flock.isEnemy(attacker))
-		flock_speak(snitch, "Damage sighted on [source], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
+		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
 	snitch.flock.updateEnemy(attacker)
 
 

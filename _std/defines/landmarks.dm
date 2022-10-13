@@ -40,6 +40,11 @@
 #define LANDMARK_PIRATE_FIRST_MATE "Pirate-First-Mate-Spawn"
 #define LANDMARK_PIRATE_CAPTAIN "Pirate-Captain-Spawn"
 
+// Salvagers
+#define LANDMARK_SALVAGER "Salvager-Spawn"
+#define LANDMARK_SALVAGER_BEACON "Salvager-Beacon"
+#define LANDMARK_SALVAGER_TELEPORTER "Salvager-Tele"
+
 // misc and unused
 #define LANDMARK_CHARACTER_PREVIEW_SPAWN "character preview"
 

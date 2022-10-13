@@ -13,7 +13,6 @@
 /* --------------------------------- */
 
 /* =============== PENS =============== */
-
 /obj/item/pen
 	desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen."
 	name = "pen"
@@ -32,7 +31,7 @@
 	var/uses_handwriting = 0
 	stamina_damage = 0
 	stamina_cost = 0
-	rand_pos = 1
+	rand_pos = TRUE
 	var/in_use = 0
 	var/color_name = "black"
 	var/clicknoise = 1
@@ -41,6 +40,7 @@
 	var/spam_timer = 20
 	var/symbol_setting = null
 	var/material_uses = 10
+	var/can_dip = TRUE // can we dip this in reagents to write with them?
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
@@ -68,6 +68,10 @@
 		">" = "Greater Than"
 	)
 
+	New()
+		. = ..()
+		src.create_reagents(PEN_REAGENT_CAPACITY)
+
 
 	attack_self(mob/user as mob)
 		..()
@@ -83,6 +87,11 @@
 			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag_sound = 0
+
+	get_desc()
+		. = ..()
+		if (src.reagents.total_volume && src.can_dip)
+			. += "<br><span class = 'notice'>It's been dipped in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	proc/apply_material_to_drawing(obj/decal/cleanable/writing/drawing, mob/user)
 		if(src.material)
@@ -106,7 +115,7 @@
 			src.in_use = 0
 			return
 		phrase_log.log_phrase("floorpen", t)
-		var/obj/decal/cleanable/writing/G = make_cleanable( /obj/decal/cleanable/writing,T)
+		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
 		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
@@ -115,15 +124,8 @@
 			G.color = src.font_color
 		if(apply_material_to_drawing(G, user))
 			;
-		/* not used because it doesn't work (yet?)
-		if (src.uses_handwriting && user?.mind?.handwriting)
-			G.font = user.mind.handwriting
-			G.webfont = 1
-		*/
 		else if (src.font)
 			G.font = src.font
-			//if (src.webfont)
-				//G.webfont = 1
 		G.words = "[t]"
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			G.pixel_x = text2num(params["icon-x"]) - 16
@@ -131,6 +133,17 @@
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
+		if (src.reagents.total_volume)
+			G.color = src.reagents.get_average_rgb()
+			G.sample_reagent = src.reagents.get_master_reagent_id()
+			var/datum/reagent/master_reagent = src.reagents.reagent_list[G.sample_reagent]
+			G.sample_amt = master_reagent.volume
+			src.reagents.clear_reagents()
+
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
+
 		src.in_use = 0
 
 	onMaterialChanged()
@@ -141,18 +154,53 @@
 		if(src.material)
 			src.material_uses = initial(src.material_uses)
 
-	custom_suicide = 1
+	afterattack(atom/target, mob/user)
+		if (target.is_open_container())
+			if (src.reagents.maximum_volume <= src.reagents.total_volume)
+				boutput(user, "<span class='alert'>The pen is totally coated!</span>")
+				return
+
+			if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne))
+				var/obj/fluid/F = target
+				F.group.reagents.skip_next_update = TRUE
+				F.group.update_amt_per_tile()
+				var/amt = min(F.group.amt_per_tile, src.reagents.maximum_volume - src.reagents.total_volume)
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
+			else if (target.reagents && src.can_dip)
+				if (target.reagents.total_volume)
+					boutput(user, "<span class='hint'>You dip [src] in [target].</span>")
+					target.reagents.trans_to(src, min(PEN_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
+				else
+					boutput(user, "<span class='alert'>[target] is empty!</span>")
+		else
+			return ..()
+
+		if (src.reagents.total_volume)
+			src.add_filter("reagent_coloration", 1, color_matrix_filter(normalize_color_to_matrix(src.reagents.get_average_rgb())))
+			src.color = src.reagents.get_average_color()
+			src.font_color = src.color
+			src.color_name = get_nearest_color(src.reagents.get_average_color()) // why the fuck are there 3 vars for this
+
+			if (src.material)
+				src.removeMaterial() // no
+				src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
+
+	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+		. = ..()
+		src.reagents.clear_reagents() // no
+
+	custom_suicide = TRUE
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
-			return 0
+			return FALSE
 		user.visible_message("<span class='alert'><b>[user] gently pushes the end of [src] into [his_or_her(user)] nose, then leans forward until [he_or_she(user)] falls to the floor face first!</b></span>")
 		user.TakeDamage("head", 175, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
-				user.suiciding = 0
+				user.suiciding = FALSE
 		qdel(src)
-		return 1
-
+		return TRUE
 /obj/item/pen/fancy
 	name = "fancy pen"
 	desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the gold nib and marblewood barrel."
@@ -654,6 +702,13 @@
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
+		if (src.reagents.total_volume)
+			G.color = src.reagents.get_average_rgb()
+			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
+
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
 
 	get_desc()
 		. = ..()
