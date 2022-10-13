@@ -68,5 +68,5 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	structType = /obj/flock_structure/mitigator
 
 	check_unlocked()
-		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_DRONE_DEATHS)
+		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 
