@@ -1,6 +1,10 @@
 
 (t)thu oct 13 22
 (u)LeahTheTech
+(p)11318
+(e)🆕|C-Feature
+(+)Coconuts and pumpkins now keep their reagents when made into drinks.
+(u)LeahTheTech
 (p)11330
 (e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
 (+)Added basic chemicals to the chemical request console.
