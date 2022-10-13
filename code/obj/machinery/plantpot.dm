@@ -1248,11 +1248,9 @@
 					HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 
 				else if(istype(CROP,/obj/critter/))
-					// We need to make sure they don't attack the botanist that grew it
-					// and we'll try to assign reagents if it accepts them
+					// If it's a critter we don't need to do reagents or shit like that but
+					// we do need to make sure they don't attack the botanist that grew it.
 					var/obj/critter/C = CROP
-					if (C.reagents)
-						HYPadd_harvest_reagents(CROP,growing,DNA,quality_status)
 					C.friends = C.friends | src.contributors
 
 				else if (istype(CROP,/obj/item/organ))
