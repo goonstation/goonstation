@@ -3,7 +3,7 @@
 	name = "gnesis fountain"
 	desc = "Some sort of gnesis fountain. The gnesis appears very active."
 	flock_desc = "A defense turret that fires high speed gnesis bolts at nearby projectiles, annihilating them."
-	flock_id = "mitigator"
+	flock_id = "Mitigator"
 	health = 50
 	health_max = 50
 	repair_per_resource = 2.5
