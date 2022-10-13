@@ -496,9 +496,17 @@ proc/give_mob_item(mob/person, obj/item/gift)
 mob/verb/get_mob_to_yourself(mob/target as mob)
 ```
 
+*Additional note*: This applies in general to anything
+*used* as a verb, which can be any proc added to an atom
+via `atom.verbs += /proc/x`.
+
+So, be careful when removing `as x` to
+make sure it isn't being used as a verb somewhere else.
+
 # Useful Things
 
 ## VSCode Debugger
+//TODO
 
 ## Debugging Overlays
 
