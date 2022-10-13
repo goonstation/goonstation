@@ -450,7 +450,7 @@
 		// Manifest stuff
 		var/sec_note = ""
 		var/med_note = ""
-		if(src.client && src.client.preferences)
+		if(src.client?.preferences && !src.client.preferences.be_random_name)
 			sec_note = src.client.preferences.security_note
 			med_note = src.client.preferences.medical_note
 		var/obj/item/device/pda2/pda = locate() in src
@@ -509,6 +509,11 @@
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
+
+		// This should be here (overriding most other things), probably? - #11215
+		// Vampires spawning in the chapel is bad. :(
+		if (istype(src.loc.loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -704,6 +709,9 @@
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
 	if(istype(get_area(src),/area/afterlife))
 		rank = "Captain"

@@ -381,6 +381,12 @@
 	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2)
 
+/obj/storage/secure/closet/security/armory/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
+
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
 	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."

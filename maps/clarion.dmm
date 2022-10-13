@@ -2474,9 +2474,8 @@
 	},
 /area/station/crewquarters/cryotron)
 "afl" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_left{
 	density = 0;
-	emergency = 0;
 	id = "merchant_N";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -4198,9 +4197,8 @@
 	},
 /area/station/crewquarters/cryotron)
 "aiq" = (
-/obj/machinery/computer/airbr/emergency_shuttle{
+/obj/machinery/computer/airbr/trader_right{
 	density = 0;
-	emergency = 0;
 	id = "merchant_S";
 	pixel_y = 32;
 	req_access_txt = ""
@@ -40858,7 +40856,10 @@
 	},
 /area/station/engine/ptl)
 "bJI" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bJJ" = (
@@ -43709,6 +43710,13 @@
 	},
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
+"ekn" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_left,
+/turf/space,
+/area/station/shield_zone)
 "ele" = (
 /obj/cable{
 	d1 = 1;
@@ -44166,6 +44174,13 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/station/quartermaster/storage)
+"fjt" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/traffic_light/trader_right,
+/turf/space,
+/area/station/shield_zone)
 "flb" = (
 /obj/cable,
 /obj/cable{
@@ -90027,10 +90042,10 @@ aay
 rlE
 afl
 ajr
-agq
+ekn
 agJ
 agJ
-agq
+fjt
 rlE
 aiq
 ajr

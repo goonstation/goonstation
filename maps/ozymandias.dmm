@@ -3828,6 +3828,10 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/carpet/red/fancy/edge/nw,
 /area/station/engine/engineering/ce)
+"beb" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/hydroponics)
 "bec" = (
 /obj/table/auto,
 /obj/item/gun/russianrevolver{
@@ -10576,7 +10580,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cWF" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "cWH" = (
@@ -161855,7 +161862,7 @@ bWM
 ryX
 vqF
 wth
-tpx
+beb
 tpx
 kRm
 ryX
