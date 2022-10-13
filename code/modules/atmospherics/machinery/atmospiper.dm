@@ -31,8 +31,7 @@
 /obj/machinery/atmos_pipedispenser/New(mob/user)
 	..()
 	dat = {"<b>Atmos Pipes</b><br><br>"}
-	var/counter = 1
-
+	
 	for (var/type in pipesforcreation)
 		dat += "<A href='?src=\ref[src];dmake=[type]'>[type]</A><BR>"
 
