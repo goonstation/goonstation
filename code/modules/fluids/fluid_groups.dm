@@ -341,7 +341,7 @@
 					break
 				else
 					blocked++
-			if(blocked = length(cardinal)) // failed
+			if(blocked == length(cardinal)) // failed
 				src.remove(F,0,2)
 		else
 			var/turf/T

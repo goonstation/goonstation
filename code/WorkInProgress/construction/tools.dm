@@ -206,8 +206,24 @@
 			if (A != TargA)
 				if (istype(A,/area/built_zone))
 					TargA.contents += T // steal the turf from the old
-			if (A.area_apc)
-				A.area_apc.area = TargA
+
+			if (A.area_apc) // steal the APCs
+				var/obj/machinery/power/apc/Aapc = A.area_apc
+				Aapc.area = TargA
+				Aapc.name = "[TargA.name] APC"
+				if (!TargA.area_apc)
+					TargA.area_apc = Aapc
+
+			for (var/obj/machinery/M in A.machines) // steal all the machines too
+				A.machines -= M
+				TargA.machines += M
+				if (istype(M,/obj/machinery/light)) // steal all the lights
+					A.remove_light(M)
+					TargA.add_light(M)
+
+			SPAWN(0.5 SECONDS) // apc code does this too
+				if (TargA.area_apc)
+					TargA.area_apc.update()
 
 	proc/identify_room(var/turf/T) // stolen from what this was using before
 		var/list/affected = list()
