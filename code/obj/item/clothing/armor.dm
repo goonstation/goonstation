@@ -357,7 +357,7 @@
 
 /obj/item/clothing/suit/armor/pirate_captain_coat
 	name = "pirate captain's coat"
-	desc = "A dread inducing red and black greatcoat, worn by only the greatest of mass larcenists. Probably stolen."
+	desc = "A luxurious yet dread inducing red and gold greatcoat, worn by only the greatest of mass larcenists. Probably stolen."
 	icon_state = "pirate_captain"
 	item_state = "pirate_captain"
 	hides_from_examine = 0
