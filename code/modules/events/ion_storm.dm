@@ -179,6 +179,9 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
+			if(!length(targets)) // if there are no targets
+				break
+
 			var/object = pick(targets)
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
@@ -305,28 +308,52 @@ ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category/ids
 	amount = 5
 
+	valid_instance(var/obj/item/card/id/currentcard)
+		var/turf/T = null
+		T = get_turf(currentcard)
+		if (T?.z != Z_LEVEL_STATION) // only affect the station
+			return FALSE
+		if (length(currentcard.access) < 1) // skip empty IDs
+			return FALSE
+		if (!currentcard.registered) // make sure it's a registered ID so we can change the name
+			return FALSE
+		if (istype(currentcard, /obj/item/card/id/clown)) // Clown ID is scribbled on, so it's immune to changes
+			return FALSE
+		return TRUE
+
 	build_targets()
-		for (var/obj/item/card/id/currentcard in by_type[/obj/item/card/id])
-			if (valid_instance(currentcard) && !(access_fuck_all in currentcard.access)) // exclude empty ID cards (nice access name)
+		for_by_tcl(currentcard, /obj/item/card/id)
+			if (valid_instance(currentcard)) // exclude empty and fake IDs
 				targets += currentcard
 
 	action(var/obj/item/card/id/currentcard)
 		var/cc_access = currentcard.access
-		var/length = length(cc_access)
+		var/list/all_accesses = get_all_accesses()
+		var/list/excluded_accesses = list(access_fuck_all, access_maxsec, access_change_ids) + (syndicate_spec_ops_access() - all_accesses)
+		var/length = length(cc_access - excluded_accesses)
+
 		var/removal_ratio = 0.2
 		var/num_to_remove = round(length * removal_ratio + 1) // removes more access the more the card has, with a minimum of 1 access
 		var/num_to_add = rand(1, 2)
-		var/list/all_accesses = get_all_accesses()
 
-		for (var/i in num_to_remove)
-			var/access_to_remove = pick(cc_access)
-			if (access_to_remove in (all_accesses + list(access_maxsec))) // exclude bonus access
-				cc_access -= list(access_to_remove)
-				all_accesses -= list(access_to_remove)
-				logTheThing(LOG_STATION, null, "Ion storm interfered with ID card (<b>[currentcard.registered]</b>) and removed access [access_to_remove].")
+		for (var/i in 1 to num_to_remove)
+			var/access_to_remove = pick(cc_access - excluded_accesses) // exclude bonus access
+			cc_access -= list(access_to_remove)
+			all_accesses -= list(access_to_remove)
+			logTheThing(LOG_STATION, null, "Ion storm interfered with ID card (<b>[currentcard.registered]</b>) and removed access [access_to_remove].")
 
-		for (var/i in num_to_add)
+		for (var/i in 1 to num_to_add)
 			var/list/accessibles = all_accesses - cc_access // get it? accessible + accesses
+
+			if (!length(accessibles)) // if there's nothing to add
+				break
+
 			var/access_to_add = pick(accessibles)
 			cc_access += list(access_to_add)
 			logTheThing(LOG_STATION, null, "Ion storm interfered with ID card (<b>[currentcard.registered]</b>) and added access [access_to_add].")
+
+		// Mess up the name on the ID
+		currentcard.registered = radioGarbleText(currentcard.registered)
+		currentcard.update_name()
+
+		targets -= list(currentcard)
