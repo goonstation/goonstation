@@ -461,6 +461,7 @@
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
 	icon_state = "headset"
 	chat_class = RADIOCL_SYNDICATE
+	locked_frequency = TRUE
 	secure_frequencies = list("p" = R_FREQ_PIRATE)
 	secure_classes = list(RADIOCL_SYNDICATE)
 	protected_radio = 1

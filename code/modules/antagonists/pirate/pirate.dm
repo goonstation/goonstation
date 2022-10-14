@@ -34,7 +34,8 @@
 							/obj/item/clothing/under/misc/dirty_vest)
 			var/obj/item/clothing/hat = pick(/obj/item/clothing/head/red,
 							/obj/item/clothing/head/bandana/red,
-							/obj/item/clothing/head/pirate_brn)
+							/obj/item/clothing/head/pirate_brn,
+							/obj/item/clothing/head/pirate_blk)
 
 			H.equip_if_possible(new jumpsuit, H.slot_w_uniform)
 			H.equip_if_possible(new hat, H.slot_head)
