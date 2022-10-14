@@ -685,8 +685,8 @@
 	desc = "A small pouch containing .58 lead balls for flintlock pistols."
 	ammo_type = new/datum/projectile/bullet/flintlock
 	icon_state = "flintlock_ammo_pouch"
-	amount_left = 10
-	max_amount = 10
+	amount_left = 15
+	max_amount = 15
 	ammo_cat = AMMO_FLINTLOCK
 
 	single
