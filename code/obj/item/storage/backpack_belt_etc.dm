@@ -454,7 +454,7 @@
 		/obj/item/sponge,
 		/obj/item/spraybottle/cleaner
 	)
-	slots = 7
+	slots = 5
 
 /* -------------------- Belts -------------------- */
 
