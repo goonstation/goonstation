@@ -773,8 +773,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 //medic primary
 /obj/item/gun/kinetic/veritate
-	desc = "A machine pistol, developed by Almagest Weapons Fabrication."
-	name = "\improper Veritate machine pistol"
+	desc = "A personal defence weapon, developed by Almagest Weapons Fabrication."
+	name = "\improper Veritate PDW"
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "vector"
 	item_state = "vector"
