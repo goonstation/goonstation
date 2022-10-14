@@ -127,7 +127,7 @@
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
 	if (istype(src,/turf/simulated/wall/auto))
-		newlight.nostick = 0 // sticky lights are cool and good
+		newlight.autoposition()
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)
