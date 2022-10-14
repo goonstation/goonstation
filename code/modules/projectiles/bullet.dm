@@ -374,6 +374,27 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 
+//medic primary
+/datum/projectile/bullet/veritate
+	name = "bullet"
+	shot_sound = 'sound/weapons/9x19NATO.ogg'
+	power = 15
+	damage_type = D_PIERCING
+	armor_ignored = 0.66
+	hit_type = DAMAGE_STAB
+	hit_ground_chance = 50
+	projectile_speed = 60
+	impact_image_state = "bhole-small"
+	implanted = /obj/item/implant/projectile/bullet_flechette
+	casing = /obj/item/casing/small
+
+/datum/projectile/bullet/veritate/burst
+	sname = "burst fire"
+	power = 15
+	cost = 3
+	shot_number = 3
+
+
 //0.357
 /datum/projectile/bullet/revolver_357
 	name = "bullet"
