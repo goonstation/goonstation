@@ -581,6 +581,11 @@ TRAYS
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
+		if(food.cant_drop)
+			boutput(user, "<span class='alert'>You can't do that, [food] is attached to you!</span>")
+			return
+
+
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
