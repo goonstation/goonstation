@@ -444,6 +444,11 @@
 /////////////////////////////////
 // Construction begins in /obj/item/storage/toolbox/attackby
 
+/obj/item/toolbox_tiles/attack_self(mob/user)
+	for(var/obj/item/I in src.contents) // toolbox
+		user.put_in_hand_or_drop(I)
+		qdel(src)
+	boutput(user, "You discard the tile and recover the toolbox!")
 
 /obj/item/toolbox_tiles/attackby(var/obj/item/device/prox_sensor/D, mob/user as mob)
 	if (!istype(D, /obj/item/device/prox_sensor))
@@ -457,6 +462,7 @@
 	user.u_equip(D)
 	user.put_in_hand_or_drop(B)
 	boutput(user, "You add the sensor to the toolbox and tiles!")
+	// No going back now!
 	qdel(D)
 	qdel(src)
 

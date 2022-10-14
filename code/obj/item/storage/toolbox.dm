@@ -44,8 +44,9 @@
 	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
 			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
-			user.u_equip(W)
+
 			user.put_in_hand_or_drop(B)
+			W.change_stack_amount(-1)
 
 			if(istype(src, /obj/item/storage/toolbox/emergency))
 				B.color_overlay = "floorbot_overlay_red"
@@ -57,9 +58,8 @@
 			if(B.color_overlay)
 				B.UpdateOverlays(image(B.icon, icon_state = B.color_overlay), "coloroverlay")
 
-			qdel(P)
-			qdel(src)
-
+			user.drop_item(src)
+			src.set_loc(B)
 			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
 
