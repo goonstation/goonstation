@@ -379,7 +379,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			payload.temperature = T0C
 
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8, flags = SOUND_IGNORE_SPACE)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 			trace_gas.moles += 0.18
@@ -389,7 +389,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			target.assume_air(payload)
 		else
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 			payload.oxygen = 80
 			molitz.iterations -= 1
 
@@ -414,9 +414,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(molitz.iterations >= 1)
-				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
 			if(molitz.iterations == 0)
-				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5, flags = SOUND_IGNORE_SPACE)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
