@@ -13705,6 +13705,7 @@
 	icon_state = "1-4"
 	},
 /obj/machinery/light_switch/auto,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/purplewhite{
 	dir = 10
 	},
