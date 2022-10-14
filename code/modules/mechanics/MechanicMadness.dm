@@ -347,7 +347,6 @@
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
-	burn_possible = FALSE
 	/// whether or not this component is prevented from being anchored in cabinets
 	var/cabinet_banned = FALSE
 	/// if true makes it so that only one component can be wrenched on the tile
