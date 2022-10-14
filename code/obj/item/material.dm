@@ -206,19 +206,17 @@
 			return
 		var/datum/material/crystal/molitz/molitz = src.material
 		if(molitz.iterations == 2 && molitz.unexploded == 0)
-			. += " All the big pockets of air are gone now, however the small pockets look loose."
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
 		else if(molitz.iterations == 1 && molitz.unexploded == 0)
-			. += " There's just a tiny bit more gas left in the crystal."
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
 		else if(molitz.iterations == 0 && molitz.unexploded == 0)
-			. += " All the gas in the crystal is completely gone."
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
 		else if(molitz.iterations >= 3)
-			. += " It looks like the crystal has plenty of gas trapped inside of it."
-		else if(molitz.iterations == 2)
-			. += " The crystal's large gas pockets look smaller then usual"
-		else if(molitz.iterations == 1)
-			. += " All of the big pockets of gas are nearly gone, however there are still plenty of small pockets of gas that contain more gas."
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
 		else if(molitz.iterations == 0)
-			. += " All the big pockets of gas are gone, yet the small pockets of gas refuse to vent."
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
 
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
@@ -237,19 +235,17 @@
 			return
 		var/datum/material/crystal/molitz/molitz = src.material
 		if(molitz.iterations == 2 && molitz.unexploded == 0)
-			. += " All the big pockets of air are gone now, however the small pockets look loose."
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
 		else if(molitz.iterations == 1 && molitz.unexploded == 0)
-			. += " There's just a tiny bit more gas left in the crystal."
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
 		else if(molitz.iterations == 0 && molitz.unexploded == 0)
-			. += " All the gas in the crystal is completely gone."
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
 		else if(molitz.iterations >= 3)
-			. += " It looks like the crystal has plenty of gas trapped inside of it."
-		else if(molitz.iterations == 2)
-			. += " The crystal's large gas pockets look smaller then usual"
-		else if(molitz.iterations == 1)
-			. += " All of the big pockets of gas are nearly gone, however there are still plenty of small pockets of gas that contain more gas."
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
 		else if(molitz.iterations == 0)
-			. += " All the big pockets of gas are gone, yet the small pockets of gas refuse to vent."
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
