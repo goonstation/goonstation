@@ -939,6 +939,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
 			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
 			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			src.reagents.trans_to(bowl, src.reagents.maximum_volume)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
@@ -966,7 +967,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else
 			..()
 
-obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 	name = "spiced pumpkin"
 	desc = "Autumny!"
 	icon_state = "pumpkinlatte"
@@ -983,7 +984,8 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			qdel(src)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
-			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(get_turf(user))
+			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/latte = new(get_turf(user))
+			src.reagents.trans_to(latte, src.reagents.total_volume)
 			qdel(src)
 
 /obj/item/clothing/head/pumpkinlatte
@@ -1287,7 +1289,8 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
-		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
+		src.reagents.trans_to(drink, src.reagents.total_volume)
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)

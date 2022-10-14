@@ -2664,7 +2664,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attack_self(mob/user as mob)
 		if (unwrapped)
-			return
+			attack(user, user)
 
 		unwrapped = 1
 		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
