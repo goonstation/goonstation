@@ -301,3 +301,32 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/firealarm/alarm)
 		alarm.alarm()
+
+/datum/ion_category/ids
+	amount = 5
+
+	build_targets()
+		for (var/obj/item/card/id/currentcard in by_type[/obj/item/card/id])
+			if (valid_instance(currentcard) && !(access_fuck_all in currentcard.access)) // exclude empty ID cards (nice access name)
+				targets += currentcard
+
+	action(var/obj/item/card/id/currentcard)
+		var/cc_access = currentcard.access
+		var/length = length(cc_access)
+		var/removal_ratio = 0.2
+		var/num_to_remove = round(length * removal_ratio + 1) // removes more access the more the card has, with a minimum of 1 access
+		var/num_to_add = rand(1, 2)
+		var/list/all_accesses = get_all_accesses()
+
+		for (var/i in num_to_remove)
+			var/access_to_remove = pick(cc_access)
+			if (access_to_remove in (all_accesses + list(access_maxsec))) // exclude bonus access
+				cc_access -= list(access_to_remove)
+				all_accesses -= list(access_to_remove)
+				logTheThing(LOG_STATION, null, "Ion storm interfered with ID card (<b>[currentcard.registered]</b>) and removed access [access_to_remove].")
+
+		for (var/i in num_to_add)
+			var/list/accessibles = all_accesses - cc_access // get it? accessible + accesses
+			var/access_to_add = pick(accessibles)
+			cc_access += list(access_to_add)
+			logTheThing(LOG_STATION, null, "Ion storm interfered with ID card (<b>[currentcard.registered]</b>) and added access [access_to_add].")
