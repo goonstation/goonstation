@@ -2127,7 +2127,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.bioHolder.AddEffect("hell_fire", magical=1)
 
 /datum/job/special/halloween/superhero
-	name = "Discount Superhero"
+	name = "Discount Vigilante Superhero"
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
