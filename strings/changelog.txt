@@ -1,5 +1,9 @@
 
 (t)fri oct 14 22
+(u)LeahTheTech
+(p)11189
+(e)🆕🎨💅📄🤖|C-Feature, C-Sprites, C-QoL, A-UI, A-Silicons
+(*)The Cybernetic hypospray now uses a shiny new context action menu.
 (u)glowbold
 (p)11317
 (e)🆕💅🍝|C-Feature, C-QoL, A-Catering
