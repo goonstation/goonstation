@@ -219,6 +219,7 @@
 	color_r = 1
 	color_g = 1
 	color_b = 1
+	contraband = 4 // illegal (stolen) crimefighting vigilante gear
 
 /obj/item/clothing/glasses/thermal
 	name = "optical thermal scanner"

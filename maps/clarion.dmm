@@ -15601,7 +15601,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aGv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/westeast,
 /area/station/crew_quarters/bar)
 "aGw" = (
@@ -15884,7 +15884,7 @@
 /area/station/medical/medbay/pharmacy)
 "aHb" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -15948,7 +15948,7 @@
 /area/station/medical/medbay/pharmacy)
 "aHg" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -27736,7 +27736,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/storage/wall/emergency{
 	pixel_y = 30
@@ -29758,7 +29758,7 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -29788,7 +29788,7 @@
 "bmS" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/door_control{
 	id = "chemblast";
 	name = "Chemistry Blast Shield Control";
