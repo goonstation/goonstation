@@ -1723,9 +1723,9 @@ obj/item/whetstone
 	name = "Halberd"
 	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "halberd"
+	icon_state = "halberdnormal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "halberd1"
+	item_state = "halberdhoriz"
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
@@ -1767,8 +1767,8 @@ obj/item/whetstone
 				force = 24
 				stamina_damage = 10
 				stamina_cost = 7
-				item_state = "halberd2"
-				icon_state = "halberd"
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
 				hit_type = DAMAGE_CUT
 				src.click_delay = COMBAT_CLICK_DELAY * 0.75
 				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
@@ -1778,8 +1778,8 @@ obj/item/whetstone
 				force = 15
 				stamina_damage = 10
 				stamina_cost = 8
-				item_state = "halberd2"
-				icon_state = "halberd"
+				item_state = "halberdverti"
+				icon_state = "halberdnormal"
 				hit_type = DAMAGE_STAB
 				src.click_delay = COMBAT_CLICK_DELAY * 0.60
 				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -1790,8 +1790,8 @@ obj/item/whetstone
 				force = 10
 				stamina_damage = 40
 				stamina_cost = 20
-				item_state = "halberd1"
-				icon_state = "halberd2"
+				item_state = "halberdhoriz"
+				icon_state = "halberdupsidown"
 				hit_type = DAMAGE_STAB
 				src.click_delay = COMBAT_CLICK_DELAY
 				hitsound ='sound/impact_sounds/coconut_break.ogg' //it's a good hitsound when you ignore the name
@@ -1802,8 +1802,8 @@ obj/item/whetstone
 				force = 35
 				stamina_damage = 20
 				stamina_cost = 35
-				item_state = "halberd1"
-				icon_state = "halberd"
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
 				hit_type = DAMAGE_CUT
 				src.click_delay = COMBAT_CLICK_DELAY * 1.25
 				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
@@ -1812,7 +1812,7 @@ obj/item/whetstone
 
 
 		user.update_inhands()
-		src.buildTooltipContent()
+		src.tooltip_rebuild = TRUE
 
 	attack_hand(mob/user)
 		if(src.loc != user)
@@ -1832,7 +1832,7 @@ obj/item/whetstone
 		src.click_delay = COMBAT_CLICK_DELAY * 0.75
 		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		src.setItemSpecial(/datum/item_special/simple)
-		src.buildTooltipContent()
+		src.tooltip_rebuild = TRUE
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
