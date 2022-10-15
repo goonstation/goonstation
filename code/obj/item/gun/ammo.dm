@@ -1113,6 +1113,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_FLINTLOCK_MORTAR
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = TRUE
+	amount_left = 10
+	max_amount = 10
 
 	single
 		amount_left = 1
