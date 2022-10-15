@@ -238,6 +238,9 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!(src.ckey in NT))
 				return 0
+		if (JOB.mentor_only)
+			if (!(src.ckey in mentors))
+				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
 		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
@@ -597,6 +600,11 @@ a.latejoin-card:hover {
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
+		if(force_random_names)
+			src.client.preferences.be_random_name = 1
+		if(force_random_looks)
+			src.client.preferences.be_random_look = 1
+
 		var/mob/new_character = null
 		if (J)
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
@@ -847,7 +855,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -872,7 +880,7 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			//src.mind.dnr=1
+			src.mind.dnr = 1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			if(observer?.client)

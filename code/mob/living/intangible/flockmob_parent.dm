@@ -77,12 +77,6 @@
 	else
 		return 0.75 + movement_delay_modifier
 
-/mob/living/intangible/flock/Move(NewLoc, direct)
-	src.set_dir(get_dir(src, NewLoc))
-	if (isturf(NewLoc) && istype(NewLoc, /turf/unsimulated/wall)) // no getting past these walls, fucko
-		return 0
-	..()
-
 /mob/living/intangible/flock/attack_hand(mob/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
@@ -220,7 +214,7 @@
 
 
 /mob/living/intangible/flock/proc/createstructure(obj/flock_structure/structure_type, resources = 0)
-	new /obj/flock_structure/ghost(get_turf(src), structure_type, src.flock, resources)
+	new /obj/flock_structure/ghost(get_turf(src), src.flock, structure_type, resources)
 
 //compute - override if behaviour is weird
 /mob/living/intangible/flock/proc/compute_provided()

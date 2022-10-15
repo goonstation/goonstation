@@ -19870,7 +19870,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "aRY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "aRZ" = (
@@ -27715,7 +27715,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "biP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/pharmacy)
@@ -42263,7 +42263,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "bOZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/door_control{
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
@@ -43222,7 +43222,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "bQX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -44724,7 +44724,7 @@
 	},
 /area/station/science/chemistry)
 "bUc" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},

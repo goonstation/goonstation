@@ -4,6 +4,7 @@
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
+	var/flock_id = "Conduit"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
 	flags = USEDELAY
@@ -38,7 +39,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Conduit
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/50)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -172,6 +173,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."
+	var/flock_id = "Nanite block"
 	icon = 'icons/turf/walls_flock.dmi'
 	icon_state = "flock0"
 	mod = "flock"
@@ -204,7 +206,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Nanite Block
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.max_health)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 

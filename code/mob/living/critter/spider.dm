@@ -197,7 +197,6 @@
 	icon_state_dead = "bumblespider-dead"
 	density = 0
 	flags = TABLEPASS
-	fits_under_table = 1
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0

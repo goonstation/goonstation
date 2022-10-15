@@ -326,6 +326,7 @@
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
 
 /datum/targetable/ai/module/nanite_repair
+	name = "Nanite Repair"
 	icon_state = "nanites"
 	desc = "Send out targeted nanites to repair a silicon being or a camera."
 	targeted = TRUE
