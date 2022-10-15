@@ -55,6 +55,7 @@
 	var/bio_effects = null
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
+	var/max_rounds_to_play = INFINITY //infinity be defatult, job cannot be played if the player has played more than this many rounds
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
 
 	New()
@@ -499,6 +500,7 @@ ABSTRACT_TYPE(/datum/job/security)
 		slot_poc2 = list(/obj/item/requisition_token/security/assistant)
 		items_in_backpack = list(/obj/item/paper/book/from_file/space_law)
 		rounds_needed_to_play = 5
+		max_rounds_to_play = 30
 
 		New()
 			..()
