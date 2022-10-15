@@ -50,6 +50,26 @@
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
 			if (!isdead(MT))
 				MT.emote("scream")
+			if (istype(MT, /mob/living/critter/brain_slug))
+				var/mob/living/critter/brain_slug/the_slug = MT
+				boutput(holder.owner, "<span class='notice'>What a delightful morsel! You swallow it all in one gulp!</span>")
+				boutput(the_slug, "<span class='alert'>[holder.owner] pecks at you and swallows you in one gulp!</span>")
+				the_slug.set_loc(holder.owner)
+				spawn(4 SECONDS)
+					boutput(holder.owner, "<span class='alert'>Something is wrong! Your stomach is growling! You feel faint!</span>")
+					boutput(the_slug, "<span class='alert'>You get to work, you're not going to let yourself be eaten by some space critter!</span>")
+					spawn(4 SECONDS)
+						if(the_slug.mind)
+							logTheThing(LOG_COMBAT, caster, "[the_slug] has infested [holder.owner]")
+							boutput(holder.owner, "<span class='alert'>You feel something crawl up your neck, then nothingness. Your conscience fades.</span>")
+							holder.owner.ghostize()
+							the_slug.mind.transfer_to(the_mob)
+							var/datum/abilityHolder/brain_slug/AH = holder.owner.add_ability_holder(/datum/abilityHolder/brain_slug)
+							AH.addAbility(/datum/targetable/brain_slug/exit_host)
+							AH.addAbility(/datum/targetable/brain_slug/infest_host)
+						else
+							boutput(holder.owner, "<span class='notice'>Actually, you feel just fine! Nothing to worry about!</span>")
+
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"

@@ -2743,7 +2743,7 @@ datum
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
-				if (istype(M, /mob/living/critter/small_animal/slug))
+				if (istype(M, /mob/living/critter/small_animal/slug) || istype(M, /mob/living/critter/brain_slug))
 					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 					M.TakeDamage(null, volume, volume)
 				return
@@ -2761,7 +2761,7 @@ datum
 			on_mob_life(var/mob/living/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
-				if (istype(M, /mob/living/critter/small_animal/slug))
+				if (istype(M, /mob/living/critter/small_animal/slug) || istype(M, /mob/living/critter/brain_slug))
 					M.show_text("<span class='alert'><b>OH GOD THE SALT [pick("IT BURNS","HOLY SHIT THAT HURTS","JESUS FUCK YOU'RE DYING")]![pick("","!","!!")]</b></span>")
 					M.TakeDamage(null, src.depletion_rate * mult, src.depletion_rate * mult)
 				..()

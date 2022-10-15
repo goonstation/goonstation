@@ -453,6 +453,8 @@ datum
 			overdose = 40
 			value = 7
 			stun_resist = 31
+			var/counter = 1
+			var/being_ejected = FALSE
 			threshold = THRESHOLD_INIT
 
 			cross_threshold_over()
@@ -468,12 +470,56 @@ datum
 				..()
 
 			on_mob_life(var/mob/M, var/mult = 1)
+				if (!counter) counter = 1
 				if(!M) M = holder.my_atom
 				M.changeStatus("drowsy", -10 SECONDS)
 				if(M.sleeping) M.sleeping = 0
 				if (M.get_brain_damage() <= 90)
 					if (prob(50)) M.take_brain_damage(-1 * mult)
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
+
+				//Brain slug stuff
+				if (istype(M, /mob/living/carbon/human))
+					var/mob/living/carbon/human/human_host = M
+					if (human_host.slug)
+						if (prob(20))
+							human_host.emote(pick("scream", "twitch_v", "twitch", "drool"))
+							boutput(human_host, "<span class='alert'>Something's wrong! You can feel something trying to expel you from this host's head!</span>")
+						switch(counter += (1 * mult))
+							if (1 to 5)
+								human_host.take_toxin_damage(1 * mult)
+							if (6 to 25)
+								human_host.take_toxin_damage(1.5 * mult)
+								M.make_dizzy(1 * mult)
+								M.change_misstep_chance(10 * mult)
+							if (19 to INFINITY)
+								if(!being_ejected)
+									being_ejected = TRUE
+									human_host.visible_message("<span class='alert'>[human_host]'s suddenly arcs forward and clutches [his_or_her(human_host)] head!</span>")
+									human_host.emote("scream")
+									spawn(2 SECONDS)
+										human_host.vomit()
+										spawn(3 SECONDS)
+											human_host.mind.transfer_to(human_host.slug)
+											human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
+											human_host.slug.set_loc(get_turf(human_host))
+											//Dont immediately infest something again.
+											var/datum/targetable/ability = human_host.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+											ability.doCooldown()
+											if (human_host.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
+												var/obj/head = human_host.organHolder.drop_organ("head")
+												qdel(head)
+												make_cleanable( /obj/decal/cleanable/blood/gibs,human_host.loc)
+												playsound(human_host.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50)
+												gibs(human_host.loc, headbits = 0)
+												human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
+											//Cleanup
+											human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
+											human_host.removeAbility(/datum/targetable/brain_slug/infest_host)
+											human_host.slug = null
+											human_host.death(gibbed = false)
+
+
 				..()
 				return
 

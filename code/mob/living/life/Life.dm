@@ -328,12 +328,14 @@
 		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
-
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
 
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
+
+		if (src.slug)
+			src.handle_slug_process()
 
 	src.handle_pathogens()
 
@@ -593,7 +595,51 @@
 		var/emote2do = pick(src.random_emotes)
 		src.emote(emote2do)
 
-
+	//Hints towards a parasited host
+	proc/handle_slug_process()
+		var/datum/abilityHolder/brain_slug/AH = null
+		//Check if they have slug abilities
+		if (src.abilityHolder)
+			if(istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
+				AH = src.abilityHolder
+			else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
+				var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
+				for (var/datum/abilityHolder/found_holder in composite_holder.holders)
+					if (istype(found_holder, /datum/abilityHolder/brain_slug))
+						AH = found_holder
+						break
+			//If they do, roll a chance to do some hint
+			if (AH)
+				if (AH.points > 600)
+					if (prob(2))
+						src.emote(pick("sneeze", "drool", "shiver", "twitch", "cough"))
+				else if (AH.points > 300)
+					if (prob(4))
+						if(prob(50))
+							src.emote(pick("drool", "twitch_v", "gesticulate", "groan"))
+						else
+							src.visible_message("<span class='notice'>[src] vomits! It looks slimier than usual</span>")
+							src.vomit()
+				else if (AH.points > 1)
+					//Chance to do something
+					if (prob(6))
+						//emote or vomit
+						if(prob(50))
+							src.emote(pick("twitch_v", "gesticulate", "scream", "twitch", "cough"))
+							src.make_jittery(20)
+						else
+							//small vomit or big puke
+							if (prob(70))
+								src.emote("cough")
+								var/turf/T = get_turf(src)
+								make_cleanable(/obj/decal/cleanable/blood,T)
+							else
+								src.visible_message("<span class='alert'>[src] vomits a lot of blood!</span>")
+								playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								bleed(src, rand(5,8), 5)
+				else if (AH.points <= 0)
+					random_brute_damage(src, 5)
+					src.take_oxygen_deprivation(-5)
 /mob/living/carbon/human
 
 	proc/handle_pathogens()

@@ -22,7 +22,7 @@
 	can_help = 0
 
 
-	//Makes its say not work.
+	//Todo Makes its say not work.
 	New(var/turf/T)
 		..(T)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)

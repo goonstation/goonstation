@@ -222,7 +222,7 @@
 			human_host.make_jittery(20)
 			human_host.emote("scream")
 			spawn(3 SECONDS)
-				//Drop the slug on the floor and control it agani
+				//Drop the slug on the floor and control it again
 				human_host.mind.transfer_to(human_host.slug)
 				human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
 				human_host.slug.set_loc(get_turf(human_host))
@@ -237,10 +237,10 @@
 					gibs(human_host.loc, headbits = 0)
 					human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
 				//Cleanup
-				human_host.death(gibbed = false)
 				human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
 				human_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 				human_host.slug = null
+				human_host.death(gibbed = false)
 
 		else if (istype(holder.owner, /mob/living/critter/brain_slug))
 			var/mob/living/critter/brain_slug/the_slug = holder.owner
