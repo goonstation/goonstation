@@ -60081,9 +60081,6 @@
 "dwr" = (
 /obj/storage/secure/closet/fridge,
 /obj/item/reagent_containers/food/snacks/bagel{
-	icon_state = "swedishfisk-open"
-	},
-/obj/item/reagent_containers/food/snacks/bagel{
 	icon_state = "seedbagel"
 	},
 /obj/item/reagent_containers/food/snacks/plant/coffeebean,
@@ -60094,7 +60091,6 @@
 /obj/drink_rack/cup{
 	pixel_y = 24
 	},
-/obj/decal/cleanable/rust/jen,
 /turf/unsimulated/greek/cave/floor{
 	dir = 1
 	},
@@ -60813,22 +60809,6 @@
 /area/centcom/offices/mbc)
 "dyA" = (
 /obj/table/wood/auto/desk,
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = 2;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -3;
-	pixel_y = 5
-	},
-/obj/item/reagent_containers/food/drinks/bottle/beer{
-	pixel_x = -12;
-	pixel_y = 16
-	},
-/obj/item/reagent_containers/food/drinks/bottle/fancy_beer{
-	pixel_x = -9;
-	pixel_y = 8
-	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/drsingh)
 "dyB" = (
