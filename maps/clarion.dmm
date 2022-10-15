@@ -2437,7 +2437,7 @@
 "afe" = (
 /obj/table/reinforced/auto,
 /obj/machinery/cashreg,
-/turf/simulated/floor,
+/turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "aff" = (
 /obj/machinery/light{
@@ -2885,13 +2885,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "agj" = (
-/obj/machinery/power/apc{
-	areastring = "Crew Quarters S02";
-	cell_type = 1000;
-	dir = 8;
-	name = "Crew Quarters S02 APC";
-	pixel_x = -24
-	},
+/obj/machinery/power/apc/autoname_west,
 /obj/cable{
 	d2 = 4;
 	dir = 0;
@@ -8988,23 +8982,6 @@
 "aqB" = (
 /obj/cable{
 	icon_state = "1-4"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
-"aqC" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	d1 = 2;
-	d2 = 8;
-	icon_state = "2-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -15624,7 +15601,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aGv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/westeast,
 /area/station/crew_quarters/bar)
 "aGw" = (
@@ -15907,7 +15884,7 @@
 /area/station/medical/medbay/pharmacy)
 "aHb" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -15971,7 +15948,7 @@
 /area/station/medical/medbay/pharmacy)
 "aHg" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -27759,7 +27736,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/storage/wall/emergency{
 	pixel_y = 30
@@ -29781,7 +29758,7 @@
 	pixel_x = -10
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purpleblack{
 	dir = 8
@@ -29811,7 +29788,7 @@
 "bmS" = (
 /obj/disposalpipe/segment,
 /obj/table/reinforced/chemistry/auto,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/door_control{
 	id = "chemblast";
 	name = "Chemistry Blast Shield Control";
@@ -40856,7 +40833,10 @@
 	},
 /area/station/engine/ptl)
 "bJI" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bJJ" = (
@@ -45943,22 +45923,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
-"juU" = (
-/obj/disposalpipe/segment{
-	dir = 2;
-	icon_state = "pipe-c"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/machinery/power/apc{
-	areastring = "Public Market";
-	dir = 4;
-	name = "Public Market APC";
-	pixel_x = 24
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "jvE" = (
 /obj/cable{
 	d2 = 4;
@@ -89803,7 +89767,7 @@ anF
 aoK
 ale
 apS
-aqC
+aqU
 aqB
 aqu
 asl
@@ -90060,7 +90024,7 @@ ale
 aoJ
 ale
 apT
-juU
+arA
 aqU
 arz
 asm

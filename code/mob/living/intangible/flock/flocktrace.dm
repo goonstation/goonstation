@@ -21,6 +21,7 @@
 	if(istype(F))
 		src.flock = F
 		src.flock.addTrace(src)
+		src.flock.partitions_made++
 	else
 		src.death()
 

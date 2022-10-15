@@ -102,9 +102,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 			else
 				randomContent = src
 
-			if (randomContent != src)
-				randomContent.throw_impact(hit_atom)
-
 			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))

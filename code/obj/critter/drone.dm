@@ -1144,8 +1144,8 @@
 /obj/critter/gunbot/drone/iridium/whydrone/horse
 	name = "Horseman"
 	desc = "What the hell is this thing!? Oh God, is that a MOUTH?"
-	health = 8000 //glitch drone tough
-	maxhealth = 8000 // you aren't killing the apocalypse easily
+	health = 5000
+	maxhealth = 5000
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "horsedrone"
 	bound_height = 96

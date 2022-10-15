@@ -3,6 +3,12 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
+///List of 2 letter shorthands for the reagent, currently only used by the cybernetic hypospray
+var/list/reagent_shorthands = list(
+	"salbutamol" = "Sb",
+	"anti_rad" = "KI"
+)
+
 ABSTRACT_TYPE(/datum/reagent)
 
 datum
@@ -337,6 +343,22 @@ datum
 
 		proc/crack(var/amount) //this proc is called by organic chemistry machines. It should return nothing.
 			return							//rather it should subtract its own volume and create the appropriate byproducts.
+
+		/// Returns a representation of this reagent's recipes in text form
+		proc/get_recipes_in_text(allow_secret = FALSE)
+			. = ""
+			for (var/datum/chemical_reaction/recipe in chem_reactions_by_result[src.id])
+				. += "<b>Recipe for [recipe.result_amount] unit[recipe.result_amount > 1 ? "s": ""] of [reagents_cache[recipe.result] || "NULL"]:</b>"
+				if (recipe.hidden && !allow_secret)
+					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
+				else
+					if (recipe.required_temperature != -1)
+						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
+					for (var/id in recipe.required_reagents)
+						. += "<br>&emsp;[reagents_cache[id]] - [recipe.required_reagents[id]] unit[recipe.required_reagents[id] > 1 ? "s" : ""]" // English name - Required amount
+				. += "<br><br>"
+			if (!.) // empty string is falsey
+				. += "<b>No known recipes.</b>"
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
