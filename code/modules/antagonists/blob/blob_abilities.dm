@@ -832,6 +832,7 @@
 			return 1
 
 		var/obj/blob/L = new build_path(T)
+		logTheThing(LOG_STATION, owner, "builds [L] at [T] ([log_loc(T)])")
 		L.setOvermind(owner)
 		L.setMaterial(B.material)
 		B.material = null
