@@ -581,11 +581,11 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
-	telejamming_range = 3
 	var/nextAttackMsg = 0
 
 	New()
 		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
 
 		. = ..()
 		START_TRACKING

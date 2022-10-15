@@ -25,7 +25,6 @@
 	hitTwitch = FALSE
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
-	telejamming_range = 5
 	var/conversion_radius = 1
 	var/max_conv_radius = 100
 	var/list/turfs_to_convert = null
@@ -43,6 +42,7 @@
 
 /obj/flock_structure/relay/New()
 	START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 5)
 
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")

@@ -30,9 +30,6 @@
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
-	/// Teleportation jamming range, used if the object is tracked as a telejammer. -1 is used if telejamming isn't active.
-	var/telejamming_range = -1
-
 	/// Gets the atoms name with all the ugly prefixes things remove
 	proc/clean_name()
 		return strip_special(name)

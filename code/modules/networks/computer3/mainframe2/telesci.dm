@@ -15,8 +15,8 @@ var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
 	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (A.telejamming_range != -1)
-			if (IN_RANGE(A, T, A.telejamming_range))
+		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER))
+			if (IN_RANGE(A, T, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 				return FALSE
 
 	// first check the always allowed turfs from map landmarks

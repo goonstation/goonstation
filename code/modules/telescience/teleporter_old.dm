@@ -187,8 +187,8 @@
 
 
 	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (A.telejamming_range != -1)
-			if (IN_RANGE(tmploc, A, A.telejamming_range))
+		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER))
+			if (IN_RANGE(tmploc, A, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 				m_blocked = 1
 				break
 
