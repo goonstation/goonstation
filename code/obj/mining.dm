@@ -154,7 +154,11 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-			T.ReplaceWithSpace()
+
+			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+				T.ReplaceWith(/turf/space, force=TRUE)
+			else
+				T.ReplaceWith(/turf/space)
 			T.UpdateOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()

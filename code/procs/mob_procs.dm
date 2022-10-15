@@ -747,6 +747,7 @@
 	var/list/can_see = list()
 	var/see_traitors = 0
 	var/see_nukeops = 0
+	var/see_pirates = 0
 	var/see_wizards = 0
 	var/see_revs = 0
 	var/see_heads = 0
@@ -793,6 +794,8 @@
 			see_traitors = TRUE
 		else if (isnukeop(src) || isnukeopgunbot(src))
 			see_nukeops = 1
+		else if (ispirate(src))
+			see_pirates = 1
 		else if (iswizard(src))
 			see_wizards = 1
 		else if (isvampire(src))
@@ -817,7 +820,7 @@
 	if (remove)
 		return
 
-	if (!see_traitors && !see_nukeops && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
+	if (!see_traitors && !see_nukeops && !see_pirates && !see_wizards && !see_revs && !see_heads && !see_xmas && !see_zombies && !see_special && !see_everything && gang_to_see == null && PWT_to_see == null && !V && !VT)
 		src.last_overlay_refresh = world.time
 		return
 
@@ -912,6 +915,18 @@
 				if (ROLE_ZOMBIE)
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_PIRATE)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_PIRATE_FIRST_MATE)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate_first_mate, loc = M.current)
+						can_see.Add(I)
+				if (ROLE_PIRATE_CAPTAIN)
+					if (see_everything || see_pirates)
+						var/I = image(antag_pirate_captain, loc = M.current)
 						can_see.Add(I)
 				else
 					if (see_everything)

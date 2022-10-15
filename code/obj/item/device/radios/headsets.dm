@@ -456,6 +456,35 @@
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 			..()
 
+/obj/item/device/radio/headset/pirate
+	name = "radio headset"
+	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"
+	icon_state = "headset"
+	chat_class = RADIOCL_SYNDICATE
+	locked_frequency = TRUE
+	secure_frequencies = list("p" = R_FREQ_PIRATE)
+	secure_classes = list(RADIOCL_SYNDICATE)
+	protected_radio = 1
+	icon_override = "pirate"
+	icon_tooltip = "Space Pirate"
+
+	New()
+		..()
+		SPAWN(1 SECOND)
+			var/the_frequency = R_FREQ_PIRATE
+			// if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+			// 	var/datum/game_mode/nuclear/N = ticker.mode
+			// 	the_frequency = N.agent_radiofreq
+			src.frequency = the_frequency
+
+	first_mate
+		icon_override = "pirate_first_mate"
+		icon_tooltip = "Space Pirate First Mate"
+
+	captain
+		icon_override = "pirate_captain"
+		icon_tooltip = "Space Pirate Captain"
+
 /obj/item/device/radio/headset/deaf
 	name = "auditory headset"
 	desc = "A radio headset that also interfaces with the ear canal, allowing the deaf to hear normally while wearing it."

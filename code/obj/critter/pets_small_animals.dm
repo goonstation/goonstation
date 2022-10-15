@@ -1491,6 +1491,16 @@ var/list/shiba_names = list("Maru", "Coco", "Foxtrot", "Nectarine", "Moose", "Pe
 		if (!src.species)
 			src.apply_species(pick("smacaw","bmacaw","mmacaw","hmacaw"))
 
+	pirate
+		name = "Sharkbait"
+		species = "smacaw"
+		learn_phrase_chance = 0
+		learn_words_chance = 0
+		learned_phrases = list("YARR!")
+		learned_words = list("YARR!")
+		icon_state = "smacaw"
+		dead_state = "smacaw"
+
 /obj/critter/parrot/lovebird
 	name = "space lovebird"
 	desc = "A spacefaring species of parrot from the <i>agapornis</i> genus."
