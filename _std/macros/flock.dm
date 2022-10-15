@@ -15,7 +15,6 @@
 #define FLOCK_ANNOTATION_FLOCKMIND_CONTROL "flockmind_face"
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
-#define FLOCK_ANNOTATION_SAPPER_POWER "sapper_power"
 
 // costs
 #define FLOCK_CONVERT_COST 20

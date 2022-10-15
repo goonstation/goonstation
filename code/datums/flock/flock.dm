@@ -362,14 +362,6 @@ var/flock_signal_unleashed = FALSE
 	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
-	var/image/sapper_power = image('icons/misc/featherzone.dmi', icon_state = "sapper-power")
-	sapper_power.blend_mode = BLEND_ADD
-	sapper_power.pixel_x = 10
-	sapper_power.pixel_y = 2
-	sapper_power.plane = PLANE_ABOVE_LIGHTING
-	sapper_power.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	.[FLOCK_ANNOTATION_SAPPER_POWER] = sapper_power
-
 ///proc to get the indexed list of annotations on a particular mob
 /datum/flock/proc/getAnnotations(atom/target)
 	var/active = src.annotations[target]
