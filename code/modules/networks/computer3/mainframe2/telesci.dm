@@ -14,23 +14,10 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (istype(atom, /obj/machinery/telejam))
-			var/obj/machinery/telejam/TJ = atom
-			if (!TJ.active)
-				continue
-			if(IN_RANGE(TJ, T, TJ.range))
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (A.telejamming_range != -1)
+			if (IN_RANGE(A, T, A.telejamming_range))
 				return FALSE
-		if (istype(atom, /obj/item/device/flockblocker))
-			var/obj/item/device/flockblocker/F = atom
-			if (!F.active)
-				continue
-			if(IN_RANGE(F, T, F.range))
-				return FALSE
-
-	for_by_tcl(N, /obj/blob/nucleus)
-		if(IN_RANGE(N, T, 3))
-			return FALSE
 
 	// first check the always allowed turfs from map landmarks
 	if (T in landmarks[LANDMARK_TELESCI])

@@ -122,8 +122,8 @@
 	var/base_state = "teleblocker"
 	name = "grumpy doodad"
 	desc = "You can feel nothing but contempt emanate from this thing. Contempt for teleportation."
+	telejamming_range = 4
 	var/active = 1
-	var/range = 4
 
 	New()
 		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
@@ -135,6 +135,7 @@
 
 /obj/item/device/flockblocker/attack_self(mob/user as mob)
 	active = !active
+	src.telejamming_range = !src.active ? -1 : initial(src.telejamming_range)
 	icon_state = "[base_state]-[active ? "on" : "off"]"
 	boutput(user, "<span class='notice'>You fumble with [src] until you [active ? "turn it on. Space suddenly feels more thick." : "turn it off. You feel strangely exposed."]</span>")
 

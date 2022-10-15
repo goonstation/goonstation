@@ -7,6 +7,7 @@
 	opacity = 0
 	anchored = 0
 	mats = 9
+	telejamming_range = -1
 	var/obj/item/cell/PCEL = null
 	var/coveropen = 0
 	var/active = 0
@@ -61,7 +62,7 @@
 			if(!PCEL)
 				turn_off()
 				return
-			PCEL.charge -= 5 * src.range
+			PCEL.charge -= 5 * src.telejamming_range
 
 			var/charge_percentage = 0
 			var/current_battery_level = 0
@@ -162,12 +163,14 @@
 
 		src.anchored = 1
 		src.active = 1
+		src.telejamming_range = src.range
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
 
 	proc/turn_off()
 		src.anchored = 0
 		src.active = 0
+		src.telejamming_range = -1
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 

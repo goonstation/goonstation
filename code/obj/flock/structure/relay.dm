@@ -25,6 +25,7 @@
 	hitTwitch = FALSE
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
+	telejamming_range = 5
 	var/conversion_radius = 1
 	var/max_conv_radius = 100
 	var/list/turfs_to_convert = null
@@ -41,6 +42,8 @@
 	var/shuttle_departure_delayed = FALSE
 
 /obj/flock_structure/relay/New()
+	START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
@@ -78,6 +81,7 @@
 		turfs_to_convert["[dist]"] |= T
 
 /obj/flock_structure/relay/disposing()
+	STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 	var/mob/living/intangible/flock/flockmind/F = src.flock?.flockmind
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] is destroyed at [log_loc(src)].")
 	..()
