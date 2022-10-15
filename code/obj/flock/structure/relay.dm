@@ -42,7 +42,7 @@
 
 /obj/flock_structure/relay/New()
 	START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
-	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 5)
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
 
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
