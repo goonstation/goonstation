@@ -3288,6 +3288,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/pirate_ship
 	name = "Peregrine"
 	icon_state = "red"
+	requires_power = 0
 	teleport_blocked = 1
 	do_not_irradiate = TRUE
 
