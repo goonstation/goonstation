@@ -194,6 +194,11 @@
 		mail_tag = "engineering"
 		mailgroup = MGO_ENGINEER
 		message = 1
+	mechanics
+		name = "Mechanics"
+		mail_tag = "mechanics"
+		mailgroup = MGO_ENGINEER
+		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
@@ -462,6 +467,22 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
+		mailgroup = MGO_ENGINEER
+		message = 1
+
+		north
+			dir = NORTH
+			pixel_y = 32
+		east
+			dir = EAST
+		south
+			dir = SOUTH
+		west
+			dir = WEST
+
+	mechanics
+		name = "Mechanics"
+		mail_tag = "mechanics"
 		mailgroup = MGO_ENGINEER
 		message = 1
 
