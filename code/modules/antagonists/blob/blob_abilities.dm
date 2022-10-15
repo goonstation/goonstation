@@ -232,6 +232,7 @@
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
+		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
