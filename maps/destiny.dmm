@@ -15484,7 +15484,9 @@
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 5
 	},
-/turf/simulated/floor,
+/turf/simulated/floor/neutral/side{
+	dir = 1
+	},
 /area/station/maintenance/south)
 "byU" = (
 /obj/decal/tile_edge/line/white{
@@ -19807,6 +19809,11 @@
 /area/station/maintenance/disposal)
 "dfz" = (
 /obj/table/reinforced/industrial/auto,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor,
 /area/station/maintenance/south)
 "dfI" = (
@@ -43158,13 +43165,9 @@
 	},
 /area/station/hydroponics/bay)
 "oNh" = (
-/obj/cable/yellow{
-	icon_state = "4-8"
+/turf/simulated/floor/neutral/side{
+	dir = 4
 	},
-/obj/machinery/light{
-	dir = 1
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/south)
 "oNn" = (
 /obj/disposalpipe/segment/mail{
@@ -49079,6 +49082,10 @@
 	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
+"rTx" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/neutral/side,
+/area/station/maintenance/south)
 "rTL" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 8;
@@ -49856,7 +49863,8 @@
 	frequency = 1225;
 	id_tag = "engine_combust";
 	master_id = "engine_combust_control";
-	name = "Gas Mixer (Combustion Chamber)"
+	name = "Gas Mixer (Combustion Chamber)";
+	pixel_x = -1
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
@@ -105863,9 +105871,9 @@ bxE
 ntL
 bBJ
 pOU
-oNh
+wIG
 dfz
-uRi
+oNh
 uRi
 qQY
 kHn
@@ -106166,7 +106174,7 @@ rSE
 byu
 qKj
 dfp
-hUh
+rTx
 hUh
 byT
 nhd
