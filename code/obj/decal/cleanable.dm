@@ -1335,7 +1335,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
+			if (H.job == "Roboticist" || H.job == "Engineer")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
 				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)

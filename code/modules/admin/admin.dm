@@ -643,7 +643,7 @@ var/global/noir = 0
 					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(player.cached_jobbans.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -677,7 +677,7 @@ var/global/noir = 0
 							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
@@ -703,7 +703,7 @@ var/global/noir = 0
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(cache.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -736,7 +736,7 @@ var/global/noir = 0
 							if(cache.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(cache.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
@@ -3517,8 +3517,6 @@ var/global/noir = 0
 						src.owner:debug_variables(random_events)
 					if("disease")
 						src.owner:debug_variables(disease_controls)
-					if("mechanic")
-						src.owner:debug_variables(mechanic_controls)
 					if("artifact")
 						src.owner:debug_variables(artifact_controls)
 					if("gauntlet")

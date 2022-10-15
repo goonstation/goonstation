@@ -927,8 +927,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
 				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1065,8 +1063,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
 				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1155,8 +1151,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.mind.assigned_role == "Chief Engineer")
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
 				duration = round(duration / 2)
 
 	onUpdate()

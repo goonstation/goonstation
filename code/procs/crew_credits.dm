@@ -59,7 +59,7 @@ var/global/crew_creds = null
 					#endif
 
 				// Engineering?
-				if("Chief Engineer","Engineer","Quartermaster","Miner","Mechanic","Construction Worker")
+				if("Chief Engineer","Engineer","Quartermaster","Miner","Construction Worker")
 					round_engineering.Add(M)
 					continue
 

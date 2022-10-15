@@ -353,18 +353,6 @@
 	icon_override = "Min"
 	icon_tooltip = "Miner"
 
-/obj/item/device/radio/headset/mechanic
-	name = "mechanic headset"
-	desc = "A headset line only created due to the sheer effectiveness of packet nerd protesting."
-	icon_state = "engine headset"
-	secure_frequencies = list(
-	"e" = R_FREQ_ENGINEERING)
-	secure_classes = list(
-		"e" = RADIOCL_ENGINEERING,
-		)
-	icon_override = "Mec"
-	icon_tooltip = "Mechanic"
-
 /obj/item/device/radio/headset/mail
 	name = "mailman's headset"
 	desc = "In a land of belt hells, the pit fiend is king."

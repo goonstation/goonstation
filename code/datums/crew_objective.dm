@@ -599,8 +599,8 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 		return check_result
 
 
-ABSTRACT_TYPE(/datum/objective/crew/mechanic)
-/datum/objective/crew/mechanic/scanned
+ABSTRACT_TYPE(/datum/objective/crew/engineer)
+/datum/objective/crew/engineer/scanned
 	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
 	medal_name = "Man with a Scan"
 	var/static/check_result = null
@@ -610,7 +610,7 @@ ABSTRACT_TYPE(/datum/objective/crew/mechanic)
 			if(mechanic_controls.scanned_items.len > 9)
 				check_result = TRUE
 		return check_result
-/datum/objective/crew/mechanic/teleporter
+/datum/objective/crew/engineer/teleporter
 	explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
 	medal_name = "It's not 'Door to Heaven'"
 	var/static/check_result = null

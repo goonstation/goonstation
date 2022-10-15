@@ -511,7 +511,7 @@ proc/create_fluff(datum/mind/target)
 
 	set_up()
 		var/list/targets = list("Staff Assistant","Medical Doctor","Engineer","Security Officer",
-		"Geneticist","Scientist","Roboticist","Mechanic","Quartermaster","Miner","Botanist")
+		"Geneticist","Scientist","Roboticist","Quartermaster","Miner","Botanist")
 		target_job = pick(targets)
 		explanation_text = "Kill every [target_job] on the station. You do not need to kill yourself if you are a [target_job]."
 

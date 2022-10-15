@@ -286,7 +286,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Chief Engineer")
 						// Hubris
 						gain = 150
-					if ("Engineer", "Mechanic")
+					if ("Engineer")
 						// More hubris
 						gain = 100
 					if ("Staff Assistant", "Captain")

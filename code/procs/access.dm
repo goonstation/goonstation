@@ -321,15 +321,13 @@
 			return list(access_maint_tunnels, access_tech_storage, access_research, access_chemistry, access_tox, access_researchfoyer, access_artlab, access_telesci, access_robotdepot) //notably not tox_storage, which is also the sci locker access for some fucking reason
 
 		//////////////////////////// Engineering
-		if("Mechanic")
-			return list(access_maint_tunnels, access_external_airlocks, access_engineering_control,
-						access_tech_storage,access_engineering_mechanic,access_engineering_power)
 		if("Atmospheric Technician")
 			return list(access_maint_tunnels, access_external_airlocks, access_construction, access_engineering_control,
 						access_eva, access_engineering, access_engineering_storage, access_engineering_eva, access_engineering_atmos)
 		if("Engineer")
 			return list(access_engineering,access_maint_tunnels,access_external_airlocks, access_engineering_control,
-						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power)
+						access_engineering_storage,access_engineering_atmos,access_engineering_engine,access_engineering_power,
+						access_tech_storage,access_engineering_mechanic,)
 		if("Miner")
 			return list(access_maint_tunnels, access_external_airlocks,
 						access_engineering_eva, access_mining_shuttle, access_mining,
