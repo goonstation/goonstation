@@ -425,9 +425,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		var/i = 0
-		while(i < DRINK_OBJ_COUNT) //for loops don't let you modify the iterator :)))
-			i++
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
 			var/datum/reagent/fooddrink/instance = new choiceType
 			var/hidden = 0
