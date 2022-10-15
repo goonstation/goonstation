@@ -10775,7 +10775,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTd" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTf" = (

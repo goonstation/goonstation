@@ -23972,7 +23972,7 @@
 	},
 /area/station/science/artifact)
 "eXm" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/disposalpipe/segment/mail{
@@ -26068,7 +26068,7 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
 	dir = 4
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
@@ -28904,7 +28904,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/south)
 "hqk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/line/white{
 	dir = 10;
 	icon_state = "line1"
@@ -31663,7 +31663,10 @@
 /turf/simulated/floor/blue/side,
 /area/station/hydroponics/bay)
 "iRf" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "iRw" = (
@@ -37619,7 +37622,7 @@
 /turf/simulated/floor/black,
 /area/station/hangar/qm)
 "mbA" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/alarm{
 	dir = 4;
@@ -48079,7 +48082,7 @@
 	},
 /area/station/engine/elect)
 "rwq" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/bar)

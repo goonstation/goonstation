@@ -34,6 +34,7 @@ var/flock_signal_unleashed = FALSE
 	var/static/list/annotation_imgs = null
 	var/list/obj/flock_structure/structures = list()
 	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
+	var/bullets_hit = 0
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
@@ -581,8 +582,9 @@ var/flock_signal_unleashed = FALSE
 		src.togglePriorityTurf(T)
 	for (var/name in src.busy_tiles)
 		src.unreserveTurf(src.busy_tiles[name])
-	src.unlockableStructures = list()
+	src.bullets_hit = 0
 	src.achievements = list()
+	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
 	if (!real)
@@ -691,6 +693,8 @@ var/flock_signal_unleashed = FALSE
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
+// ACHIEVEMENTS
+
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
 	src.achievements |= str
@@ -701,6 +705,23 @@ var/flock_signal_unleashed = FALSE
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/hasAchieved(var/str)
 	return (str in src.achievements)
+
+/datum/flock/proc/check_for_bullets_hit_achievement(obj/projectile/P)
+	if (!istype(P.proj_data, /datum/projectile/bullet))
+		return
+	if (src.bullets_hit > FLOCK_BULLETS_HIT_THRESHOLD)
+		return
+
+	var/attacker = P.shooter
+	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
+		attacker = P.mob_shooter // shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
+	if (istype(attacker, /mob/living/critter/flock))
+		var/mob/living/critter/flock/flockcritter = attacker
+		if (flockcritter.flock == src)
+			return
+	src.bullets_hit++
+	if (src.bullets_hit == FLOCK_BULLETS_HIT_THRESHOLD)
+		src.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////

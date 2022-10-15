@@ -1194,7 +1194,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "adk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
 /turf/simulated/floor/greenwhite{
@@ -16938,7 +16938,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bdS" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -28140,7 +28140,7 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "ejp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1

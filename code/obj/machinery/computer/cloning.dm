@@ -575,7 +575,8 @@ proc/find_ghost_by_key(var/find_key)
 			src.occupant = null
 
 			for(var/atom/movable/A in src)
-				A.set_loc(src.loc)
+				if(!QDELETED(A))
+					A.set_loc(src.loc)
 
 			src.icon_state = "scanner_0"
 

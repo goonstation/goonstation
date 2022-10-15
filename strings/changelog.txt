@@ -1,5 +1,46 @@
 
+(t)fri oct 14 22
+(u)Sord
+(+)The Discount Superhero has had their job title changed, and their gear is now contraband to reflect they're not on the side of security, only JUSTICE!
+(u)LeahTheTech
+(p)11189
+(e)🆕🎨💅📄🤖|C-Feature, C-Sprites, C-QoL, A-UI, A-Silicons
+(*)The Cybernetic hypospray now uses a shiny new context action menu.
+(u)glowbold
+(p)11317
+(e)🆕💅🍝|C-Feature, C-QoL, A-Catering
+(+)Zongzi can now be made with a bamboo shoot, rice ball, and any meat. Yum!
+(t)thu oct 13 22
+(u)LeahTheTech
+(p)11318
+(e)🆕|C-Feature
+(+)Coconuts and pumpkins now keep their reagents when made into drinks.
+(u)LeahTheTech
+(p)11330
+(e)🆕🗺💅⚗|C-Feature, A-Mapping, C-QoL, A-Chemistry
+(+)Added basic chemicals to the chemical request console.
+(u)DrWolfy
+(p)11344
+(e)💅🤖|C-QoL, A-Silicons
+(+)Remove fabricator range limit for cyborgs.
+(t)wed oct 12 22
+(u)Skeletonman0
+(p)11039
+(e)🪲🗺💅📦|C-Bug, A-Mapping, C-QoL, A-Game-Objects
+(*)New breakthroughs allow multiple mining magnets to operate at the same time. Please report any bugs you find
 (t)tue oct 11 22
+(u)Ryou
+(p)11308
+(e)🪲🔎|C-Bug, C-Code-Quality
+(+)Fixed a bug that allowed Kleptomaniacs to pick up items while lying down.
+(u)LeahTheTech
+(p)11300
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Robotics consoles on Kondaru and Donut 2 have had their safety screws removed due to budget cuts.
+(u)Ryou
+(p)11297
+(e)🗺💅📦|A-Mapping, C-QoL, A-Game-Objects
+(+)Added espresso machine and cups to the bar in Oshan Laboratory.
 (u)Garash
 (p)9963
 (e)🆕💅📄|C-Feature, C-QoL, A-UI

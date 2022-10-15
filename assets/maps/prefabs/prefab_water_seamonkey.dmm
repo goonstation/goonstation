@@ -124,7 +124,7 @@
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
 "az" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/white,
 /area/prefab/sea_monkey_hideout)
