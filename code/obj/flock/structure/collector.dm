@@ -4,7 +4,7 @@
 /obj/flock_structure/collector
 	name = "weird lookin' pulsing thing"
 	desc = "Seems to be pulsing."
-	flock_desc = "Provides compute power based on the number of Flock floor tiles it is connected to."
+	flock_desc = "Provides compute power and charges a nearby APC based on the number of Flock floor tiles it is connected to."
 	flock_id = "Collector"
 	health = 60
 	resourcecost = 200
