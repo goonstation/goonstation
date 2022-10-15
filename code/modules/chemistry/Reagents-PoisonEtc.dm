@@ -1095,6 +1095,7 @@ datum
 						if (probmult(25)) M.emote("yawn")
 					if (6 to 9)
 						M.change_eye_blurry(10, 10)
+						M.setStatus("drowsy", 10 SECONDS)
 						if (probmult(35)) M.emote("yawn")
 					if (10)
 						M.emote("faint")
