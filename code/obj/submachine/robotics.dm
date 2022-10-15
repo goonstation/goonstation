@@ -26,7 +26,7 @@
 			if (user.loc != get_turf(user.loc))
 				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
 				return
-			var/selection = input("What do you want to drop?", "Atmospherics Transporter", null, null) as null|anything in src.contents
+			var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents)
 			if(!selection) return
 			if (istype(selection, /obj/machinery/fluid_canister))
 				var/obj/machinery/fluid_canister/S = selection
@@ -322,8 +322,8 @@
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
 			var/holder = src.loc
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water")
-			if (src.loc != holder)
+			var/pickme = tgui_input_list(user, "Please make your selection!", "Item selection", list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water"))
+			if (!pickme || src.loc != holder)
 				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
