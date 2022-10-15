@@ -3,8 +3,8 @@
 	desc = "A slithery thing."
 	hand_count = 0
 	custom_gib_handler = /proc/gibs
-	icon = 'icons/mob/wraith_critters.dmi'
-	icon_state = "smallRat"
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "brain_tick"
 	health_brute = 25
 	health_burn = 20
 	flags = TABLEPASS | DOORPASS

@@ -504,13 +504,13 @@
 /mob/living/carbon/human/disposing()
 
 	//Brain slug stuff
-	if(slug)
-		slug.set_loc(get_turf(src.loc))
-		slug.changeStatus("slowed", 10 SECONDS, 2)
-		var/datum/targetable/ability = slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+	if(src.slug)
+		src.slug.set_loc(get_turf(src.loc))
+		src.slug.changeStatus("slowed", 10 SECONDS, 2)
+		var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
-		src.mind.transfer_to(slug)
-		boutput(slug, "<span class='alert'>You manage to quickly slither out of your host!</span>")
+		src.mind.transfer_to(src.slug)
+		boutput(src.slug, "<span class='alert'>You manage to quickly slither out of your host!</span>")
 		src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You manage to quickly slither out of your host!</span>")
 
 	for(var/obj/item/I in src)
@@ -738,18 +738,18 @@
 		modify_christmas_cheer(-7)
 
 	//Brain slug business
-	if(slug)
-		var/datum/targetable/ability = slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+	if(src.slug)
+		var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
-		slug.changeStatus("slowed", 10 SECONDS, 2)
+		src.slug.changeStatus("slowed", 10 SECONDS, 2)
 		if(gibbed)
-			slug.set_loc(get_turf(src.loc))
-			src.mind.transfer_to(slug)
+			src.slug.set_loc(get_turf(src.loc))
+			src.mind.transfer_to(src.slug)
 			src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
 		else
 			spawn(3 SECONDS)
-				slug.set_loc(get_turf(src.loc))
-				src.mind.transfer_to(slug)
+				src.slug.set_loc(get_turf(src.loc))
+				src.mind.transfer_to(src.slug)
 				src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s ear!</span>", "<span class='alert'>You slither out of your dying host.</span>")
 
 

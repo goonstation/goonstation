@@ -5,13 +5,24 @@
 		if (!owner.holder)
 			return
 		..()
+	//todo check this?
+	tens_offset_x = 19
+	tens_offset_y = 7
+	secs_offset_x = 23
+	secs_offset_y = 7
 
 /datum/abilityHolder/brain_slug
 	usesPoints = 0
 	regenRate = 0
+	pointName = "Stability"
 	tabName = "Abilities"
 	topBarRendered = 1
 	rendered = 1
+	points = 1000
+	onAbilityStat()
+		..()
+		.= list()
+		.["Stability:"] = round(src.points)
 
 /datum/targetable/brain_slug/slither
 	name = "Slither away"
@@ -144,8 +155,9 @@
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
 			T.slug = the_slug
-		current_target.addAbility(/datum/targetable/brain_slug/exit_host)
-		current_target.addAbility(/datum/targetable/brain_slug/infest_host)
+		var/datum/abilityHolder/brain_slug/AH = current_target.add_ability_holder(/datum/abilityHolder/brain_slug)
+		AH.addAbility(/datum/targetable/brain_slug/exit_host)
+		AH.addAbility(/datum/targetable/brain_slug/infest_host)
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
 
@@ -154,14 +166,17 @@
 			if(istype(caster, /mob/living/critter/small_animal))
 				var/mob/living/critter/small_animal/S = caster
 				S.slug = null
-				S.removeAbility(/datum/targetable/brain_slug/exit_host)
-				S.removeAbility(/datum/targetable/brain_slug/infest_host)
+				if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/brain_slug))
+					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
+					old_host_holder.removeAbility(/datum/targetable/brain_slug/exit_host)
+					old_host_holder.removeAbility(/datum/targetable/brain_slug/infest_host)
 			if(istype(caster, /mob/living/carbon/human))
 				var/mob/living/carbon/human/S = caster
 				S.slug = null
-				S.removeAbility(/datum/targetable/brain_slug/exit_host)
-				S.removeAbility(/datum/targetable/brain_slug/infest_host)
-
+				if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/brain_slug))
+					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
+					old_host_holder.removeAbility(/datum/targetable/brain_slug/exit_host)
+					old_host_holder.removeAbility(/datum/targetable/brain_slug/infest_host)
 			spawn(5 SECONDS)
 				caster.death(gibbed = FALSE)
 
