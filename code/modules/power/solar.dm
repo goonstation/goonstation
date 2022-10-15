@@ -410,7 +410,7 @@
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if (!powernet) return
 	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
-		if(Solar.control != src) continue
+		if(Solar.control != src && Solar.control) continue
 		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
 			continue // some solars are weird
 		Solar.control = src
@@ -418,7 +418,7 @@
 
 	if (!src.tracker)
 		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
-			if(Tracker.control != src) continue
+			if(Tracker.control != src && Solar.control) continue
 			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
 				continue // some solars are weird
 			Tracker.control = src
