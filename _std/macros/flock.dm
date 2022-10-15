@@ -29,6 +29,9 @@
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
 #define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
 #define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"
+#define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
+
+#define FLOCK_BULLETS_HIT_THRESHOLD 15
 
 // replication defs
 #define FLOCK_MIN_DESIRED_POP 10
@@ -39,3 +42,5 @@
 #define FLOCK_DRONE_COMPUTE_HIBERNATE 15
 // how many times a drone must wander in a row before it hibernates
 #define FLOCK_DRONE_WANDER_PAUSE_COUNT 5
+// maximum number of flockdrones allowed
+#define FLOCK_DRONE_LIMIT 75

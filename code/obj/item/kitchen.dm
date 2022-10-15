@@ -428,8 +428,8 @@ TRAYS
 	icon = 'icons/obj/foodNdrink/food_related.dmi'
 	icon_state = "donutbox"
 	uses_multiple_icon_states = 1
-	amount = 6
-	var/max_amount = 6
+	var/count = 6
+	var/max_count = 6
 	var/box_type = "donutbox"
 	var/has_closed_state = 1
 	var/contained_food = /obj/item/reagent_containers/food/snacks/donut/custom/random
@@ -445,8 +445,8 @@ TRAYS
 		name = "egg carton"
 		desc = "A carton that holds a bunch of eggs. What kind of eggs? What grade are they? Are the eggs from space? Space chicken eggs?"
 		icon_state = "eggbox"
-		amount = 12
-		max_amount = 12
+		count = 12
+		max_count = 12
 		box_type = "eggbox"
 		contained_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
@@ -456,8 +456,8 @@ TRAYS
 		name = "lollipop bowl"
 		desc = "A little bowl of sugar-free lollipops, totally healthy in every way! They're medicinal, after all!"
 		icon_state = "lpop8"
-		amount = 8
-		max_amount = 8
+		count = 8
+		max_count = 8
 		box_type = "lpop"
 		has_closed_state = 0
 		contained_food = /obj/item/reagent_containers/food/snacks/lollipop/random_medical
@@ -475,19 +475,19 @@ TRAYS
 
 	get_desc(dist)
 		if(dist <= 1)
-			. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_food_name][s_es(src.amount)] in [src]."
+			. += "There's [(src.count > 0) ? src.count : "no" ] [src.contained_food_name][s_es(src.count)] in [src]."
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/tongs))
 			return src.Attackhand(user)
-		if(src.amount >= src.max_amount)
+		if(src.count >= src.max_count)
 			boutput(user, "You can't fit anything else in [src]!")
 			return
 		else
 			if(istype(W, src.allowed_food))
 				user.drop_item()
 				W.set_loc(src)
-				src.amount ++
+				src.count ++
 				tooltip_rebuild = 1
 				boutput(user, "You place [W] into [src].")
 				src.update()
@@ -500,21 +500,21 @@ TRAYS
 				return ..()
 
 	attack_hand(mob/user)
-		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.amount == 0)
+		if((!istype(src.loc, /turf) && !user.is_in_hands(src)) || src.count == 0)
 			..()
 			return
 		src.add_fingerprint(user)
 		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
 		if(myFoodList.len >= 1)
 			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
-			if(src.amount >= 1)
-				src.amount--
+			if(src.count >= 1)
+				src.count--
 				tooltip_rebuild = 1
 			user.put_in_hand_or_drop(myFood)
 			boutput(user, "You take [myFood] out of [src].")
 		else
-			if(src.amount >= 1)
-				src.amount--
+			if(src.count >= 1)
+				src.count--
 				tooltip_rebuild = 1
 				var/obj/item/reagent_containers/food/snacks/newFood = new src.contained_food(src.loc)
 				user.put_in_hand_or_drop(newFood)
@@ -524,14 +524,14 @@ TRAYS
 	attack_self(mob/user as mob)
 		if(!src.has_closed_state) return
 		if(src.icon_state == "[src.box_type]")
-			src.icon_state = "[src.box_type][src.amount]"
+			src.icon_state = "[src.box_type][src.count]"
 			boutput(user, "You open [src].")
 		else
 			src.icon_state = "[src.box_type]"
 			boutput(user, "You close [src].")
 
 	proc/update()
-		src.icon_state = "[src.box_type][src.amount]"
+		src.icon_state = "[src.box_type][src.count]"
 		return
 
 //=-=-=-=-=-=-=-=-=-=-=-=-
@@ -571,9 +571,21 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+	proc/check_height()
+		. = 1
+		var/obj/item/plate/curr = src
+		while(istype(curr.loc, /obj/item/plate))
+			curr = curr.loc
+			.++
+
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
+		if(food.cant_drop)
+			boutput(user, "<span class='alert'>You can't do that, [food] is attached to you!</span>")
+			return
+
+
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
@@ -581,6 +593,10 @@ TRAYS
 			if (src.plate_stacked)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
+			if (src.check_height() >= 7)
+				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
+				return
+
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
@@ -629,7 +645,7 @@ TRAYS
 		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
 		if (istype(food, /obj/item/plate/))
-			src.plate_stacked = TRUE
+			src.plate_stacked = FALSE
 		else
 			src.foods_inside -= food
 
@@ -672,13 +688,12 @@ TRAYS
 	proc/shatter(depth = 1)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		if(log(2, depth) == round(log(2, depth)))
-			for (var/i in 1 to 2)
-				var/obj/O = new /obj/item/raw_material/shard/glass
-				O.set_loc(T)
-				if(src.material)
-					O.setMaterial(copyMaterial(src.material))
-				O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+		for (var/i in 1 to (2 - (depth > 1)))
+			var/obj/O = new /obj/item/raw_material/shard/glass
+			O.set_loc(T)
+			if(src.material)
+				O.setMaterial(copyMaterial(src.material))
+			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
 

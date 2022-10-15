@@ -34,6 +34,8 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
+//#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
+
 //#define STOP_DISTRACTING_ME //All of the below
 
 //#define I_AM_ABOVE_THE_LAW // Prevents all secbots and guardbuddies from spawning, useful for gun testing
@@ -42,6 +44,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CLONING_IS_A_SIN // Don't prebake clones
 //#define I_KNOW_WHAT_IM_DOING_PROBABLY // Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY // Deletes turrets
+//#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
@@ -144,6 +147,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CLONING_IS_A_SIN
 #define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
+#define NO_CRITTERS
 #define NO_RANDOM_ROOMS
 #endif
 

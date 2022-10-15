@@ -16116,7 +16116,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "aUk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -17578,9 +17578,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aYA" = (
-/obj/machinery/computer/robotics{
-	perma = 1
-	},
+/obj/machinery/computer/robotics,
 /obj/cable,
 /obj/machinery/power/data_terminal,
 /obj/machinery/status_display{
@@ -17840,7 +17838,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
 "aZy" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay/pharmacy)
@@ -22810,7 +22808,7 @@
 	},
 /area/station/hydroponics/bay)
 "bqX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/clothing/glasses/spectro,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
@@ -24717,7 +24715,10 @@
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/pharmacy)
 "byB" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "byC" = (
@@ -26856,7 +26857,7 @@
 	},
 /area/station/science/chemistry)
 "bFh" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -45342,7 +45343,7 @@
 /turf/simulated/floor/black,
 /area/station/science/research_director)
 "iys" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
@@ -45983,7 +45984,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "iXW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/alarm{
 	pixel_y = 24
 	},
@@ -52482,7 +52483,7 @@
 /turf/simulated/floor/greenblack,
 /area/station/turret_protected/Zeta)
 "pzN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "pzZ" = (

@@ -22,3 +22,5 @@ jobs:
         days-before-issue-close: 30
         stale-issue-label: 'S-Needs-Reproducing'
         exempt-issue-labels: 'E-Verified'
+        ignore-issue-updates: true
+        close-issue-reason: 'not_planned'

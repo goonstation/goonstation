@@ -347,11 +347,11 @@ var/global/noir = 0
 						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
-						emergency_shuttle.incall()
-						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
-						logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
-						logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-						message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+						if (emergency_shuttle.incall())
+							command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+							logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
+							logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+							message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station.</span>")
 
 					if("2")
 						if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
@@ -362,11 +362,11 @@ var/global/noir = 0
 								var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","") as null|text
 								if(!call_reason)
 									call_reason = "No reason given."
-								emergency_shuttle.incall()
-								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
-								logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
-								logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-								message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+								if (emergency_shuttle.incall())
+									command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+									logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
+									logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+									message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							if(1)
 								emergency_shuttle.recall()
 								boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>")
@@ -390,15 +390,26 @@ var/global/noir = 0
 
 		if("toggle_shuttle_calling")
 			if (src.level >= LEVEL_PA)
-				emergency_shuttle.disabled = !emergency_shuttle.disabled
-				logTheThing(LOG_ADMIN, usr, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle")
-				logTheThing(LOG_DIARY, usr, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle", "admin")
-				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
+				if (!emergency_shuttle.disabled)
+					var/choice = tgui_alert(usr, "Which calls should be prevented?", "Shuttle Disabling", list("Manual Calls", "All Calls"))
+					switch(choice)
+						if ("Manual Calls")
+							emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
+						if ("All Calls")
+							emergency_shuttle.disabled = SHUTTLE_CALL_FULLY_DISABLED
+				else
+					emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
+
+				var/logmsg = "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle\
+					[emergency_shuttle.disabled ? emergency_shuttle.disabled == SHUTTLE_CALL_FULLY_DISABLED ? " completely and totally" : " manually" : ""]."
+
+				logTheThing(LOG_ADMIN, usr, logmsg)
+				message_admins("[usr] [logmsg]")
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
 				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
+				ircmsg["msg"] = logmsg
 				ircbot.export_async("admin", ircmsg)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
