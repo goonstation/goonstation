@@ -261,7 +261,8 @@
 			if(!stacked)
 				fuel_name = W.name
 				user.u_equip(W)
-				W.dropped(user)
+				if(!iscritter(W))
+					W.dropped(user)
 			boutput(user, "<span class='notice'>You load [fuel_name] into [src]!</span>")
 
 			if(src.fuel > src.maxfuel)

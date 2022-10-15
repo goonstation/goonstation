@@ -77,12 +77,6 @@
 	else
 		return 0.75 + movement_delay_modifier
 
-/mob/living/intangible/flock/Move(NewLoc, direct)
-	src.set_dir(get_dir(src, NewLoc))
-	if (isturf(NewLoc) && istype(NewLoc, /turf/unsimulated/wall)) // no getting past these walls, fucko
-		return 0
-	..()
-
 /mob/living/intangible/flock/attack_hand(mob/user)
 	switch(user.a_intent)
 		if(INTENT_HELP)
