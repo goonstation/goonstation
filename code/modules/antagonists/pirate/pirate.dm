@@ -22,8 +22,8 @@
 
 		else if (id == ROLE_PIRATE_FIRST_MATE)
 			H.equip_if_possible(new /obj/item/clothing/under/gimmick/guybrush(H), H.slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/suit/gimmick/guncoat/tan(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/clothing/head/pirate_brn(H), H.slot_head)
+			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_first_mate_coat(H), H.slot_wear_suit)
+			H.equip_if_possible(new /obj/item/clothing/head/pirate_first_mate(H), H.slot_head)
 			H.equip_if_possible(new /obj/item/device/radio/headset/pirate/first_mate(H), H.slot_ears)
 
 		else if (id == ROLE_PIRATE)

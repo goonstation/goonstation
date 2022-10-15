@@ -1825,6 +1825,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "pirate_captain"
 	item_state = "pirate_captain"
 
+/obj/item/clothing/head/pirate_first_mate
+	name = "pirate first mate's hat"
+	desc = "Who needs a fancy red feather to show authority?"
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+
 //Lesbian Hat
 
 /obj/item/clothing/head/lesbian_hat

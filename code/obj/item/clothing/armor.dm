@@ -368,6 +368,19 @@
 		setProperty("meleeprot", 4)
 		setProperty("rangedprot", 0.9)
 
+/obj/item/clothing/suit/armor/pirate_first_mate_coat
+	name = "pirate first mate's coat"
+	desc = "A rugged, protective, and pragmatic brown greatcoat, popular among pirates."
+	icon_state = "pirate_first_mate"
+	item_state = "pirate_first_mate"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
