@@ -207,7 +207,7 @@
 	desc = "Heal all flock units in an area."
 	icon_state = "heal_drone"
 	cooldown = 30 SECONDS
-	var/max_targets = 4 //maximum number of units healed
+	var/max_targets = 4 //maximum number of drones healed
 
 /datum/targetable/flockmindAbility/healDrone/cast(atom/target)
 	if(..())
@@ -225,14 +225,14 @@
 			particles.spawning = 0
 			sleep(1.5 SECONDS)
 			flockcritter.ClearSpecificParticles("flockmind_heal")
-		healed++
+		if (istype(flockcritter, /mob/living/critter/flock/drone))
+			healed++
 		if (healed > src.max_targets)
 			return
 
 	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on repairing nearby units.</span>")
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst at [log_loc(src.holder.owner)].")
-	// target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
 
 /////////////////////////////////////////
 
