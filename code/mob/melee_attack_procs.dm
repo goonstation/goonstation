@@ -895,6 +895,8 @@
 			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
 			return
 
+		var/disarm_log = null
+
 		if (!msg_group)
 			msg_group = "[affecting]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
 
@@ -925,9 +927,7 @@
 
 		if (!(suppress & SUPPRESS_LOGS))
 			if (!length(logs))
-				if (istype(src, /datum/attackResults/disarm))
-					logs = list("disarms [constructTarget(target,"combat")]")
-				else
+				if (!istype(src, /datum/attackResults/disarm))
 					logs = list("punches [constructTarget(target,"combat")]")
 
 //Pod wars friendly fire check
@@ -962,9 +962,14 @@
 			if (length(src.disarm_RNG_result))
 				if ("drop_item" in src.disarm_RNG_result)
 					target.deliver_move_trigger("bump")
+					var/dropped_items = null
 					for(var/obj/item/I in target.equipped_list())
 						if(!(I.temp_flags & IS_LIMB_ITEM))
+							dropped_items += " [I],"
 							target.drop_item_throw(I)
+					if(!isnull(dropped_items))
+						var/final_items_log = copytext(dropped_items, 1, -1)
+						disarm_log += " making them drop item(s):([final_items_log] ),"
 
 				if ("handle_item_arm" in src.disarm_RNG_result)
 					for(var/obj/item/I in target.equipped_list())
@@ -979,6 +984,7 @@
 						var/prev_intent = target.a_intent
 						target.set_a_intent(INTENT_HARM)
 
+						disarm_log += " attempting to make them self-attack with the item arm: [I],"
 						target.Attackby(I, target)
 
 						target.set_a_intent(prev_intent)
@@ -993,11 +999,16 @@
 					target.deliver_move_trigger("pushdown")
 					target.changeStatus("weakened", 2 SECONDS)
 					target.force_laydown_standup()
+					disarm_log += " shoving them down "
 				if ("shoved" in src.disarm_RNG_result)
 					step_away(target, owner, 1)
 					target.OnMove(owner)
+					disarm_log += " shoving them away "
 			else
 				target.deliver_move_trigger("bump")
+				disarm_log = " "
+			var/final_disarm_log = copytext(disarm_log, 1, -1)
+			logTheThing(LOG_COMBAT, owner, "disarms [constructTarget(target,"combat")][final_disarm_log] at [log_loc(owner)].")
 		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
