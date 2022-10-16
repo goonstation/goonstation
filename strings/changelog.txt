@@ -1,5 +1,9 @@
 
 (t)sun oct 16 22
+(u)LeahTheTech
+(p)11377
+(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(+)Turned down the misstep applied by Flockmind radio stun ability.
 (u)Sord
 (*)Most standard shuttle interior doors are now not hackable, boltable, or weldable. We'll see if this stays.
 (u)LeahTheTech
