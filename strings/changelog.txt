@@ -1,5 +1,7 @@
 
 (t)sun oct 16 22
+(u)Sord
+(*)Most standard shuttle interior doors are now not hackable, boltable, or weldable. We'll see if this stays.
 (u)LeahTheTech
 (p)9724
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
