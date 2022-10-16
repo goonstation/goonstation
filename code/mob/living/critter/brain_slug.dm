@@ -4,7 +4,7 @@
 	hand_count = 0
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/misc/critter.dmi'
-	icon_state = "brain_tick"
+	icon_state = "brain_slug"
 	health_brute = 25
 	health_burn = 20
 	flags = TABLEPASS | DOORPASS
