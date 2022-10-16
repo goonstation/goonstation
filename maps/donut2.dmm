@@ -31446,19 +31446,6 @@
 	},
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
-"hof" = (
-/obj/wingrille_spawn/auto/reinforced,
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	dir = 1;
-	icon_state = "pdoor0";
-	id = "bridge_blast";
-	layer = 4;
-	name = "Bridge Lockdown Doors";
-	opacity = 0
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "hou" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/garden/owlery)
@@ -31482,6 +31469,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/processing)
+"hqi" = (
+/obj/wingrille_spawn/auto/reinforced,
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	dir = 6;
+	icon_state = "pdoor0";
+	id = "bridge_blast";
+	layer = 4;
+	name = "Bridge Lockdown Doors";
+	opacity = 0
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "hqn" = (
 /obj/machinery/manufacturer/qm,
 /turf/simulated/floor/plating,
@@ -37013,7 +37013,7 @@
 	},
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/heads)
 "miB" = (
 /obj/machinery/light/incandescent,
 /obj/disposalpipe/segment,
@@ -37753,7 +37753,7 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
-/area/space)
+/area/station/crew_quarters/heads)
 "mOl" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -96473,10 +96473,10 @@ aVb
 aUX
 aVb
 heq
-acd
+beA
 mOi
 miz
-acd
+beA
 beO
 beM
 beM
@@ -96775,7 +96775,7 @@ bbe
 aZx
 lJO
 knZ
-hof
+hvL
 aaa
 adQ
 aaa
@@ -97077,7 +97077,7 @@ ofr
 orN
 nfj
 nfj
-wXl
+hqi
 aaa
 adQ
 aaa
