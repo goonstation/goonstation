@@ -591,7 +591,7 @@
 
 
 
-/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, do_punch = 1, do_kick = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -637,17 +637,16 @@
 		return
 
 	//calculate damage
-	var/damage = rand(base_damage_low, base_damage_high) * target_damage_multiplier * self_damage_multiplier + extra_damage + calculate_bonus_damage(msgs)
 
 	msgs.played_sound = "punch"
-
-	if(!target.canmove && target.lying && do_kick)
-		damage += src.calculate_kick_bonus(msgs)
+	var/do_punch = FALSE
+	var/do_kick = FALSE
+	if(!target.canmove && target.lying && can_kick)
 		do_armor = FALSE
 		do_stam = FALSE
-	else if(do_punch)//do_punch
-		damage += src.calculate_punch_bonus(msgs)
-
+		do_kick = TRUE
+	else if(can_punch)//do_punch
+		do_punch = TRUE
 		//adjust stamina crit chance and stamina damage based on gloves
 		if (ishuman(src))
 			var/mob/living/carbon/human/H = src
@@ -658,8 +657,8 @@
 					crit_chance += H.gloves.bonus_crit_chance
 				if (H.gloves.stamina_dmg_mult)
 					stamina_damage_mult += H.gloves.stamina_dmg_mult
-	else; //no bonus
 
+	var/damage = rand(base_damage_low, base_damage_high) * target_damage_multiplier * self_damage_multiplier + extra_damage + calculate_bonus_damage(msgs, do_punch, do_kick)
 	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
 
@@ -741,23 +740,23 @@
 	return 1
 
 ///Returns flat bonus damage to unarmed attacks - can also modify the attackResults passed in, e.g. to add to `after_effects`
-/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
+/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
 	SHOULD_CALL_PARENT(TRUE)
 	. = 0
+	if(do_punch)
+		. += calculate_punch_bonus(msgs)
+	if(do_kick)
+		. += calculate_kick_bonus(msgs)
 
-/mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
+
+/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
 	. = ..()
-	//i hate this
-
-
-/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
-	. = ..()
-
-	if (src.is_hulk())
+	if (src.is_hulk() && (do_punch || do_kick))
 		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
 		//can exceed 10 damage in edge case of being under -300% health.
 		//maybe should be a bigger bonus when hurt? hulk angry etc?
 		. += max((abs(health+max_health)/max_health)*5, 5)
+		msgs.after_effects += /proc/hulk_smash
 
 /mob/proc/calculate_punch_bonus(datum/attackResults/msgs)
 	SHOULD_CALL_PARENT(TRUE)
@@ -1267,20 +1266,6 @@
 	return
 
 /mob/living/carbon/human/attack_effects(var/mob/target, var/obj/item/affecting)
-	if (src.is_hulk())
-		SPAWN(0)
-			if (prob(20))
-				target.changeStatus("stunned", 1 SECOND)
-				step_away(target,src,15)
-				sleep(0.3 SECONDS)
-				step_away(target,src,15)
-			else if (prob(20))				//what's this math, like 40% then with the if else? who cares
-
-				var/turf/T = get_edge_target_turf(src, src.dir)
-				if (isturf(T))
-					src.visible_message("<span class='alert'><B>[src] savagely punches [target], sending them flying!</B></span>")
-					target.throw_at(T, 10, 2)
-
 	if (src.bioHolder.HasEffect("revenant"))
 		var/datum/bioEffect/hidden/revenant/R = src.bioHolder.GetEffect("revenant")
 		if (R.ghoulTouchActive)
@@ -1315,6 +1300,20 @@
 		T.throw_at(throwpoint, 10, 2)
 
 	return
+
+/proc/hulk_smash(var/mob/H, var/mob/T)
+	SPAWN(0)
+		if (prob(20))
+			T.changeStatus("stunned", 1 SECOND)
+			step_away(T,H,15)
+			sleep(0.3 SECONDS)
+			step_away(T,H,15)
+		else if (prob(20))				//what's this math, like 40% then with the if else? who cares
+
+			var/turf/throw_to = get_edge_target_turf(H, H.dir)
+			if (isturf(throw_to))
+				H.visible_message("<span class='alert'><B>[H] savagely punches [T], sending them flying!</B></span>")
+				T.throw_at(throw_to, 10, 2)
 
 /mob/proc/attack_finished(var/mob/target)
 	return
