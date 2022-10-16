@@ -587,6 +587,7 @@
 	msgs.valid = 1
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
 
+	//get defense zone and 'organ' to hit
 	var/def_zone = null
 	if (istype(affecting, /obj/item/organ))
 		var/obj/item/organ/O = affecting
@@ -603,43 +604,52 @@
 		def_zone = "All"
 		msgs.affecting = def_zone
 
-	var/punchmult = get_base_damage_multiplier(def_zone)
+	//get damage multiplers based on self and target.
+	var/self_damage_multiplier = get_base_damage_multiplier(def_zone)
+	var/target_damage_multiplier = target.get_taken_base_damage_multiplier(src, def_zone)
 
-	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
-
-	if (!punchedmult)
+	//abort if either multiplier is 0
+	if (!target_damage_multiplier)
 		if (narrator_mode)
 			msgs.played_sound = 'sound/vox/hit.ogg'
 		else
 			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		return
-
-	if (!punchmult)
+	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
 		return
 
-	var/damage = rand(base_damage_low, base_damage_high) * punchedmult * punchmult + extra_damage + calculate_bonus_damage(msgs)
+	//calculate damage
+	var/damage = rand(base_damage_low, base_damage_high) * target_damage_multiplier * self_damage_multiplier + extra_damage + calculate_bonus_damage(msgs)
 
+
+	//decide if punching or kicking
 	if (!target.canmove && target.lying)
 		src.do_kick(msgs, target, damage)
 	else
 		src.do_punch(msgs, target, damage, stamina_damage_mult, can_crit, def_zone)
 
+	//check godmode/sanctuary/etc
 	var/attack_resistance = target.check_attack_resistance()
 	if (attack_resistance)
 		damage = 0
 		if (istext(attack_resistance))
 			msgs.show_message_target(attack_resistance)
+
+	//clamp damage to non-negative values
 	msgs.damage = max(damage, 0)
 
 	return msgs
 
 /mob/proc/do_kick(datum/attackResults/msgs, mob/target, damage)
+	//setup kick effects
 	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
 	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [target]!</B></span>"
 	msgs.logs = list("[src.kickMessage] [constructTarget(target,"combat")]")
+
+	//bonus damage from shoes or legs
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (H.shoes)
@@ -648,13 +658,20 @@
 			damage += H.limbs.r_leg.limb_hit_bonus
 		else if (H.limbs.l_leg)
 			damage += H.limbs.l_leg.limb_hit_bonus
+
+	//RELAXING
 	#if STAMINA_LOW_COST_KICK == 1
 	msgs.stamina_self += STAMINA_HTH_COST / 3
 	#endif
+	//we end here. We do not deal stamina damage
+	//we do not check armor
+	//we are not affected by wrestler stuff
 
 /mob/proc/do_punch(datum/attackResults/msgs, mob/target, damage, stamina_damage_mult, can_crit, def_zone)
 	msgs.played_sound = "punch"
 	var/crit_chance = STAMINA_CRIT_CHANCE
+
+	//adjust stamina crit chance and stamina damage based on gloves
 	if (ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (H.gloves)
@@ -665,50 +682,55 @@
 			if (H.gloves.stamina_dmg_mult)
 				stamina_damage_mult += H.gloves.stamina_dmg_mult
 
-
+	//bonus damage from weighted/etc gloves
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if (H.gloves)
 			damage += H.gloves.punch_damage_modifier
+
+	//wrestlers have a 2/3 chance of a big hit
 	if (src != target && iswrestler(src) && prob(66))
 		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
 		damage += 4
 		msgs.after_effects += /proc/wrestler_backfist
+
+	//drunkards get a 2/5 chance of bonus damage
 	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
 		damage += rand(3,5)
 		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
 
+	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
 
+	//calculate stamina damage to deal
 	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 
-
+	//get target armor
 	var/armor_mod = 0
 	armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
+
+	//flat damage reduction by armor
 	var/pre_armor_damage = damage
 	damage -= armor_mod
-	if(damage/pre_armor_damage <= 0.66)
-		block_spark(target,armor=1)
-		playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
-	if(damage <= 0)
-		fuckup_attack_particle(src)
 
 	//reduce stamina by the same proportion that base damage was reduced
 	//min cap is stam_power/3 so we still cant ignore it entirely
 	if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
-		stam_power = stam_power / 3 //do the least
+		stam_power *= (1/3) //do the least
 	else
-		stam_power = max(  stam_power / 3, stam_power * ( damage / (damage + armor_mod) )  )
+		stam_power *= max(1/3, damage/pre_armor_damage)
 
+	//record the stamina damage to do
 	msgs.stamina_target -= max(stam_power, 0)
 
+	//if we can crit, roll for a crit. Crits are blocked by blocks.
 	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
-		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
+
+	//effects for armor reducing most/all of damage
 	var/armor_blocked = 0
-
 	if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
 		block_spark(target,armor=1)
 		playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
@@ -716,6 +738,7 @@
 			fuckup_attack_particle(src)
 			armor_blocked = 1
 
+	//set attack message
 	if(armor_blocked)
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
 	else
