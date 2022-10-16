@@ -44,7 +44,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "be" = (
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	hardened = 1
+	},
 /obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -506,7 +508,8 @@
 /area/shuttle/escape/centcom)
 "uE" = (
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle{
 	dir = 8
@@ -720,7 +723,8 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Secure Transport";
-	opacity = 0
+	opacity = 0;
+	hardened = 1
 	},
 /obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{

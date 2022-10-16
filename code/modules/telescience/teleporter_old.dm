@@ -60,7 +60,8 @@
 				originArea = originTurf.loc
 			if (istype(originArea, /area/centcom) || (istype(originArea, /area/shuttle))) // If the origin area is centcom or a shuttle, fail.
 				return
-			do_teleport(M, linked_computer.locked, 0) //dead-on precision
+			if (!do_teleport(M, linked_computer.locked, 0))
+				logTheThing(LOG_COMBAT, M, "entered teleporter portal ring at [log_loc(src)] and teleported to [log_loc(linked_computer.locked)]")
 		else
 			elecflash(src, power=3)
 
@@ -161,11 +162,11 @@
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision, var/use_teleblocks = 1, var/sparks = 1)
 	if(istype(M, /obj/effects))
 		qdel(M)
-		return
+		return 1
 
 	var/turf/destturf = get_turf(destination)
 	if (!istype(destturf))
-		return
+		return 1
 
 	var/tx = destturf.x + rand(precision * -1, precision)
 	var/ty = destturf.y + rand(precision * -1, precision)
@@ -181,7 +182,7 @@
 		tmploc = destination.loc
 
 	if(tmploc==null)
-		return
+		return 1
 
 	var/m_blocked = 0
 
@@ -219,12 +220,12 @@
 			else
 				for(var/mob/thing in M)
 					boutput(thing, "<span class='alert'><b>Teleportation failed!</b></span>")
-			return
+			return 1
 
 	M.set_loc(tmploc)
 	if (sparks)
 		elecflash(M, power=3)
-	return
+	return 0
 
 // /mob/living/carbon/human/list_ejectables() looked pretty similar to what I wanted, but this doesn't have organs that you need to live
 //drop a non-vital organ or a limb //shamelessly stolen from Harry Potter as is this whole ability
