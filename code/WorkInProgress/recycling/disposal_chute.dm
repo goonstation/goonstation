@@ -197,11 +197,6 @@
 			actions.start(new/datum/action/bar/icon/shoveMobIntoChute(src, mobtarget, user), user)
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
-		// This feature interferes with mail delivery, i.e. objects bouncing back into the chute.
-		// Leaves people wondering where the stuff is, assuming they received a PDA alert at all.
-		if (istype(src, /obj/machinery/disposal/mail))
-			return ..()
-
 		if(isitem(MO))
 			var/obj/item/I = MO
 			I.set_loc(src)
