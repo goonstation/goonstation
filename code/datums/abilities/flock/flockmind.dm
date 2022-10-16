@@ -307,7 +307,7 @@
 		for(var/mob/living/M in targets)
 			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
-			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
+			M.apply_sonic_stun(3, 6, 30, 0, 0, rand(1, 3), rand(1, 3))
 	else
 		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range with active radio headsets.</span>")
 		return TRUE
