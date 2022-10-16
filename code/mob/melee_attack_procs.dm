@@ -702,9 +702,6 @@
 	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
 
-	//calculate stamina damage to deal
-	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
-
 	//get target armor
 	var/armor_mod = 0
 	armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
@@ -713,21 +710,7 @@
 	var/pre_armor_damage = damage
 	damage -= armor_mod
 
-	//reduce stamina by the same proportion that base damage was reduced
-	//min cap is stam_power/3 so we still cant ignore it entirely
-	if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
-		stam_power *= (1/3) //do the least
-	else
-		stam_power *= max(1/3, damage/pre_armor_damage)
-
-	//record the stamina damage to do
-	msgs.stamina_target -= max(stam_power, 0)
-
-	//if we can crit, roll for a crit. Crits are blocked by blocks.
-	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
-		msgs.stamina_crit = 1
-		msgs.played_sound = pick(sounds_punch)
-
+	do_stam(msgs, damage, pre_armor_damage, crit_chance, stamina_damage_mult)
 
 	//effects for armor reducing most/all of damage
 	var/armor_blocked = 0
@@ -746,6 +729,24 @@
 
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
+
+/mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
+	//calculate stamina damage to deal
+	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
+	//reduce stamina damage by the same proportion that base damage was reduced
+	//min cap is stam_power/3 so we still cant ignore it entirely
+	if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
+		stam_power *= (1/3) //do the least
+	else
+		stam_power *= clamp(damage/pre_armor_damage, 1, 1/3)
+
+	//record the stamina damage to do
+	msgs.stamina_target -= max(stam_power, 0)
+
+	//if we can crit, roll for a crit. Crits are blocked by blocks.
+	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
+		msgs.stamina_crit = 1
+		msgs.played_sound = pick(sounds_punch)
 
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).
 /proc/special_attack_silicon(var/mob/target, var/mob/living/user)
