@@ -1147,7 +1147,7 @@
 /mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
 	var/punchmult = 1
 
-	if (sims)
+	if (sims) //this is still a thing. huh.
 		punchmult *= sims.getMoodActionMultiplier()
 
 	return punchmult
@@ -1160,7 +1160,7 @@
 
 /mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
 	.= ..()
-
+	//i hate this
 	if (src.traitHolder.hasTrait("bigbruiser"))
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
 		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
@@ -1170,6 +1170,9 @@
 	. = ..()
 
 	if (src.is_hulk())
+		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
+		//can exceed 10 damage in edge case of being under -300% health.
+		//maybe should be a bigger bonus when hurt? hulk angry etc?
 		. += max((abs(health+max_health)/max_health)*5, 5)
 
 
