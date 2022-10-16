@@ -581,6 +581,18 @@
 	attack_effects(target, affecting)
 	msgs.flush(suppress_flags)
 
+
+
+
+
+
+
+
+
+
+
+
+
 /mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1)
 	var/datum/attackResults/msgs = new(src)
 	msgs.clear(target)
@@ -643,6 +655,8 @@
 
 	return msgs
 
+
+
 /mob/proc/do_kick(datum/attackResults/msgs, mob/target, damage)
 	//setup kick effects
 	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
@@ -666,6 +680,8 @@
 	//we end here. We do not deal stamina damage
 	//we do not check armor
 	//we are not affected by wrestler stuff
+
+
 
 /mob/proc/do_punch(datum/attackResults/msgs, mob/target, damage, stamina_damage_mult, can_crit, def_zone)
 	msgs.played_sound = "punch"
@@ -730,6 +746,8 @@
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 
+
+
 /mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
 	//calculate stamina damage to deal
 	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
@@ -747,6 +765,57 @@
 	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
+
+
+
+////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
+
+/mob/proc/get_base_damage_multiplier()
+	return 1
+
+/mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
+	var/punchmult = 1
+
+	if (sims) //this is still a thing. huh.
+		punchmult *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
+
+	return punchmult
+
+/mob/proc/get_taken_base_damage_multiplier()
+	return 1
+
+/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
+	return 0
+
+/mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
+	.= ..()
+	//i hate this
+	if (src.traitHolder.hasTrait("bigbruiser"))
+		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
+		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
+
+
+/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
+	. = ..()
+
+	if (src.is_hulk())
+		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
+		//can exceed 10 damage in edge case of being under -300% health.
+		//maybe should be a bigger bonus when hurt? hulk angry etc?
+		. += max((abs(health+max_health)/max_health)*5, 5)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).
 /proc/special_attack_silicon(var/mob/target, var/mob/living/user)
@@ -1139,43 +1208,6 @@
 	if (limbs && !limbs.r_arm && def_zone == "r_arm")
 		return "chest"
 	return def_zone
-
-////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
-
-/mob/proc/get_base_damage_multiplier()
-	return 1
-
-/mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
-	var/punchmult = 1
-
-	if (sims) //this is still a thing. huh.
-		punchmult *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
-
-	return punchmult
-
-/mob/proc/get_taken_base_damage_multiplier()
-	return 1
-
-/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
-	return 0
-
-/mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
-	.= ..()
-	//i hate this
-	if (src.traitHolder.hasTrait("bigbruiser"))
-		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
-		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
-
-
-/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
-	. = ..()
-
-	if (src.is_hulk())
-		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
-		//can exceed 10 damage in edge case of being under -300% health.
-		//maybe should be a bigger bonus when hurt? hulk angry etc?
-		. += max((abs(health+max_health)/max_health)*5, 5)
-
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 
