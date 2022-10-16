@@ -657,11 +657,11 @@
 
 
 
-/mob/proc/do_kick(datum/attackResults/msgs, mob/target, damage)
+/mob/proc/do_kick(datum/attackResults/msgs, damage)
 	//setup kick effects
 	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [target]!</B></span>"
-	msgs.logs = list("[src.kickMessage] [constructTarget(target,"combat")]")
+	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [msgs.target]!</B></span>"
+	msgs.logs = list("[src.kickMessage] [constructTarget(msgs.target,"combat")]")
 
 	//bonus damage from shoes or legs
 	if (ishuman(src))
@@ -683,7 +683,7 @@
 	return
 
 
-/mob/proc/do_punch(datum/attackResults/msgs, mob/target, damage, stamina_damage_mult, can_crit, def_zone)
+/mob/proc/do_punch(datum/attackResults/msgs, damage, stamina_damage_mult, can_crit, def_zone)
 	msgs.played_sound = "punch"
 	var/crit_chance = STAMINA_CRIT_CHANCE
 
@@ -704,51 +704,40 @@
 		if (H.gloves)
 			damage += H.gloves.punch_damage_modifier
 
-	//wrestlers have a 2/3 chance of a big hit
-	if (src != target && iswrestler(src) && prob(66))
-		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [target], sending them flying!</span>"
-		damage += 4
-		msgs.after_effects += /proc/wrestler_backfist
-
-	//drunkards get a 2/5 chance of bonus damage
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
-		damage += rand(3,5)
-		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
-
 	//get def_zone again?
-	def_zone = target.check_target_zone(def_zone)
+	def_zone = msgs.target.check_target_zone(def_zone)
 
 	//get target armor
 	var/armor_mod = 0
-	armor_mod = target.get_melee_protection(def_zone, DAMAGE_BLUNT)
+	armor_mod = msgs.target.get_melee_protection(def_zone, DAMAGE_BLUNT)
 
 	//flat damage reduction by armor
 	var/pre_armor_damage = damage
 	damage -= armor_mod
 
-	do_stam(msgs, target, damage, pre_armor_damage, can_crit ? crit_chance : 0, stamina_damage_mult)
+	do_stam(msgs, damage, pre_armor_damage, can_crit ? crit_chance : 0, stamina_damage_mult)
 
 	//effects for armor reducing most/all of damage
 	var/armor_blocked = 0
 	if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
-		block_spark(target,armor=1)
-		playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
+		block_spark(msgs.target,armor=1)
+		playsound(msgs.target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
 		if(damage <= 0)
 			fuckup_attack_particle(src)
 			armor_blocked = 1
 
 	//set attack message
 	if(armor_blocked)
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [msgs.target], but [msgs.target]'s armor blocks it!</B></span>"
 	else
-		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
+		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [msgs.target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
 
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
 	return
 
 
-/mob/proc/do_stam(datum/attackResults/msgs, mob/target, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
+/mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
 	//calculate stamina damage to deal
 	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 	//reduce stamina damage by the same proportion that base damage was reduced
@@ -762,7 +751,7 @@
 	msgs.stamina_target -= max(stam_power, 0)
 
 	//if we can crit, roll for a crit. Crits are blocked by blocks.
-	if (prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
+	if (prob(crit_chance) && !msgs.target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 	return
@@ -770,25 +759,40 @@
 
 ////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
 
-/mob/proc/get_base_damage_multiplier()
+///multipler to unarmed attack damage dealt
+/mob/proc/get_base_damage_multiplier(def_zone)
+	SHOULD_CALL_PARENT(TRUE)
 	return 1
 
-/mob/living/carbon/human/get_base_damage_multiplier(var/def_zone)
-	var/punchmult = 1
+/mob/living/carbon/human/get_base_damage_multiplier(def_zone)
+	. = ..()
 
 	if (sims) //this is still a thing. huh.
-		punchmult *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
+		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
 
-	return punchmult
 
-/mob/proc/get_taken_base_damage_multiplier()
+///multipler to unarmed damage recieved
+/mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
+	SHOULD_CALL_PARENT(TRUE)
 	return 1
 
+///Returns flat bonus damage to unarmed attacks - can also modify the attackResults passed in, e.g. to add to `after_effects`
 /mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
-	return 0
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	//drunkards get a 2/5 chance of bonus damage
+	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+		. += rand(3,5)
+		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
+	//wrestlers have a 2/3 chance of a big hit
+	if (src != msgs.target && iswrestler(src) && prob(66))
+		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending them flying!</span>"
+		. += 4
+		msgs.after_effects += /proc/wrestler_backfist
+
 
 /mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
-	.= ..()
+	. = ..()
 	//i hate this
 	if (src.traitHolder.hasTrait("bigbruiser"))
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
@@ -803,13 +807,6 @@
 		//can exceed 10 damage in edge case of being under -300% health.
 		//maybe should be a bigger bonus when hurt? hulk angry etc?
 		. += max((abs(health+max_health)/max_health)*5, 5)
-
-
-
-
-
-
-
 
 
 
