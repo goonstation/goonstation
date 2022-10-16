@@ -1,4 +1,10 @@
 
+(t)sun oct 16 22
+(u)LeahTheTech
+(p)9724
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Added a new traitor item for mimes: a poisoned rose.
+(+)The poisoned rose temporarily mutes anyone who smells it and adds a small amount of capulettium to their system.
 (t)fri oct 14 22
 (u)Sord
 (+)The Discount Superhero has had their job title changed, and their gear is now contraband to reflect they're not on the side of security, only JUSTICE!
