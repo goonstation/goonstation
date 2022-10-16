@@ -13738,12 +13738,20 @@
 /area/station/hallway/primary/east)
 "aVN" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
 /area/station/bridge)
 "aVS" = (
 /obj/machinery/light/incandescent,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -14182,6 +14190,10 @@
 /obj/landmark/start{
 	name = "Research Director"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow{
 	dir = 8
 	},
@@ -14388,6 +14400,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aYb" = (
@@ -14693,10 +14706,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/gps_waypoint,
-/obj/disposalpipe/segment/mail{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black,
 /area/station/bridge)
 "aYT" = (
@@ -14707,6 +14717,7 @@
 /obj/landmark/start{
 	name = "Chief Engineer"
 	},
+/obj/disposalpipe/segment/mail,
 /turf/simulated/floor/carpet/blue/fancy/narrow{
 	dir = 8
 	},
@@ -14853,13 +14864,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/east)
-"aZs" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/mail,
-/turf/simulated/floor/black,
-/area/station/bridge)
 "aZu" = (
 /obj/effects/background_objects/x0{
 	pixel_x = -484;
@@ -31156,6 +31160,10 @@
 /area/station/ai_monitored/armory)
 "gYz" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 8
 	},
@@ -31638,6 +31646,10 @@
 /area/station/ai_monitored/armory)
 "huK" = (
 /obj/machinery/light/small/floor,
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "huX" = (
@@ -32936,6 +32948,16 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
+"iCM" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
+/turf/simulated/floor/black,
+/area/station/bridge)
 "iCO" = (
 /obj/grille/catwalk{
 	icon_state = "catwalk_cross"
@@ -33655,6 +33677,10 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters)
 "jjz" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor/blueblack{
 	dir = 9
 	},
@@ -33963,7 +33989,7 @@
 	},
 /obj/disposalpipe/segment/mail{
 	dir = 4;
-	icon_state = "pipe-s"
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow{
 	dir = 8
@@ -39302,6 +39328,10 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "oaj" = (
+/obj/disposalpipe/segment/mail{
+	dir = 4;
+	icon_state = "pipe-s"
+	},
 /turf/simulated/floor,
 /area/station/bridge)
 "oaU" = (
@@ -39366,7 +39396,12 @@
 /area/station/garden/owlery)
 "oeQ" = (
 /obj/machinery/light/incandescent,
-/obj/disposalpipe/segment/mail,
+/obj/disposalpipe/switch_junction{
+	dir = 2;
+	icon_state = "pipe-sj2";
+	mail_tag = "bridge";
+	name = "bridge mail router"
+	},
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -48339,6 +48374,10 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "vvg" = (
+/obj/disposalpipe/segment/mail{
+	dir = 2;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
 	},
@@ -94654,8 +94693,8 @@ vsr
 vvg
 aYa
 aYS
-aZs
 keW
+iCM
 szl
 vPJ
 vsr
