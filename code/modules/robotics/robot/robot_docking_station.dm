@@ -169,6 +169,7 @@
 	src.add_fingerprint(user)
 	src.occupant = H
 	src.build_icon()
+	return TRUE
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)

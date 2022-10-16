@@ -64,3 +64,9 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
+/datum/unlockable_flock_structure/interceptor
+	structType = /obj/flock_structure/interceptor
+
+	check_unlocked()
+		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_BULLETS_HIT)
+

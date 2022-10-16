@@ -14,7 +14,7 @@
 	RegisterSignal(parent, COMSIG_FLOCK_ATTACK, .proc/handle_flock_attack)
 
 /// If flockdrone is in our flock, deny the attack, otherwise scream and cry
-/datum/component/flock_interest/proc/handle_flock_attack(atom/source, atom/attacker, var/intentional)
+/datum/component/flock_interest/proc/handle_flock_attack(atom/source, atom/attacker, intentional, projectile_attack)
 	if(!istype(attacker))
 		return
 
@@ -50,6 +50,8 @@
 		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
 	snitch.flock.updateEnemy(attacker)
 
+	if (projectile_attack)
+		snitch.flock.check_for_bullets_hit_achievement(projectile_attack)
 
 /// Raise COMSIG_FLOCK_ATTACK on common sources of damage (projectiles, items, fists, etc.)
 /datum/component/flock_protection
@@ -79,20 +81,20 @@
 
 /// Protect against punches/kicks/etc.
 /datum/component/flock_protection/proc/handle_attackhand(atom/source, mob/user)
-	return user.a_intent == INTENT_HARM && src.report_unarmed && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, user, TRUE)
+	return user.a_intent == INTENT_HARM && src.report_unarmed && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, user, TRUE, null)
 
 /// Protect against being hit by something.
 /datum/component/flock_protection/proc/handle_attackby(atom/source, obj/item/W, mob/user)
-	return W && src.report_attack && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, user, TRUE)
+	return W && src.report_attack && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, user, TRUE, null)
 
 /// Protect against someone chucking stuff at the parent.
 /datum/component/flock_protection/proc/handle_hitby_thrown(atom/source, atom/thrown_thing, datum/thrown_thing/thr)
 	var/mob/attacker = thr.user
-	return istype(attacker) && src.report_thrown && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, attacker, FALSE)
+	return istype(attacker) && src.report_thrown && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, attacker, FALSE, null)
 
 /// Protect against someone shooting the parent.
 /datum/component/flock_protection/proc/handle_hitby_proj(atom/source, obj/projectile/P)
 	var/attacker = P.shooter
 	if (!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
 		attacker = P.mob_shooter //shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
-	return attacker && src.report_proj && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, attacker, FALSE)
+	return attacker && src.report_proj && SEND_SIGNAL(source, COMSIG_FLOCK_ATTACK, attacker, FALSE, P)
