@@ -595,6 +595,11 @@
 
 /mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1)
 	var/datum/attackResults/msgs = new(src)
+	var/crit_chance = STAMINA_CRIT_CHANCE
+	var/do_armor = TRUE
+	var/do_stam = TRUE
+
+
 	msgs.clear(target)
 	msgs.valid = 1
 	SEND_SIGNAL(target, COMSIG_MOB_ATTACKED_PRE, src, null)
@@ -637,33 +642,31 @@
 	var/damage = rand(base_damage_low, base_damage_high) * target_damage_multiplier * self_damage_multiplier + extra_damage + calculate_bonus_damage(msgs)
 
 	msgs.played_sound = "punch"
-	var/crit_chance = STAMINA_CRIT_CHANCE
-	var/do_armor = TRUE
-	var/do_stam = TRUE
 
-	if(!target.canmove && target.lying)
-		damage += src.do_kick(msgs)
+	if(!target.canmove && target.lying) //do_kick
+		damage += src.calculate_kick_bonus(msgs)
 		do_armor = FALSE
 		do_stam = FALSE
-	else
-		damage += src.do_punch(msgs)
+	else //do_punch
+		damage += src.calculate_punch_bonus(msgs)
 
-	//adjust stamina crit chance and stamina damage based on gloves
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (H.gloves)
-			if (H.gloves.crit_override)
-				crit_chance = H.gloves.bonus_crit_chance
-			else
-				crit_chance += H.gloves.bonus_crit_chance
-			if (H.gloves.stamina_dmg_mult)
-				stamina_damage_mult += H.gloves.stamina_dmg_mult
+		//adjust stamina crit chance and stamina damage based on gloves
+		if (ishuman(src))
+			var/mob/living/carbon/human/H = src
+			if (H.gloves)
+				if (H.gloves.crit_override)
+					crit_chance = H.gloves.bonus_crit_chance
+				else
+					crit_chance += H.gloves.bonus_crit_chance
+				if (H.gloves.stamina_dmg_mult)
+					stamina_damage_mult += H.gloves.stamina_dmg_mult
+
 
 	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
 
+
 	var/pre_armor_damage = damage
-	var/armor_blocked = FALSE
 	if(do_armor)
 		//get target armor
 		var/armor_mod = 0
@@ -679,7 +682,6 @@
 			playsound(target, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1,pitch=1.5)
 			if(damage <= 0)
 				fuckup_attack_particle(src)
-				armor_blocked = 1
 
 
 	if(do_stam)
@@ -706,7 +708,7 @@
 
 
 	//set attack message
-	if(armor_blocked)
+	if(pre_armor_damage > 0 && damage <= 0 )
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target], but [target]'s armor blocks it!</B></span>"
 	else
 		msgs.base_attack_message = "<span class='alert'><B>[src] [src.punchMessage] [target][msgs.stamina_crit ? " and lands a devastating hit!" : "!"]</B></span>"
@@ -763,7 +765,7 @@
 		//maybe should be a bigger bonus when hurt? hulk angry etc?
 		. += max((abs(health+max_health)/max_health)*5, 5)
 
-/mob/proc/do_punch(datum/attackResults/msgs)
+/mob/proc/calculate_punch_bonus(datum/attackResults/msgs)
 	SHOULD_CALL_PARENT(TRUE)
 	. = 0
 	//drunkards get a 2/5 chance of bonus damage
@@ -776,7 +778,7 @@
 		. += 4
 		msgs.after_effects += /proc/wrestler_backfist
 
-/mob/living/carbon/human/do_punch(datum/attackResults/msgs)
+/mob/living/carbon/human/calculate_punch_bonus(datum/attackResults/msgs)
 	. = ..()
 	//bonus damage from weighted/etc gloves
 	if(ishuman(src))
@@ -785,7 +787,7 @@
 			. += H.gloves.punch_damage_modifier
 
 
-/mob/proc/do_kick(datum/attackResults/msgs)
+/mob/proc/calculate_kick_bonus(datum/attackResults/msgs)
 	SHOULD_CALL_PARENT(TRUE)
 	. = 0
 	//setup kick effects
