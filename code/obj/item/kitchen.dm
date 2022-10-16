@@ -581,6 +581,7 @@ TRAYS
 			.++
 
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
+	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
 		if(food.cant_drop)
 			boutput(user, "<span class='alert'>You can't do that, [food] is attached to you!</span>")
@@ -620,7 +621,7 @@ TRAYS
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = TRUE
 		else
-			src.foods_inside += food
+			src.food_inside += food
 			src.space_left -= food.w_class
 
 		src.place_on(food, user, click_params) // this handles pixel positioning
@@ -647,7 +648,7 @@ TRAYS
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = FALSE
 		else
-			src.foods_inside -= food
+			src.food_inside -= food
 
 		src.UpdateIcon()
 
@@ -854,14 +855,14 @@ TRAYS
 	get_desc()
 		. = ..()
 
-		switch ((space_left / max_space) * 100) // Multiplying by 100 so we get a percentage, which we can work on a lot better than decimals
+		switch (round((space_left / max_space) * 100)) // Multiplying by 100 so we get a percentage, which we can work on a lot better than decimals
 			if (100) // space left is same as max space
 				. += " It is empty."
-			if (100 to 51) // less than half the space is used.
+			if (51 to 99) // less than half the space is used.
 				. += " It is mostly empty."
 			if (50) // half the space is used
 				. += " It is half [prob(50) ? "empty" : "full"]." // joke about the half empty/full cup dillema
-			if (50 to 1) // more than half the space is used
+			if (1 to 49) // more than half the space is used
 				. += " It is mostly full."
 			if (0)
 				. += " It is full!"
