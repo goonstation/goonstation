@@ -812,6 +812,12 @@
 		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
 		. += STAMINA_HTH_DMG * 0.25
 
+
+
+
+
+
+
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).
 /proc/special_attack_silicon(var/mob/target, var/mob/living/user)
 	if (!target || !issilicon(target) || !user || !isliving(user))
