@@ -726,7 +726,7 @@
 	var/pre_armor_damage = damage
 	damage -= armor_mod
 
-	do_stam(msgs, damage, pre_armor_damage, crit_chance, stamina_damage_mult)
+	do_stam(msgs, target, damage, pre_armor_damage, can_crit ? crit_chance : 0, stamina_damage_mult)
 
 	//effects for armor reducing most/all of damage
 	var/armor_blocked = 0
@@ -748,12 +748,12 @@
 	return
 
 
-/mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
+/mob/proc/do_stam(datum/attackResults/msgs, mob/target, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
 	//calculate stamina damage to deal
 	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 	//reduce stamina damage by the same proportion that base damage was reduced
 	//min cap is stam_power/3 so we still cant ignore it entirely
-	if ((damage + armor_mod) <= 0) //mbc lazy runtime fix
+	if (pre_armor_damage == 0) //mbc lazy runtime fix
 		stam_power *= (1/3) //do the least
 	else
 		stam_power *= clamp(damage/pre_armor_damage, 1, 1/3)
@@ -762,7 +762,7 @@
 	msgs.stamina_target -= max(stam_power, 0)
 
 	//if we can crit, roll for a crit. Crits are blocked by blocks.
-	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
+	if (prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
 	return
