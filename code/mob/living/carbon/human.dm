@@ -748,10 +748,15 @@
 			src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
 		else
 			spawn(3 SECONDS)
+				if (src.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
+					var/obj/head = src.organHolder.drop_organ("head")
+					qdel(head)
+					make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
+					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50)
+					gibs(src.loc, headbits = 0)
+					src.visible_message("<span class='alert'>[src]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [src]'s head in a delightfully horrific manner.</span>")
 				src.slug.set_loc(get_turf(src.loc))
 				src.mind.transfer_to(src.slug)
-				src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s ear!</span>", "<span class='alert'>You slither out of your dying host.</span>")
-
 
 	src.canmove = 0
 	src.lying = 1

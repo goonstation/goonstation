@@ -31,6 +31,8 @@
 	var/sound_deny = 0
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
+	var/slimed = FALSE	//Brain slug gunk keeping doors closed
+	var/slime_gunk_health = 5
 
 	var/health = 400
 	var/health_max = 400
@@ -44,6 +46,7 @@
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
 	if (src.isblocked()) return
+	if (src.slimed) return
 
 	if (ismob(AM))
 		if (src.density && src.brainloss_stumble && src.do_brainstumble(AM) == 1)
@@ -294,10 +297,24 @@
 	return 1
 
 /obj/machinery/door/attackby(obj/item/I, mob/user)
+	if (src.slimed)
+		user.visible_message("<span class='alert'>[user] hacks away at the slime holding the door shut!</span>")
+		attack_particle(user,src)
+		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
+		src.slime_gunk_health --
+		user.lastattacked = src
+		if (src.slime_gunk_health <= 0)
+			src.slimed = FALSE
+			src.UpdateOverlays(null, "panel")
+		else
+			return
+
 	if (user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || user.restrained())
 		return
+
 	if(istype(I, /obj/item/grab))
 		return ..() // handled in grab.dm + Bumped
+
 
 	if (src.isblocked() == 1)
 		if (src.density && src.operating != 1 && I)
@@ -503,6 +520,8 @@
 	if (src.operating == 1) //doors can still open when emag-disabled
 		return
 	if (!ticker)
+		return 0
+	if (src.slimed)
 		return 0
 	if(!src.operating) //in case of emag
 		src.operating = 1

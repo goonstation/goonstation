@@ -158,6 +158,7 @@
 		var/datum/abilityHolder/brain_slug/AH = current_target.add_ability_holder(/datum/abilityHolder/brain_slug)
 		AH.addAbility(/datum/targetable/brain_slug/exit_host)
 		AH.addAbility(/datum/targetable/brain_slug/infest_host)
+		AH.addAbility(/datum/targetable/brain_slug/spit_slime)
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
 
@@ -364,3 +365,32 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		return TRUE
 
 	return FALSE
+
+/datum/targetable/brain_slug/spit_slime
+	name = "Spit slime"
+	desc = "Turn some of your host's insides into slime, locking down doors or slowing attacks. Costs stability to use."
+	icon_state = "hook"
+	cooldown = 20 SECONDS
+	targeted = 1
+	target_anything = 1
+	var/border_icon = 'icons/mob/wraith_ui.dmi'
+	var/border_state = "harbinger_frame"
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/mob/S = holder.owner
+		var/obj/projectile/proj = initialize_projectile_ST(S, new/datum/projectile/special/slug_slime, get_turf(target))
+		while (!proj || proj.disposed)
+			proj = initialize_projectile_ST(S, new/datum/projectile/special/slug_slime, get_turf(target))
+
+		proj.targets = list(target)
+
+		proj.launch()
+		holder.points -= 40
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")

@@ -1141,3 +1141,33 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		var/turf/T = get_turf(O)
 		src.emit_chems(T, O)
 		src.emit_gas(T, 1)
+
+
+/datum/projectile/special/slug_slime	//Goos people and doors!
+	name = "slime"
+	dissipation_rate = 1
+	dissipation_delay = 7
+	icon_state = "ball_white"
+	power = 5
+	hit_ground_chance = 0
+	ks_ratio = 1.0
+	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
+	var/stamina_cost = 60
+
+	on_hit(atom/hit, angle, var/obj/projectile/P)
+		if (ismob(hit))
+			var/mob/M = hit
+			if(hit == P.special_data["owner"]) return 1
+			M.changeStatus("slowed", 8 SECONDS)
+			if (M.reagents)
+				M.reagents.add_reagent("neurodepressant", 5)
+				M.remove_stamina(src.stamina_cost)
+		else if (istype(hit, /obj/machinery/door))
+			var/obj/machinery/door/target = hit
+			if (!target.hardened)
+				target.slimed = TRUE
+				target.slime_gunk_health = 5
+				var/image/slime_image = image('icons/misc/frogs.dmi', "getin")
+				slime_image.alpha = 255
+				target.UpdateOverlays(slime_image, "panel")
+		qdel(P)
