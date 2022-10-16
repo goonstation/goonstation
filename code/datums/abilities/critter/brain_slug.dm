@@ -5,7 +5,6 @@
 		if (!owner.holder)
 			return
 		..()
-	//todo check this?
 	tens_offset_x = 19
 	tens_offset_y = 7
 	secs_offset_x = 23
@@ -58,8 +57,7 @@
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"
 	var/is_transfer = FALSE
-	//todo add counter + abilities.
-	//Abilities should cost the same points that keep the body alive.
+
 	cast(atom/target)
 		if (target == holder.owner)
 			return FALSE
@@ -206,7 +204,7 @@
 	targeted = 0
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = "plague_frame"
-	//Todo add a sound
+
 	cast()
 		if (istype(holder.owner, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/caster = holder.owner
@@ -225,7 +223,7 @@
 			caster.slug = null
 			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
 				caster.death(gibbed = FALSE)
-		else if (istype(holder.owner, /mob/living/carbon/human))	//Todo add something to avoid it slithering out easily
+		else if (istype(holder.owner, /mob/living/carbon/human))
 			var/mob/living/carbon/human/human_host = holder.owner
 			if (!human_host.slug)
 				boutput(holder.owner, "<span class='notice'>You have no parasite to expel... uh.</span>")
