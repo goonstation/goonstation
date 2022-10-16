@@ -1124,7 +1124,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> severs [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
-				surgeon , "<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
+					"<span class='alert'>You sever [surgeon == patient ? "your" : "[patient]'s"] butt's connection to the stomach with [src]!</span>",\
 					"<span class='alert'>[patient == surgeon ? "You sever" : "<b>[surgeon]</b> severs"] your butt's connection to the stomach with [src]!</span>")
 
 				patient.TakeDamage("chest", damage_low, 0)

@@ -192,10 +192,10 @@
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
-				emergency_shuttle.incall()
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				if (emergency_shuttle.incall())
+					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.

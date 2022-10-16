@@ -132,9 +132,9 @@
 			var/obj/item/storage/S_temp = src.loc
 			var/datum/hud/storage/H_temp = S_temp.hud
 			H_temp.remove_object(src)
-		if(istype(src.loc, /obj/critter/snake))
+		if(istype(src.loc, /mob/living/critter/small_animal/snake))
 			var/atom/movable/snake = src
-			while(istype(snake.loc, /obj/critter/snake))
+			while(istype(snake.loc, /mob/living/critter/small_animal/snake))
 				snake = snake.loc
 			snake.set_loc(get_turf(M))
 			M.show_text("Staff snake summoned successfully. You can find it on the floor at your current location.", "blue")

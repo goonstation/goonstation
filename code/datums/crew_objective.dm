@@ -425,9 +425,18 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		for(var/i in 1 to DRINK_OBJ_COUNT)
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
-			var/datum/reagent/fooddrink/instance =  new choiceType
+			var/datum/reagent/fooddrink/instance = new choiceType
+			var/hidden = 0
+			var/list/reactions = chem_reactions_by_result[instance.id]
+			for (var/datum/chemical_reaction/reaction_type in reactions)
+				if (initial(reaction_type.hidden))
+					hidden++
+			//if all reactions producing this reagent are hidden, then skip it and try again
+			if (hidden == length(reactions))
+				i--
+				continue
 			names[i] = instance.name
 			ids[i] = instance.id
 		explanation_text = "Mix a "
@@ -457,7 +466,25 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
 		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake

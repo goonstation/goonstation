@@ -7708,7 +7708,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "avp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -10692,7 +10692,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/robotics)
 "aDk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -20797,7 +20797,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
 "baZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite{
 	dir = 4
@@ -34425,6 +34425,7 @@
 	icon_state = "delivery2";
 	tag = ""
 	},
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/greenblack{
 	dir = 6
 	},
@@ -41657,7 +41658,7 @@
 	},
 /area/station/crew_quarters/bar)
 "cbI" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -47896,7 +47897,7 @@
 /turf/simulated/floor/airless/solar,
 /area/station/solar/south)
 "crU" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "crV" = (
@@ -51542,7 +51543,7 @@
 	},
 /area/station/science/chemistry)
 "cCr" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},

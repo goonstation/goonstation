@@ -169,6 +169,7 @@
 	src.add_fingerprint(user)
 	src.occupant = H
 	src.build_icon()
+	return TRUE
 
 /obj/machinery/recharge_station/MouseDrop_T(atom/movable/AM as mob|obj, mob/user as mob)
 	if (BOUNDS_DIST(AM, user) > 0 || BOUNDS_DIST(src, user) > 0)
@@ -607,9 +608,6 @@
 	switch(action)
 		if("occupant-rename")
 			if (!isrobot(src.occupant))
-				return
-			if (user == src.occupant)
-				boutput(user, "<span class='alert'>You may not rename yourself!</span>")
 				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Cyborg Maintenance", R.name))), 1, 64)

@@ -24306,7 +24306,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "bej" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -26395,7 +26395,7 @@
 	},
 /area/station/science/chemistry)
 "bjD" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -27424,7 +27424,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "blQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/west,
 /area/station/science/chemistry)
@@ -28671,7 +28671,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "boX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
