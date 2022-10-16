@@ -1148,7 +1148,7 @@
 	var/punchmult = 1
 
 	if (sims) //this is still a thing. huh.
-		punchmult *= sims.getMoodActionMultiplier()
+		punchmult *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
 
 	return punchmult
 
