@@ -2114,14 +2114,14 @@
 			src.lights.ship = src
 			src.components += src.lights
 
-	engineering // broken down mess for the ce to repair.
+	broken // broken down mess for the ce to repair.
 		body_type = "car"
 		icon_state = "car_yellow"
 
 		New()
 			..()
 			name = "Personal car"
-			desc = "A Toriyama-Okawara EV-89 personal mobility vehicle, pulled from a dump on Buttes. It appears the headlights are broken along with other parts of the ship."
+			desc = "A Toriyama-Okawara EV-89 personal mobility vehicle pulled from a dump on Buttes. It appears the headlights are broken along with other parts of the car."
 			health = -10
 
 			src.components -= src.fueltank

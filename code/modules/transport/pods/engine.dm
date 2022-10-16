@@ -18,6 +18,10 @@
 
 	activate()
 		..()
+		if(!ship.fueltank)
+			boutput(usr, "[ship.ship_message("No fuel tank located!")]")
+			src.deactivate()
+			return
 		if(ship.fueltank.air_contents.toxins <= 0)
 			boutput(usr, "[ship.ship_message("No plasma located inside of the fuel tank!")]")
 			src.deactivate()
