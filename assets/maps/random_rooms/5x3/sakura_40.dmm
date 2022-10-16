@@ -4,24 +4,11 @@
 /area/dmm_suite/clear_area)
 "b" = (
 /obj/decal/cleanable/sakura,
-/obj/railing/red/reinforced{
-	dir = 8
-	},
-/turf/unsimulated/floor/dojo/stone,
-/area/dmm_suite/clear_area)
-"c" = (
-/obj/decal/cleanable/sakura,
-/obj/railing/red/reinforced{
-	dir = 1
-	},
 /turf/unsimulated/floor/dojo/stone,
 /area/dmm_suite/clear_area)
 "g" = (
 /obj/decal/cleanable/sakura,
 /obj/decal/cleanable/sakura,
-/obj/railing/red/reinforced{
-	dir = 4
-	},
 /turf/unsimulated/floor/dojo/stone,
 /area/dmm_suite/clear_area)
 "l" = (
@@ -45,6 +32,17 @@
 	pixel_x = -31
 	},
 /obj/decal/cleanable/sakura,
+/obj/railing/red/reinforced{
+	pixel_y = -4
+	},
+/obj/railing/red/reinforced{
+	dir = 4;
+	pixel_x = 7
+	},
+/obj/railing/red/reinforced{
+	dir = 8;
+	pixel_x = -6
+	},
 /turf/unsimulated/grass,
 /area/dmm_suite/clear_area)
 "o" = (
@@ -72,7 +70,9 @@
 /area/dmm_suite/clear_area)
 "A" = (
 /obj/decal/cleanable/sakura,
-/obj/railing/red/reinforced,
+/obj/railing/red/reinforced{
+	pixel_y = -4
+	},
 /turf/unsimulated/floor/dojo/stone,
 /area/dmm_suite/clear_area)
 "B" = (
@@ -93,7 +93,7 @@ a
 (3,1,1) = {"
 A
 n
-c
+b
 "}
 (4,1,1) = {"
 z
