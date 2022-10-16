@@ -680,7 +680,7 @@
 	//we end here. We do not deal stamina damage
 	//we do not check armor
 	//we are not affected by wrestler stuff
-
+	return
 
 
 /mob/proc/do_punch(datum/attackResults/msgs, mob/target, damage, stamina_damage_mult, can_crit, def_zone)
@@ -745,7 +745,7 @@
 
 	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
 		msgs.stamina_self -= STAMINA_HTH_COST
-
+	return
 
 
 /mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
@@ -765,7 +765,7 @@
 	if (can_crit && prob(crit_chance) && !target.check_block()?.can_block(DAMAGE_BLUNT, 0))
 		msgs.stamina_crit = 1
 		msgs.played_sound = pick(sounds_punch)
-
+	return
 
 
 ////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
