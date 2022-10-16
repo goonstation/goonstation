@@ -702,10 +702,9 @@
 			msgs.stamina_crit = 1
 			msgs.played_sound = pick(sounds_punch)
 
-		//do stamina cost
-		if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
-			msgs.stamina_self -= STAMINA_HTH_COST
-
+	//do stamina cost
+	if (!(src.traitHolder && src.traitHolder.hasTrait("glasscannon")))
+		msgs.stamina_self -= STAMINA_HTH_COST
 
 	//set attack message
 	if(pre_armor_damage > 0 && damage <= 0 )
@@ -736,7 +735,6 @@
 
 	if (sims) //this is still a thing. huh.
 		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
-
 
 ///multipler to unarmed damage recieved
 /mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
