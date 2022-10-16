@@ -581,16 +581,6 @@
 	attack_effects(target, affecting)
 	msgs.flush(suppress_flags)
 
-
-
-
-
-
-
-
-
-
-
 /mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
@@ -636,8 +626,6 @@
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
 		return
 
-	//calculate damage
-
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
 	var/do_kick = FALSE
@@ -658,6 +646,7 @@
 				if (H.gloves.stamina_dmg_mult)
 					stamina_damage_mult += H.gloves.stamina_dmg_mult
 
+	//calculate damage
 	var/damage = rand(base_damage_low, base_damage_high) * target_damage_multiplier * self_damage_multiplier + extra_damage + calculate_bonus_damage(msgs, do_punch, do_kick)
 	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
@@ -671,8 +660,6 @@
 
 		//flat damage reduction by armor
 		damage -= armor_mod
-
-
 		//effects for armor reducing most/all of damage
 		if(pre_armor_damage > 0 && damage/pre_armor_damage <= 0.66)
 			block_spark(target,armor=1)
@@ -720,102 +707,6 @@
 	//clamp damage to non-negative values
 	msgs.damage = max(damage, 0)
 	return msgs
-
-////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
-
-///multipler to unarmed attack damage dealt
-/mob/proc/get_base_damage_multiplier(def_zone)
-	SHOULD_CALL_PARENT(TRUE)
-	return 1
-
-/mob/living/carbon/human/get_base_damage_multiplier(def_zone)
-	. = ..()
-
-	if (sims) //this is still a thing. huh.
-		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
-
-///multipler to unarmed damage recieved
-/mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
-	SHOULD_CALL_PARENT(TRUE)
-	return 1
-
-///Returns flat bonus damage to unarmed attacks - can also modify the attackResults passed in, e.g. to add to `after_effects`
-/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
-	SHOULD_CALL_PARENT(TRUE)
-	. = 0
-	if(do_punch)
-		. += calculate_punch_bonus(msgs)
-	if(do_kick)
-		. += calculate_kick_bonus(msgs)
-
-
-/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
-	. = ..()
-	if (src.is_hulk() && (do_punch || do_kick))
-		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
-		//can exceed 10 damage in edge case of being under -300% health.
-		//maybe should be a bigger bonus when hurt? hulk angry etc?
-		. += max((abs(health+max_health)/max_health)*5, 5)
-		msgs.after_effects += /proc/hulk_smash
-
-/mob/proc/calculate_punch_bonus(datum/attackResults/msgs)
-	SHOULD_CALL_PARENT(TRUE)
-	. = 0
-	//drunkards get a 2/5 chance of bonus damage
-	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
-		. += rand(3,5)
-		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
-	//wrestlers have a 2/3 chance of a big hit
-	if (src != msgs.target && iswrestler(src) && prob(66))
-		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending them flying!</span>"
-		. += 4
-		msgs.after_effects += /proc/wrestler_backfist
-
-/mob/living/carbon/human/calculate_punch_bonus(datum/attackResults/msgs)
-	. = ..()
-	//bonus damage from weighted/etc gloves
-	if(ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (H.gloves)
-			. += H.gloves.punch_damage_modifier
-
-
-/mob/proc/calculate_kick_bonus(datum/attackResults/msgs)
-	SHOULD_CALL_PARENT(TRUE)
-	. = 0
-	//setup kick effects
-	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [msgs.target]!</B></span>"
-	msgs.logs = list("[src.kickMessage] [constructTarget(msgs.target,"combat")]")
-
-	//bonus damage from shoes or legs
-	if (ishuman(src))
-		var/mob/living/carbon/human/H = src
-		if (H.shoes)
-			. += H.shoes.kick_bonus
-		else if (H.limbs.r_leg)
-			. += H.limbs.r_leg.limb_hit_bonus
-		else if (H.limbs.l_leg)
-			. += H.limbs.l_leg.limb_hit_bonus
-
-	//RELAXING
-	#if STAMINA_LOW_COST_KICK == 1
-	msgs.stamina_self += STAMINA_HTH_COST / 3
-	#endif
-
-///returns additive adjustment to stamina damage for unarmed attacks (applied before stamina damage multiplier)
-/mob/proc/calculate_bonus_stam_damage(datum/attackResults/msgs)
-	SHOULD_CALL_PARENT(TRUE)
-	. = 0
-	if (src.traitHolder.hasTrait("bigbruiser"))
-		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
-		. += STAMINA_HTH_DMG * 0.25
-
-
-
-
-
-
 
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).
 /proc/special_attack_silicon(var/mob/target, var/mob/living/user)
@@ -1208,6 +1099,95 @@
 	if (limbs && !limbs.r_arm && def_zone == "r_arm")
 		return "chest"
 	return def_zone
+
+////////////////////////////////////////////////////// Calculate damage //////////////////////////////////////////
+///multipler to unarmed attack damage dealt
+/mob/proc/get_base_damage_multiplier(def_zone)
+	SHOULD_CALL_PARENT(TRUE)
+	return 1
+
+/mob/living/carbon/human/get_base_damage_multiplier(def_zone)
+	. = ..()
+
+	if (sims) //this is still a thing. huh.
+		. *= sims.getMoodActionMultiplier() //also this is a 0-1.35 scale. HUH.
+
+///multipler to unarmed damage recieved
+/mob/proc/get_taken_base_damage_multiplier(mob/attacker, def_zone)
+	SHOULD_CALL_PARENT(TRUE)
+	return 1
+
+///Returns flat bonus damage to unarmed attacks - can also modify the attackResults passed in, e.g. to add to `after_effects`
+/mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	if(do_punch)
+		. += calculate_punch_bonus(msgs)
+	if(do_kick)
+		. += calculate_kick_bonus(msgs)
+
+
+/mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs, do_punch, do_kick)
+	. = ..()
+	if (src.is_hulk() && (do_punch || do_kick))
+		//increase damage by, typically, 5-10, scaled from 0% health to 100% health - raw values don't matter
+		//can exceed 10 damage in edge case of being under -300% health.
+		//maybe should be a bigger bonus when hurt? hulk angry etc?
+		. += max((abs(health+max_health)/max_health)*5, 5)
+		msgs.after_effects += /proc/hulk_smash
+
+/mob/proc/calculate_punch_bonus(datum/attackResults/msgs)
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	//drunkards get a 2/5 chance of bonus damage
+	if (src.reagents && (src.reagents.get_reagent_amount("ethanol") >= 100) && prob(40))
+		. += rand(3,5)
+		msgs.show_message_self("<span class='alert'>You drunkenly throw a brutal punch!</span>")
+	//wrestlers have a 2/3 chance of a big hit
+	if (src != msgs.target && iswrestler(src) && prob(66))
+		msgs.base_attack_message = "<span class='alert'><B>[src]</b> winds up and delivers a backfist to [msgs.target], sending them flying!</span>"
+		. += 4
+		msgs.after_effects += /proc/wrestler_backfist
+
+/mob/living/carbon/human/calculate_punch_bonus(datum/attackResults/msgs)
+	. = ..()
+	//bonus damage from weighted/etc gloves
+	if(ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (H.gloves)
+			. += H.gloves.punch_damage_modifier
+
+
+/mob/proc/calculate_kick_bonus(datum/attackResults/msgs)
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	//setup kick effects
+	msgs.played_sound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+	msgs.base_attack_message = "<span class='alert'><B>[src] [src.kickMessage] [msgs.target]!</B></span>"
+	msgs.logs = list("[src.kickMessage] [constructTarget(msgs.target,"combat")]")
+
+	//bonus damage from shoes or legs
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		if (H.shoes)
+			. += H.shoes.kick_bonus
+		else if (H.limbs.r_leg)
+			. += H.limbs.r_leg.limb_hit_bonus
+		else if (H.limbs.l_leg)
+			. += H.limbs.l_leg.limb_hit_bonus
+
+	//RELAXING
+	#if STAMINA_LOW_COST_KICK == 1
+	msgs.stamina_self += STAMINA_HTH_COST / 3
+	#endif
+
+///returns additive adjustment to stamina damage for unarmed attacks (applied before stamina damage multiplier)
+/mob/proc/calculate_bonus_stam_damage(datum/attackResults/msgs)
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	if (src.traitHolder.hasTrait("bigbruiser"))
+		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
+		. += STAMINA_HTH_DMG * 0.25
 
 /////////////////////////////////////////////////////// Target damage modifiers //////////////////////////////////
 
