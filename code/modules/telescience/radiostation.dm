@@ -241,14 +241,23 @@
 	icon_state = "mixtable-3"
 	anchored = 1
 	density = 1
-	var/can_play_music = FALSE
+	var/can_play_music = TRUE
 	var/has_record = FALSE
 	var/is_playing = FALSE
 	var/obj/item/record/record_inside = null
 
 	New()
-		..()
+		. = ..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_music)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	get_desc()
 		if(!src.can_play_music)
@@ -799,12 +808,19 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	density = 1
 	var/has_tape = FALSE
 	var/is_playing = FALSE
-	var/can_play_tapes = FALSE
+	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
 
+	New()
+		. = ..()
+		START_TRACKING
 	get_desc()
 		if(!src.can_play_tapes)
 			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
@@ -819,8 +835,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
-			src.has_tape = 1
-			src.is_playing = 1
+			src.has_tape = TRUE
+			src.is_playing = TRUE
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()

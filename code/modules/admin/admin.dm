@@ -414,6 +414,7 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 		if("radio_audio_allow")
@@ -435,6 +436,8 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"You need to be at least a Moderator to disallow radio audio.")
 >>>>>>> c2354c4eb (Not-working prototype of what I'm aiming for.)
+=======
+>>>>>>> c460e5fcdf4bf6983fb11f5d203fde3126a931fc
 		if("toggle_shuttle_recalling")
 			if (src.level >= LEVEL_PA)
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
@@ -443,6 +446,41 @@ var/global/noir = 0
 				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.can_recall ? "en" : "dis"]abled recalling the Emergency Shuttle</span>")
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle recalling.")
+
+		if("radio_audio_allow")
+			if(src.level >= LEVEL_MOD)
+
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					for(var/mob/living/M in oview(5, O)) // An indicator for the players to know that the player is enabled.
+						boutput(M, "<span class='alert'>A glowing hand appears out of nowhere and rips \"out of order\" sticker on \the [O.name]!</span>")
+					O.can_play_music = TRUE
+
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					for(var/mob/living/M in oview(5, O)) // An indicator for the players to know that the player is enabled.
+						boutput(M, "<span class='alert'>A glowing hand appears out of nowhere and rips the \"out of order\" sticker on \the [O.name]!</span>")
+					O.can_play_tapes = TRUE
+
+				logTheThing(LOG_DIARY, usr, null, "allowed for radio music/tapes to play.")
+				logTheThing(LOG_ADMIN, usr, null, "allowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to allow radio audio.")
+		if("radio_audio_disallow")
+			if(src.level >= LEVEL_MOD)
+
+				for(var/obj/submachine/record_player/O in by_type[/obj/submachine/record_player])
+					for(var/mob/living/M in oview(5, O)) // An indicator for the players to know that the player is disabled.
+						boutput(M, "<span class='alert'>A glowing hand appears out of nowhere and slaps a \"out of order\" sticker on \the [O.name]!</span>")
+					O.can_play_music = FALSE
+
+				for(var/obj/submachine/tape_deck/O in by_type[/obj/submachine/tape_deck])
+					for(var/mob/living/M in oview(5, O)) // An indicator for the players to know that the player is disabled.
+						boutput(M, "<span class='alert'>A glowing hand appears out of nowhere and slaps a \"out of order\" sticker on \the [O.name]!</span>")
+					O.can_play_tapes = FALSE
+
+				logTheThing(LOG_DIARY, usr, null, "disallowed for radio music/tapes to play.")
+				logTheThing(LOG_ADMIN, usr, null, "disallowed for radio music/tapes to play.")
+			else
+				tgui_alert(usr,"You need to be at least a Moderator to disallow radio audio.")
 
 		if("notes")
 			var/player = null
@@ -4320,8 +4358,14 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
+<<<<<<< HEAD
 				Radio Music | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
 				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
+=======
+				Player Radio Records/Tapes | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
+				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
+
+>>>>>>> c460e5fcdf4bf6983fb11f5d203fde3126a931fc
 			"}
 #ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
