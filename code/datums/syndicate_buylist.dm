@@ -753,7 +753,7 @@ This is basically useless for anyone but miners.
 	item = /obj/machinery/recharge_station/syndicate
 	cost = 8
 	vr_allowed = 0
-	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
+	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Cyborgs created this way will follow a syndicate lawset making them loyal to you."
 	job = list("Roboticist")
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
