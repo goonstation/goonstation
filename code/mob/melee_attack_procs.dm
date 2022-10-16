@@ -279,11 +279,6 @@
 				target.remove_stamina(STAMINA_DEFAULT_BLOCK_COST)
 				return
 
-	if (istype(H))
-		for (var/uid in H.pathogens)
-			var/datum/pathogen/P = H.pathogens[uid]
-			P.ongrab(target)
-
 	if (!grab_item)
 		var/obj/item/grab/G = new /obj/item/grab(src, src, target)
 		src.put_in_hand(G, src.hand)
@@ -403,14 +398,6 @@
 			msgs.disarm_RNG_result |= "shoved"
 
 	if (prob((stampart + 5) * mult))
-		if (ishuman(src))
-			var/mob/living/carbon/human/H = src
-			for (var/uid in H.pathogens)
-				var/datum/pathogen/P = H.pathogens[uid]
-				var/ret = P.ondisarm(target, 1)
-				if (!ret)
-					msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target][DISARM_WITH_ITEM_TEXT]!</B></span>"
-					return msgs
 		msgs.base_attack_message = "<span class='alert'><B>[src] shoves [target] to the ground[DISARM_WITH_ITEM_TEXT]!</B></span>"
 		msgs.played_sound = 'sound/impact_sounds/Generic_Shove_1.ogg'
 		msgs.disarm_RNG_result |= "shoved_down"
@@ -427,14 +414,6 @@
 	var/list/obj/item/limbs = list()
 	var/list/obj/item/loose = list()
 	var/list/obj/item/fixed_in_place = list()
-	if (ishuman(src))
-		var/mob/living/carbon/human/H2 = src
-		for (var/uid in H2.pathogens)
-			var/datum/pathogen/P = H2.pathogens[uid]
-			var/ret = P.ondisarm(target, 1)
-			if (!ret)
-				disarm_success = 0
-				break
 	if(length(items))
 		var/multi = length(items) > 1
 		for(var/obj/item/I in items)
@@ -625,11 +604,6 @@
 		msgs.affecting = def_zone
 
 	var/punchmult = get_base_damage_multiplier(def_zone)
-	if(ishuman(src))
-		var/mob/living/carbon/human/LM = src
-		for (var/uid in LM.pathogens)
-			var/datum/pathogen/P = LM.pathogens[uid]
-			punchmult *= P.onpunch(target, def_zone)
 
 	var/punchedmult = target.get_taken_base_damage_multiplier(src, def_zone)
 
@@ -1157,15 +1131,6 @@
 
 /mob/proc/get_taken_base_damage_multiplier()
 	return 1
-
-/mob/living/carbon/human/get_taken_base_damage_multiplier(var/mob/attacker, var/def_zone)
-	var/punchedmult = 1
-
-	for (var/uid in src.pathogens)
-		var/datum/pathogen/P = src.pathogens[uid]
-		punchedmult *= P.onpunched(attacker, def_zone)
-
-	return punchedmult
 
 /mob/proc/calculate_bonus_damage(var/datum/attackResults/msgs)
 	return 0
