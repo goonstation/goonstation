@@ -413,9 +413,6 @@ var/global/noir = 0
 				ircbot.export_async("admin", ircmsg)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
 		if("radio_audio_allow")
 			if(src.level >= LEVEL_MOD)
@@ -435,9 +432,6 @@ var/global/noir = 0
 				logTheThing("admin", usr, null, "disallowed for radio music/tapes to play.")
 			else
 				tgui_alert(usr,"You need to be at least a Moderator to disallow radio audio.")
->>>>>>> c2354c4eb (Not-working prototype of what I'm aiming for.)
-=======
->>>>>>> c460e5fcdf4bf6983fb11f5d203fde3126a931fc
 		if("toggle_shuttle_recalling")
 			if (src.level >= LEVEL_PA)
 				emergency_shuttle.can_recall = !emergency_shuttle.can_recall
@@ -4358,14 +4352,10 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
-<<<<<<< HEAD
 				Radio Music | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
 				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
-=======
 				Player Radio Records/Tapes | <A href='?src=\ref[src];action=radio_audio_allow'>ON</A> |
 				<A href='?src=\ref[src];action=radio_audio_disallow'>OFF</A><BR>
-
->>>>>>> c460e5fcdf4bf6983fb11f5d203fde3126a931fc
 			"}
 #ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}
