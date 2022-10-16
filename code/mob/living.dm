@@ -405,12 +405,13 @@
 			var/success = dropping_organ.attach_organ(src, dropping_user)
 			if (success)
 				return
-		else if (istype(dropped, /obj/item/parts/human_parts/))
-			var/obj/item/parts/dropping_limb = dropped
-			dropping_limb.attach(src, dropping_user)
-		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-			var/obj/item/parts/robot_parts/dropping_limb = dropped
-			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+		else if (istype(dropped, /obj/item/parts))
+			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
+				var/obj/item/parts/dropping_limb = dropped
+				dropping_limb.attach(src, dropping_user)
+			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+				var/obj/item/parts/robot_parts/dropping_limb = dropped
+				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
