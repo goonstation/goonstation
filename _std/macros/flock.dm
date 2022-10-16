@@ -16,6 +16,9 @@
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
 
+// flock intangibles
+#define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
+
 // costs
 #define FLOCK_CONVERT_COST 20
 #define FLOCK_BARRICADE_COST 20
