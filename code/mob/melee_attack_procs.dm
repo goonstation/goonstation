@@ -737,7 +737,7 @@
 	return
 
 
-/mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, stam_power, crit_chance, stamina_damage_mult)
+/mob/proc/do_stam(datum/attackResults/msgs, damage, pre_armor_damage, crit_chance, stamina_damage_mult)
 	//calculate stamina damage to deal
 	var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
 	//reduce stamina damage by the same proportion that base damage was reduced
