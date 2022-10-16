@@ -244,21 +244,21 @@
 			if (!T)
 				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
-			var/isterrain = locate(/datum/component/buildable_turf) in T.datum_components && istype(T,/turf/unsimulated)
-			if ((!istype(T, /turf/space) && isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
+			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			var/isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
@@ -266,13 +266,13 @@
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			var/isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			isterrain = locate(/datum/component/buildable_turf) in S.datum_components && istype(S,/turf/unsimulated)
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
 			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
@@ -308,7 +308,7 @@
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		var/isterrain = (locate(/datum/component/buildable_turf) in target.datum_components) && istype(target,/turf/unsimulated)
+		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
