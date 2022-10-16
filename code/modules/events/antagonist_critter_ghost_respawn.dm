@@ -111,6 +111,17 @@
 				)
 			)
 		),
+		list(new /datum/eventSpawnedCritter(
+			critter_types = list(/mob/living/critter/brain_slug),
+			drop_tables = list(
+				//Todo, add special item
+				new /datum/event_item_drop_table(
+					potential_drop_items = list(/obj/item/mutation_orb/fire_orb, /obj/item/rejuvenation_feather, /obj/item/property_setter/fire_jewel)
+					)
+				)
+			)
+		),
+
 	)
 
 	admin_call(var/source)

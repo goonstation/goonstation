@@ -37,6 +37,7 @@
 		playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 30, 1, 1, 1.2)
 		holder.owner.AddComponent(/datum/component/floor_slime, "superlube", 50, 75)
 		var/datum/component/C = holder.owner.GetComponent(/datum/component/floor_slime)
+		holder.owner.visible_message("<span class='alert'>[holder.owner] begins leaving a trail of slippery slime behind itself!</span>", "<span class='notice'>You expel some slime out of your body.</span>")
 		spawn(7 SECONDS)
 			C?.RemoveComponent(/datum/component/floor_slime)
 
@@ -174,7 +175,16 @@
 			if(istype(caster, /mob/living/carbon/human))
 				var/mob/living/carbon/human/S = caster
 				S.slug = null
+				var/datum/abilityHolder/brain_slug/AH = null
 				if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/brain_slug))
+					AH = S.abilityHolder
+				else if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/composite_holder = S.abilityHolder
+					for (var/datum/holder in composite_holder.holders)
+						if (istype(holder, /datum/abilityHolder/brain_slug))
+							AH = S.holder
+							break
+				if (AH)
 					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
 					old_host_holder.removeAbility(/datum/targetable/brain_slug/exit_host)
 					old_host_holder.removeAbility(/datum/targetable/brain_slug/infest_host)
@@ -253,7 +263,7 @@
 				boutput(the_slug, "<span class='notice'>You aren't in a host!</span>")
 				return TRUE
 		else
-			boutput(holder.owner, "<span class='notice'>Something weird happened. Consider making a bug report with error code: 10.</span>")
+			boutput(holder.owner, "<span class='notice'>Something weird happened. Consider making a bug report.</span>")
 			return TRUE
 
 
@@ -295,7 +305,9 @@
 					the_slug.mind.transfer_to(the_mob)
 					the_mob.full_heal()
 					hit_twitch(the_mob)
-					return FALSE
+		else
+			boutput(M, "<span class='notice'>You arent inside something you can possess.</span>")
+			return TRUE
 
 //Checks if a thing can be infested
 //Returns false if it cant be.
@@ -318,7 +330,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		if (!mob_target.organHolder.head)
 			boutput(caster, "<span class='notice'>Try as you might, you just can't find a head to crawl into.</span>")
 			return FALSE
-		if (human_target.decomp_stage >= DECOMP_STAGE_HIGHLY_DECAYED)
+		if (human_target.decomp_stage >= DECOMP_STAGE_BLOATED)
 			boutput(caster, "<span class='notice'>That body is sadly too decomposed to use.</span>")
 			return FALSE
 
@@ -368,7 +380,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 
 /datum/targetable/brain_slug/spit_slime
 	name = "Spit slime"
-	desc = "Turn some of your host's insides into slime, locking down doors or slowing attacks. Costs stability to use."
+	desc = "Turn some of your host's insides into slime, locking down doors or debilitating attackers. Costs stability to use."
 	icon_state = "hook"
 	cooldown = 20 SECONDS
 	targeted = 1

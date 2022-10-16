@@ -1147,18 +1147,18 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "slime"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	icon_state = "ball_white"
+	icon_state = "slime_shot"
 	power = 5
 	hit_ground_chance = 0
 	ks_ratio = 1.0
-	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
+	shot_sound = 'sound/items/sponge.ogg'
 	var/stamina_cost = 60
 
 	on_hit(atom/hit, angle, var/obj/projectile/P)
 		if (ismob(hit))
 			var/mob/M = hit
 			if(hit == P.special_data["owner"]) return 1
-			M.changeStatus("slowed", 8 SECONDS)
+			M.changeStatus("slowed", 7 SECONDS)
 			if (M.reagents)
 				M.reagents.add_reagent("neurodepressant", 5)
 				M.remove_stamina(src.stamina_cost)
@@ -1167,7 +1167,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			if (!target.hardened)
 				target.slimed = TRUE
 				target.slime_gunk_health = 5
-				var/image/slime_image = image('icons/misc/frogs.dmi', "getin")
+				var/image/slime_image = image('icons/obj/decals/misc.dmi', "door_slime_[pick("1", "2")]")
 				slime_image.alpha = 255
-				target.UpdateOverlays(slime_image, "panel")
+				target.UpdateOverlays(slime_image, "slime")
 		qdel(P)

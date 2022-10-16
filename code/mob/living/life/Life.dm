@@ -595,7 +595,7 @@
 		var/emote2do = pick(src.random_emotes)
 		src.emote(emote2do)
 
-	//Hints towards a parasited host
+	//Hints towards a parasited host and takes away points on each tick
 	proc/handle_slug_process()
 		var/datum/abilityHolder/brain_slug/AH = null
 		//Check if they have slug abilities
@@ -610,6 +610,7 @@
 						break
 			//If they do, roll a chance to do some hint
 			if (AH)
+				AH.points --
 				if (AH.points > 600)
 					if (prob(2))
 						src.emote(pick("sneeze", "drool", "shiver", "twitch", "cough"))
@@ -637,9 +638,10 @@
 								src.visible_message("<span class='alert'>[src] vomits a lot of blood!</span>")
 								playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 								bleed(src, rand(5,8), 5)
+				//The body is rotting on it's feet, time to go
 				else if (AH.points <= 0)
-					random_brute_damage(src, 5)
-					src.take_oxygen_deprivation(-5)
+					random_brute_damage(src, 4)
+					src.take_oxygen_deprivation(5)
 /mob/living/carbon/human
 
 	proc/handle_pathogens()

@@ -305,7 +305,7 @@
 		user.lastattacked = src
 		if (src.slime_gunk_health <= 0)
 			src.slimed = FALSE
-			src.UpdateOverlays(null, "panel")
+			src.UpdateOverlays(null, "slime")
 		else
 			return
 
