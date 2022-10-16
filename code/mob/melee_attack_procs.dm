@@ -591,9 +591,7 @@
 
 
 
-
-
-/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1)
+/mob/proc/calculate_melee_attack(var/mob/target, var/obj/item/affecting, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, do_punch = 1, do_kick = 1)
 	var/datum/attackResults/msgs = new(src)
 	var/crit_chance = STAMINA_CRIT_CHANCE
 	var/do_armor = TRUE
@@ -643,11 +641,11 @@
 
 	msgs.played_sound = "punch"
 
-	if(!target.canmove && target.lying) //do_kick
+	if(!target.canmove && target.lying && do_kick)
 		damage += src.calculate_kick_bonus(msgs)
 		do_armor = FALSE
 		do_stam = FALSE
-	else //do_punch
+	else if(do_punch)//do_punch
 		damage += src.calculate_punch_bonus(msgs)
 
 		//adjust stamina crit chance and stamina damage based on gloves
@@ -660,7 +658,7 @@
 					crit_chance += H.gloves.bonus_crit_chance
 				if (H.gloves.stamina_dmg_mult)
 					stamina_damage_mult += H.gloves.stamina_dmg_mult
-
+	else; //no bonus
 
 	//get def_zone again?
 	def_zone = target.check_target_zone(def_zone)
@@ -686,7 +684,8 @@
 
 	if(do_stam)
 		//calculate stamina damage to deal
-		var/stam_power = STAMINA_HTH_DMG * stamina_damage_mult
+		var/stam_power = STAMINA_HTH_DMG + src.calculate_bonus_stam_damage(msgs)
+		stam_power *= stamina_damage_mult
 		//reduce stamina damage by the same proportion that base damage was reduced
 		//min cap is stam_power/3 so we still cant ignore it entirely
 		if (pre_armor_damage == 0) //mbc lazy runtime fix
@@ -749,9 +748,6 @@
 /mob/living/calculate_bonus_damage(var/datum/attackResults/msgs)
 	. = ..()
 	//i hate this
-	if (src.traitHolder.hasTrait("bigbruiser"))
-		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
-		msgs.stamina_target -= STAMINA_HTH_DMG * 0.25
 
 
 /mob/living/carbon/human/calculate_bonus_damage(var/datum/attackResults/msgs)
@@ -808,8 +804,13 @@
 	msgs.stamina_self += STAMINA_HTH_COST / 3
 	#endif
 
-
-
+///returns additive adjustment to stamina damage for unarmed attacks (applied before stamina damage multiplier)
+/mob/proc/calculate_bonus_stam_damage(datum/attackResults/msgs)
+	SHOULD_CALL_PARENT(TRUE)
+	. = 0
+	if (src.traitHolder.hasTrait("bigbruiser"))
+		msgs.stamina_self -= STAMINA_HTH_COST //Double the cost since this is stacked on top of default
+		. += STAMINA_HTH_DMG * 0.25
 
 // This is used by certain limb datums (werewolf, shambling abomination) (Convair880).
 /proc/special_attack_silicon(var/mob/target, var/mob/living/user)
