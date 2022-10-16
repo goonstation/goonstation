@@ -247,12 +247,17 @@
 	var/obj/item/record/record_inside = null
 
 	New()
-		..()
+		. = ..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		START_TRACKING
 
 	get_desc()
 		if(!src.can_play_music)
 			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
@@ -802,9 +807,17 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
 
+	New()
+		. = ..()
+		START_TRACKING
+
 	get_desc()
 		if(!src.can_play_tapes)
 			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
