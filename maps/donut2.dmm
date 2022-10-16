@@ -46460,7 +46460,8 @@
 	},
 /area/station/solar/south)
 "tNV" = (
-/obj/storage/crate/rcd/CE,
+/obj/storage/secure/closet/command/chief_engineer,
+/obj/item/mop,
 /turf/simulated/floor,
 /area/station/crew_quarters/ce)
 "tOK" = (
@@ -48125,12 +48126,11 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/restroom)
 "vlV" = (
+/obj/storage/crate/rcd/CE,
 /obj/machinery/light_switch{
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/storage/secure/closet/command/chief_engineer,
-/obj/item/mop,
 /turf/simulated/floor,
 /area/station/crew_quarters/ce)
 "vmq" = (
