@@ -101,9 +101,10 @@
 		var/image/ambient = GetOverlayImage("ambient")
 
 		src.RL_SetOpacity(0)
-		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
-			A.UpdateIcon()
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/desert)
+		src.UpdateIcon()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
+			A.UpdateIcon()
 		src.color = new_color
 		src.set_opacity(0)
 		src.levelupdate()

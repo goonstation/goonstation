@@ -76,8 +76,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -107,8 +105,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -153,8 +149,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		var/list/floors = list()
 		var/list/gems = list(/obj/item/raw_material/uqill,/obj/item/raw_material/miracle,/obj/item/raw_material/gemstone,
@@ -206,8 +200,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		var/list/floors = list()
 		for (var/turf/simulated/floor/plating/airless/asteroid/T in generated_turfs)
@@ -249,8 +241,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -280,8 +270,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -312,8 +300,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -345,8 +331,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -377,8 +361,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -409,8 +391,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -441,8 +421,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -473,8 +451,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -534,8 +510,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -565,8 +539,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -596,8 +568,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -627,8 +597,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.top_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -665,8 +633,6 @@
 	for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 		AST.quality = quality
 		AST.space_overlays()
-		AST.top_overlays()
-		AST.build_icon()
 
 	Turfspawn_Asteroid_SeedOre(generated_turfs)
 	Turfspawn_Asteroid_SeedEvents(Turfspawn_Asteroid_CheckForModifiableTurfs(generated_turfs))
@@ -942,16 +908,10 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
-			AST.top_overlays()
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
-			AST.UpdateOverlays(ore_overlay, "ast_ore")
-
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
 			AST.mining_max_health = O.mining_health
@@ -1002,16 +962,10 @@
 			AST.ore = O
 			AST.hardness += O.hardness_mod
 			AST.amount = rand(O.amount_per_tile_min,O.amount_per_tile_max)
-			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			AST.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
-			AST.top_overlays()
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[O.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
-			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-			AST.UpdateOverlays(ore_overlay, "ast_ore")
 
 			O.onGenerate(AST)
 			AST.mining_health = O.mining_health
