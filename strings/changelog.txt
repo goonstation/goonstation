@@ -1,5 +1,9 @@
 
 (t)mon oct 17 22
+(u)What/SgtManGuy
+(p)10254
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated most vending machine sprites with directionals.
 (u)tarmunora
 (p)11406
 (e)🔎⚖🔨⚙|C-Code-Quality, C-Balance, A-Player-Actions, A-Internal
