@@ -1,5 +1,31 @@
 
+(t)mon oct 17 22
+(u)Ikea
+(p)11383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The price of manufacturing RCD cartridges has been reduced
+(u)LeahTheTech
+(p)11391
+(e)🆕💡|C-Feature, A-Station-Systems
+(+)Ion storms can now cause PDA alert systems to malfunction.
+(u)What/SgtManGuy
+(p)10254
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Updated most vending machine sprites with directionals.
+(u)tarmunora
+(p)11406
+(e)🔎⚖🔨⚙|C-Code-Quality, C-Balance, A-Player-Actions, A-Internal
+(+)Hulk/etc no longer stack with bear/etc arms, bladed gloves, etc
+(+)Can no longer kick with a bear/etc arm, bladed gloves, etc
+(u)Gannets
+(p)11359
+(e)🆕🎨⚖🧛‍♂️📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
+(*)Added the Veritate PDW to nuke ops Field Medic class crates.
 (t)sun oct 16 22
+(u)Glamurio (Ryou)
+(p)11386
+(e)🗺|A-Mapping
+(+)Added three new random rooms, a 5x3 and two 3x3s.
 (u)LeahTheTech
 (p)11377
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes

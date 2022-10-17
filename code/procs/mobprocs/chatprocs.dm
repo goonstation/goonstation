@@ -691,21 +691,15 @@
 
 	var/list/recipients = list()
 
-	for (var/mob/M in range(LOOC_RANGE))
-		if (!M.client)
+	for (var/client/C in clients)
+		if (!C.mob)
 			continue
-		if (M.client.preferences && !M.client.preferences.listen_looc)
+		if (C.preferences && !C.preferences.listen_looc)
 			continue
-		recipients += M.client
-
-	for (var/client/C)
-		if (!C.mob) continue
-		var/mob/M = C.mob
-
-		if (M.client in recipients)
-			continue
-		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
-			recipients += M.client
+		if (C.holder && !C.only_local_looc && !C.player_mode) // is admin with global looc enabled and not in player mode
+			recipients += C
+		else if (IN_RANGE(C.mob, src, LOOC_RANGE)) // is in range to hear looc
+			recipients += C
 
 	var looc_style = ""
 	if (src.client.holder && !src.client.stealth)
