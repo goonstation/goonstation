@@ -70,7 +70,9 @@
 // -------------------- VR --------------------
 /obj/item/device/radio/intercom/virtual
 	desc = "Virtual radio for all your beeps and bops."
+#ifndef IN_MAP_EDITOR
 	icon = 'icons/effects/VR.dmi'
+#endif
 	protected_radio = 1
 // --------------------------------------------
 
