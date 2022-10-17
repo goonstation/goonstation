@@ -89,46 +89,12 @@
 			return
 
 		switch (signal.data["command"])
-			if ("help")
-				var/datum/signal/reply = get_free_signal()
-				reply.source = src
-				reply.data["sender"] = src.net_id
-				reply.data["address_1"] = sender
-				if (!signal.data["topic"])
-					reply.data["description"] = "Chemical Combustion Generator"
-					reply.data["topics"] = "status,engine_on,engine_off,set_fuel_inlet,set_air_inlet"
-
-				else
-					reply.data["topic"] = signal.data["topic"]
-					switch (lowertext(signal.data["topic"]))
-						if ("status")
-							reply.data["description"] = "Returns the status of the Chemical Combustion Generator. No arguments"
-
-						if ("engine_on")
-							reply.data["description"] = "Starts the Chemical Combustion Generator's engine. No arguments."
-
-						if ("engine_off")
-							reply.data["description"] = "Stops the Chemical Combustion Generator's engine. No arguments."
-
-						if ("set_fuel_inlet")
-							reply.data["description"] = "Sets the inlet of fuel into the Chemical Combustion Generator's engine. This must be a value between from 0 to 1."
-							reply.data["args"] =  "data"
-
-						if ("set_air_inlet")
-							reply.data["description"] = "Sets the inlet of air into the Chemical Combustion Generator's engine. This must be a value between from 0 to 1."
-							reply.data["args"] =  "data"
-
-						else
-							reply.data["description"] = "ERROR: UNKNOWN TOPIC"
-
-				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-				return
-
 			if ("engine_on")
 				if (src.start_engine())
 					src.post_status(sender, "command", "error", "data", "ENGINE_START_FAILED")
 					return
 
+				src.updateUsrDialog()
 				src.send_status()
 				return
 
@@ -136,6 +102,7 @@
 				src.stop_engine()
 				src.post_status(sender, "command", "status", "data", "engine=0")
 
+				src.updateUsrDialog()
 				src.send_status()
 				return
 
@@ -150,6 +117,7 @@
 					return
 
 				src.fuel_inlet = set_to
+				src.updateUsrDialog()
 				src.send_status(sender)
 
 			if ("set_air_inlet")
@@ -160,6 +128,7 @@
 					return
 
 				src.atmos_inlet = set_to
+				src.updateUsrDialog()
 				src.send_status(sender)
 
 	update_icon()
