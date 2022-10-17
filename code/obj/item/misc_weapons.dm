@@ -1719,13 +1719,24 @@ obj/item/whetstone
 
 
 // Halberd- Experimental weapon by NightmareChamillian
+#define HALB_HEAVY_DAMAGE 35
+#define HALB_MED_DAMAGE 24
+#define HALB_LIGHT_DAMAGE 15
+
+#define HALB_HEAVY_STAMDAM 40
+#define HALB_LIGHT_STAMDAM 20
+
+#define HALB_HEAVY_STAMCOST 35
+#define HALB_MED_STAMCOST 20
+#define HALB_LIGHT_STAMCOST 10
+
 /obj/item/halberd
 	name = "Halberd"
 	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
 	icon = 'icons/obj/large/64x32.dmi'
-	icon_state = "halberdnormal"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "halberdhoriz"
+	icon_state = "halberdnormal"
 
 	w_class = W_CLASS_BULKY
 	two_handed = 1
@@ -1733,10 +1744,13 @@ obj/item/whetstone
 	throwforce = 30 //yeet like spear
 	stamina_crit_chance = 5
 
+
+
 	//these combat variables change depending on intent- starts with help intent vars
-	force = 28
-	stamina_damage = 10
-	stamina_cost = 7
+	force = HALB_MED_DAMAGE
+	stamina_damage = HALB_LIGHT_STAMDAM
+	stamina_cost = HALB_LIGHT_STAMCOST
+	var/guard = null //! used to keep track of what melee properties we're using
 
 
 	hit_type = DAMAGE_CUT
@@ -1744,7 +1758,7 @@ obj/item/whetstone
 	c_flags = EQUIPPED_WHILE_HELD
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
-	var/guard = null
+
 
 	New()
 		..()
@@ -1764,9 +1778,9 @@ obj/item/whetstone
 		guard = intent
 		switch(guard)
 			if("help") //light swing with the axe
-				force = 24
-				stamina_damage = 10
-				stamina_cost = 7
+				force = HALB_MED_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
 				item_state = "halberdhoriz"
 				icon_state = "halberdnormal"
 				hit_type = DAMAGE_CUT
@@ -1775,9 +1789,9 @@ obj/item/whetstone
 				src.setItemSpecial(/datum/item_special/simple)
 				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
 			if("disarm") //thrust with the pointy end
-				force = 15
-				stamina_damage = 10
-				stamina_cost = 8
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
 				item_state = "halberdverti"
 				icon_state = "halberdnormal"
 				hit_type = DAMAGE_STAB
@@ -1787,9 +1801,9 @@ obj/item/whetstone
 				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
 
 			if("grab") //attack with the spur on the back
-				force = 10
-				stamina_damage = 40
-				stamina_cost = 20
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_MED_STAMCOST
 				item_state = "halberdhoriz"
 				icon_state = "halberdupsidown"
 				hit_type = DAMAGE_STAB
@@ -1799,9 +1813,9 @@ obj/item/whetstone
 				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
 
 			if("harm") //wide, tiring swings with the axe
-				force = 35
-				stamina_damage = 20
-				stamina_cost = 35
+				force = HALB_HEAVY_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_HEAVY_STAMCOST
 				item_state = "halberdhoriz"
 				icon_state = "halberdnormal"
 				hit_type = DAMAGE_CUT
@@ -1824,15 +1838,27 @@ obj/item/whetstone
 		stat_reset()
 
 	proc/stat_reset() //sets it to normal
-		src.force = 24
-		src.stamina_damage = 10
-		src.stamina_cost = 7
+		src.force = HALB_MED_DAMAGE
+		src.stamina_damage = HALB_LIGHT_STAMDAM
+		src.stamina_cost = HALB_LIGHT_STAMCOST
 		src.item_state = "halberd1"
 		src.hit_type = DAMAGE_CUT
 		src.click_delay = COMBAT_CLICK_DELAY * 0.75
 		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
 		src.setItemSpecial(/datum/item_special/simple)
 		src.tooltip_rebuild = TRUE
+
+#undef HALB_HEAVY_DAMAGE
+#undef HALB_MED_DAMAGE
+#undef HALB_LIGHT_DAMAGE
+
+#undef HALB_HEAVY_STAMDAM
+#undef HALB_LIGHT_STAMDAM
+
+#undef HALB_HEAVY_STAMCOST
+#undef HALB_MED_STAMCOST
+#undef HALB_LIGHT_STAMCOST
+
 /obj/item/swords/sord
 	name = "gross sord"
 	desc = "oh no"
