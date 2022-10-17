@@ -1,5 +1,9 @@
 
 (t)sun oct 16 22
+(u)Glamurio (Ryou)
+(p)11386
+(e)🗺|A-Mapping
+(+)Added three new random rooms, a 5x3 and two 3x3s.
 (u)LeahTheTech
 (p)11377
 (e)⚖🧛‍♂️|C-Balance, A-Gamemodes
