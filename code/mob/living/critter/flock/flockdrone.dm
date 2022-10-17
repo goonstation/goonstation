@@ -957,7 +957,7 @@
 			return
 		if (prob(src.attack_hit_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
-			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0)
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, can_punch = 0, can_kick = 0)
 			user.attack_effects(target, affecting)
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"
