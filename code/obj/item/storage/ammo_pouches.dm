@@ -56,6 +56,11 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
 
+	veritate
+		name = "PDW magazine pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/veritate = 5)
+
 
 	powercell_medium
 		name = "power cell pouch"
