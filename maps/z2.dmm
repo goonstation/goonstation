@@ -38257,7 +38257,6 @@
 	},
 /area/sim/racing_entry)
 "cmw" = (
-/obj/item/bsj_puzzle/stack_of_envelopes,
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim)
@@ -77994,10 +77993,15 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "wYq" = (
-/obj/retention_puzzle/fan,
 /obj/machinery/light/small/sticky/frostedred{
 	dir = 1;
 	pixel_y = 10
+	},
+/obj/decal/fakeobjects{
+	desc = "It's moving a ton of air! Those blades sure do look sharp...";
+	icon = 'icons/obj/shuttle.dmi';
+	icon_state = "sea_propulsion";
+	name = "fan"
 	},
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/dark)
