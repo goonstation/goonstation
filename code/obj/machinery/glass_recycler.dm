@@ -64,7 +64,7 @@
 		if (!istype(O, /obj/item)) // dont recycle the floor!
 			return
 
-		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 0 || !can_act(user) || !isliving(user))
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
 			return
 
 		src.attackby(O, user)
