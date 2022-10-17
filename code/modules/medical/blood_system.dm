@@ -386,7 +386,7 @@ this is already used where it needs to be used, you can probably ignore it.
 	var/mob/living/H = some_idiot
 
 	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
-	var/reagents_to_transfer = (num_amount / 20)
+	var/reagents_to_transfer = (num_amount / 5) * 2
 	var/blood_to_transfer = (num_amount - min(reagents_to_transfer, H.reagents.total_volume))
 
 	if (istype(H))
