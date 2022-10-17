@@ -693,7 +693,7 @@
 
 	var/our_location = get_turf(src)
 
-	for (var/client/C)
+	for (var/client/C in clients)
 		if (!C.mob)
 			continue
 		if (C.preferences && !C.preferences.listen_looc)
