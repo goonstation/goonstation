@@ -163,10 +163,9 @@ ABSTRACT_TYPE(/datum/ion_category)
 	var/list/atom/targets = list()
 
 	proc/valid_instance(var/atom/found)
-		var/turf/T = null
-		if (found.z != Z_LEVEL_STATION)
+		var/turf/T = get_turf(found)
+		if (T.z != Z_LEVEL_STATION)
 			return FALSE
-		T = get_turf(found)
 		if (!istype(T.loc,/area/station/))
 			return FALSE
 		return TRUE
@@ -301,3 +300,21 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/firealarm/alarm)
 		alarm.alarm()
+
+/datum/ion_category/pda_alerts
+	amount = 3
+
+	valid_instance(var/obj/item/device/pda2/pda)
+		return ..() && pda.owner
+
+	build_targets()
+		for_by_tcl(pda, /obj/item/device/pda2)
+			if (valid_instance(pda))
+				targets += pda
+
+	action(var/obj/item/device/pda2/pda)
+		for (var/datum/computer/file/pda_program/prog in pda.hd.root.contents)
+			if (istype(prog, /datum/computer/file/pda_program/emergency_alert))
+				pda.run_program(prog)
+				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
+				alert_prog.send_alert(rand(1,4), TRUE)
