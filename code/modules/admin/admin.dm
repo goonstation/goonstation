@@ -440,6 +440,7 @@ var/global/player_audio_players = TRUE // Whether Record Players and Tape Decks 
 							O.can_play_tapes = TRUE
 
 						player_audio_players = FALSE
+						message_admins("<span class='internal'>[key_name(usr)] allowed for radio music/tapes to play.</span>")
 						logTheThing(LOG_DIARY, usr, null, "allowed for radio music/tapes to play.")
 						logTheThing(LOG_ADMIN, usr, null, "allowed for radio music/tapes to play.")
 					if (TRUE)
@@ -454,6 +455,7 @@ var/global/player_audio_players = TRUE // Whether Record Players and Tape Decks 
 							O.can_play_tapes = FALSE
 
 						player_audio_players = TRUE
+						message_admins("<span class='internal'>[key_name(usr)] disallowed for radio music/tapes to play.</span>")
 						logTheThing(LOG_DIARY, usr, null, "disallowed for radio music/tapes to play.")
 						logTheThing(LOG_ADMIN, usr, null, "disallowed for radio music/tapes to play.")
 			else
