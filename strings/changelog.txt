@@ -1,5 +1,9 @@
 
 (t)mon oct 17 22
+(u)DrWolfy
+(p)11309
+(e)💅🤖|C-QoL, A-Silicons
+(+)Enables drag and drop QoL feature to glass recycler for silicon usage.
 (u)Garash
 (p)11400
 (e)🆕📦|C-Feature, A-Game-Objects
