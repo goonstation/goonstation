@@ -68,22 +68,25 @@
 
 			return round((messages.len /  max_lines) * 100)
 
+#define MODE_OFF 0
+#define MODE_RECORDING 1
+#define MODE_PLAYING 2
 
 /obj/item/device/audio_log
 	name = "audio log"
 	desc = "A fairly spartan recording device."
 	icon_state = "recorder"
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
 	var/obj/item/audio_tape/tape = null
-	var/mode = 0 //1 recording, 2 playing back
+	var/mode = MODE_OFF
 	var/max_lines = 60
 	var/text_colour = "#3FCC3F"
-	var/continuous = 1
+	var/continuous = TRUE
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
-	var/self_destruct = 0 //This message will self-destruct in five seconds...
+	var/self_destruct = FALSE
 	mats = 4
 
 	wall_mounted
@@ -111,8 +114,8 @@
 				dat += "No Tape Loaded<br>"
 
 			dat += "<table cellspacing=5><tr>"
-			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == 1 ? "Recording" : "Not Recording"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == 2 ? "Playing" : "Not Playing"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
 			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
 			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
 			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
@@ -171,7 +174,7 @@
 			src.add_dialog(usr)
 			switch(href_list["command"])
 				if ("rec")
-					src.mode = 1
+					src.mode = MODE_RECORDING
 				if ("play")
 					play()
 				if ("stop")
@@ -179,7 +182,7 @@
 					if (src.tape)
 						src.tape.log_line = 1
 				if ("clear")
-					src.mode = 0
+					src.mode = MODE_OFF
 					if (src.tape)
 						src.tape.reset()
 					//src.audiolog_messages = list()
@@ -189,7 +192,7 @@
 					continuous = !continuous
 
 				if ("eject")
-					src.mode = 0
+					src.mode = MODE_OFF
 					src.icon_state = "[initial(src.icon_state)]-empty"
 
 					src.tape.set_loc(get_turf(src))
@@ -206,7 +209,7 @@
 		return
 
 	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if ((src.mode != 1) || !src.tape)
+		if ((src.mode != MODE_RECORDING) || !src.tape)
 			return
 
 		if (speaker.mind && speaker.mind.assigned_role == "Captain")
@@ -228,15 +231,15 @@
 		var/message = (lang_id == "english" || lang_id == "") ? messages[1] : messages[2]
 		if (src.tape.add_message(speaker_name, message, continuous) == 0)
 			src.speak(null, "Memory full. Have a nice day.", TRUE)
-			src.mode = 0
+			src.mode = MODE_OFF
 			src.updateSelfDialog()
 
 		return
 
 	proc/play()
-		mode = 2
+		mode = MODE_PLAYING
 		sleep(1 SECONDS)
-		while (mode == 2 && tape)
+		while (mode == MODE_PLAYING && tape)
 			var/speak_message = tape.get_message(continuous)
 			if (!speak_message)
 				stop()
@@ -288,6 +291,10 @@
 
 		src.blowthefuckup(2)
 		return
+
+#undef MODE_OFF
+#undef MODE_RECORDING
+#undef MODE_PLAYING
 
 
 	nuke_briefing
