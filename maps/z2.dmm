@@ -37678,13 +37678,12 @@
 /turf/unsimulated/floor/wood,
 /area/sim/racing_entry)
 "ckX" = (
-/obj/machinery/door/airlock/centcom/retention/black{
-	desc = "A double black access door. It looks incredibly secure.";
-	icon_base = "fmorg";
+/turf/unsimulated/wall{
+	desc = "Looks pretty tough. I wouldn't take this door on in a fight.";
+	icon = 'icons/obj/doors/destiny.dmi';
 	icon_state = "fmorg_closed";
 	name = "double black"
 	},
-/turf/unsimulated/floor/wood/seven,
 /area/sim/gunsim)
 "ckY" = (
 /obj/decal/poster/wallsign/poster_nt,
@@ -132107,9 +132106,9 @@ aaa
 aaa
 aaa
 aaa
-owg
-owg
-owg
+aaa
+aaa
+aaa
 owg
 ssh
 ssh
