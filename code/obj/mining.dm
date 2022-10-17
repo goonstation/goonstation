@@ -2116,7 +2116,7 @@ obj/item/clothing/gloves/concussive
 	opacity = 0
 	anchored = 0
 	var/active = 0
-	var/cell = null
+	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
 
@@ -2238,6 +2238,11 @@ obj/item/clothing/gloves/concussive
 				return
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
 /datum/cargo_pad_manager

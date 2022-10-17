@@ -139,6 +139,11 @@
 		src.power_change()
 		return
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
 		return
