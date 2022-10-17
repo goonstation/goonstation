@@ -1536,6 +1536,7 @@ ABSTRACT_TYPE(/area/sim)
 	dark
 		force_fullbright = FALSE
 		icon_state = "red"
+
 /area/sim/test_area
 	name = "Toxin Test Area"
 	icon_state = "toxtest"
