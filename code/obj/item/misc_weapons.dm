@@ -1744,21 +1744,16 @@ obj/item/whetstone
 	throwforce = 30 //yeet like spear
 	stamina_crit_chance = 5
 
-
-
 	//these combat variables change depending on intent- starts with help intent vars
 	force = HALB_MED_DAMAGE
 	stamina_damage = HALB_LIGHT_STAMDAM
 	stamina_cost = HALB_LIGHT_STAMCOST
 	var/guard = null //! used to keep track of what melee properties we're using
 
-
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | TABLEPASS | USEDELAY | ONBACK
 	c_flags = EQUIPPED_WHILE_HELD
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
-
-
 
 	New()
 		..()
@@ -1768,7 +1763,6 @@ obj/item/whetstone
 		. = ..()
 		setProperty("deflection", 60)
 		setProperty("block", 40)
-
 
 	intent_switch_trigger(mob/user as mob)
 		if(guard != user.a_intent)
@@ -1824,7 +1818,6 @@ obj/item/whetstone
 				src.setItemSpecial(/datum/item_special/swipe)
 				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
 
-
 		user.update_inhands()
 		src.tooltip_rebuild = TRUE
 
@@ -1851,10 +1844,8 @@ obj/item/whetstone
 #undef HALB_HEAVY_DAMAGE
 #undef HALB_MED_DAMAGE
 #undef HALB_LIGHT_DAMAGE
-
 #undef HALB_HEAVY_STAMDAM
 #undef HALB_LIGHT_STAMDAM
-
 #undef HALB_HEAVY_STAMCOST
 #undef HALB_MED_STAMCOST
 #undef HALB_LIGHT_STAMCOST
