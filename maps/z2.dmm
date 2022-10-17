@@ -309,6 +309,13 @@
 "abp" = (
 /turf/unsimulated/wall/auto/adventure/hospital,
 /area/hospital)
+"abq" = (
+/obj/item/device/radio/intercom/virtual,
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "abr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/hospital/samostrel)
@@ -62102,12 +62109,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"dDf" = (
-/turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
-	name = "virtual lead wall"
-	},
-/area/cordon)
 "dDl" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -69431,6 +69432,16 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"gXr" = (
+/turf/unsimulated/wall{
+	desc = "It's sealed shut.";
+	dir = 4;
+	icon = 'icons/obj/doors/blastdoor.dmi';
+	icon_state = "bdoormid1";
+	name = "Security Interlock";
+	tag = "icon-bdoormid1 (EAST)"
+	},
+/area/sim/gunsim/dark)
 "gYs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-48"
@@ -71872,13 +71883,6 @@
 	},
 /turf/unsimulated/floor/carpet/red/fancy/narrow/northsouth,
 /area/centcom/offices/sovexe)
-"lOb" = (
-/obj/item/device/radio/intercom/virtual,
-/turf/unsimulated/floor/setpieces/gauntlet{
-	desc = "This place is going to be a fucking mess.";
-	name = "\proper the murderbox"
-	},
-/area/sim/gunsim)
 "lPc" = (
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/arrival{
@@ -74053,6 +74057,15 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"pHo" = (
+/obj/item/device/radio/intercom/virtual{
+	dir = 1
+	},
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim)
 "pHO" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -74405,16 +74418,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"qhd" = (
-/turf/unsimulated/wall{
-	desc = "It's sealed shut.";
-	dir = 4;
-	icon = 'icons/obj/doors/blastdoor.dmi';
-	icon_state = "bdoormid1";
-	name = "Security Interlock";
-	tag = "icon-bdoormid1 (EAST)"
-	},
-/area/sim/gunsim/dark)
 "qhR" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -77749,15 +77752,6 @@
 	opacity = 0
 	},
 /area/titlescreen)
-"wDi" = (
-/obj/item/device/radio/intercom/virtual{
-	dir = 1
-	},
-/turf/unsimulated/floor/setpieces/gauntlet{
-	desc = "This place is going to be a fucking mess.";
-	name = "\proper the murderbox"
-	},
-/area/sim/gunsim)
 "wEA" = (
 /obj/decal/fakeobjects/teleport_pad,
 /obj/machinery/light/small/floor,
@@ -132109,9 +132103,9 @@ aaa
 aaa
 aaa
 aaa
-dDf
-dDf
-dDf
+owg
+owg
+owg
 owg
 ssh
 ssh
@@ -132415,7 +132409,7 @@ owg
 ckX
 owg
 owg
-lOb
+abq
 ssh
 ssh
 ssh
@@ -133333,7 +133327,7 @@ ssh
 ssh
 ssh
 ssh
-wDi
+pHo
 owg
 aaa
 aXt
@@ -135734,7 +135728,7 @@ aaa
 aaa
 aaa
 aaa
-qhd
+gXr
 gmI
 gmI
 gmI
