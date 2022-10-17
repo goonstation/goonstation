@@ -104,7 +104,7 @@
 				var/location = special_spawn_location
 				if (!istype(special_spawn_location, /turf))
 					location = pick_landmark(special_spawn_location)
-				if (location != null)
+				if (!isnull(location))
 					M.set_loc(location)
 
 			if (ishuman(M) && src.bio_effects)
