@@ -255,6 +255,10 @@
 		var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 		var/deployed = 1
 
+		Exited(Obj, newloc)
+			. = ..()
+			if(Obj == src.cell)
+				src.cell = null
 
 		personal
 			name = "Personal Laptop"

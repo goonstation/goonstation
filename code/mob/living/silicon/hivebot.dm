@@ -1067,6 +1067,11 @@ Frequency:
 	var/has_radio = 0
 	var/has_interface = 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/shell_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))
 		if (src.build_step < 1)

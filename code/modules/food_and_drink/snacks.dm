@@ -88,6 +88,11 @@
 
 	New()
 		..()
+		if (!sliced)
+			w_class = W_CLASS_NORMAL
+		else
+			w_class = W_CLASS_TINY
+
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0, copy = FALSE)
 		if (prob(1))
 			SPAWN( rand(300, 900) )
@@ -129,6 +134,7 @@
 			P.quality = src.quality
 			P.heal_amt += round((src.heal_amt/makeslices))
 			P.topping_color = src.topping_color
+			P.w_class = W_CLASS_TINY
 			if(src.sharpened)
 				src.throw_spin = 0
 			if(topping)
@@ -2664,7 +2670,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attack_self(mob/user as mob)
 		if (unwrapped)
-			return
+			attack(user, user)
 
 		unwrapped = 1
 		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")

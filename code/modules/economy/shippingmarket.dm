@@ -49,7 +49,7 @@
 
 		add_commodity(new /datum/commodity/goldbar(src))
 
-		for (var/commodity_path in (typesof(/datum/commodity) - /datum/commodity/goldbar))
+		for (var/commodity_path in (concrete_typesof(/datum/commodity) - /datum/commodity/goldbar))
 			var/datum/commodity/C = new commodity_path(src)
 			if(C.onmarket)
 				add_commodity(C)

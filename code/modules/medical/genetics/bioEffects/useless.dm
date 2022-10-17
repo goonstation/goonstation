@@ -487,6 +487,14 @@
 			overlay_image.color = color_hex
 		..()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "color_hex")
+			overlay_image.color = color_hex
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
+
 /datum/bioEffect/fire_aura/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
 	probability = 0

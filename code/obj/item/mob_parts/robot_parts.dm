@@ -458,6 +458,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 
 		else ..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."

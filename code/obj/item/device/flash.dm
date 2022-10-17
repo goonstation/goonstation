@@ -84,6 +84,11 @@
 				else
 					. += "\nThe bulb is in terrible condition"
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			qdel(src) //cannot un-turboflash
+
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return

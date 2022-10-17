@@ -4,6 +4,7 @@
 	icon_state = "door1"
 	name = "weird imposing wall"
 	desc = "It sounds like it's hollow."
+	var/flock_id = "Solid seal aperture"
 	mat_appearances_to_ignore = list("steel","gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
@@ -28,7 +29,7 @@
 	if (!isflockmob(user))
 		return
 	var/special_desc = {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Solid Seal Aperture
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%"}
 	if(broken)
 		special_desc += {"<br><span class='bold'>FUNCTION CRITICALLY IMPAIRED, REPAIRS REQUIRED</span>

@@ -62,7 +62,9 @@
 			H.delStatus("burning")
 
 	SPAWN(0)
+		var/start_loc
 		var/mobloc = get_turf(H.loc)
+		start_loc = H.loc
 		var/obj/dummy/spell_invis/holder = new /obj/dummy/spell_invis( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
 		animation.name = "water"
@@ -89,6 +91,7 @@
 		flick("reappear",animation)
 		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
+		logTheThing(LOG_COMBAT, H, "used phaseshift to move from [log_loc(start_loc)] to [log_loc(H.loc)].")
 		H.canmove = 1
 		H.restrain_time = 0
 		qdel(animation)

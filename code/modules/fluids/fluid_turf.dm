@@ -328,6 +328,15 @@
 			SPAWN(0.3 SECONDS)//you can 'jump' over a hole by running real fast or being thrown!!
 				if (istype(AM.loc, /turf/space/fluid/warp_z5))
 					visible_message("<span class='alert'>[AM] falls down [src]!</span>")
+
+					if (istype(AM, /obj/machinery/vehicle))
+						var/obj/machinery/vehicle/V = AM
+						var/turf/target_turf = V.go_home()
+						if (V.going_home && target_turf)
+							V.going_home = 0
+							AM.set_loc(target_turf)
+							return
+
 					if (ismob(AM))
 						var/mob/M = AM
 						random_brute_damage(M, 6)

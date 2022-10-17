@@ -425,9 +425,18 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		for(var/i in 1 to DRINK_OBJ_COUNT)
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
-			var/datum/reagent/fooddrink/instance =  new choiceType
+			var/datum/reagent/fooddrink/instance = new choiceType
+			var/hidden = 0
+			var/list/reactions = chem_reactions_by_result[instance.id]
+			for (var/datum/chemical_reaction/reaction_type in reactions)
+				if (initial(reaction_type.hidden))
+					hidden++
+			//if all reactions producing this reagent are hidden, then skip it and try again
+			if (hidden == length(reactions))
+				i--
+				continue
 			names[i] = instance.name
 			ids[i] = instance.id
 		explanation_text = "Mix a "
