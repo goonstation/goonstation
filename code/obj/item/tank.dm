@@ -478,7 +478,6 @@ Contains:
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	wear_state = "mini_oxtank"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
 	health = 5
 	w_class = W_CLASS_NORMAL
