@@ -1534,6 +1534,7 @@ ABSTRACT_TYPE(/area/sim)
 	icon_state = "gunsim"
 
 	dark
+		name = "Gun Sim maintenance"
 		force_fullbright = FALSE
 		icon_state = "red"
 
