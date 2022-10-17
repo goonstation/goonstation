@@ -1,5 +1,9 @@
 
 (t)mon oct 17 22
+(u)Ikea
+(p)11383
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)The price of manufacturing RCD cartridges has been reduced
 (u)LeahTheTech
 (p)11391
 (e)🆕💡|C-Feature, A-Station-Systems
