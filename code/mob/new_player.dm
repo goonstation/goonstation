@@ -307,7 +307,7 @@ mob/new_player
 				var/location = JOB.special_spawn_location
 				if (!istype(JOB.special_spawn_location, /turf))
 					location = pick_landmark(JOB.special_spawn_location)
-				if (location != null)
+				if (!isnull(location))
 					character.set_loc(location)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
