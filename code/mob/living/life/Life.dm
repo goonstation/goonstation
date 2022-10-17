@@ -640,8 +640,8 @@
 								bleed(src, rand(5,8), 5)
 				//The body is rotting on it's feet, time to go
 				else if (AH.points <= 0)
-					random_brute_damage(src, 4)
-					src.take_oxygen_deprivation(5)
+					random_brute_damage(src, -(AH.points))
+					src.take_oxygen_deprivation(-(AH.points))
 /mob/living/carbon/human
 
 	proc/handle_pathogens()

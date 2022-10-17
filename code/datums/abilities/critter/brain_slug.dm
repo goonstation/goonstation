@@ -23,15 +23,22 @@
 		.= list()
 		.["Stability:"] = round(src.points)
 
+/datum/targetable/brain_slug
+	icon = 'icons/mob/critter_ui.dmi'
+	var/border_icon = 'icons/mob/critter_ui.dmi'
+	var/border_state = "brain_slug_frame"
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 /datum/targetable/brain_slug/slither
 	name = "Slither away"
 	desc = "Expel some mucus from your body to trip threats."
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "eat_filth"
+	icon_state = "slither"
 	cooldown = 30 SECONDS
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 	cast()
 		playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 30, 1, 1, 1.2)
 		holder.owner.AddComponent(/datum/component/floor_slime, "superlube", 50, 75)
@@ -41,21 +48,15 @@
 			C?.RemoveComponent(/datum/component/floor_slime)
 
 
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
+
 
 /datum/targetable/brain_slug/infest_host
 	name = "Infest a host"
 	desc = "Take control of a living animal host or a freshly dead human."
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "ratbite"
+	icon_state = "infest_host"
 	cooldown = 30 SECOND
 	targeted = 1
 	start_on_cooldown = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 	var/is_transfer = FALSE
 
 	cast(atom/target)
@@ -77,13 +78,6 @@
 		else
 			boutput(holder.owner, "<span class='alert'>That's not something you can infest!</span>")
 			return FALSE
-
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 
 /datum/action/bar/private/icon/brain_slug_infest
 	duration = 4 SECONDS
@@ -180,7 +174,7 @@
 					var/datum/abilityHolder/composite/composite_holder = S.abilityHolder
 					for (var/datum/holder in composite_holder.holders)
 						if (istype(holder, /datum/abilityHolder/brain_slug))
-							AH = S.holder
+							AH = holder
 							break
 				if (AH)
 					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
@@ -196,14 +190,11 @@
 		boutput(caster, "<span class='alert'>You were interrupted!</span>")
 
 /datum/targetable/brain_slug/exit_host
-	name = "Dissociate"
+	name = "Exit host"
 	desc = "Leave behind this worthless body."
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "eat_filth"
+	icon_state = "exit_host"
 	cooldown = 1 SECONDS
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 
 	cast()
 		if (istype(holder.owner, /mob/living/critter/small_animal))
@@ -264,27 +255,12 @@
 			boutput(holder.owner, "<span class='notice'>Something weird happened. Consider making a bug report.</span>")
 			return TRUE
 
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
-
 /datum/targetable/brain_slug/take_control
 	name = "Assume control"
 	desc = "Take full control of the being you infested along with healing any damage they may have."
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "eat_filth"
+	icon_state = "control_host"
 	cooldown = 10 SECONDS
 	targeted = 0
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "plague_frame"
 
 	cast()
 		var/mob/M = holder.owner
@@ -379,12 +355,10 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 /datum/targetable/brain_slug/spit_slime
 	name = "Spit slime"
 	desc = "Turn some of your host's insides into slime, locking down doors or debilitating attackers. Costs stability to use."
-	icon_state = "hook"
+	icon_state = "slimeshot"
 	cooldown = 20 SECONDS
 	targeted = 1
 	target_anything = 1
-	var/border_icon = 'icons/mob/wraith_ui.dmi'
-	var/border_state = "harbinger_frame"
 
 	cast(atom/target)
 		if (..())
@@ -399,8 +373,3 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 
 		proj.launch()
 		holder.points -= 40
-
-	onAttach(datum/abilityHolder/holder)
-		..()
-		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
