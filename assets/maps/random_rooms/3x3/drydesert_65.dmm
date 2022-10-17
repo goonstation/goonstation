@@ -1,13 +1,25 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/turf/unsimulated/mars/t1,
+/turf/simulated/floor{
+	icon = 'icons/misc/mars_outpost.dmi';
+	icon_state = "t1";
+	name = "martian floor"
+	},
 /area/dmm_suite/clear_area)
 "c" = (
 /obj/item/reagent_containers/food/drinks/bottle,
-/turf/unsimulated/mars,
+/turf/simulated/floor{
+	icon = 'icons/misc/mars_outpost.dmi';
+	icon_state = "placeholder";
+	name = "martian floor"
+	},
 /area/dmm_suite/clear_area)
 "d" = (
-/turf/unsimulated/mars,
+/turf/simulated/floor{
+	icon = 'icons/misc/mars_outpost.dmi';
+	icon_state = "placeholder";
+	name = "martian floor"
+	},
 /area/dmm_suite/clear_area)
 "t" = (
 /obj/decal/fakeobjects/skeleton,
@@ -16,11 +28,19 @@
 	pixel_x = 11;
 	pixel_y = 2
 	},
-/turf/unsimulated/mars,
+/turf/simulated/floor{
+	icon = 'icons/misc/mars_outpost.dmi';
+	icon_state = "placeholder";
+	name = "martian floor"
+	},
 /area/dmm_suite/clear_area)
 "D" = (
 /obj/item/material_piece/bone,
-/turf/unsimulated/mars/t1,
+/turf/simulated/floor{
+	icon = 'icons/misc/mars_outpost.dmi';
+	icon_state = "t1";
+	name = "martian floor"
+	},
 /area/dmm_suite/clear_area)
 
 (1,1,1) = {"
