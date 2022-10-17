@@ -386,6 +386,8 @@ this is already used where it needs to be used, you can probably ignore it.
 	var/mob/living/H = some_idiot
 
 	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+	var/reagents_to_transfer = (num_amount / 20)
+	var/blood_to_transfer = (num_amount - min(reagents_to_transfer, H.reagents.total_volume))
 
 	if (istype(H))
 		blood_color_to_pass = H.blood_color
@@ -459,8 +461,8 @@ this is already used where it needs to be used, you can probably ignore it.
 			H.change_vampire_blood(-5) //num_amount // gunna go with a set number as a test
 			//BLOOD_DEBUG("[H] bleeds -5 from vamp_blood_remaining and their vamp_blood_remaining becomes [H.get_vampire_blood()]")
 		else
-			H.blood_volume -= num_amount // time to bleed
-			//BLOOD_DEBUG("[H] bleeds [num_amount] and their blood level becomes [H.blood_volume]")
+			H.blood_volume -= blood_to_transfer // time to bleed
+			//BLOOD_DEBUG("[H] bleeds [blood_to_transfer] and their blood level becomes [H.blood_volume]")
 
 			if (H.blood_volume < 0) // you shouldn't have negative blood okay
 				H.blood_volume = 0
@@ -470,13 +472,12 @@ this is already used where it needs to be used, you can probably ignore it.
 		bloodHolder.CopyOther(some_idiot.bioHolder)
 		bloodHolder.ownerName = some_idiot.real_name
 
-		B.add_volume(blood_color_to_pass, H.blood_id, num_amount, vis_amount, blood_reagent_data=bloodHolder)
+		B.add_volume(blood_color_to_pass, H.blood_id, blood_to_transfer, vis_amount, blood_reagent_data=bloodHolder)
 		//BLOOD_DEBUG("[H] adds volume to existing blood decal")
 
 		if (B.reagents && H.reagents?.total_volume)
 			//BLOOD_DEBUG("[H] transfers reagents to blood decal [log_reagents(H)]")
-			H.reagents.trans_to(B, min((num_amount / 8), 4))
-	else
+			H.reagents.trans_to(B, (num_amount - blood_to_transfer))
 		return
 
 /* ====================================== */
