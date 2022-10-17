@@ -3788,6 +3788,7 @@
 "jK" = (
 /obj/machinery/flasher/portable,
 /obj/item/wrench,
+/obj/machinery/recharger/wall/sticky,
 /turf/simulated/floor/bot,
 /area/station/security/main)
 "jL" = (
