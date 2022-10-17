@@ -18,12 +18,12 @@
 			return
 		var/list/generated_turfs
 		var/size = 3
-
 		var/magnetic_center = mining_controls.magnetic_center
 		var/area_restriction = /area/mining/magnet
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -31,7 +31,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -54,6 +53,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		var/rand_num = rand(1,3)
 		switch(rand_num)
@@ -98,6 +98,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/ice, size, 0, area_restriction)
 
@@ -122,11 +123,12 @@
 
 		var/magnetic_center = mining_controls.magnetic_center
 		var/area_restriction = /area/mining/magnet
+		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
-		var/size = rand(mining_controls.min_magnet_spawn_size, mining_controls.max_magnet_spawn_size)
 		Turfspawn_Wreckage(magnetic_center, size, 0, area_restriction)
 
 /datum/mining_encounter/geode
@@ -139,11 +141,14 @@
 
 		var/magnetic_center = mining_controls.magnetic_center
 		var/area_restriction = /area/mining/magnet
+		var/size = 7
+
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
-		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/geode, 7, 1, area_restriction)
+		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/geode, size, 1, area_restriction)
 
 		var/quality = rand(0,101)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
@@ -191,12 +196,14 @@
 		var/magnetic_center = mining_controls.magnetic_center
 		var/area_restriction = /area/mining/magnet
 		var/quality = rand(-101,101)
+		var/size = 7
 
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
-		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/algae, 7, TRUE, area_restriction)
+		var/list/generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid/algae, size, TRUE, area_restriction)
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
@@ -234,6 +241,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -263,6 +271,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -293,6 +302,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -324,6 +334,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -354,6 +365,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -384,6 +396,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -414,6 +427,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -444,6 +458,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -473,6 +488,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -480,7 +496,6 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.build_icon()
 
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
@@ -503,6 +518,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -532,6 +548,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -561,6 +578,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
@@ -590,6 +608,7 @@
 		if (target)
 			magnetic_center = target.magnetic_center
 			area_restriction = null
+			size = min(size,min(target.width,target.height))
 
 		generated_turfs = Turfspawn_Asteroid_Round(magnetic_center, /turf/simulated/wall/auto/asteroid, size, 0, area_restriction)
 
