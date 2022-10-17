@@ -12,6 +12,11 @@
 /datum/ailment/disease/robotic_transformation/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+
+	if (!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
+
 	switch(D.stage)
 		if(2)
 			if (probmult(8))
@@ -81,6 +86,11 @@
 /datum/ailment/disease/good_robotic_transformation/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
+
+	if (!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
+		return
+
 	switch(D.stage)
 		if(2)
 			if (probmult(8))
