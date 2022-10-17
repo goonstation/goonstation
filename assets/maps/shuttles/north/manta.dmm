@@ -527,7 +527,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "EQ" = (
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/pyro/security{
+	hardened = 1
+	},
 /obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
@@ -703,7 +705,9 @@
 	},
 /area/centcom/outside)
 "PN" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
@@ -910,7 +914,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "WM" = (
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	hardened = 1
+	},
 /obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)

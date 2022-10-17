@@ -83,7 +83,7 @@ VUVUZELA
 			if(prob(5))
 				playsound(user.loc, 'sound/misc/laughter/boo.ogg', 50,0)
 			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 5)].ogg",50,0)
+				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 4)].ogg",50,0)
 
 	crushed
 		name = "used up Canned laughter"

@@ -9816,7 +9816,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "axk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
@@ -14154,7 +14154,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = -28
@@ -24445,7 +24445,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "blT" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/clothing/glasses/spectro,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -41907,7 +41907,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfi" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/cable{
 	icon_state = "1-2"
 	},

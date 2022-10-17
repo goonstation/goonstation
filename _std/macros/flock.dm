@@ -16,6 +16,9 @@
 #define FLOCK_ANNOTATION_FLOCKTRACE_CONTROL "flocktrace_face"
 #define FLOCK_ANNOTATION_HEALTH "health"
 
+// flock intangibles
+#define FLOCK_AFK_COUNTER_THRESHOLD 180 SECONDS
+
 // costs
 #define FLOCK_CONVERT_COST 20
 #define FLOCK_BARRICADE_COST 20
@@ -29,6 +32,9 @@
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
 #define FLOCK_ACHIEVEMENT_CHEAT_COMPUTE "infinite_compute"
 #define FLOCK_ACHIEVEMENT_CAGE_HUMAN "human_dissection"
+#define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
+
+#define FLOCK_BULLETS_HIT_THRESHOLD 15
 
 // replication defs
 #define FLOCK_MIN_DESIRED_POP 10

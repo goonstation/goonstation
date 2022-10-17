@@ -9027,7 +9027,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
@@ -44798,7 +44798,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "con" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
@@ -46142,7 +46142,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -48327,7 +48327,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxP" = (
@@ -56781,7 +56781,7 @@
 	},
 /area/station/medical/dome)
 "mcM" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
