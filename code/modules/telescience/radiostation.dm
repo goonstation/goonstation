@@ -259,10 +259,6 @@
 		STOP_TRACKING
 		. = ..()
 
-	get_desc()
-		if(!src.can_play_music)
-			. += " There's an \"out of order\" label on it."
-
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
 		if (!src.can_play_music)
@@ -814,6 +810,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	New()
 		. = ..()
 		START_TRACKING
+
 	get_desc()
 		if(!src.can_play_tapes)
 			. += " There's an \"out of order\" label on it."
