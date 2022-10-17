@@ -691,8 +691,6 @@
 
 	var/list/recipients = list()
 
-	var/our_location = get_turf(src)
-
 	for (var/client/C in clients)
 		if (!C.mob)
 			continue
@@ -700,7 +698,7 @@
 			continue
 		if (C.holder && !C.only_local_looc && !C.player_mode) // is admin with global looc enabled and not in player mode
 			recipients += C
-		else if (IN_RANGE(C.mob, our_location, LOOC_RANGE)) // is in range to hear looc
+		else if (IN_RANGE(C.mob, src, LOOC_RANGE)) // is in range to hear looc
 			recipients += C
 
 	var looc_style = ""
@@ -713,7 +711,7 @@
 		looc_style = "color: #a24cff;"
 
 	var/image/chat_maptext/looc_text = null
-	looc_text = make_chat_maptext(our_location, "\[LOOC: [msg]]", looc_style)
+	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
 	if(looc_text)
 		looc_text.measure(src.client)
 		for(var/image/chat_maptext/I in src.chat_text.lines)
