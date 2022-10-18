@@ -11416,7 +11416,7 @@
 	dir = 9;
 	icon_state = "line4"
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -13442,7 +13442,7 @@
 	},
 /area/station/janitor/office)
 "aLW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -28522,7 +28522,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bAG" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line3"
@@ -32830,7 +32830,7 @@
 	icon_state = "line4"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/blackwhite/corner{
 	dir = 8
 	},

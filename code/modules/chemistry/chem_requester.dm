@@ -45,6 +45,9 @@ var/list/datum/chem_request/chem_requests = list()
 				var/datum/reagent/reagent = reagents_cache[reaction.result]
 				if (reagent && !istype(reagent, /datum/reagent/fooddrink)) //all the cocktails clog the UI
 					chems[lowertext(reagent.name)] = reagent.id
+		for (var/id in basic_elements)
+			var/datum/reagent/reagent = reagents_cache[id]
+			chems[lowertext(reagent.name)] = id
 		.["chemicals"] = sortList(chems, /proc/cmp_text_asc)
 		.["max_volume"] = src.max_volume
 

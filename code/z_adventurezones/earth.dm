@@ -192,6 +192,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ines
 		ckey = "hokie"
 		name = "Office of Ines"
+	janantilles
+		ckey = "janantilles"
+		name = "Office of Fleur DeLaCreme"
 	katzen
 		ckey = "flappybat"
 		name = "Office of Katzen"

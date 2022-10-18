@@ -33,7 +33,7 @@
 	var/total_weight = 0
 	var/datum/robot_cosmetic/cosmetic_mods = null
 
-	var/list/clothes = list()
+	var/list/obj/clothes = list()
 
 	var/next_cache = 0
 	var/stat_cache = list(0, 0, "")
@@ -260,6 +260,8 @@
 			src.remove_syndicate("death")
 		src.borg_death_alert()
 		src.eject_brain(fling = TRUE) //EJECT
+		for (var/slot in src.clothes)
+			src.clothes[slot].set_loc(src.loc)
 		if (!gibbed)
 			src.visible_message("<span class='alert'><b>[src]</b> falls apart into a pile of components!</span>")
 			var/turf/T = get_turf(src)

@@ -359,6 +359,8 @@ export const ChemGroups = (props, context) => {
     groupList,
     idCardName,
     idCardInserted,
+    isRecording,
+    activeRecording,
   } = data;
 
   return (
@@ -373,6 +375,21 @@ export const ChemGroups = (props, context) => {
               onClick={() => act("card")}>
               {idCardInserted ? ("Eject ID: " + idCardName) : "Insert ID"}
             </Button>
+
+            <Button color="red"
+              className="chem-dispenser__buttons"
+              icon="circle"
+              onClick={() => act("record")}>
+              {isRecording ? "Stop" : "Record"}
+            </Button>
+            <Button color="red"
+              className="chem-dispenser__buttons"
+              icon="eraser"
+              disabled={!activeRecording}
+              onClick={() => act("clear_recording")}>
+              {"Clear"}
+            </Button>
+
           </Box>
         }>
         <Box>
@@ -381,22 +398,12 @@ export const ChemGroups = (props, context) => {
             <Box pt={1} pr={7} as="span">
               {"Group Name:"}
             </Box>
-            <Box pt={1} as="span">
-              {"Reagents:"}
-            </Box>
           </Box>
           <Input
             pl={5}
             placeholder="Name"
             value={groupName}
             onInput={(e, value) => setGroupName(value)} />
-          <Box pt={1} as="span">
-            <Input
-              pl={5}
-              placeholder="Reagents"
-              value={reagents}
-              onInput={(e, value) => setReagents(value)} />
-          </Box>
           <Box as="span">
             <Button
               icon="plus-circle"
@@ -411,8 +418,8 @@ export const ChemGroups = (props, context) => {
           </Box>
 
         </Box>
-        <Box pt={0.5}>
-          {"Reagents Format: water=1;sugar=1;"}
+        <Box pt={0.5} italic={!activeRecording} color={!activeRecording ? "grey" : "default"}>
+          {activeRecording || "Recording Empty"}
         </Box>
       </Section>
       {!!groupList.length && (

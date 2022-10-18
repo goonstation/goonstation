@@ -510,6 +510,11 @@
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
 
+		// This should be here (overriding most other things), probably? - #11215
+		// Vampires spawning in the chapel is bad. :(
+		if (istype(src.loc.loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
+
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
 			random_pod_codes -= V
@@ -704,6 +709,9 @@
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
 	if(istype(get_area(src),/area/afterlife))
 		rank = "Captain"

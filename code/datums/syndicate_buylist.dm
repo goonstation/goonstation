@@ -753,7 +753,7 @@ This is basically useless for anyone but miners.
 	item = /obj/machinery/recharge_station/syndicate
 	cost = 8
 	vr_allowed = 0
-	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Be aware that cyborgs will follow the active lawset in place on-station."
+	desc = "A modified standard-issue cyborg recharging station that will automatically convert any human placed inside into a cyborg. Cyborgs created this way will follow a syndicate lawset making them loyal to you."
 	job = list("Roboticist")
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
@@ -966,6 +966,13 @@ This is basically useless for anyone but miners.
 	desc = "A sneaky robot armed with a camera disguised as a hat, used to spy on people. Comes with it's own remote controlling glasses. Can lift small items and has a disabling flash."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+/datum/syndicate_buylist/traitor/rose
+	name = "Poison rose"
+	item = /obj/item/plant/flower/rose/poisoned
+	cost = 4
+	desc = "A regular looking rose hiding a poison capable of muting and briefly incapacitating anyone who smells it."
+	job = list("Mime")
 
 /datum/syndicate_buylist/traitor/chicken_grenade
 	name = "Chicken Grenade"

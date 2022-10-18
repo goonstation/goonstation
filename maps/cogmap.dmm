@@ -9027,7 +9027,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
@@ -42243,7 +42243,10 @@
 	},
 /area/station/quartermaster/refinery)
 "chK" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "chL" = (
@@ -44795,7 +44798,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "con" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
@@ -46139,7 +46142,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -48324,7 +48327,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxP" = (
@@ -56682,7 +56685,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -56778,7 +56781,7 @@
 	},
 /area/station/medical/dome)
 "mcM" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -61234,9 +61237,6 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -61908,7 +61908,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)

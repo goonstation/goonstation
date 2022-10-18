@@ -123,6 +123,11 @@
 				nearest_tower = tower
 		return nearest_tower
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 
 /obj/item/machinery/phone/cellphone/bananaphone
 	name = "Banana Phone"
