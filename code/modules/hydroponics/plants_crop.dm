@@ -259,8 +259,16 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		..()
 		var/datum/plantgenes/DNA = S.plantgenes
 		if (!DNA) return
-		if (reagent == "radium")
-			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/glowstick)
+		switch (reagent)
+			if ("radium")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/glowstick)
+			if ("paper")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/paper)
+			if ("wolfsbane")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/dog)
+			if ("spaceglue")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/rubber)
+
 
 /datum/plant/crop/coffee
 	name = "Coffee"

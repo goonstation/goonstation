@@ -251,6 +251,11 @@
 
 		return
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/machinery/sauna_stove
 	anchored = 0
 	density = 1
@@ -453,3 +458,8 @@
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null

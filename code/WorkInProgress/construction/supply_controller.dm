@@ -500,8 +500,8 @@
 /obj/supply_pad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
-	name = "supply pad"
-	desc = "A pad used to teleport goods between Central Command and a survey outpost. Requires a telecrystal to function."
+	name = "supply telepad"
+	desc = "It's a Nanotrasen 'Waterloo 1.0' cargo teleportation pad used to teleport goods instantly between distant locations. Requires a telecrystal to function."
 	density = 0
 	anchored = 1
 	opacity = 0

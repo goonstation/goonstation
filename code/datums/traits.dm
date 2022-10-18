@@ -895,14 +895,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 	points = 1
 
 	onLife(var/mob/owner, var/mult)
-		if(!owner.stat && can_act(owner) && probmult(9))
-			if(!owner.equipped())
-				for(var/obj/item/I in view(1, owner))
-					if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
-						I.Attackhand(owner)
-						if(prob(12))
-							owner.emote(pick("grin", "smirk", "chuckle", "smug"))
-						break
+		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
+			for(var/obj/item/I in view(1, owner))
+				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
+					I.Attackhand(owner)
+					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
+					break
 
 /datum/trait/clutz
 	name = "Clutz"

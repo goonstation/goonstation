@@ -408,7 +408,8 @@ var/global
 
 	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
 	list/total_chem_reactions = list()
-	list/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
@@ -441,6 +442,7 @@ var/global
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
+	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")

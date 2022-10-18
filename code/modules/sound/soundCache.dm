@@ -763,6 +763,7 @@ var/global/list/soundCache = list(
  	"sound/misc/automaton_ratchet.ogg" = 'sound/misc/automaton_ratchet.ogg',\
  	"sound/misc/automaton_scratch.ogg" = 'sound/misc/automaton_scratch.ogg',\
  	"sound/misc/automaton_tickhum.ogg" = 'sound/misc/automaton_tickhum.ogg',\
+ 	"sound/misc/beepbeep.ogg" = 'sound/misc/beepbeep.ogg',\
  	"sound/misc/belt_click.ogg" = 'sound/misc/belt_click.ogg',\
  	"sound/misc/blowout.ogg" = 'sound/misc/blowout.ogg',\
  	"sound/misc/blowout_short.ogg" = 'sound/misc/blowout_short.ogg',\

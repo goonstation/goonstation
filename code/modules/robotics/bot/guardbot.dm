@@ -1929,6 +1929,11 @@
 
 		return 0
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
 	duration = 30 // zippy zipcuffs
@@ -4314,6 +4319,11 @@
 		else
 			spawn(0)
 				..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.created_cell)
+			src.created_cell = null
 
 
 //The Docking Station.  Recharge here!

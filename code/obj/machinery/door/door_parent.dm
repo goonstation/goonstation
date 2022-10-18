@@ -120,10 +120,15 @@
 		if(P.proj_data.window_pass)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
-		if (ismob(mover) && mover:pulling && src.bumpopen(mover))
-			// If they're pulling something and the door would open anyway,
-			// just let the door open instead.
-			return 0
+		if (ismob(mover))
+			var/mob/M = mover
+			if (M.pulling && src.bumpopen(M))
+				// If they're pulling something and the door would open anyway,
+				// just let the door open instead.
+				return 0
+			for (var/obj/item/grab/G in M.equipped_list(check_for_magtractor = 0))
+				if (G.state >= GRAB_STRONG)
+					return 0
 		animate_door_squeeze(mover)
 		return 1 // they can pass through a closed door
 
