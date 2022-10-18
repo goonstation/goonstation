@@ -1,5 +1,9 @@
 
 (t)tue oct 18 22
+(u)DrWolfy
+(p)11433
+(e)🤖|A-Silicons
+(+)Adds a hand labeler to chemistry cyborgs.
 (u)LeahTheTech
 (p)11418
 (e)🆕📦|C-Feature, A-Game-Objects
