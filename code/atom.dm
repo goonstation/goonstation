@@ -30,14 +30,6 @@
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
-	/// Gets the atoms name with all the ugly prefixes things remove
-	proc/clean_name()
-		return strip_special(name)
-
-	/// clean_name(), but encoded too since everything ever uses HTML in the game.
-	proc/safe_name()
-		return html_encode(strip_special(name))
-
 	proc/RawClick(location,control,params)
 		return
 

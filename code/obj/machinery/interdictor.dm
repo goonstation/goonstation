@@ -116,6 +116,11 @@
 		else
 			..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.intcap)
+			src.intcap = null
+
 
 /obj/machinery/interdictor/update_icon()
 	var/ratio = max(0, src.intcap.charge / src.intcap.maxcharge)
