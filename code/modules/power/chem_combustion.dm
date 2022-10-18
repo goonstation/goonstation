@@ -17,9 +17,10 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
 	var/active = FALSE
+	var/packet_control = TRUE
 
 	// 0 - 1
-	var/fuel_inlet = 0.04
+	var/fuel_inlet = 0.04 // these are just defaults, pretty average mix
 	var/atmos_inlet = 0.56
 
 	var/output_multiplier = 1 // for bigger generators?
@@ -30,27 +31,27 @@
 	var/last_oxygen = 0
 	var/last_fuel = 0
 
-	var/frequency = FREQ_GENERATOR
+	var/frequency = FREQ_POWER_SYSTEMS
 	var/net_id = null
 	var/device = "COMBUST_GEN"
 
 	// reagents
 	var/valid_fuels = list(
-		"dbreath" = 60000,
-		"kerosene" = 45000,
-		"firedust" = 30000,
-		"phlogiston" = 25000,
-		"napalm_goo" = 20000,
-		"diethylamine" = 18000,
-		"acetone" = 14000,
-		"ethanol" = 12000,
-		"oil" = 10000,
-		"fuel" = 8000,
-		"pyrosium" = 7000,
-		"hydrogen" = 6500,
-		"plasma" = 6000,
-		"phosphorus" = 5000,
-		"magnesium" = 4000
+		"dbreath" = 60,
+		"kerosene" = 45,
+		"firedust" = 30,
+		"phlogiston" = 25,
+		"napalm_goo" = 20,
+		"diethylamine" = 18,
+		"acetone" = 14,
+		"ethanol" = 12,
+		"oil" = 10,
+		"fuel" = 8,
+		"pyrosium" = 7,
+		"hydrogen" = 6,
+		"plasma" = 6,
+		"phosphorus" = 5,
+		"magnesium" = 5
 	) // wattage
 
 	// bit wierd but a bunch of type checks feels bad
@@ -73,63 +74,82 @@
 		if(!src.net_id)
 			src.net_id = generate_net_id(src)
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
+		src.AddComponent(/datum/component/packet_connected/radio, \
+			null,\
+			src.frequency, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			null, \
+			FALSE \
+		)
 
 	receive_signal(var/datum/signal/signal, receive_method, receive_param, connection_id)
-		if(!signal || !src.net_id || signal.encryption)
+		if (!src.packet_control) // we are not accepting any packets
+			return
+
+		if (!signal || !src.net_id || signal.encryption)
 			return
 
 		var/sender = signal.data["sender"] // what we send responses to
 
-		if (signal.data["address_1"] != src.net_id)
-			if (signal.data["address_1"] == "ping")
-				src.post_status(sender, "command", "ping_reply", "netid", src.net_id, "device", src.device)
-				return
+		if (signal.data["address_1"] == "ping")
+			src.post_status(sender, "command", "ping_reply", "netid", src.net_id, "device", src.device)
+			return
 
+		if (signal.data["address_1"] != src.net_id)
 			return
 
 		switch (signal.data["command"])
-			if ("engine_on")
-				if (src.start_engine())
-					src.post_status(sender, "command", "error", "data", "ENGINE_START_FAILED")
-					return
-
-				src.updateUsrDialog()
-				src.send_status()
-				return
-
-			if ("engine_off")
-				src.stop_engine()
-				src.post_status(sender, "command", "status", "data", "engine=0")
-
-				src.updateUsrDialog()
-				src.send_status()
-				return
-
 			if ("status")
 				src.send_status(sender)
 
-			if ("set_fuel_inlet")
-				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
-
-				if (isnull(set_to))
-					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
+			if ("set_field")
+				var/field = signal.data["field"]
+				var/data = signal.data["data"]
+				if (!field || !data)
 					return
 
-				src.fuel_inlet = set_to
-				src.updateUsrDialog()
-				src.send_status(sender)
+				switch (field)
+					if ("active")
+						data = text2num_safe(data)
+						if (data)
+							if (src.start_engine(FALSE))
+								src.post_status(sender, "command", "error", "data", "ENGINE_START_FAILED", multicast = 1)
+								return
 
-			if ("set_air_inlet")
-				var/set_to = clamp(text2num_safe(signal.data["data"]), INLET_MIN, INLET_MAX)
+							src.send_status(sender)
+							src.updateIntDialog()
 
-				if (isnull(set_to))
-					src.post_status(signal.data["sender"], "command", "error", "data", "INVALID_FUEL_INLET")
-					return
+						else
+							src.stop_engine(FALSE)
+							src.send_status(sender)
+							src.updateIntDialog()
 
-				src.atmos_inlet = set_to
-				src.updateUsrDialog()
-				src.send_status(sender)
+					if ("air_inlet")
+						data = clamp(text2num_safe(data), 0, 100)
+						if (isnull(data))
+							return
+
+						if (data) data /= 100
+
+						atmos_inlet = data
+						src.send_status(sender)
+						src.updateIntDialog()
+
+					if ("fuel_inlet")
+						data = clamp(text2num_safe(data), 0, 100)
+						if (isnull(data))
+							return
+
+						if (data) data /= 100
+
+						fuel_inlet = data
+						src.send_status(sender)
+						src.updateIntDialog()
+
+					else
+						src.post_status(sender, "command", "error", "data", "INVALID_FIELD", multicast = 1)
 
 	update_icon()
 		if (src.active)
@@ -174,7 +194,8 @@
 		Floor Bolts: [src.anchored ? "Anchored" : "Unanchored"] <BR>
 		Power Output: [src.active && src.last_output ? src.last_output : 0]W<BR><BR>
 		<b>Controls:</b><BR>
-		<A href='?src=\ref[src];engine=1'>Engine: [active ? "Stop" : "Start"]</A><BR>
+		<A href='?src=\ref[src];engine=1'>Engine: [src.active ? "Stop" : "Start"]</A><BR>
+		<A href='?src=\ref[src];packet=1'>Wireless Control: [src.packet_control ? "Disable" : "Enable"]</A><BR>
 		<A href='?src=\ref[src];fuel=1'>[src.fuel_tank ? "Eject [src.fuel_tank.name]" : "Connect Fuel Tank"]</A><BR>
 		<A href='?src=\ref[src];inlet=1'>[src.inlet_tank ? "Eject [src.inlet_tank.name]" : "Connect Gas Tank"]</A><BR><BR>
 		<b>Mix:</b><BR>
@@ -209,6 +230,15 @@
 				src.stop_engine()
 				src.visible_message("<span class='notice'>[usr] stops the [src].</span>")
 
+		if (href_list["packet"])
+			if (!src.packet_control)
+				src.packet_control = 1
+				boutput(usr, "<span class='notice'>You enable wireless control of the [src] by connecting the radio module.</span>")
+
+			else
+				src.packet_control = 0
+				boutput(usr, "<span class='notice'>You disable wireless control of the [src] by disconnecting the radio module.</span>")
+
 		else if (href_list["fuel"])
 			if (src.fuel_tank)
 				src.visible_message("<span class='notice'>[usr] removes [src.fuel_tank] from the [src].</span>")
@@ -227,6 +257,7 @@
 					src.fuel_tank = I
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.send_status()
 
 		else if (href_list["inlet"])
 			if (src.inlet_tank)
@@ -246,6 +277,7 @@
 					src.inlet_tank = I
 					src.UpdateIcon()
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.send_status()
 
 		// Add checks after input
 		else if (href_list["fuel_inlet"])
@@ -255,6 +287,7 @@
 
 			var/change_to = src.fuel_inlet + change_by
 			src.fuel_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
+			src.send_status()
 
 		else if (href_list["air_inlet"])
 			var/change_by = text2num_safe(href_list["air_inlet"])
@@ -263,9 +296,9 @@
 
 			var/change_to = src.atmos_inlet + change_by
 			src.atmos_inlet = clamp(change_to, INLET_MIN, INLET_MAX)
+			src.send_status()
 
-		src.send_status()
-		src.updateUsrDialog()
+		src.updateIntDialog()
 		return
 
 
@@ -289,6 +322,8 @@
 			src.UpdateIcon()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			src.send_status()
+			src.updateIntDialog()
+			return
 
 
 		// fuel tank
@@ -308,6 +343,8 @@
 			src.UpdateIcon()
 			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			src.send_status()
+			src.updateIntDialog()
+			return
 
 		else if (iswrenchingtool(W))
 			if (src.anchored)
@@ -319,12 +356,15 @@
 
 				src.anchored = FALSE
 				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				src.updateIntDialog()
 				return
 
 			src.anchored = TRUE
 			src.visible_message("<span class='notice'>[user] secures the [src]'s bolts into the floor.</span>")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			src.send_status()
+			src.updateIntDialog()
+			return
 
 		else if (ispulsingtool(W))
 			if (!src.active)
@@ -334,14 +374,14 @@
 			boutput(user, {"
 			<hr>
 			<span class='notice'><b>You take readings from the [src]'s engine control system:</b></span><br><br>
-			<span class='notice'>Stoichiometric: [src.last_mix]</span><br>
+			<span class='notice'>Mix: [src.last_mix]</span><br>
 			<span class='notice'>Inlet Flow: [src.last_inlet * 100]%</span><br>
 			<span class='notice'>Oxygen Purity: [src.last_oxygen * 100]%</span><br>
-			<span class='notice'>Fuel Quality: [src.last_fuel]W</span>
+			<span class='notice'>Fuel Rating: [src.last_fuel]</span>
 			<hr>
 			"})
+			return
 
-		src.updateUsrDialog()
 		return
 
 	process(var/mult)
@@ -381,7 +421,7 @@
 		src.last_inlet = (src.fuel_inlet + src.atmos_inlet) / 2
 		var/oxygen_multiplier = clamp(src.last_oxygen * 5, 0, 3)
 
-		src.last_output = src.last_fuel * (src.last_mix * 2) * src.last_inlet * oxygen_multiplier * src.output_multiplier * mult
+		src.last_output = (src.last_fuel * (src.last_mix * 2) * src.last_inlet * oxygen_multiplier * src.output_multiplier * mult) KILO WATTS
 		var/datum/powernet/P = C.get_powernet()
 		P.newavail += src.last_output
 
@@ -397,23 +437,29 @@
 		else if (istype(T))
 			T.remove_air(ATMOS_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * mult)
 
-		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult) // TODO: adjustable fuel/air ratio
+		src.fuel_tank.reagents.remove_any(FUEL_DRAIN_RATE * (src.last_mix * 2) * src.last_inlet * src.output_multiplier * mult)
 
 		src.UpdateIcon()
-		src.updateDialog()
+		src.updateIntDialog()
 		src.send_status()
 
-	proc/send_status(var/target_id = null)
+	proc/updateIntDialog() // only update remotely when generator is active
+		if (active && src.packet_control)
+			src.updateUsrDialog()
+		else
+			src.updateDialog()
+
+	proc/send_status(var/target_id = null) // should be called every time something happens that could change the engines behavior, so clients are in sync
 		if (!src.active)
-			src.post_status(target_id, "command", "status", "data", "anchored=[src.anchored]&engine=0&fuel=[src.fuel_tank ? src.get_fuel_power(src.fuel_tank.reagents) : 0]&oxygen=[src.check_available_oxygen()]&fuel_inlet=[fuel_inlet]&air_inlet=[atmos_inlet]", multicast = 1)
+			src.post_status(target_id, "command", "status", "data", "anchored=[src.anchored]&fuel_rating=[src.get_fuel_power(src.fuel_tank?.reagents)]&oxygen=[src.check_available_oxygen() * 100]%", "vars", "active=0&fuel_inlet=[fuel_inlet * 100]%&air_inlet=[atmos_inlet * 100]%", "device", src.device, multicast = 1)
 			return
 
 		else
-			src.post_status(target_id, "command", "status", "data", "anchored=1&engine=1&fuel=[src.last_fuel]&oxygen=[src.last_oxygen]&fuel_inlet=[fuel_inlet]&air_inlet=[atmos_inlet]&power=[src.last_output]&inlet=[src.last_inlet / 2]&mix=[src.last_mix]", multicast = 1)
+			src.post_status(target_id, "command", "status", "data", "anchored=[src.anchored]&fuel_rating=[src.last_fuel]&oxygen=[src.last_oxygen * 100]%&power=[src.last_output] W&inlet=[(src.last_inlet / 2) * 100]%&mix=[src.last_mix]", "vars", "active=1&fuel_inlet=[fuel_inlet * 100]%&air_inlet=[atmos_inlet * 100]%", "device", src.device, multicast = 1)
 			return
 
-	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3, var/multicast)
-		if (!target_id && !multicast)
+	proc/post_status(var/target_id, var/key, var/value, var/key2, var/value2, var/key3, var/value3, var/key4, var/value4, var/multicast)
+		if ((!target_id && !multicast) || !src.packet_control)
 			return
 
 		var/datum/signal/signal = get_free_signal()
@@ -424,11 +470,13 @@
 		if (target_id)
 			signal.data["address_1"] = target_id
 		if (multicast)
-			signal.data["address_tag"] = device
+			signal.data["address_tag"] = ADDRESS_TAG_POWER
 		if (key2)
 			signal.data[key2] = value2
 		if (key3)
 			signal.data[key3] = value3
+		if (key4)
+			signal.data[key4] = value4
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
@@ -448,25 +496,29 @@
 
 		return average / R.total_volume
 
-	proc/start_engine()
+	proc/start_engine(var/status)
 		if (!src.active)
 			if (!src.ready_to_start())
 				return TRUE
 
 			src.active = TRUE
 			src.UpdateIcon()
-			src.updateDialog()
+			src.updateIntDialog()
+			if (status)
+				src.send_status()
 
 			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
 				playsound(src.loc, 'sound/machines/tractorrev.ogg', 40, pitch=2)
 
 			return FALSE
 
-	proc/stop_engine()
+	proc/stop_engine(var/status = TRUE)
 		if (src.active)
 			src.active = FALSE
 			src.UpdateIcon()
-			src.updateDialog()
+			src.updateIntDialog()
+			if (status)
+				src.send_status()
 
 			if (!ON_COOLDOWN(src, "tractor", 2 SECOND))
 				playsound(src.loc, 'sound/machines/tractorrev.ogg', 40, pitch=2)
@@ -531,6 +583,7 @@
 
 		src.fuel_tank = null
 		src.UpdateIcon()
+		src.send_status()
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 
@@ -545,6 +598,7 @@
 		src.inlet_tank = null
 
 		src.UpdateIcon()
+		src.send_status()
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 #undef FUEL_DRAIN_RATE

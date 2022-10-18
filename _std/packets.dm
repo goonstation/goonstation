@@ -73,4 +73,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_COMM_DISH 0000 // unused for now, supposed to be for communication across comm dishes
 #define FREQ_AIR_ALARM_CONTROL 1439
 #define FREQ_TRACKING_IMPLANT 1451
-#define FREQ_GENERATOR 1473
+#define FREQ_POWER_SYSTEMS 1473 // for services that interface with power machinery
+
+// Address Tags
+#define ADDRESS_TAG_POWER "POWER_CONTROL" // for syncing variables and data with power_checker

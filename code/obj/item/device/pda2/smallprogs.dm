@@ -18,6 +18,7 @@
 //Ticket writer
 //Cargo request
 //Station Namer
+//Generator Controller
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -1327,3 +1328,156 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
 		return
+
+// utility for controlling power machinery
+/datum/computer/file/pda_program/power_controller
+	name = "Power Controller v1.0" // you should totally increment this if you make changes
+	size = 4
+	var/list/generator_statuses = list()
+	var/list/generator_messages = list()
+	var/list/cooldowns = list()
+
+	var/freq = FREQ_POWER_SYSTEMS
+
+	on_activated(obj/item/device/pda2/pda)
+		src.master.AddComponent(/datum/component/packet_connected/radio, \
+			"generator",\
+			src.freq, \
+			src.master.net_id, \
+			null, \
+			FALSE, \
+			ADDRESS_TAG_POWER, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		src.get_generators()
+
+	on_deactivated(obj/item/device/pda2/pda)
+		src.generator_statuses.Cut()
+		src.generator_messages.Cut()
+		qdel(get_radio_connection_by_id(pda, null))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>EngineMaster: Lite</h4>"
+		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan</a>"
+		dat += "<hr>"
+		for (var/gen in src.generator_statuses)
+			var/list/data = params2list(src.generator_statuses[gen]["data"])
+			var/list/variables = params2list(src.generator_statuses[gen]["vars"])
+			var/device = src.generator_statuses[gen]["device"]
+
+			dat += "<b>[strip_html(gen)]\> [strip_html(device)]</b><ul>"
+			dat += "<b>Data:</b><br>"
+			for (var/field in data)
+				dat += "[strip_html(field)]: [strip_html(data[field])]<br>"
+
+			dat += "<br>"
+			dat += "<b>Variables:</b><br>"
+			// html injection possible?
+			for (var/field in variables)
+				dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];edit_field=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+
+			dat += "</ul>"
+			if (gen in src.generator_messages)
+				dat += "<b>Last Message:</b> [src.generator_messages[gen]]"
+
+			dat += "<hr>"
+
+		return dat
+
+	Topic(href, href_list)
+		if (..())
+			return
+
+		if (href_list["scan"])
+			if (ON_COOLDOWN(src, "scan", 1 SECOND))
+				return
+
+			src.get_generators()
+
+		else if (href_list["edit_field"])
+			if (!href_list["netid"])
+				return
+
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src.master
+			signal.data["address_1"] = href_list["netid"]
+			signal.data["sender"] = src.master.net_id
+			signal.data["command"] = "set_field"
+			signal.data["field"] = href_list["edit_field"]
+
+			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Edit") as text)
+
+			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
+
+		src.master.add_fingerprint(usr)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!signal || !src.master.net_id || signal.encryption)
+			return
+
+		var/sender = signal.data["sender"]
+		if (!sender)
+			return
+
+		if (signal.data["command"] == "ping_reply")
+			src.get_generator_status(sender)
+			return
+
+		if (!signal.data["address_tag"] || signal.data["address_tag"] != ADDRESS_TAG_POWER) // we can assume we are not talking to a generator
+			return
+
+		switch (signal.data["command"])
+			if ("status")
+				if (!signal.data["data"])
+					return
+
+				if (!(sender in src.generator_statuses)) // A new friend!
+					src.generator_statuses.Add(sender)
+
+				src.generator_statuses[sender] = signal.data // this packet should contain all the data we need
+				src.master.updateSelfDialog()
+				return
+
+			if ("error")
+				if (!(sender in src.generator_statuses))
+					src.get_generator_status()
+					return
+
+				if (!signal.data["data"])
+					return
+
+				if (!(sender in src.generator_messages))
+					src.generator_messages.Add(sender)
+
+				src.generator_messages[sender] = signal.data["data"]
+				src.master.updateSelfDialog()
+				return
+
+	proc/get_generator_status(var/target_id)
+		if (!target_id)
+			return
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = target_id
+		signal.data["sender"] = src.master.net_id
+		signal.data["command"] = "status"
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
+
+	proc/get_generators() // ping all devices
+		src.generator_statuses.Cut()
+		src.generator_messages.Cut()
+
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src.master
+		signal.data["address_1"] = "ping"
+		signal.data["sender"] = src.master.net_id
+
+		SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
