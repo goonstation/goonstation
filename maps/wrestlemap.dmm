@@ -6138,7 +6138,7 @@
 /turf/simulated/floor/specialroom/gym,
 /area/station/medical/dome)
 "cAn" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe{
 	icon_state = "bot2";
 	tag = ""
@@ -16146,7 +16146,7 @@
 /turf/space,
 /area/space)
 "gIB" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/carpet/green/standard/edge/west,
 /area/station/crew_quarters/bar)
 "gIE" = (
@@ -23552,7 +23552,10 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "jMP" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "jMT" = (
@@ -29452,7 +29455,7 @@
 	name = "Ticket Office"
 	})
 "mrP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -41514,7 +41517,7 @@
 	})
 "rBD" = (
 /obj/disposalpipe/segment/mail/horizontal,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/incandescent/cool/very{
 	dir = 8;
 	pixel_x = -10

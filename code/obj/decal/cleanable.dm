@@ -759,10 +759,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	var/artist = null//the key of the one who wrote it
 	real_name = "writing"
 
-	New()
-		. = ..()
-		src.create_reagents(PEN_REAGENT_CAPACITY)
-
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
 		if (src.reagents.total_volume)

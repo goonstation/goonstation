@@ -3437,7 +3437,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ahA" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
 /turf/simulated/floor/white,
@@ -4348,7 +4348,7 @@
 /area/station/bridge)
 "ajz" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -9926,7 +9926,7 @@
 "awC" = (
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -12841,7 +12841,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "aDP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -14411,7 +14411,7 @@
 /area/station/crew_quarters/bar)
 "aHL" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -16657,7 +16657,7 @@
 /area/station/crew_quarters/cafeteria)
 "aNB" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/cafeteria)
@@ -17320,7 +17320,7 @@
 	amount = 50
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/storage/primary)
@@ -17561,7 +17561,7 @@
 /obj/item/crowbar,
 /obj/machinery/light,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/device/flash,
 /turf/simulated/floor/red/side{
@@ -18208,7 +18208,7 @@
 /area/station/hallway/primary/central)
 "aQW" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
@@ -18444,7 +18444,7 @@
 /area/station/quartermaster/office)
 "aRA" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -19348,7 +19348,7 @@
 /area/station/quartermaster/storage)
 "aTH" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/machinery/light_switch{
 	pixel_x = 25
@@ -20489,7 +20489,7 @@
 	d2 = 8
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lobby)
@@ -20553,7 +20553,7 @@
 /area/station/science/lab)
 "aWi" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -22094,7 +22094,7 @@
 /area/station/hydroponics/bay)
 "aZF" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
@@ -23331,7 +23331,7 @@
 "bcq" = (
 /obj/stool,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/chem_grenade/cleaner,
 /obj/item/chem_grenade/cleaner,
@@ -23796,7 +23796,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "bdr" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -24507,7 +24507,7 @@
 	pixel_y = 10
 	},
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/extinguisher,
 /turf/simulated/floor/white,
@@ -25529,7 +25529,7 @@
 /area/station/crew_quarters/fitness)
 "bhp" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -25964,7 +25964,7 @@
 /area/station/hallway/primary/south)
 "biD" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
@@ -27841,7 +27841,7 @@
 /area/station/crew_quarters/locker)
 "bmN" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/locker)

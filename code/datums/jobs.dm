@@ -13,6 +13,7 @@
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
+	var/mentor_only = 0
 	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
@@ -100,10 +101,11 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
+				var/location = special_spawn_location
 				if (!istype(special_spawn_location, /turf))
-					special_spawn_location = pick_landmark(special_spawn_location)
-				if (special_spawn_location != null)
-					M.set_loc(special_spawn_location)
+					location = pick_landmark(special_spawn_location)
+				if (!isnull(location))
+					M.set_loc(location)
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -2125,7 +2127,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.bioHolder.AddEffect("hell_fire", magical=1)
 
 /datum/job/special/halloween/superhero
-	name = "Discount Superhero"
+	name = "Discount Vigilante Superhero"
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
@@ -2180,7 +2182,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	rounds_needed_to_play = 50
+	mentor_only = TRUE
 	allow_traitors = 0
 	slot_ears = list()
 	slot_card = null
@@ -2188,8 +2190,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
-	rounds_needed_to_play = 0
-	limit = 1
+	mentor_only = FALSE
+	limit = 2
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2205,7 +2207,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		C.flags = null
 
 /datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
@@ -2215,7 +2218,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/spider/nice)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
+		C.flags = null
 
 /datum/job/special/halloween/critter/crow
 	name = "Crow"
@@ -2225,7 +2229,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/bird/crow)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
+		C.flags = null
 
 // end halloween jobs
 #endif
@@ -2344,16 +2349,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
 	add_to_manifest = FALSE
+	special_spawn_location = LANDMARK_SYNDICATE
 
 	New()
 		..()
 		src.access = syndicate_spec_ops_access()
-
-#ifdef MAP_OVERRIDE_OSHAN
-	special_spawn_location = null
-#else
-	special_spawn_location = LANDMARK_SYNDICATE
-#endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()

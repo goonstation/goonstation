@@ -1099,6 +1099,7 @@
 // flock windows
 
 /obj/window/auto/feather
+	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 
 /obj/window/auto/feather/New()
@@ -1111,7 +1112,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -1135,6 +1136,7 @@
 		return isfeathertile(src.loc) && (F.floorrunning || (F.can_floorrun && F.resources >= 1)) && (F.is_npc || (F.client && F.client.check_key(KEY_RUN)))
 
 /obj/window/feather
+	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
 	default_material = "gnesisglass"
@@ -1157,7 +1159,7 @@
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Fibrewoven Window
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 

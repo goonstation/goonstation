@@ -20,6 +20,10 @@ datum/shuttle_controller
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall()
+		if (emergency_shuttle.disabled == SHUTTLE_CALL_FULLY_DISABLED)
+			message_admins("The shuttle would have been called now, but it has been fully disabled!")
+			return FALSE
+
 		if (!online || direction != 1)
 			playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
 
@@ -31,6 +35,8 @@ datum/shuttle_controller
 			online = 1
 
 		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+
+		return TRUE
 
 	proc/recall()
 		if (online && direction == 1)

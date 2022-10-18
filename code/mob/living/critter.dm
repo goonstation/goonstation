@@ -140,6 +140,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		if(organHolder)
 			organHolder.dispose()
