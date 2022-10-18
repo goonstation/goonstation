@@ -1141,10 +1141,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // Marquesas: added an extra parameter to fix issue with changeling.
 // Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
 // cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name)
+/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
 	if (src.open_to_sound)
 		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name)
+			O.hear_talk(M,text,real_name, lang_id)
 
 /**
   * Returns true if given value is a hex value
