@@ -8354,7 +8354,9 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "atP" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 8
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "atQ" = (
@@ -25103,7 +25105,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/catering)
 "bnC" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north{
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
 	dir = 8
 	},
 /turf/simulated/floor/black,

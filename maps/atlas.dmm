@@ -4553,7 +4553,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "lC" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -4614,7 +4616,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southwest)
 "lJ" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
@@ -7346,7 +7350,9 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "sd" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -7370,7 +7376,9 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "sg" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -10208,7 +10216,9 @@
 /turf/simulated/floor/blue,
 /area/station/engine/core)
 "yz" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/vertical,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -10423,7 +10433,9 @@
 /obj/machinery/door/airlock/pyro/engineering/alt{
 	name = "Engine Room"
 	},
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/vertical,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -11281,7 +11293,9 @@
 /area/station/medical/medbay)
 "Bj" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector/north,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/coldloop)
 "Bk" = (
@@ -11303,7 +11317,9 @@
 /area/station/engine/coldloop)
 "Bm" = (
 /obj/machinery/light,
-/obj/machinery/atmospherics/portables_connector/north,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
@@ -14495,7 +14511,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "Jj" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /turf/simulated/floor/blue,
 /area/station/science/lab)
 "Jk" = (
@@ -14515,7 +14533,9 @@
 /turf/simulated/floor/arrival,
 /area/station/hangar/main)
 "Jo" = (
-/obj/machinery/atmospherics/valve/horizontal,
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -14546,7 +14566,9 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "Ju" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /turf/simulated/floor/red,
 /area/station/science/lab)
 "Jv" = (
@@ -14633,11 +14655,15 @@
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "JJ" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "JK" = (
-/obj/machinery/atmospherics/valve/vertical,
+/obj/machinery/atmospherics/valve{
+	dir = 1
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -14850,7 +14876,9 @@
 	},
 /area/station/chapel/sanctuary)
 "Kh" = (
-/obj/machinery/atmospherics/portables_connector/north,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
 /obj/machinery/portable_atmospherics/canister/empty,
 /obj/cable{
 	d1 = 1;
@@ -14921,7 +14949,9 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "Kt" = (
-/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/north,
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
+	dir = 1
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "Ku" = (
@@ -18024,7 +18054,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "Sh" = (
-/obj/machinery/atmospherics/valve/horizontal,
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -18780,7 +18812,8 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "Uf" = (
-/obj/machinery/atmospherics/valve/horizontal{
+/obj/machinery/atmospherics/valve{
+	dir = 4;
 	name = "purge valve"
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -19163,7 +19196,9 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/captain)
 "Vj" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /obj/machinery/disposal/small{
 	dir = 1;
 	layer = 32;
@@ -19538,7 +19573,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/mining/staff_room)
 "Wn" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2
+	},
 /obj/machinery/firealarm{
 	pixel_y = 25
 	},
@@ -19925,7 +19962,9 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/science/lab)
 "Xp" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -20022,7 +20061,9 @@
 /turf/unsimulated/floor/blue,
 /area/station/crewquarters/cryotron)
 "XA" = (
-/obj/machinery/atmospherics/valve/vertical,
+/obj/machinery/atmospherics/valve{
+	dir = 1
+	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
 "XB" = (
@@ -20942,7 +20983,9 @@
 /turf/simulated/floor/purple,
 /area/station/bridge/united_command)
 "ZY" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
