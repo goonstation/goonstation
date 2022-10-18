@@ -619,8 +619,7 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (food in src)
-			food.set_loc(get_turf(src))
+		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
 		food.vis_flags = initial(food.vis_flags)
