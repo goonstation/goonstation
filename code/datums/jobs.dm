@@ -1352,7 +1352,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "Mime"
 	limit = 1
 	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	linkcolor = "#FF99FF"
 	slot_belt = list(/obj/item/device/pda2)
 	slot_head = list(/obj/item/clothing/head/mime_bowler)
 	slot_mask = list(/obj/item/clothing/mask/mime)
