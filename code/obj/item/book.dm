@@ -475,6 +475,12 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 			boutput(wearer, "[voidMessage]")
 		return
 
+/obj/item/paper/book/from_file/vendbook //Guide for build-a-vends in maint bazaar random room
+	name = "A Treatise on Build-A-Vends"
+	desc = "A hefty looking guide on how to start your own business."
+	icon_state = "vendbook"
+	file_path = "strings/books/buildavend_treatise.txt"
+
 /******************** CUSTOM BOOKS ********************/
 
 /obj/item/paper/book/custom //custom book parent, just to avoid cluttering up normal books
