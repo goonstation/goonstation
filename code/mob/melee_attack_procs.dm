@@ -962,14 +962,14 @@
 			if (length(src.disarm_RNG_result))
 				if ("drop_item" in src.disarm_RNG_result)
 					target.deliver_move_trigger("bump")
-					var/dropped_items = null
+					var/list/dropped_items = list()
 					for(var/obj/item/I in target.equipped_list())
 						if(!(I.temp_flags & IS_LIMB_ITEM))
-							dropped_items += " [I],"
+							dropped_items += "[I]"
 							target.drop_item_throw(I)
-					if(!isnull(dropped_items))
-						var/final_items_log = copytext(dropped_items, 1, -1)
-						disarm_log += " making them drop item(s):([final_items_log] ),"
+					if(length(dropped_items))
+						var/final_items_log = jointext(dropped_items, ", ")
+						disarm_log += " making them drop item(s): ([final_items_log] )."
 
 				if ("handle_item_arm" in src.disarm_RNG_result)
 					for(var/obj/item/I in target.equipped_list())
