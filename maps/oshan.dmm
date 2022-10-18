@@ -35284,11 +35284,13 @@
 	},
 /area/station/quartermaster/refinery)
 "bNj" = (
-/obj/storage/cart,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/item/rods/steel/fullstack,
+/obj/machinery/manufacturer/general{
+	free_resource_amt = 0;
+	free_resources = null
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -47737,6 +47739,14 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
+"uEF" = (
+/obj/item/rods/steel/fullstack{
+	pixel_x = 11
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "uEG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -87566,7 +87576,7 @@ bHU
 bII
 cgr
 bKD
-bLY
+uEF
 bNj
 aOL
 bPs
