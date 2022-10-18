@@ -1,6 +1,10 @@
 
 (t)tue oct 18 22
 (u)DrWolfy
+(p)11337
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added a science fabricator to Oshan's research and two cargo transporters and a recharger to Oshan's artifact lab.
+(u)DrWolfy
 (p)11433
 (e)🤖|A-Silicons
 (+)Adds a hand labeler to chemistry cyborgs.
