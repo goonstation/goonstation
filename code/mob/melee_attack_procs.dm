@@ -895,7 +895,7 @@
 			logTheThing(LOG_DEBUG, owner, "<b>Marquesas/Melee Attack Refactor:</b> NO AFFECTING FLUSH! WARNING!")
 			return
 
-		var/disarm_log = null
+		var/list/disarm_log = list()
 
 		if (!msg_group)
 			msg_group = "[affecting]_attacks_[target]_with_[disarm ? "disarm" : "harm"]"
@@ -969,7 +969,7 @@
 							target.drop_item_throw(I)
 					if(length(dropped_items))
 						var/final_items_log = jointext(dropped_items, ", ")
-						disarm_log += " making them drop item(s): ([final_items_log] )."
+						disarm_log += " making them drop item(s): ([final_items_log])"
 
 				if ("handle_item_arm" in src.disarm_RNG_result)
 					for(var/obj/item/I in target.equipped_list())
@@ -984,7 +984,7 @@
 						var/prev_intent = target.a_intent
 						target.set_a_intent(INTENT_HARM)
 
-						disarm_log += " attempting to make them self-attack with the item arm: [I],"
+						disarm_log += " attempting to make them self-attack with the item arm: [I]"
 						target.Attackby(I, target)
 
 						target.set_a_intent(prev_intent)
@@ -1006,9 +1006,7 @@
 					disarm_log += " shoving them away "
 			else
 				target.deliver_move_trigger("bump")
-				disarm_log = " "
-			var/final_disarm_log = copytext(disarm_log, 1, -1)
-			logTheThing(LOG_COMBAT, owner, "disarms [constructTarget(target,"combat")][final_disarm_log] at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "disarms [constructTarget(target,"combat")][jointext(disarm_log, ", ")] at [log_loc(owner)].")
 		else
 #ifdef DATALOGGER
 			game_stats.Increment("violence")
