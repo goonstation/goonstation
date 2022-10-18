@@ -646,3 +646,8 @@ var/global/list/module_editors = list()
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
 	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

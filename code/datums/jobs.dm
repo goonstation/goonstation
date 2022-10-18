@@ -101,10 +101,11 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
+				var/location = special_spawn_location
 				if (!istype(special_spawn_location, /turf))
-					special_spawn_location = pick_landmark(special_spawn_location)
-				if (special_spawn_location != null)
-					M.set_loc(special_spawn_location)
+					location = pick_landmark(special_spawn_location)
+				if (!isnull(location))
+					M.set_loc(location)
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -2348,16 +2349,11 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
 	add_to_manifest = FALSE
+	special_spawn_location = LANDMARK_SYNDICATE
 
 	New()
 		..()
 		src.access = syndicate_spec_ops_access()
-
-#ifdef MAP_OVERRIDE_OSHAN
-	special_spawn_location = null
-#else
-	special_spawn_location = LANDMARK_SYNDICATE
-#endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
