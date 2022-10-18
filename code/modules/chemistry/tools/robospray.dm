@@ -24,11 +24,18 @@
 
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	inventory_counter_enabled = 1
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	///Custom contextActions list so we can handle opening them ourselves
+	var/list/datum/contextAction/contexts = list()
 
 	New()
 		..()
 		processing_items.Add(src)
 		src.UpdateIcon()
+		available_chems = list()
+		for (var/reagent in botreagents)
+			available_chems += reagents_cache[reagent]
+			contexts += new /datum/contextAction/reagent/robospray(reagent)
 
 	disposing()
 		..()
@@ -47,22 +54,17 @@
 		signal_event("icon_updated")
 
 	attack_self(mob/user as mob)
-		if (available_chems == null)
-			available_chems = list()
-			for (var/reagent in botreagents)
-				available_chems += reagents_cache[reagent]
-		var/holder = src.loc
-		var/datum/reagent/pick = tgui_input_list(user, "Inject which chemical?", "Cybernetic Hypospray", available_chems)
-		if (src.loc != holder)
+		user.showContextActions(src.contexts, src, src.contextLayout)
+
+	proc/change_reagent(var/reagent_id, var/mob/user = null)
+		if (!(reagent_id in src.botreagents))
 			return
-		if (!pick)
-			return
-		currentreagent = pick.id
-		propername = pick.name
-		user.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
+		currentreagent = reagent_id
+		var/datum/reagent/reagent = reagents_cache[reagent_id]
+		propername = reagent.name
+		user?.show_text("[src] is now injecting [propername], [botreagents[currentreagent]] units left.", "blue")
 		UpdateIcon()
-		tooltip_rebuild = 1
-		return
+		tooltip_rebuild = TRUE
 
 	get_desc(dist)
 		. += "It is injecting [propername]. There are [botreagents[currentreagent]] units left."

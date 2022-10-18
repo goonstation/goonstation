@@ -1053,6 +1053,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/obj/itemspecialeffect/spark/spark = new /obj/itemspecialeffect/spark
 			spark.setup(effect)
 			spark.set_dir(direction)
+			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 
 			var/hit = 0
 			for(var/atom/movable/A in effect)
@@ -1090,6 +1091,8 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
 			M.bodytemperature += (4 * mult)
 			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+
+		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
 
 /datum/item_special/spark/baton
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1300,10 +1303,12 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 
 			if (flame_succ)
+				logTheThing(LOG_COMBAT, user, "uses the flame special attack at [log_loc(user)].")
 				turf.hotspot_expose(T0C + 400, 400)
 				for(var/A in turf)
 					if(!isTarget(A))
 						continue
+					logTheThing(LOG_COMBAT, user, "'s flame special attack hits <b>[A]</b> at [log_loc(A)].")
 					if(ismob(A))
 						var/mob/M = A
 						M.changeStatus("burning", flame_succ ? time : tiny_time)
@@ -1345,16 +1350,18 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			var/obj/itemspecialeffect/conc/C = new /obj/itemspecialeffect/conc
 			C.setup(turf)
-			for (var/obj/O in turf.contents)
-				if (istype(O, /obj/blob))
-					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too wet for it to take!</b></span>")
+			logTheThing(LOG_COMBAT, user, "uses the elecflash (multitool pulse) special attack at [log_loc(user)].")
+			for(var/atom/movable/A in turf.contents)
+				if (istype(A, /obj/blob))
+					boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too wet for it to take!</b></span>")
 					return
-				if (istype(O, /obj/spacevine))
-					var/obj/spacevine/K = O
+				if (istype(A, /obj/spacevine))
+					var/obj/spacevine/K = A
 					if (K.current_stage >= 2)	//if it's med density
-						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [O] is too dense for it to take!</b></span>")
+						boutput(user, "<span class='alert'><b>You try to pulse a spark, but [A] is too dense for it to take!</b></span>")
 						return
-
+				if (ismob(A))
+					logTheThing(LOG_COMBAT, user, "'s elecflash (multitool pulse) special attack hits <b>[A]</b> at [log_loc(A)].")
 			elecflash(turf,0, power=2, exclude_center = 0)
 			afterUse(user)
 		return
@@ -1406,6 +1413,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			E.setup(effect)
 			E.set_dir(direction)
 
+			logTheThing(LOG_COMBAT, user, "uses the spark special attack ([src.type]) at [log_loc(user)].")
 			var/hit = 0
 			for(var/atom/movable/A in effect)
 				if(isTarget(A))
@@ -1444,6 +1452,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 				M.bodytemperature += (4 * mult)
 				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits <b>[hit]</b> at [log_loc(hit)].")
 
 /datum/item_special/katana_dash
 	cooldown = 9

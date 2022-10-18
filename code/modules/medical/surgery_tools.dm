@@ -450,6 +450,11 @@ CONTAINS:
 			user.suiciding = 0
 		return 1
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
 	if (!isliving(patient))
 		return 0
@@ -994,7 +999,7 @@ CONTAINS:
 
 	disposing()
 		for(var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 		..()
 
 	update_icon()

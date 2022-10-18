@@ -81,13 +81,12 @@
 	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 		. = ..()
 		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
-		if (!isliving(thrown_by))
-			return
 		if (!src.reagents)
 			return
 		if (!tied)
-			thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
-			"<span class='alert'>You forgot to tie off [src] and it spills all over you! <b>[curse]!</b></span>")
+			if(isliving(thrown_by))
+				thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
+				"<span class='alert'>You forgot to tie off [src] and it spills all over you! <b>[curse]!</b></span>")
 			src.reagents.reaction(get_turf(src))
 			src.reagents.clear_reagents()
 

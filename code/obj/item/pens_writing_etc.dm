@@ -135,11 +135,15 @@
 			G.pixel_y = rand(-4,4)
 		if (src.reagents.total_volume)
 			G.color = src.reagents.get_average_rgb()
-			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
+			G.sample_reagent = src.reagents.get_master_reagent_id()
+			var/datum/reagent/master_reagent = src.reagents.reagent_list[G.sample_reagent]
+			G.sample_amt = master_reagent.volume
+			src.reagents.clear_reagents()
 
-		src.remove_filter("reagent_coloration")
-		src.color_name = initial(src.color_name)
-		src.font_color = initial(src.font_color)
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
+
 		src.in_use = 0
 
 	onMaterialChanged()
@@ -702,9 +706,9 @@
 			G.color = src.reagents.get_average_rgb()
 			src.reagents.trans_to(G, PEN_REAGENT_CAPACITY)
 
-		src.remove_filter("reagent_coloration")
-		src.color_name = initial(src.color_name)
-		src.font_color = initial(src.font_color)
+			src.remove_filter("reagent_coloration")
+			src.color_name = initial(src.color_name)
+			src.font_color = initial(src.font_color)
 
 	get_desc()
 		. = ..()

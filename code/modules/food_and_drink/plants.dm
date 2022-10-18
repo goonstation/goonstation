@@ -939,6 +939,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
 			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
 			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			src.reagents.trans_to(bowl, src.reagents.maximum_volume)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
@@ -965,6 +966,47 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			qdel(src)
 		else
 			..()
+
+/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+	name = "spiced pumpkin"
+	desc = "Autumny!"
+	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
+	edible = 0
+	food_color = "#CC6600"
+	validforhat = 1
+
+	attackby(obj/item/W, mob/user)
+		if (iscuttingtool(W))
+			user.visible_message("[user] carefully and creatively carves [src].", "You carefully and creatively carve [src]. Cute!")
+			var/obj/item/clothing/head/pumpkinlatte/P = new(get_turf(user))
+			P.name = "carved [src.name]"
+			qdel(src)
+		else if (isspooningtool(W))
+			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
+			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/latte = new(get_turf(user))
+			src.reagents.trans_to(latte, src.reagents.total_volume)
+			qdel(src)
+
+/obj/item/clothing/head/pumpkinlatte
+	name = "carved spiced pumpkin"
+	desc = "Cute!"
+	icon_state = "pumpkinlatte"
+	c_flags = COVERSEYES | COVERSMOUTH
+	see_face = 0
+	item_state = "pumpkinlatte"
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/device/light/flashlight))
+			user.visible_message("[user] adds [W] to [src].", "You add [W] to [src].")
+			W.name = copytext(src.name, 8) + " lantern"	// "carved "
+			W.desc = "Cute!"
+			W.icon = 'icons/misc/halloween.dmi'
+			W.icon_state = "flight[W:on]"
+			W.item_state = "pumpkin"
+			qdel(src)
+		else
+			. = ..()
 
 /obj/item/reagent_containers/food/snacks/plant/lime
 	name = "lime"
@@ -1247,7 +1289,8 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
-		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
+		src.reagents.trans_to(drink, src.reagents.total_volume)
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)

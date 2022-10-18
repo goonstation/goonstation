@@ -2374,6 +2374,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	name = "Necromancer Zoldorf"
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
+	icon_fallen = "hfortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2397,6 +2398,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 	desc = "A horrid old fortune-telling machine."
 	icon_state = "fortuneteller"
 	icon_vend = "fortuneteller-vend"
+	icon_fallen = "fortuneteller-fallen"
 	pay = 1
 	acceptcard = 1
 	slogan_list = list("Ha ha ha ha ha!",
@@ -2895,12 +2897,16 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/serpico, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/serpico, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/red, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/flatcap, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/policecap, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/bobby, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/siren, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/security, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/security, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/forensic, 2, cost=PAY_TRADESMAN/1.5)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/security, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/security, 1)
 
@@ -2931,11 +2937,17 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical, 10)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/surgical_shield, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/latex, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/red, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/white, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/white, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/blue, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/headmirror, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/traditionalnursehat, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/head/nursehat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/medical, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/medical, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/medical/robotics, 2, cost=PAY_DOCTORATE/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/genetics, 2, cost=PAY_DOCTORATE/2)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/medic, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/medic, 1)
 		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/robotics, 1)

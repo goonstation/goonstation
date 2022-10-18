@@ -154,7 +154,11 @@
 				if (!(O.type in mining_controls.magnet_do_not_erase) && !istype(O, /obj/magnet_target_marker))
 					qdel(O)
 			T.ClearAllOverlays()
-			T.ReplaceWithSpace()
+
+			if(istype(T,/turf/unsimulated) && ( T.GetComponent(/datum/component/buildable_turf) || (station_repair.station_generator && (origin.z == Z_LEVEL_STATION))))
+				T.ReplaceWith(/turf/space, force=TRUE)
+			else
+				T.ReplaceWith(/turf/space)
 			T.UpdateOverlays(new /image/fullbright, "fullbright")
 
 	proc/generate_walls()
@@ -181,9 +185,32 @@
 		return walls
 
 	proc/check_for_unacceptable_content()
-		if(mining_controls.magnet_area)
-			return mining_controls.magnet_area.check_for_unacceptable_content()
-		return 1
+		// this used to use an area, which meant it only checked
+		var/turf/origin = get_turf(src)
+		var/unacceptable = FALSE
+		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
+
+			for (var/mob/living/L in T)
+				if(!isintangible(L)) //neither blob overmind or AI eye should block this
+					unacceptable = TRUE
+					break
+			for (var/obj/machinery/vehicle/V in T)
+				unacceptable = TRUE
+				break
+
+			for (var/obj/artifact/A in T) // check if an artifact has someone inside
+				if (istype(A, /obj/artifact/prison))
+					var/datum/artifact/prison/P = A.artifact
+					if(istype(P.prisoner))
+						unacceptable = TRUE
+						break
+				else if (istype(A, /obj/artifact/cloner))
+					var/datum/artifact/cloner/C = A.artifact
+					if(istype(C.clone))
+						unacceptable = TRUE
+						break
+
+		return unacceptable
 
 	proc/UL()
 		var/turf/origin = get_turf(src)
@@ -203,37 +230,50 @@
 		var/turf/dr = locate(origin.x + width - 1, origin.y, origin.z)
 		return dr
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	proc/construct()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 			if (!T)
 				boutput(usr, "<span class='alert'>Error: magnet area spans over construction area bounds.</span>")
 				return 0
-			if (!istype(T, /turf/space) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
+			var/isterrain = T.GetComponent(/datum/component/buildable_turf) && istype(T,/turf/unsimulated)
+			if ((!istype(T, /turf/space) && !isterrain) && !istype(T, /turf/simulated/floor/plating/airless/asteroid) && !istype(T, /turf/simulated/wall/auto/asteroid))
 				boutput(usr, "<span class='alert'>Error: [T] detected in [width]x[height] magnet area. Cannot magnetize.</span>")
 				return 0
 
 		var/borders = list()
 		for (var/cx = origin.x - 1, cx <= origin.x + width, cx++)
 			var/turf/S = locate(cx, origin.y - 1, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(cx, origin.y + height, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 
 		for (var/cy = origin.y, cy <= origin.y + height - 1, cy++)
 			var/turf/S = locate(origin.x - 1, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			var/isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
 			S = locate(origin.x + width, cy, origin.z)
-			if (!S || istype(S, /turf/space))
+			isterrain = S.GetComponent(/datum/component/buildable_turf) && istype(S,/turf/unsimulated)
+			if (!S || istype(S, /turf/space) || isterrain)
 				boutput(usr, "<span class='alert'>Error: bordering tile has a gap, cannot magnetize area.</span>")
 				return 0
 			borders += S
@@ -268,6 +308,7 @@
 			qdel(W)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		var/isterrain = target.GetComponent(/datum/component/buildable_turf) && istype(target,/turf/unsimulated)
 		if (!magnet)
 			if (istype(target, /obj/machinery/magnet_chassis))
 				magnet = target:linked_magnet
@@ -283,7 +324,7 @@
 					magnet = null
 				else
 					boutput(user, "<span class='notice'>Magnet locked. Designate lower left tile of target area (excluding the borders).</span>")
-		else if (istype(target, /turf/space) && magnet)
+		else if ((istype(target, /turf/space) || isterrain) && magnet)
 			if (!loaded)
 				boutput(user, "<span class='alert'>The magnetizer needs to be loaded with a plasmastone chunk first.</span>")
 			if (magnet.target)
@@ -332,7 +373,7 @@
 	var/malfunctioning = 0
 	var/rarity_mod = 0
 
-	var/uses_global_controls = TRUE
+	var/autosetup = TRUE
 
 	var/image/active_overlay = null
 	var/list/damage_overlays = list()
@@ -340,126 +381,29 @@
 	var/sound_destroyed = 'sound/impact_sounds/Machinery_Break_1.ogg'
 	var/obj/machinery/power/apc/mining_apc = null
 
-	proc/get_magnetic_center()
-		return mining_controls.magnetic_center
+	var/marker_type = /obj/magnet_target_marker
+	var/obj/magnet_target_marker/target = null
+	var/list/wall_bits = list()
 
-	proc/get_scan_range()
-		return 6
+	// reworked to nolonger use areas
+	proc/get_magnetic_center()
+		return target?.magnetic_center // the target marker has the center
+
+	proc/get_scan_range() // reworked
+		if (target)
+			return target.scan_range
+		return 6 // 6 if there's no center marker
 
 	proc/check_for_unacceptable_content()
-		if(mining_controls.magnet_area)
-			return mining_controls.magnet_area.check_for_unacceptable_content()
-		return 1
+		if (target)
+			return target.check_for_unacceptable_content()
+		return 1 // fail if there's no center marker
 
-	construction
-		var/marker_type = /obj/magnet_target_marker
-		var/obj/magnet_target_marker/target = null
-		var/list/wall_bits = list()
-		uses_global_controls = FALSE
+	proc/get_encounter(var/rarity_mod)
+		return mining_controls.select_encounter(rarity_mod)
 
-		get_magnetic_center()
-			if (target)
-				return target.magnetic_center
-			return null
-
-		get_scan_range()
-			if (target)
-				return target.scan_range
-			return 0
-
-		check_for_unacceptable_content()
-			if (target)
-				return target.check_for_unacceptable_content()
-			return 1
-
-		New()
-			..()
-			if (mining_apc)
-				mining_apc = null // Don't want random apcs across the map going haywire.
-
-		process()
-			if (!target)
-				return
-			if (automatic_mode && last_used < TIME && last_delay < TIME)
-				if (target.check_for_unacceptable_content())
-					last_delay = TIME + auto_delay
-					return
-				else
-					SPAWN(0)
-						pull_new_source()
-
-		proc/get_encounter(var/rarity_mod)
-			return mining_controls.select_encounter(rarity_mod)
-
-		pull_new_source(var/selectable_encounter_id = null)
-			if (!target)
-				return
-
-			if (!wall_bits.len)
-				wall_bits = target.generate_walls()
-
-			for (var/obj/forcefield/mining/M in wall_bits)
-				M.set_opacity(1)
-				M.set_density(1)
-				M.invisibility = INVIS_NONE
-
-			active = 1
-
-			if (last_used > TIME)
-				damage(rand(2,6))
-
-			last_used = TIME + cooldown_time
-			playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
-			build_icon()
-
-			target.erase_area()
-
-			var/sleep_time = attract_time
-			if (sleep_time < 1)
-				sleep_time = 20
-			sleep_time /= 2
-
-			if (malfunctioning && prob(20))
-				do_malfunction()
-			sleep(sleep_time)
-
-			var/datum/mining_encounter/MC
-
-			if(selectable_encounter_id != null)
-				if(selectable_encounter_id in mining_controls.mining_encounters_selectable)
-					MC = mining_controls.mining_encounters_selectable[selectable_encounter_id]
-					mining_controls.remove_selectable_encounter(selectable_encounter_id)
-				else
-					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
-					MC = get_encounter(rarity_mod)
-			else
-				MC = get_encounter(rarity_mod)
-
-			if(MC)
-				MC.generate(target)
-			else
-				for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
-					M.set_opacity(0)
-					M.set_density(0)
-					M.invisibility = INVIS_INFRA
-				active = 0
-				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: NO ENCOUNTER)")
-				return
-
-			sleep(sleep_time)
-			if (malfunctioning && prob(20))
-				do_malfunction()
-
-			active = 0
-			build_icon()
-
-			for (var/obj/forcefield/mining/M in wall_bits)
-				M.set_opacity(0)
-				M.set_density(0)
-				M.invisibility = INVIS_ALWAYS
-
-			src.updateUsrDialog()
-			return
+	construction // here so old maps dont get broken
+		autosetup = FALSE
 
 		small
 			marker_type = /obj/magnet_target_marker/small
@@ -478,17 +422,30 @@
 				linked_chassis = MC
 				MC.linked_magnet = src
 				break
+			// mining magnets can automatically set up immediately at roundstart as a treat
+			if (!target && autosetup)
+				var/obj/closest
+				var/closestDistance = 300
 
-			for (var/obj/machinery/power/apc/APC in range(20,src))
-				var/area/the_area = get_area(APC)
-				if (the_area.type == /area/station/quartermaster/magnet)
-					mining_apc = APC
-					break
+				// find the closest marker. there should be one per magnet
+
+				// Magnet center is used first
+				for_by_tcl(marker, /obj/magnet_target_marker)
+					if (istype(marker,marker_type))
+						if (GET_DIST(marker,src) < closestDistance) // same as the magnetizer limit i think
+							closest = marker
+				src.target = closest
+				if (istype(target))
+					target.construct()
+			if (!mining_apc) // no checking 400 tiles for an apc holy shit
+				mining_apc = get_local_apc()
 
 	process()
-		..()
+
+		if (!target)
+			return
 		if (automatic_mode && last_used < TIME && last_delay < TIME)
-			if (mining_controls.magnet_area.check_for_unacceptable_content())
+			if (target.check_for_unacceptable_content())
 				last_delay = TIME + auto_delay
 				return
 			else
@@ -626,7 +583,13 @@
 					mining_apc.zapStuff()
 
 	proc/pull_new_source(var/selectable_encounter_id = null)
-		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+		if (!target)
+			return
+
+		if (!length(wall_bits))
+			wall_bits = target.generate_walls()
+
+		for (var/obj/forcefield/mining/M in wall_bits)
 			M.set_opacity(1)
 			M.set_density(1)
 			M.invisibility = INVIS_NONE
@@ -640,21 +603,7 @@
 		playsound(src.loc, sound_activate, 100, 0, 3, 0.25)
 		build_icon()
 
-		for (var/obj/O in mining_controls.magnet_area.contents)
-			if (!(O.type in mining_controls.magnet_do_not_erase))
-				qdel(O)
-		for (var/turf/simulated/T in mining_controls.magnet_area.contents)
-			var/datum/client_image_group/cig = get_image_group(T) //clear out scan results
-			for(var/image/i in cig.images)
-				cig.remove_image(i)
-			if (!istype(T,/turf/simulated/floor/airless/plating/catwalk/))
-				T.ReplaceWith(/turf/space)
-				//qdel(T)
-		if(station_repair.station_generator)
-			for (var/turf/unsimulated/UT in mining_controls.magnet_area.contents)
-				UT.ReplaceWith(/turf/space, force=TRUE)
-		for (var/turf/space/S in mining_controls.magnet_area.contents)
-			S.ClearAllOverlays()
+		target.erase_area()
 
 		var/sleep_time = attract_time
 		if (sleep_time < 1)
@@ -673,14 +622,14 @@
 				mining_controls.remove_selectable_encounter(selectable_encounter_id)
 			else
 				boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder! (ERROR: INVALID ENCOUNTER)")
-				MC = mining_controls.select_encounter(rarity_mod)
+				MC = get_encounter(rarity_mod)
 		else
-			MC = mining_controls.select_encounter(rarity_mod)
+			MC = get_encounter(rarity_mod)
 
 		if(MC)
-			MC.generate(null)
+			MC.generate(target)
 		else
-			for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+			for (var/obj/forcefield/mining/M in wall_bits)
 				M.set_opacity(0)
 				M.set_density(0)
 				M.invisibility = INVIS_INFRA
@@ -690,7 +639,8 @@
 
 		if(station_repair.station_generator)
 			var/list/turf/space/repair_turfs = list()
-			for(var/turf/space/T in mining_controls.magnet_area.contents)
+			var/turf/origin = get_turf(target)
+			for (var/turf/space/T in block(origin, locate(origin.x + target.width - 1, origin.y + target.height - 1, origin.z)))
 				repair_turfs += T
 			station_repair.repair_turfs(repair_turfs)
 
@@ -701,7 +651,7 @@
 		active = 0
 		build_icon()
 
-		for (var/obj/forcefield/mining/M in mining_controls.magnet_shields)
+		for (var/obj/forcefield/mining/M in wall_bits)
 			M.set_opacity(0)
 			M.set_density(0)
 			M.invisibility = INVIS_ALWAYS
@@ -741,11 +691,11 @@
 			if ("activateselectable")
 				if (magnetNotReady)
 					return
-				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+				if (!target || !src.get_magnetic_center())
 					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 					return
 
-				if (src.check_for_unacceptable_content())
+				if (target.check_for_unacceptable_content())
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10
@@ -754,11 +704,11 @@
 			if ("activatemagnet")
 				if (magnetNotReady)
 					return
-				if (src.uses_global_controls && !istype(mining_controls.magnet_area))
+				if (!target || !src.get_magnetic_center())
 					boutput(usr, "Uh oh, something's gotten really fucked up with the magnet system. Please report this to a coder!")
 					return
 
-				if (src.check_for_unacceptable_content())
+				if (target.check_for_unacceptable_content())
 					src.visible_message("<b>[src.name]</b> states, \"Safety lock engaged. Please remove all personnel and vehicles from the magnet area.\"")
 				else
 					src.last_use_attempt = TIME + 10 // This is to prevent href exploits or autoclickers from pulling multiple times simultaneously
@@ -917,7 +867,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/default_ore = /obj/item/raw_material/rock
 	var/datum/ore/ore = null
 	var/datum/ore/event/event = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 
 	//NEW VARS
 	var/mining_health = 120
@@ -1082,6 +1032,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 
 	New(var/loc)
+		src.space_overlays = list()
 		src.topnumber = pick(1,2,3)
 		src.orenumber = pick(1,2,3)
 		..()
@@ -1421,7 +1372,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
-	var/list/space_overlays = list()
+	var/list/space_overlays = null
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1448,6 +1399,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 
 	New()
 		..()
+		src.space_overlays = list()
 		src.name = initial(src.name)
 		src.sprite_variation = rand(1,3)
 		icon_state = "astfloor" + "[sprite_variation]"
@@ -2164,7 +2116,7 @@ obj/item/clothing/gloves/concussive
 	opacity = 0
 	anchored = 0
 	var/active = 0
-	var/cell = null
+	var/obj/item/cell/cell = null
 	var/target = null
 	var/group = null
 
@@ -2286,6 +2238,11 @@ obj/item/clothing/gloves/concussive
 				return
 			boutput(user, "Target set to [selection] at [T.loc].")
 			src.target = T
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /// Basically a list wrapper that removes and adds cargo pads to a global list when it recieves the respective signals
 /datum/cargo_pad_manager

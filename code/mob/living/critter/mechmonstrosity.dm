@@ -453,10 +453,6 @@
 		..()
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
 
-	Move()
-		playsound(src.loc, 'sound/machines/glitch4.ogg', 50, 0)
-		. = ..()
-
 	seek_target()
 
 		if (!src.alive) return
