@@ -1363,7 +1363,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return
 
 		var/dat = src.return_text_header()
-		dat += "<h4>EngineMaster: Lite</h4>"
+		dat += "<h4>Power Controller</h4>"
 		dat += "<a href='byond://?src=\ref[src];scan=1'>Scan</a>"
 		dat += "<hr>"
 		for (var/gen in src.generator_statuses)
