@@ -19775,9 +19775,6 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
-"jpS" = (
-/turf/space,
-/area/shuttle/mining/diner)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -23285,8 +23282,9 @@
 /turf/simulated/floor,
 /area/radiostation/studio)
 "tuY" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3"
+/obj/wingrille_spawn/auto,
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
 "twl" = (
@@ -78945,7 +78943,7 @@ tur
 tur
 ibe
 tuY
-jpS
+udQ
 aaa
 aaa
 aaa
@@ -79549,7 +79547,7 @@ tur
 rQo
 tJW
 tuY
-jpS
+izd
 aaa
 aaa
 aaa

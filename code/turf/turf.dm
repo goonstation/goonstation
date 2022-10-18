@@ -627,6 +627,13 @@ proc/generate_space_color()
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
+
+	if (!new_turf.fullbright) // bandaid for wacky shit happening with shuttles
+		if (!rlmuloverlay && new_turf.RL_MulOverlay)
+			qdel(new_turf.RL_MulOverlay)
+		if (!rladdoverlay && new_turf.RL_AddOverlay && new_turf.RL_NeedsAdditive)
+			qdel(new_turf.RL_AddOverlay)
+
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -640,7 +647,6 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
-
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity

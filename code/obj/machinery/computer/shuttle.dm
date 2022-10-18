@@ -296,8 +296,30 @@
 		SPAWN(10 SECONDS)
 			call_shuttle()
 
+/obj/machinery/computer/mining_shuttle/set_loc(newloc) // bandaid fix for lighting staying at the old location
+	. = ..()
+	for (var/datum/light/light as anything in src.RL_Attached)
+		light.move(src.x + light.attach_x, src.y + light.attach_y, src.z, src.dir)
+
 /obj/machinery/computer/mining_shuttle/proc/call_shuttle(var/target_loc)
-	if(!active)
+	if(!active && target_loc && shuttle_loc)
+		var/area/start_location
+		var/area/end_location
+		switch(shuttle_loc)
+			if(1)
+				start_location = locate(/area/shuttle/mining/station)
+			if(2)
+				start_location = locate(/area/shuttle/mining/diner)
+			if(3)
+				start_location = locate(/area/shuttle/mining/outpost)
+		switch(target_loc)
+			if(1)
+				end_location = locate(/area/shuttle/mining/station)
+			if(2)
+				end_location = locate(/area/shuttle/mining/diner)
+			if(3)
+				end_location = locate(/area/shuttle/mining/outpost)
+
 		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			C.active = 1
 			var/message_string
@@ -308,40 +330,50 @@
 					message_string = "the Diner"
 				if(3)
 					message_string = "the [MINING_OUTPOST_NAME]"
-			C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle is en route to [message_string]!</span>")
-		SPAWN(10 SECONDS)
-			var/area/start_location
-			var/area/end_location
-			switch(shuttle_loc)
-				if(1)
-					start_location = locate(/area/shuttle/mining/station)
-				if(2)
-					start_location = locate(/area/shuttle/mining/diner)
-				if(3)
-					start_location = locate(/area/shuttle/mining/outpost)
-			switch(target_loc)
-				if(1)
-					end_location = locate(/area/shuttle/mining/station)
-				if(2)
-					end_location = locate(/area/shuttle/mining/diner)
-				if(3)
-					end_location = locate(/area/shuttle/mining/outpost)
+			if (start_location && end_location)
+				C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle is en route to [message_string]!</span>")
+			else
+				C.visible_message("<span class='alert'>The Old Fortuna Taxi Shuttle seems to be unable to move to [message_string]!</span>")
+				C.active = 0
 
-			for(var/x in end_location)
-				if(isliving(x) && !isintangible(x))
-					var/mob/living/M = x
-					logTheThing(LOG_COMBAT, M, "was gibbed by an arriving shuttle at [log_loc(M)].")
-					M.gib(1)
-				if(istype(x, /obj/storage))
-					var/obj/storage/S = x
-					qdel(S)
+		if (!start_location || !end_location)
+			return
+
+		SPAWN(10 SECONDS)
+			// shuttle crush stuff stolen from shuttle_controller.dm
+			var/list/dstturfs = list()
+			var/southBound = world.maxy
+			for (var/atom/A as obj|mob in end_location)
+				SPAWN(0)
+					if (isliving(A) && !isintangible(A))
+						var/mob/living/M = A
+						logTheThing(LOG_COMBAT, M, "was hit by an arriving shuttle at [log_loc(M)].")
+					A.ex_act(1)
+			for (var/turf/T in end_location) // figure out the south edge of the shuttle
+				dstturfs += T
+				if (T.y < southBound) southBound = T.y
+
+			for (var/turf/T in dstturfs)
+				for (var/atom/movable/AM as mob|obj in T)
+					if (isobserver(AM))
+						continue // skip ghosties
+					if (istype(AM, /obj/overlay/tile_effect))
+						continue
+					if (istype(AM, /obj/effects/precipitation))
+						continue
+					var/turf/D = locate(T.x,southBound - 1,T.z) // push everything south
+					AM.set_loc(D)
 
 			start_location.move_contents_to(end_location)
 
-			if(station_repair.station_generator)
-				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
-				if(length(turfs_to_fix))
-					station_repair.repair_turfs(turfs_to_fix)
+			for(var/turf/unsimulated/wall/auto/A in end_location)
+				A.UpdateIcon()
+
+			if(start_location.z == Z_LEVEL_STATION)
+				if(station_repair.station_generator)
+					var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+					if(length(turfs_to_fix))
+						station_repair.repair_turfs(turfs_to_fix)
 
 			for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
@@ -592,50 +624,85 @@
 
 /obj/machinery/computer/asylum_shuttle/proc/call_shuttle(var/target_loc)
 	if(!active)
-		for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+		var/area/start_location
+		var/area/end_location
+		switch(shuttle_loc)
+			if(1)
+				start_location = locate(/area/shuttle/asylum/observation)
+			if(2)
+				start_location = locate(/area/shuttle/asylum/medbay)
+			if(3)
+				start_location = locate(/area/shuttle/asylum/pathology)
+		switch(target_loc)
+			if(1)
+				end_location = locate(/area/shuttle/asylum/observation)
+			if(2)
+				end_location = locate(/area/shuttle/asylum/medbay)
+			if(3)
+				end_location = locate(/area/shuttle/asylum/pathology)
+		for(var/obj/machinery/computer/mining_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 			C.active = 1
 			var/message_string
 			switch(target_loc)
 				if(1)
-					message_string = "the Asylum"
+					message_string = "[the_station_name]"
 				if(2)
-					message_string = "Medbay"
+					message_string = "the Diner"
 				if(3)
-					message_string = "Pathology Research"
-			C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
-		SPAWN(10 SECONDS)
-			var/area/start_location
-			var/area/end_location
-			switch(shuttle_loc)
-				if(1)
-					start_location = locate(/area/shuttle/asylum/observation)
-				if(2)
-					start_location = locate(/area/shuttle/asylum/medbay)
-				if(3)
-					start_location = locate(/area/shuttle/asylum/pathology)
-			switch(target_loc)
-				if(1)
-					end_location = locate(/area/shuttle/asylum/observation)
-				if(2)
-					end_location = locate(/area/shuttle/asylum/medbay)
-				if(3)
-					end_location = locate(/area/shuttle/asylum/pathology)
+					message_string = "the [MINING_OUTPOST_NAME]"
+			if (start_location && end_location)
+				C.visible_message("<span class='alert'>The Asylum Shuttle is en route to [message_string]!</span>")
+			else
+				C.visible_message("<span class='alert'>The Asylum Shuttle seems to be unable to move to [message_string]!</span>")
+				C.active = 0
 
-			for(var/x in end_location)
-				if(isliving(x) && !isintangible(x))
-					var/mob/living/M = x
-					logTheThing(LOG_COMBAT, M, "was gibbed by an arriving shuttle at [log_loc(M)].")
-					M.gib(1)
-				if(istype(x, /obj/storage))
-					var/obj/storage/S = x
-					qdel(S)
+		if (!start_location || !end_location)
+			return
+
+		SPAWN(10 SECONDS)
+			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
+				C.active = 1
+				var/message_string
+				switch(target_loc)
+					if(1)
+						message_string = "the Asylum"
+					if(2)
+						message_string = "Medbay"
+					if(3)
+						message_string = "Pathology Research"
+				C.visible_message("<span class='alert'>The Asylum Shuttle has been sent to [message_string]!</span>")
+
+			// shuttle crush stuff stolen from shuttle_controller.dm
+			var/list/dstturfs = list()
+			var/northBound = 1
+			for (var/atom/A as obj|mob in end_location)
+				SPAWN(0)
+					if (isliving(A) && !isintangible(A))
+						var/mob/living/M = A
+						logTheThing(LOG_COMBAT, M, "was hit by an arriving shuttle at [log_loc(M)].")
+					A.ex_act(1)
+			for (var/turf/T in end_location) // figure out the north edge of the shuttle
+				dstturfs += T
+				if (T.y > northBound) northBound = T.y
+
+			for (var/turf/T in dstturfs)
+				for (var/atom/movable/AM as mob|obj in T)
+					if (isobserver(AM))
+						continue // skip ghosties
+					if (istype(AM, /obj/overlay/tile_effect))
+						continue
+					if (istype(AM, /obj/effects/precipitation))
+						continue
+					var/turf/D = locate(T.x,northBound + 1,T.z) // push everything north
+					AM.set_loc(D)
 
 			start_location.move_contents_to(end_location)
 
-			if(station_repair.station_generator)
-				var/list/turf/turfs_to_fix = get_area_turfs(start_location)
-				if(length(turfs_to_fix))
-					station_repair.repair_turfs(turfs_to_fix)
+			if(start_location.z == Z_LEVEL_STATION)
+				if(station_repair.station_generator)
+					var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+					if(length(turfs_to_fix))
+						station_repair.repair_turfs(turfs_to_fix)
 
 			for(var/obj/machinery/computer/asylum_shuttle/C in machine_registry[MACHINES_SHUTTLECOMPS])
 				C.active = 0
@@ -994,7 +1061,6 @@ var/bombini_saved = 0
 /obj/machinery/computer/shuttle_bus/proc/call_shuttle()
 	var/area/end_location = null
 	var/area/start_location = null
-
 	switch(johnbus_destination)
 		if(0)
 			end_location = locate(/area/shuttle/john/diner)
@@ -1008,27 +1074,49 @@ var/bombini_saved = 0
 	switch(johnbus_location)
 		if(0)
 			start_location = locate(/area/shuttle/john/diner)
-			start_location.move_contents_to(end_location)
-
 		if(1)
 			start_location = locate(/area/shuttle/john/owlery)
-
 			if(!bombini_saved)
 				for(var/obj/npc/trader/bee/b in start_location)
 					bombini_saved = 1
 					for(var/mob/M in start_location)
 						boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
-
-			start_location.move_contents_to(end_location)
-
 		if(2)
 			start_location = locate(/area/shuttle/john/mining)
-			start_location.move_contents_to(end_location)
-
 		if(3)
 			start_location = locate(/area/shuttle/john/grillnasium)
-			start_location.move_contents_to(end_location)
 
+	if(!start_location || !end_location)
+		johnbus_active = 0
+		for(var/obj/machinery/computer/shuttle_bus/C in machine_registry[MACHINES_SHUTTLECOMPS])
+			C.visible_message("<span class='alert'>John's Juicin' Bus cant seem to move! Uh Oh.</span>")
+		return
+
+	// shuttle crush stuff stolen from shuttle_controller.dm
+	var/list/dstturfs = list()
+	var/southBound = world.maxy
+	for (var/atom/A as obj|mob in end_location)
+		SPAWN(0)
+			if (isliving(A) && !isintangible(A))
+				var/mob/living/M = A
+				logTheThing(LOG_COMBAT, M, "was hit by an arriving shuttle at [log_loc(M)].")
+			A.ex_act(1)
+	for (var/turf/T in end_location) // figure out the south edge of the shuttle
+		dstturfs += T
+		if (T.y < southBound) southBound = T.y
+
+	for (var/turf/T in dstturfs)
+		for (var/atom/movable/AM as mob|obj in T)
+			if (isobserver(AM))
+				continue // skip ghosties
+			if (istype(AM, /obj/overlay/tile_effect))
+				continue
+			if (istype(AM, /obj/effects/precipitation))
+				continue
+			var/turf/D = locate(T.x,southBound - 1,T.z) // push everything south
+			AM.set_loc(D)
+
+	start_location.move_contents_to(end_location)
 	johnbus_location = johnbus_destination
 
 	johnbus_active = 0
