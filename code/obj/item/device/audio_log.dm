@@ -40,9 +40,8 @@
 
 		next(continuous)
 			if (log_line >= messages.len)
-				if (continuous && length(messages))
-					log_line = 1
-				else
+				log_line = 1
+				if (!(continuous && length(messages)))
 					return 0
 
 			log_line++
@@ -174,9 +173,15 @@
 			src.add_dialog(usr)
 			switch(href_list["command"])
 				if ("rec")
-					src.mode = MODE_RECORDING
+					if (src.mode != MODE_RECORDING)
+						src.mode = MODE_RECORDING
+					else
+						src.mode = MODE_OFF
 				if ("play")
-					play()
+					if (src.mode != MODE_PLAYING)
+						play()
+					else
+						src.mode = MODE_OFF
 				if ("stop")
 					stop()
 					if (src.tape)
@@ -185,8 +190,6 @@
 					src.mode = MODE_OFF
 					if (src.tape)
 						src.tape.reset()
-					//src.audiolog_messages = list()
-					//src.audiolog_speakers = list()
 
 				if ("continuous_mode")
 					continuous = !continuous
@@ -200,7 +203,7 @@
 
 					src.tape.log_line = 1
 					src.tape = null
-
+			playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
 			src.add_fingerprint(usr)
 			src.updateSelfDialog()
 		else
@@ -238,28 +241,28 @@
 
 	proc/play()
 		mode = MODE_PLAYING
-		sleep(1 SECONDS)
-		while (mode == MODE_PLAYING && tape)
-			var/speak_message = tape.get_message(continuous)
-			if (!speak_message)
-				stop()
-				return
+		SPAWN(2 SECONDS)
+			while (mode == MODE_PLAYING && tape)
+				var/speak_message = tape.get_message(continuous)
+				if (!speak_message)
+					stop()
+					return
 
-			var/separator = findtext(speak_message,"|")
-			if (!separator)
-				stop()
-				return
+				var/separator = findtext(speak_message,"|")
+				if (!separator)
+					stop()
+					return
 
-			var/speaker = copytext(speak_message, 1, separator)
-			speak_message = copytext(speak_message, separator+1)
+				var/speaker = copytext(speak_message, 1, separator)
+				speak_message = copytext(speak_message, separator+1)
 
-			speak(speaker, speak_message)
-			sleep(5 SECONDS)
-			if (!tape || !tape.next(continuous))
-				stop()
+				speak(speaker, speak_message)
+				sleep(5 SECONDS)
+				if (!tape || !tape.next(continuous))
+					stop()
 
 	proc/stop()
-		src.mode = 0
+		src.mode = MODE_OFF
 		src.updateSelfDialog()
 		if (src.self_destruct)
 			SPAWN(2 SECONDS)
@@ -273,12 +276,14 @@
 		if (!text_colour)
 			text_colour = src.text_colour
 
-		var/image/chat_maptext/audio_log_text = make_chat_maptext(src, message, "color: [text_colour];")
-		if (audio_log_text && src.chat_text && length(src.chat_text.lines))
-			audio_log_text.measure(src)
-			for (var/image/chat_maptext/I in src.chat_text.lines)
-				if (I != audio_log_text)
-					I.bump_up(audio_log_text.measured_height)
+		var/image/chat_maptext/audio_log_text
+		if (istype(src.loc, /turf))
+			audio_log_text = make_chat_maptext(src, message, "color: [text_colour];")
+			if (audio_log_text && src.chat_text && length(src.chat_text.lines))
+				audio_log_text.measure(src)
+				for (var/image/chat_maptext/I in src.chat_text.lines)
+					if (I != audio_log_text)
+						I.bump_up(audio_log_text.measured_height)
 		src.audible_message("<span class='game radio' style='color: [text_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
 		return
 
