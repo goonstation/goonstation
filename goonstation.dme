@@ -349,6 +349,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\controllers\process\random_events.dm"
 #include "code\datums\controllers\process\respawn.dm"
 #include "code\datums\controllers\process\sea_hotspots.dm"
+#include "code\datums\controllers\process\spacewind.dm"
 #include "code\datums\controllers\process\statusEffects.dm"
 #include "code\datums\controllers\process\stock_market.dm"
 #include "code\datums\controllers\process\telescope.dm"

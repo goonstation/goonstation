@@ -58,7 +58,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 /turf/proc/high_pressure_movements()
 	if(!loc:sanctuary)
 		for(var/atom/movable/in_tile as anything in src)
-			in_tile.experience_pressure_difference(pressure_difference, pressure_direction)
+			in_tile.experience_pressure_difference(pressure_difference, pressure_direction, src)
 
 	pressure_difference = 0
 
@@ -73,6 +73,8 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(connection_difference > pressure_difference)
 		if(!pressure_difference)
 			air_master.high_pressure_delta += src
+			if(z == 1)
+				boutput(world, "Turf at ([x], [y], [z]) is undergoing a high pressure delta of [connection_difference]")
 		pressure_difference = connection_difference
 		pressure_direction = connection_direction
 
@@ -84,6 +86,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 			if(!pressure_difference)
 				air_master.high_pressure_delta += src
+				if(z == 1)
+					boutput(world, "Turf at ([x], [y], [z]) is undergoing a high pressure delta of [connection_difference]")
+
 			pressure_direction = direction
 			pressure_difference = connection_difference
 			return TRUE
