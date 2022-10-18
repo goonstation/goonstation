@@ -2183,7 +2183,7 @@
 	id = "derevving"
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant, or heal it's damage!"
-	icon_state = "mindhack" //TODO: Make a more fitting icon for this
+	icon_state = "mindhack"
 	maxDuration = 30 SECONDS
 
 	onAdd()
