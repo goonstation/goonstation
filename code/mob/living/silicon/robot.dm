@@ -1494,7 +1494,7 @@
 		if (available_actions.len)
 			available_actions.Insert(1, "Cancel")
 			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Maintenance", available_actions)
-			if (!action || available_actions == "Cancel")
+			if (!action || actions == "Cancel")
 				return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
