@@ -44,27 +44,28 @@ var/datum/event_controller/random_events
 
 	New()
 		..()
-		for (var/X in childrentypesof(/datum/random_event/major))
+
+		for (var/X in concrete_typesof(/datum/random_event/major))
 			var/datum/random_event/RE = new X
 			events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/antag))
+		for (var/X in concrete_typesof(/datum/random_event/major/antag))
 			var/datum/random_event/RE = new X
 			antag_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/major/player_spawn))
+		for (var/X in concrete_typesof(/datum/random_event/major/player_spawn))
 			var/datum/random_event/RE = new X
 			player_spawn_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/minor))
+		for (var/X in concrete_typesof(/datum/random_event/minor))
 			var/datum/random_event/RE = new X
 			minor_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/special))
+		for (var/X in concrete_typesof(/datum/random_event/special))
 			var/datum/random_event/RE = new X
 			special_events += RE
 
-		for (var/X in childrentypesof(/datum/random_event/start))
+		for (var/X in concrete_typesof(/datum/random_event/start))
 			var/datum/random_event/RE = new X
 			start_events += RE
 

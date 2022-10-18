@@ -231,7 +231,14 @@
 					M.handcuffs.drop_handcuffs(M)
 
 				//Might as well set their security record to "released"
-				var/datum/db_record/R = data_core.security.find_record("name", M.name)
+				var/nameToCheck = M.name
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					// this makes it so that if your face is unobstructed and your id is wrong, i.e. you show up as John Smith (as Someone Else)
+					// it will take into account your actual name (John Smith) and still work, instead of searching for a "John Smith (as Someone Else)" in the records
+					// unless your face is obstructed, then it works normally by taking your visible name, with intended or unintended results
+					nameToCheck = H.face_visible() ? H.real_name : H.name
+				var/datum/db_record/R = data_core.security.find_record("name", nameToCheck)
 				if(!isnull(R) && ((R["criminal"] == "Incarcerated") || (R["criminal"] == "*Arrest*")))
 					R["criminal"] = "Released"
 	// timed process

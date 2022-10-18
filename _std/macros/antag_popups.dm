@@ -70,6 +70,7 @@
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
 	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
+	<a href='?src=\ref[src];action=salvager'>Salvagers</a> |
 	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a> |
 	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
 	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
@@ -257,6 +258,8 @@
 			if ("kudzu")
 				window_title = "You've been absorbed into the Kudzu!"
 				filename = "html/traitorTips/kudzuTips.html"
+			if ("salvager")
+				filename = "html/traitorTips/salvager.html"
 			if ("slasher")
 				window_title = "You've been made a Slasher!"
 				filename = "html/traitorTips/slasherTips.html"

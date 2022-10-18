@@ -768,7 +768,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -801,7 +801,7 @@ Code:
 
 		src.post_signal(signal)
 
-		if(isliving(usr))
+		if(isliving(usr) && !remote)
 			playsound(src.master, 'sound/items/security_alert.ogg', 60)
 			var/map_text = null
 			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)

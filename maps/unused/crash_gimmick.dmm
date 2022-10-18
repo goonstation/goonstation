@@ -9749,7 +9749,7 @@
 	},
 /area/russian/radiation)
 "btU" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -15151,7 +15151,7 @@
 	},
 /area/russian/radiation)
 "bVm" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -16361,7 +16361,7 @@
 /turf/space,
 /area/russian/radiation)
 "caw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -16406,7 +16406,7 @@
 	},
 /area/russian/radiation)
 "caF" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
@@ -18331,7 +18331,8 @@
 	},
 /area/built_zone)
 "ciS" = (
-/obj/machinery/manufacturer{
+/obj/machinery/manufacturer/general{
+	free_resource_amt = 999;
 	mats = 999
 	},
 /turf/simulated/floor/plating/random{
@@ -18348,6 +18349,7 @@
 /area/built_zone)
 "ciV" = (
 /obj/machinery/manufacturer/mechanic{
+	free_resource_amt = 999;
 	mats = 999
 	},
 /obj/machinery/camera{
@@ -21911,12 +21913,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"cvE" = (
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "cvS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22278,9 +22274,6 @@
 /obj/cable{
 	d2 = 2;
 	icon_state = "0-2"
-	},
-/obj/machinery/power/apc/autoname_north{
-	areastring = "Main Hallway"
 	},
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random{
@@ -27428,7 +27421,7 @@
 	},
 /area/russian/radiation)
 "cKV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite{
 	desc = " It is made of steel.";
@@ -38819,15 +38812,6 @@
 	name = "steel plating"
 	},
 /area/built_zone)
-"dHA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "dHP" = (
 /obj/cable{
 	d2 = 8;
@@ -38837,7 +38821,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "dIo" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor{
@@ -39317,7 +39301,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "dVS" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44738,7 +44722,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "gQW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -44819,13 +44803,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"gRT" = (
-/obj/machinery/light/small/floor/harsh/very,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/space)
 "gSd" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -60753,7 +60730,7 @@
 	},
 /area/russian/radiation)
 "ozP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -66253,7 +66230,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "rnw" = (
 /obj/landmark/start{
 	name = "Engineer"
@@ -67485,7 +67462,7 @@
 "rQU" = (
 /obj/decal/poster/wallsign/warning1,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/space)
+/area/built_zone)
 "rRl" = (
 /obj/disposalpipe/segment{
 	dir = 8;
@@ -77663,7 +77640,7 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/space)
+/area/built_zone)
 "xMs" = (
 /turf/simulated/wall/auto/asteroid/lighted{
 	color = "#d1e6ff";
@@ -131951,7 +131928,7 @@ dGb
 kHC
 kHC
 dGb
-dHA
+dHb
 dGb
 dGb
 dGb
@@ -132545,9 +132522,9 @@ dGb
 dFl
 dGb
 rQU
-boR
-boR
-boR
+wVX
+wVX
+wVX
 rQU
 dGb
 dGb
@@ -132846,11 +132823,11 @@ dGb
 dGb
 dFl
 dGb
-boR
+wVX
 gQS
-cvE
+cue
 gQS
-boR
+wVX
 dGb
 dGb
 wVX
@@ -133148,10 +133125,10 @@ dGb
 dGb
 dFl
 dGb
-boR
+wVX
 xMr
-gRT
-cvE
+rNv
+cue
 rmW
 dGb
 dGb
@@ -133450,11 +133427,11 @@ dGb
 dGb
 dGb
 dGb
-boR
+wVX
 gQS
-cvE
+cue
 gQS
-boR
+wVX
 dGb
 dGb
 wVX
@@ -133753,9 +133730,9 @@ dGb
 dGb
 dGb
 rQU
-boR
-boR
-boR
+wVX
+wVX
+wVX
 rQU
 dGb
 dGb
@@ -134365,7 +134342,7 @@ dGb
 dGb
 dGl
 dGb
-dHA
+dHb
 dGb
 dGb
 dGb

@@ -328,6 +328,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -394,6 +395,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null
