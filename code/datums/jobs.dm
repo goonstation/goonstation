@@ -1729,6 +1729,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
+	limit = 1
+	special_spawn_location = null
 #else
 	limit = 1
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
