@@ -862,6 +862,11 @@
 		kv["pick"] = auto_pickup
 		post_signal_multiple(control_freq, kv)
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/machinery/bot/mulebot/QM1
 	home_destination = "QM #1"
 

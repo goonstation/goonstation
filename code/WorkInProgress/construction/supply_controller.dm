@@ -307,11 +307,14 @@
 	replenishment_time = 18000
 	supply_packs = list(/datum/supply_packs/complex/manufacturer_kit)
 
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_control/pod_kit
 	maximum_stock = 2
 	replenishment_time = 9000
 	supply_packs = list(/datum/supply_packs/complex/pod_kit)
 	workstation_grade = 2
+#endif
 
 /datum/supply_control/ai_kit
 	maximum_stock = 2

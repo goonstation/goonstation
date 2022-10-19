@@ -960,7 +960,7 @@
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
-		if(locate(/mob/living) in O)
+		if(length(get_all_mobs_in(O)))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 

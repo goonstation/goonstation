@@ -504,7 +504,7 @@
 	force = 12
 	two_handed = 1
 	can_dual_wield = 0
-	shoot_delay = 8 DECI SECONDS
+	shoot_delay = 6 DECI SECONDS
 	muzzle_flash = "muzzle_flash_elec"
 
 	New()

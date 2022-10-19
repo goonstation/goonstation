@@ -5047,7 +5047,7 @@
 /area/listeningpost)
 "bof" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/storage,
+/obj/storage/closet,
 /obj/grille/catwalk/jen/side{
 	dir = 9
 	},
@@ -16257,7 +16257,7 @@
 /turf/simulated/floor/carpet/purple/decal/outercross,
 /area/station/chapel/sanctuary)
 "eyP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/green,
 /area/station/medical/cdc)
 "eyX" = (
@@ -19177,7 +19177,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
 "foQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -5;
 	pixel_y = 1
@@ -22386,7 +22386,7 @@
 /area/station/chapel/office)
 "gmf" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/storage,
+/obj/storage/closet,
 /obj/random_item_spawner/junk/maybe_few,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/east)
@@ -24811,7 +24811,7 @@
 	},
 /area/station/engine/singcore)
 "gYK" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
@@ -35468,7 +35468,7 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = 6;
 	pixel_y = 1
@@ -49976,7 +49976,7 @@
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "otu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -57292,7 +57292,10 @@
 /turf/simulated/floor/darkblue,
 /area/station/ai_monitored/storage/eva)
 "qtm" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 11;
+	width = 11
+	},
 /turf/space,
 /area/mining/magnet)
 "qts" = (
@@ -80529,7 +80532,7 @@
 	},
 /area/station/chapel/sanctuary)
 "wXr" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
@@ -84547,7 +84550,7 @@
 /area/station/crew_quarters/courtroom)
 "ydZ" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/storage,
+/obj/storage/closet,
 /obj/grille/catwalk/jen/side{
 	dir = 5
 	},

@@ -554,10 +554,12 @@ TRAYS
 	tooltip_flags = REBUILD_DIST
 	/// Will separate what we can put into plates/pizza boxes or not
 	var/is_plate = TRUE
-	/// The maximum amount of food you can fit on this plate
-	var/max_food = 2
-	/// Helps to track amount of food items inside the box
-	var/foods_inside = list()
+	// The maximum space and the inital space on the plate.
+	var/max_space = 3
+	/// Used to measure what you can fit on the plate before it gets full
+	var/space_left = 3
+	/// Used to track all the non-plate items inside the plate
+	var/food_inside = list()
 	/// The amount the plate contents are thrown when this plate is dropped or thrown
 	var/throw_dist = 3
 	/// The sound which is played when you plate someone on help intent, tapping them
@@ -571,9 +573,21 @@ TRAYS
 		..()
 		BLOCK_SETUP(BLOCK_BOOK)
 
+	proc/check_height()
+		. = 1
+		var/obj/item/plate/curr = src
+		while(istype(curr.loc, /obj/item/plate))
+			curr = curr.loc
+			.++
+
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
 		. = FALSE
+		if(food.cant_drop)
+			boutput(user, "<span class='alert'>You can't do that, [food] is attached to you!</span>")
+			return
+
+
 		if (istype(food, /obj/item/plate))
 			if (food == src)
 				boutput(user, "<span class='alert'>You can't stack a [src] on itself!</span>")
@@ -581,10 +595,14 @@ TRAYS
 			if (src.plate_stacked)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
+			if (src.check_height() >= 7)
+				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
+				return
+
 			var/obj/item/plate/not_really_food = food
 			. = src.stackable && not_really_food.stackable // . is TRUE if we can stack the other plate on this plate, FALSE otherwise
 
-		if (length(src.foods_inside) == max_food && src.is_plate)
+		if (food.w_class > src.space_left && src.is_plate)
 			boutput(user, "<span class='alert'>There's no more space on \the [src]!</span>")
 			return
 			                                    // anything that isn't a plate may as well hold anything that fits the "plate"
@@ -592,7 +610,7 @@ TRAYS
 			boutput(user, "<span class='alert'>That's not food, it doesn't belong on \the [src]!</span>")
 			return
 		if (food.w_class > W_CLASS_NORMAL && !.) // same logic as above, but to check if we can stack it
-			boutput(user, "You try to think of a way to put [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
+			boutput(user, "You try to think of a way to put \the [food] [src.is_plate ? "on" : "in"] \the [src] but it's not possible! It's too large!")
 			return
 		if (food in src.vis_contents)
 			boutput(user, "That's already on the [src]!")
@@ -603,7 +621,8 @@ TRAYS
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = TRUE
 		else
-			src.foods_inside += food
+			src.food_inside += food
+			src.space_left -= food.w_class
 
 		src.place_on(food, user, click_params) // this handles pixel positioning
 		food.set_loc(src)
@@ -612,26 +631,23 @@ TRAYS
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 		food.event_handler_flags |= NO_MOUSEDROP_QOL
 		RegisterSignal(food, COMSIG_ATOM_MOUSEDROP, .proc/indirect_pickup)
-		RegisterSignal(food, COMSIG_MOVABLE_SET_LOC, .proc/remove_contents)
 		RegisterSignal(food, COMSIG_ATTACKHAND, .proc/remove_contents)
 		src.UpdateIcon()
 		boutput(user, "You put [food] [src.is_plate ? "on" : "in"] \the [src].")
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (food in src)
-			food.set_loc(get_turf(src))
+		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
 		food.vis_flags = initial(food.vis_flags)
 		food.event_handler_flags = initial(food.event_handler_flags)
 		UnregisterSignal(food, COMSIG_ATOM_MOUSEDROP)
-		UnregisterSignal(food, COMSIG_MOVABLE_SET_LOC)
 		UnregisterSignal(food, COMSIG_ATTACKHAND)
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = FALSE
 		else
-			src.foods_inside -= food
+			src.food_inside -= food
 
 		src.UpdateIcon()
 
@@ -672,13 +688,12 @@ TRAYS
 	proc/shatter(depth = 1)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
 		var/turf/T = get_turf(src)
-		if(log(2, depth) == round(log(2, depth)))
-			for (var/i in 1 to 2)
-				var/obj/O = new /obj/item/raw_material/shard/glass
-				O.set_loc(T)
-				if(src.material)
-					O.setMaterial(copyMaterial(src.material))
-				O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
+		for (var/i in 1 to (2 - (depth > 1)))
+			var/obj/O = new /obj/item/raw_material/shard/glass
+			O.set_loc(T)
+			if(src.material)
+				O.setMaterial(copyMaterial(src.material))
+			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
 
@@ -753,6 +768,12 @@ TRAYS
 		if (ishuman(AM) && AM.throwing) // only humans have the power to smash plates with their bodies
 			src.shatter()
 
+	Exited(var/obj/item/food)
+		src.remove_contents(food)
+		if (!istype(food, /obj/item/plate/))
+			src.food_inside -= food
+			src.space_left += food.w_class
+		. = ..()
 /obj/item/plate/pizza_box
 	name = "pizza box"
 	desc = "Can hold wedding rings, clothes, weaponry... and sometimes pizza."
@@ -763,6 +784,8 @@ TRAYS
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "pizza_box"
 	is_plate = FALSE
+	max_space = 6
+	space_left = 6
 	var/open = FALSE
 
 	add_contents(obj/item/food, mob/user, click_params) // Due to non-plates skipping some checks in the original add_contents() we'll have to do our own checks.
@@ -775,14 +798,14 @@ TRAYS
 			boutput(user, "<span class='alert'>You can only put \the [food] on top of \the [src] when it's closed!")
 			return
 
-		if (length(src.foods_inside) >= src.max_food && !istype(food, src.type))
+		if (food.w_class > src.space_left && !istype(food, src.type))
 			boutput(user, "<span class='alert'>There's no more space in \the [src]!</span>")
 			return
 
 		. = ..()
 
 	proc/toggle_box(mob/user)
-		if (length(src.contents - src.foods_inside) > 0)
+		if (length(src.contents - src.food_inside) > 0)
 			boutput(user, "<span class='alert'>You have to remove the boxes on \the [src] before you can open it!")
 			return
 
@@ -806,7 +829,7 @@ TRAYS
 			src.UpdateIcon()
 
 		else
-			if (isnull(user))
+			if (isnull(user)) // We only need a null-check here because of the shit_goes_everywhere proc
 				icon_state = "pizzabox_open"
 				src.open = TRUE
 				playsound(src.loc, 'sound/machines/click.ogg', 30, 0)
@@ -827,6 +850,21 @@ TRAYS
 			src.open = TRUE
 			src.vis_contents = src.contents
 			src.UpdateIcon()
+
+	get_desc()
+		. = ..()
+
+		switch (round((space_left / max_space) * 100)) // Multiplying by 100 so we get a percentage, which we can work on a lot better than decimals
+			if (100) // space left is same as max space
+				. += " It is empty."
+			if (51 to 99) // less than half the space is used.
+				. += " It is mostly empty."
+			if (50) // half the space is used
+				. += " It is half [prob(50) ? "empty" : "full"]." // joke about the half empty/full cup dillema
+			if (1 to 49) // more than half the space is used
+				. += " It is mostly full."
+			if (0)
+				. += " It is full!"
 
 	shatter()
 		shit_goes_everywhere()
@@ -853,7 +891,8 @@ TRAYS
 	throw_range = 4
 	force = 10
 	w_class = W_CLASS_BULKY //no trays of loaves in a backpack for you
-	max_food = 30 // will look like an absolute shitshow but sure
+	max_space = 30 // will look like an absolute shitshow but sure
+	space_left = 30
 	throw_dist = 5
 	two_handed = TRUE
 

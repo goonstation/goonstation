@@ -5256,6 +5256,10 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "ami" = (
@@ -8468,6 +8472,7 @@
 /area/station/science/storage)
 "auh" = (
 /obj/machinery/light/incandescent/harsh/very,
+/obj/machinery/manufacturer/science,
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "aui" = (
@@ -9662,10 +9667,18 @@
 /area/station/science/artifact)
 "awR" = (
 /obj/machinery/light/incandescent/cool,
-/obj/machinery/disposal/mail/autoname{
-	mail_tag = "artlab"
+/obj/table/reinforced/auto,
+/obj/machinery/recharger{
+	pixel_x = -5;
+	pixel_y = 3
 	},
-/obj/disposalpipe/trunk/mail/south,
+/obj/item/cargotele{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/obj/item/cargotele{
+	pixel_x = 6
+	},
 /turf/simulated/floor/black,
 /area/station/science/artifact)
 "awS" = (
@@ -9816,7 +9829,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "axk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
@@ -10092,17 +10105,12 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "axR" = (
-/obj/disposalpipe/segment/mail,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "axS" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -10118,6 +10126,9 @@
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
+	},
+/obj/disposalpipe/segment/mail{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
@@ -10493,7 +10504,6 @@
 /turf/simulated/floor/purple,
 /area/station/science/artifact)
 "ayV" = (
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -11541,7 +11551,6 @@
 /turf/simulated/floor/white,
 /area/station/science/artifact)
 "aBi" = (
-/obj/disposalpipe/segment/mail,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -14154,7 +14163,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = -28
@@ -23334,13 +23343,14 @@
 /area/station/crew_quarters/bar)
 "bja" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/machinery/espresso_machine{
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjb" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
@@ -23590,15 +23600,15 @@
 /area/station/crew_quarters/kitchen)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/drink_rack/mug{
-	pixel_y = 30
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
+/obj/drink_rack/cup{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
@@ -23618,6 +23628,9 @@
 "bjT" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "bjU" = (
@@ -24441,7 +24454,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "blT" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/clothing/glasses/spectro,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -35271,11 +35284,13 @@
 	},
 /area/station/quartermaster/refinery)
 "bNj" = (
-/obj/storage/cart,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
-/obj/item/rods/steel/fullstack,
+/obj/machinery/manufacturer/general{
+	free_resource_amt = 0;
+	free_resources = null
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -41903,7 +41918,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfi" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -46455,6 +46470,13 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/diner/hallway)
+"njp" = (
+/obj/machinery/disposal/mail/autoname{
+	mail_tag = "artlab"
+	},
+/obj/disposalpipe/trunk/mail/south,
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "nkh" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -46606,6 +46628,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
+"ofe" = (
+/obj/disposalpipe/segment/mail,
+/turf/simulated/floor/black,
+/area/station/science/artifact)
 "oiZ" = (
 /obj/machinery/door/airlock/pyro/alt,
 /obj/firedoor_spawn,
@@ -47713,6 +47739,14 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/simulated/floor/plating,
 /area/diner/backroom)
+"uEF" = (
+/obj/item/rods/steel/fullstack{
+	pixel_x = 11
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/station/quartermaster/refinery)
 "uEG" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -87542,7 +87576,7 @@ bHU
 bII
 cgr
 bKD
-bLY
+uEF
 bNj
 aOL
 bPs
@@ -109215,10 +109249,10 @@ ape
 aSG
 ape
 avE
-awQ
-awQ
-awQ
-awQ
+njp
+ofe
+ofe
+ofe
 amh
 awQ
 awP

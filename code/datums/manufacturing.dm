@@ -743,7 +743,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_paths = list("DEN-1")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo)
 	time = 10 SECONDS
 	create = 1
@@ -752,7 +752,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
 	item_paths = list("DEN-2")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	time = 20 SECONDS
 	create = 1
@@ -760,8 +760,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("CRY-2")
-	item_amounts = list(40)
+	item_paths = list("uqill")
+	item_amounts = list(20)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
 	create = 1
@@ -3041,6 +3041,46 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	time = 20 SECONDS
 	create = 1
 	category = "Machinery"
+
+/************ NADIR RESONATORS ************/
+
+/datum/manufacture/resonator_type_ax
+	name = "Type-AX Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","POW-1")
+	item_amounts = list(15,20,20,5)
+	item_outputs = list(/obj/machinery/siphon/resonator)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_sm
+	name = "Type-SM Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","INS-1")
+	item_amounts = list(10,20,10,10)
+	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/************ NADIR GEAR ************/
+
+/datum/manufacture/nanoloom
+	name = "Nanoloom"
+	item_paths = list("MET-2","CON-1","cobryl","FAB-1")
+	item_amounts = list(4,2,1,3)
+	item_outputs = list(/obj/item/device/nanoloom)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/nanoloom_cart
+	name = "Nanoloom Cartridge"
+	item_paths = list("MET-2","cobryl","FAB-1")
+	item_amounts = list(1,1,3)
+	item_outputs = list(/obj/item/nanoloom_cartridge)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
 
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//

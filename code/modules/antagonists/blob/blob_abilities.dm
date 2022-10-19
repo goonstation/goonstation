@@ -232,6 +232,7 @@
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
+		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -831,6 +832,7 @@
 			return 1
 
 		var/obj/blob/L = new build_path(T)
+		logTheThing(LOG_STATION, owner, "builds [L] at [T] ([log_loc(T)])")
 		L.setOvermind(owner)
 		L.setMaterial(B.material)
 		B.material = null
