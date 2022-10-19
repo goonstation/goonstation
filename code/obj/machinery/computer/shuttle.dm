@@ -214,7 +214,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	Destinations = list(/area/shuttle/asylum/observation,
 	/area/shuttle/asylum/medbay,
 	/area/shuttle/asylum/pathology)
-	currentlocation = locate(/area/shuttle/research/outpost)
+	currentlocation = locate(/area/shuttle/asylum/medbay)
 	..()
 // research shuttle
 /obj/machinery/computer/transit_shuttle/research
@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle/research/New()
 	Destinations = list(/area/shuttle/research/station,
 	/area/shuttle/research/outpost)
-	currentlocation = locate(/area/shuttle/asylum/medbay)
+	currentlocation = locate(/area/shuttle/research/outpost)
 	..()
 
 // JOHN BILL'S JUICIN' BUS
