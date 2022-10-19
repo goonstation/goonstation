@@ -76189,7 +76189,8 @@
 /obj/machinery/computer/transit_shuttle/research{
 	icon_state = "shuttle-embed";
 	pixel_y = -25;
-	ejectdir = 2
+	ejectdir = 2;
+	embed = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
@@ -76266,7 +76267,7 @@
 /area/station/maintenance/south)
 "fTV" = (
 /turf/space/no_replace,
-/area/shuttle/research/outpost)
+/area/space)
 "fVa" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -77148,12 +77149,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
-"jHG" = (
-/obj/indestructible/shuttle_corner,
-/turf/unsimulated/floor/shuttle{
-	fullbright = 1
-	},
-/area/shuttle/research/outpost)
 "jHO" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/plating/scorched,
@@ -78220,9 +78215,7 @@
 /area/station/hallway/primary/west)
 "oel" = (
 /obj/indestructible/shuttle_corner,
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/research/outpost)
 "ois" = (
 /obj/decal/poster/wallsign/poster_ptoe{
@@ -78394,9 +78387,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
-"oYy" = (
-/turf/space,
-/area/shuttle/research/outpost)
 "pbL" = (
 /obj/decal/poster/wallsign/escape_right,
 /turf/simulated/wall/auto/supernorn,
@@ -78411,9 +78401,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/research/outpost)
 "pkZ" = (
 /obj/machinery/door/poddoor/blast/pyro{
@@ -78635,9 +78623,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner{
-	fullbright = 1
-	},
+/turf/space,
 /area/shuttle/research/outpost)
 "qmv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -79659,10 +79645,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4;
-	fullbright = 1
-	},
+/turf/space,
 /area/shuttle/research/outpost)
 "uMn" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -90281,9 +90264,9 @@ jis
 vuG
 rYq
 dwa
-jHG
+oel
 uEx
-oYy
+aaa
 aaa
 aaa
 aaa
@@ -90584,7 +90567,7 @@ pys
 mvu
 pys
 uEx
-oYy
+aaa
 aaa
 aaa
 aaa
@@ -106243,7 +106226,7 @@ dzW
 dzW
 dzW
 dzW
-dzW
+aaa
 aaa
 aaa
 aaa
@@ -106546,7 +106529,7 @@ dzW
 dzW
 dzW
 dzW
-dzW
+aaa
 aaa
 aaa
 aaa
@@ -106848,7 +106831,7 @@ dzW
 dzW
 dzW
 dzW
-dzW
+aaa
 aaa
 aaa
 aaa
@@ -107150,7 +107133,7 @@ dzW
 dzW
 dzW
 dzW
-dzW
+aaa
 aaa
 aaa
 aaa
@@ -107451,7 +107434,7 @@ dzW
 dzW
 dzW
 dzW
-dzW
+aaa
 aaa
 aaa
 aaa

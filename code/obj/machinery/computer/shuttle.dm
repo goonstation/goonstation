@@ -32,6 +32,7 @@
 	west
 		dir = WEST
 		pixel_x = -25
+
 ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle // this is the new shuttle console for travelling
 	name = "You shouldnt see this Shuttle Computer"
@@ -55,11 +56,11 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	..()
 	name = "[src.shuttlename] Shuttle Computer"
 	desc = "A computer that controls the movement of the [src.shuttlename]."
-	if(embed)
-		icon_state = "shuttle-embed"
-		layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
-		plane = PLANE_DEFAULT
-		density = 0
+	if(src.embed)
+		src.icon_state = "shuttle-embed"
+		src.layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
+		src.plane = PLANE_DEFAULT
+		src.density = 0
 		switch(src.dir)
 			if (NORTH)
 				pixel_y = 25
@@ -69,7 +70,19 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 				pixel_y = -25
 			if (WEST)
 				pixel_x = -25
-
+/obj/machinery/computer/transit_shuttle/power_change()  // fuck you parent code
+	if(powered() && embed)
+		icon_state = "shuttle-embed"
+		status &= ~NOPOWER
+		light.enable()
+		if(glow_in_dark_screen)
+			screen_image.plane = PLANE_LIGHTING
+			screen_image.blend_mode = BLEND_ADD
+			screen_image.layer = LIGHTING_LAYER_BASE
+			screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
+			src.UpdateOverlays(screen_image, "screen_image")
+	else
+		. = ..()
 /obj/machinery/computer/transit_shuttle/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
@@ -111,19 +124,16 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 
 /obj/machinery/computer/transit_shuttle/proc/remove_spaceturfs(area/shuttlelocation)
 	var/list/decorations = list()
-	for (var/obj/indestructible/shuttle_corner/corner in shuttlelocation)
-		decorations += corner
-	for (var/obj/decal/fakeobjects/shuttlethruster/thruster in shuttlelocation)
-		decorations += thruster
-
-	for (var/obj/O in decorations)
-		var/turf/T = get_turf(src)
-		if (!T) return
-		var/area/area = get_area(T)
-		if (!istype(area,/area/shuttle)) return
-		if (istype(T,/turf/unsimulated/floor/shuttle) || istype(T,/turf/simulated/floor))
-			return
-		// some other code handles turning this into the correct stuff
+	for (var/obj/O in shuttlelocation)
+		if (istype(O,/obj/indestructible/shuttle_corner))
+			decorations += get_turf(O)
+			continue
+		if (istype(O,/obj/decal/fakeobjects/shuttlethruster))
+			decorations += get_turf(O)
+			continue
+	for (var/turf/T in decorations)
+		// for whatever reason, the turfs were not getting the buildable turf component
+		if (istype(T, /turf/unsimulated/floor/shuttle) || istype(T,/turf/simulated/floor)) continue
 		T.ReplaceWithSpaceForce()
 		T.fullbright = 0
 
@@ -179,10 +189,16 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 					if (WEST)
 						ejectT = locate(westBound - 1,T.y,T.z)
 				AM.set_loc(ejectT)
-
 		currentlocation.move_contents_to(end_location)
 		src.remove_spaceturfs(end_location)
-		if (currentlocation?.z == Z_LEVEL_STATION && station_repair.station_generator)
+
+		// cant figure out why the walls arent behaving when moved so
+		for (var/turf/unsimulated/wall/auto/Wall in end_location)
+			Wall.UpdateIcon()
+		for (var/turf/simulated/wall/auto/Wall in end_location)
+			Wall.UpdateIcon()
+
+		if (currentlocation.z == Z_LEVEL_STATION && station_repair.station_generator)
 			var/list/turf/turfs_to_fix = get_area_turfs(currentlocation)
 			if(length(turfs_to_fix))
 				station_repair.repair_turfs(turfs_to_fix)
@@ -202,28 +218,28 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 	shuttlename = "Mining Shuttle"
 	ejectdir = SOUTH
 /obj/machinery/computer/transit_shuttle/mining/New()
+	..()
 	Destinations = list(/area/shuttle/mining/station,
 	/area/shuttle/mining/diner,
 	/area/shuttle/mining/outpost)
 	currentlocation = locate(/area/shuttle/mining/diner)
-	..()
 // asylum shuttle
 /obj/machinery/computer/transit_shuttle/asylum
 	shuttlename = "Asylum Shuttle"
 /obj/machinery/computer/transit_shuttle/asylum/New()
+	..()
 	Destinations = list(/area/shuttle/asylum/observation,
 	/area/shuttle/asylum/medbay,
 	/area/shuttle/asylum/pathology)
 	currentlocation = locate(/area/shuttle/asylum/medbay)
-	..()
 // research shuttle
 /obj/machinery/computer/transit_shuttle/research
 	shuttlename = "Research Shuttle"
 /obj/machinery/computer/transit_shuttle/research/New()
+	..()
 	Destinations = list(/area/shuttle/research/station,
 	/area/shuttle/research/outpost)
 	currentlocation = locate(/area/shuttle/research/outpost)
-	..()
 
 // JOHN BILL'S JUICIN' BUS
 // This is used for a secondary reliable transport between Z3 and Z5
@@ -235,10 +251,12 @@ var/bombini_saved
 	transit_delay = 0 SECONDS // handled elsewhere
 	ejectdir = SOUTH
 /obj/machinery/computer/transit_shuttle/johnbus/New()
-	Destinations = list(/area/shuttle/john/diner,
-	/area/shuttle/john/owlery)
-	currentlocation = locate(/area/shuttle/john/owlery)
 	..()
+	Destinations = list(/area/shuttle/john/owlery,/area/shuttle/john/diner)
+	currentlocation = locate(/area/shuttle/john/owlery)
+#ifndef UNDERWATER_MAP
+	Destinations += /area/shuttle/john/mining
+#endif
 
 /obj/machinery/computer/transit_shuttle/johnbus/ui_static_data(mob/user)
 	. = ..()
@@ -246,10 +264,6 @@ var/bombini_saved
 	if(johnbill_shuttle_fartnasium_active)
 		A = locate(/area/shuttle/john/grillnasium)
 		.["Destinations"] += list(list("type" = A?.type,"name" = A?.name))
-#ifndef UNDERWATER_MAP
-	A = locate(/area/shuttle/john/mining)
-	.["Destinations"] += list(list("type" = A?.type,"name" = A?.name))
-#endif
 
 /obj/machinery/computer/transit_shuttle/johnbus/call_shuttle(area/end_location)
 	var/turf/T = get_turf(src)
@@ -262,31 +276,31 @@ var/bombini_saved
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
 		if (Console.shuttlename != src.shuttlename) continue
 		Console.visible_message("<span class='alert'>John is starting up the engines, this could take a minute!</span>")
-		if(!embed) continue
+		if(!Console.embed) continue
 		T = get_turf(Console)
 		SPAWN(1 DECI SECOND)
 			playsound(T, 'sound/effects/ship_charge.ogg', 60, 1)
 			sleep(3 SECONDS)
 			playsound(T, 'sound/machines/weaponoverload.ogg', 60, 1)
-			src.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
+			Console.visible_message("<span class='alert'>The shuttle is making a hell of a racket!</span>")
 			sleep(5 SECONDS)
 			playsound(T, 'sound/impact_sounds/Machinery_Break_1.ogg', 60, 1)
-			for(var/mob/living/M in range(src.loc, 10))
+			for(var/mob/living/M in range(Console.loc, 10))
 				shake_camera(M, 5, 8)
 				M.add_karma(0.1)
 
 			sleep(2 SECONDS)
 			playsound(T, 'sound/effects/creaking_metal2.ogg', 70, 1)
 			sleep(3 SECONDS)
-			src.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
+			Console.visible_message("<span class='alert'>The shuttle engine alarms start blaring!</span>")
 			playsound(T, 'sound/machines/pod_alarm.ogg', 60, 1)
-			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(src)
+			var/obj/decal/fakeobjects/shuttleengine/smokyEngine = locate() in get_area(Console)
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			smoke.set_up(5, 0, smokyEngine)
 			smoke.start()
 			sleep(4 SECONDS)
 			playsound(T, 'sound/machines/boost.ogg', 60, 1)
-			for(var/mob/living/M in range(src.loc, 10))
+			for(var/mob/living/M in range(Console.loc, 10))
 				shake_camera(M, 10, 16)
 
 	T = get_turf(src)

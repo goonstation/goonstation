@@ -7,8 +7,7 @@
 /area/space)
 "aae" = (
 /turf/simulated/shuttle/wall/cockpit{
-	icon_state = "shuttlecock_mining";
-	plane = -95
+	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/john/owlery)
 "aaf" = (

@@ -43136,7 +43136,6 @@
 "cjX" = (
 /obj/table/auto,
 /obj/machinery/computer3/luggable,
-/obj/machinery/computer/transit_shuttle,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cjY" = (
