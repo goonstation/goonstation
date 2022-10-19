@@ -42710,7 +42710,7 @@
 /turf/space/fluid,
 /area/shuttle/john/diner)
 "chy" = (
-/obj/machinery/computer/shuttle_bus,
+/obj/machinery/computer/transit_shuttle/johnbus,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "chz" = (

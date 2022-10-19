@@ -43136,6 +43136,7 @@
 "cjX" = (
 /obj/table/auto,
 /obj/machinery/computer3/luggable,
+/obj/machinery/computer/transit_shuttle,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "cjY" = (
@@ -44315,7 +44316,7 @@
 	},
 /area/station/mining/staff_room)
 "cmR" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/yellow/side{
 	dir = 5
 	},

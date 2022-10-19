@@ -29758,8 +29758,10 @@
 	},
 /area/station/engine/gas)
 "hRU" = (
-/obj/machinery/computer/mining_shuttle,
 /obj/machinery/light/emergency,
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 8
+	},
 /turf/simulated/floor/escape{
 	dir = 6
 	},

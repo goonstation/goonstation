@@ -34809,13 +34809,12 @@
 /turf/space,
 /area/shuttle/mining/station)
 "bwm" = (
-/obj/machinery/computer/mining_shuttle{
-	dir = 4;
-	name = "Mining Shuttle Control"
-	},
 /obj/disposalpipe/segment/morgue{
 	dir = 1;
 	icon_state = "pipe-c"
+	},
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -44238,6 +44237,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
+"foR" = (
+/obj/machinery/computer/transit_shuttle/mining,
+/turf/simulated/wall/auto/supernorn,
+/area/station/medical/morgue)
 "foU" = (
 /obj/landmark/gps_waypoint,
 /obj/cable{
@@ -76198,7 +76201,7 @@ bns
 boo
 bpO
 bqP
-brX
+foR
 brX
 brX
 brX

@@ -7921,7 +7921,6 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/sw_triple,
 /area/station/crew_quarters/arcade/dungeon)
 "awD" = (
-/obj/machinery/computer/mining_shuttle,
 /obj/decal/tile_edge/line/black{
 	dir = 4;
 	icon_state = "line1"
@@ -7931,6 +7930,9 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
+	},
 /turf/simulated/floor/grey/side{
 	dir = 5
 	},

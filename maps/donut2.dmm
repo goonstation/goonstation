@@ -1576,11 +1576,6 @@
 /turf/simulated/floor,
 /area/station/science/storage)
 "agC" = (
-/obj/machinery/computer/research_shuttle/embedded{
-	dir = 1;
-	layer = 3.9;
-	pixel_y = -7
-	},
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8;
 	icon_state = "shuttlecock";
@@ -1800,6 +1795,12 @@
 "ahh" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 1
+	},
+/obj/machinery/computer/transit_shuttle/research{
+	icon_state = "shuttle-embed";
+	dir = 1;
+	pixel_y = 25;
+	embed = 1
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -24354,9 +24355,11 @@
 /turf/simulated/floor/engine,
 /area/station/turret_protected/AIsat)
 "bGN" = (
-/obj/machinery/computer/mining_shuttle,
 /obj/machinery/light/small{
 	dir = 1
+	},
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
@@ -27896,7 +27899,7 @@
 /area/station/science/artifact)
 "dZv" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/research_shuttle{
+/obj/machinery/computer/transit_shuttle/research{
 	dir = 4
 	},
 /turf/simulated/floor/greenwhite/other{
@@ -39639,8 +39642,10 @@
 "ort" = (
 /obj/cable,
 /obj/machinery/power/data_terminal,
-/obj/machinery/computer/research_shuttle,
 /obj/disposalpipe/segment/vertical,
+/obj/machinery/computer/transit_shuttle/research{
+	dir = 4
+	},
 /turf/simulated/floor/greenwhite/other{
 	dir = 8
 	},

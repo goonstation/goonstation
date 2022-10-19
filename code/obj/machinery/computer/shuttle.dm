@@ -59,6 +59,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 		icon_state = "shuttle-embed"
 		layer = EFFECTS_LAYER_1 // Must appear over cockpit shuttle wall thingy.
 		plane = PLANE_DEFAULT
+		density = 0
 		switch(src.dir)
 			if (NORTH)
 				pixel_y = 25
@@ -232,11 +233,13 @@ var/bombini_saved
 /obj/machinery/computer/transit_shuttle/johnbus // moved onto the new parent object
 	shuttlename = "John's Juicin' Bus"
 	transit_delay = 0 SECONDS // handled elsewhere
+	ejectdir = SOUTH
 /obj/machinery/computer/transit_shuttle/johnbus/New()
 	Destinations = list(/area/shuttle/john/diner,
 	/area/shuttle/john/owlery)
 	currentlocation = locate(/area/shuttle/john/owlery)
 	..()
+
 /obj/machinery/computer/transit_shuttle/johnbus/ui_static_data(mob/user)
 	. = ..()
 	var/area/A

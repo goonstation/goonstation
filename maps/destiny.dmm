@@ -28024,9 +28024,8 @@
 	},
 /area/station/science/lobby)
 "gUJ" = (
-/obj/machinery/computer/mining_shuttle{
-	dir = 4;
-	name = "Mining Shuttle Control"
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)

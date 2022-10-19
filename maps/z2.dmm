@@ -43026,11 +43026,13 @@
 /area/owlery/staffhall)
 "cAh" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = -95
-	},
 /obj/landmark/spawner{
 	name = "john_bill"
+	},
+/obj/machinery/computer/transit_shuttle/johnbus{
+	icon_state = "shuttle-embed";
+	embed = 1;
+	pixel_y = -25
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -44457,11 +44459,10 @@
 	dir = 8;
 	tag = ""
 	},
-/obj/machinery/computer/shuttle_bus{
-	dir = 4;
-	icon_state = "security"
-	},
 /obj/map/light/screen,
+/obj/machinery/computer/transit_shuttle/johnbus{
+	dir = 4
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 10
 	},

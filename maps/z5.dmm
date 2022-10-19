@@ -229,7 +229,7 @@
 /turf/space,
 /area/noGenerate)
 "fh" = (
-/obj/machinery/computer/mining_shuttle{
+/obj/machinery/computer/transit_shuttle/mining{
 	dir = 4
 	},
 /turf/simulated/floor/grime,
@@ -1461,7 +1461,9 @@
 /area/mining/refinery)
 "sS" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/computer/shuttle_bus,
+/obj/machinery/computer/transit_shuttle/johnbus{
+	dir = 4
+	},
 /turf/simulated/floor/plating/damaged3,
 /area/mining/miningoutpost)
 "sT" = (
@@ -3563,7 +3565,6 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
-/obj/machinery/computer/shuttle_bus,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},

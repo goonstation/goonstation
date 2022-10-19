@@ -18064,7 +18064,6 @@
 /area/diner/hangar)
 "eaj" = (
 /obj/map/light/dimred,
-/obj/machinery/computer/shuttle_bus,
 /obj/item/paper/businesscard/josh{
 	pixel_x = 4;
 	pixel_y = 25
@@ -18073,6 +18072,7 @@
 	pixel_x = -4;
 	pixel_y = 29
 	},
+/obj/machinery/computer/transit_shuttle/johnbus,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
 "edv" = (
@@ -19960,7 +19960,11 @@
 /area/diner/tug)
 "jTh" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/mining_shuttle/embedded/south,
+/obj/machinery/computer/transit_shuttle/mining{
+	icon_state = "shuttle-embed";
+	embed = 1;
+	pixel_y = -25
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -22264,7 +22268,7 @@
 /turf/unsimulated/floor,
 /area/timewarp/ship)
 "qMN" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
 "qNR" = (

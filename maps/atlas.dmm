@@ -13827,7 +13827,7 @@
 /turf/simulated/floor/blue,
 /area/station/maintenance/east)
 "HE" = (
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/arrivals)
 "HF" = (

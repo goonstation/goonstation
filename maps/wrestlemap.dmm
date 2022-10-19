@@ -30000,8 +30000,8 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/machinery/computer/mining_shuttle,
 /obj/machinery/power/data_terminal,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/grey,
 /area/station/maintenance/disposal)
 "mDi" = (

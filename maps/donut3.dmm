@@ -10075,7 +10075,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/singcore)
 "cKO" = (
-/obj/machinery/computer/asylum_shuttle,
+/obj/machinery/computer/transit_shuttle/asylum,
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "cKU" = (
@@ -11466,7 +11466,12 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "deH" = (
-/obj/machinery/computer/asylum_shuttle/embedded/north,
+/obj/machinery/computer/transit_shuttle/asylum{
+	dir = 1;
+	embed = 1;
+	icon_state = "shuttle-embed";
+	pixel_y = 25
+	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -37161,15 +37166,15 @@
 /turf/simulated/floor/wood/two,
 /area/station/hallway/primary/south)
 "kJF" = (
-/obj/machinery/computer/mining_shuttle{
-	dir = 4
-	},
 /obj/decal/tile_edge/check/yellow{
 	dir = 8;
 	icon_state = "check1"
 	},
 /obj/decal/tile_edge/check/yellow{
 	icon_state = "check1"
+	},
+/obj/machinery/computer/transit_shuttle/mining{
+	dir = 4
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/inner/north)
@@ -39179,7 +39184,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/west)
 "loL" = (
-/obj/machinery/computer/asylum_shuttle{
+/obj/machinery/computer/transit_shuttle/asylum{
 	dir = 4
 	},
 /turf/simulated/floor/circuit,
@@ -53128,12 +53133,10 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "ppP" = (
-/obj/machinery/computer/mining_shuttle{
-	dir = 1
-	},
 /obj/decal/tile_edge/check/yellow{
 	dir = 4
 	},
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "pqm" = (
@@ -75334,13 +75337,13 @@
 	},
 /area/shuttle/arrival/station)
 "vBT" = (
-/obj/machinery/computer/asylum_shuttle{
-	dir = 4
-	},
 /obj/disposalpipe/segment/morgue,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12
+	},
+/obj/machinery/computer/transit_shuttle/asylum{
+	dir = 4
 	},
 /turf/simulated/floor/circuit,
 /area/station/medical/medbay)

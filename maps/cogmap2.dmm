@@ -61701,7 +61701,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/machinery/computer/mining_shuttle,
+/obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
 /turf/simulated/floor/plating/damaged2,
 /area/station/maintenance/southeast)
@@ -76185,10 +76185,12 @@
 	},
 /area/research_outpost)
 "fzu" = (
-/obj/machinery/computer/research_shuttle/embedded/south{
-	name = "Research Outpost Shuttle Control"
-	},
 /obj/stool/chair/comfy/shuttle/green,
+/obj/machinery/computer/transit_shuttle/research{
+	icon_state = "shuttle-embed";
+	pixel_y = -25;
+	ejectdir = 2
+	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/research/outpost)
 "fFb" = (
@@ -76955,9 +76957,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "iXX" = (
-/obj/machinery/computer/research_shuttle{
+/obj/machinery/computer/transit_shuttle/research{
 	dir = 8;
-	name = "Research Outpost Shuttle Control"
+	ejectdir = 2
 	},
 /turf/simulated/floor/purple/side{
 	dir = 6
@@ -79988,12 +79990,12 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/security/checkpoint/podbay)
 "wvv" = (
-/obj/machinery/computer/research_shuttle{
-	dir = 8;
-	name = "Research Outpost Shuttle Control"
-	},
 /obj/machinery/light/small{
 	dir = 4
+	},
+/obj/machinery/computer/transit_shuttle/research{
+	dir = 8;
+	ejectdir = 2
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/science)
