@@ -339,21 +339,6 @@ obj/decal/fakeobjects/teleport_pad
 	density = 1
 	opacity = 0
 
-	set_loc(newloc) // fancy shuttle turf changing bullshit GO
-		if (!newloc) return
-		var/turf/oldArea = get_area(src)
-		. = ..()
-		var/area/newArea = get_area(newloc)
-		var/turf/T = get_turf(newloc)
-		if (newArea == oldArea || !istype(newArea,/area/shuttle)) return
-		if (!T) return
-		if (istype(T,/turf/unsimulated/floor/shuttle) || istype(T,/turf/simulated/floor))
-			return
-
-		// some other code handles turning this into the correct stuff
-		T.ReplaceWithSpaceForce()
-		T.fullbright = 0
-
 /obj/decal/fakeobjects/shuttleweapon
 	name = "weapons unit"
 	desc = "A weapons system for shuttles and similar craft."

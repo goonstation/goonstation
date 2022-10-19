@@ -184,21 +184,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 
-	set_loc(newloc) // fancy shuttle turf changing bullshit GO
-		if (!newloc) return
-		var/turf/oldArea = get_area(src)
-		. = ..()
-		var/area/newArea = get_area(newloc)
-		var/turf/T = get_turf(newloc)
-		if (newArea == oldArea || !istype(newArea,/area/shuttle)) return
-		if (!T) return
-		if (istype(T,/turf/unsimulated/floor/shuttle) || istype(T,/turf/simulated/floor))
-			return
-
-		// some other code handles turning this into the correct stuff
-		T.ReplaceWithSpaceForce()
-		T.fullbright = 0
-
 //TODO: CLEAN UP
 /turf/simulated/shuttle/wall
 	name = "shuttle wall"
