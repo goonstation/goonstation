@@ -43,7 +43,7 @@
 "aaX" = (
 /obj/reagent_dispensers/beerkeg,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "aaY" = (
 /obj/machinery/nanofab/refining,
 /turf/simulated/floor/grey/side{
@@ -812,7 +812,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "arE" = (
@@ -833,8 +833,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "arM" = (
@@ -1378,7 +1377,7 @@
 	},
 /area/station/hallway/primary/northwest)
 "aEs" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/head)
 "aEI" = (
@@ -1525,8 +1524,7 @@
 	name = "Station Power Grid Monitoring"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "aKb" = (
@@ -1726,7 +1724,7 @@
 	name = "The Warrens"
 	})
 "aRh" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine/caution/east,
 /area/station/medical/medbay/pharmacy)
 "aRC" = (
@@ -1777,7 +1775,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "aSj" = (
@@ -1805,7 +1803,7 @@
 	},
 /obj/storage/closet/wardrobe/mixed,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "aTt" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/landmark/gps_waypoint,
@@ -2348,8 +2346,7 @@
 "bio" = (
 /obj/machinery/catalytic_rod_unit/right/populated,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "biE" = (
@@ -2927,7 +2924,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "bvt" = (
 /obj/machinery/computer/siphon_db,
 /turf/simulated/floor/engine,
@@ -3334,7 +3331,7 @@
 	})
 "bFl" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "bFm" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -3484,7 +3481,7 @@
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/quarters_east)
 "bJE" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine/caution/north,
 /area/station/science/chemistry)
 "bJF" = (
@@ -3682,8 +3679,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "bQw" = (
@@ -4158,8 +4154,7 @@
 "caB" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "caI" = (
@@ -4177,7 +4172,7 @@
 	layer = 2
 	},
 /turf/simulated/floor/carpet/red/standard/narrow/solo,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "cbe" = (
 /obj/disposalpipe/loafer/horizontal,
 /turf/simulated/floor/plating,
@@ -4734,8 +4729,7 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "crt" = (
@@ -4883,7 +4877,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "cvy" = (
 /obj/landmark/start{
 	name = "Security Assistant"
@@ -4932,7 +4926,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "cyv" = (
@@ -5482,7 +5476,7 @@
 /area/station/chapel/sanctuary)
 "cOM" = (
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "cPu" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw{
@@ -5610,7 +5604,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "cRA" = (
@@ -5873,8 +5867,7 @@
 	icon_state = "2-9"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "cXC" = (
@@ -6180,7 +6173,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "dhK" = (
@@ -6299,7 +6292,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "dns" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -6780,7 +6773,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "dAy" = (
 /obj/storage/cart/mechcart{
 	desc = "A big rolling supply cart equipped for handling hull breaches.";
@@ -6869,7 +6862,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "dBU" = (
 /obj/table/reinforced/auto,
 /obj/item/device/analyzer/healthanalyzer{
@@ -6997,8 +6990,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "dDw" = (
@@ -7223,7 +7215,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 5
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "dII" = (
@@ -7326,7 +7318,7 @@
 "dMn" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "dMT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -7344,7 +7336,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "dNI" = (
@@ -7433,8 +7425,7 @@
 	})
 "dQM" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "dRl" = (
@@ -7679,13 +7670,13 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "dZl" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "dZn" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/cable{
@@ -8066,8 +8057,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "eiA" = (
@@ -8188,7 +8178,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "emm" = (
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
@@ -8682,7 +8672,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "ezx" = (
@@ -8774,8 +8764,7 @@
 	pixel_y = 14
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "eBr" = (
@@ -9063,8 +9052,7 @@
 "eKx" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/se,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "eKF" = (
@@ -9092,7 +9080,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "eLE" = (
@@ -9109,7 +9097,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "eMc" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -9568,7 +9556,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "eVF" = (
@@ -9944,7 +9932,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "fiR" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -10428,8 +10416,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/south,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "fuf" = (
@@ -10976,8 +10963,7 @@
 "fHL" = (
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "fIK" = (
@@ -11241,7 +11227,7 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "fOV" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
 /obj/cable{
@@ -11422,7 +11408,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "fST" = (
@@ -11546,7 +11532,7 @@
 "fUZ" = (
 /obj/storage/closet,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "fVU" = (
 /obj/table/reinforced/auto,
 /obj/machinery/phone/unlisted,
@@ -11794,7 +11780,7 @@
 	name = "Scientist"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gbR" = (
@@ -12051,7 +12037,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "ghK" = (
@@ -12134,7 +12120,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gkt" = (
@@ -12342,7 +12328,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gpm" = (
@@ -12486,7 +12472,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gsX" = (
@@ -13228,7 +13214,7 @@
 "gKd" = (
 /obj/machinery/light,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gKe" = (
@@ -13287,8 +13273,7 @@
 /area/station/security/checkpoint/escape)
 "gKY" = (
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "gLa" = (
@@ -13296,7 +13281,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "gLw" = (
@@ -13372,7 +13357,7 @@
 "gOc" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "gOm" = (
 /obj/machinery/vending/computer3,
 /obj/machinery/light/small{
@@ -13677,8 +13662,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "gVo" = (
@@ -13831,7 +13815,7 @@
 	name = "peststart"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "gYn" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -14328,7 +14312,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "hje" = (
@@ -14406,7 +14390,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "hkW" = (
 /obj/cable{
 	icon_state = "5-10"
@@ -14565,7 +14549,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "hnI" = (
@@ -15179,7 +15163,7 @@
 	name = "shitty_bill_respawn"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "hCT" = (
 /obj/machinery/computer/barcode/qm/no_belthell{
 	dir = 8
@@ -15455,7 +15439,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "hIn" = (
@@ -16116,7 +16100,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "iay" = (
@@ -16367,7 +16351,11 @@
 /obj/storage/closet/medicalclothes,
 /obj/machinery/firealarm{
 	dir = 8;
-	pixel_x = -24
+	pixel_x = -24;
+	pixel_y = 4
+	},
+/obj/blind_switch/area/west{
+	pixel_y = -8
 	},
 /turf/simulated/floor/blackwhite{
 	dir = 10
@@ -16483,7 +16471,7 @@
 /obj/disposalpipe/segment/ejection,
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "ihU" = (
 /obj/table/reinforced/auto,
 /obj/item/old_grenade/oxygen{
@@ -16646,8 +16634,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "imz" = (
@@ -17520,8 +17507,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "iHS" = (
@@ -17910,7 +17896,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "iTg" = (
@@ -17936,7 +17922,7 @@
 "iTH" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "iTR" = (
@@ -18085,7 +18071,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/purpleblack/corner,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "iZA" = (
@@ -18494,8 +18480,7 @@
 	icon_state = "5-10"
 	},
 /turf/simulated/floor,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "jgX" = (
@@ -18503,8 +18488,7 @@
 	icon_state = "4-10"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "jhj" = (
@@ -19023,7 +19007,7 @@
 	},
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "jvq" = (
@@ -19192,7 +19176,9 @@
 	},
 /obj/access_spawn/research_foyer,
 /turf/simulated/floor/black,
-/area/station/quartermaster/refinery)
+/area/station/science/gen_storage{
+	name = "Research Hall"
+	})
 "jzw" = (
 /obj/cable,
 /turf/simulated/floor/black,
@@ -19237,7 +19223,7 @@
 	name = "Cargo Auxiliary Endpoint"
 	})
 "jAB" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/door_control{
 	id = "nadir_chemshut";
 	name = "Chemistry Lab Shutters";
@@ -19483,7 +19469,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "jHS" = (
@@ -19542,7 +19528,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "jJE" = (
 /obj/stool/chair{
 	dir = 4
@@ -19562,7 +19548,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "jKl" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/phone/wall{
 	pixel_y = 32
 	},
@@ -19655,7 +19641,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "jNP" = (
@@ -20292,7 +20278,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "kaL" = (
@@ -21217,6 +21203,9 @@
 	pixel_x = -22;
 	pixel_y = -11
 	},
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -21735,15 +21724,10 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
+/obj/machinery/power/apc/autoname_west,
+/obj/cable,
 /obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/redblack,
 /area/station/security/brig)
@@ -21874,8 +21858,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "kMG" = (
@@ -22251,8 +22234,7 @@
 /area/station/crew_quarters/courtroom)
 "kXt" = (
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "kXA" = (
@@ -22268,6 +22250,13 @@
 /turf/simulated/floor/white/checker,
 /area/station/crew_quarters/pool)
 "kXB" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
 /turf/simulated/floor/redblack{
 	dir = 6
 	},
@@ -22287,7 +22276,7 @@
 "kXG" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "kXI" = (
 /obj/machinery/light{
 	dir = 4;
@@ -22401,8 +22390,7 @@
 "laQ" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "laW" = (
@@ -22466,7 +22454,7 @@
 	pixel_y = -5
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lbk" = (
@@ -22744,7 +22732,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lgY" = (
@@ -23068,8 +23056,7 @@
 	pixel_y = 3
 	},
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "lqD" = (
@@ -23307,7 +23294,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lws" = (
@@ -23344,7 +23331,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lxm" = (
@@ -23608,7 +23595,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "lEA" = (
 /obj/machinery/drainage,
 /obj/submachine/chef_sink/chem_sink{
@@ -23745,7 +23732,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lHV" = (
@@ -24064,7 +24051,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lOh" = (
@@ -24146,8 +24133,7 @@
 	pixel_y = 6
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "lPo" = (
@@ -24194,7 +24180,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lQk" = (
@@ -24235,7 +24221,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lRr" = (
@@ -24270,7 +24256,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lSq" = (
@@ -24418,7 +24404,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 9
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "lWD" = (
@@ -24513,8 +24499,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "lXO" = (
@@ -24614,7 +24599,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "lZF" = (
 /turf/unsimulated/wall/trench/side,
 /area/space)
@@ -25138,7 +25123,7 @@
 /area/station/crew_quarters/cafeteria)
 "mlQ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "mma" = (
@@ -25187,7 +25172,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "mnk" = (
@@ -25208,6 +25193,13 @@
 	},
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
+"mnZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/blind_switch/area/east,
+/turf/simulated/floor/darkblue/checker/other,
+/area/station/crew_quarters/radio/lab)
 "moJ" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light{
@@ -25756,7 +25748,9 @@
 "mBY" = (
 /obj/decal/poster/wallsign/engineering,
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/quartermaster/refinery)
+/area/station/science/gen_storage{
+	name = "Research Hall"
+	})
 "mCe" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -25850,8 +25844,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
 	},
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "mEN" = (
@@ -25999,8 +25992,7 @@
 	dir = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "mIG" = (
@@ -26493,7 +26485,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "mUh" = (
@@ -26721,7 +26713,7 @@
 "nce" = (
 /obj/machinery/light,
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nco" = (
@@ -26997,7 +26989,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nkW" = (
@@ -27007,7 +26999,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nlc" = (
@@ -27021,8 +27013,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/caution/south,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "nlq" = (
@@ -27126,7 +27117,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nmM" = (
@@ -27600,7 +27591,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nAa" = (
@@ -27825,7 +27816,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nFM" = (
@@ -27980,7 +27971,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "nIv" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -28004,7 +27995,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "nJl" = (
@@ -28486,8 +28477,7 @@
 	icon_state = "6-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "nYt" = (
@@ -28534,7 +28524,7 @@
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "oaD" = (
@@ -28599,7 +28589,7 @@
 "odJ" = (
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "odL" = (
@@ -28701,7 +28691,7 @@
 /area/station/security/equipment)
 "ohp" = (
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "oil" = (
@@ -28721,7 +28711,7 @@
 	pixel_y = 8
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "ojk" = (
@@ -28750,7 +28740,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 6
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "ojS" = (
@@ -29810,8 +29800,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "oNJ" = (
@@ -30405,7 +30394,7 @@
 	},
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "pfr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -30421,7 +30410,7 @@
 /obj/machinery/light/small,
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "pgy" = (
 /obj/table/wood/auto{
 	pixel_w = -1
@@ -30531,7 +30520,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "pjY" = (
@@ -30624,7 +30613,7 @@
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "plO" = (
@@ -30704,7 +30693,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "pnO" = (
@@ -30813,7 +30802,7 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "ppQ" = (
 /obj/machinery/plantpot{
 	anchored = 1
@@ -30932,8 +30921,7 @@
 	output = 34300
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "psZ" = (
@@ -30944,7 +30932,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "pte" = (
@@ -31018,6 +31006,9 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/black,
 /area/station/security/checkpoint{
 	name = "Security Overwatch"
@@ -31275,7 +31266,7 @@
 	},
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "pCL" = (
@@ -31324,7 +31315,7 @@
 /area/station/chapel/office)
 "pDE" = (
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "pDS" = (
@@ -31402,8 +31393,7 @@
 	icon_state = "1-10"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "pHb" = (
@@ -31618,7 +31608,7 @@
 "pMS" = (
 /obj/stool/chair,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "pMV" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -32126,7 +32116,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qcg" = (
@@ -32586,7 +32576,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qrn" = (
@@ -32913,8 +32903,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "qzz" = (
@@ -33030,7 +33019,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qCW" = (
@@ -33065,7 +33054,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qDV" = (
@@ -33103,7 +33092,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "qFM" = (
 /obj/stool/chair{
 	dir = 4
@@ -33153,20 +33142,21 @@
 /obj/landmark/start{
 	name = "Roboticist"
 	},
+/obj/blind_switch/area/north,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "qGL" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "qHA" = (
 /obj/rack,
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qHC" = (
@@ -33641,7 +33631,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "qVJ" = (
@@ -33970,7 +33960,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "reu" = (
@@ -34027,7 +34017,7 @@
 "rgb" = (
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "rgd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -34817,7 +34807,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "rDI" = (
@@ -34872,8 +34862,7 @@
 	name = "south substation transit chute"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "rGp" = (
@@ -35401,7 +35390,7 @@
 "rUr" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "rUx" = (
 /obj/machinery/disposal/mail/autoname/mechanics,
 /obj/machinery/light{
@@ -35659,8 +35648,7 @@
 	icon_state = "6-9"
 	},
 /turf/simulated/floor,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "sbb" = (
@@ -35914,7 +35902,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/black,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "shh" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1
@@ -36371,7 +36359,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "stc" = (
@@ -36743,7 +36731,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "sCv" = (
@@ -36853,8 +36841,7 @@
 /obj/machinery/power/catalytic_generator,
 /obj/cable,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "sDZ" = (
@@ -36975,7 +36962,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "sHZ" = (
 /obj/machinery/light,
 /obj/decal/tile_edge/line/black{
@@ -37134,7 +37121,7 @@
 	},
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "sLC" = (
@@ -37208,8 +37195,7 @@
 /obj/machinery/cell_charger,
 /obj/item/cell/supercell/charged,
 /turf/simulated/floor/caution/east,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "sNA" = (
@@ -37582,8 +37568,7 @@
 	icon_state = "2-5"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "sVT" = (
@@ -37833,8 +37818,7 @@
 	dir = 8
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "tbC" = (
@@ -38293,7 +38277,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "tmd" = (
 /obj/machinery/door/airlock/pyro/command/alt,
 /obj/access_spawn/ai_upload,
@@ -38358,7 +38342,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "tnC" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/lightbox/tubes,
@@ -38385,8 +38369,7 @@
 	dir = 8
 	},
 /turf/simulated/floor,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "tnY" = (
@@ -39308,7 +39291,7 @@
 "tLK" = (
 /obj/machinery/portable_atmospherics/scrubber,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "tLV" = (
 /obj/machinery/light{
 	dir = 1;
@@ -39350,8 +39333,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 6
 	},
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "tMu" = (
@@ -39491,7 +39473,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "tQs" = (
@@ -39610,7 +39592,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "tTk" = (
@@ -39784,7 +39766,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "tYQ" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
@@ -39892,8 +39874,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "uaU" = (
@@ -40700,8 +40681,7 @@
 /turf/simulated/floor/caution/corner/misc{
 	dir = 10
 	},
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "uyk" = (
@@ -41040,7 +41020,7 @@
 "uHR" = (
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "uHS" = (
 /turf/simulated/floor/yellowblack,
 /area/station/engine/elect)
@@ -41238,8 +41218,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/caution/west,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "uNf" = (
@@ -41757,7 +41736,7 @@
 /turf/simulated/floor/yellowblack/corner{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "vay" = (
@@ -41869,8 +41848,7 @@
 "vdY" = (
 /obj/machinery/catalytic_rod_unit/left/populated,
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "vef" = (
@@ -41931,8 +41909,7 @@
 	icon_state = "1-6"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "vgL" = (
@@ -42012,7 +41989,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 8
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "vkt" = (
@@ -42357,8 +42334,7 @@
 	})
 "vtr" = (
 /turf/simulated/floor/plating,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "vtH" = (
@@ -42416,8 +42392,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "vvt" = (
@@ -42711,7 +42686,7 @@
 	pixel_x = 3
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "vCH" = (
 /turf/simulated/floor/grey/side{
 	dir = 8
@@ -42827,7 +42802,7 @@
 	pixel_y = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "vGn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -43095,7 +43070,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "vOG" = (
@@ -43327,7 +43302,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/purpleblack/corner,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "vUR" = (
@@ -44213,7 +44188,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "wAs" = (
@@ -44659,7 +44634,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "wNk" = (
@@ -44918,7 +44893,7 @@
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "wVl" = (
@@ -45522,7 +45497,7 @@
 	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "xmi" = (
@@ -45995,7 +45970,7 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "xxE" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/black,
@@ -46087,7 +46062,7 @@
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "xAj" = (
@@ -46282,7 +46257,7 @@
 	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/inner)
+/area/station/maintenance/inner/south)
 "xFb" = (
 /obj/machinery/light_switch/west,
 /obj/stool/chair/office/blue{
@@ -46404,7 +46379,7 @@
 	},
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "xJp" = (
@@ -46487,7 +46462,7 @@
 	name = "Scientist"
 	},
 /turf/simulated/floor/purpleblack,
-/area/station/science{
+/area/station/science/gen_storage{
 	name = "Research Hall"
 	})
 "xME" = (
@@ -47245,8 +47220,7 @@
 /area/station/security/beepsky)
 "yel" = (
 /turf/simulated/floor/caution/corner/sw,
-/area/station/engine/substation{
-	do_not_irradiate = 1;
+/area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
 "yex" = (
@@ -96524,13 +96498,13 @@ fqB
 lky
 wRi
 xZH
-hJl
-hJl
-xZH
+iTH
+iTH
+mlQ
 jzr
 mBY
-hJl
-hJl
+iTH
+iTH
 mlQ
 mlQ
 mlQ
@@ -107422,7 +107396,7 @@ jav
 jMP
 kTa
 ihm
-qKq
+mnZ
 qKq
 tii
 uFd
