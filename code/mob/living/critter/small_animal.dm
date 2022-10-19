@@ -92,10 +92,9 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			src.slug.changeStatus("slowed", 10 SECONDS, 2)
 			var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 			ability.doCooldown()
-			src.mind.transfer_to(src.slug)
+			src.mind?.transfer_to(src.slug)
 			boutput(src.slug, "<span class='alert'>You manage to quickly slither out of your host!</span>")
 			src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You manage to quickly slither out of your host!</span>")
-			src.slug = null
 		..()
 
 	setup_healths()
@@ -114,20 +113,22 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if (!gibbed)
 			src.unequip_all()
 		if(src.slug)
-			var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+			var/mob/living/critter/brain_slug/the_slug = src.slug
+			var/datum/targetable/ability = the_slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 			ability.doCooldown()
-			src.slug.changeStatus("slowed", 10 SECONDS, 2)
+			the_slug.changeStatus("slowed", 10 SECONDS, 2)
 			if(gibbed)
-				src.slug.set_loc(get_turf(src.loc))
-				src.mind.transfer_to(slug)
+				the_slug.set_loc(get_turf(src.loc))
+				src.mind?.transfer_to(the_slug)
 				src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
 				src.slug = null
 			else
 				spawn(3 SECONDS)
-					slug.set_loc(get_turf(src.loc))
-					src.mind.transfer_to(slug)
-					src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s ear!</span>", "<span class='alert'>You slither out of your dying host.</span>")
-					src.slug = null
+					if(src && the_slug)	//If we got deleted instead, disposing will take place
+						the_slug.set_loc(get_turf(src.loc))
+						src.mind?.transfer_to(the_slug)
+						src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s ear!</span>", "<span class='alert'>You slither out of your dying host.</span>")
+						src.slug = null
 		..()
 
 	canRideMailchutes()

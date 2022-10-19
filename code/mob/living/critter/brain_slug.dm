@@ -1,15 +1,15 @@
 /mob/living/critter/brain_slug
 	name = "brain slug"
-	desc = "A slithery thing."
+	desc = "A space parasite known to take control of feeble minds."
 	hand_count = 0
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "brain_slug"
 	health_brute = 25
-	health_burn = 20
+	health_burn = 25
 	flags = TABLEPASS | DOORPASS
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
-	pet_text = list("squishes","pokes","slaps", "prods cautiously")
+	pet_text = list("squishes","pokes","slaps","prods curiously")
 	speechverb_say = "whispers"
 	speechverb_exclaim = "squeals"
 	add_abilities = list(/datum/targetable/brain_slug/slither,
@@ -21,8 +21,6 @@
 	can_disarm = 0
 	can_help = 0
 
-
-	//Todo Makes its say not work.
 	New(var/turf/T)
 		..(T)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
@@ -37,7 +35,7 @@
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					playsound(src, "sound/voice/creepyshriek.ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
-					return "<span class='emote'><b>[src]</b> lets out a horrific shriek!</span>"
+					return "<span class='emote'><b>[src]</b> lets out a high pitched shriek!</span>"
 
 	death(var/gibbed)
 		if (!gibbed)

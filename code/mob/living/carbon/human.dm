@@ -739,24 +739,26 @@
 
 	//Brain slug business
 	if(src.slug)
-		var/datum/targetable/ability = src.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+		var/mob/living/critter/brain_slug = src.slug
+		var/datum/targetable/ability = brain_slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
-		src.slug.changeStatus("slowed", 10 SECONDS, 2)
+		brain_slug.changeStatus("slowed", 10 SECONDS, 2)
 		if(gibbed)
-			src.slug.set_loc(get_turf(src.loc))
-			src.mind.transfer_to(src.slug)
+			brain_slug.set_loc(get_turf(src.loc))
+			src.mind?.transfer_to(brain_slug)
 			src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
 		else
 			spawn(3 SECONDS)
-				if (src.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
-					var/obj/head = src.organHolder.drop_organ("head")
-					qdel(head)
-					make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
-					playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50)
-					gibs(src.loc, headbits = 0)
-					src.visible_message("<span class='alert'>[src]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [src]'s head in a delightfully horrific manner.</span>")
-				src.slug.set_loc(get_turf(src.loc))
-				src.mind.transfer_to(src.slug)
+				if (src) //If src is null, we got disposed during that time.
+					if (src.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
+						var/obj/head = src.organHolder.drop_organ("head")
+						qdel(head)
+						make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
+						playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50)
+						gibs(src.loc, headbits = 0)
+						src.visible_message("<span class='alert'>[src]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [src]'s head in a delightfully horrific manner.</span>")
+					brain_slug.set_loc(get_turf(src.loc))
+					src.mind?.transfer_to(brain_slug)
 
 	src.canmove = 0
 	src.lying = 1

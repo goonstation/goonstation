@@ -328,6 +328,7 @@
 		src.mutantrace.onLife(mult)
 
 	if (!isdead(src)) // Marq was here, breaking everything.
+
 		if (src.sims && src.ckey) // ckey will be null if it's an npc, so they're skipped
 			src.sims.Life()
 
@@ -597,9 +598,9 @@
 
 	//Hints towards a parasited host and takes away points on each tick
 	proc/handle_slug_process()
-		var/datum/abilityHolder/brain_slug/AH = null
 		//Check if they have slug abilities
 		if (src.abilityHolder)
+			var/datum/abilityHolder/brain_slug/AH = null
 			if(istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
 				AH = src.abilityHolder
 			else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
@@ -633,9 +634,10 @@
 							if (prob(70))
 								src.emote("cough")
 								var/turf/T = get_turf(src)
+								src.visible_message("<span class='alert'>[src] coughs up some slimy blood!</span>")
 								make_cleanable(/obj/decal/cleanable/blood,T)
 							else
-								src.visible_message("<span class='alert'>[src] vomits a lot of blood!</span>")
+								src.visible_message("<span class='alert'>[src] vomits a lot of slimy, sticky blood!</span>")
 								playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
 								bleed(src, rand(5,8), 5)
 				//The body is rotting on it's feet, time to go
