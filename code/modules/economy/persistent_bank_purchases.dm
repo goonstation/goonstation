@@ -779,7 +779,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				var/picked = pick(childrentypesof(/obj/item/clothing/head))
+				var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
 				A.set_hat(new picked())
 				return 1
 			return 0
