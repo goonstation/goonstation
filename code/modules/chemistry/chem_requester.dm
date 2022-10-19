@@ -93,6 +93,7 @@ var/list/datum/chem_request/chem_requests = list()
 				src.request.time = ticker.round_elapsed_ticks
 				//byond jank, lists are only associative if they aren't int indexed
 				chem_requests["[src.request.id]"] = src.request
+				logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] placed a chemical request for [src.request.volume] units of [src.request.reagent_name] using [src.request.requester_name]'s ID at [log_loc(src)], notes: \"[src.request.note]\"")
 				var/datum/signal/pdaSignal = get_free_signal()
 				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RESEARCH-MAILBOT",  "group"=list(MGD_SCIENCE), "sender"="00000000", "message"="Notification: new chemical request received.")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
@@ -160,9 +161,11 @@ var/list/datum/chem_request/chem_requests = list()
 				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
 					request.state = "denied"
+					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] denied [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_name] at [log_loc(src)]")
 				. = TRUE
 			if ("fulfil")
 				var/datum/chem_request/request = chem_requests["[params["id"]]"]
 				if (request)
+					logTheThing(LOG_STATION, src, "[constructTarget(ui.user)] fulfilled [request.requester_name]'s chemical request for [request.volume] units of [request.reagent_name] at [log_loc(src)]")
 					request.state = "fulfilled"
 				. = TRUE
