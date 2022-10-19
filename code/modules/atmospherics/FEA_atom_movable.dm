@@ -79,7 +79,7 @@
 				if(91 to 360)
 					step_towards(src, src.airflow_origin)
 
-		src.set_dir = olddir
+		src.set_dir(old_dir)
 		boutput(world, "[src.name] moved by airflow at ([src.x], [src.y], [src.z])")
 
 	src.set_density(pre_airflow_density)
