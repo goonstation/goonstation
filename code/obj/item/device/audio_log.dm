@@ -83,6 +83,7 @@
 	var/max_lines = 60
 	var/text_colour = "#3FCC3F"
 	var/continuous = TRUE
+	var/list/name_colours = list()
 	var/list/audiolog_messages = list()
 	var/list/audiolog_speakers = list()
 	var/self_destruct = FALSE
@@ -140,6 +141,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.updateSelfDialog()
 
+			playsound(src.loc, 'sound/machines/law_insert.ogg', 40, 0.5)
 			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
 
 		else
@@ -201,6 +203,8 @@
 					src.tape.set_loc(get_turf(src))
 					usr.put_in_hand_or_eject(src.tape) // try to eject it into the users hand, if we can
 
+					playsound(src.loc, 'sound/machines/law_remove.ogg', 40, 0.5)
+
 					src.tape.log_line = 1
 					src.tape = null
 			playsound(src.loc, 'sound/machines/button.ogg', 40, 0.5)
@@ -212,7 +216,7 @@
 		return
 
 	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
-		if ((src.mode != MODE_RECORDING) || !src.tape)
+		if (src.mode != MODE_RECORDING || !src.tape)
 			return
 
 		if (speaker.mind && speaker.mind.assigned_role == "Captain")
@@ -225,7 +229,7 @@
 		if (speaker.vdisfigured)
 			speaker_name = "Unknown"
 
-		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)//istype(speaker.wear_mask, /obj/item/clothing/mask/gas/voice))
+		if (ishuman(speaker) && speaker.wear_mask && speaker.wear_mask.vchange)
 			if (speaker:wear_id)
 				speaker_name = speaker:wear_id:registered
 			else
@@ -240,9 +244,13 @@
 		return
 
 	proc/play()
+		if (!src.tape)
+			return
+
 		mode = MODE_PLAYING
+		src.create_name_colours(src.tape.speakers)
 		SPAWN(2 SECONDS)
-			while (mode == MODE_PLAYING && tape)
+			while (mode == MODE_PLAYING && src.tape)
 				var/speak_message = tape.get_message(continuous)
 				if (!speak_message)
 					stop()
@@ -268,23 +276,28 @@
 			SPAWN(2 SECONDS)
 				src.explode()
 
-	proc/speak(speaker, message, show_no_speaker, text_colour)
+	proc/speak(speaker, message, show_no_speaker, text_colour_override)
 		if (!message)
 			return
+		var/speaker_colour
+		if (!text_colour_override)
+			speaker_colour = src.text_colour
+			if (speaker && !show_no_speaker && name_colours[speaker])
+				speaker_colour = name_colours[speaker]
+		else
+			speaker_colour = text_colour_override
 		if (!speaker && !show_no_speaker)
 			speaker = "Unknown"
-		if (!text_colour)
-			text_colour = src.text_colour
 
 		var/image/chat_maptext/audio_log_text
 		if (istype(src.loc, /turf))
-			audio_log_text = make_chat_maptext(src, message, "color: [text_colour];")
+			audio_log_text = make_chat_maptext(src, message, "color: [speaker_colour];")
 			if (audio_log_text && src.chat_text && length(src.chat_text.lines))
 				audio_log_text.measure(src)
 				for (var/image/chat_maptext/I in src.chat_text.lines)
 					if (I != audio_log_text)
 						I.bump_up(audio_log_text.measured_height)
-		src.audible_message("<span class='game radio' style='color: [text_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
+		src.audible_message("<span class='game radio' style='color: [speaker_colour]'><span class='name'>[speaker]</span><b> [bicon(src)]\[Log\]</b> <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = audio_log_text)
 		return
 
 	proc/explode()
@@ -296,6 +309,30 @@
 
 		src.blowthefuckup(2)
 		return
+
+	proc/create_name_colours(var/list/names)
+		if (!names.len)
+			return
+
+		var/list/unique_names = list()
+		for (var/i in 1 to names.len)
+			if (!(names[i] in unique_names))
+				unique_names.Add(names[i])
+
+		name_colours = list()
+		if (unique_names.len == 1)
+			name_colours[unique_names[1]] = text_colour
+			return
+
+		var/list/text_rgb = hex_to_rgb_list(text_colour)
+		var/list/text_hsl = rgb2hsl(text_rgb[1], text_rgb[2], text_rgb[3])
+		var/lightness_part = 60 / (unique_names.len + 1)
+
+		for (var/i in 1 to unique_names.len)
+			var/lightness = 20 + (lightness_part * i)
+			var/colour = hsl2rgb(text_hsl[1], text_hsl[2], lightness)
+			name_colours[unique_names[i]] = colour
+			message_admins("[lightness]")
 
 #undef MODE_OFF
 #undef MODE_RECORDING
