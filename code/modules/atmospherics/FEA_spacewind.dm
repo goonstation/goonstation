@@ -32,7 +32,7 @@
 	return TRUE
 
 /mob/living/carbon/human/CanAirflowMove(delta)
- 	. = ..()
+	. = ..()
 	if(src.shoes && src.shoes.magnetic)
 		return FALSE
 
