@@ -434,8 +434,9 @@
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
 		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
-			H.traitHolder.removeTrait("pilot")
-			boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
+			if(H.traitHolder.hasTrait("pilot"))
+				H.traitHolder.removeTrait("pilot")
+				boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
 
 		H.Equip_Job_Slots(JOB)
 

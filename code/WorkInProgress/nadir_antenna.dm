@@ -430,29 +430,35 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	///Standing on the pad while it's trying to transport cargo is an extremely dumb idea, prepare to get owned
 	proc/telefrag(var/mob/living/carbon/human/M)
 		var/dethflavor = pick("suddenly vanishes","tears off in the teleport stream","disappears in a flash","violently disintegrates")
+		var/limb_ripped = FALSE
 
 		switch(rand(1,4))
 			if(1)
 				if(M.limbs.l_arm)
+					limb_ripped = TRUE
 					M.limbs.l_arm.delete()
 					M.visible_message("<span class='alert'><B>[M]</B>'s arm [dethflavor]!</span>")
 			if(2)
 				if(M.limbs.r_arm)
+					limb_ripped = TRUE
 					M.limbs.r_arm.delete()
 					M.visible_message("<span class='alert'><B>[M]</B>'s arm [dethflavor]!</span>")
 			if(3)
 				if(M.limbs.l_leg)
+					limb_ripped = TRUE
 					M.limbs.l_leg.delete()
 					M.visible_message("<span class='alert'><B>[M]</B>'s leg [dethflavor]!</span>")
 			if(4)
 				if(M.limbs.r_leg)
+					limb_ripped = TRUE
 					M.limbs.r_leg.delete()
 					M.visible_message("<span class='alert'><B>[M]</B>'s leg [dethflavor]!</span>")
 
-		playsound(M.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
-		M.emote("scream")
-		M.changeStatus("stunned", 5 SECONDS)
-		M.changeStatus("weakened", 5 SECONDS)
+		if(limb_ripped)
+			playsound(M.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+			M.emote("scream")
+			M.changeStatus("stunned", 5 SECONDS)
+			M.changeStatus("weakened", 5 SECONDS)
 
 
 /obj/machinery/computer/transception
