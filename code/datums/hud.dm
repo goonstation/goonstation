@@ -69,7 +69,7 @@
 	*
 	* list(
 	*
-*	"zone_alias" = list(
+	*	"zone_alias" = list(
 	*
 	*		"coords" = list( // list of 2 coordinate pairs for the lower left corner and the upper right corner of the hud zone
 	*			x_low = num, y_low = num, x_high = num, y_high = num
