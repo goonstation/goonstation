@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				SPAWN(0.1 SECONDS)
 					flick("drill-extract",src.drawlight)
 
-			playsound(src.loc, 'sound/machines/siphon_run.ogg', 30, !extract_progressed) //noise warbles if no progress occurred
+			playsound(src.loc, 'sound/machines/siphon_run.ogg', 50, !extract_progressed) //noise warbles if no progress occurred
 
 			if(length(src.contents) >= src.max_held_items)
 				src.changemode("low")
@@ -402,7 +402,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 			if("low")
 				playsound(src, "sound/machines/click.ogg", 40, 1)
 			if("active")
-				playsound(src, "sound/machines/siphon_activate.ogg", 40, 0)
+				playsound(src, "sound/machines/siphon_activate.ogg", 60, 0)
 			if("high")
 				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
 		src.update_fx()
