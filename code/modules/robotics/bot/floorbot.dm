@@ -532,6 +532,8 @@
 
 	onEnd()
 		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
 		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (new_tile)
 			// Make a new tile
