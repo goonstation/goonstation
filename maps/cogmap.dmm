@@ -17577,7 +17577,10 @@
 	},
 /area/station/bridge)
 "aVo" = (
-/obj/machinery/vending/snack,
+/obj/machinery/vending/snack{
+	dir = 4;
+	pixel_x = -5
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -18158,7 +18161,10 @@
 	},
 /area/station/bridge)
 "aWD" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/coffee{
+	dir = 4;
+	pixel_x = -5
+	},
 /obj/window/reinforced{
 	dir = 8
 	},
