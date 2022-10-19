@@ -245,7 +245,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				flick(flick_state, src)
 
-		..()
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
 
 	proc/ejectcasings()
 		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
