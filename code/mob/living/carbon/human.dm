@@ -743,6 +743,7 @@
 		var/datum/targetable/ability = brain_slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 		ability.doCooldown()
 		brain_slug.changeStatus("slowed", 10 SECONDS, 2)
+		src.remove_ability_holder(/datum/abilityHolder/brain_slug)
 		if(gibbed)
 			brain_slug.set_loc(get_turf(src.loc))
 			src.mind?.transfer_to(brain_slug)

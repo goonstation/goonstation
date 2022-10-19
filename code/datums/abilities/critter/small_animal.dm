@@ -49,7 +49,12 @@
 			boutput(holder.owner, "<span class='notice'>What a delightful morsel! You swallow it all in one gulp!</span>")
 			boutput(the_slug, "<span class='alert'>[holder.owner] pecks at you and swallows you in one gulp!</span>")
 			the_slug.set_loc(holder.owner)
-			holder.owner.slug = the_slug
+			if (istype(holder.owner, /mob/living/critter/small_animal))
+				var/mob/living/critter/small_animal/caster = holder.owner
+				caster.slug = the_slug
+			if (istype(holder.owner, /mob/living/carbon/human))
+				var/mob/living/carbon/human/caster = holder.owner
+				caster.slug = the_slug
 			spawn(4 SECONDS)
 				if (!holder.owner || !the_slug)
 					return
@@ -63,9 +68,8 @@
 						boutput(holder.owner, "<span class='alert'>You feel something crawl up your neck, then nothingness. Your conscience fades.</span>")
 						holder.owner.ghostize()
 						the_slug.mind.transfer_to(holder.owner)
-						var/datum/abilityHolder/brain_slug/AH = holder.owner.add_ability_holder(/datum/abilityHolder/brain_slug)
-						AH.addAbility(/datum/targetable/brain_slug/exit_host)
-						AH.addAbility(/datum/targetable/brain_slug/infest_host)
+						holder.owner.addAbility(/datum/targetable/brain_slug/exit_host)
+						holder.owner.addAbility(/datum/targetable/brain_slug/infest_host)
 					else
 						boutput(holder.owner, "<span class='notice'>Actually, you feel just fine! Nothing to worry about!</span>")
 		if (iscarbon(MT) && prob(60))

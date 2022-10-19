@@ -145,41 +145,29 @@
 		if (istype(current_target, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/T = current_target
 			T.slug = the_slug
+			T.addAbility(/datum/targetable/brain_slug/exit_host)
+			T.addAbility(/datum/targetable/brain_slug/infest_host)
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
 			T.slug = the_slug
-		var/datum/abilityHolder/brain_slug/AH = current_target.add_ability_holder(/datum/abilityHolder/brain_slug)
-		AH.addAbility(/datum/targetable/brain_slug/exit_host)
-		AH.addAbility(/datum/targetable/brain_slug/infest_host)
-		AH.addAbility(/datum/targetable/brain_slug/spit_slime)
+			var/datum/abilityHolder/brain_slug/AH = current_target.add_ability_holder(/datum/abilityHolder/brain_slug)
+			AH.addAbility(/datum/targetable/brain_slug/exit_host)
+			AH.addAbility(/datum/targetable/brain_slug/infest_host)
+			AH.addAbility(/datum/targetable/brain_slug/spit_slime)
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
 
 		if (is_transfer) //Handle the old body
 			caster.mind.transfer_to(the_slug)	//Assume control of the slug again, use "take control" to start over.
 			if(istype(caster, /mob/living/critter/small_animal))
-				var/mob/living/critter/small_animal/S = caster
-				S.slug = null
-				if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/brain_slug))
-					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
-					old_host_holder.removeAbility(/datum/targetable/brain_slug/exit_host)
-					old_host_holder.removeAbility(/datum/targetable/brain_slug/infest_host)
+				var/mob/living/critter/small_animal/old_host = caster
+				old_host.slug = null
+				old_host.removeAbility(/datum/targetable/brain_slug/exit_host)
+				old_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 			if(istype(caster, /mob/living/carbon/human))
-				var/mob/living/carbon/human/S = caster
-				S.slug = null
-				var/datum/abilityHolder/brain_slug/AH = null
-				if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/brain_slug))
-					AH = S.abilityHolder
-				else if (S.abilityHolder && istype(S.abilityHolder, /datum/abilityHolder/composite))
-					var/datum/abilityHolder/composite/composite_holder = S.abilityHolder
-					for (var/datum/holder in composite_holder.holders)
-						if (istype(holder, /datum/abilityHolder/brain_slug))
-							AH = holder
-							break
-				if (AH)
-					var/datum/abilityHolder/brain_slug/old_host_holder = S.abilityHolder
-					old_host_holder.removeAbility(/datum/targetable/brain_slug/exit_host)
-					old_host_holder.removeAbility(/datum/targetable/brain_slug/infest_host)
+				var/mob/living/carbon/human/old_host = caster
+				old_host.slug = null
+				old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			spawn(5 SECONDS)
 				caster.death(gibbed = FALSE)
 
@@ -237,9 +225,8 @@
 					gibs(human_host.loc, headbits = 0)
 					human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
 				//Cleanup
-				human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-				human_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 				human_host.slug = null
+				human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				human_host.death(gibbed = false)
 
 		else if (istype(holder.owner, /mob/living/critter/brain_slug))
