@@ -594,6 +594,9 @@
 
 	onEnd()
 		..()
+		if (!master.on)
+			interrupt(INTERRUPT_ALWAYS)
+			return
 		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
