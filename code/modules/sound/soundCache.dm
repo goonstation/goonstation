@@ -306,6 +306,7 @@ var/global/list/soundCache = list(
  	"sound/effects/smoke.ogg" = 'sound/effects/smoke.ogg',\
  	"sound/effects/smoke_tile_spread.ogg" = 'sound/effects/smoke_tile_spread.ogg',\
  	"sound/effects/snaptape.ogg" = 'sound/effects/snaptape.ogg',\
+ 	"sound/effects/space_wind_big.ogg" = 'sound/effects/space_wind_big.ogg',\
  	"sound/effects/spark_lighter.ogg" = 'sound/effects/spark_lighter.ogg',\
  	"sound/effects/sparks1.ogg" = 'sound/effects/sparks1.ogg',\
  	"sound/effects/sparks2.ogg" = 'sound/effects/sparks2.ogg',\

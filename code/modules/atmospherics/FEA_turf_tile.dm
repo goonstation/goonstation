@@ -57,10 +57,15 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 /turf/proc/high_pressure_movements()
 	if(!loc:sanctuary)
+		if(world.timeofday > loc:last_spacewind_woosh + 2 SECONDS)
+			playsound(src, 'sound/effects/space_wind_big.ogg', 100, TRUE, null)
+			loc:last_spacewind_woosh = world.timeofday
+
 		for(var/atom/movable/in_tile as anything in src)
 			in_tile.experience_pressure_difference(pressure_difference, pressure_direction, src)
 
 	pressure_difference = 0
+	maptext = pressure_difference
 
 /turf/proc/consider_pressure_difference(connection_difference, connection_direction)
 	if(loc:sanctuary)
@@ -74,6 +79,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 		if(!pressure_difference)
 			air_master.high_pressure_delta += src
 
+		maptext = connection_difference
 		pressure_difference = connection_difference
 		pressure_direction = connection_direction
 		if(locate(/mob/living/carbon/human) in viewers(5, src))
