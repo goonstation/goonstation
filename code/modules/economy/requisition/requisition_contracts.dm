@@ -360,6 +360,9 @@ ABSTRACT_TYPE(/datum/req_contract)
 				if(X) qdel(X)
 			if(!length(sell_crate.contents)) //total clean sale, tell shipping manager to del the crate
 				. = REQ_RETURN_FULLSALE
+		else //sale unsuccessful; reset rolling counts of all contract entries in preparation for subsequent fulfillment attempts
+			for(var/datum/rc_entry/shopped in rc_entries)
+				shopped.rollcount = 0
 		return
 
 #undef RC_ITEM

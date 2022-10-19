@@ -2310,21 +2310,13 @@ var/global/list/allowed_restricted_z_areas
 
 	return role
 
-var/regex/nameRegex = regex("\\xFF.","g")
-/proc/strip_special(var/text)
-	return nameRegex.Replace( "[text]", "" )
-
+var/regex/regexTextMacro = regex("\xFF.", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
   */
 /proc/stripTextMacros(text)
-	if (findtext(text, "\improper"))
-		text = replacetext(text, "\improper", "")
-	if (findtext(text, "\proper"))
-		text = replacetext(text, "\proper", "")
-
-	return text
+	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin

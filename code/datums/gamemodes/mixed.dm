@@ -12,7 +12,11 @@
 	var/has_werewolves = TRUE
 
 	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+#if defined(MAP_OVERRIDE_NADIR)
+	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#else
 	var/list/major_threats = list(ROLE_BLOB = 1, ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
+#endif
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)

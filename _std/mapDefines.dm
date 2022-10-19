@@ -37,6 +37,10 @@
 #define UNDERWATER_MAP 1
 #define SCIENCE_PATHO_MAP 1
 
+#elif defined(MAP_OVERRIDE_NADIR)
+
+#define UNDERWATER_MAP 1
+
 #elif defined(MAP_OVERRIDE_HORIZON)
 
 
