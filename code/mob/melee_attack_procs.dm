@@ -961,11 +961,11 @@
 					target.deliver_move_trigger("pushdown")
 					target.changeStatus("weakened", 2 SECONDS)
 					target.force_laydown_standup()
-					disarm_log += " shoving them down "
+					disarm_log += " shoving them down"
 				if ("shoved" in src.disarm_RNG_result)
 					step_away(target, owner, 1)
 					target.OnMove(owner)
-					disarm_log += " shoving them away "
+					disarm_log += " shoving them away"
 			else
 				target.deliver_move_trigger("bump")
 			logTheThing(LOG_COMBAT, owner, "disarms [constructTarget(target,"combat")][jointext(disarm_log, ", ")] at [log_loc(owner)].")
