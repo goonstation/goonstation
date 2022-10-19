@@ -1570,6 +1570,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "aKU" = (
@@ -3271,10 +3274,11 @@
 "bEl" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/device/analyzer/atmosanalyzer_upgrade{
+/obj/item/paper{
+	info = "if the siphon nerds kick you out use the mining fab, dive suits work just fine in acid if you loom them after EVA";
+	name = "creased note";
 	pixel_x = -15;
-	pixel_y = 3;
-	rand_pos = 0
+	pixel_y = 9
 	},
 /obj/item/device/nanoloom{
 	pixel_x = -13;
@@ -5512,6 +5516,8 @@
 "cQf" = (
 /obj/machinery/light/small,
 /obj/machinery/light_switch/east,
+/obj/rack,
+/obj/item/sea_ladder,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -7901,11 +7907,6 @@
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
-"edv" = (
-/turf/simulated/floor/yellowblack{
-	dir = 5
-	},
-/area/station/engine/storage)
 "edJ" = (
 /obj/cable{
 	icon_state = "2-5"
@@ -9057,6 +9058,10 @@
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
 	})
+"eJW" = (
+/obj/item/sea_ladder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "eKw" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergencyinternals)
@@ -12768,12 +12773,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
 "gzE" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/equipment)
 "gzN" = (
@@ -12868,6 +12873,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/east,
+/obj/rack,
+/obj/item/sea_ladder,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/sw{
 	name = "Southwest Breach Hull"
@@ -14789,6 +14796,10 @@
 	pixel_y = 21
 	},
 /obj/blind_switch/area/north,
+/obj/item/device/analyzer/atmosanalyzer_upgrade{
+	pixel_x = -14;
+	rand_pos = 0
+	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
@@ -21878,6 +21889,15 @@
 	do_not_irradiate = 1;
 	name = "South Catalytic Substation"
 	})
+"kMu" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southeast)
 "kMG" = (
 /obj/machinery/computer3/generic/communications{
 	dir = 8
@@ -23174,11 +23194,11 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "ltn" = (
-/obj/storage/secure/closet/medical/uniforms,
 /obj/machinery/firealarm{
 	dir = 4;
 	pixel_x = 24
 	},
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -23380,6 +23400,10 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/east)
+"lyg" = (
+/obj/item/sea_ladder,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "lyz" = (
 /obj/machinery/light{
 	dir = 1;
@@ -24566,6 +24590,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
+"lYm" = (
+/obj/decal/tile_edge/floorguide/mining{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/engine/storage)
 "lYP" = (
 /obj/machinery/light{
 	dir = 4;
@@ -24988,6 +25018,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/light_switch/west,
+/obj/rack,
+/obj/item/sea_ladder,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
@@ -30973,6 +31005,17 @@
 "ptO" = (
 /turf/simulated/floor/engine,
 /area/station/crew_quarters/cafeteria)
+"pum" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/engine/caution/south,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "puq" = (
 /obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/sanitary,
@@ -35995,6 +36038,12 @@
 	},
 /area/station/engine/substation/north{
 	name = "North Catalytic Substation"
+	})
+"sju" = (
+/obj/item/sea_ladder,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
 	})
 "sjI" = (
 /obj/disposalpipe/segment/vertical,
@@ -44696,6 +44745,8 @@
 "wNN" = (
 /obj/machinery/light/small,
 /obj/machinery/light_switch/west,
+/obj/rack,
+/obj/item/sea_ladder,
 /turf/simulated/floor/industrial,
 /area/station/maintenance/outer/ne{
 	name = "Northeast Breach Hull"
@@ -45850,6 +45901,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/item/sea_ladder,
 /obj/landmark{
 	icon_state = "x3";
 	name = "peststart"
@@ -46034,6 +46086,9 @@
 	icon_state = "1-8"
 	},
 /obj/disposalpipe/segment/transport,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "xyJ" = (
@@ -77825,7 +77880,7 @@ dqY
 nQY
 bxP
 vKn
-vKn
+lyg
 umj
 umj
 ewN
@@ -83815,7 +83870,7 @@ qcT
 bUz
 qmk
 gjr
-ukW
+eJW
 lMz
 tTK
 jtq
@@ -97153,7 +97208,7 @@ pyd
 swU
 vEo
 rZb
-rZb
+kMu
 vlO
 xhg
 nes
@@ -97467,7 +97522,7 @@ mrq
 jRq
 nym
 tMp
-tAy
+pum
 ykm
 lty
 lty
@@ -104701,7 +104756,7 @@ rZb
 vWX
 mkh
 pmb
-ciw
+lYm
 ciw
 ciw
 eGD
@@ -105003,7 +105058,7 @@ rZb
 vXS
 syh
 gQh
-edv
+ciw
 ciw
 ciw
 gGE
@@ -106226,7 +106281,7 @@ ntr
 kRh
 mut
 giN
-ntr
+sju
 cBV
 lCi
 neB

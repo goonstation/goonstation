@@ -23,6 +23,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	icon_state = "array"
 	bound_height = 64
 	bound_width = 96
+	mats = 0
 
 	///Whether array permits transception; can be disabled temporarily by anti-overload measures, or toggled manually
 	var/primed = TRUE
