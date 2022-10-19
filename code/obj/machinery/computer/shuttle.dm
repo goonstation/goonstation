@@ -104,6 +104,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 				var/area/end_location = locate(text2path(params["dest"]))
 				if(src.announce_move(end_location))
 					SPAWN(src.transit_delay)
+						src.active = TRUE
 						src.call_shuttle(end_location)
 				update_static_data(usr)
 
@@ -249,7 +250,6 @@ var/bombini_saved
 
 /obj/machinery/computer/transit_shuttle/johnbus/call_shuttle(area/end_location)
 	var/turf/T = get_turf(src)
-	if (active) return
 	if(bombini_saved && istype(currentlocation,/area/shuttle/john/owlery))
 		for(var/obj/npc/trader/bee/b in currentlocation)
 			bombini_saved = TRUE
