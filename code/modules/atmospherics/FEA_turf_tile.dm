@@ -73,10 +73,12 @@ var/global/list/turf/hotly_processed_turfs = list()
 	if(connection_difference > pressure_difference)
 		if(!pressure_difference)
 			air_master.high_pressure_delta += src
-			if(z == 1)
-				boutput(world, "Turf at ([x], [y], [z]) is undergoing a high pressure delta of [connection_difference]")
+
 		pressure_difference = connection_difference
 		pressure_direction = connection_direction
+		if(locate(/mob/living/carbon/human) in viewers(5, src))
+			boutput(world, "Turf at ([x], [y], [z]) is undergoing a high pressure delta of [connection_difference]")
+			boutput(world, "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
 
 /turf/simulated/proc/consider_pressure_difference_space(connection_difference)
 	for(var/direction in cardinal)
@@ -86,8 +88,6 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 			if(!pressure_difference)
 				air_master.high_pressure_delta += src
-				if(z == 1)
-					boutput(world, "Turf at ([x], [y], [z]) is undergoing a high pressure delta of [connection_difference]")
 
 			pressure_direction = direction
 			pressure_difference = connection_difference

@@ -21,7 +21,7 @@ var/global/datum/controller/process/spacewind/spacewind_control
 
 /datum/controller/process/spacewind
 	name = "Spacewind"
-	schedule_interval = 1
+	schedule_interval = 0.1 SECONDS
 
 	///The queue list for all movables ready to go through the process
 	var/list/queued_movables
@@ -48,14 +48,17 @@ var/global/datum/controller/process/spacewind/spacewind_control
 
 		if(QDELETED(target))
 			DEQUEUE_MOVABLE(target)
+			scheck()
 			continue
 
 		if(!isturf(target.loc))
 			DEQUEUE_MOVABLE(target)
+			scheck()
 			continue
 
 		if(target.airflow_speed <= 0)
 			DEQUEUE_MOVABLE(target)
+			scheck()
 			continue
 
 		if(target.airflow_process_delay > 0)
@@ -77,7 +80,7 @@ var/global/datum/controller/process/spacewind/spacewind_control
 			if(target.pre_airflow_density == 0)
 				target.set_density(FALSE)
 
-			target.airflow_process_delay = max(1, 10 - (target.airflow_speed + 3))
+			target.airflow_process_delay = max(1, 10 - (target.airflow_speed))
 			target.airflow_skip_speedcheck = TRUE
 			continue
 
@@ -98,17 +101,20 @@ var/global/datum/controller/process/spacewind/spacewind_control
 		var/airflow_angle = dir2angle(target.airflow_direction)
 		var/angle = max(dirfromoriginasangle, airflow_angle) - min(dirfromoriginasangle, airflow_angle)
 
-		switch(angle)
-			if(0 to 45)
-				step_away(target, target.airflow_origin)
-			if(46 to 89)
-				step(target, target.airflow_direction)
-			if(90 to 360)
-				step_towards(target, target.airflow_origin)
+		if(target.loc = target.airflow_origin)
+			step(target, target.airflow_direction)
+		else
+			switch(angle)
+				if(0 to 45)
+					step_away(target, target.airflow_origin)
+				if(46 to 89)
+					step(target, target.airflow_direction)
+				if(90 to 360)
+					step_towards(target, target.airflow_origin)
 
 		target.dir = olddir
 		boutput(world, "[target.name] moved by airflow at ([target.x], [target.y], [target.z])")
-		LAGCHECK(LAG_REALTIME)
+		scheck()
 
 /datum/controller/process/spacewind/proc/Enqueue(atom/movable/target, delta as num, turf/origin)
 	if(!target.PrepareAirflow(delta, origin))
