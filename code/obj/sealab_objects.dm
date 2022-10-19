@@ -240,15 +240,12 @@
 
 	meteorhit()
 		break_apart()
-		return
 
 	blob_act()
 		break_apart()
-		return
 
 	bullet_act()
 		break_apart()
-		return
 
 	proc/break_apart()
 		if(length(drop_table))

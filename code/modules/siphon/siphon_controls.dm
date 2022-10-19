@@ -144,7 +144,7 @@
 					if(signal.data["device"] == "SIPHON")
 						src.list_is_updated = FALSE
 						src.known_devices.Cut()
-		return
+
 
 	//construct command packet to send out; accepts netid for comms target device and a list of key-value paired commands
 	proc/build_command(var/com_target,var/command_list)
@@ -155,7 +155,7 @@
 			yell.data += command_list
 			SPAWN(0.5 SECONDS)
 				src.post_signal(yell)
-		return
+
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
@@ -232,7 +232,7 @@
 
 	user.Browse(HTML, "window=siphonControl_\ref[src];title=Siphon Systems Control;size=350x550;")
 	onclose(user, "siphonControl_\ref[src]")
-	return
+
 
 //oh boy another place this gets duplicated
 /obj/machinery/computer/siphon_control/proc/topicLink(action, subaction, var/list/extra)
@@ -240,33 +240,40 @@
 
 /obj/machinery/computer/siphon_control/proc/build_formatted_list()
 	if(src.list_is_updated) return
-	var/mainlist = "" //held separately so the siphon can always start the list
-	var/rollingtext = "" //list of entries for not siphon
-	var/intensity_sum = 0 //sum of resonator intensities (used to display effective extraction units per cycle, aka machine tick)
+	///The "upper" section of the list; keeps the Siphon's information on top when multiple devices are linked
+	var/mainlist = ""
+	///The "lower" section of the list; formats data from known devices (resonators) before being appended to the main list
+	var/rollingtext = ""
+	///Sum of resonator intensities (used to display effective extraction units per cycle, aka machine tick)
+	var/intensity_sum = 0
 
 	if(!length(src.known_devices))
-		mainlist = "<h2>NO CONNECTION TO DEVICES</h2><br>"
-		mainlist += "Displaying Default Message<br><br>"
-		mainlist += "Welcome to HARMONIC SIPHON CONTROL<br><br>"
-		mainlist += "To begin using the siphon, please place<br>"
-		mainlist += "one or more resonators within a radius<br>"
-		mainlist += "of four tiles. Use the floor coordinate<br>"
-		mainlist += "indicators for positional reference; they<br>"
-		mainlist += "will be reflected in this console once<br>"
-		mainlist += "the siphon is online and resonators<br>"
-		mainlist += "have completed pairing.<br><br>"
-		mainlist += "Please note that siphon operation<br>"
-		mainlist += "<strong>does not begin when siphon is lowered;</strong><br>"
-		mainlist += "lowering the siphon locks and pairs<br>"
-		mainlist += "resonators, readying them for calibration<br>"
-		mainlist += "and subsequent operation. Additionally,<br>"
-		mainlist += "note that resource extraction may not<br>"
-		mainlist += "show in the siphon reservoir indicator<br>"
-		mainlist += "immediately, as extraction typically<br>"
-		mainlist += "occurs over several cycles.<br><br>"
-		mainlist += "Using a wrench to manually anchor<br>"
-		mainlist += "resonators is optional, as an<br>"
-		mainlist += "automatic magnetic lock is utilized."
+		mainlist = {"<h2>NO CONNECTION TO DEVICES</h2><br>
+		Displaying Default Message<br>
+		<br>
+		Welcome to HARMONIC SIPHON CONTROL<br>
+		<br>
+		To begin using the siphon, please place<br>
+		one or more resonators within a radius<br>
+		of four tiles. Use the floor coordinate<br>
+		indicators for positional reference; they<br>
+		will be reflected in this console once<br>
+		the siphon is online and resonators<br>
+		have completed pairing.<br>
+		<br>
+		Please note that siphon operation<br>
+		<strong>does not begin when siphon is lowered;</strong><br>
+		lowering the siphon locks and pairs<br>
+		resonators, readying them for calibration<br>
+		and subsequent operation. Additionally,<br>
+		note that resource extraction may not<br>
+		show in the siphon reservoir indicator<br>
+		immediately, as extraction typically<br>
+		occurs over several cycles.<br>
+		<br>
+		Using a wrench to manually anchor<br>
+		resonators is optional, as an<br>
+		automatic magnetic lock is utilized."}
 		src.formatted_list = mainlist
 		return
 
@@ -295,13 +302,11 @@
 	mainlist += rollingtext
 	src.formatted_list = mainlist
 	src.list_is_updated = TRUE
-	return
+
 
 /obj/machinery/computer/siphon_control/Topic(href, href_list)
 	if(..())
 		return
-
-	//var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
 
 	switch (href_list["action"])
 		if ("calibrate")
@@ -315,8 +320,6 @@
 				src.build_command(manifest["INT_TARGETID"],commanderino)
 
 	src.add_fingerprint(usr)
-	//src.updateUsrDialog() //not sure if this is needed given updates are prompted by receipt of update from a resonator
-	return
 
 
 
@@ -337,8 +340,6 @@
 	///textified list of all indexed (non-hidden) minerals
 	var/mineral_list = null
 
-	New()
-		..()
 
 /obj/machinery/computer/siphon_db/attack_hand(var/mob/user as mob)
 	if(!src.allowed(user))
@@ -460,7 +461,6 @@
 
 	user.Browse(HTML, "window=siphonControl_\ref[src];title=Resonance Calibration Database;size=420x500;")
 	onclose(user, "siphonControl_\ref[src]")
-	return
 
 /obj/machinery/computer/siphon_db/proc/build_mineral_list()
 	if(src.mineral_list) return
@@ -490,4 +490,3 @@
 		rollingtext += "<br>"
 
 	src.mineral_list = rollingtext
-	return

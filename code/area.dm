@@ -3728,7 +3728,7 @@ ABSTRACT_TYPE(/area/mining)
 //Halloween is all about darkspace
 	if(name == "Space" || src.name == "Ocean")			// override defaults for space
 		requires_power = 0
-		#if defined(UNDERWATER_MAP)
+		#ifdef UNDERWATER_MAP
 		src.ambient_light = OCEAN_LIGHT
 		#endif
 

@@ -4,7 +4,7 @@
 	icon_state = "nanoloom"
 	flags = ONBELT | SUPPRESSATTACK
 	click_delay = 0.7 SECONDS
-	rand_pos = 0
+	rand_pos = FALSE
 
 	var/obj/item/nanoloom_cartridge/loom_cart = new
 
@@ -20,14 +20,13 @@
 			user.put_in_hand_or_drop(loom_cart)
 			src.loom_cart = null
 			UpdateIcon()
-		return
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/nanoloom_cartridge))
 			if(!loom_cart)
 				boutput(user, "<span class='notice'>You load the cartridge into the nanoloom.</span>")
 				playsound(src, "sound/machines/click.ogg", 40, 1)
-				W.loc = src
+				W.set_loc(src)
 				user.u_equip(W)
 				src.loom_cart = W
 				UpdateIcon()
@@ -82,13 +81,13 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "nanoloom-active"
 	var/mob/living/user
-	var/obj/item/device/nanoloom/N
+	var/obj/item/device/nanoloom/loom
 	var/obj/item/target
 	var/datum/component/gear_corrosion/gear_dam
 
 	New(usermob,tool,targetitem)
 		user = usermob
-		N = tool
+		loom = tool
 		target = targetitem
 		gear_dam = target.GetComponent(/datum/component/gear_corrosion)
 		..()
@@ -106,12 +105,12 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		src.loopStart()
-		return
+
 
 	loopStart()
 		..()
-		if (!N.loom_cart || N.loom_cart.thread <= 0)
-			user.show_text("[N]'s spool cartridge [N.loom_cart ? "was removed" : "is empty"].", "red")
+		if (!loom.loom_cart || loom.loom_cart.thread <= 0)
+			user.show_text("[loom]'s spool cartridge [loom.loom_cart ? "was removed" : "is empty"].", "red")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -121,19 +120,19 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(N, 'sound/items/putback_defib.ogg', 30, 1)
+		playsound(loom, 'sound/items/putback_defib.ogg', 30, 1)
 		if(gear_dam.apply_mend())
-			N.loom_cart.thread--
-			N.UpdateIcon()
+			loom.loom_cart.thread--
+			loom.UpdateIcon()
 
 	onEnd()
-		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(N))
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(loom))
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 		if(gear_dam.time_to_corrode >= gear_dam.max_ttc) //shouldn't ever exceed, but just in case.
-			user.show_text("[N] finishes repairing [target].", "blue")
+			user.show_text("[loom] finishes repairing [target].", "blue")
 			gear_dam.RemoveComponent(/datum/component/gear_corrosion)
 			gear_dam = null
 			..()
@@ -148,8 +147,8 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "nanoloom-cart"
 	w_class = W_CLASS_SMALL
-	inventory_counter_enabled = 1
-	rand_pos = 1
+	inventory_counter_enabled = TRUE
+	rand_pos = TRUE
 	var/thread = 40
 
 	New()

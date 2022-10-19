@@ -20,8 +20,6 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	///Setup guide, formatted as a list of strings describing individual resonator positions and intensities
 	var/list/setup_guide = null
 
-	New()
-		..()
 
 //A note: Parameter requirements will be totally ignored if not explicitly set.
 

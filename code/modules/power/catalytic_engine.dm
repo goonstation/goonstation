@@ -23,9 +23,11 @@
 	var/obj/machinery/catalytic_rod_unit/anode_unit
 	var/obj/machinery/catalytic_rod_unit/cathode_unit
 
+	///Generation rate, determined by the least effective rod between the two inserted rods
 	var/gen_rate = 0
-	var/defer_updateicon = FALSE
+	///Integer for picking an overlay icon state, determined by gen_rate during process
 	var/output_tier = 0
+	//Attached light
 	var/datum/light/light
 
 	var/sound_grump = 'sound/machines/buzz-two.ogg'
@@ -73,7 +75,6 @@
 		return attack_hand(user,TRUE)
 
 	update_icon()
-		src.defer_updateicon = TRUE
 		if(status & NOPOWER)
 			UpdateOverlays(null, "power")
 		else if(status & BROKEN)
@@ -95,31 +96,22 @@
 				light.set_brightness(0.6)
 				light.enable()
 
-		. = GetOverlayImage("mask")
-		if(.)
-			UpdateOverlays(.,"mask")
-
 	process(mult)
 
 		gen_rate = 0
 		output_tier = 0
 
 		if(!src.anode_unit || !src.cathode_unit)
-			//if(!src.defer_updateicon)
 			UpdateIcon()
 			return
 
 		if(src.anode_unit.mode == UNIT_OPEN || src.cathode_unit.mode == UNIT_OPEN)
-			//if(!src.defer_updateicon)
 			UpdateIcon()
 			return
 
 		if(src.anode_unit.toggling || src.cathode_unit.toggling)
-			//if(!src.defer_updateicon)
 			UpdateIcon()
 			return
-
-		src.defer_updateicon = FALSE
 
 		var/obj/anode_rod = src.anode_unit.contained_rod
 		var/obj/cathode_rod = src.cathode_unit.contained_rod
@@ -230,7 +222,7 @@
 		qdel(src.ovr_door)
 		qdel(src.ovr_rod)
 		qdel(src.ovr_clamp)
-		if(src.contained_rod) qdel(src.contained_rod)
+		qdel(src.contained_rod)
 		..()
 
 	attack_hand(mob/user,var/ejected_by_bot)
@@ -241,7 +233,7 @@
 				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
-					src.contained_rod.loc = src.loc
+					src.contained_rod.set_loc(src.loc)
 				else
 					user.put_in_hand_or_drop(src.contained_rod)
 				src.contained_rod = null
@@ -296,7 +288,6 @@
 				O.set_loc(src)
 				src.contained_rod = O
 				src.rod_post_install()
-				return
 			else
 				boutput(user,"\The [src] already has a rod installed.")
 
@@ -316,7 +307,6 @@
 	proc/use_rod(var/expend_type)
 		. = src.contained_rod.expend_rod(src.gentype)
 		src.indicator_update()
-		return
 
 	proc/update_mode(var/newmode)
 		if(newmode == src.oldmode)
@@ -370,7 +360,7 @@
 			src.toggling = FALSE
 
 		src.oldmode = src.mode
-		return
+
 
 	proc/indicator_update()
 		if(src.mode != UNIT_OPEN && src.contained_rod && powered())
@@ -420,7 +410,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "roditem-100"
 	item_state = "rods"
-	rand_pos = 1
+	rand_pos = TRUE
 	///Rod condition: decays over time, combines with generation efficacy to yield a production rate
 	var/condition = 100
 	///Generation efficacy for anode use. Influenced by material properties, increases dramatically above standard parameters
@@ -508,7 +498,7 @@
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
+		for(var/i in 1 to amount)
 			var/obj/item/catalytic_rod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Rod")
 			if(source?.material)
@@ -516,4 +506,3 @@
 
 			newObj.setupMaterial()
 			newObj.set_loc(getOutputLocation(owner))
-		return

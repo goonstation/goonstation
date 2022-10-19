@@ -13,6 +13,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 #define TRANSCEIVE_NOWIRE 3
 #define TRANSCEIVE_OK 4
 
+//Delay after a successful transception before another one may begin
+#define TRANSCEPTION_COOLDOWN 0.1
+
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
 	desc = "Sends and receives both energy and matter over a considerable distance. Questionably safe."
@@ -87,7 +90,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		use_power(ARRAY_TELECOST)
 		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
 		flick("beam",src.telebeam)
-		SPAWN(0.1 SECONDS)
+		SPAWN(TRANSCEPTION_COOLDOWN)
 			src.is_transceiving = FALSE
 		return TRUE
 
@@ -124,7 +127,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
-		return
 
 	///Primed status restarts when power is sufficiently restored
 	proc/attempt_restart()
@@ -226,6 +228,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 #undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
+#undef TRANSCEPTION_COOLDOWN
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -285,7 +288,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 						var/sigindex = signal.data["data"]
 						if(isnum_safe(sigindex))
 							src.attempt_transceive(sigindex)
-		return
+
 
 	proc/post_signal(datum/signal/signal,var/newfreq)
 		if(!signal)
@@ -343,7 +346,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				return
 		else
 			send_a_thing(netnum)
-		return
+
 
 	proc/send_a_thing(var/netnumber)
 		src.is_transceiving = TRUE
@@ -392,7 +395,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				showswirl(src.loc)
 				use_power(200) //most cost is at the array
 				src.is_transceiving = FALSE
-		return
+
 
 	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get)
 		src.is_transceiving = TRUE
@@ -423,7 +426,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
 				src.is_transceiving = FALSE
 
-		return
 
 	///Standing on the pad while it's trying to transport cargo is an extremely dumb idea, prepare to get owned
 	proc/telefrag(var/mob/living/carbon/human/M)
@@ -463,8 +465,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	object_flags = CAN_REPROGRAM_ACCESS
 	frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
-	var/last_ping = 0
-	var/temp = null
 	///list of transception pads known to the interlink
 	var/list/known_pads = list()
 	///formatted version of above pad list
@@ -508,7 +508,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					manifest["Array Link"] = signal.data["opstat"]
 					src.known_pads[device_netid] = manifest
 					src.queue_dialog_update = TRUE
-		return
+
 
 	process()
 		..()
@@ -528,16 +528,15 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				yell.data["command"] = "send"
 			SPAWN(0.5 SECONDS)
 				src.post_signal(yell)
-		return
+
 
 	proc/try_pad_ping()
-		if( (last_ping && ((last_ping + 10) >= world.time) ) || !src.net_id)
+		if( ON_COOLDOWN(src, "ping", 1 SECOND) || !src.net_id)
 			return 1
 
 		src.known_pads.Cut()
 		src.list_is_updated = FALSE
 
-		last_ping = world.time
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.data["address_1"] = "ping"
 		newsignal.data["sender"] = src.net_id
@@ -621,7 +620,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	user.Browse(HTML, "window=transception_\ref[src];title=Transception Interlink;size=350x550;")
 	onclose(user, "transception_\ref[src]")
-	return
 
 /obj/machinery/computer/transception/proc/build_formatted_list()
 	if(src.list_is_updated) return
@@ -648,7 +646,6 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	src.formatted_list = rollingtext
 	src.list_is_updated = TRUE
-	return
 
 //aa ee oo
 /obj/machinery/computer/transception/proc/topicLink(action, subaction, var/list/extra)
@@ -680,7 +677,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.build_command(manifest["INT_TARGETID"])
 
 	src.add_fingerprint(usr)
-	return
+
 
 #undef TRANSCEIVE_BUSY
 #undef TRANSCEIVE_NOPOWER

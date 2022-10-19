@@ -1019,7 +1019,7 @@ datum
 					if (method == TOUCH && volume >= 30)
 						if (ishuman(M))
 							var/mob/living/carbon/human/H = M
-							var/blocked = 0
+							var/blocked = FALSE
 							if (!H.wear_mask && !H.head)
 								H.TakeDamage("head", 0, clamp((volume - 5), 8, 50), 0, DAMAGE_BURN)
 								H.emote("scream")
@@ -1038,7 +1038,7 @@ datum
 											D.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 									else
 										H.visible_message("<span class='alert>The blueish acidic substance slides off \the [D] harmlessly.</span>", "<span class='alert'>Your [H.head] protects you from the acid!</span>")
-									blocked = 1
+									blocked = TRUE
 								if (!(H.head?.c_flags & SPACEWEAR) || !(H.head?.item_function_flags & IMMUNE_TO_ACID))
 									if (H.wear_mask)
 										var/obj/item/clothing/mask/K = H.wear_mask
@@ -1048,7 +1048,7 @@ datum
 												K.changeStatus("acid", 5 SECONDS, list("mob_owner" = M))
 										else
 											H.visible_message("<span class='alert'>The blueish acidic substance slides off \the [K] harmlessly.</span>", "<span class='alert'>Your [H.wear_mask] protects you from the acid!</span>")
-										blocked = 1
+										blocked = TRUE
 
 								if (blocked)
 									return
@@ -1058,7 +1058,6 @@ datum
 						M.emote("scream")
 						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
-				return
 
 			reaction_obj(var/obj/O, var/volume)
 				var/list/covered = holder.covered_turf()

@@ -916,7 +916,7 @@ var/global/list/mapNames = list(
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
-	auto_walls = 1
+	auto_walls = TRUE
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -927,7 +927,7 @@ var/global/list/mapNames = list(
 	window_layer_full = COG2_WINDOW_LAYER
 	window_layer_north = GRILLE_LAYER+0.1
 	window_layer_south = FLY_LAYER+1
-	auto_windows = 1
+	auto_windows = TRUE
 
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
