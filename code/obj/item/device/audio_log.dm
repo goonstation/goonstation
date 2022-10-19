@@ -100,58 +100,6 @@
 		updateSelfDialog()
 			return updateUsrDialog()
 
-	attack_self(mob/user as mob)
-		..()
-		if (user.stat || user.restrained() || user.lying)
-			return
-		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
-			src.add_dialog(user)
-
-			var/dat = "<TT><b>Audio Logger</b><br>"
-			if (src.tape)
-				dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
-			else
-				dat += "No Tape Loaded<br>"
-
-			dat += "<table cellspacing=5><tr>"
-			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
-			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
-
-			user.Browse(dat, "window=audiolog;size=400x140")
-			onclose(user, "audiolog")
-		else
-			user.Browse(null, "window=audiolog")
-			src.remove_dialog(user)
-
-		return
-
-	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/audio_tape))
-			if (src.tape)
-				boutput(user, "There is already a tape loaded.")
-				return
-
-			user.drop_item(I)
-			I.set_loc(src)
-			src.tape = I
-			src.tape.log_line = 1
-			src.icon_state = initial(src.icon_state)
-			src.updateSelfDialog()
-
-			playsound(src.loc, 'sound/machines/law_insert.ogg', 40, 0.5)
-			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
-
-		else
-			..()
-
-	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
-			return src.Attackby(W, user)
-		return ..()
-
 	New()
 		..()
 		if (!src.chat_text)
@@ -214,6 +162,58 @@
 			usr.Browse(null, "window=audiolog")
 			return
 		return
+
+	attack_self(mob/user as mob)
+		..()
+		if (user.stat || user.restrained() || user.lying)
+			return
+		if ((user.contents.Find(src) || user.contents.Find(src.master) || BOUNDS_DIST(src, user) == 0 && istype(src.loc, /turf)))
+			src.add_dialog(user)
+
+			var/dat = "<TT><b>Audio Logger</b><br>"
+			if (src.tape)
+				dat += "Memory [src.tape.use_percentage()]% Full -- <a href='byond://?src=\ref[src];command=eject'>Eject</a><br>"
+			else
+				dat += "No Tape Loaded<br>"
+
+			dat += "<table cellspacing=5><tr>"
+			dat += "<td><a href='byond://?src=\ref[src];command=rec'>[src.mode == MODE_RECORDING ? "Recording" : "Not Recording"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=play'>[src.mode == MODE_PLAYING ? "Playing" : "Not Playing"]</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=stop'>Stop</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=clear'>Clear Log</a></td>"
+			dat += "<td><a href='byond://?src=\ref[src];command=continuous_mode'>[continuous ? "Looping" : "No Loop"]</a></td></table></tt>"
+
+			user.Browse(dat, "window=audiolog;size=400x140")
+			onclose(user, "audiolog")
+		else
+			user.Browse(null, "window=audiolog")
+			src.remove_dialog(user)
+
+		return
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/audio_tape))
+			if (src.tape)
+				boutput(user, "There is already a tape loaded.")
+				return
+
+			user.drop_item(I)
+			I.set_loc(src)
+			src.tape = I
+			src.tape.log_line = 1
+			src.icon_state = initial(src.icon_state)
+			src.updateSelfDialog()
+
+			playsound(src.loc, 'sound/machines/law_insert.ogg', 40, 0.5)
+			user.visible_message("[user] loads a tape into [src].", "You load a tape into [src].")
+
+		else
+			..()
+
+	MouseDrop_T(obj/item/W as obj, mob/user as mob)
+		if (istype(W, /obj/item/audio_tape) && in_interact_range(src, user) && in_interact_range(W, user))
+			return src.Attackby(W, user)
+		return ..()
 
 	hear_talk(var/mob/living/carbon/speaker, messages, real_name, lang_id)
 		if (src.mode != MODE_RECORDING || !src.tape)
