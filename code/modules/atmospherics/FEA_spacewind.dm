@@ -27,6 +27,15 @@
 /mob
 	VAR_FINAL/last_airflow_stun = 0
 
+///Put all your movement-blocking stuff here like magboots.
+/atom/movable/proc/CanAirflowMove(delta)
+	return TRUE
+
+/mob/living/carbon/human/CanAirflowMove(delta)
+ 	. = ..()
+	if(src.shoes && src.shoes.magnetic)
+		return FALSE
+
 /atom/movable/proc/experience_pressure_difference(pressure_difference, direction, turf/origin)
 	if(last_airflow_movement > world.time - AIRFLOW_MOVE_DELAY)
 		return FALSE
@@ -58,6 +67,8 @@
 		if(QDELETED(src))
 			break
 		if(!isturf(src.loc))
+			break
+		if(!CanAirflowMove(delta))
 			break
 
 		LAGCHECK(LAG_MED)
