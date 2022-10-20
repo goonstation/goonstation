@@ -467,17 +467,32 @@ var/global/list/persistent_bank_purchaseables =	list(\
 				S = new /obj/storage/crate/wooden()
 				M.set_loc(S)
 			SPAWN(1)
-				for(var/i in 1 to 3)
-					shippingmarket.receive_crate(S)
-					sleep(randfloat(10 SECONDS, 20 SECONDS))
-					if(istype(get_area(S), /area/station))
-						return
-					boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
-				var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
-				if(length(last_chance_turfs))
-					S.set_loc(pick(last_chance_turfs))
+				if(transception_array)
+					for(var/i in 1 to 3)
+						sleep(randfloat(2 SECONDS, 6 SECONDS)) //subdivided to stagger arrival times if a bunch of people pick this
+						var/obj/machinery/transception_pad/transc_pad = pick(by_type[/obj/machinery/transception_pad])
+						transc_pad.attempt_transceive(null,S)
+						sleep(randfloat(5 SECONDS, 10 SECONDS))
+						if(istype(get_area(S), /area/station))
+							return
+					boutput(M, "<span class='alert'><b>Something went wrong with mail order, falling back to random spot!</b></span>")
+					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+					if(length(last_chance_turfs))
+						S.set_loc(pick(last_chance_turfs))
+					else
+						S.set_loc(get_random_station_turf())
 				else
-					S.set_loc(get_random_station_turf())
+					for(var/i in 1 to 3)
+						shippingmarket.receive_crate(S)
+						sleep(randfloat(10 SECONDS, 20 SECONDS))
+						if(istype(get_area(S), /area/station))
+							return
+						boutput(M, "<span class='alert'><b>Something went wrong with mail order, retrying!</b></span>")
+					var/list/turf/last_chance_turfs = get_area_turfs(/area/station/quartermaster/office, 1)
+					if(length(last_chance_turfs))
+						S.set_loc(pick(last_chance_turfs))
+					else
+						S.set_loc(get_random_station_turf())
 			return 1
 
 	frog
