@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_suffix = " cob"
 	desc = "The assistants call it maize."
 	icon_state = "corn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "clear corn cob"
 	desc = "Pure grain ethanol in a vague corn shape."
 	icon_state = "clearcorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "Pepper corn cob"
 	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
@@ -175,7 +175,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soybean pod"
 	crop_suffix = " pod"
 	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soy"
 	bites_left = 3
 	heal_amt = 1
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "bean pod"
 	crop_suffix = " pod"
 	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
-	planttype = /datum/plant/crop/beans
+	planttype = /datum/plant/veg/beans
 	icon_state = "beanpod"
 	bites_left = 1
 	heal_amt = 1
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "pea pod"
 	crop_suffix = " pod"
 	desc = "These peas are like peas in a pod. Yeah."
-	planttype = /datum/plant/crop/peas
+	planttype = /datum/plant/veg/peas
 	icon_state = "peapod"
 	bites_left = 1
 	heal_amt = 1
@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
 	desc = "Contains high-energy plankton!"
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soylent"
 	bites_left = 3
 	heal_amt = 2
