@@ -351,12 +351,32 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		if (..())
 			return 1
 
-		var/mob/S = holder.owner
-		var/obj/projectile/proj = initialize_projectile_ST(S, new/datum/projectile/special/slug_slime, get_turf(target))
+		var/mob/shooter = holder.owner
+		var/obj/projectile/proj = initialize_projectile_ST(shooter, new/datum/projectile/special/slug_slime, get_turf(target))
 		while (!proj || proj.disposed)
-			proj = initialize_projectile_ST(S, new/datum/projectile/special/slug_slime, get_turf(target))
+			proj = initialize_projectile_ST(shooter, new/datum/projectile/special/slug_slime, get_turf(target))
 
 		proj.targets = list(target)
 
 		proj.launch()
 		holder.points -= 40
+
+/datum/targetable/brain_slug/brainwave_scan
+	name = "Brainwave scan"
+	desc = "Close your eyes and open your mind to detect living beings through walls"
+	cooldown = 3 SECONDS
+	targeted = 0
+	var/active = FALSE
+
+	cast()
+		if (..())
+			return 1
+
+		var/mob/living/scanner = holder.owner
+		src.active = !(src.active)
+		if(active)
+			scanner.blinded = 1
+			APPLY_ATOM_PROPERTY(scanner, PROP_MOB_THERMALVISION_MK2, src)
+		else
+			scanner.blinded = 0
+			REMOVE_ATOM_PROPERTY(scanner, PROP_MOB_THERMALVISION_MK2, src)
