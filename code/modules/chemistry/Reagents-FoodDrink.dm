@@ -69,7 +69,7 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
-				..()
+				. = ..()
 				if(M.mob_flags & IS_BONEY)
 					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
 					if(prob(15))
