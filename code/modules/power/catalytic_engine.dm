@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		START_TRACKING
 
 		light = new /datum/light/point
 		light.attach(src)
@@ -47,6 +48,7 @@
 			UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		src.anode_unit = null
 		src.cathode_unit = null
 		..()
@@ -171,7 +173,7 @@
 	var/overlay_dir = 1
 	///Rod condition reference for overlay; should update when rod is expended
 	var/rod_condition = 100
-	///Rod viability reference for overlay; should update when rod is installed, based on efficacy for the unit type
+	///Rod viability reference for overlay; should update when rod is installed, based on viability for the unit type
 	var/rod_viability = 100
 	///What type of unit this is; used for viability calculation
 	var/gentype = GEN_ANODE
@@ -381,6 +383,17 @@
 		else
 			ClearSpecificOverlays("viability","condition")
 
+	///Reports installed rod's efficacy (effective power output multiplier) for use by external sources (currently power checker pda program)
+	proc/report_efficacy()
+		. = 0
+		var/cond_base = src.contained_rod.condition
+		switch(src.gentype)
+			if(GEN_ANODE)
+				. = round(src.contained_rod.anode_efficacy * cond_base * 0.01)
+			if(GEN_CATHODE)
+				. = round(src.contained_rod.cathode_efficacy * cond_base * 0.01)
+
+
 /obj/overlay/rod_unit_door
 	name = "rod door"
 	icon = 'icons/obj/machines/catalysis.dmi'
@@ -480,6 +493,23 @@
 		..()
 		var/ratio = min(round(condition, 20)+20,100)
 		src.icon_state = "roditem-[ratio]"
+
+	examine()
+		. = ..()
+		var/ratio = min(round(condition, 20)+20,100) //ensure parity with visual decay tiers
+		var/conditiondesc = "pretty intact"
+		switch(ratio)
+			if(20)
+				conditiondesc = "almost completely corroded"
+			if(40)
+				conditiondesc = "heavily corroded"
+			if(60)
+				conditiondesc = "moderately corroded"
+			if(80)
+				conditiondesc = "a bit corroded"
+
+		. += "\n It seems to be [conditiondesc]."
+
 
 #undef UNIT_OPEN
 #undef UNIT_INACTIVE
