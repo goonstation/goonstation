@@ -30,6 +30,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
 "aaN" = (
@@ -678,6 +679,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	dir = 4
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aoA" = (
@@ -941,6 +943,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/storage/emergency2)
 "auT" = (
@@ -1702,6 +1705,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "aPz" = (
@@ -2545,6 +2549,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -2751,6 +2756,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "bsp" = (
@@ -4146,6 +4152,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/pool)
 "caj" = (
@@ -4595,6 +4602,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "cnT" = (
@@ -5072,6 +5080,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "cCu" = (
@@ -5224,6 +5233,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
 "cHV" = (
@@ -9113,6 +9123,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner)
 "eMc" = (
@@ -10144,6 +10155,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "fob" = (
@@ -12007,6 +12019,7 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/disposalpipe/segment/transport,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black/corner,
 /area/station/maintenance/northeast)
 "ggX" = (
@@ -15110,6 +15123,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "hAF" = (
@@ -16244,6 +16258,7 @@
 "icz" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/blueblack/corner,
 /area/station/maintenance/north)
 "icE" = (
@@ -16493,6 +16508,7 @@
 	},
 /obj/disposalpipe/segment/ejection,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner)
 "ihU" = (
@@ -17334,6 +17350,7 @@
 	icon_state = "4-8"
 	},
 /obj/disposalpipe/segment/horizontal,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "iBy" = (
@@ -18932,6 +18949,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/storage/emergencyinternals)
 "jrJ" = (
@@ -20324,6 +20342,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "kba" = (
@@ -22520,6 +22539,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "lcr" = (
@@ -22684,6 +22704,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
@@ -23631,6 +23652,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner)
 "lEA" = (
@@ -25569,6 +25591,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "mwl" = (
@@ -25797,6 +25820,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "mCC" = (
@@ -26164,6 +26188,7 @@
 /area/station/medical/medbay)
 "mLZ" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "mMa" = (
@@ -26687,6 +26712,7 @@
 	icon_state = "1-2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/southwest)
 "nbE" = (
@@ -27134,6 +27160,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
 "nmi" = (
@@ -28011,6 +28038,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner)
 "nIv" = (
@@ -30236,6 +30264,7 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
+/obj/access_spawn/engineering,
 /turf/simulated/floor/minitiles/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -30832,6 +30861,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ppv" = (
@@ -31590,6 +31620,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/barber_shop)
 "pKY" = (
@@ -34109,6 +34140,7 @@
 	},
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -34457,6 +34489,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/west)
 "rsn" = (
@@ -35895,6 +35928,7 @@
 /area/listeningpost)
 "sgm" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "sgu" = (
@@ -35956,6 +35990,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/inner)
 "shh" = (
@@ -36648,6 +36683,7 @@
 	},
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment/transport,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "sxE" = (
@@ -37066,6 +37102,7 @@
 /area/shuttle/sea_elevator_room)
 "sJd" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "sJl" = (
@@ -40200,6 +40237,7 @@
 	},
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "ukt" = (
@@ -40485,6 +40523,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "usf" = (
@@ -41153,6 +41192,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/radio/lab)
 "uJE" = (
@@ -42742,6 +42782,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
 "vCk" = (
@@ -42913,6 +42954,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "vGW" = (
@@ -44038,6 +44080,7 @@
 /obj/disposalpipe/segment/vertical,
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "wup" = (
@@ -45827,6 +45870,7 @@
 	},
 /obj/forcefield/energyshield/perma/doorlink,
 /obj/firedoor_spawn,
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/engine/inner{
 	name = "Transception Array Control"
@@ -47444,6 +47488,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/maint,
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
 "ykm" = (
