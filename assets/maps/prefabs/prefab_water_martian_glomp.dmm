@@ -4,7 +4,7 @@
 /area/space)
 "c" = (
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "e" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -12,7 +12,7 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "f" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -20,11 +20,11 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "g" = (
 /obj/map/light/white,
 /turf/unsimulated/wall/auto/adventure/martian,
-/area/space)
+/area/prefab/martian_glomp)
 "i" = (
 /turf/variableTurf/floor,
 /area/noGenerate)
@@ -39,24 +39,27 @@
 	name = "dead martian"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "n" = (
 /obj/item/reagent_containers/food/snacks/yuck{
 	desc = "It's a bad day if you have to eat this for dinner.";
 	doants = 0
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
+"o" = (
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/prefab/martian_glomp)
 "r" = (
 /obj/decal/cleanable/slime,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "s" = (
 /obj/crevice{
 	pixel_y = 30
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "t" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -72,12 +75,12 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "w" = (
 /obj/decal/cleanable/slime,
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "x" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -97,12 +100,12 @@
 "z" = (
 /obj/machinery/door/unpowered/martian,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "C" = (
 /obj/critter/martian/warrior/dead,
 /obj/decal/cleanable/slime,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "D" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
@@ -121,14 +124,14 @@
 	name = "martian machine"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "G" = (
 /obj/crevice{
 	pixel_y = 30
 	},
 /obj/item/material_piece/bone,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "J" = (
 /turf/unsimulated/wall/auto/adventure/martian,
 /area/space)
@@ -146,23 +149,23 @@
 	name = "bone fragments"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "M" = (
 /obj/item/material_piece/bone{
 	pixel_x = -9;
 	pixel_y = 6
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "N" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "O" = (
 /turf/unsimulated/wall/auto/adventure/martian/exterior,
-/area/space)
+/area/prefab/martian_glomp)
 "P" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -178,14 +181,14 @@
 	icon_state = "diagonal"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "R" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
 	},
 /obj/landmark/artifact,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "S" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -196,7 +199,7 @@
 	name = "martian machine"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "T" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -211,7 +214,7 @@
 	},
 /obj/critter/martian/soldier/dead,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "W" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
@@ -223,11 +226,11 @@
 "X" = (
 /obj/critter/martian/soldier/dead,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "Y" = (
 /obj/landmark/artifact,
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 "Z" = (
 /obj/overlay{
 	desc = "The corpse of a long dead space thing.";
@@ -236,7 +239,7 @@
 	name = "dead martian"
 	},
 /turf/simulated/martian/floor,
-/area/space)
+/area/prefab/martian_glomp)
 
 (1,1,1) = {"
 a
@@ -254,24 +257,24 @@ a
 a
 W
 O
-J
+o
 z
-J
-J
-J
+o
+o
+o
 y
 a
 "}
 (3,1,1) = {"
 W
 O
-J
+o
 Q
 c
 Y
 e
-J
-J
+o
+o
 a
 "}
 (4,1,1) = {"
@@ -283,7 +286,7 @@ c
 c
 n
 e
-J
+o
 y
 "}
 (5,1,1) = {"
@@ -295,90 +298,90 @@ c
 c
 r
 E
-J
-J
+o
+o
 "}
 (6,1,1) = {"
 a
-J
+o
 f
 S
 v
-J
+o
 w
-J
+o
 g
-J
+o
 "}
 (7,1,1) = {"
 a
-J
-J
-J
-J
+o
+o
+o
+o
 Q
 r
 V
 j
-J
+o
 "}
 (8,1,1) = {"
 a
 D
-J
+o
 G
 L
 c
 r
 n
 X
-J
+o
 "}
 (9,1,1) = {"
 a
 a
-J
+o
 f
 M
 L
 C
 Z
 v
-J
+o
 "}
 (10,1,1) = {"
 a
 a
-J
+o
 g
 N
 c
 c
 v
-J
-J
+o
+o
 "}
 (11,1,1) = {"
 a
 a
-J
-J
+o
+o
 f
 c
 v
-J
-J
+o
+o
 K
 "}
 (12,1,1) = {"
 a
 a
 D
-J
-J
+o
+o
 z
-J
-J
+o
+o
 K
 a
 "}

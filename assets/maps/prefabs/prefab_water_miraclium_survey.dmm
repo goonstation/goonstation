@@ -9,52 +9,76 @@
 	name = "surveyors' stripe"
 	},
 /obj/machinery/tripod,
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
+"i" = (
+/obj/item/device/audio_log/miraclium_survey,
+/turf/space/fluid/trench,
+/area/noGenerate)
 "o" = (
-/turf/variableTurf/floor,
-/area/space)
+/obj/random_item_spawner/tools/one,
+/turf/space/fluid/trench,
+/area/noGenerate)
 "s" = (
 /obj/decal/cleanable/machine_debris{
 	desc = "A pile that was probably a machine at some point."
 	},
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
+"A" = (
+/obj/item/mining_tool/drill,
+/turf/space/fluid/trench,
+/area/noGenerate)
+"C" = (
+/turf/space/fluid/trench,
+/area/noGenerate)
+"D" = (
+/obj/item/breaching_charge/mining,
+/turf/space/fluid/trench,
+/area/noGenerate)
 "E" = (
 /obj/decal/cleanable/dirt/dirt2,
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "F" = (
 /obj/decal/fakeobjects/beacon{
 	desc = "A small tracking beacon in fairly poor condition. Nothing in the surroundings should have disturbed it - what broke it?"
 	},
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "K" = (
 /obj/item/tripod,
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
 "O" = (
 /obj/item/raw_material/miracle,
-/turf/variableTurf/floor,
-/area/space)
+/turf/space/fluid/trench,
+/area/noGenerate)
+"Q" = (
+/obj/item/device/t_scanner,
+/turf/space/fluid/trench,
+/area/noGenerate)
+"R" = (
+/obj/item/device/gps,
+/turf/space/fluid/trench,
+/area/noGenerate)
 
 (1,1,1) = {"
 a
-o
+C
 a
 a
 a
 "}
 (2,1,1) = {"
-o
+C
 F
-o
+A
 a
 a
 "}
 (3,1,1) = {"
-o
+i
 E
 O
 o
@@ -62,15 +86,15 @@ K
 "}
 (4,1,1) = {"
 a
-o
+Q
 c
-o
+C
 E
 "}
 (5,1,1) = {"
 a
-o
-o
+C
+D
 O
 a
 "}
@@ -84,7 +108,7 @@ a
 (7,1,1) = {"
 a
 a
-o
+R
 a
 a
 "}
