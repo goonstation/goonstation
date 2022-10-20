@@ -17,20 +17,6 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	genome = 12
 	commuts = list(/datum/plant_gene_strain/reagent_adder,/datum/plant_gene_strain/damage_res/bad)
 
-/datum/plant/veg/cucumber
-	name = "Cucumber"
-	seedcolor = "#005622"
-	crop = /obj/item/reagent_containers/food/snacks/plant/cucumber
-	starthealth = 25
-	growtime = 50
-	harvtime = 100
-	cropsize = 8
-	harvests = 1
-	isgrass = 1
-	endurance = 6
-	genome = 19
-	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/stabilizer)
-
 /datum/plant/veg/carrot
 	name = "Carrot"
 	seedcolor = "#774400"
