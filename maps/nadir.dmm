@@ -38641,6 +38641,9 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/landmark/start{
+	name = "Medical Director"
+	},
 /obj/stool/chair/office/blue{
 	dir = 1
 	},
