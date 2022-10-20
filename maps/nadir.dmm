@@ -7547,6 +7547,9 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -46588,7 +46591,6 @@
 /area/station/turret_protected/Zeta)
 "xBE" = (
 /obj/submachine/cargopad/artlab,
-/obj/item/cargotele,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/artifact)
 "xBG" = (
