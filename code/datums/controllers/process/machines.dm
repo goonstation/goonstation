@@ -12,7 +12,7 @@
 		name = "Machine"
 		schedule_interval = MACHINE_PROC_INTERVAL
 
-		Station_VNet = new /datum/v_space/v_space_network()
+		Station_VNet = new /obj/v_space/v_space_network()
 
 	copyStateFrom(datum/controller/process/target)
 		var/datum/controller/process/machines/old_machines = target

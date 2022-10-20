@@ -12,7 +12,7 @@
 
 	var/mob/living/user = usr
 	if (user.network_device)
-		var/datum/v_space/V
+		var/obj/v_space/V
 		V.Enter_Vspace(user, user.network_device)
 	return
 
@@ -24,7 +24,7 @@
 	if (!usr.client) return
 	if (!istype(usr, /mob/living/carbon/human/virtual/)) return
 
-	var/datum/v_space/V
+	var/obj/v_space/V
 	V.Leave_Vspace(usr)
 	return*/
 
@@ -47,9 +47,9 @@
 		Station_VNet.Leave_Vspace(user)
 		return
 
-var/global/datum/v_space/v_space_network/Station_VNet
+var/global/obj/v_space/v_space_network/Station_VNet
 
-datum/v_space
+obj/v_space
 	var
 		active = 0
 		list/users = list()			  //Who is in V-space
