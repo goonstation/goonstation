@@ -1,0 +1,396 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/turf/simulated/martian/floor,
+/area/space)
+"e" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"f" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"g" = (
+/obj/map/light/white,
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/space)
+"i" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"j" = (
+/obj/decal/aliencomputer{
+	pixel_x = -32
+	},
+/obj/overlay{
+	desc = "The corpse of a long dead space thing.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "marscorpse";
+	name = "dead martian"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"n" = (
+/obj/item/reagent_containers/food/snacks/yuck{
+	desc = "It's a bad day if you have to eat this for dinner.";
+	doants = 0
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"r" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/martian/floor,
+/area/space)
+"s" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"t" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"v" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"w" = (
+/obj/decal/cleanable/slime,
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/martian/floor,
+/area/space)
+"x" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"y" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"z" = (
+/obj/machinery/door/unpowered/martian,
+/turf/simulated/martian/floor,
+/area/space)
+"C" = (
+/obj/critter/martian/warrior/dead,
+/obj/decal/cleanable/slime,
+/turf/simulated/martian/floor,
+/area/space)
+"D" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"E" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some type of martian gewgaw, perhaps a gimcrack or bauble.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-3";
+	name = "martian machine"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"G" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/item/material_piece/bone,
+/turf/simulated/martian/floor,
+/area/space)
+"J" = (
+/turf/unsimulated/wall/auto/adventure/martian,
+/area/space)
+"K" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"L" = (
+/obj/decal/cleanable/generic{
+	desc = "Tiny bits of bone strewn about.";
+	name = "bone fragments"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"M" = (
+/obj/item/material_piece/bone{
+	pixel_x = -9;
+	pixel_y = 6
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"N" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"O" = (
+/turf/unsimulated/wall/auto/adventure/martian/exterior,
+/area/space)
+"P" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"Q" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"R" = (
+/obj/decal/aliencomputer{
+	pixel_y = 32
+	},
+/obj/landmark/artifact,
+/turf/simulated/martian/floor,
+/area/space)
+"S" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Okay, you're pretty sure that even the martians didn't know what this thing is.";
+	icon = 'icons/obj/artifacts/artifacts.dmi';
+	icon_state = "martian-4";
+	name = "martian machine"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+"T" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"V" = (
+/obj/crevice{
+	pixel_x = -30
+	},
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/space)
+"W" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls_martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"X" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/martian/floor,
+/area/space)
+"Y" = (
+/obj/landmark/artifact,
+/turf/simulated/martian/floor,
+/area/space)
+"Z" = (
+/obj/overlay{
+	desc = "The corpse of a long dead space thing.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "marscorpse";
+	name = "dead martian"
+	},
+/turf/simulated/martian/floor,
+/area/space)
+
+(1,1,1) = {"
+a
+a
+W
+T
+i
+P
+J
+y
+a
+a
+"}
+(2,1,1) = {"
+a
+W
+O
+J
+z
+J
+J
+J
+y
+a
+"}
+(3,1,1) = {"
+W
+O
+J
+Q
+c
+Y
+e
+J
+J
+a
+"}
+(4,1,1) = {"
+O
+g
+R
+c
+c
+c
+n
+e
+J
+y
+"}
+(5,1,1) = {"
+D
+O
+s
+c
+c
+c
+r
+E
+J
+J
+"}
+(6,1,1) = {"
+a
+J
+f
+S
+v
+J
+w
+J
+g
+J
+"}
+(7,1,1) = {"
+a
+J
+J
+J
+J
+Q
+r
+V
+j
+J
+"}
+(8,1,1) = {"
+a
+D
+J
+G
+L
+c
+r
+n
+X
+J
+"}
+(9,1,1) = {"
+a
+a
+J
+f
+M
+L
+C
+Z
+v
+J
+"}
+(10,1,1) = {"
+a
+a
+J
+g
+N
+c
+c
+v
+J
+J
+"}
+(11,1,1) = {"
+a
+a
+J
+J
+f
+c
+v
+J
+J
+K
+"}
+(12,1,1) = {"
+a
+a
+D
+J
+J
+z
+J
+J
+K
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+D
+x
+i
+t
+K
+a
+a
+"}

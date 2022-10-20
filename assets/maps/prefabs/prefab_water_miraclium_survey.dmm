@@ -1,0 +1,90 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "bot2";
+	name = "surveyors' stripe"
+	},
+/obj/machinery/tripod,
+/turf/variableTurf/floor,
+/area/space)
+"o" = (
+/turf/variableTurf/floor,
+/area/space)
+"s" = (
+/obj/decal/cleanable/machine_debris{
+	desc = "A pile that was probably a machine at some point."
+	},
+/turf/variableTurf/floor,
+/area/space)
+"E" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/variableTurf/floor,
+/area/space)
+"F" = (
+/obj/decal/fakeobjects/beacon{
+	desc = "A small tracking beacon in fairly poor condition. Nothing in the surroundings should have disturbed it - what broke it?"
+	},
+/turf/variableTurf/floor,
+/area/space)
+"K" = (
+/obj/item/tripod,
+/turf/variableTurf/floor,
+/area/space)
+"O" = (
+/obj/item/raw_material/miracle,
+/turf/variableTurf/floor,
+/area/space)
+
+(1,1,1) = {"
+a
+o
+a
+a
+a
+"}
+(2,1,1) = {"
+o
+F
+o
+a
+a
+"}
+(3,1,1) = {"
+o
+E
+O
+o
+K
+"}
+(4,1,1) = {"
+a
+o
+c
+o
+E
+"}
+(5,1,1) = {"
+a
+o
+o
+O
+a
+"}
+(6,1,1) = {"
+a
+a
+E
+s
+a
+"}
+(7,1,1) = {"
+a
+a
+o
+a
+a
+"}
