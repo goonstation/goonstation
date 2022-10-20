@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "cucumber"
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
-	planttype = /datum/plant/veg/cucumber
+	planttype = /datum/plant/fruit/cucumber
 	w_class = W_CLASS_TINY
 	bites_left = 2
 	heal_amt = 1
