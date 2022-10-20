@@ -386,7 +386,9 @@ this is already used where it needs to be used, you can probably ignore it.
 	var/mob/living/H = some_idiot
 
 	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
+<<<<<<< HEAD
 	var/reagents_to_transfer = (num_amount * (H.reagents?.total_volume/(H.reagents?.total_volume + H.blood_volume)))
+>>>>>>> 965c43e61f5f3a64b8040153874e9150cddfd617
 	var/blood_to_transfer = (num_amount - min(reagents_to_transfer, H.reagents.total_volume))
 
 	if (istype(H))
