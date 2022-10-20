@@ -7547,9 +7547,8 @@
 	dir = 8;
 	pixel_x = -24
 	},
-/obj/table/reinforced/auto,
-/obj/machinery/recharger,
-/obj/item/cargotele,
+/obj/machinery/power/data_terminal,
+/obj/machinery/networked/test_apparatus/xraymachine,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 1
 	},
@@ -26725,11 +26724,12 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/obj/machinery/networked/test_apparatus/xraymachine,
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/data_terminal,
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/obj/item/cargotele,
 /turf/simulated/floor/purpleblack{
 	dir = 8
 	},
