@@ -17316,10 +17316,6 @@
 	name = "Artifact Lab Shutters";
 	pixel_y = 26
 	},
-/obj/item/cargotele{
-	pixel_x = 4;
-	pixel_y = 3
-	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -46592,6 +46588,7 @@
 /area/station/turret_protected/Zeta)
 "xBE" = (
 /obj/submachine/cargopad/artlab,
+/obj/item/cargotele,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/science/artifact)
 "xBG" = (
