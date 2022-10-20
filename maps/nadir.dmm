@@ -25303,9 +25303,9 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/smes{
-	charge = 150000;
+	charge = 200000;
 	chargelevel = 50000;
-	output = 34300
+	output = 35000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north{
@@ -31226,9 +31226,9 @@
 "psV" = (
 /obj/cable,
 /obj/machinery/power/smes{
-	charge = 150000;
+	charge = 200000;
 	chargelevel = 50000;
-	output = 34300
+	output = 35000
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/pylon{
