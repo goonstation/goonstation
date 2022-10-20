@@ -387,7 +387,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 								shippingmarket.sell_crate(thing2send)
 
 						else if(thing2send.artifact)
-							var/datum/artifact/art = O.artifact
+							var/datum/artifact/art = thing2send.artifact
 							shippingmarket.sell_artifact(thing2send,art)
 
 						else //how even
