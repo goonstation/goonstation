@@ -1,6 +1,6 @@
 #define FUEL_DRAIN_RATE 0.3
-#define ATMOS_DRAIN_RATE 0.02
-#define CARBON_OUTPUT_RATE 0.01 // for every part of fuel burnt
+#define ATMOS_DRAIN_RATE 0.05
+#define CARBON_OUTPUT_RATE 0.025 // for every part of fuel burnt
 #define OPTIMAL_MIX 14.7 // how many parts oxygen for every part of fuel
 
 #define INLET_MAX 1
@@ -37,22 +37,22 @@
 
 	// reagents
 	var/valid_fuels = list(
-		"dbreath" = 60,
-		"kerosene" = 45,
-		"firedust" = 30,
-		"phlogiston" = 25,
-		"napalm_goo" = 20,
-		"diethylamine" = 18,
-		"acetone" = 14,
-		"ethanol" = 12,
+		"dbreath" = 30,
+		"kerosene" = 25,
+		"firedust" = 20,
+		"napalm_goo" = 15,
+		"phlogiston" = 15,
+		"diethylamine" = 12,
+		"acetone" = 12,
 		"oil" = 10,
 		"fuel" = 8,
 		"pyrosium" = 7,
+		"ethanol" = 6,
 		"hydrogen" = 6,
 		"plasma" = 6,
 		"phosphorus" = 5,
 		"magnesium" = 5
-	) // wattage
+	) // kilowattage (returns about half for a default setup)
 
 	// bit wierd but a bunch of type checks feels bad
 	var/valid_tanks = list(
@@ -104,8 +104,8 @@
 			if ("status")
 				src.send_status(sender)
 
-			if ("set_field")
-				var/field = signal.data["field"]
+			if ("set_var")
+				var/field = signal.data["var_name"]
 				var/data = signal.data["data"]
 				if (!field || !data)
 					return

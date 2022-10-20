@@ -1380,7 +1380,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			dat += "<b>Variables:</b><br>"
 			// html injection possible?
 			for (var/field in variables)
-				dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];edit_field=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+				dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
 
 			dat += "</ul>"
 			if (gen in src.generator_messages)
@@ -1400,7 +1400,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			src.get_generators()
 
-		else if (href_list["edit_field"])
+		else if (href_list["set_var"])
 			if (!href_list["netid"])
 				return
 
@@ -1408,10 +1408,10 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			signal.source = src.master
 			signal.data["address_1"] = href_list["netid"]
 			signal.data["sender"] = src.master.net_id
-			signal.data["command"] = "set_field"
-			signal.data["field"] = href_list["edit_field"]
+			signal.data["command"] = "set_var"
+			signal.data["var_name"] = href_list["set_var"]
 
-			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Edit") as text)
+			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Editor") as text) // better safe than sorry!
 
 			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "generator")
 
