@@ -7542,7 +7542,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/cable,
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -26724,9 +26723,6 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "0-2"
-	},
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
 /obj/item/cargotele,
@@ -29908,8 +29904,12 @@
 /area/station/crew_quarters/quarters_west)
 "oIf" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater{
+	pixel_x = 9;
+	pixel_y = 14
+	},
 /obj/item/reagent_containers/food/snacks/candy/pbcup{
-	pixel_x = 2
+	pixel_x = -1
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/entry{
