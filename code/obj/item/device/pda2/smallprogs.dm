@@ -1386,9 +1386,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			if (length(variables) > 0)
 				dat += "<br><b>Variables:</b><br>"
-				// html injection possible?
+
 				for (var/field in variables)
-					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[html_encode(field)]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
 
 			dat += "</ul>"
 
@@ -1418,7 +1418,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			signal.data["address_1"] = href_list["netid"]
 			signal.data["sender"] = src.master.net_id
 			signal.data["command"] = "set_var"
-			signal.data["var_name"] = href_list["set_var"]
+			signal.data["var_name"] = html_decode(href_list["set_var"])
 
 			signal.data["data"] = strip_html(input("Please enter the selected variable's new value.", "Remote Variable Editor") as text) // better safe than sorry!
 
