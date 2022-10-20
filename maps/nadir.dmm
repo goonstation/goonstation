@@ -1592,13 +1592,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
-"aLj" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/bent/west,
-/turf/simulated/floor/redblack/corner,
-/area/station/security/main)
 "aLz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1619,7 +1612,6 @@
 	},
 /area/station/security/checkpoint/escape)
 "aMz" = (
-/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -2560,14 +2552,30 @@
 	name = "Northwest Breach Hull"
 	})
 "bph" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/north,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 5;
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/storage/secure/closet/immersion/security,
+/obj/item/clothing/suit/space/diving/security{
+	pixel_x = -4
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/security{
+	pixel_x = -4
+	},
+/obj/item/tank/emergency_oxygen{
+	pixel_x = 6
+	},
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/device/nanoloom{
+	pixel_x = 4;
+	pixel_y = -4
 	},
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -6806,6 +6814,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -7381,6 +7390,10 @@
 "dLt" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/emergency2)
+"dLC" = (
+/obj/machinery/vending/standard,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "dMn" = (
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -12296,6 +12309,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
 "glY" = (
@@ -13996,7 +14010,8 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "gZU" = (
-/obj/machinery/vending/standard,
+/obj/disposalpipe/trunk/north,
+/obj/machinery/disposal,
 /turf/simulated/floor/redblack,
 /area/station/security/main)
 "had" = (
@@ -16959,7 +16974,6 @@
 	})
 "iqd" = (
 /obj/disposalpipe/segment/mail/vertical,
-/obj/disposalpipe/segment/horizontal,
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/redblack/corner{
 	dir = 4
@@ -29045,6 +29059,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -30626,6 +30641,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack/corner{
 	dir = 8
 	},
@@ -37872,12 +37888,6 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
-"sTP" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor/redblack/corner{
-	dir = 4
-	},
-/area/station/security/main)
 "sUo" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/mail/vertical,
@@ -43512,7 +43522,6 @@
 	},
 /area/station/hallway/primary/northwest)
 "vPb" = (
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "vPd" = (
@@ -45412,6 +45421,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "wWl" = (
@@ -46122,7 +46132,6 @@
 	},
 /area/station/hallway/secondary/east)
 "xpQ" = (
-/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
 "xqd" = (
@@ -78265,7 +78274,7 @@ bxP
 vKn
 lyg
 umj
-umj
+dLC
 ewN
 tnC
 pwV
@@ -83400,7 +83409,7 @@ abi
 yfG
 apC
 dbE
-sTP
+uXO
 xCp
 kwl
 uXO
@@ -84306,7 +84315,7 @@ dOq
 pvO
 sBx
 bIb
-aLj
+glR
 pel
 wWj
 glR
