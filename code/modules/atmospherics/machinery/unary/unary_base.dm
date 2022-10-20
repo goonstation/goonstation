@@ -1,6 +1,4 @@
 /obj/machinery/atmospherics/unary
-	dir = SOUTH
-	initialize_directions = SOUTH
 
 	var/datum/gas_mixture/air_contents
 

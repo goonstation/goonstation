@@ -3,8 +3,6 @@
 	icon_state = "intact"
 	name = "Connector Port"
 	desc = "For connecting portables devices related to atmospherics control."
-	dir = SOUTH
-	initialize_directions = SOUTH
 	plane = PLANE_NOSHADOW_BELOW
 	var/obj/machinery/portable_atmospherics/connected_device
 	var/obj/machinery/atmospherics/node
@@ -13,18 +11,9 @@
 	level = 0
 	layer = PIPE_LAYER
 
-	north
-		dir = NORTH
-	east
-		dir = EAST
-	south
-		dir = SOUTH
-	west
-		dir = WEST
-
 	New()
-		initialize_directions = dir
 		..()
+		initialize_directions = dir
 
 	network_disposing(datum/pipe_network/reference)
 		if (network == reference)
