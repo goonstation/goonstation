@@ -1353,8 +1353,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		src.get_generators()
 
 	on_deactivated(obj/item/device/pda2/pda)
-		src.generator_statuses.Cut()
-		src.generator_messages.Cut()
 		qdel(get_radio_connection_by_id(pda, null))
 		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
 
@@ -1369,20 +1367,31 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		for (var/gen in src.generator_statuses)
 			var/list/data = params2list(src.generator_statuses[gen]["data"])
 			var/list/variables = params2list(src.generator_statuses[gen]["vars"])
-			var/device = src.generator_statuses[gen]["device"]
+			var/device
+			if ("data" in src.generator_statuses[gen])
+				data = params2list(src.generator_statuses[gen]["data"])
 
-			dat += "<b>[strip_html(gen)]\> [strip_html(device)]</b><ul>"
-			dat += "<b>Data:</b><br>"
-			for (var/field in data)
-				dat += "[strip_html(field)]: [strip_html(data[field])]<br>"
+			if ("vars" in src.generator_statuses[gen])
+				variables = params2list(src.generator_statuses[gen]["vars"])
 
-			dat += "<br>"
-			dat += "<b>Variables:</b><br>"
-			// html injection possible?
-			for (var/field in variables)
-				dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
+			if ("device" in  src.generator_statuses[gen])
+				device = src.generator_statuses[gen]["device"]
+
+			dat += "<b>[strip_html(gen)]\> [device ? strip_html(device) : ""]</b><ul>"
+
+			if (length(data) > 0)
+				dat += "<b>Data:</b><br>"
+				for (var/field in data)
+					dat += "[strip_html(field)]: [strip_html(data[field])]<br>"
+
+			if (length(variables) > 0)
+				dat += "<br><b>Variables:</b><br>"
+				// html injection possible?
+				for (var/field in variables)
+					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[field]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
 
 			dat += "</ul>"
+
 			if (gen in src.generator_messages)
 				dat += "<b>Last Message:</b> [src.generator_messages[gen]]"
 
@@ -1474,6 +1483,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 	proc/get_generators() // ping all devices
 		src.generator_statuses.Cut()
 		src.generator_messages.Cut()
+		src.master.updateSelfDialog()
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
