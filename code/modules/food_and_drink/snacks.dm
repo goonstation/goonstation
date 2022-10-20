@@ -2212,7 +2212,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	var/obj/item/wrapped = null
-	var/maximum_wrapped_size = 2
+	var/maximum_wrapped_size = W_CLASS_SMALL
 	food_effects = list("food_energized")
 
 	attackby(obj/item/W, mob/user)
