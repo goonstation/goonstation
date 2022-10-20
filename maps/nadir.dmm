@@ -4666,15 +4666,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"cot" = (
-/obj/submachine/chef_sink/chem_sink{
-	dir = 8;
-	pixel_x = 8
-	},
-/turf/simulated/floor/purpleblack{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "coT" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/machinery/door/poddoor/pyro{
@@ -12314,8 +12305,8 @@
 /turf/simulated/floor/redblack/corner,
 /area/station/security/main)
 "glY" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
+/obj/disposalpipe/trunk/mail/west,
+/obj/machinery/disposal/mail/autoname/research/chemistry,
 /turf/simulated/floor/purpleblack/corner{
 	dir = 8
 	},
@@ -12473,6 +12464,13 @@
 	dir = 1
 	},
 /area/station/crew_quarters/courtroom)
+"gpP" = (
+/obj/storage/secure/closet/research/chemical,
+/obj/item/paper/book/from_file/pharmacopia,
+/turf/simulated/floor/purpleblack{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "gpS" = (
 /obj/machinery/shower{
 	dir = 4;
@@ -12611,7 +12609,6 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail/bent/north,
 /obj/landmark/gps_waypoint,
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/arcade,
@@ -18944,8 +18941,11 @@
 	name = "Head of Personnel's Quarters"
 	})
 "jpE" = (
-/obj/storage/secure/closet/research/chemical,
-/obj/item/paper/book/from_file/pharmacopia,
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/glass_recycler{
+	glass_amt = 5;
+	pixel_y = 4
+	},
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "jpG" = (
@@ -19582,6 +19582,10 @@
 /obj/machinery/optable,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
+"jFJ" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "jGl" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -27857,8 +27861,11 @@
 	},
 /area/station/crew_quarters/arcade/dungeon)
 "nzD" = (
-/obj/stool/bench/blue/auto,
 /obj/disposalpipe/segment/horizontal,
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 4
 	},
@@ -29290,11 +29297,6 @@
 	dir = 1
 	},
 /area/station/hallway/secondary/east)
-"orC" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/disposalpipe/segment/vertical,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "orS" = (
 /obj/table/reinforced/auto,
 /obj/item/shaker/salt{
@@ -30128,6 +30130,21 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"oOu" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/drinks/cola/random{
+	pixel_x = 4;
+	pixel_y = 11
+	},
+/obj/item/coin{
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/item/storage/toolbox/emergency{
+	pixel_y = -3
+	},
+/turf/simulated/floor/purpleblack,
+/area/station/hallway/primary/northeast)
 "oOx" = (
 /obj/wingrille_spawn/auto/crystal,
 /obj/cable,
@@ -36892,11 +36909,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/table/reinforced/chemistry/auto,
-/obj/machinery/glass_recycler{
-	glass_amt = 5;
-	pixel_y = 4
-	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "svP" = (
@@ -40052,21 +40066,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
-"tUT" = (
-/obj/table/round/auto,
-/obj/item/storage/toolbox/emergency{
-	pixel_x = -1;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/food/drinks/cola/random{
-	pixel_x = 6;
-	pixel_y = 1
-	},
-/obj/item/coin{
-	pixel_x = -5
-	},
-/turf/simulated/floor/purpleblack,
-/area/station/hallway/primary/northeast)
 "tVz" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/stma_kit,
@@ -40388,10 +40387,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"ugo" = (
-/obj/disposalpipe/segment/mail/bent/west,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "ugI" = (
 /obj/machinery/navbeacon{
 	codes_txt = "tour;next_tour=tour5;desc=In the event of injury, make your way to the Medbay on my left. Please alert medical personnel in advance if possible.";
@@ -41196,13 +41191,12 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "uAN" = (
-/obj/machinery/disposal/mail/autoname/research/chemistry,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/trunk/mail/south,
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -41804,7 +41798,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "uQd" = (
-/obj/disposalpipe/segment/bent/west,
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "uQg" = (
@@ -42718,11 +42712,8 @@
 	},
 /area/station/engine/storage)
 "vsB" = (
-/obj/stool/chair{
+/obj/machinery/computer/chem_requester/science{
 	dir = 4
-	},
-/obj/landmark/start{
-	name = "Staff Assistant"
 	},
 /turf/simulated/floor/purpleblack,
 /area/station/hallway/primary/northeast)
@@ -45751,7 +45742,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/disposalpipe/segment/mail/vertical,
+/obj/disposalpipe/segment/mail/bent/north,
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "xep" = (
@@ -96658,12 +96649,12 @@ byA
 rCy
 kQw
 glY
-orC
+fGI
 uQd
 vkt
 iEd
+gpP
 uRX
-cot
 uXm
 nzD
 qVs
@@ -96960,8 +96951,8 @@ byA
 tXW
 wRi
 uAN
-ugo
 fGI
+jFJ
 svg
 wRi
 wRi
@@ -97561,7 +97552,7 @@ csA
 uSB
 bUd
 byA
-tUT
+kVp
 wRi
 jKl
 iLY
@@ -97863,7 +97854,7 @@ cGt
 vtH
 lsj
 byA
-kVp
+oOu
 wRi
 edb
 swt
