@@ -1434,7 +1434,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 		switch (signal.data["command"])
 			if ("status")
-				if (!signal.data["data"])
+				if (!signal.data["data"] && !signal.data["vars"])
 					return
 
 				if (!(sender in src.generator_statuses)) // A new friend!
