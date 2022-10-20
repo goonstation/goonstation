@@ -1841,12 +1841,6 @@
 		hud.remove_item(I)
 		hud.add_object(I, HUD_LAYER+2, hud.layouts[hud.layout_style]["twohand"])
 
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
-
 		src.l_hand = I
 		src.r_hand = I
 	else //Object is 1-hand, remove ui elements, set item to proper location.
@@ -1911,12 +1905,6 @@
 			hud.set_visible(hud.rhand, 0)
 			hud.set_visible(hud.twohandl, 1)
 			hud.set_visible(hud.twohandr, 1)
-
-		var/icon/IC = new/icon(I.icon)
-		var/width = IC.Width()
-		var/regex/locfinder = new(@"^(CENTER[+-]\d:)(\d+)(.*)$") //matches screen placement of the 2handed spot (e.g.: "CENTER-1:31, SOUTH:5"), saves the pixel offset of the east-west component separate from the rest
-		if(locfinder.Find("[I.screen_loc]")) //V offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box V
-			I.screen_loc = "[locfinder.group[1]][text2num(locfinder.group[2])-(width-32)/2][locfinder.group[3]]"
 
 		return 1
 	else

@@ -1622,6 +1622,17 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_y = rand(-8, 8)
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
 
+/obj/item/paper/siphon_guide
+	name = "Harmonic Siphon Brief"
+	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
+	icon_state = "postcard-owlery"
+	sizex = 1200
+	sizey = 650
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/siphonguide.png")]'></body></html>"
+
 /obj/item/paper/iou
 	name = "IOU"
 	desc = "Somebody took whatever was in here."

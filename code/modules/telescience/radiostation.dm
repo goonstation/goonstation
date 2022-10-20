@@ -241,17 +241,30 @@
 	icon_state = "mixtable-3"
 	anchored = 1
 	density = 1
-	var/has_record = 0
-	var/is_playing = 0
+	var/can_play_music = TRUE
+	var/has_record = FALSE
+	var/is_playing = FALSE
 	var/obj/item/record/record_inside = null
 
 	New()
-		..()
+		. = ..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_music)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
-		if(has_record)
+		if (!src.can_play_music)
+			boutput(user, "<span class='alert'>You insert the record into the record player, but it won't turn on.</span>")
+			return
+		else if(has_record)
 			boutput(user, "The record player already has a record inside!")
 		else if(!is_playing)
 			boutput(user, "You insert the record into the record player.")
@@ -260,7 +273,7 @@
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
-			src.has_record = 1
+			src.has_record = TRUE
 			var/R = copytext(html_encode(tgui_input_text(user, "What is the name of this record?", "Record Name", src.record_inside.record_name)), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
@@ -789,12 +802,28 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "tapedeck"
 	anchored = 1
 	density = 1
-	var/has_tape = 0
-	var/is_playing = 0
+	var/has_tape = FALSE
+	var/is_playing = FALSE
+	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_tapes)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
+		if(!src.can_play_tapes)
+			boutput(user, "<span class='alert'>You insert the tape into the tape deck, but it won't turn on.</span>")
+			return
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
 		else if(!is_playing)
@@ -803,8 +832,8 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
-			src.has_tape = 1
-			src.is_playing = 1
+			src.has_tape = TRUE
+			src.is_playing = TRUE
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()

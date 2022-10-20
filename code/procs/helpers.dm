@@ -2602,3 +2602,17 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	if (!T)
 		return
 	return T
+
+/// adjusts a screen_loc to account for non-32px-width sprites, so they get centered in a HUD slot
+/proc/do_hud_offset_thing(atom/movable/A, new_screen_loc)
+	var/icon/IC = new/icon(A.icon)
+	var/width = IC.Width()
+	var/regex/locfinder = new(@"^(\w*)([+-]\d)?(:\d+)?(.*)$") //chops up X-axis of a screen_loc
+	if(width != 32 && locfinder.Find("[new_screen_loc]")) //if we're 32-width, just use the loc we're given
+		var/offset = 0
+		if(startswith(locfinder.group[3], ":"))
+			offset = text2num(copytext(locfinder.group[3], 2))
+		offset -= (width-32)/2 // offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box
+		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
+	else
+		return new_screen_loc //regex failed to match, just use what we got

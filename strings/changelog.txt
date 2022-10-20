@@ -1,4 +1,40 @@
 
+(t)wed oct 19 22
+(u)LeahTheTech
+(p)11441
+(e)💅🧛‍♂️|C-QoL, A-Gamemodes
+(+)Coagulated gnesis tinting now wears off after 3 minutes.
+(u)Kubius
+(p)7730
+(e)🆕🎨🗺|C-Feature, C-Sprites, A-Mapping
+(*)Added a new map, the Nadir Extraction Site. Located on the caustic planet of Magus, Nadir is nestled deep within an acid sea to escape the corrosive sleetstorms that ravage its surface.
+(*)The Site was constructed over a vast deposit of Miraclium, and its unique circumstances necessitate prototype machinery; extract and transmute Miraclium with the cutting-edge Harmonic Siphon, harness the acid's unique properties for power with catalytic generators, and "safely" transport goods on- and off-site with the Transception Array.
+(*)Thank you to the community testers who tried the map in early test sessions, and the devs who adopted it for the iteration to come. This was kind of a wacky idea, and I'm amazed that it has come to fruition.
+(u)Caro
+(*)Removes Destiny from the map rotation.
+(u)Caro
+(+)Adjusted player caps for Nadir and Clarion, max player cap is now 60.
+(u)Shiiba
+(p)11414
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Ghost Busters now have their own headset and radio icon
+(t)tue oct 18 22
+(u)Kubius
+(p)11362
+(e)🆕🗺⚖|C-Feature, A-Mapping, C-Balance
+(+)Oshan's refinery now includes an unstocked general manufacturer.
+(u)DrWolfy
+(p)11337
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added a science fabricator to Oshan's research and two cargo transporters and a recharger to Oshan's artifact lab.
+(u)DrWolfy
+(p)11433
+(e)🤖|A-Silicons
+(+)Adds a hand labeler to chemistry cyborgs.
+(u)LeahTheTech
+(p)11418
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Firing a kinetic gun in space now pushes you backwards.
 (t)mon oct 17 22
 (u)DrWolfy
 (p)11309

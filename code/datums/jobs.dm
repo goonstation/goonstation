@@ -1729,6 +1729,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
+	limit = 1
+	special_spawn_location = null
 #else
 	limit = 1
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
@@ -2044,7 +2047,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
