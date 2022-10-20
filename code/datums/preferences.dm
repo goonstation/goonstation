@@ -325,7 +325,7 @@ datum/preferences
 				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
-					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
+					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
 					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
@@ -367,7 +367,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-profileName")
-				var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
+				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
@@ -387,7 +387,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameFirst")
-				var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a first name:", "Character Generation", src.name_first)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -414,7 +414,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-nameMiddle")
-				var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -433,7 +433,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameLast")
-				var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -532,7 +532,7 @@ datum/preferences
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -544,7 +544,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -556,7 +556,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)

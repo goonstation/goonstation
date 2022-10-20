@@ -87,7 +87,7 @@
 		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
 		else randomname = pick_string_autokey("names/wizard_male.txt")
 		SPAWN(0)
-			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
+			var/newname = adminscrub(tgui_input_text(wizard.current, "You are a Wizard. Would you like to change your name to something else?", "Name change", randomname))
 			if(newname && newname != randomname)
 				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
 			if (length(ckey(newname)) == 0)

@@ -477,10 +477,10 @@ proc/get_angle(atom/a, atom/b)
 	. = dir2text(angle2dir(degree))
 
 /proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = sanitize(input(Message, Title, Default) as text, length)
+	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(input(user, Message, Title, Default) as null|text, length)
+	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1

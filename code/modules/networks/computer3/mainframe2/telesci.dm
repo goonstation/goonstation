@@ -1085,7 +1085,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
-			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
+			var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
 			title = copytext(adminscrub(title), 1, 128)
 			if(!length(title)) return
 			bm.name = title

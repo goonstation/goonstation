@@ -110,7 +110,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -593,7 +593,7 @@
 		src.in_use = 1
 		. = tgui_input_list(user, "What do you want to write?", "Write something", (isghostdrone(user) || !user.literate) ? src.c_symbol : (list("queue input") + src.c_default + src.c_symbol))
 		if(. == "queue input")
-			var/inp = input(user, "Type letters you want to write.", "Crayon Leter Queue", null)
+			var/inp = tgui_input_text(user, "Type letters you want to write.", "Crayon Letter Queue")
 			inp = uppertext(inp)
 			. = list()
 			for(var/i = 1 to min(length(inp), 100))
@@ -818,7 +818,7 @@
 			boutput(user, "<span class='alert'>You don't know how to write.</span>")
 			return
 		src.in_use = 1
-		var/t = input(user, "What do you want to write?", null, null) as null|text
+		var/t = tgui_input_text(user, "What do you want to write?", "Write")
 		if (!t || BOUNDS_DIST(T, user) > 0)
 			src.in_use = 0
 			return
@@ -899,7 +899,7 @@
 			return
 		tooltip_rebuild = 1
 		var/holder = src.loc
-		var/str = copytext(html_encode(input(user,"Label text?","Set label","") as null|text), 1, 32)
+		var/str = copytext(html_encode(tgui_input_text(user, "Label text?", "Set label")), 1, 32)
 		if(str)
 			phrase_log.log_phrase("label", str, no_duplicates=TRUE)
 		if (src.loc != holder)
