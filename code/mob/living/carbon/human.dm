@@ -3457,5 +3457,5 @@
 		src.belt?.hear_talk(M, text, real_name, lang_id)
 		src.r_hand?.hear_talk(M, text, real_name, lang_id)
 		src.l_hand?.hear_talk(M, text, real_name, lang_id)
-	..()
+	. = ..()
 
