@@ -133,7 +133,6 @@
 
 		if (istype(caster, /mob/living/critter/brain_slug))
 			SPAWN(0.5 SECONDS)	//squishy
-				//Todo find a better animation
 				eat_twitch(caster)
 
 	onEnd()
@@ -169,7 +168,7 @@
 				old_host.slug = null
 				old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			spawn(5 SECONDS)
-				caster.death(gibbed = FALSE)
+				caster?.death(gibbed = FALSE)
 
 	onInterrupt()
 		..()
@@ -201,8 +200,8 @@
 			caster.removeAbility(/datum/targetable/brain_slug/infest_host)
 			caster.slug = null
 			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
-				caster.death(gibbed = FALSE)
-		else if (istype(holder.owner, /mob/living/carbon/human))
+				caster?.death(gibbed = FALSE)
+		else if (ishuman(holder.owner))
 			var/mob/living/carbon/human/human_host = holder.owner
 			if (!human_host.slug)
 				boutput(holder.owner, "<span class='notice'>You have no parasite to expel... uh.</span>")
@@ -210,8 +209,9 @@
 			human_host.make_jittery(20)
 			human_host.emote("scream")
 			spawn(3 SECONDS)
+				if (!human_host || !human_host.slug) return
 				//Drop the slug on the floor and control it again
-				human_host.mind.transfer_to(human_host.slug)
+				human_host.mind?.transfer_to(human_host.slug)
 				human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
 				human_host.slug.set_loc(get_turf(human_host))
 				//Dont immediately infest something again.
@@ -228,12 +228,20 @@
 				human_host.slug = null
 				human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				human_host.death(gibbed = false)
-
 		else if (istype(holder.owner, /mob/living/critter/brain_slug))
 			var/mob/living/critter/brain_slug/the_slug = holder.owner
 			if (istype(the_slug.loc,/mob/))
 				var/mob/containing_mob = the_slug.loc
 				the_slug.set_loc(get_turf(containing_mob))
+				if (ishuman(containing_mob))
+					var/mob/living/carbon/human/old_host = containing_mob
+					old_host.slug = null
+					old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
+				if (istype(containing_mob, /mob/living/critter/small_animal))
+					var/mob/living/critter/small_animal/old_host = containing_mob
+					old_host.slug = null
+					old_host.removeAbility(/datum/targetable/brain_slug/exit_host)
+					old_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 				return FALSE
 			else
 				boutput(the_slug, "<span class='notice'>You aren't in a host!</span>")
@@ -260,18 +268,19 @@
 			//Begin the sluggening
 			hit_twitch(the_mob)
 			spawn(3 SECONDS)
+				if (!the_mob || !the_slug) return
 				violent_standup_twitch(the_mob)
 				playsound(M.loc, 'sound/effects/bones_break.ogg', 30, 1)
 				spawn(2 SECONDS)
-					the_slug.mind.transfer_to(the_mob)
+					if (!the_mob || !the_slug) return
+					the_slug.mind?.transfer_to(the_mob)
 					the_mob.full_heal()
-					hit_twitch(the_mob)
 		else
 			boutput(M, "<span class='notice'>You arent inside something you can possess.</span>")
 			return TRUE
 
-//Checks if a thing can be infested
-//Returns false if it cant be.
+
+///Checks if a thing can be infested by a brain slug and returns false if it cant be.
 proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 	//Small animals are fair game except mentormice and adminmice for obvious reasons.
 	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && isalive(mob_target))
@@ -283,7 +292,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 			return FALSE
 
 	//Human corpses are also prime targets, if they are fresh
-	else if (istype(mob_target, /mob/living/carbon/human))
+	else if (ishuman(mob_target))
 		if (isalive(mob_target))
 			boutput(caster, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
 			return FALSE
@@ -346,6 +355,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 	cooldown = 20 SECONDS
 	targeted = 1
 	target_anything = 1
+	pointCost = 40
 
 	cast(atom/target)
 		if (..())
@@ -359,7 +369,6 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		proj.targets = list(target)
 
 		proj.launch()
-		holder.points -= 40
 
 /datum/targetable/brain_slug/brainwave_scan
 	name = "Brainwave scan"
