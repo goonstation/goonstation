@@ -531,7 +531,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 	martian_glomp // Martian glomp (boarding pod? escape pod? you decide) that ended up very stranded
 		underwater = 1
 		maxNum = 1
-		probability = 100 //DEBUG DEBUG DEBUG
+		probability = 30
 		prefabPath = "assets/maps/prefabs/prefab_water_martian_glomp.dmm"
 		prefabSizeX = 13
 		prefabSizeY = 10
