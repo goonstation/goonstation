@@ -118,7 +118,7 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 2 space column for the leave pod button.
+	if (src.right_offset > 9) // Wraps vertically if the magnitude of right offset is greater than 8. Leave a 1 space column for the leave pod button.
 		src.wraparound_offset_right++
 
 	var/next_right_offset = src.next_right()
