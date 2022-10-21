@@ -287,7 +287,7 @@
 			if(field == "Intensity")
 				var/maxintens = manifest["Maximum Intensity"]
 				intensity_sum += manifest[field]
-				minitext += "<strong>[field]</strong> &middot; [manifest[field]][maxintens ? " / [maxintens]" : ""] "
+				minitext += "<strong>[field]</strong> &middot; [strip_html(manifest[field])][maxintens ? " / [maxintens]" : ""] "
 				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
 			else if(field != "INT_TARGETID" && field != "Maximum Intensity")
 				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
