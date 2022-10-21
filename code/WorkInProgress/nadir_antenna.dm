@@ -656,7 +656,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/list/manifest = known_pads[device_index]
 		for(var/field in manifest)
 			if(field != "INT_TARGETID")
-				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
+				minitext += "<strong>[field]</strong> &middot; [strip_html(manifest[field])]<br>"
 		rollingtext += minitext
 		rollingtext += "<A href='[topicLink("send","\ref[device_index]")]'>Send</A> | "
 		rollingtext += "<A href='[topicLink("receive","\ref[device_index]")]'>Receive</A><br><br>"
