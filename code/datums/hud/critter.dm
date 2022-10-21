@@ -107,9 +107,9 @@
 	var/y_offset = 0
 
 	if (next_left_offset < 0)
-		x_offset = next_left_offset
+		x_offset = next_left_offset + src.wraparound_offset_left
 	else if (next_left_offset > 0)
-		x_offset = "+[next_left_offset]"
+		x_offset = "+[next_left_offset + src.wraparound_offset_left]"
 	else
 		x_offset = ""
 
@@ -134,9 +134,9 @@
 	var/y_offset = 0
 
 	if (next_right_offset < 0)
-		x_offset = next_right_offset
+		x_offset = next_right_offset - src.wraparound_offset_right
 	else if (next_right_offset > 0)
-		x_offset = "+[next_right_offset]"
+		x_offset = "+[next_right_offset - src.wraparound_offset_right]"
 	else
 		x_offset = ""
 
