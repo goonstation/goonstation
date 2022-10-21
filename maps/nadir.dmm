@@ -39276,7 +39276,9 @@
 	name = "Cloning Bay Door Control";
 	pixel_x = -24
 	},
-/obj/machinery/manufacturer/uniform,
+/obj/machinery/manufacturer/uniform{
+	free_resources = list(/obj/item/material_piece/cloth/cottonfabric)
+	},
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
