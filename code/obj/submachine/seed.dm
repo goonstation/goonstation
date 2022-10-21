@@ -688,6 +688,7 @@
 		return attack_hand(user)
 
 	ui_interact(mob/user, datum/tgui/ui)
+		remove_distant_beaker()
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "ReagentExtractor", src.name)
@@ -753,15 +754,19 @@
 		. = ..()
 		if(.)
 			return
+		remove_distant_beaker()
 		var/list/containers = src.getContainers()
 		switch(action)
 			if("ejectcontainer")
 				var/obj/item/I = src.inserted
 				if (!I)
 					return
+				if(src.inserted.loc == src)
+					TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(I)
 				if (I == src.extract_to) src.extract_to = null
-				TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-				usr.put_in_hand_or_eject(I)
+				src.inserted = null
+				. = TRUE
 			if("insertcontainer")
 				if (src.inserted)
 					return
@@ -826,18 +831,34 @@
 
 		..()
 
+	proc/remove_distant_beaker()
+		// borgs and people with item arms don't insert the beaker into the machine itself
+		// but whenever something would happen to the dispenser and the beaker is far it should disappear
+		if(src.inserted && BOUNDS_DIST(src.inserted, src) > 0)
+			if (src.inserted == src.extract_to) src.extract_to = null
+			src.inserted = null
+			src.UpdateIcon()
+
 	proc/tryInsert(var/obj/item/W, var/mob/user)
-		if (isrobot(user))
-			boutput(user, "This machine does not accept containers from robots!")
+		remove_distant_beaker()
+
+		if(BOUNDS_DIST(user, src) > 0) // prevent message from appearing in case a borg inserts from afar
 			return
+
 		if(src.inserted)
 			boutput(user, "<span class='alert'>A container is already loaded into the machine.</span>")
 			return
 		src.inserted =  W
-		user.drop_item()
-		W.set_loc(src)
-		if(!src.extract_to) src.extract_to = W
-		boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
+
+		if(!W.cant_drop)
+			user.drop_item()
+			if(!W.qdeled)
+				W.set_loc(src)
+		if(W.qdeled)
+			W = null
+		else
+			if(!src.extract_to) src.extract_to = W
+			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 		src.ui_interact(user)
 
 	Exited(Obj, newloc)
