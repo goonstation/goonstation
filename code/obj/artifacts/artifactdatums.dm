@@ -73,6 +73,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
+	/// ID of the cargo tech skimming a cut of the sale
+	var/obj/item/card/id/scan = null
+	/// Bank account info of the cargo tech skimming a cut of the sale
+	var/datum/db_record/account = null
+
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100
