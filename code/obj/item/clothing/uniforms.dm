@@ -1731,6 +1731,13 @@
 
 //Crate Loot
 
+//Western Saloon Dress
+/obj/item/clothing/under/misc/westerndress
+	name = "Western Saloon Dress"
+	desc = "Featuring a skirt over a skirt!"
+	icon_state = "westerndress"
+	item_state = "westerndress"
+
 /obj/item/clothing/under/misc/tiedye
     name = "tiedye shirt"
     desc = "Featuring a pretty inky pattern."
