@@ -1,4 +1,9 @@
 
+(t)thu oct 20 22
+(u)DrWolfy
+(p)11431
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now see the destination set when examining or using a cargo transporter.
 (t)wed oct 19 22
 (u)LeahTheTech
 (p)11441

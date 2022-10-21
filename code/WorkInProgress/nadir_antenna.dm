@@ -23,6 +23,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	icon_state = "array"
 	bound_height = 64
 	bound_width = 96
+	mats = 0
 
 	///Whether array permits transception; can be disabled temporarily by anti-overload measures, or toggled manually
 	var/primed = TRUE
@@ -246,10 +247,15 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	var/pad_id = null
 
 	New()
+		START_TRACKING
 		src.net_id = generate_net_id(src)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, src.frequency)
 		src.pad_id = "[pick(vowels_upper)][prob(20) ? pick(consonants_upper) : rand(0,9)]-[rand(0,9)][rand(0,9)][rand(0,9)]"
 		src.name = "transception pad [pad_id]"
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
 
 	receive_signal(datum/signal/signal)
@@ -326,8 +332,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			else
 				return "ERR_OTHER" //what
 
-	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo, send otherwise
-	proc/attempt_transceive(var/cargo_index = null)
+	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
+	proc/attempt_transceive(var/cargo_index = null,var/obj/manual_receive = null)
 		if(src.is_transceiving)
 			return
 		if(!transception_array)
@@ -338,12 +344,16 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/netnum = powernet.number
 		if(transception_array.can_transceive(netnum) != TRANSCEIVE_OK)
 			return
-		if(cargo_index != null)
-			if(shippingmarket.pending_crates[cargo_index])
-				var/obj/inbound_target = shippingmarket.pending_crates[cargo_index]
-				receive_a_thing(netnum,inbound_target)
+		if(cargo_index || manual_receive)
+			var/obj/inbound_target
+			if(manual_receive)
+				inbound_target = manual_receive
+			else if(shippingmarket.pending_crates[cargo_index])
+				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return
+			if(inbound_target)
+				receive_a_thing(netnum,inbound_target)
 		else
 			send_a_thing(netnum)
 
@@ -387,7 +397,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 								shippingmarket.sell_crate(thing2send)
 
 						else if(thing2send.artifact)
-							shippingmarket.sell_artifact(thing2send)
+							var/datum/artifact/art = thing2send.artifact
+							shippingmarket.sell_artifact(thing2send,art)
 
 						else //how even
 							logTheThing("debug", null, null, "Telepad attempted to send [thing2send], which is not a crate or artifact")
