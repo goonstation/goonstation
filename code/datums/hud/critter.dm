@@ -95,7 +95,7 @@
 
 /// gets the leftmost screen loc
 /datum/hud/critter/proc/loc_left()
-	if (src.left_offset < -6) // wraps vertically if the magnitude of left offset is greater than 6
+	if (src.left_offset < -9) // wraps vertically if the magnitude of left offset is greater than 6
 		src.wraparound_offset_left++
 
 	var/next_left_offset = src.next_left()
@@ -118,7 +118,7 @@
 
 /// gets the rightmost screen loc
 /datum/hud/critter/proc/loc_right()
-	if (src.right_offset > 6) // wraps vertically if the magnitude of right offset is greater than 6
+	if (src.right_offset > 9) // wraps vertically if the magnitude of right offset is greater than 6
 		src.wraparound_offset_right++
 
 	var/next_right_offset = src.next_right()
