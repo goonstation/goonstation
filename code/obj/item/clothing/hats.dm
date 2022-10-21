@@ -1217,6 +1217,7 @@ proc/filter_trait_hats(var/type)
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	seal_hair = 1
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
