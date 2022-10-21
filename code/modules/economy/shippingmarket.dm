@@ -314,7 +314,7 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		if (scan & account)
+		if (scan && account)
 			wagesystem.shipping_budget += price / 2
 			account["current_money"] += price / 2
 		else
