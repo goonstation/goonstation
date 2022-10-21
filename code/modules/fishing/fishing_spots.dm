@@ -89,6 +89,17 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 /datum/fishing_spot/spatial_tear
 	fishing_atom_type = /obj/forcefield/event
 	fish_available = list(/obj/item/fish/carp = 1,\
+	/obj/item/fish/bass = 1,\
+	/obj/item/fish/salmon = 1,\
+	/obj/item/fish/herring = 1,\
+	/obj/item/fish/red_herring = 1,\
+	/obj/item/space_thing = 5,\
+	/obj/item/gnomechompski = 5,\
+	/obj/item/material_piece/cerenkite = 10,\
+	/obj/item/material_piece/erebite = 10,\
+	/obj/item/clothing/shoes/clown_shoes = 5,\
+	/obj/item/coin = 5,\
+	/mob/living/carbon/human/future = 1,\
 #ifdef SECRETS_ENABLED
 	/mob/living/carbon/human/npc/monkey/extremely_fast = 1,\
 #endif
