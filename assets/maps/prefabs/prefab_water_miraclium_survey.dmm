@@ -9,58 +9,84 @@
 	name = "surveyors' stripe"
 	},
 /obj/machinery/tripod,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "i" = (
 /obj/item/device/audio_log/miraclium_survey,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "o" = (
 /obj/random_item_spawner/tools/one,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "s" = (
 /obj/decal/cleanable/machine_debris{
 	desc = "A pile that was probably a machine at some point."
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "A" = (
 /obj/item/mining_tool/drill,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "C" = (
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "D" = (
 /obj/item/breaching_charge/mining,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "E" = (
 /obj/decal/cleanable/dirt/dirt2,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "F" = (
 /obj/decal/fakeobjects/beacon{
 	desc = "A small tracking beacon in fairly poor condition. Nothing in the surroundings should have disturbed it - what broke it?"
 	},
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "K" = (
 /obj/item/tripod,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "O" = (
 /obj/item/raw_material/miracle,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "Q" = (
 /obj/item/device/t_scanner,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 "R" = (
 /obj/item/device/gps,
-/turf/space/fluid/trench,
+/turf/space/fluid/trench{
+	spawningFlags = null
+	},
 /area/noGenerate)
 
 (1,1,1) = {"

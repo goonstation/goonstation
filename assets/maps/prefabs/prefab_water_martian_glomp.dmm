@@ -5,22 +5,6 @@
 "c" = (
 /turf/simulated/martian/floor,
 /area/prefab/martian_glomp)
-"e" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
-"f" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
 "g" = (
 /obj/map/light/white,
 /turf/unsimulated/wall/auto/adventure/martian,
@@ -62,20 +46,14 @@
 /area/prefab/martian_glomp)
 "t" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 10;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
-"v" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
 "w" = (
 /obj/decal/cleanable/slime,
 /obj/machinery/door/unpowered/martian,
@@ -83,17 +61,21 @@
 /area/prefab/martian_glomp)
 "x" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 9;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
 "y" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 5;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -108,9 +90,11 @@
 /area/prefab/martian_glomp)
 "D" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 10;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -137,9 +121,11 @@
 /area/space)
 "K" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 9;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -168,20 +154,14 @@
 /area/prefab/martian_glomp)
 "P" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 6;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
-"Q" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/simulated/martian/floor,
-/area/prefab/martian_glomp)
 "R" = (
 /obj/decal/aliencomputer{
 	pixel_y = 32
@@ -202,9 +182,11 @@
 /area/prefab/martian_glomp)
 "T" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 5;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/floor,
 /area/noGenerate)
@@ -217,9 +199,11 @@
 /area/prefab/martian_glomp)
 "W" = (
 /obj/indestructible/shuttle_corner{
+	desc = "Grody. How long has this been here?";
 	dir = 6;
 	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
+	icon_state = "diagonal";
+	name = "withered wall"
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
@@ -269,10 +253,10 @@ a
 W
 O
 o
-Q
+o
 c
 Y
-e
+o
 o
 o
 a
@@ -285,7 +269,7 @@ c
 c
 c
 n
-e
+o
 o
 y
 "}
@@ -304,9 +288,9 @@ o
 (6,1,1) = {"
 a
 o
-f
+o
 S
-v
+o
 o
 w
 o
@@ -319,7 +303,7 @@ o
 o
 o
 o
-Q
+o
 r
 V
 j
@@ -341,12 +325,12 @@ o
 a
 a
 o
-f
+o
 M
 L
 C
 Z
-v
+o
 o
 "}
 (10,1,1) = {"
@@ -357,7 +341,7 @@ g
 N
 c
 c
-v
+o
 o
 o
 "}
@@ -366,9 +350,9 @@ a
 a
 o
 o
-f
+o
 c
-v
+o
 o
 o
 K
