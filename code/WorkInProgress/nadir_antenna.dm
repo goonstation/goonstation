@@ -63,6 +63,14 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
 				if(transc_pad.is_transceiving)
 					continue
+				var/receive_turf = get_turf(transc_pad)
+				if(length(receive_turf.contents) < 10) //move on to the next pad if there is excessive clutter or dense object
+					for(var/atom/movable/O in receive_turf)
+						if(istype(O,/obj))
+							if(O.density)
+								continue
+				else
+					continue
 				var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
 				if(!pad_powernet)
 					continue
