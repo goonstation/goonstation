@@ -1367,15 +1367,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		for (var/gen in src.generator_statuses)
 			var/list/data = params2list(src.generator_statuses[gen]["data"])
 			var/list/variables = params2list(src.generator_statuses[gen]["vars"])
-			var/device
-			if ("data" in src.generator_statuses[gen])
-				data = params2list(src.generator_statuses[gen]["data"])
-
-			if ("vars" in src.generator_statuses[gen])
-				variables = params2list(src.generator_statuses[gen]["vars"])
-
-			if ("device" in  src.generator_statuses[gen])
-				device = src.generator_statuses[gen]["device"]
+			var/device = src.generator_statuses[gen]["device"]
 
 			dat += "<b>[strip_html(gen)]\> [device ? strip_html(device) : ""]</b><ul>"
 
@@ -1386,7 +1378,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			if (length(variables) > 0)
 				dat += "<br><b>Variables:</b><br>"
-
 				for (var/field in variables)
 					dat += "[strip_html(field)]: <a href='byond://?src=\ref[src];set_var=[html_encode(field)]&netid=[gen]'>[strip_html(variables[field])]</a><br>"
 
@@ -1445,9 +1436,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if ("status")
 				if (!signal.data["data"] && !signal.data["vars"])
 					return
-
-				if (!(sender in src.generator_statuses)) // A new friend!
-					src.generator_statuses.Add(sender)
 
 				src.generator_statuses[sender] = signal.data // this packet should contain all the data we need
 				src.master.updateSelfDialog()

@@ -233,6 +233,7 @@
 		if (href_list["packet"])
 			if (!src.packet_control)
 				src.packet_control = 1
+				src.send_status()
 				boutput(usr, "<span class='notice'>You enable wireless control of the [src] by connecting the radio module.</span>")
 
 			else
