@@ -36,6 +36,8 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	var/equipment_failsafe = TRUE
 	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
 	var/failsafe_active = FALSE
+	///List of items to forcibly send to pads when possible
+	var/list/direct_queue = list()
 
 	New()
 		. = ..()
@@ -56,6 +58,19 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.failsafe_active = FALSE
 			else
 				src.attempt_restart()
+		else if(length(direct_queue) && primed && !src.is_transceiving)
+			var/obj/queued_item = pick(direct_queue)
+			for_by_tcl(transc_pad, /obj/machinery/transception_pad)
+				if(transc_pad.is_transceiving)
+					continue
+				var/datum/powernet/pad_powernet = transc_pad.get_direct_powernet()
+				if(!pad_powernet)
+					continue
+				var/pad_netnum = pad_powernet.number
+				if(src.can_transceive(pad_netnum))
+					transc_pad.attempt_transceive(null,queued_item)
+					direct_queue -= queued_item
+					break
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
@@ -346,14 +361,16 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(cargo_index || manual_receive)
 			var/obj/inbound_target
+			var/was_manual
 			if(manual_receive)
 				inbound_target = manual_receive
+				was_manual = TRUE
 			else if(shippingmarket.pending_crates[cargo_index])
 				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return
 			if(inbound_target)
-				receive_a_thing(netnum,inbound_target)
+				receive_a_thing(netnum,inbound_target,was_manual)
 		else
 			send_a_thing(netnum)
 
@@ -408,7 +425,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.is_transceiving = FALSE
 
 
-	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get)
+	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get,var/was_manual = FALSE)
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
@@ -432,7 +449,10 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else
-					shippingmarket.pending_crates.Add(thing2get)
+					if(was_manual)
+						transception_array.direct_queue += thing2get
+					else
+						shippingmarket.pending_crates.Add(thing2get)
 					playsound(src.loc, "sound/machines/pod_alarm.ogg", 30, 0)
 					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
 				src.is_transceiving = FALSE
