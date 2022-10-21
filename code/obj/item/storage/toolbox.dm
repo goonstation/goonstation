@@ -77,9 +77,9 @@
 		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
+		/obj/item/electronics/scanner,/
 		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
-		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
 	yellow_tools

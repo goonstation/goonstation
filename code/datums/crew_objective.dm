@@ -566,40 +566,6 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 						check_result = FALSE
 		return check_result
 
-ABSTRACT_TYPE(/datum/objective/crew/miner)
-	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
-/datum/objective/crew/miner/isa
-	explanation_text = "Create at least three suits of Industrial Space Armor."
-	medal_name = "40K"
-	var/static/check_result = null
-	check_completion()
-		var/suitcount = 0
-		if(isnull(check_result))
-			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
-			if(suitcount > 2)
-				check_result = TRUE
-			else
-				check_result = FALSE
-		return check_result
-/datum/objective/crew/miner/forsale
-	explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
-	var/static/check_result = null
-	check_completion()
-		var/list/materials = list()
-		if(isnull(check_result))
-			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-				if(S.broken)
-					continue
-				var/list/ores = S.ores
-				for(var/ore in ores)
-					var/datum/ore_cloud_data/OCD = ores[ore]
-					if(OCD.for_sale && OCD.amount)
-						materials |= ore
-			check_result = materials.len >= 10
-		return check_result
-
-
-ABSTRACT_TYPE(/datum/objective/crew/engineer)
 /datum/objective/crew/engineer/scanned
 	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
 	medal_name = "Man with a Scan"
@@ -640,6 +606,38 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 			if(clonecount > 1) return 1
 			return 0
 */
+
+ABSTRACT_TYPE(/datum/objective/crew/miner)
+	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
+/datum/objective/crew/miner/isa
+	explanation_text = "Create at least three suits of Industrial Space Armor."
+	medal_name = "40K"
+	var/static/check_result = null
+	check_completion()
+		var/suitcount = 0
+		if(isnull(check_result))
+			suitcount = length(by_type[/obj/item/clothing/suit/space/industrial])
+			if(suitcount > 2)
+				check_result = TRUE
+			else
+				check_result = FALSE
+		return check_result
+/datum/objective/crew/miner/forsale
+	explanation_text = "Have at least ten different ores available for purchase from the Rockbox at the end of the round."
+	var/static/check_result = null
+	check_completion()
+		var/list/materials = list()
+		if(isnull(check_result))
+			for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+				if(S.broken)
+					continue
+				var/list/ores = S.ores
+				for(var/ore in ores)
+					var/datum/ore_cloud_data/OCD = ores[ore]
+					if(OCD.for_sale && OCD.amount)
+						materials |= ore
+			check_result = materials.len >= 10
+		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/heisenbee
