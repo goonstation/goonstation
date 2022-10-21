@@ -479,34 +479,48 @@ datum
 				else M.take_brain_damage(-10 * mult) // Zine those synapses into not dying *yet*
 
 				//Brain slug stuff
-				if (istype(M, /mob/living/carbon/human))
-					var/mob/living/carbon/human/human_host = M
-					if (human_host.slug)
+				if (istype(M, /mob/living/))
+					var/mob/living/host = M
+					var/mob/living/critter/brain_slug/the_slug = null
+					var/mob/living/carbon/human/human_host = null	//Are we a human?
+					var/mob/living/critter/small_animal/animal_host = null	//Or a small animal?
+					if(ishuman(M))
+						human_host = M
+						the_slug = human_host.slug
+					else if (istype(M, /mob/living/critter/small_animal))
+						animal_host = M
+						the_slug = animal_host.slug
+					if (the_slug)
 						if (prob(20))
-							human_host.emote(pick("scream", "twitch_v", "twitch", "drool"))
-							boutput(human_host, "<span class='alert'>Something's wrong! You can feel something trying to expel you from this host's head!</span>")
+							human_host?.emote(pick("scream", "twitch_v", "twitch", "drool"))
 						switch(counter += (1 * mult))
-							if (1 to 5)
-								human_host.take_toxin_damage(1 * mult)
+							if (1)
+								boutput(host, "<span class='alert'>Something's wrong! You can feel something trying to expel you from this host's head!</span>")
+							if (2 to 5)
+								host.take_toxin_damage(1 * mult)
 							if (6 to 25)
-								human_host.take_toxin_damage(1.5 * mult)
-								M.make_dizzy(1 * mult)
-								M.change_misstep_chance(10 * mult)
+								host.take_toxin_damage(1.5 * mult)
+								host.make_dizzy(1 * mult)
+								host.change_misstep_chance(10 * mult)
 							if (19 to INFINITY)
 								if(!being_ejected)
 									being_ejected = TRUE
-									human_host.visible_message("<span class='alert'>[human_host]'s suddenly arcs forward and clutches [his_or_her(human_host)] head!</span>")
-									human_host.emote("scream")
+									host.visible_message("<span class='alert'>[host]'s suddenly looks dazed and freezes up!</span>")
+									host.emote("scream")
 									spawn(2 SECONDS)
-										human_host.vomit()
+										if (!host || !the_slug)
+											return
+										human_host?.vomit()
 										spawn(3 SECONDS)
-											human_host.mind.transfer_to(human_host.slug)
-											human_host.slug.changeStatus("slowed", 5 SECONDS, 2)
-											human_host.slug.set_loc(get_turf(human_host))
+											if (!host || !the_slug)
+												return
+											host.mind?.transfer_to(the_slug)
+											the_slug.changeStatus("slowed", 5 SECONDS, 2)
+											the_slug.set_loc(get_turf(host))
 											//Dont immediately infest something again.
-											var/datum/targetable/ability = human_host.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
+											var/datum/targetable/ability = the_slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 											ability.doCooldown()
-											if (human_host.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
+											if (human_host?.organHolder.head) //sanity check in case you somehow lost your head but didnt die yet.
 												var/obj/head = human_host.organHolder.drop_organ("head")
 												qdel(head)
 												make_cleanable( /obj/decal/cleanable/blood/gibs,human_host.loc)
@@ -514,10 +528,14 @@ datum
 												gibs(human_host.loc, headbits = 0)
 												human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
 											//Cleanup
-											human_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-											human_host.removeAbility(/datum/targetable/brain_slug/infest_host)
-											human_host.slug = null
-											human_host.death(gibbed = false)
+											if (human_host)
+												human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
+												human_host.slug = null
+											if (animal_host)
+												animal_host.removeAbility(/datum/targetable/brain_slug/exit_host)
+												animal_host.removeAbility(/datum/targetable/brain_slug/infest_host)
+												animal_host.slug = null
+											host.death(gibbed = false)
 
 
 				..()

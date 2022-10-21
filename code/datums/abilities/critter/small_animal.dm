@@ -78,7 +78,6 @@
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
 			if (!isdead(MT))
 				MT.emote("scream")
-
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"

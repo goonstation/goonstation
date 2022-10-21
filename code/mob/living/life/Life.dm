@@ -612,18 +612,14 @@
 			//If they do, roll a chance to do some hint
 			if (AH)
 				AH.points --
-				if (AH.points > 600)
-					if (prob(2))
-						src.emote(pick("sneeze", "drool", "shiver", "twitch", "cough"))
-				else if (AH.points > 300)
+				if (AH.points > 500)
 					if (prob(4))
 						if(prob(50))
-							src.emote(pick("drool", "twitch_v", "gesticulate", "groan"))
+							src.emote(pick("drool", "twitch_v", "sneeze", "groan", "shiver"))
 						else
 							src.visible_message("<span class='notice'>[src] vomits! It looks slimier than usual</span>")
 							src.vomit()
 				else if (AH.points > 1)
-					//Chance to do something
 					if (prob(6))
 						//emote or vomit
 						if(prob(50))

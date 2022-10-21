@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 20
 	health_burn_vuln = 1
 
-	//Brain slug stuff in case we are infested
+	///Keeps track of the brain slug inside us, if there is any
 	var/mob/living/critter/brain_slug/slug = null
 
 	var/fur_color = 0
@@ -123,14 +123,13 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				the_slug.set_loc(get_turf(src.loc))
 				src.mind?.transfer_to(the_slug)
 				src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s remains!</span>", "<span class='alert'>You slither out of your dying host.</span>")
-				src.slug = null
 			else
 				spawn(3 SECONDS)
-					if(src && the_slug)	//If we got deleted instead, disposing will take place
+					if(src?.slug)	//If we got deleted instead, disposing will take place
 						the_slug.set_loc(get_turf(src.loc))
 						src.mind?.transfer_to(the_slug)
 						src.visible_message("<span class='alert'>A horrible slithery slug crawls out of [src]'s ear!</span>", "<span class='alert'>You slither out of your dying host.</span>")
-						src.slug = null
+			src.slug = null
 		..()
 
 	canRideMailchutes()

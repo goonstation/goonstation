@@ -38,8 +38,29 @@
 					return "<span class='emote'><b>[src]</b> lets out a high pitched shriek!</span>"
 
 	death(var/gibbed)
+		if (istype(src.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/host = src.loc
+			host.slug = null
+			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
+		if (istype(src.loc, /mob/living/critter/small_animal))
+			var/mob/living/critter/small_animal/host = src.loc
+			host.slug = null
+			host.removeAbility(/datum/targetable/brain_slug/exit_host)
+			host.removeAbility(/datum/targetable/brain_slug/infest_host)
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
 			src.gib()
 		return ..()
+
+	disposing()
+		if (istype(src.loc, /mob/living/carbon/human))
+			var/mob/living/carbon/human/host = src.loc
+			host.slug = null
+			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
+		if (istype(src.loc, /mob/living/critter/small_animal))
+			var/mob/living/critter/small_animal/host = src.loc
+			host.slug = null
+			host.removeAbility(/datum/targetable/brain_slug/exit_host)
+			host.removeAbility(/datum/targetable/brain_slug/infest_host)
+		. = ..()

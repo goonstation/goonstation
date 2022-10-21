@@ -244,6 +244,9 @@ var/global/cloning_with_records = TRUE
 	if (!cloning_with_records && isalive(subject))
 		show_message("Error: Unable to scan alive patient.")
 		return
+	if (subject.slug)
+		show_message("Error: Unable to complete genetic scan.<br>Unidentified biomass detected.", "danger")
+		return
 
 	var/datum/mind/subjMind = subject.mind
 	if ((!subjMind) || (!subjMind.key))
