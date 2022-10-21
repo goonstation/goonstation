@@ -112,7 +112,7 @@
 			KillPathAndGiveUp(1)
 			return
 
-		if (IN_RANGE(src, src.moveTowards, 1))
+		if ((BOUNDS_DIST(src, src.moveTowards) == 0))
 			bartend()
 			src.worryLevel = 0
 			src.setEmotion("happy")
@@ -188,7 +188,7 @@
 		src.worryLevel++
 
 	explode()
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 		qdel(src)
 

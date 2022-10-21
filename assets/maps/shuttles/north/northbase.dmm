@@ -28,14 +28,15 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
 /area/centcom/outside)
 "aq" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -227,7 +228,10 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "gh" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	hardened = 1
+	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -319,8 +323,10 @@
 /area/shuttle/escape/centcom)
 "iQ" = (
 /obj/machinery/door/airlock/pyro/security{
-	name = "Secure Transport"
+	name = "Secure Transport";
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "iS" = (
@@ -790,7 +796,9 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "DE" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
@@ -924,7 +932,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "Li" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Mk" = (
@@ -1097,7 +1105,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -1121,7 +1129,6 @@
 	},
 /area/centcom)
 "Ry" = (
-/obj/table/auto,
 /obj/table/auto,
 /obj/item/storage/firstaid/fire{
 	pixel_x = -6
@@ -1172,7 +1179,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -1200,7 +1207,7 @@
 	},
 /area/shuttle/escape/centcom)
 "TB" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

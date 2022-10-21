@@ -100,7 +100,7 @@
 			if(!open && user.using_dialog_of(src))
 				user.Browse(null, "window=spaceheater")
 				src.remove_dialog(user)
-		else if (istype(I, /obj/item/wrench))
+		else if (iswrenchingtool(I))
 			if (user)
 				user.show_text("You [anchored ? "release" : "anchor"] the [src]", "blue")
 			src.anchored = !src.anchored
@@ -109,7 +109,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -148,9 +148,9 @@
 
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -251,6 +251,11 @@
 
 		return
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/machinery/sauna_stove
 	anchored = 0
 	density = 1
@@ -330,7 +335,7 @@
 			..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if(open)
 
@@ -363,9 +368,9 @@
 			UpdateIcon()
 
 			if (on)
-				playsound(src.loc, "sound/machines/heater_on.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_on.ogg', 50, 1)
 			else
-				playsound(src.loc, "sound/machines/heater_off.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/heater_off.ogg', 50, 1)
 		return
 
 
@@ -453,3 +458,8 @@
 
 
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null

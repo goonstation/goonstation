@@ -48,6 +48,8 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/scramblechance = 10
 	/// used to set straight icon_states on activation instead of fx overlays
 	var/nofx = 0
+	/// special_addendum for ArtifactLogs() proc
+	var/log_addendum = null
 
 	/// the list of all the artifacts faults
 	var/list/faults = list()
@@ -123,7 +125,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "activated", null, istype(src, /datum/artifact/bomb/) ? 1 : 0)
+		ArtifactLogs(usr, null, O, "activated", log_addendum, istype(src, /datum/artifact/bomb/) ? 1 : 0)
 		return 0
 
 	/// What the artifact does once when deactivated.
@@ -131,7 +133,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 		if (!O)
 			return 1
 		O.add_fingerprint(usr)
-		ArtifactLogs(usr, null, O, "deactivated", null, 0)
+		ArtifactLogs(usr, null, O, "deactivated", log_addendum, 0)
 		return 0
 
 	/// What activated artifact machines do each processing tick.
@@ -163,7 +165,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 			return 1
 		if (!user.in_real_view_range(T))
 			return 1
-		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
+		else if (!user.client && GET_DIST(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
 		O.add_fingerprint(user)
 		if (!istype(O, /obj/item/artifact/attack_wand)) // Special log handling required there.
@@ -214,11 +216,12 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
 	var/obj/machinery/artifact/turret/turretArt = null

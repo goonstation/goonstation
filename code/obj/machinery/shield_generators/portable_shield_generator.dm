@@ -7,10 +7,10 @@
 	density = 1
 	opacity = 0
 	anchored = 0
-	mats = 50
 	layer = FLOOR_EQUIP_LAYER1
 	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
+	var/starts_with_cell = TRUE
 	var/coveropen = 0
 	var/active = 0
 	var/range = 2
@@ -21,18 +21,21 @@
 	var/image/display_active = null
 	var/image/display_battery = null
 	var/image/display_panel = null
-	var/sound/sound_on = "sound/effects/shielddown.ogg"
-	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
-	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
+	var/sound/sound_on = 'sound/effects/shielddown.ogg'
+	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
+	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
+	var/obj/cable/connected_wire = null	//wire the gen is wrenched over. used to validate pnet connection
 	var/backup = 0		//if equip power went out while connected to wire, this should be true. Used to automatically turn gen back on if power is restored
 	var/first = 0		//tic when the power goes out.
+
 	New()
-		PCEL = new /obj/item/cell/supercell(src)
-		PCEL.charge = PCEL.maxcharge
+		if(starts_with_cell)
+			PCEL = new /obj/item/cell/supercell(src)
+			PCEL.charge = PCEL.maxcharge
 
 		src.display_active = image('icons/obj/meteor_shield.dmi', "on")
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
@@ -65,11 +68,11 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				shield_off(1) //1 for failed
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if(PCEL && !connected && active)
 					src.PCEL.use(120 * src.range * (src.power_level * src.power_level))
 				else if(connected && active)
@@ -77,7 +80,7 @@
 				if(prob(50))
 					shield_off(1)
 				return
-			if(3.0)
+			if(3)
 				if(PCEL && !connected && active)
 					src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
 					return
@@ -99,14 +102,25 @@
 		qdel(src)
 		return
 
+	//Code for power draw. Dictates actual draw, also used in description.
+	proc/get_draw()
+		return 30 * src.range * (src.power_level * src.power_level)
+
+	//Checks if connected grid exists and is adequately powered. Doesn't use get_direct_powernet because that requires knots
+	proc/line_powered()
+		. = FALSE
+		if(!src.connected_wire)
+			return
+		var/datum/powernet/net = src.connected_wire.get_powernet()
+		if (net)
+			if (net.avail - net.newload > power_usage)
+				. = TRUE
+		return
 
 	proc/process_wired()
-		//must be wrenched on top of a wire
-		if(!connected)
-			return
-
-		if(powered()) //if connected to power grid and there is power
-			src.power_usage = 30 * (src.range + 1) * (power_level * power_level)
+		//check for linepower
+		if(line_powered())
+			src.power_usage = get_draw()
 			use_power(src.power_usage)
 
 			//automatically turn back on if gen was deactivated due to power outage
@@ -118,7 +132,7 @@
 			src.build_icon()
 
 			return
-		else //connected grid has no power
+		else //connected grid missing or has no power
 			if(!backup)
 				backup = !backup
 				first = 1
@@ -129,7 +143,7 @@
 			return
 
 	proc/process_battery()
-		PCEL.use(30 * src.range * (power_level * power_level))
+		PCEL.use(get_draw())
 		var/charge_percentage = 0
 		var/current_battery_level = 0
 		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
@@ -158,7 +172,7 @@
 		var/the_range = input("Enter a range from [src.min_range]-[src.max_range]. Higher ranges use more power.","[src.name]",2) as null|num
 		if(!the_range)
 			return
-		if(get_dist(user,src) > 1)
+		if(BOUNDS_DIST(user, src) > 0)
 			boutput(user, "<span class='alert'>You flail your arms at [src.name] from across the room like a complete muppet. Move closer, genius!</span>")
 			return
 		the_range = clamp(the_range, src.min_range, src.max_range)
@@ -185,7 +199,7 @@
 		else
 			. += "It seems to be missing a usable battery."
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null
@@ -202,14 +216,14 @@
 					else
 						boutput(user, "The [src.name]'s battery light flickers briefly.")
 				else	//turn on power if connected to a power grid with power in it
-					if(powered() && connected)
+					if(line_powered() && connected)
 						src.shield_on()
 						src.visible_message("<b>[user.name]</b> powers up the [src.name].")
 					else
 						boutput(user, "The [src.name]'s battery light flickers briefly.")
 		build_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispryingtool(W))
 			if(!anchored)
 				src.set_dir(turn(src.dir, 90))
@@ -232,11 +246,15 @@
 			//just checking if it's placed on any wire, like powersink
 			var/obj/cable/C = locate() in get_turf(src)
 			if(C) //if generator is on wire
+				if(!src.connected)
+					src.connected_wire = C
+				else
+					src.connected_wire = null
 				src.connected = !src.connected
 				src.anchored = !src.anchored
 				src.backup = 0
 				src.visible_message("<b>[user.name]</b> [src.connected ? "connects" : "disconnects"] [src.name] [src.connected ? "to" : "from"] the wire.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				boutput(user, "There is no cable to connect to.")
 
@@ -319,6 +337,11 @@
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
+
 /*
 /Force field objects for various generators
 **/
@@ -328,7 +351,7 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
 
 	attackby(obj/item/W, mob/user)
@@ -382,19 +405,19 @@
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					MS.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(120 * MS.range)
 					else if(MS.connected && MS.active)
 						MS.use_power(MS.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(MS.PCEL && !MS.connected && MS.active)
 						MS.PCEL.use(60 * MS.range)
 					else if(MS.connected && MS.active)
@@ -422,10 +445,12 @@
 	icon_state = "shieldw"
 	event_handler_flags = USE_FLUID_ENTER
 	var/powerlevel //Stores the power level of the deployer
+	var/isactive = TRUE
 	density = 0
 
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
+	var/obj/machinery/door/linked_door = null
 	var/update_tiles
 
 	flags = 0
@@ -471,11 +496,28 @@
 			density = 1
 
 	disposing()
+		if(linked_door)
+			linked_door.linked_forcefield = null
 		if(update_tiles)
 			update_nearby_tiles()
 		deployer = 0
 		..()
 
+	//hello it is kubius, this is moved here and changed to respect + not modify powerlevel
+	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
+		if(a == 1)
+			src.icon_state = "shieldw"
+			src.isactive = TRUE
+			src.invisibility = INVIS_NONE
+			//these power levels are kind of arbitrary
+			if(src.powerlevel >= 2) src.flags |= FLUID_DENSE
+			if(src.powerlevel < 3) src.gas_impermeable = TRUE
+		else
+			src.icon_state = ""
+			src.isactive = FALSE
+			src.invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
+			src.flags &= ~FLUID_DENSE
+			src.gas_impermeable = FALSE
 
 	proc/update_nearby_tiles(need_rebuild)
 		var/turf/simulated/source = loc
@@ -539,19 +581,19 @@
 			var/obj/machinery/shieldgenerator/energy_shield/ES = deployer
 
 			switch(severity)
-				if(1.0)
+				if(1)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					ES.shield_off(1) //1 for failed
 					qdel(src)
 					return
-				if(2.0)
+				if(2)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(60 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
-				if(3.0)
+				if(3)
 					if(ES.PCEL && !ES.connected && ES.active)
 						ES.PCEL.use(30 * ES.range * (ES.power_level * ES.power_level))
 					else if(ES.connected && ES.active)
@@ -575,7 +617,7 @@
 
 
 //sealab arrivalss
-/obj/machinery/door/var/obj/forcefield/energyshield/perma/linked_forcefield = 0
+/obj/machinery/door/var/obj/forcefield/energyshield/linked_forcefield = 0
 
 /obj/forcefield/energyshield/perma
 	name = "Permanent Atmospheric/Liquid Forcefield"
@@ -586,20 +628,6 @@
 	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 	gas_impermeable = TRUE
 	event_handler_flags = USE_FLUID_ENTER
-
-	proc/setactive(var/a = 0) //this is called in a bunch of diff. door open procs. because the code was messy when i made this and i dont wanna redo door open code
-		if(a)
-			icon_state = "shieldw"
-			powerlevel = 2
-			invisibility = INVIS_NONE
-			flags |= FLUID_DENSE
-			gas_impermeable = TRUE
-		else
-			icon_state = ""
-			powerlevel = 0
-			invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
-			flags &= ~FLUID_DENSE
-			gas_impermeable = FALSE
 
 	meteorhit(obj/O as obj)
 		return
@@ -627,6 +655,7 @@
 			var/obj/machinery/door/door = (locate() in src.loc)
 			if(door)
 				door.linked_forcefield = src
+				src.linked_door = door
 				src.set_dir(door.dir)
 
 /obj/machinery/door/disposing()

@@ -31,7 +31,7 @@
 	return rgb(22, 210, 22)
 
 /proc/fix_hex(hex)
-	return copytext(hex + "000000", 1, 8)
+	return copytext((startswith(hex, "#") ? hex : "#") + "000000", 1, 8)
 
 #define COLOR_MATRIX_PROTANOPIA_LABEL "protanopia"
 #define COLOR_MATRIX_PROTANOPIA list(0.55, 0.45, 0.00, 0.00,\
@@ -133,7 +133,8 @@
 			color_list[1] / 255, 0, 0, 0,
 			0, color_list[2] / 255, 0, 0,
 			0, 0, color_list[3] / 255, 0,
-			0, 0, 0, color_list[4] / 255
+			0, 0, 0, color_list[4] / 255,
+			0, 0, 0, 0,
 		)
 	if(islist(color))
 		if(length(color) == 0)
@@ -256,10 +257,28 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0.299*v + 0.701*vsu + 0.168*vsw,
 		0.299*v - 0.299*vsu - 0.328*vsw,
 		0.299*v - 0.300*vsu + 1.25*vsw,
+		0,
 		0.587*v - 0.587*vsu + 0.330*vsw,
 		0.587*v + 0.413*vsu + 0.035*vsw,
 		0.587*v - 0.588*vsu - 1.05*vsw,
+		0,
 		0.114*v - 0.114*vsu - 0.497*vsw,
 		0.114*v - 0.114*vsu + 0.292*vsw,
-		0.114*v + 0.886*vsu - 0.203*vsw
+		0.114*v + 0.886*vsu - 0.203*vsw,
+		0,
+		0, 0, 0, 1,
+		0, 0, 0, 0
 	)
+
+/client/proc/set_saturation(s=1)
+	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
+	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+
+/client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY)
+	src.color_matrix = matrix
+	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+
+/client/proc/animate_color(matrix=COLOR_MATRIX_IDENTITY, time=5, easing=SINE_EASING)
+	src.color_matrix = matrix
+	matrix = mult_color_matrix(src.color_matrix, src.saturation_matrix)
+	animate(src, color=matrix, time=time, easing=easing)

@@ -1,7 +1,7 @@
 TYPEINFO(/datum/component/glue_ready)
 	initialization_args = list(
-		ARG_INFO("glue_duration", "num", "How long the glue lasts, null for infinity", null),
-		ARG_INFO("glue_removal_time", "num", "How long does it take to unglue stuff", null),
+		ARG_INFO("glue_duration", DATA_INPUT_NUM, "How long the glue lasts, null for infinity", null),
+		ARG_INFO("glue_removal_time", DATA_INPUT_NUM, "How long does it take to unglue stuff", null),
 	)
 
 /datum/component/glue_ready
@@ -38,6 +38,7 @@ TYPEINFO(/datum/component/glue_ready)
 
 /datum/component/glue_ready/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
+	UnregisterSignal(parent, list(COMSIG_ATTACKBY, COMSIG_ITEM_AFTERATTACK, COMSIG_ATOM_HITBY_THROWN, COMSIG_MOVABLE_HIT_THROWN))
 	parent.remove_filter("glue_ready_outline")
 	. = ..()
 
@@ -85,6 +86,8 @@ TYPEINFO(/datum/component/glue_ready)
 			boutput(user, "<span class='alert'>\The [glued_to]'s radiation dissolves the glue.</span>")
 		qdel(src)
 		return FALSE
+	if(istype(thing_glued, /obj/machinery/portapuke))
+		return FALSE
 	if(isturf(glued_to))
 		var/turf/glued_turf = glued_to
 		if(glued_turf.density)
@@ -114,7 +117,7 @@ TYPEINFO(/datum/component/glue_ready)
 		T.visible_message("<span class='notice'>[user] glues [thing_glued] to [glued_to].</span>")
 	else
 		T.visible_message("<span class='notice'>[thing_glued] sticks to [glued_to].</span>")
-	logTheThing(log_user, null, "combat", "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
+	logTheThing(LOG_COMBAT, log_user, "glued [ismob(thing_glued) ? constructTarget(thing_glued, "combat") : thing_glued] to [ismob(glued_to) ? constructTarget(glued_to, "combat") : glued_to] at [log_loc(glued_to)]")
 	qdel(src)
 
 /datum/component/glue_ready/proc/glue_thing_to_parent(atom/movable/parent, obj/item/item, user_or_datum_thrownthing)

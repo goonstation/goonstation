@@ -489,6 +489,14 @@
 	dir = 5
 	},
 /area/prefab/bee_sanctuary)
+"qC" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/bee_sanctuary)
 "rb" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black/grime,
@@ -529,6 +537,14 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 10
 	},
+/area/prefab/bee_sanctuary)
+"sM" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "sV" = (
 /obj/stool/chair/office/blue{
@@ -1265,6 +1281,12 @@
 "LG" = (
 /turf/unsimulated/floor,
 /area/prefab/bee_sanctuary)
+"LM" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/bee_sanctuary)
 "LY" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/purpleblack{
@@ -1295,6 +1317,17 @@
 /obj/decal/fakeobjects/robot{
 	anchored = 1;
 	desc = "How long has this been down here?"
+	},
+/turf/unsimulated/floor/white,
+/area/prefab/bee_sanctuary)
+"MP" = (
+/obj/machinery/door/airlock/glass{
+	name = "Office door"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
@@ -1406,6 +1439,14 @@
 	},
 /turf/variableTurf/clear,
 /area/noGenerate)
+"Qd" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/bee_sanctuary)
 "Qk" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -1423,6 +1464,9 @@
 /area/prefab/bee_sanctuary)
 "Qo" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-4"
+	},
 /turf/unsimulated/floor/white,
 /area/prefab/bee_sanctuary)
 "Qw" = (
@@ -2075,7 +2119,7 @@ Zz
 Zz
 Zz
 HE
-Ys
+sM
 Ys
 Mx
 Pe
@@ -2101,7 +2145,7 @@ Zz
 AK
 Ys
 Vv
-Ys
+sM
 Ys
 ME
 Pe
@@ -2127,7 +2171,7 @@ gW
 Ys
 Ys
 Vv
-Ys
+sM
 lY
 CO
 Pe
@@ -2153,17 +2197,17 @@ Zz
 AV
 AV
 Zz
-Zz
-Zz
-Zz
-Zz
-Vv
-Vv
-Zz
-Zz
-Zz
-Zz
-Zz
+Qd
+qC
+qC
+qC
+MP
+MP
+qC
+qC
+qC
+qC
+LM
 Zz
 UG
 ZM

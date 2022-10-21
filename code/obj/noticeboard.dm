@@ -15,8 +15,8 @@
 	qdel(src)
 
 
-/obj/noticeboard/attackby(var/obj/item/O as obj, var/mob/user as mob)
-	if (istype(O, /obj/item/paper))
+/obj/noticeboard/attackby(var/obj/item/O, var/mob/user)
+	if (istype(O, /obj/item/paper) || istype(O, /obj/item/canvas))
 		if (src.notices < 15)
 			O.add_fingerprint(user)
 			src.add_fingerprint(user)
@@ -24,7 +24,7 @@
 			O.set_loc(src)
 			src.notices++
 			src.UpdateIcon()
-			boutput(user, "<span class='notice'>You pin the paper to the noticeboard.</span>")
+			boutput(user, "<span class='notice'>You pin \the [O] to the noticeboard.</span>")
 			src.updateUsrDialog()
 		else
 			boutput(user, "<span class='alert'>You reach to pin your paper to the board but hesitate. You are certain your paper will not be seen among the many others already attached.</span>")
@@ -34,16 +34,17 @@
 	src.icon_state = "nboard0[min(src.notices, 5)]"
 
 
-/obj/noticeboard/attack_hand(mob/user as mob)
+/obj/noticeboard/attack_hand(mob/user)
 	var/dat = "<B>Noticeboard</B><BR>"
-	for(var/obj/item/paper/P in src)
-		dat += text("<A href='?src=\ref[];read=\ref[]'>[]</A> <A href='?src=\ref[];remove=\ref[]'>Remove</A><BR>", src, P, P.name, src, P)
+	for(var/obj/item/item in src)
+		if(istype(item, /obj/item/paper) || istype(item, /obj/item/canvas))
+			dat += "<A href='?src=\ref[src];read=\ref[item]'>[item]</A> <A href='?src=\ref[src];remove=\ref[item]'>Remove</A><BR>"
 	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
 	onclose(user, "noticeboard")
 
 
 /obj/noticeboard/Topic(href, href_list)
-	if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 		return
 	if (is_incapacitated(usr) || usr.restrained())
 		return
@@ -52,20 +53,26 @@
 
 	src.add_dialog(usr)
 	if (href_list["remove"])
-		var/obj/item/P = locate(href_list["remove"])
-		if ((P && P.loc == src))
-			P.set_loc(get_turf(src)) //dump paper on the floor because you're a clumsy fuck
-			P.layer = HUD_LAYER
-			P.add_fingerprint(usr)
+		var/obj/item/I = locate(href_list["remove"])
+		if (I?.loc == src)
+			usr.put_in_hand_or_drop(I)
+			I.add_fingerprint(usr)
 			src.add_fingerprint(usr)
 			src.notices--
 			src.UpdateIcon()
 			src.updateUsrDialog()
 
 	if (href_list["read"])
-		var/obj/item/paper/P = locate(href_list["read"])
-		if ((P && P.loc == src))
-			P.ui_interact(usr)
+		var/obj/item/I = locate(href_list["read"])
+		if (I?.loc == src)
+			if(istype(I, /obj/item/canvas))
+				var/obj/item/canvas/canvas = I
+				canvas.pop_open_a_browser_box(usr)
+			else
+				I.ui_interact(usr)
+
+
+#define PERSISTENT_NOTICEBOARD_VERSION 1
 
 /obj/noticeboard/persistent
 	name = "persistent notice board"
@@ -93,22 +100,60 @@
 		if(fexists(src.file_name))
 			src.data = json_decode(file2text(src.file_name))
 	if(isnull(src.data))
-		src.data = list()
+		src.data = list("_version" = PERSISTENT_NOTICEBOARD_VERSION)
 	if(src.persistent_id in src.data)
-		for(var/list/book_info in src.data[src.persistent_id])
-			var/obj/item/paper/paper = new(src)
-			paper.name = book_info[1]
-			paper.info = book_info[2]
-			paper.fingerprintslast = book_info[3]
-			if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
-				paper.color = book_info[4]
+		var/list/our_data = src.data[src.persistent_id]
+		var/version = our_data["_version"] || 0
+		if(version == 0)
+			for(var/list/book_info in our_data)
+				var/obj/item/paper/paper = new(src)
+				paper.name = book_info[1]
+				paper.info = book_info[2]
+				paper.fingerprintslast = book_info[3]
+				if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
+					paper.color = book_info[4]
+		if(version == 1)
+			for(var/list/info in our_data["things"])
+				var/obj/item/item = null
+				switch(info["type"])
+					if("paper")
+						var/obj/item/paper/paper = new(src)
+						item = paper
+						paper.info = info["info"]
+						paper.color = info["color"]
+					if("canvas")
+						var/obj/item/canvas/lazy_restore/canvas = new(src, info["id"])
+						item = canvas
+				if(isnull(item))
+					continue
+				item.name = info["name"]
+				item.fingerprintslast = info["fingerprintslast"]
+
 	src.notices = length(src.contents)
 	src.UpdateIcon()
 
 /obj/noticeboard/persistent/proc/save_stuff()
-	src.data[src.persistent_id] = list()
+	src.data[src.persistent_id] = list("things" = list())
 	for(var/obj/item/paper/paper in src)
-		src.data[src.persistent_id] += list(list(paper.name, paper.info, paper.fingerprintslast, paper.color))
+		src.data[src.persistent_id]["things"] += list(list(
+			"type" = "paper",
+			"name" = paper.name,
+			"info" = paper.info,
+			"fingerprintslast" = paper.fingerprintslast,
+			"color" = paper.color
+			))
+	var/i = 0
+	for(var/obj/item/canvas/canvas in src)
+		i++
+		var/canvas_id = "[src.persistent_id]_[i]"
+		canvas.save_to_id(canvas_id)
+		src.data[src.persistent_id]["things"] += list(list(
+			"type" = "canvas",
+			"name" = canvas.name,
+			"id" = canvas_id,
+			"fingerprintslast" = canvas.fingerprintslast
+			))
+	src.data[src.persistent_id]["_version"] = PERSISTENT_NOTICEBOARD_VERSION
 
 proc/save_noticeboards()
 	var/obj/noticeboard/persistent/some_board = null
@@ -116,9 +161,11 @@ proc/save_noticeboards()
 		board.save_stuff()
 		some_board = board
 	if(isnull(some_board))
-		logTheThing("debug", null, null, "No persistent noticeboards to save.")
+		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
 	fdel(some_board.file_name)
 	var/json_data = json_encode(some_board.data)
-//	logTheThing("debug", null, null, "Persistent noticeboard save data: [json_data]")
+//	logTheThing(LOG_DEBUG, null, "Persistent noticeboard save data: [json_data]")
 	text2file(json_data, some_board.file_name)
+
+#undef PERSISTENT_NOTICEBOARD_VERSION

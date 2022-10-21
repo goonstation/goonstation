@@ -5,7 +5,7 @@
 
 TYPEINFO(/datum/component/drop_loot_on_death)
 	initialization_args = list(
-		ARG_INFO("loot", "type", "Path or list of paths for loot to drop on death")
+		ARG_INFO("loot", DATA_INPUT_TYPE, "Path or list of paths for loot to drop on death")
 	)
 /datum/component/drop_loot_on_death
 	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS

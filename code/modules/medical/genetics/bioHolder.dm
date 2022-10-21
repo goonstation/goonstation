@@ -339,7 +339,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		return
 
 /datum/bioHolder
-	//Holds the apperanceholder aswell as the effects. Controls adding and removing of effects.
+	//Holds the appearanceholder aswell as the effects. Controls adding and removing of effects.
 	var/list/effects = new/list()
 	var/list/effectPool = new/list()
 
@@ -348,7 +348,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/bloodType = "AB+-"
 	var/bloodColor = null
-	var/age = 30.0
+	var/age = 30
 	var/genetic_stability = 125
 	var/clone_generation = 0 //Get this high enough and you can be like Arnold. Maybe. I found that movie fun. Don't judge me.
 
@@ -357,12 +357,13 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	var/Uid = "not initialized" //Unique id for the mob. Used for fingerprints and whatnot.
 	var/uid_hash
+	var/fingerprints
 
 	New(var/mob/owneri)
 		owner = owneri
 		Uid = CreateUid()
-		uid_hash = md5(Uid)
 		bioUids[Uid] = null
+		build_fingerprints()
 		mobAppearance = new/datum/appearanceHolder()
 
 		mobAppearance.owner = owner
@@ -375,6 +376,15 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		BuildEffectPool()
 		return ..()
+
+	proc/build_fingerprints()
+		uid_hash = md5(Uid)
+		var/fprint_base = uppertext(md5_to_more_pronouncable(uid_hash))
+		var/list/fprint_parts = list()
+		for(var/i in 1 to length(fprint_base) step 6)
+			if(i + 6 <= length(fprint_base) + 1)
+				fprint_parts += copytext(fprint_base, i, i + 6)
+		fingerprints = jointext(fprint_parts, "-")
 
 	disposing()
 		for(var/D in effects)
@@ -450,7 +460,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		var/list/filteredList = list()
 
 		if (!bioEffectList || !length(bioEffectList))
-			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to add new random effect to pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 			return 0
 
@@ -463,7 +473,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			filteredList[instance] = instance.probability
 
 		if(!filteredList.len)
-			logTheThing("debug", null, null, {"<b>Genetics:</b> Unable to get effects for new random effect for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to get effects for new random effect for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredList.len = [filteredList.len])"})
 			return 0
 
@@ -490,7 +500,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		effectPool.Cut()
 
 		if (!bioEffectList || !length(bioEffectList))
-			logTheThing("debug", null, null, {"<b>Genetics:</b> Tried to build effect pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Tried to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"], but bioEffectList is empty!"})
 
 		for(var/T in bioEffectList)
@@ -510,7 +520,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					filteredGood[instance] = instance.probability
 
 		if(!filteredGood.len || !length(filteredBad))
-			logTheThing("debug", null, null, {"<b>Genetics:</b> Unable to build effect pool for
+			logTheThing(LOG_DEBUG, null, {"<b>Genetics:</b> Unable to build effect pool for
 			 [owner ? "\ref[owner] [owner.name]" : "*NULL*"]. (filteredGood.len = [filteredGood.len],
 			  filteredBad.len = [filteredBad.len])"})
 			return
@@ -595,6 +605,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			ownerName = toCopy.ownerName
 			Uid = toCopy.Uid
 			uid_hash = md5(Uid)
+			build_fingerprints()
 
 		if (copyPool)
 			src.RemoveAllPoolEffects()
@@ -686,7 +697,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 				else
 					boutput(owner, "<span class='notice'>[newEffect.msgGain]</span>")
 			mobAppearance.UpdateMob()
-			logTheThing("combat", owner, null, "gains the [newEffect] mutation at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "gains the [newEffect] mutation at [log_loc(owner)].")
 			return newEffect
 
 		return 0
@@ -730,7 +741,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 			else
 				boutput(owner, "<span class='notice'>[BE.msgGain]</span>")
 		mobAppearance.UpdateMob()
-		logTheThing("combat", owner, null, "gains the [BE] mutation at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, owner, "gains the [BE] mutation at [log_loc(owner)].")
 		return BE
 
 	proc/RemoveEffect(var/id)
@@ -755,7 +766,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 					boutput(owner, "<span class='alert'>[D.msgLose]</span>")
 			if (mobAppearance)
 				mobAppearance.UpdateMob()
-			logTheThing("combat", owner, null, "loses the [D] mutation at [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, owner, "loses the [D] mutation at [log_loc(owner)].")
 			return effects.Remove(D.id)
 
 		return 0

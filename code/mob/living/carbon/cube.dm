@@ -33,19 +33,19 @@
 			return 1
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='notice'>You push the [src.name] but nothing happens!</span>")
-		playsound(src.loc, "sound/impact_sounds/Flesh_Crush_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Crush_1.ogg', 40, 1)
 		src.add_fingerprint(user)
 		return
 
 	ex_act(severity)
 		..() // Logs.
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.gib(1)
 				return
-			if(2.0)
+			if(2)
 				if (prob(25))
 					src.gib(1)
 			else
@@ -125,7 +125,7 @@
 							src.changeStatus("paralysis", 4 SECONDS)
 							src.changeStatus("weakened", 3 SECONDS)
 							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							animate_shake(container)
 							if (prob(33))
 								if (istype(container, /obj/storage))
@@ -143,7 +143,7 @@
 				else
 					if (voluntary) src.show_text("Invalid Emote: [act]")
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
 					O.show_message(message, m_type)
@@ -155,7 +155,7 @@
 				for (var/mob/O in A.contents)
 					O.show_message(message, m_type)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 			pop()
 		else
@@ -187,7 +187,7 @@
 				var/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/meat = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat(src.loc)
 				meat.name = "cube steak"
 				meat.desc = "Grody."
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The meat cube pops!</b></span>")
 			..()
 
@@ -206,7 +206,7 @@
 
 			// people were somehow being shit even as a meatcube, so i'm removing the small mercy they had with being unpoppable - cirr
 
-			// attackby(obj/item/W as obj, mob/user as mob)
+			// attackby(obj/item/W, mob/user)
 			// 	user.visible_message("<span class='combat'><B>[user] pokes [src] with \the [W]!</B></span>") //No weldergibs. Krampus is truly a fiend.
 
 			telekinetic //this one has the wraith click-drag to throw item ability
@@ -218,7 +218,7 @@
 		real_name = "metal cube"
 		desc = "unfortunate"
 		icon_state = "metalcube-squish"
-		sound_scream = "sound/voice/screams/Robot_Scream_2.ogg"
+		sound_scream = 'sound/voice/screams/Robot_Scream_2.ogg'
 		custom_gib_handler = /proc/robogibs
 
 		get_cube_idle()
@@ -236,11 +236,11 @@
 				M.icon_state = "cybermeat"
 				if (prob(50))
 					M.reagents.add_reagent("nanites", 5)
-			playsound(src.loc, "sound/machines/engine_grump2.ogg", 75, 1)
+			playsound(src.loc, 'sound/machines/engine_grump2.ogg', 75, 1)
 			src.visible_message("<span class='alert'><b>The metal cube violently falls apart!</b></span>")
 			..()
 
-		attackby(obj/item/W as obj, mob/user as mob)
+		attackby(obj/item/W, mob/user)
 			if (iswrenchingtool(W))
 				pop()
 			else

@@ -96,7 +96,7 @@
 			else if(length(W.ammobag_magazines) == 1)
 				ammo = W.ammobag_magazines[1]
 				if(!W.ammobag_spec_required)
-					ammo_cost = W.ammobag_restock_cost - 1
+					ammo_cost = clamp(W.ammobag_restock_cost - 1, 0, 99)
 				else
 					ammo_cost = W.ammobag_restock_cost
 
@@ -134,9 +134,12 @@
 	icon_state = "ammobag-sp-d"
 	anchored = 2
 
-	attackby(obj/item/I as obj, mob/user as mob)
+	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/gun/kinetic))
 			var/obj/item/gun/kinetic/K = I
+			if(!K.ammo.refillable)
+				boutput(user, "<span class='alert'>The ammobag grumps unhappily. What?</span>")
+				return
 			if(K.ammo.amount_left>=K.max_ammo_capacity)
 				user.show_text("[K] is full!", "red")
 				return

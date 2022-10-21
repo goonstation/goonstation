@@ -1,7 +1,7 @@
 /obj/machinery/sec_lock/attack_ai(user as mob)
 	return //src.Attackhand(user)
 
-/obj/machinery/sec_lock/attack_hand(var/mob/user as mob)
+/obj/machinery/sec_lock/attack_hand(var/mob/user)
 	if(..())
 		return
 	use_power(10)

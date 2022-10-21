@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(usr, "sound/weapons/launcher.ogg", 70, 0, 0)
+	playsound(usr, 'sound/weapons/launcher.ogg', 70, 0, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -98,7 +98,7 @@
 	set category = "Batman"
 	set name = "Batarang \[Combat]"
 	usr.visible_message("<span class='alert'>[usr] tosses a batarang at [T]!</span>", "<span class='alert'>You toss a batarang at [T]!</span>")
-	playsound(usr, pick("sound/effects/sword_unsheath1.ogg","sound/effects/sword_unsheath2.ogg"), 70, 0, 0)
+	playsound(usr, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 70, 0, 0)
 	var/obj/overlay/A = new /obj/overlay( usr.loc )
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
@@ -108,8 +108,8 @@
 	var/i
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
-		if (get_dist(A,T) < 1)
-			playsound(T, "sound/impact_sounds/Blade_Small_Bloody.ogg", 70, 0, 0)
+		if (GET_DIST(A,T) < 1)
+			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, 0, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
@@ -144,7 +144,7 @@
 	set desc = "Unstuns you"
 
 	if(usr.hasStatus("weakened") || usr.hasStatus("stunned"))
-		playsound(usr.loc, "sound/effects/flip.ogg", 50, 1)
+		playsound(usr.loc, 'sound/effects/flip.ogg', 50, 1)
 		usr.visible_message("<span class='alert'><B>[usr] suddenly recovers!</B></span>", "<span class='alert'><B>You suddenly recover!</B></span>")
 		usr.delStatus("weakened")
 		usr.delStatus("stunned")
@@ -253,7 +253,7 @@
 		usr.pixel_y = 0
 		usr.visible_message("<span class='alert'><B>[usr] elbow drops [T] into oblivion!</B></span>", "<span class='alert'><B>You elbow drop [T] into oblivion!</B></span>")
 		batman_pow(T.loc)
-		playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+		playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 		random_brute_damage(T, 20)
 		T.losebreath += 6
 		T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
@@ -273,7 +273,7 @@
 		T.force_laydown_standup()
 		sleep(1 SECOND)
 		usr.visible_message("<span class='alert'><B>[usr] starts spinning [T] around!</B></span>", "<span class='alert'><B>You start spinning [T] around!</B></span>")
-		playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
+		playsound(usr.loc, 'sound/effects/bionic_sound.ogg', 50)
 		for(var/i = 0, i < 2, i++)
 			T.set_dir(NORTH)
 			sleep(0.5 SECONDS)
@@ -302,7 +302,7 @@
 			sleep(0.1 SECONDS)
 			T.set_dir(WEST)
 			sleep(0.1 SECONDS)
-		playsound(usr.loc, "sound/weapons/rocket.ogg", 50)
+		playsound(usr.loc, 'sound/weapons/rocket.ogg', 50)
 		usr.visible_message("<span class='alert'><B>[src] flings [T] with all of his might!</B></span>")
 		T.force_laydown_standup()
 		var/target_dir = get_dir(usr, T)
@@ -311,7 +311,7 @@
 			walk(T, target_dir, 1)
 			sleep(0.5 SECONDS)
 			walk(T, 0)
-			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			random_brute_damage(T, 30)
 			T.losebreath += 10
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
@@ -325,19 +325,19 @@
 	set desc = "Fall to the ground, leap up and knock a dude out"
 
 	usr.visible_message("<span class='alert'><B>[usr] drops to the ground, preparing for a jump</B>!</span>", "<span class='alert'><B>You drop to the ground, preparing for a jump</B>!</span>")
-	playsound(usr.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(usr.loc, 'sound/effects/bionic_sound.ogg', 50)
 	usr.setStatus("weakened", 8 SECONDS)
 	usr.force_laydown_standup()
 	sleep(1.5 SECONDS)
 	usr.visible_message("<span class='alert'><B>[usr] launches towards [T]</B>!</span>", "<span class='alert'><B>You launch towards [T]</B>!</span>")
 	for(var/i=0, i<100, i++)
 		step_to(usr,T,0)
-		if (get_dist(usr,T) <= 1)
+		if (BOUNDS_DIST(usr, T) == 0)
 			batman_pow(T.loc)
 			T.setStatus("weakened", T.getStatusDuration("weakened") + 10 SECONDS)
 			T.setStatus("stunned", T.getStatusDuration("stunned") + 10 SECONDS)
-			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming \him in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming \him in the head</B>!</span>")
-			playsound(T.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			usr.visible_message("<span class='alert'><B>[usr] flies at [T], slamming [him_or_her(usr)] in the head</B>!</span>", "<span class='alert'><B>You fly at [T], slamming [him_or_her(T)] in the head</B>!</span>")
+			playsound(T.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			random_brute_damage(T, 25)
 			usr.delStatus("weakened")
 			i=100
@@ -359,7 +359,7 @@ obj/item/batarang
 	throw_range = 10
 	throw_speed = 1
 	throw_return = 1
-	hitsound = "sound/impact_sounds/Flesh_Stab_3.ogg"
+	hitsound = 'sound/impact_sounds/Flesh_Stab_3.ogg'
 	hit_type = DAMAGE_CUT
 
 

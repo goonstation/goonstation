@@ -28,7 +28,7 @@
 		if (!relay.usesPoints)
 			return 1
 		if (relay.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([relay.type]) was set to an invalid value (points less than 0), resetting.")
 			relay.points = 0
 		if (cost > relay.points)
 			boutput(owner, relay.notEnoughPointsMessage)
@@ -136,7 +136,7 @@
 		W.abilityHolder.topBarRendered = 0
 
 		message_admins("[key_name(wraith)] possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
-		logTheThing("combat", usr, null, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
+		logTheThing(LOG_COMBAT, usr, "possessed the corpse of [owner] as a revenant at [log_loc(owner)].")
 
 
 		if (src.wraith.mind) // theoretically shouldn't happen
@@ -161,8 +161,8 @@
 			return
 
 		message_admins("Revenant [key_name(owner)] died at [log_loc(owner)].")
-		playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
-		logTheThing("combat", usr, null, "died as a revenant at [log_loc(owner)].")
+		playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
+		logTheThing(LOG_COMBAT, usr, "died as a revenant at [log_loc(owner)].")
 		if (owner.mind)
 			owner.mind.transfer_to(src.wraith)
 		else if (owner.client)
@@ -172,7 +172,7 @@
 		src.wraith.abilityHolder.topBarRendered = 1
 		src.wraith.abilityHolder.regenRate /= 3
 		owner.bioHolder.RemoveEffect("revenant")
-		owner:decomp_stage = 4
+		owner:decomp_stage = DECOMP_STAGE_SKELETONIZED
 		if (ishuman(owner) && owner:organHolder && owner:organHolder:brain)
 			qdel(owner:organHolder:brain)
 		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, locate(owner.x, owner.y, owner.z)))
@@ -210,11 +210,11 @@
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")
-			playsound(owner.loc, "sound/voice/wraith/revleave.ogg", 60, 0)
+			playsound(owner.loc, 'sound/voice/wraith/revleave.ogg', 60, 0)
 			owner.death(FALSE) // todo: add custom death
 			return
 
-		var/e_decomp_stage = 0
+		var/e_decomp_stage = DECOMP_STAGE_NO_ROT
 		if (owner.max_health < 75)
 			e_decomp_stage++
 			if (owner.max_health < 50)
@@ -315,7 +315,7 @@
 	cooldown = 30 SECONDS
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/wraithlivingobject.ogg", 60, 0)
+		playsound(target.loc, 'sound/voice/wraith/wraithlivingobject.ogg', 60, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -357,7 +357,7 @@
 	var/static/list/next = list("1" = NORTHEAST, "5" = EAST,  "4" = SOUTHEAST, "6" = SOUTH, "2" = SOUTHWEST, "10" = WEST,  "8" = NORTHWEST, "9" = NORTH)
 
 	proc/shock(var/turf/T)
-		playsound(usr.loc, "sound/voice/wraith/revshock.ogg", 30, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revshock.ogg', 30, 0)
 		SPAWN(0)
 			for (var/mob/living/carbon/human/M in T)
 				if (M != holder.owner && !M.traitHolder.hasTrait("training_chaplain") && !check_target_immunity(M))
@@ -434,7 +434,7 @@
 	cooldown = 30 SECONDS
 
 	cast()
-		playsound(usr.loc, "sound/voice/wraith/revtouch.ogg", 70, 0)
+		playsound(usr.loc, 'sound/voice/wraith/revtouch.ogg', 70, 0)
 		if (istype(holder, /datum/abilityHolder/revenant))
 			var/datum/abilityHolder/revenant/RH = holder
 			RH.channeling = 0
@@ -492,7 +492,7 @@
 	cooldown = 1 MINUTE
 
 	cast(atom/target)
-		playsound(target.loc, "sound/voice/wraith/revfocus.ogg", 80, 0)
+		playsound(target.loc, 'sound/voice/wraith/revfocus.ogg', 80, 0)
 		if (!ishuman(target))
 			holder.owner.show_message("<span class='alert'>You must target a human with this ability.</span>")
 			return 1
@@ -537,7 +537,7 @@
 					holder.owner.show_message("<span class='alert'>You were interrupted!</span>")
 					RH.channeling = 0
 					break
-				if (get_dist(holder.owner, H) > 7)
+				if (GET_DIST(holder.owner, H) > 7)
 					holder.owner.show_message("<span class='alert'>[H] is pulled from your telekinetic grip!</span>")
 					RH.channeling = 0
 					break
@@ -549,6 +549,7 @@
 					H.emote("scream")
 				if (iterations > 12 && prob((iterations - 12) * 5))
 					H.visible_message("<span class='alert'>[H]'s body gives in to the telekinetic grip!</span>", "<span class='alert'>You are completely crushed.</span>")
+					logTheThing(LOG_COMBAT, holder.owner, "gibs [constructTarget(H,"combat")] with the Revenant crush ability at [log_loc(holder.owner)].")
 					H.gib()
 					return
 				sleep(0.7 SECONDS)

@@ -86,13 +86,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(3.0)
+			if(3)
 				src.icon_state = "placeholder-ex1"
 				return
-			if(2.0)
+			if(2)
 				src.icon_state = "placeholder-ex2"
 				return
-			if(1.0)
+			if(1)
 				src.icon_state = "placeholder-ex3"
 				return
 		return
@@ -198,7 +198,7 @@
 	density = 1
 	var/has_beeped = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(has_beeped)
 			return ..()
 		else
@@ -284,13 +284,13 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
 	item_state = "mars_blue"
 	c_flags = SPACEWEAR
-	permeability_coefficient = 0.1
 	protective_temperature = 700
 
 	setupProperties()
 		..()
 		setProperty("coldprot", 20)
 		setProperty("heatprot", 80)
+		setProperty("chemprot", 20)
 
 /obj/item/clothing/head/helmet/mars
 	name = "ME-3 Helmet "
@@ -298,7 +298,7 @@
 	icon_state = "mars"
 	item_state = "mars"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0.0
+	see_face = 0
 
 
 /obj/critter/marsrobot
@@ -379,10 +379,10 @@
 			boutput(O, "<span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"")
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(active) ..()
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(active) ..()
 
 	CritterDeath()
@@ -404,7 +404,7 @@
 	var/glass = 0
 	var/motherboard = 0
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		if (istype(P, /obj/item/mars_roverpart))
 			if ((istype(P, /obj/item/mars_roverpart/wheel))&&(!wheel))
 				boutput(user, "<span class='notice'>You attach the wheel to the rover's chassis.</span>")
@@ -526,7 +526,7 @@
 	icon_state = "marsrover2"
 
 /obj/vehicle/marsrover/MouseDrop_T(mob/living/carbon/human/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || is_incapacitated(user) || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	var/msg
@@ -566,7 +566,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/marsrover/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -592,57 +592,28 @@
 /area/marsoutpost
 	name = "Abandoned Outpost"
 	icon_state = "red"
-	var/sound/mysound = null
 	sound_group = "mars"
+	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
+	sound_loop_vol = 60
 
-	New()
-		..()
-		var/sound/S = new/sound()
-		mysound = S
-		S.file = 'sound/ambience/loop/Mars_Interior.ogg'
-		S.repeat = 1
-		S.wait = 0
-		S.channel = 123
-		S.volume = 60
-		S.priority = 255
-		S.status = SOUND_UPDATE
-		SPAWN(1 SECOND) process()
+/area/marsoutpost/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_UPDATE
-				Obj << mysound
-		return
+/area/marsoutpost/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-	Exited(atom/movable/Obj)
-		..()
-		if(ismob(Obj))
-			if(Obj:client)
-				mysound.status = SOUND_PAUSED | SOUND_UPDATE
-				Obj << mysound
+/area/marsoutpost/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick(
+			'sound/ambience/nature/Mars_Rockslide1.ogg',\
+			'sound/ambience/industrial/MarsFacility_MovingEquipment.ogg',\
+			'sound/ambience/nature/Mars_Rockslide2.ogg',\
+			'sound/ambience/industrial/MarsFacility_Glitchy.ogg')
 
-	proc/process()
-		var/sound/S = null
-		var/sound_delay = 0
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(6 SECONDS)
-			if (current_state == GAME_STATE_PLAYING)
-				if(prob(10))
-					S = sound(file=pick('sound/ambience/nature/Mars_Rockslide1.ogg','sound/ambience/industrial/MarsFacility_MovingEquipment.ogg','sound/ambience/nature/Mars_Rockslide2.ogg','sound/ambience/industrial/MarsFacility_Glitchy.ogg'))
-					sound_delay = rand(0, 50)
-				else
-					S = null
-					continue
-
-				for(var/mob/living/carbon/human/H in src)
-					if(H.client)
-						mysound.status = SOUND_UPDATE
-						H << mysound
-						if(S)
-							SPAWN(sound_delay)
-								playsound(H, S, 70, channel = VOLUME_CHANNEL_AMBIENT)
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/marsoutpost/duststorm
 	name = "Barren Planet"
@@ -668,6 +639,7 @@
 
 
 /area/marsoutpost/vault
+	name = "Abandoned Vault"
 	icon_state = "red"
 
 /obj/critter/gunbot/heavy
@@ -768,7 +740,7 @@
 	pixel_y = 8
 	var/triggered = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (..() || (status & (NOPOWER|BROKEN)))
 			return
 

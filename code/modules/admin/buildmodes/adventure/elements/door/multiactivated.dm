@@ -19,7 +19,7 @@
 				door.door_type = door_type
 				door.act_needed = act_needed
 				if (door_type == "glass" || door_type == "runes")
-					door.opacity = 0
+					door.set_opacity(0)
 				SPAWN(1 SECOND)
 					door.color = color_rgb
 		else if ("right" in pa)
@@ -32,7 +32,7 @@
 	var/allow_negative = 0
 	var/static/list/triggeracts_multi = list("Close" = "close", "Decrease activation count" = "dec", "Do nothing" = "nop", "Increase activation count" = "inc", "Lock open" = "secopen", "Open" = "open", "Toggle" = "toggle")
 
-	attackby(C as obj, mob/user as mob)
+	attackby(C, mob/user)
 		return
 
 	trigger_actions()

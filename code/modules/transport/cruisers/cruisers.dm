@@ -1,14 +1,16 @@
-/obj/machinery/cruiser/test
+/obj/machinery/cruiser/syndicate
 	name = "Experimental BX-1 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
 	interior_area = /area/cruiser/syndicate
 	upper_area = /area/cruiser/syndicate/upper
+	prefab_type = /datum/mapPrefab/allocated/cruiser_syndicate
 
-/obj/machinery/cruiser/test2
+/obj/machinery/cruiser/nanotrasen
 	name = "Experimental BX-2 Cruiser"
 	desc = "An experimental type of syndicate cruiser based on drone technology."
 	interior_area = /area/cruiser/nanotrasen
 	upper_area = /area/cruiser/nanotrasen/upper
+	prefab_type = /datum/mapPrefab/allocated/cruiser_nanotrasen
 
 /obj/cruiser_shield_visual//This is dumb but required because icons and images don't animate properly as overlays AND their icon_state cannot be changed properly once added (images)
 	name = ""
@@ -92,11 +94,12 @@
 
 	var/ramming = 0 //How many ramming hits we have left.
 
+	var/datum/mapPrefab/allocated/prefab_type = null
+	var/datum/allocated_region/region
 	var/area/cruiser/interior_area //interior area to use for this cruiser
 	var/area/cruiser/upper_area // upper deck area
 	var/obj/cruiser_camera_dummy/camera //used to control camera position
 
-	var/datum/particleSystem/barrelSmoke/smokeParticles
 	var/list/crew = list()
 
 	var/atmos_fail_count = 5 //counts down when life support is offline. once it his 0, life support fails.
@@ -106,6 +109,9 @@
 
 	var/list/pooList = list()
 	var/list/interiorViewers = list()
+
+	var/turf/entrance
+	var/turf/center
 
 	proc/internal_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch)
 		playsound(source, soundin, vol, vary, extrarange, pitch)
@@ -191,21 +197,35 @@
 
 	New()
 		..()
-		if(interior_area)
-			interior_area = locate(interior_area)
-			interior_area.ship = src
-		else
-			qdel(src)
+
+		var/datum/mapPrefab/allocated/prefab = get_singleton(src.prefab_type)
+		src.region = prefab.load()
+		for(var/turf/T in REGION_TILES(src.region))
+			if(istype(T.loc, src.interior_area))
+				src.interior_area = T.loc
+				src.interior_area.ship = src
+			else if(istype(T.loc, src.upper_area))
+				src.upper_area = T.loc
+				src.upper_area.ship = src
+
+		if(!istype(interior_area))
+			CRASH("No interior area found for cruiser")
 
 		shield_obj = new(src.loc)
 		var/matrix/mtx = new
-		var/turf/center
+
 		for(var/turf/T in landmarks[LANDMARK_CRUISER_CENTER])
-			if(istype(T.loc, upper_area))
+			if(T.loc == upper_area)
 				center = T
 				break
-		for(var/turf/T in get_area_turfs(upper_area))
+		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
+			if(T.loc == interior_area)
+				entrance = T
+				break
+
+		for(var/turf/T in upper_area)
 			var/obj/overlay/pooObj = new
+			pooObj.mouse_opacity = FALSE
 			pooObj.screen_loc = "CENTER,CENTER"
 			mtx.Reset()
 			mtx.Translate( (T.x - center.x) * world.icon_size, (T.y - center.y) * world.icon_size)
@@ -236,12 +256,29 @@
 	disposing()
 		STOP_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
+		qdel(src.shield_obj)
+		src.shield_obj = null
+
+		landmarks[LANDMARK_CRUISER_CENTER] -= src.center
+		landmarks[LANDMARK_CRUISER_ENTRANCE] -= src.entrance
+
+		for(var/obj/machinery/cruiser_destroyable/cruiser_pod/C in src.upper_area)
+			for(var/mob/M in C)
+				C.exitPod(M)
+		src.region.move_movables_to(src.loc)
+		for(var/mob/M in src.loc)
+			unsubscribe_interior(M)
+			M.set_eye(null)
+		src.region.clean_up(/turf/space, /turf/space)
+
+		qdel(src.region)
+
 		qdel(camera)
-		if(interior_area)
-			interior_area = null
+		interior_area = null
+		upper_area = null
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		return MouseDrop_T(user, user)
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
@@ -661,6 +698,8 @@
 		if(interior_area)
 			for(var/obj/machinery/cruiser_status_panel/S in interior_area)
 				S.setValues(percent_health, percent_shields, percent_power)
+			for(var/obj/machinery/cruiser_status_panel/S in upper_area)
+				S.setValues(percent_health, percent_shields, percent_power)
 		return
 
 	proc/receiveMovement(var/direction)
@@ -772,14 +811,9 @@
 
 	proc/enterShip(atom/movable/O as obj, mob/user as mob)
 		if(!interior_area || O == src) return
-		var/turf/entrance
-		for(var/turf/T in landmarks[LANDMARK_CRUISER_ENTRANCE])
-			if(T.loc == interior_area)
-				entrance = T
-				break
 
 		if(entrance)
-			if(get_dist(O, getExitLoc()) <= 1)
+			if(BOUNDS_DIST(O, getExitLoc()) == 0)
 				O.set_loc(entrance)
 				if(ismob(O))
 					crew.Add(O)
@@ -809,19 +843,39 @@
 	icon = 'icons/turf/areas.dmi'
 	icon_state = "eshuttle_transit"
 	var/obj/machinery/cruiser/ship
+	var/is_upper = FALSE
 	requires_power = 1
+
+	Entered(var/atom/movable/A, atom/oldloc)
+		. = ..()
+		if(!src.is_upper || !ismob(A))
+			return
+		var/mob/user = A
+		src.ship.subscribe_interior(user)
+		user.set_eye(src.ship)
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(!ismob(A))
+			return
+		var/mob/user = A
+		src.ship.unsubscribe_interior(user)
+		user.set_eye(null)
+
 /area/cruiser/syndicate/lower
 	name = "Syndicate cruiser interior"
 	sound_group = "cruiser_syndicate"
 /area/cruiser/syndicate/upper
 	name = "Syndicate cruiser interior"
 	sound_group = "cruiser_syndicate"
+	is_upper = TRUE
 /area/cruiser/nanotrasen/lower
 	name = "Nanotrasen cruiser interior"
 	sound_group = "cruiser_nanotrasen"
 /area/cruiser/nanotrasen/upper
 	name = "Nanotrasen cruiser interior"
 	sound_group = "cruiser_nanotrasen"
+	is_upper = TRUE
 
 
 /obj/cruiser_camera_dummy
@@ -929,10 +983,10 @@
 	ex_act(var/severity)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (rebooting) return
 		if (istype(W, tool_type) && (broken || health < health_max))
-			playsound(src.loc, "sound/machines/repairing.ogg", 85, 1)
+			playsound(src.loc, 'sound/machines/repairing.ogg', 85, 1)
 			var/health_adj = 1 - (health / health_max) //90% = 0,1, 10% = 0,9
 			var/repair_time_adj = round(repair_time * health_adj)
 			actions.start(new/datum/action/bar/icon/cruiser_repair(src, W, repair_time_adj), user)
@@ -1007,7 +1061,7 @@
 		if(open) icon_state = icon_state_open
 		else icon_state = icon_state_closed
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(!..())
 			if(open)
 				user.drop_item()
@@ -1067,7 +1121,7 @@
 		set_density(0)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!ready) return
 		if(open)
 			if(broken)
@@ -1188,15 +1242,15 @@
 	ex_act(var/severity)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/area/cruiser/interior = get_area(src)
 		if(interior.ship)
 			interior.ship.leaveShip(user)
 
-	attackby(var/obj/item/grab/G as obj, mob/user as mob)
+	attackby(var/obj/item/grab/G, mob/user)
 		if ((!( istype(G, /obj/item/grab) ) || !( ismob(G.affecting) )))
 			return
-		if (!G.state)
+		if (G.state == GRAB_PASSIVE)
 			boutput(user, "<span class='alert'>You need a tighter grip!</span>")
 			return
 		var/mob/M = G.affecting
@@ -1215,7 +1269,7 @@
 	density = 1
 	anchored = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		/*
 		if(1) return//todo remove
 		if(istype(user.abilityHolder, /datum/abilityHolder/composite))
@@ -1293,7 +1347,7 @@
 		for(var/T in abilities)
 			AbHolder.addAbility(T)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(broken)
 			boutput(user, "<span class='alert'>This pod is broken and must be repaired before it can be used again.</span>")
 			return
@@ -1390,24 +1444,10 @@
 
 /obj/ladder/cruiser
 	id = "cruiser"
-	var/obj/machinery/cruiser/ship
 
 	New()
 		..()
-		var/area/cruiser/A = get_area(src)
-		if (istype(A, /area/cruiser))
-			ship = A.ship
-		else
-			qdel(src)
-
-	climb(mob/user as mob)
-		..()
-		if (src.icon_state == "ladder") // going down to lower deck
-			ship.unsubscribe_interior(user)
-			user.set_eye(user)
-		else // going up to upper deck
-			ship.subscribe_interior(user)
-			user.set_eye(ship)
+		src.update_id("[src.id][src.x][src.z][world.time]")
 
 /obj/ladder/cruiser/syndicate
 	id = "cruiser_syndicate"

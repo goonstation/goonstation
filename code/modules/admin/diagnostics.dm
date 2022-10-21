@@ -191,8 +191,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
@@ -250,6 +250,15 @@ proc/debug_map_apc_count(delim,zlim)
 			if(theTurf.loc:do_not_irradiate)
 				img.app.color = "#0f0"
 			else
+				img.app.color = "#f00"
+
+	proximity
+		name = "proximity turfs"
+		help = "Green tiles are turfs with checkinghasproximity, red tiles have neighcheckinghasproximity."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf:checkinghasproximity)
+				img.app.color = "#0f0"
+			else if(theTurf:neighcheckinghasproximity)
 				img.app.color = "#f00"
 
 	areas
@@ -347,7 +356,7 @@ proc/debug_map_apc_count(delim,zlim)
 					/*
 					var/list/borders_space = list()
 					for(var/turf/spaceses in group.space_borders)
-						if(get_dist(spaceses, theTurf) == 1)
+						if(GET_DIST(spaceses, theTurf) == 1)
 							var/dir = get_dir(theTurf, spaceses)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_space[++borders_space.len] = "NORTH"
@@ -362,7 +371,7 @@ proc/debug_map_apc_count(delim,zlim)
 					*/
 					var/list/borders_individual = list()
 					for(var/turf/ind in group.border_individual)
-						if(get_dist(ind, theTurf) == 1)
+						if(GET_DIST(ind, theTurf) == 1)
 							var/dir = get_dir(theTurf, ind)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_individual[++borders_individual.len] = "NORTH"
@@ -376,7 +385,7 @@ proc/debug_map_apc_count(delim,zlim)
 						img.app.desc += "<br/>(borders individual to the [borders_individual.Join(" ")])"
 					var/list/borders_group = list()
 					for(var/turf/simulated/T in group.enemies)
-						if(get_dist(T, theTurf) == 1)
+						if(GET_DIST(T, theTurf) == 1)
 							var/dir = get_dir(theTurf, T)
 							if((dir & (dir-1)) == 0)
 								if(dir & NORTH) borders_group[++borders_group.len] = "NORTH"
@@ -701,8 +710,8 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && length(theTurf.cameras))
-				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+			if(theTurf.camera_coverage_emitters && length(theTurf.camera_coverage_emitters))
+				img.app.overlays = list(src.makeText(length(theTurf.camera_coverage_emitters)))
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0
@@ -956,12 +965,6 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.overlays = list(src.makeText(toucher, RESET_ALPHA | RESET_COLOR))
 		proc/is_ok(atom/A)
 			return TRUE
-
-	checkingexit
-		name = "checkingexit"
-		help = "Green = yes."
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			img.app.color = theTurf.checkingexit ? "#0f0" : "#f00"
 
 	blocked_dirs
 		name = "blocked dirs"
@@ -1279,8 +1282,8 @@ proc/info_overlay_choices()
 				img:loc = null
 				qdel(img)
 			infoOverlayImages = list()
-		activeOverlay = null
 		qdel(activeOverlay)
+		activeOverlay = null
 	else
 		var/type = available_overlays[name]
 		activeOverlay = new type()

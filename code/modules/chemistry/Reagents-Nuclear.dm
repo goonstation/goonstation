@@ -19,7 +19,7 @@ datum
 			part_type = "neutron"
 			epv = 0
 			hpe = 0
-			absorb = 0.0
+			absorb = 0
 			k_factor = 0
 
 datum
@@ -36,7 +36,7 @@ datum
 			part_type = "neutron"
 			epv = 0.1
 			hpe = 20
-			absorb = 0.90
+			absorb = 0.9
 			k_factor = 0.3
 
 			on_mob_life(var/mob/M, var/mult = 1 )
@@ -62,8 +62,8 @@ datum
 			part_type = "neutron"
 			epv = 5
 			hpe = 20
-			absorb = 0.80
-			k_factor = 3.0
+			absorb = 0.8
+			k_factor = 3
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
@@ -89,7 +89,7 @@ datum
 			epv = 7
 			hpe = 30
 			absorb = 0.85
-			k_factor = 5.0
+			k_factor = 5
 
 			on_mob_life(var/mob/M, var/mult = 1 )
 				if(!M) M = holder.my_atom
@@ -117,5 +117,5 @@ datum
 			part_type = "neutron"
 			epv = 400
 			hpe = 400
-			absorb = 1.0
-			k_factor = 20.0
+			absorb = 1
+			k_factor = 20

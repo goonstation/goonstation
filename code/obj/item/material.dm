@@ -33,7 +33,7 @@
 			name = "[amount] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(W.type == src.type)
 			stack_item(W)
 			if(!user.is_in_hands(src))
@@ -52,7 +52,7 @@
 				boutput(user, "<span class='alert'>[W] is full!</span>")
 		else ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(user.is_in_hands(src) && src.amount > 1)
 			var/splitnum = round(input("How many ores do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
@@ -76,7 +76,7 @@
 				S.satchel.UpdateIcon()
 				if (S.satchel.contents.len >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, "sound/machines/chime.ogg", 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, 1)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -86,7 +86,7 @@
 				src.set_loc(SCOOP)
 				if (SCOOP.contents.len >= SCOOP.capacity)
 					boutput(V.pilot, "<span class='alert'>Your pod's ore scoop hold is full!</span>")
-					playsound(V.loc, "sound/machines/chime.ogg", 20, 1)
+					playsound(V.loc, 'sound/machines/chime.ogg', 20, 1)
 			return
 		else
 			return
@@ -97,10 +97,10 @@
 			return
 
 		if(!istype(over_object, /atom/movable/screen/hud))
-			if (get_dist(usr,src) > 1)
+			if (BOUNDS_DIST(usr, src) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
-			if (get_dist(usr,over_object) > 1)
+			if (BOUNDS_DIST(usr, over_object) > 0)
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
@@ -210,6 +210,7 @@
 
 	setup_material()
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
+		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
 
 /obj/item/raw_material/pharosium
@@ -322,7 +323,7 @@
 			var/turf/bombturf = get_turf(src)
 			if (bombturf)
 				var/bombarea = bombturf.loc.name
-				logTheThing("combat", null, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
+				logTheThing(LOG_COMBAT, null, "Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [src.fingerprintslast]")
 				if (src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 					message_admins("Erebite detonated by an explosion in [bombarea] ([log_loc(bombturf)]). Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -337,7 +338,7 @@
 			var/turf/bombturf = get_turf(src)
 			var/bombarea = istype(bombturf) ? bombturf.loc.name : "a blank, featureless void populated only by your own abandoned dreams and wasted potential"
 
-			logTheThing("combat", null, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
+			logTheThing(LOG_COMBAT, null, "Erebite detonated by heat in [bombarea]. Last touched by: [src.fingerprintslast]")
 			if(src.fingerprintslast && !istype(get_area(bombturf), /area/mining/magnet))
 				message_admins("Erebite detonated by heat in [bombarea]. Last touched by: [key_name(src.fingerprintslast)]")
 
@@ -431,7 +432,7 @@
 		src.setMaterial(getMaterial("telecrystal"), appearance = 0, setname = 0)
 		return ..()
 
-	attack(mob/M as mob, mob/user as mob, def_zone)//spyguy apologizes in advance -- not somepotato i promise
+	attack(mob/M, mob/user, def_zone)//spyguy apologizes in advance -- not somepotato i promise
 		if(M == user)
 			boutput(M, "<b class='alert'>You eat the [html_encode(src)]!</b>")
 			boutput(M, "Nothing happens, though.")
@@ -570,12 +571,13 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shard-glass"
 	flags = TABLEPASS | FPRINT
+	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	w_class = W_CLASS_NORMAL
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	g_amt = 3750
 	burn_type = 1
 	stamina_damage = 5
@@ -583,6 +585,7 @@
 	stamina_crit_chance = 35
 	burn_possible = 0
 	event_handler_flags = USE_FLUID_ENTER
+	material_amt = 0.1
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
 	New()
@@ -590,14 +593,14 @@
 		icon_state += "[rand(1,3)]"
 		src.setItemSpecial(/datum/item_special/double)
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!scalpel_surgery(M,user)) return ..()
 		else return
 
 	Crossed(atom/movable/AM as mob|obj)
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
-			if(H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
+			if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
 				return
 			if(isabomination(H))
 				return
@@ -605,10 +608,12 @@
 				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
 				step_on(H)
 			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
+				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
+				if (H.mutantrace?.can_walk_on_shards)
+					return
 				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
 					return
-				if((!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 70)) && !iscow(H))
+				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")
 					step_on(H)
 		..()
@@ -741,11 +746,6 @@
 	default_material = "erebite"
 	icon_state = "martian-bar"
 
-/obj/item/material_piece/gold
-	name = "stamped bullion"
-	desc = "Oh wow! This stuff's got to be worth a lot of money!"
-	default_material = "gold"
-
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"
 	default_material = "ice"
@@ -762,20 +762,21 @@
 	event_handler_flags = NO_MOUSEDROP_QOL
 	var/active = 0
 	var/reject = 0
-	var/insufficient = 0
 	var/smelt_interval = 5
 	var/sound/sound_load = sound('sound/items/Deconstruct.ogg')
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
 	var/atom/output_location = null
+	var/list/atom/leftovers = null
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (active)
 			boutput(user, "<span class='alert'>It's already working! Give it a moment!</span>")
 			return
 		if (src.contents.len < 1)
 			boutput(user, "<span class='alert'>There's nothing inside to reclaim.</span>")
 			return
+		leftovers = list()
 		user.visible_message("<b>[user.name]</b> switches on [src].")
 		active = 1
 		anchored = 1
@@ -791,33 +792,13 @@
 				src.reject = 1
 				continue
 
-			else if (istype(M, /obj/item/raw_material/shard))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/sheet))
-				if (output_bar_from_item(M, 10))
-					qdel(M)
-
-			else if (istype(M, /obj/item/rods))
-				if (output_bar_from_item(M, 20))
-					qdel(M)
-
-			else if (istype(M, /obj/item/tile))
-				if (output_bar_from_item(M, 40))
-					qdel(M)
-
 			else if (istype(M, /obj/item/cable_coil))
 				var/obj/item/cable_coil/C = M
-				if (output_bar_from_item(M, 30, C.conductor.mat_id))
-					qdel(C)
-
-			else if (istype(M, /obj/item/wizard_crystal))
-				if (output_bar_from_item(M))
-					qdel(M)
+				output_bar_from_item(M, 1 / M.material_amt, C.conductor.mat_id)
+				qdel(C)
 
 			else
-				output_bar_from_item(M)
+				output_bar_from_item(M, 1 / M.material_amt)
 				qdel(M)
 
 			sleep(smelt_interval)
@@ -827,9 +808,12 @@
 			src.visible_message("<b>[src]</b> emits an angry buzz and rejects some unsuitable materials!")
 			playsound(src.loc, sound_grump, 40, 1)
 
-		if (insufficient)
-			src.insufficient = 0
-			src.visible_message("<b>[src]</b> emits a grumpy buzz and ejects some leftovers.")
+		var/waste = 0
+		for(var/matID in leftovers)
+			if(leftovers[matID] > 0)
+				waste = 1
+		if (waste)
+			src.visible_message("<b>[src]</b> emits a grumpy buzz and disintegrates some leftovers.")
 			playsound(src.loc, sound_grump, 40, 1)
 
 		active = 0
@@ -837,28 +821,39 @@
 		icon_state = "reclaimer"
 		src.visible_message("<b>[src]</b> finishes working and shuts down.")
 
-	proc/output_bar_from_item(obj/item/O, var/amount_modifier = 1, var/extra_mat)
+	proc/output_bar_from_item(obj/item/O, var/amount_per_bar = 1, var/extra_mat)
 		if (!O || !O.material)
 			return
 
-		var/stack_amount = O.amount
-		if (amount_modifier)
-			var/divide = O.amount / amount_modifier
-			stack_amount = round(divide)
-			if (stack_amount != divide)
-				src.insufficient = 1
-				O.change_stack_amount(-stack_amount * amount_modifier)
-				O.set_loc(src.loc)
-				if (!stack_amount)
-					return
-			else
-				. = 1
+		var/output_amount = O.amount
 
-		output_bar(O.material, stack_amount, O.quality)
-		if (extra_mat)
-			output_bar(extra_mat, stack_amount, O.quality)
+		if (amount_per_bar)
+			var/bonus = leftovers[O.material.mat_id]
+			var/num_bars = O.amount / amount_per_bar + bonus
+
+			output_amount = round(num_bars)
+			if (output_amount != num_bars)
+				leftovers[O.material.mat_id] = num_bars - output_amount
+
+		output_bar(O.material, output_amount, O.quality)
+
+		if (extra_mat) // i hate this
+			output_amount = O.amount
+
+			if (amount_per_bar)
+				var/bonus = leftovers[extra_mat]
+				var/num_bars = O.amount / amount_per_bar + bonus
+
+				output_amount = round(num_bars)
+				if (output_amount != num_bars)
+					leftovers[extra_mat] = num_bars - output_amount
+
+			output_bar(extra_mat, output_amount, O.quality)
 
 	proc/output_bar(material, amount, quality)
+
+		if(amount <= 0)
+			return
 
 		var/datum/material/MAT = material
 		if (!istype(MAT))
@@ -888,13 +883,11 @@
 		if (src.is_valid(W))
 			W.set_loc(src)
 			if (user) user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 			. = TRUE
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (W.cant_drop) //For borg held items
-			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
-			return ..()
+	attackby(obj/item/W, mob/user)
+
 		if (istype(W, /obj/item/ore_scoop))
 			var/obj/item/ore_scoop/scoop = W
 			W = scoop.satchel
@@ -916,11 +909,12 @@
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
 				playsound(src, sound_load, 40, 1)
-
+		else if (W?.cant_drop)
+			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
+			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
 			playsound(src, sound_load, 40, 1)
-
 		else
 			. = ..()
 
@@ -934,11 +928,11 @@
 			boutput(usr, "<span class='notice'>You reset the reclaimer's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The reclaimer is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -991,7 +985,7 @@
 			boutput(user, "<span class='alert'>You can't quick-load that.</span>")
 			return
 
-		if(!IN_RANGE(O, user, 1))
+		if(BOUNDS_DIST(O, user) > 0)
 			boutput(user, "<span class='alert'>You are too far away!</span>")
 			return
 
@@ -1032,7 +1026,7 @@
 		if (!output_location)
 			return src.loc
 
-		if (!IN_RANGE(src.output_location, src, 1))
+		if (!(BOUNDS_DIST(src.output_location, src) == 0))
 			output_location = null
 			return src.loc
 

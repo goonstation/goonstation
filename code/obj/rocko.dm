@@ -36,7 +36,7 @@ obj/item/rocko
 			var/datum/material/dummy = new new_material
 			src.setMaterial(getMaterial(dummy.mat_id), setname = FALSE)
 		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		UpdateIcon()
 

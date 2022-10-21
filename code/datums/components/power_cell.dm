@@ -8,10 +8,10 @@
 
 TYPEINFO(/datum/component/power_cell)
 	initialization_args = list(
-		ARG_INFO("max", "num", "Maximum cell charge", 200),
-		ARG_INFO("start_charge", "num", "Initial cell charge", 200),
-		ARG_INFO("recharge_rate", "num", "Recharge rate of cell (approx per 5.8 seconds)", 0),
-		ARG_INFO("rechargable", "num", "If the cell can recharged in a recharger", TRUE)
+		ARG_INFO("max", DATA_INPUT_NUM, "Maximum cell charge", 200),
+		ARG_INFO("start_charge", DATA_INPUT_NUM, "Initial cell charge", 200),
+		ARG_INFO("recharge_rate", DATA_INPUT_NUM, "Recharge rate of cell (approx per 5.8 seconds)", 0),
+		ARG_INFO("rechargable", DATA_INPUT_BOOL, "If the cell can recharged in a recharger", TRUE)
 	)
 
 /datum/component/power_cell/Initialize(max = 200, start_charge = 200, recharge = 0, rechargable = TRUE)

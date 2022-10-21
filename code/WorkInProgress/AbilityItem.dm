@@ -120,16 +120,13 @@
 		..()
 
 
-/obj/ability_button/labcoat_toggle
-	name = "(Un)Button Labcoat"
+/obj/ability_button/coat_toggle
+	name = "(Un)Button Coat"
 	icon_state = "labcoat"
 
 	execute_ability()
-		var/obj/item/clothing/suit/labcoat/W = the_item
-		if(W.buttoned)
-			W.unbutton()
-		else
-			W.button()
+		var/obj/item/clothing/suit/W = the_item
+		W.AttackSelf(the_mob)
 		..()
 
 /obj/ability_button/hood_toggle
@@ -143,16 +140,18 @@
 
 /obj/ability_button/magboot_toggle
 	name = "(De)Activate Magboots"
-	icon_state = "shieldceon"
+	icon_state = "magbootson"
+	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
 		if(W.magnetic)
 			W.deactivate()
-			boutput(the_mob, "You power off your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")
 		else
 			W.activate()
-			boutput(the_mob, "You power on your magnetic boots")
+			boutput(the_mob, "<span class='hint'>You power on your magnetic boots.</span><br><span class='success'>You are now firmly anchored to the floor, and cannot be moved by pushing or teleportation.</span>", \
+				group = "magbootson")
 		the_mob.update_equipped_modifiers()
 		the_mob.update_clothing()
 		..()
@@ -194,6 +193,7 @@
 		if(R.uses < 0)
 			the_item.name = "Empty Rocket Shoes"
 			boutput(the_mob, "<span class='alert'>Your rocket shoes are empty.</span>")
+			the_item.hide_buttons()
 			R.abilities.Cut()
 			qdel(src)
 			return
@@ -229,6 +229,7 @@
 						the_mob:update_burning(1)
 						sleep(0.3 SECONDS)
 				the_mob.unlock_medal( "Too Fast Too Furious", 1 )
+				logTheThing(LOG_COMBAT, the_mob, "was gibbed by rocket shoes at [log_loc(the_mob)].")
 				the_mob.gib()
 
 			return
@@ -268,7 +269,7 @@
 			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
-		playsound(the_mob, "sound/effects/bamf.ogg", 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
 
 		SPAWN(0)
 			for(var/i=0, i<R.soniclength, i++)
@@ -308,12 +309,12 @@
 
 /obj/ability_button/flashlight_toggle
 	name = "Toggle Flashlight"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/device/light/flashlight/J = the_item
 		J.toggle()
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -375,40 +376,40 @@
 
 /obj/ability_button/flashlight_engiehelm
 	name = "Toggle Helmet Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/engineer/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		if (J.on) src.icon_state = "off"
-		else  src.icon_state = "on"
+		if (J.on) src.icon_state = "lighton"
+		else  src.icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/flashlight_hardhat
 	name = "Toggle Hardhat Light"
-	icon_state = "on"
+	icon_state = "lightoff"
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/hardhat/J = the_item
 
 		J.flashlight_toggle(the_mob)
-		src.icon_state = J.on ? "off" : "on"
+		src.icon_state = J.on ? "lighton" : "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
 	name = "Toggle T-Scanner"
-	icon_state = "on"
+	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
 		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "off"
-		else  icon_state = "on"
+		if(J.on) icon_state = "lighton"
+		else  icon_state = "lightoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -441,24 +442,24 @@
 
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
-	icon_state = "jet2on"
+	icon_state = "jetoff"
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jet2off"
-		else  icon_state = "jet2on"
+		if(J.on) icon_state = "jet2on"
+		else  icon_state = "jet2off"
 		..()
 
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
-	icon_state = "jeton"
+	icon_state = "jetoff"
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
 		J.toggle()
-		if(J.on) icon_state = "jetoff"
-		else  icon_state = "jeton"
+		if(J.on) icon_state = "jeton"
+		else  icon_state = "jetoff"
 		..()
 
 ////////////////////////////////////////////////////////////
@@ -793,6 +794,7 @@
 	plane = PLANE_HUD
 	anchored = 1
 	flags = NOSPLASH
+	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 
 	var/cooldown = 0
 	var/last_use_time = 0

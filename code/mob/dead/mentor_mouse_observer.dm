@@ -27,8 +27,8 @@
 	process_move(keys)
 		if(keys && src.move_dir && !src.leave_popup_open)
 			src.leave_popup_open = TRUE
-			if(alert(src, "Are you sure you want to leave?", "Hop out of the pocket", "Yes", "No") == "Yes")
-				src.stop_observing()
+			if(tgui_alert(src, "Are you sure you want to leave?", "Hop out of the pocket", list("Yes", "No")) == "Yes")
+				qdel(src)
 			src.leave_popup_open = FALSE
 
 	click(atom/target, params) // TODO spam delay
@@ -84,9 +84,9 @@
 			return
 
 		if(src.is_admin)
-			logTheThing("diary", src, null, "(ADMINMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
 		else
-			logTheThing("diary", src, null, "(MENTORMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -121,9 +121,6 @@
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()
-		boot()
-
-	ghostize()
 		boot()
 
 	disposing()

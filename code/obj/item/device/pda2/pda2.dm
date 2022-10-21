@@ -172,23 +172,27 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
+		name = "Medical PDA"
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
+			name = "Robotics PDA"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
 	genetics
+		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	security
+		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
@@ -196,6 +200,7 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
+		name = "Forensic PDA"
 		icon_state = "pda-s"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
@@ -262,6 +267,11 @@
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
 
+	technical_assistant
+		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
+		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		alertgroups = list(MGA_MAIL,MGA_RADIO)
+
 	mining
 		icon_state = "pda-e"
 		mailgroups = list(MGD_MINING,MGD_PARTY)
@@ -318,6 +328,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -384,6 +395,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null
@@ -489,6 +501,12 @@
 		a:hover   { background-color: [src.link_color];   color: [src.bg_color]; }
 
 	</style>
+	<script>
+		function updateScroll() {window.name = document.documentElement.scrollTop || document.body.scrollTop;}
+		window.addEventListener("beforeunload", updateScroll);
+		window.addEventListener("scroll", updateScroll);
+		window.addEventListener("load", function() {document.documentElement.scrollTop = document.body.scrollTop = window.name;});
+	</script>
 </head>
 <body>"}
 
@@ -527,7 +545,7 @@
 
 /obj/item/device/pda2/Topic(href, href_list)
 	..()
-	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( get_dist(src, usr) <= 1 || isAI(usr) )))
+	if (usr.contents.Find(src) || usr.contents.Find(src.master) || ((istype(src.loc, /turf) || isAI(usr)) && ( BOUNDS_DIST(src, usr) == 0 || isAI(usr) )))
 		if(!can_act(usr))
 			return
 
@@ -553,7 +571,7 @@
 		src.updateSelfDialog()
 		return
 
-/obj/item/device/pda2/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda2/attackby(obj/item/C, mob/user)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		if (U.try_deliver(C, user))
@@ -587,7 +605,7 @@
 		return
 
 	else if (isscrewingtool(C))
-		playsound(user.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(user.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.closed = !src.closed
 		boutput(user, "You [src.closed ? "secure" : "unscrew"] the cover.")
 
@@ -657,7 +675,7 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/pda2/attack(mob/M, mob/user)
 	if(src.scan_program)
 		return
 	else
@@ -983,7 +1001,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, 1)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1015,11 +1033,7 @@
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
-			for (var/atom in mobs)
-				if (!atom) continue
-				var/mob/O = atom
-				if (get_dist(get_turf(src),O) <= 3)
-					O.show_message(text("[bicon(src)] *[alert_message]*"))
+			src.audible_message("[bicon(src)] *[alert_message]*")
 
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))

@@ -14,7 +14,7 @@
 /mob/living/carbon/human/normal/syndicate
 	New()
 		..()
-		JobEquipSpawned("Syndicate")
+		JobEquipSpawned("Syndicate Operative")
 
 /mob/living/carbon/human/normal/captain
 	New()
@@ -35,6 +35,11 @@
 	New()
 		..()
 		JobEquipSpawned("Research Director")
+
+/mob/living/carbon/human/normal/medicaldirector
+	New()
+		..()
+		JobEquipSpawned("Medical Director")
 
 /mob/living/carbon/human/normal/headofsecurity
 	New()
@@ -141,10 +146,10 @@
 		..()
 		JobEquipSpawned("Scientist")
 
-/mob/living/carbon/human/normal/ntso
+/mob/living/carbon/human/normal/ntsc
 	New()
 		..()
-		JobEquipSpawned("Nanotrasen Security Operative")
+		JobEquipSpawned("Nanotrasen Security Consultant")
 
 /mob/living/carbon/human/normal/inspector
 	New()

@@ -27,7 +27,7 @@
 		setProperty("heatprot", 5)
 		setProperty("meleeprot_head", 2)
 
-/obj/item/clothing/mask/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/clothing/mask/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/voice_changer))
 		if (src.see_face)
 			user.show_text("You can't find a way to attach [W] where it isn't really, really obvious. That'd kinda defeat the purpose of putting [W] in there, wouldn't it?", "red")
@@ -90,12 +90,12 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(target, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1) //head,
+		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
 
-		logTheThing("combat", source, target, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
+		logTheThing(LOG_COMBAT, source, "rips out the staples on [constructTarget(target,"combat")]'s [src]") //Crime
 
 /obj/item/clothing/mask/gas
 	name = "gas mask"
@@ -103,9 +103,8 @@
 	icon_state = "gas_mask"
 	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
-	see_face = 0.0
+	see_face = 0
 	item_state = "gas_mask"
-	permeability_coefficient = 0.05
 	color_r = 0.8 // green tint
 	color_g = 1
 	color_b = 0.8
@@ -118,8 +117,8 @@
 		setProperty("disorient_resist_eye", 10)
 
 /obj/item/clothing/mask/gas/NTSO
-	name = "NT-SO gas mask"
-	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect elite Nanotrasen personnel from environmental threats."
+	name = "NT gas mask"
+	desc = "A close-fitting CBRN mask with dual filters and a tinted lens, designed to protect Nanotrasen security personnel from environmental threats."
 	icon_state = "gas_mask_NT"
 	item_state = "gas_mask_NT"
 	color_r = 0.8 // cool blueberry nanotrasen tint provides disorientation resist
@@ -135,7 +134,7 @@
 	desc = "Nobody will know who you are if you put this on. Nobody."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 0.0
+	see_face = 0
 	w_class = W_CLASS_TINY
 	is_syndicate = 1
 	mats = 2
@@ -173,7 +172,7 @@
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
-		see_face = 1.0
+		see_face = 1
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -194,7 +193,7 @@
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
-		see_face = 1.0
+		see_face = 1
 		setupProperties()
 			..()
 			setProperty("movespeed", 0.2)
@@ -259,10 +258,9 @@
 	item_state = "breath"
 	c_flags = COVERSMOUTH | MASKINTERNALS
 	w_class = W_CLASS_SMALL
-	permeability_coefficient = 0.50
 
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/tank))
 			src.auto_setup(W,user)
 		else
@@ -310,7 +308,7 @@
 	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	see_face = 0.0
+	see_face = 0
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -354,9 +352,9 @@
 	item_state = "clown_hat"
 	item_function_flags = IMMUNE_TO_ACID
 	burn_possible = 0
-	color_r = 1.0
-	color_g = 1.0
-	color_b = 1.0
+	color_r = 1
+	color_g = 1
+	color_b = 1
 	w_class = W_CLASS_SMALL
 	var/mob/living/carbon/human/victim
 
@@ -365,13 +363,13 @@
 		var/mob/living/carbon/human/H = user
 		if(istype(H) && slot == SLOT_WEAR_MASK)
 			if ( user.mind && user.mind.assigned_role=="Clown" && istraitor(user) )
-				src.cant_other_remove = 1.0
-				src.cant_self_remove = 0.0
+				src.cant_other_remove = 1
+				src.cant_self_remove = 0
 			else
-				boutput (user, __red("[src] latches onto your face! It burns!"))
+				boutput (user, "<span class='alert'>[src] latches onto your face! It burns!</span>")
 				src.victim = H
-				src.cant_other_remove = 0.0
-				src.cant_self_remove = 1.0
+				src.cant_other_remove = 0
+				src.cant_self_remove = 1
 				src.victim.change_misstep_chance(25)
 				src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,15,0,DAMAGE_BURN)
@@ -390,7 +388,7 @@
 			if ( src.victim.health <= 0 )
 				return
 			if (prob(45))
-				boutput (src.victim, __red("[src] burns your face!"))
+				boutput (src.victim, "<span class='alert'>[src] burns your face!</span>")
 				if (prob(25))
 					src.victim.emote("scream")
 				src.victim.TakeDamage("head",0,3,0,DAMAGE_BURN)
@@ -408,8 +406,8 @@
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
 			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
-				U.visible_message(__red("[src] latches onto [T]'s face!"),__red("You slap [src] onto [T]'s face!'"))
-				logTheThing("combat",user,target,"forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
+				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
+				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
 
 				// If we don't empty out that slot first, it could blip the mask out of existence
@@ -443,12 +441,12 @@
 	item_state = "s_mask"
 	w_class = W_CLASS_TINY
 	c_flags = COVERSMOUTH
-	permeability_coefficient = 0.1
 	path_prot = 0
 
 	setupProperties()
 		..()
 		setProperty("viralprot", 50) // fashion reasons, they're *space* masks, ok?
+		setProperty("chemprot", 5)
 
 /obj/item/clothing/mask/surgical_shield
 	name = "surgical face shield"
@@ -457,13 +455,13 @@
 	item_state = "surgicalshield"
 	w_class = W_CLASS_SMALL
 	c_flags = COVERSMOUTH | COVERSEYES
-	permeability_coefficient = 0.50
 	var/bee = FALSE
 	var/randcol
 
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 1)
+		setProperty("chemprot", 7)
 		setProperty("disorient_resist_eye", 10)
 
 	New()
@@ -507,9 +505,9 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 10
+	health = 3
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
@@ -532,13 +530,12 @@
 	desc = "A little mask, made of paper."
 	icon_state = "domino"
 	item_state = "domino"
-	see_face = 0.0
+	see_face = 0
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 10
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/obj/item/pen/P = W
 			if (P.font_color)
@@ -550,14 +547,14 @@
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/wrestling
 	name = "wrestling mask"
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
-	see_face = 0.0
+	see_face = 0
 
 	black
 		icon_state = "blackmask"
@@ -576,7 +573,7 @@
 	desc = "Looking at this thing gives you the heebie-jeebies. And a weird urge to go rob a bank, for some reason."
 	icon_state = "anime"
 	item_state = "anime"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
@@ -621,9 +618,11 @@
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
+	see_face = 0
 
 /obj/item/clothing/mask/peacockmask
 	name = "peacock mask"
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "peacock"
 	item_state = "peacock"
+	see_face = 0

@@ -62,14 +62,6 @@
 		dat += get_manifest()
 		dat += "<br>"
 
-		var/list/stored = list()
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		if(length(stored))
-			dat += "<b>In Cryogenic Storage:</b><hr>[jointext("", stored)]<br>"
-
 		return dat
 
 //Status Display
@@ -149,6 +141,7 @@
 		status_signal.source = src.master
 		status_signal.transmission_method = 1
 		status_signal.data["command"] = command
+		status_signal.data["address_tag"] = "STATDISPLAY"
 
 		switch(command)
 			if("message")
@@ -216,7 +209,7 @@ Code:
 				return
 			last_transmission = world.time
 			SPAWN( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -328,7 +321,7 @@ Code:
 			return
 		if (last_honk && world.time < last_honk + 20)
 			return
-		playsound(src.master.loc, "sound/musical_instruments/Bikehorn_1.ogg", (src.honk_volume * 25), 1)
+		playsound(src.master.loc, 'sound/musical_instruments/Bikehorn_1.ogg', (src.honk_volume * 25), 1)
 		src.last_honk = world.time
 
 		return
@@ -415,7 +408,7 @@ Code:
 /datum/computer/file/pda_program/door_control
 	name = "DoorMaster"
 	size = 8
-	var/id = 1.0
+	var/id = 1
 	var/last_toggle = 0
 
 	syndicate
@@ -775,7 +768,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -801,16 +794,26 @@ Code:
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && length(eye_loc.cameras)))
+			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
 		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 
+		if(isliving(usr) && !remote)
+			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
-	name = "BOMB"
+	name = "SELF-DESTRUCT"
 	size = 8
 	var/detonating = 0
 
@@ -914,15 +917,15 @@ Using electronic "Detomatix" MISSILE program is simple!<br>
 <li>now run MISSILE.PPROG and select IMPORT PDA LIST</li>
 <li>select up to four (4) PDAs you want EXPLODED from DISTANCE!</li>
 </ul><br>
-Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
+Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 <ul>
-<li>Copy BOMB.PPROG to main drive, as cart programs cannot be edited!</li>"
-<li>Simply rename new BOMB.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
+<li>Copy SELF-DESTRUCT.PPROG to main drive, as cart programs cannot be edited!</li>"
+<li>Simply rename new SELF-DESTRUCT.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
 <li>Now, COPY renamed file and open MESSENGER.  Select your target and SEND THEM the file!</li>
 <li>Finally, they run file expecting some attractive plants, but instead get EXPLODED PDA!</li>
 </ul>
 <br>
-<b>Caution: </b>Do not run BOMB.PPROG on your own system!  It will explode!
+<b>Caution: </b>Do not run SELF-DESTRUCT.PPROG on your own system!  It will explode!
 "}
 
 //Security ticket writer - not really a small prog any more but oh well
@@ -1030,8 +1033,8 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			logTheThing("admin", usr, null, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
@@ -1077,10 +1080,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
-			logTheThing("admin", usr, null, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
 					var/obj/item/paper/p = new /obj/item/paper
@@ -1097,7 +1100,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(src.master, "sound/machines/printer_thermal.ogg", 50, 1)
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
 			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
@@ -1258,7 +1261,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if (station_name_changing)
 				var/nextName = lastStationNameChange + stationNameChangeDelay
 				if (nextName > world.timeofday)
-					alert("You must wait for the station naming coils to recharge! Did space school teach you nothing?!")
+					tgui_alert(usr, "You must wait for the station naming coils to recharge! Did space school teach you nothing?!", "Naming coils recharging")
 					usr.Browse(null, "window=stationnamechanger")
 					src.master.updateSelfDialog()
 					return
@@ -1267,7 +1270,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 			usr.Browse(null, "window=stationnamechanger")
 			src.master.updateSelfDialog()

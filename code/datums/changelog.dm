@@ -151,7 +151,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 									html += "th, "
 					html += "20[copytext(line, 15, 17)]</li>"
 				if("(u)")
-					#ifdef APRIL_FOOLS
+					#ifdef APRIL_FOOLS_2021
 					author = "CodeDude"
 					#else
 					author = copytext(line, 4, 0)
@@ -165,7 +165,7 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
 						html += "<li class=\"admin\"><span><i class=\"icon-check\"></i> [author]</span> updated:"
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
-							#ifdef APRIL_FOOLS
+							#ifdef APRIL_FOOLS_2021
 							var/random_em = ""
 							for(var/i in 1 to rand(1, 4))
 								random_em += random_emoji()
@@ -214,11 +214,6 @@ ATTENTION: The changelog has moved into its own file: strings/changelog.txt
     <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
-#if ASS_JAM
-	html += "<a id='ass_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#main_changelog\") });'>Jump to regular changelog</a>"
-	html += changelog_parse(file2text("strings/ass_changelog.txt"), "Ass Jam Changelog", " ass")
-	html += "<a id='main_changelog' href='#' style='color:#ffffff; text-align:center; display:block' onclick='$(\".nano\").nanoScroller({ scrollTo: $(\"#ass_changelog\") });'>Jump to ass jam changelog</a>"
-#endif
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog")
 	html += {"
 <h3>GoonStation 13 Development Team</h3>

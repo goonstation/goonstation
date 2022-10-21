@@ -27,6 +27,9 @@
 					human_owner.sight |= SEE_MOBS
 					human_owner.see_invisible = INVIS_CLOAK
 
+			if (istype(owner, /mob/living/critter/flock))
+				owner.see_invisible = INVIS_FLOCK
+
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
 		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
@@ -57,13 +60,13 @@
 				if (sight_meson)
 					robot_owner.sight &= ~SEE_BLACKNESS
 					robot_owner.sight |= SEE_TURFS
-					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+					robot_owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
 					robot_owner.vision.set_scan(1)
-					robot_owner.client.color = "#c2ffc2"
+					robot_owner.client.set_color(normalize_color_to_matrix("#c2ffc2"))
 				else
 					robot_owner.sight |= SEE_BLACKNESS
 					robot_owner.sight &= ~SEE_TURFS
-					robot_owner.client.color = null
+					robot_owner.client.set_color()
 					robot_owner.vision.set_scan(0)
 				//if (sight_therm)
 				//	src.sight |= SEE_MOBS //todo make borg thermals have a purpose again

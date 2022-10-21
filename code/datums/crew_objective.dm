@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 
@@ -47,7 +46,7 @@
 			obj_count++
 
 		var/mob/crewmob = crewMind.current
-		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(20))
+		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist"))
 			/*var/conspiracy_text = ""
 			var/noun = pick_string("conspiracy_theories.txt", "noun")
 			var/conspiracy = pick_string("conspiracy_theories.txt", "conspiracy")
@@ -392,7 +391,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 /datum/objective/crew/bartender/shotgun
 	explanation_text = "Don't lose your shotgun!"
 	check_completion()
-		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/riotgun))
+		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/sawnoff))
 			return TRUE
 		else
 			return FALSE
@@ -426,9 +425,18 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		for(var/i in 1 to DRINK_OBJ_COUNT)
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
-			var/datum/reagent/fooddrink/instance =  new choiceType
+			var/datum/reagent/fooddrink/instance = new choiceType
+			var/hidden = 0
+			var/list/reactions = chem_reactions_by_result[instance.id]
+			for (var/datum/chemical_reaction/reaction_type in reactions)
+				if (initial(reaction_type.hidden))
+					hidden++
+			//if all reactions producing this reagent are hidden, then skip it and try again
+			if (hidden == length(reactions))
+				i--
+				continue
 			names[i] = instance.name
 			ids[i] = instance.id
 		explanation_text = "Mix a "
@@ -456,12 +464,29 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/mushroom,
 		/obj/item/reagent_containers/food/snacks/pickle/trash,
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
-		/obj/item/reagent_containers/food/snacks/plant,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
-		/obj/item/reagent_containers/food/snacks/soup,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
+		/obj/item/reagent_containers/food/snacks/soup/custom,
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake
 	)
-	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks)-blacklist-concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
+	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE

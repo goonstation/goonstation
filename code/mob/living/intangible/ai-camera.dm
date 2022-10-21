@@ -9,7 +9,6 @@
 //Camera Helmets /obj/item/clothing/head/helmet/camera X
 //Bots /obj/machinery/bot  X
 //Observables /obj/observable  X
-//Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
@@ -23,6 +22,9 @@
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
 	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_bleed = FALSE
+	metabolizes = FALSE
+	blood_id = null
 
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
@@ -35,9 +37,6 @@
 	var/turf/T = 0
 
 	var/outer_eye_atom = null
-
-	/// The UI used for the "Open station map" verb
-	var/datum/tgui/map_ui
 
 	New()
 		src.cancel_camera()
@@ -105,12 +104,12 @@
 			O.set_loc(get_turf(src))
 		. = ..()
 
-	Move(var/turf/NewLoc, direct)//Ewww!
+	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
-		src.closeContextActions()
+		src.contextActionsOnMove()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe.closeContextActions()
+		src.mainframe?.contextActionsOnMove()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -118,22 +117,7 @@
 		if (!isturf(src.loc))
 			src.cancel_camera()
 
-		if (NewLoc)
-			src.set_dir(get_dir(loc, NewLoc))
-			src.set_loc(NewLoc) //src.set_loc(NewLoc) we don't wanna refresh last_range here and as fas as i can tell there's no reason we Need set_loc
-		else
-
-			src.set_dir(direct)
-			if((direct & NORTH) && src.y < world.maxy)
-				src.y++
-			if((direct & SOUTH) && src.y > 1)
-				src.y--
-			if((direct & EAST) && src.x < world.maxx)
-				src.x++
-			if((direct & WEST) && src.x > 1)
-				src.x--
-
-		//boutput(src,"[client.images.len]") //useful for debuggin that one bad bug
+		. = ..()
 
 		if(src.loc.z != 1)	//you may only move on the station z level!!!
 			src.cancel_camera()
@@ -180,6 +164,10 @@
 		//var/obj/item/equipped = src.equipped()
 
 		if (!src.client.check_any_key(KEY_EXAMINE | KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_POINT) ) // ugh
+			if (src.targeting_ability)
+				..()
+				return
+
 			//only allow Click-to-track on mobs. Some of the 'trackable' atoms are also machines that can open a dialog and we don't wanna mess with that!
 			if (src.mainframe && ismob(target) && is_mob_trackable_by_AI(target))
 				mainframe.ai_actual_track(target)
@@ -191,7 +179,7 @@
 			if( isturf(target) && findtext(control, "map_viewport") )
 				set_loc(src, target)
 
-			if (get_dist(src, target) > 0)
+			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
 
@@ -285,6 +273,9 @@
 	resist()
 		return 0 //can't actually resist anything because there's nothing to resist, but maybe the hot key could be used for something?
 
+	vomit()
+		return 0 //can't puke
+
 	//death stuff that should be passed to mainframe
 	gib(give_medal, include_ejectables) //this should be admin only, I would hope
 		message_admins("something tried to gib the AI Eye - if this wasn't an admin action, something has gone badly wrong")
@@ -307,7 +298,7 @@
 		if (src.mainframe)
 			mainframe.show_laws(0, src)
 		else
-			ticker.centralized_ai_laws.show_laws(src)
+			boutput(src, "<span class='alert'>You lack a dedicated mainframe! This is a bug, report to an admin!</span>")
 		return
 
 	verb/cmd_return_mainframe()
@@ -403,7 +394,7 @@
 		var/area/A = get_area(src)
 		if(istype(A, /area/station/))
 			var/obj/machinery/power/apc/P = A.area_apc
-			if(P?.operating)
+			if(P)
 				P.attack_ai(src)
 				return
 
@@ -491,38 +482,22 @@
 		set name = "Open station map"
 		set desc = "Click on the map to teleport"
 		set category = "AI Commands"
-		map_ui = tgui_process.try_update_ui(usr, src, map_ui)
-		if (!map_ui)
-			if (!winexists(usr, "ai_map"))
-				winset(src.client, "ai_map", list2params(list(
-					"type" = "map",
-					"size" = "300,300",
-				)))
-				var/atom/movable/screen/handler = new
-				handler.plane = 0
-				handler.mouse_opacity = 0
-				handler.screen_loc = "ai_map:1,1"
-				src.client.screen += handler
+		mainframe?.open_map()
 
-				ai_station_map.screen_loc = "ai_map;1,1"
-				handler.vis_contents += ai_station_map
-				src.client.screen += ai_station_map
-			map_ui = new(usr, src, "AIMap")
-			map_ui.open()
+	verb/rename_self()
+		set category = "AI Commands"
+		set name = "Change Designation"
+		set desc = "Change your name."
+		mainframe?.rename_self()
 
+	stopObserving()
+		src.set_loc(get_turf(src))
+		src.observing = null
 
 //---TURF---//
 /turf/var/image/aiImage
-/turf/var/list/cameras = null
-
-/turf/proc/adjustCameraImage()
-	if(!istype(src.aiImage)) return
-
-	if( src.cameras.len >= 1 )
-		src.aiImage.loc = null
-	else if( src.cameras == null )
-		src.aiImage.loc = src
-	return
+/turf/var/list/obj/machinery/camera/cameras
+/turf/var/list/datum/component/camera_coverage_emitter/camera_coverage_emitters
 
 //slow
 /*
@@ -533,99 +508,7 @@
 			usr.client.show_popup_menus = (length(cameras))
 */
 
-//---TURF---//
-
-//---CAMERA---//
-/obj/machinery/camera/var/list/turf/coveredTiles = null
-
-/obj/machinery/camera/proc/updateCoverage()
-	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_INIT && !global.explosions.exploding)
-		world.updateCameraVisibility()
-
 //---MISC---//
-
-var/list/obj/machinery/camera/camerasToRebuild
-world/proc/updateCameraVisibility(generateAiImages=FALSE)
-	set waitfor = FALSE
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
-	// I don't wanna wait for this camera setup shit just GO
-	return
-#endif
-
-	if(generateAiImages)
-		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
-		ma.plane = PLANE_HUD
-		ma.layer = 100
-		ma.color = "#777777"
-		ma.dir = pick(alldirs)
-		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
-		ma.name = " "
-
-		// takes about one second compared to the ~12++ that the actual calculations take
-		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-//pod wars has no AI so this is just a waste of time...
-#ifndef MAP_OVERRIDE_POD_WARS
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
-
-		var/lastpct = 0
-		var/thispct = 0
-		var/donecount = 0
-
-		for(var/turf/t as anything in cam_candidates) //ugh
-			t.aiImage = new
-			t.aiImage.appearance = ma
-			t.aiImage.dir = pick(alldirs)
-			t.aiImage.loc = t
-
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
-
-			donecount++
-			thispct = round(donecount / cam_candidates.len * 100)
-			if (thispct != lastpct)
-				lastpct = thispct
-				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
-
-			LAGCHECK(100)
-
-		for_by_tcl(cam, /obj/machinery/camera)
-			LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-		game_start_countdown?.update_status("Updating camera vis...\n")
-
-	var/list/turf/staticUpdateTurfs = list()
-
-	for(var/obj/machinery/camera/cam as anything in camerasToRebuild)
-		var/list/prev_tiles = cam.coveredTiles
-		var/list/new_tiles = list()
-		if(cam.camera_status && !isnull(get_turf(cam)))
-			for(var/turf/T in view(CAM_RANGE, get_turf(cam)))
-				new_tiles += T
-		if (prev_tiles)
-			for(var/turf/T as anything in (prev_tiles - new_tiles))
-				staticUpdateTurfs |= T
-				if(isnull(T.cameras)) continue
-				T.cameras -= cam
-				if(!length(T.cameras))
-					T.cameras = null
-		if (new_tiles)
-			for(var/turf/T as anything in (new_tiles - prev_tiles))
-				LAZYLISTADDUNIQUE(T.cameras, cam)
-				staticUpdateTurfs |= T
-
-		cam.coveredTiles = new_tiles
-
-	for(var/turf/T as anything in staticUpdateTurfs)
-		T.aiImage?.loc = length(T.cameras) ? null : T
-
-	camerasToRebuild = null
-#endif
-
-// to be called by admins if everything breaks. TODO move to an admin verb
-/proc/force_full_camera_rebuild()
-	for_by_tcl(cam, /obj/machinery/camera)
-		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-	world.updateCameraVisibility()
-
 /mob/living/intangible/aieye/proc/check_eye_z(source)
 	var/atom/movable/temp = source
 	while(!istype(temp.loc, /turf))

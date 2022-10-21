@@ -364,7 +364,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if ("middle" in pa)
 			src.holder.add_to_hotkey_bar(src.holder.mode.copy())
 		else if ("left" in pa)
-			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache)
+			var/modename = input("Select new mode", "Select new mode", holder.mode.name) in sortList(holder.modes_cache, /proc/cmp_text_asc)
 			if (modename == holder.mode.name && isnull(holder.mode.hotkey_number))
 				return
 			holder.select_mode(holder.modes_cache[modename])

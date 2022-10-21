@@ -16,7 +16,7 @@
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "heater"
-	flags = NOSPLASH
+	flags = NOSPLASH | TGUI_INTERACTIVE
 	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
@@ -32,11 +32,12 @@
 		..()
 		output_target = src.loc
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 
-		if(!istype(B, /obj/item/reagent_containers/glass))
-			return
+		if(istype(B, /obj/item/reagent_containers/glass))
+			tryInsert(B, user)
 
+	proc/tryInsert(obj/item/reagent_containers/glass/B, var/mob/user)
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
@@ -67,20 +68,20 @@
 
 		if(src.beaker || roboworking)
 			boutput(user, "You add the beaker to the machine!")
-		src.updateUsrDialog()
+			src.ui_interact(user)
 		src.UpdateIcon()
 
 	handle_event(var/event, var/sender)
 		if (event == "reagent_holder_update")
 			src.UpdateIcon()
-			src.updateUsrDialog()
+			tgui_process.update_uis(src)
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -93,111 +94,96 @@
 		qdel(src)
 		return
 
-	Topic(href, href_list)
-		if(status & (NOPOWER|BROKEN)) return
-		if(usr.stat || usr.restrained()) return
-		if(!in_interact_range(src, usr)) return
-
-		src.add_dialog(usr)
-		if (!beaker)
-			// This should only happen when the UI is out of date - refresh it
-			src.updateUsrDialog()
-			return
-
-		if (href_list["eject"])
-			if (roboworking)
-				if (usr != roboworking)
-					// If a cyborg is using this, other people can't eject the beaker.
-					usr.show_text("You cannot eject the beaker because it is part of [roboworking].", "red")
-					return
-				roboworking = null
-			else
-				beaker.set_loc(output_target)
-				usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
-
-			beaker = null
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["adjustM"])
-			if (!beaker.reagents.total_volume) return
-			var/change = text2num_safe(href_list["adjustM"])
-			target_temp = clamp(target_temp-change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["adjustP"])
-			if (!beaker.reagents.total_volume) return
-			var/change = text2num_safe(href_list["adjustP"])
-			target_temp = clamp(target_temp+change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["settemp"])
-			if (!beaker.reagents.total_volume) return
-			var/change = input(usr,"Target Temperature (0-1000):","Enter target temperature",target_temp) as null|num
-			if(!change || !isnum_safe(change)) return
-			target_temp = clamp(change, 0, 1000)
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else if (href_list["stop"])
-			set_inactive()
-			return
-		else if (href_list["start"])
-			if (!beaker.reagents.total_volume) return
-			active = 1
-			active()
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-		else
-			usr.Browse(null, "window=chem_heater;title=Chemistry Heater")
-			src.UpdateIcon()
-			src.updateUsrDialog()
-			return
-
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
-		if(status & (NOPOWER|BROKEN))
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemHeater", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		var/obj/item/reagent_containers/glass/container = src.beaker
+		// Container data
+		var/list/containerData
+		if(container)
+			var/datum/reagents/R = container.reagents
+			containerData = list(
+				name = container.name,
+				maxVolume = R.maximum_volume,
+				totalVolume = R.total_volume,
+				temperature = R.total_temperature,
+				contents = list(),
+				finalColor = "#000000"
+			)
+
+			var/list/contents = containerData["contents"]
+			if(istype(R) && R.reagent_list.len>0)
+				containerData["finalColor"] = R.get_average_rgb()
+				// Reagent data
+				for(var/reagent_id in R.reagent_list)
+					var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+					contents.Add(list(list(
+						name = reagents_cache[reagent_id],
+						id = reagent_id,
+						colorR = current_reagent.fluid_r,
+						colorG = current_reagent.fluid_g,
+						colorB = current_reagent.fluid_b,
+						volume = current_reagent.volume
+					)))
+		.["containerData"] = containerData
+		.["targetTemperature"] = src.target_temp
+		.["isActive"] = src.active
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
 			return
-		src.add_dialog(user)
-		var/list/dat = list()
+		var/obj/item/reagent_containers/glass/container = src.beaker
+		switch(action)
+			if("eject")
+				if(!container)
+					return
+				if (src.roboworking)
+					if (usr != src.roboworking)
+						// If a cyborg is using this, other people can't eject the beaker.
+						usr.show_text("You cannot eject the beaker because it is part of [roboworking].", "red")
+						return
+					src.roboworking = null
+				else
+					container.set_loc(src.output_target) // causes Exited proc to be called
+					usr.put_in_hand_or_eject(container) // try to eject it into the users hand, if we can
+				src.beaker = null
+				src.UpdateIcon()
+				return
 
-		if(!beaker)
-			dat += "Please insert beaker.<BR>"
-		else if (!beaker.reagents.total_volume)
-			dat += "Beaker is empty.<BR>"
-			dat += "<A href='?src=\ref[src];eject=1'>Eject beaker</A><BR><BR>"
-		else
-			var/datum/reagents/R = beaker:reagents
-			dat += "<A href='?src=\ref[src];eject=1'>Eject beaker</A><BR><BR>"
-			dat += "<A href='?src=\ref[src];adjustM=10'>(<<)</A><A href='?src=\ref[src];adjustM=1'>(<)</A><A href='?src=\ref[src];settemp=1'> [target_temp] </A><A href='?src=\ref[src];adjustP=1'>(>)</A><A href='?src=\ref[src];adjustP=10'>(>>)</A><BR><BR>"
-
-			if(active)
-				dat += "Status: Active ([(target_temp > R.total_temperature) ? "Heating" : "Cooling"])<BR>"
-				dat += "Current Temperature: [R.total_temperature]<BR>"
-				dat += "<A href='?src=\ref[src];stop=1'>Deactivate</A><BR><BR>"
-			else
-				dat += "Status: Inactive<BR>"
-				dat += "Current Temperature: [R.total_temperature]<BR>"
-				dat += "<A href='?src=\ref[src];start=1'>Activate</A><BR><BR>"
-
-			for(var/reagent_id in R.reagent_list)
-				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-				dat += "[current_reagent.name], [current_reagent.volume] Units.<BR>"
-
-		user.Browse("<TITLE>Reagent Heating/Cooling Unit</TITLE>Reagent Heating/Cooling Unit:<BR><BR>[dat.Join()]", "window=chem_heater;title=Chemistry Heater")
-
-		onclose(user, "chem_heater")
-		return
+			if("insert")
+				if (container)
+					return
+				var/obj/item/reagent_containers/glass/inserting = usr.equipped()
+				if(istype(inserting))
+					tryInsert(inserting, usr)
+			if("adjustTemp")
+				src.target_temp = clamp(params["temperature"], 0, 1000)
+				src.UpdateIcon()
+			if("start")
+				if (!container?.reagents.total_volume)
+					return
+				src.active = 1
+				active()
+				src.UpdateIcon()
+			if("stop")
+				set_inactive()
+		. = TRUE
 
 	//MBC : moved to robot_disposal_check
 	/*
 	ProximityLeave(atom/movable/AM as mob|obj)
-		if (roboworking && AM == roboworking && get_dist(src, AM) > 1)
+		if (roboworking && AM == roboworking && BOUNDS_DIST(src, AM) > 0)
 			// Cyborg is leaving (or getting pushed away); remove its beaker
 			roboworking = null
 			beaker = null
@@ -223,7 +209,7 @@
 
 		if(abs(R.total_temperature - target_temp) <= 3) active = 0
 
-		src.updateUsrDialog()
+		tgui_process.update_uis(src)
 
 		SPAWN(1 SECOND) active()
 
@@ -242,7 +228,7 @@
 			// This proc is only called when a robot was at one point using the heater, so if
 			// roboworking is unset then it must have been deleted
 			set_inactive()
-		else if (get_dist(src, roboworking) > 1)
+		else if (BOUNDS_DIST(src, roboworking) > 0)
 			roboworking = null
 			beaker = null
 			set_inactive()
@@ -254,7 +240,7 @@
 		power_usage = 50
 		active = 0
 		UpdateIcon()
-		updateUsrDialog()
+		tgui_process.update_uis(src)
 
 	update_icon()
 		src.overlays -= src.icon_beaker
@@ -277,11 +263,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the Reagent Heater/Cooler's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The Reagent Heater/Cooler is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -292,6 +278,12 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			src.UpdateIcon()
+			tgui_process.update_uis(src)
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -321,10 +313,10 @@
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -341,7 +333,7 @@
 		if (event == "reagent_holder_update")
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 
@@ -376,7 +368,7 @@
 		var/datum/reagents/R = beaker.reagents
 
 		if (href_list["analyze"])
-			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR>Name:<BR>[href_list["name"]]<BR><BR>Description:<BR>[href_list["desc"]]<BR><BR><BR><A href='?src=\ref[src];main=1'>(Back)</A>"
+			var/dat = "<TITLE>CheMaster 3000</TITLE>Chemical infos:<BR><BR><b>Name:</b><BR>&emsp;[href_list["name"]]<BR><BR><b>Description:</b><BR>&emsp;[href_list["desc"]]<BR><BR><BR>[href_list["recipe"]]<BR><BR><BR> <A href='?src=\ref[src];main=1'>(Back)</A>"
 			usr.Browse(dat, "window=chem_master;size=575x400;title=CheMaster 3000")
 			return
 		else if (href_list["isolate"])
@@ -399,12 +391,10 @@
 			attack_hand(usr)
 			return
 		else if (href_list["eject"])
-			if (src.beaker)
-				beaker.set_loc(src.output_target)
-			usr.put_in_hand_or_eject(beaker) // try to eject it into the users hand, if we can
-			beaker = null
-			icon_state = "mixer0"
-			src.updateUsrDialog()
+			var/obj/item/I = src.beaker
+			if (I)
+				I.set_loc(src.output_target) // causes Exited proc to be called
+			usr.put_in_hand_or_eject(I) // try to eject it into the users hand, if we can
 			return
 
 		else if (href_list["createpill"])
@@ -413,14 +403,14 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("pill", input_name, no_duplicates=TRUE)
 			var/pillname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
+			if (isnull(pillname) || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(src.output_target)
 			P.name = "[pillname] pill"
 			R.trans_to(P, 100)//R.total_volume) we can't move all of the reagents if it's >100u so let's only move 100u
 			color_icon(P)
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [pillname] pill containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepillbottle"])
@@ -435,16 +425,16 @@
 			var/pillname = copytext(html_encode(input_pillname), 1, 32)
 			if(input_pillname && input_pillname != default)
 				phrase_log.log_phrase("pill", input_pillname, no_duplicates=TRUE)
-			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || get_dist(usr, src) > 1)
+			if (isnull(pillname) || !src.beaker || !R || !length(pillname) || pillname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
 			var/pillvol = input(usr, "Volume of chemical per pill: (Min/Max 5/100):", "Volume", 5) as null|num
-			if (!pillvol || !src.beaker || !R || !isnum_safe(pillvol))
+			if (!pillvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(pillvol))
 				return
 			pillvol = clamp(pillvol, 5, 100)
 			// maths
 			var/pillcount = round(R.total_volume / pillvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [pillcount] [pillname] pills containing [log_reagents(R)] at [log_loc(src)].")
 			var/use_bottle = src.pill_bottle
 			if (pillcount > 20) // if you're trying to make a huge pile of pills you get a bottle regardless of what the machine is set to
 				use_bottle = 1
@@ -471,18 +461,14 @@
 			if(input_name && input_name != default)
 				phrase_log.log_phrase("bottle", input_name, no_duplicates=TRUE)
 			var/bottlename = copytext(html_encode(input_name), 1, 32)
-			if (isnull(bottlename) || !src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1)
+			if (isnull(bottlename) || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/obj/item/reagent_containers/glass/bottle/B
-			if (R.total_volume <= 30)
-				B = new/obj/item/reagent_containers/glass/bottle/plastic(src.output_target)
-				R.trans_to(B,30)
-			else
-				B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
-				R.trans_to(B,50)
+			B = new/obj/item/reagent_containers/glass/bottle/chemical/plastic(src.output_target)
+			R.trans_to(B,50)
 			B.name = "[bottlename] bottle"
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [bottlename] bottle containing [log_reagents(B)] at log_loc[src].")
 			return
 
 		else if (href_list["createcan"])
@@ -494,7 +480,7 @@
 
 			var/input_design = input(usr, "Choose the design (1~26):", "Design", default) as null|num
 
-			if (!src.beaker || !R || !length(bottlename) || bottlename == " " || get_dist(usr, src) > 1 || isnull(input_design) || input_design > 26 || input_design < 1)
+			if (!src.beaker || !R || R.total_volume <= CHEM_EPSILON || !length(bottlename) || bottlename == " " || BOUNDS_DIST(usr, src) > 0 || isnull(input_design) || input_design > 26 || input_design < 1)
 				return
 
 			var/obj/item/reagent_containers/food/drinks/cola/custom/C
@@ -509,13 +495,13 @@
 
 			C.name = "[bottlename]"
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a can named [bottlename] containing [log_reagents(C)] at log_loc[src].")
 			return
 
 		else if (href_list["createpatch"])
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || get_dist(usr, src) > 1)
+			if (isnull(patchname) || !src.beaker || R.total_volume <= CHEM_EPSILON || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			var/med = src.check_whitelist(R)
 			var/obj/item/reagent_containers/patch/P
@@ -530,7 +516,7 @@
 			P.medical = med
 			P.on_reagent_change()
 			src.updateUsrDialog()
-			logTheThing("combat",usr,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepatchbox"])
@@ -549,7 +535,7 @@
 			A = new /obj/item/reagent_containers/ampoule(src.output_target)
 			A.name = "ampoule ([ampoulename])"
 			R.trans_to(A, 5)
-			logTheThing("combat",usr,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 			updateUsrDialog()
 			return
 
@@ -557,16 +543,16 @@
 			// get the pill name from the user
 			var/input_name = input(usr, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
 			var/patchname = copytext(html_encode(input_name), 1, 32)
-			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || get_dist(usr, src) > 1)
+			if (isnull(patchname) || !src.beaker || !R || !length(patchname) || patchname == " " || BOUNDS_DIST(usr, src) > 0)
 				return
 			// get the pill volume from the user
 			var/patchvol = input(usr, "Volume of chemical per patch: (Min/Max 5/30)", "Volume", 5) as null|num
-			if (!patchvol || !src.beaker || !R || !isnum_safe(patchvol))
+			if (!patchvol || !src.beaker || !R || R.total_volume <= CHEM_EPSILON || !isnum_safe(patchvol))
 				return
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
-			logTheThing("combat",usr,null,"used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, usr, "used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
 			var/use_box = src.patch_box
 			if (patchcount > 20) // if you're trying to make a huge pile of patches you get a box regardless of what the machine is set to
 				use_box = 1
@@ -617,7 +603,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN)
 			return
 		src.add_dialog(user)
@@ -634,7 +620,7 @@
 				dat += "Contained reagents:<BR>"
 				for (var/reagent_id in R.reagent_list)
 					var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
-					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
+					dat += "[capitalize(current_reagent.name)] - [current_reagent.volume] Units - <A style='color: green' href='?src=\ref[src];analyze=1;desc=[html_encode(current_reagent.description)];name=[capitalize(current_reagent.name)];recipe=[current_reagent.get_recipes_in_text()]'>(Analyze)</A> <A href='?src=\ref[src];isolate=[current_reagent.id]'>(Isolate)</A> <A href='?src=\ref[src];remove=[current_reagent.id]'>(Remove all)</A> <A href='?src=\ref[src];remove5=[current_reagent.id]'>(-5)</A> <A href='?src=\ref[src];remove1=[current_reagent.id]'>(-1)</A><BR>"
 				dat += "<BR><A href='?src=\ref[src];createpill=1'>Create pill (100 units max)</A><BR>"
 				dat += "<A href='?src=\ref[src];multipill=1'>Create multiple pills (5 units min)</A> Bottle: <A href='?src=\ref[src];togglepillbottle=1'>[src.pill_bottle ? "Yes" : "No"]</A><BR>"
 				dat += "<A href='?src=\ref[src];createbottle=1'>Create bottle (50 units max)</A><BR>"
@@ -685,11 +671,11 @@
 			boutput(usr, "<span class='alert'>Only living mobs are able to set the CheMaster 3000's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
+		if(BOUNDS_DIST(over_object, src) > 0)
 			boutput(usr, "<span class='alert'>The CheMaster 3000 is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
+		if(BOUNDS_DIST(over_object, usr) > 0)
 			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
@@ -700,6 +686,12 @@
 		else
 			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	Exited(Obj, newloc)
+		if(Obj == src.beaker)
+			src.beaker = null
+			icon_state = "mixer0"
+			src.updateUsrDialog()
 
 datum/chemicompiler_core/stationaryCore
 	statusChangeCallback = "statusChange"
@@ -721,7 +713,7 @@ datum/chemicompiler_core/stationaryCore
 	New()
 		..()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", "runscript")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "Run Script", .proc/runscript)
 		executor = new(src, /datum/chemicompiler_core/stationaryCore)
 		light = new /datum/light/point
 		light.set_brightness(0.4)
@@ -736,10 +728,10 @@ datum/chemicompiler_core/stationaryCore
 
 	ex_act(severity)
 		switch (severity)
-			if (1.0)
+			if (1)
 				qdel(src)
 				return
-			if (2.0)
+			if (2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -759,7 +751,7 @@ datum/chemicompiler_core/stationaryCore
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (status & BROKEN || !powered())
 			boutput( user, "<span class='alert'>You can't seem to power it on!</span>" )
 			return
@@ -768,7 +760,7 @@ datum/chemicompiler_core/stationaryCore
 		onclose(user, "chemicompiler")
 		return
 
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		if (!istype(B, /obj/item/reagent_containers/glass))
 			return
 		if (isrobot(user)) return attack_ai(user)
@@ -804,9 +796,8 @@ datum/chemicompiler_core/stationaryCore
 		topicPermissionCheck(action)
 			if (!(src in range(1)))
 				return 0
-			if (executor.core.running)
-				if(!(action in list("getUIState", "reportError")))
-					return 0
+			if(executor.core.running)
+				return action in list("getUIState", "reportError", "abortCode")
 			return 1
 
 		statusChange(oldStatus, newStatus)
@@ -959,7 +950,7 @@ datum/chemicompiler_core/stationaryCore
 			count++
 		output_target = src.loc
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass/))
 			var/obj/item/reagent_containers/glass/B = W
 
@@ -1045,7 +1036,7 @@ datum/chemicompiler_core/stationaryCore
 							R.trans_to(P, P.initial_volume)
 						P.medical = all_safe
 						P.on_reagent_change()
-						logTheThing("combat",user,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, user, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 					if("Create Ampoule")
 						var/datum/reagents/R = B.reagents
 						var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
@@ -1059,7 +1050,7 @@ datum/chemicompiler_core/stationaryCore
 						A = new /obj/item/reagent_containers/ampoule(user.loc)
 						A.name = "ampoule ([ampoulename])"
 						R.trans_to(A, 5)
-						logTheThing("combat",user,null,"used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
+						logTheThing(LOG_COMBAT, user, "used the [src.name] to create a [ampoulename] ampoule containing [log_reagents(A)] at [log_loc(src)].")
 
 				working = 0
 			else if(mode_type == "Reagent Extractor")
@@ -1097,7 +1088,7 @@ datum/chemicompiler_core/stationaryCore
 			boutput(user, "<span class='notice'>You add [W] to the machine!</span>")
 
 			user.u_equip(W)
-			W.dropped()
+			W.dropped(user)
 
 			src.updateUsrDialog()
 			return
@@ -1218,7 +1209,7 @@ datum/chemicompiler_core/stationaryCore
 			src.updateUsrDialog()
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr) )
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr) )
 			boutput(usr, "<span class='alert'>You need to be closer to the extractor to do that!</span>")
 			return
 		if(href_list["page"])
@@ -1267,7 +1258,7 @@ datum/chemicompiler_core/stationaryCore
 			var/list/ext_targets = list(src.storage_tank_1,src.storage_tank_2)
 			if (src.inserted) ext_targets.Add(src.inserted)
 			var/target = input(usr, "Extract to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
+			if(BOUNDS_DIST(usr, src) > 0) return
 			src.extract_to = target
 			src.updateUsrDialog()
 
@@ -1302,7 +1293,7 @@ datum/chemicompiler_core/stationaryCore
 			if (src.inserted) ext_targets.Add(src.inserted)
 			ext_targets.Remove(G)
 			var/target = input(usr, "Transfer to which target?", "Reagent Extractor", 0) in ext_targets
-			if(get_dist(usr, src) > 1) return
+			if(BOUNDS_DIST(usr, src) > 0) return
 			var/obj/item/reagent_containers/glass/T = target
 
 			if (!T) boutput(usr, "<span class='alert'>Transfer target not found.</span>")
@@ -1311,7 +1302,7 @@ datum/chemicompiler_core/stationaryCore
 				var/amt = input(usr, "Transfer how many units?", "Chemical Transfer", 0) as null|num
 				if(!isnum_safe(amt))
 					return
-				if(get_dist(usr, src) > 1) return
+				if(BOUNDS_DIST(usr, src) > 0) return
 				if (amt < 1) boutput(usr, "<span class='alert'>Invalid transfer quantity.</span>")
 				else G.reagents.trans_to(T,amt)
 

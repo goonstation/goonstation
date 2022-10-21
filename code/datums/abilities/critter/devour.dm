@@ -19,13 +19,13 @@
 	onUpdate()
 		..()
 
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, target) > 1 || target == null || owner == null || !devour || !devour.cooldowncheck())
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour || !devour.cooldowncheck())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -35,11 +35,11 @@
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(ownerMob && target && IN_RANGE(owner, target, 1) && devour?.cooldowncheck())
-			logTheThing("combat", ownerMob, target, "devours [constructTarget(target,"combat")].")
+		if(ownerMob && target && (BOUNDS_DIST(owner, target) == 0) && devour?.cooldowncheck())
+			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")].")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] devours [target]!</B></span>", 1)
-			playsound(ownerMob, "sound/voice/burp_alien.ogg", 50, 0)
+			playsound(ownerMob, 'sound/voice/burp_alien.ogg', 50, 0)
 			ownerMob.health = ownerMob.max_health
 			if (target == owner)
 				boutput(owner, "<span class='success'>Good. Job.</span>")
@@ -68,13 +68,13 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to devour there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to devour there.</span>")
 				return 1
 		if (!isliving(target))
-			boutput(holder.owner, __red("Invalid target."))
+			boutput(holder.owner, "<span class='alert'>Invalid target.</span>")
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to devour."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to devour.</span>")
 			return 1
 		actions.start(new/datum/action/bar/icon/devourAbility(target, src), holder.owner)
 		return 0

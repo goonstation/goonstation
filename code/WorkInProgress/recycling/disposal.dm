@@ -131,10 +131,10 @@
 			return
 
 		for (var/mob/M in hearers(src.loc.loc))
-			boutput(M, "<FONT size=[max(0, 5 - get_dist(src, M))]>CLONG, clong!</FONT>")
+			boutput(M, "<FONT size=[max(0, 5 - GET_DIST(src, M))]>CLONG, clong!</FONT>")
 
 		if(last_sound + 6 < world.time)
-			playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 50, 0, 0)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 			last_sound = world.time
 			damage_pipe()
 			if(prob(30))
@@ -169,7 +169,8 @@
 		return
 
 // Disposal pipes
-
+/// Color of the 'holograms' of pipes, visible to a t-ray scanner
+#define MISSING_DISPOSAL_IMAGE_COLOR "#0ac6f0"
 /obj/disposalpipe
 	icon = 'icons/obj/disposal.dmi'
 	name = "disposal pipe"
@@ -178,14 +179,15 @@
 	density = 0
 	text = ""
 
-	level = 1			// underfloor only
-	var/dpdir = 0		// bitmask of pipe directions
-	dir = 0				// dir will contain dominant direction for junction pipes
-	var/health = 10 	// health points 0-10
+	level = 1			//! underfloor only
+	var/dpdir = 0		//! bitmask of pipe directions
+	dir = 0				//! dir will contain dominant direction for junction pipes
+	var/health = 10 	//! Health points 0-10
 	layer = DISPOSAL_PIPE_LAYER
 	plane = PLANE_FLOOR
-	var/base_icon_state	// initial icon state on map
-	var/list/mail_tag = null // Tag of mail group for switching pipes
+	var/base_icon_state	//! Initial icon state on map
+	var/list/mail_tag = null //! Tag of mail group for switching pipes
+
 
 	var/image/pipeimg = null
 
@@ -196,7 +198,10 @@
 		pipeimg = image(src.icon, src.loc, src.icon_state, 3, dir)
 		pipeimg.layer = OBJ_LAYER
 		pipeimg.dir = dir
-		return
+
+		// done here instead of world setup in case you want to load a big map in before the round starts or something
+		if (src.z == Z_LEVEL_STATION && global.current_state <= GAME_STATE_PREGAME)
+			src.build_missing_image()
 
 	// pipe is deleted
 	// ensure if holder is present, it is expelled
@@ -273,9 +278,24 @@
 	proc/fix_sprite()
 		return
 
+	/// Builds the 'missing pipe' overlay visible on T-ray scanners
+	proc/build_missing_image()
+		// loc doesn't matter since we aren't showing these directly, just adding as overlays to another image
+		var/image/missing_image = image(icon = src.icon, icon_state = src.icon_state, layer = src.layer - 0.01, dir = src.dir)
+		missing_image.plane = PLANE_FLOOR
+		missing_image.color = MISSING_DISPOSAL_IMAGE_COLOR
+		missing_image.alpha = 180
+		missing_image.appearance_flags = RESET_ALPHA | RESET_COLOR
+
+		var/turf/simulated/T = get_turf(src)
+		if (!T.disposal_image)
+			T.disposal_image = missing_image
+		else
+			T.disposal_image.underlays += missing_image
+		return missing_image
+
 	// expel the held objects into a turf
 	// called when there is a break in the pipe
-	//
 
 	proc/expel(var/obj/disposalholder/H, var/turf/T, var/direction)
 		// oh dear, please stop ruining the machine loop with your invalid loc
@@ -303,7 +323,7 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
@@ -313,7 +333,7 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -384,14 +404,14 @@
 	ex_act(severity)
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				broken(0)
 				return
-			if(2.0)
+			if(2)
 				health -= rand(5,15)
 				healthcheck()
 				return
-			if(3.0)
+			if(3)
 				health -= rand(0,15)
 				healthcheck()
 				return
@@ -454,13 +474,15 @@
 
 		if (user)
 			boutput(user, "You finish slicing [C].")
-			logTheThing("station", user, null, "unwelded the disposal pipe at [log_loc(C)]")
+			logTheThing(LOG_STATION, user, "unwelded the disposal pipe at [log_loc(C)]")
 
 		C.set_dir(dir)
 		C.mail_tag = src.mail_tag
 		C.update()
 
 		qdel(src)
+
+#undef MISSING_DISPOSAL_IMAGE_COLOR
 
 // a straight or bent segment
 /obj/disposalpipe/segment
@@ -862,7 +884,7 @@
 		src.is_doing_stuff = TRUE
 
 		if (H.contents.len)
-			playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 30, 1)
 			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
 			src.icon_state = "pipe-loaf1"
 
@@ -895,7 +917,7 @@
 					otherLoaf = null
 
 				else if (isliving(newIngredient))
-					playsound(src.loc, pick("sound/impact_sounds/Slimy_Splat_1.ogg","sound/impact_sounds/Liquid_Slosh_1.ogg","sound/impact_sounds/Wood_Hit_1.ogg","sound/impact_sounds/Slimy_Hit_3.ogg","sound/impact_sounds/Slimy_Hit_4.ogg","sound/impact_sounds/Flesh_Stab_1.ogg"), 50, 1)
+					playsound(src.loc, pick('sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Liquid_Slosh_1.ogg','sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Slimy_Hit_3.ogg','sound/impact_sounds/Slimy_Hit_4.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
 					var/mob/living/poorSoul = newIngredient
 					if (issilicon(poorSoul))
 						newLoaf.reagents.add_reagent("oil",10)
@@ -929,10 +951,10 @@
 			StopLoafing:
 
 			sleep(0.3 SECONDS)	//make a bunch of ongoing noise i guess?
-			playsound(src.loc, pick("sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/mixer.ogg","sound/machines/hiss.ogg","sound/machines/ding.ogg","sound/machines/buzz-sigh.ogg","sound/impact_sounds/Machinery_Break_1.ogg","sound/effects/pop.ogg","sound/machines/warning-buzzer.ogg","sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Flesh_Break_2.ogg","sound/effects/spring.ogg","sound/machines/engine_grump1.ogg","sound/machines/engine_grump2.ogg","sound/machines/engine_grump3.ogg","sound/impact_sounds/Glass_Hit_1.ogg","sound/effects/bubbles.ogg","sound/effects/brrp.ogg"), 50, 1)
+			playsound(src.loc, pick('sound/machines/mixer.ogg','sound/machines/mixer.ogg','sound/machines/mixer.ogg','sound/machines/hiss.ogg','sound/machines/ding.ogg','sound/machines/buzz-sigh.ogg','sound/impact_sounds/Machinery_Break_1.ogg','sound/effects/pop.ogg','sound/machines/warning-buzzer.ogg','sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Flesh_Break_2.ogg','sound/effects/spring.ogg','sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg','sound/impact_sounds/Glass_Hit_1.ogg','sound/effects/bubbles.ogg','sound/effects/brrp.ogg'), 30, 1)
 			sleep(0.3 SECONDS)
 
-			playsound(src.loc, "sound/machines/engine_grump1.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/engine_grump1.ogg', 30, 1)
 			sleep(3 SECONDS)
 			src.icon_state = "pipe-loaf0"
 			//src.visible_message("<b>[src] deactivates!</b>") // Processor + loop = SPAM
@@ -970,6 +992,7 @@
 	desc = "A hypothetical feature of loaf-spacetime. Maybe this could be used as a material?"
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "eloaf"
+	object_flags = NO_GHOSTCRITTER
 	force = 0
 	throwforce = 0
 	initial_volume = 400
@@ -984,6 +1007,7 @@
 	desc = "A rather slapdash loaf designed to feed prisoners.  Technically nutritionally complete and edible in the same sense that potted meat product is edible."
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "ploaf0"
+	object_flags = NO_GHOSTCRITTER
 	force = 0
 	throwforce = 0
 	initial_volume = 400
@@ -1008,7 +1032,7 @@
 		var/orderOfLoafitude = clamp(round(log(8, loaf_factor)), 0, MAXIMUM_LOAF_STATE_VALUE)
 		//src.icon_state = "ploaf[orderOfLoafitude]"
 
-		src.w_class = min(orderOfLoafitude+1, 4)
+		src.w_class = min(round(orderOfLoafitude/2)+1, W_CLASS_GIGANTIC)
 
 		switch ( orderOfLoafitude )
 
@@ -1042,7 +1066,7 @@
 				src.force = 9
 				src.throwforce = 9
 				src.throw_range = 6
-				src.reagents.add_reagent("thalmerite",25)
+				src.reagents.add_reagent("pyrosium",25)
 
 			if (5)
 				src.name = "fissile loaf"
@@ -1138,9 +1162,9 @@
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggleactivation")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", "deactivate")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleactivation)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"on", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"off", .proc/deactivate)
 
 		SPAWN(1 SECOND)
 			switch_dir = turn(dir, 90)
@@ -1284,10 +1308,10 @@
 
 		if (allowDump)
 			flick("unblockoutlet-open", src)
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 
 			for(var/atom/movable/AM in H)
@@ -1355,10 +1379,10 @@
 
 		if (things_to_dump.len)
 			flick("unblockoutlet-open", src)
-			playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
@@ -1412,12 +1436,12 @@
 
 		update()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return
 		else if(ispulsingtool(W))
-			. = alert(user, "What should trigger the sensor?","Disposal Sensor", "Creatures", "Anything", "A mail tag")
+			. = tgui_alert(user, "What should trigger the sensor?", "Disposal Sensor", list("Creatures", "Anything", "A mail tag"))
 			if (.)
-				if (get_dist(user, src) > 1 || user.stat)
+				if (BOUNDS_DIST(user, src) > 0 || user.stat)
 					return
 
 				switch (.)
@@ -1429,7 +1453,7 @@
 
 					if ("A mail tag")
 						. = copytext(ckeyEx(input(user, "What should the tag be?", "What?")), 1, 33)
-						if (. && get_dist(user, src) < 2 && !user.stat)
+						if (. && GET_DIST(user, src) < 2 && !user.stat)
 							sense_mode = SENSE_TAG
 							sense_tag_filter = .
 
@@ -1690,6 +1714,7 @@
 	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
 	var/frequency = FREQ_PDA
+	var/flusher_id = null
 	throw_speed = 1
 
 	ex_act(var/severity)
@@ -1749,15 +1774,22 @@
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
 
+		if (src.flusher_id)
+			for(var/obj/machinery/floorflusher/M in by_type[/obj/machinery/floorflusher])
+				if(M.mail_id == src.flusher_id)
+					M.mail_tag = H.mail_tag
+
 		flick("outlet-open", src)
-		playsound(src, "sound/machines/warning-buzzer.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 
-
+		var/turf/expel_loc = get_turf(src)
+		while(locate(src.type) in get_step(expel_loc, src.dir))
+			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
-			AM.set_loc(src.loc)
+			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
 		H.vent_gas(src.loc)

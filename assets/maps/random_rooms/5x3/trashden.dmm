@@ -24,7 +24,6 @@
 /obj/stool/chair{
 	dir = 8
 	},
-/obj/machinery/light/small,
 /turf/simulated/floor/carpet/grime,
 /area/dmm_suite/clear_area)
 "D" = (

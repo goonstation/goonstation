@@ -2,7 +2,7 @@
 Contains:
 -Base Tank
 -Anesthetic/N2O Tank
--Jetpack
+-Jetpacks
 -Oxygen Tank
 -Emergency Oxygen Tank
 -Air Tank
@@ -11,25 +11,34 @@ Contains:
 
 /obj/item/tank
 	name = "tank"
+	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-
-	var/datum/gas_mixture/air_contents = null
-	var/distribute_pressure = ONE_ATMOSPHERE
-	var/integrity = 3
-	var/compatible_with_TTV = 1
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
 
-	pressure_resistance = ONE_ATMOSPHERE*5
+	pressure_resistance = ONE_ATMOSPHERE * 5
 
-	force = 5.0
-	throwforce = 10.0
+	force = 5
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
 	stamina_damage = 55
 	stamina_cost = 23
 	stamina_crit_chance = 10
+
+	abilities = list(/obj/ability_button/tank_valve_toggle)
+
+	/// This value is read by get_desc(), and is used by subtypes instead of copy-pasting the entire description with minor changes.
+	var/extra_desc = null
+	/// The air contents of this tank.
+	var/datum/gas_mixture/air_contents = null
+	/// This tank's contents will be released at this pressure. Most subtypes use the minimum breathable value here.
+	var/distribute_pressure = ONE_ATMOSPHERE
+	/// Decremented over time when the tank is overpressurized. A damaged tank will leak or even rupture.
+	var/integrity = 3
+	/// Whether or not this tank can be used in a tank transfer valve.
+	var/compatible_with_TTV = TRUE
 
 	New()
 		..()
@@ -59,15 +68,7 @@ Contains:
 				air_contents = null
 			qdel(src)
 
-
-	proc/using_internal()
-		.= 0
-		if(iscarbon(src.loc))
-			var/mob/living/carbon/location = loc
-			if(location.internal==src)
-				.= 1
-
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		if (!(src.air_contents))
 			return
 
@@ -81,110 +82,111 @@ Contains:
 
 	assume_air(datum/gas_mixture/giver)
 		air_contents.merge(giver)
-
 		check_status()
-		return 1
+		return TRUE
 
-	proc/set_release_pressure(var/pressure as num)
+	proc/using_internal()
+		if (iscarbon(src.loc))
+			var/mob/living/carbon/location = loc
+			return location.internal == src
+		return FALSE
+
+	proc/set_release_pressure(pressure)
 		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
-		if(iscarbon(src.loc))
+		if (iscarbon(src.loc))
 			var/mob/living/carbon/location = loc
-			if (!location) return
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+			if (!location)
+				return
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			if(location.internal == src)
 				for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-					T.icon_state = "airoff"
+					if(T.the_item == src)
+						T.icon_state = "airoff"
 				location.internal = null
-				if (location.internals) location.internals.icon_state = "internal0"
-				boutput(usr, "<span class='notice'>You close the tank release valve.</span>")
-				return 0
+				if (location.internals)
+					location.internals.icon_state = "internal0"
+				boutput(location, "<span class='notice'>You close the tank release valve.</span>")
+				return FALSE
 			else
 				if(location.wear_mask && (location.wear_mask.c_flags & MASKINTERNALS))
+					if(!isnull(location.internal)) //you're already using a tank and it's not this one
+						location.internal.toggle_valve()
+						boutput(location, "<span class='notice'>After closing the valve on your other tank, you switch to this one.</span>")
 					location.internal = src
+
 					for (var/obj/ability_button/tank_valve_toggle/T in location.internal.ability_buttons)
-						T.icon_state = "airon"
-					if (location.internals) location.internals.icon_state = "internal1"
-					boutput(usr, "<span class='notice'>You open the tank valve.</span>")
-					return 1
+						if(T.the_item == src)
+							T.icon_state = "airon"
+					if (location.internals)
+						location.internals.icon_state = "internal1"
+					boutput(location, "<span class='notice'>You open the tank release valve.</span>")
+					return TRUE
 				else
-					boutput(usr, "<span class='notice'>The valve immediately closes. You must put on a mask first.</span>")
-					playsound(src.loc, "sound/items/penclick.ogg", 50, 1)
-					return 0
+					boutput(location, "<span class='alert'>The valve immediately closes! You need to put on a mask first.</span>")
+					playsound(src.loc, 'sound/items/penclick.ogg', 50, TRUE)
+					return FALSE
 
 	proc/remove_air_volume(volume_to_return)
 		if(!air_contents)
 			return null
-
 		var/tank_pressure = MIXTURE_PRESSURE(air_contents)
-		//if(tank_pressure < distribute_pressure)
-		//	distribute_pressure = max(tank_pressure,17)
-
-
 		var/moles_needed = min(distribute_pressure, tank_pressure) *volume_to_return/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
-
 		return remove_air(moles_needed)
 
 	process()
 		//Allow for reactions
-		if (air_contents) //Wire: Fix for Cannot execute null.react().
+		if (air_contents)
 			air_contents.react()
 			src.inventory_counter.update_text("[round(MIXTURE_PRESSURE(air_contents))]\nkPa")
 		check_status()
 
 	proc/check_status()
 		//Handle exploding, leaking, and rupturing of the tank
-
 		if(!air_contents)
-			return 0
-
+			return FALSE
 		var/pressure = MIXTURE_PRESSURE(air_contents)
 		if(pressure > TANK_FRAGMENT_PRESSURE) // 50 atmospheres, or: 5066.25 kpa under current _setup.dm conditions
-			//boutput(world, "<span class='notice'>[x],[y] tank is exploding: [pressure] kPa</span>")
 			//Give the gas a chance to build up more pressure through reacting
-			playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 			air_contents.react()
 			air_contents.react()
 			air_contents.react()
 			pressure = MIXTURE_PRESSURE(air_contents)
 
-			var/range = (pressure-TANK_FRAGMENT_PRESSURE)/TANK_FRAGMENT_SCALE
+			var/range = (pressure - TANK_FRAGMENT_PRESSURE) / TANK_FRAGMENT_SCALE
 			// (pressure - 5066.25 kpa) divided by 1013.25 kpa
-			range = min(range, 12)		// was 8
+			range = min(range, 12)
 
 			if(src in bible_contents)
-				for_by_tcl(B, /obj/item/storage/bible)//world)
+				for_by_tcl(B, /obj/item/storage/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
-						logTheThing("bombing", src, null, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
-						explosion(src, T, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
+						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
-
-			//boutput(world, "<span class='notice'>Exploding Pressure: [pressure] kPa, intensity: [range]</span>")
-
-
-			logTheThing("bombing", src, null, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
-			explosion(src, epicenter, round(range*0.25), round(range*0.5), round(range), round(range*1.5))
+			logTheThing(LOG_BOMBING, src, "exploded at [log_loc(epicenter)], , range: [range], last touched by: [src.fingerprintslast]")
+			src.visible_message("<span class='alert'><b>[src] explosively ruptures!</b></span>")
+			explosion(src, epicenter, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
 			qdel(src)
 
 		else if(pressure > TANK_RUPTURE_PRESSURE)
-			//boutput(world, "<span class='notice'>[x],[y] tank is rupturing: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
 				loc.assume_air(air_contents)
 				air_contents = null
-				//TODO: make pop sound
-				playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1) // consider it TO DID
+				src.visible_message("<span class='alert'>[src] violently ruptures!</span>")
+				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, TRUE)
 				qdel(src)
 			else
 				integrity--
 
 		else if(pressure > TANK_LEAK_PRESSURE)
-			//boutput(world, "<span class='notice'>[x],[y] tank is leaking: [pressure] kPa, integrity [integrity]</span>")
 			if(integrity <= 0)
+				playsound(src.loc, 'sound/effects/spray.ogg', 50, TRUE)
 				var/datum/gas_mixture/leaked_gas = air_contents.remove_ratio(0.25)
 				loc.assume_air(leaked_gas)
 			else
@@ -193,41 +195,57 @@ Contains:
 		else if(integrity < 3)
 			integrity++
 
-	examine()
+	get_desc(dist, mob/user)
+		var/list/extras = list()
+		if (extra_desc)
+			extras += extra_desc
+		extras += ..()
+		return extras.Join(" ")
+
+	examine(mob/user)
+		. = list()
+		var/can_interact = in_interact_range(src, user) || isobserver(user)
+		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/descriptive = "buggy. Report this to a coder."
+		switch (celsius_temperature)
+			if (-INFINITY to -1)
+				descriptive = "freezing cold!"
+			if (-1 to 19)
+				descriptive = "cold."
+			if (19 to 39)
+				descriptive = "room temperature."
+			if (39 to 79)
+				descriptive = "lukewarm."
+			if (79 to 99)
+				descriptive = "warm."
+			if (99 to 299)
+				descriptive = "hot."
+			if (299 to INFINITY)
+				descriptive = "furiously hot!"
+		// this call is kind of gross, but it's necessary to show data about the tank used for an assembly
+		// examining an assembly from afar should show nothing about the tank; up close, it should show its temperature info
+		// examining a tank on its own from afar should still show the tank's normal examine,
+		// even if the user is too far away to get temperature info.
+		// thus, we need some tangled logic here to make it work as intended
 		if (istype(src.loc, /obj/item/assembly))
-			var/obj/item/icon = src
-			. = list()
-			icon = src.loc
-			if (!in_interact_range(src, usr))
-				if (icon == src)
-					. += "<span class='notice'>It's a [bicon(icon)]! If you want any more information you'll need to get closer.</span>"
-				return
+			if (in_interact_range(src.loc, user) || isobserver(user))
+				. += "<span class='notice'>[bicon(src)] [src] feels [descriptive]</span>"
+			return .
+		. += ..()
+		if (!can_interact)
+			return .
+		. += "<br><span class='notice'>It feels [descriptive]</span>"
+		var/cur_pressure = MIXTURE_PRESSURE(air_contents)
+		if (cur_pressure >= TANK_RUPTURE_PRESSURE)
+			. += "<span class='alert'><b>It's starting to rupture! Better get rid of it quick!</b></span>"
+		else if (cur_pressure >= TANK_LEAK_PRESSURE)
+			. += "<br><span class='alert'>It's leaking air!</span>"
 
-			var/celsius_temperature = src.air_contents.temperature-T0C
-			var/descriptive
-
-			if (celsius_temperature < 20)
-				descriptive = "cold"
-			else if (celsius_temperature < 40)
-				descriptive = "room temperature"
-			else if (celsius_temperature < 80)
-				descriptive = "lukewarm"
-			else if (celsius_temperature < 100)
-				descriptive = "warm"
-			else if (celsius_temperature < 300)
-				descriptive = "hot"
-			else
-				descriptive = "furiously hot"
-
-			. += "<span class='notice'>The [bicon(icon)] feels [descriptive]</span>"
-		else
-			return ..()
-
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W,/obj/item/clothing/mask/breath))
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/clothing/mask/breath))
 			var/obj/item/clothing/mask/breath/B = W
-			B.auto_setup(src,user)
+			boutput(user, "<span class='notice'>You hook up [B] to [src].</span>")
+			B.auto_setup(src, user)
 		else
 			..()
 
@@ -276,55 +294,73 @@ Contains:
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/anesthetic
-	name = "Gas Tank (Sleeping Agent)"
+	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
-	desc = "This tank is labelled that it contains an anaesthetic capable of keeping somebody unconscious while they breathe it."
-	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
+	extra_desc = "It's labeled as containing an anesthetic capable of keeping somebody unconscious while they breathe it."
+	distribute_pressure = 81
 
 	New()
 		..()
-		src.air_contents.oxygen = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
+		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
 		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+		trace_gas.moles = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 		return
 
 ////////////////////////////////////////////////////////////
 
-#if defined(MAP_OVERRIDE_MANTA)
 /obj/item/tank/jetpack
-	name = "Jetpack (Oxygen)"
-	icon_state = "jetpack_mag0"
-	uses_multiple_icon_states = 1
-	var/on = 0.0
+	name = "jetpack (oxygen)"
+	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
-	item_state = "jetpack_mag"
 	mats = 16
 	force = 8
-	stamina_damage = 55
-	stamina_cost = 30
-	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
+	distribute_pressure = 17
+	compatible_with_TTV = FALSE
+	abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
+
+	/// Is our propulsion enabled?
+	var/on = FALSE
+
+	// base_icon_state is used when updating the jetpack's icon, with "1" or "0" appended depending on if the jetpack is on or not
+	// jetpacks have special behavior on Manta, hence the overrides here
+	#if defined(MAP_OVERRIDE_MANTA)
+	icon_state = "jetpack_mag0"
+	item_state = "jetpack_mag"
 	c_flags = IS_JETPACK
+	var/base_icon_state = "jetpack_mag"
+	#else
+	icon_state = "jetpack0"
+	item_state = "jetpack"
+	var/base_icon_state = "jetpack"
+	#endif
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
+
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon, "[override ? "back-" : ""][base_icon_state][on]"))
 
 	proc/toggle()
-		src.on = !( src.on )
-		src.icon_state = text("jetpack_mag[]", src.on)
-		if(src.on)
-			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
+		src.on = !(src.on)
+		src.icon_state = "[base_icon_state][src.on]"
+		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
+		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
+		update_icon()
+		if (ismob(src.loc))
+			var/mob/M = src.loc
+			M.update_clothing() // Immediately update the worn icon
 		return
 
-	proc/allow_thrust(num, mob/user as mob)
+	proc/allow_thrust(num, mob/user)
+		#if defined(MAP_OVERRIDE_MANTA)
 		if (MagneticTether != 1)
 			return 0
+		#endif
 
-		if (!( src.on ))
+		if (!(src.on))
 			return 0
 		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
 			return 0
@@ -344,131 +380,146 @@ Contains:
 				return 0.5
 			else
 				return 0
-	update_wear_image(mob/living/carbon/human/H, override)
-		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mag[on]"))
 
-/obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
-
-#else
-/obj/item/tank/jetpack
-	name = "Jetpack (Oxygen)"
-	icon_state = "jetpack0"
-	uses_multiple_icon_states = 1
-	var/on = 0.0
-	w_class = W_CLASS_BULKY
-	item_state = "jetpack"
-	mats = 16
-	force = 8
-	desc = "A jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
-	compatible_with_TTV = 0
+/obj/item/tank/jetpack/jetpackmk2
+	name = "jetpack MKII (oxygen)"
+	icon_state = "jetpack_mk2_0"
+	base_icon_state = "jetpack_mk2_"
+	item_state = "jetpack_mk2_0"
+	desc = "Suitable for underwater work, this back-mounted DPV lets you glide through the ocean depths with ease."
+	extra_desc = "It comes pre-loaded with oxygen, which is used for internals as well as to power its propulsion system."
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+		setProperty("negate_fluid_speed_penalty", 0.6)
+
+/obj/item/tank/jetpack/syndicate
+	name = "jetpack (oxygen)"
+	icon_state = "sjetpack_mag0"
+	base_icon_state = "sjetpack_mag"
+	item_state = "redjetpack"
+	extra_desc = "It's painted in a sinister yet refined shade of red."
+
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
+/obj/item/tank/jetpack/micro
+	name = "micro-lite jetpack (oxygen)"
+	icon_state = "microjetpack0"
+	item_state = "microjetpack0"
+	base_icon_state = "microjetpack"
+	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
+	mats = 8
+	force = 6
+
+	New()
+		..()
+		src.air_contents.volume = 18
+		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
-
-	proc/toggle()
-		src.on = !( src.on )
-		src.icon_state = text("jetpack[]", src.on)
-		if(src.on)
-			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
-		return
-
-	proc/allow_thrust(num, mob/user as mob)
-		if (!( src.on ))
-			return 0
-		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
-			return 0
-
-		var/datum/gas_mixture/G = src.air_contents.remove(num)
-
-		if (G.oxygen >= 0.01)
-			return 1
-		if (G.toxins > 0.001)
-			if (user)
-				var/d = G.toxins / 2
-				d = min(abs(user.health + 100), d, 25)
-				user.TakeDamage("chest", 0, d)
-			return (G.oxygen >= 0.0075 ? 0.5 : 0)
-		else
-			if (G.oxygen >= 0.0075)
-				return 0.5
-			else
-				return 0
-	update_wear_image(mob/living/carbon/human/H, override)
-		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack[on]"))
-
-/obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)
-#endif
-
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/oxygen
-	name = "Gas Tank (Oxygen)"
+	name = "gas tank (oxygen)"
 	icon_state = "oxygen"
-	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible receptacle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain oxygen."
-	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	extra_desc = "The deep blue paintwork indicates that it contains oxygen."
+	distribute_pressure = 17
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
-
-/obj/item/tank/oxygen/abilities = list(/obj/ability_button/tank_valve_toggle)
 
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/emergency_oxygen
-	name = "emergency oxygentank"
-	icon_state = "em_oxtank"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
-	w_class = W_CLASS_SMALL
-	force = 3.0
-	stamina_damage = 30
-	stamina_cost = 16
-	desc = "A small tank that is labelled to contain oxygen. In emergencies, wear a mask that can be used to transfer air, such as a breath mask, turn on the release valve on the oxygen tank, and put it on your belt."
-	wear_image_icon = 'icons/mob/clothing/belt.dmi'
-	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
+	name = "pocket oxygen tank"
+	icon_state = "pocket_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	health = 5
+	w_class = W_CLASS_TINY
+	force = 1
+	stamina_damage = 20
+	stamina_cost = 8
+	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	distribute_pressure = 17
 
 	New()
 		..()
-		src.air_contents.volume = 6 // Change to 3 once atmos is fixed
-		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4.5)*70/(R_IDEAL_GAS_EQUATION*T20C) // cogwerks: drastically reduced capacity of emerg tanks
+		src.air_contents.volume = 3
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 9) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
-/obj/item/tank/emergency_oxygen/abilities = list(/obj/ability_button/tank_valve_toggle)
+/obj/item/tank/emergency_oxygen/extended
+	name = "extended capacity pocket oxygen tank"
+	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	icon_state = "ex_pocket_oxtank"
+
+	New()
+		..()
+		src.air_contents.volume = 6
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 4) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
+
+	empty
+
+		New()
+			..()
+			src.air_contents.oxygen = null
+			return
+
+
+
+/obj/item/tank/mini_oxygen
+	name = "mini oxygen tank"
+	icon_state = "mini_oxtank"
+	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	health = 5
+	w_class = W_CLASS_NORMAL
+	force = 3
+	stamina_damage = 30
+	stamina_cost = 16
+	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
+	wear_image_icon = 'icons/mob/clothing/belt.dmi'
+	distribute_pressure = 17
+
+	New()
+		..()
+		src.air_contents.volume = 8
+		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
+		return
 
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/air
-	name = "Gas Tank (Air Mix)"
+	name = "gas tank (air mix)"
 	icon_state = "airmix"
 	item_state = "airmix"
-	desc = "This is a tank that can be worn on one's back, as well as hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain nitrogen and oxygen."
-	distribute_pressure = 81 // setting these things to start at the minimum pressure needed to breathe - Haine
+	extra_desc = "The white paintwork indicates a breathable air mix."
+	distribute_pressure = 81
 
 	New()
 		..()
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * O2STANDARD
-		src.air_contents.nitrogen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C) * N2STANDARD
+		src.air_contents.oxygen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
+		src.air_contents.nitrogen = (6 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 		return
-
-/obj/item/tank/air/abilities = list(/obj/ability_button/tank_valve_toggle)
 
 ////////////////////////////////////////////////////////////
 
 /obj/item/tank/plasma
-	name = "Gas Tank (BIOHAZARD)"
+	name = "gas tank (BIOHAZARD)"
+	desc = "This heavy orange gas tank is used to contain toxic, volatile plasma. You can technically breathe from it, but you probably shouldn't without a very good reason."
 	icon_state = "plasma"
 	item_state = "plasma"
-	desc = "This is a tank that can be hooked up to a compatible recepticle. When a mask is worn and the release valve on the tank is open, the user will breathe the gas inside the tank. This is labelled to contain deadly plasma."
 
 	New()
 		..()
-		src.air_contents.toxins = (3*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
+		src.air_contents.toxins = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
 	proc/release()
@@ -476,10 +527,11 @@ Contains:
 		loc.assume_air(removed)
 
 	proc/ignite()
-		if (!src) return
+		if (QDELETED(src))
+			return
 		var/fuel_moles = air_contents.toxins + air_contents.oxygen/6
 		var/strength = 1
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, TRUE)
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
@@ -487,7 +539,8 @@ Contains:
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)
-			if(src.master) qdel(src.master)
+			if(src.master)
+				qdel(src.master)
 			bible_contents.Remove(src)
 			qdel(src)
 			return
@@ -523,7 +576,7 @@ Contains:
 		if(src.master) qdel(src.master)
 		qdel(src)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		..()
 		if (istype(W, /obj/item/assembly/rad_ignite))
 			var/obj/item/assembly/rad_ignite/S = W
@@ -596,95 +649,3 @@ Contains:
 			S.part2 = null
 			//S = null
 			qdel(S)
-
-/*/obj/item/tank/supersoaker
-	name = "Super Soaker"
-	icon_state = "jetpack0"
-	var/on = 0.0
-	w_class = W_CLASS_BULKY
-	item_state = "jetpack"*/
-
-
-/obj/item/tank/jetpack/jetpackmk2
-	name = "Jetpack MKII (Oxygen)"
-	icon_state = "jetpack_mk2_0"
-	uses_multiple_icon_states = 1
-	on = 0.0
-	w_class = W_CLASS_BULKY
-	item_state = "jetpack_mk2_0"
-	mats = 16
-	force = 8
-	desc = "An upgraded jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-	distribute_pressure = 17 // setting these things to start at the minimum pressure needed to breathe - Haine
-
-	New()
-		..()
-		src.air_contents.volume = 100
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*100/(R_IDEAL_GAS_EQUATION*T20C)
-		setProperty("negate_fluid_speed_penalty",0.6)
-		return
-
-	toggle()
-		src.on = !( src.on )
-		src.icon_state = text("jetpack_mk2_[]", src.on)
-		if(src.on)
-			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
-			playsound(src.loc, "sound/misc/JetpackMK2on.ogg", 50, 1)
-		else
-			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
-		return
-
-	allow_thrust(num, mob/user as mob)
-		if (!( src.on ))
-			return 0
-		if ((num < 0.01 || TOTAL_MOLES(src.air_contents) < num))
-			return 0
-
-		var/datum/gas_mixture/G = src.air_contents.remove(num)
-
-		if (G.oxygen >= 0.01)
-			return 1
-		if (G.toxins > 0.001)
-			if (user)
-				var/d = G.toxins / 2
-				d = min(abs(user.health + 100), d, 25)
-				user.TakeDamage("chest", 0, d)
-			return (G.oxygen >= 0.0075 ? 0.5 : 0)
-		else
-			if (G.oxygen >= 0.0075)
-				return 0.5
-			else
-				return 0
-
-	update_wear_image(mob/living/carbon/human/H, override)
-		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]jetpack_mk2_[on]"))
-
-/obj/item/tank/jetpack/jetpackmk2/abilities = list(/obj/ability_button/jetpack2_toggle, /obj/ability_button/tank_valve_toggle)
-
-/obj/item/tank/jetpack/syndicate
-	name = "Jetpack (Oxygen)"
-	icon_state = "sjetpack_mag0"
-	item_state = "redjetpack"
-	desc = "A syndicate jetpack that can be toggled on, letting the user use the gas inside as a propellant. Can also be hooked up to a compatible mask to allow you to breathe the gas inside. This is labelled to contain oxygen."
-
-	New()
-		..()
-		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		src.air_contents.oxygen = (6*ONE_ATMOSPHERE)*70/(R_IDEAL_GAS_EQUATION*T20C)
-
-	toggle()
-		src.on = !( src.on )
-		src.icon_state = text("sjetpack_mag[]", src.on)
-		if(src.on)
-			boutput(usr, "<span class='notice'>The jetpack is now on</span>")
-		else
-			boutput(usr, "<span class='notice'>The jetpack is now off</span>")
-
-	update_wear_image(mob/living/carbon/human/H, override)
-		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "back-" : ""]sjetpack_mag[on]"))
-
-	disposing()
-		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
-		..()
-
-/obj/item/tank/jetpack/abilities = list(/obj/ability_button/jetpack_toggle, /obj/ability_button/tank_valve_toggle)

@@ -18,7 +18,7 @@
 		..()
 		src.change_mode(omni_mode)
 
-	attack_self(var/mob/user as mob)
+	attack_self(var/mob/user)
 		..()
 		// cycle between modes
 		var/new_mode = null
@@ -45,7 +45,7 @@
 		if (new_mode)
 			src.change_mode(new_mode, user)
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
+	attack(mob/living/carbon/M, mob/user)
 		if (src.omni_mode == "prying")
 			if (!pry_surgery(M, user))
 				return ..()
@@ -56,7 +56,7 @@
 		if (dist < 3)
 			. = "<span class='notice'>It is currently set to [src.omni_mode] mode.</span>"
 
-	suicide(var/mob/user as mob)
+	suicide(var/mob/user)
 		if (!src.user_can_suicide(user))
 			return 0
 		user.visible_message("<span class='alert'><b>[user] stabs and beats [himself_or_herself(user)] with each tool in the [src] in rapid succession.</b></span>")
@@ -72,16 +72,17 @@
 				// based on /obj/item/crowbar
 				set_icon_state("[prefix]-prying")
 				src.tool_flags = TOOL_PRYING
-				src.force = 5.0
-				src.throwforce = 7.0
+				src.force = 7
+				src.throwforce = 7
 				src.throw_range = 7
 				src.throw_speed = 2
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 33/20
-				src.stamina_cost = STAMINA_ITEM_COST * 25/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 10/25
+				src.stamina_damage = 35
+				src.stamina_cost = 12
+				src.stamina_crit_chance = 10
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/tile_fling)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-prying"), src)
@@ -91,17 +92,17 @@
 				// based on /obj/item/device/multitool
 				set_icon_state("[prefix]-pulsing")
 				src.tool_flags = TOOL_PULSING
-				src.force = 5.0
-				src.throwforce = 5.0
+				src.force = 5
+				src.throwforce = 5
 				src.throw_range = 15
 				src.throw_speed = 3
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 5/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 1/25
+				src.stamina_damage = 5
+				src.stamina_cost = 5
+				src.stamina_crit_chance = 1
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
-
+				src.setItemSpecial(/datum/item_special/elecflash)
 				if(src.animated_changes)
 					flick(("[prefix]-swap-pulsing"), src)
 
@@ -110,16 +111,17 @@
 				// based on /obj/item/screwdriver
 				set_icon_state("[prefix]-screwing")
 				src.tool_flags = TOOL_SCREWING
-				src.force = 5.0
-				src.throwforce = 5.0
+				src.force = 5
+				src.throwforce = 5
 				src.throw_range = 5
 				src.throw_speed = 3
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 10/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
+				src.stamina_damage = 10
+				src.stamina_cost = 5
+				src.stamina_crit_chance = 30
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-screwing"), src)
@@ -129,16 +131,17 @@
 				// based on /obj/item/wirecutters
 				set_icon_state("[prefix]-snipping")
 				src.tool_flags = TOOL_SNIPPING
-				src.force = 6.0
-				src.throwforce = 1.0
+				src.force = 6
+				src.throwforce = 1
 				src.throw_range = 9
 				src.throw_speed = 2
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
+				src.stamina_damage = 15
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 30
 				src.hit_type = DAMAGE_STAB
 				src.hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-snipping"), src)
@@ -148,16 +151,17 @@
 				// based on /obj/item/wrench
 				set_icon_state("[prefix]-wrenching")
 				src.tool_flags = TOOL_WRENCHING
-				src.force = 5.0
-				src.throwforce = 7.0
+				src.force = 5
+				src.throwforce = 7
 				src.throw_range = 7
 				src.throw_speed = 2
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 25/20
-				src.stamina_cost = STAMINA_ITEM_COST * 20/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 15/25
+				src.stamina_damage = 40
+				src.stamina_cost = 14
+				src.stamina_crit_chance = 15
 				src.hit_type = DAMAGE_BLUNT
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-wrenching"), src)
@@ -172,11 +176,12 @@
 				src.throw_range = 5
 				src.throw_speed = 2
 				// taken from wirecutters because I don't know what's going on here
-				src.stamina_damage = STAMINA_ITEM_DMG * 5/20
-				src.stamina_cost = STAMINA_ITEM_COST * 10/18
-				src.stamina_crit_chance = min(STAMINA_CRIT_CHANCE * 30/25, 100)
+				src.stamina_damage = 5
+				src.stamina_cost = 10
+				src.stamina_crit_chance = 15
 				src.hit_type = DAMAGE_CUT
 				src.hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
+				src.setItemSpecial(/datum/item_special/double)
 
 				if(src.animated_changes)
 					flick(("[prefix]-swap-cutting"), src)
@@ -185,14 +190,16 @@
 				src.omni_mode = "welding"
 				// based on /obj/item/weldingtool
 				src.tool_flags = TOOL_WELDING
-				throwforce = 5.0
+				throwforce = 5
 				throw_speed = 1
 				throw_range = 5
 				// using relative amounts in case the default changes
-				src.stamina_damage = STAMINA_ITEM_DMG * 30/20
-				src.stamina_cost = STAMINA_ITEM_COST * 30/18
-				src.stamina_crit_chance = STAMINA_CRIT_CHANCE * 5/25
+				src.stamina_damage = 10
+				src.stamina_cost = 18
+				src.stamina_crit_chance = 0
 				src.hitsound = 'sound/impact_sounds/Generic_Hit_1.ogg'
+				src.setItemSpecial(/datum/item_special/flame)
+
 				if(get_fuel())
 					set_icon_state("[prefix]-weldingtool-on")
 					src.force = 15
@@ -220,7 +227,7 @@
 			reagents.remove_reagent("fuel", amount)
 		return
 
-	proc/eyecheck(mob/user as mob)
+	proc/eyecheck(mob/user)
 		if(user.isBlindImmune())
 			return
 		//check eye protection
@@ -274,13 +281,13 @@
 	has_cutting = 1
 	has_welding = 1
 
-	afterattack(obj/O as obj, mob/user as mob)
+	afterattack(obj/O, mob/user)
 
-		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && get_dist(src,O) <= 1)
+		if ((istype(O, /obj/reagent_dispensers/fueltank) || istype(O, /obj/item/reagent_containers/food/drinks/fueltank)) && BOUNDS_DIST(src, O) == 0)
 			if (O.reagents.total_volume)
 				O.reagents.trans_to(src, 20)
 				boutput(user, "<span class='notice'>Welder refueled</span>")
-				playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+				playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 			else
 				boutput(user, "<span class='alert'>The [O.name] is empty!</span>")
 			return

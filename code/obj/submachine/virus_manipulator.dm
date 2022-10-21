@@ -26,7 +26,7 @@
 	attack_ai(mob/user as mob)
 		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Virus Manipulator</B><BR>
@@ -187,7 +187,7 @@
 					for(var/reagent_id in src.active_vial.reagents.reagent_list)
 						log_reagents += " [reagent_id]"
 
-				logTheThing("combat", usr, null, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
+				logTheThing(LOG_COMBAT, usr, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
 				for(var/obj/item/reagent_containers/glass/vial/V in src.contents)
 					V.set_loc(get_turf(src))
 				src.active_vial = null
@@ -204,7 +204,7 @@
 				src.updateUsrDialog()
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (src.working)
 			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return

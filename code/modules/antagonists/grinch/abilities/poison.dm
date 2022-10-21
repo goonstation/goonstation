@@ -24,11 +24,11 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to poison yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to poison yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		// Written in such a way that adding other reagent containers (e.g. medicine) would be trivial.
@@ -38,7 +38,7 @@
 		if (istype(target, /obj/item/reagent_containers/food)) // Food and drinking glass/bottle parent.
 			RC = target
 		else
-			boutput(M, __red("You can't poison [target], only food items and drinks."))
+			boutput(M, "<span class='alert'>You can't poison [target], only food items and drinks.</span>")
 			return 1
 
 		if (RC && istype(RC))
@@ -67,9 +67,9 @@
 			attempt_success = 0
 
 		if (attempt_success == 1)
-			boutput(M, __blue("You successfully poisoned [target]."))
-			logTheThing("combat", M, null, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
+			boutput(M, "<span class='notice'>You successfully poisoned [target].</span>")
+			logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
 			return 0
 		else
-			boutput(M, __red("You failed to poison [target]."))
+			boutput(M, "<span class='alert'>You failed to poison [target].</span>")
 			return 1

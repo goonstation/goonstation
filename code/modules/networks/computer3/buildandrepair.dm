@@ -17,12 +17,14 @@
 	name = "Computer-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
+	material_amt = 0.5
 	var/state = 0
 	var/obj/item/motherboard/mainboard = null
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/max_peripherals = 3
 	var/list/peripherals = list()
 	var/created_icon_state = "computer_generic"
+	var/computer_type = /obj/machinery/computer3
 	var/glass_needed = 2 //How much glass does this need for a screen?
 	var/metal_given = 5 //How much metal does this give when destroyed?
 
@@ -31,6 +33,8 @@
 		desc = "A light micro-computer frame used for terminal systems."
 		icon = 'icons/obj/terminal_frame.dmi'
 		created_icon_state = "dterm"
+		computer_type = /obj/machinery/computer3/terminal
+		material_amt = 0.3
 		max_peripherals = 2
 		metal_given = 3
 		glass_needed = 1
@@ -39,6 +43,7 @@
 		name = "Desktop Computer-frame"
 		icon = 'icons/obj/computer_frame_desk.dmi'
 		created_icon_state = "old"
+		computer_type = /obj/machinery/computer3/generic/personal/personel_alt
 		max_peripherals = 3
 		metal_given = 3
 		glass_needed = 1
@@ -67,35 +72,35 @@
 /obj/computer3frame/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computer3frame/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computer3frame/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computer3frame/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
 		if(0)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				actions.start(action_bar, user)
 			if(isweldingtool(P))
-				playsound(src.loc, "sound/items/Welder.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Welder.ogg', 50, 1)
 				actions.start(action_bar, user)
 		if(1)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/motherboard) && !mainboard)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You place the mainboard inside the frame.</span>")
 				src.icon_state = "1"
 				src.mainboard = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && mainboard)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You screw the mainboard into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && mainboard)
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "0"
@@ -106,7 +111,7 @@
 
 		if(2)
 			if (isscrewingtool(P) && mainboard && (!peripherals.len))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You unfasten the mainboard.</span>")
 				src.state = 1
 				src.icon_state = "1"
@@ -121,7 +126,7 @@
 					boutput(user, "<span class='alert'>There is no more room for peripheral cards.</span>")
 
 			if (ispryingtool(P) && length(src.peripherals))
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the peripheral boards.</span>")
 				for(var/obj/item/peripheral/W in src.peripherals)
 					W.set_loc(src.loc)
@@ -130,11 +135,11 @@
 
 			if (istype(P, /obj/item/cable_coil))
 				if (P.amount >= 5)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					actions.start(action_bar, user)
 		if(3)
 			if (issnippingtool(P))
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
@@ -152,7 +157,7 @@
 				boutput(user, "<span class='notice'>You connect the drive to the cabling.</span>")
 
 			if (ispryingtool(P) && src.hd)
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the hard drive.</span>")
 				src.hd.set_loc(src.loc)
 				src.hd = null
@@ -161,7 +166,7 @@
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= src.glass_needed)
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
 						boutput(user, "<span class='alert'>There's not enough sheets on the stack.</span>")
@@ -169,7 +174,7 @@
 					boutput(user, "<span class='alert'>You need sheets of some kind of crystal or glass for this.</span>")
 		if(4)
 			if (ispryingtool(P))
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
@@ -177,9 +182,11 @@
 				A.amount = src.glass_needed
 
 			if (isscrewingtool(P))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
-				var/obj/machinery/computer3/C= new /obj/machinery/computer3( src.loc )
+				if(!ispath(computer_type, /obj/machinery/computer3))
+					src.computer_type = /obj/machinery/computer3
+				var/obj/machinery/computer3/C= new src.computer_type( src.loc )
 				C.set_dir(src.dir)
 				if(src.material) C.setMaterial(src.material)
 				C.setup_drive_size = 0

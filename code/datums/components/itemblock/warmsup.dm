@@ -7,7 +7,7 @@
 
 /datum/component/itemblock/warmsup/RegisterWithParent()
 	. = ..()
-	RegisterSignal(parent, COMSIG_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
+	RegisterSignal(parent, COMSIG_ITEM_BLOCK_TOOLTIP_BLOCKING_APPEND, .proc/append_to_tooltip)
 
 //arguments are sent from the the SendSignal() in Life.dm:140
 //SEND_SIGNAL(src, COMSIG_LIVING_LIFE_TICK, (life_time_passed / tick_spacing))
@@ -15,7 +15,7 @@
 //second argument, COMSIG_LIVING_LIFE_TICK, is the type of signal that was send. This matches the signal we are registered to,
 //(registering for the signal happened in /datum/component/itemblock/proc/on_block_begin()), so this triggers the proc below
 //third argument, (life_time_passed / tick_spacing), is the tick spacing multiplier for the Life Loop. Signalled procs may have any number of additional arguments, but ours only has one.
-/datum/component/itemblock/warmsup/proc/warmup(mob/living/carbon/human/H, var/mult) 
+/datum/component/itemblock/warmsup/proc/warmup(mob/living/carbon/human/H, var/mult)
 	if(parent != H.equipped())
 		return //do nothing if not in active hand
 	if(H.bodytemperature < H.base_body_temp) // Shamelessly copy-pasted from coffee

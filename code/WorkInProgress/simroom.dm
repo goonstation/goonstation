@@ -64,7 +64,7 @@
 
 
 /obj/machinery/sim/transmitter/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
 			user.Browse(null, "window=mm")
@@ -140,7 +140,7 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || user.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
@@ -159,7 +159,7 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/sim/chair/attack_hand(mob/user as mob)
+/obj/machinery/sim/chair/attack_hand(mob/user)
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
@@ -193,8 +193,8 @@
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null
-	var/time = 30.0
-	var/timing = 0.0
+	var/time = 30
+	var/timing = 0
 	var/last_tick = 0
 	//var/emagged = 0
 
@@ -211,7 +211,7 @@
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
-/obj/machinery/sim/vr_bed/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/sim/vr_bed/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/grab))
 		var/obj/item/grab/G = O
 		if (!ismob(G.affecting))
@@ -315,7 +315,7 @@
 /obj/machinery/sim/vr_bed/remove_air(amount)
 	return src.loc.remove_air(amount)
 
-/obj/machinery/sim/vr_bed/attack_hand(var/mob/user as mob)
+/obj/machinery/sim/vr_bed/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"

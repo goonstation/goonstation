@@ -19,10 +19,10 @@
 	desc = "an incredibly fragile glass test tube"
 	icon_state = "vial0"
 	item_state = "vial"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 8
-	force = 3.0
+	force = 3
 	w_class = W_CLASS_TINY
 	initial_volume = 30
 
@@ -298,7 +298,7 @@
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.contents.len > 0)
 			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)

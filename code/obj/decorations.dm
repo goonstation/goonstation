@@ -46,7 +46,7 @@
 	name = "Tree"
 	desc = "It's a tree."
 	icon = 'icons/effects/96x96.dmi' // changed from worlds.dmi
-	icon_state = "tree" // changed from 0.0
+	icon_state = "tree" // changed from 0
 	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_3
 
@@ -159,11 +159,19 @@
 	var/time_between_uses = 400 // The default time between uses.
 	var/override_default_behaviour = 0 // When this is set to 1, the additional_items list will be used to dispense items.
 	var/list/additional_items = list() // See above.
+	/// How many bites can cow people take out of it?
+	var/bites = 5
+	/// The mask used to show bite marks
+	var/current_mask = 5
+	/// Is the bush actually made out of plastic?
+	var/is_plastic = FALSE
 
 	New()
 		..()
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
+		if (prob(5))
+			is_plastic = TRUE
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
@@ -175,12 +183,21 @@
 				qdel(src)
 			else
 				src.take_damage(45)
-	attack_hand(mob/user as mob)
+
+	attack_hand(mob/user)
 		if (!user) return
-		if (destroyed) return ..()
+		if (destroyed && iscow(user) && user.a_intent == INTENT_HELP)
+			boutput(user, "<span class='notice'>You pick at the ruined bush, looking for any leafs to graze on, but cannot find any.</span>")
+			return ..()
+		else if (destroyed)
+			return ..()
 
 		user.lastattacked = src
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, -1)
+		if (iscow(user) && user.a_intent == INTENT_HELP)	//Cow people may want to eat some of the bush's leaves
+			graze(user)
+			return 0
+
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -215,7 +232,7 @@
 			if (!L.getStatusDuration("weakened") && !L.hasStatus("resting"))
 				boutput(L, "<span class='alert'><b>A branch from [src] smacks you right in the face!</b></span>")
 				L.TakeDamageAccountArmor("head", rand(1,6), 0, 0, DAMAGE_BLUNT)
-				logTheThing("combat", user, L, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "shakes a bush and smacks [L] with a branch [log_loc(user)].")
 				var/r = rand(1,2)
 				switch(r)
 					if (1)
@@ -233,7 +250,11 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 0
-			H.health_implant?.alpha = 0
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 0
 			H.health_mon?.alpha = 0
 
 	Uncrossed(atom/movable/AM)
@@ -244,25 +265,59 @@
 		if(ishuman(AM))
 			var/mob/living/carbon/human/H = AM
 			H.arrestIcon?.alpha = 255
-			H.health_implant?.alpha = 255
+			if (H.implant_icons)
+				var/image/I
+				for (var/implant in H.implant_icons)
+					I = H.implant_icons[implant]
+					I.alpha = 255
 			H.health_mon?.alpha = 255
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, "sound/impact_sounds/Bush_Hit.ogg", 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
+
+	proc/graze(mob/living/carbon/human/user)
+		src.bites -= 1
+		var/desired_mask = (src.bites / initial(src.bites)) * 5
+		desired_mask = round(desired_mask)
+		desired_mask = clamp(desired_mask, 1, 5)
+
+		if (desired_mask != current_mask)
+			current_mask = desired_mask
+			src.add_filter("bite", 0, alpha_mask_filter(icon=icon('icons/obj/foodNdrink/food.dmi', "eating[desired_mask]")))
+
+		eat_twitch(user)
+		playsound(user, 'sound/items/eatfood.ogg', rand(10,50), 1)
+
+		if (is_plastic)
+			user.setStatus("weakened", 3 SECONDS)
+			user.visible_message("<span class='notice'>[user] takes a bite out of [src] and chokes on the plastic leaves.</span>", "<span class='alert'>You munch on some of [src]'s leaves, but realise too late it's made of plastic. You start choking!</span>")
+			user.take_oxygen_deprivation(20)
+			user.losebreath += 2
+		else
+			user.changeStatus("food_hp_up", 20 SECONDS)
+			user.visible_message("<span class='notice'>[user] takes a bite out of [src].</span>", "<span class='notice'>You munch on some of [src]'s leaves, like any normal human would.</span>")
+			user.sims?.affectMotive("Hunger", 10)
+
+		if(src.bites <= 0)
+			destroy()
+		return 0
 
 	proc/take_damage(var/damage_amount = 5)
 		src.health -= damage_amount
 		if (src.health <= 0)
-			src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
-			new /obj/decal/cleanable/leaves(get_turf(src))
-			playsound(src.loc, "sound/impact_sounds/Wood_Snap.ogg", 90, 1)
-			qdel(src)
+			destroy()
 			return
+
+	proc/destroy()
+		src.visible_message("<span class='alert'><b>The [src.name] falls apart!</b></span>")
+		new /obj/decal/cleanable/leaves(get_turf(src))
+		playsound(src.loc, 'sound/impact_sounds/Wood_Snap.ogg', 90, 1)
+		qdel(src)
 
 	random
 		New()
@@ -291,30 +346,48 @@
 /obj/shrub/captainshrub
 	name = "\improper Captain's bonsai tree"
 	icon = 'icons/misc/worlds.dmi'
-	icon_state = "shrub"
+	icon_state = "bonsai"
 	desc = "The Captain's most prized possession. Don't touch it. Don't even look at it."
 	anchored = 1
 	density = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	dir = EAST
 
-	proc/destroy()
+	destroy()
 		src.set_dir(NORTHEAST)
 		src.destroyed = 1
 		src.set_density(0)
+		icon_state = "bonsai-destroyed"
 		src.desc = "The scattered remains of a once-beautiful bonsai tree."
-		playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 0)
-		// The bonsai tree goes to the deadbar because of course it does
-		var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
-		C.overlays += image('icons/misc/32x64.dmi',"halo")
-		C.set_loc(pick(get_area_turfs(/area/afterlife/bar)))
-		C.anchored = 0
-		C.set_density(0)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 0)
+		// The bonsai tree goes to the deadbar because of course it does, except when there is no deadbar of course
+		var/list/afterlife_turfs = get_area_turfs(/area/afterlife/bar)
+		if(length(afterlife_turfs))
+			var/obj/shrub/captainshrub/C = new /obj/shrub/captainshrub
+			C.overlays += image('icons/misc/32x64.dmi',"halo")
+			C.set_loc(pick(afterlife_turfs))
+			C.anchored = 0
+			C.set_density(0)
 		for (var/mob/living/M in mobs)
 			if (M.mind && M.mind.assigned_role == "Captain")
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	graze(mob/user)
+		user.lastattacked = src
+		if (user.mind && user.mind.assigned_role == "Captain")
+			boutput(user, "<span class='notice'>You catch yourself almost taking a bite out of your precious bonzai but stop just in time!</span>")
+			return
+		else
+			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
+			user.visible_message("<b><span class='alert'>[user] violently grazes on [src]!</span></b>", "<span class='notice'>You voraciously devour the bonzai, what a feast!</span>")
+			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
+			src.destroy()
+			user.changeStatus("food_deep_burp", 2 MINUTES)
+			user.changeStatus("food_hp_up", 2 MINUTES)
+			user.changeStatus("food_energized", 2 MINUTES)
+			return
+
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -329,7 +402,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -360,7 +433,7 @@
 		if (!src) return
 		src.destroyed = 1
 		src.desc = "The scattered remains of a once-beautiful ship in a bottle."
-		playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 0)
+		playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 0)
 		// The bonsai goes to the deadbar so I guess the ship in a bottle does too lol
 		var/obj/captain_bottleship/C = new /obj/captain_bottleship
 		C.overlays += image('icons/misc/32x64.dmi',"halo")
@@ -371,7 +444,7 @@
 				boutput(M, "<span class='alert'>You suddenly feel hollow. Something very dear to you has been lost.</span>")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		if (inafterlife(user))
@@ -406,6 +479,7 @@
 	icon_state = "ppot0"
 	anchored = 1
 	density = 0
+	deconstruct_flags = DECON_SCREWDRIVER
 
 	New()
 		..()
@@ -462,7 +536,7 @@
 			else
 				if(prob(50))
 					qdel(src)
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle()
 		src.toggle_group()
 
@@ -484,10 +558,10 @@
 	update_icon()
 		if (src.open)
 			src.icon_state = "[src.base_state]-c"
-			src.opacity = 1
+			src.set_opacity(1)
 		else
 			src.icon_state = "[src.base_state]-o"
-			src.opacity = 0
+			src.set_opacity(0)
 
 	left
 		icon_state = "blindsH-L-o"
@@ -566,7 +640,7 @@
 		for (var/obj/window_blinds/blind in myBlinds)
 			blind.toggle(src.on)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle()
 
 	attack_ai(mob/user as mob)
@@ -637,7 +711,7 @@
 		light.set_height(2.4)
 		light.attach(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.toggle_on()
 
 	proc/toggle_on()
@@ -710,14 +784,94 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Fugg"
+		name = "Shidd"
 		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Shidd"
+		name = "Fugg"
 		desc = "A blazing young blue star."
+
+
+	domus_dei
+		icon_state = "domusDei"
+		name = "Domus Dei"
+		pixel_x = -256
+		pixel_y = -256
+
+	quadriga
+		icon_state = "quadriga"
+		name = "Quadriga"
+		pixel_x = -256
+		pixel_y = -256
+
+	mundus
+		icon_state = "mundus"
+		name = "Mundus"
+		pixel_x = -256
+		pixel_y = -256
+
+	iustitia
+		icon_state = "iustitia"
+		name = "Iustitia"
+		pixel_x = -256
+		pixel_y = -256
+
+	iudicium
+		icon_state = "iudicium"
+		name = "Iudicium"
+		pixel_x = -256
+		pixel_y = -256
+
+	fortuna
+		icon_state = "fortuna"
+		name = "Fortuna"
+		pixel_x = -256
+		pixel_y = -256
+
+	fatuus
+		icon_state = "fatuus"
+		name = "Fatuus"
+		pixel_x = -256
+		pixel_y = -256
+
+	magus
+		icon_state = "magus"
+		name = "Magus"
+		pixel_x = -256
+		pixel_y = -256
+
+	regis
+		icon_state ="regis"
+		name = "Regis"
+		pixel_x = -256
+		pixel_y = -256
+
+	regina
+		icon = 'icons/obj/large/320x320.dmi'
+		icon_state = "regina"
+		name = "Regina"
+		pixel_x = -110
+		pixel_y = -170
+
+	amantes
+		icon_state = "amantes"
+		name = "Amantes"
+		pixel_x = -256
+		pixel_y = -256
+
+	antistes
+		icon_state = "antistes"
+		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
+	mors
+		icon_state = "mors"
+		name = "Mors"
+		pixel_x = -256
+		pixel_y = -256
 
 	station
 		name = "Space Station 14"
@@ -842,7 +996,7 @@ obj/decoration/ceilingfan
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -850,7 +1004,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -874,7 +1028,7 @@ obj/decoration/ceilingfan
 				src.lit = 1
 				UpdateIcon ()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
@@ -887,6 +1041,12 @@ obj/decoration/ceilingfan
 		if (light)
 			light.dispose()
 		..()
+
+	prelit
+		New()
+			. = ..()
+			src.lit = TRUE
+			UpdateIcon()
 
 /obj/decoration/rustykrab
 	name = "rusty krab sign"
@@ -922,6 +1082,15 @@ obj/decoration/ceilingfan
 	anchored = 2
 	density = 0
 	layer = DECAL_LAYER
+
+obj/decoration/gibberBroken
+	name = "rusty old gibber"
+	desc = "This thing is completely broken and rusted. There's also a shredded armored jacket and some crunched up bloody bones inside. Huh."
+	icon = 'icons/obj/decoration.dmi'
+	icon_state = "gibberBroken"
+	anchored = 1
+	density = 1
+	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_CROWBAR
 
 /obj/decoration/syndiepc
 	name = "syndicate computer"
@@ -1099,14 +1268,14 @@ obj/decoration/ceilingfan
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
 	throwforce = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.r_hand == src || user.l_hand == src) && src.contents && length(src.contents))
 			user.visible_message("The cell on this is corroded. Good luck getting this thing to fire ever again!")
 			src.add_fingerprint(user)
@@ -1119,7 +1288,6 @@ obj/decoration/ceilingfan
 	desc = "You've never heard of this pistol before... who made it?"
 	icon_state = "e_laser_pistol"
 
-//stolen code for anchorable and movable target sheets. cannot get projectile tracking on them to work right now so. oh well. help appreciated!
 /obj/item/caution/target_sheet
 	desc = "A paper silhouette target sheet with a cardboard backing."
 	name = "paper target"
@@ -1128,8 +1296,8 @@ obj/decoration/ceilingfan
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "table_parts"
 	density = 1
-	force = 1.0
-	throwforce = 3.0
+	force = 1
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -1137,12 +1305,12 @@ obj/decoration/ceilingfan
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
-	var/list/proj_impacts = list()
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bullet_holes, 20, 0)
 		BLOCK_SETUP(BLOCK_SOFT)
 
 	attackby(obj/item/W, mob/user, params)
@@ -1150,25 +1318,6 @@ obj/decoration/ceilingfan
 			actions.start(new /datum/action/bar/icon/anchor_or_unanchor(src, W, duration=2 SECONDS), user)
 			return
 		. = ..()
-
-	get_desc()
-		if (islist(src.proj_impacts) && length(src.proj_impacts))
-			var/shots_taken = 0
-			for (var/i in src.proj_impacts)
-				shots_taken ++
-			. += "<br>[src] has [shots_taken] hole[s_es(shots_taken)] in it."
-
-	proc/update_projectile_image(var/update_time)
-		if (src.proj_impacts.len > 10)
-			return
-		if (src.last_proj_update_time && (src.last_proj_update_time + 1) < ticker.round_elapsed_ticks)
-			return
-		if (!src.proj_image)
-			src.proj_image = image('icons/obj/projectiles.dmi', "bhole-small")
-		src.proj_image.overlays = null
-		for (var/image/i in src.proj_impacts)
-			src.proj_image.overlays += i
-		src.UpdateOverlays(src.proj_image, "projectiles")
 
 //Walp Decor
 
@@ -1210,7 +1359,7 @@ obj/decoration/ceilingfan
 			src.icon_state = src.icon_off
 			light.disable()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.lit)
 			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
 				boutput(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
@@ -1218,7 +1367,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				boutput(user, "<span class='alert'>Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				boutput(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1242,7 +1391,7 @@ obj/decoration/ceilingfan
 				src.lit = 1
 				UpdateIcon ()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.lit)
 			var/fluff = pick("snuff", "blow")
 			src.lit = 0
@@ -1250,7 +1399,7 @@ obj/decoration/ceilingfan
 			user.visible_message("<b>[user]</b> [fluff]s out the [src].",\
 			"You [fluff] out the [src].")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && src.deconstructable)
 			actions.start(new /datum/action/bar/icon/furniture_deconstruct(src, W, 30), user)
 			return
@@ -1263,7 +1412,7 @@ obj/decoration/ceilingfan
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -1281,7 +1430,7 @@ obj/decoration/ceilingfan
 			if (P && src.material)
 				P.setMaterial(src.material)
 		else
-			playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			var/obj/item/sheet/S = new (src.loc)
 			if (src.material)
 				S.setMaterial(src.material)
@@ -1307,3 +1456,64 @@ obj/decoration/pottedfern
 	icon_state = "plant_fern"
 	anchored = 1
 	density = 1
+
+/obj/burning_barrel
+	name = "burning barrel"
+	desc = "cozy."
+	icon = 'icons/obj/stationobjs.dmi'
+	icon_state = "barrel1"
+	density = 1
+	anchored = 1
+	opacity = 0
+
+	var/datum/light/light
+
+	New()
+		UpdateParticles(new/particles/barrel_embers, "embers")
+		UpdateParticles(new/particles/barrel_smoke, "smoke")
+		light = new /datum/light/point
+		light.attach(src)
+		light.set_brightness(1)
+		light.set_color(0.5, 0.3, 0)
+		light.enable()
+		..()
+
+	disposing()
+		light.disable()
+		light.detach()
+		light = null
+		..()
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/clothing/mask/cigarette))
+			var/obj/item/clothing/mask/cigarette/C = W
+			if(!C.on)
+				C.light(user, "<span class='alert'>[user] lights the [C] with [src]. That seems appropriate.</span>")
+
+/obj/fireworksbox
+	name = "Box of Fireworks"
+	desc = "The Label simply reads : \"Firwerks fun is having total family.\""
+	density = 0
+	anchored = 0
+	opacity = 0
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "fireworksbox"
+	var/fireworking = 0
+
+	attack_hand(mob/user)
+		if(fireworking) return
+		fireworking = 1
+		boutput(user, "<span class='alert'>The fireworks go off as soon as you touch the box. This is some high quality stuff.</span>")
+		anchored = 1
+
+		SPAWN(0)
+			for(var/i=0, i<rand(15,25), i++)
+				particleMaster.SpawnSystem(new /datum/particleSystem/fireworks(src.loc))
+				playsound(src.loc, 'sound/effects/firework.ogg', 50, 1)
+				sleep(rand(2, 15))
+
+			for(var/mob/O in oviewers(world.view, src))
+				O.show_message("<span class='notice'>The box of fireworks magically disappears.</span>", 1)
+
+			qdel(src)
+		return

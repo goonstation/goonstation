@@ -7,7 +7,7 @@
 	health_burn = 40
 	var/being_seen = FALSE
 	var/mob/last_witness
-	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "wendigo", "bunny", "penguin")
+	var/icon_states_with_supported_eyes = list("bee", "buddy", "kitten", "monkey", "possum", "brullbar", "bunny", "penguin")
 	var/image/eye_light
 	var/glowing_eye_color = "#c40000ff"
 	var/glowing_eyes_enabled_alpha = 190
@@ -29,8 +29,8 @@
 	possum
 		icon_state = "possum"
 		pick_random_icon_state = 0
-	wendigo
-		icon_state = "wendigo"
+	brullbar
+		icon_state = "brullbar"
 		pick_random_icon_state = 0
 	bunny
 		icon_state = "bunny"
@@ -61,7 +61,7 @@
 		if(!gibbed)
 			src.visible_message("<span class='alert'>[src] lets out a haunting shriek as its body begins to lose its form and fades into mist...</span>",
 				"<span class='alert'>Your grasp on the physical realm weakens. Your form dissolves...</span>")
-			playsound(get_turf(src), "sound/ambience/spooky/Hospital_Haunted3.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/ambience/spooky/Hospital_Haunted3.ogg', 50, 1)
 			SPAWN(0)
 				animate(src, alpha=0, time=7 SECONDS)
 				sleep(0.1 SECONDS)
@@ -94,7 +94,7 @@
 				var/time_to_respawn = 2.5 MINUTES
 				boutput(ghost_mob, "<h3><span class='alert'>Your plushie has manifested inside [spawn_target] on the station. In [time_to_respawn/10] seconds you will possess it once more as long as the vessel is not destroyed before then.</span></h3>")
 				ghost_mob.set_loc(get_turf(spawn_target))
-				playsound(get_turf(spawn_target), "sound/ambience/spooky/Void_Calls.ogg", 100, 1)
+				playsound(get_turf(spawn_target), 'sound/ambience/spooky/Void_Calls.ogg', 100, 1)
 				sleep(time_to_respawn)
 				if(!ghost_mob || !ghost_mob.client) // somewhere on the way we lost our dead player, try to find them
 					ghost_mob = null
@@ -117,7 +117,7 @@
 					reborn_cryptid.ckey = ckey_of_dead_player
 					SPAWN(0.5 SECONDS)
 						if(reborn_cryptid && !reborn_cryptid.disposed)
-							playsound(get_turf(reborn_cryptid), "sound/misc/jester_laugh.ogg", 60, 1)
+							playsound(get_turf(reborn_cryptid), 'sound/misc/jester_laugh.ogg', 60, 1)
 			else
 				boutput(ghost_mob, "<h3><span class='alert'>The cycle has been stopped.</span></h3>")
 
@@ -174,7 +174,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 300))
-					playsound(src, "sound/misc/lincolnshire.ogg", 65, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/misc/lincolnshire.ogg', 65, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> plays a song!</span>"
 			if ("fart")
 				return
@@ -185,13 +185,13 @@
 			if ("snap")
 				if (src.emote_check(voluntary, 100))
 					if (prob(33))
-						playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+						playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 						return  "<B>[src]</B> emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound."
 					else if (prob(33))
-						playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+						playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 						return "<B>[src]</B> emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise."
 					else
-						playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+						playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		return ..()
 
 	Life(datum/controller/process/mobs/parent)
@@ -216,14 +216,14 @@
 			set_dormant_status(FALSE)
 			return
 		if (last_witness && last_witness.client) // optimization attempt
-			if(get_dist(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
+			if(GET_DIST(src, last_witness) < 3) // still next to last person that saw us, might be for instance pulling us or sitting next to us
 				return
 		last_witness = null
 
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue
-			if (!isalive(M))
+			if (!isalive(M) || isintangible(M))
 				continue
 			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue
@@ -281,7 +281,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			return
 		if(!holder || !holder.owner)
 			return
-		playsound(holder.owner, "sound/misc/automaton_scratch.ogg", 50, 1)
+		playsound(holder.owner, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		selected = uppertext(selected)
 		our_plushie.plushie_speech(selected)
 		return 0
@@ -294,9 +294,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	cooldown = 400
 	targeted = 0
 	qdel_itself_if_not_attached_to_plushie = 1
-	var/list/minor_event_sounds = list("sound/machines/giantdrone_boop1.ogg", "sound/machines/giantdrone_boop3.ogg", "sound/machines/giantdrone_boop4.ogg")
-	var/list/moderate_event_sounds = list("sound/machines/giantdrone_boop2.ogg")
-	var/list/major_event_sounds = list("sound/misc/android_scream.ogg")
+	var/list/minor_event_sounds = list('sound/machines/giantdrone_boop1.ogg', 'sound/machines/giantdrone_boop3.ogg', 'sound/machines/giantdrone_boop4.ogg')
+	var/list/moderate_event_sounds = list('sound/machines/giantdrone_boop2.ogg')
+	var/list/major_event_sounds = list('sound/misc/android_scream.ogg')
 	var/cycle
 
 	cast(atom/target)
@@ -360,7 +360,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 			if(!our_plushie || our_plushie.disposed || src.disposed)
 				return
 			if(prob(scratch_chance))
-				playsound(get_turf(holder.owner), "sound/misc/automaton_scratch.ogg", 20, 1)
+				playsound(get_turf(holder.owner), 'sound/misc/automaton_scratch.ogg', 20, 1)
 				scratch_chance -= 10
 			else
 				scratch_chance += 10
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		return get_a_random_station_unlocked_container_with_no_others_on_the_turf()
 
 	proc/teleport_to_a_target(var/teleportation_target = null, var/target_a_random_container = FALSE)
-		playsound(get_turf(holder.owner), "sound/effects/ghostbreath.ogg", 75, 1)
+		playsound(get_turf(holder.owner), 'sound/effects/ghostbreath.ogg', 75, 1)
 		animate(holder.owner, alpha=0, time=1.5 SECONDS)
 		sleep(0.1 SECONDS)
 		if(!holder.owner || holder.owner.disposed || src.disposed)
@@ -437,7 +437,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 		else
 			boutput(holder.owner, "<span class='alert'>Couldn't find a container to teleport to!</span>")
 
-		playsound(get_turf(teleportation_target), "sound/effects/ghostlaugh.ogg", 75, 1)
+		playsound(get_turf(teleportation_target), 'sound/effects/ghostlaugh.ogg', 75, 1)
 		animate(holder.owner, alpha=255, time=1.5 SECONDS)
 		sleep(1.5 SECONDS)
 		if(!holder || !holder.owner || src.disposed)
@@ -511,13 +511,13 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 				var/obj/itemspecialeffect/glare/E = new /obj/itemspecialeffect/glare
 				E.color = "#ff0000"
 				E.setup(holder.owner.loc)
-				playsound(holder.owner.loc,"sound/effects/screech_tone.ogg", 50, 1, pitch = 1, extrarange = -4)
+				playsound(holder.owner.loc, 'sound/effects/screech_tone.ogg', 50, 1, pitch = 1, extrarange = -4)
 
 				SPAWN(1 DECI SECOND)
 					var/obj/itemspecialeffect/glare/EE = new /obj/itemspecialeffect/glare
 					EE.color = "#ff0000"
 					EE.setup(attacker.loc)
-					playsound(attacker.loc,"sound/effects/screech_tone.ogg", 50, 1, pitch = 0.8, extrarange = -4)
+					playsound(attacker.loc, 'sound/effects/screech_tone.ogg', 50, 1, pitch = 0.8, extrarange = -4)
 
 				attacker.apply_flash(30, 5, stamina_damage = 350)
 

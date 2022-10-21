@@ -7,6 +7,7 @@
 	var/state = 0
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
+	material_amt = 0.5
 
 	blob_act(var/power)
 		qdel(src)
@@ -16,6 +17,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard
 	density = 0
 	anchored = 0
+	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
 	icon = 'icons/obj/module.dmi'
@@ -28,12 +30,24 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	var/list/records = null
 	mats = 6
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 /obj/item/circuitboard/security
-	name = "Circuit board (Security)"
+	name = "Circuit board (Security Cameras)"
 	computertype = "/obj/machinery/computer/security"
-/obj/item/circuitboard/aiupload
-	name = "Circuit board (AI Upload)"
-	computertype = "/obj/machinery/computer/aiupload"
+/obj/item/circuitboard/security_tv
+	name = "Circuit board (Security Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv"
+/obj/item/circuitboard/small_tv
+	name = "Circuit board (Television)"
+	computertype = "/obj/machinery/computer/security/wooden_tv/small"
+
 //obj/item/circuitboard/med_data
 //	name = "Circuit board (Medical)"
 //	computertype = "/obj/machinery/computer/med_data"
@@ -136,44 +150,50 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/qmsupply
 	name = "Circuit board (Quartermaster's Console)"
 	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/transception
+	name = "Circuit board (Transception Interlink)"
+	computertype = "/obj/machinery/computer/transception"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
 /obj/item/circuitboard/telescope
 	name = "Circuit board (Quantum Telescope)"
 	computertype = "/obj/machinery/computer/telescope"
+/obj/item/circuitboard/announcement
+	name = "Circuit board (Announcement Computer)"
+	computertype = "/obj/machinery/computer/announcement"
 
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
-/obj/computerframe/attackby(obj/item/P as obj, mob/user as mob)
+/obj/computerframe/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
 		if (0)
 			if (iswrenchingtool(P))
 				actions.start(action_bar, user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
 				actions.start(action_bar, user)
 		if (1)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
 				src.state = 2
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "0"
@@ -181,20 +201,20 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				src.circuit = null
 		if (2)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
 				src.state = 1
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
 				if (P.amount >= 5)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					actions.start(action_bar, user)
 				else
 					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
 		if (3)
 			if (issnippingtool(P))
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the cables.</span>")
 				src.state = 2
 				src.icon_state = "2"
@@ -207,7 +227,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				var/obj/item/sheet/S = P
 				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
 						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
@@ -215,14 +235,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
 		if (4)
 			if (ispryingtool(P))
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
 				src.state = 3
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
@@ -232,7 +252,7 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					B.records = circuit.records
 				if (circuit.frequency)
 					B.frequency = circuit.frequency
-				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
 /obj/computerframe/proc/state_actions(obj/item/P, mob/user)

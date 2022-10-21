@@ -31,6 +31,8 @@
 	var/can_be_welded=false
 	var/can_be_anchored=false
 	custom_suicide=true
+	open_to_sound = TRUE
+
 	New()
 		src.light = new /datum/light/point
 		src.light.attach(src)
@@ -38,10 +40,6 @@
 		processing_items |= src
 		..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
-		for(var/obj/item/mechanics/miccomp/mic in src.contents)
-			mic.hear_talk(M,msg,real_name,lang_id)
-		return
 	process()
 		if (src.light_time>0)
 			src.light_time--
@@ -60,10 +58,10 @@
 		return
 	ex_act(severity)
 		switch(severity)
-			if (1.0)
+			if (1)
 				src.dispose() // disposing upon being blown up unlike all those decorative rocks on cog2
 				return
-			if (2.0)
+			if (2)
 				if(prob(25))
 					src.dispose()
 					return
@@ -71,7 +69,7 @@
 				src.welded=false
 				src.UpdateIcon()
 				return
-			if (3.0)
+			if (3)
 				if(prob(50) && !src.welded)
 					src.open=true
 					src.UpdateIcon()
@@ -83,7 +81,7 @@
 		user.visible_message("<span class='alert'><b>[user] stares into the [src], trying to make sense of its function!</b></span>")
 		SPAWN(3 SECONDS)
 			user.visible_message("<span class='alert'><b>[user]'s brain melts!</b></span>")
-			playsound(user, "sound/effects/mindkill.ogg", 50)
+			playsound(user, 'sound/effects/mindkill.ogg', 50)
 			user.take_brain_damage(69*420)
 		SPAWN(20 SECONDS)
 			if (user && !isdead(user))
@@ -93,12 +91,12 @@
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.users) && istype(user))
 			src.users+=user
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if(src.welded)
 				boutput(user,"<span class='alert'>The [src] is welded shut.</span>")
@@ -230,7 +228,7 @@
 		anchored=false
 		icon_state="housing_cabinet"
 		flags = FPRINT | EXTRADELAY | CONDUCT
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(src.loc==user)
 				src.set_loc(get_turf(src))
 				user.drop_item()
@@ -301,13 +299,13 @@
 	New()
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(iswrenchingtool(W)) // prevent unanchoring
 			return 0
 		if(..()) return 1
 		return 1 //attack_hand(user) // was causing issues
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 		if (!istype(src.loc,/obj/item/storage/mechanics/housing_handheld))
 			qdel(src) //if outside the gun, delet
@@ -343,6 +341,7 @@
 	icon_state = "comp_unk"
 	item_state = "swat_suit"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
+	object_flags = NO_GHOSTCRITTER
 	plane = PLANE_NOSHADOW_BELOW
 	w_class = W_CLASS_TINY
 	level = 2
@@ -410,7 +409,7 @@
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1) return
 		if(issilicon(user) || isAI(user)) return
 		else return ..(user)
@@ -423,7 +422,7 @@
 	proc/rotate()
 		src.set_dir(turn(src.dir, -90))
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (can_rotate)
 				if (!anchored)
@@ -435,7 +434,7 @@
 			switch(level)
 				if(1) //Level 1 = wrenched into place
 					boutput(user, "You detach the [src] from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivate it.")
-					logTheThing("station", user, null, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and deactivates it at [log_loc(src)].")
 					level = 2
 					anchored = 0
 					clear_owner()
@@ -452,8 +451,11 @@
 							if (Z.type == src.type && Z.level == 1)
 								boutput(user,"<span class='alert'>No matter how hard you try, you are not able to think of a way to fit more than one [src] on a single tile.</span>")
 								return
+					if(anchored)
+						boutput(user,"<span class='alert'>[src] is already attached to something somehow.</span>")
+						return
 					boutput(user, "You attach the [src] to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"] and activate it.")
-					logTheThing("station", user, null, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the [istype(src.loc,/obj/item/storage/mechanics) ? "housing" : "underfloor"]  at [log_loc(src)].")
 					level = 1
 					anchored = 1
 					set_owner(user)
@@ -491,7 +493,7 @@
 		return
 
 	proc/componentSay(var/string)
-		string = trim(sanitize(html_encode(string)), 1)
+		string = trim(sanitize(html_encode(string)))
 		for(var/mob/O in all_hearers(7, src.loc))
 			O.show_message("<span class='game radio'><span class='name'>[src]</span><b> [bicon(src)] [pick("squawks", "beeps", "boops", "says", "screeches")], </b> <span class='message'>\"[string]\"</span></span>",2)
 
@@ -519,12 +521,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", "emoney")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"eject money", .proc/emoney)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price","setPrice")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code","setCode")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String","setThank")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money","checkEjectMoney")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Price",.proc/setPrice)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Code",.proc/setCode)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Thank-String",.proc/setThank)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Eject Money",.proc/checkEjectMoney)
 
 	proc/emoney(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -534,7 +536,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -578,7 +580,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -586,7 +588,7 @@
 				return 0
 		ejectmoney()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if (istype(W, /obj/item/spacecash) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			LIGHT_UP_HOUSING
@@ -637,7 +639,7 @@
 
 	New()
 		. = ..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"flush", "flushp")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"flush", .proc/flushp)
 
 	disposing()
 		if(air_contents)
@@ -646,7 +648,7 @@
 		trunk = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user))
 			if(src.level == 1) //wrenched down
 				trunk = locate() in src.loc
@@ -689,14 +691,14 @@
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)
-		playsound(src, "sound/machines/disposalflush.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
 
 		H.start(src) // start the holder processing movement
 
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, "sound/machines/hiss.ogg", 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -718,21 +720,21 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"print", "print")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name","setPaperName")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"print", .proc/print)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Paper Name",.proc/setPaperName)
 
 	proc/print(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, "sound/machines/printer_thermal.ogg", 60, 0)
+			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html(html_decode(input.signal))
+			P.info = strip_html_tags(html_decode(input.signal))
 			P.name = paper_name
 		return
 
-	proc/setPrice(obj/item/W as obj, mob/user as mob)
+	proc/setPaperName(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter name:","name setting", paper_name) as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
@@ -741,7 +743,7 @@
 		return 1
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -756,11 +758,11 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Paper Consumption","toggleConsume")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode","toggleThermal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Paper Consumption",.proc/toggleConsume)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Thermal Paper Mode",.proc/toggleThermal)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -775,7 +777,7 @@
 		boutput(user, "[thermal_only ? "Now accepting only thermal paper":"Now accepting any paper"]")
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		else if (istype(W, /obj/item/paper) && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(thermal_only && !istype(W, /obj/item/paper/thermal))
@@ -783,9 +785,9 @@
 				return 0
 			LIGHT_UP_HOUSING
 			flick("comp_pscan1",src)
-			playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
+			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
-			var/saniStr = strip_html(sanitize(html_encode(P.info)))
+			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
@@ -834,9 +836,9 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range","setRange")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",.proc/setRange)
 
 	proc/setRange(obj/item/W as obj, mob/user as mob)
 		var/rng = input("Range is limited between 1-5.", "Enter a new range", range) as num
@@ -873,7 +875,7 @@
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -885,7 +887,7 @@
 		beamobjs = list()
 		var/turf/lastturf = get_step(get_turf(src), dir)
 		for(var/i = 1, i<range, i++)
-			if(lastturf.opacity || !lastturf.canpass())
+			if(lastturf.opacity || !lastturf.Enter(src)) // bootlegging src as an Enter arg. shouldn't matter
 				break
 			var/obj/mechbeam/newbeam = new(lastturf, src)
 			newbeam.set_dir(src.dir)
@@ -900,20 +902,20 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Type","toggleSig")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Type",.proc/toggleSig)
 
 	proc/toggleSig(obj/item/W as obj, mob/user as mob)
 		send_name = !send_name
 		boutput(user, "[send_name ? "Now sending user NAME":"Now sending user FINGERPRINT"]")
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level != 2 && !ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time))
 			if(ishuman(user) && user.bioHolder)
 				LIGHT_UP_HOUSING
 				flick("comp_hscan1",src)
-				playsound(src.loc, "sound/machines/twobeep2.ogg", 90, 0)
-				var/sendstr = (send_name ? user.real_name : user.bioHolder.uid_hash)
+				playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
+				var/sendstr = (send_name ? user.real_name : user.bioHolder.fingerprints)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,sendstr)
 			else
 				boutput(user, "<span class='alert'>The hand scanner can only be used by humanoids.</span>")
@@ -921,7 +923,7 @@
 		else return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target) && target.density)
 				user.drop_item()
 				src.set_loc(target)
@@ -938,7 +940,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activateproc")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activateproc)
 
 	proc/drivecurrent()
 		if(level == 2) return
@@ -973,7 +975,7 @@
 		if(AM.throwing) return
 		var/atom/target = get_edge_target_turf(AM, src.dir)
 		var/datum/thrown_thing/thr = AM.throw_at(target, 50, 1)
-		thr?.user = (owner || usr)
+		thr?.user = (owner)
 		return
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -999,8 +1001,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", "eleczap")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power","setPower")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"zap", .proc/eleczap)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Power",.proc/setPower)
 
 	proc/eleczap(var/datum/mechanicsMessage/input)
 		if(level == 2 || ON_COOLDOWN(src, SEND_COOLDOWN_ID, src.cooldown_time)) return
@@ -1041,10 +1043,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delay", "delayproc")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delay", .proc/delayproc)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay","setDelay")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing","toggleDefault")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Delay",.proc/setDelay)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",.proc/toggleDefault)
 
 	proc/setDelay(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter delay in 10ths of a second:", "Set delay", 10) as num
@@ -1098,10 +1100,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire1")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire2")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Frame","setTime")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Time Frame",.proc/setTime)
 
 	proc/setTime(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user, "Enter Time Frame in 10ths of a second:", "Set Time Frame", timeframe) as num
@@ -1160,25 +1162,25 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 9", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 10", "fire")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 8", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 9", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 10", .proc/fire)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field","setTrigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1205,15 +1207,15 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", "split")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field","setTrigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"split", .proc/split)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger Field",.proc/setTrigger)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1251,13 +1253,13 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", "checkstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", "setPatternSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", "setReplacementSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", "setFlagsSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern","setPattern")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement","setReplacement")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags","setFlags")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"replace string", .proc/checkstr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set pattern", .proc/setPatternSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set replacement", .proc/setReplacementSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set flags", .proc/setFlagsSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Pattern",.proc/setPattern)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Replacement",.proc/setReplacement)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Flags",.proc/setFlags)
 
 	proc/setPattern(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Pattern:","Pattern setting", expressionpatt) as text
@@ -1321,7 +1323,7 @@
 		if(!R) return
 
 		var/mod = R.Replace(input.signal, expressionrepl)
-		mod = strip_html(sanitize(html_encode(mod)))//U G H
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
 		if(mod)
 			input.signal = mod
@@ -1336,22 +1338,22 @@
 	desc = ""
 	icon_state = "comp_regfind"
 	var/replacesignal = 0
-	var/expression = "/\[a-Z\]*/"
-	var/expressionpatt
+	var/expressionTT = "\[a-zA-Z\]*"
+	var/expressionpatt = "\[a-zA-Z\]*"
 	var/expressionflag
 
 	get_desc()
-		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expression))]<br>
+		. += {"<br><span class='notice'>Current Expression: [sanitize(html_encode(expressionTT))]<br>
 		Replace Signal is [replacesignal ? "on.":"off."]</span>"}
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", "checkstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", "setregex")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", .proc/checkstr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set regex", .proc/setregex)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Pattern","setRegex")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Flags","setFlags")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing","toggleReplaceing")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Pattern",.proc/setRegex)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Expression Flags",.proc/setFlags)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal replacing",.proc/toggleReplaceing)
 
 	proc/setRegex(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Expression Pattern:","Expression setting", expressionpatt) as text
@@ -1359,9 +1361,9 @@
 			return 0
 		if(length(inp))
 			expressionpatt = inp
-			expression =("[expressionpatt]/[expressionflag]")
+			expressionTT =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
-			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Expression Pattern set to [inp], Current Expression: [sanitize(html_encode(expressionTT))]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -1372,9 +1374,9 @@
 			return 0
 		if(length(inp))
 			expressionflag = inp
-			expression =("[expressionpatt]/[expressionflag]")
+			expressionTT =("[expressionpatt]/[expressionflag]")
 			inp = sanitize(html_encode(inp))
-			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expression))]")
+			boutput(user, "Expression Flags set to [inp], Current Expression: [sanitize(html_encode(expressionTT))]")
 			tooltip_rebuild = 1
 			return 1
 		return 0
@@ -1387,10 +1389,11 @@
 
 	proc/setregex(var/datum/mechanicsMessage/input)
 		if(level == 2) return
-		expression = input.signal
+		expressionpatt = input.signal
+		expressionTT = ("[expressionpatt]/[expressionflag]")
 		tooltip_rebuild = 1
 	proc/checkstr(var/datum/mechanicsMessage/input)
-		if(level == 2 || !length(expression)) return
+		if(level == 2 || !length(expressionTT)) return
 		LIGHT_UP_HOUSING
 		var/regex/R = new(expressionpatt, expressionflag)
 
@@ -1423,12 +1426,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", "checkstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", "settrigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"check string", .proc/checkstr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set trigger", .proc/settrigger)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger-String","setTrigger")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Invert Trigger","invertTrigger")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Replace Signal","toggleReplace")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Trigger-String",.proc/setTrigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Invert Trigger",.proc/invertTrigger)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Replace Signal",.proc/toggleReplace)
 
 	proc/setTrigger(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting","1") as text
@@ -1495,9 +1498,9 @@
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER), .proc/addFilter)
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_RM_OUTGOING), .proc/removeFilter)
 		RegisterSignal(src, list(_COMSIG_MECHCOMP_DISPATCH_VALIDATE), .proc/runFilter)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", "dispatch")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching","toggleExactMatching")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode","toggleSingleOutput")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"dispatch", .proc/dispatch)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle exact matching",.proc/toggleExactMatching)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle single output mode",.proc/toggleSingleOutput)
 
 	disposing()
 		var/list/signals = list(\
@@ -1579,14 +1582,14 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string", "addstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", "addstrsend")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "sendstr")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", "clrbff")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", "setStartingStringSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", "setEndingStringSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String","setStartingStringManual")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String","setEndingStringManual")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string", .proc/addstr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add to string + send", .proc/addstrsend)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/sendstr)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"clear buffer", .proc/clrbff)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set starting string", .proc/setStartingStringSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set ending string", .proc/setEndingStringSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set starting String",.proc/setStartingStringManual)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set ending String",.proc/setEndingStringManual)
 
 	proc/setStartingStringManual(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter String:","String setting", bstr) as text
@@ -1602,7 +1605,7 @@
 		setStartingString(input.signal)
 
 	proc/setStartingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		bstr = inp
 		tooltip_rebuild = 1
 
@@ -1620,7 +1623,7 @@
 		setEndingString(input.signal)
 
 	proc/setEndingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		astr = inp
 		tooltip_rebuild = 1
 
@@ -1643,7 +1646,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
+		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
@@ -1672,9 +1675,9 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"relay", "relay")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"relay", .proc/relay)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing","toggleDefault")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Signal Changing",.proc/toggleDefault)
 
 	proc/toggleDefault(obj/item/W as obj, mob/user as mob)
 		changesig = !changesig
@@ -1705,10 +1708,10 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send file", "sendfile")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add file to signal and send", "addandsendfile")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"save file", "storefile")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", "deletefile")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send file", .proc/sendfile)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add file to signal and send", .proc/addandsendfile)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"save file", .proc/storefile)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"delete file", .proc/deletefile)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
 	disposing()
@@ -1771,11 +1774,11 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", "send")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqManually")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering","toggleAddressFiltering")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All","toggleForwardAll")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send radio message", .proc/send)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", .proc/setfreq)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",.proc/setFreqManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle NetID Filtering",.proc/toggleAddressFiltering)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Forward All",.proc/toggleForwardAll)
 
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
@@ -1827,13 +1830,13 @@
 		for(var/X in converted)
 			sendsig.data["[X]"] = "[converted[X]]"
 			if(X == "command" && converted[X] == "text_message")
-				logTheThing("pdamsg", usr, null, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
+				logTheThing(LOG_PDAMSG, usr, "sends a PDA message <b>[input.signal]</b> using a wifi component at [log_loc(src)].")
 		if(input.data_file)
 			sendsig.data_file = input.data_file.copy_file()
 		SPAWN(0)
 			if(src.noise_enabled)
 				src.noise_enabled = false
-				playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+				playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 				SPAWN(WIFI_NOISE_COOLDOWN)
 					src.noise_enabled = true
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, sendsig, src.range, "main")
@@ -1859,7 +1862,7 @@
 				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if(src.noise_enabled)
 						src.noise_enabled = false
-						playsound(src, "sound/machines/modem.ogg", WIFI_NOISE_VOLUME, 0, 0)
+						playsound(src, 'sound/machines/wifi.ogg', WIFI_NOISE_VOLUME, 0, 0)
 						SPAWN(WIFI_NOISE_COOLDOWN)
 							src.noise_enabled = true
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pingsignal, src.range)
@@ -1868,7 +1871,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1876,21 +1879,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode("[signal.encryption]" + stars(packets, 15)), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(list2params(signal.data)), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["data"]), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, html_decode(signal.data["message"]), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -1935,23 +1938,23 @@
 	New()
 		..()
 		signals = new/list()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", "additem")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", "remitem")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", "remallitem")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item", "selitem")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item + send", "selitemplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", "next")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous", "previous")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", "nextplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", "previousplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", "sendCurrent")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", "popitem")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", "sendRand")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List","setSignalList")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)","setDelimetedList")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Announcements","toggleAnnouncements")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Random","toggleRandom")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Allow Duplicate Entries","toggleAllowDuplicates")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"add item", .proc/additem)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove item", .proc/remitem)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"remove all items", .proc/remallitem)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item", .proc/selitem)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"select item + send", .proc/selitemplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next", .proc/next)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous", .proc/previous)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"next + send", .proc/nextplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"previous + send", .proc/previousplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected", .proc/sendCurrent)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send selected + remove", .proc/popitem)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send random", .proc/sendRand)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List",.proc/setSignalList)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Signal List(Delimeted)",.proc/setDelimetedList)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Announcements",.proc/toggleAnnouncements)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Random",.proc/toggleRandom)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Allow Duplicate Entries",.proc/toggleAllowDuplicates)
 
 
 	proc/setSignalList(obj/item/W as obj, mob/user as mob)
@@ -2158,15 +2161,15 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", "activateplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", "deactivate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate and send", "deactivateplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle and send", "toggleplus")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", "send")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set On-Signal","setOnSignal")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal","setOffSignal")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate and send", .proc/activateplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", .proc/deactivate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate and send", .proc/deactivateplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle and send", .proc/toggleplus)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", .proc/send)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set On-Signal",.proc/setOnSignal)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Off-Signal",.proc/setOffSignal)
 
 	proc/setOnSignal(obj/item/W as obj, mob/user as mob)
 		var/inp = input(user,"Please enter Signal:","Signal setting",signal_on) as text
@@ -2259,10 +2262,10 @@
 	New()
 		..()
 		START_TRACKING
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "activate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", "setidmsg")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID","setID")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode","toggleSendOnly")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/activate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"setID", .proc/setidmsg)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Teleporter ID",.proc/setID)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Send-only Mode",.proc/toggleSendOnly)
 		telelight = image('icons/misc/mechanicsExpansion.dmi', icon_state="telelight")
 		telelight.plane = PLANE_SELFILLUM
 		telelight.alpha = 180
@@ -2306,7 +2309,7 @@
 		LIGHT_UP_HOUSING
 		flick("[under_floor ? "u":""]comp_tele1", src)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tpbeam(get_turf(src.loc))).Run()
-		playsound(src.loc, "sound/mksounds/boost.ogg", 50, 1)
+		playsound(src.loc, 'sound/mksounds/boost.ogg', 50, 1)
 		var/list/destinations = new/list()
 
 		for_by_tcl(T, /obj/item/mechanics/telecomp)
@@ -2328,7 +2331,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/tpbeamdown(get_turf(picked.loc))).Run()
 			for(var/atom/movable/M in src.loc)
 				if(M == src || M.invisibility || M.anchored) continue
-				logTheThing("combat", M, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
+				logTheThing(LOG_COMBAT, M, "entered [src] at [log_loc(src)] and teleported to [log_loc(picked)]")
 				M.set_loc(get_turf(picked.loc))
 				count_sent++
 			input.signal = count_sent
@@ -2360,12 +2363,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", "toggle")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", "turnon")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", "turnoff")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set rgb", "setrgb")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Color","setColor")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range","setRange")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggle)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"activate", .proc/turnon)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"deactivate", .proc/turnoff)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set rgb", .proc/setrgb)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Color",.proc/setColor)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Range",.proc/setRange)
 
 		light = new /datum/light/point
 		light.attach(src)
@@ -2446,7 +2449,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Show-Source","toggleSender")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Show-Source",.proc/toggleSender)
 
 	proc/toggleSender(obj/item/W as obj, mob/user as mob)
 		add_sender = !add_sender
@@ -2483,8 +2486,8 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", "setfreq")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency","setFreqMan")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"set frequency", .proc/setfreq)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Frequency",.proc/setFreqMan)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
 
 	proc/setFreqMan(obj/item/W as obj, mob/user as mob)
@@ -2517,7 +2520,7 @@
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message))
+		message = strip_html_tags(html_decode(message))
 		var/heardname = null
 		if (isobj(AM))
 			heardname = AM.name
@@ -2531,6 +2534,8 @@
 						heardname = ID.registered
 					else
 						heardname = "Unknown"
+				else if (H.vdisfigured)
+					heardname = "Unknown"
 
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"name=[heardname]&message=[message]")
 		animate_flash_color_fill(src,"#00FF00",2, 2)
@@ -2548,7 +2553,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", "fire")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input", .proc/fire)
 
 	proc/fire(var/datum/mechanicsMessage/input)
 		if(level == 2 || !input) return
@@ -2599,22 +2604,22 @@
 		..()
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ALLOW_MANUAL_SIGNAL)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		if(ispulsingtool(W)) return // Don't press the button with a multitool, it brings up the config menu instead
 		return attack_hand(user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(level == 1)
 			flick(icon_down, src)
 			LIGHT_UP_HOUSING
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_DEFAULT_MSG, null)
-			logTheThing("station", user, null, "presses the mechcomp button at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "presses the mechcomp button at [log_loc(src)].")
 			return 1
 		return ..(user)
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if(level == 2 && get_dist(src, target) == 1)
+		if(level == 2 && GET_DIST(src, target) == 1)
 			if(isturf(target))
 				user.drop_item()
 				if(isturf(target) && target.density)
@@ -2646,9 +2651,9 @@
 	New()
 		..()
 		active_buttons = list()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button","addButton")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button","removeButton")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", "signalAddButton")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Add Button",.proc/addButton)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Button",.proc/removeButton)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT, "Add Button", .proc/signalAddButton)
 
 	proc/addButton(obj/item/W as obj, mob/user as mob)
 		if(length(src.active_buttons) >= 10)
@@ -2711,7 +2716,7 @@
 
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (level == 1)
 			if (length(src.active_buttons))
 				var/selected_button = input(user, "Press a button", "Button Panel") in src.active_buttons + "*CANCEL*"
@@ -2719,7 +2724,7 @@
 				LIGHT_UP_HOUSING
 				flick(icon_down, src)
 				SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, src.active_buttons[selected_button])
-				logTheThing("station", user, null, "presses the mechcomp button [selected_button] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "presses the mechcomp button [selected_button] at [log_loc(src)].")
 				return 1
 			else
 				boutput(user, "<span class='alert'>[src] has no active buttons - there's nothing to press!</span>")
@@ -2752,12 +2757,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"fire", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Gun","removeGun")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"fire", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Gun",.proc/removeGun)
 
 	proc/removeGun(obj/item/W as obj, mob/user as mob)
 		if(Gun)
-			logTheThing("station", user, null, "removes [Gun] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [Gun] from [src] at [log_loc(src)].")
 			Gun.set_loc(get_turf(src))
 			Gun = null
 			tooltip_flags &= ~REBUILD_ALWAYS
@@ -2765,7 +2770,7 @@
 		boutput(user, "<span class='alert'>There is no gun inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(..(W, user)) return 1
 		var/gun_fits = 0
 		for(var/I in src.compatible_guns)
@@ -2776,7 +2781,7 @@
 		if(gun_fits)
 			if(!Gun)
 				boutput(user, "You put the [W] inside the [src].")
-				logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+				logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 				user.drop_item()
 				Gun = W
 				Gun.set_loc(src)
@@ -2808,10 +2813,10 @@
 					Gun.shoot(target, get_turf(src), src)
 			else
 				src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"The [Gun.name] has no [istype(Gun, /obj/item/gun/energy) ? "charge" : "ammo"] remaining.\"</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		else
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No gun installed.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 		return
 
 	update_icon()
@@ -2833,7 +2838,7 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recharge", "recharge")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"recharge", .proc/recharge)
 
 	process()
 		..()
@@ -2856,7 +2861,7 @@
 		// Can't recharge the crossbow. Same as the other recharger.
 		if (!(SEND_SIGNAL(E, COMSIG_CELL_CAN_CHARGE) & CELL_CHARGEABLE))
 			src.visible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"This gun cannot be recharged manually.\"</span>")
-			playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 			charging = 0
 			tooltip_rebuild = 1
 			UpdateIcon()
@@ -2904,12 +2909,12 @@
 
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"play", "fire")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Instrument","removeInstrument")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"play", .proc/fire)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Remove Instrument",.proc/removeInstrument)
 
 	proc/removeInstrument(obj/item/W as obj, mob/user as mob)
 		if(instrument)
-			logTheThing("station", user, null, "removes [instrument] from [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "removes [instrument] from [src] at [log_loc(src)].")
 			instrument.set_loc(get_turf(src))
 			instrument = null
 			tooltip_rebuild = 1
@@ -2918,7 +2923,7 @@
 			boutput(user, "<span class='alert'>There is no instrument inside this component.</span>")
 		return 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (..(W, user)) return 1
 		else if (instrument) // Already got one, chief!
 			boutput(user, "There is already \a [instrument] inside the [src].")
@@ -2950,7 +2955,7 @@
 
 		if (instrument) // You did it, boss. Now log it because someone will figure out a way to abuse it
 			boutput(user, "You put [W] inside [src].")
-			logTheThing("station", user, null, "adds [W] to [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "adds [W] to [src] at [log_loc(src)].")
 			user.drop_item()
 			instrument.set_loc(src)
 			tooltip_rebuild = 1
@@ -3000,12 +3005,12 @@
 		icon_state = "comp_arith"
 	New()
 		..()
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", "setA")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", "setB")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", "evaluate")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A","setAManually")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B","setBManually")
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode","setMode")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set A", .proc/setA)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Set B", .proc/setB)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"Evaluate", .proc/evaluate)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set A",.proc/setAManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set B",.proc/setBManually)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Set Mode",.proc/setMode)
 
 	proc/setAManually(obj/item/W as obj, mob/user as mob)
 		var/input = input("Set A to what?", "A", A) as num
@@ -3086,14 +3091,14 @@
 	New()
 		..()
 		map = list()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", "addItems")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", "removeItem")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", "sendValue")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", "setMode")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", "addItemManual")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", "removeItemManual")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", "getMapAsString")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", "clear")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "add association(s)", .proc/addItems)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "remove association", .proc/removeItem)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "send value", .proc/sendValue)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set mode", .proc/setMode)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "add association", .proc/addItemManual)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "remove association", .proc/removeItemManual)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "view all associations", .proc/getMapAsString)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "clear all associations", .proc/clear)
 
 	get_desc()
 		. += {"<br><span class='notice'>Mode: [mode == 0 ? "Mutable" : mode == 1 ? "Immutable" : "List"]<br>
@@ -3248,8 +3253,8 @@
 		src.icon_state = "comp_screen"
 	New()
 		..()
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", "setLetterIndex")
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", "fire")
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "set letter index", .proc/setLetterIndex)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "input", .proc/fire)
 
 	proc/setLetterIndex(obj/item/W as obj, mob/user as mob)
 		var/input = input("Which letter from the input string to take? (1-indexed)", "Letter Index", letter_index) as num

@@ -471,7 +471,7 @@
 					signal.data[key] = keyval[key]
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
-					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
+					logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "sender")
 				master.updateSelfDialog()
@@ -528,7 +528,7 @@
 
 			var/allowfrequency = FALSE
 
-			switch (alert("Allow users to set frequency?",,"Yes","No"))
+			switch (tgui_alert(usr, "Allow users to set frequency?", "Frequency permissions", list("Yes", "No")))
 				if ("Yes")
 					allowfrequency = TRUE
 				else
@@ -644,7 +644,7 @@
 					signal.data[buttonc[1][i]] = value
 
 				if ((send_freq == FREQ_PDA) && (!isnull(signal.data["message"])) && (signal.data["command"] == "text_message"))
-					logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
+					logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [src.master.loc.name] ([src.master.fingerprintslast]) (as [isnull(signal.data["sender_name"]) ? "Nobody" : signal.data["sender_name"]]) &rarr; [isnull(signal.data["address_1"]) ? "Everybody" : "[signal.data["address_1"]]"]:</b></i> [signal.data["message"]]")
 
 				get_radio_connection_by_id(src.master, "builtprog").update_frequency(send_freq)
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "builtprog")

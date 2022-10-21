@@ -19,10 +19,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	is_npc = 1
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -506,15 +506,65 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	return null
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//jellyfish
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/living/critter/aquatic/fish/jellyfish
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "Squishy"
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish"
+	base_move_delay = 2
+	hand_count = 2
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	death_text = "%src% collapses in a heap on the ground!"
+	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
+	add_abilities = list(/datum/targetable/critter/sting)
+
+/mob/living/critter/aquatic/fish/jellyfish/New()
+	..()
+	src.color = random_saturated_hex_color()
+	var/list/color_list = rgb2num(src.color)
+	src.add_medium_light("jellyglow", color_list + list(100))
+	SPAWN(0)
+		if(src.client)
+			src.is_npc = 0
+		else
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
+
+/mob/living/critter/aquatic/fish/jellyfish/setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
+	HH.limb = new /datum/limb/mouth/fish/jellyfish
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "mouth"
+	HH.name = "mouth"
+	HH.limb_name = "mouth"
+
+	HH = hands[2]
+	HH.limb = new /datum/limb/small_critter
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "handn"
+	HH.name = "tendrils"
+	HH.limb_name = "tendrils"
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // aquatic mobcritter limbs
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/mouth/fish
-	sound_attack = "sound/impact_sounds/Glub_2.ogg"
+	sound_attack = 'sound/impact_sounds/Glub_2.ogg'
 	dam_low = 0
 	dam_high = 1
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
 	stam_damage_mult = 0.2
+
+	jellyfish
+		dam_low = 3
+		dam_high = 8
 
 /datum/limb/king_crab // modified claw limb
 
@@ -527,7 +577,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		return
 
 	if (isobj(target))
-		switch (user.smash_through(target, list("window", "grille", "table")))
+		switch (user.smash_through(target, list("window", "grille", "table", "blob"))) //crab vs blob when
 			if (0)
 				if (isitem(target))
 					if (prob(33))
@@ -558,7 +608,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
@@ -581,13 +631,13 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
 	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
-	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
+	msgs.played_sound = 'sound/impact_sounds/Glub_1.ogg'
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)
 

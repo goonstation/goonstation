@@ -2,7 +2,7 @@
 	name = "computer"
 	icon = 'icons/obj/computer.dmi'
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	power_usage = 250
 	var/datum/light/light
 	var/light_r = 1
@@ -34,14 +34,14 @@
 	attack_ai(mob/user as mob)
 		src.Attackhand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (can_reconnect)
 			if (ispulsingtool(W) && !(status & (BROKEN|NOPOWER)))
 				boutput(user, "<span class='notice'>You pulse the [name] to re-scan for equipment.</span>")
 				connection_scan()
 				return
 		if (isscrewingtool(W) && src.circuit_type)
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
 		else
@@ -84,10 +84,6 @@
 	icon = 'airtunnelcomputer.dmi'
 	icon_state = "console00"
 */
-/obj/machinery/computer/aiupload
-	name = "AI Upload"
-	desc = "A computer that accepts modules, and uploads the commands to the AI."
-	icon_state = "aiupload"
 
 /obj/machinery/computer/general_alert
 	name = "General Alert Computer"
@@ -126,16 +122,16 @@
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//gib(src.loc) NO.
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		if(3.0)
+		if(3)
 			if (prob(25))
 				for(var/x in src.verbs)
 					src.verbs -= x

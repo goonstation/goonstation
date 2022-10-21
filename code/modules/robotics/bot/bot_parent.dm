@@ -35,7 +35,7 @@
 	/// The noise that happens whenever the bot speaks
 	var/bot_voice = 'sound/misc/talk/bottalk_1.ogg'
 	/// The bot's speech bubble
-	var/static/image/bot_speech_bubble = image('icons/mob/mob.dmi', "speech")
+	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
 	var/use_speech_bubble = 1
 	/// Is this bot *dynamic* enough to need a higher processing tier when being watched?
 	/// Set to 0 for bots that don't typically directly interact with people, like ducks and floorbots
@@ -94,6 +94,10 @@
 			src.botcard.access = get_access(src.access_lookup)
 			src.botnet_id = format_net_id("\ref[src]")
 
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		botcard = null
 		qdel(chat_text)
@@ -105,7 +109,7 @@
 			cam = null
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		attack_particle(user,src)
 		hit_twitch(src)
@@ -231,13 +235,7 @@
 	if(!T) return
 	if(announce_it)
 		visible_message("<b>[src]</b> points at [target]!")
-	var/obj/decal/point/P = new(T)
-	P.pixel_x = target.pixel_x
-	P.pixel_y = target.pixel_y
-	P.color = src.bot_speech_color
-	SPAWN(2 SECONDS)
-		P.invisibility = INVIS_ALWAYS
-		qdel(P)
+	make_point(T, pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bot_speech_color, pointer=src)
 
 /obj/machinery/bot/emp_act()
 	src.emag_act()
@@ -266,9 +264,9 @@
 
 /obj/machinery/bot/proc/navigate_to(atom/the_target, var/move_delay = 10, var/adjacent = 0, max_dist=60)
 	var/target_turf = get_pathable_turf(the_target)
-	if(IN_RANGE(the_target, src, 1))
+	if((BOUNDS_DIST(the_target, src) == 0))
 		return
-	if(src.bot_mover?.the_target == target_turf)
+	if(src.bot_mover?.the_target == target_turf && frustration == 0)
 		return 0
 	if(!target_turf)
 		return 0
@@ -316,6 +314,11 @@
 			master.moving = FALSE
 		src.master = null
 		src.the_target = null
+
+		#ifdef ALL_ROBOT_AND_COMPUTERS_MUST_SHUT_THE_HELL_UP
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 		..()
 
 	proc/master_move()

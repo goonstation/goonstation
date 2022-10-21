@@ -1952,7 +1952,7 @@
 	layer = 4;
 	name = "Market #2";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -3169,7 +3169,7 @@
 	layer = 4;
 	name = "Market #1";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/market)
@@ -7289,7 +7289,6 @@
 	icon_state = "tabledir";
 	dir = 10
 	},
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/purple,
 /area/space{
@@ -7314,7 +7313,6 @@
 	},
 /obj/item/aiModule/protectStation,
 /obj/item/aiModule/notHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/purple,
 /area/space{
 	name = "Module Storage"
@@ -7348,7 +7346,6 @@
 	icon_state = "tabledir";
 	dir = 4
 	},
-/obj/item/aiModule/reset,
 /obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -7827,23 +7824,6 @@
 	dir = 2;
 	name = "S APC";
 	pixel_y = -24
-	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aoO" = (
-/obj/rack,
-/obj/item/circuitboard/aiupload,
-/obj/item/circuitboard/teleporter,
-/obj/item/circuitboard/card,
-/obj/item/circuitboard/robot_module_rewriter,
-/obj/item/circuitboard/cloning,
-/obj/machinery/light_switch{
-	name = "S light switch";
-	pixel_y = -24
-	},
-/obj/machinery/camera{
-	c_tag = "Technical Storage";
-	dir = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -9119,11 +9099,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/space)
-"arE" = (
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer/aiupload,
-/turf/simulated/floor/purple,
-/area/space)
 "arF" = (
 /obj/grille,
 /obj/window/reinforced{
@@ -9423,7 +9398,8 @@
 /area/space)
 "asi" = (
 /obj/item/device/radio/intercom{
-	dir = 8 frequency = 1447;
+	dir = 8;
+	frequency = 1447;
 	broadcasting = 1
 	},
 /obj/machinery/light/small{
@@ -15759,7 +15735,7 @@
 	},
 /area/station/science/chemistry)
 "aEJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
 "aEK" = (
@@ -16965,7 +16941,7 @@
 	},
 /area/station/science/chemistry)
 "aGR" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -24329,7 +24305,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Pad Lockdown Door";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine,
 /area/space)
@@ -26579,7 +26555,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -27232,7 +27208,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
@@ -28410,13 +28386,6 @@
 	dir = 8
 	},
 /area/station/crew_quarters/kitchen)
-"bbW" = (
-/obj/decal/fakeobjects/skeleton,
-/obj/item/clothing/suit/chef,
-/obj/item/clothing/head/chefhat,
-/obj/decal/cleanable/cobweb,
-/turf/simulated/aprilfools,
-/area/station/hallway/primary/west)
 "bbX" = (
 /obj/decal/cleanable/tomatosplat,
 /obj/creepy_sound_trigger,
@@ -29452,7 +29421,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor,
 /area/station/security/brig)
 "bdL" = (
@@ -29979,7 +29948,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/courtroom)
 "beD" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -30520,7 +30489,7 @@
 	d1 = 4;
 	d2 = 8
 	},
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /obj/cable{
 	icon_state = "2-8";
 	d1 = 2;
@@ -33141,7 +33110,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "bkd" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;
@@ -37191,6 +37160,34 @@
 "cqb" = (
 /turf/space,
 /area/space)
+"gcn" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/lawrack,
+/turf/simulated/floor/purple,
+/area/space)
+"tBe" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/suit/chef,
+/obj/item/clothing/head/chefhat,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/aprilfools,
+/area/station/hallway/primary/west)
+"vEx" = (
+/obj/rack,
+/obj/item/circuitboard/teleporter,
+/obj/item/circuitboard/card,
+/obj/item/circuitboard/robot_module_rewriter,
+/obj/item/circuitboard/cloning,
+/obj/machinery/light_switch{
+	name = "S light switch";
+	pixel_y = -24
+	},
+/obj/machinery/camera{
+	c_tag = "Technical Storage";
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 
 (1,1,1) = {"
 cqb
@@ -55429,7 +55426,7 @@ amR
 anq
 anP
 anq
-aoO
+vEx
 apn
 apH
 apH
@@ -55716,7 +55713,7 @@ aWn
 aVj
 aVj
 aPE
-bbW
+tBe
 aPE
 bZO
 cnn
@@ -68827,7 +68824,7 @@ apF
 cae
 aqy
 aqZ
-arE
+gcn
 asi
 aqy
 cae

@@ -26,10 +26,10 @@
 
 	var/list/deployed_fields = list()
 
-	var/sound/sound_interdict_on = "sound/machines/interdictor_activate.ogg"
-	var/sound/sound_interdict_off = "sound/machines/interdictor_deactivate.ogg"
-	var/sound/sound_interdict_run = "sound/machines/interdictor_operate.ogg"
-	var/sound/sound_togglebolts = "sound/machines/click.ogg"
+	var/sound/sound_interdict_on = 'sound/machines/interdictor_activate.ogg'
+	var/sound/sound_interdict_off = 'sound/machines/interdictor_deactivate.ogg'
+	var/sound/sound_interdict_run = 'sound/machines/interdictor_operate.ogg'
+	var/sound/sound_togglebolts = 'sound/machines/click.ogg'
 
 	New(spawnlocation,var/obj/item/cell/altcap,var/obj/item/interdictor_rod/altrod,var/datum/material/mat)
 		if(altcap)
@@ -60,7 +60,7 @@
 		deployed_fields = list()
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!src.allowed(user))
 			boutput(user, "<span class='alert'>Engineering clearance is required to operate the interdictor's locks.</span>")
 			return
@@ -86,7 +86,7 @@
 		else
 			boutput(user, "<span class='alert'>The interdictor's magnetic locks were just toggled and can't yet be toggled again.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(ispulsingtool(W))
 			boutput(user, "<span class='notice'>The interdictor's internal capacitor is currently at [src.intcap.charge] of [src.intcap.maxcharge] units.</span>")
 			return
@@ -115,6 +115,11 @@
 						boutput(user, "<span class='alert'>The interdictor must be installed onto an electrical cable.</span>")
 		else
 			..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.intcap)
+			src.intcap = null
 
 
 /obj/machinery/interdictor/update_icon()
@@ -203,7 +208,7 @@
 //initalizes interdiction, including visual depiction of range
 /obj/machinery/interdictor/proc/start_interdicting()
 	for(var/turf/T in orange(src.interdict_range,src))
-		if (get_dist(T,src) != src.interdict_range)
+		if (GET_DIST(T,src) != src.interdict_range)
 			continue
 		var/obj/interdict_edge/YEE = new /obj/interdict_edge(T)
 		src.deployed_fields += YEE
@@ -283,6 +288,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "electronic"
 	mats = 6
+	health = 6
 	w_class = W_CLASS_TINY
 	flags = FPRINT | TABLEPASS | CONDUCT
 
@@ -329,12 +335,12 @@
 	var/obj/intcap = null
 	var/obj/introd = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(state == 4) //permit removal of cell before you install wires
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -342,7 +348,7 @@
 			return
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		switch(state)
 			if(0)
 				if (iswrenchingtool(I))
@@ -364,7 +370,7 @@
 					src.state = 4
 					src.icon_state = "interframe-4"
 					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -434,7 +440,7 @@
 
 	onUpdate()
 		..()
-		if (itdr == null || the_tool == null || owner == null || get_dist(owner, itdr) > 1)
+		if (itdr == null || the_tool == null || owner == null || BOUNDS_DIST(owner, itdr) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -444,22 +450,22 @@
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins assembling \the [itdr].")
 		if (itdr.state == 1)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a mainboard into \the [itdr].")
 		if (itdr.state == 2)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a phase-control rod into \the [itdr].")
 		if (itdr.state == 4)
-			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [itdr]'s electrical systems.")
 		if (itdr.state == 5)
-			playsound(itdr, "sound/effects/zzzt.ogg", 30, 1)
+			playsound(itdr, 'sound/effects/zzzt.ogg', 30, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [itdr]'s wiring into place.")
 		if (itdr.state == 6)
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing a casing onto \the [itdr].")
 	onEnd()
 		..()
@@ -467,14 +473,14 @@
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
 			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(itdr, "sound/items/Ratchet.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
 			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -486,7 +492,7 @@
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
 			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -499,7 +505,7 @@
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(itdr, "sound/items/Deconstruct.ogg", 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -515,12 +521,12 @@
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You solder the wiring into place. The internal systems are now fully installed.</span>")
-			playsound(itdr, "sound/effects/zzzt.ogg", 40, 1)
+			playsound(itdr, 'sound/effects/zzzt.ogg', 40, 1)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(itdr, "sound/impact_sounds/Generic_Stab_1.ogg", 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool

@@ -11,8 +11,8 @@
 "g" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
-/obj/item/card_group,
 /obj/machinery/light/small/floor/netural,
+/obj/item/card_box/plain,
 /turf/simulated/floor/wood/seven,
 /area/dmm_suite/clear_area)
 "p" = (

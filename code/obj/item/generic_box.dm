@@ -225,7 +225,7 @@
 		take_from()
 			if( !contained_items.len )
 				boutput( usr, "Dag, this box has nothing special about it. Oh well." )
-				logTheThing("debug", src, null, "has no items in it!")
+				logTheThing(LOG_DEBUG, src, "has no items in it!")
 				return
 			src.contained_item = pick( contained_items )
 			return ..()//TODO: hack?
@@ -262,7 +262,7 @@
 			..()
 			build_overlay()
 
-		attack(mob/M as mob, mob/user as mob)
+		attack(mob/M, mob/user)
 			if (src.open)
 				src.add_fingerprint(user)
 				var/obj/item/I = src.take_from()
@@ -286,6 +286,11 @@
 			name = "box of synthflesh patches"
 			contained_item = /obj/item/reagent_containers/patch/synthflesh
 			item_amount = 10
+			max_item_amount = 10
+		nicotine
+			name = "box of nicotine patches"
+			contained_item = /obj/item/reagent_containers/patch/nicotine
+			item_amount = 5
 			max_item_amount = 10
 
 		mini_styptic
@@ -332,7 +337,7 @@
 			SPAWN(1 SECOND)
 				if (QDELETED(src)) return
 				if (!ispath(src.contained_item))
-					logTheThing("debug", src, null, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
+					logTheThing(LOG_DEBUG, src, "has a non-path contained_item, \"[src.contained_item]\", and is being disposed of to prevent errors")
 					qdel(src)
 					return
 				else if (src.item_amount == 0 && length(src.contents)) // count if we already have things inside!
@@ -359,11 +364,11 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.add_to(W, user))
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.add_fingerprint(user)
 		if (user.is_in_hands(src))
 			if (!src.open)

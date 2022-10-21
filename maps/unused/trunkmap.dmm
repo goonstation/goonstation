@@ -148,9 +148,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaz" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaB" = (
 /obj/grille/steel,
@@ -295,9 +293,7 @@
 	name = "Mining Outpost"
 	},
 /obj/lattice,
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "aaT" = (
 /obj/landmark/magnet_shield,
@@ -1151,7 +1147,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "add" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ade" = (
@@ -1198,7 +1194,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "adk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
 /turf/simulated/floor/greenwhite{
@@ -2130,7 +2126,7 @@
 /turf/space,
 /area/space)
 "afI" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -2199,7 +2195,7 @@
 /area/listeningpost)
 "afT" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/space)
@@ -2234,7 +2230,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "afZ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -3571,10 +3567,6 @@
 	d2 = 4;
 	icon_state = "1-4"
 	},
-/turf/simulated/floor/white,
-/area/russian)
-"akA" = (
-/obj/decal/fakeobjects/sink,
 /turf/simulated/floor/white,
 /area/russian)
 "akB" = (
@@ -5941,14 +5933,14 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "asc" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell5";
 	name = "Cell 5 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "ase" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell6";
 	name = "Cell 6 Locker"
 	},
@@ -7321,7 +7313,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "awo" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell4";
 	name = "Cell 4 Locker"
 	},
@@ -8200,7 +8192,6 @@
 /area/station/storage/tech)
 "aza" = (
 /obj/table/auto,
-/obj/item/aiModule/reset,
 /obj/item/peripheral/printer,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
@@ -8886,7 +8877,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aBP" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell3";
 	name = "Cell 3 Locker"
 	},
@@ -9312,13 +9303,6 @@
 /area/station/storage/tech)
 "aDv" = (
 /obj/item/device/audio_log,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aDw" = (
-/obj/rack{
-	dir = 4
-	},
-/obj/item/circuitboard/aiupload,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aDx" = (
@@ -9940,18 +9924,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"aFD" = (
-/obj/machinery/camera{
-	c_tag = "Genetic Research East"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/machinery/computer/aiupload,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "aFE" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -10227,14 +10199,14 @@
 /turf/simulated/wall/false_wall,
 /area/station/security/main)
 "aGH" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell2";
 	name = "Cell 2 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aGI" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell1";
 	name = "Cell 1 Locker"
 	},
@@ -11794,7 +11766,6 @@
 /area/station/maintenance/west)
 "aMn" = (
 /obj/table/auto,
-/obj/item/aiModule/rename,
 /obj/item/aiModule/freeform,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
@@ -11810,7 +11781,6 @@
 "aMp" = (
 /obj/table/auto,
 /obj/item/aiModule/oneHuman,
-/obj/item/aiModule/reset,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "aMq" = (
@@ -12766,7 +12736,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -12782,7 +12752,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -12796,7 +12766,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -16968,7 +16938,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bdS" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -20695,7 +20665,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "boD" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "boE" = (
@@ -21436,7 +21406,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -21452,7 +21422,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -21481,7 +21451,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -23028,7 +22998,7 @@
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
 "btR" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "btS" = (
 /obj/cable{
@@ -23824,7 +23794,7 @@
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/east)
 "bvM" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -23842,12 +23812,12 @@
 /area/listeningpost)
 "bvQ" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "bvR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -23931,7 +23901,7 @@
 	},
 /area/station/science/lobby)
 "bwd" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -24145,7 +24115,7 @@
 	},
 /area/listeningpost)
 "bwC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -24478,7 +24448,7 @@
 /area/listeningpost)
 "bxm" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -24770,13 +24740,13 @@
 /area/station/quartermaster/storage)
 "bxZ" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
 "byf" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -25266,19 +25236,19 @@
 /area/station/hallway/primary/central)
 "bAr" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
 "bAs" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
 "bAt" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bAu" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -27613,7 +27583,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -27650,7 +27620,7 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "cAW" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/small{
@@ -27858,7 +27828,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28170,7 +28140,7 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "ejp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -28200,7 +28170,7 @@
 /turf/simulated/floor/red/side{
 	dir = 5
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eqo" = (
 /turf/simulated/floor{
 	icon_state = "carpetS"
@@ -28388,7 +28358,7 @@
 	},
 /obj/machinery/vending/security_ammo,
 /turf/simulated/floor/caution/west,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "eVc" = (
 /obj/machinery/door/window/northleft,
 /turf/simulated/floor/carpet/grime,
@@ -28541,7 +28511,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "foT" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28691,7 +28661,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28726,7 +28696,7 @@
 	name = "Sorry"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "fXy" = (
 /obj/table/auto,
 /obj/disposalpipe/segment,
@@ -28824,7 +28794,7 @@
 /obj/table/reinforced/auto,
 /obj/item/clothing/ears/earmuffs,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gnZ" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -29063,11 +29033,11 @@
 	dir = 1
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gRU" = (
 /obj/rack,
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "gVo" = (
 /obj/item/device/radio/intercom{
 	frequency = 1357;
@@ -29136,7 +29106,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hqW" = (
 /obj/table/auto,
 /obj/item/assembly/time_ignite,
@@ -29240,7 +29210,7 @@
 	name = "Fire Range Robot"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "hGL" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29397,7 +29367,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ifu" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -29560,7 +29530,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29592,7 +29562,7 @@
 	icon_state = "1-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iHg" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -29623,7 +29593,7 @@
 /area/station/security/hos)
 "iJI" = (
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "iKX" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -29683,7 +29653,7 @@
 	id = "Disposal Entrance";
 	name = "Crusher Blast Door";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -29719,7 +29689,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29790,12 +29760,6 @@
 	},
 /turf/simulated/wall,
 /area/station/maintenance/disposal)
-"jos" = (
-/obj/decal/fakeobjects/sink,
-/turf/simulated/floor/purple/side{
-	dir = 4
-	},
-/area/station/science/chemistry)
 "jrX" = (
 /obj/cable{
 	d2 = 2;
@@ -29993,7 +29957,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -30147,7 +30111,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -30163,7 +30127,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "khc" = (
 /turf/simulated/shuttle/wall{
 	dir = 6;
@@ -30226,7 +30190,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ksA" = (
 /turf/simulated/floor/darkpurple,
 /area/station/teleporter)
@@ -30247,7 +30211,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30345,7 +30309,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Commander's Office";
@@ -30421,7 +30385,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30528,7 +30492,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30633,7 +30597,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30757,7 +30721,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "loK" = (
 /obj/cable{
 	d1 = 2;
@@ -30782,7 +30746,7 @@
 /area/station/maintenance/southwest)
 "luc" = (
 /turf/simulated/wall/r_wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lxz" = (
 /obj/cable{
 	d2 = 2;
@@ -30891,7 +30855,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "lVv" = (
 /turf/simulated/shuttle/wall{
 	dir = 0;
@@ -30983,7 +30947,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -31006,7 +30970,7 @@
 /obj/machinery/light,
 /obj/cable,
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mdm" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor,
@@ -31086,6 +31050,12 @@
 	dir = 1
 	},
 /area/station/teleporter)
+"mpp" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/purple/side{
+	dir = 4
+	},
+/area/station/science/chemistry)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -31138,11 +31108,11 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mzR" = (
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "mBg" = (
 /obj/cable{
 	d1 = 1;
@@ -31374,7 +31344,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -31835,7 +31805,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "oYc" = (
 /obj/cable{
 	d1 = 1;
@@ -32015,7 +31985,7 @@
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "pDU" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -32076,7 +32046,7 @@
 /turf/simulated/floor/red/side{
 	dir = 9
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "pPx" = (
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -32244,7 +32214,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "qqf" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -32271,7 +32241,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -32385,6 +32355,18 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"qCX" = (
+/obj/machinery/camera{
+	c_tag = "Genetic Research East"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/machinery/lawrack,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "qEo" = (
 /obj/stool/bed,
 /obj/machinery/light/small{
@@ -32921,7 +32903,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -32932,7 +32914,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "rXN" = (
 /obj/machinery/camera{
 	c_tag = "Atmospherics Southeast";
@@ -33032,13 +33014,17 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
 	},
 /turf/space,
 /area/station/security/prison)
+"seX" = (
+/obj/decal/fakeobjects/sink,
+/turf/simulated/floor/white,
+/area/russian)
 "sfI" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -33220,10 +33206,10 @@
 /turf/simulated/floor/red/side{
 	dir = 4
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sUS" = (
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sWl" = (
 /obj/cable{
 	d1 = 1;
@@ -33243,7 +33229,7 @@
 /obj/machinery/recharger,
 /obj/cable,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "sYn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33418,7 +33404,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -33444,13 +33430,13 @@
 /area/station/teleporter)
 "twS" = (
 /turf/simulated/wall,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "txG" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side{
 	dir = 10
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "txY" = (
 /obj/machinery/camera{
 	c_tag = "Test Chamber West";
@@ -33532,7 +33518,7 @@
 	dir = 4
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tFL" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -33563,7 +33549,7 @@
 /turf/simulated/floor/red/side{
 	dir = 8
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tJk" = (
 /obj/machinery/door/poddoor{
 	id = "sciencedriver";
@@ -33626,7 +33612,7 @@
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "tRv" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34005,7 +33991,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -34018,7 +34004,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uza" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/food/drinks/bottle/wine,
@@ -34038,7 +34024,7 @@
 "uCj" = (
 /obj/table/auto,
 /turf/simulated/floor/red/side,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uDx" = (
 /obj/grille/steel,
 /obj/window/reinforced/south,
@@ -34153,7 +34139,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uWM" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -34175,7 +34161,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor/caution/east,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "uYx" = (
 /obj/cable{
 	d1 = 4;
@@ -34380,7 +34366,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	name = "Secure Transport";
@@ -34585,7 +34571,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -34797,7 +34783,7 @@
 "wVf" = (
 /obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /turf/simulated/floor/black,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "wWu" = (
 /obj/stool,
 /obj/cable{
@@ -34892,7 +34878,7 @@
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "xxA" = (
 /obj/cable{
 	d1 = 4;
@@ -35075,7 +35061,7 @@
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "xYh" = (
 /turf/simulated/floor/red/side{
 	dir = 4
@@ -35187,7 +35173,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 1;
@@ -35195,7 +35181,7 @@
 	req_access_txt = "37"
 	},
 /turf/simulated/floor,
-/area/station/security/armory)
+/area/station/ai_monitored/armory)
 "ylN" = (
 /obj/cable{
 	d1 = 4;
@@ -59789,7 +59775,7 @@ aaa
 ayd
 ayZ
 aAO
-aDw
+aHE
 aFv
 aHE
 aHY
@@ -67340,7 +67326,7 @@ ayg
 azg
 aAT
 aDC
-aFD
+qCX
 aIk
 aJL
 aJL
@@ -90937,7 +90923,7 @@ esB
 bBK
 sHS
 nnw
-jos
+mpp
 oVY
 avV
 kzS
@@ -115271,7 +115257,7 @@ aaR
 abh
 akq
 abD
-akA
+seX
 abD
 abD
 abD

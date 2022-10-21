@@ -26,7 +26,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	var/sound/sound_inject = 'sound/items/hypo.ogg'
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	inventory_counter_enabled = 1
 
 	emagged
@@ -59,41 +59,57 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		if (src.safe && add)
 			check_whitelist(src, src.whitelist)
 		src.UpdateIcon()
+		tgui_process.update_uis(src)
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Hypospray", "Hypospray")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		var/datum/reagents/R = src.reagents
+		var/list/reagentData = list(
+			maxVolume = R.maximum_volume,
+			totalVolume = R.total_volume,
+			contents = list(),
+			finalColor = "#000000"
+		)
+
+		var/list/contents = reagentData["contents"]
+		if(istype(R) && R.reagent_list.len>0)
+			reagentData["finalColor"] = R.get_average_rgb()
+			for(var/reagent_id in R.reagent_list)
+				var/datum/reagent/current_reagent = R.reagent_list[reagent_id]
+
+				contents.Add(list(list(
+					name = reagents_cache[reagent_id],
+					id = reagent_id,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					volume = current_reagent.volume
+				)))
+		.["reagentData"] = reagentData
+		.["injectionAmount"] = src.inj_amount
+		.["emagged"] = !src.safe
+
+	ui_act(action, params)
+		. = ..()
+		if(.)
+			return
+		switch(action)
+			if("dump")
+				src.reagents.clear_reagents()
+				. = TRUE
+			if("changeAmount")
+				src.inj_amount = clamp(round(params["amount"]), 1, src.reagents.maximum_volume)
+				. = TRUE
+
 
 	attack_self(mob/user as mob)
-		UpdateIcon()
-		src.add_dialog(user)
-		var/dat = ""
-		dat += "Injection amount: <A href='?src=\ref[src];change_amt=1'>[inj_amount == -1 ? "ALL" : inj_amount]</A><BR><BR>"
-
-		if (src.reagents.total_volume)
-			dat += "Contains: <BR>"
-			for (var/current_id in reagents.reagent_list)
-				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
-				dat += " - [current_reagent.volume] [current_reagent.name]<BR>"
-			dat += "<A href='?src=\ref[src];dump_cont=1'>Dump contents</A>"
-
-		user.Browse("<TITLE>Hypospray</TITLE>Hypospray:<BR><BR>[dat]", "window=hypospray;size=350x250")
-		onclose(user, "hypospray")
-		return
-
-	Topic(href, href_list)
-		..()
-		if (usr != src.loc)
-			return
-
-		if (href_list["dump_cont"])
-			src.reagents.clear_reagents()
-
-		if (href_list["change_amt"])
-			var/amt = input(usr,"Select:","Amount", inj_amount) in list("ALL",1,2,3,4,5,8,10,15,20,25)
-			if (amt == "ALL")
-				inj_amount = -1
-			else
-				inj_amount = amt
-
-		updateUsrDialog()
-		attack_self(usr)
+		ui_interact(user)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!safe)
@@ -103,6 +119,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		safe = 0
 		var/image/magged = image(src.icon, "hypomag", layer = FLOAT_LAYER)
 		src.UpdateOverlays(magged, "emagged")
+		tgui_process.update_uis(src)
 		return 1
 
 	demag(var/mob/user)
@@ -113,9 +130,10 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		safe = 1
 		src.UpdateOverlays(null, "emagged")
 		src.UpdateIcon()
+		tgui_process.update_uis(src)
 		return 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (issilicon(M))
 			user.show_text("[src] cannot be used on silicon lifeforms!", "red")
 			return
@@ -133,7 +151,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 		var/amt_prop = inj_amount == -1 ? src.reagents.total_volume : inj_amount
 		user.visible_message("<span class='notice'><B>[user] injects [M] with [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()].</B></span>",\
 		"<span class='notice'>You inject [min(amt_prop, reagents.total_volume)] units of [src.reagents.get_master_reagent_name()]. [src] now contains [max(0,(src.reagents.total_volume-amt_prop))] units.</span>")
-		logTheThing("combat", user, M, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a hypospray [log_reagents(src)] to inject [constructTarget(M,"combat")] at [log_loc(user)].")
 
 		src.reagents.trans_to(M, amt_prop)
 
@@ -154,7 +172,7 @@ var/global/list/chem_whitelist = list("antihol", "charcoal", "epinephrine", "ins
 				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 
-			logTheThing("combat", user, null, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "dumps the contents of [src] [log_reagents(src)] into [target] at [log_loc(user)].")
 			boutput(user, "<span class='notice'>You dump the contents of [src] into [target].</span>")
 			src.reagents.trans_to(target, src.reagents.total_volume)
 

@@ -11,7 +11,23 @@
 	var/is_construction_mode = 0
 
 	var/list/stats = list()
-	var/list/statNames = list("Map:","Next Map:","Map Vote Link:","Map Vote Time:","Map Vote Spacer","Vote Link:","Vote Time:","Vote Spacer","Game Mode:","Time To Start:","Server Load:","Shift Time Spacer","Shift Time:","Local Time:","Shuttle")
+	var/list/statNames = list(
+		"Map:",
+		"Next Map:",
+		"Map Vote Link:",
+		"Map Vote Time:",
+		"Map Vote Spacer",
+		"Vote Link:",
+		"Vote Time:",
+		"Vote Spacer",
+		"Game Mode:",
+		"Time To Start:",
+		"Server Load:",
+		"Shift Time Spacer",
+		"Shift Time:",
+		"Local Time:",
+		"Shuttle"
+	)
 	//above : ORDER IS IMPORANT
 
 	New()
@@ -92,33 +108,17 @@
 				saveStat("Shift Time:", "[shiftTime] minute[shiftTime == 1 ? "" : "s"]")
 				saveStat("Local Time:", time2text(world.timeofday, "hh:mm"))
 
-				//MBC : nah we don't run construction anyway
-				//if (ticker.mode && istype(ticker.mode, /datum/game_mode/construction))
-				//	is_construction_mode = 1
-
-
-		/*
-		var/ticklagtext = "Light"
-		switch (world.tick_lag)
-			if (0.5 to 0.7)
-				ticklagtext = "Medium"
-			if (0.71 to 0.9)
-				ticklagtext = "Heavy"
-			if (0.9 to 2)
-				ticklagtext = "Insane"
-		*/
 		saveStat("Server Load:", world.cpu < 90 ? "No" : "Yes") //Yes very useful a++
-		//saveStat("Server Load:", ticklagtext)   //Yes, very useful! A+!
 
 		if (emergency_shuttle?.online && emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
 			stats["Shift Time Spacer"] = -1
 			var/timeleft = emergency_shuttle.timeleft()
 			if (timeleft)
 				var/locstr = ""
-				switch( emergency_shuttle.location )
-					if( 1 )
+				switch(emergency_shuttle.location)
+					if(1)
 						locstr = "ETD"
-					if( 1.5 )
+					if(1.5)
 						locstr = "ETA to Centcom"
 					else
 						locstr = "ETA"
@@ -139,21 +139,12 @@ var/global/datum/mob_stat_thinker/mobStat = new
 		if (world.time - mobStat.last_update > mobStat.update_interval)
 			mobStat.update()
 
-		/*
-
-		if (mobStat.stats["Map Vote Time:"])
-			var/vote = mapSwitcher.playerVotes[src.client.ckey]
-			if (vote)
-				stat ("Your vote: ","[vote]")
-
-		*/
-
 		//MBC : Copy paste for life : This is the same loop as below basically. (I don't want to check admin holder each and every loop iteration for non-admins! I'd rather the code look like shit.
 
 		//THIS ONE FOR ADMINS
 		if (src.client.holder)
 			//todo : figure out a good way to do less checks within this loop
-			for(var/i = 1, i <= mobStat.statNames.len, i++)
+			for(var/i in 1 to length(mobStat.statNames))
 				if (mobStat.stats[mobStat.statNames[i]] == 0)
 					continue
 				else if (mobStat.stats[mobStat.statNames[i]] == -1)
@@ -169,6 +160,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					#if TIME_DILATION_ENABLED == 1
 					stat("Variable Ticklag:", "[world.tick_lag]")
 					#endif
+					stat("Maptick/Client:", "[world.map_cpu/length(clients)]")
 
 					if (!istype(src.loc, /turf) && !isnull(loc))
 						stat("Co-ordinates:", "([loc.x], [loc.y], [loc.z])")
@@ -185,7 +177,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 
 		//THIS ONE FOR PLAYERS
 		else
-			for(var/i = 1, i <= mobStat.statNames.len, i++)
+			for(var/i in 1 to length(mobStat.statNames))
 				if (mobStat.stats[mobStat.statNames[i]] == 0)
 					continue
 				else if (mobStat.stats[mobStat.statNames[i]] == -1)
@@ -193,27 +185,6 @@ var/global/datum/mob_stat_thinker/mobStat = new
 					continue
 
 				stat(mobStat.statNames[i],mobStat.stats[mobStat.statNames[i]])
-
-		//screw this we don't even run construction mode
-		/*
-		if (mobStat.is_construction_mode)
-			stat(null, " ")
-			var/datum/game_mode/construction/C = ticker.mode
-			stat("Construction time left:", C.human_time_left)
-			var/datum/construction_controller/E = C.events
-			if (E.event_delay)
-				if (E.current_event)
-					stat("Event in progress:", E.current_event.name)
-				else
-					stat("Event cycle starts in:", dstohms(E.event_delay - ticker.round_elapsed_ticks))
-			else if (E.choose_at)
-				stat("Next event type:", E.next_event_type)
-				stat("Estimated event ETA:", dstohms(E.next_event_at - ticker.round_elapsed_ticks))
-			else if (E.next_event_at)
-				stat("Next event type:", E.next_event_type)
-				stat("Event ETA:", dstohms(E.next_event_at - ticker.round_elapsed_ticks))
-			stat(null, " ")
-		*/
 
 		#ifdef XMAS
 		stat("Spacemas Cheer:", "[christmas_cheer]%")
@@ -227,7 +198,5 @@ var/global/datum/mob_stat_thinker/mobStat = new
 	if (is_near_gauntlet())
 		gauntlet_controller.Stat()
 
-	if (is_near_colosseum())
-		colosseum_controller.Stat()
 
 #undef saveStat

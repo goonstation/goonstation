@@ -139,7 +139,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 		if(index <= src.overlays.len)
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
 		else
-			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method.")
+			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method. Ref: \ref[src]")
 
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
@@ -163,8 +163,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			overlay_refs -= key
 	return 1
 
-/atom/proc/ClearAllOverlays(var/retain_cache=0) //Some men just want to watch the world burn
-	if(src.overlays.len)
+/atom/proc/ClearAllOverlays(retain_cache = FALSE) //Some men just want to watch the world burn
+	if(length(src.overlays))
 		if (!src.overlay_refs)
 			src.overlay_refs = list()
 		src.overlays.Cut()

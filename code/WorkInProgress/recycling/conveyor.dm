@@ -65,6 +65,7 @@
 
 	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
 		S.conveyors -= src
+	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
@@ -100,11 +101,11 @@
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
 	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
-	if(isobserver(A))
-		return
 	if(istype(A, /obj/machinery/bot) && A:on)	//They drive against the motion of the conveyor, ok.
 		return
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
+		return
+	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
 		return
 	var/movedir = dir	// base movement dir
 	if(divert && dir == divdir)	// update if diverter present
@@ -150,7 +151,7 @@
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
-		if(!next_conveyor.operating)
+		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
 			walk(AM, 0)
 			return
 
@@ -204,12 +205,12 @@
 
 // attack with hand, move pulled object onto conveyor
 
-/obj/machinery/conveyor/attack_hand(mob/user as mob)
+/obj/machinery/conveyor/attack_hand(mob/user)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
@@ -267,7 +268,7 @@
 	desc = "A diverter arm for a conveyor belt."
 	anchored = 1
 	layer = FLY_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
 	var/deployed = 0	// true if diverter arm is extended
 	var/operating = 0	// true if arm is extending/contracting
@@ -369,13 +370,15 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
+	var/direct = get_dir(O, O.movement_newloc)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
+		. = 0
+	else if(!deployed)
+		. = 1
+	else
+		. = direct != divert_from
+	UNCROSS_BUMP_CHECK(O)
 
 
 
@@ -406,7 +409,7 @@
 		START_TRACKING
 		UpdateIcon()
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", "trigger")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 		conveyors = list()
 		SPAWN(0.5 SECONDS)
 			link_conveyors()
@@ -455,11 +458,11 @@
 			else
 				position = CONVEYOR_REVERSE
 				last_pos = CONVEYOR_STOPPED
-			logTheThing("station", user, null, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
 		else
 			last_pos = position
 			position = CONVEYOR_STOPPED
-			logTheThing("station", user, null, "turns the conveyor switch off at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "turns the conveyor switch off at [log_loc(src)].")
 		UpdateIcon()
 
 		// find any switches with same id as this one, and set their positions to match us

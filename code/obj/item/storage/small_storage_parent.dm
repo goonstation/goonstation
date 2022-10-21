@@ -8,17 +8,29 @@
 	icon_state = "box_blank"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
+	/// Types that will be accepted
 	var/list/can_hold = null//new/list()
-	var/in_list_or_max = 0 // sorry for the dumb var name - if can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
+	/// Exact types that will be accepted, in addition to can_hold
+	var/list/can_hold_exact = null
+	/// If can_hold has stuff in it, if this is set, something will fit if it's at or below max_wclass OR if it's in can_hold, otherwise only things in can_hold will fit
+	var/in_list_or_max = 0
 	var/datum/hud/storage/hud
-	var/sneaky = 0 //Don't print a visible message on use.
+	/// Don't print a visible message on use.
+	var/sneaky = 0
+	/// Prevent accessing storage when clicked in pocket
 	var/does_not_open_in_pocket = 1
-	var/max_wclass = 2
-	var/slots = 7 // seems that even numbers are what breaks the on-ground hud layout
+	/// Maximum  w_class that can be held
+	var/max_wclass = W_CLASS_SMALL
+	/// Number of storage slots, even numbers overlap the close button for the on-ground hud layout
+	var/slots = 7
+	/// Initial contents when created
 	var/list/spawn_contents = list()
+	/// specify if storage should grab other items on turf
+	var/grab_stuff_on_spawn = FALSE
 	move_triggered = 1
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_NORMAL
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
 
 		//cogwerks - burn vars
 	burn_point = 2500
@@ -38,6 +50,13 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.make_my_stuff()
+
+		if (grab_stuff_on_spawn)
+			for (var/obj/item/I in src.loc)
+				if (I == src) continue
+				if (I.anchored) continue
+				if (check_can_hold(I) > 0)
+					add_contents(I)
 
 	Entered(Obj, OldLoc)
 		. = ..()
@@ -84,11 +103,11 @@
 			for (amt, amt>0, amt--)
 				new thing(src)
 		if (total_amt > slots)
-			logTheThing("debug", null, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
+			logTheThing(LOG_DEBUG, null, "STORAGE ITEM: [src] has more than [slots] items in it!")
 		total_amt = null
 		return 1
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (surgeryCheck(M, user))
 			insertChestItem(M, user)
 			return
@@ -106,7 +125,7 @@
 				if(O in user.equipped_list())
 					src.Attackby(O, user, O.loc)
 			else
-				boutput(user, __blue("Your hands are full!"))
+				boutput(user, "<span class='notice'>Your hands are full!</span>")
 			user.swap_hand()
 
 	//failure returns 0 or lower for diff messages - sorry
@@ -124,6 +143,10 @@
 				for (var/A in src.can_hold)
 					if (ispath(A) && istype(W, A))
 						ok = 1
+				if (!ok)
+					for (var/A in src.can_hold_exact)
+						if (ispath(A) && W.type == A)
+							ok = 1
 			if (!ok)
 				return 0
 
@@ -231,7 +254,7 @@
 							usr.u_equip(src)
 							usr.put_in_hand_or_drop(src, 1)
 				return
-		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
+		if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat && !isintangible(usr))
 			if (usr.s_active)
 				usr.detach_hud(usr.s_active)
 				usr.s_active = null
@@ -268,10 +291,10 @@
 								M.triggered(usr)
 						hud.remove_item(I)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.sneaky)
 			playsound(src.loc, "rustle", 50, 1, -2)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand || IS_LIVING_OBJECT_USING_SELF(user)))
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (H.limbs) // this check is probably dumb. BUT YOU NEVER KNOW
@@ -289,10 +312,11 @@
 			animate_storage_rustle(src)
 		else
 			..()
-			for (var/mob/M as anything in hud.mobs)
-				if (M != user)
-					M.detach_hud(hud)
-			hud.update(user)
+			if (hud)
+				for (var/mob/M as anything in hud.mobs)
+					if (M != user)
+						M.detach_hud(hud)
+				hud.update(user)
 
 	attack_self(mob/user as mob)
 		..()
@@ -319,9 +343,9 @@
 	name = "box"
 	icon_state = "box"
 	desc = "A box that can hold a number of small items."
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -332,6 +356,7 @@
 			return ..()
 
 /obj/item/storage/box/starter // the one you get in your backpack
+	icon_state = "emergbox"
 	spawn_contents = list(/obj/item/clothing/mask/breath)
 	make_my_stuff()
 		..()
@@ -339,12 +364,17 @@
 			new /obj/item/tank/emergency_oxygen(src)
 		if (ticker?.round_elapsed_ticks > 20 MINUTES)
 			new /obj/item/crowbar/red(src)
+#ifdef MAP_OVERRIDE_NADIR //guarantee protective gear
+		new /obj/item/clothing/suit/space/emerg(src)
+		new /obj/item/clothing/head/emerg(src)
+#else
 		if (prob(10)) // put these together
 			new /obj/item/clothing/suit/space/emerg(src)
 			new /obj/item/clothing/head/emerg(src)
+#endif
 
 /obj/item/storage/box/starter/withO2
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath, /obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/pill_bottle
 	name = "pill bottle"
@@ -353,7 +383,7 @@
 	item_state = "contsolid"
 	can_hold = list(/obj/item/reagent_containers/pill)
 	w_class = W_CLASS_SMALL
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	desc = "A small bottle designed to carry pills. Does not come with a child-proof lock, as that was determined to be too difficult for the crew to open."
 
 /obj/item/storage/briefcase
@@ -362,11 +392,11 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "briefcase"
 	flags = FPRINT | TABLEPASS| CONDUCT | NOSPLASH
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	desc = "A fancy synthetic leather-bound briefcase, capable of holding a number of small objects, with style."
 	stamina_damage = 40
 	stamina_cost = 17
@@ -384,7 +414,7 @@
 	icon_state = "briefcase_rd"
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "rd-case"
-	max_wclass = 4 // parity with secure briefcase
+	max_wclass = W_CLASS_BULKY// parity with secure briefcase
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
@@ -395,19 +425,19 @@
 	icon_state = "desk_drawer"
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_BULKY
-	max_wclass = 2
+	max_wclass = W_CLASS_SMALL
 	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
 	mechanics_type_override = /obj/item/storage/desk_drawer
 	var/locked = 0
 	var/id = null
 
-	attackby(obj/item/W as obj, mob/user as mob, obj/item/storage/T)
+	attackby(obj/item/W, mob/user, obj/item/storage/T)
 		if (istype(W, /obj/item/device/key/filing_cabinet))
 			var/obj/item/device/key/K = W
 			if (src.id && K.id == src.id)
 				src.locked = !src.locked
 				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, "sound/items/Screwdriver2.ogg", 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
 			return
@@ -428,7 +458,8 @@
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
 	w_class = W_CLASS_BULKY
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
+	var/fire_delay = 0.4 SECONDS
 
 	New()
 		..()
@@ -439,12 +470,14 @@
 			return
 		if (!src.contents.len)
 			return
+		if (ON_COOLDOWN(src, "rockit_firerate", src.fire_delay))
+			return
 		var/obj/item/I = pick(src.contents)
 		if (!I)
 			return
 
 		I.set_loc(get_turf(src.loc))
-		I.dropped()
+		I.dropped(user)
 		src.hud.remove_item(I) //fix the funky UI stuff
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)

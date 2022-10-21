@@ -33,7 +33,7 @@
 /turf/simulated/floor/plating,
 /area/dmm_suite/clear_area)
 "I" = (
-/obj/item/parts/robot_parts/chest,
+/obj/item/parts/robot_parts/chest/light,
 /obj/item/cable_coil/cut{
 	icon_state = "coil1"
 	},

@@ -7,7 +7,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -45,7 +45,7 @@
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "cu" = (
@@ -144,7 +144,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -154,7 +154,7 @@
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "iy" = (
@@ -478,7 +478,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -527,7 +527,10 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "EQ" = (
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/pyro/security{
+	hardened = 1
+	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},
@@ -702,13 +705,15 @@
 	},
 /area/centcom/outside)
 "PN" = (
-/obj/machinery/door/airlock/pyro/medical,
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor3"
 	},
 /area/shuttle/escape/centcom)
 "Qc" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "QV" = (
@@ -909,7 +914,10 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "WM" = (
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	hardened = 1
+	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "WR" = (
@@ -973,7 +981,7 @@
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "Zz" = (

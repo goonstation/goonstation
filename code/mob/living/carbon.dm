@@ -6,8 +6,8 @@
 	var/oxyloss = 0
 	var/toxloss = 0
 	var/brainloss = 0
-	//var/brain_op_stage = 0.0
-	//var/heart_op_stage = 0.0
+	//var/brain_op_stage = 0
+	//var/heart_op_stage = 0
 
 	infra_luminosity = 4
 
@@ -27,8 +27,12 @@
 		if (!src.throwing && !src.lying && isturf(NewLoc))
 			var/turf/T = NewLoc
 			if (T.turf_flags & MOB_SLIP)
-				switch (T.wet)
-					if (1)
+				var/wet_adjusted = T.wet
+				if (traitHolder?.hasTrait("super_slips") && T.wet) //non-zero wet
+					wet_adjusted = max(wet_adjusted, 2) //whee
+
+				switch (wet_adjusted)
+					if (1) //ATM only the ancient mop does this
 						if (locate(/obj/item/clothing/under/towel) in T)
 							src.inertia_dir = 0
 							T.wet = 0
@@ -43,13 +47,13 @@
 						src.remove_pulling()
 						src.changeStatus("weakened", 3.5 SECONDS)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
-						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 					if (3) // superlube
 						src.remove_pulling()
 						src.changeStatus("weakened", 6 SECONDS)
-						playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+						playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 						boutput(src, "<span class='notice'>You slipped on the floor!</span>")
 						var/atom/target = get_edge_target_turf(src, src.dir)
 						src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
@@ -75,9 +79,10 @@
 				for(var/mob/M in viewers(user, null))
 					if(M.client)
 						M.show_message(text("<span class='alert'><B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
-				playsound(user.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 50, 1)
+				playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
 
 				if(prob(get_brute_damage() - 50))
+					logTheThing(LOG_COMBAT, user, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
 					src.gib()
 
 /mob/living/carbon/gib(give_medal, include_ejectables)
@@ -97,7 +102,7 @@
 		var/obj/item/reagent_containers/pee_target = src.equipped()
 		if(istype(pee_target) && pee_target.reagents && pee_target.reagents.total_volume < pee_target.reagents.maximum_volume && pee_target.is_open_container())
 			src.visible_message("<span class='alert'><B>[src] pees in [pee_target]!</B></span>")
-			playsound(src, "sound/misc/pourdrink.ogg", 50, 1)
+			playsound(src, 'sound/misc/pourdrink.ogg', 50, 1)
 			pee_target.reagents.add_reagent("urine", 4)
 			return
 

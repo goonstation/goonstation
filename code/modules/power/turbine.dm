@@ -160,7 +160,7 @@
 
 /obj/machinery/power/turbine/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (NOPOWER|BROKEN)) && (!isAI(user)) )
 		src.remove_dialog(user)
 		user.Browse(null, "window=turbine")
 		return
@@ -190,7 +190,7 @@
 	if (usr.stat || usr.restrained() )
 		return
 
-	if (( usr.using_dialog_of(src) && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if (( usr.using_dialog_of(src) && ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["close"] )
 			usr.Browse(null, "window=turbine")
 			src.remove_dialog(usr)
@@ -230,7 +230,7 @@
 			if(P.id == id)
 				doors += P
 
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	var/dat
 	if(src.compressor)

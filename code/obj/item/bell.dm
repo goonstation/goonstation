@@ -10,13 +10,13 @@
 	throw_range = 15
 	w_class = W_CLASS_SMALL
 
-/obj/item/bell/attack_hand(mob/user as mob)
+/obj/item/bell/attack_hand(mob/user)
 	if ((!isturf(src.loc) && !user.is_in_hands(src)))
 		return ..()
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
 		return
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
-	playsound(src, "sound/effects/bell_ring.ogg", 30, 0)
+	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
 
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)

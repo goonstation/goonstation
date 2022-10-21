@@ -47,7 +47,7 @@
 
 	disposing()
 		if (host)
-			host.peripherals.Remove(src)
+			host.peripherals?.Remove(src)
 			host = null
 
 		..()
@@ -422,25 +422,25 @@
 		. += " | NETID: [src.net_id ? src.net_id : "NONE"]"
 
 
-	proc
-		check_connection()
-			//if there is a link, it has a master, and the master is valid..
-			if(src.link && istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
-				if(src.link.master == src)
-					return 1 //If it's already us, the connection is fine!
-				else//Otherwise welp no this thing is taken.
-					src.link = null
-					return 0
+// why is the connection checked like this - do we really need to disconnect then reconnect?
+/obj/item/peripheral/network/powernet_card/proc/check_connection()
+	//if there is a link, it has a master, and the master is valid..
+	if(istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
+		if(src.link.master == src)
+			return 1 //If it's already us, the connection is fine!
+		else//Otherwise welp no this thing is taken.
 			src.link = null
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
-				return 1
-			else
-				//boutput(world, "couldn't link")
-				return 0
+			return 0
+	src.link = null
+	var/turf/T = get_turf(src)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+		src.link = test_link
+		src.link.master = src
+		return 1
+	else
+		//boutput(world, "couldn't link")
+		return 0
 
 /obj/item/peripheral/network/powernet_card/terminal
 	name = "Terminal card"
@@ -504,7 +504,7 @@
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -643,7 +643,7 @@
 					var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 					P.set_loc(src.host.loc)
 
-					playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+					playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 					P.info = "<tt>[print_data]</tt>"
 					if(print_title)
 						P.name = "paper- '[print_title]'"
@@ -828,7 +828,7 @@
 				var/obj/item/paper/thermal/P = new /obj/item/paper/thermal
 				P.set_loc(src.host.loc)
 
-				playsound(src.host.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/printer_thermal.ogg', 50, 1)
 				P.info = "<tt>[print_data]</tt>"
 				if(print_title)
 					P.name = "paper- '[print_title]'"
@@ -969,7 +969,7 @@
 			if (src.clownifies_card)
 				src.authid.assignment = "Clown"
 				src.authid.update_name()
-				playsound(src.host.loc, "sound/items/bikehorn.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 			status_text = "Card: [authid.registered]"
 		return status_text
 
@@ -1108,7 +1108,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1146,7 +1146,7 @@
 
 		switch(command)
 			if("beep")
-				playsound(src.host.loc, "sound/machines/twobeep.ogg", 50, 1)
+				playsound(src.host.loc, 'sound/machines/twobeep.ogg', 50, 1)
 				for (var/mob/O in hearers(3, src.host.loc))
 					O.show_message(text("[bicon(src.host)] *beep*"))
 
@@ -1226,7 +1226,7 @@
 		if(..())
 			return
 
-		if(issilicon(usr) && get_dist(src, usr) > 1)
+		if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
 			boutput(usr, "<span class='alert'>You cannot press the ejection button.</span>")
 			return
 
@@ -1392,7 +1392,7 @@
 						if(M.client)
 							M.show_message("<span class='alert'><B>The [src.host.name] catches on fire!</B></span>", 1)
 						fireflash(src.host.loc, 0)
-						playsound(src.host.loc, "sound/items/Welder2.ogg", 50, 1)
+						playsound(src.host.loc, 'sound/items/Welder2.ogg', 50, 1)
 						src.host.set_broken()
 						//dispose()
 						src.dispose()

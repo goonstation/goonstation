@@ -8,7 +8,7 @@
 			return
 		var/masterspawnamount = rand(4,12)
 		var/spawnamount = masterspawnamount
-		var/type = rand(1,4)
+		var/type = rand(1,5)
 		switch (type)
 			if (1)
 				while (spawnamount > 0)
@@ -22,13 +22,18 @@
 					LAGCHECK(LAG_LOW)
 			if (3)
 				while (spawnamount > 0)
-					new /obj/critter/spacebee(pestlandmark)
+					new /obj/critter/wasp(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (4)
 				while (spawnamount > 0)
 					new /obj/critter/spacescorpion(pestlandmark)
 					spawnamount -= 3
+					LAGCHECK(LAG_LOW)
+			if (5)
+				while (spawnamount > 0)
+					new /obj/critter/spacerattlesnake(pestlandmark)
+					spawnamount -= 11
 					LAGCHECK(LAG_LOW)
 		//pestlandmark.visible_message("A group of [type] emerges from their hidey-hole")
 

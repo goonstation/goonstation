@@ -69,7 +69,7 @@
 		if (tutorial)
 			return
 		tutorial = new(src)
-		if (tutorial.tutorial_area)
+		if (tutorial.initial_turf)
 			tutorial.Start()
 		else
 			boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
@@ -199,10 +199,7 @@
 		src.last_blob_life_tick = TIME
 
 	death()
-		//death was called but the player isnt playing this blob anymore
-		//OR they're in the process of transforming (e.g. gibbing)
-		if ((src.client && src.client.mob != src) || src.transforming)
-			return
+		. = ..()
 
 		//if within grace period, respawn
 		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)

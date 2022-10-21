@@ -54,7 +54,8 @@
 					O.anchored = 1
 					mode = 2
 					boutput(user, "[O] connects itself to the cable. Weird.")
-					playsound(O, "sound/effects/ship_charge.ogg", 75, 1)
+					playsound(O, 'sound/effects/ship_charge.ogg', 75, 1)
+					logTheThing(LOG_STATION, user, "connected power generator artifact [O] at [log_loc(O)].")
 					var/obj/machinery/artifact/power_gen/L = O
 					if (L.light)
 						L.light.enable()
@@ -65,7 +66,8 @@
 			mode = 0
 			attached = 0
 			boutput(user, "[O] disconnects itself from the cable.")
-			playsound(O, "sound/effects/shielddown2.ogg", 75, 1, 0, 2)
+			playsound(O, 'sound/effects/shielddown2.ogg', 75, 1, 0, 2)
+			logTheThing(LOG_STATION, user, "discconnected power generator artifact [O] at [log_loc(O)].")
 			var/obj/machinery/artifact/power_gen/L = O
 			if (L.light)
 				L.light.disable()
@@ -78,27 +80,28 @@
 			if(PN)
 				PN.newavail += gen_rate
 				var/turf/T = get_turf(O)
-				playsound(O, "sound/machines/engine_highpower.ogg", 75, 1, 0, 1)
+				playsound(O, 'sound/machines/engine_highpower.ogg', 75, 1, 0, 1)
 				if (prob(10))
-					playsound(O, "sound/effects/screech2.ogg", 75, 1)
+					playsound(O, 'sound/effects/screech2.ogg', 75, 1)
 					fireflash(O, rand(1,min(5,gen_level)))
 					O.visible_message("<span class='alert'>[O] erupts in flame!</span>")
 				if (prob(5))
-					playsound(O, "sound/effects/screech2.ogg", 75, 1)
+					playsound(O, 'sound/effects/screech2.ogg', 75, 1)
 					O.visible_message("<span class='alert'>[O] rumbles!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
 						shake_camera(M, 5, 8)
 						M.changeStatus("weakened", 3 SECONDS)
 					for (var/turf/TF in range(min(5,gen_level),T))
-						animate_shake(TF,5,1 * get_dist(TF,T),1 * get_dist(TF,T))
+						animate_shake(TF,5,1 * GET_DIST(TF,T),1 * GET_DIST(TF,T))
 					if (gen_level >= 5)
 						for (var/obj/window/W in range(min(5,gen_level), T))
 							W.health = 0
 							W.smash()
 				if (prob(5))
-					playsound(O, "sound/effects/screech2.ogg", 75, 1)
+					playsound(O, 'sound/effects/screech2.ogg', 75, 1)
 					O.visible_message("<span class='alert'>[O] sparks violently!</span>")
 					for (var/mob/M in range(min(5,gen_level),T))
+						if (isintangible(M)) continue
 						arcFlash(O, M, gen_rate/2)
 						if(!M.disposed)
 							O.ArtifactFaultUsed(M) // in case you weren't already fucked enough lol

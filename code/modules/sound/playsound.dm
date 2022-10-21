@@ -21,8 +21,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!vol)
 		return
 
-	logTheThing("admin", src, null, "played sound [S]")
-	logTheThing("diary", src, null, "played sound [S]", "admin")
+	logTheThing(LOG_ADMIN, src, "played sound [S]")
+	logTheThing(LOG_DIARY, src, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
 	SPAWN(0)
 		for (var/client/C in clients)
@@ -78,8 +78,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
-	logTheThing("admin", src, null, "started loading music [S]")
-	logTheThing("diary", src, null, "started loading music [S]", "admin")
+	logTheThing(LOG_ADMIN, src, "started loading music [S]")
+	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
 	return 1
 
@@ -108,8 +108,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			boutput(C, "Now playing radio tunes. <a href='byond://winset?command=Stop-the-Radio!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [client_vol]")
 
-	logTheThing("admin", src, null, "started loading music [soundPath], by the name of: [name]")
-	logTheThing("diary", src, null, "started loading music [soundPath], by the name of: [name]", "admin")
+	logTheThing(LOG_ADMIN, src, "started loading music [soundPath], by the name of: [name]")
+	logTheThing(LOG_DIARY, src, "started loading music [soundPath], by the name of: [name]", "admin")
 	message_admins("[key_name(src)] started loading music [soundPath], by the name of: [name]")
 	return 1
 
@@ -149,12 +149,12 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 
 	if (adminC)
-		logTheThing("admin", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
 		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	else
-		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		logTheThing(LOG_ADMIN, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
 		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
@@ -250,8 +250,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 	if (response.errored || !response.body)
 		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
+		logTheThing(LOG_DIARY, null, "Youtube Error: No response from server with video: [video]", "debug")
 		return
 
 	var/data = json_decode(response.body)

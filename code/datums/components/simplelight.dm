@@ -11,11 +11,11 @@
 
 TYPEINFO(/datum/component/loctargeting/simple_light)
 	initialization_args = list(
-		ARG_INFO("r", "num", "Value of red component \[0-255\]", 255),
-		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
-		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
-		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
+		ARG_INFO("r", DATA_INPUT_NUM, "Value of red component \[0-255\]", 255),
+		ARG_INFO("g", DATA_INPUT_NUM, "Value of green component \[0-255\]", 255),
+		ARG_INFO("b", DATA_INPUT_NUM, "Value of blue component \[0-255\]", 255),
+		ARG_INFO("a", DATA_INPUT_NUM, "Alpha (brightness) component \[0-255\]", 127),
+		ARG_INFO("enabled", DATA_INPUT_BOOL, "Initial state of the simplelight (bool)", FALSE)
 	)
 /datum/component/loctargeting/simple_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()
@@ -86,11 +86,11 @@ TYPEINFO(/datum/component/loctargeting/simple_light)
 
 TYPEINFO(/datum/component/loctargeting/sm_light)
 	initialization_args = list(
-		ARG_INFO("r", "num", "Value of red component \[0-255\]", 255),
-		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
-		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
-		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
+		ARG_INFO("r", DATA_INPUT_NUM, "Value of red component \[0-255\]", 255),
+		ARG_INFO("g", DATA_INPUT_NUM, "Value of green component \[0-255\]", 255),
+		ARG_INFO("b", DATA_INPUT_NUM, "Value of blue component \[0-255\]", 255),
+		ARG_INFO("a", DATA_INPUT_NUM, "Alpha (brightness) component \[0-255\]", 127),
+		ARG_INFO("enabled", DATA_INPUT_NUM, "Initial state of the simplelight (bool)", FALSE)
 	)
 /datum/component/loctargeting/sm_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()
@@ -162,11 +162,11 @@ TYPEINFO(/datum/component/loctargeting/sm_light)
 
 TYPEINFO(/datum/component/loctargeting/medium_directional_light)
 	initialization_args = list(
-		ARG_INFO("r", "num", "Value of red component \[0-255\]", 255),
-		ARG_INFO("g", "num", "Value of green component \[0-255\]", 255),
-		ARG_INFO("b", "num", "Value of blue component \[0-255\]", 255),
-		ARG_INFO("a", "num", "Alpha (brightness) component \[0-255\]", 127),
-		ARG_INFO("enabled", "num", "Initial state of the simplelight (bool)", FALSE)
+		ARG_INFO("r", DATA_INPUT_NUM, "Value of red component \[0-255\]", 255),
+		ARG_INFO("g", DATA_INPUT_NUM, "Value of green component \[0-255\]", 255),
+		ARG_INFO("b", DATA_INPUT_NUM, "Value of blue component \[0-255\]", 255),
+		ARG_INFO("a", DATA_INPUT_NUM, "Alpha (brightness) component \[0-255\]", 127),
+		ARG_INFO("enabled", DATA_INPUT_BOOL, "Initial state of the simplelight", FALSE)
 	)
 /datum/component/loctargeting/medium_directional_light/Initialize(r = 255, g = 255, b = 255, a = 127, enabled = FALSE)
 	. = ..()

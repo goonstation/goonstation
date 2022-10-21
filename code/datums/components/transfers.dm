@@ -167,7 +167,7 @@
 		if(isitem(incoming))
 			var/obj/item/I = incoming
 			attacker.u_equip(incoming)
-			I.dropped()
+			I.dropped(attacker)
 		return TRUE
 
 #undef CONTAINER_CHOICE_DUMP
@@ -226,19 +226,19 @@
 
 	onUpdate()
 		. = ..()
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 
 	loopStart()
 		. = ..()
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		. = ..()
 		if (!load_type)
 			return
-		if(get_dist(owner, target) > 1)
+		if(BOUNDS_DIST(owner, target) > 0)
 			src.interrupt(INTERRUPT_ALWAYS)
 			return
 		for(var/obj/item/M in view(1, owner))
@@ -247,7 +247,7 @@
 			if (M.type != load_type)
 				continue
 			if(SEND_SIGNAL(target, COMSIG_TRANSFER_INCOMING, M))
-				playsound(target, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(target, 'sound/items/Deconstruct.ogg', 40, 1)
 				onRestart()
 				return
 

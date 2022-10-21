@@ -26,8 +26,8 @@ var/global/haine_blood_debug = 0
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set hidden = 1
 	haine_blood_debug = !( haine_blood_debug )
-	logTheThing("admin", usr, null, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled blood debug messages [haine_blood_debug ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled blood debug messages [haine_blood_debug ? "on" : "off"]")
 
 // for logging purposes
@@ -678,9 +678,9 @@ this is already used where it needs to be used, you can probably ignore it.
 
 		H.being_staunched = 1
 
-		src.tri_message("<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		src, "<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
-		H, "<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
+		src.tri_message(H, "<span class='notice'><b>[src]</b> puts pressure on [src == H ? "[his_or_her(H)]" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>You put pressure on [src == H ? "your" : "[H]'s"] wounds, trying to stop the bleeding!</span>",\
+			"<span class='notice'>[H == src ? "You put" : "<b>[src]</b> puts"] pressure on your wounds, trying to stop the bleeding!</span>")
 
 		if (do_mob(src, H, 100))
 			var/original_bleed = H.bleeding
@@ -719,10 +719,10 @@ this is already used where it needs to be used, you can probably ignore it.
 	if (!blood_system)
 		return
 
-	if (haine_blood_debug) logTheThing("debug", some_idiot, null, "<b>HAINE BLOOD DEBUG: [some_idiot] begins internal bleed damage proc</b>")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, some_idiot, "<b>HAINE BLOOD DEBUG: [some_idiot] begins internal bleed damage proc</b>")
 
 	if (!isliving(some_idiot))
-		if (haine_blood_debug) logTheThing("debug", some_idiot, null, "<b>HAINE BLOOD DEBUG: [some_idiot] is not living so internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, some_idiot, "<b>HAINE BLOOD DEBUG: [some_idiot] is not living so internal bleed damage was canceled</b>")
 		return
 
 	var/mob/living/H = some_idiot
@@ -731,60 +731,60 @@ this is already used where it needs to be used, you can probably ignore it.
 		if (H.bleeding)
 			H.bleeding = 0
 			H.bleeding_internal = 0
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] is dead/immortal/a vampire/otherwise not supposed to bleed, so their bleeding has been set to 0 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] is dead/immortal/a vampire/otherwise not supposed to bleed, so their bleeding has been set to 0 and internal bleed damage was canceled</b>")
 		return
 
 	if (!(H.blood_volume > 0)) // make sure we have blood to bleed
 		H.bleeding = 0 // if we don't have any blood to bleed, just stop okay, just stop.
 		H.bleeding_internal = 0
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] has no blood and their bleeding has been set to 0 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] has no blood and their bleeding has been set to 0 and internal bleed damage was canceled</b>")
 		return
 
 	if (H.bleeding_internal >= 10) // don't bleed more if you're already at bleeding 10 tia
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding was [H.bleeding_internal] and has been set to 10 and internal bleed damage was canceled</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding was [H.bleeding_internal] and has been set to 10 and internal bleed damage was canceled</b>")
 		H.bleeding_internal = 10
 		return
 
 	var/increase_chance = rand(30, 50)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial increase chance is [increase_chance]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial increase chance is [increase_chance]")
 
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial internal bleeding is [H.bleeding_internal]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s initial internal bleeding is [H.bleeding_internal]")
 	switch (H.bleeding_internal)
 		if (-INFINITY to 1)
 			increase_chance += rand(30, 50)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (2)
 			increase_chance += rand(20, 30)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (3)
 			increase_chance += rand(5, 20)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (4)
 			increase_chance += rand(0, 5)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 		if (5 to INFINITY)
-			if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
+			if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s internal bleeding was already high and chance was not increased")
 
 	if (some_jerk?.zone_sel?.selecting)
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [some_jerk]'s target zone is [some_jerk.zone_sel.selecting]")
 		switch (some_jerk.zone_sel.selecting)
 			if ("head")
 				increase_chance += rand(0, 10)
-				if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s increase chance increased to [increase_chance]")
 
 	if (ischangeling(H))
 		increase_chance -= rand(10, 20)
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H] is a changeling - [H]'s increase chance decreased to [increase_chance]")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H] is a changeling - [H]'s increase chance decreased to [increase_chance]")
 
 	var/final_increase_chance = min(increase_chance, 100)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG:</b> [H]'s final increase chance is [final_increase_chance]")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG:</b> [H]'s final increase chance is [final_increase_chance]")
 	if (prob(final_increase_chance))
 		H.bleeding_internal ++
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H] rolls internal bleeding increase, internal bleeding is now [H.bleeding_internal]</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H] rolls internal bleeding increase, internal bleeding is now [H.bleeding_internal]</b>")
 	else
-		if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding does not increase</b>")
+		if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding does not increase</b>")
 	H.bleeding_internal = clamp(H.bleeding_internal, 0, 5)
-	if (haine_blood_debug) logTheThing("debug", H, null, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding is [H.bleeding_internal] after clamp</b>")
+	if (haine_blood_debug) logTheThing(LOG_DEBUG, H, "<b>HAINE BLOOD DEBUG: [H]'s internal bleeding is [H.bleeding_internal] after clamp</b>")
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=MEDICAL-EQUIPMENT=-=-=-=-=-=-=-=-=-=-=-*/
@@ -819,7 +819,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			if ("BURN")
 				src.damage_type = DAMAGE_BURN
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> attacks [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>",\
 		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
 		switch(src.damage_type)
@@ -841,8 +841,8 @@ this is already used where it needs to be used, you can probably ignore it.
 	icon_state = "dagger"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	item_state = "knife"
-	force = 0.0
-	throwforce = 0.0
+	force = 0
+	throwforce = 0
 	throw_range = 16
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	burn_type = 1
@@ -859,7 +859,7 @@ this is already used where it needs to be used, you can probably ignore it.
 			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 			take_bleeding_damage(A, null, rand(2,3), DAMAGE_STAB)
 
-	attack(target as mob, mob/user as mob)
+	attack(target, mob/user)
 		..()
 		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		take_bleeding_damage(target, user, rand(2,3), DAMAGE_STAB)

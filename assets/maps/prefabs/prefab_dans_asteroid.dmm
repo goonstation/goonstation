@@ -175,11 +175,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/prefab/discount_dans_asteroid)
-"fC" = (
-/obj/decal/cleanable/blood/gibs/body,
-/obj/critter/wendigo,
-/turf/simulated/floor/plating,
-/area/prefab/discount_dans_asteroid)
 "fM" = (
 /obj/rack,
 /obj/item/clothing/under/jersey/dan{
@@ -223,14 +218,6 @@
 	pixel_x = 3;
 	pixel_y = 3
 	},
-/turf/simulated/floor/airless/snow,
-/area/prefab/discount_dans_asteroid)
-"gC" = (
-/obj/decal/cleanable/blood/gibs{
-	dir = 4;
-	icon_state = "gib4"
-	},
-/obj/critter/wendigo,
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
 "gE" = (
@@ -546,17 +533,6 @@
 	},
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
-"uq" = (
-/obj/decal/cleanable/blood{
-	icon_state = "floor5"
-	},
-/obj/critter/wendigo,
-/obj/item/reagent_containers/food/snacks/burrito{
-	pixel_x = -5;
-	pixel_y = 4
-	},
-/turf/simulated/floor/airless/snow,
-/area/prefab/discount_dans_asteroid)
 "uM" = (
 /obj/decal/cleanable/machine_debris,
 /turf/unsimulated/floor/plating/scorched,
@@ -655,10 +631,6 @@
 	},
 /turf/simulated/floor/airless/snow,
 /area/prefab/discount_dans_asteroid)
-"yc" = (
-/obj/decal/fakeobjects/skeleton/decomposed_corpse,
-/turf/variableTurf/clear,
-/area/noGenerate)
 "yo" = (
 /obj/decal/cleanable/blood{
 	icon_state = "u_guilty"
@@ -684,7 +656,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "zZ" = (
-/turf/simulated/wall/asteroid/comet/ice,
+/turf/simulated/wall/auto/asteroid/comet/ice,
 /area/noGenerate)
 "Al" = (
 /obj/decal/poster/wallsign/poster_discount,
@@ -779,7 +751,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /obj/decal/cleanable/oil/streak,
@@ -867,6 +839,14 @@
 	},
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
+"Jc" = (
+/obj/decal/cleanable/blood/gibs{
+	dir = 4;
+	icon_state = "gib4"
+	},
+/obj/critter/brullbar,
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
 "Jd" = (
 /obj/lattice{
 	dir = 1;
@@ -875,6 +855,10 @@
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater"
 	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jr" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
 /turf/variableTurf/clear,
 /area/noGenerate)
 "Jx" = (
@@ -991,18 +975,6 @@
 	},
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
-"Nn" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/orange,
-/obj/decal/fakeobjects/skeleton{
-	pixel_x = 2;
-	pixel_y = 1
-	},
-/obj/machinery/light/incandescent/small{
-	dir = 1
-	},
-/turf/simulated/floor/wood,
-/area/prefab/discount_dans_asteroid)
 "Nr" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -1046,7 +1018,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "NV" = (
-/turf/simulated/wall/asteroid/comet/ice,
+/turf/simulated/wall/auto/asteroid/comet/ice,
 /area/prefab/discount_dans_asteroid)
 "Od" = (
 /obj/item/device/light/glowstick/green_on{
@@ -1123,6 +1095,17 @@
 "Qe" = (
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area/prefab/discount_dans_asteroid)
+"Qj" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/obj/critter/brullbar,
+/obj/item/reagent_containers/food/snacks/burrito{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/airless/snow,
+/area/prefab/discount_dans_asteroid)
 "Qp" = (
 /obj/decal/tile_edge/stripe/big{
 	icon_state = "xtra_bigstripe-edge"
@@ -1143,6 +1126,18 @@
 	icon_state = "plant"
 	},
 /turf/simulated/floor/airless/neutral,
+/area/prefab/discount_dans_asteroid)
+"QS" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/obj/decal/fakeobjects/skeleton{
+	pixel_x = 2;
+	pixel_y = 1
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "Rg" = (
 /obj/decal/floatingtiles{
@@ -1275,6 +1270,11 @@
 /area/prefab/discount_dans_asteroid)
 "Ve" = (
 /turf/simulated/wall/auto/reinforced/supernorn/orange,
+/area/prefab/discount_dans_asteroid)
+"Wo" = (
+/obj/decal/cleanable/blood/gibs/body,
+/obj/critter/brullbar,
+/turf/simulated/floor/plating,
 /area/prefab/discount_dans_asteroid)
 "Wr" = (
 /obj/decal/cleanable/ash,
@@ -2010,7 +2010,7 @@ UU
 wG
 fd
 vO
-fC
+Wo
 Se
 Ph
 bQ
@@ -2154,7 +2154,7 @@ Fr
 PC
 Sf
 wG
-Nn
+QS
 Ub
 GU
 bR
@@ -2188,7 +2188,7 @@ jU
 jU
 NV
 NV
-yc
+Jr
 jU
 mo
 BV
@@ -2443,7 +2443,7 @@ jU
 NV
 NV
 kI
-uq
+Qj
 Am
 Ir
 NV
@@ -2637,7 +2637,7 @@ NV
 Al
 wX
 eK
-gC
+Jc
 mu
 wk
 Dj

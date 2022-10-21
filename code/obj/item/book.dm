@@ -19,7 +19,7 @@ Custom Books
 	burn_point = 400
 	burn_output = 1100
 	burn_possible = 1
-	health = 30
+	health = 4
 	//
 
 	stamina_damage = 2
@@ -389,7 +389,7 @@ Custom Books
 	icon_state = "bookadps"
 	file_path = "strings/books/deep_blue_sea.txt"
 
-	attackby(obj/item/P as obj, mob/user as mob)
+	attackby(obj/item/P, mob/user)
 		..()
 		if (istype(P, /obj/item/magnifying_glass))
 			boutput(user, "<span class='notice'>You pore over the book with the magnifying glass.</span>")
@@ -447,6 +447,13 @@ Custom Books
 		New()
 			..()
 			STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE) //ugly but oh well
+
+/obj/item/paper/book/from_file/fleurscookbook
+	name = "Fleur's Cookbook"
+	desc = "A life's work in progress."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "cookbook-fleur"
+	file_path = "strings/books/fleurs_cookbook.txt"
 
 /obj/item/paper/book/from_file/zoo_diary
 	name = "grimy diary"
@@ -518,3 +525,10 @@ soon the light of the unwaking will rise and the shining ones will not be prepar
 				src.book_cover = "book0"
 			src.icon_state = src.book_cover
 		src.info = "<span style=\"color:[src.ink_color]\">[src.info]</span>"
+
+/obj/item/paper/spaceodyssey
+	name = "strange printout"
+	info = {"<tt>Daisy, Daisy,<BR/>
+give me your answer do.<BR/>
+I'm half crazy,<BR/>
+all for the love of you.</tt>"}

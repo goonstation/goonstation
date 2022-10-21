@@ -8,6 +8,7 @@
 	config_tag = "everyone-is-a-traitor"
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR, ROLE_CHANGELING, ROLE_WRAITH)
+	antag_token_support = TRUE
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -58,7 +59,7 @@
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*num_traitors--
 		num_traitors = max(num_traitors, 0)*/
@@ -83,7 +84,7 @@
 	for(var/datum/mind/traitor in traitors)
 		switch(traitor.special_role)
 			if(ROLE_TRAITOR)
-				SHOW_TRAITOR_HARDMODE_TIPS(traitor.current)
+				traitor.current.show_antag_popup("traitorhard")
 
 			if (ROLE_WRAITH)
 				generate_wraith_objectives(traitor)
@@ -130,8 +131,8 @@
 /datum/game_mode/assday/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer:set_zeroth_law(law)
-	boutput(killer, "New law: 0. [law]")
+	killer.law_rack_connection?.SetLawCustom("Assday Law Module",law,1,true,true)
+	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/assday/proc/get_mob_list()
 	var/list/mobs = list()

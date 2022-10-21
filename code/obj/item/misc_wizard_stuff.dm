@@ -9,7 +9,7 @@
 	name = "Teleportation Scroll"
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "scroll_seal"
-	var/uses = 4.0
+	var/uses = 4
 	flags = FPRINT | TABLEPASS
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
@@ -48,9 +48,7 @@
 	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
 		src.add_dialog(usr)
 		if (href_list["spell_teleport"])
-			if (!can_act(H))
-				return
-			if (src.uses >= 1 && usr.teleportscroll(1, 1, src) == 1)
+			if (src.uses >= 1 && usr.teleportscroll(1, 1, src, null, TRUE) == 1)
 				src.uses -= 1
 		if (ismob(src.loc))
 			attack_self(src.loc)
@@ -69,25 +67,21 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "staff"
 	item_state = "staff"
-	force = 3.0
-	throwforce = 5.0
+	force = 3
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
+	health = 8
 	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD
 	object_flags = NO_ARM_ATTACH
 	var/wizard_key = "" // The owner of this staff.
 	var/eldritch = 0	//was for robe and wizard hat, now nothing.
+	duration_remove = 10 SECONDS
 
 	New()
 		..()
 		BLOCK_SETUP(BLOCK_ALL)
-
-	handle_other_remove(var/mob/source, var/mob/living/carbon/human/target)
-		. = ..()
-		if (prob(75))
-			source.show_message(text("<span class='alert'>\The [src] just barely slips out of your grip!</span>"), 1)
-			. = 0
 
 	// Part of the parent for convenience.
 	proc/do_brainmelt(var/mob/affected_mob, var/severity = 2)
@@ -138,9 +132,9 @@
 			var/obj/item/storage/S_temp = src.loc
 			var/datum/hud/storage/H_temp = S_temp.hud
 			H_temp.remove_object(src)
-		if(istype(src.loc, /obj/critter/snake))
+		if(istype(src.loc, /mob/living/critter/small_animal/snake))
 			var/atom/movable/snake = src
-			while(istype(snake.loc, /obj/critter/snake))
+			while(istype(snake.loc, /mob/living/critter/small_animal/snake))
 				snake = snake.loc
 			snake.set_loc(get_turf(M))
 			M.show_text("Staff snake summoned successfully. You can find it on the floor at your current location.", "blue")
@@ -155,6 +149,7 @@
 		return
 
 /obj/item/staff/crystal // goes with Gannets' purple wizard robes - it looks different, and that's about it  :I  (always b fabulous)
+	name = "crystal wizard's staff"
 	desc = "A magical staff used for channeling spells. It's got a big crystal on the end."
 	icon_state = "staff_crystal"
 	item_state = "staff_crystal"
@@ -176,7 +171,7 @@
 		. = ..()
 		STOP_TRACKING
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (user.mind)
 			if (iswizard(user) || check_target_immunity(user))
 				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
@@ -188,11 +183,11 @@
 				return
 		else ..()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 				JOB_XP(M, "Chaplain", 2)
 				return
 
@@ -211,7 +206,7 @@
 		else
 			return
 
-	pull(var/mob/user)
+	pull(mob/user)
 		if(check_target_immunity(user))
 			return ..()
 
@@ -223,6 +218,98 @@
 		else
 			src.do_brainmelt(user, 2)
 			return
+
+/obj/item/staff/thunder
+	name = "staff of thunder"
+	desc = "A staff sparkling with static electricty. Who's afraid of a little thunder?"
+	icon_state = "staffthunder3"
+	item_state = "staffthunder"
+	var/thunder_charges = 3
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
+	pixelaction(atom/target, params, mob/user, reach)
+		if(!IN_RANGE(user, target, WIDE_TILE_WIDTH / 2))
+			return
+		if (!user.wizard_castcheck())
+			return
+		var/area/A = get_area(target)
+		if (istype(A, /area/station/chapel))
+			boutput(user, "<span class='alert'>You cannot summon lightning on holy ground!</span>") //phrasing works if either target or mob are in chapel heh
+			return
+		if (A?.sanctuary || istype(A, /area/wizard_station))
+			boutput(user, "<span class='alert'>You cannot summon lightning in this place!</span>")
+			return
+		if (thunder_charges <= 0)
+			boutput(user, "<span class='alert'>[name] is out of charges! Magically recall it to restore it's power.</span>")
+			return
+		thunder_charges -= 1
+		var/turf/T = get_turf(target)
+		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		lightning.caster = user
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
+		..()
+
+	attack_hand(var/mob/user)
+		if (user.mind)
+			if (iswizard(user) || check_target_immunity(user))
+				if (user.mind.key != src.wizard_key && !check_target_immunity(user))
+					boutput(user, "<span class='alert'>The [src.name] is magically attuned to another wizard! You can use it, but may not summon it magically.</span>")
+				..()
+				return
+			else
+				zap_person(user)
+				return
+		else ..()
+
+	pull(mob/user)
+		if(check_target_immunity(user))
+			return ..()
+
+		if (!istype(user))
+			return
+
+		if (iswizard(user))
+			return ..()
+		else
+			zap_person(user)
+			return
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if (iswizard(usr))
+			. = ..()
+		else if(isliving(usr))
+			zap_person(usr)
+		else
+			return
+
+	update_icon()
+		if(thunder_charges > 3) //var edit only but gets a fun special sprite
+			icon_state = "staffthunder_admin"
+		else
+			icon_state = "staffthunder[thunder_charges]"
+
+	proc/recharge_thunder()
+		if(thunder_charges <= 3) //doesn't ever reduce charge even though three is usually max
+			thunder_charges = 3
+		UpdateIcon()
+		flick("[icon_state]_fire", src)
+
+	proc/zap_person(var/mob/target) //purposefully doesn't do any damage, here to offer non-chat feedback when trying to pick up
+		boutput(target, "<span class='alert'>Static electricity arcs from [name] to your hand when you try and touch it!</span>")
+		playsound(target.loc, 'sound/effects/sparks4.ogg', 70, 1)
+		if (target.bioHolder?.HasEffect("resist_electric"))
+			return
+		else
+			target.do_disorient(stamina_damage = 0, weakened = 0, stunned = 0, disorient = 20)
 
 /obj/item/staff/monkey_staff
 	name = "staff of monke"
@@ -241,7 +328,7 @@
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "wizard_mirror"
-	anchored = 1.0
+	anchored = 1
 	opacity = 0
 	density = 0
 
@@ -261,7 +348,7 @@
 				T += "<b>[M.current.real_name]'s objectives:</b>"
 				var/i = 1
 				for (var/datum/objective/O in M.objectives)
-					if (istype(O, /datum/objective/crew) || istype(O, /datum/objective/miscreant))
+					if (istype(O, /datum/objective/crew))
 						continue
 					T += "<br>#[i]: [O.explanation_text]"
 					i++

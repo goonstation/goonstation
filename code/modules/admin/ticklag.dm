@@ -15,7 +15,7 @@
 			return
 
 	world.tick_lag = number
-	logTheThing("admin", src, null, "set tick_lag to [number]")
-	logTheThing("diary", src.mob, null, "set tick_lag to [number]", "admin")
+	logTheThing(LOG_ADMIN, src, "set tick_lag to [number]")
+	logTheThing(LOG_DIARY, src.mob, "set tick_lag to [number]", "admin")
 	message_admins("[key_name(usr)] modified world's tick_lag to [number]")
 	return

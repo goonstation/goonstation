@@ -45,7 +45,7 @@
 		O.anchored = 1
 		var/turf/Aloc = get_turf(O)
 		for (var/turf/T in range(field_radius,Aloc))
-			if(get_dist(O,T) == field_radius)
+			if(GET_DIST(O,T) == field_radius)
 				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
 				src.forcefields += FF
 		SPAWN(field_time)

@@ -106,11 +106,11 @@
 					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
-		if (!user.mind || get_dist(src, user) > 1)
+		if (!user.mind || BOUNDS_DIST(src, user) > 0)
 			return
 
 		user.lastattacked = src
@@ -126,7 +126,7 @@
 			var/area/TA = src.target_override
 			target_name = initial(TA.name)
 		else if(!target_name && istype(gamemode))
-			target_name = gamemode?.target_location_name
+			target_name = gamemode?.concatenated_location_names
 
 		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
 				(ispath(target_area) && istype(get_area(src), target_area)) || \
@@ -148,7 +148,7 @@
 			boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
 		else if (!NUKE_AREA_CHECK)
 			boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
-		else if(alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") != "Yes")
+		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")
@@ -164,13 +164,13 @@
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
-			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = FALSE
 
 		#undef NUKE_AREA_CHECK
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
@@ -198,8 +198,8 @@
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
 						ticker.mode.shuttle_available = 1
 
-				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
-				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
+				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
+				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
 				W.set_loc(src)
 				src.disk = W
@@ -238,10 +238,6 @@
 					// Give the player a notice so they realize what has happened
 					boutput(user, "<span class='alert'>The screws are all weird safety-bit types! You can't turn them!</span>")
 					return
-				//else if (istype(W,/obj/item/wirecutters/))
-				//	user.visible_message("<b>[user]</b> opens up [src]'s wiring panel and takes a look.")
-				//	open_wire_panel(user)
-				//	return
 
 		if (istype(W, /obj/item/wrench/battle) && src._health <= src._max_health)
 			SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/machinery/nuclearbomb/proc/repair_nuke, null, 'icons/obj/items/tools/wrench.dmi', "battle-wrench", "[user] repairs the [src]!", null)
@@ -258,20 +254,14 @@
 				if (60 to INFINITY)
 					src.take_damage(W.force / 7) // Esword has 60 force.
 
-			logTheThing("combat", user, null, "attacks [src] with [W] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "attacks [src] with [W] at [log_loc(src)].")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
 		return
 
 	ex_act(severity)
-		/*switch(severity) // No more suicide-bombing the nuke.
-			if(1)
-				src.take_damage(80)
-			if(2)
-				src.take_damage(50)
-			if(3)
-				src.take_damage(20)*/
+		// No more suicide-bombing the nuke.
 		return
 
 	blob_act(var/power)
@@ -288,10 +278,10 @@
 
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
-		if (!damage)
+		if (damage <= 0)
 			return
 		if(P.proj_data.damage_type == D_KINETIC || (P.proj_data.damage_type == D_ENERGY && damage))
-			src.take_damage(damage / 1.7)
+			src.take_damage(damage / 3)
 		else if (P.proj_data.damage_type == D_PIERCING)
 			src.take_damage(damage)
 
@@ -330,7 +320,7 @@
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				gamemode = ticker.mode
 				gamemode.the_bomb = null
-				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
+				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
 			qdel(src)
 
@@ -385,7 +375,7 @@
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
 			sleep(30 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
+			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
 
 /datum/action/bar/icon/unanchorNuke
@@ -402,7 +392,7 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -412,7 +402,7 @@
 
 	onStart()
 		..()
-		if(get_dist(owner, the_bomb) > 1 || the_bomb == null || owner == null)
+		if(BOUNDS_DIST(owner, the_bomb) > 0 || the_bomb == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -432,7 +422,7 @@
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
-				logTheThing("bombing", owner, null, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
+				logTheThing(LOG_GAMEMODE, owner, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
 
 /obj/machinery/nuclearbomb/event
 	anyone_can_activate = 1
@@ -456,7 +446,7 @@
 			decal.icon_state = "balloon_green_pop"
 			qdel(src)
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)

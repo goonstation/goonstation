@@ -6,15 +6,16 @@
 	cooldown = 400
 	requires_robes = 1
 	offensive = 1
-	voice_grim = "sound/voice/wizard/MutateGrim.ogg"
-	voice_fem = "sound/voice/wizard/MutateFem.ogg"
-	voice_other = "sound/voice/wizard/MutateLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MutateGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MutateFem.ogg'
+	voice_other = 'sound/voice/wizard/MutateLoud.ogg'
+	maptext_colors = list("#d73715", "#d73715", "#fcf574")
 
 	cast()
 		if(!holder)
 			return
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
-			holder.owner.say("BIRUZ BENNAR")
+			holder.owner.say("BIRUZ BENNAR", FALSE, maptext_style, maptext_colors)
 		..()
 
 		boutput(holder.owner, "<span class='notice'>Your muscles are magically empowered and you feel very athletic!</span>")

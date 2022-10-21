@@ -77,11 +77,11 @@
 
 	proc/target_is_valid(var/mob/living/M,var/obj/O)
 		if (!M || !O)
-			return 0
-		if (isdead(M))
-			return 0
+			return FALSE
+		if (isdead(M) || isintangible(M))
+			return FALSE
 		if (M == friend)
-			return 0
-		if (get_dist(M,O) > shot_range)
-			return 0
-		return 1
+			return FALSE
+		if (GET_DIST(M,O) > shot_range)
+			return FALSE
+		return TRUE

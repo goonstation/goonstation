@@ -100,7 +100,7 @@
 /obj/machinery/cargo_router/kd_cater_exoflap
 	New()
 		destinations = list("Catering" = EAST)
-		default_direction = SOUTH
+		default_direction = WEST
 		..()
 
 /obj/machinery/cargo_router/kd_cater_flap

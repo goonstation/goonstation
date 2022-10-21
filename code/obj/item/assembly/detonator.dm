@@ -27,8 +27,8 @@
 	var/mob/builtBy = null
 
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 1.0
-	throwforce = 2.0
+	force = 1
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
@@ -81,7 +81,7 @@
 			src.icon_state = "m-i-p-w-timer"
 			src.det_state = 4
 
-/obj/item/assembly/detonator/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/detonator/attackby(obj/item/W, mob/user)
 	switch (src.det_state)
 		if (0)
 			if (istype(W, /obj/item/tank/plasma))
@@ -279,7 +279,7 @@
 		return
 
 	var/turf/epicenter = get_turf(loc)
-	logTheThing("bombing", null, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
+	logTheThing(LOG_BOMBING, null, "A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	message_admins("A canister bomb detonates at [epicenter.loc.name] ([log_loc(epicenter)])")
 	src.attachedTo.visible_message("<b><span class='alert'>The ruptured canister shatters from the pressure, and the hot gas ignites.</span></b>")
 
@@ -309,7 +309,7 @@
 	src.dispatch_event("prime")
 
 	command_alert("A canister bomb is primed in [get_area(src)] at coordinates (<b>X</b>: [src.master.x], <b>Y</b>: [src.master.y], <b>Z</b>: [src.master.z])! It is set to go off in [src.part_fs.time] seconds.")
-	logTheThing("bombing", usr, null, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
+	logTheThing(LOG_BOMBING, usr, "primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
 	message_admins("[key_name(usr)] primes a canister bomb at [get_area(src.master)] ([log_loc(src.master)])")
 	src.attachedTo.visible_message("<B><font color=#FF0000>The detonator's priming process initiates. Its timer shows [src.part_fs.time] seconds.</font></B>")
 

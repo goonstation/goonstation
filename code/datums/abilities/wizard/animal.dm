@@ -40,11 +40,13 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	max_range = 1
 	cooldown = 1350
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	sticky = 1
-	voice_grim = "sound/voice/wizard/FurryGrim.ogg"
-	voice_fem = "sound/voice/wizard/FurryFem.ogg"
-	voice_other = "sound/voice/wizard/FurryLoud.ogg"
+	voice_grim = 'sound/voice/wizard/FurryGrim.ogg'
+	voice_fem = 'sound/voice/wizard/FurryFem.ogg'
+	voice_other = 'sound/voice/wizard/FurryLoud.ogg'
+	maptext_colors = list("#167935", "#9eee80", "#ee59e3", "#5a1d8a", "#ee59e3", "#9eee80")
 
 	cast(mob/target)
 		if (!holder)
@@ -52,6 +54,10 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 
 		if (!ishuman(target))
 			boutput(holder.owner, "Your target must be human!")
+			return 1
+
+		if(!can_act(holder.owner))
+			boutput(holder.owner, "You can't cast this whilst incapacitated!")
 			return 1
 
 		var/mob/living/carbon/human/H = target
@@ -82,28 +88,28 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 	onStart()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onUpdate()
 		..()
 
-		if (isnull(A) || get_dist(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
+		if (isnull(A) || GET_DIST(M, target) > spell.max_range || isnull(M) || !ishuman(target) || !M.wizard_castcheck(spell))
 			interrupt(INTERRUPT_ALWAYS)
 
 	onEnd()
 		..()
 
 		if(!istype(get_area(M), /area/sim/gunsim))
-			M.say("YORAF UHRY") // AN EMAL? PAL EMORF? TURAN SPHORM?
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
-					playsound(H.loc, spell.voice_grim, 50, 0, -1)
-				else if(spell.voice_fem && H.gender == "female")
-					playsound(H.loc, spell.voice_fem, 50, 0, -1)
-				else if (spell.voice_other)
-					playsound(H.loc, spell.voice_other, 50, 0, -1)
+			M.say("YORAF UHRY", FALSE, spell.maptext_style, spell.maptext_colors)
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			if(spell.voice_grim && H && istype(H.wear_suit, /obj/item/clothing/suit/wizrobe/necro) && istype(H.head, /obj/item/clothing/head/wizard/necro))
+				playsound(H.loc, spell.voice_grim, 50, 0, -1)
+			else if(spell.voice_fem && H.gender == "female")
+				playsound(H.loc, spell.voice_fem, 50, 0, -1)
+			else if (spell.voice_other)
+				playsound(H.loc, spell.voice_other, 50, 0, -1)
 
 		var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 		smoke.set_up(5, 0, target.loc)
@@ -120,7 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
-			logTheThing("combat", M, target, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
+			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = 1 // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))
 				var/mob/living/critter/small_animal/bee/B = C
@@ -128,4 +134,4 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			if (istype(C))
 				C.change_misstep_chance(30)
 				C.stuttering = 40
-				SHOW_POLYMORPH_TIPS(C)
+				C.show_antag_popup("polymorph")

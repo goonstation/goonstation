@@ -87,7 +87,7 @@
 				src.turn_off()
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null
@@ -107,7 +107,7 @@
 					boutput(user, "Nothing happens.")
 		build_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.coveropen = !src.coveropen
 			src.visible_message("<b>[user.name]</b> [src.coveropen ? "opens" : "closes"] [src]'s cell cover.")
@@ -170,6 +170,11 @@
 		src.active = 0
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
 
 	active
 		New()

@@ -18,7 +18,7 @@ var/global/list/adventure_elements_by_id = list()
 
 	New()
 		if (src.opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 			RL_SetOpacity(1)
 		if(!(src.id in adventure_elements_by_id))
 			adventure_elements_by_id[src.id] = list(src)
@@ -86,6 +86,14 @@ var/global/list/adventure_elements_by_id = list()
 	setTarget(var/atom/A)
 		src.target = A
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 // Hello, goonstation coder reading this piece of code below.
 // I'd like to ask you to stop judging me. Yes, I can hear the thoughts formulating in your brain right now.
 // "what the fuck marquesas. why. why do you do this. why. why is this here. why."
@@ -99,6 +107,14 @@ var/global/list/adventure_elements_by_id = list()
 // DO SOMETHING.
 // LEAVE ME ALONE.
 /obj/adventurepuzzle/triggerable/triggerer
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	var/list/triggered = list()
 
 	proc/post_trigger()

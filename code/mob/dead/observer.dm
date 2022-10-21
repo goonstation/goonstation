@@ -10,7 +10,6 @@
 	canmove = 1
 	blinded = 0
 	anchored = 1	//  don't get pushed around
-	var/mob/corpse = null	//	observer mode
 	var/observe_round = 0
 	var/health_shown = 0
 	var/arrest_shown = 0
@@ -56,7 +55,7 @@
 /mob/dead/observer/click(atom/target, params, location, control)
 
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point(target)
+		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
@@ -67,6 +66,7 @@
 	if(src.client)
 		src.updateOverlaysClient(src.client)
 		src.updateButtons()
+		src.hud.update_ability_hotbar()
 	// ok so in logout we set your ghost to 101 invisibility.
 	// in login we set it back to whatever it was. so you keep your ghost.
 	// is there a better way to do this? probably. i dont care.
@@ -76,7 +76,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
-/mob/dead/observer/point_at(var/atom/target)
+/mob/dead/observer/point_at(atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc))
 		return
 
@@ -90,7 +90,8 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -229,14 +230,17 @@
 	src.see_in_dark = SEE_DARK_FULL
 	animate_bumble(src) // floaty ghosts  c:
 
-	if(corpse && ismob(corpse))
+	if (ismob(corpse))
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
+	else
+		stack_trace("Observer New() called with non-mob thing [corpse] (\ref [corpse]) as a corpse.")
 
 	hud = new(src)
 	src.attach_hud(hud)
@@ -264,9 +268,10 @@
 
 	if(!isdead(src))
 		if (src.hibernating == 1)
-			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
+			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
+				src.mind?.dnr = 1
 				src.ghostize()
 				qdel(src)
 			else
@@ -281,34 +286,53 @@
 
 
 /mob/proc/ghostize()
-	RETURN_TYPE(/mob/dead/observer)
+	RETURN_TYPE(/mob/dead)
+	// do nothing for NPCs
 	if(src.key || src.client)
+
 		if(src.mind && src.mind.damned) // Wow so much sin. Off to hell with you.
 			INVOKE_ASYNC(src, /mob.proc/hell_respawn, src.mind)
 			return null
-		var/mob/dead/observer/O = new/mob/dead/observer(src)
-		O.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
-		if(!src.mouse_opacity)
-			O.mouse_opacity = 0
-			O.alpha = 0
-		if (isghostrestrictedz(O.z) && !restricted_z_allowed(O, get_turf(O)) && !(src.client && src.client.holder))
-			O.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
-		src.mind?.transfer_to(O)
-		src.ghost = O
+		// step 1: either find a ghost or make one
+		var/mob/dead/our_ghost = null
+
+		// if we already have a ghost, just go get that instead
+		if (src.ghost && !src.ghost.disposed)
+			our_ghost = src.ghost
+		// no existing ghost, make a new one
+		else
+			our_ghost = new/mob/dead/observer(src)
+			our_ghost.bioHolder.CopyOther(src.bioHolder, copyActiveEffects = 0)
+			if(!src.mouse_opacity)
+				our_ghost.mouse_opacity = 0
+				our_ghost.alpha = 0
+			src.ghost = our_ghost
+
+		if (!isghostrestrictedz(our_ghost.z) || (isghostrestrictedz(our_ghost.z) && (restricted_z_allowed(our_ghost, get_area(our_ghost)) || (src.client && src.client.holder)))) //TODO make restructed_z_allowed handle all of this
+			our_ghost.set_loc(get_turf(src))
+		else
+			our_ghost.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
+
+		// step 2: make sure they actually make it to the ghost
+		if (src.mind)
+			src.mind.transfer_to(our_ghost)
+		else
+			our_ghost.key = src.key //they're probably logged out, set key so they're in the ghost when they get back
+
 		if(istype(get_area(src),/area/afterlife))
 			qdel(src)
 
-		respawn_controller.subscribeNewRespawnee(O.ckey)
-		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[O.ckey]
-		if(istype(respawnee))
+		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
+		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
+		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
+			var/mob/dead/observer/our_observer = our_ghost
 			respawnee.update_time_display()
-			O.hud?.get_join_other() // remind them of the other server
+			our_observer.hud?.get_join_other() // remind them of the other server
 
-		O.update_item_abilities()
-		return O
+		our_ghost.update_item_abilities()
+		return our_ghost
 	return null
-
 
 /mob/dead/observer/movement_delay()
 #ifdef HALLOWEEN
@@ -434,12 +458,11 @@
 		boutput( usr, "<span class='alert'>You must enable DNR to use this.</span>" )
 		return
 
-	if(!ticker || !ticker.centralized_ai_laws)
+	if(!ticker || !ticker.ai_law_rack_manager)
 		boutput( src, "Abort abort abort! No laws! No laws!!" )
 		return
 
-	boutput( src, "<b>AI laws:</b>" )
-	ticker.centralized_ai_laws.show_laws(usr)
+	boutput( src, ticker.ai_law_rack_manager.format_for_logs(round_end = TRUE) )
 
 
 /mob/dead/observer/Logout()
@@ -498,6 +521,8 @@
 		src.x--
 	OnMove()
 
+	. = ..()
+
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
@@ -518,7 +543,7 @@
 	set category = null
 	set name = "Re-enter Corpse"
 	if(!corpse || corpse.disposed)
-		alert("You don't have a corpse!")
+		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
@@ -615,11 +640,14 @@
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe
 		if (!isliving(M) && !iswraith(M) && !isAI(M))
+			continue
+		// admins aren't observable unless they're in player mode
+		if (C.holder && !C.player_mode)
 			continue
 		// remove any secret mobs that someone is controlling
 		if (M.unobservable)
@@ -639,7 +667,7 @@
 		creatures[name] = M
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -765,7 +793,7 @@
 					creatures -= name
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -775,13 +803,13 @@
 
 mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
-	set_loc(newobs)
+	src.set_loc(newobs)
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
-	newobs.my_ghost = src
+	newobs.ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
@@ -792,8 +820,6 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 		mind.transfer_to(newobs)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
-	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 
 mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
 	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
@@ -802,7 +828,7 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 	newobs.name = src.name
 	newobs.real_name = src.real_name
 	newobs.corpse = src.corpse
-	newobs.my_ghost = src
+	newobs.ghost = src
 	delete_on_logout_reset = delete_on_logout
 	delete_on_logout = 0
 	if (target?.invisibility)
@@ -814,6 +840,4 @@ mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had t
 	else if (src.client)
 		src.client.mob = newobs
 	set_loc(newobs)
-	if (isghostrestrictedz(newobs.z) && !restricted_z_allowed(newobs, get_turf(newobs)) && !(src.client && src.client.holder))
-		newobs.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 	return newobs

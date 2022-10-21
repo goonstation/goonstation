@@ -1,0 +1,140 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/beefood{
+	pixel_x = 7
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/decal/poster/wallsign/newtonscrew{
+	desc = "The Beestro has a food safety rating of B-. Large quantities of the chef's vomit were present in the food.";
+	pixel_y = 26;
+	name = "Beestro Food Safety Rating Plaque"
+	},
+/obj/item/pen/marker/yellow{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/bee_egg_carton{
+	pixel_y = 6
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/item/sticker/bee{
+	pixel_y = 3;
+	pixel_x = -33
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/stool,
+/mob/living/critter/small_animal/bee,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/stool,
+/obj/critter/domestic_bee/reindeer,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"v" = (
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/stool,
+/obj/item/toy/plush/small/bee,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"A" = (
+/mob/living/critter/small_animal/bee/small,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/stool,
+/obj/critter/domestic_bee/creepy,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/item/sticker/bee{
+	pixel_y = 24
+	},
+/mob/living/critter/small_animal/bee/buddy,
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/espresso_machine,
+/obj/item/reagent_containers/food/drinks/espressocup,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/table/reinforced/bar/auto,
+/obj/random_item_spawner/tableware/maybe_few,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/machinery/door/window/eastright{
+	name = "Beestro Bar Door";
+	req_access_txt = null
+	},
+/obj/critter/domestic_bee/chef,
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/reagent_containers/food/snacks/breadloaf/corn/sweet/honey{
+	pixel_y = 12
+	},
+/obj/item/reagent_containers/food/snacks/cereal_box/honey{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_y = -1;
+	pixel_x = -7
+	},
+/obj/item/reagent_containers/food/drinks/milk{
+	pixel_y = 7
+	},
+/turf/simulated/bar,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+f
+D
+A
+k
+i
+"}
+(2,1,1) = {"
+v
+a
+g
+I
+x
+"}
+(3,1,1) = {"
+F
+G
+U
+V
+u
+"}

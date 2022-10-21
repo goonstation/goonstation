@@ -33,7 +33,7 @@ var/mutable_appearance/fluid_ma
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
-	anchored = 1
+	anchored = 2
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
@@ -140,9 +140,10 @@ var/mutable_appearance/fluid_ma
 
 	proc/trigger_fluid_enter()
 		for(var/atom/A in src.loc)
-			if (A.event_handler_flags & USE_FLUID_ENTER)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
 				A.EnteredFluid(src, src.loc)
-		src.loc?.EnteredFluid(src, src.loc)
+		if(src.group && !src.group.disposed)
+			src.loc?.EnteredFluid(src, src.loc)
 
 	proc/turf_remove_cleanup(turf/the_turf)
 		the_turf.active_liquid = null
@@ -201,7 +202,7 @@ var/mutable_appearance/fluid_ma
 			return
 
 		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W) || istype(W,/obj/item/pen))
+		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W))
 			var/turf/T = get_turf(src)
 			T.Attackby(W,user)
 			W.AfterAttack(T,user)
@@ -224,7 +225,7 @@ var/mutable_appearance/fluid_ma
 	//incorporate touch_modifier?
 	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid) || istype(src, /obj/fluid/airborne))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid)  || src.group.disposed || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level
@@ -297,7 +298,7 @@ var/mutable_appearance/fluid_ma
 		if (src.disposed) return
 
 		if (sfx)
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 		if (src.group)
 			if (!src.group.remove(src))
@@ -320,7 +321,9 @@ var/mutable_appearance/fluid_ma
 
 	var/spawned_any = 0
 	proc/update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -330,10 +333,6 @@ var/mutable_appearance/fluid_ma
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
-			LAGCHECK(LAG_MED)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -354,7 +353,6 @@ var/mutable_appearance/fluid_ma
 				var/suc = 1
 				var/push_thing = 0
 				for(var/obj/thing in t.contents)
-					LAGCHECK(LAG_HIGH)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
@@ -374,13 +372,12 @@ var/mutable_appearance/fluid_ma
 							suc=0
 							break
 
-				if(suc && src.group) //group went missing? ok im doin a check here lol
-					LAGCHECK(LAG_HIGH)
+				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
 					spawned_any = 1
 					src.icon_state = "15"
 					var/obj/fluid/F = new /obj/fluid
 					F.set_up(t,0)
-					if (!F || !src.group) continue //set_up may decide to remove F
+					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
@@ -395,12 +392,13 @@ var/mutable_appearance/fluid_ma
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 
@@ -749,13 +747,13 @@ var/mutable_appearance/fluid_ma
 					src.remove_pulling()
 					src.changeStatus("weakened", 3.5 SECONDS)
 					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
-					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 				if(-2) //superlibe
 					src.remove_pulling()
 					src.changeStatus("weakened", 6 SECONDS)
-					playsound(T, "sound/misc/slip.ogg", 50, 1, -3)
+					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
 					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
 					var/atom/target = get_edge_target_turf(src, src.dir)
 					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
@@ -764,7 +762,7 @@ var/mutable_appearance/fluid_ma
 
 
 	//Possibility to consume reagents. (Each reagent should return 0 in its reaction_[type]() proc if reagents should be removed from fluid)
-	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list)
+	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list && F.amt > CHEM_EPSILON)
 		F.group.last_reacted = F
 		var/react_volume = F.amt > 10 ? (F.amt / 2) : (F.amt)
 		react_volume = min(react_volume,100) //capping the react amt
@@ -811,28 +809,13 @@ var/mutable_appearance/fluid_ma
 			//	M.add_blood(F)
 			//	if (!M.anchored)
 			//		F.add_tracked_blood(M)
-
-
 	var/do_reagent_reaction = 1
 
-	if(F.my_depth_level == 1 && src.shoes?.permeability_coefficient < 1) //sandals do not help
-		do_reagent_reaction = 0
-
-	if (F.my_depth_level == 2 || F.my_depth_level == 3)
-		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
-			do_reagent_reaction = 0
-	if (F.my_depth_level >= 4)
-		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
+	if (F.my_depth_level == 1)
+		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
 			do_reagent_reaction = 0
 
-	if(!shoes)
-		do_reagent_reaction = 1
-
-	if (src.lying)
-		if (!((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair)))
-			do_reagent_reaction = 1
-
-	if (do_reagent_reaction && entered_group) //if entered_group == 1, it may not have been set yet
+	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0

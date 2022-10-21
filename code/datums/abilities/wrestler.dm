@@ -97,7 +97,7 @@
 
 
 		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
-			SHOW_WRESTLER_TIPS(src)
+			src.show_antag_popup("wrestler")
 
 	else return
 
@@ -227,29 +227,29 @@
 		// The HUD autoequip code doesn't call unequipped() when it should, naturally.
 		if (ishuman(M) && (istype(H) && H.is_inherent != 1))
 			var/mob/living/carbon/human/HH = M
-			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)))
-				boutput(HH, __red("You have to wear the wrestling belt for this."))
+			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)) && !HAS_ATOM_PROPERTY(M, PROP_MOB_PASSIVE_WRESTLE))
+				boutput(HH, "<span class='alert'>You have to wear the wrestling belt for this.</span>")
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
-		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
-			boutput(M, __red("You cannot use your \"powers\" outside of The Ring!"))
+		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
+			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
 			return 0
 
 		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1
@@ -259,31 +259,8 @@
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		return 0
 
-	proc/calculate_cooldown()
-		if (!holder)
-			return 0
-
-		var/mob/living/M = holder.owner
-
-		if (!M || !istype(M))
-			return 0
-
-		var/CD = src.cooldown
-		var/ST_mod_max = M.get_stam_mod_max()
-		var/ST_mod_regen = GET_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS)
-
-		// Balanced for 200/12 and 200/13 drugs (e.g. epinephrine or meth), so stamina regeneration
-		// buffs are prioritized over total stamina modifiers.
-		var/R = src.cooldown - (((ST_mod_max / 3 ) + (ST_mod_regen * 2)) * 10)
-		if (R > (src.cooldown * 2.5))
-			R = src.cooldown * 2.5 // Chems with severe stamina penalty exist, so this should be capped.
-		CD = max((src.cooldown / 2.5), R) // About the same minimum as the old wrestling belt procs.
-
-		//DEBUG_MESSAGE("Default CD: [src.cooldown]. Modifier: [R]. Actual CD: [CD].")
-		return CD
-
 	doCooldown()
-		src.last_cast = world.time + calculate_cooldown()
+		src.last_cast = world.time + src.cooldown
 
 		if (!src.holder.owner || !ismob(src.holder.owner))
 			return

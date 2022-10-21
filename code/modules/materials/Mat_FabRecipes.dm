@@ -1,63 +1,5 @@
 //See bottom of file for valid materials in /simple recipes.
 
-/datum/matfab_recipe/simple/insbody
-	name = "Instrument body"
-	desc = "The body of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=4)
-	result = /obj/item/musicpart/body
-
-/datum/matfab_recipe/simple/insneck
-	name = "Instrument neck"
-	desc = "The neck of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=3)
-	result = /obj/item/musicpart/neck
-
-/datum/matfab_recipe/simple/insmouth
-	name = "Instrument mouthpiece"
-	desc = "The mouthpiece of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=2)
-	result = /obj/item/musicpart/mouth
-
-/datum/matfab_recipe/simple/insbell
-	name = "Instrument bell"
-	desc = "The bell of an instrument. Not an actual bell."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=4)
-	result = /obj/item/musicpart/bell
-
-/datum/matfab_recipe/simple/insbag
-	name = "Instrument bag"
-	desc = "The bag of an instrument."
-	category = "Miscellaneous"
-	materials = list("!clothorganic"=4)
-	result = /obj/item/musicpart/bag
-
-/datum/matfab_recipe/simple/insrod
-	name = "Instrument rod"
-	desc = "A plain old hollowed out rod."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=3)
-	result = /obj/item/musicpart/h_rod
-
-/datum/matfab_recipe/blueprint/blastarmor
-	name = "Blueprint: EOD Armor"
-	desc = "Blueprints for EOD Armor"
-	category = "Blueprints"
-
-	New()
-		..()
-		required_parts.Add(new/datum/matfab_part/variable {part_name = "Hard material"; required_amount = 5; required_value = 70; greater_than = 1; required_property = "hard"; proper_name = "hardness"} ())
-		required_parts.Add(new/datum/matfab_part/variable {part_name = "Dense material"; required_amount = 2; required_value = 60; greater_than = 1; required_property = "density"; proper_name = "density"} ())
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/clothing/suit/space/suit = new()
-			suit.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
 	desc = "A complete space suit."
@@ -72,13 +14,16 @@
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/clothing/suit/space/custom/suit = new()
-			var/obj/item/clothing/head/helmet/space/custom/helmet = new()
+			var/obj/item/clothing/head/helmet/space/custom/helm = new()
+			var/obj/item/fabr = getObjectByPartName("Fabric")
+			var/obj/item/visr = getObjectByPartName("Visor")
+			var/obj/item/renf = getObjectByPartName("Reinforcement")
+
+			suit.set_custom_mats(fabr.material, renf.material)
+			helm.set_custom_mats(fabr.material, visr.material)
+
 			suit.set_loc(getOutputLocation(owner))
-			helmet.set_loc(getOutputLocation(owner))
-			var/obj/item/fab = getObjectByPartName("Fabric")
-			var/obj/item/vis = getObjectByPartName("Visor")
-			suit.setMaterial(fab.material)
-			helmet.setMaterial(vis.material)
+			helm.set_loc(getOutputLocation(owner))
 		return
 
 /datum/matfab_recipe/mining_mod_conc
@@ -248,43 +193,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/coillarge
-	name = "Large coil"
-	desc = "A large coil used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Coil"; required_amount = 2} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/coil/large/newObj = new()
-			var/obj/item/source = getObjectByPartName("Coil")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/arrowhead
-	name = "Arrowhead"
-	desc = "An Arrowhead that can be used for arrows or in other objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		var/obj/item/arrowhead/newObj = new()
-		var/obj/item/source = getObjectByPartName("Arrowhead")
-		if(source?.material)
-			newObj.setMaterial(source.material)
-		newObj.change_stack_amount((amount) - newObj.amount)
-		newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/spear
 	name = "Spear"
 	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
@@ -292,7 +200,7 @@
 
 	New()
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 3} ())
-		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Head"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Head"; required_amount = 1} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
@@ -314,7 +222,7 @@
 	category = "Weapons"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/arrowhead {part_name = "Arrowhead"; required_amount = 1} ())
+		required_parts.Add(new/datum/matfab_part/metalorcrystalororganic {part_name = "Arrowhead"; required_amount = 1} ())
 		required_parts.Add(new/datum/matfab_part/metalororganic {part_name = "Shaft"; required_amount = 1} ())
 		..()
 
@@ -389,25 +297,6 @@
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
-/datum/matfab_recipe/gears
-	name = "Gears"
-	desc = "Some gears used as parts in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metal {part_name = "Gears"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/gears/newObj = new()
-			var/obj/item/source = getObjectByPartName("Gears")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
 /datum/matfab_recipe/tripod
 	name = "Tripod"
 	desc = "A tripod."
@@ -421,25 +310,6 @@
 		for(var/i=0, i<amount, i++)
 			var/obj/item/tripod/newObj = new()
 			var/obj/item/source = getObjectByPartName("Tripod")
-			if(source?.material)
-				newObj.setMaterial(source.material)
-
-			newObj.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/aplates
-	name = "Armor plates"
-	desc = "Armor plates used in various objects."
-	category = "Components"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Armor"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/aplate/newObj = new()
-			var/obj/item/source = getObjectByPartName("Armor")
 			if(source?.material)
 				newObj.setMaterial(source.material)
 
@@ -688,15 +558,17 @@
 	category = "Tools"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/conductive {part_name = "Core"; required_amount = 2} ())
+		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Glowy Stuff"; required_amount = 2; optional = TRUE} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/ammo/power_cell/self_charging/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
+			var/obj/item/rads = getObjectByPartName("Glowy Stuff")
 			if(source?.material)
-				newObj.setMaterial(source.material)
+				newObj.set_custom_mats(source?.material, rads?.material)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -707,15 +579,17 @@
 	category = "Tools"
 
 	New()
-		required_parts.Add(new/datum/matfab_part/energy {part_name = "Core"; required_amount = 4} ())
+		required_parts.Add(new/datum/matfab_part/conductive {part_name = "Core"; required_amount = 4} ())
+		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Glowy Stuff"; required_amount = 4; optional = TRUE} ())
 		..()
 
 	build(amount, var/obj/machinery/nanofab/owner)
 		for(var/i=0, i<amount, i++)
 			var/obj/item/cell/custom/newObj = new()
 			var/obj/item/source = getObjectByPartName("Core")
+			var/obj/item/rads = getObjectByPartName("Glowy Stuff")
 			if(source?.material)
-				newObj.setMaterial(source.material)
+				newObj.set_custom_mats(source?.material, rads?.material)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -757,39 +631,6 @@
 				W.change_stack_amount(9)
 
 			W.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/fuel_rod
-	name = "Nuclear Fuel Rod"
-	desc = "Fuel suitable for use in a fission reactor"
-	category = "Tools"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/fissile {part_name = "Fissile Fuel 1"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		for(var/i=0, i<amount, i++)
-			var/obj/item/fuel_1 = getObjectByPartName("Fissile Fuel 1")
-			var/obj/item/nuke/rod/new_rod = new()
-
-			new_rod.setMaterial(fuel_1.material)
-			new_rod.sv_ratio = 1.22
-			new_rod.set_loc(getOutputLocation(owner))
-		return
-
-/datum/matfab_recipe/fuel_rod_4
-	name = "Advanced Nuclear Fuel Rod"
-	desc = "Composite fuel suitable for use in a fission reactor"
-	category = "Tools"
-
-	New()
-		required_parts.Add(new/datum/matfab_part/fissile {part_name = "Fissile Fuel"; required_amount = 3} ())
-		required_parts.Add(new/datum/matfab_part/radiocative_material {part_name = "Flux Catalyst"; required_amount = 1} ())
-		..()
-
-	build(amount, var/obj/machinery/nanofab/owner)
-		//TODO
 		return
 
 //////////////////////////////////////////////BASE CLASS BELOW
@@ -946,7 +787,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing(LOG_DEBUG, null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

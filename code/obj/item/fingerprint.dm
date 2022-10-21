@@ -50,7 +50,7 @@
 					return
 	return
 
-/obj/item/fcardholder/attack_hand(mob/user as mob)
+/obj/item/fcardholder/attack_hand(mob/user)
 	if (user.contents.Find(src))
 		SPAWN( 0 )
 			src.attack_self(user)
@@ -60,7 +60,7 @@
 		return ..()
 	return
 
-/obj/item/fcardholder/attackby(obj/item/P as obj, mob/user as mob)
+/obj/item/fcardholder/attackby(obj/item/P, mob/user)
 	if (istype(P, /obj/item/f_card))
 		if (src.contents.len < 30)
 			user.drop_item()
@@ -107,7 +107,7 @@
 	name = "Finger Print Card"
 	icon = 'icons/obj/items/card.dmi'
 	icon_state = "fingerprint0"
-	amount = 10.0
+	amount = 10
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	throwforce = 1
@@ -135,7 +135,7 @@
 		return "<B>There are no fingerprints on this card.</B>"
 	return
 
-/obj/item/f_card/attack_hand(mob/user as mob)
+/obj/item/f_card/attack_hand(mob/user)
 
 	if ((user.r_hand == src || user.l_hand == src))
 		src.add_fingerprint(user)
@@ -152,7 +152,7 @@
 		..()
 	return
 
-/obj/item/f_card/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/f_card/attackby(obj/item/W, mob/user)
 
 	if (istype(W, /obj/item/f_card))
 		if ((src.fingerprints || W.fingerprints))

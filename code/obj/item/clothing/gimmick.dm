@@ -70,6 +70,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	noslow
 		setupProperties()
@@ -81,7 +82,7 @@
 	desc = "Twoooo!"
 	icon_state = "owl"
 	item_state = "owl_mask"
-	see_face = 0.0
+	see_face = 0
 
 	equipped(var/mob/user)
 		..()
@@ -147,7 +148,7 @@
 	name = "Smiling Face"
 	desc = ":)"
 	icon_state = "smiles"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/waldo
 	name = "striped shirt and jeans"
@@ -215,6 +216,7 @@
 	icon_state = "cyborg"
 	item_state = "cyborg"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	hides_from_examine = C_UNIFORM|C_GLOVES
 
 /obj/item/clothing/under/gimmick/johnny
 	name = "Johnny~~"
@@ -264,34 +266,35 @@
 	icon_state = "devil"
 	item_state = "devil"
 
-// NASSA
+// Donk clothes
 
-/obj/item/clothing/head/helmet/space/blackstronaut
-	name = "NASSA space helmet"
+/obj/item/clothing/head/helmet/space/donk
+	name = "\improper Donk space helmet"
 	desc = "A helmet with a self-contained pressurized environment. Kinda resembles a motorcycle helmet."
 	icon_state = "EOD"
 
-/obj/item/clothing/under/gimmick/blackstronaut
-	name = "NASSA space suit"
-	desc = "A space activity suit embroidered with the NASSA logo. Space is one cold muthafucka."
-	icon_state = "nassa"
-	item_state = "nassa"
+/obj/item/clothing/under/gimmick/donk
+	name = "\improper Donk space suit"
+	desc = "Some Donk brand spacewear. It's uncomfortable and made out of some really crinkly, metallic materials. Amazingly, this seems to be vacuum sealed."
+	icon_state = "donk"
+	item_state = "donk"
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
-	permeability_coefficient = 0.02
 	protective_temperature = 1000
 
 	setupProperties()
 		..()
+		setProperty("heatprot", -20)//it's made out of foil, that would make fire a LOT worse
 		setProperty("coldprot", 20)
+		setProperty("radprot", 5)
 
-// SNAZZA
+// Donkini
 
-/obj/item/clothing/under/gimmick/snazza
-	name = "SNAZZA suit"
-	desc = "A NASSA Suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
-	icon_state = "snazza"
-	item_state = "snazza"
+/obj/item/clothing/under/gimmick/donkini
+	name = "\improper Donkini"
+	desc = "A Donk suit that appears to have been gussied and repurposed as a space bikini. Snazzy, but utterly useless for space travel."
+	icon_state = "donkini"
+	item_state = "donkini"
 
 // Duke Nukem
 
@@ -325,6 +328,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "batsuit"
 	item_state = "batsuit"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/mask/batman
 	name = "batmask and batcape"
@@ -332,7 +336,7 @@
 	icon_state = "batman"
 	item_state = "bl_suit"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | MASKINTERNALS //The bat respirator is a real thing. See also: Batman can breathe in space.
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/head/helmet/batman
 	name = "batcowl"
@@ -375,12 +379,12 @@
 	if (user.wear_mask == src)
 		boutput(user, "<span class='alert'>You can't get the mask off to look into its eyes!</span>")
 
-	if (!user || get_dist(user, src) > 0)
+	if (!user || GET_DIST(user, src) > 0)
 		return 0
 	user.visible_message("<span class='alert'><b>[user] gazes into the eyes of the [src.name]. The [src.name] gazes back!</b></span>") //And when you gaze long into an abyss, the abyss also gazes into you.
 	SPAWN(1 SECOND)
-		playsound(src.loc, "sound/voice/chanting.ogg", 25, 0, 0)
-		playsound(src.loc, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0)
+		playsound(src.loc, 'sound/voice/chanting.ogg', 25, 0, 0)
+		playsound(src.loc, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0)
 		sleep(1.5 SECONDS)
 		user.emote("scream")
 		sleep(1.5 SECONDS)
@@ -419,6 +423,10 @@
 	cant_self_remove = 1
 	cant_other_remove = 1
 	material_prints = "greasy polymer fibers"
+
+	setupProperties()
+		..()
+		setProperty("conductivity", 1) //i mean it's for cluwnes
 
 // blue clown thing
 // it was called the blessed clown for the like half week it existed before
@@ -541,8 +549,8 @@
 // Vikings
 
 /obj/item/clothing/under/gimmick/viking
-	name = "Viking Hauberk"
-	desc = "A shirt of mail armor commonly utilized by space vikings."
+	name = "TN-HEIMALIS-1 Hauberk"
+	desc = "A shirt of flexible cobryl-alloy mail armor with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "viking"
 
@@ -551,8 +559,8 @@
 		setProperty("coldprot", 40)
 
 /obj/item/clothing/head/helmet/viking
-	name = "Viking Helmet"
-	desc = "A helmet, but for space vikings."
+	name = "TN-HEIMALIS-2 Helmet"
+	desc = "A cobryl-alloy armored helmet with excellent cold protection, bearing the insignia of the Terra Nivium company."
 	icon_state = "viking"
 	item_state = "vhelmet"
 
@@ -561,12 +569,13 @@
 		setProperty("coldprot", 40)
 
 /obj/item/device/energy_shield/viking
-	name = "Space Viking energy-shield"
+	name = "TN-FIDEI Energy Shield"
+	desc = "A handheld projected energy barrier for personal protection, bearing the insignia of the Terra Nivium company."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "viking_shield"
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "vshield"
-	throwforce = 7.0
+	throwforce = 7
 	w_class = W_CLASS_NORMAL
 
 	turn_off()
@@ -649,21 +658,21 @@
 	desc = "WARNING: Provides no protection from falling bricks."
 	icon_state = "spiderman"
 	item_state = "bogloves"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/spiderman
 	name = "spider-man Suit"
 	desc = "FAPPO!"
 	icon_state = "spiderman"
 	item_state = "spiderman"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/horse_mask
 	name = "horse mask"
 	desc = "Neigh."
 	icon_state = "horse"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 	cursed
 		cant_drop = 1
@@ -711,10 +720,14 @@
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "adeptus"
 	item_state = "adeptus"
-	permeability_coefficient = 0.50
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS
 	wear_layer = MOB_OVERLAY_BASE
+
+	setupProperties()
+		..()
+		setProperty("chemprot", 10)
 
 //power armor
 
@@ -729,6 +742,7 @@
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 	icon_state = "unp_armor"
 	item_state = "unp_armor"
 
@@ -840,7 +854,7 @@
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "skull"
 	item_state = "death"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/suit/robuddy
 	name = "guardbuddy costume"
@@ -852,6 +866,7 @@
 	item_state = "robuddy"
 	wear_layer = MOB_BACK_LAYER + 0.2
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/bee
 	name = "bee costume"
@@ -875,27 +890,28 @@
 	over_hair = TRUE
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 
 /obj/item/clothing/mask/niccage
 	name = "Nicolas Cage mask"
 	desc = "An eerily realistic mask of 20th century film actor Nicolas Cage."
 	icon_state = "niccage"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/waltwhite
 	name = "meth scientist mask"
 	desc = "A crappy looking mask that you swear you've seen a million times before. 'Spook*Corp Costumes' is embedded on the side of it."
 	icon_state = "waltwhite"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS //| SPACEWEAR Walter White is like Batman in many ways. Breathing in space is not one of them.
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/mask/mmyers
 	name = "murderer mask"
 	desc = "This looks strangely like another mask you've seen somewhere else, but painted white. Huh."
 	icon_state = "mmyers"
 	c_flags = COVERSMOUTH | COVERSEYES | MASKINTERNALS
-	see_face = 0.0
+	see_face = 0
 
 
 /obj/item/clothing/suit/gimmick
@@ -909,8 +925,9 @@
 	item_state = "light_borg"
 	body_parts_covered = TORSO|LEGS|ARMS
 	c_flags = COVERSMOUTH | COVERSEYES
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/gimmick/utena //YJHTGHTFH's utena suit
 	name = "revolutionary suit"
@@ -937,6 +954,7 @@
 	desc = "A blocky looking armor suit, it's made of plastic."
 	icon_state = "mobile_suit"
 	item_state = "mobile_suit"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/head/mobile_suit
 	name = "mobile suit headpiece"
@@ -952,6 +970,7 @@
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "sneakmans"
 	item_state = "sneakmans"
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 /obj/item/clothing/suit/armor/sneaking_suit/costume
 	desc = "On closer inspection this is a cheap cosplay outfit with an obvious zipper."
@@ -976,7 +995,6 @@
 	desc = "Really, they're just regular overalls, but they have a little bee patch on them. Aww."
 	icon_state = "beekeeper"
 	item_state = "beekeeper"
-	permeability_coefficient = 0.50
 
 /obj/item/clothing/under/gimmick/butler
 	name = "butler suit"
@@ -1034,7 +1052,7 @@
 	name = "mime mask"
 	desc = "The charming mask of the mime. Very emotive! Wait, isn't this usually face-paint?"
 	icon_state = "mime"
-	see_face = 0.0
+	see_face = 0
 
 /obj/item/clothing/under/misc/mime
 	name = "mime suit"
@@ -1042,9 +1060,12 @@
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "mime1"
+	item_state = "mime1"
 
 /obj/item/clothing/under/misc/mime/alt
 	icon_state = "mime2"
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
+	item_state = "mime2"
 	desc = "A mime outfit with a pair of dungarees. The front pocket is all stitched up, jeez."
 
 /obj/item/clothing/suit/scarf
@@ -1088,7 +1109,6 @@
 	item_state = "weddress"
 	c_flags = SLEEVELESS
 
-ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 /obj/item/clothing/gloves/ring
 	name = "ring"
 	desc = "A little ring, worn on the ring finger. You absolutely can't wear rings on any other fingers. It's just not possible."
@@ -1098,7 +1118,11 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	hide_prints = 0
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	setupProperties()
+		..()
+		setProperty("conductivity", 1)
+
+	attack(mob/M, mob/user, def_zone)
 		if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(40)) || prob(1)) // honk
 			user.visible_message("<span class='alert'><b>[user] fumbles and drops [src]!</b></span>",\
 			"<span class='alert'><b>You fumble and drop [src]!</b></span>")
@@ -1180,7 +1204,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 		if (!isturf(src.loc))
 			return
 		src.layer = initial(src.layer)
-		playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 		SPAWN(rand(2,5))
 			if (src && isturf(src.loc))
 				var/obj/table/T = locate(/obj/table) in range(3,src)
@@ -1190,7 +1214,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 							break
 						if (src.loc == T.loc)
 							src.visible_message("<span class='alert'>\The [src] rolls under [T]!</span>")
-							playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 530, 1, null, 2)
 							if (prob(30))
 								qdel(src)
 								return
@@ -1200,7 +1224,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 						else
 							step_towards(src, T)
 							src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-							playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
+							playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 							sleep(rand(2,5))
 				else
 					for (var/i=rand(0,4), i>0, i--)
@@ -1208,7 +1232,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 							break
 						step(src, pick(alldirs))
 						src.visible_message("<span class='alert'>\The [src] bounces!</span>")
-						playsound(src.loc, "sound/items/coindrop.ogg", 50, 1, null, 2)
+						playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1, null, 2)
 						sleep(rand(2,5))
 
 /obj/item/clothing/gloves/ring/gold
@@ -1377,6 +1401,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon_state = "joyful"
 	body_parts_covered = TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_MASK|C_GLASSES|C_EARS
 	over_hair = TRUE
 
 /obj/item/clothing/head/rando
@@ -1476,6 +1501,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "werewolf suit"
 	desc = "The suit of a werewolf costume. Given the amount of moons in and around the station, it's a surprise there isn't a real one about."
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 	icon_state = "wwsuit"
 
 /obj/item/clothing/head/werewolf
@@ -1504,6 +1530,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	name = "abomination suit"
 	desc =  "The abomination suit straight out of the studio of Jon Woodworker's horror thriller, <i>The Whaddyacallit</i>"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM
 	icon_state = "abomcostume"
 
 /obj/item/clothing/head/abomination
@@ -1525,6 +1552,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "On close inspection, you notice a small collection of bones caught in the fabric of the suit. Spooky."
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	wear_layer = MOB_OVERLAY_BASE
+	hides_from_examine = C_UNIFORM|C_EARS
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
 
@@ -1632,11 +1660,16 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	item_state = "handcomp"
 	hide_prints = 0
 
+	setupProperties()
+		..()
+		setProperty("conductivity", 0.8)
+
 /obj/item/clothing/glasses/ftscanplate
 	name = "FTX-480 Scanner Plate"
 	icon_state = "ftscanplate"
 	item_state = "ftscanplate"
 	desc = "This eyewear looks incredibly advanced, as do most things that come from the Commonwealth of Free Worlds. Unfortunately, this is a non-functioning replica sold to tourists."
+	wear_layer = MOB_GLASSES_LAYER2
 
 /obj/item/clothing/under/blossomdress
 	name = "cherryblossom dress"
@@ -1715,6 +1748,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	desc = "It has a little hood you can flip up and down. Rawr!"
 	icon_state = "dinosaur"
 	item_state = "dinosaur"
+	hides_from_examine = C_UNIFORM
 
 	New()
 		..()
@@ -1792,3 +1826,23 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves/ring)
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	icon_state = "witchcape_mint"
+
+// marching band stuff
+/obj/item/clothing/under/gimmick/marchingband
+	name = "Marching Band Outfit"
+	desc = "Band, ten-hut! For-ward harch!" // this isn't a typo, honest -disturbherb
+	icon_state = "marchingband"
+	item_state = "marchingband"
+
+/obj/item/clothing/head/shako
+	name = "Marching Band Shako"
+	desc = "It's hard to resist playing with the plume on this thing."
+	icon_state = "shako"
+	item_state = "shako"
+
+// deus ex reference
+/obj/item/clothing/under/gimmick/jcdenton
+	name = "nano-augmented agent outfit"
+	desc = "JC stands for Jesus Christ."
+	icon_state = "jcdenton"
+	item_state = "jcdenton"

@@ -89,7 +89,7 @@
 #define REBUILD_SPECTRO				8
 
 // blood system and item damage things
-#define DAMAGE_BLUNT 1
+#define DAMAGE_BLUNT 1 // 420
 #define DAMAGE_CUT 2
 #define DAMAGE_STAB 4
 #define DAMAGE_BURN 8
@@ -142,12 +142,14 @@
 #define LIMB_STONE    (1<<12)
 /// Limb typically belongs to a vicious bear
 #define LIMB_BEAR     (1<<13)
-/// Limb typically belongs to a wendigo
-#define LIMB_WENDIGO  (1<<14)
+/// Limb typically belongs to a brullbar
+#define LIMB_BRULLBAR  (1<<14)
 /// Limb typically belongs to a large angry dog
 #define LIMB_WOLF     (1<<15)
 /// Limb is kinda boney
 #define LIMB_SKELLY   (1<<16)
+/// Limb is an artifact limb
+#define LIMB_ARTIFACT (1<<17)
 
 // islimb macros
 #define ismutantlimb(x)   HAS_FLAG(x:kind_of_limb, LIMB_MUTANT)
@@ -164,13 +166,13 @@
 #define isitemlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_ITEM)
 #define isstonelimb(x)    HAS_FLAG(x:kind_of_limb, LIMB_STONE)
 #define isbearlimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_BEAR)
-#define iswendigolimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO)
+#define isbrullbarlimb(x)  HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR)
 #define iswolflimb(x)     HAS_FLAG(x:kind_of_limb, LIMB_WOLF)
 #define isskeletonlimb(x) HAS_FLAG(x:kind_of_limb, LIMB_SKELLY)
 #define ismonsterlimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ZOMBIE) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_HUNTER) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_BEAR) |\
-                          HAS_FLAG(x:kind_of_limb, LIMB_WENDIGO) |\
+                          HAS_FLAG(x:kind_of_limb, LIMB_BRULLBAR) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_ABOM) |\
                           HAS_FLAG(x:kind_of_limb, LIMB_WOLF))
 #define isrobolimb(x) (HAS_FLAG(x:kind_of_limb, LIMB_ROBOT) |\
@@ -192,3 +194,13 @@
 #define FIRESOURCE_OPEN_FLAME 1
 /// Firesource can not cause fires on its own when dropped
 #define FIRESOURCE_IGNITER 2
+
+// for pen reagent dipping
+#define PEN_REAGENT_CAPACITY 4
+
+/// The default, the attack is animated, a message is given, and particles are shown (most items)
+#define ATTACK_VISIBLE 0
+/// The attack is fully hidden. No animation, no message, no particles (sleepy pen, silenced .22)
+#define ATTACK_FULLY_HIDDEN 1
+/// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
+#define ATTACK_PARTIALLY_HIDDEN 2

@@ -60,7 +60,6 @@ You can often get a sentence reduced or even negated entirely by just cooperatin
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
 You can interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
-The broken paint vendor can be repaired!
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -72,7 +71,6 @@ You never know what you might find in-between the cushions of some couches!
 The power of prayer can help or harm, depending on who or what hears it!
 It's dangerous in space, don't forget to bring oxygen!
 Maintenance often has tools! Be careful of the ones that move!
-Have the chills or maybe a fever? Head to Pathology to spread the good word!
 Science doesn't just explode, they've got a teleporter too. For remote explosions!
 Remember that not all explosions are the result of accidents. Some of them come from Mining!
 Corporate security is your friend! So long as you are theirs!
@@ -91,7 +89,7 @@ You can tell if the shuttle's been called and how long it has to arrive or leave
 Doctors can't heal you if you keep running away from them. Stay still and they'll patch you up in no time!
 Never trust pills you find on the floor.
 Looking for a quick way to earn cash? Try the slot machines that are usually near the bar!
-If you have a tracking implant and a health implant, medical staff will know exactly when and where you (inevitably) die. They can also teleport to your corpse using a hand teleporter.
+If you have a health implant, medical staff will know exactly when and where you (inevitably) die. They can also teleport to your corpse using a hand teleporter.
 Merely getting close to lava will melt your body if you're not wearing protective clothing.
 Helpful mutations can be sold by Genetics via the gene booth. Stop in from time to time to see what they have!
 The key to a long lifespan is meticulous preparation before the crisis.
@@ -110,7 +108,6 @@ To defeat the cyber demons, shoot at them until they die.
 Read the chat!
 Instead of taking each tool out of the toolbox one by one to put it into your belt of choice, you can just grab a toolbox into your active hand, and click it on the toolbelt to transfer all of its contents right to the belt! This also works BETWEEN belts!
 You can refill the janitor buffer with up to 1700u of ANY chemical.
-Need to find a specific item in a large pile? Try clicking the tile it's on while holding SHIFT, ALT, and CTRL, and looking through the status tab. Or press the P key and get list of nearby pickups.
 In a crowded area and tried of being shoved around? Try crawling in between others' legs to get through.
 Need to move a person or two and dragging them takes too long? Carry around a body bag. Not only can multiple people fit inside, you won't be slowed down while dragging it.
 Trash bags can hold more than just garbage. Keep one handy to store some extra items you don't mind fishing around for.

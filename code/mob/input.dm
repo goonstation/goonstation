@@ -11,11 +11,27 @@
 	return ..()
 
 /mob/keys_changed(keys, changed)
-	if (changed & KEY_EXAMINE)
-		if (keys & KEY_EXAMINE && HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 255
+	if (changed & KEY_EXAMINE && src.client)
+		if (keys & KEY_EXAMINE)
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/atom/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, TRUE)
 		else
-			src.client?.get_plane(PLANE_EXAMINE).alpha = 0
+			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
+				var/atom/movable/name_tag/hover_tag
+				for (var/mob/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -128,11 +144,11 @@
 						C.rotate(src.move_dir)
 
 				for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-					if (get_dist(src, G.affecting) > 1)
+					if (BOUNDS_DIST(src, G.affecting) > 0)
 						qdel(G)
 				for (var/obj/item/grab/G as anything in src.grabbed_by)
-					if (istype(G) && get_dist(src, G.assailant) > 1)
-						if (G.state > 1)
+					if (istype(G) && BOUNDS_DIST(src, G.assailant) > 0)
+						if (G.state > GRAB_STRONG)
 							delay += G.assailant.p_class
 						qdel(G)
 
@@ -200,9 +216,14 @@
 
 					var/do_step = 1 //robust grab : don't even bother if we are in a chokehold. Assailant gets moved below. Makes the tile glide better without having a chain of step(src)->step(assailant)->step(me)
 					for (var/obj/item/grab/G as anything in src.grabbed_by)
-						if (G?.state < GRAB_NECK) continue
+						if (G?.state < GRAB_AGGRESSIVE) continue
 						do_step = 0
 						break
+
+					if(ishuman(src) && !src?.client?.flying && !src.hasStatus("resting") && !src.buckled && !H.limbs.l_leg && !H.limbs.r_leg)	//do this before we move, so we can dump stuff on the old tile. Just to be mean.
+						boutput(src, "<span class='alert'>Without a leg to walk with, you flop over!</span>")
+						src.setStatus("resting", duration = INFINITE_STATUS)
+						src.force_laydown_standup()
 
 					if (do_step)
 						step(src, move_dir)
@@ -220,7 +241,7 @@
 
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
 							if (G.assailant == pushing || G.affecting == pushing) continue
-							if (G.state < GRAB_NECK) continue
+							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
@@ -235,7 +256,7 @@
 								src.remove_stamina((src.lying ? 3 : 1) * (STAMINA_COST_SPRINT-1))
 
 						if(src.get_stamina() < STAMINA_COST_SPRINT && HAS_ATOM_PROPERTY(src, PROP_MOB_FAILED_SPRINT_FLOP)) //Check after move rather than before so we cleanly transition from sprint to flop
-							if (!src.client.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
+							if (!src?.client?.flying && !src.hasStatus("resting")) //no flop if laying or noclipping
 								//just fall over in place when in space (to prevent zooming)
 								var/turf/current_turf = get_turf(src)
 								if (!(current_turf.turf_flags & CAN_BE_SPACE_SAMPLE))
@@ -247,7 +268,7 @@
 
 						var/list/pulling = list()
 						if (src.pulling)
-							if ((!IN_RANGE(old_loc, src.pulling, 1) && !IN_RANGE(src, src.pulling, 1)) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
+							if ((BOUNDS_DIST(old_loc, src.pulling) > 0 && BOUNDS_DIST(src, src.pulling) > 0) || !isturf(src.pulling.loc) || src.pulling == src) // fucks sake
 								src.remove_pulling()
 								//hud.update_pulling() // FIXME
 							else
@@ -256,7 +277,7 @@
 							pulling += G.affecting
 
 						for (var/atom/movable/A in pulling)
-							if (get_dist(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
+							if (GET_DIST(src, A) == 0) // if we're moving onto the same tile as what we're pulling, don't pull
 								continue
 							if (A == src || A == pushing)
 								continue
@@ -275,3 +296,12 @@
 
 			next_move = world.time + delay
 			return delay
+		else
+			if (src.restrained())
+				return
+			for (var/obj/item/grab/G as anything in src.grabbed_by)
+				if (G.state == GRAB_PIN)
+					if (src.last_resist > world.time)
+						return
+					src.last_resist = world.time + 20
+					G.do_resist()

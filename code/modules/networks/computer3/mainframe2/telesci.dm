@@ -20,29 +20,33 @@ proc/is_teleportation_allowed(var/turf/T)
 			if (!TJ.active)
 				continue
 			if(IN_RANGE(TJ, T, TJ.range))
-				return 0
+				return FALSE
 		if (istype(atom, /obj/item/device/flockblocker))
 			var/obj/item/device/flockblocker/F = atom
 			if (!F.active)
 				continue
 			if(IN_RANGE(F, T, F.range))
-				return 0
+				return FALSE
 
 	for_by_tcl(N, /obj/blob/nucleus)
 		if(IN_RANGE(N, T, 3))
-			return 0
+			return FALSE
 
 	// first check the always allowed turfs from map landmarks
 	if (T in landmarks[LANDMARK_TELESCI])
-		return 1
+		return TRUE
 
 	if ((istype(T.loc,/area) && T.loc:teleport_blocked) || isrestrictedz(T.z))
-		return 0
+		return FALSE
 
-	if (istype(T.loc, /area/shuttle/escape/station) && !T.canpass())
-		return 0//forgive me pls
+	if (istype(T.loc, /area/shuttle/escape/station))
+		if (T.density)
+			return FALSE
+		for (var/obj/O in T)
+			if (O.density)
+				return FALSE
 
-	return 1
+	return TRUE
 
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
@@ -96,7 +100,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id)
 			. += "<span class='alert'>The [src.name]'s \"disconnected from host\" light is flashing.</span>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -489,10 +493,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			which.set_loc(target)
 
-		showswirl(src.loc)
+		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
 		leaveresidual(target)
@@ -519,11 +523,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			which.set_loc(src.loc)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
-		showswirl(receiveturf)
+		showswirl_out(receiveturf)
 		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
@@ -551,11 +555,11 @@ proc/is_teleportation_allowed(var/turf/T)
 		for(var/atom/movable/O in send)
 			O.set_loc(target)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
 			O.set_loc(src.loc)
 		showswirl(src.loc)
 		showswirl(target)
@@ -573,7 +577,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			start_portal = makeportal(src.loc, target)
 			if (start_portal)
 				end_portal = makeportal(target, src.loc)
-				logTheThing("station", usr, null, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
+				logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
 
 	proc/makeportal(var/turf/newloc, var/turf/destination)
 		var/obj/perm_portal/P = new /obj/perm_portal (newloc)
@@ -581,7 +585,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return P
 
 	proc/badsend()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(90)) //MINOR EFFECTS
@@ -590,11 +594,11 @@ proc/is_teleportation_allowed(var/turf/T)
 			effect = pick("tempblind","minormutate","sorium","rads","fire","widescatter","brute")
 		else //MAJOR EFFECTS
 			effect = pick("gib","majormutate","mutatearea","fullscatter")
-		logTheThing("station", usr, null, "sends the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
+		logTheThing(LOG_STATION, usr, "sends the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
 		processbadeffect(effect)
 
 	proc/badreceive()
-		showswirl(src.loc)
+		showswirl_error(src.loc)
 
 		var/effect = ""
 		if(prob(80)) //MINOR EFFECTS
@@ -603,7 +607,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			effect = pick("mediumsummon","sorium","rads","fire","getrandom")
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
-		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
+		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
 		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
 
 	proc/processbadeffect(var/effect)
@@ -612,16 +616,16 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
+				playsound(src.loc, 'sound/weapons/flashbang.ogg', 35, 1)
 				for (var/mob/N in viewers(src, null))
-					if (get_dist(N, src) <= 6)
+					if (GET_DIST(N, src) <= 6)
 						N.apply_flash(30, 5)
 					if (N.client)
 						shake_camera(N, 6, 32)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
 				var/list/turfs = new
@@ -701,6 +705,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
+					logTheThing(LOG_COMBAT, M, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -756,7 +761,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/spacebee,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -917,7 +922,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 			if("term_message","term_file")
-				var/message = signal.data["data"]
+				var/message = strip_html(signal.data["data"])
 				if (message)
 					message = replacetext(message, "|n", "<br>")
 
@@ -936,7 +941,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (..(user))
 			return
 
@@ -984,9 +989,9 @@ proc/is_teleportation_allowed(var/turf/T)
 		onclose(user, "t_computer")
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()
@@ -1233,9 +1238,10 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!src.host_id || !message)
 			return
 
+		if (ON_COOLDOWN(src, "hostmsg", 0.5 SECONDS))
+			return
+
 		if (file)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
-
-		return

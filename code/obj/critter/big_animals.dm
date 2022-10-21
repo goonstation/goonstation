@@ -64,10 +64,10 @@
 			return 1
 		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!src.alive)
 			// TODO: tie this into surgery()
-			if (istype(W, /obj/item/scalpel))
+			if (iscuttingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 0)
 						user.visible_message("<span class='combat'>[user] slices through the skin and flesh of [src]'s left arm with [W].</span>", "<span class='alert'>You slice through the skin and flesh of [src]'s left arm with [W].</span>")
@@ -96,7 +96,7 @@
 							src.right_arm = null
 						src.update_dead_icon()
 
-			else if (istype(W, /obj/item/circular_saw))
+			else if (issawingtool(W))
 				if (user.zone_sel.selecting == "l_arm")
 					if (src.left_arm_stage == 1)
 						user.visible_message("<span class='combat'>[user] saws through the bone of [src]'s left arm with [W].</span>", "<span class='alert'>You saw through the bone of [src]'s left arm with [W].</span>")
@@ -116,7 +116,7 @@
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/MEraaargh.ogg"), 40, 0)
+		playsound(src.loc, pick('sound/voice/MEraaargh.ogg'), 40, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -133,7 +133,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, pick("sound/voice/babynoise.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/babynoise.ogg'), 50, 0)
 		M.changeStatus("weakened", 3 SECONDS)
 		M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5),1)
@@ -177,7 +177,7 @@ obj/critter/bear/care
 				src.target = C
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
-				playsound(src.loc, pick("sound/voice/animal/YetiGrowl.ogg"), 40, 0)
+				playsound(src.loc, pick('sound/voice/animal/YetiGrowl.ogg'), 40, 0)
 				src.task = "chasing"
 				break
 			else
@@ -185,7 +185,7 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 40, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 40, 1, -1)
 		M.changeStatus("stunned", 10 SECONDS)
 		M.changeStatus("weakened", 10 SECONDS)
 
@@ -208,13 +208,13 @@ obj/critter/bear/care
 		//I want to rework this so the yeti keeps the heads as a trophy and he drops them once dead
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> devours the rest of [M] in one bite!</span>")
-		logTheThing("combat", M, null, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-		playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+		logTheThing(LOG_COMBAT, M, "was devoured by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 		M.remove()
 		src.task = "thinking"
 		src.seek_target()
 		src.attacking = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 
 		sleeping = 1
 
@@ -288,7 +288,7 @@ obj/critter/bear/care
 				src.oldtarget_name = C.name
 				src.visible_message("<span class='combat'><b>[src]</b> [src.angertext] [src.target]!</span>")
 				if(!recentsound)
-					playsound(src.loc, "sound/misc/jaws.ogg", 50, 0)
+					playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
 					recentsound = 1
 					SPAWN(1 MINUTE) recentsound = 0
 				src.task = "chasing"
@@ -298,24 +298,24 @@ obj/critter/bear/care
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
 		M.changeStatus("stunned", 2 SECONDS)
 		M.changeStatus("weakened", 2 SECONDS)
 
 	CritterAttack(mob/M)
 		if (isdead(M))
 			src.visible_message("<span class='combat'><B>[src]</B> gibs [M] in one bite!</span>")
-			logTheThing("combat", M, null, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
-			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
 			M.gib()
-			SPAWN(3 SECONDS) playsound(src.loc, "sound/voice/burp_alien.ogg", 50, 0)
+			SPAWN(3 SECONDS) playsound(src.loc, 'sound/voice/burp_alien.ogg', 50, 0)
 			src.task = "thinking"
 			src.seek_target()
 			src.attacking = 0
 			sleeping = 1
 		else
 			..()
-			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_1.ogg", 50, 0.4)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 0.4)
 
 
 
@@ -371,7 +371,7 @@ obj/critter/bear/care
 						src.visible_message("<span class='alert'><B>Whoops, looks like [src] bit down a bit too hard.</span>")
 
 			//stand next to bat, and point towards some blood, the bat will try to drink it
-			else if (istype(over_object,/obj/item/reagent_containers/) && get_dist(usr, src) <= 1)
+			else if (istype(over_object,/obj/item/reagent_containers/) && BOUNDS_DIST(usr, src) == 0)
 				src.task = "chasing blood"
 				src.drink_target = over_object
 				src.visible_message("[usr] gestures towards [over_object] to try to get [src] to drink from it.")
@@ -431,7 +431,7 @@ obj/critter/bear/care
 		else return 0
 
 		if (sips_taken == 0 || prob(80))
-			playsound(src.loc,"sound/items/drink.ogg", rand(10,50), 1)
+			playsound(src.loc,'sound/items/drink.ogg', rand(10,50), 1)
 		// if (prob(20))
 		eat_twitch(src)
 
@@ -460,24 +460,24 @@ obj/critter/bear/care
 				return 0
 
 			if ("chasing blood")
-				if (!drink_target || !isobj(drink_target) || get_dist(src, src.drink_target) > 3)
+				if (!drink_target || !isobj(drink_target) || GET_DIST(src, src.drink_target) > 3)
 					src.task = "thinking"
 					drink_target = null
-				else if (get_dist(src, src.drink_target) <= 0)
+				else if (GET_DIST(src, src.drink_target) <= 0)
 					src.task = "drink obj"
 				else
 					walk_to(src, src.drink_target,0,4)
 				return 0
 
 			if ("drink obj")
-				if (!drink_target || get_dist(src, src.drink_target) > 0)
+				if (!drink_target || GET_DIST(src, src.drink_target) > 0)
 					src.task = "thinking"
 				else
 					drink_blood(drink_target)
 				return 0
 
 			if ("drink mob")
-				if (!src.drink_target || get_dist(src, src.drink_target) > src.attack_range)
+				if (!src.drink_target || GET_DIST(src, src.drink_target) > src.attack_range)
 					src.task = "thinking"
 				else
 					drink_blood(drink_target)

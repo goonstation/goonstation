@@ -136,7 +136,7 @@
 	if(src.emagged == 1)
 		var/message = src.buttifricky()
 		if(prob(2))
-			playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
+			playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		speak(message)
 		var/fartmessage = src.fart()
 		if(fartmessage)
@@ -155,7 +155,7 @@
 		if(user)
 			user.show_text("You short out the vocal emitter on [src].", "red")
 		src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src.loc, "sound/misc/extreme_ass.ogg", 35, 1)
+		playsound(src.loc, 'sound/misc/extreme_ass.ogg', 35, 1)
 		src.emagged = 1
 		return 1
 	return 0
@@ -168,7 +168,7 @@
 	src.emagged = 0
 	return 1
 
-/obj/machinery/bot/buttbot/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/bot/buttbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/emag))
 		//Do not hit the buttbot with the emag tia
 	else
@@ -216,7 +216,7 @@
 
 
 /obj/machinery/bot/buttbot/Topic(href, href_list)
-	if(!IN_RANGE(usr, src, 1))
+	if(!(BOUNDS_DIST(usr, src) == 0))
 		boutput(usr, "You're too far away from [src], get closer.[prob(5) ? pick(" ...if you really want to."," It won't bite.") : ""]")
 		return
 
@@ -234,7 +234,7 @@
 
 	attack_hand(usr)
 
-/obj/machinery/bot/buttbot/attack_hand(mob/user as mob)
+/obj/machinery/bot/buttbot/attack_hand(mob/user)
 	var/dat
 	var/butt_engine = "Bio-Reactive Organic Ketone Engine"
 	switch(src.butt_fluff)
@@ -312,7 +312,7 @@
 	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
-	playsound(src, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 	SPAWN(2 SECONDS)
 		var/jitters = 30
 		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
@@ -338,7 +338,7 @@
 				sleep(0.1 SECONDS)
 			SPAWN(3 SECONDS)
 				src.visible_message("<span class='alert'><b>[src]</b>'s ass explodes!</span>")
-				playsound(src.loc, "sound/voice/farts/superfart.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, 'sound/voice/farts/superfart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				src.robo_expel_fart_gas(2)
 				var/turf/src_turf = get_turf(src)
 				if(src_turf)
@@ -380,7 +380,7 @@
 		return
 
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
-		playsound(src, "sound/voice/farts/poo2_robot.ogg", 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 	else
 		if(narrator_mode)
 			playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
@@ -431,7 +431,7 @@
 
 	if(!fart_on_other)
 		switch(rand(1, 42))
-			if(1) . = "<B>[src]</B> lets out a girly little 'toot' from their butt."
+			if(1) . = "<B>[src]</B> lets out a little 'toot' from their butt."
 			if(2) . = "<B>[src]</B> farts loudly!"
 			if(3) . = "<B>[src]</B> lets one rip!"
 			if(4) . = "<B>[src]</B> farts! It sounds wet and smells like rotten eggs."

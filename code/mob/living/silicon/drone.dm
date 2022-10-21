@@ -96,7 +96,7 @@
 			tally -= src.propulsion.speed
 		return tally
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -129,7 +129,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -184,7 +184,7 @@
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
+		if (GET_DIST(src, target) > 0)
 			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
@@ -361,7 +361,7 @@
 			if(6)
 				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)
@@ -382,7 +382,7 @@
 			else
 				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if(W:try_weld(user, 1))
 				switch(construct_stage)
@@ -443,7 +443,8 @@
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W
 			src.visible_message("<b>[user]</b> adds [C] to [src].")
-			cable_type = C.take(1, src)
+			cable_type = C.split_stack(1)
+			cable_type.set_loc(src)
 			change_stage(3)
 
 		else if(istype(W, /obj/item/device/radio) && construct_stage == 3)

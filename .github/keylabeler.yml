@@ -9,49 +9,73 @@ caseSensitive: false
 
 # Explicit keyword mappings to labels. Form of match:label. Required.
 labelMappings:
-    "[BUG - CRITICAL]": bug - critical
-    "[CRITICAL]": bug - critical
-    "[BUG - MAJOR]": bug - major
-    "[MAJOR]": bug - major
-    "[BUG]": bug
-    "[FIX]": bug
-    "[BUGFIX]": bug
-    "[BUG - MINOR]": bug - minor
-    "[MINOR]": bug - minor
-    "[BUG - TRIVIAL]": bug - trivial
-    "[TRIVIAL]": bug - trivial
-    "[RUNTIME]": runtime
-    "[HELP WANTED]": help wanted
-    "[HELP]": help wanted
-    "[INPUT WANTED]": input wanted
-    "[INPUT]": input wanted
-    "[FEEDBACK]": input wanted
-    "[ENHANCEMENT]": feature
-    "[FEATURE]": feature
-    "[FEAT]": feature
-    "[ASS-JAM]": ass-jam
-    "[BALANCE]": balance
-    "[CLEANLINESS]": cleanliness
-    "[CLEAN]": cleanliness
-    "[CHORE]": cleanliness
-    "[EXPERIMENTAL]": experimental
-    "[PERFORMANCE]": performance
-    "[PERF]": performance
-    "[QOL]": QoL
-    "[REMOVAL]": removal
-    "[REVERT]": revert
-    "[REWORK]": rework
-    "[SECRET]": secret
-    "[STYLE]": style
-    "[TGUI]": tgui
-    "[UI]": tgui
-    "[TOOLS]": tooling
-    "[TOOLING]": tooling
-    "[WIP]": WIP
-    "[EASY]": good first issue
-    "[GFI]": good first issue
-    "[GOOD FIRST ISSUE]": good first issue
-    "[MEDAL]": medal
-    "[HUMAN RESPRITE]": human resprite project
-    "[WIKI]": add to wiki
-    "[ADD TO WIKI]": add to wiki
+    "[BUG - CRITICAL]": p-critical
+    "[CRITICAL]": p-critical
+    "[BUG - MAJOR]": p-major
+    "[MAJOR]": p-major
+    "[BUG - MINOR]": p-minor
+    "[MINOR]": p-minor
+    "[BUG - TRIVIAL]": p-trivial
+    "[TRIVIAL]": p-trivial
+    "[BUG]": c-bug
+    "[FIX]": c-bug
+    "[BUGFIX]": c-bug
+    "fixes #": c-bug
+    "[RUNTIME]": c-runtime
+    "[INPUT WANTED]": e-input-wanted
+    "[INPUT]": e-input-wanted
+    "[FEEDBACK]": e-input-wanted
+    "[ENHANCEMENT]": c-feature
+    "[FEATURE]": c-feature
+    "[FEAT]": c-feature
+    "[BALANCE]": c-balance
+    "[CLEANLINESS]": c-code-quality
+    "[CODE QUALITY]": c-code-quality
+    "[CLEAN]": c-code-quality
+    "[CHORE]": c-code-quality
+    "[EXPERIMENTAL]": c-experimental
+    "[PERFORMANCE]": c-performance
+    "[PERF]": c-performance
+    "[QOL]": c-QoL
+    "[REMOVAL]": c-removal
+    "[REVERT]": c-revert
+    "[REWORK]": c-rework
+    "[SECRET]": a-secret
+    "[TGUI]": a-ui
+    "[UI]": a-ui
+    "[TOOLS]": a-tooling
+    "[TOOLING]": a-tooling
+    "[EASY]": e-good-first-issue
+    "[GFI]": e-good-first-issue
+    "[GOOD FIRST ISSUE]": e-good-first-issue
+    "[MEDAL]": a-medal
+    "[WIKI]": e-add-to-wiki
+    "[ADD TO WIKI]": e-add-to-wiki
+    "[CONTEST]": e-contest
+    "[ADMIN]": a-admin
+    "[AI]": a-ai
+    "[ATMOS]": a-atmospherics
+    "[ATMOSPHERICS]": a-atmospherics
+    "[CATERING]": a-catering
+    "[CHEM]": a-chemistry
+    "[CHEMISTRY]": a-chemistry
+    "[CLOTHING]": a-clothing
+    "[GAME OBJECTS]": a-game-objects
+    "[OBJECTS]": a-game-objects
+    "[GAMEMODES]": a-gamemodes 
+    "[GAME MODES]": a-gamemodes 
+    "[MODES]": a-gamemodes
+    "[INTERNAL]": a-internal
+    "[MAPPING]": a-mapping
+    "[MATERIALS]": a-materials
+    "[MATSCI]": a-materials
+    "[MEDICAL]": a-medical
+    "[MUTANTRACE]": a-mutantraces
+    "[SPECIES]": a-mutantraces
+    "[PLAYER ACTIONS]": a-player-actions
+    "[ACTIONS]": a-player-actions
+    "[SCIENCE]": a-science
+    "[SILICONS]": a-silicons
+    "[BORGS]": a-silicons
+    "[STATION SYSTEMS]": a-station-systems
+    "[STATUS EFFECTS]": a-status-effects

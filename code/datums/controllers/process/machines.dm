@@ -33,7 +33,7 @@
 		if (ticker % 8 == 0)
 			src.atmos_machines = by_cat[TR_CAT_ATMOS_MACHINES]
 			for (var/obj/machinery/machine as anything in atmos_machines)
-				if( !machine || machine.z == 4 && !Z4_ACTIVE ) continue
+				if( !machine || machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame) ) continue
 	#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 	#endif
@@ -89,7 +89,7 @@
 			for(var/X in machlist[(src.ticker % (1<<(i-1)))+1])
 				if(!X) continue
 				var/obj/machinery/machine = X
-				if( machine.z == 4 && !Z4_ACTIVE ) continue
+				if( machine.z == 4 && !Z4_ACTIVE || istype(machine.loc, /obj/item/electronics/frame)) continue
 		#ifdef MACHINE_PROCESSING_DEBUG
 				var/t = world.time
 		#endif

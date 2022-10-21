@@ -90,14 +90,13 @@
 
 		return 0
 
-	//Really stolen from gang, But this basically just picks everyone who is ready and not hellbanned or jobbanned from Command or Captain
+	//Really stolen from gang, But this basically just picks everyone who is ready and not jobbanned from Command or Captain
 	//priority values 1=favorite,2=medium,3=low job priorities
 	proc/get_possible_commanders(var/priority)
 		var/list/candidates = list()
 		for(var/datum/mind/mind in members)
 			var/mob/new_player/M = mind.current
 			if (!istype(M)) continue
-			if (ishellbanned(M)) continue
 			if(jobban_isbanned(M, "Captain")) continue //If you can't captain a Space Station, you probably can't command a starship either...
 			if(jobban_isbanned(M, "NanoTrasen Commander")) continue
 			if(jobban_isbanned(M, "Syndicate Commander")) continue
@@ -169,7 +168,7 @@
 		boutput(H, "You're in the [name] faction!")
 		// bestow_objective(player,/datum/objective/battle_royale/win)
 		if (show_popup)
-			SHOW_POD_WARS(H)
+			H.show_antag_popup("podwars")
 		if (istype(mode))
 			mode.stats_manager?.add_player(H.mind, H.real_name, team_num, (H.mind == commander ? "Commander" : "Pilot"))
 

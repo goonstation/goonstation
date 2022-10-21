@@ -131,7 +131,7 @@ var/global/list/statusGroupLimits = list("Food"=4)
 		setStatus(statusId, (isnull(S.maxDuration) ? (S.duration + duration):(min(S.duration + duration, S.maxDuration))), optional)
 		return S
 	else
-		if(duration > 0)
+		if(isnull(duration) || duration > 0)
 			return setStatus(statusId, (isnull(globalInstance.maxDuration) ? (duration):(min(duration, globalInstance.maxDuration))), optional)
 
 /**
@@ -225,6 +225,10 @@ var/global/list/statusGroupLimits = list("Food"=4)
 	else
 		throw EXCEPTION("Unknown status type passed: [statusId]")
 		return null
+
+// Sets the status duration of the passed statusId to the larger of the existing status of that ID and the passed {maxDuration}
+/atom/proc/setStatusMin(statusId, minDuration, optional) //this is probably inefficient
+	src.setStatus(statusId, max(src.getStatusDuration(statusId), minDuration), optional)
 
 /**
 	* Returns duration of status with given {statusId}, or null if not found.

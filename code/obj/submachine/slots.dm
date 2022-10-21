@@ -80,7 +80,7 @@
 			src.working = 1
 			src.icon_state = "[icon_base]-on"
 
-			playsound(src, "sound/machines/ding.ogg", 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, 1)
 			. = TRUE
 			ui_interact(usr, ui)
 			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
@@ -125,7 +125,7 @@
 	src.add_fingerprint(usr)
 	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL, "machineUsed")
 
-/obj/submachine/slot_machine/attackby(var/obj/item/I as obj, mob/user as mob)
+/obj/submachine/slot_machine/attackby(var/obj/item/I, mob/user)
 	if(istype(I, /obj/item/card/id))
 		if(src.scan)
 			boutput(user, "<span class='alert'>There is a card already in the slot machine.</span>")
@@ -161,7 +161,7 @@
 /obj/submachine/slot_machine/proc/money_roll(wager)
 	var/roll = rand(1, max_roll)
 	var/exclamation = ""
-	var/win_sound = "sound/machines/ping.ogg"
+	var/win_sound = 'sound/machines/ping.ogg'
 	var/amount = 0
 
 	//300x and 100x jackpots fall through to 50x winner if wager <= 250
@@ -171,17 +171,17 @@
 		roll = min(roll * 2, max_roll)
 
 	if (roll == 1) //1 - 300
-		win_sound = "sound/misc/airraid_loop_short.ogg"
+		win_sound = 'sound/misc/airraid_loop_short.ogg'
 		exclamation = "JACKPOT! "
 		amount = 300 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning a Jackpot of [amount] credits!", "Jackpot Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 5) //4 - 400
-		win_sound =  "sound/misc/klaxon.ogg"
+		win_sound =  'sound/misc/klaxon.ogg'
 		exclamation = "Big Winner! "
 		amount = 100 * wager
-		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner")
+		command_alert("Congratulations to [src.scan.registered] on winning [amount] credits!", "Big Winner", alert_origin = ALERT_STATION)
 	else if (roll <= 15) //10 - 500    (Plus additional 5 - 250 if wager <= 250)
-		win_sound =  "sound/musical_instruments/Bell_Huge_1.ogg"
+		win_sound =  'sound/musical_instruments/Bell_Huge_1.ogg'
 		exclamation = "Big Winner! "
 		amount = 50 * wager
 	else if (roll <= 65) //50 - 500
@@ -210,7 +210,7 @@
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -229,7 +229,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -250,17 +250,17 @@
 					//O.show_message(text("<b>[]</b> says, 'Let's roll!'", src), 1)
 				var/roll = rand(1,101)
 
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				SPAWN(2.5 SECONDS)
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! [usr.name] has won their freedom!'</span>", src), 1)
-						playsound(src.loc, "sound/voice/heavenly.ogg", 55, 1)
+						playsound(src.loc, 'sound/voice/heavenly.ogg', 55, 1)
 						usr.un_damn()
 					else if(roll > 1 && roll <= 10 && istype(usr,/mob/living/carbon/human))
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, '[usr.name] has a limb ripped off by the machine!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						var/mob/living/carbon/human/H = usr
 						if(H.limbs.l_arm)
 							H.limbs.l_arm.sever()
@@ -289,7 +289,7 @@
 	icon_state = "slots-off"
 	var/play_money = 0
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/spacecash/))
 			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
@@ -301,7 +301,7 @@
 			I.amount = 0
 			qdel(I)
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_dialog(user)
 		if (src.working)
 			var/dat = {"<B>Slot Machine</B><BR>
@@ -322,7 +322,7 @@
 			onclose(user, "slotmachine")
 
 	Topic(href, href_list)
-		if (get_dist(src, usr) > 1 || !isliving(usr) || iswraith(usr) || isintangible(usr))
+		if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
 			return
 		if (is_incapacitated(usr) || usr.restrained())
 			return
@@ -348,54 +348,54 @@
 					//O.show_message(text("<b>[]</b> says, 'Let's roll!'", src), 1)
 				var/roll = rand(1,1350)
 
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
 					if (roll == 1)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'JACKPOT! You have won a MILLION CREDITS!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/airraid_loop_short.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/airraid_loop_short.ogg', 55, 1)
 						src.play_money += 1000000
 						//src.money = 0
 					else if (roll > 1 && roll <= 5)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won a hundred thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/klaxon.ogg', 55, 1)
 						src.play_money += 100000
 						//src.money -= 100000
 					else if (roll > 5 && roll <= 25)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Big Winner! You have won ten thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/misc/klaxon.ogg", 55, 1)
+						playsound(src.loc, 'sound/misc/klaxon.ogg', 55, 1)
 						src.play_money += 10000
 						//src.money -= 10000
 					else if (roll > 25 && roll <= 50)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a thousand credits!'</span>", src), 1)
-						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
+						playsound(src.loc, 'sound/musical_instruments/Bell_Huge_1.ogg', 55, 1)
 						src.play_money += 1000
 						//src.money -= 1000
 					else if (roll > 50 && roll <= 100)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won a hundred credits!'</span>", src), 1)
-						playsound(src.loc, "sound/musical_instruments/Bell_Huge_1.ogg", 55, 1)
+						playsound(src.loc, 'sound/musical_instruments/Bell_Huge_1.ogg', 55, 1)
 						src.play_money += 100
 						//src.money -= 100
 					else if (roll > 100 && roll <= 200)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'Winner! You have won fifty credits!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						src.play_money += 50
 						//src.money -= 50
 					else if (roll > 200 && roll <= 500)
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'You have won ten credits!'</span>", src), 1)
-						playsound(src.loc, "sound/machines/ping.ogg", 55, 1)
+						playsound(src.loc, 'sound/machines/ping.ogg', 55, 1)
 						src.play_money += 10
 						//src.money -= 10
 					else
 						for(var/mob/O in hearers(src, null))
 							O.show_message(text("<span class='subtle'><b>[]</b> says, 'No luck!'</span>", src), 1)
-							//playsound(src.loc, "sound/machines/buzz-two.ogg", 55, 1) // way too loud UGH
+							//playsound(src.loc, 'sound/machines/buzz-two.ogg', 55, 1) // way too loud UGH
 					src.working = 0
 					src.icon_state = "slots-off"
 					updateUsrDialog()

@@ -188,7 +188,7 @@
 		src.UpdateIcon()
 		return
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (isdead(src))
 			return ..()
 		if (issnippingtool(W))
@@ -252,7 +252,7 @@
 		E.desc += "  It appears to be covered in honey.  Gross."
 		src.visible_message("<b>[src]</b> regurgitates [E]!")
 		E.name = "sticky [E.name]"
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		E.set_loc(get_turf(src))
 		return
 
@@ -279,7 +279,7 @@
 			honey.reagents.maximum_volume += honey_production_amount
 
 		src.reagents.trans_to(honey, honey_production_amount)
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		if (src.honey_color)
 			var/icon/composite = icon(honey.icon, honey.icon_state)
 			composite.ColorTone( src.honey_color )
@@ -423,7 +423,7 @@
 	bite_adjectives = list("rather large","big","expansive","proportionally small but still sizable")
 
 /datum/limb/small_critter/bee // can hold slightly larger things
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 	actions = list("pokes")
 	sound_attack = null
 
@@ -433,7 +433,7 @@
 /datum/limb/small_critter/bee/strong/bubs // da bubs
 	dam_low = 18
 	dam_high = 22
-	sound_attack = "sound/impact_sounds/Flesh_Stab_1.ogg"
+	sound_attack = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	dmg_type = DAMAGE_STAB
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
@@ -468,12 +468,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to sting."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/living/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] pokes [MT] with [his_or_her(holder.owner)] [pick(src.sting_adjectives)] stinger!</b></span>")
@@ -536,12 +536,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to swallow there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to swallow there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to swallow."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to swallow.</span>")
 			return 1
 		var/mob/living/MT = target
 		if (MT.loc != holder.owner)
@@ -562,7 +562,7 @@
 
 				honeycube.set_loc(holder.owner.loc)
 				holder.owner.visible_message("<b>[holder.owner] regurgitates [MT]!</b>")
-				playsound(holder.owner, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(holder.owner, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 		return 0
 
 /datum/targetable/critter/bee_teleport
@@ -584,13 +584,13 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to teleport there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to teleport there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		var/mob/living/MT = target
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to teleport away."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to teleport away.</span>")
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> stares at [MT]!</span>")
 		if(do_buzz)
@@ -598,10 +598,10 @@
 		boutput(MT, "<span class='combat'>You feel a horrible pain in your head!</span>")
 		MT.changeStatus("stunned", 2 SECONDS)
 		SPAWN(2.5 SECONDS)
-			if ((get_dist(holder.owner, MT) <= 6) && !isdead(holder.owner))
+			if ((GET_DIST(holder.owner, MT) <= 6) && !isdead(holder.owner))
 				MT.visible_message("<span class='combat'><b>[MT] clutches their temples!</b></span>")
 				MT.emote("scream")
-				MT.setStatus("paralysis", max(MT.getStatusDuration("paralysis"), 20 SECONDS))
+				MT.setStatusMin("paralysis", 20 SECONDS)
 				MT.take_brain_damage(10)
 
 				do_teleport(MT, locate((world.maxx/2) + rand(-10,10), (world.maxy/2) + rand(-10,10), 1), 0)
@@ -619,7 +619,7 @@
 	honey_color = rgb(0, 255, 255)
 	// halloween stuff can come a little later seeing as we just now finished halloween
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 
@@ -833,7 +833,7 @@
 				src.visible_message("<b>[src]</b> burps!  It smells...coppery.  What'd that bee eat?")
 			if (100)
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
 					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
 				else
@@ -869,9 +869,9 @@
 			honey.reagents.maximum_volume = honey_production_amount
 		src.reagents.trans_to(honey, honey_production_amount)
 		src.visible_message("<b>[src]</b> wills a blob of honey into existence![prob(10) ? " Weird!" : null]")
-		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 1)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (src.stat)
 			return ..()
 
@@ -892,7 +892,7 @@
 				W.desc += "  It appears to be covered in honey.  Gross."
 				src.visible_message("<b>[src]</b> regurgitates [W]!")
 				W.name = "golden key"
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				W.set_loc(get_turf(src))
 		else
 			return ..()
@@ -933,7 +933,7 @@
 		//src.dance()
 
 		sleep(17 SECONDS)
-		if (get_dist(src, user) <= 7)
+		if (GET_DIST(src, user) <= 7)
 			src.visible_message("<b>[src]</b> buzzes in a clueless manner as to why [user] looks so dejected.[prob(5)?" You can tell because you studied bee linguistics, ok?": null]")
 
 			//Is this a bad idea? It probably is a bad idea.
@@ -997,7 +997,7 @@
 		if (.)
 			var/obj/item/reagent_containers/food/snacks/ingredient/honey/honey = .
 			honey.icon_state = "bighoneyblob"
-			honey.amount++
+			honey.bites_left++
 
 /mob/living/critter/small_animal/bee/queen/buddy
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. How is that even possible?"
@@ -1067,7 +1067,7 @@ obj/effects/bees
 particles/swarm/bees
 	icon = 'icons/misc/bee.dmi'
 	icon_state = list("mini-bee"=1, "mini-bee2"=1)
-	friction = 0.10
+	friction = 0.1
 	count = 10
 	spawning = 0.35
 	fade = 5

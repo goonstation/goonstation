@@ -85,38 +85,38 @@ Shield and graivty well generators
 	return
 
 /obj/shield/meteorhit(obj/O as obj)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 50, 1)
 	return
 
 /obj/shieldgen/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 75
 			src.checkhp()
-		if(2.0)
+		if(2)
 			src.health -= 30
 			if (prob(15))
 				src.malfunction = 1
 			src.checkhp()
-		if(3.0)
+		if(3)
 			src.health -= 10
 			src.checkhp()
 	return
 
 /obj/shield/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			if (prob(75))
 				qdel(src)
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 	return
 
-/obj/shieldgen/attack_hand(mob/user as mob)
+/obj/shieldgen/attack_hand(mob/user)
 	if (active)
 		src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the shield generator.</font>")
 
@@ -135,7 +135,7 @@ Shield and graivty well generators
 	density = 1
 	opacity = 0
 	anchored = 1
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 	gas_impermeable = TRUE
 
 	New()
@@ -190,18 +190,18 @@ Shield and graivty well generators
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				if (prob(75))
 					qdel(src)
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
-			if(3.0)
+			if(3)
 				if (prob(25))
 					qdel(src)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (active)
 			src.visible_message("<font color='blue'>[bicon(src)] [user] deactivated the gravity well.</font>")
 
@@ -227,10 +227,10 @@ Shield and graivty well generators
 
 		for (var/atom/X in orange(range,src))
 			//Skip if they're right beside the thing
-			if (get_dist(src,X) <= 1)
+			if (BOUNDS_DIST(src, X) == 0)
 				continue
 			//Get the distance
-			var/dist = get_dist(src,X)
+			var/dist = GET_DIST(src,X)
 
 			//Adjust probability accordingly
 			if ((istype(X,/obj) || isliving(X)) && prob(100/dist))

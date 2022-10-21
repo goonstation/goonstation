@@ -201,7 +201,7 @@
 
 		if (!isadmin(owner)) //admins can spawn wherever
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
-				boutput(owner, __red("You need to start on the [station_or_ship()]!"))
+				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
 
 			if(IS_ARRIVALS(T.loc))
@@ -232,6 +232,7 @@
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
+		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -256,7 +257,7 @@
 			//do a little "blobsplosion"
 			var/amount = rand(20, 30)
 			src.auto_spread(startTurf, maxRange = 3, maxTurfs = amount)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		owner.remove_ability(/datum/blob_ability/set_color)
 		owner.remove_ability(/datum/blob_ability/tutorial)
 		owner.remove_ability(/datum/blob_ability/plant_nucleus)
@@ -351,7 +352,7 @@
 		var/mindist = 127
 		for_by_tcl(nucleus, /obj/blob/nucleus)
 			if(nucleus.overmind == owner)
-				mindist = min(mindist, get_dist(T, get_turf(nucleus)))
+				mindist = min(mindist, GET_DIST(T, get_turf(nucleus)))
 
 		mindist *= max((length(owner.blobs) * 0.005) - 2, 1)
 
@@ -417,7 +418,7 @@
 		N.setMaterial(B.material)
 		B.material = null
 		qdel(B)
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobdeploy.ogg", 50, 1)
+		owner.playsound_local(owner.loc, 'sound/voice/blob/blobdeploy.ogg', 50, 1)
 		deduct_bio_points()
 		do_cooldown()
 		using = 0
@@ -426,8 +427,8 @@
 	name = "Consume"
 	icon_state = "blob-consume"
 	desc = "This ability can be used to remove an existing blob tile for biopoints. Any blob tile you own can be consumed."
-	bio_point_cost = 10
-	cooldown_time = 20
+	bio_point_cost = 0
+	cooldown_time = 50
 
 	onUse(var/turf/T)
 		if (..())
@@ -558,7 +559,7 @@
 			if (check_target_immunity(A))
 				continue
 			if (ishuman(A))
-				if (A:decomp_stage != 4)
+				if (A:decomp_stage != DECOMP_STAGE_SKELETONIZED)
 					M = A
 					break
 			if (ismobcritter(A))
@@ -579,7 +580,7 @@
 
 
 //The owner is the blob tile object...
-/datum/action/bar/blob_absorb //This is used when you try to set someones internals
+/datum/action/bar/blob_absorb
 	bar_icon_state = "bar-blob"
 	border_icon_state = "border-blob"
 	color_active = "#d73715"
@@ -587,11 +588,8 @@
 	color_failure = "#8d1422"
 	duration = 10 SECONDS
 
-	// interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	interrupt_flags = 0
-	id = "internalsother"
-	// icon = 'icons/obj/clothing/item_masks.dmi'
-	// icon_state = "breath"
+	id = "blobabsorb"
 	var/mob/living/target
 	var/mob/living/intangible/blob_overmind/blob_o
 
@@ -604,14 +602,19 @@
 			return
 		src.blob_o = blob_o
 
-	onInterrupt(var/flag)
+	onStart()
 		..()
-	onUpdate()
-		..()
-		if(!target || !owner || get_dist(owner, target) > 0 || !blob_o)
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (ishuman(target) && target:decomp_stage == 4)
+		actions.interrupt(target, INTERRUPT_ATTACKED)
+
+	onUpdate()
+		..()
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !blob_o)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (ishuman(target) && target:decomp_stage == DECOMP_STAGE_SKELETONIZED)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		//damage thing a bit
@@ -621,7 +624,7 @@
 	onEnd()
 		..()
 		//owner type actually matters here. But it should never not be this anyway...
-		if(!target || !owner || get_dist(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
+		if(!target || !owner || GET_DIST(owner, target) > 0 || !istype (blob_o, /mob/living/intangible/blob_overmind))
 			return
 
 		//This whole first bit is all still pretty ugly cause this ability works on both critters and humans. I didn't have it in me to rewrite the whole thing - kyle
@@ -638,15 +641,13 @@
 			return
 
 		var/mob/living/carbon/human/H = target
-		if (H?.decomp_stage == 4)
-			H.decomp_stage = 4
 
 		if (blob_o?.mind) //ahem ahem AI blobs exist
 			blob_o.mind.blob_absorb_victims += H
 
 		if (!isnpcmonkey(H) || prob(50))
 			blob_o.evo_points += 2
-			playsound(H.loc, "sound/voice/blob/blobsucced.ogg", 100, 1)
+			playsound(H.loc, 'sound/voice/blob/blobsucced.ogg', 100, 1)
 		//This is all the animation and stuff making the effect look good crap. Not much to see here.
 
 		H.visible_message("<span class='alert'><b>[H.name] is absorbed by the blob!</b></span>")
@@ -667,113 +668,6 @@
 			H.update_clothing()
 			sleep(2 SECONDS)
 			animate(H, time = 10, alpha = 255, pixel_z = current_target_z, easing = LINEAR_EASING)
-
-
-/datum/blob_ability/reinforce
-	name = "Reinforce Blob"
-	icon_state = "blob-reinforce"
-	desc = "Reinforce the selected blob bit with a material deposit on the same tile. Blob bits with reinforcements may be more durable or more heat resistant, or otherwise may bear special properties depending on the properties of the material. A single blob bit can be repeatedly reinforced to push its properties closer to that of the reinforcing material."
-	bio_point_cost = 2
-	cooldown_time = 20
-
-	onUse(var/turf/T)
-		if (..())
-			return 1
-		if (!T)
-			T = get_turf(owner)
-
-		var/obj/blob/B = locate() in T
-		if (!B)
-			boutput(owner, "<span class='alert'>No blob there to reinforce.</span>")
-			return 1
-
-		var/list/deposits = list()
-
-		for (var/obj/material_deposit/M in T)
-			deposits += M
-
-		if (!deposits.len)
-			boutput(owner, "<span class='alert'>No material deposits for reinforcement there.</span>")
-			return 1
-
-		var/obj/material_deposit/reinforcing = deposits[1]
-
-		if (deposits.len > 1)
-			reinforcing = input("Which material deposit?", "Reinforce blob", null) in deposits
-
-		if (reinforcing.disposed)
-			return 1
-
-		B.visible_message("<span class='alert'><b>[B] reinforces using [reinforcing]!</b></span>")
-
-
-		B.setMaterial(getInterpolatedMaterial(B.material, reinforcing.material, 0.17))
-		qdel(reinforcing)
-
-		owner.playsound_local(owner.loc, "sound/voice/blob/blobreinforce[rand(1, 2)].ogg", 50, 1)
-		src.deduct_bio_points()
-		src.do_cooldown()
-
-
-/datum/blob_ability/reclaimer
-	name = "Build Reclaimer"
-	icon_state = "blob-reclaimer"
-	desc = "This will convert an untapped reagent deposit in the blob into a reclaimer. Reclaimers consume the reagents in the deposit and provide biopoints in exchange. When the deposit depletes, the reclaimer becomes a lipid."
-	bio_point_cost = 4
-	cooldown_time = 50
-
-	onUse(var/turf/T)
-		if (..())
-			return 1
-		if (!T)
-			T = get_turf(owner)
-
-		var/obj/blob/deposit/B = locate() in T
-		if (!B)
-			boutput(owner, "<span class='alert'>Reclaimers must be placed on untapped reagent deposits.</span>")
-			return 1
-		if (B.type != /obj/blob/deposit)
-			boutput(owner, "<span class='alert'>Reclaimers must be placed on untapped reagent deposits.</span>")
-			return 1
-
-		if (!tutorial_check("reclaimer", T))
-			return 1
-
-		B.build_reclaimer()
-		src.deduct_bio_points()
-		src.do_cooldown()
-
-		return
-
-/datum/blob_ability/replicator
-	name = "Build Replicator"
-	icon_state = "blob-replicator"
-	desc = "This will convert an untapped reagent deposit in the blob into a replicator. Replicators use other reagent deposits to create more of the highest volume reagent in the deposit."
-	bio_point_cost = 4
-	cooldown_time = 50
-
-	onUse(var/turf/T)
-		if (..())
-			return 1
-		if (!T)
-			T = get_turf(owner)
-
-		var/obj/blob/deposit/B = locate() in T
-		if (!B)
-			boutput(owner, "<span class='alert'>Replicators must be placed on untapped reagent deposits.</span>")
-			return 1
-		if (B.type != /obj/blob/deposit)
-			boutput(owner, "<span class='alert'>Replicators must be placed on untapped reagent deposits.</span>")
-			return 1
-
-		if (!tutorial_check("replicator", T))
-			return 1
-
-		B.build_replicator()
-		src.deduct_bio_points()
-		src.do_cooldown()
-
-		return
 
 /datum/blob_ability/bridge
 	name = "Build Bridge"
@@ -897,52 +791,12 @@
 		if (!Bleb)
 			return 1
 
-		var/do_pool = 0
 
 		Bleb.visible_message("<span class='alert'><b>The blob devours [I]!</b></span>")
 
-		if (I.material)
-			var/count = 2
-			if (istype(I, /obj/item/raw_material) || istype(I, /obj/item/material_piece))
-				count = 3
-				do_pool = 1
-			if (I.amount >= 10)
-				count *= round(I.amount / 10) + 1
-			for (var/i = 1, i <= count, i++)
-				new /obj/material_deposit(Bleb.loc, I.material, owner)
-
-		var/list/aggregated = recursive_reagents(I)
-		if (aggregated.len)
-			if (Bleb.type != /obj/blob)
-				Bleb = null
-				for (var/obj/blob/C in range(5, Bleb))
-					if (C.type == /obj/blob && C.overmind == owner)
-						Bleb = C
-						break
-			if (Bleb)
-				var/obj/blob/deposit/B2 = new /obj/blob/deposit(Bleb.loc)
-				B2.setOvermind(owner)
-				qdel(Bleb)
-				B2.reagents = new /datum/reagents(0)
-				B2.reagents.my_atom = B2
-				for (var/datum/reagent/R in aggregated)
-					if (!B2)
-						src.deduct_bio_points()
-						return
-					B2.reagents.maximum_volume += R.volume
-					B2.reagents.add_reagent(R.id, R.volume)
-				if (B2)
-					B2.update_reagent_overlay()
-					if (!B2.reagents.total_volume)
-						var/obj/blob/B3 = new /obj/blob(B2.loc)
-						B3.setOvermind(owner)
-						qdel(B2)
 		src.deduct_bio_points()
 
-		if (do_pool)
-			qdel(I)
-		else
-			qdel(I)
+		qdel(I)
 
 // CONSTRUCTION ABILITIES
 
@@ -978,6 +832,7 @@
 			return 1
 
 		var/obj/blob/L = new build_path(T)
+		logTheThing(LOG_STATION, owner, "builds [L] at [T] ([log_loc(T)])")
 		L.setOvermind(owner)
 		L.setMaterial(B.material)
 		B.material = null
@@ -1145,11 +1000,11 @@
 		if (repeatable == 0)
 			owner.available_upgrades -= src
 		if (prob(80))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup1.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup1.ogg', 50, 1)
 		else if (prob(50))
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup2.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup2.ogg', 50, 1)
 		else
-			owner.playsound_local(owner.loc, "sound/voice/blob/blobup3.ogg", 50, 1)
+			owner.playsound_local(owner.loc, 'sound/voice/blob/blobup3.ogg', 50, 1)
 
 		owner.update_buttons()
 
@@ -1242,132 +1097,6 @@
 		if (..())
 			return 1
 		owner.add_ability(/datum/blob_ability/devour_item)
-		owner.add_upgrade(/datum/blob_upgrade/reclaimer)
-		owner.add_upgrade(/datum/blob_upgrade/replicator)
-		owner.add_upgrade(/datum/blob_upgrade/reinforce)
-
-/datum/blob_upgrade/reinforce
-	name = "Ability: Reinforce"
-	icon_state = "blob-reinforce-upgrade"
-	desc = "Unlocks the Reinforce ability, which can be used to strengthen a single blob bit. Blob bits with reinforcements may be more durable or more heat resistant, or otherwise may bear special properties depending on the properties of the material. A single blob bit can be repeatedly reinforced to push its properties closer to that of the reinforcing material."
-	evo_point_cost = 1
-	initially_disabled = 1
-	upgradename = "reinforce"
-
-	take_upgrade()
-		if (..())
-			return 1
-		owner.add_ability(/datum/blob_ability/reinforce)
-		owner.add_upgrade(/datum/blob_upgrade/reinforce_spread)
-
-/datum/blob_upgrade/reinforce_spread
-	name = "Passive: Reinforced Spread"
-	icon_state = "blob-global-reinforce"
-	desc = "Reinforces the blob with material permanently. All existing blob tiles are reinforced with the average of the used materials, and all future blob bits will be created with the infusion. This upgrade requires 30 material deposits to be on your current tile."
-	evo_point_cost = 1
-	initially_disabled = 1
-	scaling_cost_add = 2
-	repeatable = -1
-	upgradename = "reinforce_spread"
-	var/required_deposits = 30
-	var/taking = 0
-
-	take_upgrade()
-		if (!istype(owner))
-			return 1
-		if (!tutorial_check())
-			return 1
-		var/count = 0
-		for (var/obj/material_deposit/M in view(owner))
-			if (M.overmind == owner && M.material)
-				count++
-		if (count < required_deposits)
-			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have: [count])</b></span>")
-			return 1
-		if (taking)
-			boutput(usr, "<span class='alert'>Cannot take this upgrade currently! Please wait.</span>")
-			return 1
-		taking = 1
-		var/list/mats = list()
-		var/list/weights = list()
-		var/list/deposits = list()
-		var/total = 0
-		var/max_id = null
-		for (var/obj/material_deposit/M in view(owner))
-			if (total >= required_deposits)
-				break
-			var/datum/material/Mat = M.material
-			if (!Mat)
-				continue
-			deposits += M
-			var/id = Mat.mat_id
-			if (!(id in mats))
-				mats[id] = Mat
-				weights[id] = 1
-			else
-				weights[id] = weights[id] + 1
-			total = 0
-			for (var/mid in weights)
-				if (weights[mid] > total)
-					total = weights[mid]
-					max_id = mid
-		if (!total)
-			taking = 0
-			return 1
-		if (total < required_deposits)
-			taking = 0
-			boutput(usr, "<span class='alert'><b>You need more deposits on your screen! (Required: [required_deposits], have (of highest material '[max_id]'): [total])</b></span>")
-			return 1
-		if (!mats.len)
-			taking = 0
-			return 1
-		var/datum/material/to_merge = copyMaterial(mats[max_id])
-		owner.my_material = getInterpolatedMaterial(owner.my_material, to_merge, 0.17)
-		for (var/obj/O in deposits)
-			qdel(O)
-		boutput(usr, "<span class='notice'>Applying upgrade to the blob...</span>")
-		SPAWN(0)
-			var/wg = 0
-			for (var/obj/blob/O in owner.blobs)
-				if (!O.material)
-					O.setMaterial(copyMaterial(owner.my_material))
-				else
-					O.setMaterial(getInterpolatedMaterial(O.material, to_merge, 0.17))
-				wg++
-				if (wg >= 20)
-					sleep(0.1 SECONDS)
-					wg = 0
-			boutput(usr, "<span class='notice'>Finished applying material upgrade!</span>")
-			taking = 0
-		if (!(src in owner.upgrades))
-			owner.upgrades += src
-		return 0
-
-/datum/blob_upgrade/reclaimer
-	name = "Structure: Reclaimer"
-	icon_state = "blob-reclaimer-upgrade"
-	desc = "Unlocks the Reclaimer blob bit, which can be placed on reagent deposits. The reclaimer produces biopoints over time using reagents. Once the deposit depletes, the blob piece is transformed into a lipid."
-	evo_point_cost = 1
-	initially_disabled = 1
-	upgradename = "reclaimer"
-
-	take_upgrade()
-		if (..())
-			return 1
-		owner.add_ability(/datum/blob_ability/reclaimer)
-
-/datum/blob_upgrade/replicator
-	name = "Structure: Replicator"
-	icon_state = "blob-replicator-upgrade"
-	desc = "Unlocks the Replicator blob bit, which can be placed on reagent deposits. The replicator replicates the highest volume reagent in the deposit using reagents from other deposits, at the cost of biopoints."
-	evo_point_cost = 2
-	initially_disabled = 1
-	upgradename = "replicator"
-
-	take_upgrade()
-		if (..())
-			return 1
-		owner.add_ability(/datum/blob_ability/replicator)
 
 /datum/blob_upgrade/bridge
 	name = "Structure: Bridge"

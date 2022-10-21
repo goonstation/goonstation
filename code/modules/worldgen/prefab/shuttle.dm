@@ -19,8 +19,13 @@ TYPEINFO(/datum/mapPrefab/shuttle)
 /datum/mapPrefab/shuttle
 	var/dir = null
 	var/small = FALSE
+	#ifdef UPSCALED_MAP
+	prefabSizeX = 26 * 2
+	prefabSizeY = 26 * 2
+	#else
 	prefabSizeX = 26
 	prefabSizeY = 26
+	#endif
 
 	New(prefabPath, name, dir, small=FALSE)
 		..()

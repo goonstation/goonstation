@@ -79,7 +79,7 @@ client/proc/replace_space()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
 	SPAWN(0)
@@ -122,7 +122,7 @@ client/proc/replace_space_exclusive()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
 	SPAWN(0)
@@ -188,7 +188,7 @@ client/proc/dereplace_space()
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
-	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
+	logTheThing(LOG_ADMIN, src, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
 	SPAWN(0)

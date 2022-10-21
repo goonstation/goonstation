@@ -73,8 +73,9 @@
 				if(prob(1))
 					babyspiders = rand(6,12)
 				while(babyspiders-- > 0)
-					new/obj/critter/spider/ice/baby(affected_mob.loc)
+					new /mob/living/critter/spider/ice/baby(affected_mob.loc)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] bursts open! Holy fuck!</b></span>")
+				logTheThing(LOG_COMBAT, affected_mob, "was gibbed by the disease [name] at [log_loc(affected_mob)].")
 				affected_mob:gib()
 				return
 
@@ -125,8 +126,28 @@
 
 				larva.beeMom = affected_mob
 				larva.beeMomCkey = affected_mob.ckey
-				playsound(affected_mob.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+
+				if (ishuman(affected_mob))
+					var/mob/living/carbon/human/human = affected_mob
+					if (human.head && !istype(human.head, /obj/item/clothing/head/void_crown))
+						var/obj/item/clothing/head/cloned_hat = new human.head.type
+						cloned_hat.set_loc(larva)
+						larva.stored_hat = cloned_hat
+
+					if (human.mind?.assigned_role == "Mime")
+						larva.color = "#ebedeb"
+						if (human.bioHolder.HasEffect(/datum/bioEffect/noir))
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee/noirbee
+						else
+							larva.custom_bee_type = /obj/critter/domestic_bee/mimebee
+					else if (human.mind?.assigned_role == "Clown")
+						larva.color = "#ff0033"
+						larva.custom_bee_type = /obj/critter/domestic_bee/clownbee
+					else if (iscluwne(human))
+						larva.custom_bee_type = /obj/critter/domestic_bee/cluwnebee
+						larva.color = "#35bf4f"
+
+				playsound(affected_mob.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				affected_mob.visible_message("<span class='alert'><b>[affected_mob] horks up a bee larva!  Grody!</b></span>", "<span class='alert'><b>You cough up...a bee larva. Uhhhhh</b></span>")
 
 				affected_mob.cure_disease(D)
-				return

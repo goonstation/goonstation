@@ -39,7 +39,7 @@
 		return 0
 	// if the artifact var isn't set at all, it's probably not an artifact so don't bother continuing
 	if (!istype(src.artifact,/datum/artifact/))
-		logTheThing("debug", null, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
+		logTheThing(LOG_DEBUG, null, "<b>I Said No/Artifact:</b> Invalid artifact variable in [src.type] at [log_loc(src)]")
 		qdel(src) // wipes itself out since if it's processing it'd be calling procs it can't use again and again
 		return 0 // uh oh, we've got a poorly set up artifact and now we need to stop the proc that called it!
 	else
@@ -184,16 +184,21 @@
 		return
 	var/datum/artifact/A = src.artifact
 	switch(reagent_id)
-		if("radium","porktonium")
+		if("porktonium")
 			src.ArtifactStimulus("radiate", round(volume / 10))
-		if("strange_reagent")
-			src.ArtifactStimulus("radiate", round(volume / 5))
+			src.ArtifactStimulus("carbtouch", round(volume / 5))
+		if("synthflesh","blood","bloodc","meat_slurry") //not carbon, because it's about detecting *lifeforms*, not elements
+			src.ArtifactStimulus("carbtouch", round(volume / 5)) //require at least 5 units
+		if("nanites","corruptnanites","goodnanites","flockdrone_fluid") //not silicon&friends for the same reason
+			src.ArtifactStimulus("silitouch", round(volume / 5)) //require at least 5 units
+		if("radium")
+			src.ArtifactStimulus("radiate", round(volume / 10))
 		if("uranium","polonium")
 			src.ArtifactStimulus("radiate", round(volume / 2))
 		if("dna_mutagen","mutagen","omega_mutagen")
 			if (A.artitype.name == "martian")
 				ArtifactDevelopFault(80)
-		if("phlogiston","el_diablo","thermite","thalmerite","argine")
+		if("phlogiston","el_diablo","thermite","pyrosium","argine")
 			src.ArtifactStimulus("heat", 310 + (volume * 5))
 		if("napalm_goo","kerosene","ghostchilijuice")
 			src.ArtifactStimulus("heat", 310 + (volume * 10))
@@ -210,7 +215,7 @@
 		if("pacid","clacid","nitric_acid")
 			src.ArtifactTakeDamage(volume * 10)
 		if("george_melonium")
-			var/random_stimulus = pick("heat","force","radiate","elec")
+			var/random_stimulus = pick("heat","force","radiate","elec", "carbtouch", "silitouch")
 			var/random_strength = 0
 			switch(random_stimulus)
 				if ("heat")
@@ -221,13 +226,12 @@
 					random_strength = rand(3,30)
 				if ("radiate")
 					random_strength = rand(1,10)
+				else // carbon and silicon touch
+					random_strength = 1
 			src.ArtifactStimulus(random_stimulus,random_strength)
 	return
 
-/obj/proc/Artifact_attackby(obj/item/W as obj, mob/user as mob)
-	if (isrobot(user))
-		src.ArtifactStimulus("silitouch", 1)
-
+/obj/proc/Artifact_attackby(obj/item/W, mob/user)
 	if (istype(W,/obj/item/artifact/activator_key))
 		var/obj/item/artifact/activator_key/ACT = W
 		if (!src.ArtifactSanityCheck())
@@ -278,7 +282,7 @@
 		if (BAT.can_stun(1, user) == 1)
 			src.ArtifactStimulus("force", BAT.force)
 			src.ArtifactStimulus("elec", 1500)
-			playsound(src.loc, "sound/impact_sounds/Energy_Hit_3.ogg", 100, 1)
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_3.ogg', 100, 1)
 			src.visible_message("<span class='alert'>[user.name] beats the artifact with [BAT]!</span>")
 			BAT.process_charges(-1, user)
 			return 0
@@ -319,10 +323,10 @@
 
 			var/mob/M = GRAB.affecting
 			var/mob/A = GRAB.assailant
-			if (get_dist(src.loc, M.loc) > 1)
+			if (BOUNDS_DIST(src.loc, M.loc) > 0)
 				return
 			src.visible_message("<strong class='combat'>[A] shoves [M] against \the [src]!</strong>")
-			logTheThing("combat", A, M, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, A, "forces [constructTarget(M,"combat")] to touch \an ([src.type]) artifact at [log_loc(src)].")
 			src.ArtifactTouched(M)
 			return 0
 
@@ -396,7 +400,7 @@
 			if(stimtype == "force")
 				if (strength >= 30)
 					T.visible_message("<span class='alert'>[src] bruises from the impact!</span>")
-					playsound(src.loc, "sound/impact_sounds/Slimy_Hit_3.ogg", 100, 1)
+					playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 100, 1)
 					ArtifactDevelopFault(33)
 					src.ArtifactTakeDamage(strength / 1.5)
 			if(stimtype == "elec")
@@ -414,7 +418,7 @@
 			if(stimtype == "force")
 				if (strength >= 20)
 					T.visible_message("<span class='alert'>[src] cracks and splinters!</span>")
-					playsound(src.loc, "sound/impact_sounds/Glass_Shards_Hit_1.ogg", 100, 1)
+					playsound(src.loc, 'sound/impact_sounds/Glass_Shards_Hit_1.ogg', 100, 1)
 					ArtifactDevelopFault(80)
 					src.ArtifactTakeDamage(strength * 1.5)
 
@@ -567,11 +571,11 @@
 	var/datum/artifact/A = O.artifact
 
 	if ((target && ismob(target)) && type_of_action == "weapon")
-		logTheThing("combat", user, target, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
+		logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with an active artifact ([A.type_name])[special_addendum ? ", [special_addendum]" : ""] at [log_loc(target)].")
 	else
-		logTheThing(type_of_action == "detonated" ? "bombing" : "station", user, target, "an artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
+		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

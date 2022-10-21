@@ -12,6 +12,7 @@
 	config_tag = "revolution"
 	shuttle_available = 0
 
+	antag_token_support = TRUE
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
@@ -19,7 +20,7 @@
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
-	var/const/pop_divisor = 20
+	var/const/pop_divisor = 15
 	var/win_check_freq = 30 SECONDS //frequency of checks on the win conditions
 	var/round_limit = 40 MINUTES //see post_setup
 	var/endthisshit = 0
@@ -64,7 +65,7 @@
 		head_revolutionaries += tplayer
 		token_players.Remove(tplayer)
 		rev_number--
-		logTheThing("admin", tplayer.current, null, "successfully redeems an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeems an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeems an antag token.")
 
 	var/list/chosen_revolutionaries = antagWeighter.choose(pool = revs_possible, role = ROLE_HEAD_REV, amount = rev_number, recordChosen = 1)
@@ -91,7 +92,7 @@
 			rev_obj.find_target_by_role(head_mind.assigned_role)
 
 		equip_revolutionary(rev_mind.current)
-		SHOW_REVHEAD_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("revhead")
 		update_rev_icons_added(rev_mind)
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
@@ -206,12 +207,12 @@
 
 	var/list/uncons = src.get_unconvertables()
 	if (!(rev_mind in src.revolutionaries) && !(rev_mind in src.head_revolutionaries) && !(rev_mind in uncons))
-		SHOW_REVVED_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("revved")
 		rev_mind.current.show_text("<h2><font color=red>You are now a revolutionary! Kill the heads of staff and don't harm your fellow freedom fighters. You can identify your comrades by the R icons (blue = rev leader, red = regular member).</font></h2>")
 
 		src.revolutionaries += rev_mind
 		src.update_rev_icons_added(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "was made a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "was made a member of the revolution.")
 		. = 1
 
 		var/obj/itemspecialeffect/derev/E = new /obj/itemspecialeffect/derev
@@ -224,12 +225,12 @@
 		return 0
 
 	if (rev_mind in revolutionaries)
-		SHOW_DEREVVED_TIPS(rev_mind.current)
+		rev_mind.current.show_antag_popup("derevved")
 		rev_mind.current.show_text("<h2><font color=blue>You are no longer a revolutionary! Protect the heads of staff and help them kill the leaders of the revolution.</font></h2>", "blue")
 
 		src.revolutionaries -= rev_mind
 		src.update_rev_icons_removed(rev_mind)
-		logTheThing("combat", rev_mind.current, null, "is no longer a member of the revolution.")
+		logTheThing(LOG_COMBAT, rev_mind.current, "is no longer a member of the revolution.")
 
 		for (var/mob/living/M in view(rev_mind.current))
 			M.show_text("<b>[rev_mind.current] looks like they just remembered their real allegiance!</b>", "blue")
@@ -322,7 +323,7 @@
 				ucs += player.mind
 			else
 				var/role = player.mind.assigned_role
-				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Operative","Communications Officer"))
+				if(role in list("Captain", "Head of Security", "Security Assistant", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Head of Mining", "Security Officer", "Security Assistant", "Vice Officer", "Part-time Vice Officer", "Detective", "AI", "Cyborg", "Nanotrasen Special Operative", "Nanotrasen Security Consultant","Communications Officer"))
 					ucs += player.mind
 	//for(var/mob/living/carbon/human/player in mobs)
 
@@ -345,6 +346,9 @@
 				continue
 
 			if(isghostcritter(head_mind.current) || isVRghost(head_mind.current))
+				continue
+
+			if(istype(head_mind.current.loc, /obj/cryotron))
 				continue
 
 			// Check if they're on the current z-level
@@ -397,7 +401,8 @@
 			if(istype(T.loc, /area/station/security/brig) && !rev_mind.current.canmove)
 				continue
 
-
+			if(istype(rev_mind.current.loc, /obj/cryotron))
+				continue
 
 			return 0
 	return 1
@@ -408,6 +413,14 @@
 		return 0
 	return 1
 
+/datum/game_mode/revolution/victory_msg()
+	switch (finished)
+		if(1)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>"
+		if(2)
+			return "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
+		if(3)
+			return "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>"
 
 /datum/game_mode/revolution/declare_completion()
 
@@ -488,6 +501,10 @@
 
 	..() // Admin-assigned antagonists or whatever.
 
+	if (finished == 1)
+		for(var/datum/mind/rev_mind as anything in head_revolutionaries)
+			if(rev_mind.current && !isdead(rev_mind.current))
+				rev_mind.current.unlock_medal("This station is ours!", TRUE)
 
 
 
@@ -497,7 +514,7 @@
 
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "revsign"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	item_state = "revsign"
 
 	w_class = W_CLASS_BULKY
@@ -531,7 +548,7 @@
 					var/found = 0
 					for (var/datum/mind/M in R.head_revolutionaries)
 						if (M.current && ishuman(M.current))
-							if (get_dist(owner,M.current) <= 5)
+							if (GET_DIST(owner,M.current) <= 5)
 								for (var/obj/item/revolutionary_sign/RS in M.current.equipped_list(check_for_magtractor = 0))
 									found = 1
 									break

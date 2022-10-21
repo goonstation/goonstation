@@ -118,7 +118,7 @@
 			boutput(user, "<span class='notice'>You [locked ? "lock" : "unlock"] the mulebot's controls!</span>")
 
 		flick("mulebot-emagged", src)
-		playsound(src.loc, "sound/effects/sparks1.ogg", 100, 0)
+		playsound(src.loc, 'sound/effects/sparks1.ogg', 100, 0)
 		return 1
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -249,7 +249,7 @@
 			else
 				dat += "The bot is in maintenance mode and cannot be controlled.<BR>"
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder)
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = "Mulebot [suffix ? "([suffix])" : ""] controls",
@@ -370,7 +370,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing(LOG_VEHICLE, usr, "disables the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = usr
 						wires &= ~wirebit
 					else
@@ -379,7 +379,7 @@
 					if (usr.find_tool_in_hand(TOOL_SNIPPING))
 						var/wirebit = text2num_safe(href_list["wire"])
 						if (wirebit == wire_mobavoid)
-							logTheThing("vehicle", usr, null, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
+							logTheThing(LOG_VEHICLE, usr, "reactivates the safety of a MULE ([src.name]) at [log_loc(usr)].")
 							src.emagger = null
 						wires |= wirebit
 					else
@@ -417,7 +417,7 @@
 		if(user.stat)
 			return
 
-		if (!on || !istype(C)|| C.anchored || get_dist(user, src) > 1 || get_dist(src,C) > 1 )
+		if (!on || !istype(C)|| C.anchored || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(src, C) > 0 )
 			return
 
 		if(load)
@@ -430,7 +430,7 @@
 		if (istype(C, /atom/movable/screen) || C.anchored)
 			return
 
-		if(get_dist(C, src) > 1 || load || !on)
+		if(BOUNDS_DIST(C, src) > 0 || load || !on)
 			return
 		mode = 1
 
@@ -586,25 +586,25 @@
 							mode = 4
 							if(blockcount == 3)
 								src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-								playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+								playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 
 							if(blockcount > 5)	// attempt 5 times before recomputing
 								// find new path excluding blocked turf
 								src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-								playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+								playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 								SPAWN(0.2 SECONDS)
 									calc_path(next)
 									if(path)
 										src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-										playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+										playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 									mode = 4
 								mode = 6
 								return
 							return
 					else
 						src.visible_message("[src] makes an annoyed buzzing sound", "You hear an electronic buzzing sound.")
-						playsound(src.loc, "sound/machines/buzz-two.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 0)
 						//boutput(world, "Bad turf.")
 						mode = 5
 						return
@@ -624,11 +624,11 @@
 						blockcount = 0
 						mode = 4
 						src.visible_message("[src] makes a delighted ping!", "You hear a ping.")
-						playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 
 					else
 						src.visible_message("[src] makes a sighing buzz.", "You hear an electronic buzzing sound.")
-						playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 0)
+						playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 0)
 
 						mode = 7
 			//if(6)
@@ -671,7 +671,7 @@
 	proc/at_target()
 		if(!reached_target)
 			src.visible_message("[src] makes a chiming sound!", "You hear a chime.")
-			playsound(src.loc, "sound/machines/chime.ogg", 50, 0)
+			playsound(src.loc, 'sound/machines/chime.ogg', 50, 0)
 			reached_target = 1
 
 			if(load)		// if loaded, unload at target
@@ -725,9 +725,9 @@
 	// when mulebot is in the same loc
 	proc/RunOver(var/mob/living/carbon/human/H)
 		src.visible_message("<span class='alert'>[src] drives over [H]!</span>")
-		playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
-		logTheThing("vehicle", H, src.emagger, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
+		logTheThing(LOG_VEHICLE, H, "is run over by a MULE ([src.name]) at [log_loc(src)].[src.emagger && ismob(src.emagger) ? " Safety disabled by [constructTarget(src.emagger,"vehicle")]." : ""]")
 
 		if(ismob(load))
 			var/mob/M = load
@@ -861,6 +861,11 @@
 		kv["retn"] = auto_return
 		kv["pick"] = auto_pickup
 		post_signal_multiple(control_freq, kv)
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/machinery/bot/mulebot/QM1
 	home_destination = "QM #1"

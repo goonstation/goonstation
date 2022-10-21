@@ -74,23 +74,23 @@ var/global/harddel_count = 0
 			if (log_hard_deletions)
 				if (D.type == /image)
 					var/image/I = D
-					logTheThing("debug", text="[harddel_msg] [I.type] -- iconstate [I.icon_state], icon [I.icon]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [I.type] -- iconstate [I.icon_state], icon [I.icon]")
 				else if(istype(D, /atom))
 					var/atom/A = D
-					logTheThing("debug", text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type] -- name [A.name], iconstate [A.icon_state], icon [A.icon]")
 				else
-					logTheThing("debug", text="[harddel_msg] [D.type]")
+					logTheThing(LOG_DEBUG, text="[harddel_msg] [D.type]")
 #ifdef LOG_HARD_DELETE_REFERENCES
 				if (log_hard_deletions >= 2)
 					for(var/x in find_all_references_to(D))
-						logTheThing("debug", text=x)
+						logTheThing(LOG_DEBUG, text=x)
 #endif
 #ifdef LOG_HARD_DELETE_REFERENCES_2_ELECTRIC_BOOGALOO
 				if (log_hard_deletions >= 2)
 					var/list/result = list()
 					ref_visit_list_2(all_references, D, result)
 					for(var/x in result)
-						logTheThing("debug", text=x)
+						logTheThing(LOG_DEBUG, text=x)
 #endif
 #ifdef AUTO_REFERENCE_TRACKING_ON_HARD_DEL
 				if (log_hard_deletions >= 2)
@@ -151,7 +151,7 @@ var/global/harddel_count = 0
 			// Because we have already logged it into the gc count in qdel.
 			#endif
 
-			// Delete that bitch
+			// Delete that
 
 /*
 			// fuck
@@ -181,6 +181,11 @@ var/global/harddel_count = 0
 		*/
 
 	proc/gimmick_ungcd_mob_stuff(mob/living/L)
+
+		#ifdef UPSCALED_MAP //this causes a ton of lag. no clue why.
+		return
+		#endif
+
 		L.lying = FALSE
 		L.dir = SOUTH
 		L.invisibility = INVIS_NONE

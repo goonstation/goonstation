@@ -2,6 +2,9 @@
 	dupe_mode = COMPONENT_DUPE_UNIQUE
 	var/obj/item/tracked_item = null
 
+TYPEINFO(/datum/component/send_to_target_mob)
+	initialization_args = list()
+
 /datum/component/send_to_target_mob/Initialize(tracked_item)
 	if(!isitem(parent))
 		return COMPONENT_INCOMPATIBLE

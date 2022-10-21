@@ -60,7 +60,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -87,7 +87,7 @@
 	SPAWN(3.5 SECONDS) qdel(O)
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
@@ -123,7 +123,7 @@
 
 	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
-	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
+	playsound(M.loc, 'sound/voice/heavenly.ogg', 50, 1)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -137,7 +137,7 @@
 		B.item_state = "bball"
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, M) <= 6)
+		if(GET_DIST(N, M) <= 6)
 			if(N != M)
 				N.apply_flash(30, 5)
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
@@ -146,7 +146,7 @@
 			shake_camera(N, 6, 16)
 			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
-	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
+	playsound(M.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 /mob/proc/blitz_slam()
 	set category = "Spells"
@@ -205,7 +205,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
@@ -220,7 +220,7 @@
 	M.layer = MOB_LAYER
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
@@ -231,7 +231,7 @@
 		B.item_state = "bball"
 
 	playsound(target.loc, "explosion", 50, 1)
-	playsound(target.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+	playsound(target.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -312,19 +312,19 @@
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, __red("This b-ball doesn't have the right heft to it!"))
+			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
 			return
 		else //Safety thing to ensure the plutonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, __red("You can't dunk without a b-ball, yo!"))
+		boutput(M, "<span class='alert'>You can't dunk without a b-ball, yo!</span>")
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
-
-	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
+	logTheThing(LOG_COMBAT, M, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -334,7 +334,7 @@
 	M.layer = EFFECTS_LAYER_BASE
 
 	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
@@ -345,7 +345,7 @@
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.", alert_origin = ALERT_ANOMALY)
 	for(var/area/A in world)
 		A.eject = 1
 		A.UpdateIcon()
@@ -362,7 +362,7 @@
 					N.flash(3 SECONDS)
 			sleep(0.5 SECONDS)
 	sleep(30 SECONDS)
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
@@ -375,7 +375,8 @@
 	world << siren
 	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
-	explosion_new(src, get_turf(M), 1500, 22.78)
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")
+	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)
@@ -401,7 +402,7 @@
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
 			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
-		if(get_dist(N, M) <= 2)
+		if(GET_DIST(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)
 
@@ -424,9 +425,9 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	var/temp = null
-	var/uses = 4.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
+	var/uses = 4
+	var/selfdestruct = 0
+	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"

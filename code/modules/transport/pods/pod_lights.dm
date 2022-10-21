@@ -107,7 +107,7 @@
 
 		weeoo_in_progress = 10
 		SPAWN(0)
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
 
 			ship.add_sm_light("pod_lights\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
 			src.toggle_sm_light(1)

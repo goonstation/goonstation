@@ -9,7 +9,7 @@
 
 	var/obj/item/rod/insertedRod = null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(insertedRod)
 			insertedRod.set_loc(src.loc)
 			insertedRod = null
@@ -58,7 +58,7 @@
 				// Unequipping
 				user.u_equip(W)
 				W.set_loc(src)
-				W.dropped()
+				W.dropped(user)
 				// Letting everyone around know
 				boutput(user, "<span class='alert'>You insert the [W] into the [src].</span>")
 				for(var/mob/M in AIviewers(src))
@@ -90,7 +90,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 1.0
+	ks_ratio = 1
 //name of the projectile setting, used when you change a guns setting
 	sname = "neutron"
 //file location for the sound you want it to play

@@ -6,8 +6,8 @@
 	name = "tiles and toolbox"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -18,8 +18,8 @@
 	name = "tiles, toolbox and sensor arrangement"
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "toolbox_tiles_sensor"
-	force = 3.0
-	throwforce = 10.0
+	force = 3
+	throwforce = 10
 	throw_speed = 2
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
@@ -76,7 +76,7 @@
 			src.UpdateIcon()
 	return
 
-/obj/machinery/bot/floorbot/attack_hand(mob/user as mob, params)
+/obj/machinery/bot/floorbot/attack_hand(mob/user, params)
 	var/dat
 	dat += "<TT><B>Automatic Station Floor Repairer v1.0</B></TT><BR><BR>"
 	dat += "Status: \[<A href='?src=\ref[src];operation=start'>[src.on ? "On" : "Off"]</A>\]<BR>"
@@ -88,7 +88,7 @@
 		dat += "Finds tiles: \[<A href='?src=\ref[src];operation=tiles'>[src.eattiles ? "Yes" : "No"]</A>\]<BR>"
 		dat += "Make single pieces of metal into tiles when empty: \[<A href='?src=\ref[src];operation=make'>[src.maketiles ? "Yes" : "No"]</A>\]"
 
-	if (user.client.tooltipHolder)
+	if (user.client?.tooltipHolder)
 		user.client.tooltipHolder.showClickTip(src, list(
 			"params" = params,
 			"title" = "Repairbot v1.0 controls",
@@ -211,7 +211,7 @@
 				else if (D == src.oldtarget || should_ignore_tile(D))
 					continue
 				// Floorbot doesnt like space, so it won't accept space tiles without some kind of not-space next to it. Or they're right up against it. Or already on space.
-				else if (IN_RANGE(get_turf(src), get_turf(D), 1) || get_pathable_turf(D)) // silly little things
+				else if ((BOUNDS_DIST(get_turf(src), get_turf(D)) == 0) || get_pathable_turf(D)) // silly little things
 					src.floorbottargets |= coord
 					return D
 
@@ -305,7 +305,7 @@
 
 	if (src.target)
 		// are we there yet
-		if (IN_RANGE(get_turf(src), get_turf(src.target), 1))
+		if ((BOUNDS_DIST(get_turf(src), get_turf(src.target)) == 0))
 			do_the_thing()
 			return
 
@@ -470,7 +470,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	elecflash(src, radius=1, power=3, exclude_center = 0)
 	new /obj/item/tile/steel(src.loc)
 	new /obj/item/device/prox_sensor(src.loc)
@@ -524,7 +524,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 	onInterrupt()
 		. = ..()
@@ -532,7 +532,9 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		if (!master.target)
+			return
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -592,7 +594,7 @@
 
 	onEnd()
 		..()
-		playsound(master, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)

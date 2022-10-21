@@ -222,7 +222,7 @@
 /turf/space,
 /area/space)
 "aF" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/station/garden/owlery)
 "aG" = (
 /obj/cable{
@@ -976,7 +976,7 @@
 /turf/space,
 /area/space)
 "ci" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
@@ -1231,7 +1231,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1307,7 +1307,7 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/science/artifact)
 "db" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/research_outpost/indigo_rye)
 "dc" = (
 /obj/machinery/light{
@@ -1440,7 +1440,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /obj/cable{
@@ -1883,7 +1883,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -1895,7 +1895,7 @@
 /obj/machinery/door/poddoor/pyro{
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/access_spawn/research,
 /turf/simulated/floor/engine,
@@ -6571,6 +6571,26 @@
 /area/station/solar/small_backup1{
 	name = "Erebus Solar Array"
 	})
+"nH" = (
+/obj/table/auto,
+/obj/item/clothing/glasses/visor,
+/obj/item/device/radio/headset/deaf,
+/obj/item/robodefibrillator,
+/obj/item/remote/porter/port_a_nanomed,
+/obj/item/device/analyzer/healthanalyzer/upgraded,
+/obj/item/clothing/glasses/healthgoggles,
+/obj/item/reagent_containers/hypospray,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/medical/head{
+	name = "Asclepius Command"
+	})
 "nI" = (
 /obj/lattice{
 	dir = 4;
@@ -9218,26 +9238,6 @@
 /area/station/crew_quarters/utility{
 	name = "Dionysus Cryocore"
 	})
-"sQ" = (
-/obj/table/auto,
-/obj/item/clothing/glasses/visor,
-/obj/item/device/radio/headset/deaf,
-/obj/item/robodefibrillator,
-/obj/item/remote/porter/port_a_nanomed,
-/obj/item/device/analyzer/healthanalyzer/borg,
-/obj/item/clothing/glasses/healthgoggles,
-/obj/item/reagent_containers/hypospray,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/medical/head{
-	name = "Asclepius Command"
-	})
 "sR" = (
 /obj/table/auto,
 /obj/item/clipboard,
@@ -9560,7 +9560,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tv" = (
-/obj/machinery/vending/monkey,
+/obj/machinery/vending/monkey/genetics,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tw" = (
@@ -10405,7 +10405,7 @@
 	name = "Hammer Crew Quarters"
 	})
 "uV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -13898,19 +13898,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"By" = (
-/obj/machinery/computer/aiupload{
-	dir = 4
-	},
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/blueblack{
-	dir = 1
-	},
-/area/station/turret_protected/ai)
 "Bz" = (
 /obj/stool/chair/office{
 	dir = 8
@@ -14071,21 +14058,6 @@
 /area/station/bridge/captain{
 	name = "Meridian Command"
 	})
-"BR" = (
-/obj/table/reinforced/auto,
-/obj/item/aiModule/freeform,
-/obj/item/aiModule/oneHuman,
-/obj/item/aiModule/notHuman,
-/obj/item/aiModule/makeCaptain,
-/obj/item/aiModule/rename,
-/obj/item/aiModule/reset,
-/obj/machinery/power/apc/autoname_west,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/turf/simulated/floor/black,
-/area/station/turret_protected/ai)
 "BS" = (
 /obj/wingrille_spawn/auto,
 /obj/cable{
@@ -17732,12 +17704,10 @@
 /turf/space,
 /area/space)
 "IM" = (
-/turf/space{
-	icon_state = "aplaceholder"
-	},
+/turf/space/asteroid,
 /area/space)
 "IN" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "IO" = (
 /obj/cable,
@@ -19188,7 +19158,7 @@
 /area/research_outpost/indigo_rye)
 "Ml" = (
 /obj/table/wood/auto,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/machinery/light/small,
 /turf/simulated/floor/purpleblack,
 /area/research_outpost/indigo_rye)
@@ -21178,7 +21148,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21276,7 +21246,7 @@
 	name = "Demeter Primary Zone"
 	})
 "Pn" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21294,7 +21264,7 @@
 	})
 "Pp" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21302,13 +21272,13 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
 "Pr" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -21879,7 +21849,7 @@
 /obj/fluid_spawner{
 	amount = 1200
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/garden/aviary{
 	name = "Demeter Primary Zone"
 	})
@@ -22095,7 +22065,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "Qp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -24945,6 +24915,19 @@
 /area/station/maintenance/southwest{
 	name = "Erebus Maintenance Room"
 	})
+"Yp" = (
+/obj/table/reinforced/auto,
+/obj/item/aiModule/freeform,
+/obj/item/aiModule/oneHuman,
+/obj/item/aiModule/notHuman,
+/obj/item/aiModule/makeCaptain,
+/obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/black,
+/area/station/turret_protected/ai)
 "Yq" = (
 /obj/disposalpipe/trunk/west,
 /obj/machinery/disposal/transport{
@@ -25255,6 +25238,19 @@
 /area/station/hallway/primary/east{
 	name = "Erebus Primary Zone"
 	})
+"Zn" = (
+/obj/machinery/lawrack{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 4;
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/turret_protected/ai)
 "Zs" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -63753,8 +63749,8 @@ Ay
 AI
 AI
 Bg
-By
-BR
+Zn
+Yp
 Cs
 AI
 Dt
@@ -67053,7 +67049,7 @@ aa
 aa
 aa
 sp
-sQ
+nH
 ts
 tR
 uA

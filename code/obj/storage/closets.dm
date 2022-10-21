@@ -1,17 +1,79 @@
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
+	_max_health = LOCKER_HEALTH_WEAK
+	_health = LOCKER_HEALTH_WEAK
+	material_amt = 0.2
 
 	New()
 		. = ..()
 		START_TRACKING
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				take_damage(damage, P)
+			if(D_PIERCING)
+				take_damage(damage, P)
+			if(D_ENERGY)
+				take_damage(damage / 2, P)
+		return
+
+	proc/take_damage(var/amount, var/obj/projectile/P)
+		if (!P)
+			message_admins("P Gone")
+			return
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			if (isnull(P))
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+			else
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/M = P.shooter
+					shooter_data = M
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			break_open()
+
+	proc/break_open()
+		src.welded = 0
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
@@ -36,8 +98,9 @@
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
+				new /obj/item/tank/emergency_oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/emergency_oxygen(src)
+					new /obj/item/tank/mini_oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -98,6 +161,9 @@
 	icon_opened = "coffin-open"
 	layer = 2.5
 	icon_welded = "welded-coffin-4dirs"
+	open_sound = 'sound/misc/coffin_open.ogg'
+	close_sound = 'sound/misc/coffin_close.ogg'
+	volume = 70
 
 	wood
 		icon_closed = "woodcoffin"
@@ -152,7 +218,8 @@
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
@@ -336,7 +403,7 @@
 	bound_width = 32
 	anchored = 2
 
-	open(var/entangleLogic)
+	open(var/entangleLogic, mob/user)
 		if (src.open)
 			return 0
 		if (!src.can_open())
@@ -396,7 +463,7 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || istype(M, /mob/living/object))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
 				continue
 			if (src.crunches_contents)
 				src.crunch(M)
@@ -410,10 +477,11 @@
 			entangled.open(1)
 
 		src.UpdateIcon()
-		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
+		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cargotele))
 			return
 
@@ -497,7 +565,7 @@
 			return
 /*
 		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
+			if (BOUNDS_DIST(src, user) == 0)
 				return src.Attackhand(user)
 */
 		else
@@ -536,11 +604,12 @@
 	icon_state = "red-medical"
 	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 3,
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/traditionalnursehat = 2,
 					/obj/item/clothing/suit/nursedress = 3,
 					/obj/item/clothing/suit/wintercoat/medical = 3,
 					/obj/item/clothing/head/headmirror = 3,
-					/obj/item/clothing/suit/labcoat/medical = 3)
+					/obj/item/clothing/suit/labcoat = 2)
 
 /obj/storage/closet/command/ruined //replacements for azones and mining level flavor
 	name = "Dented command locker"

@@ -23,7 +23,7 @@
 					S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 					playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
 			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
@@ -57,7 +57,7 @@
 				if (H in mobs_messaged)
 					continue
 				var/U = H.say_understands(M, lang_id)
-				H.show_text("<font size=[clamp(speakers - round(get_dist(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
+				H.show_text("<font size=[clamp(speakers - round(GET_DIST(H, S) / 2), 0, src.max_font)]><b>[M.get_heard_name()]</b> [U ? stuff : stuff_b]</font>")
 				mobs_messaged += H
 		if (prob(10) && locate(/obj/loudspeaker) in range(2, T))
 			for_by_tcl(S, /obj/loudspeaker)
@@ -79,7 +79,7 @@
 				myMic = new(src)
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!myMic)
 			return ..()
 		user.put_in_hand_or_drop(myMic)
@@ -87,7 +87,7 @@
 		src.UpdateIcon()
 		return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/microphone))
 			if (myMic)
 				user.show_text("There's already a microphone on [src]!", "red")
@@ -126,6 +126,7 @@
 	anchored = 1
 	density = 1
 	mats = 15
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()
 		. = ..()
