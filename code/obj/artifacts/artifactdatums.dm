@@ -116,8 +116,15 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	disposing()
 		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		artitype = null
+		fx_image = null
 		holder = null
-		..()
+		faults = null
+		fault_types = null
+		triggers = null
+		scan = null
+		account = null
+		. = ..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)
