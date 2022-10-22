@@ -140,6 +140,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 
 
 	heal(var/mob/M)
+		..()
 		M.nutrition += 500
 		return
 

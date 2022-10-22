@@ -641,6 +641,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	food_effects = list("food_sweaty")
 
 	heal(var/mob/M)
+		..()
 		if (prob(15)) boutput(M, "<span class='alert'>You feel depressed.</span>")
 
 /obj/item/reagent_containers/food/snacks/soup/porridge

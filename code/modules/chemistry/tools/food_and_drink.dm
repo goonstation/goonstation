@@ -36,26 +36,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		SHOULD_CALL_PARENT(TRUE)
 		var/healing = src.heal_amt
 
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("Hunger", heal_amt * 6)
-				H.sims.affectMotive("Bladder", -heal_amt * 0.2)
-
-		if (quality >= 5)
-			boutput(M, "<span class='notice'>That tasted amazing!</span>")
-			healing *= 2
-
-		if (src.reagents && src.reagents.has_reagent("THC"))
-			boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
-			healing *= 2
-
-
 		if (quality <= 0.5)
 			boutput(M, "<span class='alert'>Ugh! That tasted horrible!</span>")
 			if (prob(20))
 				M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 			healing = 0
+
+		if (healing > 0)
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
+					H.sims.affectMotive("Hunger", heal_amt * 6)
+					H.sims.affectMotive("Bladder", -heal_amt * 0.2)
+
+			if (quality >= 5)
+				boutput(M, "<span class='notice'>That tasted amazing!</span>")
+				healing *= 2
+
+			if (src.reagents && src.reagents.has_reagent("THC"))
+				boutput(M, "<span class='notice'>Wow this tastes really good man!!</span>")
+				healing *= 2
 
 		if (!isnull(src.unlock_medal_when_eaten))
 			M.unlock_medal(src.unlock_medal_when_eaten, 1)
