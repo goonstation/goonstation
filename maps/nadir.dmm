@@ -11353,9 +11353,6 @@
 /area/station/chapel/office)
 "fNY" = (
 /obj/cable{
-	icon_state = "0-2"
-	},
-/obj/cable{
 	icon_state = "0-4"
 	},
 /obj/cable{
@@ -15162,9 +15159,6 @@
 	})
 "hyl" = (
 /obj/machinery/light_switch/west,
-/obj/cable{
-	icon_state = "1-2"
-	},
 /turf/simulated/floor/redblack,
 /area/station/hallway/primary/southwest)
 "hys" = (
@@ -32151,13 +32145,6 @@
 	dir = 8
 	},
 /area/station/security/brig)
-"pPH" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/hallway/primary/southwest)
 "pPY" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/machinery/door/airlock/pyro/glass,
@@ -35909,9 +35896,6 @@
 	},
 /obj/cable{
 	icon_state = "0-8"
-	},
-/obj/cable{
-	icon_state = "0-2"
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
@@ -43093,9 +43077,6 @@
 	name = "autoname - SS13";
 	pixel_x = 10;
 	tag = ""
-	},
-/obj/cable{
-	icon_state = "1-2"
 	},
 /obj/stool/chair{
 	dir = 8
@@ -87232,7 +87213,7 @@ lxp
 suP
 hcm
 fNY
-pPH
+rhJ
 vwQ
 bUk
 bUk
@@ -87836,7 +87817,7 @@ lxp
 suP
 hcm
 rTX
-pPH
+rhJ
 hyl
 kDZ
 lnr
