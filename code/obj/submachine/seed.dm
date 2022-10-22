@@ -852,7 +852,7 @@
 
 		if(!W.cant_drop)
 			user.drop_item()
-			if(!W.qdeled)
+			if(!QDELETED(W))
 				W.set_loc(src)
 		if(W.qdeled)
 			W = null
