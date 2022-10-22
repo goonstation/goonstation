@@ -169,7 +169,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 				old_host.slug = null
 				old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			spawn(5 SECONDS)
-				caster?.death(gibbed = FALSE)
+				caster?.death()
 
 	onInterrupt()
 		..()
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 			caster.removeAbility(/datum/targetable/brain_slug/infest_host)
 			caster.slug = null
 			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
-				caster?.death(gibbed = FALSE)
+				caster?.death()
 		else if (ishuman(holder.owner))
 			var/mob/living/carbon/human/human_host = holder.owner
 			if (!human_host.slug)
