@@ -243,7 +243,6 @@
 	density = 1
 	var/can_play_music = TRUE
 	var/has_record = FALSE
-	var/is_playing = FALSE
 	var/obj/item/record/record_inside = null
 
 	New()
@@ -266,7 +265,9 @@
 			return
 		else if(has_record)
 			boutput(user, "The record player already has a record inside!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else
 			boutput(user, "You insert the record into the record player.")
 			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
@@ -278,7 +279,7 @@
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
-			if(src.is_playing) // someone queuing up several input windows
+			if(is_music_playing()) // someone queuing up several input windows
 				return
 			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
 				return
@@ -291,20 +292,17 @@
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
 #else
-			sleep(3000)
+			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 #endif
-			src.is_playing = 0
 	else
 		..()
 
 /obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
-		if(!is_playing)
+		if(!is_music_playing())
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
 			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
@@ -803,7 +801,6 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	anchored = 1
 	density = 1
 	var/has_tape = FALSE
-	var/is_playing = FALSE
 	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
 
@@ -826,26 +823,25 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			return
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else
 			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
 			src.has_tape = TRUE
-			src.is_playing = TRUE
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			sleep(6000)
-			is_playing = 0
+			EXTEND_COOLDOWN(global, "music", 600 SECONDS)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
-		if(!is_playing)
+		if(!is_music_playing())
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
 				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
 				qdel(src.tape_inside)

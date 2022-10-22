@@ -1,4 +1,17 @@
 
+(t)sat oct 22 22
+(u)Sord
+(+)There is a new Engineering clothing vendor, found in most Eng storage rooms or common areas.
+(u)pali
+(+)Radio station sound playing cooldowns are now shared so you can't interrupt music with an ad etc.
+(u)Kubius
+(p)11475
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(+)Third batch of Nadir improvements, including a new tour guide, Janitor gear adjustments, and catalytic generator support in the Power Checker PDA program.
+(u)Bartimeus973
+(p)11476
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)You can now record sentences in audiologs if it is in your hand/pocket and talk into a microphone is someone is holding it close to you.
 (t)fri oct 21 22
 (u)Ikea
 (p)11374
