@@ -100,7 +100,7 @@
 	var/losebreath = 0
 	var/intent = null
 	var/shakecamera = 0
-	var/a_intent = "help"
+	var/a_intent = INTENT_HELP
 	var/m_intent = "run"
 	var/lastKnownIP = null
 	var/obj/stool/buckled = null
@@ -662,8 +662,8 @@
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
 
-		if (!issilicon(AM))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
+		if (!isAI(AM))
+			if (tmob.a_intent == INTENT_HELP && src.a_intent == INTENT_HELP && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
