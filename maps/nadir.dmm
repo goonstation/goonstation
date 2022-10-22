@@ -37815,7 +37815,7 @@
 	pixel_y = 22;
 	tag = ""
 	},
-/turf/space/fluid/acid,
+/turf/space/fluid/acid/clear,
 /area/space)
 "sFL" = (
 /obj/disposalpipe/segment/vertical,
