@@ -1,4 +1,9 @@
 
+(t)sat oct 22 22
+(u)Bartimeus973
+(p)11476
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)You can now record sentences in audiologs if it is in your hand/pocket and talk into a microphone is someone is holding it close to you.
 (t)fri oct 21 22
 (u)Ikea
 (p)11374
