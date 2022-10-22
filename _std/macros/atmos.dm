@@ -173,7 +173,9 @@
 // archiving
 
 // comment out to make atmos a bit less precise but less memory intensive and maybe a bit faster, may cause bugs
+// "Archiving gas is how you ensure the order of turfs talking to each other is consistent. It's a key part of the sim actually working" - LemonInTheDark
 // #define ATMOS_ARCHIVING
+
 
 #ifdef ATMOS_ARCHIVING
 #define ARCHIVED(VAR) VAR##_archived

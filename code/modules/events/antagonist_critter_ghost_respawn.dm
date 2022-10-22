@@ -126,7 +126,7 @@
 			if ("Random") //random
 				src.critter_type = null
 
-		src.num_critters = input(usr, "How many critter antagonists to spawn?", src.name, 0) as num|null
+		src.num_critters = input(usr, "How many critter antagonists to spawn? ([length(eligible_dead_player_list(allow_dead_antags = TRUE))] players eligible)", src.name, 0) as num|null
 		if (!src.num_critters || src.num_critters < 1)
 			cleanup_event()
 			return

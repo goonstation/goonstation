@@ -9019,7 +9019,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "cCa" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -10580,7 +10580,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cWF" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "cWH" = (
@@ -14828,7 +14831,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/north)
 "eaA" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -25092,7 +25095,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
 "gIq" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "gIr" = (
@@ -31263,7 +31266,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/routing/engine)
 "ipZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/noticeboard/persistent{
 	name = "Bar persistent notice board";
 	persistent_id = "bar"
@@ -42729,7 +42732,7 @@
 	name = "Catering Router"
 	})
 "ljw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbooth)
 "ljx" = (
@@ -43888,7 +43891,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "lzs" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
@@ -57224,7 +57227,7 @@
 /turf/simulated/floor/grey,
 /area/station/bridge)
 "oRu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine,
 /area/station/science/chemistry)
 "oRD" = (
@@ -74736,10 +74739,6 @@
 	icon_state = "crewquarters";
 	name = "Warrens Hall"
 	})
-"thF" = (
-/obj/machinery/hydro_mister,
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/hydroponics)
 "thT" = (
 /obj/machinery/light{
 	dir = 4;
@@ -90371,7 +90370,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "wPO" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/cable{
 	icon_state = "1-2"
@@ -90891,7 +90890,7 @@
 	},
 /area/station/crew_quarters/quartersA)
 "wVc" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	layer = 9.1;
@@ -162162,7 +162161,7 @@ ryX
 wth
 wth
 ufA
-thF
+beb
 rie
 ryX
 ran

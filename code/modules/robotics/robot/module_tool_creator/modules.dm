@@ -37,6 +37,7 @@
 // scientist.
 /datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
+		/obj/item/hand_labeler,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,

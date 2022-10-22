@@ -236,6 +236,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_force_mixed_blob,
 		/client/proc/toggle_force_mixed_wraith,
 		/client/proc/toggle_spooky_light_plane,
+		/datum/admins/proc/toggle_radio_audio,
 		///proc/possess,
 		/proc/possessmob,
 		/proc/releasemob,
@@ -1629,9 +1630,7 @@ var/list/fun_images = list()
 	set desc = "Create a custom object spewing grenade"
 	ADMIN_ONLY
 
-	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No"))
-	if(new_grenade == "No")
-		return
+	var/new_grenade = tgui_alert(src.mob, "Use the new thing throwing grenade?", "Cool new grenade?", list("Yes", "No")) == "Yes"
 	var/obj_input = input("Enter path of the object you want the grenade to have or enter a part of the path to search", "Enter Path") as null|text
 	if (!obj_input)
 		return

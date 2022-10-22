@@ -138,7 +138,8 @@
 "eK" = (
 /obj/machinery/door/airlock/pyro/security{
 	density = 0;
-	dir = 2
+	dir = 2;
+	hardened = 1
 	},
 /obj/machinery/light/small/floor,
 /obj/access_spawn/security,
@@ -297,7 +298,9 @@
 /area/centcom/outside)
 "le" = (
 /obj/machinery/light/small/floor,
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	hardened = 1
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -337,11 +340,15 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "nM" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "og" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/external{
+	hardened = 1
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -511,7 +518,9 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "yz" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
+	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)

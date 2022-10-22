@@ -381,6 +381,12 @@
 	/obj/item/requisition_token/security/assistant = 2,
 	/obj/item/turret_deployer/riot = 2)
 
+/obj/storage/secure/closet/security/armory/looted
+	spawn_contents = list()
+	locked = 0
+	open = 1
+	emagged = 1
+
 /obj/storage/secure/closet/brig
 	name = "\improper Confiscated Items safe"
 	desc = "A card-locked safe for storage of contraband. Unfortunately it was made by the lowest bidder."
@@ -963,6 +969,46 @@
 /* ================ */
 /* ----- Misc ----- */
 /* ================ */
+
+/obj/storage/secure/closet/immersion
+	name = "Immersion Suit Vault"
+	_max_health = LOCKER_HEALTH_STRONG
+	_health = LOCKER_HEALTH_STRONG
+	req_access = list(access_eva)
+	icon_state = "safe_immers"
+	icon_closed = "safe_immers"
+	icon_opened = "safe_locker-open"
+	bolted = TRUE
+
+	command
+		name = "Command Immersion Suit Vault"
+		icon_state = "safe_immers_com"
+		icon_closed = "safe_immers_com"
+		req_access = list(access_heads)
+
+	engineering
+		name = "Engineering Immersion Suit Vault"
+		icon_state = "safe_immers_eng"
+		icon_closed = "safe_immers_eng"
+		req_access = list(access_engineering)
+
+	quartermasters
+		name = "Quartermasters' Immersion Suit Vault"
+		icon_state = "safe_immers_qm"
+		icon_closed = "safe_immers_qm"
+		req_access = list(access_cargo)
+
+	research
+		name = "Research Immersion Suit Vault"
+		icon_state = "safe_immers_res"
+		icon_closed = "safe_immers_res"
+		req_access = list(access_research)
+
+	security
+		name = "Security Immersion Suit Vault"
+		icon_state = "safe_immers_sec"
+		icon_closed = "safe_immers_sec"
+		req_access = list(access_security)
 
 /obj/storage/secure/closet/courtroom
 	name = "\improper Courtroom locker"

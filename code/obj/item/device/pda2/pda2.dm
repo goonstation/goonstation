@@ -55,7 +55,7 @@
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 		// Alerts
 		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
@@ -138,7 +138,7 @@
 			// Departments
 			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 			// start in party line by default
 			MGD_PARTY,
 		)
@@ -265,7 +265,7 @@
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	technical_assistant
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
@@ -280,7 +280,7 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
@@ -288,13 +288,6 @@
 
 	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
-
-	mechanic
-		icon_state = "pda-a"
-		setup_default_module = /obj/item/device/pda_module/tray
-		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -328,6 +321,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -394,6 +388,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null

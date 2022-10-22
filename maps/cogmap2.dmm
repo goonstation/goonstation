@@ -11443,7 +11443,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aAY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light_switch/north,
 /obj/machinery/light{
@@ -61282,7 +61282,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJb" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -61303,7 +61303,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "cJf" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/item/storage/wall/random,
 /turf/simulated/floor/purple,
@@ -62111,7 +62111,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
 "cKZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large{
 	pixel_x = -7
 	},
@@ -65289,7 +65289,7 @@
 	},
 /area/station/science/chemistry)
 "cSh" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/firealarm{
 	dir = 4;
@@ -66062,7 +66062,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite{
 	dir = 9
@@ -70797,7 +70797,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/supply/delivery_point)
 "def" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "deg" = (
@@ -78178,7 +78181,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/primary/west)
 "nQy" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_misc"
 	},

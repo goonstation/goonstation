@@ -31,6 +31,8 @@
 	var/can_be_welded=false
 	var/can_be_anchored=false
 	custom_suicide=true
+	open_to_sound = TRUE
+
 	New()
 		src.light = new /datum/light/point
 		src.light.attach(src)
@@ -38,10 +40,6 @@
 		processing_items |= src
 		..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
-		for(var/obj/item/mechanics/miccomp/mic in src.contents)
-			mic.hear_talk(M,msg,real_name,lang_id)
-		return
 	process()
 		if (src.light_time>0)
 			src.light_time--

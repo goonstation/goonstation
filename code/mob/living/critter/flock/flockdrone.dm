@@ -704,9 +704,7 @@
 		return FALSE
 	if (!..())
 		return
-	var/attacker = P.shooter
-	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
-		attacker = P.mob_shooter //shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
+	src.flock?.check_for_bullets_hit_achievement(P)
 
 /mob/living/critter/flock/drone/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
@@ -959,7 +957,7 @@
 			return
 		if (prob(src.attack_hit_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
-			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0)
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, can_punch = 0, can_kick = 0)
 			user.attack_effects(target, affecting)
 			var/list/specific_attack_messages = pick(attack_messages)
 			msgs.base_attack_message = "<span class='combat bold'>[user] [specific_attack_messages[1]] [target] [specific_attack_messages[2]]!</span>"

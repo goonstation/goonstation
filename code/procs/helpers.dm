@@ -1141,10 +1141,10 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 // Marquesas: added an extra parameter to fix issue with changeling.
 // Unfortunately, it has to be this extra parameter, otherwise the spawn(0) in the mob say will
 // cause the mob's name to revert from the one it acquired for mimic voice.
-/atom/proc/hear_talk(mob/M as mob, text, real_name)
+/atom/proc/hear_talk(mob/M as mob, text, real_name, lang_id)
 	if (src.open_to_sound)
 		for(var/obj/O in src)
-			O.hear_talk(M,text,real_name)
+			O.hear_talk(M,text,real_name, lang_id)
 
 /**
   * Returns true if given value is a hex value
@@ -1769,6 +1769,18 @@ proc/countJob(rank)
 		return
 	src.letter_overlay(letter, lcolor, text2dir(dir))
 
+/// Returns a list of eligible dead players that COULD choose to respawn or whatever
+/proc/eligible_dead_player_list(var/allow_dead_antags = 0, var/require_client = FALSE)
+	. = list()
+	for (var/datum/mind/M in ticker.minds)
+		if (M.current && M.current.client)
+			var/client/C = M.current.client
+			if (dead_player_list_helper(M.current, allow_dead_antags, require_client) != 1)
+				continue
+			if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
+				continue
+			. += M
+
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
@@ -2298,21 +2310,17 @@ var/global/list/allowed_restricted_z_areas
 
 	return role
 
-var/regex/nameRegex = regex("\\xFF.","g")
-/proc/strip_special(var/text)
-	return nameRegex.Replace( "[text]", "" )
-
+// DM simultaneously makes cursed shit like this work...
+// yet won't work with just the unicode raws - infinite pain
+var/___proper = "\proper"
+var/___improper = "\improper"
+var/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
   */
 /proc/stripTextMacros(text)
-	if (findtext(text, "\improper"))
-		text = replacetext(text, "\improper", "")
-	if (findtext(text, "\proper"))
-		text = replacetext(text, "\proper", "")
-
-	return text
+	return replacetext(text, regexTextMacro, "")
 
 /**
   * Returns true if given mob/client/mind is an admin
@@ -2598,3 +2606,17 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	if (!T)
 		return
 	return T
+
+/// adjusts a screen_loc to account for non-32px-width sprites, so they get centered in a HUD slot
+/proc/do_hud_offset_thing(atom/movable/A, new_screen_loc)
+	var/icon/IC = new/icon(A.icon)
+	var/width = IC.Width()
+	var/regex/locfinder = new(@"^(\w*)([+-]\d)?(:\d+)?(.*)$") //chops up X-axis of a screen_loc
+	if(width != 32 && locfinder.Find("[new_screen_loc]")) //if we're 32-width, just use the loc we're given
+		var/offset = 0
+		if(startswith(locfinder.group[3], ":"))
+			offset = text2num(copytext(locfinder.group[3], 2))
+		offset -= (width-32)/2 // offsets the screen loc of the item by half the difference of the sprite width and the default sprite width (32), to center the sprite in the box
+		return "[locfinder.group[1]][locfinder.group[2]][offset ? ":[offset]":""][locfinder.group[4]]"
+	else
+		return new_screen_loc //regex failed to match, just use what we got

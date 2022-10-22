@@ -44,6 +44,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define CLONING_IS_A_SIN // Don't prebake clones
 //#define I_KNOW_WHAT_IM_DOING_PROBABLY // Suppresses gottagofast warning about only using one z-level.
 //#define LOW_SECURITY // Deletes turrets
+//#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
 
 //#define Z_LOG_ENABLE 1  // Enable additional world.log logging
@@ -116,6 +117,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_OZYMANDIAS
+//#define MAP_OVERRIDE_NADIR
 //#define MAP_OVERRIDE_FLEET
 //#define MAP_OVERRIDE_ICARUS
 //#define MAP_OVERRIDE_GEHENNA			// Warcrimes WIP do not use
@@ -146,6 +148,7 @@ o+`        `-` ``..-:yooos-..----------..`
 #define CLONING_IS_A_SIN
 #define I_KNOW_WHAT_IM_DOING_PROBABLY
 #define LOW_SECURITY
+#define NO_CRITTERS
 #define NO_RANDOM_ROOMS
 #endif
 
