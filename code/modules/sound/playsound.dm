@@ -1,4 +1,20 @@
-var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
+/// Approximate check of whether music is playing or not (radio / ad tapes / admin music all count as music here)
+/// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
+/// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
+proc/is_music_playing()
+	. = GET_COOLDOWN(global, "music")
+	if(!. && length(clients))
+		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
+		var/client/C = usr?.client || pick(clients)
+		var/list/sounds = C.SoundQuery()
+		for(var/sound/S in sounds)
+			if(S.channel == SOUNDCHANNEL_RADIO || S.channel >= SOUNDCHANNEL_ADMIN_LOW && S.channel <= SOUNDCHANNEL_ADMIN_HIGH)
+				message_admins("Music is playing, sound: [S] [S.len]")
+				// extend the cooldown by the length of this sound so we don't need to check SoundQuery next time
+				// Note that this is technically incorrect. We want REMAINING length of the sound, not the total length but BYOND doesn't tell us that info.
+				EXTEND_COOLDOWN(global, "music", S.len)
+				. = TRUE
+				break
 
 /client/proc/play_sound_real(S as sound, var/vol as num, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -46,7 +62,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.wait = 0
 	music_sound.repeat = 0
 	music_sound.priority = 254
-	music_sound.channel = admin_sound_channel //having this set to 999 removed layering music functionality -ZeWaka
+	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
@@ -81,6 +97,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	logTheThing(LOG_ADMIN, src, "started loading music [S]")
 	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -111,6 +129,9 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	logTheThing(LOG_ADMIN, src, "started loading music [soundPath], by the name of: [name]")
 	logTheThing(LOG_DIARY, src, "started loading music [soundPath], by the name of: [name]", "admin")
 	message_admins("[key_name(src)] started loading music [soundPath], by the name of: [name]")
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /proc/play_music_remote(data)
@@ -188,11 +209,9 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
 	for (var/i = 1 to 10)
-		//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 		stopsound.channel = mute_channel
 		src << 	stopsound
 		mute_channel ++
-	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 
 /client/verb/stop_the_radio()
 	set category = "Commands"
@@ -258,5 +277,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (data["error"])
 		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
