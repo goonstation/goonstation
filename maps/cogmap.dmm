@@ -32502,10 +32502,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "bJk" = (
-/obj/cable,
-/obj/machinery/power/apc/autoname_south,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
@@ -54041,6 +54039,9 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating/jen,
 /area/station/engine/power)
 "hLn" = (
@@ -54572,6 +54573,16 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/crew_quarters/cafeteria)
+"iHp" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	dir = 1;
+	name = "Power Room";
+	req_access = null
+	},
+/obj/firedoor_spawn,
+/obj/access_spawn/engineering_power,
+/turf/simulated/floor/plating/jen,
+/area/station/engine/elect)
 "iJw" = (
 /obj/machinery/status_display,
 /turf/simulated/wall/auto/supernorn,
@@ -59390,6 +59401,10 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/engine/power)
 "pSF" = (
@@ -59637,6 +59652,9 @@
 "qog" = (
 /obj/cable/brown{
 	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
 	},
 /turf/simulated/floor,
 /area/station/engine/power)
@@ -111642,7 +111660,7 @@ pSx
 qog
 hJn
 bJk
-bLM
+iHp
 bLT
 bNq
 vdE
