@@ -30,7 +30,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\__secret_public.dme"
 
 // BEGIN_INCLUDE
-#include "_std\defines\spacewind.dm"
 #include "code\area.dm"
 #include "code\atom.dm"
 #include "code\client.dm"

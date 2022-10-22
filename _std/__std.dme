@@ -79,6 +79,7 @@
 #include "defines\singing.dm"
 #include "defines\sound.dm"
 #include "defines\spacebee_extension.dm"
+#include "defines\spacewind.dm"
 #include "defines\speed.dm"
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"

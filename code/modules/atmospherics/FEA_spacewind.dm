@@ -20,10 +20,6 @@
 	///Set to TRUE during airflow movement for special Bump() behavior
 	VAR_FINAL/movement_by_airflow = FALSE
 
-/area
-	///Last time a spacewind sound played in this area.
-	VAR_FINAL/last_spacewind_woosh = 0
-
 /mob
 	VAR_FINAL/last_airflow_stun = 0
 
@@ -78,9 +74,9 @@
 
 		if(src.airflow_speed > AIRFLOW_SPEED_SKIP_CHECK)
 			if(src.airflow_time++ >= src.airflow_speed - AIRFLOW_SPEED_SKIP_CHECK)
-				sleep(1)
+				sleep(1 DECI SECOND)
 		else
-			sleep(max(1, 10 - (src.airflow_speed + 3)))
+			sleep(max(1, 10 - (src.airflow_speed + 3)) DECI SECONDS)
 
 		src.set_density(TRUE)
 		src.movement_by_airflow = TRUE
@@ -128,7 +124,7 @@
 		src.airflow_speed = delta / max(get_dist(src, origin), 1)
 		return FALSE
 
-	///A movement occurs here, but it doesn't mean the mob will be queued to the airflow loop.
+	// A movement occurs here, but it doesn't mean the mob will be queued to the airflow loop.
 	if (origin == loc)
 		step(src, origin.pressure_direction)
 
@@ -142,7 +138,7 @@
 	if (airflow_falloff < 1)
 		return FALSE
 
-	///At this point, we're locked into an airflow movement.
+	// At this point, we're locked into an airflow movement.
 	src.airflow_speed = min(max(delta * (9 / airflow_falloff), 1), 9)
 	src.pre_airflow_density = src.density
 	src.airflow_origin = origin
@@ -154,9 +150,10 @@
 		if(airflow_speed > 1)
 			airflow_hit(A)
 			A.airflow_hit_act(src)
-		else if(istype(src, /mob/living/carbon/human/normal) && ismovable(A) && (A:pre_airflow_density == 0))
+		else if(istype(src, /mob/living/carbon/human) && ismovable(A) && (A:pre_airflow_density == 0))
+			var/mob/living/carbon/human/H = src
 			boutput(src, "<span class='notice'>You are pinned against [A] by airflow!</span>")
-			src:changeStatus("stunned", 3 SECONDS) // :)
+			H.changeStatus("stunned", 3 SECONDS) // :)
 		/*
 		If the turf of the atom we bumped is NOT dense, then we check if the flying object is dense.
 		We check the special var because flying objects gain density so they can Bump() objects.
@@ -190,9 +187,8 @@
 			loc.add_blood(src)
 			src.visible_message(
 				"<span class='alert'>[src] splats against \the [A]!</span>",
-				"<span class='subtle'>You hear a loud thud.</span>"
+				"<span class='alert'>You slam into \the [A] with tremendous force!</span>"
 			)
-			boutput(src, "<span class='alert'>You slam into \the [A] with tremendous force!</span>")
 
 			src.emote("scream")
 
@@ -200,9 +196,8 @@
 			src.changeStatus(round(airflow_speed * 1 SECONDS)/2)
 			visible_message(
 				"<span class='alert'>[src] slams into \the [A]!</span>",
-				"<span class='subtle'>You hear a loud thud.</span>"
+				"<span class='alert'>You're thrown against \the [A] by pressure!</span>"
 			)
-			boutput(src, "<span class='alert'>You're thrown against \the [A] by pressure!</span>")
 
 	return ..()
 
@@ -215,9 +210,8 @@
 	. = ..()
 	src.visible_message(
 		"<span class='alert'>A flying [flying.name] slams into \the [src]!</span>",
-		"<span class='subtle'>You hear a soft thud.</span>"
+		"<span class='alert'>You're hit by a flying [flying]!</span>"
 	)
-	boutput(src, "<span class='alert'>You're hit by a flying [flying]!</span>")
 
 	playsound(src.loc, pick(sounds_punch), 100, 1, -1)
 	var/weak_amt
@@ -232,10 +226,22 @@
 
 /obj/airflow_hit_act(atom/movable/flying)
 	. = ..()
+
+	var/damage
+	if(ismob(flying))
+		damage = 10
+	else if(isitem(flying))
+		damage = flying:w_class*5 ///Heheheh
+	else if(flying.pre_airflow_density == TRUE)
+		damage = 30//Getting crushed by a flying canister or computer is going to fuck you up
+	else
+		damage = rand(5,15)
+
+	src.changeHealth(-damage)
+
 	if(flying.pre_airflow_density == TRUE)
 		src.visible_message(
 			"<span class='alert'>A flying [flying.name] slams into \the [src]!</span>",
-			"<span class='subtle'>You hear a loud slam!</span>"
 		)
 
 	//playsound(src.loc, "smash.ogg", 25, 1, -1)
