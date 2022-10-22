@@ -933,6 +933,9 @@
 		icon_state = "manifold"//[invisibility ? "-f" : ""]"
 		alpha = invisibility ? 128 : 255
 
+	else if (!node1 && !node2 && !node3)
+		icon_state = "manifold_disconnected"
+
 	else
 		var/connected = 0
 		var/unconnected = 0
@@ -948,9 +951,6 @@
 		unconnected = (~connected)&(connect_directions)
 
 		icon_state = "manifold_[connected]_[unconnected]"
-
-		if(!connected)
-			qdel(src)
 
 	return
 
