@@ -3323,6 +3323,9 @@
 	pixel_x = -13;
 	pixel_y = 18
 	},
+/obj/item/storage/box/donkpocket_kit{
+	pixel_y = 18
+	},
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "bEm" = (
@@ -45049,10 +45052,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/item/storage/box/donkpocket_kit{
-	pixel_x = 5;
-	pixel_y = 11
-	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},

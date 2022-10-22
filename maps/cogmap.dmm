@@ -34302,7 +34302,6 @@
 	},
 /area/station/engine/engineering/ce)
 "bNF" = (
-/obj/storage/secure/closet/engineering/welding,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "tile1"
@@ -34311,6 +34310,7 @@
 	dir = 5;
 	icon_state = "tile1"
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bNG" = (

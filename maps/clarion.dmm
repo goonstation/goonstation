@@ -33186,7 +33186,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/storage/secure/crate/eng/interdictor,
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "btr" = (
@@ -36263,6 +36263,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
+/obj/storage/secure/crate/eng/interdictor,
 /turf/simulated/floor/engine{
 	allows_vehicles = 0;
 	dir = 8;
