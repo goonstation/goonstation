@@ -228,7 +228,7 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (client)
+		if (client && !(istype(src, /mob/living/intangible/blob_overmind/ai/start_here/sudo)))
 			return
 		if (!blobs.len && state != 1)
 			return
@@ -724,6 +724,8 @@
 			return src.loc
 		else
 			return get_step(src.loc, pick(alldirs))
+
+/mob/living/intangible/blob_overmind/ai/start_here/sudo //treated as admin blob. Does whatever the fuck it wants
 
 #undef STATE_UNDER_ATTACK
 #undef STATE_FORTIFYING

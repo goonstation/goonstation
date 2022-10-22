@@ -245,7 +245,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				flick(flick_state, src)
 
-		..()
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
 
 	proc/ejectcasings()
 		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
@@ -775,9 +777,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/veritate
 	desc = "A personal defence weapon, developed by Almagest Weapons Fabrication."
 	name = "\improper Veritate PDW"
-	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "vector"
-	item_state = "vector"
+	item_state = "glocksyn"
 	shoot_delay = 1
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL

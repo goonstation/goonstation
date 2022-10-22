@@ -292,7 +292,7 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(
-		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
 	)
 
