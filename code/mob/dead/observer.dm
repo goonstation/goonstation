@@ -326,9 +326,9 @@
 		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
 		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
-			var/mob/dead/observer/our_observer = our_ghost
 			respawnee.update_time_display()
-			our_observer.hud?.get_join_other() // remind them of the other server
+			//var/mob/dead/observer/our_observer = our_ghost
+			//our_observer.hud?.get_join_other() // remind them of the other server
 
 		our_ghost.update_item_abilities()
 		return our_ghost
