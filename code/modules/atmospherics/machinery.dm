@@ -83,7 +83,7 @@ Pipelines + Other Objects -> Pipe network
 	new /obj/item/pipeconstruct(src.loc, src)
 	for (var/obj/machinery/atmospherics/pipe/node in src.pipeline_expansion())
 		node.noleakgas = TRUE
-	disposing()
+	qdel(src)
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
 	if(isweldingtool(W) && user.a_intent == INTENT_HARM)

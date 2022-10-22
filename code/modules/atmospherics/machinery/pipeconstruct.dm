@@ -29,7 +29,7 @@
 		thingtoplace.mergewithedges()
 		thingtoplace.UpdateIcon()
 
-		disposing()
+		qdel(src)
 
 /obj/item/pipeconstruct/dropped(mob/user)
 	..()

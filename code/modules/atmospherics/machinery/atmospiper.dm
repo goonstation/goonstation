@@ -31,7 +31,7 @@
 /obj/machinery/atmos_pipedispenser/New(mob/user)
 	..()
 	dat = {"<b>Atmos Pipes</b><br><br>"}
-	
+
 	for (var/type in pipesforcreation)
 		dat += "<A href='?src=\ref[src];dmake=[type]'>[type]</A><BR>"
 
@@ -54,7 +54,7 @@
 		var/path = pipesforcreation[(href_list["dmake"])]
 		var/obj/machinery/atmospherics/temp = new path()
 		new /obj/item/pipeconstruct(src.loc, temp)
-		temp.disposing()
+		qdel(temp)
 
 		usr.Browse(null, "window=pipedispenser")
 		src.remove_dialog(usr)

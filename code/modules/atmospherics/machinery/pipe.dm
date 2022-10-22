@@ -933,13 +933,9 @@
 		icon_state = "manifold"//[invisibility ? "-f" : ""]"
 		alpha = invisibility ? 128 : 255
 
-	else if (!node1 && !node2 && !node3)
-		icon_state = "manifold_disconnected"
-
 	else
 		var/connected = 0
 		var/unconnected = 0
-		var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
 
 		if(node1)
 			connected |= get_dir(src, node1)
@@ -948,11 +944,9 @@
 		if(node3)
 			connected |= get_dir(src, node3)
 
-		unconnected = (~connected)&(connect_directions)
+		unconnected = (~connected)&(initialize_directions)
 
 		icon_state = "manifold_[connected]_[unconnected]"
-
-	return
 
 /obj/machinery/atmospherics/pipe/manifold/initialize()
 	var/connect_directions = (NORTH|SOUTH|EAST|WEST)&(~dir)
