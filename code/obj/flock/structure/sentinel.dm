@@ -22,8 +22,8 @@
 	var/range = 4
 	/// The wattage of the arcflash
 	var/wattage = 6000
-	/// can chain to an extra target
-	var/extra_chain = FALSE
+	/// has extra range when chaining
+	var/extra_chain_range = FALSE
 	var/powered = FALSE
 
 	passthrough = TRUE
@@ -105,9 +105,9 @@
 
 			var/atom/last_hit = to_hit
 			var/found_chain_target
-			for(var/i in 1 to (rand(5, 6) + (src.extra_chain ? 1 : 0))) // chaining
+			for(var/i in 1 to rand(5, 6)) // chaining
 				found_chain_target = FALSE
-				for(var/atom/A as anything in view(2, last_hit.loc))
+				for(var/atom/A as anything in view(2 + (src.extra_chain ? 1 : 0), last_hit.loc))
 					if(src.flock?.isEnemy(A) && !(A in hit))
 						if (ismob(A))
 							var/mob/M = A
@@ -141,11 +141,11 @@
 	if (!src.powered || !..())
 		return FALSE
 	src.accepts_sapper_power = FALSE
-	src.extra_chain = TRUE
+	src.extra_chain_range = TRUE
 	SPAWN(10 SECONDS)
 		if (src)
 			src.accepts_sapper_power = TRUE
-			src.extra_chain = FALSE
+			src.extra_chain_range = FALSE
 	return TRUE
 
 /obj/flock_structure/sentinel/proc/updatefilter()
