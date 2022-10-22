@@ -12478,6 +12478,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "gpe" = (
@@ -21287,12 +21288,6 @@
 	dir = 1
 	},
 /area/station/crew_quarters/courtroom)
-"ksd" = (
-/obj/stool/chair/couch,
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/station/hallway/primary/northeast)
 "kse" = (
 /obj/disposalpipe/segment/transport,
 /obj/machinery/navbeacon{
@@ -42779,6 +42774,12 @@
 	icon_state = "floor4"
 	},
 /area/listeningpost)
+"vpY" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/northeast)
 "vqi" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/blueblack{
@@ -105622,7 +105623,7 @@ arE
 emx
 utm
 cNA
-ksd
+kvK
 jdT
 lsj
 lsj
@@ -105924,7 +105925,7 @@ tGr
 tGr
 tGr
 tGr
-kvK
+vpY
 jdT
 lsj
 lsj
