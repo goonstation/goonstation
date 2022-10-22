@@ -17690,7 +17690,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "bhV" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bhY" = (
@@ -34436,7 +34436,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/stool/chair/blue{
 	dir = 8
 	},
@@ -42461,14 +42461,14 @@
 /area/station/turret_protected/ai)
 "qLV" = (
 /obj/storage/closet/coffin,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
 /obj/landmark{
 	icon_state = "pest-start";
 	name = "peststart"

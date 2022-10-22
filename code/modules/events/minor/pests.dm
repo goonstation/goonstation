@@ -12,7 +12,7 @@
 		switch (type)
 			if (1)
 				while (spawnamount > 0)
-					new /obj/critter/roach(pestlandmark)
+					new /mob/living/critter/small_animal/cockroach(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (2)

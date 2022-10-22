@@ -3277,7 +3277,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "akd" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "akf" = (
@@ -5259,7 +5259,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "apO" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "apP" = (
@@ -20359,7 +20359,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bck" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "bcl" = (
@@ -22355,7 +22355,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bhb" = (
@@ -35096,7 +35096,7 @@
 	},
 /area/station/storage/warehouse)
 "bPf" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bPg" = (
@@ -53767,7 +53767,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "hrg" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/cable{
 	d1 = 1;
 	d2 = 4;

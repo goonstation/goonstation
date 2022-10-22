@@ -17225,9 +17225,9 @@
 /area/research_outpost/toxins)
 "aQc" = (
 /obj/storage/crate,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aQd" = (
@@ -38620,7 +38620,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "bVB" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/station/storage/warehouse)
@@ -40589,7 +40589,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "cbq" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "cbr" = (
@@ -40783,7 +40783,7 @@
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccb" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ccc" = (
@@ -43404,7 +43404,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "cjU" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cjV" = (

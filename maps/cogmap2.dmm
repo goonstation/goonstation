@@ -2901,7 +2901,7 @@
 	},
 /area/station/maintenance/solar/north)
 "agL" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
 "agO" = (
@@ -4337,11 +4337,8 @@
 /obj/item/plank,
 /obj/item/plank,
 /obj/item/plank,
-/obj/critter/roach{
-	generic = 0;
+/mob/living/critter/small_animal/cockroach{
 	health = 30;
-	max_quality = 80;
-	min_quality = 50;
 	name = "Maude"
 	},
 /obj/disposalpipe/junction{
@@ -7501,7 +7498,7 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
 "arU" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction)
 "arV" = (
@@ -21659,7 +21656,7 @@
 	pixel_x = 28
 	},
 /obj/decal/cleanable/ash,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/scorched,
 /area/station/maintenance/northwest)
 "aZu" = (
@@ -23603,7 +23600,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/engine/substation/west)
 "bec" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -50133,7 +50130,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cjh" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -51870,7 +51867,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "cnd" = (
@@ -77513,7 +77510,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "lsh" = (

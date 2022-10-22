@@ -1120,7 +1120,7 @@
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
 "adF" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "adG" = (

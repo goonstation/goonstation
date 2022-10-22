@@ -1494,7 +1494,7 @@
 /turf/space,
 /area/space)
 "aeP" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
 "aeQ" = (
@@ -2114,7 +2114,7 @@
 /turf/simulated/wall/false_wall/reinforced,
 /area/space)
 "aju" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
 "ajw" = (
@@ -2572,8 +2572,7 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/critter/roach{
-	angertext = "bastards at";
+/mob/living/critter/small_animal/cockroach{
 	desc = "Oh damn.. for a real bastard?.";
 	gender = "male";
 	interesting = "Captivity Bill";
@@ -15333,7 +15332,7 @@
 /turf/space,
 /area/derelict_ai_sat/solar)
 "bhz" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/cable{
 	d1 = 1;
 	d2 = 2;
@@ -19947,7 +19946,7 @@
 	dir = 8;
 	tag = "icon-toilet (WEST)"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "jTa" = (
@@ -23553,7 +23552,7 @@
 /turf/simulated/floor/scorched2,
 /area/derelict_ai_sat)
 "urd" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
 "usu" = (

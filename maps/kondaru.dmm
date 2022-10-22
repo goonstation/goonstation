@@ -2088,7 +2088,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating,
 /area/station/storage/northeast)
 "afU" = (
@@ -61792,7 +61792,7 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "xZA" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /obj/item/device/multitool,
 /turf/simulated/floor/grime,
 /area/station/maintenance/southeast)
