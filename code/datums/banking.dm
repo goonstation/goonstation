@@ -70,7 +70,6 @@
 
 		jobs["Engineer"] = PAY_TRADESMAN
 		jobs["Miner"] = PAY_TRADESMAN
-		jobs["Mechanic"] = PAY_DOCTORATE
 //		jobs["Atmospheric Technician"] = PAY_TRADESMAN
 		jobs["Security Officer"] = PAY_TRADESMAN
 //		jobs["Vice Officer"] = PAY_TRADESMAN

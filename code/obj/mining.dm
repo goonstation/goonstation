@@ -1890,6 +1890,10 @@ obj/item/clothing/gloves/concussive
 
 	examine(mob/user)
 		. = ..()
+		if(target)
+			. += "It's currently set to [src.target]."
+		else
+			. += "No destination has been selected."
 		if (isrobot(user))
 			. += "Each use of the cargo teleporter will consume [cost * SILICON_POWER_COST_MOD]PU."
 		else
@@ -1947,7 +1951,7 @@ obj/item/clothing/gloves/concussive
 		if (!src.can_teleport(cargo, user))
 			return FALSE
 
-		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
+		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
 		return TRUE
@@ -2297,7 +2301,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
 		mailgroup = MGD_MINING
@@ -2330,7 +2334,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
 			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_MECHANIC
+				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))

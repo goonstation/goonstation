@@ -189,7 +189,7 @@ var/global/list/mapNames = list(
 				break
 		if (!transit_start)
 			CRASH("Unable to load escape transit landmark")
-		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
+		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z, flags=DMM_LOAD_SPACE)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
@@ -518,7 +518,6 @@ var/global/list/mapNames = list(
 		/datum/job/research/roboticist = 3,
 		/datum/job/research/scientist = 6,
 		/datum/job/research/medical_doctor = 7,
-		/datum/job/engineering/mechanic = 4,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,

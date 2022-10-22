@@ -1,4 +1,27 @@
 
+(t)sat oct 22 22
+(u)Bartimeus973
+(p)11476
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)You can now record sentences in audiologs if it is in your hand/pocket and talk into a microphone is someone is holding it close to you.
+(t)fri oct 21 22
+(u)Ikea
+(p)11374
+(e)⚖🔄💡|C-Balance, C-Rework, A-Station-Systems
+(*)The Mechanic job and their traitor items have been merged into the Engineer job, and the Engineer job has been upped to 8 slots. The contents of the mechanics locker remains the same.
+(u)MetricDuck
+(p)11506
+(e)🪲⚖🍝|C-Bug, C-Balance, A-Catering
+(+)Pizza slices sharpened with the syndicate pizza cutter can no longer be caught mid-throw.
+(u)Shiiba
+(p)11466
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Moves bean, corn, peas and soybean to the vegetable category and cucumber to the fruit category in the seed fabricator.
+(t)thu oct 20 22
+(u)DrWolfy
+(p)11431
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now see the destination set when examining or using a cargo transporter.
 (t)wed oct 19 22
 (u)LeahTheTech
 (p)11441

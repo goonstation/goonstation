@@ -777,9 +777,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/veritate
 	desc = "A personal defence weapon, developed by Almagest Weapons Fabrication."
 	name = "\improper Veritate PDW"
-	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "vector"
-	item_state = "vector"
+	item_state = "glocksyn"
 	shoot_delay = 1
 	w_class = W_CLASS_SMALL
 	force = MELEE_DMG_PISTOL

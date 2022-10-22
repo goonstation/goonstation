@@ -271,10 +271,7 @@ datum/shuttle_controller
 							particle_spawn.start_particles()
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip=/turf/simulated/floor/plating)
-						for (var/turf/O in end_location)
-							if (istype(O, map_turf))
-								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
+						start_location.move_contents_to(end_location, map_turf, turf_to_skip=list(/turf/simulated/floor/plating, src.map_turf))
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
