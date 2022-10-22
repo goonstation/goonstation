@@ -46,7 +46,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.wait = 0
 	music_sound.repeat = 0
 	music_sound.priority = 254
-	music_sound.channel = admin_sound_channel //having this set to 999 removed layering music functionality -ZeWaka
+	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
