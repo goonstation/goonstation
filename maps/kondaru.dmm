@@ -61647,11 +61647,11 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
 "xUY" = (
-/obj/storage/secure/closet/engineering/engineer,
 /obj/machinery/alarm{
 	dir = 8;
 	pixel_x = 20
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "xVz" = (
