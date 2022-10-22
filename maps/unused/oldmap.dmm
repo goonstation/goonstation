@@ -1605,6 +1605,7 @@
 "dI" = (
 /obj/table,
 /obj/item/device/radio/intercom{
+
 	},
 /turf/simulated/floor,
 /area/bridge)
