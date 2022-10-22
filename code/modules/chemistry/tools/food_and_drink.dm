@@ -33,6 +33,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		return 0
 
 	proc/heal(var/mob/living/M)
+		SHOULD_CALL_PARENT(TRUE)
 		var/healing = src.heal_amt
 
 		if (ishuman(M))
