@@ -592,11 +592,11 @@ proc/find_ghost_by_key(var/find_key)
 		if(lock_status && !locked)
 			locked = 1
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='alert'>\The [src] locks shut!</span>")
+			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
 			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			bo(occupant, "<span class='notice'>\The [src] unlocks!</span>")
+			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
 	proc/find_pods()
@@ -638,14 +638,14 @@ proc/find_ghost_by_key(var/find_key)
 		timer_length = 15 + rand(-5, 5)
 		process_timer = timer_length
 		set_lock(1)
-		bo(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
+		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
 		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
 		SubscribeToProcess()
 
 	proc/start_strip()
 		active_process = PROCESS_STRIP
 		set_lock(1)
-		bo(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
+		boutput(occupant, "<span class='alert'>Hatches open and tiny, grabby claws emerge!</span>")
 
 		SubscribeToProcess()
 
@@ -697,7 +697,7 @@ proc/find_ghost_by_key(var/find_key)
 
 		if(to_remove)
 			if(prob(70))
-				bo(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
+				boutput(occupant, "<span class='alert'>\The arms [pick("snatch", "grab", "steal", "remove", "nick", "blag")] your [to_remove.name]!</span>")
 				playsound(src, "sound/misc/rustle[rand(1,5)].ogg", 50, 1)
 			to_remove.set_loc(src.loc)
 		else

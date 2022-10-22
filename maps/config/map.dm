@@ -145,6 +145,9 @@
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 #include "ozymandias.dm"
 
+#elif defined(MAP_OVERRIDE_NADIR)
+#include "nadir.dm"
+
 #elif defined(MAP_OVERRIDE_FLEET)
 #include "fleet.dm"
 

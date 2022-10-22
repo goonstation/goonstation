@@ -1956,6 +1956,9 @@
 		else
 			return src.loc
 
+
+// Fabricator Defines
+
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
@@ -2005,6 +2008,10 @@
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
+#ifdef MAP_OVERRIDE_NADIR
+		/datum/manufacture/nanoloom,
+		/datum/manufacture/nanoloom_cart,
+#endif
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
@@ -2661,6 +2668,19 @@
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+/******************** Nadir Resonators *******************/
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_ax
+	name = "Type-AX Resonator"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/resonator_type_ax
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_sm
+	name = "Type-SM Resonator"
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	blueprint = /datum/manufacture/resonator_type_sm
 
 
 /// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.

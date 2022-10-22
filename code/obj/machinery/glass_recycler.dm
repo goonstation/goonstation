@@ -51,6 +51,7 @@
 	var/list/product_list = list()
 	mats = 10
 	flags = NOSPLASH | FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
+	event_handler_flags = NO_MOUSEDROP_QOL
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 
@@ -58,6 +59,15 @@
 		..()
 		src.get_products()
 		UnsubscribeProcess()
+
+	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		if (!istype(O, /obj/item)) // dont recycle the floor!
+			return
+
+		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
+			return
+
+		src.attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)
