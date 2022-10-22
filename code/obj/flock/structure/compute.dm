@@ -7,7 +7,6 @@
 	uses_health_icon = FALSE
 	icon_state = "compute"
 	compute = 60
-	accepts_sapper_power = TRUE
 	var/static/display_count = 9
 	var/glow_color = "#7BFFFFa2"
 
@@ -25,13 +24,6 @@
 	overlay.pixel_y = 16
 	src.UpdateOverlays(overlay, "display")
 
-/obj/flock_structure/compute/sapper_power()
-	src.update_flock_compute("remove", FALSE)
-	src.compute += 1
-	src.update_flock_compute("apply")
-	src.info_tag.set_info_tag("Compute provided: [src.compute]")
-	return TRUE
-
 /obj/flock_structure/compute/disposing()
 	src.remove_simple_light("compute_light")
 	. = ..()
@@ -46,10 +38,3 @@
 	health = 100
 	icon_state = "compute_mainframe"
 	compute = 180
-
-/obj/flock_structure/compute/mainframe/sapper_power()
-	src.update_flock_compute("remove", FALSE)
-	src.compute += 3
-	src.update_flock_compute("apply")
-	src.info_tag.set_info_tag("Compute provided: [src.compute]")
-	return TRUE
