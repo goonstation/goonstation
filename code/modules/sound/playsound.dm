@@ -1,4 +1,21 @@
-var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
+/// Approximate check of whether music is playing or not (radio / ad tapes / admin music all count as music here)
+/// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
+/// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
+proc/is_music_playing()
+	. = FALSE
+	// . = GET_COOLDOWN(global, "music")
+	if(!. && length(clients))
+		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
+		var/client/C = usr?.client || pick(clients)
+		var/list/sounds = C.SoundQuery()
+		for(var/sound/S in sounds)
+			if(S.channel == SOUNDCHANNEL_RADIO || S.channel >= SOUNDCHANNEL_ADMIN_LOW && S.channel <= SOUNDCHANNEL_ADMIN_HIGH)
+				message_admins("Music is playing, sound: [S] [S.len]")
+				// extend the cooldown by the length of this sound so we don't need to check SoundQuery next time
+				// Note that this is technically incorrect. We want REMAINING length of the sound, not the total length but BYOND doesn't tell us that info.
+				EXTEND_COOLDOWN(global, "music", S.len)
+				. = TRUE
+				break
 
 /client/proc/play_sound_real(S as sound, var/vol as num, var/freq as num)
 	if (!config.allow_admin_sounds)
