@@ -183,21 +183,20 @@
 				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
 			..()
 
-	throw_impact(M)
-		..()
-		if (!sharpened || isnull(M))
-			return
-		if (sliced)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+	throw_impact(atom/A)
+		if (!sharpened || isnull(A) || !sliced)
+			..()
+		else
+			if (iscarbon(A))
+				var/mob/living/carbon/human/H = A
 				H.implant.Add(src)
-				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				src.visible_message("<span class='alert'>[src] gets embedded in [H]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
-				src.set_loc(M)
-				src.transfer_all_reagents(M)
-			random_brute_damage(M, 11)
-			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
+				src.set_loc(H)
+				src.transfer_all_reagents(H)
+			random_brute_damage(A, 11)
+			take_bleeding_damage(A, null, 25, DAMAGE_STAB)
 
 	proc/add_topping(var/num)
 		var/icon/I
