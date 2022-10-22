@@ -2,8 +2,7 @@
 /// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
 /// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
 proc/is_music_playing()
-	. = FALSE
-	// . = GET_COOLDOWN(global, "music")
+	. = GET_COOLDOWN(global, "music")
 	if(!. && length(clients))
 		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
 		var/client/C = usr?.client || pick(clients)
