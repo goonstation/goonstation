@@ -105,14 +105,13 @@
 
 			if (CHARGING_STRUCTURES)
 				var/obj/flock_structure/target
-				var/list/area_structures = list()
-				var/area/structure_area = get_area(src)
-				for (var/obj/flock_structure/structure as anything in src.flock.structures)
-					if (structure.accepts_sapper_power && get_area(structure) == structure_area)
-						area_structures += structure
-				if (!length(area_structures))
+				var/list/nearby_structures = list()
+				for (var/obj/flock_structure/structure in range(3, src))
+					if (structure.accepts_sapper_power && structure.flock == src.flock)
+						nearby_structures += structure
+				if (!length(nearby_structures))
 					return
-				target = pick(area_structures)
+				target = pick(nearby_structures)
 				targets += target
 				if (!target.sapper_power())
 					return
