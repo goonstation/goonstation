@@ -950,7 +950,6 @@ var/global/list/mapNames = list(
 		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
 		"the chapel" = list(/area/station/chapel/sanctuary))
 
-	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
 		/datum/job/engineering/miner = 0 //eventually, assay technicians?
 	)
