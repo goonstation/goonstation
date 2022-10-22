@@ -535,7 +535,7 @@ datum
 												animal_host.removeAbility(/datum/targetable/brain_slug/exit_host)
 												animal_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 												animal_host.slug = null
-											host.death(gibbed = false)
+											host.death()
 
 
 				..()
