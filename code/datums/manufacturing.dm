@@ -3015,7 +3015,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /************ INTERDICTOR STUFF ************/
 
-/datum/manufacture/interdictor_frame
+/datum/manufacture/interdictor_kit
 	name = "Interdictor Assembly Kit"
 	item_paths = list("MET-2","CON-1")
 	item_amounts = list(10,4)
