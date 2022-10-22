@@ -50,5 +50,5 @@
 			dat.Insert(2, {"They consumed a total of [ability_holder.lifetime_energy] units of energy during this shift.
 							<br>Hearts stopped: [ability_holder.hearts_stopped]"})
 		if (src.ability_holder.hearts_stopped >= 6)
-			src.owner.current.unlock_medal("A shocking surprise", TRUE)
+			src.owner.current.unlock_medal("A shocking demise", TRUE)
 		return dat
