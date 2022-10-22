@@ -98,6 +98,8 @@ proc/is_music_playing()
 	logTheThing(LOG_ADMIN, src, "started loading music [S]")
 	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -128,6 +130,9 @@ proc/is_music_playing()
 	logTheThing(LOG_ADMIN, src, "started loading music [soundPath], by the name of: [name]")
 	logTheThing(LOG_DIARY, src, "started loading music [soundPath], by the name of: [name]", "admin")
 	message_admins("[key_name(src)] started loading music [soundPath], by the name of: [name]")
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /proc/play_music_remote(data)
@@ -205,11 +210,9 @@ proc/is_music_playing()
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
 	for (var/i = 1 to 10)
-		//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 		stopsound.channel = mute_channel
 		src << 	stopsound
 		mute_channel ++
-	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 
 /client/verb/stop_the_radio()
 	set category = "Commands"
@@ -275,5 +278,8 @@ proc/is_music_playing()
 	if (data["error"])
 		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
