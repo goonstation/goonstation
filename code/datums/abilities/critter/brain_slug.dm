@@ -228,7 +228,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 				//Cleanup
 				human_host.slug = null
 				human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
-				human_host.death(gibbed = false)
+				human_host.death()
 		else if (istype(holder.owner, /mob/living/critter/brain_slug))
 			var/mob/living/critter/brain_slug/the_slug = holder.owner
 			if (istype(the_slug.loc,/mob/))
