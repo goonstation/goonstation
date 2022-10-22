@@ -254,6 +254,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		src.stat = 2
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)

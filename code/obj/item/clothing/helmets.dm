@@ -181,6 +181,7 @@
 	name = "diving helmet"
 	desc = "Comes equipped with a builtin flashlight."
 	icon_state = "diving0"
+	acid_survival_time = 8 MINUTES
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
@@ -448,6 +449,7 @@
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	acid_survival_time = 6 MINUTES
 
 	setupProperties()
 		..()
@@ -850,6 +852,7 @@
 	name = "industrial space helmet"
 	desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 #endif
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()

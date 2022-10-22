@@ -94,7 +94,7 @@
 		if (isintangible(C))
 			continue
 		if(C.mind?.special_role)
-			if (istraitor(C) || isnukeop(C) || isspythief(C) || isnukeopgunbot(C)) // frens :)
+			if (issawflybuddy(C)) // frens :)
 				if (!(C.weakref in owncritter.friends))
 					boutput(C, "<span class='alert'> [owncritter]'s IFF system silently flags you as an ally! </span>")
 					owncritter.friends += get_weakref(C)
