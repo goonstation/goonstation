@@ -114,9 +114,9 @@
 		list(new /datum/eventSpawnedCritter(
 			critter_types = list(/mob/living/critter/brain_slug),
 			drop_tables = list(
-				//Todo, add special item
 				new /datum/event_item_drop_table(
-					potential_drop_items = list(/obj/item/mutation_orb/fire_orb, /obj/item/rejuvenation_feather, /obj/item/property_setter/fire_jewel)
+					potential_drop_items = list(/obj/item/mutation_orb/mind_orb, /obj/item/slime_ball),
+					remove_dropped_items = 1, number_of_rolls = 2, percent_droprate = 50, pity_drop_atleast_one = 1
 					)
 				)
 			)

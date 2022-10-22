@@ -11,7 +11,7 @@
 	secs_offset_y = 7
 
 /datum/abilityHolder/brain_slug
-	usesPoints = 0
+	usesPoints = 1
 	regenRate = 0
 	pointName = "Stability"
 	tabName = "Abilities"
@@ -23,6 +23,7 @@
 		.= list()
 		.["Stability:"] = round(src.points)
 
+ABSTRACT_TYPE(/datum/targetable/brain_slug)
 /datum/targetable/brain_slug
 	icon = 'icons/mob/critter_ui.dmi'
 	var/border_icon = 'icons/mob/critter_ui.dmi'
@@ -61,10 +62,10 @@
 
 	cast(atom/target)
 		if (target == holder.owner)
-			return FALSE
+			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to infest.</span>")
-			return FALSE
+			return TRUE
 		//If we're not a slug, we're already in a mob so it's a transfer and it'll take longer to perform
 		if (!istype(holder.owner, /mob/living/critter/brain_slug))
 			is_transfer = TRUE
@@ -72,12 +73,12 @@
 			var/mob/living/M = target
 			if(check_host_eligibility(M, holder.owner))
 				actions.start(new/datum/action/bar/private/icon/brain_slug_infest(target, is_transfer, src), holder.owner)
-				return TRUE
-			else
 				return FALSE
+			else
+				return TRUE
 		else
 			boutput(holder.owner, "<span class='alert'>That's not something you can infest!</span>")
-			return FALSE
+			return TRUE
 
 /datum/action/bar/private/icon/brain_slug_infest
 	duration = 4 SECONDS
@@ -180,7 +181,7 @@
 	name = "Exit host"
 	desc = "Leave behind this worthless body."
 	icon_state = "exit_host"
-	cooldown = 1 SECONDS
+	cooldown = 8 SECONDS
 	targeted = 0
 
 	cast()
@@ -267,6 +268,7 @@
 			var/mob/the_mob = the_slug.loc
 			//Begin the sluggening
 			hit_twitch(the_mob)
+			boutput(M, "<span class='notice'>You begin to take over [the_mob].</span>")
 			spawn(3 SECONDS)
 				if (!the_mob || !the_slug) return
 				violent_standup_twitch(the_mob)
@@ -283,12 +285,15 @@
 ///Checks if a thing can be infested by a brain slug and returns false if it cant be.
 proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 	//Small animals are fair game except mentormice and adminmice for obvious reasons.
-	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && isalive(mob_target))
+	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin))
 		var/mob/living/critter/small_animal/animal_target = mob_target
+		if (!isalive(animal_target))
+			boutput(caster, "<span class='notice'>You got here a bit late. [animal_target] is already dead.</span>")
+			return FALSE
 		if (animal_target.mind == null)
 			return TRUE
 		else
-			boutput(caster, "<span class='notice'>This creature looks much too lively to infest.</span>")
+			boutput(caster, "<span class='notice'>This creature looks much too resilient to infest.</span>")
 			return FALSE
 
 	//Human corpses are also prime targets, if they are fresh
@@ -369,23 +374,3 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		proj.targets = list(target)
 
 		proj.launch()
-
-/datum/targetable/brain_slug/brainwave_scan
-	name = "Brainwave scan"
-	desc = "Close your eyes and open your mind to detect living beings through walls"
-	cooldown = 3 SECONDS
-	targeted = 0
-	var/active = FALSE
-
-	cast()
-		if (..())
-			return 1
-
-		var/mob/living/scanner = holder.owner
-		src.active = !(src.active)
-		if(active)
-			scanner.blinded = 1
-			APPLY_ATOM_PROPERTY(scanner, PROP_MOB_THERMALVISION_MK2, src)
-		else
-			scanner.blinded = 0
-			REMOVE_ATOM_PROPERTY(scanner, PROP_MOB_THERMALVISION_MK2, src)
