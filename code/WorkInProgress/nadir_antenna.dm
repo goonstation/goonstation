@@ -79,7 +79,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				if(obstructed)
 					continue
 				var/pad_netnum = pad_powernet.number
-				if(src.can_transceive(pad_netnum))
+				if(src.can_transceive(pad_netnum) == TRANSCEIVE_OK)
 					transc_pad.attempt_transceive(null,queued_item)
 					direct_queue -= queued_item
 					break
