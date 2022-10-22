@@ -5193,6 +5193,7 @@
 	pixel_x = 10;
 	tag = ""
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cEk" = (
@@ -10072,6 +10073,7 @@
 /obj/machinery/shieldgenerator/energy_shield{
 	power_level = 2
 	},
+/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "fgA" = (
@@ -12647,7 +12649,6 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "gqO" = (
@@ -13232,13 +13233,6 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"gEt" = (
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "gEC" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -13313,10 +13307,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"gGi" = (
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "gGu" = (
 /obj/stool/chair/boxingrope_corner{
 	dir = 9
@@ -15453,6 +15443,15 @@
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
 	})
+"hBF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "hBK" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -16545,6 +16544,9 @@
 	},
 /obj/cable{
 	icon_state = "1-4"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
@@ -19132,12 +19134,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/grey,
 /area/station/crewquarters/cryotron)
-"jqA" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/dome)
 "jqS" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -19958,6 +19954,10 @@
 "jMV" = (
 /obj/storage/cart/mechcart,
 /obj/random_item_spawner/tools,
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "jNc" = (
@@ -19990,7 +19990,6 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "jOj" = (
@@ -20673,11 +20672,6 @@
 /area/station/quartermaster/storage{
 	name = "Cargo Auxiliary Endpoint"
 	})
-"kbW" = (
-/obj/storage/secure/closet/animal,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "kcx" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -22659,16 +22653,6 @@
 /obj/storage/closet/syndicate/personal,
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/listeningpost)
-"kWT" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/vertical,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/northeast)
 "kWV" = (
 /obj/machinery/plantpot,
 /obj/machinery/light{
@@ -31107,15 +31091,6 @@
 /obj/decal/tile_edge/floorguide/security,
 /turf/simulated/floor/redblack/corner,
 /area/station/hallway/primary/southwest)
-"phH" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/grass,
-/area/station/medical/dome)
 "phU" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -32211,10 +32186,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
-"pJI" = (
-/obj/disposalpipe/segment/transport,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/dome)
 "pKj" = (
 /obj/submachine/poster_creator,
 /obj/noticeboard/persistent{
@@ -37046,7 +37017,6 @@
 	pixel_x = 10;
 	tag = ""
 	},
-/obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "soX" = (
@@ -43189,9 +43159,6 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "vqY" = (
@@ -47084,6 +47051,16 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
+"xAm" = (
+/obj/disposalpipe/segment/vertical,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "xAn" = (
 /obj/stool/chair{
 	dir = 4
@@ -98142,15 +98119,15 @@ uNU
 xes
 xes
 xes
-ctG
+hBF
 gqA
-pJI
-kbW
-phH
+dNI
+mZd
+vqO
 jOe
 soM
-gGi
-gEt
+bUC
+bUC
 rHP
 vdv
 cCw
@@ -98746,15 +98723,15 @@ wjl
 wjl
 xes
 xes
-fgA
-aFj
-xes
+ctG
+tWO
+pov
 fgt
-wBN
+tnY
 jMV
 dNI
 dNI
-jqA
+dNI
 dNI
 dNI
 dNI
@@ -99053,10 +99030,10 @@ aaC
 niN
 aho
 aho
-aho
+xAm
 rIF
 ahs
-kWT
+rIF
 rIF
 rIF
 ppu
@@ -99355,10 +99332,10 @@ xes
 xes
 xes
 bKE
-wBN
-cDL
-wBN
 tTl
+cDL
+tnY
+tnY
 tnY
 tnY
 pov
