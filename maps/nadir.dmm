@@ -16573,34 +16573,6 @@
 	dir = 10
 	},
 /area/station/medical/medbay/treatment)
-"ieT" = (
-/obj/machinery/guardbot_dock{
-	desc = "A recharging and command station for PR-4 Robuddies.";
-	name = "tourbot docking station"
-	},
-/obj/machinery/bot/guardbot/old/tourguide{
-	access_lookup = "Staff Assistant";
-	beacon_freq = 1443;
-	desc = "A PR-4 Robuddy. These are pretty old, you didn't know there were any still around!  There's a little label on it that says 'Mitigative After-Rest Crew Orientation'";
-	name = "Marco"
-	},
-/obj/machinery/navbeacon{
-	codes_txt = "tour";
-	freq = 1443;
-	location = "tour20";
-	name = "tour beacon - home"
-	},
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/cable{
-	d2 = 8;
-	icon_state = "0-8"
-	},
-/turf/simulated/floor/grey,
-/area/space)
 "ifl" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small{
@@ -20971,7 +20943,7 @@
 	},
 /obj/item/reagent_containers/food/drinks/coffee{
 	desc = "There's a little bit of slop around the edge. This has to have been lying around a while.";
-	initial_reagents = list("coffee" = 15);
+	initial_reagents = list("coffee"=15);
 	name = "old Robust Coffee";
 	pixel_x = 9;
 	pixel_y = 4
@@ -21678,16 +21650,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
-"kyE" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer/tour_console,
-/obj/cable{
-	d2 = 4;
-	icon_state = "0-4"
-	},
-/obj/machinery/power/data_terminal,
-/turf/simulated/floor/grey,
-/area/space)
 "kyY" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -46947,7 +46909,7 @@
 	doants = 0;
 	dropped_item = /obj/item/reagent_containers/food/snacks/soup/superchili;
 	food_effects = list("food_warm","food_fireburp","food_sweaty","food_deep_burp");
-	initial_reagents = list("capsaicin" = 50,"refried_beans" = 40,"histamine" = 30);
+	initial_reagents = list("capsaicin"=50,"refried_beans"=40,"histamine"=30);
 	initial_volume = 120;
 	name = "forbidden chili";
 	pixel_x = -7;
@@ -47503,7 +47465,7 @@
 "xUd" = (
 /obj/table/wood/auto,
 /obj/displaycase{
-	displayed = new /obj/item/captaingun;
+	displayed = new/obj/item/captaingun;
 	pixel_y = 6
 	},
 /obj/machinery/power/apc/autoname_north,
@@ -76607,7 +76569,7 @@ bzS
 bzS
 bzS
 bzS
-kyE
+bzS
 bzS
 rJg
 gbL
@@ -76909,7 +76871,7 @@ bzS
 bzS
 bzS
 bzS
-ieT
+bzS
 bzS
 rJg
 dqY
