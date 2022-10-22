@@ -725,6 +725,8 @@
 		else
 			return get_step(src.loc, pick(alldirs))
 
+/mob/living/intangible/blob_overmind/ai/start_here/sudo //treated as admin blob. Does whatever the fuck it wants
+
 #undef STATE_UNDER_ATTACK
 #undef STATE_FORTIFYING
 #undef STATE_DO_LIPIDS
