@@ -228,7 +228,7 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (client)
+		if (client && !(istype(src, /mob/living/intangible/blob_overmind/ai/start_here/sudo)))
 			return
 		if (!blobs.len && state != 1)
 			return
