@@ -9,10 +9,8 @@ proc/is_music_playing()
 		var/list/sounds = C.SoundQuery()
 		for(var/sound/S in sounds)
 			if(S.channel == SOUNDCHANNEL_RADIO || S.channel >= SOUNDCHANNEL_ADMIN_LOW && S.channel <= SOUNDCHANNEL_ADMIN_HIGH)
-				message_admins("Music is playing, sound: [S] [S.len]")
 				// extend the cooldown by the length of this sound so we don't need to check SoundQuery next time
-				// Note that this is technically incorrect. We want REMAINING length of the sound, not the total length but BYOND doesn't tell us that info.
-				EXTEND_COOLDOWN(global, "music", S.len)
+				EXTEND_COOLDOWN(global, "music", S.len - S.offset)
 				. = TRUE
 				break
 
