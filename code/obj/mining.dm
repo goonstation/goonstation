@@ -2301,7 +2301,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
 		mailgroup = MGD_MINING
@@ -2334,7 +2334,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
 			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_MECHANIC
+				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
