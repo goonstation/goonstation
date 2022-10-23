@@ -17593,7 +17593,6 @@
 	pixel_x = 6
 	},
 /obj/machinery/light_switch/north{
-	otherarea = null;
 	pixel_x = -8
 	},
 /turf/simulated/floor/redblack{
