@@ -238,6 +238,9 @@ mob/new_player
 		if (JOB.requires_whitelist)
 			if (!(src.ckey in NT))
 				return 0
+		if (JOB.mentor_only)
+			if (!(src.ckey in mentors))
+				return 0
 		if (JOB.needs_college && !src.has_medal("Unlike the director, I went to college"))
 			return 0
 		if (JOB.rounds_needed_to_play && (src.client && src.client.player))
@@ -277,19 +280,13 @@ mob/new_player
 				global.latespawning.unlock()
 				return
 
+			// Stop adding non game mode logic BEFORE game modes!
 			if(istype(ticker.mode, /datum/game_mode/football))
 				var/datum/game_mode/football/F = ticker.mode
 				F.init_player(character, 0, 1)
 			else if(istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
 				mode.add_latejoin_to_team(character.mind, JOB)
-			else if (istype(JOB, /datum/job))
-				var/datum/job/job = JOB
-				if (job.special_spawn_location)
-					if (!istype(job.special_spawn_location, /turf))
-						job.special_spawn_location = pick_landmark(job.special_spawn_location)
-					if (job.special_spawn_location != null)
-						character.set_loc(job.special_spawn_location)
 			else if(istype(ticker.mode, /datum/game_mode/battle_royale))
 				var/datum/game_mode/battle_royale/battlemode = ticker.mode
 				if (current_state < GAME_STATE_FINISHED)
@@ -306,6 +303,12 @@ mob/new_player
 				battlemode.living_battlers.Add(character.mind)
 				DEBUG_MESSAGE("Adding a new battler")
 				battlemode.battle_shuttle_spawn(character.mind)
+			else if (JOB.special_spawn_location)
+				var/location = JOB.special_spawn_location
+				if (!istype(JOB.special_spawn_location, /turf))
+					location = pick_landmark(JOB.special_spawn_location)
+				if (!isnull(location))
+					character.set_loc(location)
 			else if (character.traitHolder && character.traitHolder.hasTrait("immigrant"))
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
@@ -596,6 +599,11 @@ a.latejoin-card:hover {
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
+		if(force_random_names)
+			src.client.preferences.be_random_name = 1
+		if(force_random_looks)
+			src.client.preferences.be_random_look = 1
+
 		var/mob/new_character = null
 		if (J)
 			new_character = new J.mob_type(src.loc, client.preferences.AH, client.preferences)
@@ -846,7 +854,7 @@ a.latejoin-card:hover {
 		if (src.client.has_login_notice_pending(TRUE))
 			return
 
-		if(tgui_alert(src, "Are you sure you wish to observe? You will not be able to play this round!", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
+		if(tgui_alert(src, "By choosing to observe the round, your DNR will be set and you forfeit the chance to participate. Are you sure you wish to do this?", "Player Setup", list("Yes", "No"), 30 SECONDS) == "Yes")
 			if(!src.client) return
 			var/mob/dead/observer/observer = new(src)
 			if (src.client && src.client.using_antag_token) //ZeWaka: Fix for null.using_antag_token
@@ -871,7 +879,7 @@ a.latejoin-card:hover {
 
 			if(!src.mind) src.mind = new(src)
 
-			//src.mind.dnr=1
+			src.mind.dnr = 1
 			src.mind.joined_observer=1
 			src.mind.transfer_to(observer)
 			if(observer?.client)

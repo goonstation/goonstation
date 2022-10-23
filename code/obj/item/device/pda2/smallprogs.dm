@@ -548,7 +548,7 @@ Code:
 //PDA program for displaying engine data and laser output. By FishDance
 //Note: Could display weird results if there is more than one engine or PTL around.
 /datum/computer/file/pda_program/power_checker
-	name = "Power Checker 0.14"
+	name = "Power Checker 0.15"
 	size = 4
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
@@ -612,6 +612,25 @@ Code:
 					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA3?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3.air_contents), 0.1) : "ERR"] kPa<BR>"
 					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
+					. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/catalytic_generator]))
+			var/generator_index = 1
+			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
+				if(C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
+					if(C.anode_unit?.contained_rod)
+						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
+						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Anode Rod Installed<BR>"
+					if(C.cathode_unit?.contained_rod)
+						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
+						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Cathode Rod Installed<BR>"
 					. += "<BR>"
 
 		if(length(by_type[/obj/machinery/power/vent_capture]))
@@ -768,7 +787,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -801,7 +820,7 @@ Code:
 
 		src.post_signal(signal)
 
-		if(isliving(usr))
+		if(isliving(usr) && !remote)
 			playsound(src.master, 'sound/items/security_alert.ogg', 60)
 			var/map_text = null
 			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)

@@ -1718,7 +1718,8 @@ datum/preferences
 			character.bioHolder.age = age
 			character.bioHolder.mobAppearance.CopyOther(AH)
 			character.bioHolder.mobAppearance.gender = src.gender
-			character.bioHolder.mobAppearance.flavor_text = src.flavor_text
+			if (!src.be_random_name)
+				character.bioHolder.mobAppearance.flavor_text = src.flavor_text
 
 		//Also I think stuff other than human mobs can call this proc jesus christ
 		if (ishuman(character))

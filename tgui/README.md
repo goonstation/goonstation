@@ -206,6 +206,7 @@ pull and render.
 window elements, like the titlebar, buttons, resize handlers. Calls
 `routes.js` to decide which component to render.
 - `/packages/tgui/styles/main.scss` - CSS entry point.
+**Important:** If you want to add a .scss file for an interface, you must import it here!
 - `/packages/tgui/styles/functions.scss` - Useful SASS functions.
 Stuff like `lighten`, `darken`, `luminance` are defined here.
 - `/packages/tgui/styles/atomic` - Atomic CSS classes.

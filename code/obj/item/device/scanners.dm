@@ -148,7 +148,7 @@ that cannot be itched
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
 	mats = 3
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
@@ -297,7 +297,7 @@ that cannot be itched
 	var/organ_upgrade = 0
 	var/organ_scan = 0
 	var/image/scanner_status
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -440,7 +440,7 @@ that cannot be itched
 	m_amt = 200
 	mats = 5
 	var/scan_results = null
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M, mob/user)

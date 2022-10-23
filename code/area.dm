@@ -701,6 +701,9 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "John's Bus Diner Dock"
 	icon_state = "shuttle"
 
+/area/shuttle/john/diner/nadir
+	filler_turf = "/turf/space/fluid/acid/clear"
+
 /area/shuttle/john/owlery
 	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
@@ -740,7 +743,6 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/recovery_shuttle
 	name = "Recovery Shuttle Dock"
 	icon_state = "shuttle2"
-	name = "Recovery Shuttle"
 
 ABSTRACT_TYPE(/area/shuttle/merchant_shuttle)
 /area/shuttle/merchant_shuttle
@@ -1161,7 +1163,7 @@ ABSTRACT_TYPE(/area/adventure)
 #ifdef SUBMARINE_MAP
 	force_fullbright = 1
 #endif
-#ifdef MAP_OVERRIDE_OSHAN
+#ifdef UNDERWATER_MAP
 	requires_power = FALSE
 #endif
 
@@ -1366,6 +1368,11 @@ ABSTRACT_TYPE(/area/prefab)
 /area/prefab/art_workshop
 	name = "The Pastel Space Workshop"
 	icon_state = "purple"
+
+/area/prefab/adrift_cargorouter
+	name = "Adrift Cargo Router"
+	icon_state = "yellow"
+
 // Sealab trench areas //
 
 /area/shuttle/sea_elevator_room
@@ -3300,6 +3307,15 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "yellow"
 	requires_power = 0
 	luminosity = 1
+
+// Salvager Spawn
+/area/salvager
+	name = "Salvager Vessel Magpie"
+	icon_state = "red"
+	sanctuary = 1
+
+/area/salvager/lower
+	icon_state = "orange"
 
 /// Nukeops spawn station
 /area/syndicate_station

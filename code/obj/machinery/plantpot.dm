@@ -184,7 +184,7 @@
 
 	crop
 		New()
-			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/crop/soy)
+			spawn_plant = pick(/datum/plant/crop/cotton, /datum/plant/crop/oat, /datum/plant/crop/peanut, /datum/plant/veg/soy)
 			..()
 
 	tree
@@ -1795,14 +1795,15 @@ proc/HYPmutationcheck_full(var/datum/plant/growing,var/datum/plantgenes/DNA,var/
 	// have to appear, and if all of them are matchedit gives the green light to go ahead and
 	// add it - though there's still a % chance involved after this check passes which is handled
 	// where this check is called, usually.
-	if(!HYPmutationcheck_sub(MUT.GTrange[1],MUT.GTrange[2],DNA.growtime)) return 0
-	if(!HYPmutationcheck_sub(MUT.HTrange[1],MUT.HTrange[2],DNA.harvtime)) return 0
-	if(!HYPmutationcheck_sub(MUT.HVrange[1],MUT.HVrange[2],DNA.harvests)) return 0
-	if(!HYPmutationcheck_sub(MUT.CZrange[1],MUT.CZrange[2],DNA.cropsize)) return 0
-	if(!HYPmutationcheck_sub(MUT.PTrange[1],MUT.PTrange[2],DNA.potency)) return 0
-	if(!HYPmutationcheck_sub(MUT.ENrange[1],MUT.ENrange[2],DNA.endurance)) return 0
-	if(MUT.commut && !HYPCheckCommut(DNA,MUT.commut)) return 0
-	return 1
+	if(!HYPmutationcheck_sub(MUT.GTrange[1],MUT.GTrange[2],DNA.growtime)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.HTrange[1],MUT.HTrange[2],DNA.harvtime)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.HVrange[1],MUT.HVrange[2],DNA.harvests)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.CZrange[1],MUT.CZrange[2],DNA.cropsize)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.PTrange[1],MUT.PTrange[2],DNA.potency)) return FALSE
+	if(!HYPmutationcheck_sub(MUT.ENrange[1],MUT.ENrange[2],DNA.endurance)) return FALSE
+	if(MUT.commut && !HYPCheckCommut(DNA,MUT.commut)) return FALSE
+	if(MUT.required_mutation && !istype(DNA.mutation, MUT.required_mutation)) return FALSE
+	return TRUE
 
 proc/HYPmutationcheck_sub(var/lowerbound,var/upperbound,var/checkedvariable)
 	// Part of mutationcheck_full. Just a simple mathematical check to keep the prior proc

@@ -17,6 +17,7 @@
 	var/item_grab_overlay_state = "grab_small"
 	var/can_pin = 1
 	var/dropped = 0
+	var/irresistible = 0
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
@@ -354,7 +355,9 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
-		if (is_incapacitated(src.affecting))
+		if (irresistible)
+			prob_mod = 0
+		else if (is_incapacitated(src.affecting))
 			prob_mod = 0.7
 		else
 			prob_mod = 1
@@ -729,7 +732,7 @@
 
 
 /obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
-	src.hide_attack = 1
+	src.hide_attack = ATTACK_FULLY_HIDDEN
 
 	if (..())
 		for (var/mob/O in AIviewers(user, null))
@@ -767,11 +770,10 @@
 		..()
 
 	proc/shoot()
-		if(shot)
+		if(src.shot)
 			return
-
-		shot = 1
-		if (!shot && affecting && assailant && isitem(src.loc))
+		src.shot = TRUE
+		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
@@ -785,7 +787,7 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 
 
 	New()

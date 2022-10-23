@@ -570,7 +570,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && !isAI(user))
+	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.UpdateIcon()
@@ -1601,3 +1601,8 @@ var/zapLimiter = 0
 
 	update()
 	UpdateIcon()
+
+/obj/machinery/power/apc/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

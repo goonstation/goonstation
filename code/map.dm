@@ -11,7 +11,7 @@ var/global/datum/map_settings/map_settings = null
 //id corresponds to the name of the /obj/landmark/map
 //playerPickable defines whether the map can be chosen by players when voting on a new map.
 var/global/list/mapNames = list(
-	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Clarion" = 		list("id" = "CLARION", 		"settings" = "destiny/clarion", "playerPickable" = TRUE,		"MaxPlayersAllowed" = 60),
 #ifdef RP_MODE
 	"Cogmap 1" = 		list("id" = "COGMAP", 		"settings" = "cogmap", 			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 14),
 #else
@@ -20,7 +20,7 @@ var/global/list/mapNames = list(
 	//"Construction" = list("id" = "CONSTRUCTION", "settings" = "construction"),
 	"Cogmap 1 (Old)" = 	list("id" = "COGMAP_OLD", 	"settings" = "cogmap_old"),
 	"Cogmap 2" = 		list("id" = "COGMAP2", 		"settings" = "cogmap2", 		"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
-	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
+	"Destiny" = 		list("id" = "DESTINY", 		"settings" = "destiny", 		"playerPickable" = FALSE,		"MaxPlayersAllowed" = 80),
 	"Donut 2" = 		list("id" = "DONUT2", 		"settings" = "donut2",			"playerPickable" = TRUE,	"MaxPlayersAllowed" = 80),
 	"Donut 3" = 		list("id" = "DONUT3", 		"settings" = "donut3",			"playerPickable" = TRUE, 	"MinPlayersAllowed" = 40),
 	"Horizon" = 		list("id" = "HORIZON", 		"settings" = "horizon", 		"playerPickable" = FALSE),
@@ -31,6 +31,7 @@ var/global/list/mapNames = list(
 	"1 pamgoC" = 		list("id" = "PAMGOC", 		"settings" = "pamgoc", 			"playerPickable" = FALSE),
 	"Kondaru" = 		list("id" = "KONDARU", 		"settings" = "kondaru", 		"playerPickable" = TRUE,		"MaxPlayersAllowed" = 80),
 	"Ozymandias" = 	list("id" = "OZYMANDIAS", "settings" = "ozymandias", 	"playerPickable" = FALSE, 	"MinPlayersAllowed" = 40),
+	"Nadir" = 		list("id" = "NADIR", 		"settings" = "nadir", 		"playerPickable" = TRUE,	"MaxPlayersAllowed" = 60),
 	"Bellerophon Fleet" = list("id" = "FLEET", "settings" = "fleet", "playerPickable" = FALSE),
 	//"Density" = 		list("id" = "DENSITY", 	"settings" = "density", 			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
 	"Atlas" = 			list("id" = "ATLAS", 		"settings" = "atlas", 				"playerPickable" = TRUE,				"MaxPlayersAllowed" = 30),
@@ -188,7 +189,7 @@ var/global/list/mapNames = list(
 				break
 		if (!transit_start)
 			CRASH("Unable to load escape transit landmark")
-		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z)
+		dmm_suite.read_map(file2text(transit_path), transit_start.x, transit_start.y, transit_start.z, flags=DMM_LOAD_SPACE)
 
 		var/area/shuttle/escape/transit/transit_area = locate(/area/shuttle/escape/transit)
 		transit_area.warp_dir = escape_dir
@@ -517,7 +518,6 @@ var/global/list/mapNames = list(
 		/datum/job/research/roboticist = 3,
 		/datum/job/research/scientist = 6,
 		/datum/job/research/medical_doctor = 7,
-		/datum/job/engineering/mechanic = 4,
 		/datum/job/engineering/miner = 4,
 		/datum/job/engineering/engineer = 6,
 		/datum/job/civilian/chef = 2,
@@ -908,6 +908,52 @@ var/global/list/mapNames = list(
 		/datum/job/special/random/psychiatrist = 1
 	)
 
+/datum/map_settings/nadir
+	name = "NADIR"
+	display_name = "Nadir Extraction Site"
+	goonhub_map = "https://goonhub.com/maps/nadir"
+
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+	auto_walls = TRUE
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	escape_dir = EAST
+	default_shuttle = "oshan"
+	shuttle_map_turf = /turf/space/fluid/acid
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+
+	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
+		"the courtroom" = list(/area/station/crew_quarters/courtroom),
+		"security's central staff room" = list(/area/station/security/main),
+		"the engineering staff room" = list(/area/station/engine/engineering),
+		"the medical bay's central room" = list(/area/station/medical/medbay),
+		"the east crew quarters" = list(/area/station/crew_quarters/quarters_east),
+		"the nerd dungeon" = list(/area/station/crew_quarters/arcade/dungeon),
+		"the chapel" = list(/area/station/chapel/sanctuary))
+
+	job_limits_from_landmarks = TRUE
+	job_limits_override = list(
+		/datum/job/engineering/miner = 0 //eventually, assay technicians?
+	)
+
 /datum/map_settings/wrestlemap
 	name = "WRESTLEMAP"
 	walls = /turf/simulated/wall/auto/supernorn
@@ -943,8 +989,8 @@ var/global/list/mapNames = list(
 		"outside the Ringularity" = list(/area/station/engine/inner),
 		"the courtroom" = list(/area/station/storage/warehouse),
 		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay),
-		"the security lobby" = list(/area/station/chapel/sanctuary),
-		"the chapel" = list(/area/station/security/secwing),
+		"the security lobby" = list(/area/station/security/secwing),
+		"the chapel" = list(/area/station/chapel/sanctuary),
 		"the south crew quarters" = list(/area/station/crew_quarters/quarters_south))
 
 /datum/map_settings/pod_wars

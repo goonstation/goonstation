@@ -2236,16 +2236,16 @@ datum
 
 			reaction_mob(var/mob/living/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
-				var/col = rgb(fluid_r, fluid_g, fluid_b)
 				if(!volume_passed)
 					return
 				if(method == INGEST)
 					boutput(M, "<span class='alert'>Tastes oily and unpleasant, with a weird sweet aftertaste. It's like eating children's modelling clay.</span>")
 				if(method == TOUCH)
-					boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
-					M.color = col
-					SPAWN(3 SECONDS)
-						boutput(M, "<span class='alert'>Oh god it's not coming off! You're tinted like this forever!</span>")
+					if (!ON_COOLDOWN(M, "gnesis_tint_msg", 3 SECONDS))
+						boutput(M, "<span class='notice'>It feels like you got smudged with oil paints.</span>")
+						SPAWN(3 SECONDS)
+							boutput(M, "<span class='alert'>Oh god it's not coming off!</span>")
+					M.setStatus("gnesis_tint", 3 MINUTES)
 
 			reaction_turf(var/turf/T, var/volume)
 				if (!istype(T, /turf/space))
@@ -2308,9 +2308,11 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				if (!istype(T, /turf/space))
-					if (volume >= 10)
+					if (volume >= 10 && holder.total_temperature < T0C + 180)
 						if (!locate(/obj/item/material_piece/rubber/latex) in T)
 							new /obj/item/material_piece/rubber/latex(T)
+					else
+						return TRUE
 
 		flubber
 			name = "Liquified space rubber"

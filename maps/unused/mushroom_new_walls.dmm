@@ -7637,7 +7637,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/freezer,
@@ -20499,7 +20499,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "cUl" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
@@ -23853,7 +23853,7 @@
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
 "hsp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/north{
 	dir = 8

@@ -483,6 +483,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
+			src.recipes += new /datum/cookingrecipe/zongzi(src)
 
 			src.recipes += new /datum/cookingrecipe/baguette(src)
 			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)
@@ -559,6 +560,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sushi_roll(src)
 			src.recipes += new /datum/cookingrecipe/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/porridge(src)
+			src.recipes += new /datum/cookingrecipe/ratatouille(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
 			src.recipes += new /datum/cookingrecipe/pizza_fresh(src)

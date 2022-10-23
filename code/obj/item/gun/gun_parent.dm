@@ -520,7 +520,6 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!src.canshoot())
 		return 0
 
-	src.process_ammo(user)
 	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")
 	var/dmg = user.get_brute_damage() + user.get_burn_damage()
 	src.shoot_point_blank(user, user)
