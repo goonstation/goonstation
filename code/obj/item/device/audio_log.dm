@@ -119,7 +119,7 @@
 		..()
 		if (usr.stat || usr.restrained() || usr.lying)
 			return
-		if ((usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) && istype(src.loc, /turf)))
+		if (((src in usr.contents) || (src.master in usr.contents) || in_interact_range(src, usr) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 			switch(href_list["command"])
 				if ("rec")
@@ -311,28 +311,27 @@
 		return
 
 	proc/create_name_colours(var/list/names)
-		if (!names.len)
+		if (!length(names))
 			return
 
 		var/list/unique_names = list()
-		for (var/i in 1 to names.len)
+		for (var/i in 1 to length(names))
 			if (!(names[i] in unique_names))
 				unique_names.Add(names[i])
 
 		name_colours = list()
-		if (unique_names.len == 1)
+		if (length(unique_names) == 1)
 			name_colours[unique_names[1]] = text_colour
 			return
 
 		var/list/text_rgb = hex_to_rgb_list(text_colour)
 		var/list/text_hsl = rgb2hsl(text_rgb[1], text_rgb[2], text_rgb[3])
-		var/lightness_part = 60 / (unique_names.len + 1)
+		var/lightness_part = 60 / (length(unique_names) + 1)
 
-		for (var/i in 1 to unique_names.len)
+		for (var/i in 1 to length(unique_names))
 			var/lightness = 20 + (lightness_part * i)
 			var/colour = hsl2rgb(text_hsl[1], text_hsl[2], lightness)
 			name_colours[unique_names[i]] = colour
-			message_admins("[lightness]")
 
 #undef MODE_OFF
 #undef MODE_RECORDING
