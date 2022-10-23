@@ -31807,7 +31807,7 @@
 	},
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bHj" = (
 /obj/machinery/espresso_machine,
 /obj/drink_rack/cup{
@@ -32128,13 +32128,13 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bIh" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bIn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32357,7 +32357,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bIK" = (
 /obj/machinery/conveyor_switch{
 	id = "qmin";
@@ -33078,7 +33078,7 @@
 	dir = 5
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "bKu" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -37453,9 +37453,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"bUK" = (
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/engine/elect)
 "bUL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50117,7 +50114,7 @@
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "cJA" = (
 /obj/machinery/chem_heater,
 /obj/machinery/light{
@@ -51344,7 +51341,7 @@
 	dir = 1
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "epB" = (
 /obj/cable,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -57252,7 +57249,7 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "mMJ" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue/checker,
@@ -59119,7 +59116,7 @@
 "prs" = (
 /obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor,
-/area/station/engine/elect)
+/area/station/engine/power)
 "prW" = (
 /obj/stool/chair{
 	dir = 8
@@ -59835,7 +59832,7 @@
 	dir = 8
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "qBh" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/wingrille_spawn/auto/reinforced,
@@ -60008,7 +60005,7 @@
 	tag = ""
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "qJF" = (
 /obj/table/auto,
 /obj/machinery/shieldgenerator/meteorshield,
@@ -63438,7 +63435,7 @@
 	pixel_x = -24
 	},
 /turf/simulated/floor/plating/jen,
-/area/station/engine/elect)
+/area/station/engine/power)
 "vbI" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -64153,7 +64150,7 @@
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
-/area/station/engine/elect)
+/area/station/engine/power)
 "vYg" = (
 /obj/storage/closet/fire,
 /turf/simulated/floor/plating,
@@ -109531,9 +109528,9 @@ eNy
 osF
 eNy
 bqk
-bUK
-bUK
-bUK
+bGw
+bGw
+bGw
 vXG
 bLM
 bLM
@@ -110740,8 +110737,8 @@ bDr
 eLo
 bqk
 prs
-bNn
-bNn
+rhb
+rhb
 bIJ
 bLM
 bLM
