@@ -6876,6 +6876,7 @@
 	dir = 4;
 	name = "factory pipe"
 	},
+/obj/storage/crate/furnacefuel,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "rd" = (
@@ -9423,12 +9424,12 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/southeast)
 "wF" = (
-/obj/storage/crate/furnacefuel,
 /obj/cable{
 	d1 = 1;
 	d2 = 8;
 	icon_state = "1-8"
 	},
+/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
 "wH" = (
@@ -18595,6 +18596,10 @@
 "TE" = (
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"TF" = (
+/obj/machinery/vending/jobclothing/engineering,
+/turf/simulated/floor/orangeblack,
+/area/station/engine/engineering)
 "TG" = (
 /obj/machinery/guardbot_dock,
 /obj/cable{
@@ -60353,7 +60358,7 @@ tw
 sm
 vE
 wF
-pk
+TF
 zc
 zG
 zG

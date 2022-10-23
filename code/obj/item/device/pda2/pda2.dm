@@ -258,16 +258,19 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
+		name = "Atmos PDA"
 		icon_state = "pda-a"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
 
 	engine
+		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	technical_assistant
+		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
