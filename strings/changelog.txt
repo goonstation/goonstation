@@ -1,5 +1,9 @@
 
 (t)sun oct 23 22
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
 (u)Mr. Moriarty
 (p)11448
 (e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
