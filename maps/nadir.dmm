@@ -483,11 +483,12 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "akA" = (
-/obj/disposalpipe/segment/ejection{
-	dir = 2
-	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 8;
+	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/black,
 /area/station/security/brig)
@@ -6844,6 +6845,12 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"dzx" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/station/hallway/primary/southwest)
 "dzH" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17586,6 +17593,7 @@
 	pixel_x = 6
 	},
 /obj/machinery/light_switch/north{
+	otherarea = null;
 	pixel_x = -8
 	},
 /turf/simulated/floor/redblack{
@@ -19354,6 +19362,10 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/science/teleporter)
+"jvX" = (
+/obj/disposalpipe/segment/bent/north,
+/turf/simulated/floor/redblack,
+/area/station/security/brig)
 "jwf" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
@@ -24687,6 +24699,10 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
+"lRz" = (
+/obj/disposalpipe/segment/bent/south,
+/turf/simulated/floor/redblack,
+/area/station/security/brig)
 "lRC" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
@@ -28700,6 +28716,7 @@
 /obj/stool/chair{
 	dir = 8
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -28852,6 +28869,10 @@
 	dir = 10
 	},
 /area/station/crew_quarters/cafeteria)
+"nSu" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/security/interrogation)
 "nTf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/barber_shop)
@@ -33798,6 +33819,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -36656,9 +36678,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/turretid{
-	pixel_x = 26
-	},
 /obj/machinery/computer3/terminal/zeta{
 	setup_os_string = "ZETA_MAINFRAME"
 	},
@@ -36672,6 +36691,10 @@
 	name = "autoname - SS13";
 	pixel_x = -10;
 	tag = ""
+	},
+/obj/machinery/turretid{
+	pixel_x = 24;
+	req_access_txt = "19"
 	},
 /turf/simulated/floor/greenblack{
 	dir = 1
@@ -37860,6 +37883,13 @@
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
+"sIP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/switch_junction/biofilter/right/east,
+/turf/simulated/floor/black,
+/area/station/hallway/primary/southwest)
 "sIS" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/belt/utility,
@@ -38763,6 +38793,7 @@
 /obj/stool/chair/red{
 	dir = 4
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -42507,6 +42538,7 @@
 	dir = 8
 	},
 /obj/machinery/light/small/floor/netural,
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -44596,7 +44628,7 @@
 	name = "Northeast Breach Hull"
 	})
 "whG" = (
-/obj/disposalpipe/segment/horizontal,
+/obj/disposalpipe/junction/left/east,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -45281,6 +45313,16 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/ne,
 /area/station/crew_quarters/quarters_east)
+"wEH" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 4
+	},
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/black,
+/area/station/security/brig)
 "wEP" = (
 /obj/machinery/light/small/warm/very,
 /turf/simulated/floor/carpet/grime,
@@ -46370,6 +46412,16 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
+"xhv" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/ejection{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/black,
+/area/station/security/brig)
 "xhO" = (
 /obj/machinery/flasher/portable,
 /obj/machinery/light{
@@ -84892,8 +84944,8 @@ jwF
 jBz
 rsP
 wio
-hcm
-jhM
+wEf
+sIP
 rhJ
 vvO
 iZb
@@ -88531,8 +88583,8 @@ fVU
 kQi
 mHH
 una
-lZo
-aBu
+xhv
+hgd
 knQ
 rFT
 wCF
@@ -88826,15 +88878,15 @@ hXw
 nAx
 jeD
 whG
-mpw
-mHH
+dzx
+nSu
 nMP
 uWN
 qDV
-mHH
+nSu
 tbW
-lZo
-aBu
+wEH
+jvX
 gew
 dbc
 tPi
@@ -89136,7 +89188,7 @@ uus
 fJt
 pSd
 akA
-hgd
+lRz
 pTY
 snL
 jmO
