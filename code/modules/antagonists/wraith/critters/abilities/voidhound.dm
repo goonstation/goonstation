@@ -58,8 +58,8 @@
 				boutput(V, "<span class='notice'>We leap out of the shadows</span>")
 
 		if (istype(M.loc,/turf))
-			playsound(M.loc, "sound/voice/animal/werewolf_attack2.ogg", 50, 1, 0, 1.4)
-			playsound(M.loc, "sound/effects/swoosh.ogg", 50, 1)
+			playsound(M.loc, 'sound/voice/animal/werewolf_attack2.ogg', 50, 1, 0, 1.4)
+			playsound(M.loc, 'sound/effects/swoosh.ogg', 50, 1)
 
 			var/prevLayer = M.layer
 			M.layer = EFFECTS_LAYER_BASE
@@ -70,7 +70,7 @@
 				//get the mobs on the next step in the pounce, throw em to the side if they are standing.
 				var/turf/next_step = get_step(M, M.dir)
 				for (var/mob/A in next_step)
-					playsound(M.loc, "sound/impact_sounds/Generic_Hit_3.ogg", 50, 1)
+					playsound(M.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
 					A.setStatus("weakened", 3 SECONDS)
 				step(M, M.dir)
 				if(i < jump_tiles / 2)

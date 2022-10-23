@@ -2333,8 +2333,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 				src.mailgroup = MGD_MEDRESEACH
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
-			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))

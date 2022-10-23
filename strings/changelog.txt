@@ -1,5 +1,17 @@
 
 (t)sun oct 23 22
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
+(u)Mr. Moriarty
+(p)11448
+(e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
+(u)Ikea
+(p)11015
+(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping

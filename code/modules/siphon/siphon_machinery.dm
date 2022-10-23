@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if (!istype(L))
 			return 0
 		L.visible_message("<span class='alert'><b>[L] shoves their head into [src]'s beam, ripping it off in the matter stream! Holy shit!</b></span>")
-		playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 		L.organHolder.drop_organ("head",src) //you've met a terrible fate
 		return 1
 
@@ -227,7 +227,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					if(src.extract_ticks > 50)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
 							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
-							playsound(src, "sound/machines/pod_alarm.ogg", 30, 1)
+							playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)
 						src.extract_overloaded = TRUE
 					else
 						src.extract_overloaded = FALSE
@@ -400,11 +400,11 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		src.mode = newmode
 		switch(newmode)
 			if("low")
-				playsound(src, "sound/machines/click.ogg", 40, 1)
+				playsound(src, 'sound/machines/click.ogg', 40, 1)
 			if("active")
-				playsound(src, "sound/machines/siphon_activate.ogg", 60, 0)
+				playsound(src, 'sound/machines/siphon_activate.ogg', 60, 0)
 			if("high")
-				playsound(src, "sound/machines/pc_process.ogg", 30, 0)
+				playsound(src, 'sound/machines/pc_process.ogg', 30, 0)
 		src.update_fx()
 
 	proc/toggle_drill(var/remote_activation)
@@ -438,7 +438,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 	proc/engage_drill()
 		if(src.toggling || src.mode != "high" || !src.powered()) return
 		src.toggling = TRUE
-		playsound(src, "sound/machines/click.ogg", 40, 1)
+		playsound(src, 'sound/machines/click.ogg', 40, 1)
 		src.icon_state = "drill-low"
 		flick("drilldrop",src)
 		SPAWN(2 SECONDS)
@@ -592,14 +592,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(iswrenchingtool(W))
 			if(!wrenched)
 				src.wrenched = TRUE
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You secure the auxiliary reinforcing bolts to the floor.")
 				src.anchored = 1
 				src.desc = src.wrenched_desc
 				return
 			else if(!maglocked && wrenched)
 				src.wrenched = FALSE
-				playsound(src.loc, "sound/items/Ratchet.ogg", 75, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 75, 1)
 				boutput(user, "You undo the auxiliary reinforcing bolts.")
 				src.anchored = 0
 				src.desc = src.regular_desc
@@ -610,13 +610,13 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		else if(isscrewingtool(W))
 			if(src.panelopen)
 				src.panelopen = FALSE
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "You close the resonator's maintenance panel.")
 				src.UpdateIcon()
 				return
 			else
 				src.panelopen = TRUE
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "You open the resonator's maintenance panel.")
 				src.UpdateIcon()
 				return
@@ -625,7 +625,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 				boutput(user,"The service panel isn't open.")
 			if(HAS_FLAG(src.status,BROKEN))
 				if(W.amount >= 3)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 40, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 40, 1)
 					boutput(user, "You replace the resonator's damaged wiring.")
 					status &= ~BROKEN
 					src.UpdateIcon()
@@ -685,14 +685,14 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 		if(catastrophic)
 			src.visible_message("<span class='alert'>[src] explodes!</span>")
 			new /obj/effects/explosion(src.loc)
-			playsound(src, "sound/effects/Explosion1.ogg", 50, 1)
+			playsound(src, 'sound/effects/Explosion1.ogg', 50, 1)
 			SPAWN(0)
 				explosion_new(src, get_turf(src), 3)
 				qdel(src)
 		else
 			var/faildesc = pick("short-circuits","malfunctions","suddenly deactivates","shorts out","shoots out sparks")
 			src.visible_message("<span class='alert'>[src] [faildesc]!</span>")
-			playsound(src, "sound/effects/shielddown2.ogg", 30, 1)
+			playsound(src, 'sound/effects/shielddown2.ogg', 30, 1)
 			if(limiter.canISpawn(/obj/effects/sparks))
 				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(get_turf(src))
