@@ -1,6 +1,6 @@
 /obj/machinery/wraith/vortex_wraith
 	name = "Summoning portal"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
 	anchored = 1
@@ -55,8 +55,15 @@
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
 			if (src.next_growth < TIME)	//Growth grants us more health, spawn range, and spawn cap
 				next_growth = TIME + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
-				if (growth == 0)
-					icon_state = "harbinger_circle"
+				switch (growth)
+					if (0)
+						icon_state = "harbinger_circle_2"
+					if (1)
+						icon_state = "harbinger_circle_3"
+					if (2)
+						icon_state = "harbinger_circle_4"
+					if (3)
+						icon_state = "harbinger_circle_5"
 				growth++
 				src._health += 10
 				src.mob_value_cap += 5

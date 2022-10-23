@@ -4,7 +4,7 @@
 /obj/machinery/wraith/runetrap
 	name = "Rune trap"
 	desc = "A strange ominous circle. You should likely tip-toe around this one."
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "rune_trap"
 	density = 0
 	anchored = 1

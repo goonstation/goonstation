@@ -1,5 +1,9 @@
 
 (t)sun oct 23 22
+(u)Ikea
+(p)11015
+(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping

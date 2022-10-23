@@ -18,6 +18,8 @@
 //Ticket writer
 //Cargo request
 //Station Namer
+//Revhead tracker
+//Head tracker
 
 //Banking
 /datum/computer/file/pda_program/banking
@@ -1342,6 +1344,119 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			src.x = T.x
 			src.y = T.y
 			src.z = T.z
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/revheadtracker
+	name = "Revolutionary Leader Locater"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive revolutionary leaders located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.head_revolutionaries
+				var/turf/Turf = get_turf(usr)
+
+				for (var/datum/mind/Mind in heads)
+					if(!istype(Mind?.current, /mob/living/carbon/human))
+						return
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind?.current) || MindTurf.z != 1)
+						return
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = get_dir(Turf, nearest_head_location)
+					distance = GET_DIST(Turf, nearest_head_location)
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/headtracker
+	name = "Nanotrasen Command Tracker"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
+
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive command members located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.get_all_heads()
+				var/turf/Turf = get_turf(usr)
+
+				for (var/datum/mind/Mind in heads)
+					if(!istype(Mind?.current, /mob/living/carbon/human))
+						return
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind?.current) || MindTurf.z != 1)
+						return
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = get_dir(Turf, nearest_head_location)
+					distance = GET_DIST(Turf, nearest_head_location)
 
 		src.master.add_fingerprint(usr)
 		src.master.updateSelfDialog()
