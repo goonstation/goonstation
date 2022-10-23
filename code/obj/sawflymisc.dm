@@ -67,6 +67,7 @@
 	stamina_cost = 20
 	stamina_crit_chance = 35
 	sound_armed = 'sound/machines/sawflyrev.ogg'
+	icon = 'icons/obj/items/sawfly.dmi'
 	icon_state = "clusterflyA"
 	icon_state_armed = "clusterflyA1"
 	payload = /mob/living/critter/robotic/sawfly/ai_controlled
