@@ -452,6 +452,7 @@
 	var/lamp_color
 
 	New()
+		. = ..()
 		lamp_color = pick("blue", "pink", "orange")
 		icon_state = "lava_lamp-[lamp_color]0"
 		icon_on = "lava_lamp-[lamp_color]1"
