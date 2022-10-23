@@ -162,6 +162,7 @@
 
 		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			using = FALSE
 			return TRUE
 
 		var/area/cur_area = get_area(owner)
