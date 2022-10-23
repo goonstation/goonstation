@@ -440,15 +440,22 @@
 /obj/item/device/light/lava_lamp
 	name = "lava lamp"
 	icon = 'icons/obj/lighting.dmi'
-	icon_state = "lava_lamp0"
-	icon_on = "lava_lamp1"
-	icon_off = "lava_lamp0"
+	icon_state = "lava_lamp-blue0"
+	icon_on = "lava_lamp-blue1"
+	icon_off = "lava_lamp-blue1"
 	w_class = W_CLASS_BULKY
 	desc = "An ancient relic from a simpler, more funky time."
 	col_r = 0.85
 	col_g = 0.45
 	col_b = 0.35
 	brightness = 0.8
+	var/lamp_color
+
+	New()
+		lamp_color = pick("blue", "pink", "orange")
+		icon_state = "lava_lamp-[lamp_color]0"
+		icon_on = "lava_lamp-[lamp_color]1"
+		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
 		playsound(src, 'sound/items/penclick.ogg', 30, 1)
