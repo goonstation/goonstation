@@ -16,6 +16,7 @@ Pipelines + Other Objects -> Pipe network
 	var/initialize_directions = 0
 	var/datum/gas_mixture/air_temporary //used when reconstructing a pipeline that broke
 	var/datum/pipeline/parent
+	var/weldable = TRUE
 	var/volume = 0
 
 /obj/machinery/atmospherics/New(var/loc, var/newdir)
@@ -86,7 +87,7 @@ Pipelines + Other Objects -> Pipe network
 	qdel(src)
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
-	if(isweldingtool(W) && user.a_intent == INTENT_HARM)
+	if(isweldingtool(W) && user.a_intent == INTENT_HARM && src.weldable)
 		if(!W:try_weld(user, 2, noisy=2))
 			return
 		SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/atmospherics/proc/itemify, list(), src.icon, src.icon_state, \

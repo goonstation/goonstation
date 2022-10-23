@@ -4,6 +4,7 @@
 	icon_state = "freezer_0"
 	density = 1
 	anchored = 1
+	weldable = FALSE
 	current_heat_capacity = 1000
 	var/pipe_direction = 1
 
@@ -105,5 +106,3 @@
 			ui.set_autoupdate(TRUE)
 			ui.open()
 
-/obj/machinery/atmospherics/unary/cold_sink/freezer/attackby(obj/item/W, mob/user)
-	return
