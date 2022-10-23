@@ -1205,9 +1205,6 @@
 "aAD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/medbay,
-/obj/drink_rack/mug{
-	pixel_y = 32
-	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
 "aAN" = (
@@ -21402,6 +21399,9 @@
 /obj/item/device/radio/headset/medical{
 	pixel_x = 8;
 	pixel_y = 3
+	},
+/obj/drink_rack/mug{
+	pixel_y = 32
 	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
