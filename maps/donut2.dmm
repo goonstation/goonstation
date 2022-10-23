@@ -20811,7 +20811,7 @@
 /area/station/engine/storage)
 "btK" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/closet/wardrobe/yellow/engineering,
+/obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21031,7 +21031,7 @@
 "buM" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/engineering/electrical,
+/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21862,11 +21862,11 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/storage/secure/closet/engineering/engineer,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},

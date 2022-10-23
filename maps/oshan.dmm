@@ -27628,6 +27628,7 @@
 /area/station/engine/storage)
 "btU" = (
 /obj/machinery/light/incandescent/warm,
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor,
 /area/station/engine/storage)
 "btV" = (

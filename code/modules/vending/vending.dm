@@ -1556,11 +1556,10 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/device/pda2, 20, cost=PAY_UNTRAINED)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/atmos, 5, cost=PAY_TRADESMAN/4)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/mechanic, 2, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/game_codebreaker, 10, cost=PAY_UNTRAINED/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/janitor, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/genetics, 5, cost=PAY_DOCTORATE/3)
-		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/engineer, 5, cost=PAY_TRADESMAN/2)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/botanist, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
@@ -2895,6 +2894,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/tourist/max_payne, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/gimmick/police, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/serpico, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/security, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/fingerless, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/swat, 4)
@@ -2957,3 +2957,43 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/medical/april_fools, 2, hidden=1)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/labcoat/medical/april_fools, 2, hidden=1)
+
+/obj/machinery/vending/jobclothing/engineering
+	name = "Engineering Apparel"
+	desc = "A vending machine that vends Engineering clothing."
+	icon_state = "engclothing"
+	icon_panel = "snack-panel"
+	icon_off = "engclothing-off"
+	icon_broken = "engclothing-broken"
+	icon_fallen = "engclothing-fallen"
+	req_access = list(access_engineering)
+
+	create_products()
+		..()
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/orange, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/yellow, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/orange, 5)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/hardhat, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/welding, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/helmet/firefighter, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/head/goggles/yellow, 1)
+		product_list += new/datum/data/vending_product(/obj/item/device/radio/headset/engineer, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/engine, 2, cost=PAY_TRADESMAN/1.5)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/technical_assistant, 2, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/device/pda2/atmos, 2, cost=PAY_TRADESMAN/2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/engineering, 2)
+		product_list += new/datum/data/vending_product(/obj/item/storage/backpack/satchel/engineering, 2)
+
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer/april_fools, 2, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic/april_fools, 2, hidden=1)

@@ -29201,6 +29201,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
+"imp" = (
+/obj/machinery/vending/jobclothing/engineering,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 9
+	},
+/area/station/engine/engineering/breakroom)
 "imq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -81692,11 +81698,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"xqn" = (
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 9
-	},
-/area/station/engine/engineering/breakroom)
 "xqq" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/arrival/corner{
@@ -150562,7 +150563,7 @@ tXI
 aXh
 wML
 wML
-xqn
+swZ
 aZl
 hai
 hai
@@ -150863,7 +150864,7 @@ mjE
 ewf
 mWJ
 wML
-swZ
+imp
 wqA
 mkB
 mTt

@@ -30976,12 +30976,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bvc" = (
-/obj/stool/chair/comfy{
-	dir = 4
-	},
-/obj/landmark/start{
-	name = "Engineer"
-	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 10
 	},
