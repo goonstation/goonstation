@@ -369,6 +369,10 @@ proc/get_angle(atom/a, atom/b)
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Cleans up data passed in from network packets for display so it doesn't mess with formatting
+/proc/tidy_net_data(var/t)
+	. = isnum(t) ? t : strip_html(t)
+
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
