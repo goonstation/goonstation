@@ -625,6 +625,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\oocban.dm"
 #include "code\modules\admin\part_modifier.dm"
 #include "code\modules\admin\particool.dm"
+#include "code\modules\admin\particool_serialization.dm"
 #include "code\modules\admin\player_options.dm"
 #include "code\modules\admin\player_panel.dm"
 #include "code\modules\admin\player_stats.dm"

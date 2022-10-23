@@ -36,7 +36,7 @@
 
 	prime()
 		var/turf/T =  get_turf(src)
-		if (T)
+		if (T && heldfly)
 			heldfly.set_loc(T)
 			heldfly.is_npc = TRUE
 			heldfly.dontdolife = FALSE
