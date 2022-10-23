@@ -285,13 +285,14 @@
 		var/list/manifest = known_devices[device_index]
 		for(var/field in manifest)
 			if(field == "Intensity")
-				var/maxintens = manifest["Maximum Intensity"]
-				intensity_sum += manifest[field]
-				minitext += "<strong>[field]</strong> &middot; [strip_html(manifest[field])][maxintens ? " / [maxintens]" : ""] "
+				var/maxintens = tidy_net_data(manifest["Maximum Intensity"])
+				if(isnum(manifest[field]))
+					intensity_sum += manifest[field]
+				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])][maxintens ? " / [maxintens]" : ""] "
 				minitext += "<A href='[topicLink("calibrate","\ref[device_index]")]'>(Calibrate)</A><br>"
 			else if(field != "INT_TARGETID" && field != "Maximum Intensity")
 				if(field == "Identifier" && manifest[field] == "SIPHON") saveforsiphon = TRUE
-				minitext += "<strong>[field]</strong> &middot; [isnum(manifest[field]) ? manifest[field] : strip_html(manifest[field])]<br>"
+				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])]<br>"
 		if(saveforsiphon)
 			mainlist += minitext
 		else
