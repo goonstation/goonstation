@@ -32,6 +32,7 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the map Atlas, no other zlevels. Boots way faster
+//#define MAP_OVERRIDE_ATLAS //if you're defining gotta_go_fast, you'll also want to override to atlas.
 
 //////////// CONVENIENCE OPTIONS FOR TESTING ETC
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
