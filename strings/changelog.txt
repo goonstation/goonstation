@@ -1,5 +1,9 @@
 
 (t)sun oct 23 22
+(u)Kubius
+(p)11541
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Widened Nadir by two tiles to improve foot traffic flow in secondary hallways.
 (u)Momoberry
 (p)10909
 (e)⚖💅🧛‍♂️|C-Balance, C-QoL, A-Gamemodes
