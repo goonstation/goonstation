@@ -1997,6 +1997,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/engdivesuit
+	name = "Engineering Diving Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1")
+	item_amounts = list(3,3,2)
+	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
 	item_paths = list("FAB-1")
