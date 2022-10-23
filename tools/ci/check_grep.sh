@@ -16,4 +16,9 @@ if grep -P 'step_[xy]' maps/**/*.dmm;	then
     st=1
 fi;
 
+if grep -P 'playsound\(([^,]*), "(sound\/[^\[]+)"' code/**/*.dm;	then
+    echo "ERROR: improper playsound call detected, please fix according to code guide."
+    st=1
+fi;
+
 exit $st
