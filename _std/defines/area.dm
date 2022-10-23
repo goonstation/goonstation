@@ -6,7 +6,7 @@
 
 #define MAPC_CAFETERIA "#90d467"
 #define MAPC_BAR "#907e47"
-#define MAPC_KITCHEN "#adb6bc"
+#define MAPC_KITCHEN "#d4d4d4"
 #define MAPC_CHAPEL "#75602d"
 #define MAPC_HYDROPONICS "#0da70d"
 #define MAPC_RANCH "#59703a"
