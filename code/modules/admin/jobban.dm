@@ -50,7 +50,7 @@
 			return TRUE
 
 	if(cache.Find("Engineering Department"))
-		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+		if(rank in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 			return TRUE
 
 	if(cache.Find("Security Department") || cache.Find("Security Officer"))

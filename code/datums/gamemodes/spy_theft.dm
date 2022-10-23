@@ -466,7 +466,6 @@
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
 	station_bounties[/obj/item/device/radio/headset/miner] = 1
-	station_bounties[/obj/item/device/radio/headset/mechanic] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2

@@ -1,4 +1,56 @@
 
+(t)sun oct 23 22
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
+(u)Mr. Moriarty
+(p)11448
+(e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
+(u)Ikea
+(p)11015
+(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
+(u)Kubius
+(p)11541
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Widened Nadir by two tiles to improve foot traffic flow in secondary hallways.
+(u)Momoberry
+(p)10909
+(e)⚖💅🧛‍♂️|C-Balance, C-QoL, A-Gamemodes
+(+)Wraiths blood writing no longer has a cooldown and costs 2 points, instead of 10.
+(t)sat oct 22 22
+(u)Sord
+(+)There is a new Engineering clothing vendor, found in most Eng storage rooms or common areas.
+(u)pali
+(+)Radio station sound playing cooldowns are now shared so you can't interrupt music with an ad etc.
+(u)Kubius
+(p)11475
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(+)Third batch of Nadir improvements, including a new tour guide, Janitor gear adjustments, and catalytic generator support in the Power Checker PDA program.
+(u)Bartimeus973
+(p)11476
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)You can now record sentences in audiologs if it is in your hand/pocket and talk into a microphone is someone is holding it close to you.
+(t)fri oct 21 22
+(u)Ikea
+(p)11374
+(e)⚖🔄💡|C-Balance, C-Rework, A-Station-Systems
+(*)The Mechanic job and their traitor items have been merged into the Engineer job, and the Engineer job has been upped to 8 slots. The contents of the mechanics locker remains the same.
+(u)MetricDuck
+(p)11506
+(e)🪲⚖🍝|C-Bug, C-Balance, A-Catering
+(+)Pizza slices sharpened with the syndicate pizza cutter can no longer be caught mid-throw.
+(u)Shiiba
+(p)11466
+(e)🔄🌱|C-Rework, A-Hydroponics
+(+)Moves bean, corn, peas and soybean to the vegetable category and cucumber to the fruit category in the seed fabricator.
+(t)thu oct 20 22
+(u)DrWolfy
+(p)11431
+(e)💅📦|C-QoL, A-Game-Objects
+(+)You can now see the destination set when examining or using a cargo transporter.
 (t)wed oct 19 22
 (u)LeahTheTech
 (p)11441

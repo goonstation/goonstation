@@ -116,7 +116,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		src.is_transceiving = TRUE
 		use_power(ARRAY_TELECOST)
-		playsound(src.loc, "sound/effects/mag_forcewall.ogg", 50, 0)
+		playsound(src.loc, 'sound/effects/mag_forcewall.ogg', 50, 0)
 		flick("beam",src.telebeam)
 		SPAWN(TRANSCEPTION_COOLDOWN)
 			src.is_transceiving = FALSE
@@ -144,13 +144,13 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
 		if (equipment_failsafe && C.charge < combined_cost)
-			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
 			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
 		else if(C.charge <= ARRAY_STARTCOST)
-			playsound(src.loc, "sound/effects/manta_alarm.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
 			src.failsafe_active = TRUE
 			src.UpdateIcon()
@@ -170,7 +170,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		else
 			combined_cost = (0.1 * C.maxcharge) + ARRAY_STARTCOST
 		if (C.charge > combined_cost)
-			playsound(src.loc, "sound/machines/shieldgen_startup.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
 			src.primed = TRUE
 			src.failsafe_active = FALSE
 			src.UpdateIcon()
@@ -389,7 +389,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 	proc/send_a_thing(var/netnumber)
 		src.is_transceiving = TRUE
-		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //outgoing cargo warning (stand clear)
+		playsound(src.loc, 'sound/effects/ship_alert_minor.ogg', 50, 0) //outgoing cargo warning (stand clear)
 		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN(0.3 SECONDS)
@@ -441,7 +441,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
-		playsound(src.loc, "sound/effects/ship_alert_minor.ogg", 50, 0) //incoming cargo warning (stand clear)
+		playsound(src.loc, 'sound/effects/ship_alert_minor.ogg', 50, 0) //incoming cargo warning (stand clear)
 		SPAWN(2 SECONDS)
 			flick("neopad_activate",src)
 			SPAWN(0.4 SECONDS)
@@ -465,7 +465,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 						transception_array.direct_queue += thing2get
 					else
 						shippingmarket.pending_crates.Add(thing2get)
-					playsound(src.loc, "sound/machines/pod_alarm.ogg", 30, 0)
+					playsound(src.loc, 'sound/machines/pod_alarm.ogg', 30, 0)
 					src.visible_message("<span class='alert'><B>[src]</B> emits an [tele_obstructed ? "obstruction" : "array status"] warning.</span>")
 				src.is_transceiving = FALSE
 
@@ -498,7 +498,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					M.visible_message("<span class='alert'><B>[M]</B>'s leg [dethflavor]!</span>")
 
 		if(limb_ripped)
-			playsound(M.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+			playsound(M.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 			M.emote("scream")
 			M.changeStatus("stunned", 5 SECONDS)
 			M.changeStatus("weakened", 5 SECONDS)
@@ -688,7 +688,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		var/list/manifest = known_pads[device_index]
 		for(var/field in manifest)
 			if(field != "INT_TARGETID")
-				minitext += "<strong>[field]</strong> &middot; [manifest[field]]<br>"
+				minitext += "<strong>[field]</strong> &middot; [tidy_net_data(manifest[field])]<br>"
 		rollingtext += minitext
 		rollingtext += "<A href='[topicLink("send","\ref[device_index]")]'>Send</A> | "
 		rollingtext += "<A href='[topicLink("receive","\ref[device_index]")]'>Receive</A><br><br>"

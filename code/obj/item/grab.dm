@@ -17,6 +17,7 @@
 	var/item_grab_overlay_state = "grab_small"
 	var/can_pin = 1
 	var/dropped = 0
+	var/irresistible = 0
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
@@ -354,7 +355,9 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
-		if (is_incapacitated(src.affecting))
+		if (irresistible)
+			prob_mod = 0
+		else if (is_incapacitated(src.affecting))
 			prob_mod = 0.7
 		else
 			prob_mod = 1

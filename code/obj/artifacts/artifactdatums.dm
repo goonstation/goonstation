@@ -73,6 +73,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
+	/// ID of the cargo tech skimming a cut of the sale
+	var/obj/item/card/id/scan = null
+	/// Bank account info of the cargo tech skimming a cut of the sale
+	var/datum/db_record/account = null
+
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100
@@ -111,8 +116,15 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	disposing()
 		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		artitype = null
+		fx_image = null
 		holder = null
-		..()
+		faults = null
+		fault_types = null
+		triggers = null
+		scan = null
+		account = null
+		. = ..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)

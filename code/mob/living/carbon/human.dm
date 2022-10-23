@@ -3448,3 +3448,14 @@
 		. = id?.pronouns
 	if(isnull(.))
 		return ..()
+
+/mob/living/carbon/human/hear_talk(mob/M, text, real_name, lang_id) //Allows stuff in your hands/pockets/belt to pickup voice from other people
+	var/mob/self = src
+	if(M != self)	//So we dont hear ourselves twice
+		src.l_store?.hear_talk(M, text, real_name, lang_id)
+		src.r_store?.hear_talk(M, text, real_name, lang_id)
+		src.belt?.hear_talk(M, text, real_name, lang_id)
+		src.r_hand?.hear_talk(M, text, real_name, lang_id)
+		src.l_hand?.hear_talk(M, text, real_name, lang_id)
+	. = ..()
+
