@@ -298,7 +298,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		maxNum = 1
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //also sneakily contains diner and siphon shaft cover
-		prefabSizeX = 46
+		prefabSizeX = 47
 		prefabSizeY = 41
 #endif
 
