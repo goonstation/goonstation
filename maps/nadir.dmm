@@ -40944,7 +40944,7 @@
 	pixel_y = 32
 	},
 /turf/simulated/floor/blue/checker,
-/area/station/crew_quarters/quarters_west)
+/area/station/crew_quarters/pool)
 "uib" = (
 /obj/machinery/sim/vr_bed{
 	name = "VR simulation pod";
