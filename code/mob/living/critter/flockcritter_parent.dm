@@ -136,8 +136,10 @@
 	src.flock.removeDrone(src)
 
 /mob/living/critter/flock/projCanHit(datum/projectile/P)
-	if(istype(P, /datum/projectile/energy_bolt/flockdrone))
+	if (istype(P, /datum/projectile/energy_bolt/flockdrone))
 		return FALSE
+	if (!isalive(src)) //we cant_lie but still want to have projectiles act as if we are lying when dead
+		return prob(P.hit_ground_chance)
 	return ..()
 
 /mob/living/critter/flock/bullet_act(var/obj/projectile/P)
@@ -167,7 +169,7 @@
 
 	..(message) // caw at the non-drones
 
-	if (involuntary || message == "" || stat)
+	if (message == "" || stat)
 		return
 	if (dd_hasprefix(message, "*"))
 		return
@@ -175,9 +177,7 @@
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	message = prefixAndMessage[2]
 
-	if(!src.is_npc)
-		message = gradientText("#3cb5a3", "#124e43", message)
-	flock_speak(src, message, src.flock)
+	flock_speak(src, message, src.flock, involuntary)
 
 /mob/living/critter/flock/understands_language(var/langname)
 	if (langname == say_language || langname == "feather" || langname == "english")
@@ -241,7 +241,9 @@
 	src.update_health_icon()
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
-	src.flock?.removeDrone(src)
+	if (src.flock)
+		src.flock.deaths++
+		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()
@@ -512,14 +514,14 @@
 		if (istype(target, /mob/living/critter/flock))
 			var/mob/living/critter/flock/flockcritter = target
 			var/health_given = min(min(F.resources, FLOCK_REPAIR_COST) * flockcritter.repair_per_resource, clamp(1 - flockcritter.get_health_percentage(), 0, 1) * (flockcritter.health_brute + flockcritter.health_burn))
+			if(health_given)
+				var/datum/healthHolder/brute = flockcritter.healthlist["brute"]
+				var/brute_weight = min((brute.value > 0 ? brute.maximum_value - brute.value : brute.maximum_value + abs(brute.value)) / health_given, 1)
+				var/burn_weight = 1 - brute_weight
 
-			var/datum/healthHolder/brute = flockcritter.healthlist["brute"]
-			var/brute_weight = min((brute.value > 0 ? brute.maximum_value - brute.value : brute.maximum_value + abs(brute.value)) / health_given, 1)
-			var/burn_weight = 1 - brute_weight
-
-			flockcritter.HealDamage("All", health_given * brute_weight, health_given * burn_weight)
-			F.pay_resources(ceil(health_given / flockcritter.repair_per_resource))
-			keep_repairing = flockcritter.get_health_percentage() < 1
+				flockcritter.HealDamage("All", health_given * brute_weight, health_given * burn_weight)
+				F.pay_resources(ceil(health_given / flockcritter.repair_per_resource))
+				keep_repairing = flockcritter.get_health_percentage() < 1
 			if (flockcritter.is_npc)
 				flockcritter.ai.interrupt()
 		else if (istype(target, /obj/flock_structure))

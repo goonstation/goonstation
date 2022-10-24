@@ -6105,7 +6105,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "nN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},

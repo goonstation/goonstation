@@ -83,7 +83,8 @@
 "in" = (
 /obj/machinery/door/airlock/pyro/security{
 	density = 0;
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle,
@@ -295,13 +296,15 @@
 /area/shuttle/escape/centcom)
 "rW" = (
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "sU" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -395,7 +398,8 @@
 /area/centcom/outside)
 "xT" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,

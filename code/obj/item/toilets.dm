@@ -38,7 +38,7 @@ TOILET
 
 		if (ishuman(G.affecting))
 			var/mob/living/carbon/human/H = G.affecting
-			if (H.head == null)
+			if (!H.organHolder?.head)
 				user.visible_message("<span class='notice'>[user] fruitlessly tries to dunk [G.affecting]'s headless body into the toilet.</span>", "<span class='notice'>You struggle trying to swirlie [G.affecting] but they dont have a head! You feel silly for even attempting it.</span>")
 				return
 			else

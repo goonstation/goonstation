@@ -496,14 +496,14 @@ file_save - Save file to local disk."}
 				var/reply_id = signal.data["netid"]
 
 				if(src.ping_filter == null || findtext(lowertext(reply_device), src.ping_filter))
-					src.print_text("<b>P:</b> \[[reply_id]]-TYPE: [reply_device]")
+					src.print_text("<b>P:</b> \[[strip_html(reply_id)]]-TYPE: [strip_html(reply_device)]")
 
 			//oh, somebody trying to connect!
 			else if(signal.data["command"] == "term_connect" && !src.serv_id)
 				if(!attempt_id && signal.data["sender"] && src.auto_accept)
 					src.serv_id = signal.data["sender"]
 					src.disconnect_wait = -1
-					src.print_text("Connection established to [serv_id]!")
+					src.print_text("Connection established to [strip_html(serv_id)]!")
 					//well okay but now they need to know we've accepted!
 					if(signal.data["data"] != "noreply")
 						var/datum/signal/termsignal = get_free_signal()
@@ -525,7 +525,7 @@ file_save - Save file to local disk."}
 		if(signal.data["sender"] == src.serv_id)
 			switch(lowertext(signal.data["command"]))
 				if("term_message")
-					var/new_message = signal.data["data"]
+					var/new_message = strip_html(signal.data["data"])
 					if(!new_message)
 						return
 

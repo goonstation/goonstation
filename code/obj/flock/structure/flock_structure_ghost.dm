@@ -13,7 +13,7 @@
 	return {"<span class='bold'>Construction Percentage:</span> [!src.goal == 0 ? round((src.currentmats/src.goal)*100) : 0]%
 	<br><span class='bold'>Construction Progress:</span> [currentmats] materials added, [goal] needed"}
 
-/obj/flock_structure/ghost/New(atom/location, obj/flock_structure/building = null, datum/flock/F = null, goal = 0)
+/obj/flock_structure/ghost/New(atom/location, datum/flock/F, obj/flock_structure/building = null, goal = 0)
 	..(location, F)
 	START_TRACKING
 	if(building)
@@ -101,6 +101,7 @@
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
 		new building(get_turf(src), src.flock)
+		src.flock?.structures_made++
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()

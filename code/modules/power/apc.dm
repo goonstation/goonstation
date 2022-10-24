@@ -194,6 +194,17 @@ var/zapLimiter = 0
 	terminal = null
 	..()
 
+/obj/machinery/power/apc/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	qdel(src.terminal)
+	if(src.area?.area_apc == src)
+		src.area.area_apc = null
+	src.area = null
+
+/obj/machinery/power/apc/was_built_from_frame(mob/user, newly_built)
+	. = ..()
+	src.New()
+
 /obj/machinery/power/apc/examine(mob/user)
 	. = ..()
 
@@ -570,7 +581,7 @@ var/zapLimiter = 0
 
 	interact_particle(user,src)
 
-	if(opened && !isAI(user))
+	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)
 			user.put_in_hand_or_drop(cell)
 			cell.UpdateIcon()
@@ -1601,3 +1612,8 @@ var/zapLimiter = 0
 
 	update()
 	UpdateIcon()
+
+/obj/machinery/power/apc/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

@@ -14839,7 +14839,7 @@
 /turf/unsimulated/grasstodirt,
 /area/crypt/graveyard)
 "rNG" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/unsimulated/floor/delivery,
 /area/crater/biodome/research)
 "rNL" = (
