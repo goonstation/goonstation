@@ -4367,10 +4367,10 @@
 /turf/simulated/floor/black,
 /area/station/engine/engineering)
 "cew" = (
-/obj/decal/tile_edge/floorguide/arrow_e{
-	dir = 1
-	},
 /obj/disposalpipe/segment/bent/north,
+/obj/decal/tile_edge/floorguide/arrow_e{
+	dir = 8
+	},
 /turf/simulated/floor/redblack/corner{
 	dir = 4
 	},
@@ -16604,8 +16604,9 @@
 	name = "Diplomatic Quarters"
 	})
 "ieC" = (
-/obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4;
+	req_access = null
 	},
 /obj/access_spawn/security,
 /obj/cable{
@@ -21017,12 +21018,12 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
-/obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper{
 	icon_state = "index_card";
 	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
 	name = "printed card";
-	pixel_y = 9
+	pixel_y = 13;
+	pixel_x = -4
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -35061,12 +35062,12 @@
 /obj/table/reinforced/auto,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
-/obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
+	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
 	name = "printed card";
-	pixel_y = 9
+	pixel_y = 13;
+	pixel_x = 4
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -47870,6 +47871,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "xTD" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 8;
+	pixel_x = 8
+	},
 /turf/simulated/floor/sanitary,
 /area/station/security/hos)
 "xTI" = (
@@ -82805,9 +82810,9 @@ lZN
 eMy
 lZN
 mKo
-mKo
+qwy
 ieC
-mKo
+qwy
 mKo
 qwy
 whY
