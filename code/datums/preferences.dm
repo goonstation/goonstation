@@ -503,7 +503,7 @@ datum/preferences
 				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
 
 				if (new_age)
-					src.age = new_age
+					src.age = clamp(round(text2num(new_age)), 20, 80)
 					src.profile_modified = TRUE
 
 					return TRUE
@@ -527,7 +527,7 @@ datum/preferences
 				else
 					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
 					if (new_pin)
-						src.pin = new_pin
+						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
