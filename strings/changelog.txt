@@ -1,5 +1,9 @@
 
 (t)mon oct 24 22
+(u)Kubius
+(p)11482
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added two new trench prefabs to explore, a Martian remnant for all underwater maps and a Nadir-exclusive piece of history.
 (u)Mr. Moriarty
 (p)11412
 (e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
