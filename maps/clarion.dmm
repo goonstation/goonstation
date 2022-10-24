@@ -2300,6 +2300,11 @@
 	pixel_y = -24
 	},
 /obj/machinery/power/apc/autoname_west,
+/obj/cable{
+	d2 = 4;
+	dir = 0;
+	icon_state = "0-4"
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "afe" = (
@@ -36169,6 +36174,15 @@
 	dir = 1
 	},
 /area/station/security/main)
+"bRo" = (
+/obj/machinery/light_switch/north{
+	pixel_y = 28
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/market)
 "bRG" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -40116,6 +40130,13 @@
 /obj/machinery/navbeacon/mule/pool_north/south,
 /turf/simulated/floor/bot/white,
 /area/station/crew_quarters/pool)
+"hzo" = (
+/obj/stool,
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/market)
 "hzt" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -47502,6 +47523,20 @@
 /obj/storage/crate/robotics_supplies,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
+"sAp" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "market_2";
+	name = "Public Market";
+	opacity = 0
+	},
+/obj/firedoor_spawn,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/crew_quarters/market)
 "sDS" = (
 /obj/machinery/door/airlock/pyro/medical/alt{
 	dir = 4;
@@ -85993,8 +86028,8 @@ gve
 jkt
 nvd
 gve
-jHx
-nVz
+bRo
+hzo
 ain
 aiN
 ajq
@@ -86250,7 +86285,7 @@ gve
 lsW
 gve
 gve
-eAZ
+sAp
 afe
 ain
 aiO
@@ -86507,7 +86542,7 @@ afI
 ada
 act
 abZ
-abZ
+aiP
 ahP
 abZ
 aiP
@@ -86764,7 +86799,7 @@ pIs
 adb
 acu
 agT
-acu
+adb
 ahQ
 acu
 adb
