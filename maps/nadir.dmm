@@ -2982,9 +2982,10 @@
 /area/station/engine/engineering)
 "bwd" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro{
+/obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "bwi" = (
@@ -37716,10 +37717,11 @@
 /area/station/medical/medbay/lobby)
 "sHt" = (
 /obj/table/reinforced/auto,
-/obj/machinery/door/firedoor/pyro{
+/obj/machinery/cashreg,
+/obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 8
 	},
-/obj/machinery/cashreg,
+/obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "sHW" = (
@@ -105092,7 +105094,7 @@ oZp
 frT
 aHy
 vaR
-wMJ
+oZp
 fhJ
 eBr
 adk
