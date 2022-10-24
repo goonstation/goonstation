@@ -39691,8 +39691,8 @@
 	pixel_x = 6
 	},
 /obj/machinery/light/lamp/black{
-	pixel_y = 7;
-	pixel_x = -5
+	pixel_y = 10;
+	pixel_x = 1
 	},
 /obj/item/pen{
 	pixel_y = -2;
