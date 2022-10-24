@@ -758,7 +758,8 @@
 
 	process()
 		. = ..()
-		if(!ON_COOLDOWN(get_turf(src), "ambient_paper_generation", 30 SECONDS))
+		var/turf/T = get_turf(src)
+		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
 			paper_left++
 			if(paper_left >= 10)
 				processing_items -= src
