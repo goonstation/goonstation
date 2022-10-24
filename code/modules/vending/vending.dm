@@ -3073,6 +3073,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_security)
 
 	create_products()
@@ -3113,6 +3115,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_medical)
 
 	create_products()
@@ -3159,6 +3163,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_engineering)
 
 	create_products()
