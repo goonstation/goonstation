@@ -1018,6 +1018,18 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"awW" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/sheet/steel{
+	amount = 5;
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "axd" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
@@ -1410,6 +1422,13 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southwest)
+"aGq" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "aGv" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -1724,6 +1743,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_east)
 "aRF" = (
@@ -2423,6 +2443,14 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
+"blT" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/southeast)
 "blV" = (
 /turf/simulated/floor/purpleblack/corner{
 	dir = 4
@@ -2949,8 +2977,13 @@
 "bwb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/microwave{
-	pixel_x = 1;
-	pixel_y = 3
+	pixel_x = 1
+	},
+/obj/item/storage/wall{
+	icon_state = "miniorange";
+	name = "Donk-Closet";
+	pixel_y = 32;
+	spawn_contents = list(/obj/item/storage/box/donkpocket_kit)
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
@@ -3189,6 +3222,14 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
+"bBu" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/wrench,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "bBO" = (
 /turf/simulated/floor/caution/corner/misc{
 	dir = 9
@@ -3299,17 +3340,8 @@
 "bEl" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger,
-/obj/item/paper{
-	info = "if the siphon nerds kick you out use the mining fab, dive suits work just fine in acid if you loom them after EVA";
-	name = "creased note";
-	pixel_x = -15;
-	pixel_y = 9
-	},
 /obj/item/device/nanoloom{
 	pixel_x = -13;
-	pixel_y = 18
-	},
-/obj/item/storage/box/donkpocket_kit{
 	pixel_y = 18
 	},
 /turf/simulated/floor/black,
@@ -3512,6 +3544,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/red,
 /area/station/crew_quarters/quarters_east)
 "bJE" = (
@@ -3722,6 +3755,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment1)
+"bQQ" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/item/spacecash/twenty{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "bQV" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "2"
@@ -4267,6 +4308,9 @@
 /obj/machinery/door/airlock/pyro/maintenance/alt,
 /obj/firedoor_spawn,
 /obj/access_spawn/maint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/black,
 /area/station/maintenance/east)
 "cdp" = (
@@ -4631,6 +4675,9 @@
 /turf/space/fluid/acid/clear,
 /area/station/hallway/secondary/exit)
 "cnM" = (
+/obj/decal/cleanable/writing/infrared{
+	words = "use gloves, dust it after"
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/east)
 "cnT" = (
@@ -5430,6 +5477,18 @@
 	dir = 1
 	},
 /area/station/medical/medbay/lobby)
+"cMh" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/item/reagent_containers/food/drinks/bottle/empty/square{
+	pixel_x = -14;
+	pixel_y = 8
+	},
+/obj/item/motherboard{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "cMy" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11921,6 +11980,14 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
+"gbs" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "gbu" = (
 /obj/table/reinforced/auto,
 /obj/item/kitchen/utensil/knife,
@@ -13449,7 +13516,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Corrosion resistance slows rate of decay<br><br>Engineering personnel are authorized to access Harmonic Siphon<br>in furtherance of generator operation and Site upkeep.";
+	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
 	name = "printed card";
 	pixel_y = 6
 	},
@@ -19311,6 +19378,7 @@
 /obj/item/storage/secure/ssafe{
 	pixel_x = 28
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/quarters_east)
 "jvJ" = (
@@ -21887,6 +21955,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "kBW" = (
@@ -24572,7 +24641,7 @@
 /obj/table/reinforced/auto,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Corrosion resistance slows rate of decay<br><br>Engineering personnel are authorized to access Harmonic Siphon<br>in furtherance of generator operation and Site upkeep.";
+	info = "ANODE PARAMETERS<br>Base efficacy percentage is conductivity x 17; energetic properties, at any concentration, confer 1.3x bonus<br><br>CATHODE PARAMETERS<br>5 Density recommended, with Hardness as close to 5 as possible<br><br>Corrosion resistance slows rate of decay<br><br>Engineering co-operates the Harmonic Siphon<br>and is authorized to use its products<br>in furtherance of generator operation and Site upkeep.";
 	name = "printed card";
 	pixel_y = 6
 	},
@@ -25689,6 +25758,12 @@
 /obj/blind_switch/area/east,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"moC" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "moJ" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /obj/machinery/light{
@@ -28702,6 +28777,14 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
+"nNV" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "nOl" = (
 /obj/machinery/atmospherics/pipe/simple/southwest,
 /turf/simulated/wall/auto/supernorn,
@@ -29756,6 +29839,7 @@
 	dir = 8;
 	pixel_x = -24
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "ovY" = (
@@ -30079,8 +30163,8 @@
 /turf/simulated/floor/black,
 /area/station/storage/eva)
 "oFg" = (
-/obj/table/reinforced/auto,
-/obj/machinery/phone/unlisted,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/black/side{
 	dir = 4
 	},
@@ -30752,6 +30836,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/quarters_east)
 "oWy" = (
@@ -32224,6 +32309,17 @@
 	dir = 8
 	},
 /area/station/medical/medbay/surgery)
+"pLd" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "2-9"
+	},
+/obj/item/pen{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "pLn" = (
 /obj/stool/chair/office/yellow,
 /obj/landmark/start{
@@ -34457,6 +34553,9 @@
 /area/station/turret_protected/Zeta)
 "qXU" = (
 /obj/reagent_dispensers/watertank/fountain,
+/obj/machinery/phone/wall{
+	pixel_y = 32
+	},
 /turf/simulated/floor,
 /area/station/crew_quarters/quarters_east)
 "qYu" = (
@@ -34967,7 +35066,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/disposalpipe/segment/vertical,
+/obj/disposalpipe/junction/left/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "rma" = (
@@ -35250,6 +35349,23 @@
 /obj/cable,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
+"rtv" = (
+/obj/table/auto,
+/obj/item/device/radio{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/decoration/ashtray{
+	butts = 3;
+	pixel_x = 8;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/mug{
+	pixel_x = 7;
+	pixel_y = -1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "rtS" = (
 /obj/machinery/firealarm{
 	dir = 8;
@@ -38419,6 +38535,19 @@
 	dir = 8
 	},
 /area/station/hallway/primary/southeast)
+"sUL" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/table/auto,
+/obj/item/paper/blueprint{
+	desc = "A blueprint showing detailed plans for some sort of subterranean structure. It seems to be unusually lacking in labeling.";
+	name = "dusty blueprint";
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "sUR" = (
 /obj/storage/crate/freezer{
 	name = "Freezer - Spare Parts"
@@ -40587,6 +40716,13 @@
 /area/station/crew_quarters/kitchen)
 "tTK" = (
 /obj/machinery/recharge_station,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "tTR" = (
@@ -42160,6 +42296,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/carpet/red/fancy/edge/west,
 /area/station/crew_quarters/quarters_east)
 "uMd" = (
@@ -42317,6 +42454,13 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
+"uPs" = (
+/obj/disposalpipe/segment/horizontal,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "uPA" = (
 /obj/machinery/light/incandescent/netural,
 /obj/machinery/shieldgenerator/energy_shield{
@@ -43840,6 +43984,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quarters_east)
 "vHX" = (
@@ -43928,6 +44073,16 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/northwest)
+"vKd" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/obj/item/storage/secure/ssafe/loot{
+	pixel_y = 26
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "vKn" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
@@ -44686,13 +44841,6 @@
 	icon_state = "2-8"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "wjM" = (
@@ -44776,6 +44924,15 @@
 	dir = 1
 	},
 /area/station/turret_protected/ai)
+"wmP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "wmR" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -102458,12 +102615,12 @@ cAs
 vBq
 cAs
 cAs
-aLz
-qTS
+wmP
+uPs
 ccu
-gie
-gie
-gie
+gbs
+bQQ
+rtv
 sXH
 yiB
 sVX
@@ -102763,9 +102920,9 @@ iIi
 iNo
 rfO
 cnM
-gie
-gie
-gie
+aGq
+pLd
+nNV
 sXH
 yiB
 vEo
@@ -103065,11 +103222,11 @@ oZp
 iXV
 oZp
 oZp
-xWr
-gie
-gie
+sUL
+moC
+bBu
 sXH
-yiB
+blT
 vEo
 iPJ
 rZb
@@ -103367,9 +103524,9 @@ tvR
 ixW
 oNJ
 oZp
-gie
-gie
-gie
+vKd
+cMh
+awW
 sXH
 sXH
 rLM
