@@ -199,7 +199,7 @@
 			boutput(owner, "<span class='alert'>You can't start in space!</span>")
 			return
 
-		if (!isadmin(owner) || !istype(owner, /mob/living/intangible/blob_overmind/ai/start_here/sudo)) //admins can spawn wherever. So can AI blobs if we tell them to.
+		if (!(isadmin(owner) || istype(owner, /mob/living/intangible/blob_overmind/ai/start_here/sudo))) //admins can spawn wherever. So can AI blobs if we tell them to.
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
 				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
