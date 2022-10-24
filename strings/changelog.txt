@@ -1,5 +1,8 @@
 
 (t)mon oct 24 22
+(u)Sord
+(+)Jobs with clothing vendors now have less clothing in their secure lockers.
+(+)This will be the standard going forward for any jobs that receive clothing vendors.
 (u)Kubius
 (p)11482
 (e)🆕🗺|C-Feature, A-Mapping
