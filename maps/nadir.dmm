@@ -24297,6 +24297,7 @@
 	})
 "lKz" = (
 /obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
 	req_access = list(26)
 	},
 /obj/item/clothing/suit/space/diving/civilian{
@@ -32387,6 +32388,7 @@
 	})
 "pRQ" = (
 /obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
 	req_access = list(26)
 	},
 /obj/item/clothing/suit/space/diving/civilian{
@@ -39080,8 +39082,23 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "tja" = (
-/obj/storage/closet,
 /obj/machinery/light/small/warm/very,
+/obj/storage/secure/closet/immersion{
+	name = "Maintenance Immersion Suit Vault";
+	req_access = list(12)
+	},
+/obj/item/clothing/suit/space/diving/civilian{
+	pixel_x = -4
+	},
+/obj/item/clothing/shoes/flippers{
+	pixel_y = -12
+	},
+/obj/item/tank/air{
+	pixel_x = 5
+	},
+/obj/item/clothing/head/helmet/space/engineer/diving/civilian{
+	pixel_x = -4
+	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator_room)
 "tje" = (
@@ -39387,6 +39404,7 @@
 /area/station/hallway/primary/northeast)
 "trj" = (
 /obj/storage/secure/closet/immersion{
+	name = "Janitorial Immersion Suit Vault";
 	req_access = list(26)
 	},
 /obj/item/clothing/suit/space/diving/civilian{
@@ -39405,10 +39423,6 @@
 /obj/item/device/nanoloom{
 	pixel_x = 4;
 	pixel_y = -4
-	},
-/obj/item/nanoloom_cartridge{
-	pixel_x = 3;
-	pixel_y = -9
 	},
 /obj/machinery/light/small{
 	dir = 8;
