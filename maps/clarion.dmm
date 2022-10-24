@@ -2299,6 +2299,7 @@
 	pixel_x = -1;
 	pixel_y = -24
 	},
+/obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/market)
 "afe" = (
