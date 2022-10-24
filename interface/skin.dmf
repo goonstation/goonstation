@@ -266,7 +266,7 @@ menu "menu"
 		can-check = true
 		saved-params = "is-checked"
 	elem "set_parallax"
-		name = "&Toggle Parallax (Impacts fps)"
+		name = "&Toggle Parallax (Impacts FPS)"
 		command = "apply-parallax"
 		category = "&Effects"
 		is-checked = true

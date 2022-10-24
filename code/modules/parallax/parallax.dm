@@ -86,7 +86,7 @@
 		if (!master_turf) return
 
 		#ifdef UNDERWATER_MAP
-		if (master_turf.z != 2) // dont want space over z1 and z5
+		if (master_turf.z != Z_LEVEL_ADVENTURE) // dont want space over z1 and z5
 			background.alpha = 0
 			return
 		#else
@@ -116,8 +116,8 @@
 			// used for scroll speed, plane size
 			var/speed = speeds[P.plane-PLANE_SPACE]
 
-			var/newX = changeX/speed*32 // apply speed and icon scaling
-			var/newY = changeY/speed*32
+			var/newX = (changeX/speed)*32 // apply speed and icon scaling
+			var/newY = (changeY/speed)*32
 			var/matrix/matrix = matrix(1, 0, round(curX-newX,0.1), 0, 1, round(curY-newY,0.1))
 
 			P.transform = matrix
@@ -143,18 +143,18 @@
 				P.invisibility = INVIS_ALWAYS
 			background.invisibility = INVIS_ALWAYS
 			active = FALSE
-			UnregisterSignal(master,"mov_moved")
-			UnregisterSignal(master,"mob_move_vehicle")
-			UnregisterSignal(master,"mov_set_loc")
+			UnregisterSignal(master, COMSIG_MOVABLE_MOVED)
+			UnregisterSignal(master, COMSIG_MOB_MOVE_VEHICLE)
+			UnregisterSignal(master, COMSIG_MOVABLE_SET_LOC)
 		else if (setting && !active) // turn it on
 			if (master.client && !length(src.layers)) // update proc wont work without these
 				layers += master.client?.get_plane(PLANE_PARALLAX_STARS)
 				layers += master.client?.get_plane(PLANE_PARALLAX_GIANT)
 				layers += master.client?.get_plane(PLANE_PARALLAX_PLANETS)
 				layers += master.client?.get_plane(PLANE_PARALLAX_STATIONS)
-			RegisterSignal(master,"mov_moved", .proc/update)
-			RegisterSignal(master,"mob_move_vehicle", .proc/update)
-			RegisterSignal(master,"mov_set_loc", .proc/update)
+			RegisterSignal(master, COMSIG_MOVABLE_MOVED, .proc/update)
+			RegisterSignal(master, COMSIG_MOB_MOVE_VEHICLE, .proc/update)
+			RegisterSignal(master, COMSIG_MOVABLE_SET_LOC, .proc/update)
 			background.invisibility = INVIS_NONE
 			active = TRUE
 			instantchange = TRUE

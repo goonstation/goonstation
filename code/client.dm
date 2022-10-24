@@ -1300,8 +1300,7 @@ var/global/curr_day = null
 
 	parallax = !parallax // fps impact, unknown as to how much
 
-	if(mob.parallax)
-		mob.parallax.toggle()
+	mob.parallax?.toggle()
 
 /client/verb/apply_view_tint()
 	set hidden = 1

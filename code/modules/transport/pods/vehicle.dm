@@ -668,10 +668,9 @@
 		.=..(NewLoc,Dir,step_x,step_y)
 
 		for(var/mob/M in src)
-			SEND_SIGNAL(M,"mob_move_vehicle")
+			SEND_SIGNAL(M, COMSIG_MOB_MOVE_VEHICLE)
 
-		if (movement_controller)
-			movement_controller.update_owner_dir()
+		movement_controller?.update_owner_dir()
 		else if (flying && facing != flying)
 			set_dir(facing)
 
