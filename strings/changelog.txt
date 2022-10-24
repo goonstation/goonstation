@@ -1,5 +1,9 @@
 
 (t)mon oct 24 22
+(u)Mr. Moriarty
+(p)11412
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Atlas Armoury.
 (u)DrWolfy
 (p)11332
 (e)💅🤖|C-QoL, A-Silicons
