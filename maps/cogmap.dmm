@@ -7942,7 +7942,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "axB" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -9027,7 +9029,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "aAv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
@@ -34302,7 +34304,6 @@
 	},
 /area/station/engine/engineering/ce)
 "bNF" = (
-/obj/storage/secure/closet/engineering/welding,
 /obj/decal/tile_edge/line/yellow{
 	dir = 8;
 	icon_state = "tile1"
@@ -34311,6 +34312,7 @@
 	dir = 5;
 	icon_state = "tile1"
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bNG" = (
@@ -42243,7 +42245,10 @@
 	},
 /area/station/quartermaster/refinery)
 "chK" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "chL" = (
@@ -44795,7 +44800,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "con" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
@@ -45982,7 +45987,9 @@
 /area/station/medical/medbay)
 "cqR" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/west,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -46139,7 +46146,7 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "crw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -48003,7 +48010,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cwK" = (
-/obj/machinery/atmospherics/pipe/simple/southwest{
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10;
 	level = 2
 	},
 /turf/simulated/floor/redwhite{
@@ -48324,7 +48332,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "cxJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "cxP" = (
@@ -56682,7 +56690,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -56778,7 +56786,7 @@
 	},
 /area/station/medical/dome)
 "mcM" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -58884,6 +58892,7 @@
 	pixel_x = 3;
 	pixel_y = 11
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "pdT" = (
@@ -59403,13 +59412,6 @@
 /obj/access_spawn/maint,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"pTr" = (
-/obj/machinery/light{
-	dir = 1;
-	pixel_y = 3
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/medical/cdc)
 "pUw" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 8;
@@ -60752,7 +60754,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "rJL" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east{
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 1
 	},
 /turf/simulated/floor/redwhite,
@@ -61236,9 +61238,6 @@
 	},
 /obj/cable{
 	icon_state = "1-2"
-	},
-/obj/disposalpipe/segment/ejection{
-	dir = 4
 	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
@@ -61914,7 +61913,7 @@
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
-/obj/access_spawn/sec_lockers,
+/obj/access_spawn/security,
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/main)
@@ -64021,6 +64020,7 @@
 	pixel_x = -7;
 	pixel_y = 18
 	},
+/obj/machinery/light,
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "vOf" = (
@@ -100210,7 +100210,7 @@ kfp
 mRI
 sfM
 vMs
-pTr
+cxe
 mOn
 cyr
 cyA
@@ -101115,7 +101115,7 @@ kAM
 jwL
 xCr
 pbP
-pTr
+cxe
 cxJ
 cxV
 cxp

@@ -679,5 +679,3 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
-
-

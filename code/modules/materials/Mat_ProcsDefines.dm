@@ -133,13 +133,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 /proc/getMaterialPrefixList(datum/material/base)
 	. = list()
 
-	for(var/datum/material_property/P in base.properties)
+	for(var/datum/material_property/P as anything in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
 			. |= P.getAdjective(base)
-			continue
 		else if(base.properties[P] <= P.prefix_low_max)
 			. |= P.getAdjective(base)
-			continue
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)

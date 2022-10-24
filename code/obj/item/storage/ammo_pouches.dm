@@ -56,6 +56,11 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
 
+	veritate
+		name = "PDW magazine pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/veritate = 5)
+
 
 	powercell_medium
 		name = "power cell pouch"
@@ -287,7 +292,7 @@
 	slots = 4
 	does_not_open_in_pocket = 0
 	spawn_contents = list(
-		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
 	)
 

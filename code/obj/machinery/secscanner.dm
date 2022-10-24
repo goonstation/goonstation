@@ -284,15 +284,7 @@
 			return threatcount
 
 		if (src.check_records)
-			var/see_face = 1
-			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
-				see_face = 0
-			else if (istype(perp.head) && !perp.head.see_face)
-				see_face = 0
-			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
-				see_face = 0
-
-			var/perpname = see_face ? perp.real_name : perp.name
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")

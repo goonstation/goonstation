@@ -196,7 +196,7 @@
 #define FIRESOURCE_IGNITER 2
 
 // for pen reagent dipping
-#define PEN_REAGENT_CAPACITY 5
+#define PEN_REAGENT_CAPACITY 4
 
 /// The default, the attack is animated, a message is given, and particles are shown (most items)
 #define ATTACK_VISIBLE 0

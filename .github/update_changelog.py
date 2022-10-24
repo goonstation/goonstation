@@ -57,6 +57,7 @@ labels_to_emoji = {
 	'c-sound': '🔊',
 	'c-sprites': '🎨',
 	'e-contest': '🎉',
+	'e-fuck': '❗',
 }
 
 def parse_pr_changelog(pr):

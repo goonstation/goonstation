@@ -123,6 +123,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
+	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
 	var/tmp/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/tmp/last_processing_tick = -1
@@ -301,16 +302,9 @@
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
 
-	src.set_health()
-	..()
-
-/obj/item/proc/set_health()
 	if (isnull(initial(src.health))) // if not overridden
-		switch (src.w_class)
-			if (W_CLASS_TINY to W_CLASS_NORMAL)
-				src.health = src.w_class + 1
-			else
-				src.health = src.w_class + 2
+		src.health = get_initial_item_health(src.type)
+	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -837,9 +831,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
-	if(src.material)
-		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
+		if(src.material)
+			src.material.triggerTemp(src ,1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else

@@ -870,7 +870,11 @@ var/bombini_saved = 0
 
 	switch(johnbus_location)
 		if(0)
+#ifdef MAP_OVERRIDE_NADIR
+			dat += "Shuttle Location: Nadir Extraction Site"
+#else
 			dat += "Shuttle Location: Diner"
+#endif
 		if(1)
 			dat += "Shuttle Location: Frontier Space Owlery"
 		if(2)
@@ -882,7 +886,11 @@ var/bombini_saved = 0
 	dat += "<BR>"
 	switch(johnbus_destination)
 		if(0)
+#ifdef MAP_OVERRIDE_NADIR
+			dat += "Shuttle Destination: Nadir Extraction Site"
+#else
 			dat += "Shuttle Destination: Diner"
+#endif
 		if(1)
 			dat += "Shuttle Destination: Frontier Space Owlery"
 		if(2)
@@ -894,7 +902,12 @@ var/bombini_saved = 0
 	if(johnbus_active)
 		dat += "Status: Cruisin"
 	else
+
+#ifdef MAP_OVERRIDE_NADIR
+		dat += "<a href='byond://?src=\ref[src];dine=1'>Set Target: Nadir</a><BR>"
+#else
 		dat += "<a href='byond://?src=\ref[src];dine=1'>Set Target: Diner</a><BR>"
+#endif
 		dat += "<a href='byond://?src=\ref[src];owle=1'>Set Target: Owlery</a><BR>"
 #ifndef UNDERWATER_MAP
 		dat += "<a href='byond://?src=\ref[src];mine=1'>Set Target: [MINING_OUTPOST_NAME]</a><BR>"

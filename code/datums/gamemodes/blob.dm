@@ -56,7 +56,7 @@
 
 /datum/game_mode/blob/post_setup()
 	..()
-	emergency_shuttle.disabled = 0
+	emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 	for (var/datum/mind/blob in traitors)
 		if (istype(blob))
 			bestow_objective(blob,/datum/objective/specialist/blob)

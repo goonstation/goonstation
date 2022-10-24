@@ -2178,3 +2178,16 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/gnesis_tint
+	id = "gnesis_tint"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		owner.add_filter("gnesis_tint", 1, color_matrix_filter(normalize_color_to_matrix("#309179")))
+
+	onRemove()
+		. = ..()
+		owner.remove_filter("gnesis_tint")

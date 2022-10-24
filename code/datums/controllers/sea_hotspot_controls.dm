@@ -1005,6 +1005,11 @@
 		if (mode_toggle) //reactivate in togglemode
 			activate()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
