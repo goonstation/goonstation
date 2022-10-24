@@ -1384,7 +1384,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 								WG.mind.dnr = FALSE
 								WG.verbs += list(/mob/verb/setdnr)
 								human_mind.transfer_to(H)
-								playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 								boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
 							return
 						if(!H?.loc) //Human gibbed, put the wraith back into their body
