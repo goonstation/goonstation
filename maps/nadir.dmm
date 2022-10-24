@@ -21020,7 +21020,7 @@
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity times lowest axial distance<br>Maximum 3 intensity";
+	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
 	name = "printed card";
 	pixel_y = 9
 	},
@@ -35064,7 +35064,7 @@
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax,
 /obj/item/paper{
 	icon_state = "index_card";
-	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance based on axial positioning<br>Maximum 4 intensity";
+	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
 	name = "printed card";
 	pixel_y = 9
 	},
