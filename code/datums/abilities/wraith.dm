@@ -1390,7 +1390,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							WG.mind.dnr = FALSE
 							WG.verbs += list(/mob/verb/setdnr)
 							WG.mind.transfer_to(H)
-							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+							playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 						AH.possession_points = 0
 						logTheThing("debug", null, null, "step 5")
 						qdel(WG)
