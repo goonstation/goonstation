@@ -35,6 +35,11 @@ ABSTRACT_TYPE(/area) // don't instantiate this directly dummies, use /area/space
 	var/tmp/sims_score = 100
 	var/virtual = 0
 
+	/// Whether or not the tile will be drawn on the station map.
+	var/render_on_map = FALSE
+	/// What colour should be displayed for this tile on the station map?
+	var/station_map_colour = MAPC_DEFAULT
+
 	// some semi-random turf in the area to guide spy thieves
 	var/turf/spyturf = null
 
@@ -1576,6 +1581,7 @@ ABSTRACT_TYPE(/area/station)
 /area/station
 	do_not_irradiate = 0
 	sound_fx_1 = 'sound/ambience/station/Station_VocalNoise1.ogg'
+	render_on_map = TRUE
 	var/tmp/initial_structure_value = 0
 #ifdef MOVING_SUB_MAP
 	filler_turf = "/turf/space/fluid/manta"
@@ -1648,6 +1654,7 @@ ABSTRACT_TYPE(/area/station/maintenance)
 	sound_environment = 12
 	workplace = 1
 	do_not_irradiate = 1
+	station_map_colour = MAPC_MAINTENANCE
 
 /area/station/maintenance/northwest
 	name = "North West Maintenance"
@@ -1905,6 +1912,7 @@ ABSTRACT_TYPE(/area/station/hallway)
 	name = "Hallway"
 	icon_state = "hallC"
 	sound_environment = 10
+	station_map_colour = MAPC_HALLWAY
 
 ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary
@@ -2055,6 +2063,7 @@ ABSTRACT_TYPE(/area/station/hallway/secondary)
 	name = "Construction"
 	icon_state = "red"
 	sound_environment = 10
+	station_map_colour = MAPC_ENGINEERING
 
 /area/station/construction/under_construction
 		name = "Under Construction"
@@ -2064,6 +2073,7 @@ ABSTRACT_TYPE(/area/station/mining)
 	name = "Mining"
 	icon_state = "mining"
 	sound_environment = 10
+	station_map_colour = MAPC_MINING
 
 /area/station/mining/staff_room
   name = "Mining Staff Room"
@@ -2083,6 +2093,7 @@ ABSTRACT_TYPE(/area/station/mining)
 	name = "Bridge"
 	icon_state = "bridge"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 #ifdef SUBMARINE_MAP
 	sound_group = "bridge"
 	sound_loop = 'sound/ambience/station/underwater/sub_bridge_ambi1.ogg'
@@ -2100,10 +2111,12 @@ ABSTRACT_TYPE(/area/station/mining)
 /area/station/captain //Three below this one are because Manta uses specific ambience on the bridge
 	name = "Captain's Office"
 	icon_state = "CAPN"
+	station_map_colour = MAPC_COMMAND
 
 /area/station/hos
 	name = "Head of Personnel's Office"
 	icon_state = "HOP"
+	station_map_colour = MAPC_COMMAND
 
 /area/station/hos/quarter
 	name = "Head of Personnel's Personal Quarter"
@@ -2152,16 +2165,19 @@ ABSTRACT_TYPE(/area/station/crew_quarters)
 	icon_state = "HOS"
 	sound_environment = 4
 	spy_secure_area = TRUE
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/md
 	name = "Medical Director's Quarters"
 	icon_state = "MD"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/ce
 	name = "Chief Engineer's Quarters"
 	icon_state = "CE"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/sauna
 	name = "Sauna"
@@ -2260,16 +2276,19 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Captain's Quarters"
 	icon_state = "captain"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/hop
 	name = "Head of Personnel's Quarters"
 	icon_state = "green"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/cafeteria
 	name = "Cafeteria"
 	icon_state = "cafeteria"
 	sound_environment = 0
+	station_map_colour = MAPC_CAFETERIA
 
 /area/station/crew_quarters/cafeteria/the_rising_tide_bar
 		name = "The Rising Tide"
@@ -2279,6 +2298,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Kitchen"
 	icon_state = "kitchen"
 	sound_environment = 3
+	station_map_colour = MAPC_KITCHEN
 
 /area/station/crew_quarters/kitchen/freezer
 		name = "Freezer"
@@ -2298,6 +2318,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 /area/station/crew_quarters/catering
 	name = "Catering Storage"
 	icon_state = "storage"
+	station_map_colour = MAPC_KITCHEN
 
 /area/station/crew_quarters/bathroom
 	name = "Bathroom"
@@ -2315,22 +2336,26 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name= "Bar"
 	icon_state = "bar"
 	sound_environment = 4
+	station_map_colour = MAPC_BAR
 
 /area/station/crew_quarters/baroffice
 	name= "Bar Office"
 	icon_state = "bar_office"
 	sound_environment = 2
+	station_map_colour = MAPC_BAR
 
 /area/station/crew_quarters/heads
 	name = "Head of Personnel's Office"
 	icon_state = "HOP"
 	sound_environment = 4
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/hor
 	name = "Research Director's Office"
 	icon_state = "RD"
 	sound_environment = 4
 	requires_power = 1
+	station_map_colour = MAPC_COMMAND
 
 /area/station/crew_quarters/hor/horprivate
 	name = "Research Director's Private Quarters"
@@ -2396,6 +2421,7 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Public Market"
 	icon_state = "yellow"
 	sound_environment = 0
+	station_map_colour = MAPC_HALLWAY
 
 /area/station/crew_quarters/supplylobby
 	name = "Supply Lobby"
@@ -2444,6 +2470,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine
 	sound_environment = 5
 	workplace = 1
+	station_map_colour = MAPC_ENGINEERING
 
 /area/station/engine/engineering
 	name = "Engineering"
@@ -2456,6 +2483,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/engineering/ce
 	name = "Chief Engineer's Office"
 	icon_state = "CE"
+	station_map_colour = MAPC_COMMAND
 
 /area/station/engine/engineering/ce/private
 	name = "Chief Engineer's Private Quarters"
@@ -2492,6 +2520,7 @@ ABSTRACT_TYPE(/area/station/engine)
 /area/station/engine/elect
 	name = "Mechanic's Lab"
 	icon_state = "mechanics"
+	station_map_colour = MAPC_MECHLAB
 
 /area/station/engine/power
 	name = "Engineering Power Room"
@@ -2581,6 +2610,7 @@ ABSTRACT_TYPE(/area/station/engine/substation)
 	icon_state = "teleporter"
 	sound_environment = 3
 	workplace = 1
+	station_map_colour = MAPC_COMMAND
 
 /area/syndicate_teleporter
 	name = "Syndicate Teleporter"
@@ -2594,6 +2624,7 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Medical area"
 	icon_state = "medbay"
 	workplace = 1
+	station_map_colour = MAPC_MEDICAL
 
 /area/station/medical/medbay
 	name = "Medbay"
@@ -2603,6 +2634,7 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/medbay/lobby
 	name = "Medbay Lobby"
 	icon_state = "medbay_lobby"
+	station_map_colour = MAPC_MEDLOBBY
 
 /area/station/medical/medbay/cloner
 	name = "Cloning"
@@ -2639,16 +2671,19 @@ ABSTRACT_TYPE(/area/station/medical)
 /area/station/medical/robotics
 	name = "Robotics"
 	icon_state = "medresearch"
+	station_map_colour = MAPC_ROBOTICS
 
 /area/station/medical/research
 	name = "Medical Research"
 	icon_state = "medresearch"
 	sound_environment = 3
+	station_map_colour = MAPC_MEDRESEARCH
 
 /area/station/medical/head
 	name = "Medical Director's Office"
 	icon_state = "MD"
 	sound_environment = 1
+	station_map_colour = MAPC_COMMAND
 
 	private
 		name = "Medical Director's  Private Quarters"
@@ -2657,21 +2692,25 @@ ABSTRACT_TYPE(/area/station/medical)
 	name = "Pathology Research"
 	icon_state = "medcdc"
 	sound_environment = 5
+	station_map_colour = MAPC_PATHOLOGY
 
 /area/station/medical/dome
 	name = "Monkey Dome"
 	icon_state = "green"
 	sound_environment = 3
+	station_map_colour = MAPC_MEDRESEARCH
 
 /area/station/medical/morgue
 	name = "Morgue"
 	icon_state = "morgue"
 	sound_environment = 3
+	station_map_colour = MAPC_MEDICAL
 
 /area/station/medical/crematorium
 	name = "Crematorium"
 	icon_state = "morgue"
 	sound_environment = 3
+	station_map_colour = MAPC_MEDICAL
 
 /area/station/medical/medbooth
 	name = "Medical Booth"
@@ -2699,6 +2738,7 @@ ABSTRACT_TYPE(/area/station/security)
 	teleport_blocked = 1
 	workplace = 1
 	spy_secure_area = TRUE
+	station_map_colour = MAPC_SECURITY
 
 /area/station/security/main
 	name = "Security"
@@ -2721,6 +2761,7 @@ ABSTRACT_TYPE(/area/station/security)
 	sound_environment = 3
 	teleport_blocked = 0
 	do_not_irradiate = 1
+	station_map_colour = MAPC_BRIG
 
 /area/station/security/brig/cell_block_control
 		name = "Cell Block Control"
@@ -2823,6 +2864,7 @@ ABSTRACT_TYPE(/area/station/security)
 	icon_state = "HOS"
 	sound_environment = 4
 	workplace = 0 //As does the hos
+	station_map_colour = MAPC_COMMAND
 
 /area/station/security/hos/horizon
 	name = "Hovel of Security"
@@ -2907,6 +2949,7 @@ ABSTRACT_TYPE(/area/station/quartermaster)
 	name = "Quartermaster's"
 	icon_state = "quart"
 	workplace = 1
+	station_map_colour = MAPC_QUARTERMASTER
 
 /area/station/quartermaster/office
 	name = "Quartermaster's Office"
@@ -2960,6 +3003,7 @@ ABSTRACT_TYPE(/area/station/janitor)
 	icon_state = "chem"
 	sound_environment = 3
 	workplace = 1
+	station_map_colour = MAPC_CHEMISTRY
 
 /area/station/science/testchamber
 	name = "Test Chamber"
@@ -2974,6 +3018,7 @@ ABSTRACT_TYPE(/area/station/science)
 	icon_state = "purple"
 	sound_environment = 3
 	workplace = 1
+	station_map_colour = MAPC_RESEARCH
 
 /area/station/science/lobby
 	name = "Science Lobby"
@@ -2999,24 +3044,29 @@ ABSTRACT_TYPE(/area/station/science)
 /area/station/science/teleporter
 	name = "Science Teleporter"
 	icon_state = "telelab"
+	station_map_colour = MAPC_TELESCI
 
 /area/station/science/research_director
 	name = "Research Director's Office"
 	icon_state = "toxlab"
 	workplace = 0
+	station_map_colour = MAPC_COMMAND
 
 /area/station/science/lab
 	name = "Toxin Lab"
 	icon_state = "toxlab"
+	station_map_colour = MAPC_TOXINS
 
 /area/station/science/artifact
 	name = "Artifact Lab"
 	icon_state = "artifact"
+	station_map_colour = MAPC_ARTLAB
 
 /area/station/science/storage
 	name = "Toxin Storage"
 	icon_state = "toxstorage"
 	do_not_irradiate = 1
+	station_map_colour = MAPC_TOXINS
 
 /area/station/science/laser
 	name = "Optics Lab"
@@ -3035,6 +3085,7 @@ ABSTRACT_TYPE(/area/station/chapel)
 /area/station/chapel
 	name = "Chapel"
 	icon_state = "chapel"
+	station_map_colour = MAPC_CHAPEL
 
 /area/station/chapel/sanctuary
 	name = "Chapel"
@@ -3139,17 +3190,22 @@ ABSTRACT_TYPE(/area/station/hangar)
 /area/station/hangar/sec
 		name = "Secure Dock"
 		teleport_blocked = 1
+		station_map_colour = MAPC_SECURITY
 /area/station/hangar/engine
 		name = "Engineering Dock"
+		station_map_colour = MAPC_ENGINEERING
 /area/station/hangar/medical
-		name = "Medical Hanger"
+		name = "Medical Hangar"
+		station_map_colour = MAPC_MEDICAL
 /area/station/hangar/qm
 		name = "Cargo Dock"
+		station_map_colour = MAPC_QUARTERMASTER
 /area/station/hangar/escape
 		name = "Escape Dock"
 /area/station/hangar/science
 		name = "Research Dock"
 		teleport_blocked = 1
+		station_map_colour = MAPC_RESEARCH
 /area/station/hangar/port
 		name = "Submarine Bay (Port)"
 		requires_power = 1
@@ -3157,13 +3213,16 @@ ABSTRACT_TYPE(/area/station/hangar)
 		name = "Submarine Bay (Starboard)"
 /area/station/hangar/mining
 		name = "Submarine Bay (Mining)"
+		station_map_colour = MAPC_MINING
 /area/station/hangar/security
 		name = "Submarine Bay (Security)"
+		station_map_colour = MAPC_SECURITY
 
 /area/station/hydroponics
 	name = "Hydroponics"
 	icon_state = "hydro"
 	workplace = 1
+	station_map_colour = MAPC_HYDROPONICS
 
 /area/station/hydroponics/bay
   name = "Hydroponics Bay"
@@ -3176,6 +3235,7 @@ ABSTRACT_TYPE(/area/station/hangar)
 	name = "Ranch"
 	icon_state = "ranch"
 	workplace = 1
+	station_map_colour = MAPC_RANCH
 
 ABSTRACT_TYPE(/area/station/garden)
 /area/station/garden
@@ -3257,6 +3317,8 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Research Outpost"
 	icon_state = "blue"
 	do_not_irradiate = 1
+	render_on_map = TRUE
+	station_map_colour = MAPC_RESEARCH
 
 /area/research_outpost/protest
 	name = "Protest Outpost"
@@ -3367,6 +3429,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored)
 	name = "AI Monitored Area"
 	var/obj/machinery/camera/motion/motioncamera = null
 	workplace = 1
+	station_map_colour = MAPC_COMMAND
 
 /area/station/ai_monitored/New()
 	..()
@@ -3414,6 +3477,7 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 	sound_environment = 2
 	teleport_blocked = 1
 	spy_secure_area = TRUE
+	station_map_colour = MAPC_ARMOURY
 
 // // // // // //
 
@@ -3423,6 +3487,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "Turret Protected Area"
 	expandable = FALSE
 	spy_secure_area = TRUE
+	station_map_colour = MAPC_COMMAND
 	var/list/obj/machinery/turret/turret_list = list()
 	var/obj/machinery/camera/motion/motioncamera = null
 	var/list/obj/blob/blob_list = list() //faster to cache blobs as they enter instead of searching the area for them (For turrets)
@@ -3502,6 +3567,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	icon_state = "AIt"
 	requires_power = 0
 	sound_environment = 12
+	render_on_map = FALSE
 
 /area/station/turret_protected/AIbasecore2
 	name = "AI Core 2"
@@ -3527,6 +3593,7 @@ ABSTRACT_TYPE(/area/station/turret_protected)
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
 	requires_power = FALSE
+	render_on_map = FALSE
 
 // // // //  OLD AREAS THAT ARE NOT USED BUT ARE IN HERE // // // //
 
@@ -3536,6 +3603,7 @@ ABSTRACT_TYPE(/area/mining)
 	name = "Mining Outpost"
 	icon_state = "engine"
 	workplace = 1
+	station_map_colour = MAPC_MINING
 
 /area/mining/power
 	name = "Outpost Power Room"

@@ -1076,18 +1076,18 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(1 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 20)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(2 SECOND)
 					if (!(H?.loc && W?.loc)) return
@@ -1386,7 +1386,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							WG.mind.dnr = FALSE
 							WG.verbs += list(/mob/verb/setdnr)
 							WG.mind.transfer_to(H)
-							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+							playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 						W.possession_points = 0
 						logTheThing("debug", null, null, "step 5")
 						qdel(WG)

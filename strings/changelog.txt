@@ -1,5 +1,16 @@
 
 (t)sun oct 23 22
+(u)Flourish
+(*)Motives now have an individual 1/5 chance of starting at a random value between 50-100.
+(+)Motive warning messages now only happen when you're below 50 (previously 75). Their frequency has also been reduced.
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
+(u)Mr. Moriarty
+(p)11448
+(e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
 (u)Ikea
 (p)11015
 (e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes

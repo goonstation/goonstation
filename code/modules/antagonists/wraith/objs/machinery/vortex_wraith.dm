@@ -102,7 +102,7 @@
 				portal_light.set_color(150, 40, 40)
 				portal_light.attach(portal)
 				portal_light.enable()
-				playsound(chosen_turf, "sound/effects/flameswoosh.ogg" , 80, 1)
+				playsound(chosen_turf, 'sound/effects/flameswoosh.ogg' , 80, 1)
 				SPAWN(3 SECOND)
 					animate(portal, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)
