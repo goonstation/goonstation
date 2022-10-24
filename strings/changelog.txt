@@ -1,6 +1,10 @@
 
 (t)mon oct 24 22
 (u)DrWolfy
+(p)11345
+(e)🗺|A-Mapping
+(+)Add a light switch to Kondaru HoP quarters.
+(u)DrWolfy
 (p)11361
 (e)🗺🔬|A-Mapping, A-Science
 (+)Added science fabricator to Atlas science.
