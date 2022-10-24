@@ -1,7 +1,9 @@
-// converyor belt
+// conveyor belt
 
 // moves items/mobs/movables in set direction every ptick
-
+#define OP_REGULAR 1
+#define OP_OFF 0
+#define OP_REVERSE -1
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
@@ -16,10 +18,11 @@
 	power_usage = 100
 	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
-	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
-	var/operable = 1	// true if can operate (no broken segments in this belt run)
-	var/basedir			// this is the default (forward) direction, set by the map dir
-						// note dir var can vary when the direction changes
+	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
+	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
+	var/dir1 = NORTH
+	var/dir2 = SOUTH
+	var/currentdir = SOUTH
 
 	var/id = ""			// the control ID	- must match controller ID
 	// following two only used if a diverter is present
@@ -30,22 +33,49 @@
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
+	var/static/list/dir_chars = list(NORTH = "N", EAST = "E", SOUTH = "S", WEST = "W")
 
-/obj/machinery/conveyor/north
-	dir = NORTH
-/obj/machinery/conveyor/south
-	dir = SOUTH
-/obj/machinery/conveyor/east
-	dir = EAST
-/obj/machinery/conveyor/west
-	dir = WEST
-
-	// create a conveyor
+/obj/machinery/conveyor/NE
+	dir1 = NORTH
+	dir2 = EAST
+/obj/machinery/conveyor/NS
+	dir1 = NORTH
+	dir2 = SOUTH
+/obj/machinery/conveyor/NE
+	dir1 = NORTH
+	dir2 = WEST
+/obj/machinery/conveyor/ES
+	dir1 = EAST
+	dir2 = SOUTH
+/obj/machinery/conveyor/EW
+	dir1 = EAST
+	dir2 = WEST
+/obj/machinery/conveyor/EN
+	dir1 = EAST
+	dir2 = NORTH
+/obj/machinery/conveyor/SW
+	dir1 = SOUTH
+	dir2 = WEST
+/obj/machinery/conveyor/SN
+	dir1 = SOUTH
+	dir2 = NORTH
+/obj/machinery/conveyor/SE
+	dir1 = SOUTH
+	dir2 = EAST
+/obj/machinery/conveyor/WN
+	dir1 = WEST
+	dir2 = NORTH
+/obj/machinery/conveyor/WE
+	dir1 = WEST
+	dir2 = EAST
+/obj/machinery/conveyor/WS
+	dir1 = WEST
+	dir2 = SOUTH
 
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
 	..()
-	basedir = dir
+	currentdir = dir2
 	setdir()
 
 /obj/machinery/conveyor/initialize()
@@ -68,26 +98,26 @@
 	id = null
 	..()
 
-	// set the dir and target turf depending on the operating direction
-
+/// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
-	if(operating == -1)
-		set_dir(turn(basedir,180))
-	else
-		set_dir(basedir)
-	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
+	currentdir = dir1
+	if (operating == OP_REGULAR)
+		currentdir = dir1
+	else if(operating == OP_REVERSE)
+		currentdir = dir2
+
+	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src, currentdir)
 	update()
 
 
-	// update the icon depending on the operating condition
-
+/// update the icon depending on the operating condition
 /obj/machinery/conveyor/proc/update()
 	if(status & BROKEN)
 		icon_state = "conveyor-b"
-		operating = 0
+		operating = OP_OFF
 
 	if(!operable)
-		operating = 0
+		operating = OP_OFF
 	if(!operating || (status & NOPOWER))
 		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
@@ -95,7 +125,19 @@
 		for(var/atom/movable/A in loc.contents)
 			move_thing(A)
 
-	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
+	var/new_icon = "conveyor-"
+
+	if (operating == OP_OFF || operating == OP_REGULAR)
+		new_icon += dir_chars[dir1] + dir_chars[dir2]
+	else if (operating == OP_REVERSE)
+		new_icon += dir_chars[dir2] + dir_chars[dir1]
+
+	if (operating == OP_OFF)
+		new_icon += "-still"
+	else
+		new_icon += "-run"
+
+	icon_state = new_icon
 
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
@@ -107,8 +149,8 @@
 		return
 	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
 		return
-	var/movedir = dir	// base movement dir
-	if(divert && dir == divdir)	// update if diverter present
+	var/movedir = currentdir	// base movement dir
+	if(divert && currentdir == divdir)	// update if diverter present
 		movedir = divert
 
 	var/mob/M = A
@@ -229,38 +271,108 @@
 	status |= BROKEN
 	update()
 
-	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	C?.set_operable(basedir, id, 0)
+	var/obj/machinery/conveyor/C
+	C = locate() in get_step(src, dir1)
+	C?.set_operable(OP_REGULAR, id, 0)
 
-	C = locate() in get_step(src, turn(basedir,180))
-	if(C)
-		C.set_operable(turn(basedir,180), id, 0)
+	C = locate() in get_step(src, dir2)
+	C?.set_operable(OP_REVERSE, id, 0)
 
 
-//set the operable var if ID matches, propagating in the given direction
-
+/// set the operable var if ID matches, propagating in the given direction
 /obj/machinery/conveyor/proc/set_operable(stepdir, match_id, op)
-
 	if(id != match_id)
 		return
 	operable = op
 
 	update()
-	var/obj/machinery/conveyor/C = locate() in get_step(src, stepdir)
-	if(C)
-		C.set_operable(stepdir, id, op)
+	var/propdir = dir1
+	if (stepdir == OP_REGULAR)
+		propdir = dir1
+	else if(stepdir == OP_REVERSE)
+		propdir = dir2
+	var/obj/machinery/conveyor/C = locate() in get_step(src, propdir)
+	C?.set_operable(stepdir, id, op)
 
 /obj/machinery/conveyor/power_change()
 	..()
 	update()
 
+/// conveyor placing component
+/datum/component/conveyorplacer
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
+	var/conv_id = ""
+	var/list/obj/machinery/conveyor/conveyors = list()
+	var/list/obj/machinery/conveyor_switch/switches = list()
 
-// converyor diverter
+TYPEINFO(/datum/component/conveyorplacer)
+	initialization_args = list()
+
+/datum/component/conveyorplacer/Initialize()
+	if(!ismovable(parent))
+		return COMPONENT_INCOMPATIBLE
+	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/place_conveyors)
+	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/place_lever)
+	conv_id = ref(src)
+
+/datum/component/conveyorplacer/UnregisterFromParent()
+	for (var/obj/machinery/conveyor/C in src.conveyors)
+		C.linked_switches = src.switches
+	for (var/obj/machinery/conveyor_switch/S in src.switches)
+		S.conveyors = src.conveyors
+	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
+	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
+	. = ..()
+
+/datum/component/conveyorplacer/proc/place_conveyors(atom/movable/A, turf/newLoc, direct)
+	var/turf/oldLoc = get_step(newLoc, direct)
+
+	var/obj/machinery/conveyor/oldC = locate(/obj/machinery/conveyor) in oldLoc
+	var/obj/machinery/conveyor/newC = locate(/obj/machinery/conveyor) in newLoc
+
+	if (!oldC)
+		oldC = new /obj/machinery/conveyor(oldLoc)
+		src.conveyors |= oldC
+
+	if (!newC)
+		newC = new /obj/machinery/conveyor(newLoc)
+		src.conveyors |= newC
+
+	oldC.dir1 = direct
+	newC.dir1 = direct
+	newC.dir2 = turn(direct, 180)
+
+	oldC.update()
+	newC.update()
+
+/datum/component/conveyorplacer/proc/place_lever(obj/item/parent, turf/target, mob/user, reach, params)
+	if (!istype(target))
+		return
+	var/obj/machinery/conveyor_switch/sw = new /obj/machinery/conveyor_switch(target)
+	src.switches |= sw
+
+/obj/item/debug_conveyor_layer
+	name = "conveyor layer"
+	icon = 'icons/obj/recycling.dmi'
+	item_state = "debug"
+	var/on = FALSE
+
+	attack_self(mob/user)
+		. = ..()
+		if (on)
+			on = TRUE
+			item_state = "debug-on"
+			src.AddComponent(/datum/component/conveyorplacer)
+		else
+			on = FALSE
+			item_state = "debug"
+			var/datum/component/conveyorplacer/CP = src.GetComponent(/datum/component/conveyorplacer)
+			CP.RemoveComponent()
+
+// conveyor diverter
 // extendable arm that can be switched so items on the conveyer are diverted sideways
 // situate in same turf as conveyor
 // only works if belts is running proper direction
-//
-//
 /obj/machinery/diverter
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "diverter0"
@@ -279,9 +391,7 @@
 // create a diverter
 // set up divert_to and divert_from directions depending on dir state
 /obj/machinery/diverter/New()
-
 	..()
-
 	switch(dir)
 		if(NORTH)
 			divert_to = WEST			// stuff will be moved to the west
@@ -311,7 +421,7 @@
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
-			if(conv.basedir != divert_from && conv.basedir != turn(divert_from,180) )
+			if(conv.dir1 != divert_from && conv.dir2 != turn(divert_from,180) )
 				qdel(src)	// if no dir match, then delete self
 		set_divert()
 		update()
