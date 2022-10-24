@@ -325,7 +325,7 @@ datum/preferences
 				if(length(client.player.cloudsaves) >= SAVEFILE_CLOUD_PROFILES_MAX)
 					tgui_alert(usr, "You have hit your cloud save limit. Please write over an existing save.", "Max saves")
 				else
-					var/new_name = input(usr, "What would you like to name the save?", "Save Name") as null|text
+					var/new_name = tgui_input_text(usr, "What would you like to name the save?", "Save Name")
 					if(length(new_name) < 3 || length(new_name) > MOB_NAME_MAX_LENGTH)
 						tgui_alert(usr, "The name must be between 3 and [MOB_NAME_MAX_LENGTH] letters!", "Letter count out of range")
 					else
@@ -367,7 +367,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-profileName")
-				var/new_profile_name = input(usr, "New profile name:", "Character Generation", src.profile_name)
+				var/new_profile_name = tgui_input_text(usr, "New profile name:", "Character Generation", src.profile_name)
 
 				for (var/c in bad_name_characters)
 					new_profile_name = replacetext(new_profile_name, c, "")
@@ -387,7 +387,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameFirst")
-				var/new_name = input(usr, "Please select a first name:", "Character Generation", src.name_first) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a first name:", "Character Generation", src.name_first)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -414,7 +414,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-nameMiddle")
-				var/new_name = input(usr, "Please select a middle name:", "Character Generation", src.name_middle) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a middle name:", "Character Generation", src.name_middle)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -433,7 +433,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-nameLast")
-				var/new_name = input(usr, "Please select a last name:", "Character Generation", src.name_last) as null|text
+				var/new_name = tgui_input_text(usr, "Please select a last name:", "Character Generation", src.name_last)
 				if (isnull(new_name))
 					return
 				new_name = trim(new_name)
@@ -500,7 +500,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-age")
-				var/new_age = input(usr, "Please select type in age: 20-80", "Character Generation", src.age)  as null|num
+				var/new_age = tgui_input_number(usr, "Please select type in age: 20-80", "Character Generation", src.age, 80, 20)
 
 				if (new_age)
 					src.age = clamp(round(text2num(new_age)), 20, 80)
@@ -509,7 +509,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-bloodType")
-				var/blTypeNew = input(usr, "Please select a blood type:", "Character Generation", src.blType)  as null|anything in list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-")
+				var/blTypeNew = tgui_input_list(usr, "Please select a blood type:", "Character Generation", list("Random", "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"), src.blType)
 
 				if (blTypeNew)
 					if (blTypeNew == "Random")
@@ -525,14 +525,14 @@ datum/preferences
 					src.pin	= null
 					return TRUE
 				else
-					var/new_pin = input(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin)  as null|num
+					var/new_pin = tgui_input_number(usr, "Please select a PIN between 1000 and 9999", "Character Generation", src.pin || 1000, 9999, 1000)
 					if (new_pin)
 						src.pin = clamp(round(text2num(new_pin)), 1000, 9999)
 						src.profile_modified = TRUE
 						return TRUE
 
 			if ("update-flavorText")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining you):", "Character Generation", src.flavor_text, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -544,7 +544,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-securityNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your security record):", "Character Generation", src.security_note, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -556,7 +556,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-medicalNote")
-				var/new_text = input(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note) as null|text
+				var/new_text = tgui_input_text(usr, "Please enter new flavor text (appears when examining your medical record):", "Character Generation", src.medical_note, multiline = TRUE)
 				if (!isnull(new_text))
 					new_text = html_encode(new_text)
 					if (length(new_text) > FLAVOR_CHAR_LIMIT)
@@ -574,7 +574,7 @@ datum/preferences
 					tgui_alert(usr, "Oh no! The JamStar-DCXXI PDA ringtone distribution satellite is out of range! Please try again later.", "x.x ringtones broke x.x")
 					logTheThing(LOG_DEBUG, usr, "get_all_character_setup_ringtones() didn't return anything!")
 				else
-					src.pda_ringtone_index = input(usr, "Choose a ringtone", "PDA") as null|anything in selectable_ringtones
+					src.pda_ringtone_index = tgui_input_list(usr, "Choose a ringtone", "PDA", selectable_ringtones)
 					if (!(src.pda_ringtone_index in selectable_ringtones))
 						src.pda_ringtone_index = "Two-Beep"
 
@@ -700,7 +700,7 @@ datum/preferences
 						var/list/customization_types = concrete_typesof(/datum/customization_style) - concrete_typesof(/datum/customization_style/hair/gimmick)
 						new_style = select_custom_style(customization_types, usr)
 					if ("underwear")
-						new_style = input(usr, "Select an underwear style", "Character Generation") as null|anything in underwear_styles
+						new_style = tgui_input_list(usr, "Select an underwear style", "Character Generation", underwear_styles)
 
 				if (new_style)
 					switch(params["id"])
@@ -768,7 +768,7 @@ datum/preferences
 
 			if ("update-fartsound")
 				var/list/sound_list = list_keys(AH.fartsounds)
-				var/new_sound = input(usr, "Select a farting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a farting sound", "Fart sound", sound_list)
 
 				if (new_sound)
 					src.AH.fartsound = new_sound
@@ -778,7 +778,7 @@ datum/preferences
 
 			if ("update-screamsound")
 				var/list/sound_list = list_keys(AH.screamsounds)
-				var/new_sound = input(usr, "Select a screaming sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a screaming sound", "Scream sound", sound_list)
 
 				if (new_sound)
 					src.AH.screamsound = new_sound
@@ -788,7 +788,7 @@ datum/preferences
 
 			if ("update-chatsound")
 				var/list/sound_list = list_keys(AH.voicetypes)
-				var/new_sound = input(usr, "Select a chatting sound") as null|anything in sound_list
+				var/new_sound = tgui_input_list(usr, "Select a chatting sound", "Chat sound", sound_list)
 
 				if (new_sound)
 					new_sound = src.AH.voicetypes[new_sound]
@@ -802,7 +802,7 @@ datum/preferences
 					src.font_size = initial(src.font_size)
 					return TRUE
 				else
-					var/new_font_size = input(usr, "Desired font size (in percent):", "Font setting", (src.font_size ? src.font_size : 100)) as null|num
+					var/new_font_size = tgui_input_number(usr, "Desired font size (in percent):", "Font setting", src.font_size || 100, 100, 1)
 					if (!isnull(new_font_size))
 						src.font_size = new_font_size
 						src.profile_modified = TRUE
@@ -839,7 +839,7 @@ datum/preferences
 				return TRUE
 
 			if ("update-hudTheme")
-				var/new_hud = input(usr, "Please select a HUD style:", "New") as null|anything in hud_style_selection
+				var/new_hud = tgui_input_list(usr, "Please select a HUD style:", "New", hud_style_selection)
 
 				if (new_hud)
 					src.hud_style = new_hud
@@ -847,7 +847,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-targetingCursor")
-				var/new_cursor = input(usr, "Please select a cursor:", "Cursor") as null|anything in cursors_selection
+				var/new_cursor = tgui_input_list(usr, "Please select a cursor:", "Cursor", cursors_selection)
 
 				if (new_cursor)
 					src.target_cursor = new_cursor
@@ -1509,7 +1509,7 @@ datum/preferences
 				if (3) valid_actions -= "Low Priority"
 				if (4) valid_actions -= "Unwanted"
 
-			picker = input("Which bracket would you like to move this job to?","Job Preferences") as null|anything in valid_actions
+			picker = tgui_input_list(usr, "Which bracket would you like to move this job to?", "Job Preferences", valid_actions)
 			if (!picker)
 				src.antispam = 0
 				return
@@ -1592,7 +1592,7 @@ datum/preferences
 			return
 
 		if (link_tags["resetalljobs"])
-			var/resetwhat = input("Reset all jobs to which level?","Job Preferences") as null|anything in list("Medium Priority","Low Priority","Unwanted")
+			var/resetwhat = tgui_input_list(usr, "Reset all jobs to which level?", "Job Preferences", list("Medium Priority", "Low Priority", "Unwanted"))
 			switch(resetwhat)
 				if ("Medium Priority")
 					src.ResetAllPrefsToMed(user)

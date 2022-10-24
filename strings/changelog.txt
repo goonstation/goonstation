@@ -1,7 +1,7 @@
 
 (t)sun oct 23 22
 (u)Flourish
-(*)Motives now have an individual 1/5 chance of starting at a random value between 50-100.
+(*)RP servers only - motives now have an individual 1/5 chance of starting at a random value between 50-100.
 (+)Motive warning messages now only happen when you're below 50 (previously 75). Their frequency has also been reduced.
 (u)Bartimeus973
 (p)11550
