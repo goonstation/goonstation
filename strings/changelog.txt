@@ -1,6 +1,10 @@
 
 (t)mon oct 24 22
 (u)DrWolfy
+(p)11332
+(e)💅🤖|C-QoL, A-Silicons
+(+)Engineering cyborgs now have an APC pinpointer to find APCs.
+(u)DrWolfy
 (p)11345
 (e)🗺|A-Mapping
 (+)Add a light switch to Kondaru HoP quarters.
