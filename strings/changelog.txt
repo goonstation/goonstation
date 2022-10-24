@@ -1,4 +1,9 @@
 
+(t)mon oct 24 22
+(u)DrWolfy
+(p)11361
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added science fabricator to Atlas science.
 (t)sun oct 23 22
 (u)Flourish
 (*)RP servers only - motives now have an individual 1/5 chance of starting at a random value between 50-100.
