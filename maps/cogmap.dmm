@@ -7942,7 +7942,9 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "axB" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 6;
@@ -45985,7 +45987,9 @@
 /area/station/medical/medbay)
 "cqR" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/west,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -48006,7 +48010,8 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "cwK" = (
-/obj/machinery/atmospherics/pipe/simple/southwest{
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10;
 	level = 2
 	},
 /turf/simulated/floor/redwhite{
@@ -60749,7 +60754,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "rJL" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east{
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
 	dir = 1
 	},
 /turf/simulated/floor/redwhite,

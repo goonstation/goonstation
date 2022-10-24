@@ -1,5 +1,44 @@
 
+(t)mon oct 24 22
+(u)Sord
+(+)Jobs with clothing vendors now have less clothing in their secure lockers.
+(+)This will be the standard going forward for any jobs that receive clothing vendors.
+(u)Kubius
+(p)11482
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Added two new trench prefabs to explore, a Martian remnant for all underwater maps and a Nadir-exclusive piece of history.
+(u)Mr. Moriarty
+(p)11412
+(e)🗺⚖💅|A-Mapping, C-Balance, C-QoL
+(+)Standardised the Atlas Armoury.
+(u)DrWolfy
+(p)11332
+(e)💅🤖|C-QoL, A-Silicons
+(+)Engineering cyborgs now have an APC pinpointer to find APCs.
+(u)DrWolfy
+(p)11345
+(e)🗺|A-Mapping
+(+)Add a light switch to Kondaru HoP quarters.
+(u)DrWolfy
+(p)11361
+(e)🗺🔬|A-Mapping, A-Science
+(+)Added science fabricator to Atlas science.
 (t)sun oct 23 22
+(u)Flourish
+(*)RP servers only - motives now have an individual 1/5 chance of starting at a random value between 50-100.
+(+)Motive warning messages now only happen when you're below 50 (previously 75). Their frequency has also been reduced.
+(u)Bartimeus973
+(p)11550
+(e)🎨🔎💅📄|C-Sprites, C-Code-Quality, C-QoL, A-UI
+(+)Being forcefully summoned as a wraith is more obvious. You can now use abilities while summoning things as a wraith. Harbinger portal visibility improved.
+(u)Mr. Moriarty
+(p)11448
+(e)🆕🔎💅📦|C-Feature, C-Code-Quality, C-QoL, A-Game-Objects
+(+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
+(u)Ikea
+(p)11015
+(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
 (e)🆕🗺|C-Feature, A-Mapping
