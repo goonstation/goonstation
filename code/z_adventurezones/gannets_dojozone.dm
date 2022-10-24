@@ -238,13 +238,14 @@ Contents:
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
 		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
-		if( can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
+		if(!QDELETED(src) && can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
 			if( src.strikes > src.strikes_to_complete )
 				if(RC.reagents.has_reagent("reversium",1))
 					new /obj/item/swords/katana/reverse(get_turf(target))
 				else
 					new /obj/item/swords/katana/crafted(get_turf(target))
 				RC.reagents.smoke_start(RC.reagents.total_volume)
+				user.u_equip(src)
 				qdel(src)
 			else
 				RC.reagents.smoke_start(RC.reagents.total_volume)
@@ -254,8 +255,8 @@ Contents:
 				sword.maximum_force = max(30 * (src.strikes / src.strikes_to_complete),10)
 				sword.force = sword.maximum_force
 				sword.throwforce = 10
+				user.u_equip(src)
 				qdel(src)
-
 
 
 /datum/action/bar/icon/forge_katana

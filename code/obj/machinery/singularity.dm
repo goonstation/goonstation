@@ -101,7 +101,6 @@ Contains:
 	pixel_x = -64
 	pixel_y = -64
 
-	var/maxboom = 0
 	var/has_moved
 	var/active = 0 //determines if the singularity is contained
 	var/energy = 10
@@ -248,12 +247,8 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 
 /obj/machinery/the_singularity/ex_act(severity, last_touched, power)
-	if(!maxboom)
-		SPAWN(0.1 SECONDS)
-			if(severity == 1 && (maxboom ? prob(maxboom*5) : prob(30))) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
-				qdel(src)
-			maxboom = 0
-	maxboom = max(power, maxboom)
+	if (severity == 1 && prob(power * 5)) //need a big bomb (TTV+ sized), but a big enough bomb will always clear it
+		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
 	var/gain = 0
@@ -291,7 +286,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					if ("Chief Engineer")
 						// Hubris
 						gain = 150
-					if ("Engineer", "Mechanic")
+					if ("Engineer")
 						// More hubris
 						gain = 100
 					if ("Staff Assistant", "Captain")

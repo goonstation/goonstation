@@ -239,7 +239,6 @@
 	return I
 
 /atom/movable/screen/lootcratepreview
-	icon = null
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0

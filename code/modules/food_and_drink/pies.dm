@@ -1,4 +1,4 @@
-
+ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -101,9 +101,6 @@
 				randomContent = pick(contents)
 			else
 				randomContent = src
-
-			if (randomContent != src)
-				randomContent.throw_impact(hit_atom)
 
 			hit_atom.Attackby(randomContent, thr?.user)
 

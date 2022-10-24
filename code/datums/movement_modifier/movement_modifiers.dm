@@ -137,6 +137,19 @@
 /datum/movement_modifier/robot_part/thruster_right
 	additive_slowdown = -0.3
 
+// artifact legs
+/datum/movement_modifier/martian_legs/left
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
+
+/datum/movement_modifier/martian_legs/right
+	health_deficiency_adjustment = -35
+	multiplicative_slowdown = 0.95
+	pushpull_multiplier = 0.9
+	mob_pull_multiplier = 0.9
+
 // bioeffects
 
 /datum/movement_modifier/spaceham

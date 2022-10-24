@@ -355,3 +355,8 @@
 
 		src.updateUsrDialog()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.CL)
+			src.CL = null

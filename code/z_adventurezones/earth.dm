@@ -192,6 +192,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ines
 		ckey = "hokie"
 		name = "Office of Ines"
+	janantilles
+		ckey = "janantilles"
+		name = "Office of Fleur DeLaCreme"
 	katzen
 		ckey = "flappybat"
 		name = "Office of Katzen"
@@ -618,7 +621,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 	set_loc(newloc)
 		. = ..()
-		if(isnull(newloc))
+		if(isnull(newloc) && !QDELETED(src))
 			src.vis_contents = null
 			qdel(src)
 

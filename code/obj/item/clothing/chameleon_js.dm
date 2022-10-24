@@ -8,6 +8,7 @@
 	uses_multiple_icon_states = 1
 	item_state = "black"
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_jumpsuit_pattern
 
 	New()
 		..()
@@ -71,6 +72,7 @@
 
 	proc/change_outfit(var/datum/chameleon_jumpsuit_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -301,6 +303,7 @@
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
 	item_function_flags = IMMUNE_TO_ACID
 	seal_hair = 0
@@ -366,6 +369,7 @@
 
 	proc/change_outfit(var/datum/chameleon_hat_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -538,6 +542,7 @@
 	uses_multiple_icon_states = 1
 	over_hair = FALSE
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_suit_pattern
 
 	New()
 		..()
@@ -602,6 +607,7 @@
 
 	proc/change_outfit(var/datum/chameleon_suit_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -851,6 +857,7 @@
 	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_glasses_pattern
 
 	New()
 		..()
@@ -911,6 +918,7 @@
 
 	proc/change_outfit(var/datum/chameleon_glasses_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -977,6 +985,7 @@
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_shoes_pattern
 	step_sound = "step_default"
 
 	New()
@@ -1042,6 +1051,7 @@
 
 	proc/change_outfit(var/datum/chameleon_shoes_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1156,6 +1166,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
 	hide_prints = 1
 	scramble_prints = 0
@@ -1221,6 +1232,7 @@
 
 	proc/change_outfit(var/datum/chameleon_gloves_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1306,6 +1318,7 @@
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_belt_pattern
 
 	New()
 		..()
@@ -1367,6 +1380,7 @@
 
 	proc/change_outfit(var/datum/chameleon_belt_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1425,6 +1439,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
 	in_list_or_max = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
@@ -1512,6 +1527,7 @@
 
 	proc/change_outfit(var/datum/chameleon_backpack_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1654,6 +1670,52 @@
 			if(!which)
 				return
 
+			if (which.function == "delete_outfit")
+				var/datum/chameleon_outfit_choices/outfit_to_delete = tgui_input_list(usr, "Delete which chameleon outfit set?", "Chameleon Outfit Remote", outfit_choices)
+
+				if(!outfit_to_delete)
+					return
+				if(outfit_to_delete.function)
+					boutput(user, "<span class='alert'>The chameleon outfit prevents you from deleting this function!</span>")
+					return
+
+				src.outfit_choices -= outfit_to_delete
+
+				boutput(user, "<span class='notice'>Outfit set deleted!</span>")
+				return
+
+			if(which.function == "new_outfit")
+				var/name = tgui_input_text(usr, "Name of new outfit set:", "Chameleon Outfit Remote")
+				if(!name)
+					return
+				for(var/datum/chameleon_outfit_choices/P in src.outfit_choices)
+					if(P.name == name)
+						boutput(user, "<span class='alert'>That outfit set name is already saved in the chameleon outfit banks!</span>")
+						return
+
+				var/datum/chameleon_outfit_choices/P = new /datum/chameleon_outfit_choices(src)
+				P.name = name
+				if(connected_jumpsuit)
+					P.jumpsuit_type = connected_jumpsuit.current_choice
+				if(connected_hat)
+					P.hat_type = connected_hat.current_choice
+				if(connected_suit)
+					P.suit_type = connected_suit.current_choice
+				if(connected_glasses)
+					P.glasses_type = connected_glasses.current_choice
+				if(connected_shoes)
+					P.shoes_type = connected_shoes.current_choice
+				if(connected_gloves)
+					P.gloves_type = connected_gloves.current_choice
+				if(connected_belt)
+					P.belt_type = connected_belt.current_choice
+				if(connected_backpack)
+					P.backpack_type = connected_backpack.current_choice
+				src.outfit_choices += P
+
+				boutput(user, "<span class='notice'>New outfit set created!</span>")
+				return
+
 			if(connected_jumpsuit || which.jumpsuit_type)
 				connected_jumpsuit.change_outfit(which.jumpsuit_type)
 
@@ -1679,6 +1741,7 @@
 				connected_backpack.change_outfit(which.backpack_type)
 
 /datum/chameleon_outfit_choices
+	var/function = null
 	var/name = "Staff Assistant"
 	var/jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
 	var/hat_type = new/datum/chameleon_hat_pattern/
@@ -1941,3 +2004,11 @@
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
+
+	new_outfit
+		function = "new_outfit"
+		name = "New Outfit Set"
+
+	delete_outfit
+		function = "delete_outfit"
+		name = "Delete Outfit Set"

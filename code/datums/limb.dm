@@ -388,7 +388,7 @@
 
 		if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
 			var/obj/item/affecting = target.get_affecting(user)
-			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user))
+			var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
 			user.attack_effects(target, affecting)
 			msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
 			msgs.played_sound = src.sound_attack
@@ -471,7 +471,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -586,7 +586,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 1)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "scratch", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -657,7 +657,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dual saw at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("lacerate", "carve", "mangle", "sever", "hack", "slice", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -738,7 +738,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(5,9) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 10, rand(5,9) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "maul", "mangle", "rip", "claw", "lacerate", "mutilate")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
@@ -817,7 +817,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "melts [constructTarget(target,"combat")] with hot hands at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 3, 1, 0, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 3, 1, 0, 0, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 
 		msgs.base_attack_message = "<b><span class='alert'>[user] melts [target] with their clutch!</span></b>"
@@ -1068,7 +1068,7 @@
 
 		var/send_flying = 0 // 1: a little bit | 2: across the room
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, can_punch = 0, can_kick = 0)
 
 		if (!msgs || !istype(msgs))
 			return
@@ -1260,13 +1260,50 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "claws [constructTarget(target,"combat")] with claw arms at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 10, rand(1,3) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 10, rand(1,3) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("maim", "stab", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their [src.holder]!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Tear_3.ogg'
 		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+
+/datum/limb/eldritch
+	var/static/list/organs = list("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+
+	harm(mob/living/target, var/mob/living/user)
+		if(!user || !target)
+			return FALSE
+		if (!target.melee_attack_test(user))
+			return
+
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, can_punch = 0)
+
+		if (!msgs)
+			return
+
+		msgs.damage = 0
+		msgs.damage_type = DAMAGE_BLUNT
+		msgs.base_attack_message = "<span class='alert'><b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b></span>"
+		user.attack_effects(target, affecting)
+		msgs.flush(SUPPRESS_LOGS)
+
+		if (target.organHolder)
+			var/list/possible_organs = list()
+			for (var/organ in organs)
+				if (target.organHolder.get_organ(organ))
+					possible_organs += organ
+
+			if (length(possible_organs))
+				target.organHolder.damage_organ(5, 0, 0, pick(possible_organs))
+
+				if (prob(25))
+					boutput(target, "<span class='alert'>[pick("Your insides don't feel good!", "You don't feel right somehow.", "You feel strange inside.")]</span>")
+
+		logTheThing("combat", user, target, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
+
 		user.lastattacked = target
 
 /datum/limb/leg_hand
@@ -1299,7 +1336,7 @@
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "kicks [constructTarget(target,"combat")] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 4, rand(1,3) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 4, rand(1,3) * quality, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("kick", "stomp", "boot")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
@@ -1465,7 +1502,7 @@
 		//	L.do_disorient(24, 1 SECOND, 0, 0, 0.5 SECONDS)
 
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 5, rand(0,2) * quality)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 1, 5, rand(0,2) * quality, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("cut", "rip", "claw", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"

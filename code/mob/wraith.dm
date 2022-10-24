@@ -99,7 +99,7 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
-		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_harbinger))
+		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_harbinger) && !istype(src, /mob/wraith/poltergeist))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
 		last_life_update = TIME
@@ -436,6 +436,8 @@
 			//if tile contains salt, wraith becomes corporeal
 			if (salted && !src.density && !src.justdied)
 				src.setStatus("corporeal", src.forced_haunt_duration, TRUE)
+				var/datum/targetable/ability = src.abilityHolder.getAbility(/datum/targetable/wraithAbility/haunt)
+				ability.doCooldown()
 				boutput(src, "<span class='alert'>You have passed over salt! You now interact with the mortal realm...</span>")
 
 		//if ((marker && BOUNDS_DIST(src, marker) > 05) && (master && BOUNDS_DIST(P, src) > 02 ))

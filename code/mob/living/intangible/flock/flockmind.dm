@@ -58,8 +58,20 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
+	if (!src.flock)
+		return
 	src.flock.peak_compute = max(src.flock.peak_compute, src.flock.total_compute())
-	if (src.started && src.flock)
+	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
+		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
+			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
+		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+			var/list/traces = src.flock.getActiveTraces()
+			if (length(traces))
+				boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b></span>")
+				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
+				chosen_trace.promoteToFlockmind(FALSE)
+			src.afk_counter = 0
+	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
 		for (var/obj/flock_structure/s in src.flock.structures)

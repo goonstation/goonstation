@@ -88,7 +88,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers)
 		if (!reagents)
 			return
 		. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
-		return
 
 	mouse_drop(atom/over_object as obj)
 		if (isintangible(usr))

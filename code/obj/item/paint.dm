@@ -24,6 +24,7 @@
 	desc = "Dispenses paint. Derp."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "paint-vend"
+	icon_fallen = "paint-fallen"
 	var/paint_color = "#ff0000"
 	var/add_orig = 0.2
 	var/paint_intensity = 0.6
