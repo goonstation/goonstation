@@ -3,6 +3,12 @@
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
+///List of 2 letter shorthands for the reagent, currently only used by the cybernetic hypospray
+var/list/reagent_shorthands = list(
+	"salbutamol" = "Sb",
+	"anti_rad" = "KI"
+)
+
 ABSTRACT_TYPE(/datum/reagent)
 
 datum

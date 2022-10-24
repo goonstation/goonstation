@@ -337,6 +337,11 @@
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
+
 /*
 /Force field objects for various generators
 **/

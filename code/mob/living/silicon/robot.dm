@@ -254,6 +254,7 @@
 		hud.update_pulling()
 
 	death(gibbed)
+		src.stat = 2
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
@@ -741,7 +742,7 @@
 			if(force_instead)
 				newname = default_name
 			else
-				newname = input(src,"You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
+				newname = tgui_input_text(src, "You are a Cyborg. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
 				if(newname && newname != default_name)
 					phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 			if (!newname)
@@ -1333,7 +1334,7 @@
 				boutput(user, "<span class='alert'>You can't think of anything to use the wrench on.</span>")
 				return
 
-			var/action = input("What do you want to do?", "Cyborg Deconstruction") in actions
+			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Deconstruction", actions)
 			if (!action) return
 			if (action == "Do nothing") return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && (!user.bioHolder || !user.bioHolder.HasEffect("telekinesis")))
@@ -1493,8 +1494,8 @@
 
 		if (available_actions.len)
 			available_actions.Insert(1, "Cancel")
-			var/action = input("What do you want to do?", "Cyborg Maintenance") as null|anything in available_actions
-			if (!action)
+			var/action = tgui_input_list(user, "What do you want to do?", "Cyborg Maintenance", available_actions)
+			if (!action || action == "Cancel")
 				return
 			if (BOUNDS_DIST(src.loc, user.loc) > 0 && !src.bioHolder?.HasEffect("telekinesis"))
 				boutput(user, "<span class='alert'>You need to move closer!</span>")

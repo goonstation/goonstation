@@ -9749,7 +9749,7 @@
 	},
 /area/russian/radiation)
 "btU" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/cleanable/dirt/dirt2,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/white{
@@ -15151,7 +15151,7 @@
 	},
 /area/russian/radiation)
 "bVm" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
@@ -16361,7 +16361,7 @@
 /turf/space,
 /area/russian/radiation)
 "caw" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"
@@ -16406,7 +16406,7 @@
 	},
 /area/russian/radiation)
 "caF" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
 	},
@@ -27421,7 +27421,7 @@
 	},
 /area/russian/radiation)
 "cKV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/redwhite{
 	desc = " It is made of steel.";
@@ -60730,7 +60730,7 @@
 	},
 /area/russian/radiation)
 "ozP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;

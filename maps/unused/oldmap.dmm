@@ -6457,7 +6457,7 @@
 /turf/simulated/floor,
 /area/crew_quarters/quarters)
 "oR" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/chemistry)
 "oS" = (
@@ -14250,7 +14250,7 @@
 /turf/simulated/floor,
 /area/zeta)
 "Gq" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/camera{
 	c_tag = "Chemistry";
 	dir = 4;

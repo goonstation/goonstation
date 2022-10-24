@@ -30,7 +30,7 @@
 			src.antagonist_type = type
 
 		if(type != "Blob (AI)")
-			src.antag_count = input(usr, "How many to assign?", src.name, antag_count) as num|null
+			src.antag_count = input(usr, "How many to assign? ([length(eligible_dead_player_list(allow_dead_antags = TRUE))] players eligible)", src.name, antag_count) as num|null
 			if (isnull(src.antag_count))
 				return
 			else if (src.antag_count < 1)
@@ -266,7 +266,9 @@
 				if ("Hunter")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_HUNTER, do_equip = FALSE, do_relocate = TRUE)
+						role = ROLE_HUNTER
 					else
 						failed = 1
 
@@ -275,6 +277,7 @@
 					if (istype(L))
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_SALVAGER, do_equip = TRUE, do_relocate = TRUE)
+						role = ROLE_SALVAGER
 					else
 						failed = 1
 
@@ -340,7 +343,9 @@
 				if ("Arcfiend")
 					var/mob/living/L = M3.humanize()
 					if (istype(L))
+						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_ARCFIEND)
+						role = ROLE_ARCFIEND
 					else
 						failed = 1
 				else

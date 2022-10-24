@@ -643,7 +643,7 @@ var/global/noir = 0
 					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(player.cached_jobbans.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -677,7 +677,7 @@ var/global/noir = 0
 							if(player.cached_jobbans.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(player.cached_jobbans.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
@@ -703,7 +703,7 @@ var/global/noir = 0
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(cache.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -736,7 +736,7 @@ var/global/noir = 0
 							if(cache.Find("[Trank1]"))
 								jobban_unban(M,Trank1)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(cache.Find("[Trank2]"))
 								jobban_unban(M,Trank2)
 					else if(job == "Security Department")
@@ -3517,8 +3517,6 @@ var/global/noir = 0
 						src.owner:debug_variables(random_events)
 					if("disease")
 						src.owner:debug_variables(disease_controls)
-					if("mechanic")
-						src.owner:debug_variables(mechanic_controls)
 					if("artifact")
 						src.owner:debug_variables(artifact_controls)
 					if("gauntlet")
@@ -4277,7 +4275,6 @@ var/global/noir = 0
 			dat += "<b>Force players to use random names:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>[force_random_names ? "Yes" : "No"]</a><br>"
 			dat += "<b>Force players to use random appearances:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomlooks'>[force_random_looks ? "Yes" : "No"]</a><br>"
 			//dat += "<A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>Politely suggest all players use random names</a>" // lol
-
 	if (src.level >= LEVEL_SA)
 		dat += "<hr>"
 		dat += "<A href='?src=\ref[src];action=create_object'>Create Object</A><br>"
@@ -4300,7 +4297,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
-
 			"}
 #ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}

@@ -290,6 +290,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -442,6 +443,7 @@ var/global
 	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
 	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
 	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
+	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
 
 	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
 	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")

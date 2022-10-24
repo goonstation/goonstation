@@ -1,7 +1,7 @@
 // Salvager Gear
 
 /obj/item/salvager
-	name = "Salvage Reclaimer"
+	name = "salvage reclaimer"
 	desc = "A strange hodgepodge of industrial equipment used to break part equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
@@ -55,7 +55,11 @@
 				return
 			. = 20 SECONDS
 		else if (istype(A, /turf/simulated/floor))
+#ifdef UNDERWATER_MAP
+			. = 45 SECONDS
+#else
 			. = 30 SECONDS
+#endif
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
@@ -258,7 +262,7 @@
 		..()
 
 /obj/item/storage/box/salvager_frame_compartment
-	name = "Electronics Frame Compartment"
+	name = "electronics frame compartment"
 	desc = "A special compartment designed to neatly and safely store deconstructed eletronics and machinery frames."
 	max_wclass = W_CLASS_HUGE
 	can_hold = list(/obj/item/electronics/frame)
@@ -281,7 +285,6 @@
 	desc = "A repurposed military backpack made of high density fabric, designed to fit a wide array of tools and junk."
 	icon_state = "tactical_backpack"
 	spawn_contents = list(/obj/item/storage/box/salvager_frame_compartment,
-						  /obj/item/storage/box/starter/withO2,
 						  /obj/item/deconstructor,
 						  /obj/item/tool/omnitool,
 						  /obj/item/weldingtool,
@@ -337,33 +340,18 @@
 
 	New()
 		..()
-		src.goods_sell += new /datum/commodity/boogiebot(src)
-		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
-		src.goods_sell += new /datum/commodity/podparts/artillery(src)
-		src.goods_sell += new /datum/commodity/contraband/flare(src)
-		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
+			src.goods_sell += new sell_type(src)
 
 #ifdef SECRETS_ENABLED
-		src.goods_sell += new /datum/commodity/contraband/salvager/teleporter(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/pistol(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/ratstick(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/bullets_22(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/bullets_9mm(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/shotgun(src)
-
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/rare_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/rare_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/station_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/station_items(src)
-		src.goods_buy += new /datum/commodity/salvage/machine_frame(src)
-		src.goods_buy += new /datum/commodity/salvage/scrap_materials(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
 #endif
-		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/robotics(src)
-		src.goods_buy += new /datum/commodity/tech/laptop(src)
-		src.goods_buy += new /datum/commodity/fuel(src)
-		src.goods_buy += new /datum/commodity/ore/gemstone(src)
-		src.goods_buy += new /datum/commodity/ore/telecrystal(src)
+
+		for(var/buy_type in concrete_typesof(/datum/commodity/magpie/buy))
+			src.goods_buy += new buy_type(src)
 
 		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
 
@@ -391,5 +379,8 @@
 
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
-
-/obj/item/clothing/head/helmet/space/salvager
+/obj/item/clothing/head/helmet/space/engineer/salvager
+ABSTRACT_TYPE(/datum/commodity/magpie/sell)
+/datum/commodity/magpie/sell
+ABSTRACT_TYPE(/datum/commodity/magpie/buy)
+/datum/commodity/magpie/buy

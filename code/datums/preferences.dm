@@ -460,7 +460,7 @@ datum/preferences
 					return TRUE
 
 			if ("update-robotName")
-				var/new_name = input(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name) as null|text
+				var/new_name = tgui_input_text(usr, "Your preferred cyborg name, leave empty for random.", "Character Generation", src.robot_name)
 				if (isnull(new_name))
 					return
 				if (is_blank_string(new_name))

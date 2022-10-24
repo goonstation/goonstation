@@ -15,9 +15,12 @@
 
 		var/mob/living/carbon/human/H = src.owner.current
 
+		// You are... no one...
+		randomize_look(H, change_gender=FALSE)
+		H.bioHolder.mobAppearance.flavor_text = null
 		H.unequip_all(TRUE)
 
-		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/salvager(H), H.slot_head)
+		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), H.slot_wear_suit)
 		var/obj/item/device/radio/headset/salvager/headset = new
 		headset.frequency = src.pick_radio_freq()
@@ -26,7 +29,7 @@
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
 		H.equip_if_possible(new /obj/item/clothing/mask/breath(H), H.slot_wear_mask)
-		H.equip_if_possible(new /obj/item/device/light/flashlight(H), H.slot_l_store)
+		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
 		H.equip_if_possible(new /obj/item/ore_scoop/prepared(H), H.slot_r_store)
 		H.equip_if_possible(new /obj/item/clothing/shoes/magnetic(H), H.slot_shoes)
 		H.equip_if_possible(new /obj/item/clothing/gloves/long(H), H.slot_gloves)
