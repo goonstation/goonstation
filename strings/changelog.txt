@@ -1,5 +1,7 @@
 
 (t)mon oct 24 22
+(u)tarmunora
+(+)Thermal printers now have a limited stock of paper that slowly replenishes.
 (u)Sord
 (+)Jobs with clothing vendors now have less clothing in their secure lockers.
 (+)This will be the standard going forward for any jobs that receive clothing vendors.
