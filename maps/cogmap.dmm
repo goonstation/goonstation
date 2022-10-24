@@ -51673,6 +51673,13 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"ePv" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/power/apc/autoname_east,
+/turf/simulated/floor,
+/area/station/engine/elect)
 "ePw" = (
 /obj/machinery/computer/barcode,
 /obj/item/device/radio/intercom/cargo{
@@ -57263,6 +57270,15 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/routing/engine)
+"mTl" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor,
+/area/station/engine/elect)
 "mTV" = (
 /obj/plasticflaps,
 /obj/machinery/conveyor{
@@ -110137,7 +110153,7 @@ jnQ
 uvR
 uvR
 eWf
-neb
+mTl
 neb
 rzC
 wtl
@@ -110439,7 +110455,7 @@ jIx
 jIx
 rZm
 bLN
-bNn
+ePv
 bNn
 ndi
 nST
