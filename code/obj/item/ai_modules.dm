@@ -326,6 +326,8 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.lawText)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
+			if (lawTarget != initial(lawText))
+				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
 

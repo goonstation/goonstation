@@ -2486,7 +2486,6 @@
 /turf/unsimulated/floor/blue,
 /area/station/crewquarters/cryotron)
 "gC" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
 /obj/machinery/light_switch/auto,
 /turf/simulated/floor/red/side{
 	dir = 10
@@ -2500,7 +2499,7 @@
 /turf/simulated/floor/red/side,
 /area/station/security/main)
 "gG" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red/side{
 	dir = 6
 	},
@@ -4063,7 +4062,7 @@
 	},
 /area/station/chapel/sanctuary)
 "kv" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/partyalarm{
 	pixel_y = 28
@@ -11980,7 +11979,7 @@
 /turf/simulated/floor,
 /area/station/science/teleporter)
 "De" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
@@ -12211,6 +12210,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"DQ" = (
+/obj/storage/secure/closet/fridge/blood,
+/turf/simulated/floor/blue,
+/area/station/medical/medbay)
 "DS" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
@@ -12926,7 +12929,7 @@
 	},
 /area/station/medical/medbay)
 "FE" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -18760,6 +18763,9 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"Ub" = (
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "Uc" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -20841,10 +20847,6 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"ZH" = (
-/obj/storage/secure/closet/fridge/blood,
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "ZJ" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating/random,
@@ -69419,7 +69421,7 @@ VT
 Bw
 PJ
 yF
-BC
+DQ
 Bx
 Fx
 Gl
@@ -69721,7 +69723,7 @@ Bx
 Bx
 PK
 yF
-ZH
+Ea
 Bx
 Uu
 WG
@@ -70023,7 +70025,7 @@ Ug
 Fy
 PL
 wb
-Ea
+Ub
 yg
 Fz
 Gn

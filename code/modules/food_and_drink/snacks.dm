@@ -2664,7 +2664,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attack_self(mob/user as mob)
 		if (unwrapped)
-			return
+			attack(user, user)
 
 		unwrapped = 1
 		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
@@ -2929,4 +2929,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
-
+/obj/item/reagent_containers/food/snacks/ratatouille
+    name = "ratatouille"
+    desc = "Stewed and caramalized vegetables. Remy not included."
+    icon = 'icons/obj/foodNdrink/food_meals.dmi'
+    icon_state = "ratatouille"
+    needspoon = true
+    heal_amt = 2
+    bites_left = 3
+    food_effects = list("food_refreshed","food_warm")

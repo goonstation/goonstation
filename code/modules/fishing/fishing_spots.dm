@@ -61,7 +61,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	fish_available = list(/obj/item/fish/carp = 40,\
 	/obj/item/fish/bass = 30,\
 	/obj/critter/slug = 10,\
-	/obj/critter/snake = 10,\
+	/mob/living/critter/small_animal/snake = 10,\
 	/obj/critter/frog = 10,\
 	/obj/item/clothing/head/rafflesia = 5)
 

@@ -818,6 +818,9 @@
 
 
 	New()
+		if (istype(ticker.mode, /datum/game_mode/disaster)) //For Disaster wraith
+			desc = "Choose a form to evolve into using the power of the void"
+
 		..()
 
 		object.contextLayout = new /datum/contextLayout/screen_HUD_default(2, 16, 16)
@@ -834,7 +837,7 @@
 
 	proc/evolve(var/effect as text)
 		var/datum/abilityHolder/wraith/AH = holder
-		if (AH.corpsecount < AH.absorbs_to_evolve)
+		if (AH.corpsecount < AH.absorbs_to_evolve && !istype(ticker.mode, /datum/game_mode/disaster))
 			boutput(holder.owner, "<span class='notice'>You didn't absorb enough souls. You need to absorb at least [AH.absorbs_to_evolve - AH.corpsecount] more!</span>")
 			return 1
 		if (holder.points < pointCost)
@@ -1553,6 +1556,8 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				trap_choice = /obj/machinery/wraith/runetrap/stunning
 			if("Sleepyness")
 				trap_choice = /obj/machinery/wraith/runetrap/sleepyness
+			if("Slipperiness")
+				trap_choice = /obj/machinery/wraith/runetrap/slipping
 
 		if(P != null)
 			new trap_choice(T, P.master)

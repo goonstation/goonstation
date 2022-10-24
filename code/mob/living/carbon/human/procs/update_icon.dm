@@ -118,9 +118,9 @@
 		UpdateOverlays(null, "material_suit")
 
 	// ID
-	if (src.wear_id)
+	if (src.wear_id?.wear_state)
 		wear_sanity_check(src.wear_id)
-		var/wear_state = src.wear_id.wear_state || src.wear_id.icon_state
+		var/wear_state = src.wear_id.wear_state
 		var/no_offset = 0
 		if ((islist(id_overrides)) && (wear_state in id_overrides))
 			src.wear_id.wear_image.icon = src.mutantrace.clothing_icon_id
@@ -560,9 +560,9 @@
 		UpdateOverlays(null, "wear_head_blood")
 		UpdateOverlays(null, "material_head")
 	// Belt
-	if (src.belt)
+	if (src.belt?.wear_state)
 		wear_sanity_check(src.belt)
-		var/wear_state = src.belt.wear_state || src.belt.item_state || src.belt.icon_state
+		var/wear_state = src.belt.wear_state
 		var/no_offset = FALSE
 		//
 		if (islist(belt_overrides) && (wear_state in belt_overrides)) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
@@ -866,7 +866,7 @@
 		src.image_cust_three?.layer = src.bioHolder.mobAppearance.customization_third.default_layer
 
 
-var/list/update_body_limbs = list("r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left", "r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left")
+var/list/update_body_limbs = list("r_leg" = "stump_leg_right", "l_leg" = "stump_leg_left", "r_arm" = "stump_arm_right", "l_arm" = "stump_arm_left")
 
 /mob/living/carbon/human/update_body()
 	..()

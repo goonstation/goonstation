@@ -61,6 +61,10 @@
 		if(rank in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director","Medical Director"))
 			return TRUE
 
+	if(cache.Find("Ghostdrone"))
+		if(rank in list("Ghostdrone","Remy","Bumblespider","Crow"))
+			return TRUE
+
 	if(cache.Find("[rank]"))
 		return TRUE
 	else

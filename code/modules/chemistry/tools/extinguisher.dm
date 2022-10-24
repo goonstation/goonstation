@@ -74,9 +74,9 @@
 	return "Contains [src.reagents.total_volume] units."
 
 /obj/item/extinguisher/attack(mob/M, mob/user)
-	src.hide_attack = 0
+	src.hide_attack = ATTACK_VISIBLE
 	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
-		src.hide_attack = 1
+		src.hide_attack = ATTACK_FULLY_HIDDEN
 		return
 	..()
 

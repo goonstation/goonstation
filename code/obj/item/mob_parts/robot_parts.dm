@@ -556,8 +556,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left
 	name = "cyborg left arm"
 	slot = "l_arm"
-	icon_state_base = "l_arm"
-	icon_state = "l_arm-generic"
+	icon_state_base = "armL"
+	icon_state = "armL-generic"
 	handlistPart = "armL-generic"
 
 /obj/item/parts/robot_parts/arm/left/standard
@@ -582,7 +582,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/sturdy
 	name = "sturdy cyborg left arm"
 	appearanceString = "sturdy"
-	icon_state = "l_arm-sturdy"
+	icon_state = "armL-sturdy"
 	max_health = 100
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -610,7 +610,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/heavy
 	name = "heavy cyborg left arm"
 	appearanceString = "heavy"
-	icon_state = "l_arm-heavy"
+	icon_state = "armL-heavy"
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -618,7 +618,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/left)
 /obj/item/parts/robot_parts/arm/left/light
 	name = "light cyborg left arm"
 	appearanceString = "light"
-	icon_state = "l_arm-light"
+	icon_state = "armL-light"
 	max_health = 25
 	handlistPart = "armL-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_left
@@ -629,8 +629,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 	name = "cyborg right arm"
 	icon_state = "r_arm"
 	slot = "r_arm"
-	icon_state_base = "r_arm"
-	icon_state = "r_arm-generic"
+	icon_state_base = "armR"
+	icon_state = "armR-generic"
 	handlistPart = "armR-generic"
 
 
@@ -656,7 +656,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/sturdy
 	name = "sturdy cyborg right arm"
 	appearanceString = "sturdy"
-	icon_state = "r_arm-sturdy"
+	icon_state = "armR-sturdy"
 	max_health = 100
 	weight = 0.2
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVY)
@@ -684,7 +684,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/heavy
 	name = "heavy cyborg right arm"
 	appearanceString = "heavy"
-	icon_state = "r_arm-heavy"
+	icon_state = "armR-heavy"
 	max_health = 175
 	weight = 0.4
 	kind_of_limb = (LIMB_ROBOT | LIMB_HEAVIER)
@@ -692,7 +692,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/arm/right)
 /obj/item/parts/robot_parts/arm/right/light
 	name = "light cyborg right arm"
 	appearanceString = "light"
-	icon_state = "r_arm-light"
+	icon_state = "armR-light"
 	max_health = 25
 	handlistPart = "armR-light"
 	robot_movement_modifier = /datum/movement_modifier/robot_part/arm_right
@@ -787,8 +787,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "cyborg left leg"
 	slot = "l_leg"
 	step_image_state = "footprintsL"
-	icon_state_base = "l_leg"
-	icon_state = "l_leg-generic"
+	icon_state_base = "legL"
+	icon_state = "legL-generic"
 	partlistPart = "legL-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_left
 
@@ -798,7 +798,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 /obj/item/parts/robot_parts/leg/left/light
 	name = "light cyborg left leg"
 	appearanceString = "light"
-	icon_state = "l_leg-light"
+	icon_state = "legL-light"
 	partlistPart = "legL-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_left
@@ -808,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/left)
 	name = "left cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
-	icon_state = "l_leg-treads"
+	icon_state = "legL-treads"
 	handlistPart = "legL-treads" // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
@@ -822,8 +822,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "cyborg right leg"
 	slot = "r_leg"
 	step_image_state = "footprintsR"
-	icon_state_base = "r_leg"
-	icon_state = "r_leg-generic"
+	icon_state_base = "legR"
+	icon_state = "legR-generic"
 	partlistPart = "legR-generic"
 	movement_modifier = /datum/movement_modifier/robotleg_right
 
@@ -833,7 +833,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 /obj/item/parts/robot_parts/leg/right/light
 	name = "light cyborg right leg"
 	appearanceString = "light"
-	icon_state = "r_leg-light"
+	icon_state = "legR-light"
 	partlistPart = "legR-light"
 	max_health = 25
 	robot_movement_modifier = /datum/movement_modifier/robotleg_right
@@ -843,7 +843,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "right cyborg tread"
 	desc = "A large wheeled unit like tank tracks. This will help heavier cyborgs to move quickly."
 	appearanceString = "treads"
-	icon_state = "r_leg-treads"
+	icon_state = "legR-treads"
 	handlistPart = "legR-treads"  // THIS ONE gets to layer with the hands because it looks ugly if jumpsuits are over it. Will fix codewise later
 	max_health = 100
 	powerdrain = 2.5
@@ -856,7 +856,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "left thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
-	icon_state = "l_leg-thruster"
+	icon_state = "legL-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.
@@ -867,7 +867,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "right thruster assembly"
 	desc = "Is it really a good idea to give thrusters to cyborgs..? Probably not."
 	appearanceString = "thruster"
-	icon_state = "r_leg-thruster"
+	icon_state = "legR-thruster"
 	max_health = 100
 	powerdrain = 5
 	step_image_state = null //It's flying so no need for this.

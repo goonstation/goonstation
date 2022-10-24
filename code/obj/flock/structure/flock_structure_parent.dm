@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	/// maximum allowed tick spacing for mult calculations due to lag
 	var/cap_tick_spacing = FLOCK_PROCESS_SCHEDULE_INTERVAL * 5
 
-/obj/flock_structure/New(var/atom/location, var/datum/flock/F=null)
+/obj/flock_structure/New(var/atom/location, var/datum/flock/F, atom/param)
 	..()
 	START_TRACKING_CAT(TR_CAT_FLOCK_STRUCTURE)
 	last_process = TIME

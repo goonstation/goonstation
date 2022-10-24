@@ -1269,6 +1269,43 @@
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 
+/datum/limb/eldritch
+	var/static/list/organs = list("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+
+	harm(mob/living/target, var/mob/living/user)
+		if(!user || !target)
+			return FALSE
+		if (!target.melee_attack_test(user))
+			return
+
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting)
+
+		if (!msgs)
+			return
+
+		msgs.damage = 0
+		msgs.damage_type = DAMAGE_BLUNT
+		msgs.base_attack_message = "<span class='alert'><b>[user] punches [target][pick("!", ", with a seemingly unknown effect!", ", doing who knows what!")]</b></span>"
+		user.attack_effects(target, affecting)
+		msgs.flush(SUPPRESS_LOGS)
+
+		if (target.organHolder)
+			var/list/possible_organs = list()
+			for (var/organ in organs)
+				if (target.organHolder.get_organ(organ))
+					possible_organs += organ
+
+			if (length(possible_organs))
+				target.organHolder.damage_organ(5, 0, 0, pick(possible_organs))
+
+				if (prob(25))
+					boutput(target, "<span class='alert'>[pick("Your insides don't feel good!", "You don't feel right somehow.", "You feel strange inside.")]</span>")
+
+		logTheThing("combat", user, target, "punches [constructTarget(target, "combat")] with eldritch arms at [log_loc(user)].")
+
+		user.lastattacked = target
+
 /datum/limb/leg_hand
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control)
 		if (!holder)

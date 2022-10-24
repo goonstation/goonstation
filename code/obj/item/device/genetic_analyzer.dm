@@ -8,7 +8,7 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 5
 	throw_range = 10
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 /obj/item/device/analyzer/genetic/attack(mob/M, mob/user)
 	var/datum/computer/file/genetics_scan/GS = create_new_dna_sample_file(M)

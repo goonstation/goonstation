@@ -225,11 +225,7 @@
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "fc" = (
-/obj/effects/background_objects/x4{
-	name = "Regina";
-	pixel_x = -64;
-	pixel_y = -64
-	},
+/obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
 "fh" = (
@@ -4801,12 +4797,9 @@
 "MO" = (
 /obj/table/auto,
 /obj/item/magnetizer{
-	desc = "Some kind of old mining tool.  Looks like there's a big coil on it, maybe?";
-	loaded = 1;
-	name = "old mining gizmo";
-	pixel_x = 6;
-	pixel_y = 6
+	loaded = 1
 	},
+/obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "MT" = (
@@ -47086,7 +47079,7 @@ Bt
 Bt
 bi
 ab
-ep
+cT
 ab
 ab
 ab
@@ -47390,7 +47383,7 @@ bi
 ab
 ab
 ab
-cT
+ab
 ab
 ab
 ab
@@ -48599,8 +48592,8 @@ IA
 Jv
 ab
 ab
-ab
 fc
+ab
 ab
 ab
 ab

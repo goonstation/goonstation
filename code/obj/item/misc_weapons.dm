@@ -447,7 +447,6 @@
 
 /obj/item/sword/discount/attack(mob/target, mob/user, def_zone, is_special = 0)
 	//hhaaaaxxxxxxxx. overriding the disorient for my own effect
-	is_special = 1
 	if (active)
 		hit_type = DAMAGE_BURN
 	else
@@ -1008,56 +1007,51 @@
 	playsound(loc, 'sound/vox/banned.ogg', 60, 1)
 	return
 
-/////////////////////////////////////////////////// Katana ////////////////////////////////////////////
-//PS the description can be shortened if you find it annoying and you are a jerk.
-
+/////////////////////////////////////////////////// Swords ////////////////////////////////////////////
 //You probably want to spawn the sheath in instead of this.
-/obj/item/katana
-	name = "katana"
-	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
+/obj/item/swords
+	name = "youshouldntseeme sword"
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "katana"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_CUT
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
-	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
+	tool_flags = TOOL_CUTTING
+	w_class = W_CLASS_BULKY
+	force = 10
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	is_syndicate = TRUE
-	mats = list("MET-3"=20, "FAB-1"=5)
-	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
-	w_class = W_CLASS_BULKY
-	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
-	tool_flags = TOOL_CUTTING
+	contraband = 4
 	attack_verbs = "slashes"
-
-
-	// pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+	is_syndicate = TRUE
+	var/delimb_prob = 1
 	custom_suicide = 1
-	var/obj/itemspecialeffect/katana_dash/start/start
-	var/obj/itemspecialeffect/katana_dash/mid/mid1
-	var/obj/itemspecialeffect/katana_dash/mid/mid2
-	var/obj/itemspecialeffect/katana_dash/end/end
-	var/delimb_prob = 100
 
-	crafted
-		name = "handcrafted katana"
-		delimb_prob = 2
+/obj/item/swords/proc/handle_parry(mob/target, mob/user)
+	if (target != user && ishuman(target))
+		var/mob/living/carbon/human/H = target
+		if (H.find_type_in_hand(/obj/item/swords, "right") || H.find_type_in_hand(/obj/item/swords, "left"))
+			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
+			playsound(target, pick('sound/effects/sword_clash1.ogg','sound/effects/sword_clash2.ogg','sound/effects/sword_clash3.ogg'), 70, 0, 0)
+			C.setup(H.loc)
+			var/matrix/m = matrix()
+			m.Turn(rand(0,360))
+			C.transform = m
+			var/matrix/m1 = C.transform
+			m1.Scale(2,2)
+			C.pixel_x = 32*(user.x - target.x)*0.5
+			C.pixel_y = 32*(user.y - target.y)*0.5
+			animate(C,transform=m1,time=8)
+			H.remove_stamina(60)
+			if (ishuman(user))
+				var/mob/living/carbon/human/U = user
+				U.remove_stamina(20)
 
-		force = 12
-		contraband = 5
+			return 1
+	return 0
 
-	New()
-		..()
-		start = new/obj/itemspecialeffect/katana_dash/start(src)
-		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
-		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
-		end = new/obj/itemspecialeffect/katana_dash/end(src)
-		src.setItemSpecial(/datum/item_special/katana_dash)
-		BLOCK_SETUP(BLOCK_SWORD)
-
-/obj/item/katana/attack(mob/target, mob/user, def_zone, is_special = 0)
+/obj/item/swords/attack(mob/target, mob/user, def_zone, is_special = 0)
 	if(!ishuman(target)) //only humans can currently be dismembered
 		return ..()
 	if (target.nodamage)
@@ -1097,38 +1091,62 @@
 			return ..()
 	..()
 
+/obj/item/swords/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
+		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
+		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+		user.TakeDamage("chest", 100, 0)
+		SPAWN(10 SECONDS)
+		if (user)
+			user.suiciding = 0
+		return 1
+
 /// Checks if the target is facing in some way away from the user. Or they're lying down
-/obj/item/katana/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
+/obj/item/swords/proc/SeverButtStuff(var/mob/living/carbon/human/target, var/mob/user)
 	if(ismob(target) && (BOUNDS_DIST(target, user) == 0) && (target.dir == user.dir || target.lying))
 		if(target.organHolder?.tail)
 			target.organHolder.drop_and_throw_organ("tail", dist = 5, speed = 1, showtext = 1)
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
-/obj/item/katana/proc/handle_parry(mob/target, mob/user)
-	if (target != user && ishuman(target))
-		var/mob/living/carbon/human/H = target
-		if (H.find_type_in_hand(/obj/item/katana, "right") || H.find_type_in_hand(/obj/item/katana, "left"))
-			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
-			playsound(target, pick('sound/effects/sword_clash1.ogg','sound/effects/sword_clash2.ogg','sound/effects/sword_clash3.ogg'), 70, 0, 0)
-			C.setup(H.loc)
-			var/matrix/m = matrix()
-			m.Turn(rand(0,360))
-			C.transform = m
-			var/matrix/m1 = C.transform
-			m1.Scale(2,2)
-			C.pixel_x = 32*(user.x - target.x)*0.5
-			C.pixel_y = 32*(user.y - target.y)*0.5
-			animate(C,transform=m1,time=8)
-			H.remove_stamina(60)
-			if (ishuman(user))
-				var/mob/living/carbon/human/U = user
-				U.remove_stamina(20)
+//PS the description can be shortened if you find it annoying and you are a jerk.
+/obj/item/swords/katana
+	name = "katana"
+	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
+	icon_state = "katana"
+	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
+	mats = list("MET-3"=20, "FAB-1"=5)
+	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 
-			return 1
-	return 0
 
-/obj/item/katana/suicide(var/mob/user as mob)
+	// pickup_sfx = 'sound/items/blade_pull.ogg'
+	var/obj/itemspecialeffect/katana_dash/start/start
+	var/obj/itemspecialeffect/katana_dash/mid/mid1
+	var/obj/itemspecialeffect/katana_dash/mid/mid2
+	var/obj/itemspecialeffect/katana_dash/end/end
+	delimb_prob = 100
+
+	crafted
+		name = "handcrafted katana"
+		delimb_prob = 2
+
+		force = 12
+		contraband = 5
+
+	New()
+		..()
+		start = new/obj/itemspecialeffect/katana_dash/start(src)
+		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
+		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
+		end = new/obj/itemspecialeffect/katana_dash/end(src)
+		src.setItemSpecial(/datum/item_special/katana_dash)
+		BLOCK_SETUP(BLOCK_SWORD)
+
+/obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
 	var/say = pick("Kono shi wa watashinokazoku ni meiyo o ataeru","Haji no mae no shi", "Watashi wa kyo nagura reta.", "Teki ga katta", "Shinjiketo ga modotte kuru")
 	user.say(say)
@@ -1139,7 +1157,7 @@
 			user.suiciding = 0
 	return 1
 
-/obj/item/katana/self_destructing // for the dojo ronin to wield
+/obj/item/swords/katana/self_destructing // for the dojo ronin to wield
 	force = 30
 
 	dropped(mob/user)
@@ -1147,32 +1165,25 @@
 		if (isturf(src.loc))
 			qdel(src)
 
-/obj/item/katana/reverse
+/obj/item/swords/katana/reverse
 	icon_state = "katana_reverse"
 	name = "reverse blade katana"
 	desc = "A sword whose blade is on the wrong side. Crafted by a master who grew to hate the death his weapons caused; which was weird since Oppenheimer has him beat by several orders of magnitude. Considered worthless by many, only a true virtuoso can unleash it's potential."
-
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	hit_type = DAMAGE_BLUNT
 	force = 18
-	throwforce = 5
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
-	delimb_prob = 1
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
-/obj/item/katana/captain
+/obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
 	mats = list("MET-2"=15)
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 16 //not awful but not amazing
-	throwforce = 5
-	delimb_prob = 1
 	contraband = 4
 	tooltip_flags = REBUILD_USER
 
@@ -1192,28 +1203,11 @@
 	red
 		icon_state = "red_cap_sword"
 
-/obj/item/katana/captain/suicide(var/mob/living/carbon/human/user as mob) //you stab out a random organ
-	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	else
-		var/organtokill = pick("liver", "spleen", "heart", "appendix", "stomach", "intestines")
-		user.visible_message("<span class='alert'><b>[user] stabs the [src] into their own chest, ripping out their [organtokill]! [pick("Oh the humanity", "What a bold display", "That's not safe at all")]!</b></span>")
-		user.organHolder.drop_and_throw_organ(organtokill, dist = 5, speed = 1, showtext = 1)
-		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
-		user.TakeDamage("chest", 100, 0)
-		SPAWN(10 SECONDS)
-		if (user)
-			user.suiciding = 0
-		return 1
-
-/obj/item/katana/nukeop
+/obj/item/swords/nukeop
 	icon_state = "syndie_sword"
 	name = "Syndicate Commander's Sabre"
 	desc = "A sharp sabre for the most trusted and competent syndicate operatives. Commissioned from Iron Belle Bladeworks."
-
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	force = 20
-	throwforce = 5
 	delimb_prob = 20
 	contraband = 4
 
@@ -1221,7 +1215,7 @@
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
-/obj/item/katana/nukeop/suicide(var/mob/living/carbon/human/user as mob)
+/obj/item/swords/nukeop/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
 		return 0
 	else
@@ -1229,34 +1223,42 @@
 		user.organHolder.drop_and_throw_organ("head", dist = 5, speed = 1, showtext = 1)
 		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
-/obj/item/katana_sheath
-	name = "katana sheath"
-	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
+/obj/item/swords/pirate
+	icon_state = "pirate_sword"
+	name = "Pirate's Sabre"
+	desc = "A sharp sabre for the most feared of all space pirates. Commissioned from Iron Belle Bladeworks."
+	force = 20
+	delimb_prob = 10
+	contraband = 4
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
+/obj/item/swords_sheaths //blegh, keeping naming consistent
+	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "katana_sheathed"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	wear_layer = MOB_SHEATH_LAYER
 	uses_multiple_icon_states = 1
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	item_state = "sheathedhand"
 	hit_type = DAMAGE_BLUNT
-	force = 1
+	force = 5 // can do a little more damage, as a treat
 	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
-	is_syndicate = 1
-	var/obj/item/katana/sword_inside = 1
+	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
-
 	var/ih_sheathed_state = "sheathedhand"
 	var/ih_sheath_state = "sheathhand"
-	var/sword_path = /obj/item/katana
+	var/sword_path = /obj/item/swords
+	is_syndicate = TRUE
 
 	New()
 		..()
-		var/obj/item/katana/K = new sword_path()
+		var/obj/item/swords/K = new sword_path()
 		sword_inside = K
 		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
@@ -1277,9 +1279,10 @@
 		if (!istype(W, sword_path))
 			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
 			return
-		if (istype(W, /obj/item/katana) && !src.sword_inside && !W.cant_drop == 1)
+		if (istype(W, /obj/item/swords) && !src.sword_inside && !W.cant_drop == 1)
 			icon_state = sheathed_state
 			item_state = ih_sheathed_state
+			wear_state = ih_sheathed_state
 			user.u_equip(W)
 			W.set_loc(src)
 			user.update_clothing()
@@ -1291,21 +1294,36 @@
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
-/obj/item/katana_sheath/proc/draw_sword(mob/living/carbon/human/user)
-	if(src.sword_inside) //Checks if a katana is inside
+
+/obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
+	if(src.sword_inside) //Checks if a sword is inside
 		if (!user.r_hand || !user.l_hand)
 			sword_inside.clean_forensic()
 			boutput(user, "You draw [sword_inside] from your sheath.")
 			playsound(user, pick('sound/effects/sword_unsheath1.ogg','sound/effects/sword_unsheath2.ogg'), 50, 0, 0)
 			icon_state = sheath_state
 			item_state = ih_sheath_state
+			wear_state = ih_sheath_state
 			user.put_in_hand_or_drop(sword_inside)
 			sword_inside = null //No more sword inside.
 			user.update_clothing()
 		else
 			boutput(user, "You don't have a free hand to draw with!")
 
-/obj/item/katana_sheath/reverse
+/obj/item/swords_sheaths/katana
+	name = "katana sheath"
+	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
+	icon_state = "katana_sheathed"
+	item_state = "sheathedhand"
+	sword_inside = 1
+	sheathed_state = "katana_sheathed"
+	sheath_state = "katana_sheath"
+
+	ih_sheathed_state = "sheathedhand"
+	ih_sheath_state = "sheathhand"
+	sword_path = /obj/item/swords/katana
+
+/obj/item/swords_sheaths/katana/reverse
 	name = "reverse-blade katana sheath"
 	desc = "It can clean a bloodied katana, and also allows for easier storage of a katana"
 	icon_state = "sheath_reverse1"
@@ -1315,15 +1333,9 @@
 	sheath_state = "sheath_reverse0"
 	ih_sheathed_state = "sheath_reverse1"
 	ih_sheath_state = "sheath_reverse0"
-	sword_path = /obj/item/katana/reverse
+	sword_path = /obj/item/swords/katana/reverse
 
-	attackby(obj/item/W, mob/user)
-		if (W.type == /obj/item/katana)
-			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
-			return
-		..()
-
-/obj/item/katana_sheath/captain
+/obj/item/swords_sheaths/captain
 	name = "Commander's Scabbard"
 	desc = null
 	icon_state = "cap_sword_scabbard"
@@ -1333,14 +1345,8 @@
 	sheath_state = "cap_scabbard"
 	ih_sheathed_state = "scabbard-cap1"
 	ih_sheath_state = "scabbard-cap0"
-	sword_path = /obj/item/katana/captain
+	sword_path = /obj/item/swords/captain
 	tooltip_flags = REBUILD_USER
-
-	attackby(obj/item/W, mob/user)
-		if (!istype(W, /obj/item/katana/captain))
-			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
-			return
-		..()
 
 	get_desc(var/dist, var/mob/user)
 		if (user.mind && user.mind.assigned_role == "Captain")
@@ -1356,7 +1362,7 @@
 		sheath_state = "blue_cap_scabbard"
 		ih_sheathed_state = "blue_scabbard-cap1"
 		ih_sheath_state = "blue_scabbard-cap0"
-		sword_path = /obj/item/katana/captain/blue
+		sword_path = /obj/item/swords/captain/blue
 
 	red //for brown pants medal reward
 		icon_state = "red_cap_sword_scabbard"
@@ -1366,9 +1372,9 @@
 		sheath_state = "red_cap_scabbard"
 		ih_sheathed_state = "red_scabbard-cap1"
 		ih_sheath_state = "red_scabbard-cap0"
-		sword_path = /obj/item/katana/captain/red
+		sword_path = /obj/item/swords/captain/red
 
-/obj/item/katana_sheath/nukeop
+/obj/item/swords_sheaths/nukeop
 	name = "Syndicate Commander's Scabbard"
 	desc = "A nifty container for an evil sword. Given to the most trusted syndicate operatives. The scabbard bears the insignia 'I.B.B'."
 	icon_state = "syndie_sword_scabbard"
@@ -1378,13 +1384,20 @@
 	sheath_state = "syndie_scabbard"
 	ih_sheathed_state = "scabbard-syndie1"
 	ih_sheath_state = "scabbard-syndie0"
-	sword_path = /obj/item/katana/nukeop
+	sword_path = /obj/item/swords/nukeop
 
-	attackby(obj/item/W, mob/user)
-		if (!istype(W, sword_path))
-			boutput(user, "<span class='alert'>The [W] can't fit into [src].</span>")
-			return
-		..()
+/obj/item/swords_sheaths/pirate
+	name = "Pirate's Scabbard"
+	desc = "A nifty container for a ruthless sword. Given to the most feared space pirates, or stolen from the previous most feared space pirate. The scabbard bears the insignia 'I.B.B'."
+	icon_state = "pirate_sword_scabbard"
+	item_state = "scabbard-pirate1"
+
+	sheathed_state = "pirate_sword_scabbard"
+	sheath_state = "pirate_scabbard"
+	ih_sheathed_state = "scabbard-pirate1"
+	ih_sheath_state = "scabbard-pirate0"
+	sword_path = /obj/item/swords/pirate
+
 
 /*
  *							--- Non-electronic Swords ---
@@ -1393,7 +1406,7 @@
  * Kinda just proof-of-concepts + me learning about numbers. ~ Gannets
 */
 
-/obj/item/bloodthirsty_blade
+/obj/item/swords/bloodthirsty_blade
 	name = "Bloodthirsty Blade"
 	desc = "A mysterious blade that hungers for blood & revels in strife. Grows stronger when used for malicious means."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1413,6 +1426,7 @@
 	stamina_crit_chance = 15
 	two_handed = 1
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	delimb_prob = 10
 
 	New()
 		..()
@@ -1421,7 +1435,7 @@
 		BLOCK_SETUP(BLOCK_SWORD)
 
 
-/obj/item/bloodthirsty_blade/attack(target, mob/user)
+/obj/item/swords/bloodthirsty_blade/attack(target, mob/user)
 	playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, 1)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -1431,14 +1445,14 @@
 			take_bleeding_damage(C, user, 5, DAMAGE_STAB)
 	..()
 
-/obj/item/bloodthirsty_blade/dropped(mob/user)
+/obj/item/swords/bloodthirsty_blade/dropped(mob/user)
 	..()
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>As the [src] falls from [user]'s hands, it seems to become duller!</span>")
 		force = 5
 		return
 
-obj/item/fragile_sword
+obj/item/swords/fragile_sword
 	name = "fragile sword"
 	desc = "This great blade has seen many battles, as such it dulls quickly when used."
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1454,6 +1468,7 @@ obj/item/fragile_sword
 	stamina_cost = 25
 	stamina_crit_chance = 15
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	delimb_prob = 5
 
 	var/minimum_force = 5
 	var/maximum_force = 70
@@ -1702,3 +1717,27 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+/obj/item/swords/sord
+	name = "gross sord"
+	desc = "oh no"
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "longsword"
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	color = "#4a996c"
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	force = 10
+	throwforce = 5
+	throw_speed = 1
+	throw_range = 5
+	is_syndicate = TRUE
+	contraband = 10 // absolutely illegal
+	w_class = W_CLASS_NORMAL
+	hitsound = 'sound/voice/farts/fart7.ogg'
+	tool_flags = TOOL_CUTTING
+	attack_verbs = "slashes"
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)

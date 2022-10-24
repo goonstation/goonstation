@@ -25,7 +25,8 @@ var/datum/event_controller/random_events
 	var/list/player_spawn_events = list()
 	var/dead_players_threshold = 0.3
 	var/spawn_events_begin = 23 MINUTES
-	var/time_between_spawn_events = 8 MINUTES
+	var/time_between_spawn_events_lower = 8 MINUTES
+	var/time_between_spawn_events_upper = 12 MINUTES
 
 	var/major_event_timer = 0
 	var/minor_event_timer = 0
@@ -127,7 +128,7 @@ var/datum/event_controller/random_events
 				message_admins("<span class='internal'>A spawn event would have happened now, but it was not needed based on alive players + antagonists headcount or game mode!<br> \
 								[round(100 * aap, 0.1)]% of the alive crew were antags and [round(100 * dcp, 0.1)]% of the entire crew were dead.</span>")
 
-		next_spawn_event = ticker.round_elapsed_ticks + time_between_spawn_events
+		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
 		if (!event_bank || event_bank.len < 1)

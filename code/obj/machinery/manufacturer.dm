@@ -563,7 +563,7 @@
 				if (src.shock(usr, 10))
 					return
 
-		if (((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf)))
+		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))

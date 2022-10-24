@@ -412,6 +412,7 @@
 
 	New()
 		..()
+		wear_state = item_state
 		BLOCK_SETUP(BLOCK_ROPE)
 
 /obj/item/storage/fanny/funny
@@ -460,6 +461,7 @@
 
 	New()
 		..()
+		wear_state = item_state
 		BLOCK_SETUP(BLOCK_ROPE)
 		START_TRACKING
 
@@ -619,7 +621,7 @@
 
 /obj/item/storage/belt/utility/prepared
 	spawn_contents = list(/obj/item/crowbar/yellow,
-	/obj/item/weldingtool,
+	/obj/item/weldingtool/yellow,
 	/obj/item/wirecutters/yellow,
 	/obj/item/screwdriver/yellow,
 	/obj/item/wrench/yellow,
@@ -628,7 +630,7 @@
 
 /obj/item/storage/belt/utility/superhero
 	name = "superhero utility belt"
-	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/mini_oxygen)
+	spawn_contents = list(/obj/item/clothing/mask/breath,/obj/item/tank/emergency_oxygen)
 
 /obj/item/storage/belt/medical
 	name = "medical belt"
@@ -637,6 +639,13 @@
 	item_state = "medical"
 	can_hold = list(/obj/item/robodefibrillator)
 	in_list_or_max = 1
+
+/obj/item/storage/belt/medical/prepared
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+	/obj/item/reagent_containers/mender/burn,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/device/analyzer/healthanalyzer/upgraded,
+	/obj/item/robodefibrillator)
 
 /obj/item/storage/belt/roboticist
 	icon_state = "utilrobotics"
@@ -897,6 +906,7 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 
 	New()
 		..()
+		src.wear_state = src.item_state
 		setProperty("negate_fluid_speed_penalty", 0.2)
 
 /obj/item/inner_tube/duck
@@ -917,3 +927,4 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 		if (prob(40))
 			src.icon_state = "pool_ring-[pick("duck","giraffe","flamingo")]"
 			src.item_state = src.icon_state
+			src.wear_state = src.item_state

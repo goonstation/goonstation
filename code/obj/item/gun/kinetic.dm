@@ -523,7 +523,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_PISTOL_22)
 	max_ammo_capacity = 10
 	auto_eject = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
 	has_empty_state = 1
 	fire_animation = TRUE
@@ -982,7 +982,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_DART_ALL)
 	max_ammo_capacity = 1.
 	can_dual_wield = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	gildable = 1
 	w_class = W_CLASS_SMALL
 	muzzle_flash = "muzzle_flash_launch"
@@ -1676,7 +1676,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 
 /datum/component/holdertargeting/smartgun/nukeop/is_valid_target(mob/user, mob/M)
-	return ..() && !istype(M.get_id(), /obj/item/card/id/syndicate)
+	return ..() && !(istype(M.get_id(), /obj/item/card/id/syndicate) || isnukeopgunbot(M) || istype(M, /mob/living/critter/robotic/sawfly))
 
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
@@ -1736,7 +1736,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_TRANQ_9MM)
 	max_ammo_capacity = 15
 	auto_eject = 1
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/tranq_darts/syndicate/pistol
 	fire_animation = TRUE
@@ -2153,6 +2153,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	can_dual_wield = FALSE
 	two_handed = FALSE
 	add_residue = TRUE
+	gildable = TRUE
 	sound_load_override = 'sound/weapons/gunload_sawnoff.ogg'
 
 	var/broke_open = FALSE
@@ -2165,6 +2166,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new/obj/item/ammo/bullets/abg/two
 		set_current_projectile(new/datum/projectile/bullet/abg)
 		..()
+
+	update_icon()
+		. = ..()
+		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
 	canshoot()
 		if (!src.broke_open)
@@ -2180,10 +2185,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	attack_self(mob/user)
 		if (src.broke_open)
-			src.icon_state = "coachgun"
 			src.broke_open = FALSE
 		else
-			src.icon_state = "coachgun-empty"
 			src.broke_open = TRUE
 			src.casings_to_eject = src.shells_to_eject
 
@@ -2193,6 +2196,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
 
+		update_icon()
 		..()
 
 	attackby(obj/item/I, mob/user)

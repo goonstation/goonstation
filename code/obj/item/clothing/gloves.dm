@@ -495,7 +495,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			return 0
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("stab", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
@@ -513,6 +513,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			force = initial(force)
 			stamina_damage = initial(stamina_damage)
 			stamina_cost = initial(stamina_cost)
+			stamina_crit_chance = initial(stamina_crit_chance)
 
 			hitsound = initial(hitsound)
 			attack_verbs = initial(attack_verbs)
@@ -531,8 +532,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			deployed = TRUE
 			hit_type = DAMAGE_CUT
 			force = 11
-			stamina_damage = 25
+			stamina_damage = 20
 			stamina_cost = 10
+			stamina_crit_chance = 0
 			activeweapon = TRUE
 			setSpecialOverride(/datum/item_special/double, src)
 

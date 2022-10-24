@@ -4764,12 +4764,6 @@
 	dir = 8
 	},
 /area/station/medical/staff)
-"alh" = (
-/obj/storage/secure/closet/medical/uniforms,
-/turf/simulated/floor/redwhite{
-	dir = 8
-	},
-/area/station/medical/medbay/surgery/storage)
 "ali" = (
 /obj/item/crowbar,
 /turf/simulated/floor/plating/random,
@@ -5774,7 +5768,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
 "anu" = (
-/obj/storage/closet/medicalclothes,
+/obj/machinery/vending/jobclothing/medical,
 /obj/machinery/light/incandescent/cool,
 /turf/simulated/floor/redwhite{
 	dir = 10
@@ -9822,7 +9816,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
 "axk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = 32
@@ -10791,6 +10785,7 @@
 /area/station/hallway/primary/north)
 "azw" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/paper/book/from_file/pharmacopia,
 /obj/machinery/phone{
 	pixel_y = 6
 	},
@@ -13974,7 +13969,6 @@
 	name = "Glassware Recycler"
 	},
 /obj/table/reinforced/chemistry/auto,
-/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHz" = (
@@ -14160,7 +14154,7 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "aHW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/poster_ptoe{
 	pixel_y = -28
@@ -18403,7 +18397,7 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "aTa" = (
@@ -23340,13 +23334,14 @@
 /area/station/crew_quarters/bar)
 "bja" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/obj/machinery/espresso_machine{
+	pixel_y = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
 "bjb" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/plate,
-/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
 	pixel_y = 6
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
@@ -23596,15 +23591,15 @@
 /area/station/crew_quarters/kitchen)
 "bjN" = (
 /obj/machinery/vending/alcohol,
-/obj/drink_rack/mug{
-	pixel_y = 30
+/obj/noticeboard/persistent{
+	name = "Bar persistent notice board";
+	persistent_id = "bar"
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/nw,
 /area/station/crew_quarters/bar)
 "bjO" = (
-/obj/noticeboard/persistent{
-	name = "Bar persistent notice board";
-	persistent_id = "bar"
+/obj/drink_rack/cup{
+	pixel_y = 32
 	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/T_north,
 /area/station/crew_quarters/bar)
@@ -23624,6 +23619,9 @@
 "bjT" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/cookie/jaffa{
+	pixel_y = 6
+	},
 /turf/simulated/floor/carpet/blue/fancy/narrow/ne,
 /area/station/crew_quarters/bar)
 "bjU" = (
@@ -24447,7 +24445,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "blT" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/clothing/glasses/spectro,
 /obj/machinery/power/apc/autoname_south,
 /obj/cable,
@@ -28656,7 +28654,7 @@
 /obj/machinery/turret{
 	name = "armory turret"
 	},
-/turf/simulated/floor/delivery/caution,
+/turf/simulated/floor/red/redblackchecker,
 /area/station/ai_monitored/armory)
 "bwF" = (
 /obj/disposalpipe/segment/morgue,
@@ -38455,9 +38453,7 @@
 "bVa" = (
 /obj/item/device/radio/intercom/security,
 /obj/machinery/vending/security_ammo,
-/turf/simulated/floor/redblack{
-	dir = 8
-	},
+/turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "bVc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -39052,6 +39048,7 @@
 /area/station/ai_monitored/armory)
 "bWG" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	name = "Armory";
 	req_access_txt = "37"
 	},
@@ -39386,9 +39383,6 @@
 /obj/cable,
 /turf/simulated/floor/red,
 /area/station/security/brig)
-"bXu" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/ai_monitored/armory)
 "bXv" = (
 /obj/storage/secure/crate/gear/armory/grenades,
 /turf/simulated/floor/redblack{
@@ -39695,9 +39689,49 @@
 /area/station/ai_monitored/armory)
 "bYq" = (
 /obj/rack,
-/obj/item/storage/box/flashbang_kit,
-/obj/item/storage/box/flashbang_kit{
-	pixel_x = -4
+/obj/item/clothing/mask/gas{
+	pixel_x = -7;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -15;
+	pixel_y = 8
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -13
+	},
+/obj/item/clothing/suit/armor/heavy{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -4;
+	pixel_y = 12
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -13;
+	pixel_y = 12
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 9
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 1
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 11;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 12;
+	pixel_y = 8
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 4;
+	pixel_y = 8
 	},
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/redblack/corner{
@@ -39714,11 +39748,27 @@
 /turf/simulated/floor/green,
 /area/research_outpost/pathology)
 "bYt" = (
-/obj/item/reagent_containers/food/snacks/donut/custom/robust{
-	pixel_y = 4;
-	rand_pos = 0
-	},
 /obj/table/reinforced/industrial/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_x = 11;
+	pixel_y = 6
+	},
+/obj/item/device/radio/electropack{
+	pixel_x = -15;
+	pixel_y = 6
+	},
+/obj/item/device/radio/electropack{
+	pixel_x = -14;
+	pixel_y = 2
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -5;
+	pixel_y = 11
+	},
+/obj/item/device/radio/signaler{
+	pixel_x = -4;
+	pixel_y = 4
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -41857,7 +41907,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "cfi" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -44030,6 +44080,7 @@
 /area/station/engine/storage)
 "clX" = (
 /obj/machinery/door/airlock/pyro/security/alt{
+	aiControlDisabled = 1;
 	dir = 4;
 	name = "Armory";
 	req_access_txt = "37"
@@ -45148,7 +45199,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "gJy" = (
-/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
+/obj/item/ammo/bullets/tranq_darts,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -45493,11 +45547,19 @@
 	name = "Catering Hangar"
 	})
 "iPj" = (
-/obj/item/kitchen/food_box/donut_box{
-	pixel_x = -3;
-	pixel_y = 6
-	},
 /obj/table/reinforced/industrial/auto,
+/obj/item/storage/box/revimp_kit{
+	pixel_x = 5;
+	pixel_y = 13
+	},
+/obj/item/storage/box/revimp_kit{
+	pixel_y = 13
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
+	pixel_x = -1;
+	pixel_y = 2;
+	rand_pos = 0
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -45760,6 +45822,32 @@
 	name = "not grass"
 	},
 /area/station/ranch)
+"jWq" = (
+/obj/rack,
+/obj/item/breaching_charge{
+	pixel_x = 10;
+	pixel_y = 1
+	},
+/obj/item/breaching_charge{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/breaching_charge{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -3;
+	pixel_y = 7
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -1;
+	pixel_y = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
 "jZw" = (
 /obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
@@ -45822,6 +45910,11 @@
 	dir = 4
 	},
 /area/station/medical/medbay/lobby)
+"krS" = (
+/turf/simulated/floor/redblack/corner{
+	dir = 8
+	},
+/area/station/ai_monitored/armory)
 "ksg" = (
 /turf/simulated/floor/black,
 /area/research_outpost)
@@ -46225,32 +46318,37 @@
 /area/station/ai_monitored/storage/eva)
 "mLJ" = (
 /obj/rack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/electropack,
-/obj/item/device/radio/signaler,
-/obj/item/device/radio/signaler,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/chem_grenade/pepper,
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 9;
+	pixel_y = 7
 	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 8;
+	pixel_y = 2
 	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 7;
+	pixel_y = -3
 	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
+/obj/item/clothing/glasses/thermal{
+	pixel_x = 6;
+	pixel_y = -8
 	},
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -8;
+	pixel_y = -6
 	},
 /turf/simulated/floor/redblack/corner{
 	dir = 1
@@ -46711,15 +46809,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "pij" = (
-/obj/rack,
-/obj/item/storage/box/revimp_kit{
-	pixel_x = 2
-	},
-/obj/item/storage/box/revimp_kit{
-	pixel_x = -3
-	},
-/obj/item/gun/energy/phaser_gun,
-/obj/item/gun/energy/phaser_gun,
+/obj/storage/secure/crate/weapon/armory/phaser,
 /obj/machinery/light/incandescent/greenish,
 /turf/simulated/floor/redblack{
 	dir = 8
@@ -47711,14 +47801,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "vex" = (
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/item/ammo/bullets/tranq_darts,
-/obj/machinery/light/incandescent/harsh/very,
+/obj/machinery/weapon_stand/rifle_rack/recharger,
 /obj/decal/poster/wallsign/framed_award/hos_medal{
 	pixel_y = 28
 	},
+/obj/machinery/light/incandescent/harsh/very,
 /turf/simulated/floor/redblack,
 /area/station/ai_monitored/armory)
 "vfw" = (
@@ -48213,17 +48300,26 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/sec)
 "xWR" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/suit/armor/heavy,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/glasses/thermal,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/head/helmet/riot,
-/obj/item/clothing/glasses/nightvision,
-/obj/item/clothing/glasses/nightvision,
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/box/flashbang_kit{
+	pixel_y = 13
+	},
+/obj/item/storage/box/flashbang_kit{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -2;
+	pixel_y = 2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -9;
+	pixel_y = 2
+	},
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -91689,7 +91785,7 @@ bTR
 bTR
 bTR
 bTR
-bXu
+bTR
 bTR
 bTR
 vcb
@@ -92592,8 +92688,8 @@ bQF
 bRH
 bSN
 bTR
-bVX
-bVX
+jWq
+krS
 bWH
 bVX
 bVX
@@ -98242,7 +98338,7 @@ ajQ
 ait
 akS
 ktR
-alh
+oXV
 anu
 aog
 aoY

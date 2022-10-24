@@ -168,6 +168,9 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Ignite"
 				id = "ignite"
 				gender = MASCULINE
+			igniteshaved
+				name = "Ignite: Shaved"
+				id = "igniteshaved"
 			streak
 				name = "Hair Streak"
 				id = "streak"
@@ -269,11 +272,23 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 				name = "Two Bangs: Short"
 				id = "2bangs_short"
 			flatbangs
-				name = "Flat Bangs"
+				name = "Bangs: Flat"
 				id = "flatbangs"
+			shortflatbangs
+				name = "Bangs: Flat Shorter"
+				id = "shortflatbangs"
 			longwavebangs
-				name = "Long Wavy Bangs"
+				name = "Bangs: Long Wavy"
 				id = "longwavebangs"
+			shortwavebangs
+				name = "Bangs: Short Wavy"
+				id = "shortwavebangs"
+			sidebangs
+				name = "Bangs: Sides"
+				id = "sidebangs"
+			mysterybangs
+				name = "Bangs: Mysterious"
+				id = "mysterybangs"
 			bedhead
 				name = "Bedhead"
 				id = "bedhead"

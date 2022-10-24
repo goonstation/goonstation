@@ -192,10 +192,10 @@
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
-				emergency_shuttle.incall()
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				if (emergency_shuttle.incall())
+					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -405,12 +405,13 @@
 			var/success = dropping_organ.attach_organ(src, dropping_user)
 			if (success)
 				return
-		else if (istype(dropped, /obj/item/parts/human_parts/))
-			var/obj/item/parts/dropping_limb = dropped
-			dropping_limb.attach(src, dropping_user)
-		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-			var/obj/item/parts/robot_parts/dropping_limb = dropped
-			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+		else if (istype(dropped, /obj/item/parts))
+			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
+				var/obj/item/parts/dropping_limb = dropped
+				dropping_limb.attach(src, dropping_user)
+			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+				var/obj/item/parts/robot_parts/dropping_limb = dropped
+				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)

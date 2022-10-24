@@ -742,25 +742,27 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white_pop"
 
+// reagent coloration is done in pens_writing_etc
 /obj/decal/cleanable/writing
 	name = "writing"
 	desc = "Someone's scribbled something here."
 	layer = TURF_LAYER + 1
 	icon = 'icons/obj/decals/writing.dmi'
 	icon_state = "writing1"
-	color = "#000000"
+	color = "#FFFFFF"
 	random_icon_states = list("writing1", "writing2", "writing3", "writing4", "writing5", "writing6", "writing7")
 	var/words = "Nothing."
 	var/font = null
 	var/webfont = 0
-	var/font_color = "#000000"
+	var/font_color = "#FFFFFF"
 	var/color_name = null
 	var/artist = null//the key of the one who wrote it
 	real_name = "writing"
 
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
-		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span class='notice'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
+		if (src.reagents.total_volume)
+			. += "<br><span class = 'notice'>It's written in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -1530,6 +1532,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "magnesium"
 	sample_verb = "scrape"
+	color = "#434343" // distinguish from salt
 	var/on_fire = null
 	var/burn_time = 4
 

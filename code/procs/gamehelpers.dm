@@ -762,3 +762,15 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 
 	return words
+
+// returns initial health of an item or an item type
+/proc/get_initial_item_health(obj/item/I)
+	if (initial(I.health))
+		return initial(I.health)
+	else
+		var/weight_class = initial(I.w_class)
+		switch (weight_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				return weight_class + 1
+			else
+				return weight_class + 2
