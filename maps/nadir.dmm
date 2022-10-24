@@ -2435,8 +2435,9 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "blT" = (
-/obj/stool/chair{
-	dir = 8
+/obj/table/wood/round/auto,
+/obj/item/paper_bin{
+	pixel_y = 2
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -3059,6 +3060,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"bxW" = (
+/obj/stool/chair/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/yellowblack,
+/area/station/hallway/primary/southeast)
 "byf" = (
 /obj/decal/tile_edge{
 	icon = 'icons/obj/decals/stencils.dmi';
@@ -23852,6 +23859,17 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
+"lAr" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/obj/landmark/start{
+	name = "Staff Assistant"
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/southeast)
 "lAB" = (
 /obj/item/storage/toilet{
 	dir = 4
@@ -39667,6 +39685,19 @@
 /obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
+"tza" = (
+/obj/table/wood/round/auto,
+/obj/item/pen{
+	pixel_y = -2;
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 16
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/station/hallway/primary/southeast)
 "tzj" = (
 /obj/rack,
 /obj/item/clothing/suit/armor/heavy{
@@ -43614,8 +43645,12 @@
 /area/station/crew_quarters/pool)
 "vDk" = (
 /obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/item/pen,
+/obj/item/device/pda_module/tray{
+	pixel_x = -5
+	},
+/obj/item/electronics/scanner{
+	pixel_x = 4
+	},
 /turf/simulated/floor/yellowblack,
 /area/station/hallway/primary/southeast)
 "vDp" = (
@@ -102387,7 +102422,7 @@ gbs
 bQQ
 rtv
 sXH
-yiB
+tza
 sVX
 iPJ
 wlW
@@ -102689,7 +102724,7 @@ aGq
 pLd
 nNV
 sXH
-yiB
+lAr
 vEo
 iPJ
 uEI
@@ -104807,7 +104842,7 @@ sNR
 jjd
 qBe
 rZb
-oHA
+bxW
 hXJ
 lbH
 lbg
