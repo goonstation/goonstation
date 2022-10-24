@@ -148,16 +148,17 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		setup_overlays()
 
 	setup_overlays()
-		if (src.client && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor/admin) &&	!istype(src, /mob/living/critter/small_animal/mouse/remy))
-			fur_color = src.client.preferences.AH.customization_first_color
-			eye_color = src.client.preferences.AH.e_color
-		var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
-		overlay.color = fur_color
-		src.UpdateOverlays(overlay, "hair")
+		if (!istype(src, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && !istype(src, /mob/living/critter/small_animal/mouse/remy))
+			if (src.client)
+				fur_color = src.client.preferences.AH.customization_first_color
+				eye_color = src.client.preferences.AH.e_color
+			var/image/overlay = image('icons/misc/critter.dmi', "mouse_colorkey")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 
-		var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
-		overlay_eyes.color = eye_color
-		src.UpdateOverlays(overlay_eyes, "eyes")
+			var/image/overlay_eyes = image('icons/misc/critter.dmi', "mouse_eyes")
+			overlay_eyes.color = eye_color
+			src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
 		src.ClearAllOverlays()
