@@ -166,7 +166,7 @@ mob/verb/checkrewards()
 		C.mob.put_in_hand_or_drop(I)
 		boutput(C.mob, "An orange shade starts to crawl all over the mop's head.")
 
-/datum/jobXpReward/janitor20
+/datum/jobXpReward/janiberet
 	name = "Head of Sanitation beret"
 	desc = "You've seen it all.  You've seen entirely too much. Was it worth it? Maybe this hat will help you forget..."
 	required_levels = list("Janitor"=20)
@@ -175,6 +175,19 @@ mob/verb/checkrewards()
 
 	activate(var/client/C)
 		var/obj/item/clothing/head/janiberet/T = new/obj/item/clothing/head/janiberet(get_turf(C.mob))
+		T.set_loc(get_turf(C.mob))
+		C.mob.put_in_hand(T)
+		return
+
+/datum/jobXpReward/janicape
+	name = "Head of Sanitation cape"
+	desc = "No one cared who you were until you put on the cape. Now who's the real HoS?"
+	required_levels = list("Janitor"=20)
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		var/obj/item/clothing/suit/armor/janicape/T = new/obj/item/clothing/suit/armor/janicape(get_turf(C.mob))
 		T.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(T)
 		return

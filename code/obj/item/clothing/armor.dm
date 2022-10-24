@@ -459,3 +459,15 @@
 		setProperty("rangedprot", 0.7)
 		setProperty("coldprot", 5)
 		setProperty("heatprot", 35)
+
+/obj/item/clothing/suit/armor/janicape
+	name = "Head of Sanitation's cape"
+	desc = "Comes with all the style, but none of the armor."
+	icon_state = "jani-cape"
+	item_state = "jani-cape"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 0)
+		setProperty("meleeprot", 0)
+		setProperty("rangedprot", 0)
