@@ -365,13 +365,13 @@
 		src.component_grid[x][y]=equipped
 		user.u_equip(equipped)
 		equipped.set_loc(src)
-		playsound(src, "sound/machines/law_insert.ogg", 80)
+		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		logTheThing("station", user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
-		playsound(src, "sound/machines/law_remove.ogg", 80)
+		playsound(src, 'sound/machines/law_remove.ogg', 80)
 		logTheThing("station", user, "[constructName(user)] <b>removes</b> component from nuclear reactor([src]): [src.component_grid[x][y]] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [src.component_grid[x][y]] out of the reactor</span>", "<span class='alert'>You slide the [src.component_grid[x][y]] out of the reactor.</span>")
 		user.put_in_hand_or_drop(src.component_grid[x][y])
