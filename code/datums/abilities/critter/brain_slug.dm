@@ -17,7 +17,7 @@
 	tabName = "Abilities"
 	topBarRendered = 1
 	rendered = 1
-	points = 1000
+	points = 700
 	onAbilityStat()
 		..()
 		.= list()
@@ -185,6 +185,13 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 	targeted = 0
 
 	cast()
+		if (holder.owner.reagents)
+			var/volume_passed = holder.owner.reagents.get_reagent_amount("synaptizine") //Some counterplay to avoid the slug just ditching the body the second it is caught out
+			if (volume_passed)
+				holder.owner.visible_message("<span class='notice'>[holder.owner] contorts for an instant then straightens back up, visibly pained.'</span>",\
+											"<span class='alert'>You try to exit this host but you can't concentrate enough with this poison in you!</span>")
+				holder.owner.emote("scream")
+				return FALSE
 		if (istype(holder.owner, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/caster = holder.owner
 			if (!caster.slug)
@@ -209,6 +216,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 				return TRUE
 			human_host.make_jittery(20)
 			human_host.emote("scream")
+			human_host.setStatus("stunned", 10 SECONDS)
 			spawn(3 SECONDS)
 				if (!human_host || !human_host.slug) return
 				//Drop the slug on the floor and control it again

@@ -612,7 +612,7 @@
 			//If they do, roll a chance to do some hint
 			if (AH)
 				AH.points --
-				if (AH.points > 500)
+				if (AH.points > 350)
 					if (prob(4))
 						if(prob(50))
 							src.emote(pick("drool", "twitch_v", "sneeze", "groan", "shiver"))

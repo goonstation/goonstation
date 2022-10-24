@@ -507,6 +507,7 @@ datum
 									being_ejected = TRUE
 									host.visible_message("<span class='alert'>[host]'s suddenly looks dazed and freezes up!</span>")
 									host.emote("scream")
+									host.setStatus("stunned", 10 SECONDS)
 									spawn(2 SECONDS)
 										if (!host || !the_slug)
 											return
