@@ -758,8 +758,7 @@
 
 	process()
 		. = ..()
-		process_cycle = (process_cycle + 1) % 10
-		if(process_cycle == 0)
+		if(!ON_COOLDOWN(get_turf(src), "ambient_paper_generation", 30 SECONDS))
 			paper_left++
 			if(paper_left >= 10)
 				processing_items -= src
