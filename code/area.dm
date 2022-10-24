@@ -1432,6 +1432,10 @@ ABSTRACT_TYPE(/area/prefab)
 	icon_state = "red"
 	sound_environment = 2
 
+/area/prefab/martian_glomp
+	name = "Martian Mass"
+	icon_state = "red"
+
 /area/prefab/mobius
 	name = "Mobius Strip Mall"
 	icon_state = "purple"
