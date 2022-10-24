@@ -40,6 +40,7 @@
 	name = "attacking"
 	weight = 10 // attack behaviour gets a high priority
 	ai_turbo = TRUE //attack behaviour gets a speed boost for robustness
+	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/critter/attack/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
@@ -58,7 +59,7 @@
 /datum/aiTask/sequence/goalbased/critter/attack/get_targets()
 	var/mob/living/critter/C = holder.owner
 	var/targets = C.seek_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1)
+	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
 
 /////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
 
@@ -99,6 +100,7 @@
 /datum/aiTask/sequence/goalbased/critter/scavenge
 	name = "scavenging"
 	weight = 3
+	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/critter/scavenge/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
@@ -111,7 +113,7 @@
 /datum/aiTask/sequence/goalbased/critter/scavenge/get_targets()
 	var/mob/living/critter/C = holder.owner
 	var/targets = C.seek_scavenge_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1)
+	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
 
 ////////
 
@@ -152,6 +154,7 @@
 /datum/aiTask/sequence/goalbased/critter/eat
 	name = "eating"
 	weight = 3
+	max_dist = 7
 
 /datum/aiTask/sequence/goalbased/critter/eat/New(parentHolder, transTask) //goalbased aitasks have an inherent movement component
 	..(parentHolder, transTask)
@@ -164,7 +167,7 @@
 /datum/aiTask/sequence/goalbased/critter/eat/get_targets()
 	var/mob/living/critter/C = holder.owner
 	var/targets = C.seek_food_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1)
+	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
 
 ////////
 
@@ -196,3 +199,11 @@
 
 /datum/aiTask/succeedable/critter/scavenge/on_reset()
 	has_started = FALSE
+
+// Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
+/datum/aiTask/sequence/goalbased/critter
+	New()
+		..()
+		if(istype(subtasks[subtask_index], /datum/aiTask/succeedable/move))
+			var/datum/aiTask/succeedable/move/m_subtask = subtasks[subtask_index]
+			m_subtask.move_through_space = TRUE

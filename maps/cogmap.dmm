@@ -19922,7 +19922,7 @@
 	},
 /area/station/engine/elect)
 "bbh" = (
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	name = "spider"
 	},
 /obj/cable{

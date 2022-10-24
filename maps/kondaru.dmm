@@ -41625,7 +41625,7 @@
 /area/station/security/secwing)
 "eMs" = (
 /obj/disposalpipe/segment/vertical,
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "eMt" = (

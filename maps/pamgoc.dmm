@@ -15093,7 +15093,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ayk" = (
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	name = "spider"
 	},
 /obj/cable{

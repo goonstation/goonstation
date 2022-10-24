@@ -2489,7 +2489,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/critter/spider,
+/mob/living/critter/spider,
 /turf/simulated/floor,
 /area/space)
 "fR" = (
@@ -3183,7 +3183,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "hl" = (
-/obj/critter/spider,
+/mob/living/critter/spider,
 /turf/simulated/floor,
 /area/space)
 "hm" = (

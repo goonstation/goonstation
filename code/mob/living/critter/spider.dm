@@ -264,6 +264,9 @@
 	max_skins = 4
 	reacting = 0
 
+/mob/living/critter/spider/ice/nice
+	ai_type = /datum/aiHolder/spider_peaceful
+
 /mob/living/critter/spider/ice/baby
 	name = "baby ice spider"
 	desc = "Dawww."

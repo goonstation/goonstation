@@ -28564,7 +28564,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "hdY" = (
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "her" = (

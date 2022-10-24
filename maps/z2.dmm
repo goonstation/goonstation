@@ -7592,7 +7592,7 @@
 	dir = 4;
 	pixel_y = -10
 	},
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	desc = "So, it was you!";
 	name = "source of all of those really atmospheric webs around"
 	},
@@ -10784,7 +10784,7 @@
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aJF" = (
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aJG" = (
@@ -11106,13 +11106,13 @@
 /area/lower_arctic/lower)
 "aKF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aKG" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/cobweb2,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKH" = (
@@ -11193,7 +11193,7 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
 "aKY" = (
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKZ" = (
@@ -11456,7 +11456,7 @@
 /area/lower_arctic/lower)
 "aLU" = (
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aLV" = (
@@ -11736,7 +11736,7 @@
 /area/lower_arctic/lower)
 "aMF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aMG" = (
@@ -14253,7 +14253,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aUq" = (
-/obj/critter/spider/ice/nice,
+/mob/living/critter/spider/ice/nice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aUr" = (
@@ -16127,7 +16127,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aZm" = (
-/obj/critter/spider/ice/queen,
+/mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -19143,7 +19143,7 @@
 "bhl" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/plasmastone,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bhm" = (
@@ -21236,7 +21236,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmv" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmw" = (
@@ -23271,7 +23271,7 @@
 "brR" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "brS" = (
@@ -66574,7 +66574,7 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dPy" = (
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dPz" = (
