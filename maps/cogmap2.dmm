@@ -1962,7 +1962,7 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aep" = (
@@ -7973,7 +7973,7 @@
 	},
 /obj/machinery/light_switch/north,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "ath" = (
@@ -10805,7 +10805,7 @@
 /area/station/crew_quarters/kitchen)
 "azB" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "azC" = (
@@ -12562,7 +12562,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/crew_quarters/catering)
 "aDs" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /obj/machinery/light/small,
 /obj/disposalpipe/segment,
 /obj/disposalpipe/segment/food{
@@ -33906,7 +33906,7 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bBg" = (
@@ -49361,7 +49361,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "chc" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/bent/north,
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/plating/scorched,
@@ -51264,7 +51264,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "clG" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
@@ -52696,7 +52696,7 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/storage/warehouse)
 "coO" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating/scorched,
 /area/station/storage/warehouse)
 "coP" = (

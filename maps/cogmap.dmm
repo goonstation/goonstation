@@ -1354,7 +1354,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "aeK" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/construction2)
 "aeL" = (
@@ -8428,7 +8428,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/emergency)
 "ayX" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)
 "ayY" = (
@@ -17735,7 +17735,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVN" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/owlery)
 "aVO" = (
@@ -42140,7 +42140,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "chv" = (
@@ -63096,7 +63096,7 @@
 	},
 /area/shuttle/arrival/station)
 "uCN" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uDR" = (

@@ -49036,7 +49036,7 @@
 	},
 /area/station/hallway/primary/south)
 "mKo" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mKs" = (

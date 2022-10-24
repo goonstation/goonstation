@@ -4441,7 +4441,7 @@
 	name = "Crew Quarters P03"
 	})
 "arN" = (
-/obj/critter/mouse/remy,
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "arO" = (

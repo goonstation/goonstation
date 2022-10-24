@@ -18287,7 +18287,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beP" = (
-/obj/critter/mouse,
+/mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "beQ" = (
