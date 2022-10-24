@@ -597,11 +597,11 @@
 
 	switch(action)
 		if("cutwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
