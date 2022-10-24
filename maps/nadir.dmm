@@ -11933,7 +11933,6 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "gbu" = (
@@ -28620,7 +28619,6 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "nOl" = (
