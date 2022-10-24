@@ -659,7 +659,7 @@ var/global/noir = 0
 					logTheThing(LOG_DIARY, usr, "unbanned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
-					jobban_unban(M, job, usr.ckey, usr.ckey)
+					jobban_unban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
 					logTheThing(LOG_ADMIN, usr, "banned [constructTarget(M,"admin")] from [job]")
