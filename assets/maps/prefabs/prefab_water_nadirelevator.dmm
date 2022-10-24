@@ -1237,7 +1237,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/diner/dining)
 "Sr" = (
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
 /area/diner/bathroom)
 "Sw" = (
