@@ -570,7 +570,17 @@ Broken RCD + Effects
 			var/obj/machinery/door/airlock/T = new interim(A)
 			log_construction(user, "builds an airlock ([T])")
 
-			//if(map_setting == "COG2") T.set_dir(user.dir)
+			// makes everything around it look nice
+			T.set_dir(user.dir)
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
+
 			T.autoclose = TRUE
 
 	update_icon() //we got fancy rcds now
@@ -798,6 +808,15 @@ Broken RCD + Effects
 			else
 				T.req_access = null
 				T.req_access_txt = null
+
+			for (var/obj/window/auto/O in orange(1,T))
+				O.UpdateIcon()
+			for (var/obj/grille/G in orange(1,T))
+				G.UpdateIcon()
+			for (var/turf/simulated/wall/auto/W in orange(1,T))
+				W.UpdateIcon()
+			for (var/turf/simulated/wall/false_wall/F in orange(1,T))
+				F.UpdateIcon()
 
 /obj/item/rcd/material
 

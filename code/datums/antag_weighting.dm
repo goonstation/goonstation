@@ -170,8 +170,16 @@ var/global/datum/antagWeighter/antagWeighter
 	 * @return list List of minds chosen
 	 */
 	proc/choose(list/pool = list(), role = "", amount = 0, recordChosen = 0)
-		if (!pool.len || !role || !amount)
-			throw EXCEPTION("Incorrect parameters given")
+		. = list()
+		if (!length(pool))
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Pool is empty.")
+			return
+		if (!role)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): No rank provided.")
+			return
+		if (!amount)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Requested antag amount is 0.")
+			return
 
 		if (src.debug)
 			src.debugLog("---------- Starting antagWeighter.choose with role: [role] and amount: [amount] ----------")
