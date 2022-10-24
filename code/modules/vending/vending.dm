@@ -731,6 +731,20 @@
 
 	if (!istype(src,/obj/machinery/vending/pizza)) // no tgui support for pizza vendor yet
 		ui_interact(user)
+	else
+		src.add_dialog(user)
+		if (!src.HTML)
+			src.generate_HTML()
+		else
+			if (src.HTML && !src.vending_HTML)
+				src.generate_HTML(1)
+			if (src.HTML && (src.panel_open || isAI(user)) && !src.wire_HTML)
+				src.generate_HTML(0, 1)
+		if (window_size)
+			user.Browse(src.HTML, "window=vending;size=[window_size]")
+		else
+			user.Browse(src.HTML, "window=vending")
+		onclose(user, "vending")
 
 	interact_particle(user,src)
 	return
