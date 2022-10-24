@@ -440,31 +440,33 @@
 			src.explode()
 		return
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
-			if (src.allowed(user))
+	attackby(obj/item/I, mob/M)
+		if (istype(I, /obj/item/device/pda2) && I:ID_card)
+			I = I:ID_card
+		if (istype(I, /obj/item/card/id))
+			if (src.allowed(M))
 				src.locked = !src.locked
-				boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
+				boutput(M, "Controls are now [src.locked ? "locked." : "unlocked."]")
 				src.updateUsrDialog()
 			else
-				boutput(user, "<span class='alert'>Access denied.</span>")
+				boutput(M, "<span class='alert'>Access denied.</span>")
 
-		else if (isscrewingtool(W))
+		else if (isscrewingtool(I))
 			if (src.health < initial(health))
 				src.health = initial(health)
-				src.visible_message("<span class='alert'>[user] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
+				src.visible_message("<span class='alert'>[M] repairs [src]!</span>", "<span class='alert'>You repair [src].</span>")
 		else
-			switch(W.hit_type)
+			switch(I.hit_type)
 				if (DAMAGE_BURN)
-					src.health -= W.force * 0.75
+					src.health -= I.force * 0.75
 				else
-					src.health -= W.force * 0.5
+					src.health -= I.force * 0.5
 			if (src.health <= 0)
+				if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] with [I] at [log_loc(src)]")
 				src.explode()
-			else if (W.force) // Prioritize your safety, cant kill crime if you're dead!
-				src.EngageTarget(user, 1, 1)
+			else if (I.force) // Prioritize your safety, cant kill crime if you're dead!
+				src.EngageTarget(M, 1, 1)
 			..()
 
 	bullet_act(var/obj/projectile/P)
@@ -479,6 +481,10 @@
 			src.health -= damage
 
 		if (src.health <= 0)
+			if (src.z == Z_LEVEL_STATION) // I only care about station secbots
+				if (ismob(P.shooter))
+					var/mob/living/M = P.shooter
+					logTheThing(LOG_COMBAT, M, "destroyed secbot [src.emagged ? "(emagged)" : ""] [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" : ""]")
 			src.explode()
 			return
 
@@ -975,15 +981,8 @@
 			return threatcount
 
 		if (src.check_records) // bot is set to actively compare security records
-			var/see_face = 1
-			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
-				see_face = 0
-			else if (istype(perp.head) && !perp.head.see_face)
-				see_face = 0
-			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
-				see_face = 0
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
-			var/perpname = see_face ? perp.real_name : perp.name
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")
 					threatcount = 7

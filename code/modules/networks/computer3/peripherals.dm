@@ -422,25 +422,25 @@
 		. += " | NETID: [src.net_id ? src.net_id : "NONE"]"
 
 
-	proc
-		check_connection()
-			//if there is a link, it has a master, and the master is valid..
-			if(src.link && istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
-				if(src.link.master == src)
-					return 1 //If it's already us, the connection is fine!
-				else//Otherwise welp no this thing is taken.
-					src.link = null
-					return 0
+// why is the connection checked like this - do we really need to disconnect then reconnect?
+/obj/item/peripheral/network/powernet_card/proc/check_connection()
+	//if there is a link, it has a master, and the master is valid..
+	if(istype(src.link) && DATA_TERMINAL_IS_VALID_MASTER(src.link, src.link.master))
+		if(src.link.master == src)
+			return 1 //If it's already us, the connection is fine!
+		else//Otherwise welp no this thing is taken.
 			src.link = null
-			var/turf/T = get_turf(src)
-			var/obj/machinery/power/data_terminal/test_link = locate() in T
-			if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
-				src.link = test_link
-				src.link.master = src
-				return 1
-			else
-				//boutput(world, "couldn't link")
-				return 0
+			return 0
+	src.link = null
+	var/turf/T = get_turf(src)
+	var/obj/machinery/power/data_terminal/test_link = locate() in T
+	if(test_link && !DATA_TERMINAL_IS_VALID_MASTER(test_link, test_link.master))
+		src.link = test_link
+		src.link.master = src
+		return 1
+	else
+		//boutput(world, "couldn't link")
+		return 0
 
 /obj/item/peripheral/network/powernet_card/terminal
 	name = "Terminal card"

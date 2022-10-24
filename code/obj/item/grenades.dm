@@ -38,7 +38,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	attack_self(mob/user as mob)
 		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+			src.state = 1		//This could help for now. Should leverage the click buffer from combat stuff too.
 			if (!isturf(user.loc))
 				src.state = 0
 				return
@@ -108,7 +108,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -580,8 +580,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
-		GM.oxygen = 1500
-		GM.carbon_dioxide = 100
+		GM.oxygen = 1830
+		GM.carbon_dioxide = 20
 
 		var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 		// Uses existing animated icon adjust coloration of explosion to lighter cyan to match oxygen items
@@ -599,12 +599,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				else
 					var/count = length(T.parent?.members)
 					if (count)
+						var/o2_per = GM.oxygen / count
+						var/co2_per = GM.carbon_dioxide / count
 						for (var/turf/simulated/MT as() in T.parent.members)
 							if (GM.disposed)
 								GM = new /datum/gas_mixture
 							GM.temperature = T20C + 15
-							GM.oxygen = 1500 / count
-							GM.carbon_dioxide = 100 / count
+							GM.oxygen = o2_per
+							GM.carbon_dioxide = co2_per
 							MT.assume_air(GM)
 					else
 						T.assume_air(GM)
@@ -702,7 +704,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
 		if (istype(target, /obj/item/storage)) return ..()
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
@@ -715,7 +717,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	attack_self(mob/user as mob)
 		if (!isturf(user.loc))
 			return
-		if (src.state == 0)
+		if (src.state == 0 && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
@@ -806,7 +808,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -1658,7 +1660,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = 1
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")

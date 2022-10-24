@@ -12,6 +12,8 @@
 	particle abuse
 */
 
+// playsound\(([^,]*), "(sound/[^\[]+)"
+// playsound($1, '$2'
 // Greek Adventurezone Thingy
 
 /turf/unsimulated/greek/

@@ -4,7 +4,7 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
-	type_name = "Surgery machine"
+	type_name = "Surgery machine (cyborg/synth)"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
@@ -347,6 +347,8 @@
 	associated_datum = /datum/artifact/augmentor/limb_augmentor
 
 /datum/artifact/augmentor/limb_augmentor
+	associated_object = /obj/artifact/augmentor/limb_augmentor
+	type_name = "Surgery machine (artifact limbs)"
 	rarity_weight = 200
 	validtypes = list("eldritch", "martian", "precursor")
 	limited_use = TRUE

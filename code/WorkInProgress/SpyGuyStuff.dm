@@ -127,13 +127,17 @@ proc/Create_Tommyname()
 
 /mob/living/carbon/human/proc/tommyize_reshape()
 	//Set up the new appearance
-	var/datum/appearanceHolder/AH = new
-	AH.gender = "male"
-	AH.customization_first = new /datum/customization_style/hair/long/dreads
-	AH.gender = "male"
-	AH.s_tone = "#FAD7D0"
-	AH.owner = src
-	AH.parentHolder = src.bioHolder
+	if(src.bioHolder)
+		src.bioHolder.AddEffect("accent_tommy")
+		if(src.bioHolder.mobAppearance)
+			var/datum/appearanceHolder/AH = src.bioHolder.mobAppearance
+			AH.gender = "male"
+			AH.customization_first = new /datum/customization_style/hair/long/dreads
+			AH.customization_first_color = "#101010"
+			AH.customization_second = new /datum/customization_style/none
+			AH.customization_third = new /datum/customization_style/none
+			AH.s_tone = "#FAD7D0"
+			src.bioHolder.AddEffect("accent_tommy")
 
 	src.gender = "male"
 	src.real_name = Create_Tommyname()
@@ -161,9 +165,6 @@ proc/Create_Tommyname()
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
 
-	if(src.bioHolder)
-		src.bioHolder.mobAppearance = AH
-		src.bioHolder.AddEffect("accent_tommy")
 	src.update_colorful_parts()
 
 //------------------------//
@@ -1042,7 +1043,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	prob_mod = 0
+	irresistible = 1
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

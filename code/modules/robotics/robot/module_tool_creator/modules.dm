@@ -37,6 +37,7 @@
 // scientist.
 /datum/robot/module_tool_creator/recursive/module/chemistry
 	definitions = list(
+		/obj/item/hand_labeler,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -128,6 +129,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
