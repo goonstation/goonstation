@@ -1020,24 +1020,18 @@
 		src.layer += src.edge_priority_level / 1000
 		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
 			edge_overlays()
-	Del()
-		edge_overlays(TRUE) // remove from neighbors
-		..()
-	proc/edge_overlays(var/remove=FALSE)
+
+	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
-			if (istype(T, /turf/simulated/shuttle/wall/cockpit))
-				continue
 			if (istype(T, /turf/unsimulated/floor/auto))
 				var/turf/unsimulated/floor/auto/TA = T
 				if (TA.edge_priority_level >= src.edge_priority_level)
 					continue
 			var/direction = get_dir(T,src)
-			var/image/edge_overlay = null
-			if (!remove)
-				edge_overlay = image(src.icon, "[icon_state_edge][direction]")
-				edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
-				edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
-				edge_overlay.plane = PLANE_FLOOR
+			var/image/edge_overlay = image(src.icon, "[icon_state_edge][direction]")
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+			edge_overlay.plane = PLANE_FLOOR
 			T.UpdateOverlays(edge_overlay, "edge_[direction]")
 
 /turf/unsimulated/floor/auto/grass/swamp_grass
