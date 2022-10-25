@@ -1038,7 +1038,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		..()
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
-			src.build_icon()
+			src.color = src.stone_color
 
 	generate_worldgen()
 		. = ..()
@@ -1161,14 +1161,25 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			setTexture("damage3", BLEND_MULTIPLY, "damage")
 		return
 
-	proc/build_icon()
+	update_icon()
+		. = ..()
 		src.color = src.stone_color
+		src.ClearAllOverlays() // i know theres probably a better way to handle this
+		src.top_overlays()
+		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
 		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
 		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
+
+	proc/ore_overlays()
+		if(src.ore) // make sure ores dont turn invisible
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
+			src.UpdateOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
 		for (var/turf/space/A in orange(src,1))
@@ -1304,18 +1315,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.stone_color = new_color
 		src.set_opacity(0)
 		src.levelupdate()
-		for (var/turf/simulated/wall/auto/asteroid/A in range(src,1))
-			A.ClearAllOverlays() // i know theres probably a better way to handle this
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
 			A.UpdateIcon()
-			var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[A.topnumber]")
-			top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[A.icon_state]"))
-			top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
-			A.UpdateOverlays(top_overlay, "ast_top_rock")
-			if(A?.ore) // make sure ores dont turn invisible
-				var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[A.ore.name][A.orenumber]")
-				ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[A.icon_state]"))
-				ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
-				A.UpdateOverlays(ore_overlay, "ast_ore")
 #ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
 			A.UpdateOverlays(new /image/fullbright, "fullbright")
 #endif
@@ -1890,6 +1891,10 @@ obj/item/clothing/gloves/concussive
 
 	examine(mob/user)
 		. = ..()
+		if(target)
+			. += "It's currently set to [src.target]."
+		else
+			. += "No destination has been selected."
 		if (isrobot(user))
 			. += "Each use of the cargo teleporter will consume [cost * SILICON_POWER_COST_MOD]PU."
 		else
@@ -1947,7 +1952,7 @@ obj/item/clothing/gloves/concussive
 		if (!src.can_teleport(cargo, user))
 			return FALSE
 
-		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
+		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
 		return TRUE
@@ -2297,7 +2302,7 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
 		mailgroup = MGD_MINING
@@ -2329,8 +2334,6 @@ var/global/datum/cargo_pad_manager/cargo_pad_manager
 				src.mailgroup = MGD_MEDRESEACH
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
-			else if (istype(area, /area/station/engine/elect))
-				src.mailgroup = MGO_MECHANIC
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))

@@ -4,9 +4,13 @@
 
 #define hex2num(X) text2num(X, 16)
 
+#define hsl2rgb(hue, sat, lum) rgb(h=hue,s=sat,l=lum)
+
 #define hsv2rgb(hue, sat, val) rgb(h=hue,s=sat,v=val)
 
 #define hsv2rgblist(hue, sat, val) rgb2num(hsv2rgb(hue, sat, val))
+
+#define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 

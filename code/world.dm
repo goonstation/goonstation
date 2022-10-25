@@ -1573,6 +1573,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+				// trigger cooldown so radio station doesn't interrupt our cool music
+				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
 				return 1
 
 			if ("delay")
