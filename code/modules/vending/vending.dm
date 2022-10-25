@@ -597,11 +597,11 @@
 
 	switch(action)
 		if("cutwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
@@ -3073,6 +3073,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_security)
 
 	create_products()
@@ -3113,6 +3115,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_medical)
 
 	create_products()
@@ -3159,18 +3163,21 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_engineering)
 
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 6)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
