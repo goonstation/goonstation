@@ -134,7 +134,12 @@
 /obj/item/breaching_charge{
 	pixel_x = 6
 	},
-/obj/item/breaching_hammer,
+/obj/item/breaching_hammer{
+	pixel_x = 4
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -4
+	},
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
 	icon_state = "0-8"
@@ -2710,6 +2715,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary,
 /area/station/security/equipment)
 "bsh" = (
@@ -4527,6 +4533,30 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/purpleblack/corner,
 /area/station/hallway/secondary/west)
+"cjB" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/stinger_kit{
+	pixel_y = 7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/device/radio/intercom/security{
+	dir = 4
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 6
+	},
+/area/station/ai_monitored/armory)
 "cjY" = (
 /turf/unsimulated/wall/setpieces/leadwall{
 	dir = 6
@@ -7563,10 +7593,6 @@
 	dir = 4
 	},
 /area/station/security/brig)
-"dPx" = (
-/obj/submachine/laundry_machine,
-/turf/simulated/floor/sanitary,
-/area/station/security/equipment)
 "dPZ" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/siphon_guide{
@@ -11263,6 +11289,44 @@
 /obj/decal/poster/wallsign/medbay,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/lobby)
+"fJO" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -7
+	},
+/obj/item/chem_grenade/flashbang,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
 "fJQ" = (
 /obj/table/reinforced/auto,
 /obj/item/aiModule/freeform{
@@ -11830,7 +11894,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/vending/security_ammo,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
 	},
@@ -15692,25 +15756,39 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/communications/centre)
 "hHe" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/glasses/thermal{
-	pixel_y = 10
+/obj/rack,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = 6
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /obj/item/clothing/glasses/thermal{
+	pixel_x = -1;
 	pixel_y = 2
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = -2
+	pixel_x = 2;
+	pixel_y = -1
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = -6
+	pixel_x = 5;
+	pixel_y = -4
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 5
-	},
+/turf/simulated/floor/engine/caution/north,
 /area/station/ai_monitored/armory)
 "hHm" = (
 /obj/submachine/cargopad/hydroponic,
@@ -17060,23 +17138,6 @@
 /obj/window_blinds/cog2,
 /turf/simulated/floor/plating,
 /area/station/chapel/office)
-"ipb" = (
-/obj/table/reinforced/auto,
-/obj/item/paper_bin,
-/obj/machinery/light_switch/north,
-/obj/machinery/light/small{
-	dir = 4;
-	pixel_x = 12
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/turf/simulated/floor/sanitary,
-/area/station/security/equipment)
 "ipe" = (
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/plating,
@@ -20905,6 +20966,15 @@
 	dir = 5
 	},
 /area/station/engine/elect)
+"kiE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/red{
+	dir = 8
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/ai_monitored/armory)
 "kiG" = (
 /obj/machinery/light{
 	dir = 4;
@@ -23965,14 +24035,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "lBs" = (
+/obj/machinery/weapon_stand/shotgun_rack,
 /obj/machinery/light_switch/east,
-/obj/table/reinforced/auto,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm{
-	pixel_y = 10
-	},
-/obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "lBt" = (
@@ -29335,7 +29399,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "oip" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "oja" = (
@@ -30918,6 +30982,14 @@
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 16
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/machinery/light_switch/east,
 /turf/simulated/floor/sanitary,
 /area/station/security/equipment)
 "paN" = (
@@ -31879,27 +31951,12 @@
 	name = "Extraction Nexus"
 	})
 "pAs" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/stinger_kit{
-	pixel_y = 7
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 8;
-	pixel_y = -2
-	},
 /obj/machinery/light{
 	dir = 8;
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/storage/secure/crate/weapon/armory/phaser,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "pAx" = (
@@ -32985,9 +33042,6 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/northwest)
 "qfP" = (
-/obj/stool/chair/red{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -33982,7 +34036,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qJo" = (
-/obj/machinery/vending/security_ammo,
+/obj/table/reinforced/auto,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -35145,10 +35205,15 @@
 	name = "The Warrens"
 	})
 "rrM" = (
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -42844,26 +42909,10 @@
 	},
 /area/station/security/main)
 "vfp" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = -5
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/engine/caution/corner{
+	dir = 1
 	},
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = 1
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_y = 15
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_y = 9
-	},
-/obj/item/device/radio/intercom/security{
-	dir = 4
-	},
-/turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "vfE" = (
 /obj/stool/chair{
@@ -45092,21 +45141,12 @@
 	})
 "wxF" = (
 /obj/table/reinforced/auto,
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 10
 	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -7
-	},
-/obj/item/chem_grenade/flashbang,
+/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -82851,9 +82891,9 @@ qwy
 whY
 qwy
 mKo
-ipb
-wpf
-dPx
+mKo
+vVS
+mKo
 mKo
 uqC
 uqC
@@ -83153,9 +83193,9 @@ jDb
 qov
 mlg
 mKo
-mKo
-vVS
-mKo
+wgR
+oha
+vlv
 mKo
 uqC
 uqC
@@ -83455,9 +83495,9 @@ mOd
 qov
 ufa
 mKo
-wgR
-oha
-vlv
+mKo
+mKo
+mKo
 mKo
 jjE
 tZe
@@ -83757,9 +83797,9 @@ qLh
 vSK
 qLh
 qLh
-qLh
-qLh
-qLh
+cjB
+ons
+fJO
 qLh
 jjE
 jjE
@@ -84060,7 +84100,7 @@ lXp
 oip
 pAs
 vfp
-ons
+kiE
 hHe
 qLh
 ddg
