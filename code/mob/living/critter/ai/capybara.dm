@@ -19,14 +19,15 @@
 
 /datum/aiTask/timed/sitting/evaluate()
 	. = 0
-	if(GET_COOLDOWN(src.holder.owner, "capy_sit_down"))
-		return 1 //low priority task
+	if(!GET_COOLDOWN(src.holder.owner, "capy_sit_down"))
+		return 1
 
 /datum/aiTask/timed/sitting/on_tick()
-	ON_COOLDOWN(src.holder.owner, "capy_sit_down", 10 SECONDS)
+	ON_COOLDOWN(src.holder.owner, "capy_sit_down", 15 SECONDS)
 	holder.stop_move()
 	holder.owner.icon_state = "capybara-sit"
 
-/datum/aiTask/timed/sitting/on_reset()
+/datum/aiTask/timed/sitting/next_task()
 	. = ..()
-	holder.owner.icon_state = "capybara"
+	if(.)
+		holder.owner.icon_state = "capybara"
