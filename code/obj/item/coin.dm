@@ -21,8 +21,9 @@
 		animate(src, time=3 DECI SECONDS, pixel_y=5, easing=SINE_EASING | EASE_OUT)
 		animate(time=3 DECI SECONDS, pixel_y=0, easing=SINE_EASING | EASE_IN)
 		SPAWN(6 DECI SECOND)
-			playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
-			flip()
+			if(!istype(src.loc, /mob/))	//Hot dog, you caught it midair!
+				playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
+				flip()
 
 /obj/item/coin/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
