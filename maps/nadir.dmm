@@ -602,6 +602,21 @@
 /obj/machinery/power/apc/autoname_north,
 /turf/simulated/floor/blueblack,
 /area/station/medical/staff)
+"amF" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/black/grime,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "amO" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -4509,6 +4524,10 @@
 	},
 /obj/item/storage/toilet{
 	dir = 8
+	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/security/brig/genpop)
@@ -11215,6 +11234,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "fJg" = (
@@ -13812,17 +13835,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/checkpoint/escape)
-"gTt" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/obj/decal/cleanable/dirt/jen,
-/turf/simulated/floor/carpet/green/standard/innercorner/omni,
-/area/station/maintenance/storage{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
-	})
 "gTR" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small,
@@ -14055,13 +14067,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/west)
-"gYf" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/inner/south)
 "gYn" = (
 /turf/unsimulated/wall/setpieces/leadwall/gray{
 	dir = 6
@@ -15726,6 +15731,10 @@
 	},
 /obj/machinery/drainage,
 /obj/decal/cleanable/dirt,
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
 /turf/simulated/floor/sanitary,
 /area/station/maintenance/storage{
 	icon_state = "crewquarters";
@@ -16122,6 +16131,9 @@
 	dir = 8
 	},
 /obj/firedoor_spawn,
+/obj/landmark/spawner{
+	name = "monkeyspawn_mrsmuggles"
+	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargooffice)
 "hVr" = (
@@ -32528,6 +32540,13 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/courtroom)
+"pUR" = (
+/obj/landmark{
+	icon_state = "x3";
+	name = "peststart"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/northwest)
 "pUS" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -43068,13 +43087,6 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quarters_east)
-"vnt" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "vnv" = (
 /obj/lattice{
 	dir = 10;
@@ -43692,15 +43704,6 @@
 	},
 /turf/simulated/floor/yellowblack,
 /area/station/hallway/primary/southeast)
-"vDp" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "vDv" = (
 /obj/machinery/drainage,
 /obj/machinery/light/small{
@@ -45177,10 +45180,6 @@
 	name = "Warrens Hall"
 	})
 "wzO" = (
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
-	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -48155,10 +48154,6 @@
 /obj/machinery/disposal/ore{
 	desc = "A pneumatic delivery chute for delivery of food to the brig.";
 	name = "brig meal-line chute"
-	},
-/obj/landmark{
-	icon_state = "x3";
-	name = "peststart"
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -80704,7 +80699,7 @@ trK
 ajs
 oEZ
 gbZ
-vnt
+oEZ
 cbe
 dHA
 rvl
@@ -84909,7 +84904,7 @@ odL
 imj
 fwk
 oTZ
-ukW
+pUR
 ukW
 pHb
 wHo
@@ -92796,7 +92791,7 @@ qDP
 ohp
 mlQ
 sHW
-gYf
+cOM
 pMS
 vFY
 kBB
@@ -98270,7 +98265,7 @@ pOj
 hQo
 nlQ
 hri
-gTt
+eUl
 wxt
 lty
 lty
@@ -107920,7 +107915,7 @@ gik
 gik
 gik
 lFY
-giN
+amF
 cBV
 cBV
 neB
@@ -109126,7 +109121,7 @@ nHj
 dbf
 kRh
 jxs
-vDp
+mTx
 cBV
 cBV
 neB
