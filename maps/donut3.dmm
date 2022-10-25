@@ -58,7 +58,8 @@
 /turf/simulated/floor/specialroom/clown,
 /area/station/crew_quarters/clown)
 "aad" = (
-/obj/machinery/atmospherics/valve/notify_admins/horizontal{
+/obj/machinery/atmospherics/valve/notify_admins{
+	dir = 4;
 	name = "Riot Control Gas"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -4738,7 +4739,7 @@
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
 "biI" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south{
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
 	dir = 1
 	},
 /turf/simulated/floor,
@@ -4790,7 +4791,9 @@
 	d2 = 2;
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 5
+	},
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "bjl" = (
@@ -8371,7 +8374,9 @@
 /area/station/engine/elect)
 "chU" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/unary/vent_pump/security/east,
+/obj/machinery/atmospherics/unary/vent_pump/security{
+	dir = 4
+	},
 /obj/machinery/firealarm{
 	dir = 8;
 	pixel_x = -24
@@ -8776,7 +8781,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 8
 	},
 /obj/cable{
@@ -10108,7 +10113,9 @@
 /area/station/crew_quarters/cafeteria)
 "cLn" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/unary/vent_pump/security/east,
+/obj/machinery/atmospherics/unary/vent_pump/security{
+	dir = 4
+	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -12088,7 +12095,10 @@
 /area/station/maintenance/outer/ne)
 "dmU" = (
 /obj/storage/secure/closet/security/armory,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/overfloor{
+	dir = 6;
+	
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "dmY" = (
@@ -14898,7 +14908,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 4
+	},
 /turf/simulated/floor/black{
 	icon_state = "respect3"
 	},
@@ -15888,7 +15900,9 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/floor/white,
 /area/station/security/main)
 "esK" = (
@@ -18877,7 +18891,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/machinery/atmospherics/unary/vent_pump/west{
+/obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
 	},
 /turf/simulated/floor,
@@ -24502,7 +24516,9 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "gUz" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 5
+	},
 /obj/disposalpipe/segment{
 	dir = 1;
 	icon_state = "pipe-c"
@@ -25668,7 +25684,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "hll" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1
+	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -25789,7 +25807,9 @@
 	dir = 4
 	},
 /obj/disposalpipe/segment/brig,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /obj/disposalpipe/segment/ejection{
 	dir = 4
 	},
@@ -28428,7 +28448,8 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/valve/purge/vertical{
+/obj/machinery/atmospherics/valve/purge{
+	dir = 1;
 	name = "Air To Riot Gas Dispersal"
 	},
 /turf/simulated/floor,
@@ -29206,6 +29227,12 @@
 	},
 /turf/simulated/floor,
 /area/station/science/lobby)
+"imp" = (
+/obj/machinery/vending/jobclothing/engineering,
+/turf/simulated/floor/carpet/green/fancy/edge{
+	dir = 9
+	},
+/area/station/engine/engineering/breakroom)
 "imq" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -32365,7 +32392,10 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 10;
+	
+	},
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "jkD" = (
@@ -33048,7 +33078,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/north)
 "jus" = (
-/obj/machinery/atmospherics/pipe/simple/overfloor/northeast{
+/obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 10
 	},
 /obj/machinery/light/incandescent/harsh{
@@ -34844,7 +34874,9 @@
 	},
 /area/station/hydroponics/bay)
 "jVm" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/west,
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
+	dir = 8
+	},
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "jVu" = (
@@ -35257,7 +35289,10 @@
 /turf/simulated/floor/plating/jen,
 /area/station/engine/engineering)
 "kcT" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 10;
+	
+	},
 /obj/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -39244,7 +39279,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -42694,7 +42729,7 @@
 	},
 /area/station/mining/staff_room)
 "mnt" = (
-/obj/machinery/atmospherics/portables_connector/south{
+/obj/machinery/atmospherics/portables_connector{
 	dir = 8
 	},
 /obj/machinery/portable_atmospherics/canister/air,
@@ -46309,7 +46344,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/vent_pump/security/west,
+/obj/machinery/atmospherics/unary/vent_pump/security{
+	dir = 8
+	},
 /turf/simulated/floor/white,
 /area/station/security/quarters)
 "nqL" = (
@@ -46479,7 +46516,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "nti" = (
-/obj/machinery/atmospherics/unary/vent_pump/security/north{
+/obj/machinery/atmospherics/unary/vent_pump/security{
 	dir = 8
 	},
 /turf/simulated/floor/white,
@@ -50983,7 +51020,9 @@
 /turf/simulated/floor/carpet/green/standard/narrow/east,
 /area/station/medical/medbay/lobby)
 "oIB" = (
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent/west,
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+	dir = 8
+	},
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
@@ -52573,7 +52612,7 @@
 	},
 /area/station/crew_quarters/courtroom)
 "pjt" = (
-/obj/machinery/atmospherics/pipe/manifold/east{
+/obj/machinery/atmospherics/pipe/manifold{
 	dir = 8
 	},
 /obj/cable{
@@ -53473,7 +53512,7 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "puI" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 2
 	},
 /obj/machinery/light/incandescent/cool/very{
@@ -54811,7 +54850,9 @@
 /area/station/engine/engineering/breakroom)
 "pNX" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/unary/vent_pump/security/east,
+/obj/machinery/atmospherics/unary/vent_pump/security{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNY" = (
@@ -55160,7 +55201,9 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/warm/very,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
+	dir = 5
+	},
 /obj/machinery/disposal/brig{
 	name = "ejection chute"
 	},
@@ -59500,7 +59543,9 @@
 /turf/simulated/floor/plating/airless,
 /area/station/mining/staff_room)
 "qYT" = (
-/obj/machinery/atmospherics/valve/horizontal,
+/obj/machinery/atmospherics/valve{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/hangar/science)
 "qYV" = (
@@ -64306,7 +64351,9 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/se)
 "ssw" = (
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/security/main)
 "ssE" = (
@@ -65353,7 +65400,9 @@
 /turf/space,
 /area/station/turret_protected/armory_outside)
 "sIL" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /obj/decal/mule/beacon/no_auto_dropoff_spawn,
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -65741,7 +65790,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/atmospherics/unary/vent_pump/security/east,
+/obj/machinery/atmospherics/unary/vent_pump/security{
+	dir = 4
+	},
 /obj/machinery/light_switch/west,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -67744,7 +67795,7 @@
 	},
 /area/station/crew_quarters/market)
 "tur" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
 	dir = 2
 	},
 /turf/simulated/floor/specialroom/freezer,
@@ -67933,7 +67984,9 @@
 /obj/decal/tile_edge/line/red{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "twN" = (
@@ -81695,11 +81748,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/escape,
 /area/station/hallway/secondary/exit)
-"xqn" = (
-/turf/simulated/floor/carpet/green/fancy/edge{
-	dir = 9
-	},
-/area/station/engine/engineering/breakroom)
 "xqq" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/arrival/corner{
@@ -82617,7 +82665,10 @@
 /area/station/bridge)
 "xDo" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/southeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 6;
+	
+	},
 /obj/cable{
 	d1 = 1;
 	d2 = 4;
@@ -82942,7 +82993,9 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "xHf" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "xHi" = (
@@ -83591,7 +83644,9 @@
 	d2 = 8;
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/northwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 9
+	},
 /turf/simulated/floor/black{
 	icon_state = "respect4"
 	},
@@ -150565,7 +150620,7 @@ tXI
 aXh
 wML
 wML
-xqn
+swZ
 aZl
 hai
 hai
@@ -150866,7 +150921,7 @@ mjE
 ewf
 mWJ
 wML
-swZ
+imp
 wqA
 mkB
 mTt
