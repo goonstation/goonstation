@@ -1478,8 +1478,7 @@
 	},
 /area/station/crew_quarters/lounge)
 "aHU" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/west,
+/obj/submachine/seed_vendor,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -13665,10 +13664,6 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"gPp" = (
-/obj/disposalpipe/segment/mail/bent/north,
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "gPP" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -14978,6 +14973,10 @@
 	dir = 9
 	},
 /area/station/medical/medbay/treatment)
+"hsb" = (
+/obj/disposalpipe/segment/mail/bent/north,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "hsq" = (
 /obj/landmark/artifact,
 /obj/machinery/phone/wall{
@@ -21033,6 +21032,10 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"klu" = (
+/obj/disposalpipe/segment/vertical,
+/turf/simulated/floor/black,
+/area/station/hydroponics/bay)
 "klx" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -23628,10 +23631,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
-"lvi" = (
-/obj/disposalpipe/segment/mail/horizontal,
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "lvk" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4
@@ -24475,8 +24474,8 @@
 	name = "Transception Array Control"
 	})
 "lON" = (
-/obj/machinery/disposal/mail/autoname/hydroponics,
-/obj/disposalpipe/trunk/mail/west,
+/obj/disposalpipe/trunk/west,
+/obj/machinery/disposal,
 /turf/simulated/floor/greenblack{
 	dir = 4
 	},
@@ -25170,6 +25169,14 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
+"mdo" = (
+/obj/machinery/plantpot,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 24
+	},
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "mdz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -26997,8 +27004,8 @@
 	name = "Warrens Hall"
 	})
 "mUk" = (
-/obj/disposalpipe/segment/mail/vertical,
 /obj/landmark/gps_waypoint,
+/obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "mUR" = (
@@ -27245,6 +27252,12 @@
 	},
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
+"nda" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/greenblack{
+	dir = 8
+	},
+/area/station/hydroponics/bay)
 "ndi" = (
 /obj/rack,
 /obj/item/clothing/suit/wizrobe/purple,
@@ -28658,6 +28671,10 @@
 /obj/machinery/atmospherics/pipe/simple/southwest,
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
+"nOr" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass,
+/area/station/hydroponics/bay)
 "nOs" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
@@ -30522,10 +30539,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
-"oSh" = (
-/obj/disposalpipe/segment/mail/bent/south,
-/turf/simulated/floor/black,
-/area/station/hydroponics/bay)
 "oSi" = (
 /obj/stool/chair{
 	dir = 8
@@ -32311,6 +32324,18 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"pQm" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/access_spawn/hydro,
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/obj/firedoor_spawn,
+/obj/disposalpipe/segment/mail/horizontal,
+/turf/simulated/floor/green,
+/area/station/hydroponics/bay)
 "pRb" = (
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/hallway/secondary/construction{
@@ -46033,10 +46058,8 @@
 /turf/simulated/floor/darkblue/checker,
 /area/station/turret_protected/ai)
 "wXB" = (
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
-	},
+/obj/machinery/disposal/mail/small/autoname/hydroponics/west,
+/obj/disposalpipe/trunk/mail/south,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "wYs" = (
@@ -85201,7 +85224,7 @@ ewv
 nrw
 jdV
 jdV
-jdV
+nOr
 oNg
 ejD
 iHN
@@ -86103,9 +86126,9 @@ tIi
 sdD
 wKU
 bYZ
-fLE
+mdo
 wXB
-jdV
+hsb
 jdV
 mvb
 oNg
@@ -86407,7 +86430,7 @@ wKU
 ewv
 ewv
 ewv
-qlJ
+pQm
 qlJ
 oNg
 oNg
@@ -86709,7 +86732,7 @@ gpF
 kYt
 ewv
 uXb
-vnJ
+nda
 vnJ
 hYt
 aWy
@@ -87012,9 +87035,9 @@ rRf
 lxA
 oMd
 mUk
-oMd
-oMd
-gPp
+ajV
+ajV
+ajV
 loU
 loU
 kry
@@ -87316,9 +87339,9 @@ sKJ
 ajV
 ajV
 ajV
-oSh
-gPp
+ajV
 eTy
+klu
 tgQ
 igl
 igl
@@ -87619,8 +87642,8 @@ cZD
 cZD
 cZD
 mwv
-lvi
 omx
+ajV
 ajV
 ajV
 fpO
