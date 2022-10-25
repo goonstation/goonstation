@@ -34212,6 +34212,12 @@
 /obj/item/wrestlingbell,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
+"qSW" = (
+/obj/machinery/nanofab/mining,
+/turf/simulated/floor/grey/side{
+	dir = 8
+	},
+/area/station/quartermaster/refinery)
 "qSY" = (
 /obj/table/round/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -97911,7 +97917,7 @@ los
 sEG
 wRi
 xZH
-aaY
+qSW
 nAo
 fvu
 bZA
