@@ -17702,16 +17702,16 @@
 "iCA" = (
 /obj/table/reinforced/auto,
 /obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_x = 7;
-	pixel_y = 5
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 6;
+	pixel_y = 18
 	},
 /obj/item/reagent_containers/emergency_injector/atropine{
 	pixel_x = 7;
-	pixel_y = 8
-	},
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_x = 7;
-	pixel_y = 11
+	pixel_y = 22
 	},
 /obj/item/chem_grenade/flashbang{
 	pixel_x = -4;
