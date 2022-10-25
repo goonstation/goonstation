@@ -2,7 +2,7 @@
 // Defintion for the nuclear reactor engine internal components
 /////////////////////////////////////////////////////////////////
 
-ABSTRACT_TYPE(/obj/reactor_component)
+ABSTRACT_TYPE(/obj/item/reactor_component)
 /obj/item/reactor_component //base component
 	name = "base reactor component"
 	desc = "You really shouldn't be seeing this - call a coder"
