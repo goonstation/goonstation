@@ -122,21 +122,6 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 						src.call_shuttle(end_location)
 				update_static_data(usr)
 
-/obj/machinery/computer/transit_shuttle/proc/remove_spaceturfs(area/shuttlelocation)
-	var/list/decorations = list()
-	for (var/obj/O in shuttlelocation)
-		if (istype(O,/obj/indestructible/shuttle_corner))
-			decorations += get_turf(O)
-			continue
-		if (istype(O,/obj/decal/fakeobjects/shuttlethruster))
-			decorations += get_turf(O)
-			continue
-	for (var/turf/T in decorations)
-		// for whatever reason, the turfs were not getting the buildable turf component
-		if (istype(T, /turf/unsimulated/floor/shuttle) || istype(T,/turf/simulated/floor)) continue
-		T.ReplaceWithSpaceForce()
-		T.fullbright = 0
-
 /obj/machinery/computer/transit_shuttle/proc/announce_move(area/end_location)
 	if (!src.transit_delay) return (currentlocation && end_location) // dont bother sending a message
 	for(var/obj/machinery/computer/transit_shuttle/Console in machine_registry[MACHINES_SHUTTLECOMPS])
@@ -189,8 +174,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 					if (WEST)
 						ejectT = locate(westBound - 1,T.y,T.z)
 				AM.set_loc(ejectT)
-		currentlocation.move_contents_to(end_location)
-		src.remove_spaceturfs(end_location)
+
+		currentlocation.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 		// cant figure out why the walls arent behaving when moved so
 		for (var/turf/unsimulated/wall/auto/Wall in end_location)
