@@ -2700,7 +2700,6 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/submachine/laundry_machine,
 /turf/simulated/floor/sanitary,
 /area/station/security/equipment)
 "bsh" = (
@@ -9057,7 +9056,7 @@
 	pixel_y = 21
 	},
 /turf/simulated/floor/sanitary,
-/area/station/ai_monitored/armory)
+/area/station/security/equipment)
 "eFA" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -14281,7 +14280,7 @@
 /obj/item/sponge,
 /obj/machinery/light/small,
 /turf/simulated/floor/sanitary,
-/area/station/ai_monitored/armory)
+/area/station/security/equipment)
 "hcb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
@@ -39571,7 +39570,7 @@
 	spawn_contents = list(/obj/item/clothing/under/towel,/obj/item/clothing/under/towel)
 	},
 /turf/simulated/floor/sanitary,
-/area/station/ai_monitored/armory)
+/area/station/security/equipment)
 "tsp" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -83481,11 +83480,11 @@ mKo
 mOd
 qov
 ufa
-qLh
+mKo
 eFo
 tsf
 hbS
-qLh
+mKo
 jjE
 tZe
 uqC
