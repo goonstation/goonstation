@@ -505,6 +505,7 @@ proc/generate_space_color()
 /turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
+	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
 
@@ -624,16 +625,10 @@ proc/generate_space_color()
 		new_turf.set_dir(old_dir)
 
 	new_turf.levelupdate()
+	new_turf.active_liquid = old_liquid
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
-
-	if (!new_turf.fullbright) // bandaid for wacky shit happening with shuttles
-		if (!rlmuloverlay && new_turf.RL_MulOverlay)
-			qdel(new_turf.RL_MulOverlay)
-		if (!rladdoverlay && new_turf.RL_AddOverlay && new_turf.RL_NeedsAdditive)
-			qdel(new_turf.RL_AddOverlay)
-
 	new_turf.RL_MulOverlay = rlmuloverlay
 	new_turf.RL_AddOverlay = rladdoverlay
 
@@ -647,6 +642,7 @@ proc/generate_space_color()
 	//new_turf.RL_OverlayState = rloverlaystate //we actually want these cleared
 	new_turf.RL_Lights = rllights
 	new_turf.opaque_atom_count = opaque_atom_count
+
 
 	new_turf.blocked_dirs = old_blocked_dirs
 	new_turf.checkinghasproximity = old_checkinghasproximity
