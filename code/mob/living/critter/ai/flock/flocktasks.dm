@@ -68,8 +68,7 @@ stare
 
 /datum/aiTask/prioritizer/flock/on_tick()
 	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		walk(holder.owner, 0) // to prevent moving when dead
+		holder.disable() // to prevent moving when dead
 
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()

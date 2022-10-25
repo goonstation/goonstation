@@ -183,10 +183,9 @@
 		var/mob/living/M = holder.owner
 		if (M.ai && M.is_npc)
 			if(M.ai.enabled )
-				M.ai.enabled = FALSE
+				M.ai.disable()
 			else
-				M.ai.enabled = TRUE
-				M.ai.interrupt()
+				M.ai.enable()
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)

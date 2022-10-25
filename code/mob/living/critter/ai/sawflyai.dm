@@ -18,8 +18,7 @@
 
 /datum/aiTask/prioritizer/sawfly/on_tick()
 	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		walk(holder.owner, 0)
+		holder.disable()
 
 /datum/aiTask/prioritizer/sawfly/on_reset()
 	..()

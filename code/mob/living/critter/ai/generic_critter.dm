@@ -24,8 +24,7 @@
 
 /datum/aiTask/prioritizer/critter/on_tick()
 	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		holder.stop_move()
+		holder.disable()
 
 /datum/aiTask/prioritizer/critter/on_reset()
 	..()
