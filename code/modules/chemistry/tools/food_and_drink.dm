@@ -46,8 +46,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.sims)
-					H.sims.affectMotive("Hunger", heal_amt * 6)
-					H.sims.affectMotive("Bladder", -heal_amt * 0.2)
+					H.sims.affectMotive("Hunger", healing * 6)
+					H.sims.affectMotive("Bladder", -healing * 0.2)
 
 			if (quality >= 5)
 				boutput(M, "<span class='notice'>That tasted amazing!</span>")
