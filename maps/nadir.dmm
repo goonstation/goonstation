@@ -31951,11 +31951,6 @@
 	name = "Extraction Nexus"
 	})
 "pAs" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/storage/secure/crate/weapon/armory/phaser,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
