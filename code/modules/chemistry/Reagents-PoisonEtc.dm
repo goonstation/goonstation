@@ -835,7 +835,6 @@ datum
 					M.setStatusMin("weakened", 6 SECONDS * mult)
 					M.make_jittery(6)
 					M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor, scratching themselves violently!</span>")
-					M.emote("scream")
 				..()
 				return
 
@@ -1789,8 +1788,6 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (prob(15))
 							M.setStatusMin("stunned", 2 SECONDS * mult)
-							if (!isdead(M))
-								M.emote("scream")
 					if (30 to 60)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
@@ -2137,7 +2134,6 @@ datum
 							if(3) //Trip
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2b"), "red")
 								H.visible_message("<span class='combat bold'>[H] stumbles and falls!</span>")
-								if(probmult(10)) H.emote("scream")
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")

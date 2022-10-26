@@ -876,13 +876,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/topnumber = 1
 	var/orenumber = 1
 
-#ifdef UNDERWATER_MAP
-	fullbright = 0
-	luminosity = 1
-#else
-	fullbright = 1
-#endif
-
 	dark
 		fullbright = 0
 		luminosity = 1
@@ -1191,9 +1184,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1317,9 +1307,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.levelupdate()
 		for (var/turf/simulated/wall/auto/asteroid/A in orange(src,1))
 			A.UpdateIcon()
-#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 		for (var/turf/simulated/floor/plating/airless/asteroid/A in range(src,1))
 			A.UpdateIcon()
 #ifdef UNDERWATER_MAP
@@ -1381,7 +1368,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	luminosity = 3
 #else
 	luminosity = 1
-	fullbright = 1
 #endif
 
 	dark
@@ -1448,9 +1434,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
 			src.space_overlays += edge_overlay
-#ifndef UNDERWATER_MAP // We don't want fullbright edges underwater. This fixes 'shadow' issue.
-			A.UpdateOverlays(new /image/fullbright, "fullbright")
-#endif
 
 
 // Tool Defines

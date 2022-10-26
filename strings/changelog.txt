@@ -1,4 +1,11 @@
 
+(t)tue oct 25 22
+(u)aloe
+(+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
+(u)Waffleloffle & amylizzle
+(p)11585
+(e)🎨|C-Sprites
+(+)Added a capybara to the game.
 (t)mon oct 24 22
 (u)tarmunora
 (+)Thermal printers now have a limited stock of paper that slowly replenishes.

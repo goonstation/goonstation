@@ -612,10 +612,7 @@ ABSTRACT_TYPE(/datum/projectile)
 		//When it hits a mob or such should anything special happen
 		on_hit(atom/hit, angle, var/obj/projectile/O) //MBC : what the fuck shouldn't this all be in bullet_act on human in damage.dm?? this split is giving me bad vibes
 			impact_image_effect(ie_type, hit)
-//				if (isliving(hit))
-//					var/mob/living/L = hit
-//					stun_bullet_hit(O,L)
-			return
+
 		/// Does a thing every step this projectile takes
 		tick(var/obj/projectile/O)
 			return
@@ -972,11 +969,6 @@ datum/projectile/snowball
 		P.reagents.add_reagent(DATA.reagent_payload, 15)
 
 	return P
-
-/proc/stun_bullet_hit(var/obj/projectile/O, var/mob/living/L)
-	L.do_disorient(clamp(O.power*4, O.proj_data.power*2, O.power+80), weakened = O.power*2, stunned = O.power*2, disorient = min(O.power, 80), remove_stamina_below_zero = 0)
-	L.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
-
 
 /proc/shoot_reflected_to_sender(var/obj/projectile/P, var/obj/reflector, var/max_reflects = 3)
 	if(P.reflectcount >= max_reflects)
