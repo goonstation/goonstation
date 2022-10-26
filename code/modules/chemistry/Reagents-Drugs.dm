@@ -289,41 +289,63 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/counter = 1
 			var/current_color_pattern = 1
 			var/static/list/halluc_sounds = list(
 				"punch",
 				'sound/vox/poo-vox.ogg',
-				"clownstep",
+				new /datum/hallucinated_sound("clownstep", min_count = 1, max_count = 6, delay = 0.5 SECONDS),
 				'sound/weapons/armbomb.ogg',
-				'sound/weapons/Gunshot.ogg',
-				'sound/impact_sounds/Energy_Hit_3.ogg',
+				new /datum/hallucinated_sound('sound/weapons/Gunshot.ogg', min_count = 1, max_count = 3, delay = 0.4 SECONDS),
+				new /datum/hallucinated_sound('sound/impact_sounds/Energy_Hit_3.ogg', min_count = 2, max_count = 4, delay = COMBAT_CLICK_DELAY),
 				'sound/voice/creepyshriek.ogg',
-				'sound/impact_sounds/Metal_Hit_1.ogg',
-				'sound/machines/airlock_bolt.ogg',
+				new /datum/hallucinated_sound('sound/impact_sounds/Metal_Hit_1.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
+				new /datum/hallucinated_sound('sound/machines/airlock_bolt.ogg', min_count = 1, max_count = 4, delay = 0.3 SECONDS),
 				'sound/machines/airlock_swoosh_temp.ogg',
-				'sound/weapons/flash.ogg',
+				'sound/machines/airlock_deny.ogg',
+				new /datum/hallucinated_sound('sound/weapons/flash.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
 				'sound/musical_instruments/Bikehorn_1.ogg',
 				'sound/misc/talk/radio.ogg',
 				'sound/misc/talk/radio2.ogg',
 				'sound/misc/talk/radio_ai.ogg',
 				'sound/weapons/laser_f.ogg',
 				'sound/items/security_alert.ogg', //hehehehe
-				'sound/machines/click.ogg',
+				new /datum/hallucinated_sound('sound/machines/click.ogg', min_count = 1, max_count = 4, delay = 0.4 SECONDS), //silenced pistol sound
+				new /datum/hallucinated_sound('sound/effects/glare.ogg', pitch = 0.8), //vamp glare is pitched down for... reasons
+				'sound/effects/poff.ogg',
+				new /datum/hallucinated_sound('sound/effects/electric_shock_short.ogg', min_count = 3, max_count = 10, delay = 1 SECOND, pitch = 0.8), //arcfiend drain
+			)
+			var/static/list/speech_sounds = list(
+				'sound/misc/talk/speak_1.ogg',
+				'sound/misc/talk/speak_3.ogg',
+				'sound/misc/talk/cow.ogg',
+				'sound/misc/talk/roach.ogg',
+				'sound/misc/talk/lizard.ogg',
+				'sound/misc/talk/skelly.ogg',
+			)
+			var/static/list/voice_names = list(
+				"The voice in your head",
+				"Someone right behind you",
+				"???",
+				"A whisper in the vents",
+				"The universe itself",
 			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
+				src.counter += mult //around half realtime
 				// TODO. Write awesome hallucination algorithm!
 //				if(M.canmove) step(M, pick(cardinal))
 //				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				if(M.client && prob(20))
+				//the colour changes are delayed slightly, so the first few hallucinations you see seem more real
+				if(M.client && counter >= 6 && prob(20))
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
 						src.current_color_pattern = 2
 					else
 						animate_fade_drug_inbetween_2(M.client, 40)
 						src.current_color_pattern = 1
-				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 20 SECONDS))
+				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS))
 					if (prob(30))
 						if(prob(50))
 							fake_attack(M)
@@ -334,14 +356,23 @@ datum
 					else
 						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
 						new fake_type(M.loc, M)
-				if(probmult(16))
+				if(probmult(min(16 + counter/2, 30))) //THE VOICES GET LOUDER
 					var/atom/origin = M.loc
 					var/turf/mob_turf = get_turf(M)
 					if (mob_turf)
 						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
-					M.playsound_local(origin, pick(src.halluc_sounds), 50, 1)
+					//wacky loosely typed code ahead
+					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
+					if (istype(chosen)) //it's a datum
+						SPAWN(0)
+							for (var/i = 1 to rand(chosen.min_count, chosen.max_count))
+								M.playsound_local(origin, chosen.path, 100, 1, pitch = chosen.pitch)
+								sleep(chosen.delay)
+					else //it's just a path directly
+						M.playsound_local(origin, chosen, 100, 1)
 				if(probmult(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[phrase_log.random_phrase("say")]</i></b>")
+					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
+					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
 				..()
 				return
 

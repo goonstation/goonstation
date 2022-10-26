@@ -472,11 +472,20 @@ var/reverse_mode = 0
 		SPAWN(rand(10,300))
 			src.sparks()
 
-/proc/testa()
-	fake_attack(usr)
+/datum/hallucinated_sound
+	var/path //sound file
+	var/max_count //max number of times to play it
+	var/min_count //^
+	var/delay //delay between each play
+	var/pitch
 
-/proc/testb()
-	fake_attack(input(usr) as mob in world)
+	New(path, min_count = 1, max_count = 1, delay = 0, pitch = 1)
+		..()
+		src.path = path
+		src.min_count = min_count
+		src.max_count = max_count
+		src.delay = delay
+		src.pitch = pitch
 
 /obj/fake_attacker
 	icon = null
@@ -493,7 +502,7 @@ var/reverse_mode = 0
 	event_handler_flags = USE_FLUID_ENTER
 
 	proc/get_name()
-		return src.icon_state
+		return src.fake_icon_state
 
 	pig
 		fake_icon = 'icons/effects/hallucinations.dmi'
@@ -572,9 +581,9 @@ var/reverse_mode = 0
 		if (prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 50, 0)
+					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
 				else
-					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 50, 1)
+					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
 				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
@@ -582,9 +591,9 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 			else
 				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 50, 0)
+					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 40, 0)
 				else
-					my_target.playsound_local(my_target.loc, pick(sounds_punch), 50, 1)
+					my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
