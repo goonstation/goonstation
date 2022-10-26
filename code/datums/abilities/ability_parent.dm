@@ -200,7 +200,7 @@
 	proc/Stat()
 		if (usesPoints && pointName != "" && rendered)
 			stat(null, " ")
-			stat("[src.pointName]:", "[src.points]")
+			stat("[src.pointName]:", src.points)
 			if (src.regenRate || src.lastBonus)
 				stat("Generation Rate:", "[src.regenRate] + [src.lastBonus]")
 
