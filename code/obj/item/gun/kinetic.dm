@@ -990,13 +990,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	desc = "A law enforcement weapon that fires foam darts. Synthesizes darts directly from the battery and includes new auto-load technology."
 	icon_state="foamdartgun-pull"
 	inventory_counter_enabled = FALSE
-	var/power_requirement = 10 //! The amount of power deducted from a borg's cell when they fire this.
+	allowReverseReload = FALSE
+	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
+
+	New()
+		. = ..()
+		set_current_projectile(new /datum/projectile/bullet/foamdart/biodegradable)
 
 	canshoot(mob/user)
 		// no parent call so we don't care if it's pulled
 		if (issilicon(user))
 			var/mob/living/silicon/S = user
-			return (S.cell && (S.cell.charge >= power_requirement))
+			return S.cell?.charge >= power_requirement
 		else // guess someone spawned one???
 			return TRUE
 
@@ -1008,9 +1013,16 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
 		if (src.canshoot(user))
-				. = ..()
+			. = ..()
 		else
 			boutput(user, "<span class='alert'>You're too low on power to synthesize a dart!</span>")
+
+	process_ammo(mob/user)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			S.cell?.charge -= src.power_requirement
+		return TRUE
+
 
 /obj/item/gun/kinetic/foamdartrevolver
 	name = "foam dart revolver"

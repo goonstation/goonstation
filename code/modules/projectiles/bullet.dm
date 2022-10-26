@@ -480,14 +480,14 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
-		drop_as_ammo(P)
+		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
+		drop_as_ammo(get_turf(hit))
 
 	on_max_range_die(obj/projectile/P)
 		..()
-		drop_as_ammo(P)
+		drop_as_ammo(get_turf(P))
 
-	proc/drop_as_ammo(obj/projectile/P)
-		var/turf/T = get_turf(P)
+	proc/drop_as_ammo(turf/T)
 		if(T)
 			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
 			ammo_dropped.amount_left = 1
@@ -499,6 +499,8 @@ toxic - poisons
 /datum/projectile/bullet/foamdart/biodegradable
 	name = "biodegradable CyberFoam dart"
 	sname = "biodegradable CyberFoam dart"
+	damage_type = D_KINETIC
+	power = 0.3 // about 38 shots to down a full-stam person
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()

@@ -1,5 +1,7 @@
 
 (t)tue oct 25 22
+(u)aloe
+(+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
 (u)Waffleloffle & amylizzle
 (p)11585
 (e)🎨|C-Sprites
