@@ -35,26 +35,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	proc/get_food_color()
 		if (food_color) // keep manually defined food colors
 			return food_color
-		var/rSum  = 0
-		var/gSum  = 0
-		var/bSum  = 0
-		var/total = 0
-		//estimate color
 		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
-		for (var/y = 1 to 3)
-			for (var/x = 1 to 5)
-				var/pixColor = I.GetPixel(4*x+4,8*y)
-				if (!pixColor)
-					continue
-				var/rgba = rgb2num(pixColor)
-				var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
-				total += weight
-				rSum += rgba[1] * weight
-				gSum += rgba[2] * weight
-				bSum += rgba[3] * weight
-		if (total == 0)
-			return "#FF0000"
-		food_color = rgb(rSum/total,gSum/total,bSum/total)
+		food_color = get_average_color(I)
 		return food_color
 
 	proc/heal(var/mob/living/M)

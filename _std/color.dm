@@ -274,6 +274,29 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0, 0, 0, 0
 	)
 
+proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
+	var/rSum  = 0
+	var/gSum  = 0
+	var/bSum  = 0
+	var/total = 0
+	var/xReps = round(32/xPixelInterval)
+	var/yReps = round(32/yPixelInterval)
+	//estimate color
+	for (var/y = 1 to yReps)
+		for (var/x = 1 to xReps)
+			var/pixColor = I.GetPixel(x*xPixelInterval,y*yPixelInterval)
+			if (!pixColor)
+				continue
+			var/rgba = rgb2num(pixColor)
+			var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
+			total += weight
+			rSum += rgba[1] * weight
+			gSum += rgba[2] * weight
+			bSum += rgba[3] * weight
+	if (total == 0)
+		return "#FF0000"
+	return rgb(rSum/total,gSum/total,bSum/total)
+
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
