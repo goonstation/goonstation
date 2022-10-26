@@ -54337,6 +54337,10 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/medical/morgue)
+"rfJ" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "rfU" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1;
@@ -122319,8 +122323,8 @@ age
 ate
 awg
 age
-ajO
-ajO
+age
+age
 age
 aWX
 uWJ
@@ -122621,8 +122625,8 @@ age
 atl
 awg
 adL
-aay
-aay
+rfJ
+rfJ
 ard
 ard
 ard
