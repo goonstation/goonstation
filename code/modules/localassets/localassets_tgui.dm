@@ -58,6 +58,8 @@
 		"fa-solid-900.ttf"
 	)
 
-	url_map = list(
-		"fa-all.min.css" = "[resource("css/tgui/fa-all.min.css")]"
-	)
+	init()
+		. = ..()
+		url_map = list(
+			"fa-all.min.css" = "[resource("css/tgui/fa-all.min.css")]"
+		)
