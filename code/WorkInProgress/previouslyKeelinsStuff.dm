@@ -472,11 +472,17 @@ var/reverse_mode = 0
 		SPAWN(rand(10,300))
 			src.sparks()
 
+///Config datum for LSD fake sounds
 /datum/hallucinated_sound
-	var/path //sound file
-	var/max_count //max number of times to play it
-	var/min_count //^
-	var/delay //delay between each play
+	///The sound file to play
+	var/path
+	///Max number of times to play it
+	var/max_count
+	///Min number of times to play it
+	var/min_count
+	///Delay between each play
+	var/delay
+	///Pitch to play it at
 	var/pitch
 
 	New(path, min_count = 1, max_count = 1, delay = 0, pitch = 1)
@@ -499,6 +505,7 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
+	///Does this hallucination constantly whack you
 	var/should_attack = TRUE
 	event_handler_flags = USE_FLUID_ENTER
 
