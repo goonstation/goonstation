@@ -481,6 +481,8 @@ var/reverse_mode = 0
 /obj/fake_attacker
 	icon = null
 	icon_state = null
+	var/fake_icon = 'icons/misc/critter.dmi'
+	var/fake_icon_state = ""
 	name = ""
 	desc = ""
 	density = 0
@@ -490,6 +492,45 @@ var/reverse_mode = 0
 	var/weapon_name = null
 	event_handler_flags = USE_FLUID_ENTER
 
+	proc/get_name()
+		return src.icon_state
+
+	pig
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "pig"
+		get_name()
+			return pick("pig", "DAT FUKKEN PIG")
+	spider
+		fake_icon_state = "big_spide"
+		get_name()
+			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
+	slime
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "slime"
+		get_name()
+			return pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
+	shambler
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "shambler"
+		get_name()
+			return pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
+	legworm
+		fake_icon_state = "legworm"
+	handspider
+		fake_icon_state = "handspider"
+	bat
+		fake_icon_state = "bat"
+		get_name()
+			return pick("bat", "batty", "the roundest possible bat", "the giant bat that makes all of the rules")
+	snake
+		fake_icon_state = "rattlesnake"
+		get_name()
+			return pick("snek", "WHY DID IT HAVE TO BE SNAKES?!", "rattlesnake", "OH SHIT A SNAKE")
+
+	scorpion
+		fake_icon_state = "spacescorpion"
+		get_name()
+			return "space scorpion"
 
 	disposing()
 		my_target = null
@@ -513,7 +554,11 @@ var/reverse_mode = 0
 /obj/fake_attacker/New(location, target)
 	..()
 	SPAWN(30 SECONDS)	qdel(src)
+	src.name = src.get_name()
 	src.my_target = target
+	if (src.fake_icon && src.fake_icon_state)
+		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+		target << image
 	step_away(src,my_target,2)
 	process()
 
@@ -524,7 +569,7 @@ var/reverse_mode = 0
 	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
-		if (prob(15))
+		if (prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				if (narrator_mode)
 					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 50, 0)
@@ -544,9 +589,10 @@ var/reverse_mode = 0
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
+			attack_twitch(src)
 
-	if (prob(15)) step_away(src,my_target,2)
-	SPAWN(0.5 SECONDS) .()
+	if (prob(10)) step_away(src,my_target,2)
+	SPAWN(0.3 SECONDS) .()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)

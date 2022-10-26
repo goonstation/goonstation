@@ -290,6 +290,26 @@ datum
 			value = 6 // 4 2
 			thirst_value = -0.03
 			var/current_color_pattern = 1
+			var/static/list/halluc_sounds = list(
+				"punch",
+				'sound/vox/poo-vox.ogg',
+				"clownstep",
+				'sound/weapons/armbomb.ogg',
+				'sound/weapons/Gunshot.ogg',
+				'sound/impact_sounds/Energy_Hit_3.ogg',
+				'sound/voice/creepyshriek.ogg',
+				'sound/impact_sounds/Metal_Hit_1.ogg',
+				'sound/machines/airlock_bolt.ogg',
+				'sound/machines/airlock_swoosh_temp.ogg',
+				'sound/weapons/flash.ogg',
+				'sound/musical_instruments/Bikehorn_1.ogg',
+				'sound/misc/talk/radio.ogg',
+				'sound/misc/talk/radio2.ogg',
+				'sound/misc/talk/radio_ai.ogg',
+				'sound/weapons/laser_f.ogg',
+				'sound/items/security_alert.ogg', //hehehehe
+				'sound/machines/click.ogg',
+			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -303,37 +323,23 @@ datum
 					else
 						animate_fade_drug_inbetween_2(M.client, 40)
 						src.current_color_pattern = 1
-				if(probmult(6))
-					switch(rand(1,2))
-						if(1)
-							if(prob(50))
-								fake_attack(M)
-							else
-								var/monkeys = rand(1,3)
-								for(var/i = 0, i < monkeys, i++)
-									fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", "monkey ([rand(1, 1000)])")
-						if(2)
-							var/halluc_state = null
-							var/halluc_name = null
-							switch(rand(1,5))
-								if(1)
-									halluc_state = "pig"
-									halluc_name = pick("pig", "DAT FUKKEN PIG")
-								if(2)
-									halluc_state = "spider"
-									halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
-								if(3)
-									halluc_state = "dragon"
-									halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")
-								if(4)
-									halluc_state = "slime"
-									halluc_name = pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
-								if(5)
-									halluc_state = "shambler"
-									halluc_name = pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
-							fake_attackEx(M, 'icons/effects/hallucinations.dmi', halluc_state, halluc_name)
-				if(probmult(9))
-					M.playsound_local(M.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 50, 1)
+				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 20 SECONDS))
+					if (prob(30))
+						if(prob(50))
+							fake_attack(M)
+						else
+							var/monkeys = rand(1,3)
+							for(var/i = 0, i < monkeys, i++)
+								fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
+					else
+						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
+						new fake_type(M.loc, M)
+				if(probmult(16))
+					var/atom/origin = M.loc
+					var/turf/mob_turf = get_turf(M)
+					if (mob_turf)
+						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
+					M.playsound_local(origin, pick(src.halluc_sounds), 50, 1)
 				if(probmult(8))
 					boutput(M, "<b>You hear a voice in your head... <i>[phrase_log.random_phrase("say")]</i></b>")
 				..()
