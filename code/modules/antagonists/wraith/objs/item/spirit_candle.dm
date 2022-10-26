@@ -90,7 +90,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
