@@ -76,8 +76,6 @@
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
 			playsound(target, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
-			if (!isdead(MT))
-				MT.emote("scream")
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"
@@ -102,7 +100,6 @@
 			if (prob(10))
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R] and snips an important-looking cable!</span>")
 				R.compborg_take_critter_damage(null, 0 ,rand(40,70))
-				MT.emote("scream")
 				return 0
 			else
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R]!</span>")

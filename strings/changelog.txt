@@ -1,5 +1,31 @@
 
+(t)wed oct 26 22
+(u)TDHooligan
+(p)11607
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)X Cakes and similar recipes will now more closely match the color of their ingredients, rather than being bright red.
+(u)Wisemonster
+(p)11553
+(e)🗺💅|A-Mapping, C-QoL
+(+)Mechanics storage has been modified on cog1 to now be merged with the engineering power room.
+(u)Kubius
+(p)11551
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Mining fabricators are now capable of manufacturing dive suits while on an underwater map.
+(u)Kubius
+(p)11564
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Fifth fixbatch for Nadir, prominently including a third Janitor slot, removal of a nonstandard Security slot, and inner maintenance camera coverage adjustment. The Research hall is no longer radstorm immune.
+(t)tue oct 25 22
+(u)aloe
+(+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
+(u)Waffleloffle & amylizzle
+(p)11585
+(e)🎨|C-Sprites
+(+)Added a capybara to the game.
 (t)mon oct 24 22
+(u)tarmunora
+(+)Thermal printers now have a limited stock of paper that slowly replenishes.
 (u)Sord
 (+)Jobs with clothing vendors now have less clothing in their secure lockers.
 (+)This will be the standard going forward for any jobs that receive clothing vendors.

@@ -709,7 +709,7 @@
 		loaded = null
 		return 1
 
-	canshoot()
+	canshoot(mob/user)
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
