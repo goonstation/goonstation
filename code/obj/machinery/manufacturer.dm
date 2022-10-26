@@ -2273,6 +2273,9 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+#endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
 		/datum/manufacture/powercell,
