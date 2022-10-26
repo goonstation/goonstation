@@ -481,7 +481,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	src.UpdateIcon()
 	return TRUE
 
-//! Check if the gun can shoot or not. `user` will be null if the gun is shot by a non-mob (gun component)
+/// Check if the gun can shoot or not. `user` will be null if the gun is shot by a non-mob (gun component)
 /obj/item/gun/proc/canshoot(mob/user)
 	return 0
 
