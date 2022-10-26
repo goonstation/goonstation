@@ -499,6 +499,7 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
+	var/should_attack = TRUE
 	event_handler_flags = USE_FLUID_ENTER
 
 	proc/get_name()
@@ -541,6 +542,16 @@ var/reverse_mode = 0
 		get_name()
 			return "space scorpion"
 
+	aberration
+		fake_icon_state = "aberration"
+		should_attack = FALSE
+		get_name()
+			return "transposed particle field"
+
+	capybara
+		fake_icon_state = "capybara"
+		should_attack = FALSE
+
 	disposing()
 		my_target = null
 		. = ..()
@@ -578,7 +589,7 @@ var/reverse_mode = 0
 	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
-		if (prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
+		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				if (narrator_mode)
 					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
@@ -600,7 +611,7 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 			attack_twitch(src)
 
-	if (prob(10)) step_away(src,my_target,2)
+	if (src.should_attack && prob(10)) step_away(src,my_target,2)
 	SPAWN(0.3 SECONDS) .()
 
 /proc/fake_blood(var/mob/target)
