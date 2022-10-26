@@ -300,7 +300,7 @@ datum
 				new /datum/hallucinated_sound('sound/impact_sounds/Energy_Hit_3.ogg', min_count = 2, max_count = 4, delay = COMBAT_CLICK_DELAY),
 				'sound/voice/creepyshriek.ogg',
 				new /datum/hallucinated_sound('sound/impact_sounds/Metal_Hit_1.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
-				new /datum/hallucinated_sound('sound/machines/airlock_bolt.ogg', min_count = 1, max_count = 4, delay = 0.3 SECONDS),
+				new /datum/hallucinated_sound('sound/machines/airlock_bolt.ogg', min_count = 1, max_count = 3, delay = 0.3 SECONDS),
 				'sound/machines/airlock_swoosh_temp.ogg',
 				'sound/machines/airlock_deny.ogg',
 				'sound/machines/airlock_pry.ogg',
