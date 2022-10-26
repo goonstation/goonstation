@@ -654,8 +654,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-		eater.emote("scream")
-		return
 
 #endif
 

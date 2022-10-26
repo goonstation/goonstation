@@ -480,20 +480,32 @@ toxic - poisons
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		..()
-		drop_as_ammo(P)
+		var/turf/T = istype(hit, /mob) ? get_turf(hit) : get_turf(P) // drop on same tile if mob, drop 1 tile away otherwise
+		drop_as_ammo(get_turf(T))
 
 	on_max_range_die(obj/projectile/P)
 		..()
-		drop_as_ammo(P)
+		drop_as_ammo(get_turf(P))
 
-	proc/drop_as_ammo(obj/projectile/P)
-		var/turf/T = get_turf(P)
+	proc/drop_as_ammo(turf/T)
 		if(T)
 			var/obj/item/ammo/bullets/foamdarts/ammo_dropped = new /obj/item/ammo/bullets/foamdarts (T)
 			ammo_dropped.amount_left = 1
 			ammo_dropped.UpdateIcon()
 			ammo_dropped.pixel_x += rand(-12,12)
 			ammo_dropped.pixel_y += rand(-12,12)
+			. = ammo_dropped
+
+/datum/projectile/bullet/foamdart/biodegradable
+	name = "biodegradable CyberFoam dart"
+	sname = "biodegradable CyberFoam dart"
+	damage_type = D_KINETIC
+	power = 0.3 // about 38 shots to down a full-stam person
+
+	drop_as_ammo(obj/projectile/P)
+		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
+		if (dropped)
+			dropped.changeStatus("acid", 3 SECONDS) // this will probably bug out if someone manages to load it into a gun. problem for later
 
 //0.40
 /datum/projectile/bullet/blow_dart
@@ -594,7 +606,6 @@ toxic - poisons
 			if(proj.power >= 40)
 				var/throw_range = (proj.power > 50) ? 6 : 3
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat) M.emote("scream")
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			if (M.organHolder)
@@ -743,7 +754,6 @@ toxic - poisons
 				var/throw_range = (proj.power > 20) ? 5 : 3
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat) M.emote("scream")
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
 				M.update_canmove()
 			hit.changeStatus("staggered", clamp(proj.power/8, 5, 1) SECONDS)
@@ -792,8 +802,6 @@ toxic - poisons
 		. = ..()
 		if(isliving(hit))
 			var/mob/living/L = hit
-			if(!ON_COOLDOWN(L, "saltshot_scream", 1 SECOND))
-				L.emote("scream")
 			L.take_eye_damage(P.power / 2)
 			L.change_eye_blurry(P.power, 40)
 			L.setStatus("salted", 15 SECONDS, P.power * 2)
@@ -896,8 +904,6 @@ toxic - poisons
 				var/mob/living/M = hit
 				var/throw_range = 10
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat)
-					M.emote("scream")
 				M.throw_at(target, throw_range, 2, throw_type = THROW_GUNIMPACT)
 
 				if (ishuman(M) && M.organHolder)
@@ -1014,8 +1020,6 @@ datum/projectile/bullet/autocannon
 					var/mob/living/carbon/human/M = hit
 					boutput(M, "<span class='alert'>You are struck by an autocannon round! Thankfully it was not armed.</span>")
 					M.do_disorient(stunned = 40)
-					if (!M.stat)
-						M.emote("scream")
 
 
 		on_launch(var/obj/projectile/P)
@@ -1187,7 +1191,6 @@ datum/projectile/bullet/autocannon
 				var/throw_range = (proj.power > 30) ? 5 : 3
 
 				var/turf/target = get_edge_target_turf(M, dirflag)
-				if(!M.stat) M.emote("scream")
 				M.changeStatus("stunned", 1 SECONDS)
 				M.changeStatus("weakened", 2 SECONDS)
 				M.throw_at(target, throw_range, 1, throw_type = THROW_GUNIMPACT)
@@ -1337,8 +1340,6 @@ datum/projectile/bullet/autocannon
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
-					if (!M.stat)
-						M.emote("scream")
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 36, 0.45)
@@ -1438,8 +1439,6 @@ datum/projectile/bullet/autocannon
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
 					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
-					if (!M.stat)
-						M.emote("scream")
 
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, 0.45)
@@ -1472,8 +1471,6 @@ datum/projectile/bullet/autocannon
 				M.TakeDamage("chest", 15/M.get_ranged_protection(), 0)
 				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
 				M.do_disorient(stunned = 40)
-				if (!M.stat)
-					M.emote("scream")
 
 /datum/projectile/bullet/mininuke //Assday only.
 	name = "miniature nuclear warhead"
@@ -1520,7 +1517,6 @@ datum/projectile/bullet/autocannon
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 
@@ -1545,7 +1541,6 @@ datum/projectile/bullet/autocannon
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 25)
 			M.throw_at(target, 12, 3, throw_type = THROW_GUNIMPACT)
 
