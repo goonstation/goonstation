@@ -494,6 +494,16 @@ toxic - poisons
 			ammo_dropped.UpdateIcon()
 			ammo_dropped.pixel_x += rand(-12,12)
 			ammo_dropped.pixel_y += rand(-12,12)
+			. = ammo_dropped
+
+/datum/projectile/bullet/foamdart/biodegradable
+	name = "biodegradable CyberFoam dart"
+	sname = "biodegradable CyberFoam dart"
+
+	drop_as_ammo(obj/projectile/P)
+		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
+		if (dropped)
+			dropped.changeStatus("acid", 3 SECONDS) // this will probably bug out if someone manages to load it into a gun. problem for later
 
 //0.40
 /datum/projectile/bullet/blow_dart
