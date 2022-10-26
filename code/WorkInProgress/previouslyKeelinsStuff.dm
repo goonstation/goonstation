@@ -493,6 +493,13 @@ var/reverse_mode = 0
 		src.delay = delay
 		src.pitch = pitch
 
+	///Play the sound to a mob from a location
+	proc/play(var/mob/mob, var/atom/location)
+		SPAWN(0)
+			for (var/i = 1 to rand(src.min_count, src.max_count))
+				mob.playsound_local(location, src.path, 100, 1, pitch = src.pitch)
+				sleep(src.delay)
+
 /obj/fake_attacker
 	icon = null
 	icon_state = null

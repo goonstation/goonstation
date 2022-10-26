@@ -336,7 +336,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				src.counter += mult //around half realtime
+				src.counter += 1 * mult //around half realtime
 				if(M.client && counter >= 6 && prob(20))
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
@@ -363,10 +363,7 @@ datum
 					//wacky loosely typed code ahead
 					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
 					if (istype(chosen)) //it's a datum
-						SPAWN(0)
-							for (var/i = 1 to rand(chosen.min_count, chosen.max_count))
-								M.playsound_local(origin, chosen.path, 100, 1, pitch = chosen.pitch)
-								sleep(chosen.delay)
+						chosen.play(M, origin)
 					else //it's just a path directly
 						M.playsound_local(origin, chosen, 100, 1)
 				if(probmult(8))
