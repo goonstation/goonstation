@@ -166,7 +166,7 @@ var/global/datum/mob_stat_thinker/mobStat = new
 						stat("Co-ordinates:", "([loc.x], [loc.y], [loc.z])")
 					else
 						stat("Co-ordinates:", "([x], [y], [z])")
-					stat("Runtimes:", runtime_count)
+					stat("Runtimes:", "[runtime_count]")
 					continue
 				if (mobStat.statNames[i] == "Game Mode:")
 					stat("Game Mode:", (ticker?.hide_mode) ? "[master_mode] **HIDDEN**" : "[master_mode]")
