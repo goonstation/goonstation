@@ -1,4 +1,9 @@
 
+(t)wed oct 26 22
+(u)Kubius
+(p)11564
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Fifth fixbatch for Nadir, prominently including a third Janitor slot, removal of a nonstandard Security slot, and inner maintenance camera coverage adjustment. The Research hall is no longer radstorm immune.
 (t)tue oct 25 22
 (u)aloe
 (+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
