@@ -199,7 +199,7 @@
 			user.drop_item()
 			I.set_loc(src)
 			user.visible_message("[user] adds a beaker to \the [src]!", "You add a beaker to the [src]!")
-			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(G)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
+			logTheThing(LOG_CHEMISTRY, user, "adds a beaker [log_reagents(I)] to [src] at [log_loc(src)].") // Rigging cryo is advertised in the 'Tip of the Day' list (Convair880).
 			src.add_fingerprint(user)
 		else if(istype(I, /obj/item/grab))
 			var/obj/item/grab/G = I
