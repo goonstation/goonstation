@@ -303,6 +303,7 @@ datum
 				new /datum/hallucinated_sound('sound/machines/airlock_bolt.ogg', min_count = 1, max_count = 4, delay = 0.3 SECONDS),
 				'sound/machines/airlock_swoosh_temp.ogg',
 				'sound/machines/airlock_deny.ogg',
+				'sound/machines/airlock_pry.ogg',
 				new /datum/hallucinated_sound('sound/weapons/flash.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
 				'sound/musical_instruments/Bikehorn_1.ogg',
 				'sound/misc/talk/radio.ogg',
@@ -314,6 +315,8 @@ datum
 				new /datum/hallucinated_sound('sound/effects/glare.ogg', pitch = 0.8), //vamp glare is pitched down for... reasons
 				'sound/effects/poff.ogg',
 				new /datum/hallucinated_sound('sound/effects/electric_shock_short.ogg', min_count = 3, max_count = 10, delay = 1 SECOND, pitch = 0.8), //arcfiend drain
+				'sound/items/hypo.ogg',
+				'sound/items/sticker.ogg',
 			)
 			var/static/list/speech_sounds = list(
 				'sound/misc/talk/speak_1.ogg',
@@ -334,10 +337,6 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				src.counter += mult //around half realtime
-				// TODO. Write awesome hallucination algorithm!
-//				if(M.canmove) step(M, pick(cardinal))
-//				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				//the colour changes are delayed slightly, so the first few hallucinations you see seem more real
 				if(M.client && counter >= 6 && prob(20))
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
@@ -356,7 +355,7 @@ datum
 					else
 						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
 						new fake_type(M.loc, M)
-				if(probmult(min(16 + counter/2, 30))) //THE VOICES GET LOUDER
+				if(probmult(min(16 + src.counter/2, 30))) //THE VOICES GET LOUDER
 					var/atom/origin = M.loc
 					var/turf/mob_turf = get_turf(M)
 					if (mob_turf)
