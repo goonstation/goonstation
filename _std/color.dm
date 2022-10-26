@@ -279,12 +279,12 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 	var/gSum  = 0
 	var/bSum  = 0
 	var/total = 0
-	var/xReps = round(32/xPixelInterval)
-	var/yReps = round(32/yPixelInterval)
+	var/icon_width = I.Width()
+	var/icon_height = I.Height()
 	//estimate color
-	for (var/y = 1 to yReps)
-		for (var/x = 1 to xReps)
-			var/pixColor = I.GetPixel(x*xPixelInterval,y*yPixelInterval)
+	for (var/y = 1 to icon_height step yPixelInterval)
+		for (var/x = 1 to icon_width step xPixelInterval)
+			var/pixColor = I.GetPixel(x,y)
 			if (!pixColor)
 				continue
 			var/rgba = rgb2num(pixColor)
@@ -294,7 +294,7 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 			gSum += rgba[2] * weight
 			bSum += rgba[3] * weight
 	if (total == 0)
-		return "#FF0000"
+		return "#00000000"
 	return rgb(rSum/total,gSum/total,bSum/total)
 
 /client/proc/set_saturation(s=1)
