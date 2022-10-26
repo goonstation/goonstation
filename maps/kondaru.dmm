@@ -11914,7 +11914,7 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/vacuum,
 /area/station/engine/core)
 "aHw" = (
 /obj/machinery/door/airlock/pyro/external,
@@ -12918,7 +12918,7 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/vacuum,
 /area/station/engine/hotloop)
 "aKz" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
@@ -12930,7 +12930,7 @@
 	name = "Combustion Chamber Heat Shield";
 	opacity = 0
 	},
-/turf/simulated/floor/plating,
+/turf/simulated/floor/engine/vacuum,
 /area/station/engine/core)
 "aKA" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
