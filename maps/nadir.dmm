@@ -5082,7 +5082,9 @@
 /turf/simulated/floor/black,
 /area/station/engine/storage)
 "cAN" = (
-/obj/machinery/atmospherics/pipe/manifold/south,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 2
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
 "cAO" = (
@@ -8061,7 +8063,9 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "edi" = (
-/obj/machinery/atmospherics/pipe/simple/junction/west,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
 /obj/stool/bench/red/auto,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
@@ -11403,7 +11407,9 @@
 /turf/simulated/floor/greenblack,
 /area/station/ranch)
 "fNF" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /obj/stool/bench/red/auto,
 /obj/machinery/light/small{
 	dir = 1;
@@ -11463,7 +11469,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "fOV" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -14379,7 +14387,9 @@
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/sanctuary)
 "heJ" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/stool/bench/red/auto,
 /obj/machinery/light_switch/north,
 /obj/machinery/camera{
@@ -16222,7 +16232,9 @@
 	pixel_x = -10;
 	tag = ""
 	},
-/obj/machinery/atmospherics/pipe/simple/overfloor/northwest,
+/obj/machinery/atmospherics/pipe/simple/overfloor{
+	dir = 9
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "hXh" = (
@@ -17082,7 +17094,10 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/southwest)
 "ipf" = (
-/obj/machinery/atmospherics/portables_connector/south,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 2;
+	
+	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
@@ -17869,7 +17884,9 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quarters_east)
 "iJn" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /obj/stool/bench/red/auto,
 /obj/cable{
 	icon_state = "4-8"
@@ -19428,7 +19445,9 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "jyb" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "jyf" = (
@@ -19597,7 +19616,9 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "jBB" = (
-/obj/machinery/atmospherics/pipe/simple/junction/west,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 8
+	},
 /obj/stool/bench/red/auto,
 /obj/machinery/light/small{
 	dir = 1;
@@ -23453,7 +23474,9 @@
 	name = "Secure Release Foyer"
 	})
 "lns" = (
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
 "lnM" = (
@@ -28727,7 +28750,9 @@
 	},
 /area/station/hallway/primary/northwest)
 "nOl" = (
-/obj/machinery/atmospherics/pipe/simple/southwest,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 10
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
 "nOs" = (
@@ -32189,7 +32214,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/northwest)
 "pJr" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
 "pJt" = (
@@ -36166,7 +36193,9 @@
 	name = "Cargo Auxiliary Endpoint"
 	})
 "rTm" = (
-/obj/machinery/atmospherics/pipe/simple/horizontal,
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 4
+	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/sauna)
 "rTn" = (
@@ -37303,7 +37332,9 @@
 	},
 /area/station/hallway/secondary/west)
 "suz" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -38861,7 +38892,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "tee" = (
-/obj/machinery/atmospherics/pipe/tank/oxygen/south,
+/obj/machinery/atmospherics/pipe/tank/oxygen{
+	dir = 2
+	},
 /turf/simulated/floor/industrial,
 /area/iss{
 	name = "Drop Capsule"
@@ -42393,7 +42426,9 @@
 /turf/simulated/floor/engine/glow/blue,
 /area/station/communications/centre)
 "uRF" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/south,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 2
+	},
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "uRO" = (
@@ -45216,7 +45251,8 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "wBm" = (
-/obj/machinery/atmospherics/valve/notify_admins/vertical{
+/obj/machinery/atmospherics/valve/notify_admins{
+	dir = 1;
 	name = "Sauna Air Supply"
 	},
 /turf/simulated/floor/plating,
@@ -47304,7 +47340,9 @@
 	name = "Drop Capsule"
 	})
 "xEp" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /obj/machinery/light/small,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/sauna)
@@ -47344,7 +47382,9 @@
 	name = "Drop Capsule"
 	})
 "xHW" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
 /obj/stool/bench/red/auto,
 /obj/machinery/light/small{
 	dir = 8;
