@@ -635,7 +635,7 @@
 								make_cleanable(/obj/decal/cleanable/blood,T)
 							else
 								src.visible_message("<span class='alert'>[src] vomits a lot of slimy, sticky blood!</span>")
-								playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+								playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 								bleed(src, rand(5,8), 5)
 				//The body is rotting on it's feet, time to go
 				else if (AH.points <= 0)
