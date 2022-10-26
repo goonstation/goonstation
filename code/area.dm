@@ -3043,6 +3043,10 @@ ABSTRACT_TYPE(/area/station/science)
 	name = "Tenebrae Primary Zone"
 	icon_state = "science"
 
+/area/station/science/hall
+	name = "Research Hall"
+	icon_state = "science"
+
 /area/station/science/gen_storage
 	name = "Research Storage"
 	icon_state = "genstorage"
