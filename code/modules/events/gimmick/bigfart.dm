@@ -70,7 +70,6 @@
 		return
 
 	limbloss_prob = clamp(limbloss_prob, 0, 100)
-	var/severed_something
 
 	var/is_bot = 0 // so we don't do a bunch of ishuman/isrobot calls
 	var/changer = ischangeling(H)
@@ -91,7 +90,6 @@
 			ThrowRandom(B, dist = 6, speed = 1)
 		H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "arse" : "ass"] tears itself away from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 		"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "arse" : "ass"] tears itself away from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
-		severed_something = TRUE
 
 	/// If that didn't work, try severing a limb or tail
 	else if (!is_bot && prob(limbloss_prob)) // It'll try to sever an arm, then a leg, then an arm, then a leg
@@ -107,7 +105,6 @@
 
 		if (length(possible_limbs)) /// Dont want your tail removed? Keep all your limbs intact!
 			if(istype(H.organHolder.tail) && prob(100 - (25 * length(possible_limbs)))) // 25% chance to lose a tail per missing limb
-				severed_something = TRUE
 				H.visible_message("<span class='alert'><b>[H]</b>'s [magical ? "tægl" : "tail"] is torn free from [his_or_her(H)] body[magical ? " in a magical explosion" : null]!</span>",\
 				"<span class='alert'>[changer ? "Our" : "Your"] [magical ? "tægl" : "tail"] is torn free from [changer ? "our" : "your"] body[magical ? " in a magical explosion" : null]!</span>")
 				H.drop_and_throw_organ("tail", dist = 6, speed = 1, showtext = 1)
@@ -128,14 +125,12 @@
 						ass_explosion_message(L, H, magical, possible_limbs[L], 0)
 						continue
 					if(1)
-						severed_something = TRUE
 						ass_explosion_message(L, H, magical, possible_limbs[L], 1)
 						L.sever()
 						break
 					if(2)
 						if(prob(50))
 							ass_explosion_message(L, H, magical, possible_limbs[L], 1)
-							severed_something = TRUE
 							L.sever()
 							break
 						else
