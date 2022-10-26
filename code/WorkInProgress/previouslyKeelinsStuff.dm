@@ -553,6 +553,7 @@ var/reverse_mode = 0
 		has_movement_state = TRUE
 	buttcrab
 		fake_icon_state = "buttcrab"
+		should_attack = FALSE
 		has_movement_state = TRUE
 	bat
 		fake_icon_state = "bat"

@@ -345,8 +345,8 @@ datum
 						animate_fade_drug_inbetween_2(M.client, 40)
 						src.current_color_pattern = 1
 				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS))
-					if (prob(30))
-						if(prob(50))
+					if (prob(20))
+						if(prob(60))
 							fake_attack(M)
 						else
 							var/monkeys = rand(1,3)
