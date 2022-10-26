@@ -337,14 +337,14 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				src.counter += 1 * mult //around half realtime
-				if(M.client && counter >= 6 && prob(20))
+				if(M.client && counter >= 6 && prob(20)) //trippy colours
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
 						src.current_color_pattern = 2
 					else
 						animate_fade_drug_inbetween_2(M.client, 40)
 						src.current_color_pattern = 1
-				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS))
+				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS)) //spawn a fake critter
 					if (prob(20))
 						if(prob(60))
 							fake_attack(M)
@@ -355,7 +355,8 @@ datum
 					else
 						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
 						new fake_type(M.loc, M)
-				if(probmult(min(16 + src.counter/2, 30))) //THE VOICES GET LOUDER
+				//THE VOICES GET LOUDER
+				if(probmult(min(16 + src.counter/2, 30))) //play some fake audio
 					var/atom/origin = M.loc
 					var/turf/mob_turf = get_turf(M)
 					if (mob_turf)
@@ -366,9 +367,21 @@ datum
 						chosen.play(M, origin)
 					else //it's just a path directly
 						M.playsound_local(origin, chosen, 100, 1)
-				if(probmult(8))
+				if(probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
+				if(probmult(10)) //turn someone into a critter
+					var/list/candidates = list()
+					for(var/mob/living/carbon/human/human in viewers(M))
+						candidates += human
+					var/mob/living/carbon/human/chosen = pick(candidates)
+					var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
+					var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
+					override_img.override = TRUE
+					var/client/client = M.client //hold a reference to the client directly
+					client?.images.Add(override_img)
+					SPAWN (20 SECONDS)
+						client?.images.Remove(override_img)
 				..()
 				return
 
