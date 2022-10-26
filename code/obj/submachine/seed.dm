@@ -854,7 +854,7 @@
 			user.drop_item()
 			if(!QDELETED(W))
 				W.set_loc(src)
-		if(W.qdeled)
+		if(QDELETED(W))
 			W = null
 		else
 			if(!src.extract_to) src.extract_to = W
