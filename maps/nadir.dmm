@@ -3770,9 +3770,9 @@
 /area/station/medical/medbay/treatment1)
 "bQQ" = (
 /obj/decal/cleanable/dirt/dirt4,
-/obj/item/spacecash/twenty{
-	pixel_x = -4;
-	pixel_y = -6
+/obj/item/spacecash/fifty{
+	pixel_y = -9;
+	pixel_x = -4
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
