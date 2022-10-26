@@ -27,7 +27,7 @@ export const Vendors = (props, context) => {
     ((((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney) && (a.amount > 0))
   );
   const getCost = (a) => (
-    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Free")
+    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Vend")
   );
 
   return (
