@@ -517,7 +517,7 @@
 			P.medical = med
 			P.on_reagent_change()
 			src.updateUsrDialog()
-			logTheThing(LOG_CHEMISTRY,usr,null,"used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create a [patchname] patch containing [log_reagents(P)] at [log_loc(src)].")
 			return
 
 		else if (href_list["togglepatchbox"])
@@ -553,7 +553,7 @@
 			patchvol = clamp(patchvol, 5, 30)
 			// maths
 			var/patchcount = round(R.total_volume / patchvol) // round with a single parameter is actually floor because byond
-			logTheThing(LOG_CHEMISTRY,usr,null,"used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
+			logTheThing(LOG_CHEMISTRY, usr, "used the [src.name] to create [patchcount] [patchname] patches from [log_reagents(R)] at [log_loc(src)].")
 			var/use_box = src.patch_box
 			if (patchcount > 20) // if you're trying to make a huge pile of patches you get a box regardless of what the machine is set to
 				use_box = 1

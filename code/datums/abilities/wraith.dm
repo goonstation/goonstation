@@ -160,7 +160,7 @@
 		if (!H)
 			return 1 // no valid targets were identified, cast fails
 
-		logTheThing("combat", holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
+		logTheThing(LOG_COMBAT, holder.owner, "absorbs the corpse of [key_name(H)] as a wraith.")
 		var/turf/T = get_turf(H)
 		// decay wraith receives bonuses for toxin damaged and decayed bodies, but can't absorb fresh kils without toxin damage
 		if ((istype(holder.owner, /mob/wraith/wraith_decay)))

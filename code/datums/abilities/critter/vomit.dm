@@ -36,7 +36,7 @@
 				continue
 			holder.owner.reagents.reaction(F,TOUCH)
 			for(var/mob/living/L in F.contents)
-				logTheThing(LOG_COMBAT, holder.owner, L, "power-pukes [log_reagents(holder.owner)] onto [constructTarget(L, "combat")] at [log_loc(holder.owner)].")
+				logTheThing(LOG_COMBAT, holder.owner, "power-pukes [log_reagents(holder.owner)] onto [constructTarget(L, "combat")] at [log_loc(holder.owner)].")
 				holder.owner.reagents.reaction(L,TOUCH)
 			for(var/obj/O in F.contents)
 				holder.owner.reagents.reaction(O,TOUCH)

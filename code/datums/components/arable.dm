@@ -73,7 +73,7 @@ TYPEINFO(/datum/component/arable)
 			user.u_equip(SEED)
 			SEED.set_loc(P)
 			if(SEED && istype(SEED.planttype,/datum/plant/maneater)) // Logging for man-eaters, since they can't be harvested (Convair880).
-				logTheThing(LOG_STATION, user, null, "plants a [SEED.planttype] seed at [log_loc(P)].")
+				logTheThing(LOG_STATION, user, "plants a [SEED.planttype] seed at [log_loc(P)].")
 			if(!(user in P.contributors))
 				P.contributors += user
 		else

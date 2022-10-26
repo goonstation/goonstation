@@ -213,7 +213,7 @@
 			boutput(user, "<span class='alert'>[A] is full!</span>") // Notify the user, then exit the process.
 			return
 
-		logTheThing(LOG_CHEMISTRY, user, null, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
+		logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [A] at [log_loc(A)].") // Ditto (Convair880).
 		var/T = src.reagents.trans_to(A, src.reagents.total_volume) // Dump it all!
 		boutput(user, "<span class='notice'>You transfer [T] units into [A].</span>")
 		return
