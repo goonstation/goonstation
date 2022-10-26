@@ -274,6 +274,12 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0, 0, 0, 0
 	)
 
+/**
+ * Takes an icon and optionally two non-zero Pixel Intervals and returns the average color of the icon.
+ *
+ * The pixel intervals represent the distance between each pixel scanned on the X/Y axes respectively, and default to 4 for performance.
+ * For example, an X interval of 1 and a Y interval of 3 will mean every X coordinate of every 3rd Y coordinate will be scanned.
+ */
 proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 	var/rSum  = 0
 	var/gSum  = 0
