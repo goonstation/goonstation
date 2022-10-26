@@ -111,17 +111,6 @@
 				)
 			)
 		),
-		list(new /datum/eventSpawnedCritter(
-			critter_types = list(/mob/living/critter/brain_slug),
-			drop_tables = list(
-				new /datum/event_item_drop_table(
-					potential_drop_items = list(/obj/item/mutation_orb/mind_orb, /obj/item/slime_ball),
-					remove_dropped_items = 1, number_of_rolls = 2, percent_droprate = 50, pity_drop_atleast_one = 1
-					)
-				)
-			)
-		),
-
 	)
 
 	admin_call(var/source)
