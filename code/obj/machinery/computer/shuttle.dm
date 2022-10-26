@@ -1021,7 +1021,7 @@ var/bombini_saved = 0
 	switch(johnbus_location)
 		if(0)
 			start_location = locate(/area/shuttle/john/diner)
-			start_location.move_contents_to(end_location)
+			start_location.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 		if(1)
 			start_location = locate(/area/shuttle/john/owlery)
@@ -1032,15 +1032,15 @@ var/bombini_saved = 0
 					for(var/mob/M in start_location)
 						boutput(M, "<span class='notice'>It would be great if things worked that way, but they don't. You'll need to find what <b>Bombini</b> is missing, now.</span>")
 
-			start_location.move_contents_to(end_location)
+			start_location.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 		if(2)
 			start_location = locate(/area/shuttle/john/mining)
-			start_location.move_contents_to(end_location)
+			start_location.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 		if(3)
 			start_location = locate(/area/shuttle/john/grillnasium)
-			start_location.move_contents_to(end_location)
+			start_location.move_contents_to(end_location, turf_to_skip=list(/turf/space, global.map_settings.shuttle_map_turf))
 
 	johnbus_location = johnbus_destination
 
