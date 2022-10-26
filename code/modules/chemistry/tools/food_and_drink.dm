@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/heal_amt = 0
 	var/needfork = 0
 	var/needspoon = 0
-	var/food_color = "#FF0000" //Color for various food items
+	var/food_color = null //Color for various food items
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -31,6 +31,31 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (istype(M, /obj/table))
 				return 1
 		return 0
+
+	proc/get_food_color()
+		if (food_color) // keep manually defined food colors
+			return food_color
+		var/rSum  = 0
+		var/gSum  = 0
+		var/bSum  = 0
+		var/total = 0
+		//estimate color
+		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
+		for (var/y = 1 to 3)
+			for (var/x = 1 to 5)
+				var/pixColor = I.GetPixel(4*x+4,8*y)
+				if (!pixColor)
+					continue
+				var/rgba = rgb2num(pixColor)
+				var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
+				total += weight
+				rSum += rgba[1] * weight
+				gSum += rgba[2] * weight
+				bSum += rgba[3] * weight
+		if (total == 0)
+			return "#FF0000"
+		food_color = rgb(rSum/total,gSum/total,bSum/total)
+		return food_color
 
 	proc/heal(var/mob/living/M)
 		var/healing = src.heal_amt
