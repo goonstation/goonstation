@@ -1,5 +1,9 @@
 
 (t)wed oct 26 22
+(u)Kubius
+(p)11608
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aqua tenebrae, Nadir's sea acid, will no longer vaporize your loose items if somebody smokes it.
 (u)ZWRh3
 (p)11605
 (e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
