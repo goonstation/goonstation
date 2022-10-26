@@ -1,5 +1,9 @@
 
 (t)wed oct 26 22
+(u)TDHooligan
+(p)11607
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)X Cakes and similar recipes will now more closely match the color of their ingredients, rather than being bright red.
 (u)Wisemonster
 (p)11553
 (e)🗺💅|A-Mapping, C-QoL
