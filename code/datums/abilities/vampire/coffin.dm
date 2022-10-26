@@ -5,18 +5,18 @@
 	icon_state = "vampcoffin"
 	icon_closed = "vampcoffin"
 	icon_opened = "vampcoffin-open"
-	health = 50
+	_max_health = 50
+	_health = 50
 
 	open(entangleLogic, mob/user)
 		if (!isvampire(user))
 			return
 		. = ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!isvampire(user))
 			if (user.a_intent == INTENT_HELP)
 				user.show_text("It won't budge!", "red")
-
 			else
 				user.show_text("It's built tough! A weapon would be more effective.", "red")
 			return
@@ -29,14 +29,14 @@
 		else
 			..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
-
+	attackby(obj/item/I, mob/user)
 		user.lastattacked = src
-		health -= W.force
+		_health -= I.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 50, 1, pitch = 1.1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 50, 1, pitch = 1.1)
 
-		if (health <= 0)
+		if (_health <= 0)
+			logTheThing(LOG_COMBAT, user, "destroyed [src] at [log_loc(src)]")
 			bust_out()
 
 
@@ -71,13 +71,13 @@
 		var/datum/abilityHolder/vampire/V = holder
 
 		if (istype(target,/turf/space) || isrestrictedz(target.z))
-			boutput(M, __red("You cannot place your coffin there."))
+			boutput(M, "<span class='alert'>You cannot place your coffin there.</span>")
 			return 1
 
 		V.coffin_turf = target
-		boutput(M, __blue("You plant your coffin on [target]."))
+		boutput(M, "<span class='notice'>You plant your coffin on [target].</span>")
 
-		logTheThing("combat", M, target, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "marks coffin on tile on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/targetable/vampire/coffin_escape
@@ -107,9 +107,9 @@
 		var/turf/spawnturf = V.coffin_turf
 		if (istype(spawnturf,/turf/space))
 			spawnturf = get_turf(M)
-
-		if (spawnturf.z != M.z)
-			boutput(M, __red("You cannot escape to a different Z-level."))
+		var/turf/owner_turf = get_turf(M)
+		if (spawnturf.z != owner_turf?.z)
+			boutput(M, "<span class='alert'>You cannot escape to a different Z-level.</span>")
 			return 1
 
 
@@ -128,7 +128,7 @@
 
 		proj.launch()
 
-		logTheThing("combat", M, target, "begins escaping to a coffin from [log_loc(M)] to [log_loc(V.coffin_turf)].")
+		logTheThing(LOG_COMBAT, M, "begins escaping to a coffin from [log_loc(M)] to [log_loc(V.coffin_turf)].")
 
 		if (get_turf(coffin) == get_turf(M))
 			M.set_loc(coffin)

@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "aab" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aac" = (
 /turf/space/asteroid,
@@ -13,7 +13,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/storage/primary)
 "aae" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -1375,7 +1375,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "acU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -2308,7 +2308,7 @@
 /area/station/hallway/secondary/construction)
 "aeQ" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /turf/simulated/floor/plating/damaged2,
@@ -2393,7 +2393,7 @@
 /area/station/crew_quarters/locker)
 "afb" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
@@ -2943,7 +2943,7 @@
 /area/station/maintenance/north)
 "agi" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/cable{
@@ -5156,7 +5156,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Habitat Dome"
 	},
 /turf/simulated/floor/engine{
@@ -5381,7 +5381,7 @@
 /area/station/maintenance/north)
 "alt" = (
 /obj/disposalpipe/segment/horizontal,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -6832,7 +6832,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Restroom"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -8229,7 +8229,7 @@
 	},
 /area/station/maintenance/storage)
 "arK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -10269,7 +10269,7 @@
 /turf/simulated/floor/airless/black,
 /area/station/crew_quarters/quartersB)
 "awC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -11247,7 +11247,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "ayS" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -13007,7 +13007,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -14115,7 +14115,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Chapel Office";
 	req_access_txt = "22"
 	},
@@ -16205,7 +16205,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Kitchen";
 	req_access_txt = "28"
 	},
@@ -16799,7 +16799,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Bar";
 	req_access_txt = "25"
 	},
@@ -17320,7 +17320,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
 /obj/disposalpipe/segment/vertical,
@@ -17338,7 +17338,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
@@ -18976,7 +18976,7 @@
 /area/station/security/brig)
 "aPL" = (
 /obj/machinery/door/airlock/pyro{
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	dir = 4
 	},
 /obj/machinery/door/firedoor/pyro{
@@ -19870,7 +19870,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "aRY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/bar)
 "aRZ" = (
@@ -24051,7 +24051,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bbc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -24497,7 +24497,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Patchy's Cabana";
 	req_access_txt = "5;25;"
 	},
@@ -24634,7 +24634,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/maintenance/west)
 "bcj" = (
-/obj/storage/secure/closet/brig/automatic/solitary,
+/obj/storage/secure/closet/brig_automatic/solitary,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -24937,7 +24937,7 @@
 "bcI" = (
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Restroom"
 	},
 /turf/simulated/floor/sanitary/white,
@@ -25643,7 +25643,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Last Resort Bar";
 	req_access_txt = "25"
 	},
@@ -27715,7 +27715,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "biP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/pharmacy)
@@ -29139,7 +29139,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -29594,7 +29594,7 @@
 /obj/machinery/door/firedoor/pyro,
 /obj/machinery/door/airlock/pyro{
 	dir = 2;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -29792,7 +29792,7 @@
 	},
 /area/station/solar/west)
 "bno" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -31049,7 +31049,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "Hydroponics";
 	req_access_txt = "35"
 	},
@@ -33190,10 +33190,10 @@
 /area/station/crew_quarters/pool)
 "buX" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "buY" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "buZ" = (
 /obj/pool{
@@ -33531,7 +33531,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bvS" = (
 /obj/pool{
@@ -33861,11 +33861,11 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwI" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bwJ" = (
 /obj/pool{
@@ -34209,7 +34209,7 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/escape)
 "bxx" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -36346,7 +36346,7 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/storage/tools)
 "bCA" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -36862,7 +36862,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/southwest)
 "bDK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -38179,7 +38179,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/ai_upload)
 "bGM" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -38661,7 +38661,7 @@
 	dir = 2;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/science/teleporter)
@@ -38675,7 +38675,7 @@
 	dir = 2;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -39026,7 +39026,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -39393,7 +39393,7 @@
 	dir = 4;
 	id = "scienceteleporter";
 	name = "Pad Shutters";
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_east"
@@ -40391,7 +40391,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bLy" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -42263,7 +42263,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "bOZ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/door_control{
 	id = "chemistry";
 	name = "Chemistry Privacy Shutters";
@@ -43222,7 +43222,7 @@
 /turf/simulated/floor/caution/corner/sw,
 /area/station/science/chemistry)
 "bQX" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 1;
@@ -43461,7 +43461,7 @@
 	},
 /obj/machinery/door/airlock/pyro{
 	dir = 4;
-	icon_state = "generic_closed";
+	icon_state = "door_closed";
 	name = "The Alchemist's Nook";
 	req_access_txt = "25"
 	},
@@ -44724,7 +44724,7 @@
 	},
 /area/station/science/chemistry)
 "bUc" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/north{
 	dir = 8
 	},
@@ -46494,7 +46494,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/quarters_south)
 "bYb" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/station/hallway/secondary/construction2)
 "bYc" = (
 /obj/machinery/atmospherics/binary/pump{
@@ -46846,7 +46846,7 @@
 /area/listeningpost)
 "bYK" = (
 /obj/map/light/brightwhite,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bYL" = (
 /obj/storage/crate/loot,
@@ -48422,13 +48422,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "ccr" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/maintenance/east)
 "ccs" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48439,7 +48439,7 @@
 	},
 /area/station/hallway/primary/east)
 "ccu" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48469,7 +48469,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ccx" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48562,7 +48562,7 @@
 	},
 /area/station/medical/medbay)
 "ccI" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48573,7 +48573,7 @@
 	},
 /area/station/hydroponics/bay)
 "ccK" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48642,7 +48642,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "ccR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48661,13 +48661,13 @@
 /turf/simulated/floor/plating/damaged3,
 /area/station/hallway/secondary/construction2)
 "ccU" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/crew_quarters/quartersA)
 "ccV" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48678,7 +48678,7 @@
 	},
 /area/station/maintenance/southwest)
 "ccX" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48706,13 +48706,13 @@
 	},
 /area/station/hallway/primary/south)
 "cdb" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/storage/auxillary)
 "cdc" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
@@ -48756,19 +48756,19 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "cdk" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/hallway/primary/south)
 "cdl" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},
 /area/station/science/chemistry)
 "cdm" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10;
 	icon_state = "ast1"
 	},

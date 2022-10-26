@@ -41,7 +41,7 @@ var/sound/mutecache
 		status |= SOUND_UPDATE
 		var/turf/CT = get_turf(c.mob)
 		var/turf/AT = get_turf(attached)
-		var/dist = get_dist(CT, AT)
+		var/dist = GET_DIST(CT, AT)
 		if( !listeners.Find(c) )
 			//world << "Their dist: [dist] vs [maxdist]"
 			if( dist < maxdist )

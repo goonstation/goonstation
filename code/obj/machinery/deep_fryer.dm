@@ -12,7 +12,7 @@
 	var/atom/movable/fryitem = null
 	var/cooktime = 0
 	var/frytemp = 185 + T0C //365 F is a good frying temp, right?
-	var/max_wclass = 3
+	var/max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -22,7 +22,7 @@
 		reagents.add_reagent("grease", 25)
 		reagents.set_reagent_temp(src.frytemp)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isghostdrone(user) || isAI(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -41,9 +41,9 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing("chemistry", user, null, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
 				if (!W.reagents.total_volume) boutput(user, "<span class='alert'><b>[W] is now empty.</b></span>")
 
@@ -58,14 +58,14 @@
 				return
 
 			if(ismonkey(G.affecting))
-				logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
+				logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")] into the [src] at [log_loc(src)].") // For player monkeys (Convair880).
 				src.visible_message("<span class='alert'><b>[user] shoves [G.affecting] into [src]!</b></span>")
 				src.start_frying(G.affecting)
 				G.affecting.death(FALSE)
 				qdel(W)
 				return
 
-			logTheThing("combat", user, G.affecting, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "shoves [constructTarget(G.affecting,"combat")]'s face into the [src] at [log_loc(src)].")
 			src.visible_message("<span class='alert'><b>[user] shoves [G.affecting]'s face into [src]!</b></span>")
 			src.reagents.reaction(G.affecting, TOUCH)
 
@@ -77,7 +77,7 @@
 
 		src.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>")
 		user.u_equip(W)
-		W.dropped()
+		W.dropped(user)
 		src.start_frying(W)
 		SubscribeToProcess()
 
@@ -100,7 +100,7 @@
 		else
 			src.icon_state = "fryer0"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (isghostdrone(user))
 			boutput(user, "<span class='alert'>The [src] refuses to interface with you, as you are not a properly trained chef!</span>")
 			return
@@ -144,7 +144,7 @@
 		if (src.cooktime < 60)
 
 			if (src.cooktime == 30)
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				src.visible_message("<span class='notice'>[src] dings!</span>")
 			else if (src.cooktime == 60) //Welp!
 				src.visible_message("<span class='alert'>[src] emits an acrid smell!</span>")
@@ -233,10 +233,10 @@
 		fryholder.overlays = thing.overlays
 		if (isitem(thing))
 			var/obj/item/item = thing
-			fryholder.amount = item.w_class
+			fryholder.bites_left = item.w_class
 			fryholder.w_class = item.w_class
 		else
-			fryholder.amount = 5
+			fryholder.bites_left = 5
 		if (ismob(thing))
 			fryholder.w_class = W_CLASS_BULKY
 		if(thing.reagents)
@@ -255,12 +255,15 @@
 		var/obj/item/reagent_containers/food/snacks/shell/deepfry/fryholder = src.fryify(src.fryitem, src.cooktime >= 60)
 		fryholder.set_loc(get_turf(src))
 
-		src.fryitem = null
-		src.UpdateIcon()
-		for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
-			I.set_loc(src.loc)
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.fryitem)
+			src.fryitem = null
+			src.UpdateIcon()
+			for (var/obj/item/I in src) //Things can get dropped somehow sometimes ok
+				I.set_loc(src.loc)
+			UnsubscribeProcess()
 
-		UnsubscribeProcess()
 
 	verb/drain()
 		set src in oview(1)

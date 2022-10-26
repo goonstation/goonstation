@@ -154,7 +154,7 @@
 			if(!istype(D.vars[V], /datum/admins))
 				names += V
 
-	names = sortList(names)
+	names = sortList(names, /proc/cmp_text_asc)
 	if(D == "GLOB")
 		for (var/V in names)
 			body += debug_variable(V, global.vars[V], D, 0, 10)
@@ -360,7 +360,10 @@
 		usr << browse_rsc(I, rname)
 		html += "\[[name]\]</th><td>(<span class='value'>[value]</span>) <img class=icon src=\"[rname]\">"
 		#else
-		html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
+		if(istype(value, /icon))
+			html += "\[[name]\]</th><td>/icon (<em class='value'><a href='byond://?src=\ref[src];Download=\ref[value]'>[value]</a></em>)"
+		else
+			html += "\[[name]\]</th><td>/icon (<em class='value'>[value]</em>)"
 		#endif
 
 /*	else if (istype(value, /image))
@@ -424,7 +427,18 @@
 		html += "\[[name]\]</th><td><em class='value'>[html_encode("[value]")]</em>"
 
 	if(name == "particles")
-		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</b></a>"
+		html += " <a href='byond://?src=\ref[src];Particool=\ref[fullvar]' style='font-size:0.65em;'>particool</a>"
+
+	if(name == "filters")
+		html += " <a href='byond://?src=\ref[src];Filterrific=\ref[fullvar]' style='font-size:0.65em;'>filterrific</a>"
+
+	if(istype(value, /datum/weakref))
+		var/datum/weakref/weakref = value
+		var/datum/deref = weakref.deref()
+		if(isnull(deref))
+			html += " <span style='font-size:0.65em;'>INVALID</span>"
+		else
+			html += " <a href='byond://?src=\ref[src];Vars=\ref[deref]' style='font-size:0.65em;'>\ref[deref]</a>"
 
 	html += "</td></tr>"
 
@@ -550,6 +564,23 @@
 			src.holder.particool.ui_interact(mob)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to open particool on something all rude-like.")
+		return
+	if (href_list["Filterrific"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Filterrific"])
+			src.holder.filteriffic = new /datum/filter_editor(D)
+			src.holder.filteriffic.ui_interact(mob)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to open filterrific on something all rude-like.")
+		return
+	if (href_list["Download"])
+		USR_ADMIN_ONLY
+		if(holder && src.holder.level >= LEVEL_PA)
+			var/datum/D = locate(href_list["Download"])
+			src << ftp(D)
+		else
+			audit(AUDIT_ACCESS_DENIED, "tried to download a var of something all rude-like.")
 		return
 	if (href_list["Delete"])
 		USR_ADMIN_ONLY
@@ -743,8 +774,8 @@
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
-		logTheThing("admin", usr, null, "tried to varedit [D.type] but was denied!")
-		logTheThing("diary", usr, null, "tried to varedit [D.type] but was denied!", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to varedit [D.type] but was denied!")
+		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
 
@@ -818,8 +849,8 @@
 
 
 
-	logTheThing("admin", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
-	logTheThing("diary", src, null, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
+	logTheThing(LOG_ADMIN, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""))
+	logTheThing(LOG_DIARY, src, "modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), "admin")
 	message_admins("[key_name(src)] modified [original_name]'s [variable] to [D == "GLOB" ? global.vars[variable] : D.vars[variable]]" + (set_global ? " on all entities of same type" : ""), 1)
 	SPAWN(0)
 		if (istype(D, /datum))
@@ -831,8 +862,8 @@
 	set category = "Debug"
 	switch (alert("Are you sure you wish to delete \the [A.name] at ([A.x],[A.y],[A.z]) ?", "Admin Delete Object","Yes","No"))
 		if("Yes")
-			logTheThing("admin", usr, null, "deleted [A.name] at ([log_loc(A)])")
-			logTheThing("diary", usr, null, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
+			logTheThing(LOG_ADMIN, usr, "deleted [A.name] at ([log_loc(A)])")
+			logTheThing(LOG_DIARY, usr, "deleted [A.name] at ([showCoords(A.x, A.y, A.z, 1)])", "admin")
 
 /proc/debug_overlays(target_thing, client/user, indent="")
 	for(var/ov in target_thing:overlays)

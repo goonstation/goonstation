@@ -3,9 +3,9 @@ Some procs  exist for replacement within text:
 	[constructTarget(target,type)]
 
 Example in-game log call:
-		logTheThing("admin", src, M, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
+		logTheThing(LOG_ADMIN, src, "shot that nerd [constructTarget(src,"diary")] at [log_loc(usr)]")
 Example out of game log call:
-		logTheThing("diary", src, null, "gibbed everyone ever", "admin")
+		logTheThing(LOG_DIARY, src, "gibbed everyone ever", "admin")
 */
 
 //We save this as html because the non-diary logging currently has html tags in place
@@ -21,7 +21,7 @@ var/global/disable_log_lists = 0
 var/global/first_adminhelp_happened = 0
 var/global/logLength = 0
 
-/proc/logTheThing(type, source, target, text, diaryType)
+/proc/logTheThing(type, source, text, diaryType)
 	var/diaryLogging
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
@@ -30,29 +30,11 @@ var/global/logLength = 0
 		A = get_area(source)
 		source = constructName(source, type)
 	else
-		if (type != "diary") source = "<span class='blank'>(blank)</span>"
-
-	//if (target) target does nothing but i cant be assed to remove its arg from every single logthething and idk regex
-	//	target = constructTarget(target,type)
+		if (type != LOG_DIARY) source = "<span class='blank'>(blank)</span>"
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
-		if (type == "diary")
-			switch (diaryType)
-				//These are things we log in the out of game logs (the diary)
-				if ("admin") if (config.log_admin) diaryLogging = 1
-				if ("ahelp") if (config.log_say) diaryLogging = 1 //log_ahelp
-				if ("mhelp") if (config.log_say) diaryLogging = 1 //log_mhelp
-				if ("game") if (config.log_game) diaryLogging = 1
-				if ("access") if (config.log_access) diaryLogging = 1
-				if ("say") if (config.log_say) diaryLogging = 1
-				if ("ooc") if (config.log_ooc) diaryLogging = 1
-				if ("whisper") if (config.log_whisper) diaryLogging = 1
-				if ("station") if (config.log_station) diaryLogging = 1
-				if ("combat") if (config.log_combat) diaryLogging = 1
-				if ("telepathy") if (config.log_telepathy) diaryLogging = 1
-				if ("debug") if (config.log_debug) diaryLogging = 1
-				if ("vehicle") if (config.log_vehicles) diaryLogging = 1
-
+		if (type == LOG_DIARY)
+			diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -67,50 +49,33 @@ var/global/logLength = 0
 
 		switch(type)
 			//These are things we log in-game (accessible via the Secrets menu)
-			if ("audit")
-				logs["audit"] += ingameLog
+			if (LOG_AUDIT)
+				logs[LOG_AUDIT] += ingameLog
 				diaryLogging = 1
-				diaryType = "audit"
+				diaryType = LOG_AUDIT
 				forceNonDiaryLoggingToo = TRUE
-			if ("admin") logs["admin"] += ingameLog
-			if ("admin_help") logs["admin_help"] += ingameLog
-			if ("mentor_help") logs["mentor_help"] += ingameLog
-			if ("say") logs["speech"] += ingameLog
-			if ("ooc") logs["ooc"] += ingameLog
-			if ("whisper") logs["speech"] += ingameLog
-			if ("station") logs["station"] += ingameLog
-			if ("combat")
+			if (LOG_ADMIN) logs[LOG_ADMIN] += ingameLog
+			if (LOG_AHELP) logs[LOG_AHELP] += ingameLog
+			if (LOG_MHELP) logs[LOG_MHELP] += ingameLog
+			if (LOG_SAY) logs[LOG_SPEECH] += ingameLog
+			if (LOG_OOC) logs[LOG_OOC] += ingameLog
+			if (LOG_WHISPER) logs[LOG_SPEECH] += ingameLog
+			if (LOG_STATION) logs[LOG_STATION] += ingameLog
+			if (LOG_COMBAT)
 				if (A?.dont_log_combat)
 					return
-				logs["combat"] += ingameLog
-			if ("telepathy") logs["telepathy"] += ingameLog
-			if ("debug") logs["debug"] += ingameLog
-			if ("pdamsg") logs["pdamsg"] += ingameLog
-			if ("signalers") logs["signalers"] += ingameLog
-			if ("bombing") logs["bombing"] += ingameLog
-			if ("atmos") logs["atmos"] += ingameLog
-			if ("pathology") logs["pathology"] += ingameLog
-			if ("deleted") logs["deleted"] += ingameLog
-			if ("vehicle") logs["vehicle"] += ingameLog
-			if ("computers") logs["computers"] += ingameLog
-			if ("chemistry") logs["chemistry"] += ingameLog
-			if ("diary")
-				switch (diaryType)
-					//These are things we log in the out of game logs (the diary)
-					if ("admin") if (config.log_admin) diaryLogging = 1
-					if ("ahelp") if (config.log_say) diaryLogging = 1 //log_ahelp
-					if ("mhelp") if (config.log_say) diaryLogging = 1 //log_mhelp
-					if ("game") if (config.log_game) diaryLogging = 1
-					if ("access") if (config.log_access) diaryLogging = 1
-					if ("say") if (config.log_say) diaryLogging = 1
-					if ("ooc") if (config.log_ooc) diaryLogging = 1
-					if ("whisper") if (config.log_whisper) diaryLogging = 1
-					if ("station") if (config.log_station) diaryLogging = 1
-					if ("combat") if (config.log_combat) diaryLogging = 1
-					if ("telepathy") if (config.log_telepathy) diaryLogging = 1
-					if ("debug") if (config.log_debug) diaryLogging = 1
-					if ("vehicle") if (config.log_vehicles) diaryLogging = 1
-
+				logs[LOG_COMBAT] += ingameLog
+			if (LOG_TELEPATHY) logs[LOG_TELEPATHY] += ingameLog
+			if (LOG_DEBUG) logs[LOG_DEBUG] += ingameLog
+			if (LOG_PDAMSG) logs[LOG_PDAMSG] += ingameLog
+			if (LOG_SIGNALERS) logs[LOG_SIGNALERS] += ingameLog
+			if (LOG_BOMBING) logs[LOG_BOMBING] += ingameLog
+			if (LOG_PATHOLOGY) logs[LOG_PATHOLOGY] += ingameLog
+			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
+			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
+			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
+			if (LOG_DIARY)
+				diaryLogging = should_diary_log(diaryType)
 
 		if (diaryLogging)
 			WRITE_LOG(diary_name, "[diaryType]: [source ? "[source] ": ""][text]")
@@ -120,6 +85,27 @@ var/global/logLength = 0
 			WRITE_LOG(roundLog_name, "\[[type]] [source && source != "<span class='blank'>(blank)</span>" ? "[source]: ": ""][text]<br>")
 			logLength++
 	return
+
+///Check config for whether a message should be logged to the diary
+/proc/should_diary_log(diaryType)
+	switch (diaryType)
+		//These are things we log in the out of game logs (the diary)
+		if (LOG_ADMIN) if (config.log_admin) return TRUE
+		if (LOG_AHELP) if (config.log_say) return TRUE
+		if (LOG_MHELP) if (config.log_say) return TRUE
+		if (LOG_GAME) if (config.log_game) return TRUE
+		if (LOG_ACCESS) if (config.log_access) return TRUE
+
+		if (LOG_SAY) if (config.log_say) return TRUE
+		if (LOG_OOC) if (config.log_ooc) return TRUE
+		if (LOG_WHISPER) if (config.log_whisper) return TRUE
+		if (LOG_STATION) if (config.log_station) return TRUE
+		if (LOG_COMBAT) if (config.log_combat) return TRUE
+		if (LOG_TELEPATHY) if (config.log_telepathy) return TRUE
+		if (LOG_DEBUG) if (config.log_debug) return TRUE
+		if (LOG_VEHICLE) if (config.log_vehicles) return TRUE
+		if (LOG_GAMEMODE) if (config.log_gamemode) return TRUE
+	return FALSE
 
 /proc/logDiary(text)
 	WRITE_LOG(diary_name, "[text]")
@@ -347,14 +333,17 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 			friendly_fire = 1
 
 	if (friendly_fire)
-		logTheThing("combat", shooter_data, SHOT, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing(LOG_COMBAT, shooter_data, "<span class='alert'>Friendly Fire!</span>[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
 			var/datum/game_mode/pod_wars/mode = ticker.mode
 			mode.stats_manager?.inc_friendly_fire(shooter_data)
 	else
-		logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+		logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #else
-	logTheThing("combat", shooter_data, SHOT, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	if (shooter_data)
+		logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots [constructTarget(SHOT,"combat")][P.was_pointblank != 0 ? " point-blank" : ""][target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+	else
+		logTheThing(LOG_COMBAT, SHOT, "is hit by a projectile [target_is_immune ? " (immune due to spellshield/nodamage)" : ""] at [log_loc(SHOT)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
 #endif
 
 
@@ -414,7 +403,7 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 		nameRegex = regex(searchString,"ig")
 	catch()
 		nameRegex = searchString
-		logTheThing("debug", null, null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
+		logTheThing(LOG_DEBUG, null, "Tried to search logs with invalid regex, switching to plain text: [searchString]")
 
 	var/list/dat = list("<table>")
 
@@ -428,6 +417,11 @@ proc/log_shot(var/obj/projectile/P,var/obj/SHOT, var/target_is_immune = 0)
 	if (logType == "alls")
 		for (var/log in logs)
 			if(log == "audit") continue
+			if(log == "topic")
+				if (requesting_admin.tempmin)
+					continue
+				if (!requesting_admin.show_topic_log)
+					continue
 			var/list/logList = logs[log]
 			prettyLogName = replacetext(log, "_", " ")
 			var/list/searchData = list()

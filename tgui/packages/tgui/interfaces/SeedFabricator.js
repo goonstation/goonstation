@@ -5,10 +5,10 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from "../backend";
+import { useBackend, useLocalState } from '../backend';
 import { Blink, Box, Button, Collapsible, Flex, Icon, Modal, NumberInput, ProgressBar, Section } from '../components';
 import { Window } from '../layouts';
-import { pluralize } from "./common/stringUtils";
+import { pluralize } from './common/stringUtils';
 
 const DefaultSort = {
   Fruit: 1,
@@ -23,7 +23,7 @@ const categorySorter = (a, b) => (
   (DefaultSort[a.name] || DefaultSort.Other) - (DefaultSort[b.name] || DefaultSort.Other)
 );
 
-export const SeedFabricator = (props, context) => {
+export const SeedFabricator = (_props, context) => {
   const { data } = useBackend(context);
   const { canVend, isWorking, maxSeed, name, seedCount } = data;
   const categories = data.seedCategories || [];
@@ -61,10 +61,10 @@ export const SeedFabricator = (props, context) => {
             <Flex.Item basis={6} grow>
               <NumberInput
                 value={dispenseAmount}
-                format={value => value + pluralize(" seed", value)}
+                format={value => value + pluralize(' seed', value)}
                 minValue={1}
                 maxValue={10}
-                onDrag={(e, value) => setDispenseAmount(value)}
+                onDrag={(_e, value) => setDispenseAmount(value)}
               />
             </Flex.Item>
             <Flex.Item grow={2}>
@@ -95,7 +95,7 @@ export const SeedFabricator = (props, context) => {
               UNIT RECHARGING
             </Modal>
           )}
-          {categories.map((category, index) => (
+          {categories.map(category => (
             <SeedCategory
               key={category.name}
               category={category}
@@ -113,16 +113,23 @@ const SeedCategory = (props, context) => {
   const { act } = useBackend(context);
   const { category, dispenseAmount } = props;
   const { name, seeds } = category;
-  if (!seeds) return false;
-  seeds.sort(seedsSorter);
+
+  if (!seeds) return null;
+
+  const sortedSeeds = seeds.sort(seedsSorter);
 
   return (
     <Collapsible
       title={name}>
-      {seeds.map(seed => (
+      {sortedSeeds.map(seed => (
         <Box key={seed.name} as="span">
-          <Button width="155px" height="32px" px={0} m={0.25}
-            onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}>
+          <Button
+            width="155px"
+            height="32px"
+            px={0}
+            m={0.25}
+            onClick={() => act('disp', { path: seed.path, amount: dispenseAmount })}
+          >
             <Flex direction="row" align="center">
               <Flex.Item>
                 {seed.img ? (
@@ -151,7 +158,8 @@ const SeedCategory = (props, context) => {
               <Flex.Item
                 overflow="hidden"
                 style={{ 'text-overflow': 'ellipsis' }}
-                title={seed.name}>
+                title={seed.name}
+              >
                 {seed.name}
               </Flex.Item>
             </Flex>
@@ -160,5 +168,4 @@ const SeedCategory = (props, context) => {
       ))}
     </Collapsible>
   );
-
 };

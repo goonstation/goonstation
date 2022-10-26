@@ -194,9 +194,13 @@
 /turf/simulated/floor,
 /area/janitor_setpiece)
 "aF" = (
-/obj/machinery/power/apc/autoname_south{
+/obj/machinery/power/apc/autoname_south/nopoweralert{
 	cell_type = 7500;
 	start_charge = 45
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
 	},
 /turf/simulated/floor,
 /area/janitor_setpiece)
@@ -297,7 +301,7 @@
 /area/janitor_setpiece)
 "aT" = (
 /obj/table/wood/auto/desk,
-/obj/machinery/light/lamp,
+/obj/machinery/light/lamp/black,
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor,
 /area/janitor_setpiece)

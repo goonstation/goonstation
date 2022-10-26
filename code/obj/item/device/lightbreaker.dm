@@ -3,10 +3,10 @@
 	desc = "A casette player loaded with a casette of a vampire's screech."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "recorder"
-	var/active = 0.0
+	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 2
 	throw_range = 10
 	w_class = W_CLASS_SMALL
@@ -30,14 +30,18 @@
 			src.activate(user)
 			ammo--
 		else
-			playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 			boutput(user, "<span class='alert'>The tape is worn out!</span>")
 		return
 
 	proc/activate(mob/user as mob)
-		playsound(src.loc, "sound/effects/light_breaker.ogg", 75, 1, 5)
+		playsound(src.loc, 'sound/effects/light_breaker.ogg', 75, 1, 5)
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
+				continue
+			var/area/A = get_area(L)
+			// Protect lights in sanctuary and nukie battlecruiser
+			if(A?.sanctuary || istype(A, /area/syndicate_station))
 				continue
 			L.broken(1)
 
@@ -58,7 +62,7 @@
 
 	proc/rewind()
 		ammo = ammo_max
-		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 
 /datum/action/bar/icon/rewind_tape
 	id = "rewind_tape"
@@ -93,7 +97,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, "sound/misc/winding.ogg", 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, 1,3)
 
 	onStart()
 		..()

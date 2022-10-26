@@ -6,7 +6,7 @@
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1.0
+	anchored = 1
 	var/skipprocess = 0 //Experimenting
 	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
@@ -64,15 +64,15 @@
 
 	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
-	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 		//Pressure sensor
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			safe = 0
 		else safe = 1
 
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10)))
+	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
 		//Oxygen Levels Sensor
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			safe = 0
 		else safe = 1
 
@@ -132,7 +132,7 @@
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
-/obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
+/obj/machinery/alarm/attackby(var/obj/item/W, user)
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
@@ -175,9 +175,9 @@
 		var/environment_pressure = MIXTURE_PRESSURE(environment)
 		var/total_moles = TOTAL_MOLES(environment)
 
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			output += "<FONT color = 'red'>"
-		else if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+		else if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -193,9 +193,9 @@
 
 		output += "<B>Composition:</B><BR>"
 
-		if(environment.nitrogen < MOLES_N2STANDARD*0.80)
+		if(environment.nitrogen < MOLES_N2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.nitrogen < MOLES_N2STANDARD*0.90) || (environment.nitrogen > MOLES_N2STANDARD*1.10))
+		else if((environment.nitrogen < MOLES_N2STANDARD*0.9) || (environment.nitrogen > MOLES_N2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -204,9 +204,9 @@
 		else
 			output += "N2: N/A</FONT><BR>"
 
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10))
+		else if((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"

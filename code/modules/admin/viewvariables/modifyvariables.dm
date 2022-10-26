@@ -69,7 +69,7 @@
 		boutput(src, "<span class='alert'>That's not a List!</span>")
 		return
 
-	var/list/names = sortList(L)
+	var/list/names = sortList(L, /proc/cmp_text_asc)
 
 	var/list/fixedList = list()
 

@@ -51,6 +51,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
+			var/list/flushed_reagents = list("capsaicin")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -63,15 +64,17 @@ datum
 						for (var/obj/item/organ/O in H.organs)
 							if (O.bones)
 								O.bones.repair_damage(1 * mult)
-					if(H.mob_flags & IS_BONER)
-						M.HealDamage("All", 1 * mult, 1 * mult)
-						if(probmult(15))
-							boutput(H, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
-				if (M.reagents.has_reagent("capsaicin"))
-					M.reagents.remove_reagent("capsaicin", 5 * mult)
+				flush(M,5 * mult, flushed_reagents)
 				..()
 				return
 
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+				. = ..()
+				if(M.mob_flags & IS_BONEY)
+					. = FALSE
+					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
+					if(prob(15))
+						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
 		fooddrink/milk/chocolate_milk
 			name = "chocolate milk"
 			id = "chocolate_milk"
@@ -105,7 +108,7 @@ datum
 			fluid_g = 196
 			fluid_b = 248
 			transparency = 255
-			taste = "oily and sweet."
+			taste = list("oily", "sweet")
 			description = "Smells like blueberries and tastes worse."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -218,24 +221,24 @@ datum
 				if(exposed_temperature <= T0C + 7)
 					name = "Chilled Beer"
 					description = "A nice chilled beer. Perfect!"
-					taste = "nicely cool and hoppy"
+					taste = list("nicely cool", "hoppy")
 				else if (exposed_temperature > T0C + 30)
 					name = "Warm Beer"
 					description = "Warm Beer. Ughhh, this is disgusting."
-					taste = "grossly warm and hoppy"
+					taste = list("grossly warm", "hoppy")
 				else
 					name = "Beer"
 					description = initial(description)
 					taste = initial(taste)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				var/mytemp = holder.total_temperature
 				if(!volume_passed) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
-							M.take_toxin_damage(-5 * mult)
+							M.take_toxin_damage(-5)
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
@@ -505,7 +508,7 @@ datum
 								M.visible_message("<span class='alert'>[M] pukes everywhere and passes out!</span>")
 								M.vomit()
 								M.reagents.del_reagent("bojack")
-								M.changeStatus("paralysis", 3 SECONDS)
+								M.setStatusMin("paralysis", 3 SECONDS)
 
 		fooddrink/alcoholic/cocktail_screwdriver
 			name = "Screwdriver"
@@ -541,7 +544,7 @@ datum
 			fluid_g = 53
 			fluid_b = 0
 			transparency = 200
-			alch_strength = 0.30
+			alch_strength = 0.3
 
 		fooddrink/alcoholic/snakebite
 			name = "Snakebite"
@@ -559,7 +562,7 @@ datum
 			id = "caipirinha"
 			description = "A sweet vodka and pineapple cocktail that's fit for a day at the beach."
 			reagent_state = LIQUID
-			taste = "like pineapples and sea breeze"
+			taste = list("like pineapples", "like a sea breeze")
 			fluid_r = 240
 			fluid_g = 236
 			fluid_b = 110
@@ -581,7 +584,7 @@ datum
 			id = "diesel"
 			description = "A tart, yet sweet cocktail."
 			reagent_state = LIQUID
-			taste = "like falling leaves and cranberries"
+			taste = list("like falling leaves", "like cranberries")
 			fluid_r = 163
 			fluid_g = 64
 			fluid_b = 27
@@ -635,8 +638,10 @@ datum
 					else if (prob(75))
 						M.TakeDamage("head", 25, 0, 0, DAMAGE_BLUNT) // this does brute for some reason, whateverrrr
 						M.emote("scream")
-						boutput(M, "<span class='alert'>Your face has become disfigured!</span>")
-						M.real_name = "Unknown"
+						if(!H.disfigured)
+							boutput(H, "<span class='alert'>Your face has become disfigured!</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
 						M.unlock_medal("Red Hood", 1)
 					else
 						M.TakeDamage("All", 5, 0, 0, DAMAGE_BLUNT)
@@ -646,6 +651,7 @@ datum
 						H.visible_message("<span class='alert'><b>[H] explodes in a shower of gibs, hair and piracy!</b></span>","<span class='alert'><b>Oh god, too much hair!</b></span>")
 						new /obj/item/clothing/glasses/eyepatch(get_turf(H))
 						new /obj/item/clothing/mask/moustache(get_turf(H))
+						logTheThing(LOG_COMBAT, src, "was gibbed by the reagent [name].")
 						H.gib()
 						return
 					if(H.bioHolder.mobAppearance.customization_first.id != "dreads" || H.bioHolder.mobAppearance.customization_second.id != "fullbeard")
@@ -695,7 +701,8 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (probmult(15))
-					if (isrestrictedz(M.z))
+					var/turf/mob_turf = get_turf(M)
+					if (isrestrictedz(mob_turf?.z))
 						boutput(M, "<span class='notice'>You feel strange. Almost a sense of guilt.</span>")
 						return
 					var/telerange = 10
@@ -708,7 +715,7 @@ datum
 						..()
 						return
 					boutput(M, text("<span class='alert'>You blink, and suddenly you're somewhere else!</span>"))
-					playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 					M.set_loc(pick(randomturfs))
 				..()
 				return
@@ -761,8 +768,8 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Ugh! Why did you drink that?!</span>")
-					M.changeStatus("stunned", 3 SECONDS)
-					M.changeStatus("weakened", 3 SECONDS)
+					M.setStatusMin("stunned", 3 SECONDS)
+					M.setStatusMin("weakened", 3 SECONDS)
 					if (prob(25))
 
 						M.visible_message("<span class='alert'>[M] horks all over [himself_or_herself(M)]. Gross!</span>")
@@ -814,7 +821,7 @@ datum
 			transparency = 190
 			description = "From Russia with Love."
 			reagent_state = LIQUID
-			taste = "smooth and dry"
+			taste = list("smooth", "dry")
 
 		fooddrink/alcoholic/appletini
 			name = "Appletini"
@@ -966,7 +973,7 @@ datum
 			description = "The breakfast of hung-over champions."
 			reagent_state = LIQUID
 			thirst_value = -0.5
-			taste = "rich and sugary"
+			taste = list("rich", "sugary")
 
 		fooddrink/alcoholic/cosmo
 			name = "Cosmopolitan"
@@ -1123,6 +1130,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 
 				..()
@@ -1155,8 +1163,8 @@ datum
 
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Drinking that was an awful idea!</span>")
-					M.changeStatus("stunned", 3 SECONDS)
-					M.changeStatus("weakened", 3 SECONDS)
+					M.setStatusMin("stunned", 3 SECONDS)
+					M.setStatusMin("weakened", 3 SECONDS)
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)
 					if (prob(10))
@@ -1184,9 +1192,7 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				for(var/reagent_id in M.reagents.reagent_list)
-					if(reagent_id != id)
-						M.reagents.remove_reagent(reagent_id, 8 * mult)
+				flush(M, 8 * mult)
 				if(M.health > 10)
 					M.take_toxin_damage(2 * mult)
 				if(probmult(20))
@@ -1217,7 +1223,7 @@ datum
 			alch_strength = 0.4
 			description = "A Drink then you'll have that's not bad - / At least, so they say in Jamaica!"
 			reagent_state = LIQUID
-			taste = "strong and fruity"
+			taste = list("strong", "fruity")
 
 		fooddrink/alcoholic/maitai
 			name = "Mai Tai"
@@ -1389,7 +1395,7 @@ datum
 			alch_strength = 0.15
 			description = "A tasty fruit wine cocktail."
 			reagent_state = LIQUID
-			taste = "rich and fruity"
+			taste = list("rich", "fruity")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(M.bodytemperature < 400)
@@ -1561,7 +1567,7 @@ datum
 			description = "Patience."
 			reagent_state = LIQUID
 			var/bioeffect_length = 0
-			taste = "fresh and sugary"
+			taste = list("fresh", "sugary")
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1594,7 +1600,7 @@ datum
 					M.reagents.del_reagent("chocolate")
 					M.reagents.del_reagent("freeze")
 				if(M.bodytemperature > 0)
-					M.bodytemperature=max(M.bodytemperature-(10 * mult),0)
+					M.bodytemperature=max(M.bodytemperature-(20 * mult),0)
 				if(probmult(10))
 					boutput(M, pick("<span class='notice'><i>Brrr...</i></span>","<span class='notice'><i>Isn't it a bit chilly in here?</i></span>","<span class='notice'><i>Who left an airlock open?</i></span>"))
 				if(probmult(15))
@@ -1807,7 +1813,7 @@ datum
 			alch_strength = 0.1
 			description = "Does this really count as a Martini?"
 			reagent_state = LIQUID
-			taste = "smooth and chocolatey"
+			taste = list("smooth", "chocolatey")
 
 		fooddrink/alcoholic/radler
 			name = "Radler"
@@ -1818,7 +1824,7 @@ datum
 			alch_strength = 0.1
 			description = "A lemonade and beer shandy."
 			reagent_state = LIQUID
-			taste = "sweet and sour"
+			taste = list("sweet", "sour")
 
 		fooddrink/alcoholic/threemileislandicedtea
 			name = "Three Mile Island Iced Tea"
@@ -1979,9 +1985,9 @@ datum
 							M.reagents.add_reagent("psilocybin", 30)
 						if(5)
 							boutput(M, "<span class='alert'>What stunning texture!</span>")
-							M.changeStatus("paralysis", 6 SECONDS)
-							M.changeStatus("stunned", 7 SECONDS)
-							M.changeStatus("weakened", 8 SECONDS)
+							M.setStatusMin("paralysis", 6 SECONDS)
+							M.setStatusMin("stunned", 7 SECONDS)
+							M.setStatusMin("weakened", 8 SECONDS)
 							M.stuttering += 20
 
 		fooddrink/capsaicin
@@ -2027,9 +2033,8 @@ datum
 					if (volume_passed > 10)
 						if (volume_passed >= 80)
 							boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
-							M.emote("scream")
 							M.stuttering += 30
-							M.changeStatus("weakened", 5 SECONDS)
+							M.setStatusMin("weakened", 5 SECONDS)
 						else if (volume_passed >= 40 && volume_passed < 80)
 							boutput(M, "<span class='alert'>HOT!!!!</span>")
 							M.emote("cough")
@@ -2041,16 +2046,21 @@ datum
 
 
 				else if (method == TOUCH)
-					if(iscarbon(M))
-						if(!M.wear_mask)
-							M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-							if(prob(50))
-								M.emote("scream")
-								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-								M.take_eye_damage(1, 1)
-							M.change_eye_blurry(3)
-							M.changeStatus("stunned", 2 SECONDS)
-							M.change_misstep_chance(10)
+					if(ishuman(M))
+						var/mob/living/carbon/human/H = M
+						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))))
+							return
+					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
+						return
+					else
+						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
+						if(prob(50))
+							M.emote("scream")
+							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+							M.take_eye_damage(1, 1)
+						M.change_eye_blurry(3)
+						M.setStatusMin("stunned", 2 SECONDS)
+						M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo
@@ -2085,7 +2095,6 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
-					M.emote("scream")
 					M.stuttering += 30
 					M.changeStatus("stunned", 2 SECONDS)
 					if (prob(20))
@@ -2207,7 +2216,7 @@ datum
 
 				if(volume >= 5 && prob(10))
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2276,7 +2285,7 @@ datum
 			energy_value = 0.8
 			caffeine_rush = 3
 			stun_resist = 10
-			taste = "rich and fragrant"
+			taste = list("rich", "fragrant")
 			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2311,6 +2320,22 @@ datum
 			addiction_prob = 1
 			addiction_prob2 = 5
 			energy_value = 0
+
+		fooddrink/coffee/mate
+			name = "mate"
+			id = "mate"
+			description = "Basically coffee but green."
+			depletion_rate = 0.2
+			thirst_value = 0.25
+			energy_value = 0.2
+			caffeine_rush = 2
+			addiction_prob = 1
+			addiction_prob2 = 2
+			stun_resist = 3
+			fluid_r = 107
+			fluid_g = 188
+			fluid_b = 20
+			taste = "bitter"
 
 		fooddrink/coffee/energydrink
 			name = "energy drink"
@@ -2386,6 +2411,7 @@ datum
 			addiction_prob2 = 1
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
+			var/list/flushed_reagents = list("toxin","toxic_slurry")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if (exposed_temperature <= T0C + 7)
@@ -2399,10 +2425,7 @@ datum
 					description = initial(description)
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				if (holder.has_reagent("toxin")) //Tea is good for you!!
-					holder.remove_reagent("toxin", 1 * mult)
-				if (holder.has_reagent("toxic_slurry"))
-					holder.remove_reagent("toxic_slurry", 1 * mult)
+				flush(M, 1 * mult, flushed_reagents)//Tea is good for you!
 				..()
 				return
 
@@ -2614,7 +2637,7 @@ datum
 			fluid_b = 28
 			hunger_value = 1.5
 			viscosity = 0.4
-			taste = "rich and velvety"
+			taste = list("rich", "velvety")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(prob(50))
@@ -2773,7 +2796,7 @@ datum
 
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/ketchup) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						make_cleanable(/obj/decal/cleanable/ketchup,T)
 
 		fooddrink/mustard
@@ -2786,6 +2809,21 @@ datum
 			fluid_b = 0
 			transparency = 255
 			taste = "pungent"
+
+		fooddrink/soysauce
+			name = "soy sauce"
+			id = "soysauce"
+			description = "A dark brown sauce brewed from soybeans and wheat. Salty!"
+			reagent_state = LIQUID
+			fluid_r = 53
+			fluid_g = 33
+			fluid_b = 28
+			transparency = 255
+			taste = "salty"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("salt", 0.5 * mult)
+				..()
 
 		fooddrink/porktonium
 			name = "porktonium"
@@ -2825,7 +2863,7 @@ datum
 			transparency = 250
 			taste = "herbal"
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if(!volume_passed || method != INGEST)
 					return
@@ -2833,13 +2871,13 @@ datum
 					return
 
 				if(M.get_oxygen_deprivation() && prob(45))
-					M.take_oxygen_deprivation(-1 * mult)
+					M.take_oxygen_deprivation(-1)
 				if(M.get_toxin_damage() && prob(45))
-					M.take_toxin_damage(-1 * mult)
+					M.take_toxin_damage(-1)
 				if(M.losebreath && prob(85))
-					M.losebreath -= (1 * mult)
+					M.losebreath -= (1)
 				if(prob(45))
-					M.HealDamage("All", 6 * mult, 6 * mult)
+					M.HealDamage("All", 6, 6)
 				//M.UpdateDamageIcon()
 				return
 
@@ -3011,7 +3049,7 @@ datum
 				if(!M) M = holder.my_atom
 				if(ishuman(M) && ((M.bioHolder.bloodType != "A+") || probmult(5)))
 					if (prob(10))
-						M.take_toxin_damage(rand(2.4) * mult)
+						M.take_toxin_damage(rand(2,4) * mult)
 					if (prob(7))
 						boutput(M, "<span class='alert'>A horrible migraine overpowers you.</span>")
 						M.setStatusMin("stunned", 4 SECONDS * mult)
@@ -3026,6 +3064,7 @@ datum
 			fluid_g = 220
 			fluid_b = 0
 			transparency = 225
+			overdose = 10
 			pathogen_nutrition = list("water", "sugar", "sodium", "iron", "nitrogen")
 			hunger_value = 1
 			viscosity = 0.2
@@ -3034,12 +3073,13 @@ datum
 				if(!M) M = holder.my_atom
 				M.nutrition += 1 * mult
 
-				if(probmult(8))
-					M.emote("fart")
-
 				if(prob(3))
 					M.reagents.add_reagent("cholesterol", rand(1,2) * mult)
 				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				if(probmult(16))
+					M.emote("fart")
 
 		fooddrink/beff
 			name = "beff"
@@ -3164,7 +3204,7 @@ datum
 						boutput(M, "<span class='alert'>My goodness, that was tasty!</span>")
 					else
 						boutput(M, "<span class='alert'>A slice of pepperoni slaps you!</span>")
-						playsound(M.loc, "sound/impact_sounds/Generic_Slap_1.ogg", 50, 1)
+						playsound(M.loc, 'sound/impact_sounds/Generic_Slap_1.ogg', 50, 1)
 						M.TakeDamage("head", 1, 0, 0, DAMAGE_BLUNT)
 
 			reaction_turf(var/turf/T, var/volume)
@@ -3343,7 +3383,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 1.5
 			bladder_value = -1.5
-			taste = "sweet and tart"
+			taste = list("sweet", "tart")
 
 		fooddrink/juice_blueraspberry
 			name = "blue raspberry juice"
@@ -3424,6 +3464,18 @@ datum
 			thirst_value = 1
 			bladder_value = -1
 			taste = "like carrots"
+
+		fooddrink/juice_pumpkin
+			name = "pumpkin juice"
+			id = "juice_pumpkin"
+			fluid_r = 255
+			fluid_g = 117
+			fluid_b = 24
+			description = "The journey to juice a pumpkin has finally come to an end, with very orange results."
+			reagent_state = LIQUID
+			thirst_value = 1.5
+			bladder_value = -1.5
+			taste = "earthy"
 
 		fooddrink/juice_grapefruit
 			name = "grapefruit juice"
@@ -3600,7 +3652,7 @@ datum
 				if(method == INGEST)
 					if (M.get_toxin_damage())
 						M.take_toxin_damage(9 * -1) //I assume this was not supposed to be poison.
-					M.playsound_local(M, "sound/effects/bigwave.ogg", 50, 1)
+					M.playsound_local(M, 'sound/effects/bigwave.ogg', 50, 1)
 					boutput(M, "<span class='notice'><B>You feel refreshed.<B></span>")
 
 			on_remove()
@@ -3636,7 +3688,7 @@ datum
 					boutput(M, "<span class='alert'><B>Gotta get a grip!<B></span>")
 				if(probmult(10))
 					boutput(M, "<span class='alert'><B>I can only think of citrus!!<B></span>")
-				M.playsound_local(M, "sound/effects/heartbeat.ogg", 50, 1)
+				M.playsound_local(M, 'sound/effects/heartbeat.ogg', 50, 1)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
@@ -3659,7 +3711,6 @@ datum
 					M.make_dizzy(33 * mult)
 
 					M.take_brain_damage(9 * mult)
-					M.emote("scream")
 
 					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "orange", "orange")
 					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lime", "lime")
@@ -3685,7 +3736,7 @@ datum
 			reagent_state = LIQUID
 			thirst_value = 0.7
 			bladder_value = -0.2
-			taste = "sweet and sour"
+			taste = list("sweet", "sour")
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()
@@ -3709,7 +3760,7 @@ datum
 			fluid_g = 255
 			fluid_b = 140
 			description = "A refreshing, sweet and sour drink consisting of sugar and lime juice."
-			taste = "sweet and sour"
+			taste = list("sweet", "sour")
 
 		fooddrink/halfandhalf
 			name = "half and half"
@@ -3732,7 +3783,7 @@ datum
 			fluid_g = 110
 			fluid_b = 41
 			transparency = 200
-			taste = "bittersweet."
+			taste = "bittersweet"
 			description = "A mixture of half lemonade and half coffee."
 			reagent_state = LIQUID
 			thirst_value = 0.75
@@ -3744,7 +3795,7 @@ datum
 			fluid_g = 210
 			fluid_b = 90
 			transparency = 220
-			taste = "sweet and fruity"
+			taste = list("sweet", "fruity")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -3755,7 +3806,7 @@ datum
 			fluid_g = 200
 			fluid_b = 80
 			transparency = 195
-			taste = "sweet and sour"
+			taste = list("sweet", "sour")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -3766,7 +3817,7 @@ datum
 			fluid_g = 220
 			fluid_b = 90
 			transparency = 160
-			taste = "sour and fizzy"
+			taste = list("sour", "fizzy")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -3777,7 +3828,7 @@ datum
 			fluid_g = 100
 			fluid_b = 60
 			transparency = 200
-			taste = "sweet and fruity"
+			taste = list("sweet", "fruity")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -3788,7 +3839,7 @@ datum
 			fluid_g = 110
 			fluid_b = 54
 			transparency = 220
-			taste = "aromatic and citrusy"
+			taste = list("aromatic", "citrusy")
 			reagent_state = LIQUID
 			thirst_value = 0.8
 
@@ -3911,9 +3962,9 @@ datum
 			transparency = 60
 			bioeffect_id = "accent_tyke"
 
-		fooddrink/bonerjuice
+		fooddrink/boneyjuice
 			name = "the satisfaction of making spaghetti"
-			id = "bonerjuice"
+			id = "boneyjuice"
 			description = "The congealed essence of cullinary passion."
 			fluid_r = 200
 			fluid_g = 231
@@ -3957,8 +4008,8 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST && do_stunny)
 					boutput(M, "<span class='alert'>Ugh! Eating that was a terrible idea!</span>")
-					M.changeStatus("stunned", 2 SECONDS)
-					M.changeStatus("weakened", 2 SECONDS)
+					M.setStatusMin("stunned", 2 SECONDS)
+					M.setStatusMin("weakened", 2 SECONDS)
 					M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
 		fooddrink/fakecheese
@@ -4012,14 +4063,14 @@ datum
 						T.visible_message("<span class='alert'>The [T] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					T.setMaterial(getMaterial("pizza"))
+					T.setMaterial(getMaterial("pizza"), copy = FALSE)
 			reaction_obj(var/obj/O, var/volume)
 				if(volume < rand(5,9))
 					if(prob(5))
 						O.visible_message("<span class='alert'>The [O] fails to muster up the effort to become delicious!</span>")
 					return
 				else
-					O.setMaterial(getMaterial("pizza"))
+					O.setMaterial(getMaterial("pizza"), copy = FALSE)
 
 		fooddrink/friedessence
 			name = "The Physical Manifestation Of The Very Concept Of Fried Food"
@@ -4076,6 +4127,7 @@ datum
 								boutput(M, "<span class='alert'><b>IT BURNS!!!!</b></span>")
 								sleep(0.2 SECONDS)
 								M.visible_message("<span class='alert'>[M] is consumed in flames!</span>")
+								logTheThing(LOG_COMBAT, M, "was fire-gibbed by the reagent [name].")
 								M.firegib()
 				..()
 
@@ -4126,8 +4178,8 @@ datum
 					boutput(M, "<span class='alert'>Your body feels like it's being tickled from the inside out!</span>")
 					M.changeStatus("weakened", 1 SECONDS)
 					M.emote("laugh")
-					M.visible_message("<span class='alert'>[M] sneezes. \His sneeze sounds like a honk!</span>")
-					playsound(M.loc, "sound/items/bikehorn.ogg", 50, 1)
+					M.visible_message("<span class='alert'>[M] sneezes. [capitalize(his_or_her(M))] sneeze sounds like a honk!</span>")
+					playsound(M.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 				if (probmult(4))
 					//Create an alphabet soup of random phrases and force the mob to say it!
 					var/message = null
@@ -4272,7 +4324,7 @@ datum
 			fluid_b = 237
 			description = "A popular twist on cloudy lemonade, this soft drink has been dyed pink. How colourful."
 			reagent_state = LIQUID
-			taste = "sweet and sour"
+			taste = list("sweet", "sour")
 
 		fooddrink/alcoholic/duckfart
 			name = "Duck Fart"
@@ -4316,3 +4368,125 @@ datum
 			description = "A cocktail from the prohibition era, named after a popular expression."
 			reagent_state = LIQUID
 			taste = "honeyed"
+
+		fooddrink/alcoholic/tealquila
+			name = "Tealquila Sunrise"
+			id = "tealquila"
+			fluid_r = 38
+			fluid_g = 255
+			fluid_b = 230
+			alch_strength = 0.3
+			description = "A shockingly teal cocktail infused with benign gnesis, effective at neutralizing the more aggresssive variety."
+			reagent_state = LIQUID
+			taste = list("teal", "like TV static")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				. = ..()
+				if (!M)
+					M = holder.my_atom
+				if (M.reagents.has_reagent("flockdrone_fluid"))
+					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
+				flush(M, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
+
+		fooddrink/matcha
+			name = "matcha"
+			id = "matcha"
+			fluid_r = 116
+			fluid_g = 161
+			fluid_b = 46
+			description = "A finely ground powder made from green tea leaves."
+			reagent_state = SOLID
+			taste = "grass-like"
+
+		fooddrink/matchatea
+			name = "matcha tea"
+			id = "matchatea"
+			fluid_r = 5
+			fluid_g = 71
+			fluid_b = 42
+			description = "A type of green tea that's been served for centuries in China and Japan."
+			reagent_state = LIQUID
+			taste = "sweet with a hint of bitter"
+			thirst_value = 1
+			bladder_value = 0.04
+			energy_value = 0.04
+			addiction_prob = 1
+			addiction_prob2 = 2
+			addiction_min = 10
+			var/list/flushed_reagents = list("cholesterol")
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				flush(M, 3 * mult, flushed_reagents)
+				..()
+
+		fooddrink/iced/coconutmilkespresso
+			name = "iced coconut milk espresso"
+			id = "icedcoconutmilkespresso"
+			fluid_r = 177
+			fluid_g = 143
+			fluid_b = 106
+			transparency = 200
+			taste = list("sweet", "cold")
+			description = "A creamy iced espresso, mixed with coconut milk."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/pineapplematcha
+			name = "iced pineapple matcha"
+			id = "icedpineapplematcha"
+			fluid_r = 152
+			fluid_g = 184
+			fluid_b = 96
+			transparency = 200
+			taste = list("earthy")
+			description = "Tangy, yet refreshingly earthy."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/iced/thaicoffee
+			name = "Thai iced coffee"
+			id = "thaiicedcoffee"
+			fluid_r = 218
+			fluid_g = 172
+			fluid_b = 140
+			transparency = 200
+			taste = list("bittersweet", "cold")
+			description = "A local favorite, now available on demand."
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/pepperminthotchocolate
+			name = "peppermint hot chocolate"
+			id = "pepperminthotchocolate"
+			fluid_r = 147
+			fluid_g = 94
+			fluid_b = 43
+			transparency = 200
+			taste = list("minty", "chocolatey")
+			description = "Minty, creamy, and chocolatey; delicious!"
+			reagent_state = LIQUID
+			thirst_value = 0.8
+
+		fooddrink/mexicanhotchocolate
+			name = "Mexican hot chocolate"
+			id = "mexicanhotchocolate"
+			fluid_r = 76
+			fluid_g = 29
+			fluid_b = 3
+			transparency = 200
+			taste = list("spicy", "chocolatey")
+			description = "Hot! Yet, very tasty."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+
+		fooddrink/pumpkinspicelatte
+			name = "pumpkin spice latte"
+			id = "pumpkinspicelatte"
+			id = "pumpkinspicelatte"
+			fluid_r = 231
+			fluid_g = 106
+			fluid_b = 0
+			description = "Whether or not it contains actual pumpkin juice has been up for debate."
+			reagent_state = LIQUID
+			taste = list("earthy", "sweet")
+			thirst_value = 1

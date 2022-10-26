@@ -37,7 +37,7 @@
 
 	event_effect(warning_delay, event_duration, grump_to_overcome)
 		..()
-		var/list/spooky_sounds = list("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg")
+		var/list/spooky_sounds = list('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg')
 		var/list/area/stationAreas = get_accessible_station_areas()
 
 		if(!generator)
@@ -82,7 +82,7 @@
 		// Delayed Warning and Instruction
 		SPAWN(warning_delay)
 			if(event_active)
-				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning")
+				command_alert("Reports indicate that the engine on-board [station_name()] is behaving unusually. Stationwide power failures may occur or worse.", "Engine Warning", alert_origin = ALERT_STATION)
 				sleep(30 SECONDS)
 			if(event_active)
 				command_alert("Onsite Engineers inform us a sympathetic connection exists between the furnaces and the engine. Considering burning something it might enjoy: food, people, weed. We're grasping at straws here. ", "Engine Suggestion")
@@ -264,7 +264,7 @@ datum/teg_transformation/vampire
 		animate(src.teg.circ1)
 		animate(src.teg.circ2)
 		for(var/mob/M in abilityHolder.thralls)
-			remove_mindslave_status(M)
+			remove_mindhack_status(M)
 		. = ..()
 
 	on_grump(mult)
@@ -279,7 +279,7 @@ datum/teg_transformation/vampire
 		if(length(targets))
 			if(probmult(30))
 				if( !ON_COOLDOWN(src.teg,"blood", 30 SECONDS) )
-					playsound(src.teg, "sound/effects/blood.ogg", rand(10,20), 0, -1)
+					playsound(src.teg, 'sound/effects/blood.ogg', rand(10,20), 0, -1)
 
 			var/mob/living/carbon/target = pick(targets)
 
@@ -335,7 +335,7 @@ datum/teg_transformation/vampire
 					src.health -= 5
 					C.reagents.remove_reagent("water_holy", 8)
 					if (!(locate(/datum/effects/system/steam_spread) in C.loc))
-						playsound(C.loc, "sound/effects/bubbles3.ogg", 80, 1, -3, pitch=0.7)
+						playsound(C.loc, 'sound/effects/bubbles3.ogg', 80, 1, -3, pitch=0.7)
 						var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 						steam.set_up(1, 0, get_turf(C))
 						steam.attach(C)
@@ -345,7 +345,7 @@ datum/teg_transformation/vampire
 			on_revert()
 
 	// Implement attackby to handle objects and attacks to Generator and Circulators
-	proc/attackby(obj/T, obj/item/I as obj, mob/user as mob)
+	proc/attackby(obj/T, obj/item/I, mob/user)
 		var/force = I.force
 		if(istype(I,/obj/item/storage/bible) && user.traitHolder.hasTrait("training_chaplain"))
 			force = 60

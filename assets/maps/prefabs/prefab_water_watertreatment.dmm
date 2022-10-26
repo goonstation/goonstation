@@ -128,7 +128,7 @@
 /turf/simulated/floor/red,
 /area/prefab/water_treatment)
 "aC" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},

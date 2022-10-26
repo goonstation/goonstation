@@ -62,7 +62,7 @@ var/global/meteor_shower_active = 0
 		var/commins = round((ticker.round_elapsed_ticks + warning_delay - ticker.round_elapsed_ticks)/10 ,1)
 		commins = max(0,commins)
 		if (random_events.announce_events)
-			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert")
+			command_alert("[comsev] [shower_name] approaching [comdir]. Impact in [commins] seconds.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 			playsound_global(world, 'sound/machines/engine_alert2.ogg', 40)
 			meteor_shower_active = direction
 			for (var/obj/machinery/shield_generator/S as anything in machine_registry[MACHINES_SHIELDGENERATORS])
@@ -70,7 +70,7 @@ var/global/meteor_shower_active = 0
 
 		SPAWN(warning_delay)
 			if (random_events.announce_events)
-				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert")
+				command_alert("The [shower_name] has reached the [station_or_ship()]. Brace for impact.", "Meteor Alert", alert_origin = ALERT_WEATHER)
 				playsound_global(world, 'sound/machines/engine_alert1.ogg', 30)
 
 			var/start_x
@@ -161,7 +161,7 @@ var/global/meteor_shower_active = 0
 	icon_state = "flaming"
 	desc = "A chunk of space debris. You might want to stop staring at it and run."
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/speed = 1
 	var/pix_speed = 8
 	var/hit_object = 0 //If we hit something we skip the next step (we dont move)
@@ -228,12 +228,13 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
@@ -329,7 +330,7 @@ var/global/meteor_shower_active = 0
 	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	//bound_width = 96
 	//bound_height = 96

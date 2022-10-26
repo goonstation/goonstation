@@ -15,6 +15,7 @@
 	soundproofing = 3
 	throwforce = 50 //ouch
 	can_flip_bust = 1
+	object_flags = NO_GHOSTCRITTER
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	get_desc()
@@ -29,6 +30,15 @@
 		else
 			src.UpdateOverlays(null, "barcode")
 
+	attackby(obj/item/I, mob/user)
+		if(!src.open && istype(I, /obj/item/antitamper))
+			if(src.locked)
+				boutput(user, "<span class='alert'>[src] is already locked and doesn't need [I].</span>")
+				return
+			var/obj/item/antitamper/AT = I
+			AT.attach_to(src, user)
+			return
+		..()
 
 	Cross(atom/movable/mover)
 		if(istype(mover, /obj/projectile))
@@ -261,7 +271,7 @@
 				new /obj/critter/spirit( src )
 			return 1
 
-	open()
+	open(entanglelogic, mob/user)
 		..()
 		if(!triggered)
 			triggered = 1
@@ -298,11 +308,12 @@
 				I.Scale(NESTED_SCALING_FACTOR**nest_amt, NESTED_SCALING_FACTOR**nest_amt) //scale the contents if we're nested
 				if (owner)
 					item_datum.run_on_spawn(I, owner, TRUE, owner_uplink)
-					if (owner.mind)
-						owner.mind.traitor_crate_items += item_datum
+					var/datum/antagonist/traitor/T = owner.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(T))
+						T.surplus_crate_items.Add(item_datum)
 				telecrystals += item_datum.cost
 			var/str_contents = kText.list2text(crate_contents, ", ")
-			logTheThing("debug", owner, null, "surplus crate contains: [str_contents] at [log_loc(src)]")
+			logTheThing(LOG_DEBUG, owner, "surplus crate contains: [str_contents] at [log_loc(src)]")
 		#undef NESTED_SCALING_FACTOR
 
 /obj/storage/crate/syndicate_surplus/spawnable
@@ -310,19 +321,6 @@
 	New()
 		..()
 		spawn_items() //null owner/uplink, so pulls from all possible items
-
-/obj/storage/crate/pizza
-	name = "pizza box"
-	desc = "A pizza box."
-	icon_state = "pizzabox"
-	icon_opened = "pizzabox_open"
-	icon_closed = "pizzabox"
-	icon_welded = "welded-short-horizontal"
-	weld_image_offset_Y = -10
-
-	New()
-		..()
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
 
 /obj/storage/crate/bee
 	name = "Bee crate"
@@ -519,10 +517,10 @@
 		spawn_contents = list(/obj/item/gun/kinetic/tranq_pistol,
 		/obj/item/storage/pouch/tranq_pistol_dart,
 		/obj/item/pinpointer/disk,
-		/obj/item/genetics_injector/dna_scrambler,
+		/obj/item/dna_scrambler,
 		/obj/item/voice_changer,
 		/obj/item/card/emag,
-		/obj/item/clothing/under/chameleon,
+		/obj/item/storage/backpack/chameleon,
 		/obj/item/device/chameleon,
 		/obj/item/clothing/suit/space/syndicate/specialist,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/infiltrator)
@@ -558,7 +556,8 @@
 	medic_rework
 		name = "Class Crate - Field Medic"
 		desc = "A crate containing a Specialist Operative loadout. This one is packed with medical supplies."
-		spawn_contents = list(/obj/item/clothing/glasses/healthgoggles/upgraded,
+		spawn_contents = list(/obj/item/gun/kinetic/veritate,
+		/obj/item/storage/pouch/veritate,
 		/obj/item/device/analyzer/healthanalyzer/upgraded,
 		/obj/item/storage/medical_pouch,
 		/obj/item/storage/belt/syndicate_medic_belt,
@@ -576,7 +575,6 @@
 		/obj/item/storage/pouch/shotgun/weak,
 		/obj/item/weldingtool/high_cap,
 		/obj/item/storage/belt/utility/prepared,
-		/obj/item/clothing/glasses/meson,
 		/obj/item/clothing/suit/space/syndicate/specialist/engineer,
 		/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)
 
@@ -731,7 +729,7 @@
 		/obj/item/shipcomponent/sensor/mining)
 
 	clothes
-		spawn_contents = list(/obj/item/clothing/under/gimmick/blackstronaut,
+		spawn_contents = list(/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/shoes/cleats,
 		/obj/item/clothing/mask/balaclava,
 		/obj/item/reagent_containers/glass/beaker/burn)

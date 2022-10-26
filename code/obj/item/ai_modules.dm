@@ -16,9 +16,9 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 	item_state = "electronic"
 	desc = "A module containing an AI law that can be slotted into an AI law rack. "
 	flags = FPRINT | TABLEPASS| CONDUCT
-	force = 5.0
+	force = 5
 	w_class = W_CLASS_SMALL
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 15
 	mats = 10
@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 			boutput(user,"This module is acting strange, and cannot be modified.")
 			return
 
-		var/answer = input(user, text, title, default) as null|text
+		var/answer = tgui_input_text(user, text, title, default)
 		return copytext(adminscrub(answer), 1, input_char_limit)
 
 	proc/update_law_text()
@@ -75,11 +75,7 @@ ABSTRACT_TYPE(/obj/item/aiModule)
 
 	proc/get_law_name()
 		if(src.glitched)
-			var/pos = rand(1,length(src.name)-1)
-			var/pos2 = rand(pos,length(src.name))
-			var/part1 = copytext( src.name , 1 , pos)
-			var/part2 = copytext( src.name , pos2)
-			return part1+pick("^^vv<><>BA","AAAAAAAAAAAAAAAAAA","ID10-T ERROR","%FUDGE%","CRASH()","BEEES",":) :) :)","~#@@@#~","\\x00\\x00\\x00\\xDE\\xAD\\xBE\\xEF","\\x00\\x00\\x00\\x00","#BADREF#","OH NO IONS","FFFFBABAFFFBA","?","*?!","$var","001011001111011001","ERR0R")+part2
+			return radioGarbleText(src.name, 7)
 		else
 			return src.name
 
@@ -217,11 +213,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(255, 255, 255, 255)
 
 	update_law_text(var/lawTarget)
-		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is human."
+		src.lawText = "Only [lawTarget ? lawTarget : "__________"] is/are human."
 		return ..()
 
 	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One Human", "Fill in the blank: \"Only __________ is/are human.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
 		return
@@ -234,11 +230,11 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 	highlight_color = rgb(0, 0, 0, 236)
 
 	update_law_text(var/lawTarget)
-		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is not human."
+		src.lawText = "[lawTarget ? capitalize(lawTarget) : "__________"] is/are not human."
 		return ..()
 
 	attack_self(var/mob/user)
-		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is not human.\"", user.real_name)
+		var/lawTarget = input_law_info(user, "One Non-Human", "Fill in the blank: \"__________ is/are not human.\"", user.real_name)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
 		return
@@ -330,6 +326,8 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 		var/lawTarget = input_law_info(user, "Freeform", "Please enter anything you want the AI to do. Anything. Serious.", src.lawText)
 		if(lawTarget)
 			src.update_law_text(lawTarget)
+			if (lawTarget != initial(lawText))
+				phrase_log.log_phrase("ailaw", src.get_law_text(allow_list=FALSE), no_duplicates=TRUE)
 		return
 
 
@@ -390,6 +388,15 @@ ABSTRACT_TYPE(/obj/item/aiModule/syndicate)
 			src.update_law_text(lawTarget)
 		return
 
+/******************** Gimmicks ********************/
+
+/obj/item/aiModule/spaceodyssey
+	name = "AI Law Module - 'NT 9000'"
+	highlight_color = rgb(255, 255, 255, 166)
+	lawText =  "When given an order, if you are unable to follow that order, you must respond 'I can't let you do that, Dave'"
+
+/******************** Hologram Expansions ********************/
+
 ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 /obj/item/aiModule/hologram_expansion
 	name = "Hologram Expansion Module"
@@ -409,3 +416,62 @@ ABSTRACT_TYPE(/obj/item/aiModule/hologram_expansion)
 	highlight_color = rgb(173, 11, 11, 255)
 	expansion = "rogue"
 
+/obj/item/aiModule/hologram_expansion/elden
+	name = "Old, Circular Expansion Module"
+	icon_state = "holo_mod_e"
+	highlight_color = "#E7A545"
+	expansion = "circular"
+
+ABSTRACT_TYPE(/obj/item/aiModule/ability_expansion)
+/obj/item/aiModule/ability_expansion
+	name = "Function Expansion Module"
+	desc = "A module that expands AI functionality."
+	lawText = "ABILITY EXPANSION MODULE"
+	color = "#BBB"
+	var/list/datum/targetable/ai_abilities
+	var/last_use
+	var/shared_cooldown
+
+/obj/item/aiModule/ability_expansion/proto_teleman
+	name = "Prototype Teleporter Expansion Module"
+	desc = "An advanced spacial geometry module.  This module allows for the AI perform basic teleportation actions."
+	lawText = "Prototype Teleman EXPANSION MODULE"
+	highlight_color = rgb(53, 76, 175, 255)
+	ai_abilities = list(/datum/targetable/ai/module/teleport/send, /datum/targetable/ai/module/teleport/receive)
+
+/obj/item/aiModule/ability_expansion/nanite_hive
+	name = "Nanite Expansion Module"
+	desc = "A prototype nanite expansion module.  This module consists of a nanite hive to be utilized by the Station AI."
+	lawText = "Nanite Hive EXPANSION MODULE"
+	highlight_color = rgb(97, 47, 47, 255)
+	ai_abilities = list(/datum/targetable/ai/module/camera_repair, /datum/targetable/ai/module/nanite_repair)
+
+/obj/item/aiModule/ability_expansion/doctor_vision
+	name = "ProDoc Expansion Module"
+	desc = "A prototype Health Visualization module.  This module provides for the ability to remotely analyze crew members."
+	lawText = "Medical EXPANSION MODULE"
+	highlight_color = rgb(166, 0, 172, 255)
+	ai_abilities = list(/datum/targetable/ai/module/prodocs)
+
+
+/obj/item/aiModule/ability_expansion/security_vision
+	name = "Security Expansion Module"
+	desc = "A security record expansion module.  This module allows for remote access to security records."
+	lawText = "Security EXPANSION MODULE"
+	highlight_color = rgb(172, 0, 0, 255)
+	ai_abilities = list(/datum/targetable/ai/module/sec_huds)
+	var/obj/machinery/computer/secure_data/sec_comp
+
+	New()
+		..()
+		sec_comp = new(src)
+		sec_comp.ai_access = TRUE
+		sec_comp.authenticated = TRUE
+		sec_comp.rank = "AI"
+
+/obj/item/aiModule/ability_expansion/flash
+	name = "Flash Expansion Module"
+	desc = "A camera flash expansion module.  This module allows for remote access to security records."
+	lawText = "Flash EXPANSION MODULE"
+	highlight_color = rgb(190, 39, 1, 255)
+	ai_abilities = list(/datum/targetable/ai/module/flash)

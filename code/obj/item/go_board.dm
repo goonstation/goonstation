@@ -10,12 +10,12 @@
 	proc/uisetup()
 		usr << browse(replacetext(replacetext(grabResource("html/go.htm"), "honk", json_encode(piecelist)), "!!SRC_REF!!", "\ref[src]"), "window=go;size=595x595;border=0;can_resize=0;can_minimize=1;")
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 			src.openwindows.Add(user)
 		uisetup()
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon,/obj/item/gostone/b) || istype(weapon,/obj/item/gostone/w))
 			if(!(user in src.openwindows) && istype(user,/mob/living/carbon/human) && !(src in user.contents))
 				src.openwindows.Add(user)
@@ -119,7 +119,7 @@
 	var/affinity //1 or 2 (black or white) : reference for setting the color of the pieces used by the bowl
 	var/stones //amount of stones in the bowl
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(!stones)
 			boutput(user, "<span style=\"color:red\">The [src] is empty!</span>")
 			return
@@ -131,7 +131,7 @@
 			if(2)
 				user.put_in_hand_or_drop(new /obj/item/gostone/w)
 
-	attackby(obj/item/weapon as obj,mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		var/piece_affinity
 		if(istype(weapon, /obj/item/gostone/b))
 			piece_affinity = 1

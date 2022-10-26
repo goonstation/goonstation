@@ -150,7 +150,7 @@
 /turf/space/asteroid,
 /area/space)
 "aap" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "aaq" = (
 /obj/cable{
@@ -2219,7 +2219,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Teleporter Pad"
@@ -2781,7 +2781,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Teleporter Pad";
@@ -3612,7 +3612,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/cable{
@@ -3636,7 +3636,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/cable{
@@ -4085,7 +4085,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	icon_state = "0-4";
@@ -4120,7 +4120,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter2";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced,
 /obj/securearea{
@@ -5172,7 +5172,7 @@
 	},
 /area/station/science/chemistry)
 "ajg" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
@@ -5703,7 +5703,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "ajY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/cable{
 	icon_state = "4-8";
@@ -7065,7 +7065,7 @@
 /turf/simulated/wall/auto/reinforced/gannets,
 /area/station/maintenance/solar/east)
 "amE" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "amF" = (
 /obj/decal/cleanable/cobweb,
@@ -9472,7 +9472,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
 "arN" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/maintenance/northwest)
 "arO" = (
 /obj/machinery/space_heater,
@@ -11957,7 +11957,7 @@
 /turf/simulated/floor/grime,
 /area/station/security/checkpoint/cargo)
 "awW" = (
-/obj/storage/secure/closet/brig/automatic/minibrig,
+/obj/storage/secure/closet/brig_automatic/minibrig,
 /turf/simulated/floor/caution/west,
 /area/station/security/checkpoint/cargo)
 "awX" = (
@@ -12068,7 +12068,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/cafeteria)
 "axm" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor{
 	icon_state = "carpetSW";
 	dir = 8
@@ -12789,7 +12789,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "ayM" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/crew_quarters/barber_shop)
 "ayN" = (
 /obj/machinery/door/poddoor/blast{
@@ -12945,7 +12945,7 @@
 	layer = 4;
 	name = "Kitchen Shutter";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/item/storage/box/donkpocket_kit,
 /turf/simulated/floor/carpet/grime,
@@ -15850,7 +15850,7 @@
 /area/station/maintenance/west)
 "aFx" = (
 /obj/floorpillstatue,
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/space)
 "aFy" = (
 /turf/simulated/wall/auto/gannets,
@@ -17762,7 +17762,7 @@
 	},
 /area/station/medical/head)
 "aJL" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/south,
 /area/space)
 "aJM" = (
@@ -22082,7 +22082,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig)
 "aRW" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/security/brig)
 "aRX" = (
 /turf/simulated/wall/auto/reinforced/gannets,
@@ -26520,7 +26520,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "bap" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/mining/staff_room)
 "baq" = (
 /obj/cable{
@@ -29928,7 +29928,7 @@
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/station/com_dish/comdish)
 "bhb" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/mining/hangar)
 "bhc" = (
 /turf/space,
@@ -30358,7 +30358,7 @@
 /turf/space,
 /area/station/com_dish/comdish)
 "bhV" = (
-/turf/simulated/wall/asteroid/dark,
+/turf/simulated/wall/auto/asteroid/dark,
 /area/station/com_dish/comdish)
 "bhW" = (
 /obj/grille/catwalk,
@@ -32818,7 +32818,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "bni" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8;
 	icon_state = "ast1"
 	},
@@ -32846,14 +32846,14 @@
 /turf/simulated/floor/plating/airless,
 /area/listeningpost)
 "bnm" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
 /area/space)
 "bnn" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1;
 	icon_state = "ast1"
 	},
@@ -32874,7 +32874,7 @@
 	},
 /area/listeningpost)
 "bnq" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},
@@ -33064,7 +33064,7 @@
 /area/listeningpost)
 "bnM" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5;
 	icon_state = "ast1"
 	},

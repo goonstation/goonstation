@@ -34,3 +34,30 @@
 				MD.drivestored += get_schematic_from_path(X)
 				MD.fablimit = src.fablimit
 		src.read_only = 1
+
+	ai //AI core frame limiting
+		name = "Command ManuDrive: Artificial Intelligence License"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint protected by NT-approved DRM that permits the user to manufacture two AI core frames."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/core_frame)
+		fablimit = 2
+
+	law_rack //The law rack that the CE locker starts with
+		name = "Command ManuDrive: Artificial Intelligence Law Rack Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
+		icon_state = "datadiskcom"
+		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)
+
+	interdictor_parts //Compacts the parts into a single manudrive
+		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor rods and frames."
+		icon_state = "datadisk2"
+		temp_recipe_string = list(/datum/manufacture/interdictor_frame,
+		/datum/manufacture/interdictor_rod_lambda,
+		/datum/manufacture/interdictor_rod_sigma)
+
+	cleaner_grenade //Let's janitors create more grenades after running out.
+		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
+		icon_state = "datadisk1"
+		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)

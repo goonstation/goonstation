@@ -13,7 +13,7 @@
 
 	elecflash(src)
 
-	return user.shock(src, PN ? PN.avail : 0, user.hand == 1 ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
+	return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
 // attach a wire to a power machine - leads from the turf you are standing on
 
@@ -122,7 +122,7 @@
 		if (cuts >= cuts_required)
 			..()
 		else
-			playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 
 /obj/cable/New(var/newloc, var/obj/item/cable_coil/source)
 	..()
@@ -144,7 +144,7 @@
 	if (istype(source))
 		applyCableMaterials(src, source.insulator, source.conductor)
 	else
-		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default))
+		applyCableMaterials(src, getMaterial(insulator_default), getMaterial(condcutor_default), copy_material = FALSE)
 
 	START_TRACKING
 
@@ -228,7 +228,7 @@
 
 	else if (istype(W, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = W
-		coil.cable_join(src, user)
+		coil.cable_join(src, get_turf(user), user, TRUE)
 		//note do shock in cable_join
 
 	else if (istype(W, /obj/item/device/t_scanner) || ispulsingtool(W) || (istype(W, /obj/item/device/pda2) && istype(W:module, /obj/item/device/pda_module/tray)))
@@ -236,11 +236,11 @@
 		var/datum/powernet/PN = get_powernet()		// find the powernet
 		var/powernet_id = ""
 
-		if(ispulsingtool(W))
+		if(PN && ispulsingtool(W))
 			// 3 Octets: Netnum, 4 Octets: Nodes+Data Nodes*2, 4 Octets: Cable Count
 			powernet_id = " ID#[num2text(PN.number,3,8)]:[num2text(length(PN.nodes)+(length(PN.data_nodes)<<2),4,8)]:[num2text(length(PN.cables),4,8)]"
 
-		if(PN && (PN.avail > 0))		// is it powered?
+		if(PN?.avail > 0)		// is it powered?
 
 			boutput(user, "<span class='alert'>[PN.avail]W in power network. [powernet_id]</span>")
 
@@ -304,11 +304,11 @@
 	// this is bad and should be fixed, probably by having a queue of stuff to process once current makepowernets finishes
 	// but I'm too lazy to do that, so here's a bandaid
 	if(cable_d1 && !cable_d1.netnum)
-		logTheThing("debug", src, cable_d1, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
+		logTheThing(LOG_DEBUG, src, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
 		DEBUG_MESSAGE("Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d1] which had netnum 0, rebuilding powernets.")
 		return makepowernets()
 	if(cable_d2 && !cable_d2.netnum)
-		logTheThing("debug", src, cable_d1, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
+		logTheThing(LOG_DEBUG, src, "Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
 		DEBUG_MESSAGE("Cable \ref[src] ([src.x], [src.y], [src.z]) connected to \ref[cable_d2] which had netnum 0, rebuilding powernets.")
 		return makepowernets()
 
@@ -412,8 +412,8 @@
 
 
 	if (cut) //avoid some slower string builds lol
-		logTheThing("station", user, null, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "cuts a cable[powered == 1 ? " (powered when cut)" : ""] at [log_loc(src)].")
 	else
-		logTheThing("station", user, null, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "lays a cable[powered == 1 ? " (powered when connected)" : ""] at [log_loc(src)].")
 
 	return

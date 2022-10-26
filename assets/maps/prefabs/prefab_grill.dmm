@@ -32,6 +32,10 @@
 "k" = (
 /turf/unsimulated/wall/setpieces/bloodwall,
 /area/prefab/grillnasium)
+"l" = (
+/obj/machinery/vending/meat/prefab_grill,
+/turf/unsimulated/floor/setpieces/bloodfloor,
+/area/prefab/grillnasium)
 "m" = (
 /obj/neon_lining{
 	color = "#AA0033";
@@ -125,10 +129,6 @@
 	icon_state = "bloodfloor_2";
 	name = "Fleshy Floor"
 	},
-/area/prefab/grillnasium)
-"P" = (
-/obj/machinery/vending/meat,
-/turf/unsimulated/floor/setpieces/bloodfloor,
 /area/prefab/grillnasium)
 "R" = (
 /obj/railing/red/reinforced{
@@ -254,7 +254,7 @@ G
 a
 a
 n
-P
+l
 b
 J
 R

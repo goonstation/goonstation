@@ -14,7 +14,7 @@ var/compx_gridx_max = 5
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/base_icon_state = "computer_generic"
 	var/datum/computer/file/terminalx_program/os/host_program //Our best pal, the operating system!
 	var/list/processing_programs = list()
@@ -89,7 +89,7 @@ var/compx_gridx_max = 5
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
@@ -194,13 +194,13 @@ var/compx_gridx_max = 5
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else

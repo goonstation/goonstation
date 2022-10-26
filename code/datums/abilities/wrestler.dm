@@ -97,7 +97,7 @@
 
 
 		if (belt_check != 1 && (src.mind && src.mind.special_role != ROLE_OMNITRAITOR && src.mind.special_role != "Faustian Wrestler"))
-			SHOW_WRESTLER_TIPS(src)
+			src.show_antag_popup("wrestler")
 
 	else return
 
@@ -227,29 +227,29 @@
 		// The HUD autoequip code doesn't call unequipped() when it should, naturally.
 		if (ishuman(M) && (istype(H) && H.is_inherent != 1))
 			var/mob/living/carbon/human/HH = M
-			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)))
-				boutput(HH, __red("You have to wear the wrestling belt for this."))
+			if (!(HH.belt && istype(HH.belt, /obj/item/storage/belt/wrestling)) && !HAS_ATOM_PROPERTY(M, PROP_MOB_PASSIVE_WRESTLE))
+				boutput(HH, "<span class='alert'>You have to wear the wrestling belt for this.</span>")
 				HH.make_wrestler(0, 1, 1)
 				return 0
 
-		if (fake && !istype(get_turf(M), /turf/simulated/floor/specialroom/gym))
-			boutput(M, __red("You cannot use your \"powers\" outside of The Ring!"))
+		if (fake && !(istype(get_turf(M), /turf/simulated/floor/specialroom/gym) || istype(get_turf(M), /turf/unsimulated/floor/specialroom/gym)))
+			boutput(M, "<span class='alert'>You cannot use your \"powers\" outside of The Ring!</span>")
 			return 0
 
 		if (!(ishuman(M) || ismobcritter(M))) // Not all critters have arms to grab people with, but whatever.
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

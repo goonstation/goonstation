@@ -48,7 +48,7 @@ TYPEINFO(/datum/component/glued)
 	else
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/start_ungluing)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/on_attackhand)
 	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
 	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
 	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
@@ -71,6 +71,13 @@ TYPEINFO(/datum/component/glued)
 	var/turf/T = get_turf(parent)
 	T.visible_message("<span class='notice'>The glue on [parent] dries up and it falls off from [glued_to].</span>")
 	qdel(src)
+
+/datum/component/glued/proc/on_attackhand(atom/movable/parent, mob/user)
+	if(user?.a_intent == INTENT_HELP)
+		src.start_ungluing(parent, user)
+	else
+		src.glued_to.Attackhand(user)
+		user.lastattacked = user
 
 /datum/component/glued/proc/start_ungluing(atom/movable/parent, mob/user)
 	if(isnull(src.glue_removal_time))
@@ -105,7 +112,7 @@ TYPEINFO(/datum/component/glued)
 
 /datum/component/glued/proc/on_explode(atom/movable/parent, list/explode_args)
 	// explode_args format: list(atom/source, turf/epicenter, power, brisance = 1, angle = 0, width = 360, turf_safe=FALSE)
-	explode_args[3] /= 6 // reduce explosion size by a factor of 6
+	explode_args[3] /= 3 // reduce explosion size by a factor of 3
 	qdel(src)
 
 /datum/component/glued/UnregisterFromParent()

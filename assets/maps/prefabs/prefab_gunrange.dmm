@@ -288,7 +288,9 @@
 /turf/simulated/floor/engine/caution,
 /area/prefab/shooting_range)
 "te" = (
-/obj/item/sticker/clover,
+/obj/item/sticker/clover{
+	anchored = 1
+	},
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
 "tp" = (
@@ -331,7 +333,9 @@
 /turf/simulated/floor/racing,
 /area/prefab/shooting_range)
 "tW" = (
-/obj/item/sticker/horseshoe,
+/obj/item/sticker/horseshoe{
+	anchored = 1
+	},
 /turf/simulated/wall/auto/reinforced/jen/dark4,
 /area/prefab/shooting_range)
 "uN" = (

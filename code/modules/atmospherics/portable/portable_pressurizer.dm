@@ -285,7 +285,7 @@
 
 		// Flashbang pressure wave is 30,000 psi thus 206 MPa
 		var/volume = clamp(pressure KILO PASCALS / 206 MEGA PASCAL * 35, 15, 70)
-		playsound(src, "sound/effects/exlow.ogg", volume, 1)
+		playsound(src, 'sound/effects/exlow.ogg', volume, 1)
 
 		var/turf/simulated/T = get_turf(src)
 		if(T && istype(T))
@@ -308,8 +308,8 @@
 						T.assume_air(temp)
 
 			if(pressure > (maximum_pressure * BLAST_EFFECT_RATIO))
-				for(var/mob/living/HH in range(8, src))
-					var/checkdist = get_dist(HH.loc, T)
+				for(var/mob/living/HH in hearers(8, T))
+					var/checkdist = GET_DIST(HH.loc, T)
 
 					// Reduced sonic boom effect with increased misstep from shockwave
 					var/misstep = clamp(1 + 10 * (5 - checkdist), 0, 40)

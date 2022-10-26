@@ -248,7 +248,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
 				return
 
-	if(get_dist(parent, A) > SQUARE_TILE_WIDTH)
+	if(GET_DIST(parent, A) > SQUARE_TILE_WIDTH)
 		boutput(user, "<span class='alert'>Components need to be within a range of 14 meters to connect.</span>")
 		return
 
@@ -257,20 +257,41 @@ TYPEINFO(/datum/component/mechanics_holder)
 		if("Trigger")
 			SEND_SIGNAL(A, _COMSIG_MECHCOMP_LINK, parent, user)
 		if("Receiver")
-			link_devices(null, A, user) //What do you want, an invitation? No signal needed!
+			link_devices(comsig_target, A, user) //What do you want, an invitation? No signal needed!
 		if("*CANCEL*")
 			return
 	return
 
 //We are in the scope of the receiver-component, our argument is the trigger
 //This feels weird/backwards, but it results in fewer SEND_SIGNALS & var/lists
-/datum/component/mechanics_holder/proc/link_devices(var/comsig_target, atom/trigger, mob/user)
+/datum/component/mechanics_holder/proc/link_devices(atom/comsig_target, atom/trigger, mob/user)
 	var/atom/receiver = parent
+	if(trigger == comsig_target)
+		boutput(user, "<span class='alert'>Can not connect a component to itself.</span>")
+		return
 	if(trigger in src.connected_outgoing)
 		boutput(user, "<span class='alert'>Can not create a direct loop between 2 components.</span>")
 		return
+	if(trigger.loc != comsig_target.loc)
+		var/obj/item/storage/mechanics/cabinet = null
+		if(istype(comsig_target.loc, /obj/item/storage/mechanics))
+			cabinet = comsig_target.loc
+		if(istype(trigger.loc, /obj/item/storage/mechanics))
+			cabinet = trigger.loc
+		if(cabinet)
+			if(!cabinet.anchored)
+				boutput(user,"<span class='alert'>Cannot create connection through an unsecured component housing</span>")
+				return
 	if(!IN_RANGE(receiver, trigger, WIDE_TILE_WIDTH))
 		boutput(user, "<span class='alert'>These two components are too far apart to connect.</span>")
+		return
+	var/atom/movable/moveable_target = comsig_target
+	if(istype(moveable_target) && !moveable_target.anchored)
+		boutput(user, "<span class='alert'>[moveable_target] must be anchored to connect it.</span>")
+		return
+	var/atom/movable/moveable_trigger = trigger
+	if(istype(moveable_trigger) && !moveable_trigger.anchored)
+		boutput(user, "<span class='alert'>[moveable_trigger] must be anchored to connect it.</span>")
 		return
 	if(!src.inputs.len)
 		boutput(user, "<span class='alert'>[receiver.name] has no input slots. Can not connect [trigger.name] as Trigger.</span>")
@@ -286,7 +307,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 	trg_outgoing[receiver] = selected_input
 	src.connected_incoming |= trigger //Let's not allow making many of the same connection.
 	boutput(user, "<span class='success'>You connect the [trigger.name] to the [receiver.name].</span>")
-	logTheThing("station", user, null, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
+	logTheThing(LOG_STATION, user, "connects a <b>[trigger.name]</b> to a <b>[receiver.name]</b>.")
 	SEND_SIGNAL(trigger,_COMSIG_MECHCOMP_DISPATCH_ADD_FILTER, receiver, user)
 	return
 
@@ -309,11 +330,11 @@ TYPEINFO(/datum/component/mechanics_holder)
 	// check if the multitool has a connector component - if so, we are connecting components, not configuring!
 	var/datum/component/mechanics_connector/connector = W.GetComponent(/datum/component/mechanics_connector)
 	if(connector)
-		src.link_devices(null, connector.connectee, user)
+		src.link_devices(comsig_target, connector.connectee, user)
 		return TRUE
 	if(istype(comsig_target, /obj/machinery/door))
 		var/obj/machinery/door/hacked_door = comsig_target
-		if(hacked_door.p_open)
+		if(hacked_door.panel_open)
 			return
 	if(istype(comsig_target, /obj/machinery/vending))
 		var/obj/machinery/vending/hacked_vendor = comsig_target
@@ -321,7 +342,8 @@ TYPEINFO(/datum/component/mechanics_holder)
 			return
 	if(length(src.configs))
 		var/selected_config = input("Select a config to modify!", "Config", null) as null|anything in src.configs
-		if(selected_config && in_interact_range(parent, user))
+		if (!in_interact_range(parent, user)) return TRUE
+		if(selected_config)
 			switch(selected_config)
 				if(SET_SEND)
 					var/inp = input(user,"Please enter Signal:","Signal setting","1") as text
@@ -336,6 +358,7 @@ TYPEINFO(/datum/component/mechanics_holder)
 					if(istype(parent, /atom))
 						var/atom/AP = parent
 						boutput(user, "<span class='notice'>You disconnect [AP.name].</span>")
+					return TRUE
 				if(CONNECT_COMP)
 					W.AddComponent(/datum/component/mechanics_connector, src.parent)
 					boutput(user, "<span class='notice'>Your [W] will now link other mechanics components to [src.parent]! Use it in hand to stop linking!</span>")

@@ -55,7 +55,7 @@
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 		// Alerts
 		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
@@ -138,7 +138,7 @@
 			// Departments
 			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 			// start in party line by default
 			MGD_PARTY,
 		)
@@ -172,23 +172,27 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
+		name = "Medical PDA"
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
+			name = "Robotics PDA"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
 	genetics
+		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	security
+		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
@@ -196,6 +200,7 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
+		name = "Forensic PDA"
 		icon_state = "pda-s"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
@@ -253,16 +258,19 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
+		name = "Atmos PDA"
 		icon_state = "pda-a"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
 
 	engine
+		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	technical_assistant
+		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
@@ -275,7 +283,7 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
@@ -283,13 +291,6 @@
 
 	bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
-
-	mechanic
-		icon_state = "pda-a"
-		setup_default_module = /obj/item/device/pda_module/tray
-		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -323,6 +324,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -389,6 +391,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null
@@ -564,7 +567,7 @@
 		src.updateSelfDialog()
 		return
 
-/obj/item/device/pda2/attackby(obj/item/C as obj, mob/user as mob)
+/obj/item/device/pda2/attackby(obj/item/C, mob/user)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
 		if (U.try_deliver(C, user))
@@ -598,7 +601,7 @@
 		return
 
 	else if (isscrewingtool(C))
-		playsound(user.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(user.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.closed = !src.closed
 		boutput(user, "You [src.closed ? "secure" : "unscrew"] the cover.")
 
@@ -668,7 +671,7 @@
 	if (src.pen)
 		. += "[pen] is sticking out of the pen slot."
 
-/obj/item/device/pda2/attack(mob/M as mob, mob/user as mob)
+/obj/item/device/pda2/attack(mob/M, mob/user)
 	if(src.scan_program)
 		return
 	else
@@ -994,7 +997,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, 1)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1026,11 +1029,7 @@
 			if(. && (src.r_tone?.overrideAlert || src.r_tone_temp?.overrideAlert))
 				alert_message = .
 
-			for (var/atom in mobs)
-				if (!atom) continue
-				var/mob/O = atom
-				if (get_dist(get_turf(src),O) <= 3)
-					O.show_message(text("[bicon(src)] *[alert_message]*"))
+			src.audible_message("[bicon(src)] *[alert_message]*")
 
 			//this one prob sloewr
 			//for (var/mob/O in hearers(3, src.loc))

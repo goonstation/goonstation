@@ -1,4 +1,4 @@
-/mob/living/critter/drone/glitch
+/mob/living/critter/robotic/drone/glitch
 	name = "D²o-|"
 	drone_designation = "Glitch"
 	desc = "A highly dÄ:;g$r+us $yn§i#a{e $'+~`?? ???? ? ???? ??"

@@ -9,19 +9,12 @@
 
 			//TODO : move this code somewhere else that updates from an event trigger instead of constantly
 			var/arrestState = ""
-			var/see_face = 1
-			if (istype(H.wear_mask) && !H.wear_mask.see_face)
-				see_face = 0
-			else if (istype(H.head) && !H.head.see_face)
-				see_face = 0
-			else if (istype(H.wear_suit) && !H.wear_suit.see_face)
-				see_face = 0
-			var/visibleName = see_face ? H.real_name : H.name
+			var/visibleName = H.face_visible() ? H.real_name : H.name
 
 			var/datum/db_record/record = data_core.security.find_record("name", visibleName)
 			if(record)
 				var/criminal = record["criminal"]
-				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released")
+				if(criminal == "*Arrest*" || criminal == "Parolled" || criminal == "Incarcerated" || criminal == "Released" || criminal == "Clown")
 					arrestState = criminal
 			else if(H.traitHolder.hasTrait("immigrant") && H.traitHolder.hasTrait("jailbird"))
 				arrestState = "*Arrest*"

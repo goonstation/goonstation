@@ -33,7 +33,7 @@ var/list/miningModifiers = list()
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			src.ReplaceWith(/turf/simulated/wall/asteroid, FALSE, TRUE, FALSE, TRUE)
+			src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
@@ -45,11 +45,11 @@ var/list/miningModifiers = list()
 				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
-	name = ""
+	name = "BLOCK GENERATION"
 	icon_state = "blockgen"
 
 /area/allowGenerate //Areas of this type do not block asteroid/cavern generation.
-	name = ""
+	name = "ALLOW GENERATION"
 	icon_state = "allowgen"
 
 	trench
@@ -138,7 +138,7 @@ var/list/miningModifiers = list()
 				var/map_y = clamp(round(y / world.maxy * height), 1, height)
 				var/turf/T = locate(x,y,z_level)
 				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
-					var/turf/simulated/wall/asteroid/N = T.ReplaceWith(/turf/simulated/wall/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
+					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
 				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
@@ -149,7 +149,7 @@ var/list/miningModifiers = list()
 		for(var/s=0, s<20, s++)
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
-			for(var/turf/simulated/wall/asteroid/A in orange(5,TU))
+			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
 				L.Add(A)
 			seeds.Add(TU)
 			seeds[TU] = L
@@ -162,14 +162,14 @@ var/list/miningModifiers = list()
 				for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 					holeList.Add(T)
 					T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-					if(!istype(T, /turf/simulated/wall/asteroid)) continue
-					var/turf/simulated/wall/asteroid/ast = T
+					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+					var/turf/simulated/wall/auto/asteroid/ast = T
 					ast.destroy_asteroid(0)
 
 
 		for(var/i=0, i<80, i++)
 			var/list/L = list()
-			for (var/turf/simulated/wall/asteroid/dark/A in range(4,pick(generated)))
+			for (var/turf/simulated/wall/auto/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
@@ -226,7 +226,7 @@ var/list/miningModifiers = list()
 
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
-			while(edgeTiles.len)
+			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
 
@@ -254,7 +254,7 @@ var/list/miningModifiers = list()
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
 				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
-					var/turf/simulated/wall/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/asteroid)
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
@@ -266,9 +266,9 @@ var/list/miningModifiers = list()
 
 			Turfspawn_Asteroid_SeedEvents(placed)
 
-			if(placed.len)
+			if(length(placed))
 				generated.Add(placed)
-				if(placed.len > 9)
+				if(length(placed) > 9)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
@@ -277,8 +277,8 @@ var/list/miningModifiers = list()
 						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-							if(!istype(T, /turf/simulated/wall/asteroid)) continue
-							var/turf/simulated/wall/asteroid/ast = T
+							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
 		return miningZ
 
@@ -311,18 +311,20 @@ var/list/miningModifiers = list()
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
 				if (ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				count++
 				if (count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
 		else break
 
 	var/datum/mapGenerator/D
 
 	if(map_currently_underwater)
+		bioluminescent_algae = new()
+		bioluminescent_algae.setup()
 		D = new/datum/mapGenerator/seaCaverns()
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
@@ -340,6 +342,43 @@ var/list/miningModifiers = list()
 		for (var/turf/T in get_area_turfs(/area/allowGenerate))
 			new /area/space(T)
 
-	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
+	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
 	hotspot_controller.generate_map()
+
+var/global/datum/bioluminescent_algae/bioluminescent_algae
+/datum/bioluminescent_algae
+	/// our randomized seed values
+	var/list/seeds
+	///the random offset applied to square coordinates, causes intermingling at biome borders
+	var/const/random_square_drift = 2
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
+	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
+	var/const/color_alpha = 30
+
+	proc/setup()
+		seeds = list()
+		seeds["hue"] = rand(0, 50000)
+		seeds["saturation"] = rand(0, 50000)
+		seeds["value"] = rand(0, 50000)
+		seeds["salinity"] = rand(0, 50000)
+
+	proc/get_color(atom/A)
+		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
+		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
+
+		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
+		if (salinity > 0.25) // no algae for you :(
+			return
+		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
+		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
+		var/value_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["value"]]", "[drift_x]", "[drift_y]"))
+
+
+		var/list/color_vals
+		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
+		color_vals += color_alpha
+		return color_vals

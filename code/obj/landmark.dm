@@ -8,7 +8,7 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
 	anchored = 1
 	invisibility = INVIS_ALWAYS
@@ -20,7 +20,7 @@ proc/pick_landmark(name, default=null)
 	ex_act()
 		return
 
-/obj/landmark/proc/init()
+/obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
 		if(!landmarks)
 			landmarks = list()
@@ -29,12 +29,15 @@ proc/pick_landmark(name, default=null)
 			landmarks[name] = list()
 		landmarks[name][src.loc] = src.data
 	if(src.deleted_on_start)
-		qdel(src)
+		if(delay_qdel)
+			SPAWN(0)
+				qdel(src)
+		else
+			qdel(src)
 
 /obj/landmark/New()
 	if(current_state > GAME_STATE_MAP_LOAD)
-		SPAWN(0)
-			src.init()
+		src.init(delay_qdel=TRUE)
 		..()
 	else
 		src.init()
@@ -45,10 +48,15 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/start
 	name = "start"
-	icon_state = "x"
+	icon_state = "player-start"
 	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
 	New()
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)
@@ -60,6 +68,7 @@ var/global/list/job_start_locations = list()
 // most of these are here just for backwards compatibility
 
 /obj/landmark/start/latejoin
+	icon_state = "latejoin"
 	name = LANDMARK_LATEJOIN
 	add_to_landmarks = TRUE
 
@@ -92,6 +101,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
+
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
 
@@ -103,11 +115,21 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/magnet_center
 	name = LANDMARK_MAGNET_CENTER
-	icon_state = "x"
+	icon_state = "magnet-center"
+	var/width = 15
+	var/height = 15
+	var/obj/machinery/mining_magnet/magnet
+
+	New()
+		var/turf/T = locate(src.x-round(width/2), src.y-round(height/2), src.z)
+		var/obj/magnet_target_marker/M = new /obj/magnet_target_marker(T)
+		M.width = src.width
+		M.height = src.height
+		..()
 
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD
-	icon_state = "x"
+	icon_state = "magnet-shield"
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
@@ -140,11 +162,19 @@ var/global/list/job_start_locations = list()
 
 /obj/landmark/artifact
 	name = LANDMARK_ARTIFACT_SPAWN
-	icon_state = "x3"
+	icon_state = "artifact-spawn"
 	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
 	New()
 		src.data = src.spawnchance
 		..()
+
+	random_room
+		name = LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN
+
+		New()
+			if (prob(src.spawnchance))
+				Artifact_Spawn(get_turf(src))
+			..()
 
 /obj/landmark/spawner
 	name = "spawner"
@@ -218,7 +248,7 @@ var/global/list/job_start_locations = list()
 /obj/landmark/spawner/loot
 	name = "Loot spawn"
 	type_to_spawn = /obj/storage/crate/loot
-	spawnchance = 75
+	spawnchance = 10
 
 // LONG RANGE TELEPORTER
 // consider refactoring to be associative the other way around later

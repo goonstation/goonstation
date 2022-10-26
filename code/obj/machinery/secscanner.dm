@@ -11,7 +11,7 @@
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun
-	var/success_sound = "sound/machines/chime.ogg"
+	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
 
 	var/weapon_access = access_carrypermit
@@ -28,11 +28,13 @@
 		..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
-	Crossed( atom/movable/O )
-		if(isliving(O) && !isintangible(O))
-			do_scan(O)
-		if (istype(O,/obj/item) && (!emagged))
-			do_scan_item(O)
+	Crossed(atom/movable/AM)
+		if(isliving(AM) && !isintangible(AM))
+			src.do_scan(AM)
+		else if (isobserver(AM) && prob(1))
+			src.do_scan(AM)
+		else if (istype(AM, /obj/item) && (!src.emagged))
+			src.do_scan_item(AM)
 		return ..()
 
 	process()
@@ -42,7 +44,7 @@
 		else
 			icon_state = "scanner_on"
 
-	attackby(obj/item/W as obj, mob/user as mob) //If we get emagged...
+	attackby(obj/item/W, mob/user) //If we get emagged...
 		if (istype(W, /obj/item/card/emag) && (!emagged))
 			src.add_fingerprint(user)
 			emagged++
@@ -282,15 +284,7 @@
 			return threatcount
 
 		if (src.check_records)
-			var/see_face = 1
-			if (istype(perp.wear_mask) && !perp.wear_mask.see_face)
-				see_face = 0
-			else if (istype(perp.head) && !perp.head.see_face)
-				see_face = 0
-			else if (istype(perp.wear_suit) && !perp.wear_suit.see_face)
-				see_face = 0
-
-			var/perpname = see_face ? perp.real_name : perp.name
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
 
 			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
 				if(R["criminal"] == "*Arrest*")

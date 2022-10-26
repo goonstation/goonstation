@@ -5,7 +5,6 @@
 #define PLANE_NOSHADOW_BELOW -101
 #define PLANE_DEFAULT -100
 #define PLANE_NOSHADOW_ABOVE -99
-#define PLANE_EXAMINE -96
 #define PLANE_HIDDENGAME -95
 #define PLANE_LIGHTING -90
 #define PLANE_SELFILLUM -80
@@ -87,8 +86,6 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_BELOW, name = "noshadow_below_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_DEFAULT, name = "game_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_NOSHADOW_ABOVE, name = "noshadow_above_plane"))
-		var/atom/examine_plane = add_plane(new /atom/movable/screen/plane_parent(PLANE_EXAMINE, name = "examine_plane"))
-		examine_plane.alpha = 0
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_LIGHTING, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_MULTIPLY, mouse_opacity = 0, name = "lighting_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SELFILLUM, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_ADD, mouse_opacity = 0, name = "selfillum_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))

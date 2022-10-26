@@ -71,7 +71,7 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", user, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
 
@@ -203,7 +203,7 @@
 	name = "Rock Drilling Rig"
 	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
 	power_used = 100
-	weapon_score = 1.0
+	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
 	firerate = 10
@@ -311,10 +311,10 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", user, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
 				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
@@ -386,8 +386,8 @@
 		if(!core_inserted)
 			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
 			return
-		playsound(src.loc, "sound/weapons/heavyioncharge.ogg", 75, 1)
-		logTheThing("combat", user, null, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		playsound(src.loc, 'sound/weapons/heavyioncharge.ogg', 75, 1)
+		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
 		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
 		purge.dir = ship.facing
 		if(!is_cardinal(purge.dir))
@@ -411,7 +411,7 @@
 			var/destruction_point_x
 			var/destruction_point_y
 			ship.vis_contents -= purge
-			playsound(ship.loc, "sound/weapons/laserultra.ogg", 100, 1)
+			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
 			switch (purge.dir)
 				if (NORTH)
 					for (increment in 1 to 4)
@@ -476,7 +476,7 @@
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
 			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
-			playsound(M.loc, "sound/impact_sounds/burn_sizzle.ogg", 70, 1)
+			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))
 			T.ex_act(1)

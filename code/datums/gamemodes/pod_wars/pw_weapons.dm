@@ -5,8 +5,8 @@
 	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
-	w_class = 3.0
-	force = 8.0
+	w_class = W_CLASS_NORMAL
+	force = 8
 	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
@@ -16,30 +16,30 @@
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(atom/target, mob/user)
-		if (canshoot())
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
-				return ..(target, user)
+				return ..(target, user, second_shot)
 
 	disposing()
 		indicator_display = null
@@ -98,8 +98,8 @@
 	icon_state = "power_cell"
 	m_amt = 20000
 	g_amt = 45000
-	charge = 500.0
-	max_charge = 500.0
+	charge = 500
+	max_charge = 500
 
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_basic
@@ -137,18 +137,18 @@
 	icon_state = "surv_machete_nt"
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "surv_machete"
-	force = 10.0
-	throwforce = 15.0
+	force = 10
+	throwforce = 15
 	throw_range = 5
 	hit_type = DAMAGE_STAB
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	burn_type = 1
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	New()
@@ -162,12 +162,12 @@
 	name = "blast grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "energy_stinger"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "energy_stinger1"
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
@@ -175,7 +175,7 @@
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -206,18 +206,18 @@
 	name = "concussion grenade"
 	desc = "It is set to detonate in 3 seconds."
 	icon_state = "concussion"
-	det_time = 30.0
+	det_time = 30
 	org_det_time = 30
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
 	prime()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/conc_grenade.ogg", 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = 1
 			O.name = "Explosion"
@@ -242,7 +242,7 @@
 						var/mob/living/M = A
 						M.do_disorient(stamina_damage = 60, weakened = 30, stunned = 0, disorient = 20, remove_stamina_below_zero = 0)
 					if (target)
-						A.throw_at(target, 10 - get_dist(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
+						A.throw_at(target, 10 - GET_DIST(src, A)*2, 1)		//throw things farther if they are closer to the epicenter.
 
 			SPAWN(0.1 SECONDS)
 				qdel(O)

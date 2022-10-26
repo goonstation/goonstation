@@ -93,45 +93,6 @@ jobs:
       #     name: DMB + RSC
       #     path: ${{github.workspace}}/artifacts
 
-
-  compile_ass:
-    name: "Compile for Ass Day"
-    runs-on: ubuntu-20.04
-    if: "${{ false }}" # "!contains(github.event.head_commit.message, 'skip ci')"
-    steps:
-      - uses: actions/checkout@v2
-
-      - name: Install Dependencies
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i 's/azure\.//' /etc/apt/sources.list
-          sudo apt-get update
-          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
-
-      - name: Cache BYOND
-        uses: actions/cache@v2
-        with:
-          path: $HOME/BYOND
-          key: ${{ runner.os }}-byond
-
-      # Ass Jam occurs on the 13th of the month.
-      - name: Setup BYOND
-        run: |
-          tools/ci/install_byond.sh
-          cd $GITHUB_WORKSPACE
-          printenv
-          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
-          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
-          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
-          touch +secret/__secret.dme
-          sed -i 's/BUILD_TIME_DAY 01/BUILD_TIME_DAY 13/' _std/__build.dm
-
-
-      - name: Compile
-        run: |
-          tools/ci/dm.sh -DCIBUILD -DTRAVIS_ASSJAM goonstation.dme
-
   compile_full:
     name: "Compile and Lint with Secret Submodule"
     runs-on: ubuntu-20.04

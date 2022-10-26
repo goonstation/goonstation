@@ -5,6 +5,7 @@
 	density = 0
 	opacity = 0
 	anchored = 1
+	layer = FLOOR_EQUIP_LAYER1
 	var/recharging =0
 	var/id = "shuttle" //The main location of the teleporter
 	var/recharge = 20 //A short recharge time between teleports
@@ -39,7 +40,7 @@
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	w_class = W_CLASS_SMALL
 
 	attack_self(mob/user as mob)

@@ -18,23 +18,17 @@
 	icon_state = "evidence"
 	desc = "A box for collecting forensics evidence."
 
-/* Phased out with the forensic scanner overhaul. Was useless anyway (Convair880).
-/obj/item/storage/box/fcard_kit
-	name = "fingerprint card box"
-	icon_state = "id"
-	spawn_contents = list(/obj/item/f_card = 7)
-*/
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
-	desc = "Contains four morphine autoinjectors, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 4)
+	desc = "Contains six morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
 
 /obj/item/storage/lunchbox/robustdonuts
 	name = "robust donuts lunchbox"
 	icon_state = "lunchbox"
-	desc = "Contains two robust donuts and two robusted donuts, for security use"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 2, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 2)
+	desc = "Contains a robust donut and a robusted donut, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -66,13 +60,13 @@
 	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
-/obj/item/storage/box/ak47 // cogwerks, terrorism update
-	name = "rifle box"
+/obj/item/storage/box/akm // cogwerks, terrorism update
+	name = "AKM box"
 	icon_state = "hard_case"
-	desc = "A box containing a syndicate rifle and some ammo."
+	desc = "A box containing a surplus AKM and 3 magazines."
 	// this might be a terrible idea giving them so much ammo, but whatevs
-	spawn_contents = list(/obj/item/gun/kinetic/ak47,\
-	/obj/item/ammo/bullets/ak47 = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/akm,\
+	/obj/item/ammo/bullets/akm = 2)
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
@@ -268,7 +262,7 @@
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
-	max_wclass = 3
+	max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -277,7 +271,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.cloaked == 1)
 			..()
 		else
@@ -348,6 +342,11 @@
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/boomerang,
+	/obj/item/clothing/under,
+	/obj/item/ammo/bullets/tranq_darts)
+
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\

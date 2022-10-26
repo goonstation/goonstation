@@ -62,7 +62,6 @@ names@=
 	Mark Antony
 	Luthais
 	Colman
-	Cooney
 	Wynono
 	Kane
 	Alhsom
@@ -142,7 +141,6 @@ names@=
 	Sgt. Cory
 	Gunter Flange
 	Robutt
-	Mr. Fisting
 	Jimmy Shits
 	Scorpio
 	Mr. Pantaloons

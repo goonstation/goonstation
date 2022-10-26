@@ -1,0 +1,342 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/machinery/cruiser_status_panel,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/lower)
+"c" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/cruiser/syndicate/lower)
+"e" = (
+/obj/machinery/cruiser_destroyable/cable_panel,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/lower)
+"f" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/cruiser/syndicate/lower)
+"h" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/syndicate/upper)
+"j" = (
+/obj/ladder/cruiser/syndicate,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"k" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/syndicate/lower)
+"l" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/engine,
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"p" = (
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"q" = (
+/obj/machinery/cruiser_destroyable/cruiser_exit,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/syndicate/lower)
+"s" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/lower)
+"v" = (
+/obj/landmark/cruiser_entrance,
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/syndicate/lower)
+"w" = (
+/obj/machinery/manufacturer/pod_wars/syndicate,
+/turf/simulated/floor,
+/area/cruiser/syndicate/lower)
+"x" = (
+/obj/landmark/cruiser_center,
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"z" = (
+/obj/machinery/cruiser_destroyable/cruiser_pod/movement{
+	pixel_x = -22
+	},
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"A" = (
+/obj/machinery/cruiser_status_panel,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/syndicate/upper)
+"B" = (
+/turf/cordon,
+/area/cordon)
+"C" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/upper)
+"D" = (
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/syndicate/lower)
+"G" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/cruiser/syndicate/upper)
+"H" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/right,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"I" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/weapon/left,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"K" = (
+/obj/machinery/cruiser_camera_screen,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/lower)
+"L" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/rack,
+/obj/item/weldingtool{
+	pixel_x = -7
+	},
+/obj/item/crowbar{
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/crowbar{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/obj/item/weldingtool{
+	pixel_x = -3
+	},
+/obj/item/wirecutters{
+	pixel_y = -7
+	},
+/obj/item/wirecutters{
+	pixel_x = -4;
+	pixel_y = -7
+	},
+/obj/item/wrench{
+	pixel_x = 10;
+	pixel_y = -2
+	},
+/obj/item/wrench{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/obj/item/screwdriver{
+	pixel_x = 13;
+	pixel_y = -6
+	},
+/obj/item/screwdriver{
+	pixel_x = 11;
+	pixel_y = -4
+	},
+/turf/simulated/floor,
+/area/cruiser/syndicate/lower)
+"N" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/rack,
+/obj/item/tile/steel/fullstack,
+/obj/item/rods/steel/fullstack,
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 2
+	},
+/obj/item/extinguisher{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/obj/item/extinguisher{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/simulated/floor,
+/area/cruiser/syndicate/lower)
+"O" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/ladder/cruiser/syndicate{
+	icon_state = "ladder_wall";
+	pixel_y = 20
+	},
+/turf/simulated/floor/shuttlebay,
+/area/cruiser/syndicate/lower)
+"P" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 9
+	},
+/area/cruiser/syndicate/upper)
+"Q" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/cruiser/syndicate/lower)
+"R" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 6
+	},
+/area/cruiser/syndicate/upper)
+"T" = (
+/obj/machinery/cruiser_destroyable/cruiser_pod/security{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor,
+/area/cruiser/syndicate/upper)
+"U" = (
+/obj/machinery/cruiser_destroyable/cruiser_component_slot/life_support,
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/syndicate/upper)
+"V" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 10
+	},
+/area/cruiser/syndicate/upper)
+"W" = (
+/turf/unsimulated/wall/setpieces/leadwall,
+/area/cruiser/syndicate/lower)
+"X" = (
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 5
+	},
+/area/cruiser/syndicate/lower)
+"Y" = (
+/obj/machinery/cruiser_camera_screen,
+/turf/unsimulated/wall/setpieces/leadwall{
+	dir = 4
+	},
+/area/cruiser/syndicate/upper)
+
+(1,1,1) = {"
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+"}
+(2,1,1) = {"
+B
+P
+h
+U
+h
+V
+B
+f
+W
+W
+W
+c
+B
+"}
+(3,1,1) = {"
+B
+C
+z
+p
+I
+C
+B
+K
+N
+w
+L
+K
+B
+"}
+(4,1,1) = {"
+B
+C
+j
+x
+l
+Y
+B
+s
+O
+k
+k
+s
+B
+"}
+(5,1,1) = {"
+B
+C
+T
+p
+H
+C
+B
+a
+D
+v
+D
+e
+B
+"}
+(6,1,1) = {"
+B
+G
+h
+A
+h
+R
+B
+X
+W
+q
+W
+Q
+B
+"}
+(7,1,1) = {"
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+B
+"}

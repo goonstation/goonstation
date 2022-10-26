@@ -98,11 +98,11 @@ obj/item/engivac/afterattack(atom/target)
 	find_crud_on_turf(isturf(target) ? target : get_turf(target))
 
 
-obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
+obj/item/engivac/attackby(obj/item/I, mob/user)
 	if (istype(I, /obj/item/storage/toolbox) && !held_toolbox)
 		if (!toolbox_contents_check(I))
 			if(!ON_COOLDOWN(src, "rejectsound", 2 SECONDS))
-				playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+				playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(user, "<span class='alert'>This toolbox has too many unrecognised things in it, and the vacuum rejects it.</span>")
 			return
 		user.u_equip(I)
@@ -116,7 +116,7 @@ obj/item/engivac/attackby(obj/item/I as obj, mob/user as mob)
 	..()
 
 
-obj/item/engivac/attack_hand(mob/living/user as mob)
+obj/item/engivac/attack_hand(mob/living/user)
 	if (user.find_in_hand(src) && held_toolbox)
 		if (user.put_in_hand(held_toolbox))
 			held_toolbox = null
@@ -180,7 +180,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 		if (!scan_for_floortiles()) //...and I'm all out of tiles
 			placing_tiles = FALSE
 			tooltip_rebuild = 1
-			playsound(get_turf(src), "sound/machines/buzz-sigh.ogg", 50, 0)
+			playsound(get_turf(src), 'sound/machines/buzz-sigh.ogg', 50, 0)
 			boutput(M, "<span class='alert'>\The [name] does not have any floor tiles left, and deactivates auto-placing.</span>")
 			return
 	if (istype(target, /turf/simulated/floor))

@@ -74,12 +74,12 @@
 		playsound(src.loc, sound_token, 80, 1)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
-			logTheThing("debug", user, null, "inserted [token] into [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_DEBUG, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
 
 
 	proc/vended(atom/A)
 		if(log_purchase)
-			logTheThing("debug", usr, null, "bought [A] from [src] at [log_loc(get_turf(src))]")
+			logTheThing(LOG_DEBUG, usr, "bought [A] from [src] at [log_loc(get_turf(src))]")
 		.= 0
 
 /obj/item/device/weapon_vendor/syndicate

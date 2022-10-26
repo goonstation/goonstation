@@ -6,8 +6,7 @@
 		if (master_mode == "construction")
 			return
 		for (var/datum/mind/crewMind in minds)
-			if(prob(10)) generate_miscreant_objectives(crewMind)
-			else generate_individual_objectives(crewMind)
+			generate_individual_objectives(crewMind)
 
 		return
 
@@ -47,7 +46,7 @@
 			obj_count++
 
 		var/mob/crewmob = crewMind.current
-		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist") && prob(20))
+		if (crewmob.traitHolder && crewmob.traitHolder.hasTrait("conspiracytheorist"))
 			/*var/conspiracy_text = ""
 			var/noun = pick_string("conspiracy_theories.txt", "noun")
 			var/conspiracy = pick_string("conspiracy_theories.txt", "conspiracy")
@@ -392,7 +391,7 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 /datum/objective/crew/bartender/shotgun
 	explanation_text = "Don't lose your shotgun!"
 	check_completion()
-		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/riotgun))
+		if(owner.current?.check_contents_for(/obj/item/gun/kinetic/sawnoff))
 			return TRUE
 		else
 			return FALSE
@@ -426,9 +425,18 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 	set_up()
 		..()
 		var/list/names[DRINK_OBJ_COUNT]
-		for(var/i in 1 to DRINK_OBJ_COUNT)
+		for (var/i = 1; i <= DRINK_OBJ_COUNT; i++)
 			var/choiceType = pick(cocktails)
-			var/datum/reagent/fooddrink/instance =  new choiceType
+			var/datum/reagent/fooddrink/instance = new choiceType
+			var/hidden = 0
+			var/list/reactions = chem_reactions_by_result[instance.id]
+			for (var/datum/chemical_reaction/reaction_type in reactions)
+				if (initial(reaction_type.hidden))
+					hidden++
+			//if all reactions producing this reagent are hidden, then skip it and try again
+			if (hidden == length(reactions))
+				i--
+				continue
 			names[i] = instance.name
 			ids[i] = instance.id
 		explanation_text = "Mix a "
@@ -458,7 +466,25 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		/obj/item/reagent_containers/food/snacks/pizza/xmas,
 		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
 		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/snack_cake
 	)
 	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
@@ -549,6 +575,47 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 						check_result = FALSE
 		return check_result
 
+/datum/objective/crew/engineer/scanned
+	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
+	medal_name = "Man with a Scan"
+	var/static/check_result = null
+	check_completion()
+		if(isnull(check_result))
+			check_result = FALSE
+			if(mechanic_controls.scanned_items.len > 9)
+				check_result = TRUE
+		return check_result
+/datum/objective/crew/engineer/teleporter
+	explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
+	medal_name = "It's not 'Door to Heaven'"
+	var/static/check_result = null
+	check_completion()
+		var/telecount = 0
+		if(isnull(check_result))
+			check_result = FALSE
+			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
+				if(S.z != Z_LEVEL_STATION) continue
+				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
+					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
+						telecount++
+						break
+			if(telecount > 1)
+				check_result = TRUE
+		return check_result
+/*
+	cloner
+		explanation_text = "Ensure that there are at least two cloners on the station level at the end of the round."
+		check_completion()
+			var/clonecount = 0
+			for(var/obj/machinery/computer/cloning/C in as anything machine_registry[MACHINES_CLONINGCONSOLES]) //ugh
+				for(var/obj/machinery/dna_scannernew/D in orange(2,C))
+					for(var/obj/machinery/clonepod/P in orange(2,C))
+						clonecount++
+						break
+			if(clonecount > 1) return 1
+			return 0
+*/
+
 ABSTRACT_TYPE(/datum/objective/crew/miner)
 	// just fyi dont make a "gather ore" objective, it'd be a boring-ass grind (like mining is(dohohohoho))
 /datum/objective/crew/miner/isa
@@ -580,49 +647,6 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 						materials |= ore
 			check_result = materials.len >= 10
 		return check_result
-
-
-ABSTRACT_TYPE(/datum/objective/crew/mechanic)
-/datum/objective/crew/mechanic/scanned
-	explanation_text = "Have at least ten items scanned and researched in the ruckingenur at the end of the round."
-	medal_name = "Man with a Scan"
-	var/static/check_result = null
-	check_completion()
-		if(isnull(check_result))
-			check_result = FALSE
-			if(mechanic_controls.scanned_items.len > 9)
-				check_result = TRUE
-		return check_result
-/datum/objective/crew/mechanic/teleporter
-	explanation_text = "Ensure that there are at least two functioning command teleporter consoles, complete with portal generators and portal rings, on the station level at the end of the round."
-	medal_name = "It's not 'Door to Heaven'"
-	var/static/check_result = null
-	check_completion()
-		var/telecount = 0
-		if(isnull(check_result))
-			check_result = FALSE
-			for(var/obj/machinery/teleport/portal_generator/S as anything in machine_registry[MACHINES_PORTALGENERATORS]) //really shitty, I know
-				if(S.z != Z_LEVEL_STATION) continue
-				for(var/obj/machinery/teleport/portal_ring/H in orange(2,S))
-					for(var/obj/machinery/computer/teleporter/C in orange(2,S))
-						telecount++
-						break
-			if(telecount > 1)
-				check_result = TRUE
-		return check_result
-/*
-	cloner
-		explanation_text = "Ensure that there are at least two cloners on the station level at the end of the round."
-		check_completion()
-			var/clonecount = 0
-			for(var/obj/machinery/computer/cloning/C in as anything machine_registry[MACHINES_CLONINGCONSOLES]) //ugh
-				for(var/obj/machinery/dna_scannernew/D in orange(2,C))
-					for(var/obj/machinery/clonepod/P in orange(2,C))
-						clonecount++
-						break
-			if(clonecount > 1) return 1
-			return 0
-*/
 
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
 /datum/objective/crew/researchdirector/heisenbee

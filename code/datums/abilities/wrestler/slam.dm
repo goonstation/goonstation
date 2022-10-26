@@ -30,7 +30,7 @@
 		if(check_target_immunity( HH ))
 			M.visible_message("<span class='alert'>You seem to attack [M]!</span>")
 			return 1
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.set_loc(M.loc)
 		M.set_dir(get_dir(M, HH))
@@ -64,8 +64,8 @@
 						HH.pixel_x = M.pixel_x + 8
 
 				// These are necessary because of the sleep call.
-				if (!G || !istype(G) || G.state < 1)
-					boutput(M, __red("You can't slam the target without a firm grab!"))
+				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
+					boutput(M, "<span class='alert'>You can't slam the target without a firm grab!</span>")
 					M.pixel_x = 0
 					M.pixel_y = 0
 					HH.pixel_x = 0
@@ -81,7 +81,7 @@
 					return 0
 
 				if (BOUNDS_DIST(M, HH) > 0)
-					boutput(M, __red("[target] is too far away!"))
+					boutput(M, "<span class='alert'>[target] is too far away!</span>")
 					qdel(G)
 					M.pixel_x = 0
 					M.pixel_y = 0
@@ -90,7 +90,7 @@
 					return 0
 
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't slam [target] here!"))
+					boutput(M, "<span class='alert'>You can't slam [target] here!</span>")
 					qdel(G)
 					M.pixel_x = 0
 					M.pixel_y = 0
@@ -115,8 +115,8 @@
 			HH.pixel_y = 0
 
 			// These are necessary because of the sleep call.
-			if (!G || !istype(G) || G.state < 1)
-				boutput(M, __red("You can't slam the target without a firm grab!"))
+			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
+				boutput(M, "<span class='alert'>You can't slam the target without a firm grab!</span>")
 				return 0
 
 			if (src.castcheck() != 1)
@@ -124,12 +124,12 @@
 				return 0
 
 			if (BOUNDS_DIST(M, HH) > 0)
-				boutput(M, __red("[HH] is too far away!"))
+				boutput(M, "<span class='alert'>[HH] is too far away!</span>")
 				qdel(G)
 				return 0
 
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't slam [HH] here!"))
+				boutput(M, "<span class='alert'>You can't slam [HH] here!</span>")
 				qdel(G)
 				return 0
 
@@ -141,14 +141,13 @@
 					fluff = "turbo [fluff]"
 				if (3)
 					fluff = "atomic [fluff]"
-					playsound(M.loc, "sound/effects/explosionfar.ogg", 60, 1)
+					playsound(M.loc, 'sound/effects/explosionfar.ogg', 60, 1)
 
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 75, 1)
+			playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
 			M.visible_message("<span class='alert'><B>[M] [fluff] [HH]!</B></span>")
 
 			if (!fake)
 				if (!isdead(HH))
-					HH.emote("scream")
 					HH.changeStatus("weakened", 3 SECONDS)
 					HH.changeStatus("stunned", 3 SECONDS)
 					HH.force_laydown_standup()
@@ -164,7 +163,7 @@
 					HH.ex_act(3)
 
 			qdel(G)
-			logTheThing("combat", M, HH, "uses the [fake ? "fake " : ""]slam wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]slam wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		else
 			if (M)

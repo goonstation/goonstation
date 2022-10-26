@@ -230,7 +230,7 @@
 			if(P.id == id)
 				doors += P
 
-/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/turbine_computer/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	var/dat
 	if(src.compressor)

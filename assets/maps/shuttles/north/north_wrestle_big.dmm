@@ -2032,7 +2032,7 @@
 /turf/unsimulated/floor/carpet/green/fancy/edge/ne,
 /area/shuttle/escape/centcom)
 "dN" = (
-/obj/machinery/vending/cola{
+/obj/machinery/vending/cola/red{
 	bound_height = 64;
 	bound_width = 64;
 	bound_x = 0;

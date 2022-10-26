@@ -613,6 +613,7 @@
 
 	//substitution_feedback_thing = list()	//debug
 	while(1)
+		text = html_decode(text) // makes it so this works again
 		findPosition = findtext(text, separator, searchPosition, 0)
 		var/quotePoint = findtext(text, QUOTE_SYMBOL, searchPosition, findPosition)
 		if (quotePoint)

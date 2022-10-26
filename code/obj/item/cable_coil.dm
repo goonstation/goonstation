@@ -1,5 +1,7 @@
 // the cable coil object, used for laying cable
 
+// Contains reinforced and red (default) cables, the other colours of cable are generated through weird-but-cool #define bullshit in cablecolors.dm
+
 obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 #define STARTCOIL 30 //base type starting coil amt
@@ -21,6 +23,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	throw_speed = 2
 	throw_range = 5
 	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	object_flags = NO_GHOSTCRITTER
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 10
@@ -28,11 +31,13 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	event_handler_flags = USE_GRAB_CHOKE | USE_FLUID_ENTER
 	special_grab = /obj/item/grab
 	inventory_counter_enabled = 1
+	material_amt = 1 / 30
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
 
 	var/cable_obj_type = /obj/cable
+	var/currently_laying = FALSE
 
 	// will use getMaterial() to apply these at spawn
 	var/spawn_insulator_name = "synthrubber"
@@ -58,7 +63,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span class='alert'><b>[user] wraps the cable around \his neck and tightens it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] wraps the cable around [his_or_her(user)] neck and tightens it.</b></span>")
 		user.take_oxygen_deprivation(160)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
@@ -96,21 +101,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			UpdateIcon()
 			return 1
 
-	proc/take(var/amt, var/newloc)
-		if (amt > amount)
-			amt = amount
-		if (amt == amount)
-			if (ismob(loc))
-				var/mob/owner = loc
-				owner.u_equip(src)
-			set_loc(newloc)
-			return src
-		src.use(amt)
-		var/obj/item/cable_coil/C = new /obj/item/cable_coil(newloc)
-		C.amount = amt
-		C.UpdateIcon()
-		C.setInsulator(insulator)
-		C.setConductor(conductor)
+	update_stack_appearance()
+		update_icon()
 
 	update_icon()
 		if (amount <= 0)
@@ -176,48 +168,51 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 /////////////////////////////////////////////////REINFORCED CABLE
 
 /obj/item/cable_coil/attack_self(var/mob/living/M)
-	if (istype(M))
-		if (M.move_laying)
-			M.move_laying = null
-			boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
-		else
-			M.move_laying = src
-			boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+	if (currently_laying)
+		UnregisterSignal(M, COMSIG_MOVABLE_MOVED)
+		boutput(M, "<span class='notice'>No longer laying the cable while moving.</span>")
+	else
+		RegisterSignal(M, COMSIG_MOVABLE_MOVED, .proc/move_callback)
+		boutput(M, "<span class='notice'>Now laying cable while moving.</span>")
+	currently_laying = !currently_laying
+
+obj/item/cable_coil/dropped(mob/user)
+	UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
+	currently_laying = FALSE
+	..()
 
 /proc/find_half_cable(var/turf/T, var/ignore_dir)
 	for (var/obj/cable/C in T)
 		if (!C.d1 && C.d2 != ignore_dir)
 			return C
 
-/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/source, var/turf/target)
+/obj/item/cable_coil/move_callback(var/mob/living/M, var/turf/target, var/direction, var/turf/source)
 	if (!istype(M))
 		return
-	if (!src.amount)
-		M.move_laying = null
-		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
+	if (!isturf(M.loc))
 		return
-	var/obj/cable/C
 
-	C = find_half_cable(source, get_dir(source, target))
+	if(!source)
+		source = M.loc //the signal doesn't give the source location but it gets sent before the mob actually transfers turfs so this works fine
+
+	var/obj/cable/C = find_half_cable(source, get_dir(source, target))
 	if (C)
-		cable_join_between(C, target)
+		cable_join(C, target, M, FALSE)
 	else
-		turf_place_between(source, target)
+		turf_place(source, target, M)
 
-	if (!src.amount || QDELETED(src))
-		M.move_laying = null
+	if (src.disposed) //AKA 0 coil left
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
 	C = find_half_cable(target, get_dir(target, source))
 
 	if (C)
-		cable_join_between(C, source)
+		cable_join(C, source, M, FALSE)
 	else
-		turf_place_between(target, source)
+		turf_place(target, source, M)
 
-	if (!src.amount || QDELETED(src))
-		M.move_laying = null
+	if (src.disposed)
 		boutput(M, "<span class='alert'>Your cable coil runs out!</span>")
 		return
 
@@ -234,182 +229,65 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 /obj/item/cable_coil/attackby(obj/item/W, mob/user)
 	if (issnippingtool(W) && src.amount > 1)
-		src.amount--
-		take(1, user.loc)
-		boutput(user, "You cut a piece off the [base_name].")
-		src.UpdateIcon()
+		var/obj/item/cable_coil/A = split_stack(round(input("How long of a wire do you wish to cut?","Length of [src.amount]",1) as num))
+		if (istype(A))
+			A.set_loc(user.loc) //Hey, split_stack, Why is the default location for the new item src.loc which is *very likely* to be a damn mob?
+			boutput(user, "You cut a piece off the [base_name].")
 		return
 
-	else if (istype(W, /obj/item/cable_coil))
-		if(isrobot(user))
-			src.max_stack = 500
-		var/obj/item/cable_coil/C = W
-		if(!isSameMaterial(C.conductor, src.conductor) || !isSameMaterial(C.insulator, src.insulator))
-			boutput(user, "You cannot link together cables made from different materials. That would be silly.")
-			return
-
-		if (C.amount >= max_stack)
-			boutput(user, "The coil is too long, you cannot add any more cable to it.")
-			return
-
-		if ((C.amount + src.amount <= max_stack))
-			C.amount += src.amount
-			boutput(user, "You join the cable coils together.")
-			C.UpdateIcon()
-			if(istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/storage = src.loc
-				storage.hud.remove_object(src)
-			else if(istype(src.loc, /mob))
-				var/mob/M = src.loc
-				M.u_equip(src)
-				M.drop_item(src)
-			qdel(src)
-			return
-
-		else
-			boutput(user, "You transfer [max_stack - src.amount ] length\s of cable from one coil to the other.")
-			src.amount -= (max_stack-C.amount)
-			src.UpdateIcon()
-			C.amount = max_stack
-			C.UpdateIcon()
-			return
+	if (check_valid_stack(W))
+		stack_item(W)
+		if(!user.is_in_hands(src))
+			user.put_in_hand(src)
+		boutput(user, "You join the cable coils together.")
 
 /obj/item/cable_coil/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..(O, user)
 	for (var/obj/item/cable_coil/C in view(1, user))
 		C.UpdateIcon()
 
-// called when cable_coil is clicked on a turf/simulated/floor
-/obj/item/cable_coil/proc/turf_place_between(turf/A, turf/B)
-	if (!(istype(A,/turf/simulated/floor) || istype(A,/turf/space/fluid)))
+// Placing a cable on a turf
+/obj/item/cable_coil/proc/turf_place(turf/target, turf/source, mob/user)
+	if (target.intact)		// if floor is intact, complain
 		return
-	if (!isturf(B) || !(istype(B,/turf/simulated/floor) || istype(B,/turf/space/fluid)))
+	if (!(istype(target,/turf/simulated/floor) || istype(target,/turf/space/fluid)))
 		return
-	if (BOUNDS_DIST(A, B) > 0)
+	if (!(istype(source,/turf/simulated/floor) || istype(source,/turf/space/fluid)))
 		return
-	if (A.intact)
-		return
-
-	var/dirn = get_dir(A, B)
-	for (var/obj/cable/C in A)
-		if (C.d1 == dirn || C.d2 == dirn)
-			return
-	var/obj/cable/NC = new cable_obj_type(A, src)
-
-	applyCableMaterials(NC, src.insulator, src.conductor)
-	NC.d1 = 0
-	NC.d2 = dirn
-	NC.UpdateIcon()
-	NC.update_network()
-	NC.log_wirelaying(usr)
-	src.use(1)
-	return
-
-/obj/item/cable_coil/proc/cable_join_between(var/obj/cable/C, var/turf/B)
-	if (!isturf(B) || !(istype(B,/turf/simulated/floor) || istype(B,/turf/space/fluid)))
-		return
-
-	var/turf/T = C.loc
-
-	if (!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
-		return
-
-	if (BOUNDS_DIST(C, B) > 0)		// make sure it's close enough
-		return
-
-	if (B == T)		// do nothing if we clicked a cable we're standing on
-		return		// may change later if can think of something logical to do
-
-	var/dirn = get_dir(C, B)
-
-	if (C.d1 == 0)			// exisiting cable doesn't point at our position, so see if it's a stub
-							// if so, make it a full cable pointing from it's old direction to our dirn
-
-		var/nd1 = C.d2	// these will be the new directions
-		var/nd2 = dirn
-
-		if (nd1 > nd2)		// swap directions to match icons/states
-			nd1 = dirn
-			nd2 = C.d2
-
-
-		for (var/obj/cable/LC in T)		// check to make sure there's no matching cable
-			if (LC == C)			// skip the cable we're interacting with
-				continue
-			if ((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
-				return
-		qdel(C)
-		var/obj/cable/NC = new cable_obj_type(T, src)
-		applyCableMaterials(NC, src.insulator, src.conductor)
-		NC.d1 = nd1
-		NC.d2 = nd2
-		NC.UpdateIcon()
-		NC.update_network()
-		NC.log_wirelaying(usr)
-		src.use(1)
-	return
-
-/obj/item/cable_coil/proc/turf_place(turf/F, mob/user)
-	if (!isturf(user.loc))
-		return
-
-	if (!(istype(F,/turf/simulated/floor) || istype(F,/turf/space/fluid)))
-		return
-
-	if (BOUNDS_DIST(F, user) > 0)
+	if (GET_DIST(target, source) > 1)
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
 
-	if (F.intact)		// if floor is intact, complain
-		boutput(user, "You can't lay cable there unless the floor tiles are removed.")
-		return
-
+	var/dirn
+	if (target == source)
+		dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
 	else
-		var/dirn
+		dirn = get_dir(target, source)
 
-		if (user.loc == F)
-			dirn = user.dir			// if laying on the tile we're on, lay in the direction we're facing
-		else
-			dirn = get_dir(F, user)
+	for (var/obj/cable/LC in target)
+		if (LC.d1 == dirn || LC.d2 == dirn)
+			return
 
-		for (var/obj/cable/LC in F)
-			if (LC.d1 == dirn || LC.d2 == dirn)
-				boutput(user, "There's already a cable at that position.")
-				return
-
-		var/obj/cable/C = new cable_obj_type(F, src)
-		C.d1 = 0
-		C.d2 = dirn
-		C.add_fingerprint(user)
-		C.UpdateIcon()
-		C.update_network()
-		applyCableMaterials(C, src.insulator, src.conductor)
-		C.log_wirelaying(user)
-		src.use(1)
+	plop_a_cable(target, user, 0, dirn)
 	return
 
-// called when cable_coil is click on an installed obj/cable
-/obj/item/cable_coil/proc/cable_join(obj/cable/C, mob/user)
-	var/turf/U = user.loc
-	if (!isturf(U))
+// called when cable_coil is clicked on an installed obj/cable or auto-laying found a stub to connect to
+/obj/item/cable_coil/proc/cable_join(obj/cable/C, turf/source, mob/user, attempt_at_source)
+	var/turf/target = C.loc
+	if (!isturf(target) || target.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
 		return
-
-	var/turf/T = C.loc
-
-	if (!isturf(T) || T.intact)		// sanity checks, also stop use interacting with T-scanner revealed cable
-		return
-
-	if (BOUNDS_DIST(C, user) > 0)		// make sure it's close enough
+	if (GET_DIST(C, user) > 1)		// make sure it's close enough
 		boutput(user, "You can't lay cable at a place that far away.")
 		return
-
-	if (U == T)		// do nothing if we clicked a cable we're standing on
+	if (source == target)		// do nothing if we clicked a cable we're standing on
 		return		// may change later if can think of something logical to do
 
-	var/dirn = get_dir(C, user)
+	var/dirn = get_dir(C, source)
 
-	if (C.d1 == dirn || C.d2 == dirn)		// one end of the clicked cable is pointing towards us
-		if (U.intact)						// can't place a cable if the floor is complete
+	//Okay so this code branch tries to connect C on the turf you're standing on, for when you slap an obj/cable by hand
+	//Auto-laying cable doesn't need it because that attempts to put a cable on both turfs anyway
+	if (attempt_at_source && (C.d1 == dirn || C.d2 == dirn))		// one end of the clicked cable is pointing towards us
+		if (source.intact)						// can't place a cable if the floor is complete
 			boutput(user, "You can't lay cable there unless the floor tiles are removed.")
 			return
 		else
@@ -418,35 +296,21 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 
 			var/fdirn = turn(dirn, 180)		// the opposite direction
 
-			for (var/obj/cable/LC in U)		// check to make sure there's not a cable there already
+			for (var/obj/cable/LC in source)		// check to make sure there's not a cable there already
 				if (LC.d1 == fdirn && LC.d2 == fdirn)
 					boutput(user, "There's already a cable at that position.")
 					return
 
-			var/obj/cable/NC = new cable_obj_type(U, src)
-			applyCableMaterials(NC, src.insulator, src.conductor)
-			NC.d1 = 0
-			NC.d2 = fdirn
-			NC.add_fingerprint()
-			NC.UpdateIcon()
-			NC.update_network()
-			NC.log_wirelaying(user)
-			src.use(1)
+			plop_a_cable(source, user, 0, fdirn)
 			C.shock(user, 25)
 			return
 
 	else if (C.d1 == 0)		// exisiting cable doesn't point at our position, so see if it's a stub
 							// if so, make it a full cable pointing from it's old direction to our dirn
+		var/nd1 = min(C.d2, dirn)	// these will be the new directions
+		var/nd2 = max(C.d2, dirn)
 
-		var/nd1 = C.d2	// these will be the new directions
-		var/nd2 = dirn
-
-		if (nd1 > nd2)		// swap directions to match icons/states
-			nd1 = dirn
-			nd2 = C.d2
-
-
-		for (var/obj/cable/LC in T)		// check to make sure there's no matching cable
+		for (var/obj/cable/LC in target)		// check to make sure there's no matching cable
 			if (LC == C)			// skip the cable we're interacting with
 				continue
 			if ((LC.d1 == nd1 && LC.d2 == nd2) || (LC.d1 == nd2 && LC.d2 == nd1) )	// make sure no cable matches either direction
@@ -454,13 +318,17 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 				return
 		C.shock(user, 25)
 		qdel(C)
-		var/obj/cable/NC = new cable_obj_type(T, src)
-		applyCableMaterials(NC, src.insulator, src.conductor)
-		NC.d1 = nd1
-		NC.d2 = nd2
-		NC.add_fingerprint()
-		NC.UpdateIcon()
-		NC.update_network()
-		NC.log_wirelaying(user)
-		src.use(1)
+		plop_a_cable(target, user, nd1, nd2)
 		return
+
+///This was copy-pasted some 5 times across the 4 cable laying procs that existed) FSR?
+obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
+	var/obj/cable/NC = new cable_obj_type(overthere, src)
+	applyCableMaterials(NC, src.insulator, src.conductor)
+	NC.d1 = dir1
+	NC.d2 = dir2
+	NC.add_fingerprint()
+	NC.update_icon()
+	NC.update_network()
+	NC.log_wirelaying(user)
+	src.use(1)

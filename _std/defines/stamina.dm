@@ -38,6 +38,8 @@
 #define STAMINA_GRAB_BLOCK_CHANCE 85
 /// Chance to resist out of passive grabs.
 #define STAMINA_P_GRAB_RESIST_CHANCE 100
+/// Chance to resist out of a strong grab (i.e. werewolves)
+#define STAMINA_S_GRAB_RESIST_CHANCE 60
 /// Chance to resist out of upgraded grabs.
 #define STAMINA_U_GRAB_RESIST_CHANCE 45
 /// Cost of blocking an attack.
@@ -83,6 +85,6 @@
 #define STAMINA_EXHAUSTED_STR "<p style=\"color:red;font-weight:bold;\">You are too exhausted to attack.</p>"
 
 /// How much farting costs. I am not even kidding.
-#define STAMINA_DEFAULT_FART_COST 0
+#define STAMINA_DEFAULT_FART_COST 1
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy

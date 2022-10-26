@@ -10,8 +10,9 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_TINY
+	object_flags = NO_GHOSTCRITTER
 	var/empty = 0
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(empty)
 			boutput(user, "<span class='alert'>This stimpack is empty!</span>")
 			return
@@ -25,7 +26,7 @@
 		return
 
 /obj/item/stimpack/large_dose
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if(user != M)
 			boutput(user, "<span class='alert'>You can only use this item on yourself.</span>")
 			return

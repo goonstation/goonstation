@@ -73,7 +73,7 @@
 		if (..())
 			return 1
 		disabled = 1
-		boutput(holder.owner, __blue("You fade out of sight."))
+		boutput(holder.owner, "<span class='notice'>You fade out of sight.</span>")
 		var/datum/action/invisibility/I = new
 		I.owner = holder.owner
 		I.ability = src
@@ -91,7 +91,7 @@
 
 	proc/fade_in()
 		if (holder.owner)
-			boutput(holder.owner, __red("You fade back into sight!"))
+			boutput(holder.owner, "<span class='alert'>You fade back into sight!</span>")
 			disabled = 0
 			doCooldown()
 			SPAWN(linger_time)

@@ -42,7 +42,7 @@
 		dummy.name = null
 		dummy.set_density(0)
 		dummy.anchored = 1
-		dummy.opacity = 0
+		dummy.set_opacity(0)
 		dummy.icon = null
 		dummy.overlays += charger
 		dummy.alpha = 255
@@ -57,21 +57,21 @@
 		O.special_data["valid_loc"] = get_turf(hit)
 		var/mob/charger = O.special_data["charger"]
 		if (isturf(hit))
-			hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
-			boutput(charger, __red("You slam into [hit]! Ouch!"))
+			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
+			boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 			charger.changeStatus("stunned", 3 SECONDS)
-			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		else if (isobj(hit))
 			var/obj/H = hit
 			if (H.anchored)
-				hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
-				boutput(charger, __red("You slam into [hit]! Ouch!"))
+				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
+				boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 				charger.changeStatus("stunned", 3 SECONDS)
-				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 			else
-				hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
-				playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-				boutput(charger, __red("You slam into [hit]!"))
+				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+				boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 				var/kbdir = angle_to_dir(angle)
 				step(H, kbdir, 2)
 				if (prob(10))
@@ -79,11 +79,11 @@
 						step(H, kbdir, 2)
 		else if (ismob(hit))
 			var/mob/M = hit
-			playsound(hit, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
-			hit.visible_message(__red("[charger] slams into [hit]!"), "You hear something slam!")
-			boutput(charger, __red("You slam into [hit]!"))
-			boutput(M, __red("<b>[charger] slams into you!</b>"))
-			logTheThing("combat", charger, M, "slams [constructTarget(M,"combat")].")
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
+			boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
+			boutput(M, "<span class='alert'><b>[charger] slams into you!</b></span>")
+			logTheThing(LOG_COMBAT, charger, "slams [constructTarget(M,"combat")].")
 			var/kbdir = angle_to_dir(angle)
 			step(M, kbdir, 2)
 			M.changeStatus("weakened", 4 SECONDS)

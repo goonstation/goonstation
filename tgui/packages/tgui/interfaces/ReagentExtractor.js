@@ -73,7 +73,7 @@ const ReagentDisplay = (props, context) => {
       buttons={
         <>
           <Button
-            tooltip="Flush All"
+            title="Flush All"
             icon="times"
             color="red"
             disabled={!container.totalVolume}
@@ -81,7 +81,7 @@ const ReagentDisplay = (props, context) => {
           />
           {!insertable || (
             <Button
-              tooltip="Eject"
+              title="Eject"
               icon="eject"
               disabled={!props.container}
               onClick={() => act('ejectcontainer')}
@@ -110,14 +110,14 @@ const ReagentDisplay = (props, context) => {
                 mr={1.5}
                 icon="filter"
                 color="red"
-                tooltip="Isolate"
+                title="Isolate"
                 onClick={() => act('isolate', { container_id: container.id, reagent_id: reagent.id })}
               />
               <Button
                 px={0.75}
                 icon="times"
                 color="red"
-                tooltip="Flush"
+                title="Flush"
                 onClick={() => act('flush_reagent', { container_id: container.id, reagent_id: reagent.id })}
               />
             </>
@@ -132,7 +132,7 @@ const ReagentDisplay = (props, context) => {
             width={17}
             textAlign="center"
             selected={container.selected}
-            tooltip="Select Extraction and Transfer Target"
+            title="Select Extraction and Transfer Target"
             icon={container.selected ? "check-square-o" : "square-o"}
             onClick={() => act('extractto', { container_id: container.id })}
           >
@@ -209,7 +209,7 @@ const ExtractableList = (props, context) => {
                     </Button>
                     <Button
                       icon="eject"
-                      tooltip="Eject"
+                      title="Eject"
                       onClick={() => act('ejectingredient', { ingredient_id: extractable.id })}
                     />
                   </Flex.Item>
@@ -223,7 +223,7 @@ const ExtractableList = (props, context) => {
           <Flex.Item textAlign="center" basis={1.5}>
             <Button
               icon="caret-left"
-              tooltip="Previous Page"
+              title="Previous Page"
               disabled={page < 2}
               onClick={() => setPage(page - 1)}
             />
@@ -237,7 +237,7 @@ const ExtractableList = (props, context) => {
             />
             <Button
               icon="caret-right"
-              tooltip="Next Page"
+              title="Next Page"
               disabled={page > totalPages - 1}
               onClick={() => setPage(page + 1)}
             />

@@ -180,7 +180,7 @@
 				waldo_mob.equip_if_possible(new /obj/item/clothing/under/color/white(waldo_mob), waldo_mob.slot_w_uniform)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(waldo_mob), waldo_mob.slot_wear_suit)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/head/wizard(waldo_mob), waldo_mob.slot_head)
-				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(waldo_mob), waldo_mob.slot_shoes)
+				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(waldo_mob), waldo_mob.slot_shoes)
 				waldo_mob.equip_if_possible(new /obj/item/staff(waldo_mob), waldo_mob.slot_r_hand)
 				waldo_mob.equip_if_possible(new /obj/item/device/pda2/syndicate(waldo_mob), waldo_mob.slot_belt)
 

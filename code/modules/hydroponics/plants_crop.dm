@@ -75,52 +75,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (reagent == "insulin")
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rice/ricein)
 
-/datum/plant/crop/beans
-	name = "Bean"
-	seedcolor = "#AA7777"
-	crop = /obj/item/reagent_containers/food/snacks/plant/bean
-	starthealth = 40
-	growtime = 50
-	harvtime = 130
-	cropsize = 2
-	harvests = 4
-	endurance = 0
-	vending = 1
-	genome = 6
-	mutations = list(/datum/plantmutation/beans/jelly)
-	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
-	assoc_reagents = list("nitrogen")
-
-/datum/plant/crop/peas
-	name = "Peas"
-	seedcolor = "#77AA77"
-	crop = /obj/item/reagent_containers/food/snacks/plant/peas
-	starthealth = 40
-	growtime = 50
-	harvtime = 130
-	cropsize = 2
-	harvests = 4
-	endurance = 0
-	vending = 1
-	genome = 8
-	mutations = list(/datum/plantmutation/peas/ammonia)
-	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
-
-/datum/plant/crop/corn
-	name = "Corn"
-	seedcolor = "#FFFF00"
-	crop = /obj/item/reagent_containers/food/snacks/plant/corn
-	starthealth = 20
-	growtime = 60
-	harvtime = 110
-	cropsize = 3
-	harvests = 3
-	endurance = 2
-	genome = 10
-	mutations = list(/datum/plantmutation/corn/clear, /datum/plantmutation/corn/pepper)
-	commuts = list(/datum/plant_gene_strain/photosynthesis,/datum/plant_gene_strain/splicing/bad)
-	assoc_reagents = list("cornstarch")
-
 /datum/plant/crop/synthmeat
 	name = "Synthmeat"
 	seedcolor = "#550000"
@@ -135,12 +89,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 7
 	special_proc = 1
 	assoc_reagents = list("synthflesh")
-	mutations = list(/datum/plantmutation/synthmeat/butt,/datum/plantmutation/synthmeat/limb,
-	/datum/plantmutation/synthmeat/brain,/datum/plantmutation/synthmeat/heart,
-	/datum/plantmutation/synthmeat/eye,/datum/plantmutation/synthmeat/lung,
-	/datum/plantmutation/synthmeat/appendix,/datum/plantmutation/synthmeat/pancreas,
-	/datum/plantmutation/synthmeat/liver,/datum/plantmutation/synthmeat/kidney,
-	/datum/plantmutation/synthmeat/spleen, /datum/plantmutation/synthmeat/stomach,)
 	commuts = list(/datum/plant_gene_strain/yield,/datum/plant_gene_strain/unstable)
 
 	HYPinfusionP(var/obj/item/seed/S,var/reagent)
@@ -150,7 +98,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 		if (reagent == "nanites" && (DNA.mutation && istype(DNA.mutation,/datum/plantmutation/synthmeat/butt)))
 			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt/buttbot)
 		switch(reagent)
-			if("simethicone")
+			if("anti_fart")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/butt)
 			if("synthflesh")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/limb)
@@ -162,7 +110,7 @@ ABSTRACT_TYPE(/datum/plant/crop)
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/eye)
 			if("salbutamol")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/lung)
-			if("compost")
+			if("poo")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/appendix)
 			if("sugar")
 				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/synthmeat/pancreas)
@@ -189,21 +137,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	genome = 8
 	commuts = list(/datum/plant_gene_strain/quality,/datum/plant_gene_strain/terminator)
 	assoc_reagents = list("sugar")
-
-/datum/plant/crop/soy
-	name = "Soybean"
-	seedcolor = "#CCCC88"
-	crop = /obj/item/reagent_containers/food/snacks/plant/soy
-	starthealth = 15
-	growtime = 60
-	harvtime = 105
-	cropsize = 4
-	harvests = 3
-	endurance = 1
-	genome = 7
-	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/quality/inferior)
-	assoc_reagents = list("grease")
-	mutations = list(/datum/plantmutation/soy/soylent)
 
 /datum/plant/crop/peanut
 	name = "Peanut"
@@ -261,6 +194,21 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	mutations = list(/datum/plantmutation/tree/money, /datum/plantmutation/tree/rubber,/datum/plantmutation/tree/sassafras, /datum/plantmutation/tree/dog,/datum/plantmutation/tree/paper)
 	commuts = list(/datum/plant_gene_strain/metabolism_fast,/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/resistance_drought)
 
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		switch (reagent)
+			if ("radium")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/glowstick)
+			if ("paper")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/paper)
+			if ("wolfsbane")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/dog)
+			if ("spaceglue")
+				DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/tree/rubber)
+
+
 /datum/plant/crop/coffee
 	name = "Coffee"
 	seedcolor = "#302013"
@@ -272,5 +220,6 @@ ABSTRACT_TYPE(/datum/plant/crop)
 	harvests = 5
 	endurance = 0
 	genome = 6
+	assoc_reagents = list("coffee")
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/metabolism_slow)
 	mutations = list(/datum/plantmutation/coffee/mocha, /datum/plantmutation/coffee/latte)

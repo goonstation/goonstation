@@ -18,10 +18,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/text_cooldown = "makes a subdued noise."
 	var/text_dud = "sputters and rattles a bit, then falls quiet."
 	var/flascustomization_first_color = "#FF0000"
-	var/sound/alarm_initial = "sound/machines/lavamoon_plantalarm.ogg"
-	var/sound/alarm_during = "sound/machines/alarm_a.ogg"
-	var/sound/alarm_final = "sound/machines/engine_alert1.ogg"
-	var/sound/sound_cooldown = "sound/machines/weaponoverload.ogg"
+	var/sound/alarm_initial = 'sound/machines/lavamoon_plantalarm.ogg'
+	var/sound/alarm_during = 'sound/machines/alarm_a.ogg'
+	var/sound/alarm_final = 'sound/machines/engine_alert1.ogg'
+	var/sound/sound_cooldown = 'sound/machines/weaponoverload.ogg'
 	var/doAlert = 0
 	var/blewUp = 0
 	var/animationScale = 3
@@ -58,7 +58,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
-			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected")
+			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
 		O.add_simple_light("artbomb", lightColor)
 		animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = src.explode_delay + 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 		animate(O.simple_light, flags=ANIMATION_PARALLEL, time = src.explode_delay + 10 SECONDS, transform = matrix() * animationScale)
@@ -105,7 +105,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		var/turf/T = get_turf(O)
 		T.visible_message("<b><span class='notice'>[O] [text_disarmed]</b></span>")
 		if(src.doAlert && !src.blewUp && !ON_COOLDOWN(O, "alertDisarm", 10 MINUTES)) // lol, don't give the message if it was destroyed by exploding itself
-			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+			command_alert("The object of [src.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 	proc/deploy_payload(var/obj/O)
 		if (!O)
@@ -114,7 +114,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O] [text_dud]")
 			if(src.doAlert && !ON_COOLDOWN(O, "alertDud", 10 MINUTES))
-				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [src.artitype.type_name] origin appears to be nonfunctional. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 			O.ArtifactDeactivated()
 			return 1
 
@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if(src.artifact && istype(src.artifact, /datum/artifact/bomb))
 			var/datum/artifact/bomb/B = src.artifact
 			if(B.doAlert && B.activated && !B.blewUp) // lol, don't give the message if it was destroyed by exploding itself
-				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized")
+				command_alert("The object of [B.artitype.type_name] origin has been neutralized. All personnel should return to their duties.", "Station Threat Neutralized", alert_origin = ALERT_ANOMALY)
 
 
 
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, "sound/machines/satcrash.ogg", 100, 0, 3, 0.8)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
 		new /obj/bhole(T,rand(100,300))
 
 		if (O)
@@ -335,7 +335,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_final = ""
 	alarm_initial = null
 	alarm_during = null
-	alarm_final = "sound/machines/satcrash.ogg"
+	alarm_final = 'sound/effects/glitchy1.ogg'
 	var/material = "gold"
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue
@@ -455,6 +455,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
+		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)
 
 		SPAWN(1 SECOND)
 			var/range_squared = range**2

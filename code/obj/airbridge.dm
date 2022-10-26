@@ -122,6 +122,7 @@
 
 		if(linked.working || working) return
 		if(linked.maintaining_bridge || maintaining_bridge) return
+		if((linked.x != src.x && linked.y != src.y) || linked.z != src.z) return
 
 		working = 1
 		maintaining_bridge = 1
@@ -170,7 +171,7 @@
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
 					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
-				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -206,10 +207,10 @@
 
 		working = 1
 		maintaining_bridge = 0
-		playsound(src.loc, "sound/machines/warning-buzzer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/warning-buzzer.ogg', 50, 1)
 
 		SPAWN(2 SECONDS)
-			var/list/path_reverse = reverse_list(path)
+			var/list/path_reverse = reverse_list_range(path)
 
 			for(var/obj/light in src.my_lights)
 				animate_close_into_floor(light, time=1 SECOND, self_contained=0)
@@ -226,7 +227,7 @@
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
 					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
-				playsound(T, "sound/effects/airbridge_dpl.ogg", 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -256,6 +257,7 @@
 	name = "Airbridge Computer"
 	desc = "Used to control the airbridge."
 	id = "noodles"
+	icon = 'icons/obj/airtunnel.dmi'
 	icon_state = "airbr0"
 
 	// set this var to 1 in the map editor if you want the airbridge to establish and pressurize when the round starts
@@ -272,12 +274,15 @@
 	var/obj/airbridge_controller/primary_controller = null
 
 	var/emergency = 0 // 1 to automatically extend when the emergency shuttle docks
+	var/connected_dock = null
 
 	New()
 		..()
 		START_TRACKING
 		if (src.emergency && emergency_shuttle) // emergency_shuttle is the controller datum
 			emergency_shuttle.airbridges += src
+		if (src.connected_dock)
+			RegisterSignal(GLOBAL_SIGNAL, src.connected_dock, .proc/dock_signal_handler)
 
 	initialize()
 		..()
@@ -289,6 +294,15 @@
 	disposing()
 		STOP_TRACKING
 		..()
+
+	proc/dock_signal_handler(datum/holder, var/signal)
+		switch(signal)
+			if(DOCK_EVENT_INCOMING)
+				src.establish_bridge()
+			if(DOCK_EVENT_ARRIVED)
+				src.pressurize()
+			if(DOCK_EVENT_DEPARTED)
+				src.remove_bridge()
 
 	proc/get_links()
 		for_by_tcl(C, /obj/airbridge_controller)
@@ -349,7 +363,7 @@
 		icon_state = "airbr[working]"
 		state_str = C.get_state_string()
 
-	attack_hand(var/mob/user as mob, params)
+	attack_hand(var/mob/user, params)
 		if (..(user, params))
 			return
 
@@ -365,7 +379,7 @@
 		<A href='?src=\ref[src];air=1'>Pressurize</A><BR>
 		"}
 
-		if (user.client.tooltipHolder)
+		if (user.client?.tooltipHolder) // BAD MONKEY!
 			user.client.tooltipHolder.showClickTip(src, list(
 				"params" = params,
 				"title" = src.name,
@@ -421,21 +435,21 @@
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.establish_bridge())
-				logTheThing("station", usr, null, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "extended the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["remove"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.remove_bridge())
-				logTheThing("station", usr, null, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "retracted the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		else if (href_list["air"])
 			if (!(src.allowed(usr)))
 				boutput(usr, "<span class='alert'>Access denied.</span>")
 				return
 			if (src.pressurize())
-				logTheThing("station", usr, null, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
+				logTheThing(LOG_STATION, usr, "pressurized the airbridge at [usr.loc.loc] ([log_loc(usr)])")
 
 		update_status()
 		src.updateDialog()
@@ -466,11 +480,15 @@
 		status |= BROKEN
 
 /obj/machinery/computer/airbr/emergency_shuttle
-	icon = 'icons/obj/airtunnel.dmi'
 	emergency = 1
 
-/* -------------------- Button -------------------- */
+/obj/machinery/computer/airbr/trader_left // matching mapping area conventions
+	connected_dock = COMSIG_DOCK_TRADER_WEST
 
+/obj/machinery/computer/airbr/trader_right
+	connected_dock = COMSIG_DOCK_TRADER_EAST
+
+/* -------------------- Button -------------------- */
 /obj/machinery/airbr_test_button
 	name = "Airbridge Button"
 	icon = 'icons/obj/objects.dmi'
@@ -478,9 +496,9 @@
 	desc = ""
 	var/id = "noodles"
 	var/state = 0
-	anchored = 1.0
+	anchored = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		for(var/obj/airbridge_controller/C in range(3, src))
 			boutput(user, "<span class='notice'>[C.toggle_bridge()]</span>")
 			break

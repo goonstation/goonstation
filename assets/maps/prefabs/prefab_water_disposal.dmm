@@ -192,7 +192,7 @@
 	name = "GLOMAR Salvager"
 	})
 "z" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"

@@ -16,6 +16,7 @@ Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 				boutput(usr, "You cannot use this feature on human mobs!")
 				return
 			object.appearance = initial(object.appearance)
+			REMOVE_ATOM_PROPERTY(object, PROP_ATOM_NO_ICON_UPDATES, "buildmode")
 		else if (AH && ishuman(object))
 			var/mob/living/carbon/human/H = object
 			if (!H.bioHolder) return
@@ -30,6 +31,7 @@ Right Mouse Button on mob/obj/turf = Copy Appearance<br>
 			H.update_colorful_parts()
 		else
 			object.appearance = MA
+			APPLY_ATOM_PROPERTY(object, PROP_ATOM_NO_ICON_UPDATES, "buildmode")
 		blink(get_turf(object))
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)

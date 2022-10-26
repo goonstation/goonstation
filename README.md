@@ -40,7 +40,7 @@ To contribute sprites to the game, please follow our spriting guidelines! It det
 To contribute audio to the game, please follow our audio guidelines! It details what types of sounds we want to include, things to keep in mind, and the sound cache.
 
 [<img src=".github/assets/maps.png" alt="Mapping Guidelines" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fmaps)
-To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission.
+To contribute maps to the game, please follow our mapping guidelines! It details the **required** pieces for a map submission. There are also guides on how to map included.
 
 ## FAQ (Frequently Asked Question)
 

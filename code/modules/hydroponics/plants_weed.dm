@@ -67,7 +67,7 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		random_brute_damage(user, 10, 1)//see above
 		if (W && prob(50))
 			boutput(user, "<span class='alert'>The lasher grabs and smashes your [W]!</span>")
-			W.dropped()
+			W.dropped(user)
 			qdel(W)
 		return 1
 
@@ -157,8 +157,9 @@ ABSTRACT_TYPE(/datum/plant/weed)
 				if (160 to INFINITY)
 					radstrength = 50
 					radrange = 3
-			for (var/mob/living/carbon/M in range(radrange,POT))
-				M.changeStatus("radiation", (radstrength) SECONDS, 3)
+			for (var/mob/living/carbon/M in view(radrange,POT))
+				if(!ON_COOLDOWN(M, "radweed_pulse", 2 SECONDS))
+					M.take_radiation_dose(radstrength/30 SIEVERTS)
 			for (var/obj/machinery/plantpot/C in range(radrange,POT))
 				var/datum/plant/growing = C.current
 				if (POT.health <= P.starthealth / 2) break
@@ -203,11 +204,11 @@ ABSTRACT_TYPE(/datum/plant/weed)
 		if (POT.growth >= (P.harvtime + DNA.harvtime + 50) && prob(10) && !src.exploding)
 			src.exploding = 1
 			POT.visible_message("<span class='alert'><b>[POT]</b> begins to bubble and expand!</span>")
-			playsound(POT, "sound/effects/bubbles.ogg", 50, 1)
+			playsound(POT, 'sound/effects/bubbles.ogg', 50, 1)
 
 			SPAWN(5 SECONDS)
 				POT.visible_message("<span class='alert'><b>[POT]</b> bursts, sending toxic goop everywhere!</span>")
-				playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 				for (var/mob/living/carbon/human/M in view(3,POT))
 					if(istype(M.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(M.head, /obj/item/clothing/head/bio_hood))

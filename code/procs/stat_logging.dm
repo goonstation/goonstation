@@ -155,11 +155,11 @@
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if ("spyslave")
+			if ("spyminion")
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name
-			if (ROLE_MINDSLAVE)
+			if (ROLE_MINDHACK)
 				if (M.master)
 					var/mob/mymaster = ckey_to_mob(M.master)
 					if (mymaster) special = mymaster.real_name

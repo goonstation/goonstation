@@ -11,7 +11,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_batter"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	amount = 12
+	bites_left = 12
 	heal_amt = 1
 	var/obj/item/reagent_containers/custom_item
 	initial_volume = 50
@@ -22,7 +22,8 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "yellowcake"
 	w_class = W_CLASS_TINY
-	amount = 1
+	object_flags = NO_GHOSTCRITTER
+	bites_left = 1
 	heal_amt = 2
 	initial_volume = 5
 	initial_reagents = "uranium"
@@ -33,9 +34,9 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	amount = 0
+	bites_left = 0
 	heal_amt = 2
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
 	w_class = W_CLASS_BULKY
@@ -104,7 +105,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.food_color
+				overlay_color = F.get_food_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
@@ -214,7 +215,7 @@
 			schild.desc = "a delicious slice of cake!"
 			schild.food_color = src.food_color
 			schild.sliced = TRUE
-			schild.amount = 1
+			schild.bites_left = 1
 
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
@@ -445,7 +446,7 @@
 	proc/unstack(var/mob/user)
 		var/obj/item/reagent_containers/food/snacks/cake/s = new /obj/item/reagent_containers/food/snacks/cake
 
-		src.reagents.trans_to(s,(src.reagents.total_volume/3))
+		src.reagents.trans_to(s,(src.reagents.total_volume/src.clayer))
 		for(var/food_effect in src.food_effects)
 			s.food_effects |= food_effect
 		s.quality = src.quality
@@ -473,14 +474,14 @@
 			src.put_out()
 			user.visible_message("<b>[user.name]</b> blows out the candle!")
 
-	attackby(obj/item/W as obj, mob/user as mob) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
+	attackby(obj/item/W, mob/user) //ok this proc is entirely a mess, but its *hopfully* better on the server than the alternatives
 		if(istool(W, TOOL_CUTTING | TOOL_SAWING))
 			if(!src.sliced)
 				slice_cake(W,user)
 				return
 			else
 				..()
-		else if(istype(W,/obj/item/kitchen/utensil/spoon) || istool(W,TOOL_SPOONING))
+		else if(isspooningtool(W))
 			if(!src.sliced)
 				return
 			else
@@ -516,7 +517,7 @@
 						src.ignite()
 				qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(length(cakeActions))
 			user.showContextActions(cakeActions, src)
 		else
@@ -529,7 +530,7 @@
 			return
 
 
-	attack(mob/M as mob, mob/user as mob, def_zone) //nom nom nom
+	attack(mob/M, mob/user, def_zone) //nom nom nom
 		if(!src.sliced)
 			if(user == M)
 				user.show_text("You can't just cram that in your mouth, you greedy beast!","red")
@@ -546,7 +547,7 @@
 	desc = "A little birthday cupcake for a bee. May not taste good to non-bees. This doesn't seem to be homemade; maybe that's why it looks so generic."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "b_cupcake"
-	amount = 4
+	bites_left = 4
 	heal_amt = 1
 	doants = 0
 
@@ -643,7 +644,7 @@
 	desc = "The most disgusting dessert ever devised. Legend says there's only one of these in the galaxy, passed from location to location by vengeful deities."
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake_fruit"
-	amount = 12
+	bites_left = 12
 	heal_amt = 3
 	initial_volume = 50
 	initial_reagents = "yuck"
@@ -653,8 +654,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-		eater.emote("scream")
-		return
 
 #endif
 
@@ -665,7 +664,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	icon_state = "cake1-base_cream"
 
-/obj/item/cake_item/attack(target as mob, mob/user as mob)
+/obj/item/cake_item/attack(target, mob/user)
 	var/iteminside = length(src.contents)
 	if(!iteminside)
 		user.show_text("The cake crumbles away!","red")

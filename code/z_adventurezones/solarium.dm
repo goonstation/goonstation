@@ -51,7 +51,7 @@ var/global/the_sun = null
 			the_sun = null
 		..()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
 				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
@@ -59,6 +59,7 @@ var/global/the_sun = null
 					SPAWN(1 SECOND)
 						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
 						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						logTheThing(LOG_COMBAT, user, "was firegibbed by [src] ([src.type]) at [log_loc(user)].")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)
@@ -86,7 +87,7 @@ var/global/derelict_mode = 0
 		if (world.name)
 			name = world.name
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
@@ -137,7 +138,7 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
-			playsound_global(world, "sound/machines/lavamoon_plantalarm.ogg", 70)
+			playsound_global(world, 'sound/machines/lavamoon_plantalarm.ogg', 70)
 			SPAWN(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
@@ -155,7 +156,7 @@ var/global/derelict_mode = 0
 			cinematic.play("sadbuddy")
 			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
-			logTheThing("diary", null, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
+			logTheThing(LOG_DIARY, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
 
 			SPAWN(5 SECONDS)
 				for (var/client/C in clients)
@@ -198,5 +199,5 @@ proc/voidify_world()
 			Automaton.aggressive = 1
 			Automaton.atkcarbon = 1
 			Automaton.atksilicon = 1
-		playsound_global(world, "sound/ambience/industrial/Precursor_Drone1.ogg", 70)
+		playsound_global(world, 'sound/ambience/industrial/Precursor_Drone1.ogg', 70)
 	return

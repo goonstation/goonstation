@@ -1,97 +1,5 @@
-// moving traitor popups to defines so i can make an admin proc to show them to yourself and see what players see.
-// if you add new types of popups in here, don't forget to add them to the View Antag Popups panel at the bottom of this file
-// - thanks, singh
-
-// window title/size
-#define ANTAG_TIPS_WINDOW "window=antagTips;size=700x450;title=Antagonist Tips"
-
-// damn one off windows... i'll make them defines too i guess in case anyone wants to reuse or edit them
-#define POLYMORPH_TIPS_WINDOW "window=antagTips;size=600x400;title=Polymorphed!"
-#define SOULSTEEL_TIPS_WINDOW "window=antagTips;size=600x400;title=Posession!"
-#define MINDWIPE_TIPS_WINDOW "window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0"
-
-//traitor
-#define SHOW_TRAITOR_RADIO_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorradiouplinkTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_PDA_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_HARDMODE_TIPS(M) M.Browse(grabResource("html/traitorTips/traitorhardTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_TRAITOR_OMNI_TIPS(M) M.Browse(grabResource("html/traitorTips/omniTips.html"), ANTAG_TIPS_WINDOW)
-
-// mindslaves
-#define SHOW_MINDSLAVE_TIPS(M) M.Browse(grabResource("html/mindslave/implanted.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_DEATH_TIPS(M) M.Browse(grabResource("html/mindslave/death.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_OVERRIDE_TIPS(M) M.Browse(grabResource("html/mindslave/override.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MINDSLAVE_EXPIRED_TIPS(M) M.Browse(grabResource("html/mindslave/expire.html"), ANTAG_TIPS_WINDOW)
-
-// wizard
-#define SHOW_WIZARD_TIPS(M) M.Browse(grabResource("html/traitorTips/wizardTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_ADMINWIZARD_TIPS(M) M.Browse(grabResource("html/traitorTips/wizardcustomTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_POLYMORPH_TIPS(M) M.Browse(grabResource("html/polymorph.html"), POLYMORPH_TIPS_WINDOW)
-
-// nuke
-#define SHOW_NUKEOP_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_NUKEOP_COMMANDER_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopcommanderTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_NUKEOP_GUNBOT_TIPS(M) M.Browse(grabResource("html/traitorTips/nukeopgunbotTips.html"), ANTAG_TIPS_WINDOW)
-
-// revolution
-#define SHOW_REVHEAD_TIPS(M) M.Browse(grabResource("html/traitorTips/revTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_REVVED_TIPS(M) M.Browse(grabResource("html/traitorTips/revAdded.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_DEREVVED_TIPS(M) M.Browse(grabResource("html/traitorTips/revRemoved.html"), ANTAG_TIPS_WINDOW)
-
-// spy
-#define SHOW_SPY_TIPS(M) M.Browse(grabResource("html/traitorTips/spyTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_SPY_THIEF_TIPS(M) M.Browse(grabResource("html/traitorTips/spy_theft_Tips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_CONSPIRACY_TIPS(M) M.Browse(grabResource("html/traitorTips/conspiracyTips.html"), ANTAG_TIPS_WINDOW)
-
-//gangers
-#define SHOW_GANG_MEMBER_TIPS(M) M.Browse(grabResource("html/traitorTips/gang_member_added.html"), ANTAG_TIPS_WINDOW)
-
-// vampire (thrall uses the mindslave popup)
-#define SHOW_VAMPIRE_TIPS(M) M.Browse(grabResource("html/traitorTips/vampireTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_VAMPTHRALL_TIPS(M) M.Browse(grabResource("html/traitorTips/vampiricthrallTips.html"), ANTAG_TIPS_WINDOW)
-
-// changeling
-#define SHOW_CHANGELING_TIPS(M) M.Browse(grabResource("html/traitorTips/changelingTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HANDSPIDER_TIPS(M) M.Browse(grabResource("html/mindslave/handspider.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_EYESPIDER_TIPS(M) M.Browse(grabResource("html/mindslave/eyespider.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_LEGWORM_TIPS(M) M.Browse(grabResource("html/mindslave/legworm.html"), ANTAG_TIPS_WINDOW)
-
-// various others
-#define SHOW_GRINCH_TIPS(M) M.Browse(grabResource("html/traitorTips/grinchTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_HUNTER_TIPS(M) M.Browse(grabResource("html/traitorTips/hunterTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_WEREWOLF_TIPS(M) M.Browse(grabResource("html/traitorTips/werewolfTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_WRESTLER_TIPS(M) M.Browse(grabResource("html/traitorTips/wrestlerTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_BATTLE_ROYALE_TIPS(M) M.Browse(grabResource("html/traitorTips/battleTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_MARTIAN_TIPS(M) M.Browse(grabResource("html/traitorTips/martianInfiltrator.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_KUDZU_TIPS(M) M.Browse(grabResource("html/traitorTips/kudzu.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_FOOTBALL_TIPS(M) M.Browse(grabResource("html/traitorTips/football.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_ZOMBIE_TIPS(M) M.Browse(grabResource("html/traitorTips/zombieTips.html"), ANTAG_TIPS_WINDOW)
-#define SHOW_SLASHER_TIPS(M) M.Browse(grabResource("html/traitorTips/slasherTips.html"), ANTAG_TIPS_WINDOW)
-
-// borg does things a little differently
-#define BORG_EMAGGED_MSG "<span class='alert'><b>PROGRAM EXCEPTION AT 0x05BADDAD</b></span><br><span class='alert'><b>Law ROM data corrupted. Unable to restore...</b></span>"
-#define BORG_EMAGGED_ALERT_MSG "You have been emagged and now have absolute free will.", "You have been emagged!"
-#define SHOW_EMAGGED_BORG_TIPS(M) boutput(M, BORG_EMAGGED_MSG); SPAWN(0) alert(M, BORG_EMAGGED_ALERT_MSG)
-#define SHOW_ROGUE_BORG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/roguerobotRemoved.html"), ANTAG_TIPS_WINDOW)
-
-// antag removed by admin
-#define SHOW_ANTAG_REMOVED_TIPS(M) M.Browse(grabResource("html/traitorTips/antagRemoved.html"), ANTAG_TIPS_WINDOW)
-
-// soulsteel posession
-#define SHOW_SOULSTEEL_TIPS(M) M.Browse(grabResource("html/soulsteel.html"), SOULSTEEL_TIPS_WINDOW)
-
-// slasher possession
-#define SHOW_SLASHER_POSSESSION_TIPS(M) M.Browse(grabResource("html/slasher_possession.html"), ANTAG_TIPS_WINDOW)
-
-// mindwipe from cloner zap chance
-#define SHOW_MINDWIPE_TIPS(M) M.Browse(grabResource("html/mindwipe.html"), MINDWIPE_TIPS_WINDOW)
-
-//Instructions for pod-wars gametype
-#define SHOW_POD_WARS(M) M.Browse(grabResource("html/traitorTips/pod_wars.html"), ANTAG_TIPS_WINDOW)
-
-// arcfiend
-#define SHOW_ARCFIEND_TIPS(M) M.Browse(grabResource("html/traitorTips/arcfiendTips.html"), ANTAG_TIPS_WINDOW)
-
-/datum/adminAntagPopups
+///Singleton that handles antag popups, use get_singleton
+/datum/antagPopups
 	var/html
 
 	proc/generateHTML()
@@ -99,7 +7,7 @@
 			html = ""
 
 		html += {"
-<title>Antag Popup Viewer</title>
+<title>Special Role Popup Viewer</title>
 <style>
 	a {text-decoration:none}
 	.antagType {padding:5px; margin-bottom:8px; border:1px solid black}
@@ -109,13 +17,15 @@
 	<a href='?src=\ref[src];action=traitorradio'>Radio Uplink</a> |
 	<a href='?src=\ref[src];action=traitorpda'>PDA Uplink</a> |
 	<a href='?src=\ref[src];action=traitorhard'>Hard Mode</a> |
-	<a href='?src=\ref[src];action=traitoromni'>Omnitraitor</a>
+	<a href='?src=\ref[src];action=traitoromni'>Omnitraitor</a> |
+	<a href='?src=\ref[src];action=traitorgeneric'>Generic</a> |
+	<a href='?src=\ref[src];action=sleeper'>Sleeper agent</a>
 </div>
-<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindslave</b>
-	<a href='?src=\ref[src];action=mindslave'>Implanted</a> |
-	<a href='?src=\ref[src];action=mindslavedeath'>Death</a> |
-	<a href='?src=\ref[src];action=mindslaveoverride'>Overriden</a> |
-	<a href='?src=\ref[src];action=mindslaveexpired'>Expired</a>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Mindhack</b>
+	<a href='?src=\ref[src];action=mindhack'>Implanted</a> |
+	<a href='?src=\ref[src];action=mindhackdeath'>Death</a> |
+	<a href='?src=\ref[src];action=mindhackoverride'>Overriden</a> |
+	<a href='?src=\ref[src];action=mindhackexpired'>Expired</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Wizard</b>
 	<a href='?src=\ref[src];action=wizard'>Wizard</a> |
@@ -133,7 +43,7 @@
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Spy/Conspiracy</b>
 	<a href='?src=\ref[src];action=spy'>Spy</a> |
 	<a href='?src=\ref[src];action=spythief'>Spy Thief</a> |
-	<a href='?src=\ref[src];action=conspiracy'>Conspiracy</a>
+	<a href='?src=\ref[src];action=conspiracy'>Conspiracy</a> |
 	<a href='?src=\ref[src];action=gang_member'>Gang Member</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Vampire/Changeling</b>
@@ -141,9 +51,15 @@
 	<a href='?src=\ref[src];action=vampthrall'>Vamp Thrall</a> |
 	<a href='?src=\ref[src];action=vampzombie'>Vamp Zombie</a> |
 	<br><a href='?src=\ref[src];action=changeling'>Changeling</a> |
+	<a href='?src=\ref[src];action=changeling_absorbed'>Changeling victim</a> |
 	<a href='?src=\ref[src];action=handspider'>Handspider</a> |
-	<a href='?src=\ref[src];action=eyespider'>Eye/Butt Spider</a> |
-	<a href='?src=\ref[src];action=legworm'>Legworm</a>
+	<a href='?src=\ref[src];action=eyespider'>Eyespider</a> |
+	<a href='?src=\ref[src];action=legworm'>Legworm</a> |
+	<a href='?src=\ref[src];action=buttcrab'>Buttcrab</a>
+</div>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Flock</b>
+	<a href='?src=\ref[src];action=flocktrace'>Flocktrace</a> |
+	<a href='?src=\ref[src];action=flockmind'>Flockmind</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Other Antags</b>
 	<a href='?src=\ref[src];action=grinch'>Grinch</a> |
@@ -153,16 +69,27 @@
 	<a href='?src=\ref[src];action=battle'>Battle Royale</a> |
 	<a href='?src=\ref[src];action=martian'>Martian</a> |
 	<a href='?src=\ref[src];action=kudzu'>Kudzu Person</a> |
-	<a href='?src=\ref[src];action=slasher'>The Slasher</a>
-	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a>
+	<a href='?src=\ref[src];action=slasher'>The Slasher</a> |
+	<a href='?src=\ref[src];action=salvager'>Salvagers</a> |
+	<a href='?src=\ref[src];action=arcfiend'>Arcfiend Person</a> |
+	<a href='?src=\ref[src];action=plaguebringer'>Plaguebringer wraith</a> |
+	<a href='?src=\ref[src];action=harbinger'>Harbinger wraith</a> |
+	<a href='?src=\ref[src];action=trickster'>Trickster wraith</a> |
+	<a href='?src=\ref[src];action=plaguerat'>Plague rat</a>
+</div>
+<div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Ghost roles</b>
+	<a href='?src=\ref[src];action=ghostdrone'>Ghostdrone</a> |
+	<a href='?src=\ref[src];action=ghostcritter'>Ghostcritter</a> |
+	<a href='?src=\ref[src];action=ghostcritter_antag'>Antag ghostcritter</a> |
+	<a href='?src=\ref[src];action=ghostcritter_mentor'>Mentor ghostcritter</a>
 </div>
 <div class='antagType' style='border-color:#AEC6CF'><b class='title' style='background:#AEC6CF'>Misc</b>
-	<a href='?src=\ref[src];action=emaggedborg'>Borg Emagged</a> |
 	<a href='?src=\ref[src];action=rogueborgremoved'>Rogue Borg Removed</a> |
 	<a href='?src=\ref[src];action=antagremoved'>Antag Removed</a> |
 	<a href='?src=\ref[src];action=soulsteel'>Soulsteel Posession</a> |
 	<a href='?src=\ref[src];action=mindwipe'>Cloner Mindwipe</a> |
-	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a>
+	<a href='?src=\ref[src];action=slasher_possession'>Slasher Possession</a> |
+	<a href='?src=\ref[src];action=souldorf'>Souldorf</a>
 </div>
 "}
 
@@ -176,128 +103,252 @@
 
 		usr.Browse(html, "window=adminAntagPopups;size=600x400")
 
-	Topic(href, href_list)
-		var/mob/M
-		if (ismob(usr))
-			M = usr
-			if (M.client.holder.level < 0)
-				alert("UM, EXCUSE ME??  YOU AREN'T AN ADMIN, GET DOWN FROM THERE!")
-				M << csound("sound/voice/farts/poo2.ogg")
-				return
-		else
-			alert("How the hell are you not a mob?! I can't show the panel to you, you don't exist!")
-			return
+	//this is definitely not a massive security hole or anything. I think
+	proc/searchWiki(mob/M, var/phrase)
+		M << link("https://wiki.ss13.co/index.php?search=[phrase]")
 
-		switch(href_list["action"])
+	Topic(href, href_list)
+		if (href_list["action"])
+			usr.show_antag_popup(href_list["action"], FALSE)
+		if (href_list["wiki"])
+			searchWiki(usr, href_list["wiki"])
+
+	//show antag popup to a mob
+	proc/show_popup(mob/M, var/popup_name)
+		var/window_title = "Antagonist Tips"
+		var/filename = null
+		switch(popup_name)
 			// traitor
 			if ("traitorradio")
-				SHOW_TRAITOR_RADIO_TIPS(M)
+				window_title = "Radio Traitor Tips"
+				filename = "html/traitorTips/traitorradiouplinkTips.html"
 			if ("traitorpda")
-				SHOW_TRAITOR_PDA_TIPS(M)
+				window_title = "Traitor Tips"
+				filename = "html/traitorTips/traitorTips.html"
 			if ("traitorhard")
-				SHOW_TRAITOR_HARDMODE_TIPS(M)
+				window_title = "Hardmode Traitor Tips"
+				filename = "html/traitorTips/traitorhardTips.html"
 			if ("traitoromni")
-				SHOW_TRAITOR_OMNI_TIPS(M)
+				window_title = "Omni-Traitor Tips"
+				filename = "html/traitorTips/omniTips.html"
+			if ("traitorgeneric")
+				window_title = "Antagonist Tips"
+				filename ="html/traitorTips/traitorGenericTips.html"
+			if (ROLE_SLEEPER_AGENT)
+				window_title = "Sleeper Agent Tips"
+				filename = "html/traitorTips/traitorsleeperTips.html"
 
-			// mindslave
-			if ("mindslave")
-				SHOW_MINDSLAVE_TIPS(M)
-			if ("mindslavedeath")
-				SHOW_MINDSLAVE_DEATH_TIPS(M)
-			if ("mindslaveoverride")
-				SHOW_MINDSLAVE_OVERRIDE_TIPS(M)
-			if ("mindslaveexpired")
-				SHOW_MINDSLAVE_EXPIRED_TIPS(M)
+			// mindhack
+			if ("mindhack")
+				window_title = "You've been mindhacked!"
+				filename = "html/notice/implanted.html"
+			if ("mindhackdeath")
+				window_title = "Mindhack Status Removed!"
+				filename = "html/notice/death.html"
+			if ("mindhackoverride")
+				window_title = "Mindhack Master Changed!"
+				filename = "html/notice/override.html"
+			if ("mindhackexpired")
+				window_title = "Mindhack Implant Expired!"
+				filename = "html/notice/expire.html"
 
 			// wizard
 			if ("wizard")
-				SHOW_WIZARD_TIPS(M)
+				window_title = "Wizarding Facts for beginning magical entities"
+				filename = "html/traitorTips/wizardTips.html"
 			if ("adminwizard")
-				SHOW_ADMINWIZARD_TIPS(M)
+				window_title = "Wizarding Theory for advanced practitioners"
+				filename = "html/traitorTips/wizardcustomTips.html"
 			if ("polymorph")
-				SHOW_POLYMORPH_TIPS(M)
+				window_title = "You've been polymorphed!"
+				filename = "html/polymorph.html"
 
 			// nuke/rev
 			if ("nukeop")
-				SHOW_NUKEOP_TIPS(M)
+				window_title = "Nuclear Operative Basics"
+				filename = "html/traitorTips/nukeopTips.html"
 			if ("nukeop-commander")
-				SHOW_NUKEOP_COMMANDER_TIPS(M)
+				window_title = "Nuclear Commander Basics"
+				filename = "html/traitorTips/nukeopcommanderTips.html"
 			if ("nukeop-gunbot")
-				SHOW_NUKEOP_GUNBOT_TIPS(M)
+				window_title = "Nuclear Gun-Bot Basics"
+				filename = "html/traitorTips/nukeopgunbotTips.html"
 			if ("revhead")
-				SHOW_REVHEAD_TIPS(M)
+				window_title = "Revolutionary Head Goals"
+				filename = "html/traitorTips/revTips.html"
 			if ("revved")
-				SHOW_REVVED_TIPS(M)
+				window_title = "You've been converted to the Revolution!"
+				filename = "html/traitorTips/revAdded.html"
 			if ("derevved")
-				SHOW_DEREVVED_TIPS(M)
+				window_title = "You've been freed from your brainwashing!"
+				filename = "html/traitorTips/revRemoved.html"
 
 			// spy/conspiracy
 			if ("spy")
-				SHOW_SPY_TIPS(M)
+				window_title = "How to Spy 101"
+				filename = "html/traitorTips/spyTips.html"
 			if ("spythief")
-				SHOW_SPY_THIEF_TIPS(M)
+				window_title = "Spy Thief Tips"
+				filename = "html/traitorTips/spy_theft_Tips.html"
 			if ("conspiracy")
-				SHOW_CONSPIRACY_TIPS(M)
+				window_title = "Conspiracy Guidelines"
+				filename = "html/traitorTips/conspiracyTips.html"
 
 			// gangers
 			if ("gang_member")
-				SHOW_GANG_MEMBER_TIPS(M)
+				window_title = "You've joined a Gang!"
+				filename = "html/traitorTips/gang_member_added.html"
 
 			// vamp/changeling
 			if ("vampire")
-				SHOW_VAMPIRE_TIPS(M)
+				window_title = "Vampire Tips"
+				filename = "html/traitorTips/vampireTips.html"
 			if ("vampthrall")
-				SHOW_VAMPTHRALL_TIPS(M)
+				window_title = "You've become the brainwashed thrall of a Vampire!"
+				filename = "html/traitorTips/vampiricthrallTips.html"
 			if ("changeling")
-				SHOW_CHANGELING_TIPS(M)
+				window_title = "Changeling Tips"
+				filename = "html/traitorTips/changelingTips.html"
+			if ("changeling_absorbed")
+				window_title = "You've been absorbed into the Hivemind!"
+				filename = "html/notice/changelingEaten.html"
+			if ("changeling_leave")
+				window_title = "Leaving the Hivemind"
+				filename = "html/notice/changelingLeave.html"
 			if ("handspider")
-				SHOW_HANDSPIDER_TIPS(M)
+				window_title = "Handspider Expectations"
+				filename = "html/notice/handspider.html"
 			if ("eyespider")
-				SHOW_EYESPIDER_TIPS(M)
+				window_title = "Eyespider Expectations"
+				filename = "html/notice/eyespider.html"
 			if ("legworm")
-				SHOW_LEGWORM_TIPS(M)
+				window_title = "LegWorm Expectations"
+				filename = "html/notice/legworm.html"
+			if ("buttcrab")
+				window_title = "Buttcrab Expectations"
+				filename = "html/notice/buttcrab.html"
+
+			//flock
+			if("flocktrace")
+				window_title = "Flocktrace tips"
+				filename = "html/traitorTips/flocktraceTips.html"
+			if("flockmind")
+				window_title = "Flockmind Basics"
+				filename = "html/traitorTips/flockmindTips.html"
 
 			// other antags
 			if ("grinch")
-				SHOW_GRINCH_TIPS(M)
+				window_title = "How to steal Spacemas"
+				filename = "html/traitorTips/grinchTips.html"
 			if ("hunter")
-				SHOW_HUNTER_TIPS(M)
+				window_title = "Basic Prey Hunting"
+				filename = "html/traitorTips/hunterTips.html"
 			if ("werewolf")
-				SHOW_WEREWOLF_TIPS(M)
+				window_title = "Werewolf Basics"
+				filename = "html/traitorTips/werewolfTips.html"
 			if ("wrestler")
-				SHOW_WRESTLER_TIPS(M)
+				window_title = "How to be a Champion!"
+				filename = "html/traitorTips/wrestlerTips.html"
 			if ("battle")
-				SHOW_BATTLE_ROYALE_TIPS(M)
+				window_title = "Battle Royale Tips!"
+				filename = "html/traitorTips/battleTips.html"
 			if ("martian")
-				SHOW_MARTIAN_TIPS(M)
+				window_title = "Being a Martian 101!"
+				filename = "html/traitorTips/martianInfiltratorTips.html"
 			if ("kudzu")
-				SHOW_KUDZU_TIPS(M)
+				window_title = "You've been absorbed into the Kudzu!"
+				filename = "html/traitorTips/kudzuTips.html"
+			if ("salvager")
+				filename = "html/traitorTips/salvager.html"
 			if ("slasher")
-				SHOW_SLASHER_TIPS(M)
+				window_title = "You've been made a Slasher!"
+				filename = "html/traitorTips/slasherTips.html"
 			if ("arcfiend")
-				SHOW_ARCFIEND_TIPS(M)
+				window_title = "Arcfiend Tips!"
+				filename = "html/traitorTips/arcfiendTips.html"
+			if ("plaguebringer")
+				filename = "html/traitorTips/plaguebringerTips.html"
+			if ("plaguerat")
+				filename = "html/traitorTips/plagueratTips.html"
+			if ("trickster")
+				filename = "html/traitorTips/tricksterTips.html"
+			if ("harbinger")
+				filename = "html/traitorTips/harbingerTips.html"
+			if ("football")
+				window_title = "Go for the endzone!"
+				filename = "html/traitorTips/footballTips.html"
+			if ("podwars")
+				window_title = "Fight for your team!"
+				filename = "html/traitorTips/pod_warsTips.html"
+			if ("zombie")
+				window_title = "Zombie Basics"
+				filename = "html/traitorTips/zombieTips.html"
+
+			// ghost roles
+			if ("ghostdrone")
+				window_title = "Ghost Drone Expectations"
+				filename = "html/ghostdrone.html"
+			if ("ghostcritter")
+				window_title = "Ghost Critter Expectations"
+				filename = "html/ghostcritter.html"
+			if ("ghostcritter_antag")
+				window_title = "Ghost Critter Antagonist Tips!"
+				filename = "html/ghostcritter_antag.html"
+			if ("ghostcritter_mentor")
+				window_title = "Mentor Mouse Tips!"
+				filename = "html/ghostcritter_mentor.html"
 
 			// misc
-			if ("emaggedborg")
-				boutput(M, BORG_EMAGGED_MSG)
-				boutput(M, BORG_EMAGGED_ALERT_MSG)
+			if ("syndieborg")
+				window_title = "Syndicate Robot Tips!"
+				filename = "html/traitorTips/syndicaterobotTips.html"
 			if ("rogueborgremoved")
-				SHOW_ROGUE_BORG_REMOVED_TIPS(M)
+				window_title = "Rogue Status Removed!"
+				filename = "html/traitorTips/roguerobotRemoved.html"
 			if ("antagremoved")
-				SHOW_ANTAG_REMOVED_TIPS(M)
+				window_title = "Antagonist Status Removed!"
+				filename = "html/traitorTips/antagRemoved.html"
 			if ("soulsteel")
-				SHOW_SOULSTEEL_TIPS(M)
+				window_title = "Posession!"
+				filename = "html/soulsteel.html"
 			if ("slasher_possession")
-				SHOW_SLASHER_POSSESSION_TIPS(M)
+				window_title = "Possessed by the Slasher!"
+				filename = "html/slasher_possession.html"
 			if ("mindwipe")
-				SHOW_MINDWIPE_TIPS(M)
+				window_title = "Mindwiped!"
+				filename = "html/mindwipe.html"
+			if ("zoldorf")
+				filename = "html/traitorTips/zoldorfTips.htm"
+			if ("souldorf")
+				filename = "html/traitorTips/souldorfTips.htm"
 
-var/datum/adminAntagPopups/aap
+		if (!filename)
+			return
+		var/html = grabResource(filename)
+		html = replacetext(html, "{ref}", "\ref[get_singleton(/datum/antagPopups)]")
+		M.Browse(html, "window=antagTips;size=700x450;title=[window_title]")
+
 
 /client/proc/cmd_admin_antag_popups()
-	set name = "View Antag Popups"
+	set name = "View Special Role Popups"
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	if (src.holder)
-		if (!aap)
-			aap = new
-		aap.showPanel()
+		get_singleton(/datum/antagPopups).showPanel()
+
+/mob
+	///Stores the name of the last antag popup shown to the mob
+
+	var/last_antag_popup = null
+	/*Show antag popup with to a mob
+	* @param popup_name the name of the popup to match to the correct macro
+	* @param set_last_popup whether to modify the mob's last_antag_popup entry (used for the admin display)
+	*/
+	proc/show_antag_popup(var/popup_name, var/set_last_popup = TRUE)
+		if (set_last_popup)
+			src.last_antag_popup = popup_name
+		get_singleton(/datum/antagPopups).show_popup(src, popup_name)
+
+	verb/reopen_antag_popup()
+		set name = "Special role popup"
+		if (src.last_antag_popup)
+			src.show_antag_popup(src.last_antag_popup, FALSE)

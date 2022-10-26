@@ -4,7 +4,7 @@
 	desc = "A cone designed in 1937 by members of FDR's brain trust.  Its purpose? To hold as much ice cream as possible."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "icecream"
-	amount = 1
+	bites_left = 1
 
 /obj/item/reagent_containers/food/snacks/ice_cream
 	name = "ice cream"
@@ -12,14 +12,14 @@
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "icecream"
 	real_name = "ice cream"
-	amount = 4
+	bites_left = 4
 	heal_amt = 4
 	food_color = null
 	var/flavor_name = null
 	var/image/cream_image = null
 	initial_volume = 40
 	food_effects = list("food_cold")
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 
 	on_reagent_change()
 		..()
@@ -34,7 +34,7 @@
 		src.food_color = src.reagents.get_master_color()
 		if (!src.cream_image)
 			src.cream_image = image(src.icon)
-		var/cream_level = (100 * round(amount/initial(amount),0.25))
+		var/cream_level = (100 * round(bites_left/initial(bites_left),0.25))
 		if (!src.food_color)
 			src.food_color = src.reagents.get_master_color()
 		src.cream_image.icon_state = "ice[cream_level]"
@@ -52,15 +52,15 @@
 		if (!src.user_can_suicide(user))
 			return 0
 		var/icecount = 0
-		if (istype(user.l_hand,/obj/item/reagent_containers/food/snacks/ice_cream) && user.l_hand.amount)
+		if (istype(user.l_hand,/obj/item/reagent_containers/food/snacks/ice_cream) && user.l_hand:bites_left)
 			var/obj/item/reagent_containers/food/snacks/ice_cream/I = user.l_hand
-			icecount += I.amount
-			I.amount = 1
+			icecount += I.bites_left
+			I.bites_left = 1
 			I.update_cone()
-		if (istype(user.r_hand,/obj/item/reagent_containers/food/snacks/ice_cream) && user.r_hand.amount)
+		if (istype(user.r_hand,/obj/item/reagent_containers/food/snacks/ice_cream) && user.r_hand:bites_left)
 			var/obj/item/reagent_containers/food/snacks/ice_cream/I = user.r_hand
-			icecount += I.amount
-			I.amount = 1
+			icecount += I.bites_left
+			I.bites_left = 1
 			I.update_cone()
 		if (!icecount)
 			return
@@ -99,7 +99,7 @@
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
 	needspoon = 1
-	amount = 6
+	bites_left = 6
 	heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/yoghurt/frozen

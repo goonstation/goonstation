@@ -113,8 +113,8 @@
 
 #define FLOOR_HEAT_TRANSFER_COEFFICIENT 0.15
 #define WALL_HEAT_TRANSFER_COEFFICIENT 0.12
-#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.20 //a hack to partly simulate radiative heat
-#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.40
+#define SPACE_HEAT_TRANSFER_COEFFICIENT 0.2 //a hack to partly simulate radiative heat
+#define OPEN_HEAT_TRANSFER_COEFFICIENT 0.4
 #define WINDOW_HEAT_TRANSFER_COEFFICIENT 0.18 //a hack for now
 	//Must be between 0 and 1. Values closer to 1 equalize temperature faster
 	//Should not exceed 0.4 else strange heat flow occur
@@ -173,7 +173,9 @@
 // archiving
 
 // comment out to make atmos a bit less precise but less memory intensive and maybe a bit faster, may cause bugs
+// "Archiving gas is how you ensure the order of turfs talking to each other is consistent. It's a key part of the sim actually working" - LemonInTheDark
 // #define ATMOS_ARCHIVING
+
 
 #ifdef ATMOS_ARCHIVING
 #define ARCHIVED(VAR) VAR##_archived

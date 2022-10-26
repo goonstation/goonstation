@@ -35,9 +35,9 @@
 	var/is_npc = 0
 
 	var/move_laying = null
-	var/last_typing = null
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
-	var/static/image/sleep_bubble = image('icons/mob/mob.dmi', "sleep")
+	var/has_typing_indicator = FALSE
+	var/static/mutable_appearance/speech_bubble = living_speech_bubble
+	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/static_image = null
 	var/static_type_override = null
 	var/icon/default_static_icon = null // set to an icon and that's what the static will generate from
@@ -132,7 +132,6 @@
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
 	vision = new()
 	src.attach_hud(vision)
-	src.vis_contents += src.chat_text
 	if (can_bleed)
 		src.ensure_bp_list()
 
@@ -155,9 +154,6 @@
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
-
-	qdel(chat_text)
-	chat_text = null
 
 	if(stamina_bar)
 		for (var/datum/hud/thishud in huds)
@@ -196,10 +192,10 @@
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
-				emergency_shuttle.incall()
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				if (emergency_shuttle.incall())
+					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -291,12 +287,14 @@
 	// and not a vr ghost
 	// and not a ghost critter
 	// and not a ghost drone
+	// and not a living object (probably soulsteel)
 	// ...then remove respawn candidate.
 	if (!isdead(src) \
 		&& !(istype(get_area(src), /area/afterlife) && !istype(get_area(src), /area/afterlife/hell)) \
 		&& !isVRghost(src) \
 		&& !isghostcritter(src) \
 		&& !isghostdrone(src) \
+		&& !islivingobject(src) \
 	)
 		respawn_controller.unsubscribeRespawnee(src.ckey)
 
@@ -400,18 +398,20 @@
 			W.onMouseUp(object,location,control,params)
 
 /mob/living/MouseDrop_T(atom/dropped, mob/dropping_user)
-	if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
-		// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
-		var/obj/item/organ/dropping_organ = dropped
-		var/success = dropping_organ.attach_organ(src, dropping_user)
-		if (success)
-			return
-	else if (istype(dropped, /obj/item/parts/human_parts/))
-		var/obj/item/parts/dropping_limb = dropped
-		dropping_limb.attach(src, dropping_user)
-	else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-		var/obj/item/parts/robot_parts/dropping_limb = dropped
-		dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+	if(in_interact_range(src, dropping_user) && in_interact_range(dropped, dropping_user))
+		if (istype(dropped, /obj/item/organ/) || istype(dropped, /obj/item/clothing/head/butt/) || istype(dropped, /obj/item/skull/))
+			// because butts are clothing you're born with, and skull primarily exist to reenact hamlet... for some insane reason
+			var/obj/item/organ/dropping_organ = dropped
+			var/success = dropping_organ.attach_organ(src, dropping_user)
+			if (success)
+				return
+		else if (istype(dropped, /obj/item/parts))
+			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
+				var/obj/item/parts/dropping_limb = dropped
+				dropping_limb.attach(src, dropping_user)
+			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+				var/obj/item/parts/robot_parts/dropping_limb = dropped
+				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -473,7 +473,7 @@
 			return
 
 		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
@@ -505,7 +505,7 @@
 		else if (params["ctrl"])
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 
 				if (mob_flags & AT_GUNPOINT)
 					for(var/obj/item/grab/gunpoint/G in grabbed_by)
@@ -522,7 +522,7 @@
 					src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
 				if (src.invisibility > INVIS_NONE && (isturf(target) || (target != src && isturf(target.loc)))) // dont want to check for a cloaker every click if we're not invisible
-					SEND_SIGNAL(src, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+					SEND_SIGNAL(src, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 				if (equipped)
 					weapon_attack(target, equipped, reach, params)
@@ -596,7 +596,7 @@
 	src.in_point_mode = !(src.in_point_mode)
 	src.update_cursor()
 
-/mob/living/point_at(var/atom/target)
+/mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
 		return
 
@@ -615,8 +615,8 @@
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
-
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color=src.bioHolder.mobAppearance.customization_first_color)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
 /mob/living/proc/set_burning(var/new_value)
@@ -636,19 +636,31 @@
 		if ("headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("secure headset")
 			if (src.ears)
 				src.ears.talk_into(src, messages, param, src.real_name, lang_id)
+			else if (ishuman(src))
+				var/mob/living/carbon/human/H = src
+				if(isskeleton(H) && !H.organHolder.head)
+					var/datum/mutantrace/skeleton/S = H.mutantrace
+					if(S.head_tracker != null)
+						S.head_tracker.ears?.talk_into(src, messages, param, src.real_name, lang_id)
 
 		if ("right hand")
-			if (src.r_hand)
+			if (src.r_hand && src.organHolder.head)
 				src.r_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
 
 		if ("left hand")
-			if (src.l_hand)
+			if (src.l_hand && src.organHolder.head)
 				src.l_hand.talk_into(src, messages, param, src.real_name, lang_id)
 			else
 				src.emote("handpuppet")
@@ -668,8 +680,8 @@
 			return src.eyecam.client.preferences.auto_capitalization
 	. = ..()
 
-/mob/living/say(var/message, ignore_stamina_winded)
-	message = strip_html(trim(copytext(sanitize_noencode(message), 1, MAX_MESSAGE_LEN)))
+/mob/living/say(var/message, ignore_stamina_winded, var/unique_maptext_style, var/maptext_animation_colors)
+	message = strip_html(trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN)))
 
 	if (!message)
 		return
@@ -691,7 +703,7 @@
 
 	if (reverse_mode) message = reverse_text(message)
 
-	logTheThing("diary", src, null, ": [message]", "say")
+	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 #ifdef DATALOGGER
 	// Jewel's attempted fix for: null.ScanText()
@@ -741,19 +753,12 @@
 			H.whisper(message, forced=TRUE)
 			return
 
-	//Pod coloseum is broken - disable this unnecessary istype
-	/*
-	if (istype(loc, /obj/machinery/colosseum_putt))
-		var/obj/machinery/colosseum_putt/C = loc
-		logTheThing("say", src, null, "<i>broadcasted between Colosseum Putts:</i> \"[message]\"")
-		C.broadcast(message)
-		return
-	*/
-
 	message = trim(message)
 
 	// check for singing prefix before radio prefix
 	message = check_singing_prefix(message)
+
+	message = say_decorate(message)
 
 	var/italics = 0
 	var/forced_language = null
@@ -939,11 +944,7 @@
 			if(!src.stuttering && prob(8))
 				message = stutter(message)
 
-	UpdateOverlays(speech_bubble, "speech_bubble")
-	var/speech_bubble_time = src.last_typing
-	SPAWN(1.5 SECONDS)
-		if(speech_bubble_time == src.last_typing)
-			UpdateOverlays(null, "speech_bubble")
+	show_speech_bubble(speech_bubble)
 
 	//Blobchat handling
 	if (src.mob_flags & SPEECH_BLOB)
@@ -1038,22 +1039,28 @@
 		if ("intercom")
 			for (var/obj/item/device/radio/intercom/I in view(1, null))
 				I.talk_into(src, messages, null, src.real_name, lang_id)
-			for (var/obj/colosseum_radio/M in hearers(1, src))
-				M.hear_talk(src, messages, real_name, lang_id)
 
 			message_range = 1
 			italics = 1
 
 	var/heardname = src.real_name
 
-	if (!skip_open_mics_in_range)
+	var/is_decapitated_skeleton = ishuman(src) && isskeleton(src) && !src.organHolder.head
+
+	if (!skip_open_mics_in_range && !is_decapitated_skeleton)
 		src.send_hear_talks(message_range, messages, heardname, lang_id)
 
 	var/list/listening = list()
 	var/list/olocs = list()
+	var/atom/say_location = src
 	var/thickness = 0
-	if (isturf(loc))
-		listening = all_hearers(message_range, src)
+	if (is_decapitated_skeleton)	//Decapitated skeletons speak from their heads
+		var/mob/living/carbon/human/H = src
+		var/datum/mutantrace/skeleton/S = H.mutantrace
+		if (S.head_tracker)
+			say_location = S.head_tracker
+	if (isturf(say_location.loc))
+		listening = all_hearers(message_range, say_location)
 	else
 		olocs = obj_loc_chain(src)
 		if(olocs.len > 0) // fix runtime list index out of bounds when loc is null (IT CAN HAPPEN, APPARENTLY)
@@ -1086,7 +1093,7 @@
 			src.last_chat_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
 			src.last_heard_name = src.get_heard_name()
 
-		var/turf/T = get_turf(src)
+		var/turf/T = get_turf(say_location)
 		for(var/i = 0; i < 2; i++) T = get_step(T, WEST)
 		for(var/i = 0; i < 5; i++)
 			for(var/mob/living/L in T)
@@ -1104,7 +1111,15 @@
 				maptext_color ="#D8BFD8"
 		else
 			maptext_color = src.last_chat_color
-		chat_text = make_chat_maptext(src, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(unique_maptext_style)
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + unique_maptext_style + singing_italics)
+		else
+			chat_text = make_chat_maptext(say_location, messages[1], "color: [maptext_color];" + src.speechpopupstyle + singing_italics)
+
+		if(maptext_animation_colors)
+			oscillate_colors(chat_text, maptext_animation_colors)
+
 		if(chat_text)
 			chat_text.measure(src.client)
 			for(var/image/chat_maptext/I in src.chat_text.lines)
@@ -1129,7 +1144,7 @@
 		rendered = "<span style='-ms-transform: rotate(180deg)'>[rendered]</span>"
 
 	var/viewrange = 0
-	var/list/hearers = hearers(src)
+	var/list/hearers = hearers(say_location)
 	for (var/client/C)
 		var/mob/M = C.mob
 
@@ -1143,7 +1158,7 @@
 			(istype(M, /mob/zoldorf)) || \
 			(isintangible(M) && (M in hearers)) || \
 			( \
-				(!isturf(src.loc) && src.loc == M.loc) && \
+				(!isturf(say_location.loc) && say_location.loc == M.loc) && \
 				!(M in heard_a) && \
 				!istype(M, /mob/dead/target_observer) && \
 				M != src \
@@ -1158,23 +1173,26 @@
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
 				if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 					//if (M in range(M.client.view, src))
-					if (get_dist(M,src) <= viewrange)
+					if (GET_DIST(M,say_location) <= viewrange)
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					//if (M in range(M.client.view, src)) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
-					if (get_dist(M,src) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
+					if (GET_DIST(M,say_location) <= viewrange) //you're not just listening locally and the message is nearby? sweet! bold that sucka brosef
 						M.show_message("<span class='bold'>[thisR]</span>", 2, assoc_maptext = chat_text) //awwwww yeeeeeah lookat dat bold
 					else
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
 				viewrange = (((istext(C.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH) - 1) / 2)
-				if (get_dist(M,src) <= viewrange)
+				if (GET_DIST(M,say_location) <= viewrange)
 					if((!istype(M.loc,/obj/machinery/playerzoldorf))&&(!istype(M.loc,/mob))&&(M.invisibility == INVIS_GHOST))
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 				else
 					M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else
 				M.show_message(thisR, 2, assoc_maptext = chat_text)
+
+/mob/living/proc/say_decorate(message)
+	return message
 
 // helper proooocs
 
@@ -1370,6 +1388,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		return
 	src.last_resist = world.time + 20
 
+	if (isobj(src.loc))
+		var/obj/container = src.loc
+		if (container.mob_resist_inside(src))
+			return TRUE //cancel further resist code if needed
+
 	if (src.getStatusDuration("burning"))
 		if (!actions.hasAction(src, "fire_roll"))
 			src.last_resist = world.time + 25
@@ -1384,24 +1407,24 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!src.restrained() && isalive(src)) //isalive returns false for both dead and unconcious, which is what we want
 		var/struggled_grab = 0
-		if (src.canmove)
-			if(src.grabbed_by.len > 0)
+		if (!is_incapacitated(src))
+			if(length(src.grabbed_by) > 0)
 				for (var/obj/item/grab/G in src.grabbed_by)
 					G.do_resist()
-					struggled_grab = 1
+					struggled_grab = TRUE
 			else
 				if(src.pulled_by)
 					for (var/mob/O in AIviewers(src, null))
 						O.show_message(text("<span class='alert'>[] resists []'s pulling!</span>", src, src.pulled_by), 1, group = "resist")
 					src.pulled_by.remove_pulling()
-					struggled_grab = 1
+					struggled_grab = TRUE
 		else
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.stunned_targets_can_break())
 					G.do_resist()
-					struggled_grab = 1
+					struggled_grab = TRUE
 
-		if (!src.grabbed_by || !src.grabbed_by.len && !struggled_grab)
+		if (!src.grabbed_by || !length(src.grabbed_by) && !struggled_grab)
 			if (src.buckled)
 				src.buckled.Attackhand(src)
 				src.force_laydown_standup() //safety because buckle code is a mess
@@ -1417,6 +1440,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 							O.show_message(text("<span class='alert'><B>[] resists!</B></span>", src), 1, group = "resist")
 
 	return 0
+
 /mob/living/set_loc(var/newloc as turf|mob|obj in world)
 	var/atom/oldloc = src.loc
 	. = ..()
@@ -1431,19 +1455,10 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			while(!isnull(A) && !istype(A.loc, /turf) && !istype(A.loc, /obj/disposalholder)) A = A.loc
 			A?.vis_contents += src.chat_text
 
-
 /mob/living/proc/empty_hands()
 	. = 0
 
 /mob/living/proc/update_lying()
-	if (src.buckled)
-		if (src.buckled == src.loc)
-			src.lying = 1
-		else if (istype(src.buckled, /obj/stool/bed))
-			src.lying = 1
-		else
-			src.lying = 0
-
 	if (src.lying != src.lying_old)
 		src.lying_old = src.lying
 		src.animate_lying(src.lying)
@@ -1453,7 +1468,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	animate_rest(src, !lying)
 
 
-/mob/living/attack_hand(mob/living/M as mob, params, location, control)
+/mob/living/attack_hand(mob/living/M, params, location, control)
 	if (!M || !src) //Apparently M could be a meatcube and this causes HELLA runtimes.
 		return
 
@@ -1536,7 +1551,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				return
 			*/
 			if (gloves?.activeweapon)
-				gloves.special_attack(src)
+				gloves.special_attack(src, M)
 				return
 
 			if (src.parry_or_dodge(M))
@@ -1557,16 +1572,16 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if(move_dir & last_move_dir)
 				if (sustained_moves < SUSTAINED_RUN_REQ+1 && sustained_moves + steps >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),move_dir)
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.5)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.5)
 				sustained_moves += steps
 			else
 				if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !isFlying && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 					sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-					playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+					playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 				else if (move_dir == turn(last_move_dir,180) && !isFlying)
 					if(!HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 						sprint_particle_tiny(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-						playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.9)
+						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.9)
 					if(src.bioHolder.HasEffect("magnets_pos") || src.bioHolder.HasEffect("magnets_neg"))
 						var/datum/bioEffect/hidden/magnetic/src_effect = src.bioHolder.GetEffect("magnets_pos")
 						if(src_effect == null) src_effect = src.bioHolder.GetEffect("magnets_neg")
@@ -1581,7 +1596,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	// Call movement traits
 	if(src.traitHolder)
 		for(var/id in src.traitHolder.moveTraits)
-			var/obj/trait/O = src.traitHolder.moveTraits[id]
+			var/datum/trait/O = src.traitHolder.moveTraits[id]
 			O.onMove(src)
 
 	..()
@@ -1591,7 +1606,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (. && move_dir && !(direct & move_dir) && src.use_stamina)
 		if (sustained_moves >= SUSTAINED_RUN_REQ+1 && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS))
 			sprint_particle_small(src,get_step(NewLoc,turn(move_dir,180)),turn(move_dir,180))
-			playsound(src.loc,"sound/effects/sprint_puff.ogg", 9, 1,extrarange = -25, pitch=2.8)
+			playsound(src.loc, 'sound/effects/sprint_puff.ogg', 9, 1,extrarange = -25, pitch=2.8)
 		sustained_moves = 0
 
 
@@ -1642,7 +1657,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = (src.max_health - src.health) + health_deficiency_adjustment // cogwerks // let's treat this like pain
+	var/health_deficiency = 0
+	if (src.max_health > 0)
+		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+	else
+		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
 	if (health_deficiency >= 30)
 		. += (health_deficiency / 35)
@@ -1656,7 +1675,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (istype(src.pulling, /atom/movable) && !(src.is_hulk() || (src.bioHolder && src.bioHolder.HasEffect("strong"))))
 				var/atom/movable/A = src.pulling
 				// hi grayshift sorry grayshift
-				if (get_dist(src,A) > 0 && get_dist(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
+				if (GET_DIST(src,A) > 0 && GET_DIST(move_target,A) > 0) //i think this is mbc dist stuff for if we're actually stepping away and pulling the thing or not?
 					if(pull_slowing)
 						. *= max(A.p_class, 1)
 					else
@@ -1678,7 +1697,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			. = lerp(1, . , pushpull_multiplier)
 
 
-		if (src.pushing && (src.pulling != src.pushing))
+		if (src.pushing)
 			. *= lerp(1, max(src.pushing.p_class, 1), pushpull_multiplier)
 
 		for (var/obj/item/grab/G in src.equipped_list())
@@ -1686,8 +1705,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			if (isnull(M))
 				continue //ZeWaka: If we have a null affecting, ex. someone jumped in lava when we were grabbing them
 
-			if (G.state == 0)
-				if (get_dist(src,M) > 0 && get_dist(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
+			if (G.state == GRAB_PASSIVE)
+				if (GET_DIST(src,M) > 0 && GET_DIST(move_target,M) > 0) //pasted into living.dm pull slow as well (consider merge somehow)
 					if(ismob(M) && M.lying)
 						. *= lerp(1, max(M.p_class, 1), pushpull_multiplier)
 			else
@@ -1701,12 +1720,16 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (running)
 
-		var/runScaling = src.lying ? RUN_SCALING_LYING : RUN_SCALING
+		var/runScaling = src.lying ? SPRINT_SCALING_LYING : SPRINT_SCALING
 		if (src.hasStatus(list("staggered","blocking")))
-			runScaling = max(runScaling, RUN_SCALING_STAGGER)
+			runScaling = max(runScaling, SPRINT_SCALING_STAGGER)
 		var/minSpeed = (1.0- runScaling * base_speed) / (1 - runScaling) // ensures sprinting with 1.2 tally drops it to 0.75
 		if (pulling) minSpeed = base_speed // not so fast, fucko
 		. = min(., minSpeed + (. - minSpeed) * runScaling) // i don't know what I'm doing, help
+
+	var/turf/T = get_turf(src)
+	if (T?.turf_flags & CAN_BE_SPACE_SAMPLE)
+		. = max(., base_speed)
 
 
 //this lets subtypes of living alter their movement delay WITHIN that big proc above - not before or after (which would fuck up the numbers greatly)
@@ -1761,7 +1784,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				if ((src.loc != last || force_puff) && !HAS_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS)) //ugly check to prevent stationary sprint weirds
 					sprint_particle(src, last)
 					if (!isFlying)
-						playsound(src.loc,"sound/effects/sprint_puff.ogg", 29, 1,extrarange = -4)
+						playsound(src.loc, 'sound/effects/sprint_puff.ogg', 29, 1,extrarange = -4)
 
 // cogwerks - fix for soulguard and revive
 /mob/living/proc/remove_ailments()
@@ -1811,19 +1834,18 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
-		if (equipped && istype(equipped,/obj/item/sword))
-			var/obj/item/sword/S = equipped
-			S.handle_deflect_visuals(src)
-
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-		P.die()
-		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [P] ([P.type]) hitting mob [src] (src.type)")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
 		src.visible_message("<span class='alert'>A divine light absorbs the magical projectile!</span>")
-		playsound(src.loc, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		P.die()
 		return 0
 
@@ -1848,42 +1870,44 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/damage = 0
 	var/stun = 0 //HEY this doesnt actually stun. its the number to reduce stamina. gosh.
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
+		damage = P.power * P.proj_data.ks_ratio
+		stun = P.power * (1.0 - P.proj_data.ks_ratio)
 	var/armor_msg = ""
-	var/rangedprot = get_ranged_protection() //will be 1 unless overridden
+	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
+		var/rangedprot_mod = max(rangedprot_base*(1-P.proj_data.armor_ignored),1)
+
+		if (rangedprot_mod > 1)
+			armor_msg = ", but your armor softens the hit!"
+		else if(rangedprot_base > 1)
+			armor_msg = ", but [P] pierces through your armor!"
+
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
+				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_PIERCING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.TakeDamage("chest", damage/max((rangedprot/3), 1), 0, 0, P.proj_data.hit_type)
+				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
 				if (isalive(src))
 					lastgasp()
-				if (rangedprot > 1)
-					armor_msg = ", but [P] pierces through your armor!"
 
 			if (D_SLASHING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (rangedprot > 1)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					armor_msg = ", but your armor softens the hit!"
+				if (rangedprot_mod > 1)
+					src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
 				else
 					src.TakeDamage("chest", (damage*2), 0, 0, P.proj_data.hit_type)
 
@@ -1896,52 +1920,39 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 				if (src.stuttering < stun)
 					src.stuttering = stun
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
+				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (src.is_heat_resistant())
 					// fire resistance should probably not let you get hurt by welders
 					src.visible_message("<span class='alert'><b>[src] seems unaffected by fire!</b></span>")
 					return 0
-				src.TakeDamage("chest", 0, (damage/rangedprot), 0, P.proj_data.hit_type)
-				src.update_burning(damage/rangedprot)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
+				src.TakeDamage("chest", 0, (damage/rangedprot_mod), 0, P.proj_data.hit_type)
+				src.update_burning(damage/rangedprot_mod)
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				src.changeStatus("radiation", damage SECONDS)
+				src.reagents?.add_reagent("radium", damage/4) //fuckit
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
-				if (P.proj_data.reagent_payload)
-					src.TakeDamage("chest", (damage/rangedprot), 0, 0, P.proj_data.hit_type)
-					if (isalive(src))
-						lastgasp()
-					src.reagents.add_reagent(P.proj_data.reagent_payload, 15/rangedprot)
-				else
+				if (!P.reagents)
 					src.take_toxin_damage(damage)
-				if(rangedprot > 1)
-					armor_msg = ", but your armor softens the hit!"
 
 	if (!P.proj_data.silentshot)
 		src.visible_message("<span class='alert'>[src] is hit by the [P.name]!</span>", "<span class='alert'>You are hit by the [P.name][armor_msg]!</span>")
@@ -1959,18 +1970,19 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/oldbloss = get_brute_damage()
 	var/oldfloss = get_burn_damage()
 	..()
-	SPAWN(0.1 SECONDS) //fix race condition
-		var/newbloss = get_brute_damage()
-		var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
-		if (reagents)
-			reagents.physical_shock((newbloss - oldbloss) * 0.15)
+	var/newbloss = get_brute_damage()
+	var/damage = ((newbloss - oldbloss) + (get_burn_damage() - oldfloss))
+	if (reagents)
+		reagents.physical_shock((newbloss - oldbloss) * 0.15)
 
-		if ((damage > 0) || W.force)
-			src.was_harmed(M, W)
+	if ((damage > 0) || W.force)
+		src.was_harmed(M, W)
 
 
 /mob/living/shock(var/atom/origin, var/wattage, var/zone = "chest", var/stun_multiplier = 1, var/ignore_gloves = 0)
 	if (!wattage)
+		return 0
+	if (check_target_immunity(src))
 		return 0
 	var/prot = 1
 
@@ -1980,9 +1992,9 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		var/obj/item/clothing/gloves/G = H.gloves
 		if (G && !ignore_gloves)
 			prot = (G.hasProperty("conductivity") ? G.getProperty("conductivity") : 1)
-		if (H.limbs.l_arm)
+		if (H.limbs.l_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.l_arm.siemens_coefficient)
-		if (H.limbs.r_arm)
+		if (H.limbs.r_arm && !ignore_gloves)
 			prot = min(prot,H.limbs.r_arm.siemens_coefficient)
 		if (prot <= 0.29)
 			return 0
@@ -2017,11 +2029,11 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	src.setStatus("defibbed", sqrt(shock_damage) SECONDS)
 	switch(shock_damage)
 		if (0 to 25)
-			playsound(src.loc, "sound/effects/electric_shock.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/electric_shock.ogg', 50, 1)
 		if (26 to 59)
-			playsound(src.loc, "sound/effects/elec_bzzz.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/elec_bzzz.ogg', 50, 1)
 		if (60 to 99)
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)  // begin the fun arcflash
+			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)  // begin the fun arcflash
 			boutput(src, "<span class='alert'><b>[origin] discharges a violent arc of electricity!</b></span>")
 			src.apply_flash(60, 0, 10)
 			if (H)
@@ -2029,7 +2041,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				H.bioHolder.mobAppearance.customization_first = new hair_type
 				H.set_face_icon_dirty()
 		if (100 to INFINITY)  // cogwerks - here are the big fuckin murderflashes
-			playsound(src.loc, "sound/effects/elec_bigzap.ogg", 40, 1)
+			playsound(src.loc, 'sound/effects/elec_bigzap.ogg', 40, 1)
 			playsound(src.loc, "explosion", 50, 1)
 			src.flash(60)
 			if (H)
@@ -2084,3 +2096,26 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 			return copytext(message, 2)
 	src.singing = 0
 	. =  message
+
+// can stumble or flip while drunk
+/mob/living/proc/can_drunk_act()
+	if (!src.canmove || !isturf(src.loc))
+		return FALSE
+	if (length(src.grabbed_by))
+		for (var/obj/item/grab/G in src.grabbed_by)
+			if (istype(G, /obj/item/grab/block))
+				continue
+			if (G.state > GRAB_PASSIVE)
+				return FALSE
+	return !src.lying && !((length(src.grabbed_by) || src.pulled_by) && src.hasStatus("handcuffed"))
+
+/mob/living/take_radiation_dose(Sv,internal=FALSE)
+	if(!src.lifeprocesses[/datum/lifeprocess/radiation]) //if we don't have the radiation lifeprocess, we're immune, so don't send any messages or burn us
+		return
+	var/actual_dose = ..()
+	if(actual_dose > 0.2 && !internal)
+		src.TakeDamage("All",0,20*clamp(actual_dose/4.0, 0, 1)) //a 2Sv dose all at once will badly burn you
+		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
+			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
+	else if((!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
+		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")

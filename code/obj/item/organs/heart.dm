@@ -10,7 +10,7 @@
 	desc = "Offal, just offal."
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 9.0
+	organ_holder_required_op_stage = 9
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
@@ -41,7 +41,7 @@
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
 			playsound(user, squeeze_sound, 30, 1)
-			logTheThing("chemistry", user, null, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
 			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
 
@@ -80,6 +80,11 @@
 		if (donor)
 			if (src.donor.reagents && src.reagents)
 				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
+
+			if (!ischangeling(donor) && !donor.nodamage)
+				donor.changeStatus("weakened", 8 SECONDS)
+				donor.losebreath += 20
+				donor.take_oxygen_deprivation(20)
 
 			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
 
@@ -188,10 +193,9 @@
 				H.blood_volume += converted_amt
 
 /obj/item/organ/heart/flock/special_desc(dist, mob/user)
-	if(isflock(user))
-		return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
 		<br><span class='bold'>ID:</span> Resource repository
 		<br><span class='bold'>Resources:</span> [src.resources]
 		<br><span class='bold'>###=-</span></span>"}
-	else
-		return null // give the standard description

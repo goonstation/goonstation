@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			if (reinforcement == 1)
 				A.set_reinforcement(M)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			src.deconstruct(src.reinforced ? 1 : null)
 			qdel(src)
@@ -86,12 +86,17 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return ..()
 
 	afterattack(atom/target, mob/user)
-		if (!isturf(target) || target:density)
+		if (!isturf(target) || target.density)
 			return ..()
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
 	attack_self(mob/user as mob)
-		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration), user)
+		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
+
+	mouse_drop(atom/movable/target)
+		. = ..()
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -108,6 +113,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 /obj/item/furniture_parts/table
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a table."
+	material_amt = 0.2
 
 	afterattack(atom/target, mob/user)
 		if (isturf(target) && target == get_turf(user))
@@ -292,20 +298,71 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
+	material_amt = 0.1
 
 //bookshelf part construction
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/plank))
 			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
 			if (!do_after(user, 2 SECONDS))
 				return
 			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			new /obj/item/furniture_parts/bookshelf(get_turf(src))
 			qdel(src)
 			qdel(W)
 		else
 			..()
+
+/* ------- Single Table Parts ------- */
+
+/obj/item/furniture_parts/endtable_classic
+	name = "vintage endtable parts"
+	desc = "A collection of parts that can be used to make a vintage endtable."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtableclassic_parts"
+	furniture_type = /obj/table/endtable_classic
+	furniture_name = "vintage endtable"
+
+/obj/item/furniture_parts/endtable_gothic
+	name = "gothic endtable parts"
+	desc = "A collection of parts that can be used to make a gothic endtable."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "endtablegothic_parts"
+	furniture_type = /obj/table/endtable_gothic
+	furniture_name = "gothic endtable"
+
+/obj/item/furniture_parts/podium_wood
+	name = "wooden podium parts"
+	desc = "A collection of parts that can be used to make a wooden podium."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwood_parts"
+	furniture_type = /obj/table/podium_wood
+	furniture_name = "wooden podium"
+
+/obj/item/furniture_parts/podium_wood/nt
+	icon_state = "podiumwoodnt_parts"
+	furniture_type = /obj/table/podium_wood/nanotrasen
+
+/obj/item/furniture_parts/podium_wood/syndie
+	icon_state = "podiumwoodsnd_parts"
+	furniture_type = /obj/table/podium_wood/syndicate
+
+/obj/item/furniture_parts/podium_white
+	name = "white podium parts"
+	desc = "A collection of parts that can be used to make a white podium."
+	icon = 'icons/obj/furniture/single_tables.dmi'
+	icon_state = "podiumwhite_parts"
+	furniture_type = /obj/table/podium_white
+	furniture_name = "wooden podium"
+
+/obj/item/furniture_parts/podium_white/nt
+	icon_state = "podiumwhitent_parts"
+	furniture_type = /obj/table/podium_white/nanotrasen
+
+/obj/item/furniture_parts/podium_white/syndie
+	icon_state = "podiumwhitesnd_parts"
+	furniture_type = /obj/table/podium_white/syndicate
 
 /* ---------- Stool Parts ---------- */
 /obj/item/furniture_parts/stool
@@ -569,7 +626,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return
 		var/mob/source = owner
 		// cirrfix: ghost drones should be able to build furniture now
-		if(istype(source))
+		if(istype(source) && !HAS_ATOM_PROPERTY(source, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING))
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()
@@ -644,11 +701,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, 1)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, 1)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

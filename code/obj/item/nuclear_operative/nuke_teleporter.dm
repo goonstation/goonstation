@@ -7,7 +7,7 @@
 	w_class = W_CLASS_SMALL
 
 	var/charges = 1
-	var/use_sound = "sound/machines/chime.ogg"
+	var/use_sound = 'sound/machines/chime.ogg'
 	var/atom/movable/the_bomb = null
 
 /obj/item/remote/nuke_summon_remote/attack_self(mob/user as mob)

@@ -24,7 +24,7 @@
 
 	var/x_occupied = 0
 	var/y_occupied = 0
-	var/datum/abilityHolder/composite_owner = 0
+	var/datum/abilityHolder/composite_owner = null
 	var/any_abilities_displayed = 0
 
 	var/cast_while_dead = 0
@@ -303,7 +303,7 @@
 		if (!usesPoints)
 			return 1
 		if (src.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			src.points = 0
 		if (cost > points)
 			boutput(owner, notEnoughPointsMessage)
@@ -399,6 +399,10 @@
 
 	proc/set_loc_callback(var/newloc)
 		.=0
+
+	///Returns the actual mob currently controlling this holder, in case src.owner and composite_owner.owner differ (eg flockmind in a drone)
+	proc/get_controlling_mob()
+		return src.composite_owner?.owner || src.owner
 
 /atom/movable/screen/ability
 	var/datum/targetable/owner
@@ -522,7 +526,7 @@
 		..()
 
 	proc/get_controlling_mob()
-		var/mob/M = owner.owner
+		var/mob/M = owner.get_controlling_mob()
 		if (!istype(M) || !M.client)
 			return null
 		return M
@@ -636,7 +640,7 @@
 		return
 
 	proc/get_controlling_mob()
-		var/mob/M = owner.holder.owner
+		var/mob/M = owner.holder.get_controlling_mob()
 		if (!istype(M) || !M.client)
 			return null
 		return M
@@ -692,7 +696,7 @@
 		var/datum/hud/abilityHud
 		if(owner.holder)
 			// for nice, well-behaved abilities that live in a holder
-			abilityHud = owner.holder.hud
+			abilityHud = owner.holder.composite_owner?.hud || owner.holder.hud
 		else
 			// for fucking deviant genetics abilities that know neither ethics nor morality
 			var/mob/M = get_controlling_mob()
@@ -723,11 +727,11 @@
 		last_y = pos_y
 
 	clicked(parameters)
-		if (!owner.holder || !owner.holder.owner || usr != owner.holder.owner)
+		if (!owner.holder || !owner.holder.owner || usr != owner.holder.get_controlling_mob())
 			boutput(usr, "<span class='alert'>You do not own this ability.</span>")
 			return
 		var/datum/abilityHolder/holder = owner.holder
-		var/mob/user = holder.owner
+		var/mob/user = holder.composite_owner?.owner || holder.owner
 
 		if(parameters["left"])
 			if (owner.targeted && user.targeting_ability == owner)
@@ -907,7 +911,7 @@
 		// to execute one ability multiple times. The checks hopefully make it a bit more difficult.
 		tryCast(atom/target, params)
 			if (!holder || !holder.owner)
-				logTheThing("debug", usr, null, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
+				logTheThing(LOG_DEBUG, usr, "orphaned ability clicked: [name]. ([holder ? "no owner" : "no holder"])")
 				return 1
 			if (src.holder.locked == 1 && src.ignore_holder_lock != 1)
 				boutput(holder.owner, "<span class='alert'>You're already casting an ability.</span>")
@@ -993,7 +997,7 @@
 				var/obj/item/grab/GD = M.equipped()
 
 				if (!GD || !istype(GD) || (!GD.affecting || !ismob(GD.affecting)))
-					boutput(M, __red("You need to grab hold of the target with your active hand first!"))
+					boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
 					return 0
 
 				var/mob/living/L = GD.affecting
@@ -1001,9 +1005,9 @@
 					if (GD.state >= state)
 						G = GD
 					else
-						boutput(M, __red("You need a tighter grip!"))
+						boutput(M, "<span class='alert'>You need a tighter grip!</span>")
 				else
-					boutput(M, __red("You need to grab hold of the target with your active hand first!"))
+					boutput(M, "<span class='alert'>You need to grab hold of the target with your active hand first!</span>")
 
 				return G
 
@@ -1022,10 +1026,10 @@
 								G = G2
 								break
 							else
-								boutput(M, __red("You need a tighter grip!"))
+								boutput(M, "<span class='alert'>You need a tighter grip!</span>")
 								return 0
 					if (isnull(G) || !istype(G))
-						boutput(M, __red("You need to grab hold of [target] first!"))
+						boutput(M, "<span class='alert'>You need to grab hold of [target] first!</span>")
 						return 0
 					else
 						return G
@@ -1094,12 +1098,13 @@
 		return holders[holders.len]
 
 	//return holder on success, null on fail
-	proc/addHolderInstance(var/datum/abilityHolder/N)
+	proc/addHolderInstance(var/datum/abilityHolder/N, keep_owner = FALSE)
 		for (var/datum/abilityHolder/H in holders)
 			if (H == N)
 				return
 		holders += N
-		if (N.owner != owner)
+		N.composite_owner = src
+		if (N.owner != owner && !keep_owner)
 			N.owner = owner
 		N.onAbilityHolderInstanceAdd()
 		updateButtons()
@@ -1112,7 +1117,7 @@
 	proc/removeHolder(holderType)
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
-				H.composite_owner = 0
+				H.composite_owner = null
 				holders -= H
 		updateButtons()
 
@@ -1186,15 +1191,18 @@
 		//var/style = "font-size: 7px;"
 
 		var/i = 0
+		var/longest_line = 0
 		for (var/datum/abilityHolder/H in holders)
 			if (H.topBarRendered && H.rendered)
 				var/list/stats = H.onAbilityStat()
 				for (var/x in stats)
+					var/line_length = length(x) + 1 + length(num2text(stats[x]))
+					longest_line = max(longest_line, line_length)
 					msg += "[x] [stats[x]]<br>"
 					i++
 
 		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
-
+		abilitystat.maptext_width = longest_line * 9 //font size is 9px
 		if (i > 2)
 			abilitystat.maptext_height = ((i+1) % 2) * 32
 			abilitystat.maptext_y = -abilitystat.maptext_height + 16
@@ -1308,7 +1316,7 @@
 	transferOwnership(var/newbody)
 		for (var/datum/abilityHolder/H in holders)
 			H.transferOwnership(newbody)
-		owner = newbody
+		..()
 
 	remove_unlocks()
 		for (var/datum/abilityHolder/H in holders)

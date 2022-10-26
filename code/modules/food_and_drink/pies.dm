@@ -1,4 +1,4 @@
-
+ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -12,7 +12,7 @@
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
 			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 			M.change_eye_blurry(rand(5,10))
 			M.take_eye_damage(rand(0, 2), 1)
 			if (prob(40))
@@ -26,7 +26,7 @@
 	icon_state = "pie"
 	splat = 1
 	needspoon = 1
-	amount = 3
+	bites_left = 3
 	throwforce = 0
 	force = 0
 
@@ -34,7 +34,7 @@
 	name = "apple pie"
 	desc = "Is there anything more Space-American?"
 	icon_state = "applepie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_apple"=15)
@@ -43,33 +43,18 @@
 	name = "key lime pie"
 	desc = "Tart, sweet, and with a dollop of cream on top."
 	icon_state = "limepie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
-	var/has_key = 0
-	var/static/had_key = 0
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=15)
 
-	New()
-		..()
-		if (prob(6) && !had_key)
-			had_key = 1
-			src.has_key = 1
-		return
 
-	heal(var/mob/M)
-		..()
-		if (has_key)
-			src.has_key = 0
-			M.visible_message("<span class='alert'>[M] pulls a key out of [src]!</span>","<span class='alert'>You discover an iron key in [src]! Gross!</span>")
-			new /obj/item/device/key/haunted(get_turf(src))
-		return
 
 /obj/item/reagent_containers/food/snacks/pie/lemon
 	name = "lemon meringue pie"
 	desc = "A fine use of fruit curd."
 	icon_state = "lemonpie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_lemon"=15)
@@ -78,7 +63,7 @@
 	name = "strawberry pie"
 	desc = "It smells like summertime memories."
 	icon_state = "strawberrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_strawberry"=15)
@@ -87,7 +72,7 @@
 	name = "pumpkin pie"
 	desc = "An autumn favourite."
 	icon_state = "pumpie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 
 /obj/item/reagent_containers/food/snacks/pie/cream
@@ -98,16 +83,16 @@
 	needspoon = 1
 	throwforce = 0
 	force = 0
-	amount = 2
+	bites_left = 2
 	heal_amt = 6
 
 /obj/item/reagent_containers/food/snacks/pie/anything
 	name = "anything pie"
 	desc = "An empty anything pie. You shouldn't be able to see this!"
 	icon_state = "pie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
-	use_bite_mask = 0
+	use_bite_mask = FALSE
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
@@ -117,24 +102,27 @@
 			else
 				randomContent = src
 
-			if (randomContent != src)
-				randomContent.throw_impact(hit_atom)
-
 			hit_atom.Attackby(randomContent, thr?.user)
 
 			if (ismob(hit_atom))
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 				var/mob/M = hit_atom
 				if (M == thr.user)
 					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
 					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
 
+	Exited(atom/movable/Obj, newloc)
+		. = ..()
+		if(!QDELETED(Obj))
+			Obj.visible_message("<span class='alert'>[Obj] dissolves completely upon leaving [src]!</span>")
+			qdel(Obj)
+
 /obj/item/reagent_containers/food/snacks/pie/slurry
 	name = "slurry pie"
 	desc = "Though dangerous to eat raw, the slurrypod produces a fine, tart pie noted for its curative properties."
 	icon_state = "slurrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 5
 	initial_volume = 30
 	initial_reagents = list("mutadone"=15)
@@ -144,7 +132,7 @@
 	name = "bacon pie"
 	desc = "Named in honor of Sir Francis Bacon, who tragically died as the result of an early experiment into the field of bacon ice cream."
 	icon_state = "baconpie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 6
 	initial_volume = 80
 	initial_reagents = list("porktonium"=75)
@@ -162,7 +150,7 @@
 	splat = 1
 	throwforce = 0
 	force = 0
-	amount = 3
+	bites_left = 3
 	heal_amt = 2
 	food_effects = list("food_sweaty_big","food_refreshed")
 	New()
@@ -175,17 +163,17 @@
 	desc = "Like a chocolate cake, but a pie, and also very different."
 	icon_state = "chocolatepie"
 	heal_amt = 6
-	amount = 3
+	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("sugar"=20,"hugs"=10)
-	food_effects = list("food_sweaty","food_refreshed", "food_sturdy")
+	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
 	icon_state = "chickenpie"
 	heal_amt = 6
-	amount = 3
+	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("chickensoup"=20)
 	food_effects = list("food_sweaty","food_hp_up_big","food_refreshed")
@@ -195,7 +183,7 @@
 	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
 	icon_state = "weedpie"
 	heal_amt = 4
-	amount = 3
+	bites_left = 3
 	initial_volume = 30
 	initial_reagents = list("THC"=20,"CBD"=20)
 	food_effects = list("food_sweaty","food_refreshed")
@@ -205,7 +193,7 @@
 	desc = "The snack that stares back."
 	icon_state = "fishpie"
 	heal_amt = 4
-	amount = 3
+	bites_left = 3
 	initial_volume = 30
 	food_effects = list("food_sweaty","food_rad_wick","food_refreshed")
 
@@ -213,7 +201,7 @@
 	name = "raspberry pie"
 	desc = "Those are fresh raspberries, too. Oh man."
 	icon_state = "raspberrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_raspberry"=15)
@@ -222,7 +210,7 @@
 	name = "blackberry pie"
 	desc = "The stains will be oh so worth it."
 	icon_state = "blackberrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_blackberry"=15)
@@ -231,7 +219,7 @@
 	name = "blueberry pie"
 	desc = "Blueberries cook up purple, who knew?"
 	icon_state = "blueberrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_blueberry"=15)
@@ -240,7 +228,7 @@
 	name = "cherry pie"
 	desc = "It looks so good, it brings a tear to you eye."
 	icon_state = "cherrypie"
-	amount = 3
+	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
 	initial_reagents = list("juice_cherry"=15)

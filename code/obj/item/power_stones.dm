@@ -30,10 +30,10 @@
 		ability = /obj/ability_button/stone_animate
 
 		//The stone requires a price
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(user.mind.karma <= 49)
 				boutput(user,"<span class='alert'><B>You are not a Just enough being. The stone finds you unworthy.</B></span>")
-				logTheThing("combat", user, null, "is gibbed by [src] at [log_loc(user)]")
+				logTheThing(LOG_COMBAT, user, "is gibbed by [src] at [log_loc(user)]")
 				user.gib()
 			else
 				return ..(user)
@@ -63,15 +63,15 @@
 		icon_state = "owlstone"
 		ability = /obj/ability_button/stone_owl
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if (ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if (istype(H.w_uniform, /obj/item/clothing/under/gimmick/owl) && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask))
 					return ..(user)
 				else
 					boutput(user,"<span class='alert'><B>The stone finds you unworthy.</B></span>")
-					playsound(user.loc, "sound/voice/animal/hoot.ogg", 100, 1)
-					logTheThing("combat", user, null, "is owlgibbed by [src] at [log_loc(user)]")
+					playsound(user.loc, 'sound/voice/animal/hoot.ogg', 100, 1)
+					logTheThing(LOG_COMBAT, user, "is owlgibbed by [src] at [log_loc(user)]")
 					user.owlgib()
 
 	//Gall
@@ -82,7 +82,7 @@
 		icon_state = "gallstone"
 		ability = /obj/ability_button/stone_gall
 
-		attack_hand(mob/user as mob)
+		attack_hand(mob/user)
 			if(!istype(user, /mob/living/carbon/human)) return
 			boutput(user,"<span class='alert'><B>God, holding it makes you feel sick.</B></span>")
 			user.vomit()

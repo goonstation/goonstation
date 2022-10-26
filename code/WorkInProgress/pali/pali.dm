@@ -20,8 +20,8 @@
 	name = "beepsky box"
 	desc = "A box of large Beepsky-shaped bullets"
 	icon_state = "lmg_ammo"
-	amount_left = 10.0
-	max_amount = 10.0
+	amount_left = 10
+	max_amount = 10
 	ammo_type = new/datum/projectile/special/spawner/beepsky
 
 	ammo_cat = AMMO_BEEPSKY
@@ -115,7 +115,7 @@
 	fits_under_table = 1
 	good_grip = 1
 	bird_call_msg = "honks"
-	bird_call_sound = "sound/voice/animal/goose.ogg"
+	bird_call_sound = 'sound/voice/animal/goose.ogg'
 	health_brute = 50
 	health_burn = 50
 	add_abilities = list(/datum/targetable/critter/peck,
@@ -466,3 +466,11 @@
 			if(prob(chance))
 				var/mob/living/carbon/human/normal/H = new(T)
 				H.JobEquipSpawned(job_name)
+
+
+
+
+/obj/storage/closet/extradimensional
+	New()
+		..()
+		src.setMaterial(getMaterial("negativematter"))

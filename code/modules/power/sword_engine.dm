@@ -37,7 +37,7 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full. [integrity_state ? "This engine, even with the metal debris removed, seems nigh unfixable" : "It looks quite broken"]. [core_inserted ? "It would be wise to repurpose it's core for something else, as it's still intact" : "The core is missing.."]."}
 
 
-/obj/machinery/power/sword_engine/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/power/sword_engine/attackby(obj/item/W, mob/user)
 	if (integrity_state == 0 && isweldingtool(W) && W:try_weld(user,1))
 		boutput(user, "<span class='notice'>You removed the mangled metal from the SWORD Engine!</span>")
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
@@ -52,7 +52,7 @@
 		if(integrity_state == 0)
 			boutput(user, "<span class='notice'>Pieces of mangled metal make screwing off the panel impossible!</span>")
 			return
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 100, 1)
 		var/action_buffer = 0
 		if(integrity_state == 1)
 			boutput(user, "<span class='notice'>You unscrew the panel!</span>")
@@ -70,7 +70,7 @@
 		if (!istype(src.loc, /turf/simulated/floor/))
 			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
 			return
-		playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 		var/turf/T = get_turf(user)
 		if(src.anchored == 0)
 			boutput(user, "<span class='notice'>Now securing the SWORD Engine.</span>")

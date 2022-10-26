@@ -91,11 +91,11 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/martian_screech.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/martian_screech.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> emits a psychic screech!"
 			if ("growl")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/screams/martian_growl.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/martian_growl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> gives a guttural psionic growl!"
 		return null
 
@@ -283,7 +283,7 @@ proc/martian_speak(var/mob/speaker, var/message as text, var/speak_as_admin=0)
 		..()
 		// TEMPORARY THING TO ESTABLISH THESE DUDES AS EXPLICITLY ANTAGS OK
 		SPAWN(1 DECI SECOND)
-			SHOW_MARTIAN_TIPS(src)
+			src.show_antag_popup("martian")
 			boutput(src, "<h2><font color=red>You are a Martian Infiltrator!</font></h2>")
 			boutput(src, "<font color=red>Find a safe place to start building a base with your teammates!</font>")
 			if(src.leader)

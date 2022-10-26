@@ -2,7 +2,7 @@
 /obj/item/sticker
 	name = "sticker"
 	desc = "You stick it on something, then that thing is even better, because it has a little sparkly unicorn stuck to it, or whatever."
-	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY
+	flags = FPRINT | TABLEPASS | CLICK_DELAY_IN_CONTENTS | USEDELAY | NOSPLASH
 	event_handler_flags = HANDLE_STICKER | USE_FLUID_ENTER
 	icon = 'icons/misc/stickers.dmi'
 	icon_state = "bounds"
@@ -28,9 +28,9 @@
 			return
 		if (isarea(A) || istype(A, /obj/item/item_box) || istype(A, /atom/movable/screen) || istype(A, /obj/ability_button))
 			return
-		user.tri_message("<b>[user]</b> sticks [src] to [A]!",\
-		user, "You stick [src] to [user == A ? "yourself" : "[A]"]!",\
-		A, "[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
+		user.tri_message(A, "<b>[user]</b> sticks [src] to [A]!",\
+			"You stick [src] to [user == A ? "yourself" : "[A]"]!",\
+			"[user == A ? "You stick" : "<b>[user]</b> sticks"] [src] to you[user == A ? "rself" : null]!")
 		var/pox = src.pixel_x
 		var/poy = src.pixel_y
 		DEBUG_MESSAGE("pox [pox] poy [poy]")
@@ -39,11 +39,11 @@
 				pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 				poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 				DEBUG_MESSAGE("pox [pox] poy [poy]")
-		src.stick_to(A, pox, poy)
+		src.stick_to(A, pox, poy, user)
 		user.u_equip(src)
 		return 1
 
-	proc/stick_to(var/atom/A, var/pox, var/poy)
+	proc/stick_to(var/atom/A, var/pox, var/poy, user)
 		if (!dont_make_an_overlay)
 			var/image/sticker = image('icons/misc/stickers.dmi', src.icon_state)
 			//sticker.layer = //EFFECTS_LAYER_BASE // I swear to fuckin god stop being under CLOTHES you SHIT
@@ -69,6 +69,8 @@
 		src.set_loc(A)
 
 		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		add_fingerprint(user)
+		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
@@ -114,13 +116,14 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "postit"
 	dont_make_an_overlay = 1
+	vis_flags = VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
 	var/words = ""
 	var/max_message = 128
 
 	get_desc()
 		. = "<br><span class='notice'>It says:</span><br><blockquote style='margin: 0 0 0 1em;'>[words]</blockquote>"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)
@@ -134,7 +137,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = user
 		if (istype(W, /obj/item/stamp))
 
@@ -172,7 +175,7 @@
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (src.icon_state == initial(src.icon_state))
 				var/search_t = lowertext(t)
@@ -419,7 +422,7 @@
 			src.camera = new /obj/machinery/camera (src)
 			src.camera.c_tag = src.camera_tag
 			src.camera.network = src.camera_network
-			src.camera.camera_status = 0
+			src.camera.set_camera_status(FALSE)
 			src.camera_tag = src.name
 
 		if (src.has_radio)
@@ -434,7 +437,9 @@
 	attack_self(mob/user as mob)
 		var/choice = "Set radio"
 		if (src.has_camera)
-			choice = alert(user, "What would you like to do with [src]?",,"Set radio", "Set camera")
+			choice = tgui_alert(user, "What would you like to do with [src]?", "Configure sticker", list("Set radio", "Set camera"))
+		if (!choice)
+			return
 		if (choice == "Set radio")
 			src.set_internal_radio(user)
 		else
@@ -444,7 +449,7 @@
 		if (src.radio)
 			src.loc.open_to_sound = 0
 		if (src.camera)
-			src.camera.camera_status = 0
+			src.camera.set_camera_status(FALSE)
 			src.camera.c_tag = src.camera_tag
 		if(!isnull(pinpointer_category))
 			STOP_TRACKING_CAT(pinpointer_category)
@@ -464,11 +469,10 @@
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		if (src.camera)
 			src.camera.c_tag = "[src.camera_tag] ([A.name])"
-			src.camera.camera_status = 1.0
-			src.camera.updateCoverage()
+			src.camera.set_camera_status(TRUE)
 		if (src.radio)
 			src.radio.invisibility = INVIS_ALWAYS
-		logTheThing(ismob(A) ? "combat" : "station", user, A, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
+		logTheThing(ismob(A) ? LOG_COMBAT : LOG_STATION, user, "places a spy sticker on [constructTarget(A,"combat")] at [log_loc(user)].")
 
 		..()
 
@@ -596,7 +600,7 @@
 ABSTRACT_TYPE(/obj/item/sticker/glow)
 /obj/item/sticker/glow
 	name = "glow sticker"
-	desc = "A sticker that has been egineered to self-illuminate when stuck to things."
+	desc = "A sticker that has been engineered to self-illuminate when stuck to things."
 	dont_make_an_overlay = TRUE
 	icon_state = "glow"
 	var/datum/component/loctargeting/simple_light/light_c
@@ -611,7 +615,7 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, brightness*255)
 		light_c.update(0)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.lastattacked = user
 		if (src.attached)
 			if (user.a_intent == INTENT_HELP)

@@ -56,26 +56,26 @@
 		if(isnull(src.fingerprints))
 			src.fingerprints = list()
 		if (H.gloves) // Fixed: now adds distorted prints even if 'fingerprintslast == ckey'. Important for the clean_forensic proc (Convair880).
-			var/gloveprints = H.gloves.distort_prints(H.bioHolder.uid_hash, 1)
+			var/gloveprints = H.gloves.distort_prints(H.bioHolder.fingerprints, 1)
 			if (gloveprints)
 				src.fingerprints -= gloveprints
 				if (length(src.fingerprints) >= 6) // limit fingerprints in the list to 6
 					src.fingerprints -= src.fingerprints[1]
 				src.fingerprints += gloveprints
 				return
-		src.fingerprints -= H.bioHolder.uid_hash
+		src.fingerprints -= H.bioHolder.fingerprints
 		if(length(src.fingerprints) >= 6)
 			src.fingerprints -= src.fingerprints[1]
-		src.fingerprints += H.bioHolder.uid_hash
+		src.fingerprints += H.bioHolder.fingerprints
 
 // WHAT THE ACTUAL FUCK IS THIS SHIT
 // WHO THE FUCK WROTE THIS
 /atom/proc/add_blood(atom/source, var/amount = 5)
-//	if (!( isliving(M) ) || !M.blood_id)
-//		return 0
-	if (!(src.flags& FPRINT))
+	if (!(src.flags & FPRINT))
 		return
 	var/mob/living/L = source
+	if (istype(L) && !L.can_bleed)
+		return
 	var/b_uid = "--unidentified substance--"
 	var/b_type = "--unidentified substance--"
 	var/blood_color = DEFAULT_BLOOD_COLOR
@@ -197,8 +197,7 @@
 		if (isobserver(src) || isintangible(src) || iswraith(src)) // Just in case.
 			return
 
-		if (src.color) //wash off paint! might be dangerous, so possibly move this check into humans only if it causes problems with critters
-			src.color = initial(src.color)
+		src.remove_filter(list("paint_color", "paint_pattern")) //wash off any paint
 
 		if (ishuman(src))
 			var/mob/living/carbon/human/M = src
@@ -292,6 +291,8 @@
 	if (!islist(src.tracked_blood))
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
+		return
+	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
 		return
 	var/turf/T = get_turf(src)
 	var/obj/decal/cleanable/blood/dynamic/tracks/B = null
