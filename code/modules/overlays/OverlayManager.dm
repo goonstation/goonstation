@@ -430,6 +430,25 @@
 
 		return ..()
 
+/datum/overlayComposition/blinded_slime
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/knockout2t.dmi'
+		dither.d_icon_state = "knockout2t"
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		dither.d_screen_loc = "CENTER-7,CENTER-7"
+		definitions.Add(dither)
+
+		var/datum/overlayDefinition/meaty = new()
+		meaty.d_icon = 'icons/effects/overlays/meatyC.dmi'
+		meaty.d_icon_state = "meatyC"
+		meaty.d_blend_mode = 2
+		meaty.d_alpha = 30
+		meaty.d_color = "#07a515"
+		definitions.Add(meaty)
+		return ..()
+
 /datum/overlayComposition/shuttle_warp
 	var/warp_dir = "warp"
 	New()

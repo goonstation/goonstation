@@ -53,7 +53,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 
 /datum/targetable/brain_slug/infest_host
 	name = "Infest a host"
-	desc = "Take control of a living animal host or a freshly dead human."
+	desc = "Enter the body of a living animal host or a freshly dead human."
 	icon_state = "infest_host"
 	cooldown = 30 SECOND
 	targeted = 1
@@ -279,10 +279,12 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 			boutput(M, "<span class='notice'>You begin to take over [the_mob].</span>")
 			spawn(3 SECONDS)
 				if (!the_mob || !the_slug) return
+				if (the_slug.loc != the_mob) return
 				violent_standup_twitch(the_mob)
 				playsound(M.loc, 'sound/effects/bones_break.ogg', 30, 1)
 				spawn(2 SECONDS)
 					if (!the_mob || !the_slug) return
+					if (the_slug.loc != the_mob) return
 					the_slug.mind?.transfer_to(the_mob)
 					the_mob.full_heal()
 		else

@@ -611,7 +611,8 @@
 						break
 			//If they do, roll a chance to do some hint
 			if (AH)
-				AH.points --
+				//under consideration
+				//AH.points --
 				if (AH.points > 350)
 					if (prob(4))
 						if(prob(50))

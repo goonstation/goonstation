@@ -1159,9 +1159,13 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			var/mob/M = hit
 			if(hit == P.special_data["owner"]) return 1
 			M.changeStatus("slowed", 7 SECONDS)
+			M.change_eye_blurry(5)
+			M.addOverlayComposition(/datum/overlayComposition/blinded_slime)
+			M.updateOverlaysClient(M.client)
+			SPAWN(8 SECONDS)
+				M.removeOverlayComposition(/datum/overlayComposition/blinded_slime)
+				M.updateOverlaysClient(M.client)
 			M.remove_stamina(src.stamina_cost)
-			if (M.reagents)
-				M.reagents.add_reagent("neurodepressant", 5)
 		else if (istype(hit, /obj/machinery/door))
 			var/obj/machinery/door/target = hit
 			if (!target.hardened)
