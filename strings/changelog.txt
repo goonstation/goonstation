@@ -1,6 +1,10 @@
 
 (t)wed oct 26 22
 (u)Kubius
+(p)11551
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Mining fabricators are now capable of manufacturing dive suits while on an underwater map.
+(u)Kubius
 (p)11564
 (e)🆕🗺|C-Feature, A-Mapping
 (*)Fifth fixbatch for Nadir, prominently including a third Janitor slot, removal of a nonstandard Security slot, and inner maintenance camera coverage adjustment. The Research hall is no longer radstorm immune.
