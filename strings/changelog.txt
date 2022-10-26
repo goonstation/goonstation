@@ -1,5 +1,9 @@
 
 (t)wed oct 26 22
+(u)ZWRh3
+(p)11605
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fixed an exploit which allowed flashes to stun at twice the intended speed.
 (u)TDHooligan
 (p)11607
 (e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
