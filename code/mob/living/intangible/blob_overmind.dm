@@ -233,14 +233,14 @@
 		else
 			stat("Generation Rate:", "[base_gen_rate + gen_rate_bonus - gen_rate_used]/[base_gen_rate + gen_rate_bonus] BP")
 
-		stat("Blob Size:", blobs.len)
-		stat("Total spreads:", total_placed)
-		stat("Evo Points:", evo_points)
-		stat("Next Evo Point at size:", next_evo_point)
-		stat("Total spreads needed for additional point:", next_pity_point)
-		stat("Living nuclei:", nuclei.len)
-		stat("Unplaced extra nuclei:", extra_nuclei)
-		stat("Next Extra Nucleus at size:", next_extra_nucleus)
+		stat("Blob Size:", "[blobs.len]")
+		stat("Total spreads:", "[total_placed]")
+		stat("Evo Points:", "[evo_points]")
+		stat("Next Evo Point at size:", "[next_evo_point]")
+		stat("Total spreads needed for additional point:", "[next_pity_point]")
+		stat("Living nuclei:", "[nuclei.len]")
+		stat("Unplaced extra nuclei:", "[extra_nuclei]")
+		stat("Next Extra Nucleus at size:", "[next_extra_nucleus]")
 
 	Login()
 		..()

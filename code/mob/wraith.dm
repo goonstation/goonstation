@@ -150,7 +150,7 @@
 
 	Stat()
 		..()
-		stat("Health:", src.health)
+		stat("Health:", "[src.health]")
 
 	Life(parent)
 		if (..(parent))
