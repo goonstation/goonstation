@@ -55,7 +55,6 @@
 		uplink.setup(src.owner, uplink_source)
 
 		// step 3 of uplinkification: inform the player about it and store the code in their memory
-		var/uplink_message
 		if (istype(uplink_source, /obj/item/device/pda2))
 			boutput(H, "The Syndicate have cunningly disguised an uplink as your [uplink_source.name] [loc_string]. Simply enter the the code <b>\"[uplink.lock_code]\"</b> as the ringtone in its Messenger app to unlock its hidden features.")
 			logTheThing(LOG_DEBUG, H, "Traitor PDA uplink created: [uplink_source.name]. Location given: [loc_string]. Code: [uplink.lock_code]")
