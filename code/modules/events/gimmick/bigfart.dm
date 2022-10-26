@@ -160,8 +160,6 @@
 	else
 		H.changeStatus("weakened", 1 DECI SECOND)
 	H.force_laydown_standup()
-	if(!severed_something)
-		H.emote("scream")
 
 /// Returns 0 if it cant be severed like this, 1 if it always gets severed, or 2 if it *sometimes* gets severed
 /proc/ass_explosion_limb_success(var/obj/item/parts/L)
@@ -279,7 +277,6 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] rips free from its socket!</span>")
 				else
 					boutput(H, "<span class='notification'>...but it slips, only managing to rip out a clump of hair!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)
@@ -294,7 +291,6 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] breaks off at the [armleg == "arm" ? "shoulder" : "hip"]!</span>")
 				else
 					boutput(H, "<span class='notification'>...but it slips off the smooth stony finish of [ch ? "our" : "your"] [L]!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)
@@ -323,7 +319,6 @@
 					boutput(H, "<span class='alert'>[ch ? "Our" : "Your"] [L] rips free from its socket!</span>")
 				else
 					boutput(H, "<span class='notification'>...but [ch ? "our" : "your"] [armleg == "arm" ? "shoulder" : "hip"] manages to hold it on!</span>")
-					H.emote("scream")
 			else
 				boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 				if(severed)
