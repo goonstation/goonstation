@@ -7395,6 +7395,7 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/machinery/magnet_chassis,
+/obj/machinery/mining_magnet,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 10;
 	icon_state = "catwalk_cross"
@@ -10794,7 +10795,6 @@
 /area/pod_wars/spacejunk/fstation/mess)
 "OM" = (
 /obj/rack,
-/obj/item/magnet_parts/construction,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team2/mining)
 "ON" = (
@@ -10931,7 +10931,6 @@
 /area/space)
 "Pq" = (
 /obj/rack,
-/obj/item/magnet_parts/construction,
 /turf/unsimulated/floor/yellow/side,
 /area/pod_wars/team1/mining)
 "Pr" = (
@@ -11031,6 +11030,9 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/machinery/magnet_chassis{
+	dir = 8
+	},
+/obj/machinery/mining_magnet{
 	dir = 8
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -13711,6 +13713,10 @@
 	},
 /turf/simulated/floor/white,
 /area/pod_wars/spacejunk/fstation/medbay)
+"ZO" = (
+/obj/landmark/magnet_center,
+/turf/space,
+/area/space)
 "ZQ" = (
 /obj/stool/bed,
 /obj/window/cubicle{
@@ -30884,7 +30890,7 @@ JW
 JW
 JW
 JW
-JW
+ZO
 JW
 JW
 JW
@@ -239639,7 +239645,7 @@ JW
 JW
 JW
 JW
-JW
+ZO
 JW
 JW
 JW
