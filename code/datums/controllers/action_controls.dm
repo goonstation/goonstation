@@ -1790,6 +1790,9 @@ var/datum/action_controller/actions
 		src.mob_owner = owner
 		syringe_mode = S.mode
 
+		// only created if we're drawing blood from someone else
+		logTheThing(LOG_COMBAT, mob_owner, "starts trying to draw blood from [target].")
+
 		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || mob_owner.equipped() != S)
 			interrupt(INTERRUPT_ALWAYS)
 			return

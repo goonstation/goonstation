@@ -201,8 +201,6 @@
 						patch_name += "patch"
 						target.name = patch_name
 
-		return
-
 	proc/syringe_action(mob/user, mob/target)
 		switch(src.mode)
 			if(S_DRAW)
