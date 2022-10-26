@@ -1,5 +1,9 @@
 
 (t)wed oct 26 22
+(u)Wisemonster
+(p)11553
+(e)🗺💅|A-Mapping, C-QoL
+(+)Mechanics storage has been modified on cog1 to now be merged with the engineering power room.
 (u)Kubius
 (p)11551
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
