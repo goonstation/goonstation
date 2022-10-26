@@ -40897,11 +40897,6 @@
 /area/station/crew_quarters/quarters_east)
 "etO" = (
 /obj/machinery/door/airlock/pyro/external,
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
 	name = "Door-linked Atmospheric Forcefield";
@@ -48068,11 +48063,6 @@
 "lpu" = (
 /obj/disposalpipe/segment/bent/south,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/obj/cable{
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
@@ -53845,11 +53835,6 @@
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/station/crew_quarters/quarters_south)
 "qJq" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -55731,6 +55716,10 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/south)
+"sFw" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/caution/corner/ne,
+/area/station/engine/gas)
 "sFD" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -104369,7 +104358,7 @@ aHq
 mhp
 aHq
 aHq
-pGN
+sFw
 aNM
 yep
 aHq
