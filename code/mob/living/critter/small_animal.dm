@@ -1455,11 +1455,12 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		src.UpdateOverlays(overlay_eyes, "eyes")
 
 	death()
-		src.ClearAllOverlays()
-		//appears to be missing a dead colorkey
-		//var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
-		//overlay.color = fur_color
-		//src.UpdateOverlays(overlay, "hair")
+		can_lie = 0
+		if (fur_color != 0)
+			src.ClearAllOverlays()
+			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
+			overlay.color = fur_color
+			src.UpdateOverlays(overlay, "hair")
 		..()
 
 
@@ -1485,6 +1486,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if ("scream","chitter")
 				return 2
 		return ..()
+
+	attack_hand(mob/living/M)
+		if (ishuman(M) && M.a_intent == INTENT_HARM && prob(95))
+			if(isdead(src))
+				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
+				return
+			else
+				src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
+				src.death()
+				return
+		..()
+		. = ..()
 
 /* =================================================== */
 /* -------------------- Scorpion --------------------- */
