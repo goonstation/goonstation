@@ -511,9 +511,14 @@ var/reverse_mode = 0
 	anchored = 1
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
+	var/image/my_image = null
 	var/weapon_name = null
 	///Does this hallucination constantly whack you
 	var/should_attack = TRUE
+	///Should this attacker try to load a custom movement state from the file
+	var/has_movement_state = FALSE
+	///Horrible hack to make movement states work, copy the movement state into this file if you want it to work
+	var/movement_state_file = 'icons/misc/hallucination_movestates.dmi'
 	event_handler_flags = USE_FLUID_ENTER
 
 	proc/get_name()
@@ -542,6 +547,13 @@ var/reverse_mode = 0
 		fake_icon_state = "legworm"
 	handspider
 		fake_icon_state = "handspider"
+
+	eyespider
+		fake_icon_state = "eyespider"
+		has_movement_state = TRUE
+	buttcrab
+		fake_icon_state = "buttcrab"
+		has_movement_state = TRUE
 	bat
 		fake_icon_state = "bat"
 		get_name()
@@ -566,6 +578,11 @@ var/reverse_mode = 0
 		fake_icon_state = "capybara"
 		should_attack = FALSE
 
+	frog
+		fake_icon_state = "frog"
+		should_attack = FALSE
+		has_movement_state = TRUE
+
 	disposing()
 		my_target = null
 		. = ..()
@@ -585,14 +602,26 @@ var/reverse_mode = 0
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
+//hack to make movement states work
+/obj/fake_attacker/Move()
+	if (..() && src.has_movement_state)
+		src.my_target.client?.images.Remove(src.my_image)
+		src.my_image = image(icon = src.movement_state_file, loc = src, icon_state = src.fake_icon_state)
+		src.my_target << src.my_image
+		SPAWN(src.glide_size)
+			src.my_target.client?.images.Remove(src.my_image)
+			src.my_image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+			src.my_target << src.my_image
+
+
 /obj/fake_attacker/New(location, target)
 	..()
 	SPAWN(30 SECONDS)	qdel(src)
 	src.name = src.get_name()
 	src.my_target = target
 	if (src.fake_icon && src.fake_icon_state)
-		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
-		target << image
+		src.my_image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+		target << my_image
 	step_away(src,my_target,2)
 	process()
 
