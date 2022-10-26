@@ -621,6 +621,8 @@
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					P.unlocked = !P.unlocked
+					if(!P.unlocked)
+						P.loading = FALSE
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
@@ -637,7 +639,7 @@
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id().registered == P.owner || !P.owner)
+				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(R.product_path == text2path(params["target"]))
 							P.promoimage = R.icon
