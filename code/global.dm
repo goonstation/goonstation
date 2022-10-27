@@ -511,7 +511,7 @@ var/global
 	hardRebootFilePath = "data/hard-reboot"
 
 	/// The map object used to display the AI station map
-	obj/station_map/ai_station_map
+	obj/minimap/ai/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
