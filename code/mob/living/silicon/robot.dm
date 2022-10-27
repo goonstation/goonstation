@@ -2134,6 +2134,7 @@
 	verb/cmd_state_standard_laws()
 		set category = "Robot Commands"
 		set name = "State Standard Laws"
+		logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 		src.say("1. You may not injure a human being or cause one to come to harm.")
 		sleep(1 SECOND)
 		src?.say("2. You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
@@ -2158,6 +2159,7 @@
 				return
 			laws = src.law_rack_connection.format_for_irc()
 
+		logTheThing(LOG_SAY, usr, "states all their current laws.")
 		for (var/number in laws)
 			src.say("[number]. [laws[number]]")
 			sleep(1 SECOND)
