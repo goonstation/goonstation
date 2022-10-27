@@ -373,16 +373,14 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(cargo_index || manual_receive)
 			var/obj/inbound_target
-			var/was_manual = FALSE //failed manual receive is returned to the direct queue, instead of shipping market pending crates
 			if(manual_receive)
 				inbound_target = manual_receive
-				was_manual = TRUE
 			else if(shippingmarket.pending_crates[cargo_index])
 				inbound_target = shippingmarket.pending_crates[cargo_index]
 			else
 				return
 			if(inbound_target)
-				receive_a_thing(netnum,inbound_target,was_manual)
+				receive_a_thing(netnum,inbound_target,manual_receive)
 		else
 			send_a_thing(netnum)
 
@@ -437,7 +435,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.is_transceiving = FALSE
 
 
-	proc/receive_a_thing(var/netnumber, var/atom/movable/thing2get, var/was_manual = FALSE)
+	proc/receive_a_thing(var/netnumber, var/atom/movable/thing2get, var/manual_receive = null)
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
@@ -461,7 +459,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 					showswirl(src.loc)
 					use_power(200) //most cost is at the array
 				else
-					if(was_manual)
+					if(manual_receive)
 						transception_array.direct_queue += thing2get
 					else
 						shippingmarket.pending_crates.Add(thing2get)
