@@ -270,7 +270,6 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()

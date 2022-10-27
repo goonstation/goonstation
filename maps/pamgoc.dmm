@@ -12352,7 +12352,10 @@
 "ats" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -34597,7 +34600,10 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/west)
 "boF" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1;
+	
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 2;
@@ -63992,7 +63998,10 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},

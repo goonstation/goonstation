@@ -131,7 +131,6 @@ datum
 							H.TakeDamage("chest", 0, 5, 0, DAMAGE_BURN)
 						else
 							H.TakeDamage("chest", 0, 2, 0, DAMAGE_BURN)
-						H.emote("scream")
 						if (cauterised)
 							boutput(H, "<span class='notice'>The silver nitrate burns like hell as it cauterises some of your wounds.</span>")
 						else
@@ -1754,17 +1753,12 @@ datum
 					return
 				if (method == TOUCH)
 					. = 0 // for depleting fluid pools
-				if(!ON_COOLDOWN(M, "ants_scream", 3 SECONDS))
-					boutput(M, "<span class='alert'><b>OH SHIT ANTS!!!!</b></span>")
-					M.emote("scream")
 				random_brute_damage(M, 4)
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
 				random_brute_damage(M, 2 * mult)
 				..()
-				return
 
 		spiders
 			name = "spiders"
@@ -1834,7 +1828,6 @@ datum
 					"<span class='alert'><b>[pick("T", "It feels like t", "You feel like t", "Oh shit t", "Oh fuck t", "Oh god t")]here's something [pick("crawling", "wriggling", "scuttling", "skittering")] in your [pick("blood", "veins", "stomach")]!</b></span>")
 				else if (prob(10))
 					random_brute_damage(M, 5 * mult)
-					M.emote("scream")
 					M.emote("twitch")
 					M.setStatusMin("weakened", 2 SECONDS * mult)
 					M.visible_message("<span class='alert'><b>[M.name]</b> tears at their own skin!</span>",\

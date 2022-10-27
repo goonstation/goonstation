@@ -12762,7 +12762,10 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aCa" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/south,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 2;
+	
+	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aCb" = (
@@ -18983,7 +18986,10 @@
 	icon_state = "fdoor0";
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/delivery,
 /area/station/security/brig)
 "aPM" = (
@@ -24463,7 +24469,10 @@
 	},
 /area/station/medical/medbay/pharmacy)
 "bbS" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4;
+	
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 4;
@@ -39914,7 +39923,10 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bKF" = (
-/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/east,
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "bKG" = (
@@ -41837,7 +41849,10 @@
 /area/station/science/lab)
 "bOl" = (
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/tank/west,
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bOm" = (
@@ -43836,7 +43851,10 @@
 /turf/simulated/floor/grime,
 /area/station/science/lab)
 "bSl" = (
-/obj/machinery/atmospherics/pipe/tank/west,
+/obj/machinery/atmospherics/pipe/tank{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/bot,
 /area/station/science/lab)
 "bSm" = (
@@ -45773,15 +45791,24 @@
 	},
 /area/research_outpost/chamber)
 "bWr" = (
-/obj/machinery/atmospherics/pipe/vent/east,
+/obj/machinery/atmospherics/pipe/vent{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWs" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWt" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10;
+	
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -45933,21 +45960,30 @@
 	},
 /area/research_outpost/chamber)
 "bWJ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 5;
+	
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/engine,
 /area/research_outpost/chamber)
 "bWK" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/engine{
 	icon_state = "engine_caution_corners2";
 	dir = 6
 	},
 /area/research_outpost/chamber)
 "bWL" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /obj/machinery/light{
 	dir = 4;
 	icon_state = "tube1";
@@ -45960,7 +45996,10 @@
 	},
 /area/research_outpost/chamber)
 "bWM" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10;
+	
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
 "bWN" = (
@@ -46053,7 +46092,10 @@
 	},
 /area/research_outpost/chamber)
 "bWZ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1;
+	
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/research_outpost)
 "bXa" = (
@@ -46242,7 +46284,10 @@
 /turf/simulated/floor/wood,
 /area/research_outpost)
 "bXw" = (
-/obj/machinery/atmospherics/portables_connector/north,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/plating,
 /area/research_outpost)
 "bXx" = (

@@ -807,7 +807,6 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
-		return
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2187,8 +2186,8 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 5 SECONDS)
+			hit.force_laydown_standup()
 			break
 		return 0
 
