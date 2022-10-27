@@ -251,6 +251,9 @@ To remove:
 //-------------------- OBJ PROPS ------------------------
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
+//-------------------- ITEM PROPS -----------------------
+#define PROP_ITEM_CONTRABAND_FREE(x) x("contraband_free", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Item is considered to have a contraband value of 0
+
 //------------------- MOVABLE PROPS ---------------------
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------

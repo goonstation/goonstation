@@ -483,44 +483,6 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
-
-			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
-			//cogwerks note for drsingh: this was causing infinite server-killing problems
-			//someone brought a couple pieces of cheese into chemistry
-			//chlorine trifluoride foam set the cheese on fire causing it to releasee cheese smoke
-			//creating a dozen more cheeses on the floor
-			//which would catch on fire, releasing more cheese smoke
-			//i'm sure you can see where that is going
-			//this will happen with any reagents that create more reagent-containing items on turf reactions
-			var/location = get_turf(src)
-			var/max_vol = reagents.maximum_volume
-			var/rname = reagents.get_master_reagent_name()
-			var/color = reagents.get_master_color(1)
-			var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-			if (color)
-				overlay.Blend(color,ICON_MULTIPLY)
-			var/image/I = image(overlay)
-			I.pixel_x = -32
-			I.pixel_y = -32
-
-			var/the_dir = NORTH
-			for(var/i=0, i<8, i++)
-				var/obj/chem_smoke/C = new/obj/chem_smoke(location, reagents, max_vol)
-				C.overlays += I
-				if (rname) C.name = "[rname] smoke"
-				SPAWN(0)
-					var/my_dir = the_dir
-					var/my_time = rand(80,110)
-					var/my_range = 3
-					SPAWN(my_time) qdel(C)
-					for(var/b=0, b<my_range, b++)
-						sleep(1.5 SECONDS)
-						if (!C) break
-						step(C,my_dir)
-						C.expose()
-				the_dir = turn(the_dir,45) */
-
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -533,6 +495,9 @@
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
+
+/obj/item/proc/get_contraband()
+	return HAS_ATOM_PROPERTY(src, PROP_ITEM_CONTRABAND_FREE) ? 0 : src.contraband
 
 /obj/item/proc/update_stack_appearance()
 	return

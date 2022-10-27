@@ -3162,38 +3162,38 @@
 				if (istype(perp.l_hand))
 					if (istype(perp.l_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.l_hand.contraband
+							. += perp.l_hand.get_contraband()
 
 				if (istype(perp.r_hand))
 					if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
 						if(!has_carry_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 					else // not carrying a gun, but potential contraband?
 						if(!has_contraband_permit)
-							. += perp.r_hand.contraband
+							. += perp.r_hand.get_contraband()
 
 				if (istype(perp.belt))
 					if (istype(perp.belt, /obj/item/gun/))
 						if (!has_carry_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 					else
 						if (!has_contraband_permit)
-							. += perp.belt.contraband * 0.5
+							. += perp.belt.get_contraband() * 0.5
 
 				if (istype(perp.wear_suit))
 					if (!has_contraband_permit)
-						. += perp.wear_suit.contraband
+						. += perp.wear_suit.get_contraband()
 
 				if (istype(perp.back))
 					if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
 						if (!has_carry_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 					else // at moment of doing this we don't have other contraband back items, but maybe that'll change
 						if (!has_contraband_permit)
-							. += perp.back.contraband * 0.5
+							. += perp.back.get_contraband() * 0.5
 
 				if(perp.mutantrace && perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
