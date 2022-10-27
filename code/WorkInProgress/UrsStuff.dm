@@ -50,3 +50,5 @@
 	name = "\improper Knitting Supplies"
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
+
+/mob/living/critter/robotic/bot/engibot

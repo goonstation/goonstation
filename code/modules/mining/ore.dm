@@ -8,7 +8,7 @@
 	//metal = 1
 	//conductor = 1
 	New()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0, copy = FALSE)
 		return ..()
 
 /datum/ore
@@ -62,7 +62,7 @@
 	output = /obj/item/raw_material/molitz
 	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
-	event_chance = 12
+	event_chance = 20
 	hardness_mod = 1
 	mining_health = 160
 
@@ -209,6 +209,7 @@
 	events = list(/datum/ore/event/loot_crate)
 	tiles_per_rock_min = 2
 	tiles_per_rock_max = 8
+	event_chance = 1
 	hardness_mod = 2
 	rarity_tier = 3
 	amount_per_tile_min = 1
@@ -246,6 +247,7 @@
 	name = "nanite cluster"
 	output = /obj/item/material_piece/cloth/carbon
 	events = list(/datum/ore/event/loot_crate)
+	event_chance = 1
 	tiles_per_rock_min = 5
 	tiles_per_rock_max = 15
 	hardness_mod = 2

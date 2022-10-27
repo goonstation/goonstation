@@ -19,10 +19,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 	is_npc = 1
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if (no_logs != 1)
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
 	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"

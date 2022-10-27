@@ -26,7 +26,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "flamethrower_no_oxy_no_fuel"
 	item_state = "flamethrower0"
 	desc = "You are a firestarter!"
@@ -76,7 +76,7 @@ A Flamethrower in various states of assembly
 		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
-	canshoot()
+	canshoot(mob/user)
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
@@ -119,7 +119,7 @@ A Flamethrower in various states of assembly
 		if(!P.proj_data)
 			return
 
-		if(!canshoot())
+		if(!canshoot(null)) //null because I can't be assed
 			return
 
 		var/list/P_special_data = P.special_data
@@ -177,7 +177,7 @@ A Flamethrower in various states of assembly
 /obj/item/gun/flamethrower/assembled
 	name = "flamethrower"
 	icon = 'icons/obj/items/weapons.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	desc = "You are a firestarter!"
 	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
 	force = 3

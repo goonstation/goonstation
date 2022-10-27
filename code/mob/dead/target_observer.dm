@@ -120,6 +120,15 @@
 		if (isobj(target))
 			src.RegisterSignal(target, list(COMSIG_PARENT_PRE_DISPOSING), .verb/stop_observing)
 
+	click(atom/target, params, location, control)
+		if(!isnull(target) && (target.flags & TGUI_INTERACTIVE))
+			if(ismob(src.target))
+				var/mob/mob_target = src.target
+				for(var/datum/tgui/ui in mob_target.tgui_open_uis)
+					if(ui.src_object == target)
+						return target.ui_interact(src)
+		return ..()
+
 
 	verb
 		stop_observing()

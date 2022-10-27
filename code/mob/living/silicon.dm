@@ -46,6 +46,7 @@
 	else
 		src.law_rack_connection = ticker?.ai_law_rack_manager.default_ai_rack
 		logTheThing(LOG_STATION, src, "New cyborg [src] connects to default rack [constructName(src.law_rack_connection)]")
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING, src)
 
 /mob/living/silicon/disposing()
 	req_access = null
@@ -503,7 +504,7 @@ var/global/list/module_editors = list()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -571,9 +572,6 @@ var/global/list/module_editors = list()
 		// Mundane objectives probably don't make for an interesting antagonist.
 		for (var/datum/objective/O in src?.mind?.objectives)
 			if (istype(O, /datum/objective/crew))
-				src.mind.objectives -= O
-				qdel(O)
-			if (istype(O, /datum/objective/miscreant))
 				src.mind.objectives -= O
 				qdel(O)
 		src.syndicate = TRUE
@@ -647,4 +645,9 @@ var/global/list/module_editors = list()
 	var/note_img = "<img class=\"icon misc\" style=\"position: relative; bottom: -3px;\" src=\"[resource("images/radio_icons/noterobot.png")]\">"
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
-	return "[adverb] [speech_verb],[note_img]<span style=\"font-style: italic; color: lightcyan;\">[text]</span>[note_img]"
+	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

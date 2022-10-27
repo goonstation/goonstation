@@ -50,8 +50,13 @@ var/global/list/job_start_locations = list()
 	name = "start"
 	icon_state = "player-start"
 	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
 	New()
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)
@@ -96,6 +101,9 @@ var/global/list/job_start_locations = list()
 /obj/landmark/tutorial_start
 	name = LANDMARK_TUTORIAL_START
 
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
+
 /obj/landmark/halloween
 	name = LANDMARK_HALLOWEEN_SPAWN
 
@@ -108,6 +116,16 @@ var/global/list/job_start_locations = list()
 /obj/landmark/magnet_center
 	name = LANDMARK_MAGNET_CENTER
 	icon_state = "magnet-center"
+	var/width = 15
+	var/height = 15
+	var/obj/machinery/mining_magnet/magnet
+
+	New()
+		var/turf/T = locate(src.x-round(width/2), src.y-round(height/2), src.z)
+		var/obj/magnet_target_marker/M = new /obj/magnet_target_marker(T)
+		M.width = src.width
+		M.height = src.height
+		..()
 
 /obj/landmark/magnet_shield
 	name = LANDMARK_MAGNET_SHIELD

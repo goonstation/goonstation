@@ -518,8 +518,7 @@ var/datum/artifact_controller/artifact_controls
 		'sound/musical_instruments/artifact/Artifact_Precursor_2.ogg',
 		'sound/musical_instruments/artifact/Artifact_Precursor_3.ogg',
 		'sound/musical_instruments/artifact/Artifact_Precursor_4.ogg',
-		'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg',
-		'sound/musical_instruments/artifact/Artifact_Precursor_6.ogg')
+		'sound/musical_instruments/artifact/Artifact_Precursor_5.ogg')
 	fault_types = list(
 		/datum/artifact_fault/irradiate = 10,
 		/datum/artifact_fault/shutdown = 5,

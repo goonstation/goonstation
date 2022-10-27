@@ -128,7 +128,7 @@
 		return TRUE
 	var/mob/living/intangible/flock/F = holder.owner
 	var/turf/T = get_turf(target)
-	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)))
+	if(!(istype(T, /turf/simulated) || istype(T, /turf/space)) || !flockTurfAllowed(T))
 		boutput(holder.get_controlling_mob(), "<span class='alert'>The flock can't convert this.</span>")
 		return TRUE
 	if(isfeathertile(T))
@@ -307,7 +307,7 @@
 		for(var/mob/living/M in targets)
 			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
-			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
+			M.apply_sonic_stun(3, 6, 30, 0, 0, rand(1, 3), rand(1, 3))
 	else
 		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range with active radio headsets.</span>")
 		return TRUE
@@ -425,6 +425,7 @@
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
 
 	if(structurewantedtype)
+		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
 
 /////////////////////////////////////////

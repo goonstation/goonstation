@@ -45,8 +45,7 @@
 
 	var/stamina_crit_chance = STAMINA_CRIT_CHANCE //Crit chance when attacking with this.
 	var/datum/item_special/special = null // Contains the datum which executes the items special, if it has one, when used beyond melee range.
-	var/hide_attack = 0 //If 1, hide the attack animation + particles. Used for hiding attacks with silenced .22 and sleepy pen
-						//If 2, play the attack animation but hide the attack particles.
+	var/hide_attack = ATTACK_VISIBLE
 	var/click_delay = DEFAULT_CLICK_DELAY //Delay before next click after using this.
 	var/combat_click_delay = COMBAT_CLICK_DELAY
 
@@ -124,6 +123,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
+	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
 	var/tmp/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/tmp/last_processing_tick = -1
@@ -302,16 +302,9 @@
 			// this is a gross hack to make things not just show "1" by default
 			src.inventory_counter.update_number(src.amount)
 
-	src.set_health()
-	..()
-
-/obj/item/proc/set_health()
 	if (isnull(initial(src.health))) // if not overridden
-		switch (src.w_class)
-			if (W_CLASS_TINY to W_CLASS_NORMAL)
-				src.health = src.w_class + 1
-			else
-				src.health = src.w_class + 2
+		src.health = get_initial_item_health(src.type)
+	..()
 
 /obj/item/set_loc(var/newloc as turf|mob|obj in world)
 	if (src.temp_flags & IS_LIMB_ITEM)
@@ -838,9 +831,9 @@
 			S.hud.objects -= src // prevents invisible object from failed transfer (item doesn't fit in pockets from backpack for example)
 
 /obj/item/attackby(obj/item/W, mob/user, params)
-	if(src.material)
-		src.material.triggerTemp(src ,1500)
 	if (W.firesource)
+		if(src.material)
+			src.material.triggerTemp(src ,1500)
 		if (src.burn_possible && src.burn_point <= 1500)
 			src.combust(W)
 		else
@@ -1154,7 +1147,7 @@
 		if (src.ArtifactSanityCheck())
 			src.ArtifactTouched(user)
 
-	if (hide_attack != 1)
+	if (hide_attack != ATTACK_FULLY_HIDDEN)
 		if (pickup_sfx)
 			playsound(oldloc_sfx, pickup_sfx, 56, vary=0.2)
 		else

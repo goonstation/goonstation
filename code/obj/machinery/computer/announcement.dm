@@ -225,8 +225,11 @@
 		var/job = person.mind.assigned_role
 		if(!job || job == "MODE")
 			job = "Staff Assistant"
+		if(issilicon(person))
+			job = "Cyborg"
 		var/message = replacetext(replacetext(replacetext(src.departurealert, "$STATION", "[station_name()]"), "$JOB", job), "$NAME", person.real_name)
 		message = replacetext(replacetext(replacetext(message, "$THEY", "[he_or_she(person)]"), "$THEM", "[him_or_her(person)]"), "$THEIR", "[his_or_her(person)]")
+
 
 		var/list/messages = process_language(message)
 		src.announcement_radio.talk_into(src, messages, 0, src.name, src.say_language)

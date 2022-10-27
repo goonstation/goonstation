@@ -1717,7 +1717,7 @@
 "adc" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/item/storage/toolbox/emergency,
 /obj/item/device/radio,
@@ -1854,7 +1854,10 @@
 /turf/simulated/floor/engine,
 /area/station/engine/vesselpower)
 "ado" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/south,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 2;
+	
+	},
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -5172,7 +5175,7 @@
 	},
 /area/station/science/chemistry)
 "ajg" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
@@ -5703,7 +5706,7 @@
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
 "ajY" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/cable{
 	icon_state = "4-8";
@@ -11093,7 +11096,7 @@
 	pixel_x = 6
 	},
 /obj/item/device/radio/intercom/catering{
-
+	
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
@@ -12068,7 +12071,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/cafeteria)
 "axm" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor{
 	icon_state = "carpetSW";
 	dir = 8
@@ -17762,7 +17765,7 @@
 	},
 /area/station/medical/head)
 "aJL" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/caution/south,
 /area/space)
 "aJM" = (
@@ -32172,17 +32175,26 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "bly" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "blz" = (
 /obj/stool/bench/yellow/auto,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/exit)
 "blA" = (
 /obj/stool/bench/yellow/auto,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "blB" = (
@@ -32193,7 +32205,10 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "blC" = (
@@ -32206,7 +32221,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "blE" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 9;
+	
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "blF" = (
@@ -32309,7 +32327,7 @@
 /area/station/hallway/secondary/exit)
 "blR" = (
 /obj/item/device/radio/intercom{
-
+	
 	},
 /obj/table/auto,
 /obj/item/decoration/ashtray,
@@ -33881,7 +33899,10 @@
 /turf/simulated/wall/auto/gannets,
 /area/station/maintenance/south)
 "bpK" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/horizontal,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4;
+	
+	},
 /turf/simulated/wall/auto/gannets,
 /area/station/hallway/secondary/exit)
 "bpL" = (

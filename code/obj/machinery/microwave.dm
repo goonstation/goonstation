@@ -257,7 +257,7 @@ obj/machinery/microwave/attackby(var/obj/item/O, var/mob/user)
 			/// If cook was pressed in the menu
 			if(operation == 1)
 				src.visible_message("<span class='notice'>The microwave turns on.</span>")
-				playsound(src.loc, 'sound/machines/microwave_start.ogg', 50, 0)
+				playsound(src.loc, 'sound/machines/microwave_start.ogg', 25, 0)
 				var/diceinside = 0
 				for(var/obj/item/dice/D in src.contents)
 					if(!diceinside)

@@ -206,7 +206,7 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 	proc/triggerOnRemove(var/location)
-		for(var/datum/materialProc/X in triggersOnAdd)
+		for(var/datum/materialProc/X in triggersOnRemove)
 			call(X,  "execute")(location)
 		return
 

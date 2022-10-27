@@ -1515,7 +1515,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 
 	pixelaction(atom/target, params, mob/user, reach)

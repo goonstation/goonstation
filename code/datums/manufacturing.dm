@@ -232,6 +232,42 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Miscellaneous"
 
+/datum/manufacture/saxophone
+	name = "Saxophone"
+	item_paths = list("MET-2")
+	item_amounts = list(15)
+	item_outputs = list(/obj/item/instrument/saxophone)
+	time = 7 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/whistle
+	name = "Whistle"
+	item_paths = list("MET-3")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/instrument/whistle)
+	time = 3 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/trumpet
+	name = "Trumpet"
+	item_paths = list("MET-2")
+	item_amounts = list(10)
+	item_outputs = list(/obj/item/instrument/trumpet)
+	time = 6 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
+/datum/manufacture/bagpipe
+	name = "Bagpipe"
+	item_paths = list("FAB-1", "MET-2")
+	item_amounts = list(10, 25)
+	item_outputs = list(/obj/item/instrument/bagpipe)
+	time = 5 SECONDS
+	create = 1
+	category = "Miscellaneous"
+
 /datum/manufacture/bikehorn
 	name = "Bicycle Horn"
 	item_paths = list("ALL")
@@ -707,7 +743,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammo
 	name = "Compressed Matter Cartridge"
 	item_paths = list("DEN-1")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo)
 	time = 10 SECONDS
 	create = 1
@@ -716,7 +752,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 /datum/manufacture/RCDammomedium
 	name = "Medium Compressed Matter Cartridge"
 	item_paths = list("DEN-2")
-	item_amounts = list(40)
+	item_amounts = list(30)
 	item_outputs = list(/obj/item/rcd_ammo/medium)
 	time = 20 SECONDS
 	create = 1
@@ -724,8 +760,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/RCDammolarge
 	name = "Large Compressed Matter Cartridge"
-	item_paths = list("CRY-2")
-	item_amounts = list(40)
+	item_paths = list("uqill")
+	item_amounts = list(20)
 	item_outputs = list(/obj/item/rcd_ammo/big)
 	time = 30 SECONDS
 	create = 1
@@ -784,6 +820,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
+
+/datum/manufacture/cleaner_grenade
+	name = "Cleaner Grenade"
+	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
+	item_amounts = list(8, 8, 10, 10)
+	item_outputs = list(/obj/item/chem_grenade/cleaner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 /******************** Medical **************************/
 
@@ -1321,6 +1366,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_amounts = list(4,4,2)
 	item_outputs = list(/obj/item/cell/cerenkite)
 	time = 45 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/powercellH
+	name = "Hyper Capacity Power Cell"
+	item_paths = list("DEN-2", "CON-2", "POW-2")
+	item_amounts = list(5,10,10)
+	item_outputs = list(/obj/item/cell/hypercell)
+	time = 120 SECONDS
 	create = 1
 	category = "Component"
 
@@ -1939,6 +1993,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1","MET-1","CRY-1")
 	item_amounts = list(3,3,2)
 	item_outputs = list(/obj/item/clothing/suit/space/engineer,/obj/item/clothing/head/helmet/space/engineer)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/engdivesuit
+	name = "Engineering Diving Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1")
+	item_amounts = list(3,3,2)
+	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
 	time = 15 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2904,15 +2967,6 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Miscellaneous"
 
-/datum/manufacture/pizzabox
-	name = "Pizza Box"
-	item_paths = list("MET-1")
-	item_amounts = list(5)
-	item_outputs = list(/obj/storage/crate/pizza)
-	time = 10 SECONDS
-	create = 1
-	category = "Miscellaneous"
-
 /datum/manufacture/wooden
 	name = "Wooden Crate"
 	item_paths = list("MET-1")
@@ -2997,6 +3051,46 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Machinery"
 
+/************ NADIR RESONATORS ************/
+
+/datum/manufacture/resonator_type_ax
+	name = "Type-AX Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","POW-1")
+	item_amounts = list(15,20,20,5)
+	item_outputs = list(/obj/machinery/siphon/resonator)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/datum/manufacture/resonator_type_sm
+	name = "Type-SM Resonator"
+	item_paths = list("MET-2","CON-2","CRY-1","INS-1")
+	item_amounts = list(10,20,10,10)
+	item_outputs = list(/obj/machinery/siphon/resonator/stabilizer)
+	time = 30 SECONDS
+	create = 1
+	category = "Machinery"
+
+/************ NADIR GEAR ************/
+
+/datum/manufacture/nanoloom
+	name = "Nanoloom"
+	item_paths = list("MET-2","CON-1","cobryl","FAB-1")
+	item_amounts = list(4,2,1,3)
+	item_outputs = list(/obj/item/device/nanoloom)
+	time = 15 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/nanoloom_cart
+	name = "Nanoloom Cartridge"
+	item_paths = list("MET-2","cobryl","FAB-1")
+	item_amounts = list(1,1,3)
+	item_outputs = list(/obj/item/nanoloom_cartridge)
+	time = 8 SECONDS
+	create = 1
+	category = "Tool"
+
 //////////////////////UBER-EXTREME SURVIVAL////////////////////////////////
 /datum/manufacture/armor_vest	//
 	name = "Armor Vest"
@@ -3011,7 +3105,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	name = "Colt SAA"
 	item_paths = list("MET-2")
 	item_amounts = list(7)
-	item_outputs = list(/obj/item/gun/kinetic/colt_saa)
+	item_outputs = list(/obj/item/gun/kinetic/single_action/colt_saa)
 	time = 30 SECONDS
 	create = 1
 	category = "Weapon"

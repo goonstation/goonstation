@@ -41,7 +41,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	density = 1
 	emaggable = 0 // Can't be emagged...
 	syndicate_possible = 1 // ...but we can become a rogue computer.
-	var/datum/hud/ai/hud
+	var/datum/hud/silicon/ai/hud
 	var/last_notice = 0//attack notices
 	var/network = "SS13"
 	var/classic_move = 1 //Ordinary AI camera movement
@@ -1640,7 +1640,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 			// this is just the default input for the user, so it should be fine
 			law_base += "[html_decode(fake_law)]\n"
 
-	var/raw_law_text = input(usr,"Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base) as null|message
+	var/raw_law_text = tgui_input_text(usr, "Please enter the fake laws you would like to be able to state via the State Fake Laws command! Each line is one law.", "Fake Laws", law_base, multiline = TRUE)
 	if(!raw_law_text)
 		return
 	// split into lines
@@ -2325,7 +2325,7 @@ proc/get_mobs_trackable_by_AI()
 			continue
 
 		var/turf/T = get_turf(M)
-		if(!T.cameras || !length(T.cameras))
+		if(!T.camera_coverage_emitters || !length(T.camera_coverage_emitters))
 			continue
 
 		var/name = M.name
@@ -2390,7 +2390,7 @@ proc/get_mobs_trackable_by_AI()
 	vox_reinit_check()
 
 	can_announce = 0
-	var/message_in = input(usr, "Please enter a message (280 characters)", "Station Announcement?", "") // I made an announcement in game on the announcement computer and this seemed to be the max length
+	var/message_in = tgui_input_text(usr, "Please enter a message (280 characters)", "Station Announcement?") // I made an announcement in game on the announcement computer and this seemed to be the max length
 	can_announce = 1
 
 	if(!message_in)
@@ -2428,7 +2428,7 @@ proc/get_mobs_trackable_by_AI()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name ? client.preferences.robot_name : default_name) as null|text
+			newname = tgui_input_text(renaming_mob || src, "You are an AI. Would you like to change your name to something else?", "Name Change", client?.preferences?.robot_name || default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-ai", newname, no_duplicates=TRUE)
 		if (src.brain.owner != brain_owner)
@@ -2506,6 +2506,11 @@ proc/get_mobs_trackable_by_AI()
 			UpdateOverlays(image_top_overlay, "top")
 			if(build_step == 2)
 				UpdateOverlays(image_wire_overlay, "wires")
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/ai_core_frame/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/sheet))

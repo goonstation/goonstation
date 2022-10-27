@@ -22,6 +22,7 @@
 	see_face = 0
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 
@@ -180,6 +181,7 @@
 	name = "diving helmet"
 	desc = "Comes equipped with a builtin flashlight."
 	icon_state = "diving0"
+	acid_survival_time = 8 MINUTES
 
 	flashlight_toggle(var/mob/user, var/force_on = 0, activated_inhand = FALSE)
 		on = !on
@@ -447,6 +449,7 @@
 	desc = "A modified combat helmet for Nanotrasen security forces."
 	icon_state = "ntso_specialist"
 	item_state = "ntso_specialist"
+	acid_survival_time = 6 MINUTES
 
 	setupProperties()
 		..()
@@ -499,6 +502,7 @@
 	name = "T.U.R.D.S. helmet"
 	icon_state = "turdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	item_state = "turdhelm"
 	setupProperties()
 		..()
@@ -659,6 +663,7 @@
 	desc = "A head-mounted face cover designed to protect the wearer completely from space-arc eye. Can be flipped up for clearer vision."
 	icon_state = "welding"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = FALSE
 	item_state = "welding"
 	protective_temperature = 1300
@@ -670,6 +675,10 @@
 		..()
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
+
+	show_buttons()	//Hide the button from non-human mobs
+		if (ishuman(the_mob))
+			..()
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -683,27 +692,28 @@
 		up = FALSE
 		see_face = FALSE
 		icon_state = "welding"
-		boutput(user, "You flip the mask down. The mask is now protecting you from eye damage.")
-		if (user.head == src)
-			src.obscure(user)
-			user.update_clothing()
-
+		boutput(user, "You flip the mask down. The mask now provides protection from eye damage.")
 		src.c_flags |= (COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 1)
 		setProperty("disorient_resist_eye", 100)
+		if (ishuman(user))
+			if (user.head == src)
+				src.obscure(user)
+				user.update_clothing()
+
 
 	proc/flip_up(var/mob/living/carbon/human/user)
 		up = TRUE
 		see_face = TRUE
 		icon_state = "welding-up"
-		boutput(user, "You flip the mask up. The mask is now providing greater armor to your head.")
-		if (user.head == src)
-			src.reveal(user)
-			user.update_clothing()
-
+		boutput(user, "You flip the mask up. The mask now provides higher armor to the head.")
 		src.c_flags &= ~(COVERSEYES | BLOCKCHOKE)
 		setProperty("meleeprot_head", 4)
 		setProperty("disorient_resist_eye", 0)
+		if (ishuman(user))
+			if (user.head == src)
+				src.reveal(user)
+				user.update_clothing()
 
 	equipped(mob/user, slot)
 		. = ..()
@@ -735,6 +745,7 @@
 	icon_state = "EOD"
 	item_state = "tdhelm"
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 9)
@@ -825,6 +836,7 @@
 	icon_state = "nthelm"
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	see_face = 0
 	setupProperties()
 		..()
@@ -845,6 +857,7 @@
 	name = "industrial space helmet"
 	desc = "Goes with Industrial Space Armor. Now with zesty citrus-scented visor!"
 #endif
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -885,6 +898,7 @@
 	item_state = "buckethelm"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	c_flags = COVERSEYES | BLOCKCHOKE
+	hides_from_examine = C_EARS
 
 	setupProperties()
 		..()
@@ -914,6 +928,7 @@
 	block_vision = 1
 	seal_hair = 1
 	var/bucket_type = /obj/item/reagent_containers/glass/bucket
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 	attack_self(mob/user as mob)
 		boutput(user, "<span class='notice'>You turn the bucket right side up.</span>")

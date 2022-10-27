@@ -661,12 +661,22 @@ var/datum/action_controller/actions
 		. = ..()
 		if(QDELETED(sheet) || sheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
+		if (ismob(owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 	onEnd()
 		..()
 		if(QDELETED(sheet) || sheet.amount < cost)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if (ismob(owner))
+			var/mob/M = owner
+			if(!equipped_or_holding(sheet, M))
+				interrupt(INTERRUPT_ALWAYS)
+				return
 		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
 		var/obj/item/R = new objtype(get_turf(spot || owner))
 		R.setMaterial(mat)
@@ -1813,7 +1823,7 @@ var/datum/action_controller/actions
 			P = item
 			duration = round(clamp(P.reagents.total_volume, 30, 90) / 3 + 20)
 		else
-			logTheThing("debug", src, null, "/datum/action/bar/icon/pill called with invalid type [item].")
+			logTheThing(LOG_DEBUG, src, "/datum/action/bar/icon/pill called with invalid type [item].")
 		src.icon = icon
 		src.icon_state = icon_state
 

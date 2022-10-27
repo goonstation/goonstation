@@ -51,8 +51,6 @@ datum
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume_passed * 2, 10, 45), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
-					M.emote("scream")
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
@@ -63,7 +61,6 @@ datum
 				if(istype(L))
 					L.update_burning(2 * mult)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("fire",8)
@@ -214,7 +211,6 @@ datum
 					var/mob/living/L = M
 					if(istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", 10 SECONDS)
-				return
 
 			reaction_turf(var/turf/T, var/volume)
 				if(istype(T, /turf/simulated))
@@ -232,9 +228,9 @@ datum
 						T.UpdateOverlays(image('icons/effects/effects.dmi',icon_state = "thermite"), "thermite")
 
 					T.reagents.add_reagent("thermite", volume, null)
+					holder.remove_reagent("thermite", volume)
 					if (T.active_hotspot)
 						T.reagents.temperature_reagents(T.active_hotspot.temperature, T.active_hotspot.volume, 350, 300, 1)
-				return
 
 
 		combustible/smokepowder
@@ -380,9 +376,7 @@ datum
 				return
 
 			reaction_turf(var/turf/T, var/volume)
-				var/datum/reagents/old_holder = src.holder //mbc pls, ZeWaka fix: null.holder
-				//if(!T.reagents) T.create_reagents(50)
-				//T.reagents.add_reagent("infernite", 5, null)
+				var/datum/reagents/old_holder = src.holder
 				var/list/covered = old_holder.covered_turf()
 				if(length(covered) > 9)
 					volume = volume/length(covered)
@@ -413,8 +407,6 @@ datum
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 2.5, 15, 90), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
-					M.emote("scream")
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
@@ -437,8 +429,6 @@ datum
 			volatility = 4
 
 			reaction_turf(var/turf/T, var/volume)
-				//if(!T.reagents) T.create_reagents(50)
-				//T.reagents.add_reagent("infernite", 5, null)
 				tfireflash(T, clamp(volume/10, 0, 8), 7000)
 				if(!istype(T, /turf/space))
 					SPAWN(max(10, rand(20))) // let's burn right the fuck through the floor
@@ -485,20 +475,6 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				holder.del_reagent(id)
-
-			reaction_obj(var/obj/O, var/volume)
-				if (O)
-					if(!O.reagents)
-						O.create_reagents(50)
-					O.reagents.add_reagent("pyrosium", 5, null)
-				return
-
-			reaction_turf(var/turf/T, var/volume)
-				if (T)
-					if(!T.reagents)
-						T.create_reagents(50)
-					T.reagents.add_reagent("pyrosium", 5, null)
-				return
 
 		combustible/argine
 			name = "argine"
@@ -571,18 +547,6 @@ datum
 						return
 
 					src.reacting = ldmatter_reaction(holder, volume, id)
-
-
-			//Comment this out if you notice a lot of crashes. (It's probably a really bad idea to have this in)
-			/* i agree. also fuck snapcakes
-			reaction_turf(var/turf/T, var/volume)
-				if(prob(75)) return
-
-				var/datum/reagent/us = src
-				if(!T.reagents) T.create_reagents(50)
-				T.reagents.add_reagent(us.id, 5, null)
-				return
-			*/
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
 				. = ..()

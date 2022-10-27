@@ -22,10 +22,10 @@
 	var/encase_in_web = 1 // do they encase people in ice, web, or uh, cotton candy?
 	var/reacting = 1 // when they inject their venom, does it react immediately or not?
 
-	var/health_brute = 50
-	var/health_brute_vuln = 0.45
-	var/health_burn = 50
-	var/health_burn_vuln = 0.65
+	health_brute = 50
+	health_brute_vuln = 0.45
+	health_burn = 50
+	health_burn_vuln = 0.65
 	reagent_capacity = 100
 
 	can_help = 1
@@ -197,7 +197,6 @@
 	icon_state_dead = "bumblespider-dead"
 	density = 0
 	flags = TABLEPASS
-	fits_under_table = 1
 	health_brute = 30
 	health_burn = 30
 	good_grip = 0

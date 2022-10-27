@@ -417,11 +417,6 @@
 	dir = 8;
 	pixel_x = 2
 	},
-/obj/item/device/key{
-	desc = "A bee key.  A...kee, if you will.";
-	icon_state = "key_bee";
-	name = "bee key"
-	},
 /turf/unsimulated/floor/setpieces/hivefloor,
 /area/space_hive)
 "abv" = (
@@ -696,11 +691,11 @@
 	pixel_x = -22
 	},
 /obj/decal/fakeobjects{
+	desc = "It looks like it was never even plugged in. Did this ever work?!";
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "printer0";
 	name = "Broken Printer";
-	true_name = "printer?";
-	desc = "It looks like it was never even plugged in. Did this ever work?!"
+	true_name = "printer?"
 	},
 /turf/simulated/floor/black,
 /area/radiostation/bridge)
@@ -979,7 +974,6 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/space,
@@ -1462,6 +1456,9 @@
 /obj/machinery/light_switch/south{
 	pixel_x = 5
 	},
+/obj/landmark{
+	name = "Radio-Show-Host-Spawn"
+	},
 /turf/simulated/floor/carpet/grime,
 /area/radiostation/studio)
 "aeF" = (
@@ -1678,7 +1675,7 @@
 	icon_state = "tube1"
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/diner/hallway)
+/area/diner/motel)
 "afy" = (
 /obj/stool/chair/couch{
 	dir = 8;
@@ -1805,7 +1802,6 @@
 "agA" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/darkblue,
@@ -1961,8 +1957,13 @@
 "ahN" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/glass,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/diner/hallway)
+/area/diner/motel)
 "ahR" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -2122,7 +2123,7 @@
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "ajx" = (
 /obj/lattice{
 	dir = 6;
@@ -2225,7 +2226,6 @@
 "ajX" = (
 /obj/decal/fakeobjects/tallsmes,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -2433,7 +2433,6 @@
 "alh" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -2511,7 +2510,6 @@
 "alH" = (
 /obj/decal/fakeobjects/vacuumtape,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -2550,7 +2548,7 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/airlock/pyro/glass,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/diner/hallway)
+/area/diner/motel)
 "alQ" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 4;
@@ -2859,7 +2857,6 @@
 /area/space)
 "amT" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light/small{
@@ -3121,13 +3118,6 @@
 /area/diner/motel)
 "aod" = (
 /turf/simulated/wall/auto/reinforced/old,
-/area/diner/motel)
-"aok" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
 /area/diner/motel)
 "aon" = (
 /obj/stool/chair{
@@ -3634,7 +3624,6 @@
 /area/space)
 "aqp" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -3770,7 +3759,6 @@
 	charge = 5e+006
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
@@ -3914,7 +3902,6 @@
 "are" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -3933,7 +3920,6 @@
 "arf" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/storage/tape_drive{
@@ -4048,7 +4034,6 @@
 /area/buddyfactory)
 "ary" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -4093,7 +4078,6 @@
 /area/space)
 "arE" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -4109,7 +4093,6 @@
 /area/space)
 "arF" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -4609,7 +4592,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -4630,7 +4612,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/airless,
@@ -6166,7 +6147,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/terminal/zeta{
@@ -6203,7 +6183,6 @@
 "aFL" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/computer3frame/terminal{
@@ -8358,7 +8337,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/grille,
@@ -8751,7 +8729,6 @@
 "aNy" = (
 /obj/machinery/computer/solar_control,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating/random,
@@ -8980,7 +8957,6 @@
 	id = "derelict_ai_sat"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless{
@@ -9314,7 +9290,6 @@
 /area/derelict_ai_sat/core)
 "aPb" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -9454,7 +9429,6 @@
 "aPp" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/radio,
@@ -9470,7 +9444,6 @@
 /area/h7)
 "aPs" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/terminal{
@@ -9680,7 +9653,6 @@
 "aPV" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -9719,7 +9691,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/grille,
@@ -10021,7 +9992,6 @@
 /area/abandonedship)
 "aQX" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -10199,7 +10169,6 @@
 /area/derelict_ai_sat)
 "aRB" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/stool,
@@ -10782,7 +10751,6 @@
 /area/h7/crew)
 "aTb" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -10807,7 +10775,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTd" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTf" = (
@@ -10923,7 +10891,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless{
@@ -10986,7 +10953,6 @@
 "aTB" = (
 /obj/machinery/power/solar,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless{
@@ -11076,7 +11042,6 @@
 /area/h7/crew)
 "aTL" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -12188,7 +12153,6 @@
 /area/h7)
 "aWF" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/item/cable_coil/cut,
@@ -13136,7 +13100,6 @@
 	},
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -13634,7 +13597,6 @@
 "bbn" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -13749,7 +13711,6 @@
 "bbG" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -13764,7 +13725,6 @@
 /area/space)
 "bbH" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -13776,7 +13736,6 @@
 "bbI" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -13799,7 +13758,6 @@
 /area/h7/lab)
 "bbK" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -14091,7 +14049,6 @@
 /area/h7/lab)
 "bcG" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -14213,7 +14170,6 @@
 /area/h7/lab)
 "bcV" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -14585,7 +14541,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -14984,7 +14939,7 @@
 /area/space)
 "bgz" = (
 /obj/decal/cleanable/blood,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -15007,11 +14962,7 @@
 /turf/space,
 /area/space)
 "bgE" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/space,
 /area/space)
@@ -15098,7 +15049,7 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/space)
 "bgO" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bgP" = (
@@ -15122,7 +15073,6 @@
 /area/derelict_ai_sat)
 "bgS" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -15291,7 +15241,6 @@
 "bhm" = (
 /obj/cable,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/grille,
@@ -15371,7 +15320,6 @@
 	dir = 10
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -15408,7 +15356,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -15633,7 +15580,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -15657,7 +15603,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/grille/catwalk{
@@ -15675,7 +15620,6 @@
 /area/derelict_ai_sat/solar)
 "bic" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/tracker/east{
@@ -15778,7 +15722,6 @@
 /area/derelict_ai_sat/core)
 "biq" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc{
@@ -15920,7 +15863,6 @@
 "biG" = (
 /obj/machinery/power/furnace,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grime,
@@ -15935,7 +15877,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -15965,7 +15906,6 @@
 "biL" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -16035,11 +15975,11 @@
 "biT" = (
 /obj/decal/cleanable/dirt,
 /obj/storage/crate,
-/obj/item/device/key{
-	name = "studio door key"
-	},
 /obj/item/plant/herb/cannabis/spawnable,
 /obj/item/device/microphone,
+/obj/item/device/key/generic{
+	name = "studio door key"
+	},
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
 "biU" = (
@@ -16335,11 +16275,7 @@
 	},
 /area/salyut)
 "bkj" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -17471,6 +17407,11 @@
 /area/radiostation/studio)
 "bYA" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/nw,
 /area/diner/motel/observatory)
 "bYC" = (
@@ -17591,7 +17532,7 @@
 /turf/simulated/shuttle/wall/cockpit{
 	icon_state = "shuttlecock_mining"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "cll" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -17737,7 +17678,6 @@
 	icon_state = "xtra_bigstripe-edge"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_east/nopoweralert,
@@ -17785,6 +17725,10 @@
 	},
 /area/bee_trader)
 "cWa" = (
+/obj/machinery/power/apc/autoname_north/nopoweralert,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
 "cWB" = (
@@ -18055,10 +17999,14 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "dQS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
@@ -18162,7 +18110,7 @@
 /area/diner/jucer_trader)
 "ejg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "elM" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/decal/tile_edge/stripe/big{
@@ -18525,14 +18473,20 @@
 /area/diner/jucer_trader)
 "fFQ" = (
 /obj/table/auto,
-/obj/item/mining_tool,
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
+/obj/item/device/gps,
+/obj/item/device/gps,
+/obj/item/mining_tool,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "fIW" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -18553,10 +18507,10 @@
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "fPL" = (
 /obj/cable{
 	d2 = 4;
@@ -18710,7 +18664,6 @@
 /area/diner/motel/observatory)
 "gmE" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
@@ -18900,7 +18853,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/wingrille_spawn/auto,
@@ -19050,6 +19002,11 @@
 /turf/simulated/floor/plating,
 /area/diner/dining)
 "hkX" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/diner/hallway)
 "hlO" = (
@@ -19128,6 +19085,17 @@
 /obj/decal/cleanable/blood,
 /turf/simulated/floor/plating,
 /area/diner/kitchen)
+"htc" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/diner/motel)
 "hto" = (
 /obj/grille/catwalk/dubious{
 	icon_state = "catwalk_cross-3"
@@ -19260,19 +19228,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"hQP" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
-	},
-/obj/cable{
-	d1 = 4;
-	d2 = 8;
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "hSH" = (
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
@@ -19320,6 +19275,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
+"ibe" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "ibO" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
@@ -19370,6 +19335,15 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
+"ifC" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "iii" = (
 /obj/effects/background_objects/antistes,
 /turf/space,
@@ -19422,10 +19396,10 @@
 	icon_state = "gibbl2"
 	},
 /obj/machinery/light/small/floor/warm,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "iob" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy,
@@ -19491,7 +19465,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "izy" = (
 /obj/machinery/door/airlock/pyro/classic{
 	dir = 4;
@@ -19620,12 +19594,18 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "iUR" = (
-/obj/table/auto,
-/obj/item/satchel/mining,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "iXE" = (
 /obj/table/auto,
 /obj/item/clothing/glasses/vr/arcade,
@@ -19649,8 +19629,13 @@
 /area/diner/motel/chemstorage)
 "iZq" = (
 /obj/decal/cleanable/dirt,
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/diner/hallway)
+/area/diner/motel)
 "iZr" = (
 /obj/stool/bar,
 /turf/simulated/floor/carpet{
@@ -19728,10 +19713,14 @@
 /area/diner/dining)
 "jhF" = (
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jij" = (
 /obj/machinery/light/small,
 /obj/cable{
@@ -19767,7 +19756,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jmg" = (
 /turf/unsimulated/floor/specialroom/freezer,
 /area/helldrone)
@@ -19788,7 +19777,7 @@
 /area/diner/hangar)
 "jpS" = (
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/simulated/floor/airless/grime,
@@ -19975,10 +19964,10 @@
 "jTh" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/machinery/computer/mining_shuttle/embedded/south,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "jUl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
@@ -20078,6 +20067,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/helldrone)
+"kjO" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "kjV" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -20088,15 +20090,7 @@
 "knj" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/diner/hallway)
-"kos" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/wall/auto/reinforced/old,
-/area/diner/hallway)
+/area/diner/motel)
 "kov" = (
 /obj/decal/timeplug{
 	dir = 5
@@ -20371,7 +20365,6 @@
 	icon_state = "0-4"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/table/auto,
@@ -20415,15 +20408,6 @@
 	},
 /turf/space,
 /area/timewarp)
-"lnt" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -20442,7 +20426,6 @@
 /area/helldrone/core)
 "lsF" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/grille,
@@ -20608,6 +20591,12 @@
 	icon_state = "fred2"
 	},
 /area/timewarp/ship)
+"lMB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "lNV" = (
 /obj/stool,
 /obj/machinery/light/incandescent/netural{
@@ -20723,7 +20712,6 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -21044,7 +21032,7 @@
 /area/timewarp/ship)
 "mWO" = (
 /obj/decal/cleanable/urine,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "mXB" = (
 /turf/simulated/shuttle/wall{
@@ -21253,6 +21241,20 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
+"nxR" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/tile_edge/check/yellow{
+	dir = 8;
+	icon_state = "check1"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "nyA" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -21574,10 +21576,10 @@
 /area/diner/hangar)
 "oQp" = (
 /obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "oQs" = (
 /obj/wingrille_spawn/auto,
 /turf/simulated/floor/arrival,
@@ -21922,7 +21924,7 @@
 /turf/unsimulated/floor/arctic,
 /area/space_hive)
 "pKO" = (
-/obj/landmark/spawner/loot,
+/obj/storage/crate/loot,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedship)
 "pMZ" = (
@@ -22096,7 +22098,7 @@
 /turf/simulated/floor/delivery,
 /area/abandonedship)
 "qhW" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/diner/motel/pool)
 "qiL" = (
 /obj/rack,
@@ -22105,13 +22107,18 @@
 /turf/simulated/floor/plating,
 /area/diner/hangar)
 "qiT" = (
-/obj/table/auto,
-/obj/item/device/gps,
-/obj/item/device/gps,
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/obj/decal/tile_edge/check/yellow{
+	dir = 1;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "qja" = (
 /obj/machinery/traymachine/locking/tanning,
 /obj/decal/cleanable/cobweb2,
@@ -22216,10 +22223,10 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "qEL" = (
 /turf/unsimulated/floor/specialroom/chapel{
 	dir = 8
@@ -22403,7 +22410,6 @@
 	},
 /obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/grime,
@@ -22429,11 +22435,6 @@
 	},
 /area/bee_trader)
 "rdx" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
 /obj/decal/cleanable/ripped_poster,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway)
@@ -22551,18 +22552,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"rAh" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1;
-	icon_state = "tube1"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/grime,
-/area/diner/hallway)
 "rBu" = (
 /obj/machinery/door/airlock/pyro{
 	name = "Crew Quarters"
@@ -22638,17 +22627,17 @@
 	dir = 2;
 	icon_state = "wall3_trans"
 	},
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "rQo" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/dirt,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "rQI" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -22928,14 +22917,13 @@
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
 "sDv" = (
-/obj/grille/steel,
-/obj/window/reinforced,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/floor/plating/airless,
-/area/shuttle/mining/space)
+/turf/simulated/floor/plating,
+/area/shuttle/mining/diner)
 "sFI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -23102,6 +23090,13 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"tbl" = (
+/obj/machinery/power/apc/autoname_east/nopoweralert,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/east,
+/area/diner/motel)
 "tbR" = (
 /obj/table/wood/auto,
 /obj/indestructible/shuttle_corner{
@@ -23205,6 +23200,12 @@
 "tkr" = (
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"tli" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "tlX" = (
 /obj/storage/cart,
 /turf/simulated/floor/white/grime,
@@ -23272,10 +23273,10 @@
 /area/space)
 "tur" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "tuE" = (
 /obj/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/right{
@@ -23287,7 +23288,7 @@
 /turf/simulated/shuttle/wall{
 	icon_state = "wall3"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "twl" = (
 /obj/table/reinforced/auto,
 /obj/random_item_spawner/junk/one_or_zero,
@@ -23412,6 +23413,25 @@
 	},
 /turf/simulated/floor/black,
 /area/helldrone/core)
+"tJW" = (
+/obj/stool/chair/comfy/shuttle/brown,
+/obj/decal/tile_edge/check/yellow{
+	dir = 4;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
+"tLI" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 5;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "tNm" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -23470,7 +23490,7 @@
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "uen" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grime,
@@ -23586,6 +23606,11 @@
 	d1 = 2;
 	d2 = 8;
 	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
@@ -23898,7 +23923,7 @@
 	},
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/diner/hallway)
+/area/diner/motel)
 "vly" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
@@ -24146,13 +24171,6 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"wgE" = (
-/obj/machinery/power/apc/autoname_north/nopoweralert,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/turf/simulated/floor/plating,
-/area/diner/motel/observatory)
 "wjS" = (
 /obj/machinery/vending/cola/red,
 /obj/decal/cleanable/dirt,
@@ -24376,8 +24394,13 @@
 	},
 /area/diner/dining)
 "wIp" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/diner/hallway)
+/area/diner/motel)
 "wIr" = (
 /obj/item/screwdriver,
 /obj/decal/fakeobjects/skeleton,
@@ -24427,6 +24450,12 @@
 "wSz" = (
 /turf/simulated/floor/scorched,
 /area/diner/hangar)
+"xdk" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/carpet/green/fancy,
+/area/diner/motel/observatory)
 "xfi" = (
 /obj/decal/poster/wallsign/stencil/right/t,
 /obj/decal/poster/wallsign/stencil/left/u,
@@ -24459,7 +24488,7 @@
 /area/abandonedship)
 "xjC" = (
 /obj/decal/woodclutter,
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "xkn" = (
@@ -24562,10 +24591,10 @@
 	name = "GLOMAR Salvager"
 	})
 "xvT" = (
-/turf/simulated/floor/shuttle{
+/turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
-/area/shuttle/mining/space)
+/area/shuttle/mining/diner)
 "xws" = (
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
@@ -24581,6 +24610,15 @@
 /obj/lattice,
 /turf/space,
 /area/space)
+"xDJ" = (
+/obj/decal/tile_edge/check/yellow{
+	dir = 9;
+	icon_state = "check1"
+	},
+/turf/unsimulated/floor/shuttle{
+	icon_state = "floor2"
+	},
+/area/shuttle/mining/diner)
 "xEB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -24649,7 +24687,6 @@
 /area/diner/motel/chemstorage)
 "xPl" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/landmark/spawner/loot,
@@ -24765,7 +24802,7 @@
 /area/diner/tug)
 "yiv" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
-/area/diner/hallway)
+/area/diner/motel)
 
 (1,1,1) = {"
 aaa
@@ -78584,8 +78621,8 @@ pjN
 pjN
 pjN
 pjN
-boO
-boO
+pjN
+pjN
 boO
 apU
 akd
@@ -78601,8 +78638,8 @@ aff
 apU
 ajw
 sDv
-jhF
-xvT
+nxR
+ifC
 fFQ
 qiT
 udQ
@@ -78886,9 +78923,9 @@ pjN
 pjN
 pjN
 pjN
+pjN
+pjN
 boP
-aod
-aod
 skq
 ake
 aoT
@@ -78903,10 +78940,10 @@ uGK
 cyC
 ejg
 fLF
-xvT
+xDJ
 tur
 tur
-tur
+ibe
 tuY
 jpS
 aaa
@@ -79189,11 +79226,11 @@ aaa
 aaa
 aaa
 aaa
-aod
-aok
+aaa
+aaa
 rdx
-rAh
-lnt
+jyD
+aoU
 crC
 aaa
 aaa
@@ -79507,10 +79544,10 @@ aEC
 cyC
 ejg
 rPi
-xvT
+tLI
 tur
 rQo
-tur
+tJW
 tuY
 jpS
 aaa
@@ -79809,7 +79846,7 @@ hgU
 apU
 ajw
 sDv
-xvT
+kjO
 jhF
 dPH
 iUR
@@ -80684,7 +80721,7 @@ aaa
 aaa
 aaa
 ahT
-ahT
+lRy
 grK
 ahW
 iob
@@ -81290,14 +81327,14 @@ aaa
 ahT
 dVm
 hKm
-ahW
+tli
 bYA
 ahN
 wIp
 wIp
 wIp
 iZq
-wIp
+htc
 iZq
 iZq
 wIp
@@ -81592,14 +81629,14 @@ aaa
 ahT
 enz
 aEE
-ahW
+lMB
 rEz
 alO
 knj
 knj
 yiv
 afw
-yiv
+tbl
 yiv
 yiv
 vlf
@@ -81894,7 +81931,7 @@ aaa
 ahT
 lBY
 xfN
-ahW
+lMB
 vFH
 aod
 aod
@@ -82194,9 +82231,9 @@ aaa
 aaa
 aaa
 ahT
-ahT
+lRy
 cWa
-ahW
+xdk
 gmp
 aod
 ajh
@@ -83719,11 +83756,11 @@ aaa
 aaa
 aaa
 aaa
-lRy
-wgE
-kos
-bFR
-hQP
+aaa
+aaa
+apU
+wqS
+ste
 huF
 lHd
 xsh
@@ -84020,9 +84057,9 @@ pjN
 pjN
 pjN
 pjN
+pjN
+pjN
 boO
-lRy
-lRy
 apU
 wqS
 ste
@@ -84322,8 +84359,8 @@ pjN
 pjN
 pjN
 pjN
-boP
-boP
+pjN
+gzA
 boP
 crC
 bxI

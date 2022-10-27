@@ -556,12 +556,9 @@ datum
 						M.visible_message("<span class='alert'><b>[M.name]</b> shakes uncontrollably.</span>")
 						M.make_jittery(30)
 				else if (severity == 2) // greater
-					if(effect <= 2)
-						M.visible_message("<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>")
-						M.emote("scream")
-						M.setStatusMin("weakened", 8 SECONDS * mult)
-					else if(effect <= 5)
-						M.visible_message("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>")
+					if(effect <= 5)
+						M.visible_message(pick("<span class='alert'><b>[M.name]</b> jerks bolt upright, then collapses!</span>",
+							"<span class='alert'><b>[M.name]</b> suddenly cluches their gut!</span>"))
 						M.setStatusMin("weakened", 8 SECONDS * mult)
 					else if(effect <= 8)
 						M.visible_message("<span class='alert'><b>[M.name]</b> stumbles and staggers.</span>")
@@ -646,7 +643,7 @@ datum
 			transparency = 40
 			value = 3
 			threshold = THRESHOLD_INIT
-			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium")
+			var/list/flushed_reagents = list("neurotoxin","capulettium","sulfonal","ketamine","sodium_thiopental","pancuronium", "neurodepressant")
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -1240,15 +1237,6 @@ datum
 						repair_bleeding_damage(L, 5, 1)
 						//H.bleeding = min(H.bleeding, rand(0,5))
 
-					var/silent = 0
-					if (length(paramslist))
-						if ("silent" in paramslist)
-							silent = 1
-
-					if (!silent)
-						if(!ON_COOLDOWN(M, "styptic screaming", 3 SECONDS))
-							boutput(M, "<span class='notice'>The styptic powder stings like hell as it closes some of your wounds.</span>")
-							M.emote("scream")
 					M.UpdateDamageIcon()
 				else if(method == INGEST)
 					boutput(M, "<span class='alert'>You feel gross!</span>")
@@ -1270,31 +1258,19 @@ datum
 			value = 12 // 5 3 3 1
 			target_organs = list("left_eye", "right_eye", "heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")	//RN this is all the organs. Probably I'll remove some from this list later. no "brain",  either
 
-			/*reaction_temperature(exposed_temperature, exposed_volume)
-				var/myvol = volume
-
-				if(exposed_temperature > T0C + 50) //Turns into omnizine. Derp.
-					volume = 0
-					holder.add_reagent("omnizine", myvol, null)
-
-				return*/
-
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(M.bodytemperature < M.base_body_temp - 100 && !M.hasStatus("burning"))
-					var/health_before = M.health
-
+				if(M.bodytemperature < M.base_body_temp - 100 && M.bodytemperature > M.base_body_temp - 275 && !M.hasStatus("burning")) //works in approx 35K to 210K -> -238C to -63C - medbay freezer goes down to -200C
 					if(M.get_oxygen_deprivation())
-						M.take_oxygen_deprivation(-10 * mult)
-					if(M.get_toxin_damage())
-						M.take_toxin_damage(-3 * mult)
+						M.take_oxygen_deprivation(-2 * mult)
+					if(M.losebreath && prob(50))
+						M.lose_breath(-1 * mult)
 					if (M.get_brain_damage())
 						M.take_brain_damage(-2 * mult)
-					M.HealDamage("All", 12 * mult, 12 * mult)
-					M.updatehealth() //I hate this, but we actually need the health on time here.
-					if(M.health > health_before)
-						var/increase = min((M.health - health_before)/37*25,25) //12+12+3+10 = 37 health healed possible, 25 max temp increase possible
-						M.bodytemperature = min(M.bodytemperature+increase,M.base_body_temp)
+					M.HealDamage("All", 2 * mult, 2 * mult, 3 * mult)
+
+					M.take_radiation_dose(-0.025 SIEVERTS * mult)
+					M.bodytemperature = min(M.bodytemperature + (12.5 * mult), M.base_body_temp)
 
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M

@@ -429,7 +429,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("radioactive")*10, FALSE, FALSE, isitem(owner) ? 0 : 1)
 		return
 
 /datum/materialProc/radioactive_remove
@@ -442,7 +442,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 /datum/materialProc/n_radioactive_add
 	execute(var/atom/location)
 		animate_flash_color_fill_inherit(location, "#1122EE", -1, 40)
-		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE)
+		location.AddComponent(/datum/component/radioactive, location.material.getProperty("n_radioactive")*10, FALSE, TRUE, isitem(owner) ? 0 : 1)
 		return
 
 /datum/materialProc/n_radioactive_remove
@@ -678,5 +678,3 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
-
-

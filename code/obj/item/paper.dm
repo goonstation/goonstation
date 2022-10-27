@@ -1622,6 +1622,17 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 		pixel_y = rand(-8, 8)
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/ranchguide.png")]'></body></html>"
 
+/obj/item/paper/siphon_guide
+	name = "Harmonic Siphon Brief"
+	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
+	icon_state = "postcard-owlery"
+	sizex = 1200
+	sizey = 650
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/pocket_guides/siphonguide.png")]'></body></html>"
+
 /obj/item/paper/iou
 	name = "IOU"
 	desc = "Somebody took whatever was in here."
@@ -1922,7 +1933,7 @@ That clump of dirt has a metal substrate, we can just ask Rachid to weld it to t
 		..()
 		info = "<html><body style='margin:2px'><img src='[resource("images/arts/business_vurdulak.png")]'></body></html>"
 
-obj/item/paper/donut2smesinstructions
+/obj/item/paper/donut2smesinstructions
 	name = "Donut 2 SMES Units and YOU"
 	icon_state = "paper"
 	info = {"
@@ -1948,4 +1959,58 @@ obj/item/paper/donut2smesinstructions
 
 	Keep that power flowing,<br>
 	S.L.
+	"}
+
+/obj/item/paper/gallery
+	name = "Gallery submission guide"
+	info = {"
+		<span style="color:null;font-family:Georgia;"><p>Thank you for your interest in making a submission to the Nanotrasen Applied Paints Art Gallery!</p>
+		<p>To make a submission:</p>
+		<ol>
+		<li>Use your completed canvas in hand on any gallery exhibit</li>
+		<li>Pay the fee (see pricing below)</li>
+		<li>(Optional) Title your submission and publicly display your BYOND key as the submitter</li>
+		</ol>
+		<p>Your artwork will remain on display indefinitely unless another artist decides to purchase your exhibit.</p>
+		<p>Pricing (in Spacebux):</p>
+		<ul>
+		<li>Lowend (6x available) - 5,000</li>
+		<li>Midrange (6x available) - 10,000</li>
+		<li>Highend (2x available) - 25,000 </li>
+		<li>Premium (1x available) - 50,000</li>
+		</ul>
+		</span>
+	"}
+
+/obj/item/paper/magnetconstruction
+	name = "How to set up a new mining magnet"
+	icon_state = "paper"
+	info = {"
+	----------------------------------------<br><br>
+	How to build a set up a new mining magnet<br><br>
+
+	A basic guide to construction a new mineral magnet for your mining operation<br>
+	----------------------------------------<br><br>
+	Thank you for purchasing your standard Mineral Magnet.<br>
+	The following instructions should help you get your new mineral magnet constructed and configured properly.<br>
+	If any of these steps are already completed you may skip them.<br><br>
+
+	1. Build a border around the intended mining area with magnet chassis on the edge facing into mining area.<br>
+	NOTE: Internal magnet area must be either 7x7 for the small size magnet or 15x15 for normal size magnet. Border must not be part of the internal magnet area.<br><br>
+
+
+	2. Assemble magnet chassis outside of internal mining area and mining area border, facing the mining area.<br><br>
+
+	3. Use mineral magnet parts on the magnet chassis to construct the mineral magnet.<br><br>
+
+	4. Assemble mineral magnet control computer somewhere nearby that has power available.<br><br>
+
+	5. Retrieve Magnetizer device and ensure it is loaded with raw plasmastone.<br><br>
+
+	6. Link Magnetizer with assembled mineral magnet.<br><br>
+
+	7. Go to bottom left area of internal magnet area and use magnetizer on the bottom left corner<br>
+	NOTE: Must be the internal magnet area, not the border of the magnet area.<br><br>
+
+	Congrats! Your mineral magnet is now assembled and ready for use!
 	"}

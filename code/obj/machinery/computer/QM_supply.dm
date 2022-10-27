@@ -144,7 +144,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span class='notice'>Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		return 1
 	return 0
@@ -1273,5 +1274,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

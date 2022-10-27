@@ -7,11 +7,20 @@ jobs:
   stale:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/stale@v3
+    - uses: actions/stale@v6.0.1
       with:
         repo-token: ${{ secrets.GITHUB_TOKEN }}
+        
         stale-pr-message: "This PR has been inactive for two weeks, and has been automatically marked as stale. This means it is at risk of being auto closed in another week. Please address any outstanding review items and ensure your PR is finished. If you are auto-staled anyway, ask developers if your PR will be merged. Once you have done any of the previous actions then you should request a developer remove the stale label on your PR, to reset the stale timer. If you feel no developer will respond in that time, you may wish to close this PR youself, while you seek developer comment, as you will then be able to reopen the PR yourself."
-        days-before-stale: 14
-        days-before-close: 7
+        days-before-pr-stale: 14
+        days-before-pr-close: 7
         stale-pr-label: 'S-Stale'
         exempt-pr-labels: 'E-Certified-Organic,E-Contest'
+        
+        close-issue-message: "This issue has been marked as 'Needs Reproducing' for a month, and is being closed automatically. If you find a way to reproduce this bug, make another issue with more detailed reproduction steps."
+        days-before-issue-stale: -1
+        days-before-issue-close: 30
+        stale-issue-label: 'S-Needs-Reproducing'
+        exempt-issue-labels: 'E-Verified'
+        ignore-issue-updates: true
+        close-issue-reason: 'not_planned'

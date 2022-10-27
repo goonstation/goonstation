@@ -865,7 +865,15 @@
 				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
 				src.donor.ghostize()
 				if (newBrain.owner)
-					newBrain.owner.transfer_to(src.donor)
+					var/mob/G
+					G = find_ghost_by_key(newBrain?.owner?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(src.donor)
+						else
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain

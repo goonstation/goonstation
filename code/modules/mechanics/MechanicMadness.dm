@@ -31,6 +31,8 @@
 	var/can_be_welded=false
 	var/can_be_anchored=false
 	custom_suicide=true
+	open_to_sound = TRUE
+
 	New()
 		src.light = new /datum/light/point
 		src.light.attach(src)
@@ -38,10 +40,6 @@
 		processing_items |= src
 		..()
 
-	hear_talk(mob/M as mob, msg, real_name, lang_id) // hack to make microphones work
-		for(var/obj/item/mechanics/miccomp/mic in src.contents)
-			mic.hear_talk(M,msg,real_name,lang_id)
-		return
 	process()
 		if (src.light_time>0)
 			src.light_time--
@@ -538,7 +536,7 @@
 
 	proc/setPrice(obj/item/W as obj, mob/user as mob)
 		if (code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if (codecheck != code)
 				boutput(user, "<span class='alert'>[bicon(src)]: Incorrect code entered.</span>")
 				return 0
@@ -582,7 +580,7 @@
 
 	proc/checkEjectMoney(obj/item/W as obj, mob/user as mob)
 		if(code)
-			var/codecheck = strip_html(input(user,"Please enter current code:","Code check","") as text)
+			var/codecheck = strip_html_tags(input(user,"Please enter current code:","Code check","") as text)
 			if(!in_interact_range(src, user) || user.stat)
 				return 0
 			if (codecheck != code)
@@ -719,6 +717,8 @@
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
 	plane = PLANE_DEFAULT
+	var/paper_left = 10
+	var/process_cycle = 0
 
 	New()
 		..()
@@ -730,10 +730,15 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
-			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html(html_decode(input.signal))
-			P.name = paper_name
+			if(paper_left > 0)
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
+				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
+				P.info = strip_html_tags(html_decode(input.signal))
+				P.name = paper_name
+				paper_left--
+				processing_items |= src
+			else
+				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
 
 	proc/setPaperName(obj/item/W as obj, mob/user as mob)
@@ -750,6 +755,14 @@
 				user.drop_item()
 				src.set_loc(target)
 		return
+
+	process()
+		. = ..()
+		var/turf/T = get_turf(src)
+		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
+			paper_left++
+			if(paper_left >= 10)
+				processing_items -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -789,7 +802,7 @@
 			flick("comp_pscan1",src)
 			playsound(src.loc, 'sound/machines/twobeep2.ogg', 90, 0)
 			var/obj/item/paper/P = W
-			var/saniStr = strip_html(sanitize(html_encode(P.info)))
+			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
 				del(W)
@@ -1182,7 +1195,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1217,7 +1230,7 @@
 		if(!in_interact_range(src, user) || user.stat)
 			return 0
 		if(length(inp))
-			inp = strip_html(html_decode(inp))
+			inp = strip_html_tags(html_decode(inp))
 			triggerSignal = inp
 			boutput(user, "Signal set to [inp]")
 			return 1
@@ -1325,7 +1338,7 @@
 		if(!R) return
 
 		var/mod = R.Replace(input.signal, expressionrepl)
-		mod = strip_html(sanitize(html_encode(mod)))//U G H
+		mod = strip_html_tags(sanitize(html_encode(mod)))//U G H
 
 		if(mod)
 			input.signal = mod
@@ -1607,7 +1620,7 @@
 		setStartingString(input.signal)
 
 	proc/setStartingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		bstr = inp
 		tooltip_rebuild = 1
 
@@ -1625,7 +1638,7 @@
 		setEndingString(input.signal)
 
 	proc/setEndingString(var/inp)
-		inp = strip_html(inp)
+		inp = strip_html_tags(inp)
 		astr = inp
 		tooltip_rebuild = 1
 
@@ -1648,7 +1661,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		var/finished = "[bstr][buffer][astr]"
-		finished = strip_html(sanitize(finished))
+		finished = strip_html_tags(sanitize(finished))
 		input.signal = finished
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_MSG,input)
 		buffer = ""
@@ -1873,7 +1886,7 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("ERR_12939_CORRUPT_PACKET:" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
@@ -1881,21 +1894,21 @@
 				var/packets = ""
 				for(var/d in signal.data)
 					packets += "[d]=[signal.data[d]]; "
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode("[signal.encryption]" + stars(packets, 15))), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode("[signal.encryption]" + stars(packets, 15))), null)
 				animate_flash_color_fill(src,"#ff0000",2, 2)
 				return
 
 			if(forward_all)
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(list2params(signal.data))), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 				return
 
 			else if(signal.data["command"] == "sendmsg" && signal.data["data"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["data"])), signal.data_file?.copy_file())
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["data"])), signal.data_file?.copy_file())
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "text_message" && signal.data["message"])
-				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html(html_decode(signal.data["message"])), null)
+				SEND_SIGNAL(src, COMSIG_MECHCOMP_TRANSMIT_SIGNAL, strip_html_tags(html_decode(signal.data["message"])), null)
 				animate_flash_color_fill(src,"#00FF00",2, 2)
 
 			else if(signal.data["command"] == "setfreq" && signal.data["data"])
@@ -2522,7 +2535,7 @@
 		var/message = msg[2]
 		if (lang_id in list("english", ""))
 			message = msg[1]
-		message = strip_html(html_decode(message))
+		message = strip_html_tags(html_decode(message))
 		var/heardname = null
 		if (isobj(AM))
 			heardname = AM.name
@@ -2755,7 +2768,7 @@
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
-		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2809,7 +2822,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
-			if(Gun.canshoot())
+			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
 					Gun.shoot(target, get_turf(src), src)

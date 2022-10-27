@@ -264,11 +264,20 @@
 				src.occupant.unlock_medal("Quit Cloning Around")
 
 		src.mess = FALSE
-		var/puritan = FALSE
+		var/is_puritan = FALSE
 		if (!isnull(traits) && src.occupant.traitHolder)
 			traits.copy_to(src.occupant.traitHolder)
-			puritan = src.occupant.traitHolder.hasTrait("puritan")
-			if (puritan)
+
+
+			#ifndef MAP_OVERRIDE_POD_WARS
+			if(src.occupant.traitHolder.hasTrait("puritan"))
+				is_puritan = TRUE
+
+			for (var/trait as anything in src.occupant?.client.preferences.traitPreferences.traits_selected)
+				if(trait == "puritan")
+					is_puritan = TRUE
+
+			if (is_puritan)
 				src.mess = TRUE
 				// Puritans have a bad time.
 				// This is a little different from how it was before:
@@ -290,6 +299,7 @@
 						for (var/limb in limbs)
 							if (prob(50))
 								P.limbs.sever(limb)
+			#endif
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")
@@ -340,6 +350,17 @@
 			else
 				src.occupant.setStatus("mindhack", null, implant_hacker)
 
+		// Remove zombie antag status as zombie race is removed on cloning
+		var/mob/M = src.occupant
+		if (!M?.mind)
+			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [M].")
+		else if (M.mind.get_antagonist(ROLE_ZOMBIE))
+			var/success = M.mind.remove_antagonist(ROLE_ZOMBIE)
+			if (success)
+				logTheThing(LOG_COMBAT, M, "Cloning pod removed zombie antag status.")
+			else
+				logTheThing(LOG_DEBUG, src, "Cloning pod failed to remove zombie antag status from [M] with return code [success].")
+
 		// Someone is having their brain zapped. 75% chance of them being de-antagged if they were one
 		//MBC todo : logging. This shouldn't be an issue thoug because the mindwipe doesn't even appear ingame (yet?)
 		if(src.connected?.mindwipe)
@@ -353,7 +374,7 @@
 		if (src.connected?.BE)
 			src.occupant.bioHolder.AddEffectInstance(src.connected.BE,1)
 
-		if (!puritan)
+		if (!is_puritan)
 			src.occupant.changeStatus("paralysis", 10 SECONDS)
 		previous_heal = src.occupant.health
 		return 1
@@ -1087,10 +1108,8 @@
 		src.icon_state = "grinder[fluid_level]"
 
 		if (update_grindpaddle)
-			src.overlays = null
-			src.overlays += "grindpaddle[src.process_timer > 0 ? 1 : 0]"
-
-			src.overlays += "grindglass[fluid_level]"
+			UpdateOverlays(image(src.icon, "grindpaddle[src.process_timer > 0 ? 1 : 0]"),"paddle")
+			UpdateOverlays(image(src.icon, "grindglass[fluid_level]"),"glass")
 		return
 
 	ex_act(severity)

@@ -94,7 +94,6 @@ var/list/action_names = list(
 ///Used for literal input of actions
 var/list/action_verbs = list(
 	"say_radio" = "say_radio",
-	"emote" = "say *customv",
 	"salute" = "me_hotkey salute",
 	"burp" = "me_hotkey burp",
 	"dab" = "me_hotkey dab",
@@ -130,6 +129,7 @@ var/list/action_macros = list(
 	"asay" = "asaymacro",
 	"dsay" = "dsaymacro",
 	"say" = "startsay",
+	"emote" = "startemote",
 	"say_main_radio" = "radiosay",
 	"ooc" = "ooc",
 	"looc" = "looc",

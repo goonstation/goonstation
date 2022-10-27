@@ -37,7 +37,6 @@
 #define UNIT_TEST_FAILED 1
 
 #include "rand.dm"
-//#include "duplicate_area_names.dm"
 #include "deletions.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"

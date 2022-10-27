@@ -75,8 +75,9 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "cd" = (
-/obj/machinery/door/airlock/pyro/medical/alt{
-	dir = 8
+/obj/machinery/door/airlock/pyro/glass/med{
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
@@ -669,8 +670,10 @@
 /area/centcom/outside)
 "CK" = (
 /obj/machinery/door/airlock/pyro/glass/command{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -679,8 +682,10 @@
 "DC" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
-	name = "Secure Transport"
+	name = "Secure Transport";
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "DH" = (
@@ -843,7 +848,8 @@
 /area/centcom)
 "Jd" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack,
 /area/shuttle/escape/centcom)
@@ -978,7 +984,8 @@
 /area/centcom/outside)
 "OD" = (
 /obj/machinery/door/airlock/pyro/glass{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/redblack{
 	dir = 1
@@ -1158,9 +1165,6 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "YN" = (
-/obj/decoration/syndiepc/syndiepc3,
-/obj/decoration/syndiepc/syndiepc13,
-/obj/decoration/syndiepc/syndiepc7,
 /obj/decoration/syndiepc/syndiepc11{
 	icon_state = "syndiepc3"
 	},

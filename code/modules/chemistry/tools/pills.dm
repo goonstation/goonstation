@@ -106,7 +106,7 @@
 				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
 				"<span class='alert'>You force [target] to swallow [src].</span>")
 
-			logTheThing("combat", user, target, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 			if (src.reagents.total_volume)
 				src.reagents.reaction(target, INGEST)

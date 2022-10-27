@@ -107,9 +107,9 @@
 	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
-		src.closeContextActions()
+		src.contextActionsOnMove()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe?.closeContextActions()
+		src.mainframe?.contextActionsOnMove()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -496,16 +496,8 @@
 
 //---TURF---//
 /turf/var/image/aiImage
-/turf/var/list/cameras = null
-
-/turf/proc/adjustCameraImage()
-	if(!istype(src.aiImage)) return
-
-	if( src.cameras.len >= 1 )
-		src.aiImage.loc = null
-	else if( src.cameras == null )
-		src.aiImage.loc = src
-	return
+/turf/var/list/obj/machinery/camera/cameras
+/turf/var/list/datum/component/camera_coverage_emitter/camera_coverage_emitters
 
 //slow
 /*
@@ -516,99 +508,7 @@
 			usr.client.show_popup_menus = (length(cameras))
 */
 
-//---TURF---//
-
-//---CAMERA---//
-/obj/machinery/camera/var/list/turf/coveredTiles = null
-
-/obj/machinery/camera/proc/updateCoverage()
-	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
-		world.updateCameraVisibility()
-
 //---MISC---//
-
-var/list/obj/machinery/camera/camerasToRebuild
-world/proc/updateCameraVisibility(generateAiImages=FALSE)
-	set waitfor = FALSE
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
-	// I don't wanna wait for this camera setup shit just GO
-	return
-#endif
-
-	if(generateAiImages)
-		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
-		ma.plane = PLANE_HUD
-		ma.layer = 100
-		ma.color = "#777777"
-		ma.dir = pick(alldirs)
-		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
-		ma.name = " "
-
-		// takes about one second compared to the ~12++ that the actual calculations take
-		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-//pod wars has no AI so this is just a waste of time...
-#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
-
-		var/lastpct = 0
-		var/thispct = 0
-		var/donecount = 0
-
-		for(var/turf/t as anything in cam_candidates) //ugh
-			t.aiImage = new
-			t.aiImage.appearance = ma
-			t.aiImage.dir = pick(alldirs)
-			t.aiImage.loc = t
-
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
-
-			donecount++
-			thispct = round(donecount / cam_candidates.len * 100)
-			if (thispct != lastpct)
-				lastpct = thispct
-				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
-
-			LAGCHECK(100)
-
-		for_by_tcl(cam, /obj/machinery/camera)
-			LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-		game_start_countdown?.update_status("Updating camera vis...\n")
-
-	var/list/turf/staticUpdateTurfs = list()
-
-	for(var/obj/machinery/camera/cam as anything in camerasToRebuild)
-		var/list/prev_tiles = cam.coveredTiles
-		var/list/new_tiles = list()
-		if(cam.camera_status && !isnull(get_turf(cam)))
-			for(var/turf/T in view(CAM_RANGE, get_turf(cam)))
-				new_tiles += T
-		if (prev_tiles)
-			for(var/turf/T as anything in (prev_tiles - new_tiles))
-				staticUpdateTurfs |= T
-				if(isnull(T.cameras)) continue
-				T.cameras -= cam
-				if(!length(T.cameras))
-					T.cameras = null
-		if (new_tiles)
-			for(var/turf/T as anything in (new_tiles - prev_tiles))
-				LAZYLISTADDUNIQUE(T.cameras, cam)
-				staticUpdateTurfs |= T
-
-		cam.coveredTiles = new_tiles
-
-	for(var/turf/T as anything in staticUpdateTurfs)
-		T.aiImage?.loc = length(T.cameras) ? null : T
-
-	camerasToRebuild = null
-#endif
-
-// to be called by admins if everything breaks. TODO move to an admin verb
-/proc/force_full_camera_rebuild()
-	for_by_tcl(cam, /obj/machinery/camera)
-		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-	world.updateCameraVisibility()
-
 /mob/living/intangible/aieye/proc/check_eye_z(source)
 	var/atom/movable/temp = source
 	while(!istype(temp.loc, /turf))

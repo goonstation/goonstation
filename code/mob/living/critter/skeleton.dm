@@ -38,7 +38,7 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	blood_id = null
+	blood_id = "calcium"
 	burning_suffix = "humanoid"
 	metabolizes = 0
 	mob_flags = IS_BONEY

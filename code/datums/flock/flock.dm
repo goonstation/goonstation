@@ -18,6 +18,7 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	var/queued_trace_deaths = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
@@ -33,6 +34,7 @@ var/flock_signal_unleashed = FALSE
 	var/static/list/annotation_imgs = null
 	var/list/obj/flock_structure/structures = list()
 	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
+	var/bullets_hit = 0
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
@@ -42,16 +44,29 @@ var/flock_signal_unleashed = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 
+	// stats stuff, if not listed above
+	var/drones_made = 0
+	var/bits_made = 0
+	var/deaths = 0
+	var/resources_gained = 0
+	var/partitions_made = 0
+	var/tiles_converted = 0
+	var/structures_made = 0
+
 /datum/flock/New()
 	..()
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
 	processing_items |= src
-	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
-		src.unlockableStructures += new DT(src)
+	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
+
+/datum/flock/proc/load_structures()
+	src.unlockableStructures = list()
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
 
 /datum/flock/ui_status(mob/user)
 	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
@@ -125,6 +140,7 @@ var/flock_signal_unleashed = FALSE
 	state["drones"] = list()
 	state["structures"] = list()
 	state["enemies"] = list()
+	state["stats"] = list()
 	state["category_lengths"] = list(
 		"traces" = length(src.traces),
 		"drones" = length(src.units[/mob/living/critter/flock/drone]),
@@ -163,6 +179,21 @@ var/flock_signal_unleashed = FALSE
 				else
 					// enemy no longer exists, let's do something about that
 					src.enemies -= name
+
+		if ("stats")
+			var/list/stats = list(
+				"Drones realized: " = src.drones_made,
+				"Bits formed: " = src.bits_made,
+				"Total deaths: " = src.deaths,
+				"Resources gained: " = src.resources_gained,
+				"Partitions created: " = src.partitions_made,
+				"Tiles converted: " = src.tiles_converted,
+				"Structures created: " = src.structures_made,
+				"Highest compute: " = src.peak_compute
+				)
+
+			for (var/stat in stats)
+				state["stats"] += list(list("name" = stat, "value" = stats[stat]))
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()
@@ -442,11 +473,11 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/getActiveTraces()
 	var/list/active_traces = list()
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		if (T.client)
+		if (T.client && T.afk_counter < FLOCK_AFK_COUNTER_THRESHOLD)
 			active_traces += T
 		else if (istype(T.loc, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/flockdrone = T.loc
-			if (flockdrone.client)
+			if (flockdrone.client && T.afk_counter < FLOCK_AFK_COUNTER_THRESHOLD)
 				active_traces += T
 	return active_traces
 
@@ -543,12 +574,13 @@ var/flock_signal_unleashed = FALSE
 		src.togglePriorityTurf(T)
 	for (var/name in src.busy_tiles)
 		src.unreserveTurf(src.busy_tiles[name])
-	src.unlockableStructures = list()
+	src.bullets_hit = 0
 	src.achievements = list()
+	src.unlockableStructures = list()
 	src.total_compute = 0
 	src.used_compute = 0
-	src.peak_compute = 0
 	if (!real)
+		src.load_structures()
 		return
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
@@ -579,8 +611,12 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+	if (isfeathertile(T))
+		src.tiles_converted++
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -649,6 +685,8 @@ var/flock_signal_unleashed = FALSE
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
 
+// ACHIEVEMENTS
+
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
 	src.achievements |= str
@@ -659,6 +697,23 @@ var/flock_signal_unleashed = FALSE
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/hasAchieved(var/str)
 	return (str in src.achievements)
+
+/datum/flock/proc/check_for_bullets_hit_achievement(obj/projectile/P)
+	if (!istype(P.proj_data, /datum/projectile/bullet))
+		return
+	if (src.bullets_hit > FLOCK_BULLETS_HIT_THRESHOLD)
+		return
+
+	var/attacker = P.shooter
+	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
+		attacker = P.mob_shooter // shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
+	if (istype(attacker, /mob/living/critter/flock))
+		var/mob/living/critter/flock/flockcritter = attacker
+		if (flockcritter.flock == src)
+			return
+	src.bullets_hit++
+	if (src.bullets_hit == FLOCK_BULLETS_HIT_THRESHOLD)
+		src.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////
@@ -683,14 +738,33 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/machinery/vending = /obj/flock_structure/fabricator,
+	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
+	/obj/submachine/seed_vendor = /obj/flock_structure/fabricator,
+	/obj/machinery/dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/disposal_pipedispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chem_dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chemicompiler_stationary = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/foamtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/watertank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/fueltank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
+
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return
+	if (!flockTurfAllowed(T))
+		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
+	if(istype(T, /turf/simulated/floor))
 		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 		animate_flock_convert_complete(T)
 
@@ -740,7 +814,7 @@ var/flock_signal_unleashed = FALSE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
+			var/obj/converted = new replacementPath(T, null, O)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))

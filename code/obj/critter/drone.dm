@@ -22,7 +22,6 @@
 	flying = 1
 	mats = list("POW-1" = 5, "MET-2" = 12, "CON-2" = 12, "DEN-1" = 6)
 	var/score = 10
-	var/must_drop_loot = 0
 	dead_state = "drone-dead"
 	var/obj/item/droploot = null
 	var/damaged = 0 // 1, 2, 3
@@ -224,12 +223,10 @@
 		dying = 1 // this was dying = 0. ha ha.
 		SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_DRONE_DEATH, src)
 		SPAWN(2 SECONDS)
-			if (must_drop_loot)
-				if (prob(25))
-					new /obj/item/device/prox_sensor(src.loc)
-
-				if(droploot)
-					new droploot(src.loc)
+			if (prob(25))
+				new /obj/item/device/prox_sensor(src.loc)
+			if(droploot)
+				new droploot(src.loc)
 			..()
 			return
 
@@ -525,8 +522,8 @@
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
 		droploot = /obj/item/bang_gun
-		projectile_type = /datum/projectile/bullet/ak47
-		current_projectile = new/datum/projectile/bullet/ak47
+		projectile_type = /datum/projectile/bullet/akm
+		current_projectile = new/datum/projectile/bullet/akm
 		attack_cooldown = 20
 		mats = list("POW-3" = 13, "MET-3" = 24, "CON-2" = 20, "CRY-2" =17)
 		New()
@@ -866,7 +863,6 @@
 	bound_height = 96
 	bound_width = 96
 	score = 10000
-	must_drop_loot = 1
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
@@ -1148,8 +1144,8 @@
 /obj/critter/gunbot/drone/iridium/whydrone/horse
 	name = "Horseman"
 	desc = "What the hell is this thing!? Oh God, is that a MOUTH?"
-	health = 8000 //glitch drone tough
-	maxhealth = 8000 // you aren't killing the apocalypse easily
+	health = 5000
+	maxhealth = 5000
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "horsedrone"
 	bound_height = 96

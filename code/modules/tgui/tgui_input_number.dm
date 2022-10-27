@@ -15,11 +15,12 @@
  * * message - The content of the numbox, shown in the body of the TGUI window.
  * * title - The title of the numbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder. Users can press refresh with this.
- * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
- * * min_value - Specifies a minimum value. Often 0.
+ * * max_value - Specifies a maximum value. If none is set, it defaults to 1000.
+ * * min_value - Specifies a minimum value. If none is set, it defaults to 0.
  * * timeout - The timeout of the numbox, after which the modal will close and qdel itself. Set to zero for no timeout.
+ * * round_input - If the number in the numbox should be rounded to the nearest integer.
  */
-/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value, min_value, timeout = 0)
+/proc/tgui_input_number(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, timeout = 0, round_input = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -28,9 +29,13 @@
 			user = client.mob
 		else
 			return
-	if (!user?.client) // No NPCs or they hang Mob AI process
+	if (!user.client) // No NPCs or they hang Mob AI process
 		return
-	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout)
+	if (!isnum_safe(default))
+		CRASH("TGUI input number prompt opened with default number that is not a number.")
+	if (default > (!isnull(max_value) ? max_value : 1000) || default < min_value)
+		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
+	var/datum/tgui_input_number/numbox = new(user, message, title, default, max_value, min_value, timeout, round_input)
 	numbox.ui_interact(user)
 	numbox.wait()
 	if (numbox)
@@ -47,12 +52,13 @@
  * * message - The content of the numbox, shown in the body of the TGUI window.
  * * title - The title of the numbox modal, shown on the top of the TGUI window.
  * * default - The default (or current) value, shown as a placeholder. Users can press refresh with this.
- * * max_value - Specifies a maximum value. If none is set, any number can be entered. Pressing "max" defaults to 1000.
- * * min_value - Specifies a minimum value. Often 0.
+ * * max_value - Specifies a maximum value. If none is set, it defaults to 1000.
+ * * min_value - Specifies a minimum value. If none is set, it defaults to 0.
  * * callback - The callback to be invoked when a choice is made.
  * * timeout - The timeout of the numbox, after which the modal will close and qdel itself. Disabled by default, can be set to seconds otherwise.
+ * * round_input - If the number in the numbox should be rounded to the nearest integer.
  */
-/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value, min_value, datum/callback/callback, timeout = 60 SECONDS)
+/proc/tgui_input_number_async(mob/user, message, title = "Number Input", default, max_value = null, min_value = null, datum/callback/callback, timeout = 60 SECONDS, round_input = TRUE)
 	if (!user)
 		user = usr
 	if (!istype(user))
@@ -61,7 +67,13 @@
 			user = client.mob
 		else
 			return
-	var/datum/tgui_input_number/async/numbox = new(user, message, title, default, max_value, min_value, callback, timeout)
+	if (!user.client) // No NPCs or they hang Mob AI process
+		return
+	if (!isnum_safe(default))
+		CRASH("TGUI input number prompt opened with default number that is not a number.")
+	if (default > (!isnull(max_value) ? max_value : 1000) || default < min_value)
+		CRASH("TGUI input number prompt opened with a default number outside of the allowable range.")
+	var/datum/tgui_input_number/async/numbox = new(user, message, title, default, max_value, min_value, callback, timeout, round_input)
 	numbox.ui_interact(user)
 
 /**
@@ -89,16 +101,19 @@
 	var/start_time
 	/// The lifespan of the tgui_input_number, after which the window will close and delete itself.
 	var/timeout
+	/// If the input should be rounded upon submitting
+	var/round_input
 	/// The title of the TGUI window
 	var/title
 
 
-/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout)
+/datum/tgui_input_number/New(mob/user, message, title, default, max_value, min_value, timeout, round_input)
 	src.user = user
 	src.default = default
 	src.max_value = max_value
 	src.message = message
 	src.min_value = min_value
+	src.round_input = round_input
 	src.title = title
 	if (timeout)
 		src.timeout = timeout
@@ -138,6 +153,7 @@
 		"max_value" = max_value,
 		"message" = message,
 		"min_value" = min_value || 0,
+		"round_input" = round_input,
 		"title" = title,
 	)
 	if(timeout)
@@ -149,11 +165,14 @@
 		return
 	switch(action)
 		if("submit")
-			if(max_value && (length(params["entry"]) > max_value))
+			var/input_num = params["entry"]
+			if (src.round_input)
+				input_num = round(input_num, 1)
+			if(input_num > (!isnull(max_value) ? max_value : 1000))
 				return FALSE
-			if(min_value && (length(params["entry"]) < min_value))
+			if(input_num < min_value)
 				return FALSE
-			set_entry(params["entry"])
+			set_entry(input_num)
 			tgui_process.close_uis(src)
 			return TRUE
 		if("cancel")
@@ -162,7 +181,7 @@
 			return TRUE
 
 /datum/tgui_input_number/proc/set_entry(entry)
-		src.entry = entry
+	src.entry = entry
 
 /**
  * # async tgui_input_number
@@ -173,8 +192,8 @@
 	/// The callback to be invoked by the tgui_input_number upon having a choice made.
 	var/datum/callback/callback
 
-/datum/tgui_input_number/async/New(mob/user, message, title, default, max_value, min_value, callback, timeout)
-	..(user, message, title, default, max_value, min_value, timeout)
+/datum/tgui_input_number/async/New(mob/user, message, title, default, max_value, min_value, callback, timeout, round_input)
+	..(user, message, title, default, max_value, min_value, timeout, round_input)
 	src.callback = callback
 
 /datum/tgui_input_number/async/disposing(force, ...)

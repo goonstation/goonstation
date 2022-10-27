@@ -122,14 +122,14 @@
 		else
 			..()
 
-	handle_internal_lifeform(mob/lifeform_inside_me, breath_request)
+	handle_internal_lifeform(mob/lifeform_inside_me, breath_request, mult)
 		var/mob/M = lifeform_inside_me
 		if (breath_request > 0 && M.lying && src.reagents.total_volume > suffocation_volume) // drowning
 			// mimics `force_mob_to_ingest` in fluid_core.dm
 			// we can skip some checks due to obj handling in breath.dm
 			if (M.get_oxygen_deprivation() > 40)
 				var/react_volume = src.reagents.total_volume > 10 ? (src.reagents.total_volume / 2) : (src.reagents.total_volume)
-				react_volume = min(react_volume, 20)
+				react_volume = min(react_volume, 20) * mult
 				if (M.reagents)
 					react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 				src.reagents.reaction(M, INGEST, react_volume, 1, src.reagents.reagent_list.len)

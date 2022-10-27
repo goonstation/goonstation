@@ -884,7 +884,7 @@
 				icon_state = "drunk[how_drunk]"
 
 		getTooltip()
-			. =  "You are [how_drunk == 2 ? "very": ""][how_drunk == 3 ? ", very" : ""] drunk."
+			. =  "You are [how_drunk >= 2 ? "very": ""][how_drunk >= 3 ? ", very" : ""] drunk."
 
 	blinded
 		id = "blinded"
@@ -1568,6 +1568,15 @@
 	maxDuration = null
 	change = -5
 
+/datum/statusEffect/staminaregen/cursed
+	id = "weakcurse"
+	name = "Enfeebled"
+	desc = "You feel really weak"
+	icon_state = "stam-"
+	duration = INFINITE_STATUS
+	maxDuration = null
+	change = -5
+
 /datum/statusEffect/miasma
 	id = "miasma"
 	name = "Miasma"
@@ -2169,3 +2178,16 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/gnesis_tint
+	id = "gnesis_tint"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		owner.add_filter("gnesis_tint", 1, color_matrix_filter(normalize_color_to_matrix("#309179")))
+
+	onRemove()
+		. = ..()
+		owner.remove_filter("gnesis_tint")

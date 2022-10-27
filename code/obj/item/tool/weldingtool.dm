@@ -342,6 +342,12 @@
 			return 1 //welding, has fuel
 		return 0 //not welding
 
+/obj/item/weldingtool/yellow
+	icon_state = "weldingtool-off-yellow"
+	item_state = "weldingtool-off-yellow"
+	icon_state_variant_suffix = "-yellow"
+	uses_multiple_icon_states = 1
+
 /obj/item/weldingtool/vr
 	icon_state = "weldingtool-off-vr"
 	icon_state_variant_suffix = "-vr"

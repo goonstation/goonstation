@@ -255,6 +255,17 @@
 						things_to_pick += M
 				if(!length(things_to_pick))
 					src.emote(pick("whimper", "growl", "scowl", "grimace", "sulk", "pout", "shrug", "yawn"))
+				else if(prob(15) && src.bioHolder.HasOneOfTheseEffects("midas", "inkglands", "healingtouch")) // this monkey's all gene'd up
+					var/atom/thing_to_poke = pick(things_to_pick)
+					var/datum/bioEffect/power/healing_touch/healing_touch = src.bioHolder.GetEffect("healing_touch")
+					var/datum/bioEffect/power/midas/midas_touch = src.bioHolder.GetEffect("midas")
+					var/datum/bioEffect/power/ink/ink_glands = src.bioHolder.GetEffect("inkglands")
+					if (ismob(thing_to_poke) && healing_touch && healing_touch.ability.last_cast < world.time)
+						healing_touch.ability.handleCast(thing_to_poke)
+					else if (!ismob(thing_to_poke) && midas_touch && midas_touch?.ability.last_cast < world.time)
+						midas_touch.ability.handleCast(thing_to_poke)
+					else
+						ink_glands?.ability.handleCast(thing_to_poke)
 				else if(src.equipped())
 					var/atom/thing_to_poke = pick(things_to_pick)
 					src.weapon_attack(thing_to_poke, src.equipped(), TRUE)
@@ -294,7 +305,8 @@
 		src.ai_target = T
 		src.shitlist[T] ++
 		if (prob(40))
-			src.emote("scream")
+			if(!ON_COOLDOWN(src, "monkey_harmed_scream", 5 SECONDS))
+				src.emote("scream")
 		var/pals = 0
 		for_by_tcl(pal, /mob/living/carbon/human/npc/monkey)
 			if (GET_DIST(src, pal) > 7)
@@ -311,9 +323,11 @@
 			pal.shitlist[T] ++
 			pals ++
 			if (prob(40))
-				src.emote("scream")
+				if(!ON_COOLDOWN(pal, "monkey_harmed_scream", 5 SECONDS))
+					pal.emote("scream")
 			if(src.client)
 				break
+
 		if(aggroed)
 			walk_towards(src, ai_target, ai_movedelay)
 
@@ -481,7 +495,8 @@
 							"You sound like you singing in two keys at same time!", \
 							"Monkey no like atonal music!")) // monkeys don't know grammar but naturally know concepts like "atonal" and "cacophony"
 							if (prob(40))
-								src.emote("scream")
+								if(!ON_COOLDOWN(src, "monkey_sing_scream", 10 SECONDS))
+									src.emote("scream")
 		..()
 
 	proc/pursuited_by(atom/movable/AM)

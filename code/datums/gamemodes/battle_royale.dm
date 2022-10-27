@@ -38,8 +38,6 @@ var/global/area/current_battle_spawn = null
 	boutput(world, "<B>You are approaching [station_name(1)] in the Battle Shuttle! Jump out of the ship to land on the station!</B>")
 
 /datum/game_mode/battle_royale/pre_setup()
-	for(var/datum/mind/mind in antag_token_list())
-		mind.current?.client?.using_antag_token = FALSE
 	// EVERYONE IS A BATTLER
 	for(var/client/C)
 		var/mob/new_player/player = C.mob
@@ -188,7 +186,7 @@ var/global/area/current_battle_spawn = null
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
-	emergency_shuttle.disabled = 1
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 
 	return 1
 	// Things we are skipping:
@@ -341,7 +339,7 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/gun/kinetic/clock_188)
 	weapon_supplies.Add(/obj/item/gun/kinetic/revolver)
 	weapon_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
-	weapon_supplies.Add(/obj/item/gun/kinetic/colt_saa)
+	weapon_supplies.Add(/obj/item/gun/kinetic/single_action/colt_saa)
 	weapon_supplies.Add(/obj/item/gun/kinetic/riotgun)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
@@ -360,10 +358,10 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/nunchucks)
 	weapon_supplies.Add(/obj/item/quarterstaff)
 	weapon_supplies.Add(/obj/item/fireaxe)
-	weapon_supplies.Add(/obj/item/fragile_sword)
-	weapon_supplies.Add(/obj/item/katana_sheath/reverse)
-	weapon_supplies.Add(/obj/item/katana_sheath/captain)
-	weapon_supplies.Add(/obj/item/katana_sheath/nukeop)
+	weapon_supplies.Add(/obj/item/swords/fragile_sword)
+	weapon_supplies.Add(/obj/item/swords_sheaths/katana/reverse)
+	weapon_supplies.Add(/obj/item/swords_sheaths/captain)
+	weapon_supplies.Add(/obj/item/swords_sheaths/nukeop)
 	weapon_supplies.Add(/obj/item/sword/discount)
 	weapon_supplies.Add(/obj/item/storage/box/shuriken_pouch)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/frag)
@@ -385,7 +383,6 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
 	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate)

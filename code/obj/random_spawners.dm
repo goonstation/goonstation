@@ -1824,7 +1824,7 @@
 			closet_check_spawn()
 
 	closet_check_spawn(var/new_x,var/new_y)
-		var/obj/item/K = new /obj/item/device/key/chompskey
+		var/obj/item/K = new /obj/item/device/key/generic/chompskey
 
 		if(new_x && new_y)
 			K.set_loc(locate(new_x,new_y,src.z))

@@ -6718,7 +6718,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L16";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "akQ" = (
@@ -7871,7 +7871,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L2";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "amP" = (
@@ -8191,7 +8191,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L15";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "anj" = (
@@ -9545,7 +9545,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L1";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "apw" = (
@@ -9814,7 +9814,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L3";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "apM" = (
@@ -10219,7 +10219,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L4";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "aql" = (
@@ -12352,7 +12352,10 @@
 "ats" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -14886,7 +14889,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L10";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axI" = (
@@ -14897,7 +14900,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L11";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axJ" = (
@@ -14908,7 +14911,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L12";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axK" = (
@@ -14919,7 +14922,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L13";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axL" = (
@@ -14930,7 +14933,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L14";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axM" = (
@@ -14941,7 +14944,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L5";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axN" = (
@@ -14952,7 +14955,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L6";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axO" = (
@@ -14963,7 +14966,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L7";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axP" = (
@@ -14974,7 +14977,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L8";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axQ" = (
@@ -14985,7 +14988,7 @@
 	},
 /turf/simulated/floor{
 	icon_state = "L9";
-	transform = list(-1, 0, -1, 0, 1, 0)
+	transform = list(-1,0,-1,0,1,0)
 	},
 /area/station/crew_quarters/market)
 "axR" = (
@@ -15141,7 +15144,7 @@
 /area/station/crew_quarters/pool)
 "ays" = (
 /obj/critter/sealpup,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayt" = (
 /obj/critter/turtle/sylvester/HoS,
@@ -15149,7 +15152,7 @@
 /area/station/security/hos)
 "ayu" = (
 /obj/critter/walrus,
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "ayv" = (
 /obj/dartboard{
@@ -15905,48 +15908,48 @@
 "aAG" = (
 /obj/decal/poster/wallsign/stencil/right/a{
 	pixel_x = 0;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -12;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "aAH" = (
 /obj/decal/poster/wallsign/stencil/right/a{
 	pixel_x = 8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/n{
 	pixel_x = -4;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/d{
 	pixel_x = -15;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "aAI" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = -1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/i{
 	pixel_x = -11;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/airbridge)
 "aAJ" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 0;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -12;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
@@ -15955,26 +15958,26 @@
 "aAK" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 2;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/o{
 	pixel_x = -10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "aAL" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 6;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/p{
 	pixel_x = -18;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -15985,15 +15988,15 @@
 "aAM" = (
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 6;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/p{
 	pixel_x = -18;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -16004,11 +16007,11 @@
 "aAN" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = -1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -14;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	dir = 8
@@ -16018,18 +16021,18 @@
 "aAO" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = -1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -14;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
 "aAP" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	can_rupture = 0;
@@ -16040,18 +16043,18 @@
 "aAQ" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/primary/south)
 "aAR" = (
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 2;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/n{
 	pixel_x = -10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
@@ -16060,19 +16063,19 @@
 "aAS" = (
 /obj/decal/poster/wallsign/stencil/right/g{
 	pixel_x = 10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/n{
 	pixel_x = -7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/e{
 	pixel_x = -19;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
@@ -16081,74 +16084,74 @@
 "aAT" = (
 /obj/decal/poster/wallsign/stencil/right/k{
 	pixel_x = 10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
 "aAU" = (
 /obj/decal/poster/wallsign/stencil/right/m{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/m{
 	pixel_x = -10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/courtroom)
 "aAV" = (
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 2;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -11;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
 "aAW" = (
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/u{
 	pixel_x = -5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/t{
 	pixel_x = -16;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/depot)
 "aAX" = (
 /obj/decal/poster/wallsign/stencil/right/r{
 	pixel_x = 8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 0;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/v{
 	pixel_x = -7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -18;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "aAY" = (
 /obj/decal/poster/wallsign/stencil/right/s{
 	pixel_x = -1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/e{
 	pixel_x = -13;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
@@ -16157,44 +16160,44 @@
 "aAZ" = (
 /obj/decal/poster/wallsign/stencil/left/b{
 	pixel_x = -20;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/d{
 	pixel_x = -7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/o{
 	pixel_x = 4;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "aBa" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -13;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "aBb" = (
 /obj/decal/poster/wallsign/stencil/left/d{
 	pixel_x = -17;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/market)
 "aBc" = (
 /obj/decal/poster/wallsign/stencil/left/g{
 	pixel_x = -11;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/n{
 	pixel_x = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 9;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
@@ -16203,29 +16206,29 @@
 "aBd" = (
 /obj/decal/poster/wallsign/stencil/left/l{
 	pixel_x = -9;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 3;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "aBe" = (
 /obj/decal/poster/wallsign/stencil/left/m{
 	pixel_x = -15;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/airbridge)
 "aBf" = (
 /obj/decal/poster/wallsign/stencil/left/o{
 	pixel_x = -9;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/g{
 	pixel_x = 3;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/cable{
 	d1 = 4;
@@ -16239,44 +16242,44 @@
 "aBg" = (
 /obj/decal/poster/wallsign/stencil/left/p{
 	pixel_x = -15;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "aBh" = (
 /obj/decal/poster/wallsign/stencil/left/p{
 	pixel_x = -16;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/h{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "aBi" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -13;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/depot)
 "aBj" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -14;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/e{
 	pixel_x = -2;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/t{
 	pixel_x = 9;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/catering{
@@ -16285,15 +16288,15 @@
 "aBk" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -16;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/u{
 	pixel_x = -4;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
@@ -16302,15 +16305,15 @@
 "aBl" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -17;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/cable{
 	d1 = 4;
@@ -16324,63 +16327,63 @@
 "aBm" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 4;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/depot)
 "aBn" = (
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -10;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/l{
 	pixel_x = 2;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "aBo" = (
 /obj/decal/poster/wallsign/stencil/left/s{
 	pixel_x = -21;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/d{
 	pixel_x = -8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/e{
 	pixel_x = 3;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/airbridge)
 "aBp" = (
 /obj/decal/poster/wallsign/stencil/left/y{
 	pixel_x = -12;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/a{
 	pixel_x = 0;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/main)
 "aBq" = (
 /obj/decal/poster/wallsign/stencil/left/y{
 	pixel_x = -12;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/t{
 	pixel_x = 0;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/right/i{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "R12"
@@ -17529,7 +17532,7 @@
 /obj/disposalpipe/segment,
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 2, "EVA" = 2, "Disposals" = 8, "QM" = 2, "Engine" = 2, "Catering" = 2, "MedSci" = 2, "Security" = 2)
+	destinations = list("Airbridge"=2,"Cafeteria"=2,"EVA"=2,"Disposals"=8,"QM"=2,"Engine"=2,"Catering"=2,"MedSci"=2,"Security"=2)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -24245,7 +24248,7 @@
 /obj/fluid_spawner{
 	amount = 2700
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "aSa" = (
 /obj/fudad{
@@ -24887,15 +24890,15 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/stencil/right/c{
 	pixel_x = 7;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/a{
 	pixel_x = -5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -17;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -26279,11 +26282,11 @@
 /obj/wingrille_spawn/auto,
 /obj/decal/poster/wallsign/stencil/right/g{
 	pixel_x = 3;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /obj/decal/poster/wallsign/stencil/left/o{
 	pixel_x = -9;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -30031,7 +30034,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bee" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bef" = (
@@ -30637,7 +30643,7 @@
 /obj/landmark/spawner{
 	name = "monkeyspawn_normal"
 	},
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "bfD" = (
 /obj/lattice,
@@ -34594,7 +34600,10 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/west)
 "boF" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1;
+	
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 2;
@@ -34667,7 +34676,7 @@
 	pixel_y = -7
 	},
 /turf/simulated/floor/specialroom/bar/edge{
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "boK" = (
@@ -36243,91 +36252,91 @@
 "brz" = (
 /obj/machinery/cargo_router{
 	default_direction = 1;
-	destinations = list("Airbridge" = 4, "Cafeteria" = 1, "EVA" = 4, "Disposals" = 1, "QM" = 1, "Engine" = 1, "Catering" = 1, "MedSci" = 1, "Security" = 1)
+	destinations = list("Airbridge"=4,"Cafeteria"=1,"EVA"=4,"Disposals"=1,"QM"=1,"Engine"=1,"Catering"=1,"MedSci"=1,"Security"=1)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brA" = (
 /obj/machinery/cargo_router{
 	default_direction = 1;
-	destinations = list("Airbridge" = 4, "Cafeteria" = 4, "EVA" = 4, "Disposals" = 1, "QM" = 1, "Engine" = 4, "Catering" = 1, "MedSci" = 1, "Security" = 1)
+	destinations = list("Airbridge"=4,"Cafeteria"=4,"EVA"=4,"Disposals"=1,"QM"=1,"Engine"=4,"Catering"=1,"MedSci"=1,"Security"=1)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brB" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 2, "EVA" = 2, "Disposals" = 2, "QM" = 2, "Engine" = 2, "Catering" = 1, "MedSci" = 2, "Security" = 1)
+	destinations = list("Airbridge"=2,"Cafeteria"=2,"EVA"=2,"Disposals"=2,"QM"=2,"Engine"=2,"Catering"=1,"MedSci"=2,"Security"=1)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "brC" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 2, "EVA" = 2, "Disposals" = 2, "QM" = 2, "Engine" = 2, "Catering" = 2, "MedSci" = 2, "Security" = 4)
+	destinations = list("Airbridge"=2,"Cafeteria"=2,"EVA"=2,"Disposals"=2,"QM"=2,"Engine"=2,"Catering"=2,"MedSci"=2,"Security"=4)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "brD" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 2, "EVA" = 2, "Disposals" = 2, "QM" = 2, "Engine" = 2, "Catering" = 8, "MedSci" = 8, "Security" = 8)
+	destinations = list("Airbridge"=2,"Cafeteria"=2,"EVA"=2,"Disposals"=2,"QM"=2,"Engine"=2,"Catering"=8,"MedSci"=8,"Security"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brE" = (
 /obj/machinery/cargo_router{
 	default_direction = 2;
-	destinations = list("Airbridge" = 4, "Cafeteria" = 4, "EVA" = 4, "Disposals" = 4, "QM" = 2, "Engine" = 4, "Catering" = 4, "MedSci" = 4, "Security" = 4)
+	destinations = list("Airbridge"=4,"Cafeteria"=4,"EVA"=4,"Disposals"=4,"QM"=2,"Engine"=4,"Catering"=4,"MedSci"=4,"Security"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "brF" = (
 /obj/machinery/cargo_router{
 	default_direction = 4;
-	destinations = list("Airbridge" = 4, "Cafeteria" = 4, "EVA" = 2, "Disposals" = 4, "QM" = 4, "Engine" = 4, "Catering" = 1, "MedSci" = 2, "Security" = 1)
+	destinations = list("Airbridge"=4,"Cafeteria"=4,"EVA"=2,"Disposals"=4,"QM"=4,"Engine"=4,"Catering"=1,"MedSci"=2,"Security"=1)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "brG" = (
 /obj/machinery/cargo_router{
 	default_direction = 4;
-	destinations = list("Airbridge" = 4, "Cafeteria" = 4, "EVA" = 4, "Disposals" = 4, "QM" = 4, "Engine" = 2, "Catering" = 4, "MedSci" = 4, "Security" = 4)
+	destinations = list("Airbridge"=4,"Cafeteria"=4,"EVA"=4,"Disposals"=4,"QM"=4,"Engine"=2,"Catering"=4,"MedSci"=4,"Security"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brH" = (
 /obj/machinery/cargo_router{
 	default_direction = 4;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 4, "EVA" = 4, "Disposals" = 4, "QM" = 4, "Engine" = 4, "Catering" = 4, "MedSci" = 4, "Security" = 4)
+	destinations = list("Airbridge"=2,"Cafeteria"=4,"EVA"=4,"Disposals"=4,"QM"=4,"Engine"=4,"Catering"=4,"MedSci"=4,"Security"=4)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brI" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Airbridge" = 8, "Cafeteria" = 1, "EVA" = 8, "Disposals" = 8, "QM" = 8, "Engine" = 8, "Catering" = 8, "MedSci" = 8, "Security" = 8)
+	destinations = list("Airbridge"=8,"Cafeteria"=1,"EVA"=8,"Disposals"=8,"QM"=8,"Engine"=8,"Catering"=8,"MedSci"=8,"Security"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brJ" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Airbridge" = 2, "Cafeteria" = 2, "EVA" = 2, "Disposals" = 8, "QM" = 8, "Engine" = 2, "Catering" = 8, "MedSci" = 8, "Security" = 8)
+	destinations = list("Airbridge"=2,"Cafeteria"=2,"EVA"=2,"Disposals"=8,"QM"=8,"Engine"=2,"Catering"=8,"MedSci"=8,"Security"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "brK" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Airbridge" = 8, "Cafeteria" = 8, "EVA" = 8, "Disposals" = 8, "QM" = 8, "Engine" = 8, "Catering" = 2, "MedSci" = 8, "Security" = 8)
+	destinations = list("Airbridge"=8,"Cafeteria"=8,"EVA"=8,"Disposals"=8,"QM"=8,"Engine"=8,"Catering"=2,"MedSci"=8,"Security"=8)
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "brL" = (
 /obj/machinery/cargo_router{
 	default_direction = 8;
-	destinations = list("Airbridge" = 8, "Cafeteria" = 8, "EVA" = 1, "Disposals" = 8, "QM" = 8, "Engine" = 8, "Catering" = 8, "MedSci" = 8, "Security" = 8)
+	destinations = list("Airbridge"=8,"Cafeteria"=8,"EVA"=1,"Disposals"=8,"QM"=8,"Engine"=8,"Catering"=8,"MedSci"=8,"Security"=8)
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
@@ -36336,7 +36345,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "brN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
@@ -36349,7 +36358,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "brO" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -36357,13 +36366,13 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "brP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "brQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "brR" = (
@@ -39422,7 +39431,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "bxF" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	dir = 8;
 	name = "Listening Post"
@@ -39430,7 +39439,7 @@
 /turf/simulated/floor/delivery,
 /area/listeningpost)
 "bxG" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	dir = 8;
 	name = "Weather Satellite"
@@ -46757,7 +46766,7 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "bLu" = (
@@ -56749,7 +56758,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "ceW" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "ceX" = (
@@ -62480,7 +62489,7 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 8;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "cmX" = (
@@ -62499,7 +62508,7 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "cmZ" = (
@@ -62521,7 +62530,7 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 5;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "cnb" = (
@@ -62529,7 +62538,7 @@
 /obj/machinery/phone,
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 4;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "cnc" = (
@@ -63989,7 +63998,10 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -65533,6 +65545,7 @@
 	},
 /area/station/hydroponics/bay)
 "cuB" = (
+/obj/machinery/hydro_mister,
 /turf/simulated/floor/green/side{
 	dir = 6
 	},
@@ -66467,7 +66480,7 @@
 /turf/simulated/grimycarpet,
 /area/ghostdrone_factory)
 "cyO" = (
-/turf/simulated/pool/no_animate,
+/turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
 "cyP" = (
 /turf/simulated/shuttle/wall/cockpit/window{
@@ -67682,7 +67695,7 @@
 	},
 /turf/simulated/floor/specialroom/bar/edge{
 	dir = 1;
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "fno" = (
@@ -69338,7 +69351,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "pqJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
@@ -69879,7 +69892,7 @@
 	pixel_y = 13
 	},
 /turf/simulated/floor/specialroom/bar/edge{
-	transform = list(-1, 0, 0, 0, 1, 0)
+	transform = list(-1,0,0,0,1,0)
 	},
 /area/station/crew_quarters/cafeteria)
 "tpK" = (

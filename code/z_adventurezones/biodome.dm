@@ -68,7 +68,7 @@ SYNDICATE DRONE FACTORY AREAS
 		sound_environment = 3
 
 /area/crater/cave
-	name = "Caves"
+	name = "Moist Caves"
 	icon_state = "purple"
 	force_fullbright = 0
 	sound_environment = 8
@@ -76,7 +76,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sims_score = 30
 
 /area/crater/cave/lower
-	name = "Lower Caves"
+	name = "Lower Moist Caves"
 	icon_state = "purple"
 	force_fullbright = 0
 	skip_sims = 1
@@ -333,31 +333,31 @@ SYNDICATE DRONE FACTORY AREAS
 
 /area/crypt/sigma/mainhall
 	icon_state = "chapel"
-	name = "Research Facility Sigma"
+	name = "Facility Sigma Main Hall"
 
 /area/crypt/sigma/rd
 	icon_state = "bridge"
-	name = "Director's Quarters"
+	name = "Facility Sigma Director's Quarters"
 
 /area/crypt/sigma/lab
 	icon_state = "toxlab"
-	name = "Laboratory"
+	name = "Facility Sigma Laboratory"
 
 /area/crypt/sigma/crew
 	icon_state = "crewquarters"
-	name = "Crew Quarters"
+	name = "Facility Sigma Personnel's Quarters"
 
 /area/crypt/sigma/kitchen
 	icon_state = "kitchen"
-	name = "Kitchen"
+	name = "Facility Sigma Kitchen"
 
 /area/crypt/sigma/storage
 	icon_state = "storage"
-	name = "Storage Rooms"
+	name = "Facility Sigma Storage Rooms"
 
 /area/crypt/sigma/morgue
 	icon_state = "purple"
-	name = "Morgue"
+	name = "Facility Sigma Morgue"
 
 /area/catacombs
 	name = "Catacombs"
@@ -1396,21 +1396,22 @@ var/satellite_crash_event_status = -1
 	sound_group = "drone_factory"
 
 /area/drone/zone
+	name = "Drone Assembly Outpost Entrance"
 
 /area/drone/crew_quarters
-	name = "Crew Quarters"
+	name = "Drone Engineer's Quarters"
 	icon_state = "showers"
 	sound_environment = 4
 
 /area/drone/engineering
-	name = "Engineering"
+	name = "Drone Engineering"
 	icon_state = "yellow"
 	sound_environment = 5
 
 /area/drone/office
-	name = "Design Office"
+	name = "Drone Design Office"
 	icon_state = "purple"
 
 /area/drone/assembly
-	name = "Assembly Floor"
+	name = "Drone Assembly Floor"
 	icon_state = "storage"

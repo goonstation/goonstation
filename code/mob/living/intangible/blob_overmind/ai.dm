@@ -228,7 +228,7 @@
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
 			return 1
-		if (client)
+		if (client && !src.admin_override)
 			return
 		if (!blobs.len && state != 1)
 			return
@@ -279,7 +279,7 @@
 						var/turf/T = get_turf(H)
 						if (has_adjacent_blob(T) && prob(50))
 							attack_now(T)
-							if (T.can_blob_spread_here())
+							if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								spread_to(T, 0)
 							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Can't absorb [H] (no blob on tile), attacking instead at [log_loc(H)].")
 						continue
@@ -290,7 +290,7 @@
 								var/turf/T = get_step(H, dir)
 								if(H.loc != H_turf)
 									break
-								if(T.can_blob_spread_here())
+								if(T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 									spread_to(T, 0)
 									sleep(spread.cooldown_time + 1)
 					// no explicit `absorb.onUse` call because absorption is now automatic
@@ -368,7 +368,7 @@
 						return
 					for (var/turf/Q in range(5, last_spread))
 						if (Q in open)
-							if (Q.can_blob_spread_here())
+							if (Q.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								ST = Q
 								break
 							else
@@ -383,7 +383,7 @@
 							if (!open.len)
 								break
 							var/turf/Q = pick(open)
-							if (Q.can_blob_spread_here())
+							if (Q.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								ST = Q
 								break
 							else
@@ -573,7 +573,7 @@
 				if (attacker)
 					var/turf/AT = get_turf(attacker)
 					var/spreaded = 0
-					if (!(locate(/obj/blob) in AT) && AT.can_blob_spread_here())
+					if (!(locate(/obj/blob) in AT) && AT.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 						spreaded = 1
 						spread_to(AT, 0)
 					for (var/obj/reagent_dispensers/fueltank/FU in view(attacker))
@@ -589,7 +589,7 @@
 						create_wall_if_possible(get_turf(B))
 					if (!spreaded)
 						for (var/turf/T in range(2, attacker))
-							if (T.can_blob_spread_here())
+							if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 								spread_to(T, 0)
 								logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near [attacker] to [log_loc(T)] in response to attack force.")
 								break
@@ -615,7 +615,7 @@
 						var/turf/T = get_turf(F)
 						create_mitochondria_if_possible(T)
 					for (var/turf/T in range(5, nearest))
-						if (T.can_blob_spread_here())
+						if (T.can_blob_spread_here(admin_overmind = (isadmin(src) || src.admin_override)))
 							spread_to(T, 0)
 							logTheThing(LOG_DEBUG, src, "<b>Marquesas/AI Blob:</b> Spreading near nearest [nearest] to [log_loc(T)] in response to attack force.")
 							break
@@ -724,6 +724,9 @@
 			return src.loc
 		else
 			return get_step(src.loc, pick(alldirs))
+
+/mob/living/intangible/blob_overmind/ai/start_here/sudo //treated as admin blob. Does whatever the fuck it wants
+	admin_override = TRUE
 
 #undef STATE_UNDER_ATTACK
 #undef STATE_FORTIFYING

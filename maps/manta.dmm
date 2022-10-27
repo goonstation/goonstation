@@ -1545,7 +1545,7 @@
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afd" = (
-/obj/storage/crate/loot,
+/obj/landmark/spawner/loot,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
 "afe" = (
@@ -3481,7 +3481,7 @@
 	},
 /area/listeningpost/syndicateassaultvessel)
 "alO" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "It's locked up pretty tight.";
 	dir = 4;
 	name = "Syndicate Assault Vessel"
@@ -3497,7 +3497,7 @@
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alQ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
@@ -4207,7 +4207,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Syndicate Assault Vessel"
 	},
@@ -4337,7 +4337,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge)
 "anZ" = (
-/obj/machinery/door/airlock/pyro/syndicate{
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Syndicate Assault Vessel"
 	},
@@ -11416,7 +11416,7 @@
 	dir = 9;
 	icon_state = "line4"
 	},
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
@@ -13442,7 +13442,7 @@
 	},
 /area/station/janitor/office)
 "aLW" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -17130,7 +17130,10 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aWW" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
+	
+	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/space/santahat,
 /obj/item/reagent_containers/food/drinks/eggnog,
@@ -17630,7 +17633,10 @@
 	},
 /area/station/crew_quarters/quartersA)
 "aYn" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1;
+	
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYo" = (
@@ -17657,7 +17663,10 @@
 /obj/item/storage/box/donkpocket_kit,
 /obj/item/storage/box/ic_cones,
 /obj/item/storage/box/ic_cones,
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
+	
+	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -17687,18 +17696,27 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYr" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYs" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4;
+	
+	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYt" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9;
+	
+	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -21234,7 +21252,10 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/lobby)
 "bhv" = (
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1;
+	
+	},
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
 	icon_state = "line4"
@@ -28522,7 +28543,7 @@
 /turf/simulated/floor/black,
 /area/station/science/chemistry)
 "bAG" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/decal/tile_edge/line/purple{
 	dir = 1;
 	icon_state = "line3"
@@ -32830,7 +32851,7 @@
 	icon_state = "line4"
 	},
 /obj/machinery/light/incandescent/netural,
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/blackwhite/corner{
 	dir = 8
 	},
@@ -37052,6 +37073,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/backroom)
+"kSX" = (
+/obj/machinery/conveyor/north{
+	id = "north"
+	},
+/turf/space/fluid/manta/nospawn,
+/area/space)
 "kWs" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/wood/eight{
@@ -38001,7 +38028,10 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/starboard)
 "nqf" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 1;
+	
+	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
 	},
@@ -42328,7 +42358,10 @@
 /turf/simulated/floor,
 /area/station/engine/inner)
 "xQw" = (
-/obj/machinery/atmospherics/unary/cryo_cell/north,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 1;
+	
+	},
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
 	icon_state = "line4"
@@ -70499,8 +70532,8 @@ bdV
 bIU
 bdY
 ark
-ark
-ark
+kSX
+kSX
 adx
 aaa
 aaa

@@ -18,18 +18,19 @@ import { Window } from '../layouts';
    min_value: number | null;
    init_value: number;
    timeout: number;
+   round_input: boolean;
    title: string;
  };
 
 export const NumberInputModal = (_, context) => {
   const { act, data } = useBackend<NumberInputData>(context);
-  const { message, init_value, timeout, title } = data;
+  const { message, init_value, round_input, timeout, title } = data;
   const [input, setInput] = useLocalState(context, 'input', init_value);
   const onChange = (value: number) => {
-    setInput(value);
+    setInput(round_input ? Math.round(value) : value);
   };
   const onClick = (value: number) => {
-    setInput(value);
+    setInput(round_input ? Math.round(value) : value);
   };
   // Dynamically changes the window height based on the message.
   const windowHeight
@@ -90,13 +91,13 @@ const InputArea = (props, context) => {
           maxValue={max_value}
           onChange={(_, value) => onChange(value)}
           onDrag={(_, value) => onChange(value)}
-          value={input || init_value || 0}
+          value={input !== null ? input : init_value}
         />
       </Stack.Item>
       <Stack.Item>
         <Button
           icon="angle-double-right"
-          onClick={() => onClick(max_value || 10000)}
+          onClick={() => onClick(max_value !== null ? max_value : 10000)}
           tooltip="Max"
         />
       </Stack.Item>

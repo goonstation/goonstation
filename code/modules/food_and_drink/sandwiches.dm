@@ -209,7 +209,7 @@
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
-	initial_volume = 20
+	initial_volume = 25
 	initial_reagents = list("cholesterol"=5)
 	food_effects = list("food_hp_up", "food_warm")
 

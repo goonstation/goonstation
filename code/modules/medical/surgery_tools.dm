@@ -39,13 +39,10 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
 		..()
-		if (src.icon_state == "scalpel1")
-			icon_state = pick("scalpel1", "scalpel2")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
@@ -93,9 +90,9 @@ CONTAINS:
 	name = "circular saw"
 	desc = "A saw used to slice through bone in surgeries, and attackers in self defense."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "saw1"
+	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
-	item_state = "saw1"
+	item_state = "saw"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
@@ -111,14 +108,11 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/double)
-		if (src.icon_state == "saw1")
-			icon_state = pick("saw1", "saw2", "saw3")
 		src.create_reagents(5)
 		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
@@ -168,6 +162,7 @@ CONTAINS:
 	item_state = "scalpel"
 	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
 	object_flags = NO_GHOSTCRITTER
+	tool_flags = TOOL_SPOONING
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	force = 5
@@ -180,7 +175,6 @@ CONTAINS:
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
-	var/mob/Poisoner = null
 	move_triggered = 1
 
 	New()
@@ -455,6 +449,11 @@ CONTAINS:
 		else
 			user.suiciding = 0
 		return 1
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
 	if (!isliving(patient))
@@ -737,7 +736,7 @@ CONTAINS:
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/in_use = 0
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!suture_surgery(M,user))
@@ -797,7 +796,7 @@ CONTAINS:
 	stamina_crit_chance = 0
 	var/uses = 6
 	var/in_use = 0
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	//if we want this bandage to do some healing. choose how much healing of each type of damage it should do per application.
 	var/brute_heal = 0
 	var/burn_heal = 0
@@ -1000,7 +999,7 @@ CONTAINS:
 
 	disposing()
 		for(var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 		..()
 
 	update_icon()
@@ -1121,7 +1120,7 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 15
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/M, mob/user)
 		if (!ishuman(M))
@@ -1543,7 +1542,7 @@ keeping this here because I want to make something else with it eventually
 	name = "surgical scissors"
 	desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too."
 	icon = 'icons/obj/surgery.dmi'
-	icon_state = "surgical-scissors-base"
+	icon_state = "surgical-scissors"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "surgical_scissors"
 
@@ -1561,26 +1560,13 @@ keeping this here because I want to make something else with it eventually
 	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	var/mob/Poisoner = null
 	move_triggered = 1
-	var/image/handle = null
 
 	New()
 		..()
 		src.create_reagents(5)
-		handle = image('icons/obj/surgery.dmi', "")
-		if (prob(1) && prob(10))	// 1:1000 chance
-			handle.icon_state = "surgical-scissors-handle-c"
-			desc = "Used for precisely cutting up people in surgery. I guess you could use them on paper too... There's something off about this pair."
-		else
-			handle.icon_state = "surgical-scissors-handle"
-			handle.color = "#[random_hex(6)]"
-
-		src.overlays += handle
 
 	disposing()
-		handle = null
-		Poisoner = null
 		..()
 
 	move_trigger(var/mob/M, kindof)

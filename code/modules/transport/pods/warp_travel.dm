@@ -11,6 +11,7 @@
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
 	var/beaconid //created by kits
+	var/encrypted = FALSE
 
 	// Please keep synchronizied with these lists for easy map changes:
 	// /obj/machinery/door_control (door_control.dm)

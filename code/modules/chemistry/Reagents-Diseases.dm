@@ -317,6 +317,22 @@ datum
 			penetrates_skin = 1
 			disease = /datum/ailment/disease/tissue_necrosis
 
+		disease/rat_plague // Rat Plague
+			name = "rat spit"
+			id = "rat_spit"
+			description = "The spit of a disease rat. Contains a whole bunch of known and unknown disease."
+			reagent_state = LIQUID
+			depletion_rate = 0.4
+			fluid_r = 255
+			fluid_g = 40
+			fluid_b = 40
+			transparency = 50
+			disease = /datum/ailment/disease/rat_plague
+
+			on_mob_life(mob/M, mult)
+				M.take_toxin_damage(1.5 * mult)
+				. = ..()
+
 		disease/plague // Space Plague
 			name = "rat venom"
 			id = "rat_venom"

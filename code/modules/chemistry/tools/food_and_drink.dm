@@ -9,7 +9,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/heal_amt = 0
 	var/needfork = 0
 	var/needspoon = 0
-	var/food_color = "#FF0000" //Color for various food items
+	/// Color for various food items
+	var/food_color = null 
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -31,6 +32,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (istype(M, /obj/table))
 				return 1
 		return 0
+
+	proc/get_food_color()
+		if (food_color) // keep manually defined food colors
+			return food_color
+		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
+		food_color = get_average_color(I)
+		return food_color
 
 	proc/heal(var/mob/living/M)
 		var/healing = src.heal_amt
@@ -143,7 +151,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/kitchen/utensil/fork) || istype(W,/obj/item/kitchen/utensil/spoon))
+		if (istype(W,/obj/item/kitchen/utensil/fork) || isspooningtool(W))
 			if (prob(20) && (istype(W,/obj/item/kitchen/utensil/fork/plastic) || istype(W,/obj/item/kitchen/utensil/spoon/plastic)))
 				var/obj/item/kitchen/utensil/S = W
 				S.break_utensil(user)
@@ -191,8 +199,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 					if (src.needfork && user.find_type_in_hand(/obj/item/kitchen/utensil/fork))
 						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/fork)
-					else if (src.needspoon && user.find_type_in_hand(/obj/item/kitchen/utensil/spoon))
-						utensil = user.find_type_in_hand(/obj/item/kitchen/utensil/spoon)
+					else if (src.needspoon && isspooningtool(user.equipped()))
+						utensil = user.equipped()
 
 					// If it's a plastic fork we've found then test if we've broken it
 					var/obj/item/kitchen/utensil/fork/plastic/plastic_fork = utensil
@@ -223,7 +231,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 						"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
 						return 0
@@ -252,7 +260,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					var/obj/item/organ/stomach/tummy = H.get_organ("stomach")
-					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage))
+					if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 						user.tri_message(M, "<span class='alert'><b>[user]</b>tries to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'>You try to feed [M] [src], but can't make [him_or_her(M)] swallow!</span>",\
 							"<span class='alert'><b>[user]</b> tries to feed you [src], but you can't swallow!!</span>")
@@ -609,6 +617,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		eat_twitch(consumer)
 
 	//bleck, i dont like this at all. (Copied from chemistry-tools reagent_containers/glass/ definition w minor adjustments)
+	// still copy paste btw
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
 		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
@@ -677,54 +686,33 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else if (reagents.total_volume)
 
-			if (ismob(target)) return
-			if (isobj(target)) //Have to do this in 2 lines because byond is shit.
-				if (target:flags & NOSPLASH) return
-			can_mousedrop = 0
+			if (ismob(target) || (isobj(target) && target:flags & NOSPLASH))
+				return
 			boutput(user, "<span class='notice'>You [src.splash_all_contents ? "pour all of" : "apply [amount_per_transfer_from_this] units of"] the solution onto [target].</span>")
 			logTheThing(LOG_COMBAT, user, "pours [src] onto [constructTarget(target,"combat")] [log_reagents(src)] at [log_loc(user)].") // Added location (Convair880).
-			if (reagents)
-				reagents.physical_shock(14)
+			reagents.physical_shock(14)
 
-			if (src.splash_all_contents) src.reagents.reaction(target,TOUCH)
-			else src.reagents.reaction(target, TOUCH, src.amount_per_transfer_from_this)
-			SPAWN(0.5 SECONDS)
-				if (src.splash_all_contents) src.reagents.clear_reagents()
-				else src.reagents.remove_any(src.amount_per_transfer_from_this)
-				can_mousedrop = 1
-			return
+			var/splash_volume
+			if (src.splash_all_contents)
+				splash_volume = src.reagents.maximum_volume
+			else
+				splash_volume = src.amount_per_transfer_from_this
 
+			splash_volume = min(splash_volume, src.reagents.total_volume)
 
-	/*
-	afterattack(obj/target, mob/user , flag)
-		if (istype(target, /obj/reagent_dispensers)) //A dispenser. Transfer FROM it TO us.
+			src.reagents.reaction(target, TOUCH, splash_volume)
 
-			if (!target.reagents.total_volume)
-				boutput(user, "<span class='alert'>[target] is empty.</span>")
-				return
+			var/turf/T
+			if (!isturf(target) && !target.density) // if we splashed on something other than a turf or a dense obj, it goes on the floor as well
+				T = get_turf(target)
+			else if (target.density)
+				// if we splashed on a wall or a dense obj, we still want to flow out onto the floor we're pouring from (avoid pouring under windows and on walls)
+				T = get_turf(user)
 
-			if (reagents.total_volume >= reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[src] is full.</span>")
-				return
+			if (T && !T.density) // if the user AND the target are on dense turfs or the user is on a dense turf and the target is a dense obj then just give up. otherwise pour on the floor
+				src.reagents.reaction(T, TOUCH, splash_volume)
 
-			var/transferamt = src.reagents.maximum_volume - src.reagents.total_volume
-			var/trans = target.reagents.trans_to(src, transferamt)
-			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
-
-		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
-			if (!reagents.total_volume)
-				boutput(user, "<span class='alert'>[src] is empty.</span>")
-				return
-
-			if (target.reagents.total_volume >= target.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[target] is full.</span>")
-				return
-
-			logTheThing(LOG_COMBAT, user, "transfers chemicals from [src] [log_reagents(src)] to [target] at [log_loc(user)].") // Brought in line with beakers (Convair880).
-			var/trans = src.reagents.trans_to(target, 10)
-			boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target].</span>")
-		return
-	*/
+			src.reagents.remove_any(splash_volume)
 
 /* =============================================== */
 /* -------------------- Bowls -------------------- */
@@ -740,12 +728,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	var/image/fluid_image = null
 
+	New()
+		..()
+		ENSURE_IMAGE(src.fluid_image, src.icon, src.icon_state + "_fluid")
+
 	on_reagent_change()
 		..()
 		if (reagents.total_volume)
-			ENSURE_IMAGE(src.fluid_image, src.icon, "fluid")
-			//if (!src.fluid_image)
-				//src.fluid_image = image('icons/obj/kitchen.dmi', "fluid")
 			var/datum/color/average = reagents.get_average_color()
 			fluid_image.color = average.to_rgba()
 			src.UpdateOverlays(src.fluid_image, "fluid")
@@ -756,7 +745,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/cereal_box))
 			var/obj/item/reagent_containers/food/snacks/cereal_box/cbox = W
 
-			var/obj/newcereal = new /obj/item/reagent_containers/food/snacks/soup/cereal(get_turf(src), cbox.prize)
+			var/obj/newcereal = new /obj/item/reagent_containers/food/snacks/soup/cereal(get_turf(src), cbox.prize, src)
+			newcereal.pixel_x = src.pixel_x
+			newcereal.pixel_y = src.pixel_y
 			cbox.prize = 0
 			newcereal.reagents = src.reagents
 
@@ -793,8 +784,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				boutput(user,"<span class='alert'>There's already something in the bowl!</span>")
 				return
 
-			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup)
-
+			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
 			L.my_soup = null
@@ -809,6 +799,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		else
 			..()
+
+/obj/item/reagent_containers/food/drinks/bowl/pumpkin
+	name = "pumpkin bowl"
+	desc = "Aww, it's all hallowed out."
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkin"
+	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
+	item_state = "pumpkin"
+	can_recycle = FALSE
+
 
 /* ======================================================= */
 /* -------------------- Drink Bottles -------------------- */
@@ -1035,6 +1035,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
+	var/splash_on_smash = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1319,12 +1320,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		if (!T)
 			qdel(src)
 			return
-		if (src.reagents) // haine fix for cannot execute null.reaction()
+		if(src.reagents && splash_on_smash)
 			var/amt = max(10, src.gulp_size)
 			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
 			src.reagents.remove_any(amt)
 			src.reagents.reaction(T)
-
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1457,6 +1457,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
+	splash_on_smash = TRUE
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
@@ -1756,6 +1757,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.fluid_image.color = average.to_rgba()
 		src.UpdateOverlays(src.fluid_image, "fluid")
 
+/obj/item/reagent_containers/food/drinks/pinkmug //for Jan's office
+	name = "pink latte mug"
+	desc = "Whoever owns this drinks a lot of lattes."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "pinkmug_full"
+	initial_volume = 50
+	initial_reagents = list("espresso"=40, "milk"=5, "chocolate"=5)
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+		if (src.reagents.total_volume == 0)
+			update_icon()
+			icon_state = "pinkmug_empty"
+		else
+			update_icon()
+			icon_state = "pinkmug_full"
+		return
+
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
 	desc = null
@@ -1859,6 +1880,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	initial_volume = 50
 	can_recycle = FALSE
 	initial_reagents = list("coconut_milk"=20)
+
+/obj/item/reagent_containers/food/drinks/pumpkinlatte
+	name = "Spiced Pumpkin"
+	desc = "Oh, a delicious, mysterious pumpkin spice latte!"
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "pumpkinlatte"
+	item_state = "drink_glass"
+	g_amt = 30
+	initial_volume = 50
+	can_recycle = FALSE
+	initial_reagents = list("pumpkinspicelatte"=30)
 
 /obj/item/reagent_containers/food/drinks/energyshake
 	name = "Brotein Shake - Dragon Balls flavor"

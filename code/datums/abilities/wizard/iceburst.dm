@@ -116,8 +116,8 @@
 
 		src.health *= (rand(10,20)/10)
 
-		processing_items.Add(src)
-
+		for(var/mob/M in src)
+			src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, .proc/PassiveCool)
 
 	disposing()
 		processing_items.Remove(src)
@@ -126,6 +126,7 @@
 				var/mob/M = AM
 				M.visible_message("<span class='alert'><b>[M]</b> breaks out of [src]!</span>","<span class='alert'>You break out of [src]!</span>")
 				M.last_cubed = world.time
+				UnregisterSignal(M, COMSIG_LIVING_LIFE_TICK)
 			AM.set_loc(src.loc)
 
 		if (steam_on_death)
@@ -161,11 +162,10 @@
 			src.pixel_x = 0
 			src.pixel_y = 0
 
-	proc/process()
-		for(var/mob/M in src)
-			if (M.bodytemperature > 0)
-				M.bodytemperature = max(M.bodytemperature-40,0)
-				takeDamage(1)
+	proc/PassiveCool(var/mob/M, mult)
+		if(M.bodytemperature >= 0)
+			M.bodytemperature = max(M.bodytemperature - (20 * mult),0)
+			takeDamage(1 * mult)
 
 	attack_hand(mob/user)
 		user.visible_message("<span class='combat'><b>[user]</b> kicks [src]!</span>", "<span class='notice'>You kick [src].</span>")

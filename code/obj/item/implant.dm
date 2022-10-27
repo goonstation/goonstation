@@ -761,9 +761,9 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		name = ".38 AP round"
 		desc = "A more powerful armor-piercing .38 round. Huh. Aren't these illegal?"
 
-	bullet_nine_mm_NATO
-		name = "9mm NATO round"
-		desc = "A reliable bullet, used ubiquitously in law enforcement and armed forces a century ago."
+	bullet_9mm
+		name = "9mm round"
+		desc = "An extremely common bullet fired by a myriad of different cartridges."
 
 	ninemmplastic
 		name = "9mm Plastic round"
@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 
@@ -1594,59 +1594,59 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 /obj/item/implantcase/health
 	name = "glass case - 'Health'"
-	implant_type = "/obj/item/implant/health"
+	implant_type = /obj/item/implant/health
 
 /obj/item/implantcase/sec
 	name = "glass case - 'Security Access'"
-	implant_type = "/obj/item/implant/sec"
+	implant_type = /obj/item/implant/sec
 /*
 /obj/item/implantcase/nt
 	name = "glass case - 'Weapon Auth 2'"
-	implant_type = "/obj/item/implant/nt"
+	implant_type = /obj/item/implant/nt
 
 /obj/item/implantcase/ntc
 	name = "glass case - 'Weapon Auth 3'"
-	implant_type = "/obj/item/implant/ntc"
+	implant_type = /obj/item/implant/ntc
 */
 /obj/item/implantcase/freedom
 	name = "glass case - 'Freedom'"
-	implant_type = "/obj/item/implant/freedom"
+	implant_type = /obj/item/implant/freedom
 
 /obj/item/implantcase/counterrev
 	name = "glass case - 'Counter-Rev'"
-	implant_type = "/obj/item/implant/counterrev"
+	implant_type = /obj/item/implant/counterrev
 
 /obj/item/implantcase/microbomb
 	name = "glass case - 'Microbomb'"
-	implant_type = "/obj/item/implant/revenge/microbomb"
+	implant_type = /obj/item/implant/revenge/microbomb
 
 /obj/item/implantcase/robotalk
 	name = "glass case - 'Machine Translator'"
-	implant_type = "/obj/item/implant/robotalk"
+	implant_type = /obj/item/implant/robotalk
 
 /obj/item/implantcase/bloodmonitor
 	name = "glass case - 'Blood Monitor'"
-	implant_type = "/obj/item/implant/bloodmonitor"
+	implant_type = /obj/item/implant/bloodmonitor
 
 /obj/item/implantcase/mindhack
 	name = "glass case - 'Mindhack'"
-	implant_type = "/obj/item/implant/mindhack"
+	implant_type = /obj/item/implant/mindhack
 
 /obj/item/implantcase/super_mindhack
 	name = "glass case - 'Mindhack DELUXE'"
-	implant_type = "/obj/item/implant/mindhack/super"
+	implant_type = /obj/item/implant/mindhack/super
 
 /obj/item/implantcase/robust
 	name = "glass case - 'Robusttec'"
-	implant_type = "/obj/item/implant/robust"
+	implant_type = /obj/item/implant/robust
 
 /obj/item/implantcase/antirot
 	name = "glass case - 'Rotbusttec'"
-	implant_type = "/obj/item/implant/antirot"
+	implant_type = /obj/item/implant/antirot
 
 /obj/item/implantcase/access
 	name = "glass case - 'Electronic Access'"
-	implant_type = "/obj/item/implant/access"
+	implant_type = /obj/item/implant/access
 
 	get_desc(dist)
 		if (dist <= 1 && src.imp)
@@ -1655,7 +1655,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				. += "It appears to contain \a [src.imp.name] with [I.uses] charges."
 
 	unlimited
-		implant_type = "/obj/item/implant/access/infinite"
+		implant_type = /obj/item/implant/access/infinite
 		get_desc(dist)
 			if (dist <= 1 && src.imp)
 				. += "It appears to contain \a [src.imp.name] with unlimited charges."
@@ -2006,7 +2006,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		else
 			return ..()
 
-	canshoot()
+	canshoot(mob/user)
 		if (!my_implant)
 			return 0
 		return 1

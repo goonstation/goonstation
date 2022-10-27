@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 	appearanceString = "screen"
 	icon_state = "head-screen"
 	max_health = 90
-	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky")
+	var/list/expressions = list("happy", "veryhappy", "neutral", "sad", "angry", "curious", "surprised", "unsure", "content", "tired", "cheeky","skull","eye")
 
 ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 /obj/item/parts/robot_parts/chest
@@ -457,6 +457,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 			src.wires = 0
 
 		else ..()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"

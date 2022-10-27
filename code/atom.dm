@@ -30,14 +30,6 @@
 	/// A multiplier that changes how an atom stands up from resting. Yes.
 	var/rest_mult = 0
 
-	/// Gets the atoms name with all the ugly prefixes things remove
-	proc/clean_name()
-		return strip_special(name)
-
-	/// clean_name(), but encoded too since everything ever uses HTML in the game.
-	proc/safe_name()
-		return html_encode(strip_special(name))
-
 	proc/RawClick(location,control,params)
 		return
 
@@ -102,7 +94,7 @@
 				if (amt_suffixes >= src.num_allowed_suffixes)
 					break
 				suffix += " " + i
-				amt_suffixes ++
+				amt_suffixes++
 			return suffix
 
 	proc/remove_prefixes(var/num = 1)
@@ -116,7 +108,7 @@
 				if (num <= 0 || !length(src.name_prefixes))
 					return
 				src.name_prefixes -= i
-				num --
+				num--
 
 	proc/remove_suffixes(var/num = 1)
 		if (!num || !name_suffixes)
@@ -129,7 +121,7 @@
 				if (num <= 0 || !length(src.name_suffixes))
 					return
 				src.name_suffixes -= i
-				num --
+				num--
 
 	proc/UpdateName()
 		src.name = "[name_prefix(null, 1)][initial(src.name)][name_suffix(null, 1)]"
@@ -358,6 +350,9 @@
 	usr << output("[src.name]", "atom_label")
 */
 
+/atom/proc/get_examine_tag(mob/examiner)
+	return null
+
 /atom/movable/overlay/attackby(a, b)
 	//Wire note: hascall check below added as fix for: undefined proc or verb /datum/targetable/changeling/monkey/attackby() (lmao)
 	if (src.master && hascall(src.master, "attackby"))
@@ -456,7 +451,7 @@
 
 	last_turf = src.loc // instead rely on set_loc to clear last_turf
 	set_loc(null)
-	..()
+	. = ..()
 
 
 /atom/movable/Move(NewLoc, direct)
@@ -966,6 +961,14 @@
 	if (isturf(src.loc))
 		// Not a turf, so we must send a signal to the turf
 		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+
+	// Below is a "smart" signal on a turf that only get called when the opacity
+	// actually changes in a meaningfull way. If atom is on a turf and we are
+	// obscuring vision in a turf that was originally not obscured. Or we are on a
+	// turf that is not obscuring vision, we were obscuring vision and are not
+	// anymore.
+	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, src)
 
 // standardized damage procs
 

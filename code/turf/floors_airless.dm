@@ -441,7 +441,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("pharosium"))
+		setMaterial(getMaterial("pharosium"), copy = FALSE)
 
 /turf/simulated/floor/airless/circuit/green
 	icon_state = "circuit-green"
@@ -717,7 +717,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("wood"))
+		setMaterial(getMaterial("wood"), copy = FALSE)
 
 /turf/simulated/floor/airless/wood/two
 	icon_state = "wooden"
@@ -880,7 +880,7 @@
 
 	New()
 		..()
-		setMaterial(getMaterial("synthrubber"))
+		setMaterial(getMaterial("synthrubber"), copy = FALSE)
 
 /turf/simulated/floor/airless/grass/leafy
 	icon_state = "grass_leafy"

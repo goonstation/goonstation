@@ -58,6 +58,13 @@
 
 	var/tmp/image/disposal_image = null // 'ghost' image of disposal pipes originally at these coords, visible with a T-ray scanner.
 
+	New()
+		..()
+
+		src.init_lighting()
+
+		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
+
 	disposing() // DOES NOT GET CALLED ON TURFS!!!
 		SHOULD_NOT_OVERRIDE(TRUE)
 		SHOULD_CALL_PARENT(FALSE)
@@ -138,6 +145,10 @@
 	Del()
 		dispose()
 		..()
+
+	proc/on_set_opacity(turf/thisTurf, old_opacity)
+		if (length(src.camera_coverage_emitters))
+			camera_coverage_controller?.update_emitters(src.camera_coverage_emitters)
 
 /obj/overlay/tile_effect
 	name = ""
@@ -494,6 +505,7 @@ proc/generate_space_color()
 /turf/proc/ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, handle_dir = 1, force = 0)
 	var/turf/simulated/new_turf
 	var/old_dir = dir
+	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
 
@@ -554,6 +566,7 @@ proc/generate_space_color()
 
 	var/old_aiimage = src.aiImage
 	var/old_cameras = src.cameras
+	var/old_camera_coverage_emitters = src.camera_coverage_emitters
 
 	var/image/old_disposal_image = src.disposal_image
 
@@ -612,6 +625,7 @@ proc/generate_space_color()
 		new_turf.set_dir(old_dir)
 
 	new_turf.levelupdate()
+	new_turf.active_liquid = old_liquid
 
 	new_turf.RL_ApplyGeneration = rlapplygen
 	new_turf.RL_UpdateGeneration = rlupdategen
@@ -636,6 +650,7 @@ proc/generate_space_color()
 
 	new_turf.aiImage = old_aiimage
 	new_turf.cameras = old_cameras
+	new_turf.camera_coverage_emitters = old_camera_coverage_emitters
 
 	new_turf.disposal_image = old_disposal_image
 
@@ -1055,7 +1070,7 @@ proc/generate_space_color()
 #else
 /turf/proc/edge_step(var/atom/movable/A, var/newx, var/newy)
 	var/zlevel = 3 //((A.z=3)?5:3)//(3,4)
-
+	var/turf/target_turf
 	if(A.z == 3) zlevel = 5
 	else zlevel = 3
 
@@ -1065,6 +1080,9 @@ proc/generate_space_color()
 		var/obj/machinery/vehicle/V = A
 		if (V.going_home)
 			zlevel = 1
+			target_turf = V.go_home()
+			if(target_turf)
+				zlevel = target_turf.z
 			V.going_home = 0
 	if (istype(A, /obj/newmeteor))
 		qdel(A)
@@ -1075,9 +1093,10 @@ proc/generate_space_color()
 			for_by_tcl(C, /obj/machinery/communications_dish)
 				C.add_cargo_logs(A)
 
-	var/target_x = newx || A.x
-	var/target_y = newy || A.y
-	var/turf/target_turf = locate(target_x, target_y, zlevel)
+	if(!target_turf)
+		var/target_x = newx || A.x
+		var/target_y = newy || A.y
+		target_turf = locate(target_x, target_y, zlevel)
 	if(target_turf)
 		A.set_loc(target_turf)
 #endif
@@ -1128,40 +1147,6 @@ proc/generate_space_color()
 ////////////////////////////////////////////////
 
 //stuff ripped out of keelinsstuff.dm
-/turf/unsimulated/floor/pool
-	name = "water"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-
-/turf/unsimulated/pool/no_animate
-	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-/turf/simulated/pool
-	name = "water"
-	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
-
-/turf/simulated/pool/no_animate
-	name = "pool floor"
-	icon = 'icons/obj/fluid.dmi'
-	icon_state = "poolwaterfloor"
-
-	New()
-		..()
-		src.set_dir(pick(NORTH,SOUTH))
 
 /turf/unsimulated/grasstodirt
 	name = "grass"

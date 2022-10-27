@@ -240,7 +240,7 @@
 		desc = "What happens when you put an assault rifle in the microwave."
 		setup_charge_maximum = 100000
 		setup_charge_percentage = 100
-		setup_gun = /obj/item/gun/kinetic/ak47
+		setup_gun = /obj/item/gun/kinetic/akm
 		health = 100
 		ammofab = 1
 		shotcount = 3 // Never stop firing, never start spawning
@@ -1836,8 +1836,6 @@
 			src.overlays += image(budgun.icon, budgun.icon_state, layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))	// ugh
 				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)	// ugh
-				if (istype(src.budgun, /obj/item/gun/energy/lawbringer/old))
-					lawbringer_lights.icon_state = "old-lawbringer-d100"
 				switch(lawbringer_state)	// ugh
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"
@@ -1930,6 +1928,11 @@
 		src.mover.master_move(the_target,adjacent)
 
 		return 0
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 //Buddy handcuff bar thing
 /datum/action/bar/icon/buddy_cuff
@@ -4317,6 +4320,11 @@
 			spawn(0)
 				..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.created_cell)
+			src.created_cell = null
+
 
 //The Docking Station.  Recharge here!
 /obj/machinery/guardbot_dock
@@ -5151,7 +5159,7 @@
 	w_class = W_CLASS_TINY
 
 	attack_self(var/mob/user as mob)
-		playsound(src.loc, 'sound/items/coindrop.ogg', 100, 1)
+		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		user.visible_message("<b>[user]</b> flips the token","You flip the token")
 		SPAWN(1 SECOND)
 		user.visible_message("It came up Hugs.")

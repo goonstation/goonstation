@@ -92,6 +92,8 @@ proc/filter_trait_hats(var/type)
 	icon_state = "bio"
 	item_state = "bio_hood"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
+
 	desc = "This hood protects you from harmful biological contaminants."
 	seal_hair = 1
 	path_prot = 0
@@ -125,6 +127,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "emerg"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	desc = "Helps protect from vacuum for a short period of time."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 	seal_hair = 1
 	path_prot = 0
 
@@ -139,6 +142,7 @@ proc/filter_trait_hats(var/type)
 	name = "Class II radiation hood"
 	icon_state = "radiation"
 	c_flags = COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	desc = "Asbestos, right near your face. Perfect!"
 	seal_hair = 1
 
@@ -680,6 +684,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/longbee
 	name = "Longbee"
 	desc = "A gorgeous creature now on your head!"
+	hides_from_examine = C_EARS
 	icon_state = "longbee"
 	item_state = "longbee"
 
@@ -749,6 +754,7 @@ proc/filter_trait_hats(var/type)
 	item_state = "wizardnec"
 	see_face = 0
 	seal_hair = 1
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
 /obj/item/clothing/head/pinkwizard //no magic properties
 	name = "pink wizard hat"
@@ -982,7 +988,7 @@ proc/filter_trait_hats(var/type)
 			return
 		if(prob(20))
 			var/turf/T = get_turf(src)
-			T.fluid_react_single("miasma_s", 5, airborne = 1)
+			T?.fluid_react_single("miasma_s", 5, airborne = 1)
 		if(prob(1))
 			host.real_name = "[prob(10)?SPACER_PICK("honorifics")+" ":""][prob(20)?SPACER_PICK("stuff")+" ":""][SPACER_PICK("firstnames")+" "][prob(80)?SPACER_PICK("nicknames")+" ":""][prob(50)?SPACER_PICK("firstnames"):SPACER_PICK("lastnames")]"
 			host.name = host.real_name
@@ -1209,7 +1215,9 @@ proc/filter_trait_hats(var/type)
 	icon_state = "chemhood"
 	item_state = "chemhood"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
+	hides_from_examine = C_EARS
 	seal_hair = 1
+	acid_survival_time = 8 MINUTES
 
 	setupProperties()
 		..()
@@ -1911,3 +1919,4 @@ ABSTRACT_TYPE(/obj/item/clothing/head/basecap)
 	icon_state = "space_replica"
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
+	hides_from_examine = C_EARS|C_MASK|C_GLASSES

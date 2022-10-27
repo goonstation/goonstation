@@ -21,7 +21,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	.= 0
 
 /turf/selftilenotify()
-	if (src.active_liquid && src.active_liquid.group && !src.Enter(src.active_liquid))
+	if (src.active_liquid && src.active_liquid.group && !src.can_crossed_by(src.active_liquid))
 		src.active_liquid.group.displace(src.active_liquid)
 	else
 		///HEY HEY LOOK AT ME TODO : This is kind of a band-aid. I'm not sure why, but tilenotify() doesn't trigger when it should sometimes. do this to be absolutely sure!
@@ -118,6 +118,9 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 
 	FG.add(F, react_volume, guarantee_is_member = fluid_and_group_already_exist)
 	R.trans_to_direct(FG.reagents, react_volume, index=index)
+	/*Normally `amt` isn't set until the fluid group process procs, but we sometimes need it right away for mob reactions etc.
+	  We know the puddle starts as a single tile, so until then just set `amt` as the total reacted reagent volume. */
+	F.amt = FG.reagents.total_volume
 	F.UpdateIcon()
 
 	if (!airborne)

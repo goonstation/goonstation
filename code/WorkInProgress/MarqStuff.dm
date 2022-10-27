@@ -112,7 +112,7 @@
 /obj/nerd_trap_door
 	name = "Heavily locked door"
 	desc = "Man, whatever is in here must be pretty valuable. This door seems to be indestructible and features an unrealistic amount of keyholes."
-	var/list/expected = list("silver key", "skeleton key", "literal skeleton key", "hot iron key", "cold steel key", "onyx key", "key lime pie", "futuristic key", "virtual key", "golden key", "bee key", "iron key", "iridium key", "lunar key")
+	var/list/expected = list("silver key", "skeleton key", "cold steel key", "literal skeleton key", "hot iron key", "onyx key", "virtual key", "golden key", "iron key", "iridium key", "lunar key")
 	var/list/unlocked = list()
 	var/list/ol = list()
 	icon = 'icons/misc/aprilfools.dmi'
@@ -200,7 +200,7 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", /*"cold steel key",*/ "onyx key", /*"key lime pie",*/ "futuristic key", /*"virtual key",*/ "golden key", "bee key", /*"iron key",*/ /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/, /*"virtual key",*/ "golden key", "bee key", "iron key", /*"iridium key",*/ "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
@@ -592,7 +592,7 @@
 /obj/item/gun/bow
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "bow"
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
@@ -709,7 +709,7 @@
 		loaded = null
 		return 1
 
-	canshoot()
+	canshoot(mob/user)
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)

@@ -563,7 +563,7 @@
 				if (src.shock(usr, 10))
 					return
 
-		if (((BOUNDS_DIST(src, usr) == 0 || isAI(usr)) && istype(src.loc, /turf)))
+		if (((BOUNDS_DIST(src, usr) == 0 || (isAI(usr) || isrobot(usr))) && istype(src.loc, /turf)))
 			src.add_dialog(usr)
 
 			if (src.malfunction && prob(10))
@@ -1956,6 +1956,9 @@
 		else
 			return src.loc
 
+
+// Fabricator Defines
+
 /obj/machinery/manufacturer/general
 	name = "general manufacturer"
 	supplemental_desc = "This one produces tools and other hardware, as well as general-purpose items like replacement lights."
@@ -1984,6 +1987,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/light_bulb,
 		/datum/manufacture/red_bulb,
 		/datum/manufacture/yellow_bulb,
@@ -2004,11 +2008,17 @@
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
+#ifdef MAP_OVERRIDE_NADIR
+		/datum/manufacture/nanoloom,
+		/datum/manufacture/nanoloom_cart,
+#endif
 		/datum/manufacture/fluidcanister,
 		/datum/manufacture/meteorshieldgen,
 		/datum/manufacture/shieldgen,
 		/datum/manufacture/doorshieldgen,
-		/datum/manufacture/patch)
+		/datum/manufacture/patch,
+		/datum/manufacture/saxophone,
+		/datum/manufacture/trumpet)
 	hidden = list(/datum/manufacture/RCDammo,
 		/datum/manufacture/RCDammomedium,
 		/datum/manufacture/RCDammolarge,
@@ -2018,7 +2028,9 @@
 		/datum/manufacture/bikehorn,
 		/datum/manufacture/bullet_22,
 		/datum/manufacture/bullet_smoke,
-		/datum/manufacture/stapler)
+		/datum/manufacture/stapler,
+		/datum/manufacture/bagpipe,
+		/datum/manufacture/whistle)
 
 /obj/machinery/manufacturer/robotics
 	name = "robotics fabricator"
@@ -2062,6 +2074,7 @@
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/crowbar,
 		/datum/manufacture/wrench,
 		/datum/manufacture/screwdriver,
@@ -2260,11 +2273,15 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+#endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
 		/datum/manufacture/powercell,
 		/datum/manufacture/powercellE,
 		/datum/manufacture/powercellC,
+		/datum/manufacture/powercellH,
 		/datum/manufacture/ore_scoop,
 		/datum/manufacture/oresatchel,
 		/datum/manufacture/oresatchelL,
@@ -2507,7 +2524,6 @@
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
-		/datum/manufacture/pizzabox,
 		/datum/manufacture/wooden,
 		/datum/manufacture/medical,
 		/datum/manufacture/biohazard,
@@ -2655,6 +2671,15 @@
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+/******************** Nadir Resonators *******************/
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_ax
+	name = "Type-AX Resonator"
+	blueprint = /datum/manufacture/resonator_type_ax
+
+/obj/item/paper/manufacturer_blueprint/resonator_type_sm
+	name = "Type-SM Resonator"
+	blueprint = /datum/manufacture/resonator_type_sm
 
 
 /// This is a special item that breaks apart into blueprints for the machines needed to build/repair a cloner.

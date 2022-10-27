@@ -7,6 +7,7 @@
 	var/scan_decal = null
 	var/prevent_excavation = 0
 	var/restrict_to_turf_type = null
+	var/weight = 100
 
 	set_up(var/datum/ore/event/parent_event)
 		..()
@@ -66,14 +67,12 @@
 	analysis_string = "Caution! Large object embedded in rock!"
 	excavation_string = "An abandoned crate was unearthed!"
 	scan_decal = "scan-object"
+	weight = 10
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		if(prob(10))
-			new /obj/storage/crate/loot(AST)
-		else
-			new/obj/storage/crate(AST)
+		new /obj/storage/crate/loot(AST)
 
 /datum/ore/event/artifact
 	analysis_string = "Caution! Large object embedded in rock!"

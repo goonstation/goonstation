@@ -37,7 +37,7 @@
 	//var/atom/movable/screen/zone_sel/zone_sel = null
 	var/datum/hud/zone_sel/zone_sel = null
 	var/atom/movable/name_tag/name_tag
-	var/mob_hovered_over = null
+	var/atom/atom_hovered_over = null
 
 	var/obj/item/device/energy_shield/energy_shield = null
 
@@ -303,7 +303,7 @@
 	else
 		. = ..()
 
-	src.closeContextActions()
+	src.contextActionsOnMove()
 
 	src.update_grab_loc()
 
@@ -563,7 +563,7 @@
 	if (ismob(AM))
 		var/mob/tmob = AM
 		if (ishuman(tmob))
-			if(isliving(src))
+			if(isliving(src) && src.density)
 				var/mob/living/L = src
 				L.viral_transmission(AM,"Contact",1)
 
@@ -663,7 +663,7 @@
 							tmob.now_pushing = 0
 
 		if (!issilicon(AM))
-			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled && !src.throwing && !tmob.throwing) // mutual brohugs all around!
+			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
 				if(!oldloc.Enter(tmob) || !newloc.Enter(src))
@@ -2153,10 +2153,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 
@@ -2702,10 +2702,16 @@
 	if(the_pos)
 		name = copytext(name, 1, the_pos)
 	if(name)
-		src.name_tag.set_extra(he_or_she(src))
+		src.name_tag.set_info_tag(he_or_she(src))
 	else
-		src.name_tag.set_extra("")
+		src.name_tag.set_info_tag("")
 	src.name_tag.set_name(name, strip_parentheses=TRUE)
+
+/mob/proc/get_tracked_examine_atoms()
+	return mobs
+
+/mob/get_examine_tag(mob/examiner)
+	return src.name_tag
 
 /mob/proc/protected_from_space()
 	return 0
@@ -3141,8 +3147,9 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		src.client?.Click(A, get_turf(A))
+		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		if (A)
+			src.client?.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1
@@ -3158,14 +3165,16 @@
 
 /mob/MouseEntered(location, control, params)
 	var/mob/M = usr
-	M.mob_hovered_over = src
+	M.atom_hovered_over = src
 	if(M.client.check_key(KEY_EXAMINE))
-		src.name_tag?.show_images(M.client, FALSE, TRUE)
+		var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+		hover_tag?.show_images(M.client, FALSE, TRUE)
 
 /mob/MouseExited(location, control, params)
 	var/mob/M = usr
-	M.mob_hovered_over = null
-	src.name_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
+	M.atom_hovered_over = null
+	var/atom/movable/name_tag/hover_tag = src.get_examine_tag(M)
+	hover_tag?.show_images(M.client, M.client.check_key(KEY_EXAMINE) && HAS_ATOM_PROPERTY(M, PROP_MOB_EXAMINE_ALL_NAMES) ? TRUE : FALSE, FALSE)
 
 /mob/proc/get_pronouns()
 	RETURN_TYPE(/datum/pronouns)

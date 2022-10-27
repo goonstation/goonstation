@@ -31,10 +31,11 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
+		src.original_bodypart.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -104,7 +105,7 @@
 		..()
 
 	butcher(mob/user)
-		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
 		return ..(user, FALSE)
 
@@ -562,7 +563,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -643,6 +645,7 @@
 		var/mob/living/carbon/human/H = M
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
 		H.setStatusMin("paralysis", 10 SECONDS)
 

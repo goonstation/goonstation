@@ -68,7 +68,7 @@ var/global/atom_emergency_stop = 0
 				message_admins("[key_name(usr)]'s type transmute command terminated due to an emergency stop!")
 				break
 			else
-				A.setMaterial(getMaterial(mat))
+				A.setMaterial(getMaterial(mat), copy = FALSE)
 				transmute ++
 				transmute_total ++
 				if (transmute >= amount_to_transmute)

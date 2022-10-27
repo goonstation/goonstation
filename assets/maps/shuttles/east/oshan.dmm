@@ -44,7 +44,10 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "be" = (
-/obj/machinery/door/airlock/pyro/command,
+/obj/machinery/door/airlock/pyro/command{
+	hardened = 1
+	},
+/obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -154,7 +157,7 @@
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
 "gy" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -408,7 +411,7 @@
 	},
 /area/shuttle/escape/centcom)
 "pM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
@@ -432,7 +435,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qE" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
 	icon_state = "floor2"
@@ -504,10 +507,9 @@
 	},
 /area/shuttle/escape/centcom)
 "uE" = (
-/obj/machinery/door/airlock/pyro/medical{
+/obj/machinery/door/airlock/pyro/glass/med{
 	dir = 4;
-	name = "First-Aid Station";
-	opacity = 0
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle{
 	dir = 8
@@ -721,8 +723,10 @@
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
 	name = "Secure Transport";
-	opacity = 0
+	opacity = 0;
+	hardened = 1
 	},
+/obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -758,7 +762,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "EY" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-L"
@@ -1062,7 +1066,7 @@
 	},
 /area/centcom)
 "VM" = (
-/obj/wingrille_spawn/auto,
+/obj/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"

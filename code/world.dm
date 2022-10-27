@@ -277,6 +277,8 @@ var/f_color_selector_handler/F_Color_Selector
 		respawn_controller = new /datum/respawn_controls()
 		Z_LOG_DEBUG("Preload", " cargo_pad_manager")
 		cargo_pad_manager = new /datum/cargo_pad_manager()
+		Z_LOG_DEBUG("Preload", " camera_coverage_controller")
+		camera_coverage_controller = new /datum/controller/camera_coverage()
 
 		Z_LOG_DEBUG("Preload", "hydro_controls set_up")
 		hydro_controls.set_up()
@@ -535,9 +537,6 @@ var/f_color_selector_handler/F_Color_Selector
 	build_manufacturer_icons()
 	clothingbooth_setup()
 	initialize_biomes()
-#ifdef SECRETS_ENABLED
-	initialize_gallery_manager()
-#endif
 
 	Z_LOG_DEBUG("World/Init", "Loading fishing spots...")
 	global.initialise_fishing_spots()
@@ -562,6 +561,12 @@ var/f_color_selector_handler/F_Color_Selector
 	makepowernets()
 	#endif
 
+	#ifdef SECRETS_ENABLED
+	UPDATE_TITLE_STATUS("Loading gallery artwork")
+	Z_LOG_DEBUG("World/Init", "Initializing gallery manager...")
+	initialize_gallery_manager()
+	#endif
+
 	UPDATE_TITLE_STATUS("Generating terrain")
 	Z_LOG_DEBUG("World/Init", "Setting perlin noise terrain...")
 	for (var/area/map_gen/A in by_type[/area/map_gen])
@@ -569,7 +574,7 @@ var/f_color_selector_handler/F_Color_Selector
 
 	UPDATE_TITLE_STATUS("Calculating cameras")
 	Z_LOG_DEBUG("World/Init", "Updating camera visibility...")
-	world.updateCameraVisibility(TRUE)
+	camera_coverage_controller.setup()
 
 	UPDATE_TITLE_STATUS("Preloading client data...")
 	Z_LOG_DEBUG("World/Init", "Transferring manuf. icons to clients...")
@@ -1568,6 +1573,8 @@ var/f_color_selector_handler/F_Color_Selector
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+				// trigger cooldown so radio station doesn't interrupt our cool music
+				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
 				return 1
 
 			if ("delay")

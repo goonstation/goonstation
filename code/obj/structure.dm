@@ -81,23 +81,23 @@ obj/structure/ex_act(severity)
 
 /obj/structure/girder/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W) && state == 0 && anchored && !istype(src, /obj/structure/girder/displaced))
-		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISASSEMBLE), user)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISASSEMBLE, null, user), user)
 
 
 	else if (isscrewingtool(W) && state == 2 && istype(src, /obj/structure/girder/reinforced))
-		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_UNSECURESUPPORT), user)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_UNSECURESUPPORT, null, user), user)
 
 	else if (issnippingtool(W) && istype(src, /obj/structure/girder/reinforced) && state == 1)
-		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REMOVESUPPORT), user)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REMOVESUPPORT, null, user), user)
 
 	else if (ispryingtool(W) && state == 0 && anchored )
-		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISLODGE), user)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_DISLODGE, null, user), user)
 
 	else if (iswrenchingtool(W) && state == 0 && !anchored )
 		if (!istype(src.loc, /turf/simulated/floor/))
 			boutput(user, "<span class='alert'>Not sure what this floor is made of but you can't seem to wrench a hole for a bolt in it.</span>")
 			return
-		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_SECURE), user)
+		actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_SECURE, null, user), user)
 	else if (istype(W, /obj/item/sheet))
 		var/obj/item/sheet/S = W
 		if (S.amount < 2)
@@ -105,10 +105,10 @@ obj/structure/ex_act(severity)
 			return
 
 		if (src.icon_state != "reinforced" && S.reinforcement)
-			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE), user)
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE, null, user), user)
 
 		else
-			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE), user)
+			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
 	else
 		..()
 
@@ -123,7 +123,7 @@ obj/structure/ex_act(severity)
 	var/obj/item/the_tool
 	var/interaction = GIRDER_DISASSEMBLE
 
-	New(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i)
+	New(var/obj/table/girdr, var/obj/item/tool, var/interact, var/duration_i, var/mob/user)
 		..()
 		if (girdr)
 			the_girder = girdr
@@ -136,9 +136,13 @@ obj/structure/ex_act(severity)
 		if (duration_i)
 			duration = duration_i
 		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
+			var/mob/living/carbon/human/H = user
 			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
+		var/mob/living/critter/robotic/bot/engibot/E = user
+		if(istype(E))
+			interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_MOVE
+			duration = 1 DECI SECOND
 
 	onUpdate()
 		..()

@@ -2096,7 +2096,7 @@ datum/pathogeneffects/malevolent/snaps/jazz
 		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))
 			var/obj/item/instrument/saxophone/D = new /obj/item/instrument/saxophone(H)
 			if(!(H.put_in_hand(D) == 1))
-				var/drophand = (H.hand == 0 ? H.slot_r_hand : H.slot_l_hand) //basically works like a derringer
+				var/drophand = (H.hand == RIGHT_HAND ? H.slot_r_hand : H.slot_l_hand) //basically works like a derringer
 				H.drop_item()
 				D.set_loc(H)
 				H.equip_if_possible(D, drophand)

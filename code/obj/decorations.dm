@@ -402,7 +402,7 @@
 		else if(isitem(W) && (user.mind && user.mind.assigned_role != "Captain"))
 			src.destroy()
 			boutput(user, "<span class='alert'>I don't think the Captain is going to be too happy about this...</span>")
-			src.visible_message("<b><span class='alert'>[user] ravages the [src] with [W].</span></b>", 1)
+			src.visible_message("<b><span class='alert'>[user] ravages [src] with [W].</span></b>", 1)
 			src.interesting = "Inexplicably, the genetic code of the bonsai tree has the words 'fuck [user.real_name]' encoded in it over and over again."
 		return
 
@@ -848,6 +848,13 @@
 		pixel_x = -256
 		pixel_y = -256
 
+	regina
+		icon = 'icons/obj/large/320x320.dmi'
+		icon_state = "regina"
+		name = "Regina"
+		pixel_x = -110
+		pixel_y = -170
+
 	amantes
 		icon_state = "amantes"
 		name = "Amantes"
@@ -857,6 +864,12 @@
 	antistes
 		icon_state = "antistes"
 		name = "Antistes"
+		pixel_x = -256
+		pixel_y = -256
+
+	mors
+		icon_state = "mors"
+		name = "Mors"
 		pixel_x = -256
 		pixel_y = -256
 
@@ -1255,7 +1268,7 @@ obj/decoration/gibberBroken
 	icon = 'icons/obj/decoration.dmi'
 	desc = "A terribly cheap and discontinued old model of laser pistol."
 	icon_state = "laser_pistol"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "protopistol"
 	stamina_damage = 0
 	stamina_cost = 4
@@ -1292,7 +1305,6 @@ obj/decoration/gibberBroken
 	stamina_damage = 0
 	stamina_cost = 4
 	stamina_crit_chance = 0
-	var/list/proj_impacts = list()
 	var/image/proj_image = null
 	var/last_proj_update_time = null
 

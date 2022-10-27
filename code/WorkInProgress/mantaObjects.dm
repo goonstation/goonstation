@@ -927,8 +927,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
 				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1065,8 +1063,6 @@ var/obj/manta_speed_lever/mantaLever = null
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
 				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
-				duration = round(duration / 2)
 
 	onUpdate()
 		..()
@@ -1155,8 +1151,6 @@ var/obj/manta_speed_lever/mantaLever = null
 			if (H.mind.assigned_role == "Chief Engineer")
 				duration = round(duration / 2)
 			if (H.mind.assigned_role == "Engineer")
-				duration = round(duration / 2)
-			if (H.mind.assigned_role == "Mechanic")
 				duration = round(duration / 2)
 
 	onUpdate()
@@ -1403,20 +1397,26 @@ var/obj/manta_speed_lever/mantaLever = null
 	icon_state = "green"
 
 /area/wrecknsspolaris
-	name = "Wreck of NSS Polaris"
+	name = "Wreck of the NSS Polaris"
 	icon_state = "green"
 	sound_group = "polaris"
 	teleport_blocked = 1
 	sound_loop = 'sound/ambience/loop/Polarisloop.ogg'
 
 /area/wrecknsspolaris/vault
+	name = "NSS Polaris Vault"
 	requires_power = 0
 
 /area/wrecknsspolaris/outside
+	name = "Ouside the Wreck"
 	icon_state = "blue"
 	ambient_light = OCEAN_LIGHT
+
 /area/wrecknsspolaris/outside/teleport
+	name = "Outer Wreck (with teleport)"
+
 /area/wrecknsspolaris/outside/back
+	name = "Back of the Wreck"
 
 /obj/item/parts/human_parts/arm/right/polaris
 	name = "misplaced right arm"
@@ -1499,7 +1499,7 @@ var/obj/manta_speed_lever/mantaLever = null
 
 /obj/item/broken_egun
 	name = "broken energy gun"
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_egun"
 	desc = "Its a gun that has two modes, stun and kill, although this one is nowhere near working condition."

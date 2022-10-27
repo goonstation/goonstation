@@ -1,4 +1,4 @@
-
+ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -45,25 +45,10 @@
 	icon_state = "limepie"
 	bites_left = 3
 	heal_amt = 4
-	var/has_key = 0
-	var/static/had_key = 0
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=15)
 
-	New()
-		..()
-		if (prob(6) && !had_key)
-			had_key = 1
-			src.has_key = 1
-		return
 
-	heal(var/mob/M)
-		..()
-		if (has_key)
-			src.has_key = 0
-			M.visible_message("<span class='alert'>[M] pulls a key out of [src]!</span>","<span class='alert'>You discover an iron key in [src]! Gross!</span>")
-			new /obj/item/device/key/haunted(get_turf(src))
-		return
 
 /obj/item/reagent_containers/food/snacks/pie/lemon
 	name = "lemon meringue pie"
@@ -116,9 +101,6 @@
 				randomContent = pick(contents)
 			else
 				randomContent = src
-
-			if (randomContent != src)
-				randomContent.throw_impact(hit_atom)
 
 			hit_atom.Attackby(randomContent, thr?.user)
 

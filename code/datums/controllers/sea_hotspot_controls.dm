@@ -1005,7 +1005,114 @@
 		if (mode_toggle) //reactivate in togglemode
 			activate()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
+/obj/item/clothing/shoes/stomp_boots
+	name = "Stomper Boots"
+	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
+	icon_state = "stompboots"
+	kick_bonus = 3
+	step_sound = "step_plating"
+	step_priority = STEP_PRIORITY_LOW
+	laces = LACES_NONE
+	mats = 20
+	burn_possible = 0
+	abilities = list(/obj/ability_button/stomper_boot_stomp)
+
+	setupProperties()
+		. = ..()
+		src.setProperty("movespeed", 0.8)
+		src.setProperty("disorient_resist", 15)
+
+/obj/ability_button/stomper_boot_stomp
+	name = "Stomp"
+	icon_state = "magbootson"
+	desc = "Stomp the ground, pinning hotspots under you and moving any others nearby."
+	var/jump_height = 1.5 //! Jump height, in tiles.
+	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
+	var/stomp_cooldown = 10 SECONDS
+	var/stomp_damage = 20
+
+	execute_ability()
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
+		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
+			// Mostly stolen from jumpy
+			if (istype(the_mob.loc, /turf/))
+				the_mob.visible_message("<span class='alert'><b>[the_mob]</b> activates the boost on their stomper boots!</span>")
+				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
+				var/prevLayer = the_mob.layer
+				var/prevPlane = the_mob.plane
+				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
+				the_mob.plane = PLANE_NOSHADOW_ABOVE
+				APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+				the_mob.flags |= TABLEPASS
+
+				if (prob(10))
+					the_mob.emote("flip")
+
+				animate(the_mob,
+					pixel_y = jump_height * 32,
+					time = jump_time / 2,
+					easing = EASE_OUT | CIRCULAR_EASING,
+					flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+				animate(
+					pixel_y = -jump_height * 32,
+					time = jump_time / 2,
+					easing = EASE_IN | CIRCULAR_EASING,
+					flags = ANIMATION_RELATIVE)
+
+				SPAWN(0)
+					sleep(jump_time)
+					the_mob.layer = prevLayer
+					the_mob.plane = prevPlane
+					REMOVE_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+					the_mob.flags &= ~TABLEPASS
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
+
+					if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
+						SPAWN(0.4 SECONDS)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
+
+					for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
+						if (BOUNDS_DIST(src, H.center.turf()) == 0)
+							playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+							for (var/mob/O in hearers(the_mob, null))
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+
+					for (var/mob/M in get_turf(src))
+						if (isliving(M) && M != the_mob)
+							random_brute_damage(M, src.stomp_damage, TRUE)
+							M.changeStatus("weakened", 1 SECOND)
+							playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+
+
+			else if (istype(the_mob.loc, /obj/))
+				var/obj/container = the_mob.loc
+				boutput(the_mob, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+				the_mob.changeStatus("paralysis", 5 SECONDS)
+				the_mob.changeStatus("weakened", 5 SECONDS)
+				container.visible_message("<span class='alert'><b>[the_mob.loc]</b> emits a loud thump and rattles a bit.</span>")
+				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+				animate_storage_thump(container)
+		else
+			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
+			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
+
+/obj/item/clothing/shoes/stomp_boots/extreme
+	name = "STOMP BOOTS HYPERMURDER EDITION"
+	desc = "PAPA'S GOT A BRAND NEW SHOE"
+	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
+
+/obj/ability_button/stomper_boot_stomp/extreme
+	name = "EARTH SHATTERING MEGA STOMP"
+	desc = "EXTREMELY HAZARDOUS TO ALL LIFE"
+	stomp_cooldown = 0 SECONDS
+	stomp_damage = 200
 
 ////////////////////////////////////////////////////////////
 //actions

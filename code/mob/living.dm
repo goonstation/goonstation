@@ -192,10 +192,10 @@
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
-				emergency_shuttle.incall()
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				if (emergency_shuttle.incall())
+					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -405,12 +405,13 @@
 			var/success = dropping_organ.attach_organ(src, dropping_user)
 			if (success)
 				return
-		else if (istype(dropped, /obj/item/parts/human_parts/))
-			var/obj/item/parts/dropping_limb = dropped
-			dropping_limb.attach(src, dropping_user)
-		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-			var/obj/item/parts/robot_parts/dropping_limb = dropped
-			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+		else if (istype(dropped, /obj/item/parts))
+			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
+				var/obj/item/parts/dropping_limb = dropped
+				dropping_limb.attach(src, dropping_user)
+			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+				var/obj/item/parts/robot_parts/dropping_limb = dropped
+				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -1550,7 +1551,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 				return
 			*/
 			if (gloves?.activeweapon)
-				gloves.special_attack(src)
+				gloves.special_attack(src, M)
 				return
 
 			if (src.parry_or_dodge(M))
@@ -1834,9 +1835,12 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	if (!P.was_pointblank && HAS_ATOM_PROPERTY(src, PROP_MOB_REFLECTPROT))
 		var/obj/item/equipped = src.equipped()
 		var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
-		P.die()
-		src.visible_message("<span class='alert'>[src] reflected [Q.name] with [equipped]!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
+		if (!Q)
+			CRASH("Failed to initialize reflected projectile from original projectile [P] ([P.type]) hitting mob [src] (src.type)")
+		else
+			P.die()
+			src.visible_message("<span class='alert'>[src] reflects [Q.name] with [equipped]!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg',80, 0.1, 0, 3)
 		return 0
 
 	if (P?.proj_data?.is_magical  && src?.traitHolder?.hasTrait("training_chaplain"))
@@ -1866,8 +1870,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/damage = 0
 	var/stun = 0 //HEY this doesnt actually stun. its the number to reduce stamina. gosh.
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
+		damage = P.power * P.proj_data.ks_ratio
+		stun = P.power * (1.0 - P.proj_data.ks_ratio)
 	var/armor_msg = ""
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
@@ -1881,7 +1885,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -1890,7 +1894,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_PIERCING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
@@ -1899,7 +1903,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_SLASHING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (rangedprot_mod > 1)
@@ -1920,7 +1924,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (src.is_heat_resistant())
@@ -1932,7 +1936,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.reagents?.add_reagent("radium", damage/4) //fuckit
@@ -1944,7 +1948,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (!P.reagents)
@@ -2114,4 +2118,4 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		if(!ON_COOLDOWN(src,"radiation_feel_message_burn",5 SECONDS))
 			src.show_message("<span class='alert'>[pick("Your skin blisters!","It hurts!","Oh god, it burns!")]</span>") //definitely get a message for that
 	else if((!src.radiation_dose || prob(10)) && !ON_COOLDOWN(src,"radiation_feel_message",10 SECONDS))
-		src.show_message("<span class='alert'>[pick("Your skin prickles","You taste iron","You smell ozone","You feel a wave of pins and needles","Is it hot in here?")]</span>")
+		src.show_message("<span class='alert'>[pick("Your skin prickles.","You taste iron.","You smell ozone.","You feel a wave of pins and needles.","Is it hot in here?")]</span>")

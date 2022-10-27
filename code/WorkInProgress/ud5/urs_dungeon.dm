@@ -130,6 +130,7 @@
 	target = null
 	var/my_portal = null
 	var/start_on = 0
+	var/invisible_portal = 0
 
 	var/static/list/triggeracts = list("Disable" = "off", "Do nothing" = "nop", "Enable" = "on")
 
@@ -151,6 +152,8 @@
 					return
 				var/obj/perm_portal/P = new /obj/perm_portal(get_turf(src))
 				P.target = get_turf(target)
+				if(src.invisible_portal)
+					P.invisibility = 20
 				src.my_portal = P
 				return
 			if ("off")
