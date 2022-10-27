@@ -729,7 +729,7 @@
 		if (src.shock(user, 100))
 			return
 
-	if (!istype(src,/obj/machinery/vending/pizza)) // no tgui support for pizza vendor yet
+	if (!istype(src,/obj/machinery/vending/pizza)) // TODO: tgui support for pizza vendor yet
 		ui_interact(user)
 	else
 		src.add_dialog(user)
