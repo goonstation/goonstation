@@ -12,7 +12,6 @@
 	var/emagged = FALSE
 
 /obj/item/coin/attack_self(mob/user as mob)
-
 	boutput(user, "<span class='notice'>You flip the coin</span>")
 	user.u_equip(src)
 	src.set_loc(user.loc)
