@@ -10901,8 +10901,10 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "azB" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
-/obj/critter/mouse/remy,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 9
+	},
+/mob/living/critter/small_animal/mouse/remy,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/kitchen)
 "azC" = (
