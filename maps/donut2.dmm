@@ -50743,7 +50743,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "xIm" = (
-/obj/machinery/lrteleporter,
+/obj/machinery/lrteleporter/mining,
 /turf/simulated/floor/yellow,
 /area/station/mining/staff_room)
 "xIF" = (
