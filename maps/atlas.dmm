@@ -19896,9 +19896,6 @@
 	name = "power conduit"
 	},
 /obj/map/light/green,
-/obj/machinery/lrteleporter/mining{
-	layer = 4
-	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "WT" = (
