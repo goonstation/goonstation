@@ -13,11 +13,6 @@
 	///The minimum y coordinate to be rendered, in world coordinates.
 	var/y_min = null
 
-	//The x coordinate of the focal point of the map, in world coordinates.
-	var/focus_x = null
-	//The y coordinate of the focal point of the map, in world coordinates.
-	var/focus_y = null
-
 	New()
 		. = ..()
 		if (!map_render)
@@ -68,6 +63,11 @@
 	var/zoom_x_offset = 0
 	///The offset in the y coordinate caused by zooming the map to the focal point.
 	var/zoom_y_offset = 0
+
+	//The x coordinate of the focal point of the map, in world coordinates.
+	var/focus_x = null
+	//The y coordinate of the focal point of the map, in world coordinates.
+	var/focus_y = null
 
 	///The width in pixels between the edge of the station and the edge of the map.
 	var/border_width = 20
