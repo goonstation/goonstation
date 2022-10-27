@@ -837,7 +837,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			EXTEND_COOLDOWN(global, "music", 600 SECONDS)
+			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
