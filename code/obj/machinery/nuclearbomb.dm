@@ -345,6 +345,7 @@
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
 			return
+		explosion(src, src.loc, 35, 45, 55, 55)
 #ifdef MAP_OVERRIDE_MANTA
 		world.showCinematic("manta_nukies", TRUE)
 #else
@@ -371,7 +372,6 @@
 			// update: yolo
 			nukee.firegib()
 
-		explosion(src, src.loc, 25, 35, 45, 55)
 		creepify_station()
 
 		if(!istype(gamemode))
