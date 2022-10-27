@@ -306,8 +306,8 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		maxNum = 1
 		probability = 100
 		prefabPath = "assets/maps/prefabs/prefab_water_miraclium_survey.dmm"
-		prefabSizeX = 6
-		prefabSizeY = 3
+		prefabSizeX = 7
+		prefabSizeY = 5
 #endif
 
 //water prefabs that wouldn't make overly much sense in nadir's acid should go in this subsection
