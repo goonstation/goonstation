@@ -23,22 +23,17 @@
 		if (!x_max || !x_min || !y_max || !y_min || !z_level)
 			return
 		src.map_render = icon('icons/obj/station_map.dmi', "blank")
-		for (var/x in src.x_min to src.x_max)
-			for (var/y in src.y_min to src.y_max)
-				var/turf/turf = locate(x, y, src.z_level)
-				if (!src.valid_turf(turf))
-					continue
-				map_render.DrawBox(turf_color(turf), x, y)
+		for (var/turf/T in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
+			if (!src.valid_turf(T))
+				continue
+			map_render.DrawBox(turf_color(T), T.x, T.y)
 
-	///Checks whether a turf should be rendered on the map through the render_on_map variable on /turf. Takes into account edge cases, such as the Kondaru Owlery.
+	///Checks whether a turf should be rendered on the map through the render_on_map variable on /turf.
 	proc/valid_turf(var/turf/T)
 		if (!T.loc)
 			return FALSE
 		var/area/A = T.loc
 		if (!A.render_on_map)
-			return FALSE
-		//The Kondaru off-station Owlery and Abandoned Research Outpost are both considered part of the station, but have no AI cameras.
-		if ((map_settings.name in list("KONDARU", "DONUT3")) && (istype(T.loc, /area/station/garden/owlery) || istype(T.loc, /area/research_outpost/indigo_rye)))
 			return FALSE
 		return TRUE
 
@@ -91,15 +86,13 @@
 		var/min_x = src.x_max
 		var/max_y = src.y_min
 		var/min_y = src.y_max
-		for (var/x in src.x_min to src.x_max)
-			for (var/y in src.y_min to src.y_max)
-				var/turf/turf = locate(x, y, src.z_level)
-				if (!src.valid_turf(turf))
-					continue
-				max_x = max(max_x, x)
-				min_x = min(min_x, x)
-				max_y = max(max_y, y)
-				min_y = min(min_y, y)
+		for (var/turf/T in block(locate(src.x_min, src.y_min, src.z_level), locate(src.x_max, src.y_max, src.z_level)))
+			if (!src.valid_turf(T))
+				continue
+			max_x = max(max_x, T.x)
+			min_x = min(min_x, T.x)
+			max_y = max(max_y, T.y)
+			min_y = min(min_y, T.y)
 
 		var/scale_x = ((max_x - min_x) + border_width) / world.maxx
 		var/scale_y = ((max_y - min_y) + border_width) / world.maxy

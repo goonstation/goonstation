@@ -25,10 +25,10 @@
 			var/y = round((text2num(param_list["icon-y"]) * map.zoom_coefficient) + map.zoom_y_offset)
 			var/turf/clicked = locate(x, y, map.z_level)
 			if (isAIeye(usr))
-				usr.loc = clicked
+				usr.set_loc(clicked)
 			else
 				var/mob/living/silicon/ai/mainframe = usr
 				mainframe.eye_view()
-				mainframe.eyecam.loc = clicked
+				mainframe.eyecam.set_loc(clicked)
 		if ("right" in param_list)
 			return TRUE
