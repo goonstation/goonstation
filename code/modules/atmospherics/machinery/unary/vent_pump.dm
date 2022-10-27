@@ -1,6 +1,6 @@
 /obj/machinery/atmospherics/unary/vent_pump
 	icon = 'icons/obj/atmospherics/vent_pump.dmi'
-	icon_state = "out"
+	icon_state = "off"
 	name = "Air Vent"
 	desc = "A vent used for repressurization. It's probably hooked up to a canister port, somewhere."
 	level = 1

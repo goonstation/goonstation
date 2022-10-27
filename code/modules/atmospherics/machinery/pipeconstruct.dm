@@ -7,6 +7,7 @@
 
 /obj/item/pipeconstruct/New(var/loc, var/obj/machinery/atmospherics/parentobj)
 	..()
+	src.name = 	"[parentobj.name] construct"
 	src.typetoplace = parentobj.type
 	src.icon = parentobj.icon
 	src.icon_state = initial(parentobj.icon_state)
