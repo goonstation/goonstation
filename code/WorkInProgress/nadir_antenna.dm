@@ -373,7 +373,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(cargo_index || manual_receive)
 			var/obj/inbound_target
-			var/was_manual
+			var/was_manual = FALSE
 			if(manual_receive)
 				inbound_target = manual_receive
 				was_manual = TRUE
