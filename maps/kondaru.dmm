@@ -19902,6 +19902,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/black/corner{
 	dir = 4
 	},
@@ -22922,17 +22923,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"btb" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment/brig{
-	dir = 1
-	},
-/turf/simulated/floor,
-/area/station/hallway/primary/south)
 "btd" = (
 /obj/machinery/light,
 /turf/simulated/floor/engine,
@@ -23556,6 +23546,11 @@
 /area/station/janitor/office)
 "bvA" = (
 /obj/disposalpipe/segment/mail/vertical,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/blue/corner{
 	dir = 1
 	},
@@ -23813,11 +23808,6 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "bwG" = (
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green/corner{
 	dir = 8
@@ -46469,6 +46459,11 @@
 /area/station/hydroponics/bay)
 "jJP" = (
 /obj/disposalpipe/segment/horizontal,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -48993,7 +48988,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "mhp" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
 /obj/access_spawn/engineering_engine,
@@ -52396,13 +52391,6 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "psl" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
 /obj/machinery/firealarm{
 	pixel_y = 24
 	},
@@ -57380,7 +57368,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/primary/east)
 "tOr" = (
-/obj/machinery/door/airlock/pyro/external{
+/obj/machinery/door/airlock/pyro/glass/engineering{
 	dir = 4
 	},
 /obj/access_spawn/engineering_engine,
@@ -57503,6 +57491,13 @@
 /area/station/maintenance/southeast)
 "tUz" = (
 /obj/machinery/vending/coffee,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
 /turf/simulated/floor/blue/side{
 	dir = 1
 	},
@@ -101898,7 +101893,7 @@ ayN
 meT
 agE
 arE
-aLB
+oyn
 meT
 qZL
 wio
@@ -102201,7 +102196,7 @@ aKo
 auI
 fLB
 aLC
-bld
+aOG
 aNI
 aOG
 jpj
@@ -102813,11 +102808,11 @@ aQC
 aRM
 aSN
 aTD
-aUq
-aVh
 aWA
-ljr
+aVh
 aUq
+ljr
+aWA
 fCz
 aUq
 aUq
@@ -103134,9 +103129,9 @@ auH
 haO
 bnT
 bnT
-bnT
+bDq
 brG
-btb
+bnT
 buy
 xLq
 tnf
@@ -119152,7 +119147,7 @@ riU
 boo
 tvw
 bDA
-bEv
+pdL
 bFO
 bGV
 bMt
@@ -119454,7 +119449,7 @@ rsz
 yfW
 tvw
 bDA
-pdL
+bEv
 bFO
 eCH
 bMu
