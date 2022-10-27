@@ -100,7 +100,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //////////// MAP OVERRIDES
 
 //#define MAP_OVERRIDE_CONSTRUCTION		// Construction mode
-//#define MAP_OVERRIDE_DESTINY			// Destiny/RP
+#define MAP_OVERRIDE_DESTINY			// Destiny/RP
 //#define MAP_OVERRIDE_CLARION			// Destiny/Alt RP
 //#define MAP_OVERRIDE_COGMAP
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap 2
@@ -114,7 +114,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_CRASH			// Stupid Crash Gimmick Map
 //#define MAP_OVERRIDE_ATLAS			// gannetmap OR IS IT KUBIUSGANNETMAP??
 //#define MAP_OVERRIDE_MANTA			// manta map
-#define MAP_OVERRIDE_DENSITY
+//#define MAP_OVERRIDE_DENSITY
 //#define MAP_OVERRIDE_KONDARU
 //#define MAP_OVERRIDE_OZYMANDIAS
 //#define MAP_OVERRIDE_NADIR
