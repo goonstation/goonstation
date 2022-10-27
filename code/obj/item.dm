@@ -496,8 +496,10 @@
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
 
+/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
 /obj/item/proc/get_contraband()
-	return HAS_ATOM_PROPERTY(src, PROP_ITEM_CONTRABAND_FREE) ? 0 : src.contraband
+	// This needs to be a ternary because the value of the contraband override might be 0
+	return HAS_ATOM_PROPERTY(src, PROP_ITEM_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_ITEM_CONTRABAND_OVERRIDE) : src.contraband
 
 /obj/item/proc/update_stack_appearance()
 	return
