@@ -27,16 +27,16 @@ export const Vendors = (props, context) => {
     ((((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney) && (a.amount > 0))
   );
   const getCost = (a) => (
-    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Free")
+    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Vend")
   );
 
   return (
     <Window
       title={windowName}
-      width="350"
+      width="500"
+      height="600"
       fontFamily="Consolas"
-      font-size="10pt"
-      height="400">
+      font-size="10pt">
       <Window.Content>
         <Stack vertical fill minHeight="1%" maxHeight="100%">
 
@@ -115,49 +115,59 @@ export const Vendors = (props, context) => {
             <Section fill scrollable height="100%">
               {productList.map(product => {
                 return (
-                  <>
-                    <Table direction="row" align="center" key={product}>
-                      <Table.Row>
-                        <Table.Cell collapsing>
-                          {product.img && (<img
+                  <Flex key={product} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
+                    <Flex.Item direction="row">
+                      {product.img && (
+                        <Box style={{ "overflow": "show", "height": "24px" }}>
+                          <img
                             src={`data:image/png;base64,${product.img}`}
                             style={{
-                              'vertical-align': 'middle',
-                              'horizontal-align': 'middle',
+                              'transform': 'translate(0, -4px)',
                             }}
-                          />)}
-                        </Table.Cell>
-                        <Table.Cell>
-                          <Box bold>
-                            {product.name}
-                            {(playerBuilt && wiresOpen) && <Button
-                              ml="1%"
-                              color="green"
-                              icon="images"
-                              onClick={() => act('setIcon', { target: product.path })}
-                            />}
-                          </Box>
-                          <Box italic>
-                            {`Quantity: ${product.amount}`}
-                          </Box>
-                        </Table.Cell>
-                        <Table.Cell bold textAlign="right">
-                          {(playerBuilt && unlocked) ? <Button.Input
-                            color={canVend(product) ? "green" : "grey"}
-                            content={getCost(product)}
-                            onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
-                          /> : <Button
-                            color={canVend(product) ? "green" : "grey"}
-                            content={getCost(product)}
-                            disabled={canVend(product) ? false : true}
-                            onClick={() => act('vend', {
-                              target: product.path, cost: product.cost, amount: product.amount })}
+                          />
+                        </Box>)}
+                    </Flex.Item>
+                    <Flex.Item direction="row"
+                      grow style={{
+                        "display": "flex",
+                        "justify-content": "center",
+                        "flex-direction": "column",
+                      }}>
+                      <Box>
+                        <Box inline italic>
+                          {`${product.amount} x`}&nbsp;
+                        </Box>
+                        <Box inline>
+                          {product.name}
+                          {(playerBuilt && wiresOpen) && <Button inline
+                            color="green"
+                            icon="images"
+                            style={{ "margin-left": "5px" }}
+                            onClick={() => act('setIcon', { target: product.path })}
                           />}
-                        </Table.Cell>
-                      </Table.Row>
-                    </Table>
-                    <Divider />
-                  </>
+                        </Box>
+                      </Box>
+                    </Flex.Item>
+                    <Flex.Item bold direction="row" style={{ "margin-left": "5px",
+                      "display": "flex",
+                      "justify-content": "center",
+                      "flex-direction": "column",
+                    }}>
+                      {(playerBuilt && unlocked) ? <Button.Input
+                        color={canVend(product) ? "green" : "grey"}
+                        content={getCost(product)}
+                        style={{ "width": "50px", "text-align": "center" }}
+                        onCommit={(e, value) => act('setPrice', { target: product.path, cost: value })}
+                      /> : <Button
+                        color={canVend(product) ? "green" : "grey"}
+                        content={getCost(product)}
+                        disabled={canVend(product) ? false : true}
+                        style={{ "width": "50px", "text-align": "center", "padding": "0px" }}
+                        onClick={() => act('vend', {
+                          target: product.path, cost: product.cost, amount: product.amount })}
+                      />}
+                    </Flex.Item>
+                  </Flex>
                 );
               })}
             </Section>
