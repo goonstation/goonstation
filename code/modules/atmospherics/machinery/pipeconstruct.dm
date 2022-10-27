@@ -22,9 +22,16 @@
 
 /obj/item/pipeconstruct/attackby(obj/item/W, mob/user, params)
 	if(isweldingtool(W))
+		var/obj/machinery/atmospherics/thingtoplace = new typetoplace(src.loc, src.pipedir)
+		for(var/obj/machinery/atmospherics/target in thingtoplace.loc)
+			if(target == thingtoplace)
+				continue
+			if(target.initialize_directions & thingtoplace.initialize_directions)
+				boutput(user, "<b><span class='alert'>Something is hogging that direction!</span></b>")
+				qdel(thingtoplace)
+				return
 		if(!W:try_weld(user, 2, noisy=2))
 			return
-		var/obj/machinery/atmospherics/thingtoplace = new typetoplace(src.loc, src.pipedir)
 		thingtoplace.color = src.color
 		thingtoplace.initialize()
 		thingtoplace.mergewithedges()
