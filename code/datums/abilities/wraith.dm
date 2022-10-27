@@ -38,6 +38,7 @@
 	targeted = 1
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
+	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
@@ -744,6 +745,7 @@
 	targeted = 0
 	pointCost = 600
 	cooldown = 5 MINUTES
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
@@ -755,7 +757,9 @@
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			src.doCooldown()
 			make_poltergeist(holder.owner, T)
+			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
@@ -1072,18 +1076,18 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(1 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 20)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(2 SECOND)
 					if (!(H?.loc && W?.loc)) return
@@ -1321,6 +1325,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 400
 	targeted = 1
 	cooldown = 3 MINUTES
+	ignore_holder_lock = 0
 	var/wraith_key = null
 
 	cast(mob/target)
@@ -1381,7 +1386,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 							WG.mind.dnr = FALSE
 							WG.verbs += list(/mob/verb/setdnr)
 							WG.mind.transfer_to(H)
-							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+							playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 						W.possession_points = 0
 						logTheThing("debug", null, null, "step 5")
 						qdel(WG)
@@ -1684,6 +1689,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	targeted = 0
 	pointCost = 400
 	cooldown = 150 SECONDS
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
@@ -1694,7 +1700,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			src.doCooldown()
 			make_summon(holder.owner, T)
+			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
@@ -1752,6 +1760,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 0
 	cooldown = 300 SECONDS
 	start_on_cooldown = 1
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 3
@@ -1784,7 +1793,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))
 				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
+				src.doCooldown()
 				make_plague_rat(holder.owner, T)
+				return 0
 			else
 				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 				return 1

@@ -42,15 +42,24 @@
 		if ("right" in param_list)
 			return TRUE
 
+	///Checks whether a turf be rendered on the map.
+	proc/valid_turf(var/turf/turf)
+		if (!turf.loc)
+			return FALSE
+		var/area/A = turf.loc
+		if (!A.render_on_map)
+			return FALSE
+		// The Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
+		if ((map_settings.name in list("KONDARU", "DONUT3")) && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+			return FALSE
+		return TRUE
+
 	//generates the map from the current station layout
 	proc/render_map()
 		for (var/y in world.maxy to 1 step -1)
 			for (var/x in 1 to world.maxx)
 				var/turf/turf = locate(x, y, Z_LEVEL_STATION)
-				if (!turf.loc || !(istype(turf.loc, /area/station) || istype(turf.loc, /area/research_outpost)))
-					continue
-				//the Kondaru off station owlry and abandoned research outpost are both considered part of the station but have no AI cams
-				if (map_settings.name == "KONDARU" && (istype(turf.loc, /area/station/garden/owlery) || istype(turf.loc, /area/research_outpost/indigo_rye)))
+				if (!src.valid_turf(turf))
 					continue
 				//keep track of the outer bounds of the station
 				x_max = max(x_max, x)
@@ -75,23 +84,7 @@
 		src.pixel_y = -(center_y - (world.maxy/2)) * scale_main
 
 	proc/turf_color(turf/turf)
-		if (istype(turf.loc, /area/station/hydroponics) || istype(turf.loc, /area/station/ranch))
-			return "#0da70d"
-		else if (istype(turf.loc, /area/station/medical) && !istype(turf.loc, /area/station/medical/morgue))
-			return "#1ba7e9"
-		else if (istype(turf.loc, /area/station/science) || istype(turf.loc, /area/research_outpost))
-			return "#8e0bc2"
-		else if (istype(turf.loc, /area/station/security) || istype(turf.loc, /area/station/hos) || istype(turf.loc, /area/station/ai_monitored/armory))
-			return "#b10202"
-		else if (istype(turf.loc, /area/station/engine) || istype(turf.loc, /area/station/quartermaster) || istype(turf.loc, /area/station/mining) || istype(turf.loc, /area/station/construction))
-			return "#e4d835"
-		else if (istype(turf.loc, /area/station/chapel))
-			return "#75602d"
-		else if (istype(turf.loc, /area/station/bridge) || istype(turf.loc, /area/station/turret_protected) || istype(turf.loc, /area/station/teleporter) || istype(turf.loc, /area/station/ai_monitored))
-			return "#1e2861"
-		else if (istype(turf.loc, /area/station/maintenance))
-			return "#474747"
-		else if (istype(turf.loc, /area/station/hallway))
-			return "#ffffff"
-		else
-			return "#808080"
+		if (!turf.loc)
+			return
+		var/area/A = turf.loc
+		return A.station_map_colour

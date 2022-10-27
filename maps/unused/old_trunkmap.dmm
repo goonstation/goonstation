@@ -7260,7 +7260,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "apZ" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /obj/machinery/light{
 	icon_state = "tube1";
 	dir = 4
@@ -7639,7 +7642,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aqY" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aqZ" = (

@@ -540,7 +540,10 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aGx" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south,
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "aGI" = (
@@ -6889,7 +6892,10 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "ikB" = (
-/obj/machinery/atmospherics/pipe/tank/toxins/south,
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+	
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
