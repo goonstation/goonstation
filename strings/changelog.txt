@@ -1,5 +1,9 @@
 
 (t)thu oct 27 22
+(u)Flaborized
+(p)11598
+(e)🎨🔬|C-Sprites, A-Science
+(+)Resprited long range teleporter.
 (u)pali
 (p)11616
 (e)💅📄|C-QoL, A-UI
