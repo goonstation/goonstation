@@ -85,7 +85,7 @@
 		/obj/item/device/reagentscanner,
 		/obj/item/device/analyzer/atmospheric/upgraded,
 		/obj/item/robojumper,
-		/obj/item/extinguisher/large,
+		/obj/item/extinguisher/large/cyborg,
 		/obj/item/portable_typewriter/borg,
 	)
 
