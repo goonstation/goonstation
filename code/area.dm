@@ -2401,6 +2401,17 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	icon_state = "showers"
 	sound_environment = 3
 
+	New()
+		. = ..()
+
+		// it's capybara time
+		SPAWN(3 SECONDS)
+			var/list/capyturfs = get_area_turfs(src.type, floors_only=TRUE) + get_area_turfs(/area/station/crew_quarters/sauna, floors_only=TRUE)
+			if(!length(capyturfs))
+				capyturfs = get_area_turfs(/area/station/crew_quarters, floors_only=TRUE)
+			if(length(capyturfs))
+				new /mob/living/critter/small_animal/capybara(pick(capyturfs))
+
 /area/station/crew_quarters/observatory
 	name = "Observatory"
 	icon_state = "observatory"
@@ -3030,6 +3041,10 @@ ABSTRACT_TYPE(/area/station/science)
 
 /area/station/science/tenebrae
 	name = "Tenebrae Primary Zone"
+	icon_state = "science"
+
+/area/station/science/hall
+	name = "Research Hall"
 	icon_state = "science"
 
 /area/station/science/gen_storage

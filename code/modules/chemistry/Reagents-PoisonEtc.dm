@@ -835,7 +835,6 @@ datum
 					M.setStatusMin("weakened", 6 SECONDS * mult)
 					M.make_jittery(6)
 					M.visible_message("<span class='alert'><b>[M.name]</b> falls to the floor, scratching themselves violently!</span>")
-					M.emote("scream")
 				..()
 				return
 
@@ -946,7 +945,7 @@ datum
 			fluid_g = 60
 			fluid_b = 255
 			dispersal = 1
-			blob_damage = 4
+			blob_damage = 2
 			viscosity = 0.25
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -1059,24 +1058,9 @@ datum
 						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 
-			reaction_obj(var/obj/O, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 16)
-					volume = (volume/covered.len)
-
-				if (istype(O,/obj/fluid))
-					return 1
-				if (isitem(O) && volume > O:w_class)
-					var/obj/item/toMelt = O
-					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						if(!O.hasStatus("acid"))
-							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
-					else
-						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
-
 			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid",10)
-				P.growth -= 5
+				P.HYPdamageplant("acid",8)
+				P.growth -= 4
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
@@ -1789,8 +1773,6 @@ datum
 							M.change_misstep_chance(15 * mult)
 						if (prob(15))
 							M.setStatusMin("stunned", 2 SECONDS * mult)
-							if (!isdead(M))
-								M.emote("scream")
 					if (30 to 60)
 						M.change_eye_blurry(5, 5)
 						M.stuttering = max(M.stuttering, 5)
@@ -2137,7 +2119,6 @@ datum
 							if(3) //Trip
 								H.show_text(pick_string("chemistry_reagent_messages.txt", "strychnine2b"), "red")
 								H.visible_message("<span class='combat bold'>[H] stumbles and falls!</span>")
-								if(probmult(10)) H.emote("scream")
 								H.changeStatus("weakened", 2 SECONDS * mult)
 							if(4) //Light-headedness
 								H.show_text("You feel like you are about to faint!", "red")
