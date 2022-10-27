@@ -13794,16 +13794,16 @@
 "gNE" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 6;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 6
 	},
 /obj/machinery/light/lamp/black{
-	pixel_y = 10;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 10
 	},
 /obj/item/pen{
-	pixel_y = -2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = -2
 	},
 /turf/simulated/floor/black/side{
 	dir = 1
@@ -15177,8 +15177,7 @@
 /area/station/medical/medbay/lobby)
 "huo" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 2;
-	
+	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -15818,8 +15817,8 @@
 	icon_state = "index_card";
 	info = "TYPE-SM - SHEAR MITIGATOR<br>Reduces shear by intensity, based on radial distance from siphon (8x > 4x > 2x > 1x)<br>Maximum 3 intensity";
 	name = "printed card";
-	pixel_y = 13;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -43595,8 +43594,8 @@
 "vxC" = (
 /obj/decal/cleanable/dirt/dirt4,
 /obj/item/spacecash/fifty{
-	pixel_y = -9;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = -9
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
@@ -45968,8 +45967,8 @@
 	icon_state = "index_card";
 	info = "TYPE-AX - AXIAL RESONATOR<br>Provides lateral and vertical resonance, multiplied based on distance from axial pinch points (8x > 4x > 2x > 1x)<br>Maximum 4 intensity";
 	name = "printed card";
-	pixel_y = 13;
-	pixel_x = 4
+	pixel_x = 4;
+	pixel_y = 13
 	},
 /turf/simulated/floor/engine,
 /area/station/science/construction{
@@ -83827,7 +83826,7 @@ qLh
 qLh
 qLh
 qLh
-jjE
+qLh
 jjE
 uqC
 uqC
@@ -84130,7 +84129,7 @@ ons
 jRE
 qOd
 qLh
-jjE
+qLh
 uqC
 uqC
 wuT
@@ -84432,8 +84431,8 @@ den
 nxg
 laq
 qLh
-jjE
-jjE
+qLh
+qLh
 hAg
 uqC
 jjE
@@ -84735,7 +84734,7 @@ llS
 uts
 rRY
 lPo
-jjE
+qLh
 aUV
 uqC
 uqC
@@ -85036,8 +85035,8 @@ uOq
 gKy
 xeL
 qLh
-jjE
-jjE
+qLh
+qLh
 jjE
 eqq
 eqq
