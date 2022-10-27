@@ -323,7 +323,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 							src.attempt_transceive(sigindex)
 
 
-	proc/post_signal(datum/signal/signal,var/newfreq)
+	proc/post_signal(datum/signal/signal, var/newfreq)
 		if(!signal)
 			return
 		var/freq = newfreq
@@ -360,7 +360,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				return "ERR_OTHER" //what
 
 	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
-	proc/attempt_transceive(var/cargo_index = null,var/obj/manual_receive = null)
+	proc/attempt_transceive(var/cargo_index = null, var/obj/manual_receive = null)
 		if(src.is_transceiving)
 			return
 		if(!transception_array)
@@ -437,7 +437,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 				src.is_transceiving = FALSE
 
 
-	proc/receive_a_thing(var/netnumber,var/atom/movable/thing2get,var/was_manual = FALSE)
+	proc/receive_a_thing(var/netnumber, var/atom/movable/thing2get, var/was_manual = FALSE)
 		src.is_transceiving = TRUE
 		if(thing2get in shippingmarket.pending_crates)
 			shippingmarket.pending_crates.Remove(thing2get) //avoid received thing being queued into multiple pads at once
@@ -566,7 +566,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			src.queue_dialog_update = FALSE
 
 	//construct command packet to send out; specify cargo index for receive, otherwise defaults to send
-	proc/build_command(var/com_target,var/cargo_index)
+	proc/build_command(var/com_target, var/cargo_index)
 		if(com_target)
 			var/datum/signal/yell = new
 			yell.data["address_1"] = com_target
@@ -592,7 +592,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		newsignal.source = src
 		src.post_signal(newsignal)
 
-	proc/post_signal(datum/signal/signal,var/newfreq)
+	proc/post_signal(datum/signal/signal, var/newfreq)
 		if(!signal)
 			return
 		var/freq = newfreq
