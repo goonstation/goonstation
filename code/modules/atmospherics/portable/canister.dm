@@ -36,15 +36,25 @@
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
+		if(src.destroyed)
+			return
 		if (!src.user_can_suicide(user))
 			return FALSE
+		usr.visible_message("<span class='alert'><b>[user] attempts to reach the valve with [his_or_her(user)] mouth to release some pressure!</b></span>")
+		if (src.det)
+			if (!src.det.part_fs.timing || src.det.defused)
+				boutput(usr, "<span class='alert'>You try to reach the valve with your mouth but the failsafe prevents you from reaching it.<br><i>Looks like priming the bomb might make it accessible to you...?</i></span>")
+				return
+			if (locate(/obj/item/device/analyzer/atmospheric) in src.det.attachments)
+				src.visible_message("<span class='alert'>[usr] opened the valve and triggered the detonation process.</span>")
+				src.custom_suicide = 0
+				src.det.detonate()
+			return
 		if (src.release_pressure < 5*ONE_ATMOSPHERE || MIXTURE_PRESSURE(src.air_contents) < 5*ONE_ATMOSPHERE)
 			boutput(user, "<span class='alert'>You hold your mouth to the release valve and open it. Nothing happens. You close the valve in shame.<br><i>Maybe if you used more pressure...?</i></span>")
-			return FALSE
-		user.visible_message("<span class='alert'><b>[user] holds [his_or_her(user)] mouth to [src]'s release valve and briefly opens it!</b></span>")
+			return
 		src.valve_open = TRUE
-		user.gib()
-		return TRUE
+		usr.gib()
 
 	powered()
 		return 1
@@ -498,7 +508,7 @@
 
 	return ..()
 
-/obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
+/obj/machinery/portable_atmospherics/canister/proc/toggle_valve() //weirdness in opening the valve
 	if(!src.has_valve)
 		return FALSE
 
