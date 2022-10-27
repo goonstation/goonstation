@@ -1491,7 +1491,7 @@
 			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
 			A.reagents.maximum_volume += overflow
 			if (ismob(A) && amount > 800) // rough estimate
-				if (tgui_alert(usr, "That amount of reagents will probably make [mob] explode. Want to prevent them from exploding due to excessive blood?",
+				if (tgui_alert(usr, "That amount of reagents will probably make [A] explode. Want to prevent them from exploding due to excessive blood?",
 					"Bloodgib Status", list("Yes", "No")) == "Yes")
 					APPLY_ATOM_PROPERTY(A, PROP_MOB_BLOODGIB_IMMUNE, usr)
 		else
