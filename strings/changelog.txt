@@ -80,7 +80,7 @@
 (+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
 (u)Ikea
 (p)11015
-(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
 (*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
@@ -88,7 +88,7 @@
 (+)Widened Nadir by two tiles to improve foot traffic flow in secondary hallways.
 (u)Momoberry
 (p)10909
-(e)⚖💅🧛‍♂️|C-Balance, C-QoL, A-Gamemodes
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
 (+)Wraiths blood writing no longer has a cooldown and costs 2 points, instead of 10.
 (t)sat oct 22 22
 (u)Sord
@@ -124,7 +124,7 @@
 (t)wed oct 19 22
 (u)LeahTheTech
 (p)11441
-(e)💅🧛‍♂️|C-QoL, A-Gamemodes
+(e)💅🧛|C-QoL, A-Gamemodes
 (+)Coagulated gnesis tinting now wears off after 3 minutes.
 (u)Kubius
 (p)7730
@@ -185,7 +185,7 @@
 (+)Can no longer kick with a bear/etc arm, bladed gloves, etc
 (u)Gannets
 (p)11359
-(e)🆕🎨⚖🧛‍♂️📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
+(e)🆕🎨⚖🧛📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
 (*)Added the Veritate PDW to nuke ops Field Medic class crates.
 (t)sun oct 16 22
 (u)Glamurio (Ryou)
@@ -194,7 +194,7 @@
 (+)Added three new random rooms, a 5x3 and two 3x3s.
 (u)LeahTheTech
 (p)11377
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (+)Turned down the misstep applied by Flockmind radio stun ability.
 (u)Sord
 (*)Most standard shuttle interior doors are now not hackable, boltable, or weldable. We'll see if this stays.
@@ -281,7 +281,7 @@
 (+)Standardised the Cogmap2 Armoury.
 (u)LeahTheTech
 (p)11031
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Flock are now capped at 75 flockdrones per flock.
 (t)sat oct 08 22
 (u)Ikea
@@ -296,7 +296,7 @@
 (*)The Remy, bumblespider, and crow Spooktober jobs are now restricted to mentors only. Please ahelp if you see people still being griefy.
 (u)Bartimeus
 (p)11195
-(e)🆕⚖🧛‍♂️|C-Feature, C-Balance, A-Gamemodes
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
 (+)Trickster wraiths now have access to a slippery trap.
 (u)Waffleloffle
 (p)11233
@@ -313,7 +313,7 @@
 (t)fri oct 07 22
 (u)Bartimeus
 (p)11063
-(e)🆕🧛‍♂️|C-Feature, A-Gamemodes
+(e)🆕🧛|C-Feature, A-Gamemodes
 (+)The harbinger wraith's summons now see in the dark and so does the trickster wraith.
 (u)Sord
 (+)Med and Sec clothing vendors now sell PDAs and headsets for those departments. They also have shoes for free.
@@ -369,15 +369,15 @@
 (+)Sticks-to-snakes spell snakes are mobs now. You can set them on fire and poison them.
 (u)Wisemonster
 (p)11157
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Disaster round wraiths can now evolve without having to absorb any corpses.
 (u)LeahTheTech
 (p)11090
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Mixed "major threat" antagonists (Blob, Flock and Wraith) are now twice as common and replace fewer normal antagonists.
 (u)LeahTheTech
 (p)11140
-(e)🪲⚖🧛‍♂️|C-Bug, C-Balance, A-Gamemodes
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
 (+)Flockdrone corpses no longer block 100% of shots
 (t)sun oct 02 22
 (u)Sord
@@ -420,11 +420,11 @@
 (+)The Security and Medical job clothing vendors can now be accessed by anyone who has access to those departments.
 (u)Amylizzle
 (p)11071
-(e)🪲⚖🧛‍♂️📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
+(e)🪲⚖🧛📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
 (+)Substantially buffed the Flock's Gnesis Turret.
 (u)ZWRh3
 (p)11101
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (+)Removed vuvuzela gun from the battle royale gamemode.
 (u)FlameArrow57 and DimWhat
 (p)9043
@@ -452,7 +452,7 @@
 (+)Balloons need to be tied off before being thrown.
 (u)LeahTheTech
 (p)11077
-(e)🪲🧛‍♂️|C-Bug, A-Gamemodes
+(e)🪲🧛|C-Bug, A-Gamemodes
 (+)The Hydra smart pistol is now slightly smarter and no longer targets sawflies or nukeop gunbots.
 (t)thu sep 29 22
 (u)LeahTheTech
