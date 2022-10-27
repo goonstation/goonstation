@@ -1024,9 +1024,9 @@ TRAYS
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
-				foodoverlay.color = FOOD.food_color
+				foodoverlay.color = FOOD.get_food_color()
 				foodoverlay.layer = (src.layer+3)
-				toppingdata.Add(FOOD.food_color)
+				toppingdata.Add(FOOD.get_food_color())
 				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)

@@ -508,7 +508,7 @@
 
 	return ..()
 
-/obj/machinery/portable_atmospherics/canister/proc/toggle_valve() //weirdness in opening the valve
+/obj/machinery/portable_atmospherics/canister/proc/toggle_valve()
 	if(!src.has_valve)
 		return FALSE
 

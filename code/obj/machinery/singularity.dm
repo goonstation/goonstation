@@ -112,6 +112,7 @@ Contains:
 	var/grav_pull = 6
 	var/radius = 0 //the variable used for all calculations involving size.this is the current size
 	var/maxradius = INFINITY//the maximum size the singularity can grow to
+	var/restricted_z_allowed = FALSE
 
 
 
@@ -147,7 +148,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 /obj/machinery/the_singularity/process()
 	var/turf/T = get_turf(src)
-	if(isrestrictedz(T?.z))
+	if(isrestrictedz(T?.z) && !src.restricted_z_allowed)
 		src.visible_message("<span class='notice'>Something about this place makes [src] wither and implode.</span>")
 		qdel(src)
 	eat()
@@ -424,6 +425,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 				T.ReplaceWithFloor()
 	return
 #endif
+
+/// Singularity that can exist on restricted z levels
+/obj/machinery/the_singularity/admin
+	restricted_z_allowed = TRUE
+
 
 /particles/singularity
 	transform = list(1, 0, 0, 0,
