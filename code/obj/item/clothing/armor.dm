@@ -369,6 +369,16 @@
 		setProperty("disorient_resist", 45)
 		setProperty("movespeed", 1.5)
 
+	nt_acid //wasn't sure whether to put this here or over by hazard so I decided on here
+		name = "Nanotrasen Armored Immersion Suit"
+		desc = "An immersion-tight suit reinforced with heavy armor. The combination is unwieldy, but protects from environmental and combat hazards alike."
+		icon = 'icons/obj/clothing/overcoats/item_suit_hazard.dmi'
+		wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_hazard.dmi'
+		icon_state = "nt_acid_armor"
+		item_state = "nt_acid_armor"
+		c_flags = SPACEWEAR
+		acid_survival_time = 12 MINUTES
+
 /obj/item/clothing/suit/armor/death_commando
 	name = "death commando armor"
 	desc = "Armor used by NanoTrasen's top secret purge unit. You're not sure how you know this."

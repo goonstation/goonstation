@@ -120,20 +120,11 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/research_director)
 "acA" = (
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = -4
-	},
-/obj/item/breaching_charge{
-	pixel_x = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 6
-	},
-/obj/item/breaching_hammer,
-/obj/machinery/power/apc/autoname_east,
-/obj/cable{
-	icon_state = "0-8"
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
@@ -6214,13 +6205,6 @@
 /obj/forcefield/energyshield/perma/doorlink,
 /turf/simulated/floor/black/side,
 /area/station/crew_quarters/arcade)
-"ddg" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid/acid/clear,
-/area/station/ai_monitored/armory)
 "ddR" = (
 /obj/table/auto,
 /obj/item/paper_bin,
@@ -11911,7 +11895,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/obj/machinery/weapon_stand/shotgun_rack,
+/obj/machinery/vending/security_ammo,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 10
 	},
@@ -15725,25 +15709,39 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/communications/centre)
 "hHe" = (
-/obj/table/reinforced/auto,
-/obj/item/clothing/glasses/thermal{
-	pixel_y = 10
+/obj/rack,
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = -2
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 1;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = 6
+	pixel_x = -4;
+	pixel_y = 5
 	},
 /obj/item/clothing/glasses/thermal{
+	pixel_x = -1;
 	pixel_y = 2
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = -2
+	pixel_x = 2;
+	pixel_y = -1
 	},
 /obj/item/clothing/glasses/thermal{
-	pixel_y = -6
+	pixel_x = 5;
+	pixel_y = -4
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 5
-	},
+/turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "hHm" = (
 /obj/submachine/cargopad/hydroponic,
@@ -16397,6 +16395,15 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"hZK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/glow,
+/area/station/ai_monitored/armory)
 "hZT" = (
 /obj/decal/tile_edge/floorguide/security{
 	dir = 8
@@ -17679,10 +17686,37 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargooffice)
 "iCA" = (
-/obj/machinery/weapon_stand/rifle_rack/recharger,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 24
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 5;
+	pixel_y = 14
+	},
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 6;
+	pixel_y = 18
+	},
+/obj/item/reagent_containers/emergency_injector/atropine{
+	pixel_x = 7;
+	pixel_y = 22
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -4;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = 7
+	},
+/obj/item/chem_grenade/flashbang{
+	pixel_x = -7
+	},
+/obj/item/chem_grenade/flashbang,
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
@@ -23964,14 +23998,8 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/arcade/dungeon)
 "lBs" = (
+/obj/machinery/weapon_stand/shotgun_rack,
 /obj/machinery/light_switch/east,
-/obj/table/reinforced/auto,
-/obj/item/ammo/bullets/smoke,
-/obj/item/ammo/bullets/smoke,
-/obj/item/gun/kinetic/riot40mm{
-	pixel_y = 10
-	},
-/obj/item/gun/kinetic/riot40mm,
 /turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "lBt" = (
@@ -27437,8 +27465,7 @@
 /area/station/engine/engineering)
 "nji" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 2;
-
+	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -29288,7 +29315,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "oip" = (
-/obj/storage/secure/closet/security/armory,
+/obj/storage/secure/crate/weapon/armory/tranquilizer,
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "ojk" = (
@@ -31857,27 +31889,7 @@
 	name = "Extraction Nexus"
 	})
 "pAs" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/box/stinger_kit{
-	pixel_y = 7
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = -6;
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 1;
-	pixel_y = -2
-	},
-/obj/item/chem_grenade/pepper{
-	pixel_x = 8;
-	pixel_y = -2
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
+/obj/storage/secure/crate/weapon/armory/phaser,
 /turf/simulated/floor/engine/caution/east,
 /area/station/ai_monitored/armory)
 "pAx" = (
@@ -32538,6 +32550,35 @@
 	dir = 8
 	},
 /area/station/engine/engineering)
+"pVn" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = -5
+	},
+/obj/item/clothing/suit/armor/EOD{
+	pixel_x = 5
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = -5;
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/EOD{
+	pixel_x = 5;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -5;
+	pixel_y = 2
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/ai_monitored/armory)
 "pVZ" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -32944,17 +32985,14 @@
 /turf/simulated/floor/black,
 /area/station/hydroponics/bay)
 "qfP" = (
-/obj/stool/chair/red{
-	dir = 8
-	},
 /obj/cable{
 	icon_state = "1-2"
 	},
 /obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
 	icon_state = "1-8"
+	},
+/obj/stool/chair/red{
+	dir = 8
 	},
 /turf/simulated/floor/engine/glow,
 /area/station/ai_monitored/armory)
@@ -33108,6 +33146,32 @@
 "qmk" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/fitness)
+"qmn" = (
+/obj/table/reinforced/auto,
+/obj/item/storage/box/stinger_kit{
+	pixel_y = 7
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = -6;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 1;
+	pixel_y = -2
+	},
+/obj/item/chem_grenade/pepper{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 5
+	},
+/area/station/ai_monitored/armory)
 "qmt" = (
 /obj/machinery/light{
 	dir = 4;
@@ -33946,15 +34010,27 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "qJo" = (
-/obj/machinery/vending/security_ammo,
-/obj/machinery/light{
+/obj/rack,
+/obj/item/breaching_charge{
+	pixel_x = -4
+	},
+/obj/item/breaching_charge{
+	pixel_x = 1
+	},
+/obj/item/breaching_charge{
+	pixel_x = 6
+	},
+/obj/item/breaching_hammer{
+	pixel_x = 4
+	},
+/obj/item/breaching_hammer{
+	pixel_x = -4
+	},
+/obj/machinery/firealarm{
 	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
+	pixel_x = 24
 	},
-/turf/simulated/floor/engine/caution/corner2{
-	dir = 9
-	},
+/turf/simulated/floor/engine/caution/west,
 /area/station/ai_monitored/armory)
 "qJD" = (
 /obj/machinery/traymachine/morgue,
@@ -34806,13 +34882,6 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/barber_shop)
-"rhC" = (
-/obj/lattice{
-	dir = 1;
-	icon_state = "lattice-dir"
-	},
-/turf/space/fluid/acid/clear,
-/area/station/ai_monitored/armory)
 "rhJ" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/black,
@@ -35137,10 +35206,10 @@
 	name = "The Warrens"
 	})
 "rrM" = (
-/obj/storage/secure/crate/weapon/armory/tranquilizer,
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/engine/caution/corner2{
 	dir = 6
 	},
@@ -38052,6 +38121,18 @@
 /area/station/medical/research{
 	name = "Genetic Research"
 	})
+"sLi" = (
+/obj/table/reinforced/auto,
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 10
+	},
+/obj/item/gun/kinetic/riot40mm,
+/turf/simulated/floor/engine/caution/corner2{
+	dir = 9
+	},
+/area/station/ai_monitored/armory)
 "sLC" = (
 /obj/table/reinforced/auto,
 /obj/item/paper_bin{
@@ -39761,30 +39842,6 @@
 /obj/access_spawn/artlab,
 /turf/simulated/floor/black,
 /area/station/science/artifact)
-"tzj" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = -7
-	},
-/obj/item/clothing/suit/armor/heavy{
-	pixel_x = 7
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -7;
-	pixel_y = -6
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 7;
-	pixel_y = -6
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = -7
-	},
-/obj/item/clothing/head/helmet/riot{
-	pixel_x = 7
-	},
-/turf/simulated/floor/engine/caution/north,
-/area/station/ai_monitored/armory)
 "tzs" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -41960,6 +42017,35 @@
 	dir = 1
 	},
 /area/station/crew_quarters/market)
+"uGN" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/heavy/nt_acid{
+	pixel_x = -7;
+	pixel_y = 3
+	},
+/obj/item/clothing/suit/armor/heavy/nt_acid{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = -7;
+	pixel_y = -6
+	},
+/obj/item/clothing/mask/gas{
+	pixel_x = 7;
+	pixel_y = -6
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = -7
+	},
+/obj/item/clothing/head/helmet/riot{
+	pixel_x = 7
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine/caution/north,
+/area/station/ai_monitored/armory)
 "uGY" = (
 /obj/item/storage/wall{
 	dir = 8;
@@ -42849,22 +42935,7 @@
 	},
 /area/station/security/main)
 "vfp" = (
-/obj/table/reinforced/auto,
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = -5
-	},
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = -2
-	},
-/obj/item/reagent_containers/emergency_injector/atropine{
-	pixel_y = 1
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_y = 15
-	},
-/obj/item/clothing/glasses/nightvision{
-	pixel_y = 9
-	},
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
 /obj/item/device/radio/intercom/security{
 	dir = 4
 	},
@@ -45129,21 +45200,12 @@
 	})
 "wxF" = (
 /obj/table/reinforced/auto,
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -4;
-	pixel_y = 4
+/obj/item/ammo/bullets/smoke,
+/obj/item/ammo/bullets/smoke,
+/obj/item/gun/kinetic/riot40mm{
+	pixel_y = 10
 	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 3;
-	pixel_y = 4
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = 7
-	},
-/obj/item/chem_grenade/flashbang{
-	pixel_x = -7
-	},
-/obj/item/chem_grenade/flashbang,
+/obj/item/gun/kinetic/riot40mm,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -46924,35 +46986,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/security/equipment)
-"xvW" = (
-/obj/rack,
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = -5
-	},
-/obj/item/clothing/suit/armor/EOD{
-	pixel_x = 5
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = -5;
-	pixel_y = -3
-	},
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 5;
-	pixel_y = -3
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = -5;
-	pixel_y = 2
-	},
-/obj/item/clothing/mask/gas{
-	pixel_x = 5;
-	pixel_y = 2
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/engine/caution/north,
-/area/station/ai_monitored/armory)
 "xwa" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -83499,7 +83532,7 @@ wgR
 oha
 vlv
 mKo
-jjE
+qLh
 tZe
 uqC
 uqC
@@ -83801,8 +83834,8 @@ qLh
 qLh
 qLh
 qLh
-jjE
-jjE
+qLh
+qLh
 uqC
 uqC
 jjE
@@ -84102,9 +84135,9 @@ pAs
 vfp
 ons
 hHe
+qmn
 qLh
-ddg
-jjE
+qLh
 uqC
 uqC
 wuT
@@ -84401,13 +84434,13 @@ iKJ
 opv
 nxg
 nxg
-nxg
+hZK
 qfP
-xvW
-rRY
-lPo
-jjE
-jjE
+nxg
+pVn
+qLh
+qLh
+qLh
 sKM
 uqC
 jjE
@@ -84703,13 +84736,13 @@ btg
 llS
 llS
 llS
-llS
 tkp
-tzj
+llS
+llS
+uGN
+rRY
+lPo
 qLh
-rhC
-rhC
-jjE
 aUV
 uqC
 uqC
@@ -85008,10 +85041,10 @@ wxF
 iCA
 acA
 qJo
+sLi
 qLh
 qLh
-jjE
-jjE
+qLh
 jjE
 eqq
 eqq
@@ -85311,8 +85344,8 @@ qLh
 qLh
 qLh
 qLh
-rnQ
-jjE
+qLh
+qLh
 acI
 nyP
 vcl
@@ -85614,7 +85647,7 @@ rnQ
 rnQ
 rnQ
 rnQ
-jjE
+qLh
 wpI
 jjE
 jjE
@@ -85916,7 +85949,7 @@ iSy
 iSy
 iSy
 iSy
-jjE
+qLh
 rjz
 lAP
 jjE

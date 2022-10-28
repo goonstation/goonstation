@@ -822,7 +822,15 @@
 	color_r = 0.7
 	color_g = 0.7
 	color_b = 0.8
+	seal_hair = 1
+#ifdef MAP_OVERRIDE_NADIR
+	name = "heavy immersion helmet"
+	desc = "Protects you from heavy impacts, acid oceans, and too much peripheral vision."
+	c_flags = BLOCKCHOKE | SPACEWEAR
+	acid_survival_time = 12 MINUTES
+#else
 	c_flags = BLOCKCHOKE
+#endif
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 10)
