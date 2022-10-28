@@ -2009,6 +2009,9 @@
 		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/flippers,
+#endif
 		/datum/manufacture/breathmask,
 #ifdef MAP_OVERRIDE_NADIR
 		/datum/manufacture/nanoloom,
@@ -2277,6 +2280,7 @@
 		/datum/manufacture/engspacesuit,
 #ifdef UNDERWATER_MAP
 		/datum/manufacture/engdivesuit,
+		/datum/manufacture/flippers,
 #endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
