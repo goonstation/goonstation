@@ -47,8 +47,6 @@
 			src.donor = nholder.donor
 		if (src.donor)
 			src.donor_name = src.donor.real_name
-			src.name = "[src.donor_name]'s [initial(src.name)]"
-			src.real_name = "[src.donor_name]'s [initial(src.name)]" // Gotta do this somewhere!
 			src.donor_DNA = src.donor.bioHolder ? src.donor.bioHolder.Uid : null
 			if (src.toned && src.donor.bioHolder) //NO RACIALLY INSENSITIVE ASSHATS ALLOWED
 				src.s_tone = src.donor.bioHolder.mobAppearance.s_tone

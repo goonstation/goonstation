@@ -89,9 +89,11 @@
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774
 			// zam note - removing this again.
-			SPAWN(2 SECONDS)
-				if (new_holder && istype(new_holder))
-					name = "[new_holder.real_name]'s [initial(name)]"
+			//https://forum.ss13.co/showthread.php?tid=1774
+			// aloe note - removing this again.
+			// SPAWN(2 SECONDS)
+			// 	if (new_holder && istype(new_holder))
+			// 		name = "[new_holder.real_name]'s [initial(name)]"
 		if (src.skintoned)
 			if (holder_ahol)
 				colorize_limb_icon()
