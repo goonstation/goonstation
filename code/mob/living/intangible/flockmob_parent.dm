@@ -146,6 +146,7 @@
 	if (istype(target, /mob/living/critter/flock/drone))
 		var/datum/abilityHolder/flockmind/holder = src.abilityHolder
 		holder.drone_controller.drone = target
+		target.AddComponent(/datum/component/flock_ping/selected)
 		src.targeting_ability = holder.drone_controller
 		src.update_cursor()
 		return
