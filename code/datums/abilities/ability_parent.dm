@@ -198,11 +198,7 @@
 			owner.attach_hud(hud)
 
 	proc/Stat()
-		if (usesPoints && pointName != "" && rendered)
-			stat(null, " ")
-			stat("[src.pointName]:", src.points)
-			if (src.regenRate || src.lastBonus)
-				stat("Generation Rate:", "[src.regenRate] + [src.lastBonus]")
+		return
 
 	proc/StatAbilities()
 		if (!rendered)
