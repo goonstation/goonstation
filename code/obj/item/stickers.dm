@@ -702,6 +702,8 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 
 /obj/item/sticker/contraband
 	name = "localized contraband modification sticker"
+	desc = "A sticker which will cause any item it's attached to to register as having the set contraband value of this sticker. Set value can be adjusted while holding the sticker."
+	icon_state = "contraband"
 	var/contraband_value = 0
 
 	attack_self(mob/user)
