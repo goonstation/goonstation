@@ -33,44 +33,129 @@
 	event_handler_flags = USE_FLUID_ENTER
 	/// list of conveyor_switches that have us in their conveyors list
 	var/list/linked_switches
-	var/static/list/dir_chars = list(NORTH = "N", EAST = "E", SOUTH = "S", WEST = "W")
 
+// for all your mapping needs!
 /obj/machinery/conveyor/NE
 	dir1 = NORTH
 	dir2 = EAST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-NE-map"
+#endif
 /obj/machinery/conveyor/NS
 	dir1 = NORTH
 	dir2 = SOUTH
-/obj/machinery/conveyor/NE
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-NS-map"
+#endif
+/obj/machinery/conveyor/NW
 	dir1 = NORTH
 	dir2 = WEST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-NW-map"
+#endif
 /obj/machinery/conveyor/ES
 	dir1 = EAST
 	dir2 = SOUTH
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-ES-map"
+#endif
 /obj/machinery/conveyor/EW
 	dir1 = EAST
 	dir2 = WEST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-EW-map"
+#endif
 /obj/machinery/conveyor/EN
 	dir1 = EAST
 	dir2 = NORTH
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-EN-map"
+#endif
 /obj/machinery/conveyor/SW
 	dir1 = SOUTH
 	dir2 = WEST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-SW-map"
+#endif
 /obj/machinery/conveyor/SN
 	dir1 = SOUTH
 	dir2 = NORTH
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-SN-map"
+#endif
 /obj/machinery/conveyor/SE
 	dir1 = SOUTH
 	dir2 = EAST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-SE-map"
+#endif
 /obj/machinery/conveyor/WN
 	dir1 = WEST
 	dir2 = NORTH
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-WN-map"
+#endif
 /obj/machinery/conveyor/WE
 	dir1 = WEST
 	dir2 = EAST
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-WE-map"
+#endif
 /obj/machinery/conveyor/WS
 	dir1 = WEST
 	dir2 = SOUTH
+#ifdef IN_MAP_EDITOR
+	icon_state = "conveyor-WS-map"
+#endif
+
+/obj/machinery/conveyor/NE/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/NS/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/NW/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/ES/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/EW/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/EN/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/SW/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/SN/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/SE/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/WN/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/WE/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
+/obj/machinery/conveyor/WS/carousel
+	id = "carousel"
+	move_lag = 5.5
+	operating = 1
 
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
@@ -102,9 +187,9 @@
 /obj/machinery/conveyor/proc/setdir()
 	currentdir = dir1
 	if (operating == OP_REGULAR)
-		currentdir = dir1
-	else if(operating == OP_REVERSE)
 		currentdir = dir2
+	else if(operating == OP_REVERSE)
+		currentdir = dir1
 
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src, currentdir)
 	update()
@@ -127,15 +212,41 @@
 
 	var/new_icon = "conveyor-"
 
+	var/dir1char = "N"
+	switch (dir1)
+		if (NORTH)
+			dir1char = "N"
+		if (EAST)
+			dir1char = "E"
+		if (SOUTH)
+			dir1char = "S"
+		if (WEST)
+			dir1char = "W"
+
+	var/dir2char = "N"
+	switch (dir2)
+		if (NORTH)
+			dir2char = "N"
+		if (EAST)
+			dir2char = "E"
+		if (SOUTH)
+			dir2char = "S"
+		if (WEST)
+			dir2char = "W"
+
+
 	if (operating == OP_OFF || operating == OP_REGULAR)
-		new_icon += dir_chars[dir1] + dir_chars[dir2]
+		new_icon += dir1char + dir2char
 	else if (operating == OP_REVERSE)
-		new_icon += dir_chars[dir2] + dir_chars[dir1]
+		new_icon += dir2char + dir1char
 
 	if (operating == OP_OFF)
 		new_icon += "-still"
 	else
 		new_icon += "-run"
+
+	if (dir1 == dir2)
+		new_icon = "conveyor-fuck"
 
 	icon_state = new_icon
 
@@ -298,76 +409,29 @@
 	..()
 	update()
 
-/// conveyor placing component
-/datum/component/conveyorplacer
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS
-	var/conv_id = ""
-	var/list/obj/machinery/conveyor/conveyors = list()
-	var/list/obj/machinery/conveyor_switch/switches = list()
-
-TYPEINFO(/datum/component/conveyorplacer)
-	initialization_args = list()
-
-/datum/component/conveyorplacer/Initialize()
-	if(!ismovable(parent))
-		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_MOVABLE_MOVED, .proc/place_conveyors)
-	RegisterSignal(parent, COMSIG_ITEM_AFTERATTACK, .proc/place_lever)
-	conv_id = ref(src)
-
-/datum/component/conveyorplacer/UnregisterFromParent()
-	for (var/obj/machinery/conveyor/C in src.conveyors)
-		C.linked_switches = src.switches
-	for (var/obj/machinery/conveyor_switch/S in src.switches)
-		S.conveyors = src.conveyors
-	UnregisterSignal(parent, COMSIG_MOVABLE_MOVED)
-	UnregisterSignal(parent, COMSIG_ITEM_AFTERATTACK)
-	. = ..()
-
-/datum/component/conveyorplacer/proc/place_conveyors(atom/movable/A, turf/newLoc, direct)
-	var/turf/oldLoc = get_step(newLoc, direct)
-
-	var/obj/machinery/conveyor/oldC = locate(/obj/machinery/conveyor) in oldLoc
-	var/obj/machinery/conveyor/newC = locate(/obj/machinery/conveyor) in newLoc
-
-	if (!oldC)
-		oldC = new /obj/machinery/conveyor(oldLoc)
-		src.conveyors |= oldC
-
-	if (!newC)
-		newC = new /obj/machinery/conveyor(newLoc)
-		src.conveyors |= newC
-
-	oldC.dir1 = direct
-	newC.dir1 = direct
-	newC.dir2 = turn(direct, 180)
-
-	oldC.update()
-	newC.update()
-
-/datum/component/conveyorplacer/proc/place_lever(obj/item/parent, turf/target, mob/user, reach, params)
-	if (!istype(target))
-		return
-	var/obj/machinery/conveyor_switch/sw = new /obj/machinery/conveyor_switch(target)
-	src.switches |= sw
 
 /obj/item/debug_conveyor_layer
 	name = "conveyor layer"
 	icon = 'icons/obj/recycling.dmi'
-	item_state = "debug"
+	icon_state = "debug"
 	var/on = FALSE
 
 	attack_self(mob/user)
-		. = ..()
-		if (on)
+		toggle_state()
+
+	proc/toggle_state()
+		if (!on)
 			on = TRUE
-			item_state = "debug-on"
-			src.AddComponent(/datum/component/conveyorplacer)
+			icon_state = "debug-on"
+			src.AddComponent(/datum/component/conveyorplacer, .proc/stop_laying)
 		else
-			on = FALSE
-			item_state = "debug"
-			var/datum/component/conveyorplacer/CP = src.GetComponent(/datum/component/conveyorplacer)
-			CP.RemoveComponent()
+			stop_laying()
+
+	proc/stop_laying()
+		on = FALSE
+		icon_state = "debug"
+		var/datum/component/conveyorplacer/CP = src.GetComponent(/datum/component/conveyorplacer)
+		CP.RemoveComponent()
 
 // conveyor diverter
 // extendable arm that can be switched so items on the conveyer are diverted sideways
@@ -496,7 +560,6 @@ TYPEINFO(/datum/component/conveyorplacer)
 
 /// the conveyor control switch
 /obj/machinery/conveyor_switch
-
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
@@ -592,65 +655,6 @@ TYPEINFO(/datum/component/conveyorplacer)
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
 	.= 0
-
-
-//for ease of mapping
-/obj/machinery/conveyor/oshan_carousel
-	id = "carousel"
-	move_lag = 5.5
-	operating = 1
-
-
-/obj/machinery/conveyor/oshan_carousel/coroner
-	var/startdir = NORTH
-	var/altdir = NORTH
-
-	New()
-		..()
-		startdir = src.dir
-
-	setdir()
-		if(operating == -1)
-			set_dir(altdir)
-		else
-			set_dir(startdir)
-		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
-		update()
-
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast
-	startdir = NORTH
-	altdir = EAST
-
-/obj/machinery/conveyor/oshan_carousel/coroner/northwest
-	startdir = NORTH
-	altdir = WEST
-
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast
-	startdir = SOUTH
-	altdir = EAST
-
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest
-	startdir = SOUTH
-	altdir = WEST
-
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth
-	startdir = WEST
-	altdir = SOUTH
-
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth
-	startdir = WEST
-	altdir = NORTH
-
-/obj/machinery/conveyor/oshan_carousel/coroner/eastsouth
-	startdir = EAST
-	altdir = SOUTH
-
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth
-	startdir = EAST
-	altdir = NORTH
-
-
-
 
 /obj/machinery/carouselpower
 	var/maxdrain = 23 MEGA WATTS
