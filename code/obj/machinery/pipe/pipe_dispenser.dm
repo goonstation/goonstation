@@ -1,7 +1,7 @@
 
 /obj/machinery/disposal_pipedispenser
-	name = "Disposal Pipe Dispenser"
-	desc = "A clunky, old machine that dispenses unanchored disposal pipes one at a time."
+	name = "Generic Pipe Dispenser"
+	desc = "A retrofitted, old machine that dispenses atmospheric and disposal pipes."
 	icon = 'icons/obj/manufacturer.dmi'
 	icon_state = "pipe-fab"
 	density = 1
@@ -9,19 +9,45 @@
 	mats = 16
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
 
+	var/dat
+
+	var/static/list/pipesforcreation = list(
+	"Pipe" = /obj/machinery/atmospherics/pipe/simple/overfloor,
+	"Bent pipe" = /obj/machinery/atmospherics/pipe/simple/overfloor/bent,
+	"Manifold" = /obj/machinery/atmospherics/pipe/manifold/overfloor,
+	"Passive vent" = /obj/machinery/atmospherics/pipe/vent,
+	"Pressure tank" = /obj/machinery/atmospherics/pipe/tank,
+	"Passive gate" = /obj/machinery/atmospherics/binary/passive_gate,
+	"Pressure pump" = /obj/machinery/atmospherics/binary/pump,
+	"Volume pump" = /obj/machinery/atmospherics/binary/volume_pump,
+	"Portable connector" = /obj/machinery/atmospherics/portables_connector,
+	"Manual valve" = /obj/machinery/atmospherics/valve,
+	"Digital valve" = /obj/machinery/atmospherics/valve/digital,
+	"Furnace connector" = /obj/machinery/atmospherics/unary/furnace_connector,
+	"Outlet Injector" = /obj/machinery/atmospherics/unary/outlet_injector,
+	"Vent pump" = /obj/machinery/atmospherics/unary/vent_pump
+	)
+
+/obj/machinery/disposal_pipedispenser/New()
+	..()
+
+	dat = {"<b>Disposal Pipes</b><br><br>
+		<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
+		<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
+		<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
+		<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
+		<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
+		"}
+
+	dat += "<BR><b>Atmospheric Pipes</b><br><br>"
+	for (var/type in pipesforcreation)
+		dat += "<A href='?src=\ref[src];atmosmake=[type]'>[type]</A><BR>"
+
 /obj/machinery/disposal_pipedispenser/attack_hand(mob/user)
 	if(..())
 		return
 
-	var/dat = {"<b>Disposal Pipes</b><br><br>
-<A href='?src=\ref[src];dmake=0'>Pipe</A><BR>
-<A href='?src=\ref[src];dmake=1'>Bent Pipe</A><BR>
-<A href='?src=\ref[src];dmake=2'>Junction</A><BR>
-<A href='?src=\ref[src];dmake=3'>Y-Junction</A><BR>
-<A href='?src=\ref[src];dmake=4'>Trunk</A><BR>
-"}
-
-	user.Browse("<HEAD><TITLE>Disposal Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
+	user.Browse("<HEAD><TITLE>Pipe Dispenser</TITLE></HEAD><TT>[dat]</TT>", "window=pipedispenser")
 	return
 
 // 0=straight, 1=bent, 2=junction-j1, 3=junction-j2, 4=junction-y, 5=trunk
@@ -51,7 +77,15 @@
 
 		usr.Browse(null, "window=pipedispenser")
 		src.remove_dialog(usr)
-	return
+
+	else if(href_list["atmosmake"])
+		var/path = pipesforcreation[(href_list["atmosmake"])]
+		var/obj/machinery/atmospherics/temp = new path()
+		new /obj/item/pipeconstruct(src.loc, temp)
+		qdel(temp)
+
+		usr.Browse(null, "window=pipedispenser")
+		src.remove_dialog(usr)
 
 /obj/machinery/disposal_pipedispenser/mobile
 	name = "Disposal Pipe Dispenser Cart"
