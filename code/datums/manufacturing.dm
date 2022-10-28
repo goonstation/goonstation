@@ -823,8 +823,8 @@ ABSTRACT_TYPE(/datum/manufacture)
 
 /datum/manufacture/flippers
 	name = "Flippers"
-	item_paths = list("FAB-1", "RUB")
-	item_amounts = list(2, 5)
+	item_paths = list("RUB")
+	item_amounts = list(5)
 	item_outputs = list(/obj/item/clothing/shoes/flippers)
 	time = 8 SECONDS
 	create = 1
