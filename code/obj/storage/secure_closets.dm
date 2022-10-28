@@ -263,6 +263,7 @@
 	/obj/item/hand_tele,
 	/obj/item/storage/box/zeta_boot_kit,
 	/obj/item/device/radio/electropack,
+	/obj/item/device/chemicompiler,
 	/obj/item/clothing/mask/gas,
 	/obj/item/device/flash,
 	/obj/item/stamp/rd,

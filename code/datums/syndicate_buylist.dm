@@ -729,15 +729,6 @@ This is basically useless for anyone but miners.
 	job = list("Medical Doctor", "Medical Director", "Research Director", "Scientist", "Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
-/datum/syndicate_buylist/traitor/chemicompiler
-	name = "Chemicompiler"
-	item = /obj/item/device/chemicompiler
-	cost = 5
-	not_in_crates = 1
-	desc = "A handheld version of the Chemicompiler machine in Chemistry."
-	job = list("Research Director", "Scientist")
-	can_buy = UPLINK_TRAITOR
-
 /datum/syndicate_buylist/traitor/robosuit
 	name = "Syndicate Robot Frame"
 	item = /obj/item/parts/robot_parts/robot_frame/syndicate
