@@ -2,11 +2,12 @@
 	name = "Station Map"
 	layer = TURF_LAYER
 	anchored = TRUE
-	var/datum/minimap/z_level/map
+	var/map_path = /datum/minimap/z_level
+	var/datum/minimap/map
 
 	New()
 		. = ..()
-		map = new /datum/minimap/z_level
+		map = new map_path
 		icon = map.map_render
 
 	update_icon()
@@ -15,14 +16,16 @@
 
 /obj/minimap/ai
 	name = "AI Station Map"
+	map_path = /datum/minimap/z_level/ai
 
 	Click(location, control, params)
 		if (!isAI(usr))
 			return
 		var/list/param_list = params2list(params)
+		var/datum/minimap/z_level/ai_map = map
 		if ("left" in param_list)
-			var/x = round((text2num(param_list["icon-x"]) * map.zoom_coefficient) + map.zoom_x_offset)
-			var/y = round((text2num(param_list["icon-y"]) * map.zoom_coefficient) + map.zoom_y_offset)
+			var/x = round((text2num(param_list["icon-x"]) * ai_map.zoom_coefficient) + ai_map.zoom_x_offset)
+			var/y = round((text2num(param_list["icon-y"]) * ai_map.zoom_coefficient) + ai_map.zoom_y_offset)
 			var/turf/clicked = locate(x, y, map.z_level)
 			if (isAIeye(usr))
 				usr.set_loc(clicked)

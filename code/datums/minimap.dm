@@ -15,8 +15,12 @@
 
 	New()
 		. = ..()
-		if (!map_render)
+		// If the map for the z-level has already been rendered, avoid re-rendering it.
+		if (!z_level_maps["[src.z_level]"])
 			src.render_map()
+			z_level_maps["[src.z_level]"] = src.map_render
+		else
+			src.map_render = z_level_maps["[src.z_level]"]
 
 	///Renders the map within the boundaries defined by x_max, x_min, y_max, and y_min.
 	proc/render_map()
@@ -118,3 +122,13 @@
 
 		src.zoom_x_offset = min_x_crop
 		src.zoom_y_offset = min_y_crop
+
+/datum/minimap/z_level/ai
+	//The Kondaru off-station Owlery and Abandoned Research Outpost are both considered part of the station, but have no AI cameras.
+	valid_turf(var/turf/T)
+		if (!T.loc)
+			return FALSE
+		if ((map_settings.name in list("KONDARU", "DONUT3")) && (istype(T.loc, /area/station/garden/owlery) || istype(T.loc, /area/research_outpost/indigo_rye)))
+			return FALSE
+
+		. = ..()
