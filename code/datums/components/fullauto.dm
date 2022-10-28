@@ -199,7 +199,7 @@ TYPEINFO(/datum/component/holdertargeting/fullauto)
 	shooting = 1
 
 	while(!stopping)
-		if(G.canshoot())
+		if(G.canshoot(L))
 			G.shoot(target ? target : get_step(L, NORTH), get_turf(L), L)
 			G.suppress_fire_msg = 1
 		else

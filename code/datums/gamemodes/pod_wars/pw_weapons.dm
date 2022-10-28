@@ -16,7 +16,7 @@
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
 	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
@@ -29,7 +29,7 @@
 				return ..(target, start, user)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)

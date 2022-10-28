@@ -1337,6 +1337,8 @@
 			return TRUE
 		if (pattern == "ORG|RUB")
 			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+		if (pattern == "RUB")
+			return mat.material_flags & MATERIAL_RUBBER
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num_safe(copytext(pattern, 5))
@@ -2007,6 +2009,9 @@
 		/datum/manufacture/table_folding,
 		/datum/manufacture/jumpsuit,
 		/datum/manufacture/shoes,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/flippers,
+#endif
 		/datum/manufacture/breathmask,
 #ifdef MAP_OVERRIDE_NADIR
 		/datum/manufacture/nanoloom,
@@ -2273,6 +2278,10 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+		/datum/manufacture/flippers,
+#endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
 		/datum/manufacture/powercell,
@@ -2358,6 +2367,7 @@
 	available = list(/datum/manufacture/shoes,	//hey if you update these please remember to add it to /hop_and_uniform's list too
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
+		/datum/manufacture/flippers,
 		/datum/manufacture/civilian_headset,
 		/datum/manufacture/jumpsuit_assistant,
 		/datum/manufacture/jumpsuit_pink,
@@ -2469,6 +2479,7 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/shoes_brown,
 		/datum/manufacture/shoes_white,
+		/datum/manufacture/flippers,
 		/datum/manufacture/civilian_headset,
 		/datum/manufacture/jumpsuit_assistant,
 		/datum/manufacture/jumpsuit,
@@ -2672,14 +2683,10 @@
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax
 	name = "Type-AX Resonator"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/resonator_type_ax
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm
 	name = "Type-SM Resonator"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/resonator_type_sm
 
 

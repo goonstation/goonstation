@@ -51,8 +51,6 @@ datum
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume_passed * 2, 10, 45), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
-					M.emote("scream")
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!holder) //Wire: Fix for Cannot read null.total_temperature
@@ -63,7 +61,6 @@ datum
 				if(istype(L))
 					L.update_burning(2 * mult)
 				..()
-				return
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				P.HYPdamageplant("fire",8)
@@ -410,8 +407,6 @@ datum
 				if (method == INGEST)
 					M.TakeDamage("All", 0, clamp(volume * 2.5, 15, 90), 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>It burns!</span>")
-					M.emote("scream")
-				return
 
 			on_mob_life(var/mob/M, var/mult = 1)
 
