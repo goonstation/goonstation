@@ -21929,6 +21929,9 @@
 	mail_tag = "QM";
 	name = "QM mail junction"
 	},
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -26698,6 +26701,9 @@
 	},
 /obj/machinery/light_switch/west,
 /obj/machinery/shieldgenerator/energy_shield,
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
 /turf/simulated/floor/black/side{
 	dir = 8
 	},
@@ -26885,6 +26891,14 @@
 	icon_state = "1"
 	},
 /area/shuttle/arrival/station)
+"mRR" = (
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/station/hallway/primary/northwest)
 "mSd" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -27437,8 +27451,7 @@
 /area/station/engine/engineering)
 "nji" = (
 /obj/machinery/atmospherics/portables_connector{
-	dir = 2;
-
+	dir = 2
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -34674,6 +34687,14 @@
 /area/station/bridge/customs{
 	name = "Bridge Reception"
 	})
+"rdR" = (
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/hallway/secondary/exit)
 "reh" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/info{
@@ -34682,6 +34703,9 @@
 "reu" = (
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
 	},
 /turf/simulated/floor/blueblack/corner{
 	dir = 1
@@ -35867,6 +35891,16 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/primary/southwest)
+"rMq" = (
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
+/turf/simulated/floor/blackwhite{
+	dir = 5
+	},
+/area/station/hallway/secondary/entry{
+	name = "Arrival Shuttle Hallway"
+	})
 "rMO" = (
 /turf/simulated/floor/engine/glow/blue,
 /area/station/communications/centre)
@@ -79223,7 +79257,7 @@ diT
 nfk
 cWA
 dqY
-nfk
+rMq
 lNt
 krr
 shv
@@ -90386,7 +90420,7 @@ hRH
 ykA
 ijT
 tYl
-anw
+mRR
 ilO
 tIi
 qSY
@@ -108517,7 +108551,7 @@ pnk
 aCV
 lcQ
 uSe
-fob
+rdR
 fob
 lsA
 uSe
