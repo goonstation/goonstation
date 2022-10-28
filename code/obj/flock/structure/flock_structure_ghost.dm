@@ -62,12 +62,6 @@
 	STOP_TRACKING
 	. = ..()
 
-/obj/flock_structure/ghost/Click(location, control, params)
-	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
-		return ..()
-	if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
-		cancelBuild()
-
 /obj/flock_structure/ghost/deconstruct()
 	cancelBuild()
 

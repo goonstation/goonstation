@@ -477,10 +477,27 @@
 /datum/targetable/flockmindAbility/droneControl
 	cooldown = 0
 	icon = null
-	var/task_type
 	var/mob/living/critter/flock/drone/drone = null
 
 /datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+	if (target == src.drone)
+		return
+	//by default we just walk somewhere
+	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
+	if (ismob(target) && !isflockmob(target))
+		if (is_incapacitated(target))
+			task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
+		else
+			task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
+	else if (istype(target, /obj/flock_structure/ghost))
+		task_type = /datum/aiTask/sequence/goalbased/flock/deposit/targetable
+	else if (istype(target, /obj/flock_structure) || isfeathertile(target))
+		task_type = /datum/aiTask/sequence/goalbased/flock/rally
+	else if (isflockmob(target) && !isintangible(target))
+		task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
+	else if (isitem(target))
+		task_type = /datum/aiTask/sequence/goalbased/flock/harvest/targetable
+
 	var/datum/aiTask/task = drone.ai.get_instance(task_type, list(drone.ai, drone.ai.default_task))
 	task.target = target
 	drone.ai.priority_tasks += task

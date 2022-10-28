@@ -143,14 +143,18 @@
 		src.examine_verb(target)
 		return
 
-	var/mob/living/critter/flock/drone/drone = target
-	if (istype(drone) && !drone.dormant)
-		//we have to do this manually in order to handle the input properly
-		var/datum/contextAction/active_actions = list()
-		for (var/datum/contextAction/action as anything in drone.contexts)
-			if (action.checkRequirements(target, src))
-				active_actions += action
-		src.showContextActions(active_actions, drone)
+	if (istype(target, /mob/living/critter/flock/drone))
+		var/datum/abilityHolder/flockmind/holder = src.abilityHolder
+		holder.drone_controller.drone = target
+		src.targeting_ability = holder.drone_controller
+		src.update_cursor()
+		return
+
+	//moved from flock_structure_ghost for interfering with ability targeting
+	if (istype(target, /obj/flock_structure/ghost))
+		if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
+			var/obj/flock_structure/ghost/tealprint = target
+			tealprint.cancelBuild()
 		return
 
 	src.examine_verb(target) //default to examine
