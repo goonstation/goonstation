@@ -3,7 +3,7 @@ var/global/meteor_shower_active = 0
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
 	// centcom message handled modularly here
-	required_elapsed_round_time = 55 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 	customization_available = 1
 	var/wave_direction = 1
 	var/meteors_in_wave = 20

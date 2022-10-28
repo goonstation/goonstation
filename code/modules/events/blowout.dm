@@ -1,6 +1,6 @@
 /datum/random_event/major/blowout
 	name = "Radioactive Blowout"
-	required_elapsed_round_time = 40 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 	var/space_color = "#ff4646"
 
 	event_effect()
