@@ -321,7 +321,7 @@
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 			qdel(src)
 
-		else if (istype(AM, /mob/living/critter/small_animal/mouse) && !istype(AM, /mob/living/critter/small_animal/mouse/remy) && (src.armed))
+		else if (istype(AM, /mob/living/critter/small_animal/mouse) && (src.armed))
 			var/mob/living/critter/small_animal/mouse/M = AM
 			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			icon_state = "mousetrap"

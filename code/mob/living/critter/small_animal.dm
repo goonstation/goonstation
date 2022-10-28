@@ -139,6 +139,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	ai_type = /datum/aiHolder/mouse
 	is_npc = TRUE
 	var/attack_damage = 3
+	var/use_custom_color = TRUE
 
 
 	New()
@@ -148,7 +149,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		setup_overlays()
 
 	setup_overlays()
-		if (!istype(src, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(src, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && !istype(src, /mob/living/critter/small_animal/mouse/remy))
+		if (use_custom_color)
 			if (src.client)
 				fur_color = src.client.preferences.AH.customization_first_color
 				eye_color = src.client.preferences.AH.e_color
@@ -272,6 +273,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	fits_under_table = 0
 	pull_w_class = W_CLASS_NORMAL
 	ai_type = /datum/aiHolder/mouse_remy
+	use_custom_color = FALSE
 
 	setup_overlays()
 		return
@@ -2985,6 +2987,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 35
 	health_burn = 35
 	is_npc = FALSE
+	use_custom_color = FALSE
 
 	New()
 		..()
@@ -3128,6 +3131,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_exclaim = "mouse-admin-exclaim"
 	pull_w_class = W_CLASS_BULKY
 	is_npc = FALSE
+	use_custom_color = FALSE
 
 	New()
 		..()

@@ -17,6 +17,7 @@
 	..()
 	transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
+	transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/eat, list(holder, src))
 
 /datum/aiHolder/mouse_remy
 	New()
