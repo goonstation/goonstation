@@ -834,6 +834,7 @@
 		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 0)
 	S.set_loc(src)
 	myhud.update_systems()
+	myhud.update_states()
 	return
 
 /////////////////////////////////////////////////////////////////////////////

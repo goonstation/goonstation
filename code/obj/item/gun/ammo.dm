@@ -51,6 +51,7 @@
 	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
+	/// TRUE if this ammo can be refilled from an ammo bag. Used to prevent duping
 	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 

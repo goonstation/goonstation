@@ -885,67 +885,67 @@
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
 				target_turf = T
-
-			var/mob/living/dive_attack_hit = null
-
-			for (var/mob/living/L in target_turf)
-				if (user == L || isintangible(L)) continue
-				dive_attack_hit = L
-				break
-
-			if (dive_attack_hit)
-				var/damage = rand(1,6)
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.shoes)
-						damage += H.shoes.kick_bonus
-					else if (H.limbs.r_leg)
-						damage += H.limbs.r_leg.limb_hit_bonus
-					else if (H.limbs.l_leg)
-						damage += H.limbs.l_leg.limb_hit_bonus
-
-				dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-				playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-				for (var/mob/O in AIviewers(user))
-					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
-				logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-
 			step_to(user, target_turf)
+			var/mob/living/dive_attack_hit = null
+			if(get_turf(user) == target_turf)
 
-			if(!dive_attack_hit && get_turf(user) == target_turf)
+				for (var/mob/living/L in target_turf)
+					if (user == L || isintangible(L)) continue
+					dive_attack_hit = L
+					break
+
+				if (dive_attack_hit)
+					var/damage = rand(1,6)
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.shoes)
+							damage += H.shoes.kick_bonus
+						else if (H.limbs.r_leg)
+							damage += H.limbs.r_leg.limb_hit_bonus
+						else if (H.limbs.l_leg)
+							damage += H.limbs.l_leg.limb_hit_bonus
+
+					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+					for (var/mob/O in AIviewers(user))
+						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+
+
+				else
+					// Slidekick to throw items on the turf
+					var/item_num_to_throw = 0
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						item_num_to_throw += !!H.limbs.r_leg
+						item_num_to_throw += !!H.limbs.l_leg
+					else if (ismobcritter(user))
+						//TODO: When mobcritters keep track of how many legs they have, replace the below.
+						item_num_to_throw += 2
+
+					if (item_num_to_throw)
+						for (var/obj/item/itm in target_turf) // We want to kick items only
+							if (itm.w_class >= W_CLASS_HUGE)
+								continue
+
+							var/cardinal_throw_dir = target_dir
+							if (!is_cardinal(cardinal_throw_dir))
+								if(prob(50))
+									cardinal_throw_dir &= NORTH | SOUTH
+								else
+									cardinal_throw_dir &= EAST | WEST
+
+							var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
+							if (throw_target)
+								item_num_to_throw--
+								playsound(itm, "swing_hit", 50, 1)
+								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+
+							if (!item_num_to_throw)
+								break
+			if(!dive_attack_hit)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
-
-				// Slidekick to throw items on the turf
-				var/item_num_to_throw = 0
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					item_num_to_throw += !!H.limbs.r_leg
-					item_num_to_throw += !!H.limbs.l_leg
-				else if (ismobcritter(user))
-					//TODO: When mobcritters keep track of how many legs they have, replace the below.
-					item_num_to_throw += 2
-
-				if (item_num_to_throw)
-					for (var/obj/item/itm in target_turf) // We want to kick items only
-						if (itm.w_class >= W_CLASS_HUGE)
-							continue
-
-						var/cardinal_throw_dir = target_dir
-						if (!is_cardinal(cardinal_throw_dir))
-							if(prob(50))
-								cardinal_throw_dir &= NORTH | SOUTH
-							else
-								cardinal_throw_dir &= EAST | WEST
-
-						var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
-						if (throw_target)
-							item_num_to_throw--
-							playsound(itm, "swing_hit", 50, 1)
-							itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
-
-						if (!item_num_to_throw)
-							break
 
 
 	user.u_equip(src)

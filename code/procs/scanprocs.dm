@@ -644,8 +644,8 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.contraband)
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.contraband])</span>"
+			if(I.get_contraband())
+				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.get_contraband()])</span>"
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A

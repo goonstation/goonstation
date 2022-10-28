@@ -621,6 +621,8 @@
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					P.unlocked = !P.unlocked
+					if(!P.unlocked)
+						P.loading = FALSE
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
@@ -637,7 +639,7 @@
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id().registered == P.owner || !P.owner)
+				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(R.product_path == text2path(params["target"]))
 							P.promoimage = R.icon
@@ -3174,6 +3176,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
