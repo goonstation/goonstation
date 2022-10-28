@@ -1,5 +1,7 @@
 
 (t)thu oct 27 22
+(u)aloe
+(*)Security's contraband locker now contains a box of 10 stickers which can be applied to an item to change that item's contraband value. The stickers can be adjusted from 0 to 10 contraband.
 (u)LeahTheTech
 (p)11621
 (e)🆕🍝|C-Feature, A-Catering
