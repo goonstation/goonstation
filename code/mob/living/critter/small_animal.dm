@@ -1456,8 +1456,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	death()
 		can_lie = 0
-		if (fur_color != 0)
-			src.ClearAllOverlays()
+		if (fur_color)
 			var/image/overlay = image('icons/misc/critter.dmi', "roach_colorkey-dead")
 			overlay.color = fur_color
 			src.UpdateOverlays(overlay, "hair")
@@ -1488,15 +1487,19 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		return ..()
 
 	attack_hand(mob/living/M)
-		if (ishuman(M) && M.a_intent == INTENT_HARM && prob(95))
+		if (ishuman(M) && M.a_intent == INTENT_HARM)
 			if(isdead(src))
 				src.visible_message("<span class='combat'><B>[M] squishes [src] a little more for good measure.</B></span>")
 				return
 			else
-				src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
-				src.death()
-				return
-		..()
+				if (prob(95))
+					src.visible_message("<span class='combat'><B>[M] stomps [src], killing it instantly!</B></span>")
+					src.death()
+					return
+				else
+					src.visible_message("<span class='alert'>Against all odds, [src] stops [M]'s foot and throws them off balance! Woah!</span>", "<span class='alert'>You use all your might to stop [M]'s foot before it crushes you!</span>")
+					M.setStatus("weakened", 5 SECONDS)
+					return
 		. = ..()
 
 /* =================================================== */
