@@ -2,8 +2,8 @@
 	name = "Station Map"
 	layer = TURF_LAYER
 	anchored = TRUE
-	var/map_path = /datum/minimap/z_level
 	var/datum/minimap/map
+	var/map_path = /datum/minimap/z_level
 
 	New()
 		. = ..()
