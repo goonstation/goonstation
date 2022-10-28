@@ -784,7 +784,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\atmospherics\FEA_system.dm"
 #include "code\modules\atmospherics\FEA_turf_tile.dm"
 #include "code\modules\atmospherics\machinery.dm"
-#include "code\modules\atmospherics\machinery\atmospiper.dm"
 #include "code\modules\atmospherics\machinery\binary.dm"
 #include "code\modules\atmospherics\machinery\filter.dm"
 #include "code\modules\atmospherics\machinery\mixer.dm"
