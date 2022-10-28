@@ -1,5 +1,9 @@
 
 (t)fri oct 28 22
+(u)LeahTheTech
+(p)11388
+(e)🆕🎨⚖🧛‍|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(*)Reworked the Flockmind heal ability to be an AOE.
 (u)Kubius
 (p)11643
 (e)🆕|C-Feature
