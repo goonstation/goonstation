@@ -416,13 +416,16 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
+/datum/aiTask/sequence/goalbased/flock/repair/valid_target(var/mob/living/critter/flock/drone/target)
+	var/mob/living/critter/flock/drone/drone = holder.owner
+	return target.flock == drone.flock
+
 /datum/aiTask/sequence/goalbased/flock/repair/get_targets()
 	. = list()
-	var/mob/living/critter/flock/drone/FH = holder.owner
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(FH.flock == F.flock && F.get_health_percentage() < 0.66 && !isdead(F))
+		if(F.get_health_percentage() < 0.66 && !isdead(F))
 			. += F
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
