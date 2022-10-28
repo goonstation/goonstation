@@ -59,9 +59,9 @@
 	///The offset in the y coordinate caused by zooming the map to the focal point.
 	var/zoom_y_offset = 0
 
-	//The x coordinate of the focal point of the map, in world coordinates.
+	///The x coordinate of the focal point of the map, in world coordinates.
 	var/focus_x = null
-	//The y coordinate of the focal point of the map, in world coordinates.
+	///The y coordinate of the focal point of the map, in world coordinates.
 	var/focus_y = null
 
 	///The width in pixels between the edge of the station and the edge of the map.
