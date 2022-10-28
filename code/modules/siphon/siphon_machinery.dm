@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					//non-shear failures
 					//option 1 - too many extraction ticks buffered at once
 					//option 2 - running resonators with the panel open is a bad idea
-					if(src.extract_ticks > 50)
+					if(src.extract_ticks > 20)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
 							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
 							playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)
