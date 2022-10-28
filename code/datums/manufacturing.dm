@@ -821,6 +821,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/flippers
+	name = "Flippers"
+	item_paths = list("FAB-1", "RUB")
+	item_amounts = list(2, 5)
+	item_outputs = list(/obj/item/clothing/shoes/flippers)
+	time = 8 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/cleaner_grenade
 	name = "Cleaner Grenade"
 	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
