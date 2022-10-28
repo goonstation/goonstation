@@ -22,6 +22,9 @@
 		src.flock = F
 		src.flock.addTrace(src)
 		src.flock.partitions_made++
+		if (free)
+			src.flock.free_traces++
+			//src.flock.update_computes()
 	else
 		src.death()
 
@@ -91,7 +94,7 @@
 /mob/living/intangible/flock/trace/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.flock && src.compute != 0 && src.flock.total_compute() - src.flock.used_compute < -FLOCKTRACE_COMPUTE_COST * src.flock.queued_trace_deaths && !src.dying)
+	if (src.flock && src.compute != 0 && length(src.flock.traces) > src.flock.max_trace_count + src.flock.queued_trace_deaths && !src.dying)
 		src.dying = TRUE
 		src.flock.queued_trace_deaths++
 		boutput(src, "<span class='alert'>The Flock has insufficient compute to sustain your consciousness! You will die soon!</span>")
@@ -103,7 +106,7 @@
 			flockdrone.updateOverlaysClient(src.client)
 		SPAWN(5 SECONDS)
 			if (src?.flock)
-				if (src.flock.total_compute() < src.flock.used_compute)
+				if (length(src.flock.traces) > src.flock.max_trace_count)
 					src.death()
 				else
 					src.dying = FALSE

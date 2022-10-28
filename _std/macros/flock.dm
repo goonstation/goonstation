@@ -26,7 +26,9 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
-#define FLOCKTRACE_COMPUTE_COST 100
+#define FLOCK_RELAY_COMPUTE_COST 500 // total compute
+
+#define FLOCKTRACE_COMPUTE_COST 100 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
