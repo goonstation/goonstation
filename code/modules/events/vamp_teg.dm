@@ -1,6 +1,10 @@
 /datum/random_event/major/vampire_teg
 	name = "Haunted TEG"
+#ifdef RP_MODE
+	required_elapsed_round_time = 40 MINUTES
+#else
 	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 #ifdef HALLOWEEN
 	weight = 75

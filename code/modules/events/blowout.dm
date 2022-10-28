@@ -1,8 +1,11 @@
 /datum/random_event/major/blowout
 	name = "Radioactive Blowout"
-	required_elapsed_round_time = 26.6 MINUTES
 	var/space_color = "#ff4646"
-
+#ifdef RP_MODE
+	required_elapsed_round_time = 40 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	event_effect()
 		..()
 		var/timetoreachsec = rand(1,9)
