@@ -315,7 +315,7 @@
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "abr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/hospital/samostrel)
@@ -3446,7 +3446,7 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "akM" = (
 /obj/decal/fakeobjects/lighttube_broken{
 	dir = 8
@@ -36626,7 +36626,7 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "cix" = (
 /obj/table/wood/round,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
@@ -36642,13 +36642,13 @@
 	pixel_y = 9
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ciy" = (
 /obj/stool/chair/wooden{
 	dir = 8
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ciz" = (
 /turf/unsimulated/wall{
 	icon = 'icons/obj/singularity.dmi';
@@ -36753,7 +36753,7 @@
 	pixel_y = 5
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ciN" = (
 /obj/machinery/coffeemaker/research,
 /obj/table/wood/auto,
@@ -36761,7 +36761,7 @@
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ciO" = (
 /turf/unsimulated/wall{
 	icon = 'icons/misc/beach.dmi';
@@ -37552,10 +37552,10 @@
 "ckD" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ckE" = (
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ckF" = (
 /obj/item/instrument/large/jukebox,
 /turf/unsimulated/floor/wood,
@@ -37684,7 +37684,7 @@
 	icon_state = "fmorg_closed";
 	name = "double black"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ckY" = (
 /obj/decal/poster/wallsign/poster_nt,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -37831,7 +37831,7 @@
 "clr" = (
 /obj/stool/chair/comfy/blue,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "cls" = (
 /obj/literal_firewall{
 	icon_state = "3"
@@ -37975,7 +37975,7 @@
 /turf/unsimulated/wall/auto/lead/white{
 	name = "virtual lead wall"
 	},
-/area/sim/gunsim/dark)
+/area/sim/gunsim/maintenance)
 "clN" = (
 /obj/decal/poster/wallsign/stencil/left/g,
 /obj/decal/poster/wallsign/stencil/right/a,
@@ -37995,14 +37995,14 @@
 "clP" = (
 /obj/decoration/decorativeplant/plant7,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "clQ" = (
 /obj/table/wood/auto/desk,
 /obj/decoration/decorativeplant{
 	pixel_y = 10
 	},
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "clR" = (
 /obj/stool/chair/wooden{
 	dir = 1
@@ -38036,7 +38036,7 @@
 	},
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "clT" = (
 /obj/table/auto,
 /obj/item/spacecash/hundred,
@@ -38258,7 +38258,7 @@
 "cmw" = (
 /obj/table/wood/auto/desk,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "cmx" = (
 /obj/stool/chair{
 	dir = 1
@@ -38333,7 +38333,7 @@
 /obj/item/cigarbox/gold,
 /obj/item/device/light/zippo/gold,
 /turf/unsimulated/floor/wood/seven,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "cmH" = (
 /obj/item/reagent_containers/food/snacks/spaghetti,
 /obj/table/wood/round/auto,
@@ -41102,10 +41102,10 @@
 	},
 /area/sim/racing_entry)
 "cvi" = (
-/obj/decoration/collapsedwall,
-/obj/structure/woodwall,
-/turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/turf/unsimulated/wall/auto/lead/white{
+	name = "virtual lead wall"
+	},
+/area/sim/gunsim/lobby)
 "cvj" = (
 /obj/lattice{
 	icon_state = "lattice-dir-b"
@@ -56228,9 +56228,15 @@
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
 "dfm" = (
-/obj/grille/steel/broken,
-/turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
+/turf/unsimulated/wall{
+	desc = "It's sealed shut.";
+	dir = 4;
+	icon = 'icons/obj/doors/blastdoor.dmi';
+	icon_state = "bdoormid1";
+	name = "security cordon";
+	tag = null
+	},
+/area/sim/gunsim/maintenance)
 "dfn" = (
 /obj/table/auto,
 /obj/item/shipcomponent/secondary_system/crash,
@@ -58607,6 +58613,11 @@
 	dir = 8
 	},
 /area/centcom)
+"dnb" = (
+/obj/decoration/collapsedwall,
+/obj/structure/woodwall,
+/turf/unsimulated/floor/plating,
+/area/sim/gunsim/lobby)
 "dns" = (
 /turf/unsimulated/wall{
 	dir = 4;
@@ -59283,7 +59294,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "dtQ" = (
 /obj/submachine/chef_sink{
 	desc = "A water-filled unit intended for sanitary purposes.";
@@ -67388,12 +67399,9 @@
 	},
 /area/afterlife/bar)
 "dSQ" = (
-/obj/machinery/light/small/sticky/frostedred{
-	dir = 1;
-	pixel_y = 10
-	},
+/obj/grille/steel/broken,
 /turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
+/area/sim/gunsim/maintenance)
 "dSR" = (
 /obj/table/wood/round/auto,
 /obj/item/instrument/saxophone,
@@ -67913,7 +67921,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "dWx" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/unsimulated/wall/auto/lead/gray,
@@ -68092,6 +68100,12 @@
 "enf" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum/west)
+"eoE" = (
+/turf/unsimulated/wall/auto/lead/white{
+	explosion_resistance = 999999;
+	name = "virtual lead wall"
+	},
+/area/sim/gunsim/arena)
 "eoV" = (
 /obj/decal/poster/wallsign/bookcase{
 	pixel_y = 28
@@ -68839,12 +68853,12 @@
 	pixel_y = -5
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "fJX" = (
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/wizard,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "fKc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -69142,7 +69156,7 @@
 /area/diner/cow)
 "gmI" = (
 /turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
+/area/sim/gunsim/maintenance)
 "gmY" = (
 /obj/machinery/lawrack/syndicate,
 /turf/unsimulated/floor/darkblue,
@@ -69292,7 +69306,7 @@
 	pixel_y = -5
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "gGf" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -69431,15 +69445,12 @@
 	icon_state = "blue"
 	})
 "gXr" = (
-/turf/unsimulated/wall{
-	desc = "It's sealed shut.";
-	dir = 4;
-	icon = 'icons/obj/doors/blastdoor.dmi';
-	icon_state = "bdoormid1";
-	name = "Security Interlock";
-	tag = "icon-bdoormid1 (EAST)"
+/obj/machinery/light/small/sticky/frostedred{
+	dir = 1;
+	pixel_y = 10
 	},
-/area/sim/gunsim/dark)
+/turf/unsimulated/floor/plating/random,
+/area/sim/gunsim/maintenance)
 "gYs" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-48"
@@ -69605,7 +69616,7 @@
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/arcfiend,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "hnO" = (
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/mrfishstick)
@@ -69644,7 +69655,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "hrN" = (
 /obj/machinery/light{
 	dir = 8
@@ -69942,7 +69953,7 @@
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/werewolf,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "hWH" = (
 /obj/grille/catwalk{
 	dir = 1;
@@ -70200,11 +70211,11 @@
 /area/centcom/offices/mrfishstick)
 "iuv" = (
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ivh" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ivu" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -70320,7 +70331,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "iFm" = (
 /obj/item/sticker/gold_star{
 	anchored = 1;
@@ -71358,7 +71369,7 @@
 "kSe" = (
 /obj/submachine/weapon_vendor/syndicate,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "kUZ" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
@@ -71398,7 +71409,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "lav" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-41"
@@ -71644,7 +71655,7 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "lwy" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	desc = "A small impulse drive.";
@@ -71963,7 +71974,7 @@
 	id = "murderentry"
 	},
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "lWU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -72093,12 +72104,13 @@
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
 "mlH" = (
-/obj/death_button/clean_gunsim,
-/turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
-	name = "virtual lead wall"
+/obj/grille/steel,
+/obj/machinery/light/small/sticky/frostedred{
+	dir = 4;
+	pixel_x = 10
 	},
-/area/sim/gunsim)
+/turf/unsimulated/floor/plating/random,
+/area/sim/gunsim/maintenance)
 "mmr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
@@ -72300,7 +72312,7 @@
 	dir = 8;
 	explosion_protection = 999999
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "mIX" = (
 /obj/item/nature/resin/dragonsblood{
 	name = "Dragonsblood Resin";
@@ -72386,7 +72398,7 @@
 "mRl" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "mUi" = (
 /obj/admin_plaque{
 	name = "Studenterhue's Office"
@@ -72525,7 +72537,7 @@
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "ney" = (
 /obj/machinery/light{
 	dir = 8;
@@ -72537,7 +72549,7 @@
 /obj/decal/cleanable/dirt/dirt5,
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "ngk" = (
 /obj/map/light/graveyard,
 /obj/tombstone/memorial{
@@ -72835,6 +72847,12 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/diner/cow)
+"nxN" = (
+/turf/unsimulated/wall/auto/lead/white{
+	explosion_resistance = 999999;
+	name = "virtual lead wall"
+	},
+/area/sim/gunsim/lobby)
 "nyz" = (
 /obj/decal/fakeobjects/dreambeach/big/palm1,
 /turf/unsimulated/floor/dream/beach,
@@ -72846,7 +72864,7 @@
 "nzf" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "nzm" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/nw,
 /area/centcom/offices/rodney)
@@ -73152,7 +73170,7 @@
 /obj/item/brick,
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "nYa" = (
 /obj/admin_plaque{
 	name = "Boris Bubbleton's Office";
@@ -73230,7 +73248,7 @@
 /area/centcom/gallery)
 "ocr" = (
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "odb" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4;
@@ -73310,7 +73328,7 @@
 	pixel_x = 6
 	},
 /turf/simulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "olG" = (
 /obj/decal/exhibit/premium{
 	exhibit_id = "ex_centcom_premium";
@@ -73386,11 +73404,9 @@
 /turf/unsimulated/floor/plating/damaged2,
 /area/diner/cow)
 "owg" = (
-/turf/unsimulated/wall/auto/lead/white{
-	explosion_resistance = 999999;
-	name = "virtual lead wall"
-	},
-/area/sim/gunsim)
+/obj/grille/steel,
+/turf/unsimulated/floor/plating/random,
+/area/sim/gunsim/maintenance)
 "owu" = (
 /obj/window{
 	desc = "A window.  For a museum exhibit.";
@@ -73697,7 +73713,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "pfF" = (
 /obj/window/crystal/reinforced/west,
 /obj/window/crystal/reinforced/north,
@@ -74063,7 +74079,7 @@
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "pHO" = (
 /obj/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
@@ -74230,7 +74246,7 @@
 "pSB" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "pTc" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/crater/biodome/north)
@@ -74534,11 +74550,20 @@
 	status = 1
 	},
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "qxO" = (
-/obj/grille/steel,
+/obj/machinery/light/small/sticky/frostedred{
+	dir = 1;
+	pixel_y = 10
+	},
+/obj/decal/fakeobjects{
+	desc = "It's moving a ton of air! Those blades sure do look sharp...";
+	icon = 'icons/obj/shuttle.dmi';
+	icon_state = "sea_propulsion";
+	name = "fan"
+	},
 /turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
+/area/sim/gunsim/maintenance)
 "qxY" = (
 /turf/unsimulated/floor/grey/side{
 	dir = 9
@@ -74750,7 +74775,7 @@
 	},
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "qUi" = (
 /turf/unsimulated/floor/stairs/dark{
 	dir = 1
@@ -75007,7 +75032,7 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "rou" = (
 /obj/item/disk/data/tape{
 	desc = "It appears to be a videotape containing some ancient movie.";
@@ -75432,7 +75457,7 @@
 	id = "murderbox"
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "rUx" = (
 /obj/shrub{
 	dir = 4;
@@ -75496,7 +75521,7 @@
 "rYU" = (
 /obj/decal/cleanable/dirt/dirt5,
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "rZe" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
@@ -75606,20 +75631,21 @@
 	explosion_resistance = 999999;
 	name = "virtual lead wall"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "seT" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-12"
 	},
 /area/titlescreen)
 "sfP" = (
-/obj/grille/steel,
-/obj/machinery/light/small/sticky/frostedred{
-	dir = 4;
-	pixel_x = 10
+/obj/death_button/clean_gunsim{
+	pixel_x = 32
 	},
-/turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
+/turf/unsimulated/floor/setpieces/gauntlet{
+	desc = "This place is going to be a fucking mess.";
+	name = "\proper the murderbox"
+	},
+/area/sim/gunsim/arena)
 "sgo" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
@@ -75689,7 +75715,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "sjM" = (
 /turf/unsimulated/floor/white/checker,
 /area/wizard_station)
@@ -75753,7 +75779,7 @@
 	desc = "This place is going to be a fucking mess.";
 	name = "\proper the murderbox"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "suO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -76036,7 +76062,7 @@
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/wrestler,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "tbw" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/unsimulated/floor/white/checker,
@@ -76097,7 +76123,7 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "tje" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
@@ -76111,7 +76137,7 @@
 "tjf" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "tkW" = (
 /obj/decal/fakeobjects/teleport_pad,
 /turf/unsimulated/floor/shuttle{
@@ -76218,7 +76244,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "tvE" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/shuttle{
@@ -76314,7 +76340,7 @@
 	icon_state = "gauntfloorSkulls";
 	name = "\proper THE MURDERBOX"
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/arena)
 "tCG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -76376,7 +76402,7 @@
 	pixel_x = 6
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "tNs" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
@@ -76936,7 +76962,7 @@
 	pixel_y = 6
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "uYi" = (
 /obj/map/light/yellow,
 /turf/unsimulated/wall{
@@ -76967,7 +76993,7 @@
 "vcV" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vdq" = (
 /obj/decal/fakeobjects/firelock_broken,
 /obj/machinery/door/airlock/pyro/maintenance,
@@ -76985,7 +77011,7 @@
 "vfY" = (
 /obj/decal/cleanable/dirt/dirt4,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vgi" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77126,7 +77152,7 @@
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual/nuclear,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vol" = (
 /turf/unsimulated/iomoon/floor,
 /area/iomoon/base)
@@ -77185,7 +77211,7 @@
 	},
 /obj/stool/bench/blue/auto,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vtG" = (
 /obj/map/light/graveyard,
 /mob/living/critter/small_animal/firefly/ai_controlled,
@@ -77350,7 +77376,7 @@
 	pixel_y = -24
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vIb" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 4;
@@ -77477,7 +77503,7 @@
 "vVq" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vWb" = (
 /obj/stool/chair/office/purple{
 	dir = 1
@@ -77495,7 +77521,7 @@
 /obj/table/reinforced/auto,
 /obj/traitorifier/virtual,
 /turf/unsimulated/floor/grime,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "vXm" = (
 /obj/decal/cleanable/glitter/harmless,
 /turf/unsimulated/floor/carpet/darkcarpet/border,
@@ -77915,7 +77941,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "wQy" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4;
@@ -77991,19 +78017,6 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
-"wYq" = (
-/obj/machinery/light/small/sticky/frostedred{
-	dir = 1;
-	pixel_y = 10
-	},
-/obj/decal/fakeobjects{
-	desc = "It's moving a ton of air! Those blades sure do look sharp...";
-	icon = 'icons/obj/shuttle.dmi';
-	icon_state = "sea_propulsion";
-	name = "fan"
-	},
-/turf/unsimulated/floor/plating/random,
-/area/sim/gunsim/dark)
 "xbB" = (
 /obj/decal/cleanable/dirt,
 /obj/reagent_dispensers/still,
@@ -78473,7 +78486,7 @@
 /turf/unsimulated/floor/wood/eight{
 	dir = 4
 	},
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "xSW" = (
 /obj/stool/bar,
 /mob/living/carbon/human/don_glab/cow,
@@ -78602,7 +78615,7 @@
 	pixel_y = 4
 	},
 /turf/unsimulated/floor/plating,
-/area/sim/gunsim)
+/area/sim/gunsim/lobby)
 "xYs" = (
 /obj/machinery/vending/standard{
 	pixel_y = 5
@@ -131203,21 +131216,21 @@ aaa
 aaa
 aaa
 aaa
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
 seP
-owg
-owg
-owg
-owg
-owg
+eoE
+eoE
+eoE
+eoE
+eoE
 aaa
 aaa
 bkp
@@ -131505,7 +131518,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+eoE
 ssh
 ssh
 ssh
@@ -131519,7 +131532,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aaa
 bkp
@@ -131807,7 +131820,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+eoE
 ssh
 ssh
 ssh
@@ -131821,7 +131834,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aaa
 bkp
@@ -132109,7 +132122,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+eoE
 ssh
 ssh
 ssh
@@ -132123,7 +132136,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aaa
 bmL
@@ -132406,12 +132419,12 @@ aaa
 aaa
 aaa
 aaa
-owg
-owg
-owg
+nxN
+nxN
+nxN
 ckX
-owg
-owg
+nxN
+nxN
 abq
 ssh
 ssh
@@ -132425,7 +132438,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aaa
 bmL
@@ -132708,7 +132721,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 ciw
 ckE
 ckE
@@ -132727,7 +132740,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aaa
 bkp
@@ -133010,7 +133023,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 cix
 ckE
 ckE
@@ -133029,7 +133042,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aPr
 aPr
@@ -133312,7 +133325,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 ciy
 ckE
 clr
@@ -133331,7 +133344,7 @@ ssh
 ssh
 ssh
 pHo
-owg
+eoE
 aaa
 aXt
 bkT
@@ -133614,7 +133627,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 ciM
 ckE
 clr
@@ -133633,7 +133646,7 @@ ssh
 ssh
 ssh
 nen
-owg
+eoE
 aaa
 aXt
 bkT
@@ -133916,7 +133929,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 ciN
 ckE
 ckE
@@ -133935,7 +133948,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aXt
 bmk
@@ -134218,7 +134231,7 @@ aaa
 aaa
 aaa
 aaa
-owg
+nxN
 ckD
 ckE
 ckE
@@ -134237,7 +134250,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aXt
 bkT
@@ -134520,12 +134533,12 @@ aaa
 aaa
 aaa
 aaa
-owg
-owg
-owg
-owg
+nxN
+nxN
+nxN
+dnb
 cvi
-owg
+nxN
 ssh
 ssh
 ssh
@@ -134539,7 +134552,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aXt
 bkT
@@ -134824,10 +134837,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-dfm
-owg
+dSQ
+clM
+eoE
 ssh
 ssh
 ssh
@@ -134841,7 +134854,7 @@ ssh
 ssh
 ssh
 ssh
-owg
+eoE
 aaa
 aXt
 bkT
@@ -135126,10 +135139,10 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-dSQ
-owg
+gXr
+clM
+eoE
 ssh
 ssh
 ssh
@@ -135137,13 +135150,13 @@ ssh
 ssh
 ssh
 ssh
+sfP
 ssh
 ssh
 ssh
 ssh
 ssh
-ssh
-owg
+eoE
 aaa
 aXt
 bkT
@@ -135428,24 +135441,24 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
 gmI
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-mlH
-owg
-owg
-owg
-owg
-owg
-owg
+clM
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
+eoE
 aaa
 aXt
 bkT
@@ -135730,14 +135743,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-gXr
+clM
 gmI
-gmI
-gmI
-gmI
-qxO
-owg
+clM
+clM
+clM
+clM
+clM
+nxN
 qxo
 xXV
 nWP
@@ -135747,7 +135760,7 @@ vXk
 hWu
 iuv
 rTn
-owg
+nxN
 aaa
 aXt
 bkT
@@ -136032,14 +136045,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-clM
-clM
-sfP
-qxO
+dfm
+gmI
+gmI
 gmI
 gmI
 owg
+clM
+nxN
 wPR
 tvu
 akD
@@ -136049,7 +136062,7 @@ nzf
 rYU
 fJh
 vfY
-owg
+nxN
 aaa
 aXt
 bkT
@@ -136334,14 +136347,14 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 clM
 clM
-clM
-clM
-gmI
+mlH
 owg
+gmI
+gmI
+clM
+nxN
 peA
 dtO
 nzf
@@ -136351,7 +136364,7 @@ iuv
 tMh
 tiH
 rnB
-owg
+nxN
 aaa
 aXt
 bkT
@@ -136637,13 +136650,13 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
 clM
-wYq
-qxO
+clM
+clM
+clM
 gmI
-owg
+clM
+nxN
 hqS
 dtO
 vVq
@@ -136653,7 +136666,7 @@ ocr
 pSB
 nzf
 nfy
-owg
+nxN
 aaa
 aXt
 bmk
@@ -136940,12 +136953,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-clM
-clM
-gmI
+qxO
 owg
+gmI
+clM
+nxN
 xSS
 dtO
 iuv
@@ -136955,7 +136968,7 @@ iuv
 uXV
 iuv
 vsV
-owg
+nxN
 aaa
 aXt
 bkT
@@ -137242,12 +137255,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-wYq
-qxO
+clM
+clM
 gmI
-owg
+clM
+nxN
 sjK
 dtO
 ocr
@@ -137257,7 +137270,7 @@ ocr
 ocr
 rYU
 kYk
-owg
+nxN
 aaa
 aPr
 aPr
@@ -137544,12 +137557,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-clM
-clM
-gmI
+qxO
 owg
+gmI
+clM
+nxN
 dVu
 iEF
 iuv
@@ -137559,7 +137572,7 @@ iuv
 lvT
 iuv
 vGS
-owg
+nxN
 aaa
 aaa
 bkp
@@ -137846,12 +137859,12 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
-wYq
-qxO
+clM
+clM
 gmI
-cvi
+gmI
+dnb
 tjf
 ivh
 mRl
@@ -137861,7 +137874,7 @@ vok
 tbp
 ocr
 lWT
-owg
+nxN
 aaa
 aaa
 bmL
@@ -138148,22 +138161,22 @@ aaa
 aaa
 aaa
 aaa
-aaa
 clM
+qxO
+owg
+gmI
 clM
-clM
-clM
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
-owg
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
+nxN
 aaa
 aaa
 bmL
@@ -138450,11 +138463,11 @@ aaa
 aaa
 aaa
 aaa
-aaa
-aaa
-aaa
-aaa
-aaa
+clM
+clM
+clM
+clM
+clM
 aaa
 aaa
 aaa
