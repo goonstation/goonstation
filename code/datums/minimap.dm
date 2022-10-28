@@ -79,7 +79,6 @@
 		initial_map_render = icon(map_render)
 
 		src.find_focal_point()
-		src.render_map()
 		src.auto_zoom_map()
 
 	///Locate the focal point of the map by using the furthest valid turf in each direction.
