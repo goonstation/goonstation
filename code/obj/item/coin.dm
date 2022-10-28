@@ -13,9 +13,21 @@
 
 /obj/item/coin/attack_self(mob/user as mob)
 	boutput(user, "<span class='notice'>You flip the coin</span>")
-	SPAWN(1 SECOND)
-		src.set_loc(user.loc)
-		user.u_equip(src)
+	user.u_equip(src)
+	src.set_loc(user.loc)
+	//Spin it in midair
+	animate(src, transform = turn(matrix(), 120), time = 6 DECI SECONDS, flags = ANIMATION_PARALLEL)
+	animate(transform = turn(matrix(), 240), time = 6 DECI SECONDS)
+	animate(transform = null, time = 6 DECI SECONDS)
+	//First throw
+	animate(src, time = 6 DECI SECONDS, pixel_y = 14, easing = SINE_EASING | EASE_OUT, flags = ANIMATION_PARALLEL)
+	animate(time = 6 DECI SECONDS, pixel_y = 0, easing = SINE_EASING | EASE_IN)
+	//One bounce on the ground
+	animate(src, time = 12 DECI SECONDS,  flags = ANIMATION_PARALLEL)
+	animate(time= 3 DECI SECONDS, pixel_y = 4, easing = SINE_EASING | EASE_OUT)
+	animate(time = 3 DECI SECONDS, pixel_y = 0, , easing = SINE_EASING | EASE_IN)
+	sleep(18 DECI SECOND)
+	if(!istype(src.loc, /mob/))	//Hot dog, you caught it midair!
 		playsound(src.loc, 'sound/items/coindrop.ogg', 30, 1)
 		flip()
 
