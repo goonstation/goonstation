@@ -507,16 +507,12 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 			return 1
 		if (prob(30))
 			src.icon_state = "[src.dogtype]-lying"
-			src.setStatus("paralysis", 10 SECONDS)
 			src.setStatus("stunned", 10 SECONDS)
-			src.setStatus("weakened", 10 SECONDS)
 			src.visible_message("<span class='notice'>[src] flops on [his_or_her(src)] back! Scratch that belly!</span>",\
 			"<span class='notice'>You flop on your back!</span>")
 			SPAWN(3 SECONDS)
 				if (src && !isdead(src))
-					src.delStatus("paralysis")
 					src.changeStatus("stunned", 10 SECONDS)
-					src.delStatus("weakened")
 					src.icon_state = src.dogtype
 
 
@@ -675,6 +671,42 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		if (src.randomize_shiba)
 			src.name = pick(shiba_names)
 			src.real_name = src.name
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
+
+/* -------------------- Borzoi -------------------- */
+
+/mob/living/critter/small_animal/dog/borzoi
+	icon_state = "borzoi"
+	icon_state_dead = "borzoi_lying"
+	dogtype = "borzoi"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
+
+/* -------------------- Dachshund -------------------- */
+
+/mob/living/critter/small_animal/dog/dachshund
+	icon_state = "dachshund"
+	icon_state_dead = "dachshund_lying"
+	dogtype = "dachshund"
+
+	weak
+		add_abilities = list()
+		health_brute = 10
+		health_burn = 10
+
+/* -------------------- Retriever -------------------- */
+
+/mob/living/critter/small_animal/dog/retriever
+	icon_state = "retriever"
+	icon_state_dead = "retriever_lying"
+	dogtype = "retriever"
 
 	weak
 		add_abilities = list()
