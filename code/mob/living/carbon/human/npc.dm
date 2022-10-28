@@ -732,7 +732,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband
+		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score

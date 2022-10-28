@@ -115,7 +115,7 @@ export const Vendors = (props, context) => {
             <Section fill scrollable height="100%">
               {productList.map(product => {
                 return (
-                  <Flex key={product} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
+                  <Flex key={product.name} justify="space-between" align="stretch" style={{ "border-bottom": "1px #555 solid" }}>
                     <Flex.Item direction="row">
                       {product.img && (
                         <Box style={{ "overflow": "show", "height": "24px" }}>
