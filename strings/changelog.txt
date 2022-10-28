@@ -1,5 +1,9 @@
 
 (t)fri oct 28 22
+(u)Kubius
+(p)11643
+(e)🆕|C-Feature
+(+)You can now make flippers for 5 rubber. Uniform manufacturers always have the ability to make them, and underwater maps also allow making them at general manufacturers and mining fabricators.
 (u)Bartimeus973
 (p)11599
 (e)🆕🔨|C-Feature, A-Player-Actions
