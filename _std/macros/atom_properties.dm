@@ -245,12 +245,16 @@ To remove:
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // mob can bulid furniture without holding them (for borgs)
+#define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob can bulid furniture without holding them (for borgs)
+#define PROP_MOB_BLOODGIB_IMMUNE(x) x("bloodgib_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob won't gib from having 1000+ effective blood
 
 //-------------------- OBJ PROPS ------------------------
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
+//-------------------- ITEM PROPS -----------------------
+
 //------------------- MOVABLE PROPS ---------------------
+#define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)

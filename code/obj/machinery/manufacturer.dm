@@ -2273,6 +2273,9 @@
 		/datum/manufacture/shoes,
 		/datum/manufacture/breathmask,
 		/datum/manufacture/engspacesuit,
+#ifdef UNDERWATER_MAP
+		/datum/manufacture/engdivesuit,
+#endif
 		/datum/manufacture/industrialarmor,
 		/datum/manufacture/industrialboots,
 		/datum/manufacture/powercell,
@@ -2672,14 +2675,10 @@
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax
 	name = "Type-AX Resonator"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/resonator_type_ax
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_sm
 	name = "Type-SM Resonator"
-	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
 	blueprint = /datum/manufacture/resonator_type_sm
 
 

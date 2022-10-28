@@ -135,6 +135,14 @@
 		else
 			src.cooktime++
 
+		if (src.fryitem.material.mat_id == "ice" && !ON_COOLDOWN(src, "ice_explosion", 10 SECONDS))
+			qdel(src.fryitem)
+			src.fryitem = null
+			src.visible_message("<span class='alert'>The ice reacts violently with the hot oil!</span>")
+			fireflash(src, 3)
+			UnsubscribeProcess()
+			return
+
 		if (!src.fryitem.reagents)
 			src.fryitem.create_reagents(50)
 

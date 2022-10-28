@@ -27,6 +27,7 @@
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
