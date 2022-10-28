@@ -50,6 +50,9 @@
 						if (myID)
 							var/has_carry_permit = (access_carrypermit in myID.access)
 							var/has_contraband_permit = (access_contrabandpermit in myID.access)
+							if (!has_contraband_permit)
+								contrabandLevel += GET_ATOM_PROPERTY(H, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 							if (H.l_hand)
 								if (istype(H.l_hand, /obj/item/gun/))
 									if(!has_carry_permit)

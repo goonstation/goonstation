@@ -202,6 +202,9 @@
 		var/has_carry_permit = 0
 		var/has_contraband_permit = 0
 
+		if (!has_contraband_permit)
+			threatcount += GET_ATOM_PROPERTY(H, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 		if(perp_id) //Checking for permits
 			if(weapon_access in perp_id.access)
 				has_carry_permit = 1

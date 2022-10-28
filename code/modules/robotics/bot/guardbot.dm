@@ -3151,6 +3151,9 @@
 				var/has_carry_permit = 0
 				var/has_contraband_permit = 0
 
+				if (!has_contraband_permit)
+					. += contrabandLevel += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
 				if(perp_id) //Checking for targets and permits
 					if(ckey(perp_id.registered) in target_names)
 						return 7

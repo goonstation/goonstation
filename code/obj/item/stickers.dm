@@ -718,12 +718,12 @@ ABSTRACT_TYPE(/obj/item/sticker/glow)
 
 	stick_to(atom/A)
 		. = ..()
-		APPLY_ATOM_PROPERTY(A, PROP_ITEM_CONTRABAND_OVERRIDE, src, contraband_value)
+		APPLY_ATOM_PROPERTY(A, PROP_MOVABLE_CONTRABAND_OVERRIDE, src, contraband_value)
 
 	disposing()
-		REMOVE_ATOM_PROPERTY(src.attached, PROP_ITEM_CONTRABAND_OVERRIDE, src)
+		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
 		..()
 
 	fall_off()
-		REMOVE_ATOM_PROPERTY(src.attached, PROP_ITEM_CONTRABAND_OVERRIDE, src)
+		REMOVE_ATOM_PROPERTY(src.attached, PROP_MOVABLE_CONTRABAND_OVERRIDE, src)
 		. = ..()
