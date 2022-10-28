@@ -5100,7 +5100,8 @@
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	pixel_x = -7
 	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
@@ -40308,9 +40309,13 @@
 /obj/shrub{
 	dir = 4;
 	icon = 'icons/obj/stationobjs.dmi';
-	icon_state = "plant"
+	icon_state = "plant";
+	pixel_x = 7
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/redblack,
 /area/listeningpost)
 "tHl" = (
