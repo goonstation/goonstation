@@ -1,5 +1,12 @@
 
 (t)sat oct 29 22
+(u)Hans
+(p)11095
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added stinging nettle to the list of plants botany can make! (More info in minor changes)
+(+)Stinging nettle will periodically inject anyone close with histamine and the chemicals spliced with it, similar to rafflesia but without the smoke.
+(+)Stinging nettle can be circumvented by wearing chemical protection, and the frequency of injecting people depends on it's endurance, while the amount of chemicals varies upon potency.
+(+)Leaf sprite provided by Clover.
 (u)Kubius
 (p)11642
 (e)🆕🗺|C-Feature, A-Mapping
