@@ -1,6 +1,10 @@
 
 (t)sat oct 29 22
 (u)Kubius
+(p)11578
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Substantially increased the extraction rate of Nadir's Harmonic Siphon and removed the cap of one yield per machine tick. Most mineral targets extract two to three times faster; energetic materials received a smaller buff, while gold received a larger one.
+(u)Kubius
 (p)11665
 (e)🆕🗺|C-Feature, A-Mapping
 (+)Overhauled Nadir's kitchen to significantly improve workflow for Chefs.
