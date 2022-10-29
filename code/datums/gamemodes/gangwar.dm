@@ -272,7 +272,7 @@
 		text += items
 		text += "<br><b>Areas Owned:</b> [leader_mind.gang.num_areas_controlled()]"
 		text += "<br><b>Turf Score:</b> [leader_mind.gang.score_turf]"
-		text += "<br><b>Cash Pile:</b> $[leader_mind.gang.score_cash*CASH_DIVISOR]"
+		text += "<br><b>Cash Pile:</b> [leader_mind.gang.score_cash*CASH_DIVISOR][CREDIT_SIGN]"
 		text += "<br><b>Guns Stashed:</b> [leader_mind.gang.score_gun]"
 		text += "<br><b>Drug Score:</b> [leader_mind.gang.score_drug]"
 		text += "<br><b>Event Score:</b> [leader_mind.gang.score_event]"
