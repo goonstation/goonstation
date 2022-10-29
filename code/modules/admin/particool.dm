@@ -186,6 +186,23 @@ var/list/master_particle_info = list()
 		if("remove_particle")
 			target.remove_particle()
 			. = TRUE
+		if("load_particle")
+			var/targetFile = input("Select the saved particle setup to load.", "Particle upload", null) as null|file
+			if (targetFile)
+				if(target.particles)
+					target.remove_particle()
+				// without a small delay the old particle's icon and whatnot seem to linger, despite a completely new particle object being created
+				// some internal caching? *shrug
+				SPAWN(1)
+					target.add_particle()
+					target.particles.particleset_deserialize_file(targetFile)
+			. = TRUE
+		if("save_particle")
+			target.particles?.particleset_serialize_dialog(dont_serialize_icon = 1)
+			. = TRUE
+		if("save_particle_with_icon")
+			target.particles?.particleset_serialize_dialog(dont_serialize_icon = 0)
+			. = TRUE
 		if("modify_particle_value")
 			target.modify_particle_value(params["new_data"]["name"], translate_value(params["new_data"]))
 			. = TRUE

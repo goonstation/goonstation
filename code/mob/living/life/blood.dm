@@ -140,7 +140,7 @@
 			return ..()
 
 		//special case
-		if (current_blood_amt >= 1000)
+		if (current_blood_amt >= 1000 && !HAS_ATOM_PROPERTY(owner, PROP_MOB_BLOODGIB_IMMUNE))
 			if (prob(clamp((current_blood_amt - 1000)/10, 0, 100))) //0% at 1000, 100% at 2000, linear scaling
 				owner.visible_message("<span class='alert'><b>[owner] bursts like a bloody balloon! Holy fucking shit!!</b></span>")
 				logTheThing(LOG_COMBAT, owner, "gibbed due to having over 1000 units of blood at [log_loc(src)].")

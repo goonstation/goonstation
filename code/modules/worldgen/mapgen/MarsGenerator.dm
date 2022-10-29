@@ -155,6 +155,9 @@
 		var/image/weather = src.GetOverlayImage("weather")
 		..()
 		src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid/mars)
+		src.UpdateIcon()
+		for (var/turf/simulated/wall/auto/asteroid/A in orange(1,src))
+			A.UpdateIcon()
 		src.UpdateOverlays(ambient_light, "ambient")
 		src.UpdateOverlays(weather, "weather")
 

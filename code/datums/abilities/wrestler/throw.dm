@@ -114,8 +114,6 @@
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				if (!isdead(HH))
-					HH.emote("scream")
 				if (!fake)
 					HH.set_loc(get_turf(M))
 					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t

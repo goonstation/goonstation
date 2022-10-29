@@ -344,16 +344,19 @@
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
-			explosion(src, src.loc, 20, 30, 40, 50)
-			qdel(src)
 			return
+		explosion(src, src.loc, 35, 45, 55, 55)
 #ifdef MAP_OVERRIDE_MANTA
-		world.showCinematic("manta_nukies")
+		world.showCinematic("manta_nukies", TRUE)
 #else
 		var/datum/hud/cinematic/cinematic = new
 		for (var/client/C in clients)
 			cinematic.add_client(C)
 		cinematic.play("nuke")
+
+		SPAWN(15 SECONDS) // give it a lil time to sort the explosions out
+			for (var/client/C in clients)
+				cinematic?.remove_client(C)
 #endif
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
@@ -366,7 +369,8 @@
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			nukee.death()//firegib()
+			// update: yolo
+			nukee.firegib()
 
 		creepify_station()
 
@@ -377,6 +381,8 @@
 			sleep(30 SECONDS)
 			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
+
+		qdel(src)
 
 /datum/action/bar/icon/unanchorNuke
 	duration = 55

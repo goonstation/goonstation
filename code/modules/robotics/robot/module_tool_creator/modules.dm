@@ -27,6 +27,7 @@
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
@@ -129,6 +130,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif

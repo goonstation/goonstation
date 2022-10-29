@@ -2439,7 +2439,7 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon8,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -5219,7 +5219,9 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -5640,7 +5642,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "awF" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -5701,7 +5703,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/solar/west)
 "awQ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -6143,7 +6145,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -7236,7 +7238,9 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 9
+	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "aDF" = (
@@ -7296,7 +7300,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/northwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
 /turf/simulated/floor/bluewhite{
@@ -7372,7 +7376,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -7523,7 +7529,9 @@
 	icon_state = "line1";
 	pixel_x = -10
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -7888,7 +7896,9 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -8557,7 +8567,9 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -12694,7 +12706,9 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 6
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -12892,7 +12906,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -16941,7 +16955,7 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -17569,7 +17583,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "cjy" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -19233,7 +19247,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -20090,7 +20104,7 @@
 	name = "Medical Doctor"
 	},
 /obj/item/device/radio/intercom/medical,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/bluegreen,
@@ -20720,7 +20734,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -21237,7 +21251,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/west{
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -21316,7 +21330,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/stool/bench/red,
@@ -21766,7 +21780,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/machinery/door_timer/genpop{
@@ -22105,7 +22119,7 @@
 	dir = 4;
 	pixel_x = 11
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/black,
@@ -22214,7 +22228,7 @@
 	name = "Destiny Arrivals"
 	})
 "equ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -22228,7 +22242,9 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/medical/medbay/pharmacy)
 "eqy" = (
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/wall/auto/supernorn/wood,
 /area/station/crew_quarters/fitness)
 "eqH" = (
@@ -23484,7 +23500,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/west{
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating/random,
@@ -23498,7 +23514,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "eNw" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -23623,7 +23639,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -25052,7 +25068,10 @@
 /turf/simulated/floor/purple/checker,
 /area/station/janitor/supply)
 "fvT" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
+	dir = 10;
+	
+	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/outer/sw)
 "fvV" = (
@@ -25241,7 +25260,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/cable{
@@ -25407,7 +25426,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "fEn" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -26056,7 +26075,7 @@
 	},
 /area/station/science/artifact)
 "fUD" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/machinery/chem_dispenser/chemical,
@@ -26074,7 +26093,7 @@
 /turf/simulated/floor/engine,
 /area/station/engine/core)
 "fUN" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/table/reinforced/chemistry/auto,
@@ -26528,7 +26547,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/vertical,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 1
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -27020,7 +27041,7 @@
 	nostick = 1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
@@ -28270,7 +28291,7 @@
 	},
 /area/station/chapel/sanctuary)
 "gZl" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -28689,7 +28710,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 5
 	},
 /turf/simulated/floor/black,
@@ -29793,7 +29814,7 @@
 /turf/simulated/floor/black,
 /area/station/security/checkpoint/customs)
 "hLU" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -30616,7 +30637,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/medical/alt2{
@@ -31089,7 +31110,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -31206,7 +31227,7 @@
 /turf/simulated/floor/engine,
 /area/station/hangar/main)
 "iDa" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -33167,7 +33188,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
 "jHu" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -33912,7 +33933,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/mail,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -34016,13 +34037,13 @@
 	name = "funky ol' heart"
 	},
 /obj/machinery/light_switch/north,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery/storage)
 "khO" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -34147,7 +34168,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/sanitary/white,
@@ -34669,7 +34690,9 @@
 	dir = 8;
 	icon_state = "pipe-c"
 	},
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "kAQ" = (
@@ -35510,7 +35533,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/machinery/camera{
@@ -36314,7 +36337,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /obj/wingrille_spawn/auto/reinforced,
@@ -41836,7 +41859,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/cable{
@@ -42143,7 +42166,7 @@
 	},
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/small/floor/blueish,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -42282,7 +42305,9 @@
 /obj/machinery/meter{
 	pixel_y = 24
 	},
-/obj/machinery/atmospherics/pipe/manifold/south,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 2
+	},
 /turf/simulated/floor/stairs{
 	dir = 4;
 	icon_state = "wood_stairs"
@@ -42777,7 +42802,7 @@
 	dir = 1;
 	icon_state = "line3"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -43052,7 +43077,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "oON" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -43173,7 +43198,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -43273,7 +43298,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -44991,7 +45016,9 @@
 /turf/simulated/floor/yellow,
 /area/station/hallway/secondary/construction)
 "pPB" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 1
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -45296,7 +45323,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/white,
@@ -45529,7 +45556,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "qfg" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -45711,7 +45738,10 @@
 /turf/simulated/floor,
 /area/station/quartermaster/cargobay)
 "qmh" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 10;
+	
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/testchamber)
 "qmm" = (
@@ -47431,7 +47461,9 @@
 /area/station/medical/medbay)
 "rdv" = (
 /obj/stool/bench/red/auto,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northeast,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -48618,7 +48650,9 @@
 	},
 /area/station/crew_quarters/fitness)
 "rKX" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
+	dir = 1
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "rKY" = (
@@ -49845,7 +49879,9 @@
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
 "swo" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/vertical,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
+	dir = 1
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/outer/sw)
 "swv" = (
@@ -50205,7 +50241,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/west)
 "sIG" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/purplewhite/corner{
@@ -50767,7 +50803,7 @@
 	dir = 4;
 	pixel_x = -20
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/bluegreen,
@@ -51442,7 +51478,7 @@
 /obj/decal/tile_edge/line/white{
 	icon_state = "line1"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -51793,7 +51829,7 @@
 	name = "Head of Personnel's Quarters"
 	})
 "tzg" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/purplewhite,
@@ -52946,7 +52982,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "ueV" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -53071,7 +53107,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "uio" = (
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/west{
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 2
 	},
 /turf/simulated/floor/plating/random,
@@ -54317,7 +54353,7 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 8
 	},
 /turf/simulated/floor/plating/random,
@@ -54657,7 +54693,7 @@
 /obj/disposalpipe/segment/ejection{
 	dir = 2
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/red,
@@ -55989,7 +56025,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/floor/black,
@@ -56078,7 +56114,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9
 	},
 /turf/simulated/floor/white,
@@ -56391,7 +56427,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "vNb" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 5
 	},
 /obj/machinery/disposal/mail/small{
@@ -56649,7 +56685,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "vVn" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 1
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -57328,7 +57364,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "wlz" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -57382,7 +57418,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "woa" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /obj/machinery/door_control{
@@ -57667,7 +57703,7 @@
 /obj/item/storage/wall/emergency{
 	pixel_y = 32
 	},
-/obj/machinery/atmospherics/pipe/tank/air_repressurization/west{
+/obj/machinery/atmospherics/pipe/tank/air_repressurization{
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
@@ -58463,7 +58499,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/detectives_office)
 "wML" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor/vertical{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/overfloor{
 	dir = 6
 	},
 /turf/simulated/floor/plating/random,
@@ -59245,7 +59281,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/core)
 "xiJ" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -59310,7 +59346,9 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
 "xjY" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor/northeast,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe/overfloor{
+	dir = 5
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/central)
 "xjZ" = (
@@ -59420,7 +59458,7 @@
 	},
 /area/station/medical/medbay)
 "xmI" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/wall/auto/supernorn,
@@ -59764,7 +59802,7 @@
 /obj/landmark/start{
 	name = "Medical Doctor"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
 	},
 /turf/simulated/floor/white,
@@ -60460,7 +60498,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest{
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 6
 	},
 /obj/cable{

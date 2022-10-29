@@ -717,6 +717,8 @@
 	var/paper_name = "thermal paper"
 	cabinet_banned = true
 	plane = PLANE_DEFAULT
+	var/paper_left = 10
+	var/process_cycle = 0
 
 	New()
 		..()
@@ -728,10 +730,15 @@
 		if(input)
 			LIGHT_UP_HOUSING
 			flick("comp_tprint1",src)
-			playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
-			var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
-			P.info = strip_html_tags(html_decode(input.signal))
-			P.name = paper_name
+			if(paper_left > 0)
+				playsound(src.loc, 'sound/machines/printer_thermal.ogg', 35, 0, -10)
+				var/obj/item/paper/thermal/P = new/obj/item/paper/thermal(src.loc)
+				P.info = strip_html_tags(html_decode(input.signal))
+				P.name = paper_name
+				paper_left--
+				processing_items |= src
+			else
+				playsound(src.loc, 'sound/machines/click.ogg', 35, 1, -10)
 		return
 
 	proc/setPaperName(obj/item/W as obj, mob/user as mob)
@@ -748,6 +755,14 @@
 				user.drop_item()
 				src.set_loc(target)
 		return
+
+	process()
+		. = ..()
+		var/turf/T = get_turf(src)
+		if(T && !ON_COOLDOWN(T, "ambient_paper_generation", 30 SECONDS))
+			paper_left++
+			if(paper_left >= 10)
+				processing_items -= src
 
 /obj/item/mechanics/pscan
 	name = "Paper scanner"
@@ -2753,7 +2768,7 @@
 	var/list/compatible_guns = list(/obj/item/gun/kinetic, /obj/item/gun/flamethrower)
 	cabinet_banned = true // non-functional thankfully
 	get_desc()
-		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot() ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
+		. += "<br><span class='notice'>Current Gun: [Gun ? "[Gun] [Gun.canshoot(null) ? "(ready to fire)" : "(out of [istype(Gun, /obj/item/gun/energy) ? "charge)" : "ammo)"]"]" : "None"]</span>"
 
 	New()
 		..()
@@ -2807,7 +2822,7 @@
 		if(level == 2) return
 		LIGHT_UP_HOUSING
 		if(input && Gun)
-			if(Gun.canshoot())
+			if(Gun.canshoot(null))
 				var/atom/target = getTarget()
 				if(target)
 					Gun.shoot(target, get_turf(src), src)
