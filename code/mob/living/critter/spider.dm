@@ -172,23 +172,6 @@
 		//if flail is diabled, we're flailing, so can't attack, otherwise we can always do bite/scratch
 		return can_act(src,TRUE) && !flail.disabled
 
-
-	Login()
-		. = ..()
-		//Disable the AI when a player takes control
-		if(src.client)
-			src.is_npc = FALSE
-
-	Logout()
-		. = ..()
-		//Enable the AI when a player loses control
-		if(!src.client)
-			src.is_npc = TRUE
-			src.ai?.enabled = TRUE
-			src.ai?.interrupt() //trigger a task re-evaluation
-
-
-
 /mob/living/critter/spider/nice
 	name = "bumblespider"
 	real_name = "bumblespider"
