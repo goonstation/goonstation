@@ -1,5 +1,9 @@
 
 (t)sat oct 29 22
+(u)pali
+(p)8395
+(e)|
+(*)Credits symbol has been changed from $ to ⪽
 (u)Hans
 (p)11095
 (e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
