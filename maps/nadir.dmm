@@ -9568,6 +9568,12 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"eNS" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/station/bridge/customs{
+	name = "Bridge Reception"
+	})
 "eNW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -28961,6 +28967,10 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/interrogation)
+"nSz" = (
+/obj/machinery/drainage,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/station/crew_quarters/kitchen)
 "nTf" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/barber_shop)
@@ -36705,7 +36715,11 @@
 	name = "Transception Array Control"
 	})
 "sbl" = (
-/obj/machinery/space_heater,
+/obj/machinery/space_heater{
+	set_temperature = 0;
+	desc = "Made by Space Amish using traditional space techniques, with a little bit of aftermarket tinkering.";
+	name = "modified space HVAC"
+	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
 "sbw" = (
@@ -42172,6 +42186,7 @@
 	pixel_x = 32;
 	spawn_contents = list(/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/device/reagentscanner)
 	},
+/obj/machinery/drainage,
 /turf/simulated/floor/grey/blackgrime,
 /area/station/crew_quarters/catering)
 "uHm" = (
@@ -83454,7 +83469,7 @@ gbZ
 iHN
 oJc
 kyY
-maE
+nSz
 mJW
 kzt
 ptO
@@ -94660,7 +94675,7 @@ sNC
 eZe
 wRm
 rul
-eZe
+eNS
 dzl
 tpy
 fjZ
