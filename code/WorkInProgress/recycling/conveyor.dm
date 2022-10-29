@@ -240,7 +240,7 @@
 	else if (operating == OP_REVERSE)
 		new_icon += dir2char + dir1char
 
-	if (operating == OP_OFF)
+	if (operating == OP_OFF || (status & NOPOWER))
 		new_icon += "-still"
 	else
 		new_icon += "-run"
