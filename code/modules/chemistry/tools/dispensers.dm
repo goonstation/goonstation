@@ -359,13 +359,6 @@
 			add_fingerprint(AM, TRUE)
 		else if (ismob(usr))
 			add_fingerprint(usr, TRUE)
-	smash()
-		..()
-		icon_state = "weldtank1"
-
-	ex_act(severity)
-		..()
-		icon_state = "weldtank1" //to ensure that a weldertank's always going to be updated by their own explosion
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
