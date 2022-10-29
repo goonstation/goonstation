@@ -485,19 +485,26 @@
 	qdel(ping)
 	if (target == src.drone)
 		return
-	//by default we just walk somewhere
+	//by default we try to convert the target
 	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-	if (flockValidEnemy(target))
+	//order is important here
+	if (isflockvalidenemy(target))
 		if (ismob(target) && is_incapacitated(target))
 			task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 		else
 			task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
 	else if (istype(target, /obj/flock_structure/ghost))
 		task_type = /datum/aiTask/sequence/goalbased/flock/deposit/targetable
+	else if (istype(target, /obj/flock_structure))
+		task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
 	else if (istype(target, /obj/flock_structure) || isfeathertile(target))
 		task_type = /datum/aiTask/sequence/goalbased/flock/rally
 	else if (isflockmob(target) && !isintangible(target))
-		task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
+		var/mob/living/critter/flock/mob = target
+		if (isalive(mob))
+			task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
+		else
+			task_type = /datum/aiTask/sequence/goalbased/flock/butcher/targetable
 	else if (isitem(target))
 		task_type = /datum/aiTask/sequence/goalbased/flock/harvest/targetable
 

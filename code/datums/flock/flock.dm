@@ -758,9 +758,6 @@ var/flock_signal_unleashed = FALSE
 	var/area/area = get_area(T)
 	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
 
-/proc/flockValidEnemy(atom/A)
-	return (ismob(A) || iscritter(A) || isvehicle(A)) && !isflockmob(A)
-
 /proc/flock_convert_turf(var/turf/T)
 	if(!T)
 		return

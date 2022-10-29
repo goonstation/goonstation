@@ -416,9 +416,14 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/flock/repair/valid_target(mob/living/critter/flock/target)
+/datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
 	var/mob/living/critter/flock/drone/drone = holder.owner
-	return target.flock == drone.flock && !isdead(drone)
+	if (isflockmob(target))
+		var/mob/living/critter/flock/mob_target = target
+		return mob_target.flock == drone.flock && !isdead(mob_target)
+	else if (isflockstructure(target))
+		var/obj/flock_structure/struct_target = target
+		return struct_target.flock == drone.flock
 
 /datum/aiTask/sequence/goalbased/flock/repair/get_targets()
 	. = list()
@@ -984,12 +989,15 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
+/datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
+	return isdead(target)
+
 /datum/aiTask/sequence/goalbased/flock/butcher/get_targets()
 	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner || F.butcherer)
 			continue
-		if(isdead(F))
+		if(valid_target(F))
 			. += F
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
@@ -1364,13 +1372,32 @@ stare
 	switched_to()
 		..()
 		on_reset()
-		if (!flockValidEnemy(src.target))
+		if (!isflockvalidenemy(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid elimination target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
 			return
 		var/mob/living/critter/flock/drone/drone = holder.owner
 		drone.flock.updateEnemy(src.target)
+
+	on_reset()
+		..()
+		holder.target = src.target
+
+/datum/aiTask/sequence/goalbased/flock/butcher/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
+	switched_to()
+		..()
+		on_reset()
+		if (!src.valid_target(src.target))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			flock_speak(drone, "Invalid recycling target provided by sentient level instruction.", drone.flock)
+			holder.interrupt()
 
 	on_reset()
 		..()
