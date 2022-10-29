@@ -1,4 +1,9 @@
 
+(t)sat oct 29 22
+(u)Shiiba
+(p)11499
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)New sprite for Genetics PDA cartridge.
 (t)fri oct 28 22
 (u)LeahTheTech
 (p)11388
