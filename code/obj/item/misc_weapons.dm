@@ -1030,9 +1030,9 @@
 
 /obj/item/swords/attack_self(mob/user)
 	. = ..()
-	for(var/obj/item/swords_sheaths/steath in user) //this working with chest items is intented according to my balance tests its ok its also funny
-		if(!steath.sword_inside && istype(src, steath.sword_path))
-			steath.Attackby(src,user)
+	for(var/obj/item/swords_sheaths/sheath in user) //this working with chest items is intented according to my balance tests its ok its also funny
+		if(!sheath.sword_inside && istype(src, sheath.sword_path))
+			sheath.Attackby(src, user)
 			break
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
