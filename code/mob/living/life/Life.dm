@@ -2,8 +2,8 @@
 	var/mob/living/owner
 	var/last_process = 0
 
-	var/const/tick_spacing = 20 //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
-	var/const/cap_tick_spacing = 100 //highest TIME allowance between ticks to try to play catchup with realtime thingo
+	var/const/tick_spacing = LIFE_PROCESS_TICK_SPACING //This should pretty much *always* stay at 20, for it is the one number that all do-over-time stuff should be balanced around
+	var/const/cap_tick_spacing = LIFE_PROCESS_CAP_TICK_SPACING //highest TIME allowance between ticks to try to play catchup with realtime thingo
 
 	var/mob/living/carbon/human/human_owner = null
 	var/mob/living/silicon/hivebot/hivebot_owner = null
@@ -72,11 +72,36 @@
 		qdel(L)
 
 	proc/get_heat_protection()
-		.= 0
+		var/thermal_protection = 10 // base value
+
+		// Resistance from Bio Effects
+		if (src.bioHolder)
+			if (src.bioHolder.HasEffect("dwarf"))
+				thermal_protection += 10
+
+		// Resistance from Clothing
+		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_HEATPROT)
+		thermal_protection = clamp(thermal_protection, 0, 100)
+		return thermal_protection
+
 	proc/get_cold_protection()
-		.= 0
+		// Sealed space suit? If so, consider it to be full protection
+		if (src.protected_from_space())
+			return 100
+
+		var/thermal_protection = 10 // base value
+
+		// Resistance from Clothing
+		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_COLDPROT)
+
+		thermal_protection = clamp(thermal_protection, 0, 100)
+		return thermal_protection
+
 	proc/get_rad_protection()
-		.= 0
+		return (tanh(0.02*(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_EXT)+GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT)))**2)
+
+	proc/get_chem_protection()
+		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_CHEMPROT), 0, 100)
 
 /mob/living/New()
 	..()
@@ -112,6 +137,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/human/New()
 	..()
@@ -135,6 +161,7 @@
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/viruses)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/carbon/cube/New()
 	..()
@@ -147,6 +174,7 @@
 	add_lifeprocess(/datum/lifeprocess/statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/radiation)
 
 /mob/living/silicon/ai/New()
 	..()
@@ -208,7 +236,7 @@
 			if(src.disposed) return
 			L = src.lifeprocesses?[thing]
 			if(!L)
-				logTheThing("debug", src, null, "had lifeprocess [thing] removed during Life() probably.")
+				logTheThing(LOG_DEBUG, src, "had lifeprocess [thing] removed during Life() probably.")
 				continue
 			L.Process(environment)
 
@@ -236,7 +264,7 @@
 		//Regular Trait updates
 		if(src.traitHolder)
 			for(var/id in src.traitHolder.traits)
-				var/obj/trait/O = src.traitHolder.traits[id]
+				var/datum/trait/O = src.traitHolder.traits[id]
 				O.onLife(src, life_mult)
 
 		update_icons_if_needed()
@@ -409,27 +437,6 @@
 	if (..(parent))
 		return 1
 
-	if (!src.item)
-		src.death(FALSE)
-
-	if (src.item && src.item.loc != src) //ZeWaka: Fix for null.loc
-		if (isturf(src.item.loc))
-			src.item.set_loc(src)
-		else
-			src.death(FALSE)
-
-	for (var/atom/A as obj|mob in src)
-		if (A != src.item && A != src.dummy && A != src.owner && !istype(A, /atom/movable/screen))
-			if (isobj(A) || ismob(A)) // what the heck else would this be?
-				A:set_loc(src.loc)
-
-	src.set_density(src.item ? src.item.density : 0)
-	src.item.set_dir(src.dir)
-	src.icon = src.item.icon
-	src.icon_state = src.item.icon_state
-	src.color = src.item.color
-	src.overlays = src.item.overlays
-
 /mob/living/carbon/cube
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -600,42 +607,6 @@
 			var/datum/pathogen/P = src.pathogens[uid]
 			P.disease_act()
 
-	get_cold_protection()
-		// calculate 0-100% insulation from cold environments
-		if (!src)
-			return 0
-
-		// Sealed space suit? If so, consider it to be full protection
-		if (src.protected_from_space())
-			return 100
-
-		var/thermal_protection = 10 // base value
-
-		// Resistance from Clothing
-		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_COLDPROT)
-
-/*
-		for (var/obj/item/C as anything in src.get_equipped_items())
-			thermal_protection += C.getProperty("coldprot")*/
-
-		/*
-		// Resistance from covered body parts
-		// Commented out - made certain covering items (winter coats) basically spaceworthy all on their own, and made tooltips inaccurate
-		// Besides, the protected_from_space check above covers wearing a full spacesuit.
-		if (w_uniform && (w_uniform.body_parts_covered & TORSO))
-			thermal_protection += 10
-
-		if (wear_suit)
-			if (wear_suit.body_parts_covered & TORSO)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & LEGS)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & ARMS)
-				thermal_protection += 10
-		*/
-
-		thermal_protection = clamp(thermal_protection, 0, 100)
-		return thermal_protection
 
 	proc/get_disease_protection(var/ailment_path=null, var/ailment_name=null)
 		if (!src)
@@ -671,12 +642,6 @@
 
 		resist_prob = clamp(resist_prob,0,100)
 		return resist_prob
-
-	get_rad_protection()
-		// calculate 0-100% insulation from rads
-		if (!src)
-			return 0
-		return clamp(GET_ATOM_PROPERTY(src, PROP_MOB_RADPROT), 0, 100)
 
 	get_ranged_protection()
 		if (!src)
@@ -718,39 +683,6 @@
 			return 0
 		return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISARM_RESIST), 90)
 
-
-	get_heat_protection()
-		// calculate 0-100% insulation from cold environments
-		if (!src)
-			return 0
-
-		var/thermal_protection = 10 // base value
-
-		// Resistance from Bio Effects
-		if (src.bioHolder)
-			if (src.bioHolder.HasEffect("dwarf"))
-				thermal_protection += 10
-
-		// Resistance from Clothing
-		thermal_protection += GET_ATOM_PROPERTY(src, PROP_MOB_HEATPROT)
-
-		/*
-		// Resistance from covered body parts
-		// See get_cold_protection for comment out reasoning
-		if (w_uniform && (w_uniform.body_parts_covered & TORSO))
-			thermal_protection += 10
-
-		if (wear_suit)
-			if (wear_suit.body_parts_covered & TORSO)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & LEGS)
-				thermal_protection += 10
-			if (wear_suit.body_parts_covered & ARMS)
-				thermal_protection += 10
-		*/
-
-		thermal_protection = clamp(thermal_protection, 0, 100)
-		return thermal_protection
 
 	proc/add_fire_protection(var/temp)
 		var/fire_prot = 0

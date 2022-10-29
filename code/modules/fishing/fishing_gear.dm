@@ -63,7 +63,7 @@
 			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
-		playsound(src.user, "sound/items/fishing_rod_cast.ogg", 50, 1)
+		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 		src.user.visible_message("[src.user] starts fishing.")
 		src.rod.is_fishing = true
 		src.rod.UpdateIcon()
@@ -119,7 +119,7 @@
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "fish_portal-active"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		new /obj/item/fish_portal(get_turf(src))
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 40)
 		user.visible_message("[user] flips off the [src].", "You turn off the [src].")

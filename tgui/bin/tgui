@@ -134,7 +134,7 @@ task-merge-bundle() {
   echo "tgui: Rebuilding tgui bundle"
   pushd .
   task-install
-  task-webpack
+  task-webpack --mode=production
   popd
   cp "$file_target" "$file_current"
   exit 0

@@ -8,12 +8,17 @@
 	name = "spy_thief"
 	config_tag = "spy_theft"
 
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_antag_roles = list(ROLE_TRAITOR)
 	var/const/waittime_l = 600	// Minimum after round start to send threat information to printer
 	var/const/waittime_h = 1800	// Maximum after round start to send threat information to printer
 
+#ifdef RP_MODE
 	var/const/bounty_refresh_interval = 25 MINUTES
+#else
+	var/const/bounty_refresh_interval = 15 MINUTES
+#endif
 	var/last_refresh_time = 0
 
 	var/const/spies_possible = 7
@@ -31,10 +36,10 @@
 	var/list/photo_bounties = list()				// Photos of people (Operates by text, because that's the only info that photos store)
 
 	var/const/organ_bounty_amt = 4
-	var/const/person_bounty_amt = 5
+	var/const/person_bounty_amt = 4
 	var/const/photo_bounty_amt = 4
-	var/const/station_bounty_amt = 4
-	var/const/big_station_bounty_amt = 2
+	var/const/station_bounty_amt = 5
+	var/const/big_station_bounty_amt = 3
 
 	var/list/possible_areas = list()
 	var/list/active_bounties = list()
@@ -70,7 +75,7 @@
 	// Adjust reward based off target job to estimate risk level
 		if (job == "Head of Security" || job == "Captain")
 			return 3
-		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Special Operative" || job == "Security Officer" || job == "Detective")
+		else if (job == "Medical Director" || job == "Head of Personnel" || job == "Chief Engineer" || job == "Research Director" || job == "Nanotrasen Security Consultant" || job == "Security Officer" || job == "Detective")
 			return 2
 		else
 			return 1
@@ -116,7 +121,7 @@
 
 		if (reward.item)
 			var/obj/item = new reward.item(pda_turf)
-			logTheThing("debug", user, null, "spy thief reward spawned: [item] at [log_loc(user)]")
+			logTheThing(LOG_DEBUG, user, "spy thief reward spawned: [item] at [log_loc(user)]")
 			user.show_text("Your PDA accepts the bounty and spits out [reward] in exchange.", "red")
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
@@ -165,7 +170,7 @@
 			break
 		traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
 	var/list/chosen_spy_thieves = antagWeighter.choose(pool = possible_spies, role = ROLE_SPY_THIEF, amount = num_spies, recordChosen = 1)
@@ -330,8 +335,11 @@
 
 	station_bounties[/obj/item/disk/data/floppy/read_only/communications] = 2
 	station_bounties[/obj/item/disk/data/floppy/read_only/authentication] = 3
+	station_bounties[/obj/item/disk/data/floppy/manudrive/ai] = 2
+	station_bounties[/obj/item/disk/data/floppy/manudrive/law_rack] = 1
 	station_bounties[/obj/item/aiModule/freeform] = 3
-
+	station_bounties[/obj/item/aiModule/nanotrasen1] = 2
+	station_bounties[/obj/item/aiModule/nanotrasen2] = 2
 
 	station_bounties[/obj/item/cell] = 1
 	station_bounties[/obj/item/device/multitool] = 1
@@ -352,12 +360,13 @@
 	station_bounties[/obj/item/clothing/suit/armor/vest] = 2
 
 	station_bounties[/obj/item/robodefibrillator] = 1
-	station_bounties[/obj/item/remote/porter/port_a_medbay] = 1
+	station_bounties[/obj/item/remote/porter/port_a_medbay] = 2
 	station_bounties[/obj/item/staple_gun] = 1
 	station_bounties[/obj/item/storage/firstaid] = 1
 	station_bounties[/obj/item/circular_saw] = 1
 	station_bounties[/obj/item/reagent_containers/hypospray] = 1
 	station_bounties[/obj/item/paper/book/from_file/pharmacopia] = 1
+	station_bounties[/obj/item/reagent_containers/mender] = 2
 
 	station_bounties[/obj/item/reagent_containers/food/drinks/mug/HoS] = 1
 	station_bounties[/obj/item/reagent_containers/food/drinks/rum_spaced] = 2
@@ -372,6 +381,8 @@
 	station_bounties[/obj/captain_bottleship] = 3
 	station_bounties[/obj/item/hand_tele] = 3
 	station_bounties[/obj/item/card/id/captains_spare] = 3
+	station_bounties[/obj/item/rcd] = 2
+	station_bounties[/obj/item/rcd/construction/chiefEngineer] = 3
 
 	station_bounties[/obj/item/baton] = 2
 	station_bounties[/obj/item/gun/kinetic/riot40mm] = 2
@@ -380,6 +391,8 @@
 	station_bounties[/obj/item/captaingun] = 3
 	station_bounties[/obj/item/gun/energy/taser_gun] = 2
 	station_bounties[/obj/item/gun/energy/egun] = 3
+	station_bounties[/obj/item/gun/energy/pulse_rifle] = 3
+	station_bounties[/obj/item/gun/kinetic/riotgun] = 3
 
 
 	station_bounties[/obj/item/kitchen/utensil] = 1
@@ -419,17 +432,19 @@
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
 	station_bounties[/obj/item/clothing/glasses/healthgoggles] = 1
 
+	#ifdef UNDERWATER_MAP
+	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
+	station_bounties[/obj/item/clothing/suit/space/diving/civilian] = 1
+	station_bounties[/obj/item/clothing/suit/space/diving/command] = 2
+	station_bounties[/obj/item/clothing/suit/space/diving/engineering] = 1
+	#else
+	station_bounties[/obj/item/clothing/suit/space] = 1
 	station_bounties[/obj/item/clothing/suit/space/santa] = 1
 	station_bounties[/obj/item/clothing/suit/space/captain/blue] = 2
 	station_bounties[/obj/item/clothing/suit/space/captain/red] = 2
 	station_bounties[/obj/item/clothing/suit/space/captain] = 2
 	station_bounties[/obj/item/clothing/suit/space/engineer] = 1
-	station_bounties[/obj/item/clothing/suit/space/diving/security] = 2
-	station_bounties[/obj/item/clothing/suit/space/diving/civilian] = 1
-	station_bounties[/obj/item/clothing/suit/space/diving/command] = 2
-	station_bounties[/obj/item/clothing/suit/space/diving/engineering] = 1
-	station_bounties[/obj/item/clothing/suit/space] = 1
-
+	#endif
 	station_bounties[/obj/item/tank/jetpack] = 1
 
 	station_bounties[/obj/item/storage/secure/sbriefcase] = 2
@@ -450,6 +465,7 @@
 	station_bounties[/obj/item/device/radio/headset/mail] = 1
 	station_bounties[/obj/item/device/radio/headset/clown] = 1
 	station_bounties[/obj/item/device/radio/headset/deaf] = 1
+	station_bounties[/obj/item/device/radio/headset/miner] = 1
 	station_bounties[/obj/item/device/radio/headset/security] = 2
 	station_bounties[/obj/item/device/radio/headset/command/radio_show_host] = 2
 	station_bounties[/obj/item/device/radio/headset/command/hop] = 2
@@ -462,27 +478,33 @@
 	station_bounties[/obj/item/device/radio/headset/command/hos] = 3
 
 	// Big machinery (non portable) objects
-	big_station_bounties[/obj/machinery/vehicle/pod] = 1
-	big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
-	big_station_bounties[/obj/machinery/vehicle/cargo] = 1
-	big_station_bounties[/obj/machinery/vehicle/miniputt/nanoputt] = 1
+
+	#ifdef UNDERWATER_MAP
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub/secsub] = 1
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub/mining] = 1
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub/civilian] = 1
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub/engineer] = 1
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub/escape_sub] = 1
 	big_station_bounties[/obj/machinery/vehicle/tank/minisub] = 1
+	#else
+	big_station_bounties[/obj/machinery/vehicle/pod] = 1
+	big_station_bounties[/obj/machinery/vehicle/escape_pod] = 1
+	big_station_bounties[/obj/machinery/vehicle/cargo] = 1
+	big_station_bounties[/obj/machinery/vehicle/miniputt/nanoputt] = 1
+	#endif
 
 	big_station_bounties[/obj/machinery/power/reactor_stats] = 1
 	big_station_bounties[/obj/machinery/computer/supplycomp] = 1
 	big_station_bounties[/obj/machinery/computer3/generic/communications] = 1
 	big_station_bounties[/obj/machinery/computer3/terminal/zeta] = 1
+	big_station_bounties[/obj/machinery/networked/teleconsole] = 2
 	big_station_bounties[/obj/machinery/chem_dispenser] = 2
 	big_station_bounties[/obj/machinery/computer/announcement] = 2
 	big_station_bounties[/obj/machinery/computer/card] = 2
 	big_station_bounties[/obj/machinery/computer/genetics] = 2
 	big_station_bounties[/obj/machinery/computer/robotics] = 2
 	big_station_bounties[/obj/machinery/lawrack] = 3
+	big_station_bounties[/obj/machinery/turret] = 3
 
 	big_station_bounties[/obj/machinery/vending/medical] = 1
 	big_station_bounties[/obj/machinery/vending/port_a_nanomed] = 1
@@ -504,9 +526,10 @@
 
 	big_station_bounties[/obj/machinery/sleeper/port_a_medbay] = 1
 	big_station_bounties[/obj/machinery/port_a_brig] = 3
+	big_station_bounties[/obj/machinery/recharger] = 3
 
-	big_station_bounties[/obj/machinery/manufacturer/robotics] = 1
-	big_station_bounties[/obj/machinery/manufacturer/medical] = 1
+	big_station_bounties[/obj/machinery/manufacturer/robotics] = 2
+	big_station_bounties[/obj/machinery/manufacturer/medical] = 2
 	big_station_bounties[/obj/machinery/manufacturer/general] = 1
 
 	big_station_bounties[/obj/submachine/chef_oven] = 1
@@ -516,6 +539,7 @@
 	big_station_bounties[/obj/machinery/plantpot] = 1
 	big_station_bounties[/obj/machinery/partyalarm] = 1
 	big_station_bounties[/obj/pool_springboard] = 1
+	big_station_bounties[/obj/machinery/hydro_growlamp] = 1
 
 	big_station_bounties[/obj/reagent_dispensers/foamtank] = 1
 	big_station_bounties[/obj/reagent_dispensers/watertank/fountain] = 1
@@ -527,6 +551,8 @@
 
 	big_station_bounties[/obj/machinery/communications_dish] = 2
 	big_station_bounties[/obj/item/teg_semiconductor] = 2
+	big_station_bounties[/obj/machinery/power/smes] = 2
+	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3
 
 	active_bounties.len = 0
@@ -592,7 +618,7 @@
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
 		if (big_station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough big station bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
 		// Pick an item type then check if it is valid
@@ -631,7 +657,7 @@
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
 		if (station_bounties.len <= 0)
-			logTheThing( "debug", src, null, "spy_theft.dm was unable to create enough item bounties." )
+			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break
 		// Pick an item type then check if it is valid

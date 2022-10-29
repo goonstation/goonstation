@@ -64,12 +64,12 @@
 
 	CritterAttack(mob/M)
 		..()
-		var/S = pick("sound/impact_sounds/Generic_Hit_2.ogg", "sound/impact_sounds/Wood_Hit_Small_1.ogg")
+		var/S = pick('sound/impact_sounds/Generic_Hit_2.ogg', 'sound/impact_sounds/Wood_Hit_Small_1.ogg')
 		playsound(src.loc, S, 30, 1, -1)
 
 	ChaseAttack(mob/M)
 		..()
-		playsound(src.loc, "sound/impact_sounds/Wood_Hit_1.ogg", 20, 1, -1)
+		playsound(src.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', 20, 1, -1)
 		M.changeStatus("stunned", 3 SECONDS)
 
 	on_grump()
@@ -120,7 +120,7 @@
 						boutput(M, "<span class='alert'>You feel a foreboding feeling about the imminent fate of a certain turtle in [get_area(src)], better act quick.</span>")
 
 				message_admins("[key_name(user)] rigged [src] to explode in [user.loc.loc], [log_loc(user)].")
-				logTheThing("combat", user, null, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode in [user.loc.loc] ([log_loc(user)])")
 				rigged = TRUE
 				rigger = user
 
@@ -148,7 +148,7 @@
 			var/chat_text = make_chat_maptext(src, message)
 			for (var/mob/O in all_hearers(7, get_turf(src)))
 				O.show_message("<span class='game say bold'><span class='name'>[src]</span></span> says, <span class='message'>\"[message]\"</span>", 2, assoc_maptext = chat_text)
-			playsound(src.loc, "sound/misc/rimshot.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/rimshot.ogg', 50, 1)
 
 	//sets the turtle to sleep inside their shell. Will exit their shell if hit again
 	proc/enter_shell()
@@ -202,9 +202,9 @@
 			enter_shell()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= shell_count ? 75 : 200
-			if(2.0)
+			if(2)
 				src.health -= shell_count ? 25 : 75
 			else
 				src.health -= shell_count ? 0 : 25
@@ -250,7 +250,7 @@
 		if (search_frequency <= 0)
 			if (task != "chasing" || task != "attacking" || task != "sleeping")
 				for (var/mob/M in mobs)
-					if (M.job == "Clown" && get_dist(src, M) < 7)
+					if (M.job == "Clown" && GET_DIST(src, M) < 7)
 						target = M
 						attack = 1
 						task = "chasing"
@@ -272,13 +272,13 @@
 		if (src.costume_name)
 			. += "And he's wearing an adorable costume! Wow!"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, preferred_hat))
 			give_beret(W, user)
 		else
 			..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.alive)
 			take_beret(user)
 			return

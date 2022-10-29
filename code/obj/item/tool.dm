@@ -9,8 +9,8 @@
 	health = 5
 
 	// sensible defaults
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	stamina_damage = STAMINA_ITEM_DMG * 5/4
 	stamina_cost = STAMINA_ITEM_COST * 10/9
 	stamina_crit_chance = STAMINA_CRIT_CHANCE * 2/5

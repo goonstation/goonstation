@@ -55,7 +55,7 @@
 /mob/dead/observer/click(atom/target, params, location, control)
 
 	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
-		src.point(target)
+		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 		if (src.in_point_mode)
 			src.toggle_point_mode()
 		return
@@ -66,6 +66,7 @@
 	if(src.client)
 		src.updateOverlaysClient(src.client)
 		src.updateButtons()
+		src.hud.update_ability_hotbar()
 	// ok so in logout we set your ghost to 101 invisibility.
 	// in login we set it back to whatever it was. so you keep your ghost.
 	// is there a better way to do this? probably. i dont care.
@@ -75,7 +76,7 @@
 	REMOVE_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "clientless")
 
 
-/mob/dead/observer/point_at(var/atom/target)
+/mob/dead/observer/point_at(atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc))
 		return
 
@@ -89,7 +90,8 @@
 	if(prob(20))
 		point_invisibility = INVIS_NONE
 #endif
-	make_point(get_turf(target), pixel_x=target.pixel_x, pixel_y=target.pixel_y, color="#5c00e6", invisibility=point_invisibility)
+	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
 #define GHOST_LUM	1		// ghost luminosity
@@ -232,7 +234,8 @@
 		src.corpse = corpse
 		src.set_loc(get_turf(corpse))
 		src.real_name = corpse.real_name
-		src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
+		if (corpse.bioHolder?.mobAppearance)
+			src.bioHolder.mobAppearance.CopyOther(corpse.bioHolder.mobAppearance)
 		src.gender = src.bioHolder.mobAppearance.gender
 		src.UpdateName()
 		src.verbs += /mob/dead/observer/proc/reenter_corpse
@@ -265,9 +268,10 @@
 
 	if(!isdead(src))
 		if (src.hibernating == 1)
-			var/confirm = alert("Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", "Yes", "No")
+			var/confirm = tgui_alert(src, "Are you sure you want to ghost? You won't be able to exit cryogenic storage, and will be an observer the rest of the round.", "Observe?", list("Yes", "No"))
 			if(confirm == "Yes")
 				respawn_controller.subscribeNewRespawnee(src.ckey)
+				src.mind?.dnr = 1
 				src.ghostize()
 				qdel(src)
 			else
@@ -282,7 +286,7 @@
 
 
 /mob/proc/ghostize()
-	RETURN_TYPE(/mob/dead/observer)
+	RETURN_TYPE(/mob/dead)
 	// do nothing for NPCs
 	if(src.key || src.client)
 
@@ -291,7 +295,7 @@
 			return null
 
 		// step 1: either find a ghost or make one
-		var/mob/dead/observer/our_ghost = null
+		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
 		if (src.ghost && !src.ghost.disposed)
@@ -321,9 +325,10 @@
 
 		respawn_controller.subscribeNewRespawnee(our_ghost.ckey)
 		var/datum/respawnee/respawnee = global.respawn_controller.respawnees[our_ghost.ckey]
-		if(istype(respawnee))
+		if(istype(respawnee) && istype(our_ghost, /mob/dead/observer)) // target observers don't have huds
 			respawnee.update_time_display()
-			our_ghost.hud?.get_join_other() // remind them of the other server
+			//var/mob/dead/observer/our_observer = our_ghost
+			//our_observer.hud?.get_join_other() // remind them of the other server
 
 		our_ghost.update_item_abilities()
 		return our_ghost
@@ -516,6 +521,8 @@
 		src.x--
 	OnMove()
 
+	. = ..()
+
 /mob/dead/observer/mouse_drop(atom/A)
 	if (usr != src || isnull(A)) return
 	if (ismob(A))
@@ -536,7 +543,7 @@
 	set category = null
 	set name = "Re-enter Corpse"
 	if(!corpse || corpse.disposed)
-		alert("You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!")
+		tgui_alert(src, "You don't have a corpse! If you're very sure you do, and this seems wrong, make a bug report!", "No corpse")
 		return
 	if(src.client && src.client.holder && src.client.holder.state == 2)
 		var/rank = src.client.holder.rank
@@ -633,7 +640,7 @@
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
 		// not sure how this could happen, but be safe about it
-		if (!C.mob)
+		if (!C?.mob)
 			continue
 		var/mob/M = C.mob
 		// remove some types you cannot observe
@@ -660,7 +667,7 @@
 		creatures[name] = M
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)
@@ -786,7 +793,7 @@
 					creatures -= name
 
 	var/eye_name = null
-	creatures = sortList(creatures)
+	sortList(creatures, /proc/cmp_text_asc)
 	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
 
 	if (!eye_name)

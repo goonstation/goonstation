@@ -1,0 +1,127 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/table/neon,
+/obj/item/reagent_containers/food/drinks/juicer{
+	pixel_y = 5
+	},
+/obj/decal/cleanable/tomatosplat,
+/obj/neon_lining,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/neon_lining,
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/storage/crate/freezer,
+/obj/neon_lining{
+	dir = 10
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/reagent_containers/food/snacks/ice_cream_cone,
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice,
+/obj/item/reagent_containers/food/snacks/ice_cream,
+/obj/item/reagent_containers/food/snacks/ice_cream,
+/obj/item/reagent_containers/food/snacks/ice_cream,
+/obj/item/raw_material/ice,
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/stool/neon,
+/obj/item/raw_material/ice,
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/neon_lining{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/obj/decal/poster/wallsign/neonicecream{
+	pixel_y = 31
+	},
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/submachine/ice_cream_dispenser,
+/obj/neon_lining{
+	dir = 10
+	},
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/neon_lining,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"C" = (
+/obj/neon_lining{
+	dir = 10
+	},
+/obj/decoration/pottedfern,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/item/raw_material/ice,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/stool/neon,
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/machinery/light/small/floor/blueish,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"T" = (
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/table/neon,
+/obj/item/reagent_containers/food/snacks/ice_cream/gross{
+	pixel_y = 13;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom{
+	pixel_x = -9;
+	pixel_y = 13
+	},
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/marble,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/neon_lining,
+/turf/simulated/floor/sandytile,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+v
+T
+a
+"}
+(2,1,1) = {"
+i
+Q
+Z
+"}
+(3,1,1) = {"
+H
+k
+N
+"}
+(4,1,1) = {"
+m
+X
+b
+"}
+(5,1,1) = {"
+C
+M
+A
+"}

@@ -1,22 +1,23 @@
 //this is designed for sounds - but maybe could be adapted for more collision / range checking stuff in the future
 
-#define GET_NEARBY(A,range) (A.z <= 0 || A.z > length(spatial_z_maps)) ? null : spatial_z_maps[A.z].get_nearby(A,range)
+#define GET_NEARBY(A,range) ((A.z <= 0 || A.z > length(spatial_z_maps)) ? null : spatial_z_maps[A.z].get_nearby(A,range))
 
-#define CELL_POSITION(X,Y) clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1,1,hashmap.len)
+#define CELL_POSITION(X,Y) (clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1, 1, length(hashmap)))
 
-#define ADD_BUCKET(X,Y) . |= CELL_POSITION(X, Y)
+#define ADD_BUCKET(X,Y) (. |= CELL_POSITION(X, Y))
 #define SPATIAL_HASHMAP_CELL_SIZE 30
 
+/// The global spatial Z map list, used for our spatial hashing
 var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 /proc/init_spatial_maps()
 	. = new /list(world.maxz)
-	for (var/zlevel = 1; zlevel <= world.maxz; zlevel++)
-		.[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
+	for (var/zlevel in 1 to world.maxz)
+		.[zlevel] = new/datum/spatial_hashmap(world.maxx, world.maxy, SPATIAL_HASHMAP_CELL_SIZE, zlevel)
 
 /proc/init_spatial_map(zlevel)
 	spatial_z_maps.len = world.maxz
-	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx,world.maxy,SPATIAL_HASHMAP_CELL_SIZE,zlevel)
+	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(world.maxx, world.maxy, SPATIAL_HASHMAP_CELL_SIZE, zlevel)
 
 /datum/spatial_hashmap
 	var/list/list/hashmap
@@ -40,16 +41,14 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 	var/tmp/turf/T = null
 
 
-
-	New(w,h,cs,z)
+	New(w, h, cs, z)
 		..()
 		cols = w / cs
 		rows = h / cs
 
-		hashmap = list()
-		hashmap.len = cols * rows
+		hashmap = new /list(cols * rows)
 
-		for (var/i = 1; i <= cols*rows; i++)
+		for (var/i in 1 to cols*rows)
 			hashmap[i] = list()
 
 		width = w
@@ -72,13 +71,13 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 	proc/update()
 		last_update = world.time
-		for (var/i = 1; i <= cols*rows; i++) //clean
+		for (var/i in 1 to cols*rows) //clean
 			hashmap[i].len = 0
 		for (var/client/C) //register
 			if (C.mob)
 				T = get_turf(C.mob)
-				if (T && T.z == my_z)
-					hashmap[CELL_POSITION(T.x,T.y)] += C.mob
+				if (T?.z == my_z)
+					hashmap[CELL_POSITION(T.x, T.y)] += C.mob
 				//a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here
 				//register(C.mob)
 				//C.mob.maptext = "[CELL_POSITION(C.mob.x,C.mob.y)]" //lazy debug to see what cell we are being placed in

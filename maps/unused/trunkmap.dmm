@@ -1147,7 +1147,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "add" = (
-/obj/machinery/smelter,
+/obj/machinery/neosmelter,
 /turf/simulated/floor/plating,
 /area/station/mining/refinery)
 "ade" = (
@@ -1194,7 +1194,7 @@
 /turf/simulated/floor/greenwhite,
 /area/station/medical/cdc)
 "adk" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light,
 /turf/simulated/floor/greenwhite{
@@ -2126,7 +2126,7 @@
 /turf/space,
 /area/space)
 "afI" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
@@ -2195,7 +2195,7 @@
 /area/listeningpost)
 "afT" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 9
 	},
 /area/space)
@@ -2230,7 +2230,7 @@
 /turf/simulated/floor/plating,
 /area/listeningpost)
 "afZ" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
@@ -5933,14 +5933,14 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "asc" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell5";
 	name = "Cell 5 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "ase" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell6";
 	name = "Cell 6 Locker"
 	},
@@ -7313,7 +7313,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "awo" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell4";
 	name = "Cell 4 Locker"
 	},
@@ -8877,7 +8877,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "aBP" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell3";
 	name = "Cell 3 Locker"
 	},
@@ -9180,7 +9180,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aCS" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9707,7 +9710,10 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aEP" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aEQ" = (
@@ -10199,14 +10205,14 @@
 /turf/simulated/wall/false_wall,
 /area/station/security/main)
 "aGH" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell2";
 	name = "Cell 2 Locker"
 	},
 /turf/simulated/floor,
 /area/station/security/main)
 "aGI" = (
-/obj/storage/secure/closet/brig/automatic/genpop_n{
+/obj/storage/secure/closet/brig_automatic/genpop_n{
 	id = "cell1";
 	name = "Cell 1 Locker"
 	},
@@ -12736,7 +12742,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/west,
@@ -12752,7 +12758,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -12766,7 +12772,7 @@
 	id = "eva";
 	name = "EVA Blast Doors";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/grille/steel,
 /obj/window/reinforced/north,
@@ -16938,7 +16944,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bdS" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
@@ -20665,7 +20671,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "boD" = (
-/obj/machinery/air_vendor,
+/obj/machinery/vending/air_vendor,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "boE" = (
@@ -21406,7 +21412,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -21422,7 +21428,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -21451,7 +21457,7 @@
 /obj/machinery/door/poddoor{
 	id = "scienceteleporter";
 	name = "Teleporter Blast Shield";
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 8;
@@ -22998,7 +23004,7 @@
 /turf/simulated/wall,
 /area/station/hallway/primary/central)
 "btR" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "btS" = (
 /obj/cable{
@@ -23794,7 +23800,7 @@
 /turf/simulated/floor/black/side,
 /area/station/hallway/primary/east)
 "bvM" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
@@ -23812,12 +23818,12 @@
 /area/listeningpost)
 "bvQ" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 1
 	},
 /area/space)
 "bvR" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -23901,7 +23907,7 @@
 	},
 /area/station/science/lobby)
 "bwd" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
@@ -24115,7 +24121,7 @@
 	},
 /area/listeningpost)
 "bwC" = (
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -24448,7 +24454,7 @@
 /area/listeningpost)
 "bxm" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 5
 	},
 /area/space)
@@ -24740,13 +24746,13 @@
 /area/station/quartermaster/storage)
 "bxZ" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 8
 	},
 /area/space)
 "byf" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 4
 	},
 /area/space)
@@ -25236,19 +25242,19 @@
 /area/station/hallway/primary/central)
 "bAr" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 10
 	},
 /area/space)
 "bAs" = (
 /turf/space,
-/turf/simulated/wall/asteroid{
+/turf/simulated/wall/auto/asteroid{
 	dir = 6
 	},
 /area/space)
 "bAt" = (
 /turf/space,
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "bAu" = (
 /turf/simulated/floor/plating/airless/asteroid,
@@ -27583,7 +27589,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -27828,7 +27834,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -28140,7 +28146,7 @@
 /turf/simulated/wall,
 /area/station/security/prison)
 "ejp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light{
 	dir = 1;
 	pixel_x = -1
@@ -28661,7 +28667,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29530,7 +29536,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -29653,7 +29659,7 @@
 	id = "Disposal Entrance";
 	name = "Crusher Blast Door";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
@@ -29689,7 +29695,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -29957,7 +29963,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -30111,7 +30117,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -30211,7 +30217,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30309,7 +30315,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/glass{
 	name = "Commander's Office";
@@ -30385,7 +30391,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30492,7 +30498,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
@@ -30597,7 +30603,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -30947,7 +30953,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -31344,7 +31350,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/security/hos)
@@ -32241,7 +32247,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d2 = 4;
@@ -32903,7 +32909,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/disposalpipe/segment{
 	dir = 4
@@ -33014,7 +33020,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -33404,7 +33410,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 1;
@@ -33991,7 +33997,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -34366,7 +34372,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	name = "Secure Transport";
@@ -34571,7 +34577,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/cable{
 	d1 = 4;
@@ -35173,7 +35179,7 @@
 	layer = 2;
 	name = "Lockdown Shutters";
 	opacity = 0;
-	p_open = 1
+	panel_open = 1
 	},
 /obj/machinery/door/airlock/security{
 	aiControlDisabled = 1;

@@ -17,7 +17,7 @@
 
   var/turf/T = get_turf(holder.owner)
 
-  playsound(T, "sound/effects/elec_bzzz.ogg", 100, 1)
+  playsound(T, 'sound/effects/elec_bzzz.ogg', 100, 1)
   holder.owner.visible_message("<span class='combat'><b>[holder.owner] [pick("sparks", "flashes", "buzzes")] [pick("oddly", "worryingly", "powerfully", "loudly", "intensely")]!</b></span>", "<span class='combat'><b>You emit an electromagnetic pulse!</b></span>")
   var/obj/overlay/pulse = new/obj/overlay(T)
   pulse.icon = 'icons/effects/effects.dmi'
@@ -52,8 +52,8 @@
 
   var/turf/ST = get_turf(holder.owner) // sound turf
 
-  playsound(ST, "sound/effects/suck.ogg", 100, 1)
-  playsound(ST, "sound/machines/hiss.ogg", 100, 1)
+  playsound(ST, 'sound/effects/suck.ogg', 100, 1)
+  playsound(ST, 'sound/machines/hiss.ogg', 100, 1)
   holder.owner.visible_message("<span class='combat'><b>[holder.owner] [pick("sucks", "pulls", "jerks")] everything towards itself [pick("wildly", "forcefully", "powerfully", "loudly", "intensely")]!</b></span>", "<span class='combat'><b>You concentrate your gravitational pull to an intense extreme!</b></span>")
   // XTREEEEEEM SKATEBOARDS SUNGLASSES 90S WOOOO
 
@@ -108,11 +108,11 @@
 
   // no visible message for anyone else, but there is a sound clue
 	var/turf/T = get_turf(holder.owner)
-	playsound(T, "sound/weapons/ACgun2.ogg", 100, 1)
+	playsound(T, 'sound/weapons/ACgun2.ogg', 100, 1)
 	holder.owner.show_message("<span class='combat'><b>You emit a wave of radiation!</b></span>")
 
-	for(var/mob/living/L in orange(7, holder.owner))
-		L.changeStatus("radiation", 1 SECOND)
+	for(var/mob/living/L in oviewers(7, holder.owner))
+		L.take_radiation_dose(0.1 SIEVERTS)
 		L.show_text("You feel odd.", "red")
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -130,7 +130,7 @@
     return 1
 
   var/turf/T = get_turf(holder.owner)
-  playsound(T, "sound/effects/ghost.ogg", 100, 1)
+  playsound(T, 'sound/effects/ghost.ogg', 100, 1)
   holder.owner.show_message("<span class='combat'><b>You compel all to gaze upon your singular magnificence...</b></span>")
 
   for (var/mob/living/M in oviewers(8, holder.owner))

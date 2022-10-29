@@ -1,4 +1,4 @@
-/turf/simulated/floor/engine/attack_hand(var/mob/user as mob)
+/turf/simulated/floor/engine/attack_hand(var/mob/user)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)

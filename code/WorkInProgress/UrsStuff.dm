@@ -18,6 +18,8 @@
 
 /obj/dialogueobj/dreambee
 
+/obj/item/old_grenade/chicken
+
 /turf/unsimulated/floor/dream/beach
 
 /turf/unsimulated/floor/dream/space
@@ -48,3 +50,5 @@
 	name = "\improper Knitting Supplies"
 
 /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
+
+/mob/living/critter/robotic/bot/engibot

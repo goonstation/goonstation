@@ -7,8 +7,8 @@
 	icon_state = "black"
 	uses_multiple_icon_states = 1
 	item_state = "black"
-	permeability_coefficient = 0.50
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_jumpsuit_pattern
 
 	New()
 		..()
@@ -17,7 +17,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/under/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/under/U, mob/user)
 		if(istype(U, /obj/item/clothing/under/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible jumpsuit chain reaction!</span>")
 			SPAWN(1 SECOND)
@@ -72,6 +72,7 @@
 
 	proc/change_outfit(var/datum/chameleon_jumpsuit_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -302,6 +303,7 @@
 	icon = 'icons/obj/clothing/item_hats.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_hat_pattern
 	blocked_from_petasusaphilic = TRUE
 	item_function_flags = IMMUNE_TO_ACID
 	seal_hair = 0
@@ -313,7 +315,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/head/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/head/U, mob/user)
 		if(istype(U, /obj/item/clothing/head/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a cataclysmic hat infinite loop!</span>")
 			SPAWN(1 SECOND)
@@ -367,6 +369,7 @@
 
 	proc/change_outfit(var/datum/chameleon_hat_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -539,6 +542,7 @@
 	uses_multiple_icon_states = 1
 	over_hair = FALSE
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_suit_pattern
 
 	New()
 		..()
@@ -547,7 +551,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/suit/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/suit/U, mob/user)
 		if(istype(U, /obj/item/clothing/suit/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a horrible outer suit meltdown death loop!</span>")
 			SPAWN(1 SECOND)
@@ -603,6 +607,7 @@
 
 	proc/change_outfit(var/datum/chameleon_suit_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -654,6 +659,12 @@
 		desc = "A protective laboratory coat with the purple markings of a Scientist."
 		icon_state = "SCIlabcoat"
 		item_state = "SCIlabcoat"
+
+	labcoat_MD
+		name = "medical director's labcoat"
+		desc = "The Medical Directors personal labcoat, its creation was commisioned and designed by the director themself."
+		icon_state = "MDlonglabcoat"
+		item_state = "MDlonglabcoat"
 
 	paramedic
 		name = "paramedic suit"
@@ -846,6 +857,7 @@
 	wear_image_icon = 'icons/mob/clothing/eyes.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_glasses_pattern
 
 	New()
 		..()
@@ -854,7 +866,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/glasses/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/glasses/U, mob/user)
 		if(istype(U, /obj/item/clothing/glasses/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a horrible idea! You'll cause a horrible eyewear cascade!</span>")
 			SPAWN(1 SECOND)
@@ -906,6 +918,7 @@
 
 	proc/change_outfit(var/datum/chameleon_glasses_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -972,6 +985,7 @@
 	wear_image_icon = 'icons/mob/clothing/feet.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_shoes_pattern
 	step_sound = "step_default"
 
 	New()
@@ -981,7 +995,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/shoes/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/shoes/U, mob/user)
 		if(istype(U, /obj/item/clothing/shoes/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a bad shoe feedback cycle!</span>")
 			SPAWN(1 SECOND)
@@ -1037,6 +1051,7 @@
 
 	proc/change_outfit(var/datum/chameleon_shoes_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1142,8 +1157,8 @@
 		step_sound = "step_default"
 
 /obj/item/clothing/gloves/chameleon
-	name = "Black Gloves"
-	desc = "These gloves are fire-resistant."
+	name = "black gloves"
+	desc = "These thick leather gloves are fire-resistant."
 	icon_state = "black"
 	item_state = "bgloves"
 	icon = 'icons/obj/clothing/item_gloves.dmi'
@@ -1151,6 +1166,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_feethand.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_gloves_pattern
 	material_prints = "black leather fibers"
 	hide_prints = 1
 	scramble_prints = 0
@@ -1162,7 +1178,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/clothing/gloves/U as obj, mob/user as mob)
+	attackby(obj/item/clothing/gloves/U, mob/user)
 		if(istype(U, /obj/item/clothing/gloves/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause an awful glove fractal!</span>")
 			SPAWN(1 SECOND)
@@ -1216,6 +1232,7 @@
 
 	proc/change_outfit(var/datum/chameleon_gloves_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1229,8 +1246,8 @@
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
-	var/name = "Black Gloves"
-	var/desc = "These gloves are fire-resistant."
+	var/name = "black gloves"
+	var/desc = "These thick leather gloves are fire-resistant."
 	var/icon_state = "black"
 	var/item_state = "bgloves"
 	var/sprite_item = 'icons/obj/clothing/item_gloves.dmi'
@@ -1241,7 +1258,7 @@
 	var/scramble_prints = 0
 
 	insulated
-		desc = "These gloves are electrically insulated."
+		desc = "Tough rubber work gloves styled in a high-visibility yellow color. They are electrically insulated, and provide full protection against most shocks."
 		name = "insulated gloves"
 		icon_state = "yellow"
 		item_state = "ygloves"
@@ -1250,23 +1267,23 @@
 		scramble_prints = 0
 
 	fingerless
-		desc = "These gloves lack fingers."
-		name = "Fingerless Gloves"
+		desc = "These gloves lack fingers. Good for a space biker look, but not so good for concealing your fingerprints."
+		name = "fingerless gloves"
 		icon_state = "fgloves"
 		item_state = "finger-"
 		hide_prints = 0
 		scramble_prints = 0
 
 	latex
-		name = "Latex Gloves"
+		name = "latex gloves"
 		icon_state = "latex"
 		item_state = "lgloves"
-		desc = "Thin gloves that offer minimal protection."
+		desc = "Thin, disposal medical gloves used to help prevent the spread of germs."
 		scramble_prints = 1
 
 	boxing
-		name = "Boxing Gloves"
-		desc = "These gloves are for competitive boxing."
+		name = "boxing gloves"
+		desc = "Big soft gloves used in competitive boxing. Gives your punches a bit more weight, at the cost of precision."
 		icon_state = "boxinggloves"
 		item_state = "bogloves"
 		print_type = "red leather fibers"
@@ -1301,6 +1318,7 @@
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	uses_multiple_icon_states = 1
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_belt_pattern
 
 	New()
 		..()
@@ -1309,7 +1327,7 @@
 			src.clothing_choices += P
 		return
 
-	attackby(obj/item/storage/belt/U as obj, mob/user as mob)
+	attackby(obj/item/storage/belt/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/belt/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a putrid belt spiral!</span>")
@@ -1362,6 +1380,7 @@
 
 	proc/change_outfit(var/datum/chameleon_belt_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1418,9 +1437,12 @@
 	item_state = "backpack"
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	uses_multiple_icon_states = 1
+	uses_multiple_icon_states = TRUE
 	var/list/clothing_choices = list()
+	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
 		..()
@@ -1452,7 +1474,7 @@
 			var/datum/chameleon_backpack_pattern/P = new U
 			src.clothing_choices += P
 
-	attackby(obj/item/storage/backpack/U as obj, mob/user as mob)
+	attackby(obj/item/storage/backpack/U, mob/user)
 		..()
 		if(istype(U, /obj/item/storage/backpack/chameleon))
 			boutput(user, "<span class='alert'>No!!! That's a terrible idea! You'll cause a stinky backpack self-cloning freak accident!</span>")
@@ -1505,6 +1527,7 @@
 
 	proc/change_outfit(var/datum/chameleon_backpack_pattern/T)
 		if (T)
+			src.current_choice = T
 			src.name = T.name
 			src.desc = T.desc
 			src.icon_state = T.icon_state
@@ -1647,6 +1670,52 @@
 			if(!which)
 				return
 
+			if (which.function == "delete_outfit")
+				var/datum/chameleon_outfit_choices/outfit_to_delete = tgui_input_list(usr, "Delete which chameleon outfit set?", "Chameleon Outfit Remote", outfit_choices)
+
+				if(!outfit_to_delete)
+					return
+				if(outfit_to_delete.function)
+					boutput(user, "<span class='alert'>The chameleon outfit prevents you from deleting this function!</span>")
+					return
+
+				src.outfit_choices -= outfit_to_delete
+
+				boutput(user, "<span class='notice'>Outfit set deleted!</span>")
+				return
+
+			if(which.function == "new_outfit")
+				var/name = tgui_input_text(usr, "Name of new outfit set:", "Chameleon Outfit Remote")
+				if(!name)
+					return
+				for(var/datum/chameleon_outfit_choices/P in src.outfit_choices)
+					if(P.name == name)
+						boutput(user, "<span class='alert'>That outfit set name is already saved in the chameleon outfit banks!</span>")
+						return
+
+				var/datum/chameleon_outfit_choices/P = new /datum/chameleon_outfit_choices(src)
+				P.name = name
+				if(connected_jumpsuit)
+					P.jumpsuit_type = connected_jumpsuit.current_choice
+				if(connected_hat)
+					P.hat_type = connected_hat.current_choice
+				if(connected_suit)
+					P.suit_type = connected_suit.current_choice
+				if(connected_glasses)
+					P.glasses_type = connected_glasses.current_choice
+				if(connected_shoes)
+					P.shoes_type = connected_shoes.current_choice
+				if(connected_gloves)
+					P.gloves_type = connected_gloves.current_choice
+				if(connected_belt)
+					P.belt_type = connected_belt.current_choice
+				if(connected_backpack)
+					P.backpack_type = connected_backpack.current_choice
+				src.outfit_choices += P
+
+				boutput(user, "<span class='notice'>New outfit set created!</span>")
+				return
+
 			if(connected_jumpsuit || which.jumpsuit_type)
 				connected_jumpsuit.change_outfit(which.jumpsuit_type)
 
@@ -1672,6 +1741,7 @@
 				connected_backpack.change_outfit(which.backpack_type)
 
 /datum/chameleon_outfit_choices
+	var/function = null
 	var/name = "Staff Assistant"
 	var/jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
 	var/hat_type = new/datum/chameleon_hat_pattern/
@@ -1729,7 +1799,7 @@
 		name = "Medical Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/medical_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
-		suit_type = new/datum/chameleon_suit_pattern/labcoat
+		suit_type = new/datum/chameleon_suit_pattern/labcoat_MD
 		glasses_type = new/datum/chameleon_glasses_pattern/prodoc
 		shoes_type = new/datum/chameleon_shoes_pattern
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
@@ -1737,7 +1807,7 @@
 		backpack_type = new/datum/chameleon_backpack_pattern
 
 	research_director
-		name = "Medical Director"
+		name = "Research Director"
 		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/research_director
 		hat_type = new/datum/chameleon_hat_pattern/fancy
 		suit_type = new/datum/chameleon_suit_pattern/labcoat
@@ -1934,3 +2004,11 @@
 		gloves_type = new/datum/chameleon_gloves_pattern/latex
 		belt_type = new/datum/chameleon_belt_pattern
 		backpack_type = new/datum/chameleon_backpack_pattern
+
+	new_outfit
+		function = "new_outfit"
+		name = "New Outfit Set"
+
+	delete_outfit
+		function = "delete_outfit"
+		name = "Delete Outfit Set"

@@ -656,7 +656,7 @@
 /turf/simulated/floor/wood,
 /area/prefab/discount_dans_asteroid)
 "zZ" = (
-/turf/simulated/wall/asteroid/comet/ice,
+/turf/simulated/wall/auto/asteroid/comet/ice,
 /area/noGenerate)
 "Al" = (
 /obj/decal/poster/wallsign/poster_discount,
@@ -751,7 +751,7 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "generic_open";
+	icon_state = "door_open";
 	name = "broken airlock"
 	},
 /obj/decal/cleanable/oil/streak,
@@ -1018,7 +1018,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "NV" = (
-/turf/simulated/wall/asteroid/comet/ice,
+/turf/simulated/wall/auto/asteroid/comet/ice,
 /area/prefab/discount_dans_asteroid)
 "Od" = (
 /obj/item/device/light/glowstick/green_on{

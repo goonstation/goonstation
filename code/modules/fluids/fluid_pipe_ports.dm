@@ -10,7 +10,7 @@
 
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.open)
 			src.open = 0
 			src.color = rgb(255,0,0)
@@ -52,7 +52,7 @@
 
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.open)
 			src.open = 0
 			src.color = rgb(255,0,0)

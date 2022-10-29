@@ -145,7 +145,7 @@
 		//Friendly fire check
 		if (get_pod_wars_team_num(user) == team_num)
 			message_admins("[user] just committed friendly fire against their team's [src]!")
-			logTheThing("combat", user, "\[POD WARS\][user] attacks their own team's critical system [src].")
+			logTheThing(LOG_COMBAT, user, "\[POD WARS\][user] attacks their own team's critical system [src].")
 
 			if (istype(ticker.mode, /datum/game_mode/pod_wars))
 				var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -186,6 +186,9 @@
 
 	ex_act(severity)
 		return
+
+	powered()
+		return TRUE
 
 	disposing()
 		..()
@@ -239,7 +242,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 	name = "Turret Deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	health = 125
 	quick_deploy_fuel = 2
 	associated_turret = /obj/deployable_turret/pod_wars
@@ -269,14 +272,14 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	//just "deactivates"
 	die()
 		if (!destroyed)
-			playsound(get_turf(src), "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			destroyed = 1
 			new /obj/decal/cleanable/robot_debris(src.loc)
 			src.alpha = 30
-			src.opacity = 0
+			src.set_opacity(0)
 			if (reconstruction_time)
 				sleep(reconstruction_time)
-				src.opacity = 1
+				src.set_opacity(1)
 				src.alpha = 255
 				health = initial(health)
 				destroyed = 0
@@ -286,7 +289,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	//VERY POSSIBLY UNNEEDED, -KYLE
 	// proc/pod_target_valid(var/obj/machinery/vehicle/V )
-	// 	var/distance = get_dist(V.loc,src.loc)
+	// 	var/distance = GET_DIST(V.loc,src.loc)
 	// 	if(distance > src.range)
 	// 		return 0
 
@@ -380,7 +383,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			if (isnull(assigned_id))
 				if (istype(I))
 					boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes [I] as its key!</span>")
-					playsound(src.loc, "sound/machines/ping.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 					assigned_id = I
 					team_num = get_team(I)
 					ship.locked = 0
@@ -547,7 +550,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/datum/light/light
 	var/light_r =1
 	var/light_g = 1
@@ -581,7 +584,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 		ctrl_pt.capture(user, team_num)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!can_be_captured)
 			var/cur_time
 			var/datum/game_mode/pod_wars/mode = ticker.mode
@@ -592,11 +595,11 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, "sound/machines/buzz-sigh.ogg", 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
+			playsound(get_turf(src), 'sound/machines/warning-buzzer.ogg', 150, 1, flags = SOUND_IGNORE_SPACE)	//loud
 
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
@@ -657,7 +660,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		return
 	meteorhit(var/obj/O as obj)
 		return
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return
 
 	//These are basically the same as "normal" pod_wars beacons, but they won't have a capture point so they should never get an owner team
@@ -676,7 +679,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "barricade"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	flags = NOSPLASH
 	event_handler_flags = USE_FLUID_ENTER
 	layer = OBJ_LAYER-0.1
@@ -708,18 +711,18 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			var/obj/machinery/vehicle/V = AM
 			V.health -= round(src.health/4)
 			V.checkhealth()
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 50, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
 			qdel(src)
 		..()
 
 	attackby(var/obj/item/W, var/mob/user)
 		attack_particle(user,src)
 		take_damage(W.force)
-		playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 20, 1)
+		playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 20, 1)
 		user.lastattacked = src
 		..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		switch (user.a_intent)
 			if (INTENT_HELP)
 				visible_message(src, "<span class='notice'>[user] pats [src] [pick("earnestly", "merrily", "happily","enthusiastically")] on top.</span>")
@@ -733,7 +736,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 						take_damage(20)
 					else
 						take_damage(5)
-					playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+					playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 					attack_particle(user,src)
 
 
@@ -784,7 +787,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				return
 			newThing = new src.object_type(T)
 		else
-			logTheThing("diary", user, null, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
+			logTheThing(LOG_DIARY, user, "tries to deploy an object of type ([src.type]) from [src] but its object_type is null and it is being deleted.", "station")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -793,7 +796,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -840,7 +843,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, "sound/effects/mag_warp.ogg", 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)

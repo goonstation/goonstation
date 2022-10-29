@@ -8,6 +8,7 @@
 
 ////////////////
 proc/make_cleanable(var/type,var/loc,var/list/viral_list)
+	RETURN_TYPE(/obj/decal/cleanable)
 	return new type(loc, viral_list)
 
 /obj/decal/cleanable
@@ -52,8 +53,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 
 		if (src.loc != null)
 			var/area/Ar = get_area(src)
-			if (Ar)
-				Ar.sims_score = max(Ar.sims_score - 6, 0)
+			Ar?.sims_score = max(Ar.sims_score - 6, 0)
 
 			if (src.stain)
 				src.Stain()
@@ -61,10 +61,9 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 			if(isturf(src.loc))
 				var/turf/T = src.loc
 				T.messy++
-
-			if (istype(src.loc, /turf/simulated/floor))
-				var/turf/simulated/T = src.loc
-				T.cleanable_fluid_react()
+				if (istype(T, /turf/simulated/floor))
+					var/turf/simulated/floor/floor = T
+					floor.cleanable_fluid_react()
 
 	set_loc(newloc)
 		if(isturf(src.loc))
@@ -186,7 +185,7 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 				src.sampled = 1
 				return 1
 
-	proc/Stain(var/atom/movable/AM)
+	proc/Stain(atom/movable/AM)
 		if (src.stain)
 			if (AM)
 				if (ishuman(AM))
@@ -205,21 +204,19 @@ proc/make_cleanable(var/type,var/loc,var/list/viral_list)
 					C.add_stain(src.stain)
 					return
 			else
-				SPAWN(0) //sorry. i want to lagcheck this. DO SOMETHING BETTER LATER ARUUGh
-					for (var/mob/living/carbon/human/H in src.loc)
-						if (H.lying)
-							if (H.wear_suit)
-								H.wear_suit.add_stain(src.stain)
-							else if (H.w_uniform)
-								H.w_uniform.add_stain(src.stain)
-						//else
-							//if (H.shoes)
-								//H.shoes.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
-					LAGCHECK(LAG_HIGH)
-					for (var/obj/item/clothing/C in src.loc)
-						C.add_stain(src.stain)
-						LAGCHECK(LAG_REALTIME)
+				for (var/mob/living/carbon/human/H in src.loc)
+					if (H.lying)
+						if (H.wear_suit)
+							H.wear_suit?.add_stain(src.stain)
+						else if (H.w_uniform)
+							H.w_uniform?.add_stain(src.stain)
+					//else
+						//if (H.shoes)
+							//H.shoes.add_stain(src.stain)
+					LAGCHECK(LAG_REALTIME)
+				for (var/obj/item/clothing/C in src.loc)
+					C.add_stain(src.stain)
+					LAGCHECK(LAG_REALTIME)
 
 	proc/create_overlay(var/list/icons_to_choose, var/add_color, var/direction, var/overlay_icon)
 		var/overlay_icon_state
@@ -582,13 +579,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_dry = 0
 	can_fluid_absorb = 0
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			if (H.job == "Chef" || H.job == "Sous-Chef")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (H.gloves)
 					H.gloves.blood_DNA = src.blood_DNA
 				else
@@ -745,25 +742,27 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/items/balloon.dmi'
 	icon_state = "balloon_white_pop"
 
+// reagent coloration is done in pens_writing_etc
 /obj/decal/cleanable/writing
 	name = "writing"
 	desc = "Someone's scribbled something here."
 	layer = TURF_LAYER + 1
 	icon = 'icons/obj/decals/writing.dmi'
 	icon_state = "writing1"
-	color = "#000000"
+	color = "#FFFFFF"
 	random_icon_states = list("writing1", "writing2", "writing3", "writing4", "writing5", "writing6", "writing7")
 	var/words = "Nothing."
 	var/font = null
 	var/webfont = 0
-	var/font_color = "#000000"
+	var/font_color = "#FFFFFF"
 	var/color_name = null
 	var/artist = null//the key of the one who wrote it
 	real_name = "writing"
 
 	get_desc(dist)
 		. = "<br><span class='notice'>It says[src.material ? src.material : src.color_name ? " in [src.color_name]" : null]:</span><br>[words]"
-		//. = "[src.webfont ? "<link href='http://fonts.googleapis.com/css?family=[src.font]' rel='stylesheet' type='text/css'>" : null]<span class='notice'>It says:</span><br><span style='[src.font ? "font-family: [src.font][src.webfont ? ", cursive" : null];" : null]color: [src.font_color]'>[words]</span>"
+		if (src.reagents.total_volume)
+			. += "<br><span class = 'notice'>It's written in a [get_nearest_color(src.reagents.get_average_color())] substance."
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -803,7 +802,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		pixel_y += rand(-12,12)
 		pixel_x += rand(-12,12)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (istype(W, /obj/item/stamp))
 
 			var/obj/item/stamp/S = W
@@ -839,7 +838,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.show_text("All that won't fit on [src]!", "red")
 				pen.in_use = 0
 				return
-			logTheThing("station", user, null, "writes on [src] with [pen] at [log_loc(src)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [src] with [pen] at [log_loc(src)]: [t]")
 			t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 			if (pen.uses_handwriting && user?.mind?.handwriting)
 				src.font = user.mind.handwriting
@@ -985,7 +984,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W]. It's probably best not to ask.</span>",\
 				"<span class='notice'>You [src.sample_verb] some of the puke into [W]. You are absolutely disgusting.</span>")
 				W.reagents.handle_reactions()
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				src.sampled = 1
 				return 1
 
@@ -1021,7 +1020,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			user.visible_message("<span class='notice'><b>[user]</b> is sticking their fingers into [src] and pushing it into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>",\
 			"<span class='notice'>You [src.sample_verb] some of the puke into [W].<span class='alert'>It [fluff] a bit.[fluff2]</span></span>")
 			W.reagents.handle_reactions()
-			playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			src.sampled = 1
 			return 1
 
@@ -1078,7 +1077,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 							M.vomit()
 
 				I.reagents.handle_reactions()
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				src.sampled = 1
 				return 1
 
@@ -1118,7 +1117,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 		..()
 		qdel(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		user.show_text("The ashes slip through your fingers.", "blue")
 		qdel(src)
 		return
@@ -1139,7 +1138,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	slippery = 10
 	can_dry = 1
 	can_sample = 1
-	sample_reagent = "slime"
+	sample_reagent = "badgrease"
 	stain = "slimy"
 
 	Dry(var/time = rand(100,200))
@@ -1270,7 +1269,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				user.visible_message("<span class='notice'><b>[user]</b> [src.sample_verb]s some of [src] into [W].</span>",\
 				"<span class='notice'>You [src.sample_verb] some of [src] into [W].</span>")
 				W.reagents.handle_reactions()
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				src.amount--
 				if (src.amount <= 0)
 					qdel(src)
@@ -1333,13 +1332,13 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon_state = "gib1"
 	random_icon_states = list("gib1", "gib2", "gib3", "gib4", "gib5", "gib6", "gib7")
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (H.job == "Roboticist" || H.job == "Engineer" || H.job == "Mechanic")
+			if (H.job == "Roboticist" || H.job == "Engineer")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/effects/sparks3.ogg", 50, 1)
+				playsound(src.loc, 'sound/effects/sparks3.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now you have grime all over your hands for nothing!", "red")
 				else
@@ -1349,7 +1348,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 			if (H.job == "Chef" || H.job == "Sous-Chef")
 				user.visible_message("<span class='notice'><b>[H]</b> starts rifling through \the [src] with their hands. What a weirdo.</span>",\
 				"<span class='notice'>You rake through \the [src] with your bare hands.</span>")
-				playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.sampled)
 					H.show_text("You didn't find anything useful. Now your hands are all grimey for nothing!", "red")
 				else
@@ -1533,6 +1532,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	can_sample = 1
 	sample_reagent = "magnesium"
 	sample_verb = "scrape"
+	color = "#434343" // distinguish from salt
 	var/on_fire = null
 	var/burn_time = 4
 

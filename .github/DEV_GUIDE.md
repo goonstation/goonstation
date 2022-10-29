@@ -37,9 +37,13 @@ Now, let's combine your repository and VS Code!
 
 ### Step 3: *Git* Good :arrows_clockwise: 
 
-First, we're going to need to download git, which can be found on [this page](https://git-scm.com/downloads). Install as normal, though I'd recommend not using vim as the default git editor. 
+First, we're going to need to ++download git++, which can be found on **[this page](https://git-scm.com/downloads)**. Install as normal, though I'd recommend not using vim as the default git editor. 
 
 Git is what will let you synchronize your code with others, make your own branches and merging them with other people's code, complete with VS Code integration to make the process easy.
+
+:::danger
+Please don't install/use GitKraken or GitHub Desktop. There is nothing but endless pain their way. I know GitKraken looks all professional and GH Desktop is nice and simple but their looks are _extremely_ deceiving. No help will be offered with those programs.
+:::
 
 Next, go back to VSCode and relaunch it. Under the version control sidebar (looks like a tree branch) click Clone Repository. It should look like this: ![](https://i.imgur.com/pBqGiT2.png)
 
@@ -84,15 +88,22 @@ We need to add the main Goonstation repository as a remote now. :satellite:
 
 If you haven't already relaunched VSCode, make sure to do this now; otherwise you'll have troubles on this step. To do this, open the command palette (<kbd>Ctrl + Shift + P</kbd>) and type `Git: Add Remote`. It'll prompt you for a name, which should be `upstream`. Then, put https://github.com/goonstation/goonstation as the URL. Now, you'll have the main Goonstation repository as a remote named upstream: This will let you easily send your pull requests there later.
 
+It's useful to have your local master track the main Goonstation master branch, so you can keep in sync with all the new changes automatically. To do this press (<kbd>Ctrl + \`</kbd>) to open the terminal and then run
+```
+git checkout master
+git branch -u upstream/master
+```
+After doing this you can synchronize your master branch with the main Goonstation one simply by pressing the ![](https://i.imgur.com/WFbG8w3.png) button at the bottom left.
+
 You're just about done with that! Just one last thing you need to manually do.
 
 ### Step 6: Fixing Up :wrench: 
 
-:::info
-If you're a Goonstation developer, run `git submodule update --init` instead of this step.
-:::
-
 ++**This step is required.**++ You'll need to create a file named `__secret.dme` in the `+secret` subdirectory. **It should be blank and have no contents.** You can run the `initial_setup.bat` file at the root of the repository to do this automatically.
+
+:::info
+If you're a Goonstation dev, run `git submodule update --init` instead of the prior step.
+:::
 
 That's it! Your local codebase is all set up to contribute now.
 
@@ -101,7 +112,8 @@ That's it! Your local codebase is all set up to contribute now.
 All changes you make should be done on branches. But first, what is a branch?
 
 Put simply, a branch is an alternative version of a codebase. Their lifecycle usually consists of being created, being committed, then being re-merged into the main codebase.
--A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
+
+A commit is an update you make to a branch. Think of it a saved version of said branch, or a batch of changes you make with an associated timestamp. 
 The lovely thing about Github is that each individual merge and commit you make is reversible. so if you make a horrible mistake and are plagued with thousands of errors, you can simply revert the changes. There will be more on that in the Git Graph section.
 
 By now, hopefully you've thought of what you actually want to do. First thing to do is to make a new branch on your fork. This is important because you should **never** make changes to the default(master) branch of your fork. It should remain as a clean slate.
@@ -126,16 +138,16 @@ Go wild! Make your code changes! This is a guide on how to contribute, not *what
 You'll find your code to edit in the Explorer sidebar of VS Code; if you need to find something, the Search sidebar is just below that.
 
 :::info
-Old-school style: If you want to use DreamMaker instead, go ahead and edit your files there - once you save them, VS Code will detect what you've done and you'll be able to follow the guide from there.
+For something simple like adding a sprite, one can use the Dream Maker program provided by BYOND (which provides an editor), or use the slick DMI modification interface in VSCode by just opening up a .dmi file there. Just copy your changes, and voilà!
 :::
 
 Here's the changes I'm making for the purpose of this guide:
 
-* I added a new hat sprite to icons/obj/clothing/item_hats.dmi
+* I added a new hat sprite to `icons/obj/clothing/item_hats.dmi`
 
 ![](https://i.imgur.com/tCmU12l.png)
 
-* I added the following code to code/obj/item/clothing/hats.dm
+* I added the following code to `code/obj/item/clothing/hats.dm`
 ```c
 /obj/item/clothing/head/party/birthday/green
 	name = "birthday hat"
@@ -257,14 +269,14 @@ At some point a maintainer will review your PR. Hopefully all is good and the PR
 
 Some concerns you might have while waiting:
 
--"Oh no, someone told me to atomize my PR! Do they want me to nuke it?"
+- "Oh no, someone told me to atomize my PR! Do they want me to nuke it?"
 Worry not, friend! Atomization just means to break your PR down into smaller chunks in separate PRs, whether it be for balance reasons, because there's weird or extraneous code, or simply off-topic changes.
 
--"Man, this sure is taking a long while!"
+- "Man, this sure is taking a long while!"
 The unforunate truth of Goonstation is that the developers are, just like you and the admins, unpaid volunteers who do this in their spare time, and can take a while before merging your request. Furthermore, depending on how large it is, how many systems are changed, and how controversial it might be, the developers usually give people ample time to bring up any concerns or problems. 
-**With these two factors in mind, it can take anywhere from a day to two weeks (or longer) for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy the four digit number (e.g., `#1111`) into the imcoder channel of the [Discord](https://discord.gg/zd8t6pY)to bring up the PR with the server's medibot, then ask around for feedback.
+**With these two factors in mind, it can take anywhere from a day to two weeks (or longer) for your PR to finally be merged.** In the meantime, ensure that there are no merge conflicts, that all comments are resolved, and everything is polished as possible to signal that it's ready for merging. If you want to know if there's any issues, you can always copy+paste the four digit number (e.g., `#1111`) into the imcoder channel of the [Discord](https://discord.gg/zd8t6pY) to bring up the PR, then ask around for feedback.
 
--"If I want a picture, how do I add images?"
+- "If I want a picture, how do I add images?"
 Pictures are as easy as taking a screenshot of whatever you're made, then copying and directly pasting it into the text box. For this reason, Windows' snipping tool is excellent at this task, since it automatically copies whatever you capture.
 
 Remember, you can also reply to people's comments on your PR to clarify your reasoning / intent behind your changes. Everyone who's commented in a thread will be notified when you update, but if you want to address a fine point, you can use the quote reply feature to do so.

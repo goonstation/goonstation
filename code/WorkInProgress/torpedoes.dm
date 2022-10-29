@@ -108,9 +108,9 @@
 	name = "torpedo console"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
-	anchored = 1.0
+	anchored = 1
 	appearance_flags = TILE_BOUND
-	density = 1.0
+	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
 	var/id = "torp1"
 	var/obj/machinery/torpedo_tube/tube = null
@@ -118,7 +118,7 @@
 	var/turf/target = null
 	var/obj/torpedo_targeter/targeter = null
 	var/list/validTrg = list()
-	var/inUse = 0
+	var/inUse = FALSE
 
 	New()
 		movement_controller = new(src)
@@ -128,7 +128,7 @@
 	get_movement_controller()
 		return movement_controller
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
@@ -144,7 +144,7 @@
 			resetTargeter()
 
 		if(tube)
-			inUse = 1
+			inUse = TRUE
 			user.set_loc(src)
 			user.pixel_y = -8
 			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
@@ -155,6 +155,11 @@
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
 		return
+
+	Exited(atom/movable/AM, atom/newloc)
+		..()
+		if (inUse)
+			src.exit(0)
 
 	proc/resetTargeter()
 		if(tube && targeter)
@@ -187,7 +192,7 @@
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
 			controller = null
-			inUse = 0
+			inUse = FALSE
 		return
 
 	proc/fire()
@@ -199,7 +204,7 @@
 	name = "torpedo button"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	var/id = "torp1"
 	var/list/cachedTubes = list()
 
@@ -257,7 +262,7 @@
 		rebuildOverlays()
 		return .
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(tray_obj) close()
 		else open()
 		return
@@ -310,8 +315,8 @@
 		if(tray_obj) return
 		if(loaded != null)
 
-			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]")
-			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]", "combat")
+			logTheThing(LOG_COMBAT, usr, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]")
+			logTheThing(LOG_DIARY, usr, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]", "combat")
 			var/turf/start = getLaunchTurf()
 			var/atom/target
 			if(targetTurf)
@@ -361,7 +366,7 @@
 	layer = 2.1
 	var/obj/machinery/torpedo_tube/parent = null
 
-	attack_hand(mob/living/carbon/human/M as mob)
+	attack_hand(mob/living/carbon/human/M)
 		parent?.close()
 		return
 
@@ -370,20 +375,20 @@
 			if (istype(target, /obj/storage/closet) && BOUNDS_DIST(src,target) == 0 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", user, null, " loads \a [O] into \the [src] at [log_loc(src)]")
-				logTheThing("diary", user, null, " loads \a [O] into \the [src] at [log_loc(src)]", "combat")
+				logTheThing(LOG_COMBAT, user, " loads \a [O] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads \a [O] into \the [src] at [log_loc(src)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
-				logTheThing("diary", user, target, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
+				logTheThing(LOG_COMBAT, user, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
+				logTheThing(LOG_DIARY, user, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
-				logTheThing("diary", user, target, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
+				logTheThing(LOG_COMBAT, user, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
@@ -396,8 +401,8 @@
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
 				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", user, GM, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
-				logTheThing("diary", user, GM, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
+				logTheThing(LOG_COMBAT, user, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
@@ -406,7 +411,7 @@
 		if (ishuman(M) && M.throwing)
 			var/mob/living/carbon/human/thrown_person = M
 			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
-			logTheThing("combat", thrown_person, null, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			logTheThing(LOG_COMBAT, thrown_person, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
 			thrown_person.set_loc(src.loc)
 			parent?.close()
 			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
@@ -479,7 +484,7 @@
 		..(newloc)
 		changeIcon()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		if(loaded) return loaded.Attackby(I, user)
 		else return ..()
 
@@ -521,10 +526,10 @@
 		if (src.loaded && ishuman(M) && M.throwing)
 			var/mob/living/carbon/human/thrown_person = M
 			if (thrown_person.throwing & THROW_CHAIRFLIP)
-				logTheThing("combat", thrown_person, null, " flips into \the [src] at [log_loc(src)], setting it off.")
+				logTheThing(LOG_COMBAT, thrown_person, " flips into \the [src] at [log_loc(src)], setting it off.")
 				loaded.breakLaunch()
 			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
-				logTheThing("combat", thrown_person, null, " is thrown into \the [src] at [log_loc(src)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				logTheThing(LOG_COMBAT, thrown_person, " is thrown into \the [src] at [log_loc(src)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
 				loaded.breakLaunch()
 				JOB_XP(thrown_person, "Clown", 5)
 		..()
@@ -623,14 +628,14 @@
 		dmg_threshold = rand(20,60)
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		..()
-		logTheThing("combat", user, null, " hits [src] with [I] at [log_loc(user)]")
-		logTheThing("diary", user, null, " hits [src] with [I] at [log_loc(user)]", "combat")
+		logTheThing(LOG_COMBAT, user, " hits [src] with [I] at [log_loc(user)]")
+		logTheThing(LOG_DIARY, user, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing("combat", user, null, " caused [src] to detonate at [log_loc(user)]")
-			logTheThing("diary", user, null, " caused [src] to detonate at [log_loc(user)]", "combat")
+			logTheThing(LOG_COMBAT, user, " caused [src] to detonate at [log_loc(user)]")
+			logTheThing(LOG_DIARY, user, " caused [src] to detonate at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
 
@@ -657,7 +662,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(src, "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

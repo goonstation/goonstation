@@ -29,7 +29,7 @@
 		if(display_amount)
 			. += "There's [src.amount] left."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.cant_deposit)
 			..()
 			return
@@ -40,7 +40,7 @@
 			boutput(user, "<span class='notice'>You put \the [W] into \the [src]. [display_amount ? "There's [src.amount] left.": null ]</span>")
 			qdel(W)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		add_fingerprint(user)
 		user.lastattacked = src //prevents spam
 		if (src.cant_withdraw)
@@ -125,9 +125,9 @@
 	withdraw_type = /obj/item/card/id
 	amount = 7
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!src.cant_withdraw && src.amount >= 1)
-			playsound(src.loc, "sound/machines/printer_dotmatrix.ogg", 25, 1)
+			playsound(src.loc, 'sound/machines/printer_dotmatrix.ogg', 25, 1)
 		..()
 
 /obj/item_dispenser/icedispenser
@@ -142,7 +142,7 @@
 	pixel_y = 0
 	flags = FPRINT | NOSPLASH
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/glass) || istype(W, /obj/item/reagent_containers/food/drinks))
 			if (W.reagents.total_volume <= (W.reagents.maximum_volume - 10))
 				W.reagents.add_reagent("ice", 10, null, (T0C - 50))

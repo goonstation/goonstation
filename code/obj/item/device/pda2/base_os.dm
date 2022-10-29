@@ -192,7 +192,7 @@
 									continue
 								pdaOwnerNames += P_name
 								pdaOwnerNames[P_name] = P_id
-							pdaOwnerNames = sortList(pdaOwnerNames)
+							sortList(pdaOwnerNames, /proc/cmp_text_asc)
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 
@@ -423,11 +423,11 @@
 			else if(href_list["input"])
 				switch(href_list["input"])
 					if("tone")
-						var/prompt = "Please enter new ring message"
+						var/prompt = "Please enter new ring message."
 						var/default = src.message_tone
 						if (usr.ckey == src.master?.uplink?.owner_ckey)
 							default = src.master.uplink.lock_code
-							prompt += ". Your traitor uplink code has been pre-entered for your convenience"
+							prompt += " Your uplink code has been pre-entered for your convenience."
 
 						var/t = input(usr, prompt, src.name, default) as text
 						if (!t)
@@ -445,7 +445,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, null, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing(LOG_PDAMSG, usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -1063,7 +1063,7 @@
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
 			src.message_last = world.time
 
-			logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)

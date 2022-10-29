@@ -22,7 +22,7 @@
 					LAGCHECK(LAG_LOW)
 			if (3)
 				while (spawnamount > 0)
-					new /obj/critter/spacebee(pestlandmark)
+					new /obj/critter/wasp(pestlandmark)
 					spawnamount -= 1
 					LAGCHECK(LAG_LOW)
 			if (4)

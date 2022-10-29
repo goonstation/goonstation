@@ -65,6 +65,8 @@
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
+	var/admin_override = FALSE //for sudo blobs
+
 	proc/start_tutorial()
 		if (tutorial)
 			return
@@ -199,10 +201,7 @@
 		src.last_blob_life_tick = TIME
 
 	death()
-		//death was called but the player isnt playing this blob anymore
-		//OR they're in the process of transforming (e.g. gibbing)
-		if ((src.client && src.client.mob != src) || src.transforming)
-			return
+		. = ..()
 
 		//if within grace period, respawn
 		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)

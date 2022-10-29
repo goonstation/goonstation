@@ -73,6 +73,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
+	/// ID of the cargo tech skimming a cut of the sale
+	var/obj/item/card/id/scan = null
+	/// Bank account info of the cargo tech skimming a cut of the sale
+	var/datum/db_record/account = null
+
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100
@@ -111,8 +116,15 @@ ABSTRACT_TYPE(/datum/artifact/)
 
 	disposing()
 		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		artitype = null
+		fx_image = null
 		holder = null
-		..()
+		faults = null
+		fault_types = null
+		triggers = null
+		scan = null
+		account = null
+		. = ..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)
@@ -165,7 +177,7 @@ ABSTRACT_TYPE(/datum/artifact/)
 			return 1
 		if (!user.in_real_view_range(T))
 			return 1
-		else if (!user.client && get_dist(T,user) > world.view) // idk, SOMEhow someone would find a way
+		else if (!user.client && GET_DIST(T,user) > world.view) // idk, SOMEhow someone would find a way
 			return 1
 		O.add_fingerprint(user)
 		if (!istype(O, /obj/item/artifact/attack_wand)) // Special log handling required there.
@@ -216,11 +228,12 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
 	damage_type = D_PIERCING
+	armor_ignored = 0.66
 	hit_ground_chance = 90
 	window_pass = 0
 	var/obj/machinery/artifact/turret/turretArt = null

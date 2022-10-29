@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "itemspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/amt2spawn = 0
@@ -27,7 +27,7 @@
 		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
-					logTheThing("debug", src, null, "has a non-path item in its guaranteed list, [new_item]")
+					logTheThing(LOG_DEBUG, src, "has a non-path item in its guaranteed list, [new_item]")
 					DEBUG_MESSAGE("[src] has a non-path item in its guaranteed list, [new_item]")
 					continue
 				var/amt = 1
@@ -37,11 +37,11 @@
 					closet_check_spawn(new_item)
 
 		if (!islist(src.items2spawn) || !length(src.items2spawn))
-			logTheThing("debug", src, null, "has an invalid items2spawn list")
+			logTheThing(LOG_DEBUG, src, "has an invalid items2spawn list")
 			return
 		if (rare_chance)
 			if (!islist(src.rare_items2spawn) || !length(src.rare_items2spawn))
-				logTheThing("debug", src, null, "has an invalid rare_items2spawn list")
+				logTheThing(LOG_DEBUG, src, "has an invalid rare_items2spawn list")
 				return
 		if (amt2spawn == 0)
 			amt2spawn = rand(min_amt2spawn, max_amt2spawn)
@@ -54,14 +54,14 @@
 				if (rare_items2spawn)
 					item_list = rare_items2spawn
 				else
-					logTheThing("debug", src, null, "has an invalid rare spawn list, [rare_items2spawn]")
+					logTheThing(LOG_DEBUG, src, "has an invalid rare spawn list, [rare_items2spawn]")
 					DEBUG_MESSAGE("[src] has an invalid rare spawn list, [rare_items2spawn]")
 					continue
 			else
 				item_list = items2spawn
 			var/obj/new_item = pick(item_list)
 			if (!ispath(new_item))
-				logTheThing("debug", src, null, "has a non-path item in its spawn list, [new_item]")
+				logTheThing(LOG_DEBUG, src, "has a non-path item in its spawn list, [new_item]")
 				DEBUG_MESSAGE("[src] has a non-path item in its spawn list, [new_item]")
 				continue
 
@@ -840,6 +840,7 @@
 	/obj/item/storage/toolbox/emergency,
 	/obj/item/tank/air,
 	/obj/item/tank/emergency_oxygen,
+	/obj/item/tank/mini_oxygen,
 	/obj/item/weldingtool,
 	/obj/item/wrench)
 
@@ -920,7 +921,7 @@
 		/obj/item/material_piece/plasmastone,
 		/obj/item/material_piece/uqill,
 		/obj/item/material_piece/koshmarite,
-		/obj/item/material_piece/gold,
+		/obj/item/stamped_bullion,
 		/obj/item/raw_material/cotton,
 		/obj/item/raw_material/miracle,
 		/obj/item/raw_material/uqill,
@@ -935,7 +936,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "podspawn"
 	density = 0
-	anchored = 1.0
+	anchored = 1
 	invisibility = INVIS_ALWAYS
 	layer = 99
 	var/obj/machinery/vehicle/pod2spawn = null
@@ -1340,7 +1341,7 @@
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
@@ -1376,7 +1377,8 @@
 		/obj/item/clothing/under/gimmick/hakama/random,
 		/obj/item/clothing/under/gimmick/eightiesmens,
 		/obj/item/clothing/under/gimmick/eightieswomens,
-		/obj/item/clothing/under/gimmick/ziggy)
+		/obj/item/clothing/under/gimmick/ziggy,
+		/obj/item/clothing/under/gimmick/jcdenton)
 
 	one
 		amt2spawn = 1
@@ -1822,7 +1824,7 @@
 			closet_check_spawn()
 
 	closet_check_spawn(var/new_x,var/new_y)
-		var/obj/item/K = new /obj/item/device/key/chompskey
+		var/obj/item/K = new /obj/item/device/key/generic/chompskey
 
 		if(new_x && new_y)
 			K.set_loc(locate(new_x,new_y,src.z))

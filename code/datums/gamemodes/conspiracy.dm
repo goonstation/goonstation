@@ -3,9 +3,14 @@
 	config_tag = "conspiracy"
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1 // No hunters until the conspiracy is dead, thanks
+	antag_token_support = TRUE
 
 	var/maxConspirators = 6
 	var/agent_radiofreq = 1401
+	/// How many other antags to mix in with the conspiracy
+	var/num_other_antags = 1
+	var/other_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_ARCFIEND = 1)
+	var/list/datum/mind/other_antags
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -25,27 +30,37 @@
 
 	var/numConspirators = clamp(round(numPlayers / 5), 2, maxConspirators) // Selects number of conspirators
 
-	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators)
+	var/list/potentialAntags = get_possible_enemies(ROLE_CONSPIRATOR, numConspirators + num_other_antags)
 	if (!potentialAntags.len)
 		return 0
+
+	other_antags = new()
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
 		if (!token_players.len)
 			break
+		if (length(other_antags) < num_other_antags)
+			other_antags += tplayer
 		else
 			traitors += tplayer
-			token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		token_players.Remove(tplayer)
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
+	var/antag_role = pick(other_antag_roles)
+
 	var/list/chosen_conspirator = antagWeighter.choose(pool = potentialAntags, role = ROLE_CONSPIRATOR, amount = numConspirators, recordChosen = 1)
+	var/list/chosen_other_antags = antagWeighter.choose(pool = potentialAntags - chosen_conspirator, role = antag_role, amount = num_other_antags - length(other_antags), recordChosen = 1)
 	traitors |= chosen_conspirator
+	other_antags |= chosen_other_antags
 	for (var/datum/mind/conspirator in traitors)
 		conspirator.special_role = ROLE_CONSPIRATOR
 		potentialAntags.Remove(conspirator)
 
 	agent_radiofreq = random_radio_frequency()
+	for (var/datum/mind/antag in other_antags)
+		antag.special_role = antag_role
 
 	return 1
 
@@ -74,6 +89,11 @@
 
 		boutput(conspirator.current, conspiratorList)
 		boutput(conspirator.current, meetingPoint)
+
+	for (var/datum/mind/traitor in other_antags)
+		equip_antag(traitor)
+
+	traitors |= other_antags
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()

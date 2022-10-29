@@ -1,0 +1,120 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/kitchen/food_box/egg_box,
+/turf/simulated/floor/airless/damaged2,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/decal/stage_edge,
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"p" = (
+/obj/decal/cleanable/rust/jen,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"q" = (
+/obj/railing,
+/obj/railing{
+	dir = 8
+	},
+/obj/mic_stand{
+	dir = 4;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/tomatosplat,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/decal/cleanable/rust/jen,
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/decal/cleanable/cobweb2,
+/obj/loudspeaker,
+/obj/machinery/light/small/sticky/warm{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"A" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/stairs/dark,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/railing,
+/obj/decal/cleanable/paper,
+/obj/decal/cleanable/paper{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"O" = (
+/obj/decal/stage_edge,
+/obj/decal/cleanable/eggsplat,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/stool/chair{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/decal/cleanable/tomatosplat,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky/warm{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+Y
+A
+H
+p
+w
+"}
+(2,1,1) = {"
+c
+q
+k
+P
+p
+"}
+(3,1,1) = {"
+x
+B
+O
+v
+a
+"}

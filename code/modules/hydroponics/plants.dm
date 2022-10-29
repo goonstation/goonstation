@@ -35,11 +35,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
-	var/list/harvest_tools // For plants that don't harvest normally and need some sort of special tool (mixed list of tool flags and item paths)
-	var/harvest_tool_message // An output message for plants with unique harvest messages (string)
-	var/harvest_tool_fail_message // A helpful output message to players when they attempt to harvest a plant by hand
 	var/no_extract // Stops the extraction of seeds in the PlantMaster
-	var/list/required_reagents // reagents required for the plant to grow - formated like: list(list(id="poo",amount=100),list(id="thing",amount=number))
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
@@ -134,7 +130,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT) lasterr = 101
 		if (POT.dead || !POT.current) lasterr = 102
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			special_proc = 0
 		return lasterr
 
@@ -144,7 +140,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (!POT || !user) lasterr = 201
 		if (POT.dead || !POT.current) lasterr = 202
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			attacked_proc = 0
 		return lasterr
 
@@ -154,7 +150,7 @@ ABSTRACT_TYPE(/datum/plant)
 		if (POT.dead || !POT.current) return 302
 		if (!src.harvestable || !src.crop) return 303
 		if (lasterr)
-			logTheThing("debug", null, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
+			logTheThing(LOG_DEBUG, null, "<b>Plant HYP</b> [src] in pot [POT] failed with error [.]")
 			harvested_proc = 0
 		return lasterr
 
@@ -165,7 +161,7 @@ ABSTRACT_TYPE(/datum/plant)
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
-			if ("phlogiston","infernite","thalmerite","sorium")
+			if ("phlogiston","infernite","pyrosium","sorium")
 				damage_amt = rand(80,100)
 			if ("pacid")
 				damage_amt = rand(75,80)
@@ -195,19 +191,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -217,7 +213,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++
@@ -246,22 +242,26 @@ ABSTRACT_TYPE(/datum/plant)
 	var/endurance = 0
 	var/list/commuts = null // General transferrable mutations
 	var/datum/plantmutation/mutation = null // is it mutated? if so which variation?
-	var/list/alleles = list(0,0,0,0,0,0,0)
-	// Order goes:
-	// Species, Growtime, Harvtime, Cropsize, Harvests, Potency, Endurance
+	// dominant?
+	var/d_species = FALSE
+	var/d_growtime = FALSE
+	var/d_harvtime = FALSE
+	var/d_cropsize = FALSE
+	var/d_harvests = FALSE
+	var/d_potency = FALSE
+	var/d_endurance = FALSE
 	// Species allele controls name, appearance, crop produce and mutations
-	// 1 is dominant, else recessive
 
-	New(var/loc,var/random_alleles = 1)
+	New(var/loc,var/random_alleles = TRUE)
 		..()
 		if (random_alleles)
-			src.alleles[1] = rand(0,1)
-			src.alleles[2] = rand(0,1)
-			src.alleles[3] = rand(0,1)
-			src.alleles[4] = rand(0,1)
-			src.alleles[5] = rand(0,1)
-			src.alleles[6] = rand(0,1)
-			src.alleles[7] = rand(0,1)
+			src.d_species = rand(0,1)
+			src.d_growtime = rand(0,1)
+			src.d_harvtime = rand(0,1)
+			src.d_cropsize = rand(0,1)
+			src.d_harvests = rand(0,1)
+			src.d_potency = rand(0,1)
+			src.d_endurance = rand(0,1)
 			// optimise this later
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
@@ -287,9 +287,6 @@ ABSTRACT_TYPE(/datum/plant)
 			source = sourcerelay
 		if(duration2)
 			duration = duration2
-		if(plant_pot.current.harvest_tools && (source.equipped() != null))
-			var/obj/item/I = source.equipped()
-			toolcheck = I
 		..()
 
 	onUpdate()

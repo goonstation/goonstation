@@ -75,14 +75,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 5
 		prefabSizeY = 5
 
-	beacon // warp beacon for easy z5 teleporting.
-		required = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_beacon.dmm"
-		prefabSizeX = 5
-		prefabSizeY = 5
-
 	outpost // rest stop/outpost for miners to eat/rest/heal at.
 		required = 1
 		maxNum = 1
@@ -228,15 +220,15 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		maxNum = 1
 		probability = 25
 		prefabPath = "assets/maps/prefabs/prefab_silverglass.dmm"
-		prefabSizeX = 32
-		prefabSizeY = 24
+		prefabSizeX = 35
+		prefabSizeY = 26
 
 	safehouse // A seemingly abandoned safehouse
 		maxNum = 1
 		probability = 15
 		prefabPath = "assets/maps/prefabs/prefab_safehouse.dmm"
-		prefabSizeX = 33
-		prefabSizeY = 22
+		prefabSizeX = 35
+		prefabSizeY = 23
 
 	dreamplaza // Walp's abandoned space mall... Well, what remains of it.
 		maxNum = 1
@@ -258,6 +250,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_artist_studio.dmm"
 		prefabSizeX = 25
 		prefabSizeY = 18
+
+	adrift_cargorouter
+		maxNum = 1
+		probability = 25
+		prefabPath = "assets/maps/prefabs/prefab_adrift_cargo_router.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 16
+
 	//UNDERWATER AREAS FOR OSHAN
 
 	pit
@@ -269,7 +269,7 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 8
 		prefabSizeY = 8
 
-#ifdef UNDERWATER_MAP
+#if defined(MAP_OVERRIDE_OSHAN)
 	mantahole
 		required = 1
 		underwater = 1
@@ -290,14 +290,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 11
 		prefabSizeY = 11
 #endif
-	robotfactory
+
+#if defined(MAP_OVERRIDE_NADIR)
+	elevator
+		required = 1
 		underwater = 1
 		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_robotfactory.dmm"
-		prefabSizeX = 20
-		prefabSizeY = 28
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //also sneakily contains diner and siphon shaft cover
+		prefabSizeX = 47
+		prefabSizeY = 41
 
+	miracliumsurvey
+		underwater = 1
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_water_miraclium_survey.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 5
+#endif
+
+//water prefabs that wouldn't make overly much sense in nadir's acid should go in this subsection
+#ifndef MAP_OVERRIDE_NADIR
 	racetrack
 		underwater = 1
 		maxNum = 1
@@ -321,14 +335,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_outpost.dmm"
 		prefabSizeX = 21
 		prefabSizeY = 21
-
-	sandyruins
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_sandyruins.dmm"
-		prefabSizeX = 11
-		prefabSizeY = 13
 
 	greenhouse
 		underwater = 1
@@ -394,22 +400,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 23
 		prefabSizeY = 34
 
-	drone_battle
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_drone_battle.dmm"
-		prefabSizeX = 24
-		prefabSizeY = 21
-
-	ydrone
-		underwater = 1
-		maxNum = 1
-		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_water_ydrone.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 15
-
 	honk
 		underwater = 1
 		maxNum = 1
@@ -418,22 +408,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 24
 		prefabSizeY = 22
 
-	disposal
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_disposal.dmm"
-		prefabSizeX = 16
-		prefabSizeY = 13
-
-	sketchy
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_sketchy.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-
 	water_treatment // Sov's water treatment facility
 		underwater = 1
 		maxNum = 1
@@ -441,14 +415,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_watertreatment.dmm"
 		prefabSizeX = 33
 		prefabSizeY = 14
-
-	bee_sanctuary //Sov's Bee Sanctuary
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
-		prefabSizeX = 34
-		prefabSizeY = 19
 
 	danktrench //the marijuana trench
 		underwater = 1
@@ -464,35 +430,6 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		probability = 30
 		prefabSizeX = 10
 		prefabSizeY = 10
-
-	torpedo_deposit // Torpedo deposit
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_torpedo_deposit.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 21
-
-
-#if defined(MAP_OVERRIDE_OSHAN)
-	sea_miner
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_miner.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-#endif
-
-#if defined(MAP_OVERRIDE_MANTA)
-	sea_miner
-		underwater = 1
-		maxNum = 1
-		required = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_mantamining.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 43
-#endif
 
 	cache_small_loot
 		underwater = 1
@@ -518,6 +455,48 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabSizeX = 3
 		prefabSizeY = 3
 
+#endif
+
+	bee_sanctuary //Sov's Bee Sanctuary
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_beesanctuary.dmm"
+		prefabSizeX = 34
+		prefabSizeY = 19
+
+	sandyruins
+		underwater = 1
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_water_sandyruins.dmm"
+		prefabSizeX = 11
+		prefabSizeY = 13
+
+	disposal
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_disposal.dmm"
+		prefabSizeX = 16
+		prefabSizeY = 13
+
+	sketchy
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_sketchy.dmm"
+		prefabSizeX = 21
+		prefabSizeY = 15
+
+	robotfactory
+		underwater = 1
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_water_robotfactory.dmm"
+		prefabSizeX = 20
+		prefabSizeY = 28
+
 	sea_crashed
 		underwater = 1
 		maxNum = 1
@@ -525,3 +504,55 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_crashed.dmm"
 		prefabSizeX = 24
 		prefabSizeY = 32
+
+	torpedo_deposit // Torpedo deposit
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_torpedo_deposit.dmm"
+		prefabSizeX = 21
+		prefabSizeY = 21
+
+	drone_battle
+		underwater = 1
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/prefab_water_drone_battle.dmm"
+		prefabSizeX = 24
+		prefabSizeY = 21
+
+	ydrone
+		underwater = 1
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/prefab_water_ydrone.dmm"
+		prefabSizeX = 15
+		prefabSizeY = 15
+
+	martian_glomp // Martian glomp (boarding pod? escape pod? you decide) that ended up very stranded
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_martian_glomp.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 10
+
+#if defined(MAP_OVERRIDE_OSHAN)
+	sea_miner
+		underwater = 1
+		maxNum = 1
+		probability = 35
+		prefabPath = "assets/maps/prefabs/prefab_water_miner.dmm"
+		prefabSizeX = 21
+		prefabSizeY = 15
+#endif
+
+#if defined(MAP_OVERRIDE_MANTA)
+	sea_miner
+		underwater = 1
+		maxNum = 1
+		required = 1
+		prefabPath = "assets/maps/prefabs/prefab_water_mantamining.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 43
+#endif

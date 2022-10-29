@@ -10,7 +10,9 @@
 			boutput(M, "<span class='notice'>The lightning bolt arcs around you harmlessly.</span>")
 		if (M != caster && iswizard(M))
 			boutput(M, "<span class='notice'>The other wizard's lightning strike refuses to hurt you out of respect to other wizards.</span>")
-			return
+			continue
+		else if (check_target_immunity(M))
+			continue
 		else
 			M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
 			boutput(M, "<span class='alert'>You feel a strong electric shock!</span>")
@@ -35,6 +37,7 @@
 	icon_state = "residual_electricity"
 	density = 0
 	opacity = 0
+	anchored = 1
 	plane = PLANE_NOSHADOW_ABOVE
 	var/duration = 9 SECONDS
 	var/caster
@@ -48,7 +51,7 @@
 	Crossed(atom/movable/M as mob|obj)
 		if(iscarbon(M))
 			var/mob/living/L = M
-			if (L.bioHolder?.HasEffect("resist_electric") || L.traitHolder?.hasTrait("training_chaplain"))
+			if (L.bioHolder?.HasEffect("resist_electric") || L.traitHolder?.hasTrait("training_chaplain") || check_target_immunity(L))
 				return
 			if (L != src.caster && iswizard(L))
 				return

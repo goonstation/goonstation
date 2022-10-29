@@ -12,7 +12,8 @@
 	name = "machinery"
 	icon = 'icons/obj/stationobjs.dmi'
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE
-
+	object_flags = NO_GHOSTCRITTER
+	layer = STORAGE_LAYER
 	var/status = 0
 	var/power_usage = 0
 	var/power_channel = EQUIP
@@ -160,7 +161,7 @@
 /obj/machinery/attack_ai(mob/user as mob)
 	return src.Attackhand(user)
 
-/obj/machinery/attack_hand(mob/user as mob)
+/obj/machinery/attack_hand(mob/user)
 	. = ..()
 	if(status & (NOPOWER|BROKEN))
 		return 1
@@ -201,14 +202,14 @@
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
 				qdel(src)
 				return
@@ -334,10 +335,10 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "sec_lock"
 	var/obj/item/card/id/scan = null
-	var/a_type = 0.0
+	var/a_type = 0
 	var/obj/machinery/door/d1 = null
 	var/obj/machinery/door/d2 = null
-	anchored = 1.0
+	anchored = 1
 	req_access = list(access_armory)
 
 /obj/machinery/noise_switch

@@ -16,7 +16,7 @@
 			source = "random"
 		if (announce_to_admins)
 			message_admins("<span class='internal'>Beginning [src.name] event (Source: [source]).</span>")
-			logTheThing("admin", null, null, "Random event [src.name] was triggered. Source: [source]")
+			logTheThing(LOG_ADMIN, null, "Random event [src.name] was triggered. Source: [source]")
 
 		if (centcom_headline && centcom_message && random_events.announce_events)
 			SPAWN(message_delay)
@@ -44,3 +44,10 @@
 
 /datum/random_event/minor
 	announce_to_admins = 0
+
+ABSTRACT_TYPE(/datum/random_event/major)
+ABSTRACT_TYPE(/datum/random_event/major/antag)
+ABSTRACT_TYPE(/datum/random_event/major/player_spawn)
+ABSTRACT_TYPE(/datum/random_event/minor)
+ABSTRACT_TYPE(/datum/random_event/special)
+ABSTRACT_TYPE(/datum/random_event/start)

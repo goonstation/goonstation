@@ -37,7 +37,7 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	show_ui(user)
@@ -162,10 +162,7 @@
 				prize.name = "Burno Lighter"
 				prize.desc = "Almost like a decent lighter!"
 			if(4)
-				if (prob(5))
-					prize = new /obj/item/device/key/virtual(src.loc)
-				else
-					prize = new /obj/item/toy/sword(src.loc)
+				prize = new /obj/item/toy/sword(src.loc)
 			if(5)
 				prize = new /obj/item/instrument/harmonica(src.loc)
 				prize.name = "reverse harmonica"

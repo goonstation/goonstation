@@ -1,3 +1,5 @@
+macro "input_box_macro"
+
 macro "base_macro"
 	elem
 		name = "Tab"
@@ -10,7 +12,7 @@ macro "base_macro"
 		command = "dsay"
 	elem "startsay"
 		name = "T"
-		command = ".starttyping\nsay"
+		command = ".winset \"command=\".start_typing say\";command=.init_say;saywindow.is-visible=true;saywindow.say-input.focus=true\""
 	elem "radiosay"
 		name = ";"
 		command = "say_main_radio"
@@ -22,7 +24,10 @@ macro "base_macro"
 		command = "looc"
 	elem "whisper"
 		name = "ALT+W"
-		command = "whisper"
+		command = ".winset \"command=\".start_typing whisper\";command=.init_whisper;whisperwindow.is-visible=true;whisperwindow.input.focus=true\""
+	elem "startemote"
+		name = "M"
+		command = ".winset \"command=\".start_emote_typing emote\";command=.init_emote;emotewindow.is-visible=true;emotewindow.input.focus=true\""
 	elem
 		name = "Any"
 		command = ".keydown [[*]]"
@@ -183,6 +188,13 @@ menu "menu"
 		command = ""
 		category = "&Display"
 		saved-params = "is-checked"
+	elem "fps_velvety"
+		name = "&Velvety (90fps, higher end PCs)"
+		command = "set-fps"
+		category = "&Framerate"
+		can-check = true
+		group = "fps"
+		saved-params = "is-checked"
 	elem "fps_creamy"
 		name = "&Creamy (67fps, high end PCs)"
 		command = "set-fps"
@@ -240,6 +252,11 @@ menu "menu"
 		category = "&Effects"
 		is-checked = true
 		can-check = true
+		saved-params = "is-checked"
+	elem "adjust_saturation"
+		name = "&Saturation"
+		command = "adjust-saturation"
+		category = "&Effects"
 		saved-params = "is-checked"
 	elem "set_tint"
 		name = "&View Tint"
@@ -406,16 +423,6 @@ menu "menu"
 	elem
 		name = "&Mentor Help\tF3"
 		command = "mentorhelp"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Hotkeys"
-		command = "hotkeys"
-		category = "&Help"
-		saved-params = "is-checked"
-	elem
-		name = "&Overview"
-		command = "Help"
 		category = "&Help"
 		saved-params = "is-checked"
 
@@ -1549,115 +1556,6 @@ window "infowindow"
 		on-show = ".winset\"rpane.infob.is-visible=true;rpane.textb.is-visible=true rpane.infob.is-checked=true rpane.rpanewindow.pos=0,30 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=infowindow\""
 		on-hide = ".winset\"rpane.infob.is-visible=false;rpane.browseb.is-visible=true?rpane.browseb.is-checked=true rpane.rpanewindow.left=browserwindow:rpane.textb.is-visible=false rpane.rpanewindow.pos=0,0 rpane.rpanewindow.size=0x0 rpane.rpanewindow.left=\""
 
-window "traitssetup"
-	elem "traitssetup"
-		type = MAIN
-		pos = 281,0
-		size = 424x481
-		anchor1 = none
-		anchor2 = none
-		is-visible = false
-		saved-params = "pos;size;is-minimized;is-maximized"
-		title = "Trait selection - Close to save"
-		statusbar = false
-		can-resize = false
-		on-close = ".savetraits"
-	elem "label18"
-		type = LABEL
-		pos = 0,0
-		size = 424x481
-		anchor1 = none
-		anchor2 = none
-		is-disabled = true
-		saved-params = ""
-		text = ""
-		image = 'icons\\traitbg.png'
-	elem "lblsel"
-		type = LABEL
-		pos = 216,92
-		size = 200x20
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		is-transparent = true
-		saved-params = ""
-		text = "Selected traits :"
-	elem "lblavail"
-		type = LABEL
-		pos = 8,92
-		size = 200x20
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		is-transparent = true
-		saved-params = ""
-		text = "Available traits :"
-	elem "traitPoints"
-		type = LABEL
-		pos = 8,460
-		size = 408x20
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		is-transparent = true
-		saved-params = ""
-		text = "Points left : 0"
-		text-wrap = true
-	elem "traitDesc"
-		type = LABEL
-		pos = 8,36
-		size = 408x44
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		is-transparent = true
-		saved-params = ""
-		text = ""
-		align = top-left
-		text-wrap = true
-	elem "traitName"
-		type = LABEL
-		pos = 8,8
-		size = 408x20
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		is-transparent = true
-		saved-params = ""
-		text = "Hover over a trait to see more."
-		align = top-left
-		text-wrap = true
-	elem "traitsSelected"
-		type = GRID
-		pos = 216,112
-		size = 200x344
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		background-color = #070f12
-		border = line
-		right-click = true
-		saved-params = ""
-		cells = 1x1
-		current-cell = 1,1
-		line-color = #808080
-		highlight-color = #00ffff
-	elem "traitsAvailable"
-		type = GRID
-		pos = 8,112
-		size = 200x344
-		anchor1 = none
-		anchor2 = none
-		text-color = #ffffff
-		background-color = #070f12
-		border = line
-		right-click = true
-		saved-params = ""
-		cells = 1x1
-		current-cell = 1,1
-		line-color = #808080
-		highlight-color = #00ffff
-
 window "winJobRewards"
 	elem "winJobRewards"
 		type = MAIN
@@ -1710,3 +1608,50 @@ window "winJobRewards"
 		cells = 1x1
 		current-cell = 1,1
 		highlight-color = #80ffff
+
+window "input_box"
+	elem "input_box"
+		type = MAIN
+		pos = 759,487
+		size = 302x86
+		anchor1 = 50,50
+		anchor2 = 50,50
+		background-color = none
+		is-visible = false
+		saved-params = ""
+		statusbar = false
+		can-minimize = false
+		can-resize = false
+		outer-size = 308x114
+		inner-size = 302x86
+	elem "say-input"
+		type = INPUT
+		pos = 11,17
+		size = 281x23
+		anchor1 = 4,20
+		anchor2 = 96,47
+		font-size = 7
+		border = sunken
+		saved-params = ""
+	elem "accept"
+		type = BUTTON
+		pos = 52,52
+		size = 75x23
+		anchor1 = 17,60
+		anchor2 = 42,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "OK"
+		command = ""
+	elem "cancel"
+		type = BUTTON
+		pos = 179,52
+		size = 75x23
+		anchor1 = 59,60
+		anchor2 = 84,87
+		font-size = 7
+		background-color = none
+		saved-params = ""
+		text = "Cancel"
+		command = ""

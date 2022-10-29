@@ -35,21 +35,19 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to peck there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to peck there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to peck."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to peck.</span>")
 			return 1
 
 		var/mob/MT = target
 		if (iscarbon(MT) && prob(60))
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
-			playsound(target, "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+			playsound(target, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
-			if (!isdead(MT))
-				MT.emote("scream")
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"
@@ -63,7 +61,7 @@
 				if (E)
 					holder.owner.visible_message("<span class='combat'><B>[holder.owner] [pick("tears","yanks","rips")] [MT]'s eye out! <i>Holy shit!!</i></B></span>")
 					E = H.drop_organ(chosen_eye)
-					playsound(target, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					if (holder.owner.put_in_hand_or_drop(E))
 						E.set_loc(holder.owner)
 					else
@@ -74,7 +72,6 @@
 			if (prob(10))
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R] and snips an important-looking cable!</span>")
 				R.compborg_take_critter_damage(null, 0 ,rand(40,70))
-				MT.emote("scream")
 				return 0
 			else
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R]!</span>")
@@ -108,15 +105,15 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to pounce on there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to pounce on there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to pounce on."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to pounce on.</span>")
 			return 1
 		var/mob/MT = target
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		MT.changeStatus("stunned", 2 SECONDS)
 		MT.changeStatus("weakened", 2 SECONDS)
 		if (prob(25))
@@ -147,12 +144,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to trip there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to trip there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to trip."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to trip.</span>")
 			return 1
 		var/mob/MT = target
 		var/tostun = rand(0,3)
@@ -187,17 +184,17 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to sting."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
 		"<span class='combat'>You sting [MT]!</span>")
-		playsound(target, "sound/impact_sounds/Generic_Stab_1.ogg", 50, 1)
+		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
@@ -240,18 +237,18 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to grab there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to grab there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
 		if (BOUNDS_DIST(holder.owner, target) > 0)
-			boutput(holder.owner, __red("That is too far away to grab."))
+			boutput(holder.owner, "<span class='alert'>That is too far away to grab.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] grabs [MT] with [his_or_her(holder.owner)] pincers!</b></span>",\
 		"<span class='combat'>You grab [MT]!</span>")
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1)
-		playsound(target, "sound/items/Wirecutter.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
 		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
 		MT.changeStatus("weakened", 6 SECONDS)
 		MT.force_laydown_standup()
@@ -273,7 +270,7 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] hoots seductively!</b></span>",\
 		"<span class='combat'>You hoot seductively!</span>")
-		playsound(holder.owner, "sound/voice/animal/hoot.ogg", 90, 0)
+		playsound(holder.owner, 'sound/voice/animal/hoot.ogg', 90, 0)
 		flick("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""

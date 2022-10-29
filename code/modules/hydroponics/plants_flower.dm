@@ -21,6 +21,13 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	mutations = list()
 	commuts = list(/datum/plant_gene_strain/immunity_radiation,/datum/plant_gene_strain/damage_res/bad)
 
+	HYPinfusionP(var/obj/item/seed/S,var/reagent)
+		..()
+		var/datum/plantgenes/DNA = S.plantgenes
+		if (!DNA) return
+		if (reagent == "luminol")
+			DNA.mutation = HY_get_mutation_from_path(/datum/plantmutation/rose/holorose)
+
 /datum/plant/flower/rafflesia
 	name = "Rafflesia"
 	seedcolor = "#A4000F"
@@ -38,7 +45,7 @@ ABSTRACT_TYPE(/datum/plant/flower)
 	mutations = list()
 	commuts = list(/datum/plant_gene_strain/resistance_drought)
 	assoc_reagents = list("miasma")
-	
+
 	HYPspecial_proc(var/obj/machinery/plantpot/POT) // Smokes miasma and whatever chemicals have been spliced into the plant
 		. = ..()
 		if (.) return

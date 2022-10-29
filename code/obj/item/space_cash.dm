@@ -1,4 +1,3 @@
-
 /obj/item/spacecash
 	name = "1 credit"
 	real_name = "credit"
@@ -8,16 +7,15 @@
 	uses_multiple_icon_states = 1
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_point = 400
 	burn_possible = 2
 	burn_output = 750
-	health = 10
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacecash // so all cash types can stack iwth each other
@@ -72,7 +70,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			if (istype(I, /obj/item/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
@@ -83,7 +81,7 @@
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
@@ -187,7 +185,7 @@
 
 		src.UpdateName()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much cash do you want to take from the stack?") as null|num)
 			if (isnum_safe(amt))
@@ -199,7 +197,7 @@
 		else
 			..()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacecash) && src.amount < src.max_stack)
 			boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 		else
@@ -235,14 +233,13 @@
 
 	opacity = 0
 	density = 0
-	anchored = 0.0
-	force = 1.0
-	throwforce = 1.0
+	anchored = 0
+	force = 1
+	throwforce = 1
 	throw_speed = 1
 	throw_range = 8
 	w_class = W_CLASS_TINY
 	burn_possible = 0
-	health = 1000
 	amount = 1
 	max_stack = 1000000
 	stack_type = /obj/item/spacebux
@@ -317,7 +314,7 @@
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
 		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/spacebux) && src.spent == 0)
 			user.visible_message("<span class='notice'>[user] stacks some spacebux.</span>")
 			stack_item(I)
@@ -332,7 +329,7 @@
 				return 0
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = round(input("How much spacebux do you want to split from the token?") as null|num)
 			if (isnum_safe(amt) && src.loc == user && !user.equipped())
@@ -361,3 +358,15 @@
 	thousand
 		amount = 1000
 
+//not a good spot for this but idc
+/obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
+	name = "stamped bullion"
+	desc = "Oh wow! This stuff's got to be worth a lot of money!"
+	icon = 'icons/obj/materials.dmi'
+	icon_state = "stamped_gold"
+	force = 4
+	throwforce = 6
+
+	New()
+		. = ..()
+		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)

@@ -82,11 +82,14 @@
 			new /obj/item/electronics/scanner(src),
 			new /obj/item/deconstructor/borg(src),
 			new /obj/item/weldingtool(src),
-			new /obj/item/tile/cardboard/fullstack(src)
+
 
 
 		)
 
+		var/obj/item/tile/cardboard/T  =new /obj/item/tile/cardboard/(src)
+		T.amount = 600
+		src.tools += T
 		var/obj/item/cable_coil/W = new /obj/item/cable_coil(src)
 		W.amount = 1000
 		src.tools += W
@@ -98,6 +101,9 @@
 		/*SPAWN(0)
 			out(src, "<b>Use \"say ; (message)\" to speak to fellow drones through the spooky power of spirits within machines.</b>")
 			src.show_laws_drone()*/
+
+	track_blood()
+		return
 
 	update_canmove() // this is called on Life() and also by force_laydown_standup() btw
 		..()
@@ -132,7 +138,7 @@
 				src.client.images.Add(I)
 
 	death(gibbed)
-		logTheThing("combat", src, null, "was destroyed at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		setdead(src)
 		if (src.mind)
 			src.mind.dnr = 0
@@ -146,6 +152,9 @@
 				ghost.verbs -= /mob/dead/observer/proc/reenter_corpse
 			ghost.name = (src.oldname ? src.oldname : src.real_name)
 			ghost.real_name = (src.oldname ? src.oldname : src.real_name)
+
+		//Don't be on the list of available drones
+		available_ghostdrones -= src
 
 		//So the drone cant pick up an item and then die, sending the item ~to the void~
 		var/obj/item/magtractor/mag = locate(/obj/item/magtractor) in src.tools
@@ -227,7 +236,7 @@
 			msg += "<br>"
 		msg += "[src] has a power charge of [bicon(src.cell)] [src.cell.charge]/[src.cell.maxcharge]</span>"
 
-		. += msg.Join("")
+		. += msg.Join()
 
 		if (src.health < src.max_health)
 			if (src.health < (src.max_health / 2))
@@ -284,7 +293,7 @@
 		return 1
 
 	proc/setFaceDialog()
-		var/newFace = input(usr, "Select your faceplate", "Drone", src.faceType) as null|anything in list("Happy", "Sad", "Mad", "Heart", "Sleepy", "Exclaim", "Question", "Lopsy", "Kitty", "Eye")
+		var/newFace = tgui_input_list(usr, "Select your faceplate", "Drone", list("Exclaim", "Eye", "Happy", "Heart", "Kitty", "Lopsy", "Mad", "Question", "Sad", "Sleepy"))
 		if (!newFace) return 0
 		var/newColor = input(usr, "Select your faceplate color", "Drone", src.faceColor) as null|color
 		if (!newFace && !newColor) return 0
@@ -359,12 +368,12 @@
 			return
 
 		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
-			src.point(target)
+			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
 			if (src.in_point_mode)
 				src.toggle_point_mode()
 			return
 
-		if (get_dist(src, target) > 0) // temporary fix for cyborgs turning by clicking
+		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
 		var/obj/item/equipped = src.equipped()
@@ -380,7 +389,7 @@
 		if (src.client && src.client.check_key(KEY_PULL))
 			var/atom/movable/movable = target
 			if (istype(movable))
-				movable.pull()
+				movable.pull(src)
 			return
 
 		var/reach = can_reach(src, target)
@@ -426,7 +435,7 @@
 		W.set_loc(src)
 		var/image/hatImage = image(icon = W.icon, icon_state = W.icon_state, layer = src.layer+0.1)
 		hatImage.pixel_y = 5
-		hatImage.transform *= 0.90
+		hatImage.transform *= 0.9
 		UpdateOverlays(hatImage, "hat")
 		return 1
 
@@ -467,7 +476,7 @@
 			src.icon_state = "drone-dead"
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
 				if (W:try_weld(user,0,-1,0,0))
@@ -502,7 +511,7 @@
 			C.use(1)
 			src.health = clamp(src.health + 5, 1, src.max_health)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 25)
 				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
@@ -823,14 +832,14 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
 						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
 
 			if ("johnny")
@@ -926,7 +935,7 @@
 				return
 
 		if (message && isalive(src))
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/living/silicon/ghostdrone/O in viewers(src, null))
 					O.show_message("<span class='emote'>[message]</span>", m_type)
@@ -1022,12 +1031,6 @@
 		// emotes
 		if (dd_hasprefix(message, "*"))
 			return src.emote(copytext(message, 2),1)
-
-		UpdateOverlays(speech_bubble, "speech_bubble")
-		var/speech_bubble_time = src.last_typing
-		SPAWN(1.5 SECONDS)
-			if(speech_bubble_time == src.last_typing)
-				UpdateOverlays(null, "speech_bubble")
 
 		return src.drone_broadcast(message)
 		// Removing normal dronesay stuff and changing :d to just ;
@@ -1129,16 +1132,16 @@
 		if (src.nodamage) return
 		src.flash(3 SECONDS)
 		switch (severity)
-			if (1.0)
+			if (1)
 				SPAWN(0)
 					src.gib(1)
 
-			if (2.0)
+			if (2)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 2, 1.0))
 					src.changeStatus("stunned", 10 SECONDS)
 
-			if (3.0)
+			if (3)
 				SPAWN(0)
 					src.TakeDamage(null, round(src.health / 3, 1.0))
 					src.changeStatus("stunned", 5 SECONDS)
@@ -1217,6 +1220,9 @@
 			var/obj/item/MTI = MT.holding
 			if (MTI && (MTI.tool_flags & tool_flag))
 				return MT.holding
+		I = locate(/obj/item/tool/omnitool) in src.tools //Try the omnitool if all else fails
+		if (I && (I.tool_flags & tool_flag))
+			return I
 		return null
 
 	hotkey(name)
@@ -1271,7 +1277,7 @@
 	var/mob/living/silicon/ghostdrone/G
 	if (pickNew && islist(available_ghostdrones) && length(available_ghostdrones))
 		for (var/mob/living/silicon/ghostdrone/T in available_ghostdrones)
-			if (T.newDrone)
+			if (T.newDrone && !isdead(T))
 				G = T
 				break
 			else // why are you in this list
@@ -1312,7 +1318,7 @@
 
 	boutput(G, "<span class='bold' style='color:red;font-size:150%'>You have become a Ghostdrone!</span><br><b>Humans, Cyborgs, and other living beings will appear only as static silhouettes, and you should avoid interacting with them.</b><br><br>You can speak to your fellow Ghostdrones by talking normally (default: push T). You can talk over deadchat with other ghosts by starting your message with ';'.")
 	if (G.mind)
-		G.Browse(grabResource("html/ghostdrone.html"),"window=ghostdrone;size=600x440;title=Ghostdrone Help")
+		G.show_antag_popup("ghostdrone")
 
 	SPAWN(1 SECOND)
 		G.show_laws_drone()

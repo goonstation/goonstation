@@ -106,7 +106,7 @@
 					. += "<span class='alert'><b>It seems to be on the verge of falling apart!</b></span>"
 
 	// Nuke round development was abandoned for 4 whole months, so I went out of my way to implement some user feedback from that 11 pages long forum thread (Convair880).
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.debugmode)
 			open_wire_panel(user)
 			return
@@ -126,7 +126,7 @@
 			var/area/TA = src.target_override
 			target_name = initial(TA.name)
 		else if(!target_name && istype(gamemode))
-			target_name = gamemode?.target_location_name
+			target_name = gamemode?.concatenated_location_names
 
 		#define NUKE_AREA_CHECK (!src.armed && isturf(src.loc) && (\
 				(ispath(target_area) && istype(get_area(src), target_area)) || \
@@ -148,7 +148,7 @@
 			boutput(user, "<span class='alert'>Deployment area definition missing or invalid! Please report this to a coder.</span>")
 		else if (!NUKE_AREA_CHECK)
 			boutput(user, "<span class='alert'>You need to deploy the bomb in [target_name].</span>")
-		else if(alert("Deploy and arm [src.name] here?", src.name, "Yes", "No") != "Yes")
+		else if(tgui_alert(user, "Deploy and arm [src] here?", src.name, list("Yes", "No")) != "Yes")
 			return
 		else if(src.armed || !NUKE_AREA_CHECK || !can_reach(user, src) || !can_act(user)) // gotta re-check after the alert!!!
 			boutput(user, "<span class='alert'>Deploying aborted due to you or [src] not being in [target_name].</span>")
@@ -164,13 +164,13 @@
 			src.det_time = TIME + src.timer_default
 			src.add_simple_light("nuke", list(255, 127, 127, 127))
 			command_alert("\A [src] has been armed in [isturf(src.loc) ? get_area(src) : src.loc]. It will detonate in [src.get_countdown_timer()] minutes. All personnel must report to [get_area(src)] to disarm the bomb immediately.", "Nuclear Weapon Detected")
-			playsound_global(world, "sound/machines/bomb_planted.ogg", 90)
-			logTheThing("bombing", user, null, "armed [src] at [log_loc(src)].")
+			playsound_global(world, 'sound/machines/bomb_planted.ogg', 75)
+			logTheThing(LOG_GAMEMODE, user, "armed [src] at [log_loc(src)].")
 			gamemode?.shuttle_available = FALSE
 
 		#undef NUKE_AREA_CHECK
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 		user.lastattacked = src
 
@@ -198,8 +198,8 @@
 					if(istype(ticker.mode, /datum/game_mode/nuclear))
 						ticker.mode.shuttle_available = 1
 
-				playsound(src.loc, "sound/machines/ping.ogg", 100, 0)
-				logTheThing("bombing", user, null, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
+				playsound(src.loc, 'sound/machines/ping.ogg', 100, 0)
+				logTheThing(LOG_GAMEMODE, user, "inserted [W.name] into [src] at [log_loc(src)], modifying the timer by [timer_modifier / 10] seconds.")
 				user.u_equip(W)
 				W.set_loc(src)
 				src.disk = W
@@ -254,7 +254,7 @@
 				if (60 to INFINITY)
 					src.take_damage(W.force / 7) // Esword has 60 force.
 
-			logTheThing("combat", user, null, "attacks [src] with [W] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "attacks [src] with [W] at [log_loc(src)].")
 			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 100, 1)
 			attack_particle(user,src)
 
@@ -320,7 +320,7 @@
 			if(ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 				gamemode = ticker.mode
 				gamemode.the_bomb = null
-				logTheThing("station", null, null, "The nuclear bomb was destroyed at [log_loc(src)].")
+				logTheThing(LOG_GAMEMODE, null, "The nuclear bomb was destroyed at [log_loc(src)].")
 				message_admins("The nuclear bomb was destroyed at [log_loc(src)].")
 			qdel(src)
 
@@ -344,16 +344,19 @@
 		if ((nuke_turf.z != 1 && !area_correct) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear)))
 			gamemode.the_bomb = null
 			command_alert("A nuclear explosive has been detonated nearby. The station was not in range of the blast.", "Attention")
-			explosion(src, src.loc, 20, 30, 40, 50)
-			qdel(src)
 			return
+		explosion(src, src.loc, 35, 45, 55, 55)
 #ifdef MAP_OVERRIDE_MANTA
-		world.showCinematic("manta_nukies")
+		world.showCinematic("manta_nukies", TRUE)
 #else
 		var/datum/hud/cinematic/cinematic = new
 		for (var/client/C in clients)
 			cinematic.add_client(C)
 		cinematic.play("nuke")
+
+		SPAWN(15 SECONDS) // give it a lil time to sort the explosions out
+			for (var/client/C in clients)
+				cinematic?.remove_client(C)
 #endif
 		if(istype(gamemode))
 			gamemode.nuke_detonated = 1
@@ -366,7 +369,8 @@
 			if(!nukee.stat)
 				nukee.emote("scream")
 			// until we can fix the lag related to deleting mobs we should probably just leave the end of the animation up and kill everyone instead of firegibbing everyone
-			nukee.death()//firegib()
+			// update: yolo
+			nukee.firegib()
 
 		creepify_station()
 
@@ -375,8 +379,10 @@
 			boutput(world, "<B>Everyone was killed by the nuclear blast! Resetting in 30 seconds!</B>")
 
 			sleep(30 SECONDS)
-			logTheThing("diary", null, null, "Rebooting due to nuclear destruction of station", "game")
+			logTheThing(LOG_DIARY, null, "Rebooting due to nuclear destruction of station", "game")
 			Reboot_server()
+
+		qdel(src)
 
 /datum/action/bar/icon/unanchorNuke
 	duration = 55
@@ -422,7 +428,7 @@
 				the_bomb.motion_sensor_triggered = 1
 				the_bomb.det_time -= timer_modifier
 				the_bomb.visible_message("<span class='alert'><b>[the_bomb]'s motion sensor was triggered! The countdown has been halved to [the_bomb.get_countdown_timer()]!</b></span>")
-				logTheThing("bombing", owner, null, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
+				logTheThing(LOG_GAMEMODE, owner, "unscrews [the_bomb] at [log_loc(the_bomb)], halving the countdown to [the_bomb.get_countdown_timer()].")
 
 /obj/machinery/nuclearbomb/event
 	anyone_can_activate = 1
@@ -446,7 +452,7 @@
 			decal.icon_state = "balloon_green_pop"
 			qdel(src)
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		..()
 		user.lastattacked = src
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_1.ogg', 100, 1)

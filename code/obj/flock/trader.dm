@@ -251,7 +251,7 @@
 	src.visible_message("<B>[src.name]</B> screeches, \"[gradientText(grad_col_1, grad_col_2, "We will not tolerate this!")]\"")
 	for(var/turf/T in get_area_turfs( get_area(src) ))
 		for(var/mob/living/L in T)
-			if(isflock(L))
+			if(isflockmob(L))
 				continue // don't zap our buddies
 			arcFlash(src, L, 2000000)
 
@@ -363,7 +363,7 @@
 	anchored = 1
 	var/obj/npc/trader/flock/trader
 
-/obj/flock_reclaimer/attack_hand(mob/user as mob)
+/obj/flock_reclaimer/attack_hand(mob/user)
 	if(!user)
 		return
 	if(!trader)
@@ -372,7 +372,7 @@
 	src.visible_message("<span class='notice'>[user.name] waves their hand over [src.name].</span>")
 	trader.greet(user)
 
-/obj/flock_reclaimer/attackby(obj/item/W as obj, mob/user as mob)
+/obj/flock_reclaimer/attackby(obj/item/W, mob/user)
 	if(!W || !user || W.cant_drop)
 		return
 	if(istype(W, /obj/item/grab))
@@ -383,7 +383,7 @@
 	user.remove_item(W)
 	qdel(W)
 	sleep(1 SECOND)
-	playsound(src.loc, "sound/impact_sounds/Energy_Hit_2.ogg", 70, 1)
+	playsound(src.loc, 'sound/impact_sounds/Energy_Hit_2.ogg', 70, 1)
 	sleep(0.5 SECONDS)
 	if(trader)
 		trader.donate(user, gained_resources)
@@ -397,6 +397,7 @@
 	win_path = "/obj/window/feather"
 	grille_path = "/obj/grille/flock"
 	full_win = 1
+	no_dirs = TRUE
 
 ////////////////////
 // FLOCKTRADER DOOR

@@ -125,7 +125,8 @@
 					else
 						suppress_out = 0
 						return 1
-
+				else
+					return 1
 				subPlace = findtext(text, "_sub")
 
 			//var/list/command_list = parse_string(text, (script_iteration ? src.scriptvars : null))
@@ -676,9 +677,6 @@
 							var/list/explodedString = splittext("[stack[stack.len-1]]", "[stack[stack.len]]")
 							if (explodedString.len + stack.len > MAX_STACK_DEPTH)
 								return ERR_STACK_OVER
-
-							// reverselist is getting removed because it didnt actually do anything other than copy the list, if this line actually intended to reverse it, use reverse_list
-							//explodedString = reverselist(explodedString)
 
 							stack.len -= 2
 							stack += explodedString

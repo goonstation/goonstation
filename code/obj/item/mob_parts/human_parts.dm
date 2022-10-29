@@ -45,7 +45,7 @@
 	get_damage()
 		return src.brute_dam + src.burn_dam	+ src.tox_dam
 
-	attack(mob/living/carbon/M as mob, mob/living/carbon/user as mob)
+	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if(!ismob(M))
 			return
 
@@ -159,8 +159,8 @@
 		switch(remove_stage)
 			if(0)
 				tool.the_mob.visible_message("<span class'alert'>[tool.the_mob] attaches [holder.name]'s [src.name] securely with [tool].</span>", "<span class='alert'>You attach [holder.name]'s [src.name] securely with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
-				logTheThing("diary", tool.the_mob, holder, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "staples [constructTarget(holder,"combat")]'s [src.name] back on.")
+				logTheThing(LOG_DIARY, tool.the_mob, "staples [constructTarget(holder,"diary")]'s [src.name] back on.", "combat")
 			if(1)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] slices through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>", "<span class='alert'>You slice through the skin and flesh of [holder.name]'s [src.name] with [tool].</span>")
 			if(2)
@@ -171,8 +171,8 @@
 						src.remove(0)
 			if(3)
 				tool.the_mob.visible_message("<span class='alert'>[tool.the_mob] cuts through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>", "<span class='alert'>You cut through the remaining strips of skin holding [holder.name]'s [src.name] on with [tool].</span>")
-				logTheThing("combat", tool.the_mob, holder, "removes [constructTarget(holder,"combat")]'s [src.name].")
-				logTheThing("diary", tool.the_mob, holder, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
+				logTheThing(LOG_COMBAT, tool.the_mob, "removes [constructTarget(holder,"combat")]'s [src.name].")
+				logTheThing(LOG_DIARY, tool.the_mob, "removes [constructTarget(holder,"diary")]'s [src.name]", "combat")
 				src.remove(0)
 
 
@@ -199,6 +199,20 @@
 					src.limb_is_transplanted = TRUE
 				else // Maybe we got our old limb back?
 					src.limb_is_transplanted = FALSE
+
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
+		if (hit_atom == thr.return_target)
+			var/mob/living/carbon/human/H = hit_atom
+			if (isskeletonlimb(src) && isskeleton(H) && !H.limbs.get_limb(src.slot))
+				src.attach(H)
+				H.visible_message("<span class='alert'>[H] has been hit by [src].</span> <span class='notice'>It fuses instantly with [H]'s empty socket!</span>")
+				playsound(H, 'sound/effects/attach.ogg', 50, 1)
+			else
+				hit_atom.visible_message("<span class='alert'><b>[hit_atom]</b> gets clonked in the face with [src]!</span>")
+				playsound(hit_atom, 'sound/impact_sounds/Flesh_Break_1.ogg', 30, 1)
+				hit_atom.changeStatus("stunned", 2 SECONDS)
+			return
+		..()
 
 	/// Determines what the limb's skin tone should be
 	proc/colorize_limb_icon()
@@ -365,6 +379,13 @@
 	slot = "l_arm"
 	handlistPart = "hand_left"
 
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.l_hand)
+		. = ..()
+
 /obj/item/parts/human_parts/arm/right
 	name = "right arm"
 	desc = "Someone's right hand.... hand. Or arm, whatever."
@@ -373,6 +394,13 @@
 	slot = "r_arm"
 	side = "right"
 	handlistPart = "hand_right"
+
+	disposing()
+		if (src.holder)
+			if (ishuman(src.holder))
+				var/mob/living/carbon/human/H = src.holder
+				H.drop_from_slot(H?.r_hand)
+		. = ..()
 
 /obj/item/parts/human_parts/leg
 	name = "placeholder item (don't use this!)"
@@ -726,7 +754,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -754,7 +782,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -823,7 +851,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -852,7 +880,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		set_skin_tone()
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
@@ -881,7 +909,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -908,7 +936,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -935,7 +963,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -962,7 +990,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1034,7 +1062,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1079,7 +1107,7 @@
 		newlimb.original_fprints = src.original_fprints
 		qdel(src)
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1151,7 +1179,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1179,7 +1207,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1205,7 +1233,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1231,7 +1259,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1257,7 +1285,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1283,7 +1311,7 @@
 			set_loc(holder)
 		..()
 
-	getMobIcon(var/lying, var/decomp_stage = 0)
+	getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.standImage && ((src.decomp_affected && src.current_decomp_stage_s == decomp_stage) || !src.decomp_affected))
 			return src.standImage
 		current_decomp_stage_s = decomp_stage
@@ -1801,12 +1829,16 @@
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1 // Its just a bone... full of meat. Kind of.
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 /obj/item/parts/human_parts/leg/mutant/skeleton
 	icon = 'icons/mob/skeleton.dmi'
 	partIcon = 'icons/mob/skeleton.dmi'
 	easy_attach = 1
 	kind_of_limb = (LIMB_MUTANT | LIMB_SKELLY)
+	force = 10
+	throw_return = TRUE
 
 //// LIMBS ////
 /obj/item/parts/human_parts/arm/mutant/skeleton/left

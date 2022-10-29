@@ -98,7 +98,7 @@
   src.visible_message("<span class='alert'><b>[user]</b> [futility] [action] [src]! It seems vaguely [response].</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 80, 1)
 
-/obj/martianBiotech/attackby(obj/item/W as obj, mob/user as mob)
+/obj/martianBiotech/attackby(obj/item/W, mob/user)
   src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_2.ogg', 80, 1)
 

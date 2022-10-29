@@ -140,7 +140,7 @@
 		if (src.active)
 			if (!src.anchored)
 				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.active = 0
 				src.UpdateIcon()
 				src.updateDialog()
@@ -148,7 +148,7 @@
 
 			if (!istype(src.loc, /turf/simulated/floor/))
 				src.visible_message("<span class='alert'>[src]'s retention bolts fail, triggering an emergency shutdown!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.anchored = 0 // It might have happened, I guess?
 				src.active = 0
 				src.UpdateIcon()
@@ -157,7 +157,7 @@
 
 			if (src.check_tank(src.P) == 0)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.P] is ejected!</span>")
-				playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+				playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 				src.eject_tank(null)
 				src.updateDialog()
 				return
@@ -166,7 +166,7 @@
 				if (1)
 					if (!src.our_APC)
 						src.visible_message("<span class='alert'>[src] doesn't detect a local APC and shuts down!</span>")
-						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 						src.active = 0
 						src.our_APC = null
 						src.UpdateIcon()
@@ -175,7 +175,7 @@
 					if (src.last_APC_check && world.time > src.last_APC_check + 50)
 						if (src.APC_check() != 1)
 							src.visible_message("<span class='alert'>[src] can't charge the local APC and shuts down!</span>")
-							playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+							playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 							src.active = 0
 							src.our_APC = null
 							src.UpdateIcon()
@@ -199,7 +199,7 @@
 				if (2)
 					if (!src.CL)
 						src.visible_message("<span class='alert'>[src] doesn't have a cell to charge and shuts down!</span>")
-						playsound(src.loc, "sound/machines/buzz-two.ogg", 100, 0)
+						playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 						src.active = 0
 						src.CL = null
 						src.UpdateIcon()
@@ -212,7 +212,7 @@
 						src.CL.charge = src.CL.maxcharge
 					if (src.CL.charge == src.CL.maxcharge)
 						src.visible_message("<span class='alert'>[src.CL] is fully charged. [src] ejects the cell and shuts down!</span>")
-						playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+						playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 						src.eject_cell(null)
 						src.updateDialog()
 						return
@@ -227,7 +227,7 @@
 		src.updateDialog()
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		src.add_fingerprint(user)
 
 		src.add_dialog(user)
@@ -310,7 +310,7 @@
 					src.anchored = 0 // It might have happened, I guess?
 					src.UpdateIcon()
 					return
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				if (src.anchored)
 					src.anchored = 0
 					src.UpdateIcon()
@@ -355,3 +355,8 @@
 
 		src.updateUsrDialog()
 		return
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.CL)
+			src.CL = null

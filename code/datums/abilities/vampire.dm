@@ -136,10 +136,6 @@
 				src.UpdateIcon()
 				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 				return
-
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this spell here.</span>")
-			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
 			usr.update_cursor()
@@ -205,6 +201,11 @@
 			the_coffin = null
 			if (isdead(owner))
 				owner.full_heal()
+				if (ishuman(owner)) // oof
+					var/mob/living/carbon/human/owner_human = owner
+					owner_human.decomp_stage = DECOMP_STAGE_NO_ROT
+					owner_human.update_face()
+					owner_human.update_body()
 			else
 				changeling_super_heal_step(healed = owner, mult = mult*2, changer = 0)
 
@@ -217,7 +218,7 @@
 		if (total_blood)
 			if (src.vamp_blood < 0)
 				src.vamp_blood = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.vamp_blood = 0
@@ -227,12 +228,18 @@
 		else
 			if (src.points < 0)
 				src.points = 0
-				if (haine_blood_debug) logTheThing("debug", owner, null, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
+				if (haine_blood_debug) logTheThing(LOG_DEBUG, owner, "<b>HAINE BLOOD DEBUG:</b> [owner]'s vamp_blood_remaining dropped below 0 and was reset to 0")
 
 			if (set_null)
 				src.points = 0
 			else
 				src.points = max(src.points + change, 0)
+
+			if (change > 0 && ishuman(src.owner))
+				var/mob/living/carbon/human/H = src.owner
+				if (H.sims)
+					H.sims.affectMotive("Thirst", change * 0.5)
+					H.sims.affectMotive("Hunger", change * 0.5)
 
 	proc/get_vampire_blood(var/total_blood = 0)
 		if (total_blood)
@@ -251,10 +258,10 @@
 			return
 
 		if (deduct > 1)
-			boutput(src.owner, __blue("You used [deduct] units of blood, and have [src.points - deduct] remaining."))
+			boutput(src.owner, "<span class='notice'>You used [deduct] units of blood, and have [src.points - deduct] remaining.</span>")
 
 		else
-			boutput(src.owner, __blue("You have accumulated [src.vamp_blood] units of blood and [src.points] left to use."))
+			boutput(src.owner, "<span class='notice'>You have accumulated [src.vamp_blood] units of blood and [src.points] left to use.</span>")
 
 		return
 
@@ -277,7 +284,7 @@
 
 			src.has_thermal = 1
 			APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_THERMALVISION_MK2, src)
-			boutput(src.owner, __blue("<h3>Your vampiric vision has improved (thermal)!</h3>"))
+			boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (thermal)!</h3></span>")
 
 			src.addAbility(/datum/targetable/vampire/mark_coffin)
 			src.addAbility(/datum/targetable/vampire/coffin_escape)
@@ -306,8 +313,8 @@
 
 			src.has_xray = 1
 			src.has_fullpower = 1
-			//boutput(src.owner, __blue("<h3>Your vampiric vision has improved (x-ray)!</h3>"))
-			boutput(src.owner, __blue("<h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3>"))
+			//boutput(src.owner, "<span class='notice'><h3>Your vampiric vision has improved (x-ray)!</h3></span>")
+			boutput(src.owner, "<span class='notice'><h3>You have attained full power and are now too powerful to be harmed or stopped by the chapel's aura.</h3></span>")
 
 		return
 
@@ -334,7 +341,7 @@
 		if (dd_hasprefix(message, "*"))
 			return
 
-		logTheThing("diary", sender, null, "(GHOULSPEAK): [message]", "ghoulsay")
+		logTheThing(LOG_DIARY, sender, "(GHOULSPEAK): [message]", "ghoulsay")
 
 		if (sender.client && sender.client.ismuted())
 			boutput(sender, "You are currently muted and may not speak.")
@@ -344,13 +351,13 @@
 
 
 	proc/remove_thrall(var/mob/victim)
-		remove_mindslave_status(victim)
+		remove_mindhack_status(victim)
 		thralls -= victim
 
 	proc/make_thrall(var/mob/victim)
 		if (ishuman(victim))
 
-			var/mob/living/M = victim
+			var/mob/living/carbon/human/M = victim
 
 
 			if (!M.mind && !M.client)
@@ -381,15 +388,13 @@
 
 			if (M.bioHolder && M.traitHolder.hasTrait("training_chaplain"))
 				if(ismob(owner))
-					boutput(owner, __red("Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B>"))
-					boutput(M, __blue("Your divine protection saves you from enthrallment!"))
+					boutput(owner, "<span class='alert'>Wait, this is a chaplain!!! <B>AGDFHSKFGBLDFGLHSFDGHDFGH</B></span>")
+					boutput(M, "<span class='notice'>Your divine protection saves you from enthrallment!</span>")
 					owner.emote("scream")
 					owner.changeStatus("weakened", 5 SECONDS)
 					owner.TakeDamage("chest", 0, 30)
 					return
 
-
-			M.real_name = "thrall [M.real_name]"
 			if (M.mind)
 				M.mind.special_role = ROLE_VAMPTHRALL
 				if(ismob(owner))
@@ -401,16 +406,18 @@
 
 			thralls += M
 
+			M.decomp_stage = DECOMP_STAGE_NO_ROT
 			M.set_mutantrace(/datum/mutantrace/vampiric_thrall)
 			var/datum/abilityHolder/vampiric_thrall/VZ = M.get_ability_holder(/datum/abilityHolder/vampiric_thrall)
 			if (VZ && istype(VZ))
 				VZ.master = src
 
-			boutput(M, __red("<b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B>"))
-			M.show_antag_popup("mindslave")
+			boutput(M, "<span class='alert'><b>You awaken filled with purpose - you must serve your master vampire, [owner.real_name]!</B></span>")
+			M.antagonist_overlay_refresh(1)
+			owner.antagonist_overlay_refresh(1)
 
-			boutput(owner, __blue("[M] has been revived as your thrall."))
-			logTheThing("combat", owner, M, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
+			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
+			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
 
 
 
@@ -436,6 +443,7 @@
 	preferred_holder_type = /datum/abilityHolder/vampire
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
+	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
 	New()
@@ -451,7 +459,7 @@
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
 		if (src.unlock_message && src.holder && src.holder.owner)
-			boutput(src.holder.owner, __blue("<h3>[src.unlock_message]</h3>"))
+			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
 		return
 
 	updateObject()
@@ -507,25 +515,27 @@
 
 		if(isobj(M)) //Exception for VampTEG and Sentient Objects...
 			return 1
-
+		if (src.not_when_in_an_object && !isturf(M.loc))
+			boutput(M, "<span class='alert'>You can't use this ability here.</span>")
+			return 0
 		if (!(iscarbon(M) || ismobcritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		if (istype(get_area(M), /area/station/chapel) && M.check_vampire_power(3) != 1)
-			boutput(M, __red("Your powers do not work in this holy place!"))
+			boutput(M, "<span class='alert'>Your powers do not work in this holy place!</span>")
 			return 0
 
 		return 1

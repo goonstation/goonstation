@@ -36,6 +36,11 @@
 		..()
 		JobEquipSpawned("Research Director")
 
+/mob/living/carbon/human/normal/medicaldirector
+	New()
+		..()
+		JobEquipSpawned("Medical Director")
+
 /mob/living/carbon/human/normal/headofsecurity
 	New()
 		..()
@@ -91,11 +96,6 @@
 		..()
 		JobEquipSpawned("Janitor")
 
-/mob/living/carbon/human/normal/mechanic
-	New()
-		..()
-		JobEquipSpawned("Mechanic")
-
 /mob/living/carbon/human/normal/engineer
 	New()
 		..()
@@ -141,10 +141,10 @@
 		..()
 		JobEquipSpawned("Scientist")
 
-/mob/living/carbon/human/normal/ntso
+/mob/living/carbon/human/normal/ntsc
 	New()
 		..()
-		JobEquipSpawned("Nanotrasen Security Operative")
+		JobEquipSpawned("Nanotrasen Security Consultant")
 
 /mob/living/carbon/human/normal/inspector
 	New()

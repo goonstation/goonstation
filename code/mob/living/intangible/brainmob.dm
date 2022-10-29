@@ -18,7 +18,7 @@
 
 		if (reverse_mode) message = reverse_text(message)
 
-		logTheThing("diary", src, null, ": [message]", "say")
+		logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	#ifdef DATALOGGER
 		// Jewel's attempted fix for: null.ScanText()

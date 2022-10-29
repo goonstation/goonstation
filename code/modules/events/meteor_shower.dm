@@ -22,6 +22,12 @@ var/global/meteor_shower_active = 0
 	var/meteor_type = /obj/newmeteor/massive
 #endif
 
+	is_event_available(var/ignore_time_lock = 0)
+		. = ..()
+		if(.)
+			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
+				. = FALSE
+
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
@@ -161,7 +167,7 @@ var/global/meteor_shower_active = 0
 	icon_state = "flaming"
 	desc = "A chunk of space debris. You might want to stop staring at it and run."
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/speed = 1
 	var/pix_speed = 8
 	var/hit_object = 0 //If we hit something we skip the next step (we dont move)
@@ -228,12 +234,13 @@ var/global/meteor_shower_active = 0
 
 		return
 
-	Move(atom/NewLoc,Dir)
+	Move(atom/NewLoc, Dir)
 		if(src.x == world.maxx || src.y == world.maxy || src.x == 1 || src.y == 1)
 			qdel(src)
 		if(src.loc == target)
 			shatter()
 			return
+		. = ..()
 		if(src.loc == last_tile)
 			walk_towards(src, target, speed, pix_speed)
 		if(!hit_object)
@@ -329,7 +336,7 @@ var/global/meteor_shower_active = 0
 	icon = 'icons/obj/large/meteor96x96.dmi'
 	icon_state = "flaming"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	layer = EFFECTS_LAYER_UNDER_1
 	//bound_width = 96
 	//bound_height = 96

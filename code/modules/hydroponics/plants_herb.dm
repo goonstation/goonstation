@@ -226,6 +226,21 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	mutations = list(/datum/plantmutation/tobacco/twobacco)
 	commuts = list(/datum/plant_gene_strain/resistance_drought,/datum/plant_gene_strain/yield/stunted)
 
+/datum/plant/herb/tea
+	name = "Tea"
+	seedcolor = "#377a41"
+	crop = /obj/item/plant/herb/tea
+	starthealth = 20
+	growtime = 20
+	harvtime = 60
+	cropsize = 5
+	harvests = 1
+	isgrass = TRUE
+	endurance = 3
+	nectarlevel = 5
+	genome = 1
+	assoc_reagents = list("tea")
+
 /datum/plant/herb/grass
 	name = "Grass"
 	category = "Miscellaneous" //this seems inconsistent, shouldn't  this mean it belongs in plants_crop?

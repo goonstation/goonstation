@@ -32,9 +32,12 @@
 		if (prisoner)
 			return
 		if (isliving(user))
+			if (length(user.grabbed_by) > 0)
+				for (var/obj/item/grab/grab in user.grabbed_by)
+					grab.assailant.u_equip(grab)
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
 			if (src.living)
-				new /mob/living/object/artifact(O, user)
+				new /mob/living/object/artifact(O.loc, O, user)
 			else
 				user.set_loc(O)
 			O.ArtifactFaultUsed(user)

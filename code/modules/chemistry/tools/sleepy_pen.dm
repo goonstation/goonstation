@@ -1,26 +1,26 @@
 /obj/item/pen/sleepypen
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
-	hide_attack = 1
-	move_triggered = 1
+	hide_attack = TRUE
+	move_triggered = TRUE
+	can_dip = FALSE
 
 	New()
 		..()
 		if (prob(50))
-			desc = "It's a normal black ink pen with a sharp point."
+			desc = "The humble National Notary 'Arundel' model pen. It's a normal black ink pen. With a sharp point."
 		else
 			name = "fancy pen"
-			desc = "A pretty swag pen with a sharp point."
+			desc = "One of those really fancy National Notary pens. Looks like the 'Grand Duchess' model with the marblewood handle. And a sharp point."
 			icon_state = "pen_fancy"
 			item_state = "pen_fancy"
 			font_color = "blue"
 			font = "'Dancing Script', cursive"
 			webfont = "Dancing Script"
-			uses_handwriting = 1
+			uses_handwriting = TRUE
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
-		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
 		if (src.reagents.total_volume)
@@ -29,12 +29,11 @@
 				return
 
 			boutput(user, "<span class='alert'>You stab [M] with the pen.</span>")
-			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the sleepy pen [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(M, 50)
 
 		else
 			user.show_text("The sleepy pen is empty.", "red")
-		return
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
@@ -44,7 +43,7 @@
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -59,9 +58,8 @@
 				src.reagents.add_reagent(pick("water", "krokodil", "methamphetamine"), 4)
 				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "jenkem", "glitter"), 6)
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
-		return
 
-	attack(mob/M, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!ismob(M))
 			return
 		if (src.reagents.total_volume)
@@ -71,12 +69,12 @@
 			var/luck = pick(1,2,3)
 			if(luck==1)
 				boutput(user, "<span class='alert'>You stab [M == user ? "yourself" : "[M]"] with the correct end of this greasy sleepy pen[M == user ? ", gross!" : "."]</span>")
-				logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] at [log_loc(user)].")
 				src.reagents.trans_to(M, 30)
 			if(luck==2)
 				if(src.reagents.total_volume)
 					boutput(user, "<span class='alert'>You poke [M == user ? "yourself" : "[M]"] but the greasy pen leaks quite badly!</span>")
-					logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
+					logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen with [log_reagents(src)] but fails at [log_loc(user)].")
 					src.reagents.reaction(get_turf(src), TOUCH, min(30, src.reagents.total_volume))
 					src.reagents.remove_any(30)
 					if(user != M)
@@ -84,9 +82,8 @@
 				else
 			if(luck==3)
 				boutput(user, "<span class='alert'>You stab yourself with the pointy end of the greasy sleepy pen.")
-				logTheThing("combat", user, M, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")
 				src.reagents.trans_to(user, 30)
 
 		else
 			user.show_text("The sleepy pen is empty.", "red")
-		return

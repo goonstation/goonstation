@@ -1100,17 +1100,6 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	name = "Columbian Mobster Suit"
 	path = /obj/item/clothing/under/misc/colmob
 
-/datum/clothingbooth_item/costume/mobilesuit
-	name = "Mobile Robot Suit"
-	path = /obj/item/clothing/suit/gimmick/mobile_suit
-	cost = PAY_EXECUTIVE
-
-/datum/clothingbooth_item/costume/mobilesuithelmet
-	name = "Mobile Robot Helmet"
-	path = /obj/item/clothing/head/mobile_suit
-	slot = SLOT_HEAD
-	cost = PAY_EXECUTIVE/2
-
 /datum/clothingbooth_item/costume/dinerdress_mint
 	name = "Mint Diner Waitress's Dress"
 	path = /obj/item/clothing/under/gimmick/dinerdress_mint
@@ -1206,6 +1195,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
 /datum/clothingbooth_item/western/western
 	name = "Western Shirt and Pants"
 	path = /obj/item/clothing/under/misc/western
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
+/datum/clothingbooth_item/western/westerndress
+	name = "Western Saloon Dress"
+	path = /obj/item/clothing/under/misc/westerndress
 	slot = SLOT_W_UNIFORM
 	cost = PAY_UNTRAINED/1
 

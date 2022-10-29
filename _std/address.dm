@@ -1,11 +1,13 @@
 //for memory address stuff - pure witchery
 
+// for a more complete list see https://gn32.uk/f/byond-typeids.txt
 var/global/list/type_ids = list(
 	/turf = "01",
 	/obj = "02",
 	/mob = "03",
 	/area = "04",
 	/client = "05",
+	// strings are "06"
 	/image = "0d",
 	/datum = "21"
 )

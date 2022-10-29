@@ -23,18 +23,18 @@
 			return 1
 
 		if (M == target)
-			boutput(M, __red("Why would you want to wrestle yourself?"))
+			boutput(M, "<span class='alert'>Why would you want to wrestle yourself?</span>")
 			return 1
 
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 
 		if(check_target_immunity( target ))
 			M.visible_message("<span class='alert'>You seem to attack [target]!</span>")
 			return 1
 
-		SEND_SIGNAL(M, COMSIG_CLOAKING_DEVICE_DEACTIVATE)
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		M.emote("scream")
 		M.emote("flip")
@@ -56,7 +56,7 @@
 			target.changeStatus("slowed", 8 SECONDS, 2)
 			target.force_laydown_standup()
 
-		logTheThing("combat", M, target, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]kick wrestling move on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0
 
 /datum/targetable/wrestler/kick/fake

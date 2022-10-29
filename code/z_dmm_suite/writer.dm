@@ -94,7 +94,8 @@ dmm_suite
 	*/
 	write_area(area/save_area, flags as num)
 		// Cancel out if the area isn't on the map
-		if(!(locate(/turf) in save_area.contents))
+		var/list/atom/save_area_contents = save_area.contents.Copy()
+		if(!(locate(/turf) in save_area_contents))
 			return FALSE
 		//
 		var/startZ = save_area.z
@@ -103,7 +104,7 @@ dmm_suite
 		var/endZ = 0
 		var/endY = 0
 		var/endX = 0
-		for(var/turf/containedTurf in save_area.contents)
+		for(var/turf/containedTurf in save_area_contents)
 			if(     containedTurf.z >   endZ)   endZ = containedTurf.z
 			else if(containedTurf.z < startZ) startZ = containedTurf.z
 			if(     containedTurf.y >   endY)   endY = containedTurf.y
@@ -347,7 +348,7 @@ dmm_suite/prefab_saving/makeTemplate(turf/model as turf, flags as num)
 		if(istype(model, /turf/space))
 			empty_area = 1
 			turfTemplate += "[/turf/variableTurf/clear],"
-		else if(istype(model, /turf/simulated/wall/asteroid))
+		else if(istype(model, /turf/simulated/wall/auto/asteroid))
 			empty_area = 1
 			turfTemplate += "[/turf/variableTurf/wall],"
 		else if(istype(model, /turf/simulated/floor/plating/airless/asteroid))

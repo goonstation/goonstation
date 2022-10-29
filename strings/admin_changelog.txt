@@ -1,3 +1,23 @@
+(t)sat oct 22 22
+(u)pali
+(*)Radio station music-playing now goes on cooldown when admin music gets played.
+(u)Gerhazo
+(*)Added save/load functionality to the particool UI. Supports saving the particle set properties as well as the set icons.
+(t)wed sep 07 22
+(u)Sord
+(+)Added new "Summon vortexes" random event for admin spawning. This spawns the disaster portals which summons critters. Has an option to use void critters or non-void critters.
+(t)tue aug 30 22
+(u)Sovexe
+(*)The Topic log is now hidden by default. This behavior can be toggled in your admin preferences.
+(t)tue jul 19 22
+(u)Ilysen
+(*)Started integrating the new antagonist system with the player panel. Development is still ongoing, but at bare minimum admins should be able to add and remove traitor status from people now.
+(t)tue jun 14 22
+(u)LeahTheTech
+(*)Added flockgib verb and player option
+(t)mon apr 23 22
+(u)Amylizzle, LeahTheTech, FlameArrow57, Stonepillar
+(*)Rework of the Flockmind antagonist to a playable state. It should now be less likely to explode, give it a shot!
 (t)sun apr 17 22
 (u)yellow
 (*)Create Command Alert verb now allows you to input a custom origin to the alert. Leaving it blank will set it to Central Command Update

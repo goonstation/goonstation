@@ -32,7 +32,7 @@
 	/obj/item/toy/plush/small/singuloose)
 	var/has_plushies = TRUE
 
-/obj/submachine/claw_machine/attack_hand(var/mob/user as mob)
+/obj/submachine/claw_machine/attack_hand(var/mob/user)
 	src.add_dialog(user)
 	if(src.busy)
 		boutput(user, "<span class='alert'>Someone else is currently playing [src]. Be patient!</span>")
@@ -151,20 +151,22 @@
 	rand_pos = 1
 
 /obj/item/toy/plush/proc/say_something(mob/user as mob)
-	var/message = input("What should [src] say?")
-	message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
-	if (!message || BOUNDS_DIST(src, user) > 0)
-		return
-	logTheThing("say", user, null, "makes [src] say, \"[message]\"")
-	user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
-	var/mob/living/carbon/human/H = user
-	if (H.sims)
-		H.sims.affectMotive("fun", 1)
+	if(user.client && !isghostcritter(user)) // stupid monkeys...
+		var/message = input("What should [src] say?")
+		message = trim(copytext(sanitize(html_encode(message)), 1, MAX_MESSAGE_LEN))
+		if (!message || BOUNDS_DIST(src, user) > 0)
+			return
+		phrase_log.log_phrase("plushie", message)
+		logTheThing(LOG_SAY, user, "makes [src] say, \"[message]\"")
+		user.audible_message("<span class='emote'>[src] says, \"[message]\"</span>")
+		var/mob/living/carbon/human/H = user
+		if (H.sims)
+			H.sims.affectMotive("fun", 1)
 
 /obj/item/toy/plush/attack_self(mob/user as mob)
 	src.say_something(user)
 
-/obj/item/toy/plush/attack(mob/M as mob, mob/user as mob)
+/obj/item/toy/plush/attack(mob/M, mob/user)
 	if (user.a_intent == INTENT_HELP)
 		M.visible_message("<span class='emote'>[src] gives [M] a hug!</span>", "<span class='emote'>[src] gives you a hug!</span>")
 	else
@@ -262,9 +264,11 @@
 	icon_state = "arthur"
 
 /obj/item/toy/plush/small/arthur/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Awoo","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Awoo", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/voice/babynoise.ogg", 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -276,7 +280,9 @@
 	throw_range = 10
 
 /obj/item/toy/plush/small/stress_ball/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Fidget","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Fidget", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Fidget")
 		user.visible_message("<span class='emote'>[user] fidgets with [src].</span>")
 		boutput(user, "<span class='notice'>You feel [pick("a bit", "slightly", "a teeny bit", "somewhat", "surprisingly", "")] [pick("better", "more calm", "more composed", "less stressed")].</span>")
@@ -288,9 +294,11 @@
 	icon_state = "deneb"
 
 /obj/item/toy/plush/small/deneb/attack_self(mob/user as mob)
-	var/menuchoice = alert("What would you like to do with [src]?",,"Honk","Say")
+	var/menuchoice = tgui_alert(user, "What would you like to do with [src]?", "Use [src]", list("Honk", "Say"))
+	if (!menuchoice)
+		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, "sound/items/rubberduck.ogg", 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

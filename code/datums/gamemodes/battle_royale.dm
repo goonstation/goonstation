@@ -3,7 +3,6 @@
 */
 
 var/global/area/current_battle_spawn = null
-var/global/list/datum/mind/battle_pass_holders = list()
 
 #define TIME_BETWEEN_SHUTTLE_MOVES 5 SECONDS
 #define MAX_TIME_ON_SHUTTLE 60 SECONDS
@@ -11,6 +10,9 @@ var/global/list/datum/mind/battle_pass_holders = list()
 #define MAX_TIME_BETWEEN_STORMS 480 SECONDS
 #define MIN_TIME_BETWEEN_SUPPLY_DROPS 60 SECONDS
 #define MAX_TIME_BETWEEN_SUPPLY_DROPS 180 SECONDS
+
+#define STORM_REGULAR 1
+#define STORM_FINAL 2
 
 
 /datum/game_mode/battle_royale
@@ -23,11 +25,13 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	var/next_drop = 0
 	var/current_battle_spawn_name = null
 	var/damage_tick = 0	// Don't cause off Z1 damage every tick
-	var/list/area/excluded_areas = list(/area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space)
+	var/list/area/excluded_areas = list(/area/shuttle/battle, /area/shuttle/escape/transit, /area/shuttle_transit_space, /area/battle_royale_spawn)
 	var/datum/random_event/special/battlestorm/storm = null
 	var/datum/random_event/special/supplydrop/dropper = null
 	var/list/datum/mind/recently_deceased = list()
+	var/datum/hud/battlersleft/battlersleft_hud
 	do_antag_random_spawns = 0
+	latejoin_antag_compatible = 0
 
 /datum/game_mode/battle_royale/announce()
 	boutput(world, "<B>The current game mode is - Battle Royale!</B>")
@@ -46,90 +50,22 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				player.mind.special_role = ROLE_BATTLER
 				living_battlers.Add(player.mind)
 
-	for (var/turf/space/space in world)
-		LAGCHECK(LAG_LOW)
-		if(space.icon_state != "darkvoid")
-			space.icon_state = "darkvoid"
-			space.icon = 'icons/turf/floors.dmi'
-			space.name = "void"
+	boutput(world, "<span class='notice'><h2>Preparing the [station_or_ship()]. Please be patient!</h2></span>")
+	// Stolen from /datum/terrainify/void
+	var/datum/station_zlevel_repair/station_repair = new
+	station_repair.ambient_light = new /image/ambient
+	station_repair.ambient_light.color = rgb(6.9, 4.20, 6.9)
+	station_repair.station_generator = new/datum/map_generator/void_generator
+	var/list/space = list()
+	for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
+		space += S
+	station_repair.station_generator.generate_terrain(space, flags=MAPGEN_IGNORE_FAUNA)
+	for (var/turf/S in space)
+		S.UpdateOverlays(station_repair.ambient_light, "ambient")
+	station_repair.clean_up_station_level()
+	map_settings.space_turf_replacement = /turf/simulated/floor/void
 
-	storm = new /datum/random_event/special/battlestorm()
-	dropper = new/datum/random_event/special/supplydrop()
-
-	// The places the battle shuttle can take you.
-	drop_locations = get_accessible_station_areas()
-	/*
-	drop_locations = list("security" = /area/station/security,\
-	"science wing" = /area/station/science,\
-		"the cargo bay" = /area/station/quartermaster/office,\
-		"engineering" = /area/station/engine,\
-		"medbay" = /area/station/medical,\
-		"the cafeteria" = /area/station/crew_quarters/cafeteria,\
-		"the chapel" = /area/station/chapel,\
-		"hydroponics" = /area/station/hydroponics,\
-		"the bridge" = /area/station/bridge)*/
-
-	current_battle_spawn_name = pick(drop_locations)
-	current_battle_spawn = drop_locations[current_battle_spawn_name]
-
-	// Remove monkeys
-	for (var/mob/M in world)
-		var/turf/T = get_turf(M)
-		if (!T)
-			continue
-		if (T.z != Z_LEVEL_STATION)
-			continue
-		if (isnpcmonkey(M))
-			qdel(M)
-
-	for_by_tcl(SV, /obj/submachine)
-		if (istype(SV, /obj/submachine/weapon_vendor/security))
-			qdel(SV)
-
-	for_by_tcl(MAC, /obj/machinery)
-		var/mac_type = MAC.type
-		switch (mac_type)
-			if (/obj/machinery/clone_scanner)
-				qdel(MAC)
-			if (/obj/machinery/vending/monkey)
-				qdel(MAC)
-			if (/obj/machinery/vending/security)
-				qdel(MAC)
-			if (/obj/machinery/vending/mechanics)
-				qdel(MAC)
-			if (/obj/machinery/computer/supplycomp)
-				qdel(MAC)
-			if (/obj/machinery/lrteleporter)
-				qdel(MAC)
-			if (/obj/machinery/networked/telepad)
-				qdel(MAC)
-			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
-				qdel(MAC)
-			if (/obj/machinery/portable_atmospherics/canister/toxins)
-				qdel(MAC)
-			if (/obj/machinery/teleport/portal_generator)
-				qdel(MAC)
-			if (/obj/machinery/bot/secbot)
-				qdel(MAC)
-			if (/obj/machinery/bot/secbot/beepsky)
-				qdel(MAC)
-
-	for_by_tcl(I, /obj/item/hand_tele)
-		qdel(I)
-
-	for_by_tcl(V, /obj/machinery/vehicle)
-		if (!istype(V, /obj/machinery/vehicle/escape_pod) && !istype(V, /obj/machinery/vehicle/tank/minisub/escape_sub))
-			qdel(V)
-
-	hide_weapons_everywhere(length(living_battlers))
-	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
-	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
-
-	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
-
-	emergency_shuttle.disabled = 1
-
+	// Dense borders to prevent leaving the station Z
 	for(var/x in 1 to world.maxx)
 		var/turf/T = locate(x, 1, Z_LEVEL_STATION)
 		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
@@ -141,9 +77,118 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
 		T = locate(world.maxx - 2, y, Z_LEVEL_STATION)	// Why is the Z change edge not at the actual edge??
 		T.ReplaceWith(/turf/unsimulated/wall/void, force = TRUE)
+
+	storm = new /datum/random_event/special/battlestorm()
+	dropper = new/datum/random_event/special/supplydrop()
+
+	drop_locations = get_accessible_station_areas()
+
+	current_battle_spawn_name = pick(drop_locations)
+	current_battle_spawn = drop_locations[current_battle_spawn_name]
+
+	// Remove monkeys
+	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
+		qdel(monke)
+
+	for_by_tcl(submachine, /obj/submachine)
+		if (istype(submachine, /obj/submachine/weapon_vendor/security))
+			qdel(submachine)
+
+	for_by_tcl(machine, /obj/machinery)
+		switch (machine.type)
+			if (/obj/machinery/clone_scanner)
+				qdel(machine)
+			if (/obj/machinery/the_singularitygen/)
+				qdel(machine)
+			if (/obj/machinery/chem_dispenser)
+				qdel(machine)
+			if (/obj/machinery/chemicompiler_stationary)
+				qdel(machine)
+			if (/obj/machinery/chem_master)
+				qdel(machine)
+			if (/obj/submachine/chem_extractor)
+				qdel(machine)
+			if (/obj/machinery/vending/monkey)
+				qdel(machine)
+			if (/obj/machinery/vending/monkey/kitchen)
+				qdel(machine)
+			if (/obj/machinery/vending/monkey/genetics)
+				qdel(machine)
+			if (/obj/machinery/vending/monkey/research)
+				qdel(machine)
+			if (/obj/machinery/vending/security)
+				qdel(machine)
+			if (/obj/machinery/vending/mechanics)
+				qdel(machine)
+			if (/obj/machinery/vending/medical_public)
+				qdel(machine)
+			if (/obj/machinery/vending/medical)
+				qdel(machine)
+			if (/obj/machinery/vending/port_a_nanomed)
+				qdel(machine)
+			if (/obj/machinery/sleeper/compact)
+				qdel(machine)
+			if (/obj/machinery/sleeper)
+				qdel(machine)
+			if (/obj/machinery/computer/supplycomp)
+				qdel(machine)
+			if (/obj/machinery/lrteleporter)
+				qdel(machine)
+			if (/obj/machinery/networked/telepad)
+				qdel(machine)
+			if (/obj/machinery/atmospherics/pipe/tank/sleeping_agent)
+				qdel(machine)
+			if (/obj/machinery/portable_atmospherics/canister/sleeping_agent)
+				qdel(machine)
+			if (/obj/machinery/portable_atmospherics/canister/toxins)
+				qdel(machine)
+			if (/obj/machinery/portable_atmospherics/canister/carbon_dioxide)
+				qdel(machine)
+			if (/obj/machinery/teleport/portal_generator)
+				qdel(machine)
+			if (/obj/machinery/bot/secbot)
+				qdel(machine)
+			if (/obj/machinery/bot/secbot/beepsky)
+				qdel(machine)
+			if (/obj/machinery/flasher/portable)
+				qdel(machine)
+			if (/obj/machinery/port_a_brig)
+				qdel(machine)
+			if (/obj/machinery/door/firedoor/pyro)
+				qdel(machine)
+			if (/obj/machinery/turret)
+				qdel(machine)
+			if (/obj/machinery/turretcover)
+				qdel(machine)
+			if (/obj/deployable_turret/riot)
+				qdel(machine)
+
+	for_by_tcl(circuitboard, /obj/item/circuitboard)
+		qdel(circuitboard)
+
+	for_by_tcl(hand_tele, /obj/item/hand_tele)
+		qdel(hand_tele)
+
+	for_by_tcl(belt, /obj/item/storage/belt)
+		qdel(belt)
+
+	for_by_tcl(machinery_vehicle, /obj/machinery/vehicle)
+		if (!istype(machinery_vehicle, /obj/machinery/vehicle/escape_pod) && !istype(machinery_vehicle, /obj/machinery/vehicle/tank/minisub/escape_sub))
+			qdel(machinery_vehicle)
+
+	for_by_tcl(obj_vehicle, /obj/vehicle)
+		qdel(obj_vehicle)
+
+	hide_weapons_everywhere(length(living_battlers))
+	next_storm = world.time + rand(MIN_TIME_BETWEEN_STORMS,MAX_TIME_BETWEEN_STORMS)
+	next_drop = world.time + rand(MIN_TIME_BETWEEN_SUPPLY_DROPS,MAX_TIME_BETWEEN_SUPPLY_DROPS)
+
+	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
+	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
+
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
+
 	return 1
-
-
 	// Things we are skipping:
 	// Antag selection. Everyone is an antag!
 	// Antag weighting. We dont record this - otherwise playing this round would fuck your weighting chances
@@ -152,6 +197,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 /datum/game_mode/battle_royale/post_setup()
 	for(var/datum/mind/player in src.living_battlers)
 		battle_shuttle_spawn(player)
+	battlersleft_hud = new()
+
+	for (var/client/C in clients)
+		battlersleft_hud.add_client(C)
 
 /datum/game_mode/battle_royale/proc/battle_shuttle_spawn(var/datum/mind/player)
 	bestow_objective(player,/datum/objective/battle_royale/win)
@@ -183,6 +232,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 			DEBUG_MESSAGE("[M.current.name] died. There are [length(living_battlers)] left!")
 			recently_deceased.Add(M)
 			someone_died++
+	battlersleft_hud.update_battlersleft(length(living_battlers))
 	if(someone_died && length(living_battlers) <= 5)
 		command_alert("[length(living_battlers)] battlers remain!","BATTLE STATUS ANNOUNCEMENT")
 	else if(someone_died && length(living_battlers) % 10 == 0)
@@ -197,14 +247,14 @@ var/global/list/datum/mind/battle_pass_holders = list()
 
 
 /datum/game_mode/battle_royale/declare_completion()
+	for (var/client/C in clients)
+		battlersleft_hud.remove_client(C)
 	boutput(world,"<h2>BATTLE COMPLETE</h2>")
 	if(length(living_battlers) == 1)
 		boutput(world,"<h2 class='alert'>[living_battlers[1].current.name] (played by [living_battlers[1].current.ckey]) has won!</h2>")
 		boutput(living_battlers[1].current,"<h1 class='notice'>Holy shit you won!!!</h1>")
 	else
 		boutput(world,"<h2 class='alert'>Literally everyone died. wow.</h2>")
-
-
 
 /datum/game_mode/battle_royale/process()
 	..()
@@ -243,10 +293,10 @@ var/global/list/datum/mind/battle_pass_holders = list()
 	if (src.next_storm != null)
 		// Game ending storm
 		if (emergency_shuttle.location == SHUTTLE_LOC_STATION)
-			if (emergency_shuttle.timeleft() < 60)
-				storm.event_effect(TRUE)
+			if (emergency_shuttle.timeleft() < 30)
+				storm.event_effect(STORM_FINAL)
 				src.next_storm = null
-				SPAWN(70 SECONDS)
+				SPAWN(60 SECONDS)
 					emergency_shuttle.endtime = ticker.round_elapsed_ticks + (20 MINUTES / (1 SECOND))*10
 		else if(src.next_storm < world.time)
 			// Regular storm
@@ -255,7 +305,7 @@ var/global/list/datum/mind/battle_pass_holders = list()
 				if (emergency_shuttle.endtime > 0)
 					return
 			else
-				storm.event_effect()
+				storm.event_effect(STORM_REGULAR)
 				SPAWN(85 SECONDS)
 					var/you_died_good_work = length(recently_deceased) > 0 ? "The following players recently died: " : ""
 					for(var/datum/mind/M in recently_deceased)
@@ -269,11 +319,8 @@ var/global/list/datum/mind/battle_pass_holders = list()
 		SPAWN(0) dropper.event_effect("Gamemode", drop_locations[pick(drop_locations)])
 
 
-// Does what it says on the tin
 proc/hide_weapons_everywhere(var/total_battlers = 1)
-	boutput(world, "<span class='notice'>Now hiding a shitton of goodies on the [station_or_ship()]. Please be patient!</span>")
-	// Replace all lockers with generic syndicate to clear out junk items, remove sec lockers so it's not too much of a hot spot
-	// Im stealing the list of items from the surplus crate so this check needs to happen
+	// Replaces lockers with generic syndicate to clear out junk items, fill them with loot
 
 	var/list/obj/murder_supplies = list()
 
@@ -285,24 +332,25 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 
 	var/list/weapon_supplies = list()
 	// Feel free to add more!
-	weapon_supplies.Add(/obj/item/gun/kinetic/light_machine_gun)
-	weapon_supplies.Add(/obj/item/gun/kinetic/assault_rifle)
 	weapon_supplies.Add(/obj/item/gun/kinetic/smg)
-	weapon_supplies.Add(/obj/item/gun/kinetic/spes)
+	weapon_supplies.Add(/obj/item/gun/kinetic/spes/engineer)
 	weapon_supplies.Add(/obj/item/gun/kinetic/pistol)
 	weapon_supplies.Add(/obj/item/gun/kinetic/silenced_22)
 	weapon_supplies.Add(/obj/item/gun/kinetic/clock_188)
 	weapon_supplies.Add(/obj/item/gun/kinetic/revolver)
 	weapon_supplies.Add(/obj/item/gun/kinetic/detectiverevolver)
-	weapon_supplies.Add(/obj/item/gun/kinetic/colt_saa)
+	weapon_supplies.Add(/obj/item/gun/kinetic/single_action/colt_saa)
 	weapon_supplies.Add(/obj/item/gun/kinetic/riotgun)
 	weapon_supplies.Add(/obj/item/gun/kinetic/airzooka)
 	weapon_supplies.Add(/obj/item/gun/kinetic/grenade_launcher)
 	weapon_supplies.Add(/obj/item/gun/kinetic/gyrojet)
-	weapon_supplies.Add(/obj/item/gun/energy/laser_gun)
-	weapon_supplies.Add(/obj/item/gun/energy/alastor)
-	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_small)
+	weapon_supplies.Add(/obj/item/gun/energy/phaser_huge)
+	weapon_supplies.Add(/obj/item/gun/energy/optio1)
 	weapon_supplies.Add(/obj/item/gun/energy/blaster_pistol)
+	weapon_supplies.Add(/obj/item/gun/energy/alastor)
+	weapon_supplies.Add(/obj/item/gun/energy/heavyion)
+	weapon_supplies.Add(/obj/item/gun/energy/pulse_rifle)
 	weapon_supplies.Add(/obj/item/bat)
 	weapon_supplies.Add(/obj/item/ratstick)
 	weapon_supplies.Add(/obj/item/saw)
@@ -310,25 +358,22 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/nunchucks)
 	weapon_supplies.Add(/obj/item/quarterstaff)
 	weapon_supplies.Add(/obj/item/fireaxe)
-	weapon_supplies.Add(/obj/item/fragile_sword)
-	weapon_supplies.Add(/obj/item/knife/butcher/hunterspear)
-	weapon_supplies.Add(/obj/item/katana_sheath/reverse)
-	weapon_supplies.Add(/obj/item/katana_sheath/captain)
-	weapon_supplies.Add(/obj/item/katana_sheath/nukeop)
+	weapon_supplies.Add(/obj/item/swords/fragile_sword)
+	weapon_supplies.Add(/obj/item/swords_sheaths/katana/reverse)
+	weapon_supplies.Add(/obj/item/swords_sheaths/captain)
+	weapon_supplies.Add(/obj/item/swords_sheaths/nukeop)
 	weapon_supplies.Add(/obj/item/sword/discount)
 	weapon_supplies.Add(/obj/item/storage/box/shuriken_pouch)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/frag)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/high_explosive)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/incendiary)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/mixed_explosive)
-	weapon_supplies.Add(/obj/item/storage/banana_grenade_pouch)
 	weapon_supplies.Add(/obj/item/storage/beartrap_pouch)
 
 	var/list/armor_supplies = list()
 	// Feel free to add more!
 	armor_supplies.Add(/obj/item/clothing/shoes/rocket)
-	armor_supplies.Add(/obj/item/clothing/shoes/swat/heavy)
-	armor_supplies.Add(/obj/item/clothing/shoes/galoshes)
+	armor_supplies.Add(/obj/item/clothing/shoes/swat/knight)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/vest)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/NT_alt)
@@ -338,7 +383,6 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/makeshift)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
 	armor_supplies.Add(/obj/item/clothing/suit/space/syndicate)
@@ -392,6 +436,9 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					var/obj/storage/closet/locker = new /obj/storage/closet/syndicate(T)
 					var/obj/weapon = pick(murder_supplies)
 					new weapon(locker)
+					if (prob(25))
+						weapon = pick(weapon_supplies)
+						new weapon(locker)
 				else
 					// Misc weapon and armor chests
 					var/obj/storage/crate/chest/chest = new /obj/storage/crate/chest(T)
@@ -400,6 +447,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 					if (prob(50))
 						var/obj/armor = pick(armor_supplies)
 						new armor(chest)
+					if (prob(33))
+						new /obj/item/reagent_containers/patch/mini/synthflesh(chest)
 
 proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
@@ -419,14 +468,13 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/fake_waldo,
 		/obj/item/clothing/under/gimmick/johnny,
 		/obj/item/clothing/under/gimmick/police,
-		/obj/item/clothing/under/gimmick/blackstronaut,
+		/obj/item/clothing/under/gimmick/donk,
 		/obj/item/clothing/under/gimmick/duke,
 		/obj/item/clothing/under/gimmick/mj_clothes,
 		/obj/item/clothing/under/gimmick/viking,
 		/obj/item/clothing/under/gimmick/merchant,
 		/obj/item/clothing/under/gimmick/spiderman,
 		/obj/item/clothing/under/gimmick/birdman,
-		/obj/item/clothing/under/gimmick/dawson,
 		/obj/item/clothing/under/gimmick/chav,
 		/obj/item/clothing/under/gimmick/safari,
 		/obj/item/clothing/under/gimmick/utena,
@@ -453,17 +501,62 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/shirtnjeans,
 		/obj/item/clothing/under/gimmick/hakama/random)
 	jumpsuit = new suit_type(battler)
+	jumpsuit.setProperty("coldprot", 5)
+	jumpsuit.setProperty("heatprot", 5)
+	jumpsuit.setProperty("meleeprot", 1)
+	jumpsuit.setProperty("chemprot", 10)
+	var/obj/item/clothing/head/hat = null
+	var/hat_type = pick(
+		/obj/item/clothing/head/basecap/black,
+		/obj/item/clothing/head/basecap/purple,
+		/obj/item/clothing/head/basecap/red,
+		/obj/item/clothing/head/basecap/yellow,
+		/obj/item/clothing/head/basecap/green,
+		/obj/item/clothing/head/basecap/blue,
+		/obj/item/clothing/head/basecap/white,
+		/obj/item/clothing/head/basecap/pink,
+		/obj/item/clothing/head/red,
+		/obj/item/clothing/head/blue,
+		/obj/item/clothing/head/yellow,
+		/obj/item/clothing/head/pink,
+		/obj/item/clothing/head/orange,
+		/obj/item/clothing/head/purple,
+		/obj/item/clothing/head/dolan,
+		/obj/item/clothing/head/green,
+		/obj/item/clothing/head/black,
+		/obj/item/clothing/head/white,
+		/obj/item/clothing/head/pirate_blk,
+		/obj/item/clothing/head/pirate_brn,
+		/obj/item/clothing/head/westhat,
+		/obj/item/clothing/head/graduation_cap,
+		/obj/item/clothing/head/party/random,
+		/obj/item/clothing/head/beret,
+		/obj/item/clothing/head/beret/prisoner,
+		/obj/item/clothing/head/bigtex,
+		/obj/item/clothing/head/longbee,
+		/obj/item/clothing/head/plunger,
+		/obj/item/clothing/head/chefhat,
+		/obj/item/clothing/head/that/gold,
+		/obj/item/clothing/head/sea_captain)
+	hat = new hat_type(battler)
+	hat.setProperty("meleeprot_head", 3)
+	hat.setProperty("coldprot", 5)
+	hat.setProperty("heatprot", 5)
 	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat(battler), battler.slot_shoes)
-	battler.equip_if_possible(new /obj/item/storage/backpack(battler), battler.slot_back)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donkpocket_w(battler), battler.slot_r_store)
+	battler.equip_if_possible(hat, battler.slot_head)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
+	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
+	vest.delProperty("heatprot")
+	vest.delProperty("coldprot")
+	battler.equip_if_possible(vest, battler.slot_wear_suit)
+	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), battler.slot_back)
+	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
-	I.icon_state = "gold"
-	I.icon = 'icons/obj/items/card.dmi'
+	I.access |= access_maxsec
 	battler.equip_if_possible(I, battler.slot_wear_id)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()
@@ -483,3 +576,6 @@ proc/get_accessible_station_areas()
 	global.area_list_is_up_to_date = 1
 	global.station_areas = L
 	return L
+
+#undef STORM_REGULAR
+#undef STORM_FINAL

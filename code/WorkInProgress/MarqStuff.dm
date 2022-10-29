@@ -112,7 +112,7 @@
 /obj/nerd_trap_door
 	name = "Heavily locked door"
 	desc = "Man, whatever is in here must be pretty valuable. This door seems to be indestructible and features an unrealistic amount of keyholes."
-	var/list/expected = list("silver key", "skeleton key", "literal skeleton key", "hot iron key", "cold steel key", "onyx key", "key lime pie", "futuristic key", "virtual key", "golden key", "bee key", "iron key", "iridium key", "lunar key")
+	var/list/expected = list("silver key", "skeleton key", "cold steel key", "literal skeleton key", "hot iron key", "onyx key", "virtual key", "golden key", "iron key", "iridium key", "lunar key")
 	var/list/unlocked = list()
 	var/list/ol = list()
 	icon = 'icons/misc/aprilfools.dmi'
@@ -135,7 +135,7 @@
 			//		break
 			if (kname)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the [kname]hole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if (kname in unlocked)
 					unlocked -= kname
 					overlays -= ol[kname]
@@ -150,7 +150,7 @@
 		else if (istype(I, /obj/item/reagent_containers/food/snacks/pie/lime))
 			if ("key lime pie" in expected)
 				boutput(user, "<span class='notice'>You insert the [I.name] into the key lime piehole and turn it. The door emits a loud click.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				if ("key lime pie" in unlocked)
 					unlocked -= "key lime pie"
 					overlays -= ol["key lime pie"]
@@ -179,10 +179,10 @@
 	proc/open()
 		if (unlocked.len != expected.len)
 			return
-		playsound(src.loc, "sound/machines/door_open.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/door_open.ogg', 50, 1)
 		icon_state = "hld1"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		overlays.len = 0
 
 	meteorhit()
@@ -200,7 +200,7 @@
 /obj/nerd_trap_door/voidoor
 	name = "V O I D O O R"
 	desc = "This door cannot be returned. You see, the warranty is void."
-	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", /*"cold steel key",*/ "onyx key", /*"key lime pie",*/ "futuristic key", /*"virtual key",*/ "golden key", "bee key", /*"iron key",*/ /*"iridium key",*/ "lunar key")
+	expected = list("silver key", /*"skeleton key",*/ /*"literal skeleton key",*/ "hot iron key", "cold steel key", "onyx key", /*"key lime pie",*/ /*"futuristic key"*/, /*"virtual key",*/ "golden key", "bee key", "iron key", /*"iridium key",*/ "lunar key")
 	icon_state = "hld2"
 
 /obj/steel_beams
@@ -451,18 +451,9 @@
 					boutput(user, "<span class='alert'>[I] is empty.</span>")
 				else
 					var/amt = min(reagents.maximum_volume - reagents.total_volume, I.reagents.total_volume)
-					logTheThing("combat", user, null, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
+					logTheThing(LOG_COMBAT, user, "poisoned [src] [log_reagents(I)] at [log_loc(user)].") // Logs would be nice (Convair880).
 					I.reagents.trans_to(src, amt)
 					boutput(user, "<span class='notice'>You dip [src] into [I], coating it with [amt] units of reagents.</span>")
-
-/obj/item/arrowhead
-	name = "arrowhead"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "arrowhead"
-
-	examine()
-		. = ..()
-		. += "There [amount == 1 ? "is" : "are"] [amount] arrowhead[amount != 1 ? "s" : null] in the stack."
 
 /obj/item/implant/projectile/body_visible/arrow
 	name = "arrow"
@@ -582,8 +573,8 @@
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB
 	implanted = null
-	ks_ratio = 1.0
-	icon_turf_hit = "bhole"
+	ks_ratio = 1
+	impact_image_state = "bhole"
 	icon_state = "arrow"
 
 	on_hit(var/atom/A, angle, var/obj/projectile/P)
@@ -601,7 +592,7 @@
 /obj/item/gun/bow
 	name = "bow"
 	icon = 'icons/obj/items/items.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "bow"
 	item_state = "bow"
 	var/obj/item/arrow/loaded = null
@@ -709,7 +700,7 @@
 		var/default_power = 20
 		if(loaded.head_material)
 			if(loaded.head_material.hasProperty("hard"))
-				current_projectile.power = round(20+loaded.head_material.getProperty("hard") / 2.6) //20-50 damage with 0 and 80 hardness(approximately)
+				current_projectile.power = round(17+loaded.head_material.getProperty("hard") * 3) //pretty close to the 20-50 range
 			else
 				current_projectile.power = default_power
 		else
@@ -718,7 +709,7 @@
 		loaded = null
 		return 1
 
-	canshoot()
+	canshoot(mob/user)
 		return loaded != null
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -744,12 +735,13 @@
 		else
 			var/spread_base = 40
 			if(src.material)
-				if(src.material.hasProperty("density"))
-					var/mod = src.material.getProperty("density")
-					mod -= 50
-					mod /= 2
-					mod = mod * (-1)
-					spread_base += mod
+				if(src.material.getProperty("density") <= 2)
+					spread_base *= 1.5
+				else if (src.material.getProperty("density") >= 5)
+					spread_base *= 0.75
+
+				else if (src.material.getProperty("density") >= 7)
+					spread_base *= 0.5
 
 			spread_angle = spread_base
 			if (aim)

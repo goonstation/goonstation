@@ -33,7 +33,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -104,13 +104,13 @@
 		O.effectProbModifier = 1/rand(10,50) 	// probability
 		switch(src.artitype.name)					// noise
 			if ("martian")
-				O.noise = pick("sound/voice/babynoise.ogg", "sound/voice/animal/bugchitter.ogg", "sound/voice/blob/blobdeath.ogg", "sound/voice/farts/frogfart.ogg", "sound/effects/splort.ogg")
+				O.noise = pick('sound/voice/babynoise.ogg', 'sound/voice/animal/bugchitter.ogg', 'sound/voice/blob/blobdeath.ogg', 'sound/voice/farts/frogfart.ogg', 'sound/effects/splort.ogg')
 			if ("ancient")
-				O.noise = pick("sound/effects/electric_shock_short.ogg", "sound/effects/creaking_metal2.ogg","sound/machines/weapons-reloading.ogg", "sound/machines/glitch1.ogg","sound/machines/glitch2.ogg", "sound/machines/glitch3.ogg","sound/machines/glitch4.ogg", "sound/machines/glitch5.ogg", "sound/machines/scan.ogg")
+				O.noise = pick('sound/effects/electric_shock_short.ogg', 'sound/effects/creaking_metal2.ogg','sound/machines/weapons-reloading.ogg', 'sound/machines/glitch1.ogg','sound/machines/glitch2.ogg', 'sound/machines/glitch3.ogg','sound/machines/glitch4.ogg', 'sound/machines/glitch5.ogg', 'sound/machines/scan.ogg')
 			if ("wizard")
-				O.noise = pick("sound/weapons/airzooka.ogg", "sound/misc/chair/glass/scoot5.ogg", "sound/misc/chair/glass/scoot2.ogg")
+				O.noise = pick('sound/weapons/airzooka.ogg', 'sound/misc/chair/glass/scoot5.ogg', 'sound/misc/chair/glass/scoot2.ogg')
 			if ("precursor") // what does precursor stuff even sound like???
-				O.noise = pick("sound/effects/singsuck.ogg", "sound/effects/screech_tone.ogg")
+				O.noise = pick('sound/effects/singsuck.ogg', 'sound/effects/screech_tone.ogg')
 
 		if(prob(O.maxcharge/1000)) 			// the more charge the bigger the chance it does dumb stuff
 			switch(src.artitype.name) 		// leakage

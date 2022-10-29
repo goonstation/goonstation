@@ -59,7 +59,7 @@
 
 		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
-				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
+				if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
 				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
@@ -456,9 +456,6 @@
 				var/amt = poison / length(spread)
 				for (var/obj/blob/B in spread)
 					B.poison += amt
-		for (var/obj/material_deposit/M in src.loc)
-			visible_message("<span class='alert'>[M] crumbles into dust!</span>")
-			qdel(M)
 
 	proc/heal_damage(var/amount)
 		if (!isnum(amount) || amount < 1)
@@ -506,7 +503,7 @@
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
-		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind)))
+		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
 		var/blob_type = /obj/blob/
@@ -557,8 +554,6 @@
 			if (D)
 				D.onUse(O)
 			return
-		if (istype(O, /obj/material_deposit))
-			O.set_loc(src.loc)
 		if (!istype(O, /obj/blob))
 			return
 		if (overmind.tutorial)
@@ -572,71 +567,6 @@
 	proc/onMove(var/obj/blob/B)
 		return
 
-	onMaterialChanged()
-		..()
-		if (material && material.mat_id != "blob")
-			src.name = "[material.name] [initial(src.name)]"
-
-			// ARBITRARY MATH TIME! WOO!
-			var/datum/material/initial_mat = overmind?.initial_material || getMaterial("blob")
-			var/om_tough = max(initial_mat.getProperty("density"), 1) * max(initial_mat.getProperty("hard"), 1)
-			var/c_tough = max(material.getProperty("density"), 1) * max(material.getProperty("hard"), 1)
-			var/hm_orig = initial(health_max)
-			var/new_tough = (c_tough/om_tough)
-			if(new_tough > 2)
-				new_tough = 1 + sqrt(new_tough-1)
-
-			if (om_tough)
-				var/hm_new = hm_orig * new_tough
-				var/perc_change = hm_new / health_max
-				health_max = hm_new
-				health *= perc_change
-
-			var/om_mp = initial_mat.getProperty("thermal")
-			var/c_mp = material.getProperty("thermal")
-			var/hd_orig = initial(heat_divisor)
-
-			var/mp_diff = max(0, c_mp - om_mp)
-			heat_divisor = hd_orig + mp_diff / 300
-
-			var/om_flame = initial_mat.getProperty("flammable")
-			var/c_flame = material.getProperty("flammable")
-			var/fc_orig = initial(fire_coefficient)
-
-			if (om_flame)
-				var/t = (100 / om_flame * c_flame) / 100
-				fire_coefficient = (0.25 + (t * 0.75)) * fc_orig
-
-			var/om_perme = initial_mat.getProperty("permeable")
-			var/c_perme = material.getProperty("permeable")
-			var/psc_orig = initial(poison_spread_coefficient)
-
-			if (om_perme)
-				var/t = (100 / om_perme * c_perme) / 100
-				poison_spread_coefficient = (0.5 + (t * 0.5)) * psc_orig
-
-			var/om_corr = initial_mat.getProperty("corrosion")
-			var/c_corr = material.getProperty("corrosion")
-			var/pc_orig = initial(poison_coefficient)
-
-			if (om_corr)
-				var/pc_new = pc_orig * (om_corr / c_corr)
-				poison_coefficient = pc_new
-
-			if (material.alpha > 210)
-				opacity = 1
-			else
-				opacity = initial(opacity)
-
-		else
-			src.name = initial(src.name)
-			var/hm_curr = health_max
-			health_max = initial(health_max)
-			health *= health_max / hm_curr
-			heat_divisor = initial(heat_divisor)
-			fire_coefficient = initial(fire_coefficient)
-			opacity = initial(opacity)
-		original_color = color
 
 /obj/blob/nucleus
 	name = "blob nucleus"
@@ -705,9 +635,9 @@
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
 			if (prob(50))
-				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else
-				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeath.ogg', 100, 1)
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
@@ -727,203 +657,6 @@
 	armor = 0
 	can_absorb = 0
 	movable = 0
-
-/obj/blob/deposit
-	name = "reagent deposit"
-	state_overlay = "deposit-reagent"
-	special_icon = 1
-	desc = "It's a thick walled cell with reagents entrenched within."
-	armor = 1
-	gen_rate_value = 0
-	can_absorb = 0
-	var/static/image/overlay_image = null
-	var/last_color = null
-	var/building = 0
-	movable = 1
-
-	New()
-		..()
-		if (!overlay_image)
-			overlay_image = image('icons/mob/blob.dmi', "deposit-material")
-
-	examine(mob/user)
-		if (disposed)
-			return list()
-		. = ..()
-		if (user == overmind)
-			if (movable)
-				. += "<span class='notice'>Clickdrag this onto any standard (not special) blob tile to move the reagent deposit there.</span>"
-			. += "<span class='notice'>It contains:</span>"
-			for (var/id in src.reagents.reagent_list)
-				var/datum/reagent/R = src.reagents.reagent_list[id]
-				. += "<span class='notice'>- [R.volume] unit[R.volume != 1 ? "s" : null] of [R.name]</span>"
-
-	proc/update_reagent_overlay()
-		if (disposed)
-			return
-		if (src.reagents.total_volume <= 0)
-			UpdateOverlays(overlay_image,name)
-			return
-		var/curr_color = src.reagents.get_average_rgb()
-		if (curr_color != last_color)
-			UpdateOverlays(null,name)
-			overlay_image.color = curr_color
-			last_color = curr_color
-			UpdateOverlays(overlay_image,name)
-
-	proc/build_reclaimer()
-		if (disposed || building)
-			return
-		building = 1
-		var/obj/blob/deposit/reclaimer/B = new(src.loc)
-		B.setOvermind(overmind)
-		B.reagents = src.reagents
-		B.reagents.my_atom = B
-		B.update_reagent_overlay()
-		src.reagents = null
-		B.setMaterial(src.material)
-		src.material = null
-		qdel(src)
-
-	proc/build_replicator()
-		if (disposed || building)
-			return
-		building = 1
-		var/obj/blob/deposit/replicator/B = new(src.loc)
-		B.setOvermind(overmind)
-		B.reagents = src.reagents
-		B.reagents.my_atom = B
-		B.set_master_reagent()
-		B.update_reagent_overlay()
-		src.reagents = null
-		B.setMaterial(src.material)
-		src.material = null
-		qdel(src)
-
-	onKilled()
-		if (disposed)
-			return
-		..()
-		if (src.reagents && src.reagents.total_volume)
-			visible_message("<span class='alert'>[src] bursts open, releasing the deposited reagents in a cloud!</span>")
-			smoke_reaction(reagents, 3, loc)
-
-	onMove(var/obj/blob/B)
-		var/turf/T = B.loc
-		B.set_loc(loc)
-		set_loc(T)
-		UpdateIcon()
-		B.UpdateIcon()
-
-	replicator
-		name = "replicator"
-		state_overlay = "replicator"
-		runOnLife = 1
-		var/points_per_unit = 1
-		var/max_per_tick = 3
-
-		var/master_reagent_id = null
-		var/datum/reagents/converting = null
-		var/datum/action/bar/blob_replicator/progress = new
-
-		New()
-			..()
-			progress.owner = src
-			progress.onStart()
-
-		disposing()
-			..()
-			progress.onDelete()
-			qdel(progress)
-
-		proc/set_master_reagent()
-			if (master_reagent_id)
-				return
-			if (src.reagents && src.reagents.total_volume)
-				master_reagent_id = src.reagents.get_master_reagent()
-				name = "[initial(name)] ([src.reagents.get_master_reagent_name()])"
-				src.reagents.clear_reagents()
-
-		Life()
-			if (converting)
-				var/removed = min(max_per_tick, converting.total_volume)
-				reagents.maximum_volume = reagents.total_volume + removed
-				reagents.add_reagent(master_reagent_id, removed)
-				converting.remove_any(removed)
-				if (converting.total_volume < 1)
-					converting = null
-				update_reagent_overlay()
-				progress.onUpdate()
-
-		MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-			if (O.disposed)
-				return
-			if (overmind.tutorial)
-				if (!overmind.tutorial.PerformAction("mousedrop", list(O, src)))
-					return
-			if (O.type == /obj/blob/deposit)
-				if (src.converting)
-					boutput(user, "<span class='alert'>Something is already loaded into the replicator.</span>")
-					return
-				var/obj/blob/deposit/D = O
-				if (D.overmind != user)
-					return
-				var/obj/blob/B = new(O.loc)
-				B.setOvermind(overmind)
-				converting = O.reagents
-				converting.my_atom = src
-				converting.maximum_volume = converting.total_volume
-				O.reagents = null
-				boutput(user, "<span class='notice'>Reagents transferred to the replicator.</span>")
-				qdel(O)
-				update_reagent_overlay()
-				progress.onUpdate()
-
-		onMove(var/obj/blob/B)
-			if (B.disposed)
-				return
-			if (!isturf(B.loc))
-				return
-			if (!reagents)
-				return
-			if (!reagents.total_volume)
-				return
-			var/obj/blob/deposit/D = new(B.loc)
-			D.setOvermind(overmind)
-			qdel(B)
-			var/trans_amt = src.reagents.total_volume
-			D.reagents = new /datum/reagents(trans_amt)
-			D.reagents.my_atom = D
-			src.reagents.trans_to(D, trans_amt)
-			D.update_reagent_overlay()
-			boutput(usr, "<span class='notice'>Transferred [trans_amt] reagents into a deposit.</span>")
-			update_reagent_overlay()
-
-	reclaimer
-		name = "reclaimer"
-		state_overlay = "reclaimer"
-		runOnLife = 1
-		var/reagents_per_point = 5
-		var/max_per_tick = 3
-		var/may_gain_last = null
-		movable = 0
-
-		Life()
-			if (..())
-				return 1
-			var/can_gain = round(reagents.total_volume / reagents_per_point)
-			if (can_gain <= 0)
-				var/obj/blob/lipid/B = new(loc)
-				B.setOvermind(overmind)
-				qdel(src)
-			var/may_gain = min(max_per_tick, overmind.bio_points_max - overmind.bio_points)
-			may_gain_last = may_gain
-			if (may_gain)
-				particleMaster.SpawnSystem(new /datum/particleSystem/blobheal(get_turf(src),src.color))
-				src.reagents.remove_any(reagents_per_point * may_gain)
-				overmind.bio_points += may_gain
-				reagents.maximum_volume = reagents.total_volume
-				update_reagent_overlay()
 
 /obj/blob/launcher
 	name = "slime launcher"
@@ -958,28 +691,6 @@
 			underlay_image.color = curr_color
 			last_color = curr_color
 			underlays += underlay_image
-
-	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (O.disposed)
-			return
-		if (overmind.tutorial)
-			if (!overmind.tutorial.PerformAction("mousedrop", list(O, src)))
-				return
-		if (O.type == /obj/blob/deposit)
-			if (src.reagents && src.reagents.total_volume)
-				boutput(user, "<span class='alert'>Something is already loaded into the slime launcher.</span>")
-				return
-			var/obj/blob/deposit/D = O
-			if (D.overmind != user)
-				return
-			var/obj/blob/B = new(O.loc)
-			B.setOvermind(overmind)
-			reagents = O.reagents
-			reagents.my_atom = src
-			O.reagents = null
-			boutput(user, "<span class='notice'>Reagents transferred to the slime launcher.</span>")
-			qdel(O)
-			update_reagent_underlay()
 
 	Life()
 		if (..())
@@ -1075,7 +786,7 @@
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
+				playsound(hit.loc, 'sound/voice/blob/blobhit.ogg', 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()
@@ -1324,40 +1035,6 @@
 
 	update_icon(override_parent)
 		return
-
-/obj/material_deposit
-	name = "material deposit"
-	desc = "A blob-engulfed chunk of materials."
-	var/mob/living/intangible/blob_overmind/overmind = null
-	icon = 'icons/mob/blob.dmi'
-	icon_state = "15"
-	//state_overlay =
-	layer = 4
-
-	New(nloc, mat, blob)
-		..(nloc)
-		src.overmind = blob
-		setMaterial(copyMaterial(mat))
-		pixel_x = rand(-12, 12)
-		pixel_y = rand(-12, 12)
-
-		var/image/ov = image('icons/mob/blob_organs.dmi')
-		ov.appearance_flags |= RESET_COLOR
-		ov.plane = PLANE_ABOVE_LIGHTING
-		ov.color = overmind?.organ_color
-		ov.icon_state = "deposit-material"
-		UpdateOverlays(ov, name)
-
-	onMaterialChanged()
-		pixel_x = rand(-12, 12)
-		pixel_y = rand(-12, 12)
-
-	attackby(var/obj/item/W, var/mob/user)
-		var/obj/blob/B = locate() in src.loc
-		if (!B)
-			qdel(src)
-			return
-		B.Attackby(W, user)
 
 /////////////////////////
 /// BLOB RELATED PROCS //

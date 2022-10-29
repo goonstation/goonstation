@@ -41,8 +41,8 @@ chui/window/security_cameras
 		for (var/obj/machinery/camera/C in L)
 			if (C.network == owner.network)
 				. = "[C.c_tag][C.camera_status ? null : " (Deactivated)"]"
-				// Don't draw if it's in favorites
-				if (C in owner.favorites)
+				// Don't draw if it's in favorites or AI core/upload
+				if ((C in owner.favorites) || C.ai_only)
 					continue
 				// &#128190; is save symbol
 				cameras_list += \

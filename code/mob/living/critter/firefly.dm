@@ -11,6 +11,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 	hand_count = 2
 	icon = 'icons/mob/insect.dmi'
 	icon_state = "firefly"
+	blood_id = "hemolymph"
 	var/light_color = "#ADFF2F"
 	var/image/bulb
 	var/image/bulb_light
@@ -64,7 +65,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 
 		hotkey("walk")
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		// Move to TYPEINFO if more containers are whitelisted, k thx
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
@@ -280,6 +281,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	hand_count = 2
 	icon = 'icons/mob/insect.dmi'
 	icon_state = "dragonfly"
+	blood_id = "hemolymph"
 
 	speechverb_say = "bzzs"
 	speechverb_exclaim = "bzzts"
@@ -291,7 +293,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 	flags = TABLEPASS
 	fits_under_table = 1
 	base_move_delay = 1.3
-	base_walk_delay = 2.0
+	base_walk_delay = 2
 	health_brute = 10
 	health_burn = 10
 	isFlying = 1
@@ -314,7 +316,7 @@ TYPEINFO(/mob/living/critter/small_animal/dragonfly)
 		. = ..()
 		animate(src, time=5 SECONDS, pixel_x=rand(-4,4), pixel_y=rand(-8,8))
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if(istype(W, /obj/item/reagent_containers/glass/jar) || istype(W, /obj/item/reagent_containers/glass/beaker/large))
 			W.AddComponent(/datum/component/bug_capture, W, src, user)
 		else

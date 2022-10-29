@@ -247,7 +247,7 @@
 			if (M.type != load_type)
 				continue
 			if(SEND_SIGNAL(target, COMSIG_TRANSFER_INCOMING, M))
-				playsound(target, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(target, 'sound/items/Deconstruct.ogg', 40, 1)
 				onRestart()
 				return
 

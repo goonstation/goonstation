@@ -22,7 +22,7 @@
 */
 
 obj/machinery/recharger
-	anchored = 1.0
+	anchored = 1
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "recharger0"
 	name = "recharger"
@@ -85,7 +85,7 @@ obj/machinery/recharger
 						break
 				T = null
 
-/obj/machinery/recharger/attackby(obj/item/G as obj, mob/user as mob)
+/obj/machinery/recharger/attackby(obj/item/G, mob/user)
 	if (isrobot(user)) return
 	if (src.charging)
 		return
@@ -104,7 +104,7 @@ obj/machinery/recharger
 	else
 		boutput(user, "<span class='alert'>That [G.name] won't fit in \the [src]!</span>")
 
-/obj/machinery/recharger/attack_hand(mob/user as mob)
+/obj/machinery/recharger/attack_hand(mob/user)
 	src.add_fingerprint(user)
 	remove_charging()
 

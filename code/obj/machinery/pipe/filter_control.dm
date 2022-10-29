@@ -44,7 +44,7 @@
 		src.updateUsrDialog()
 	src.UpdateIcon()
 
-/obj/machinery/filter_control/attack_hand(mob/user as mob)
+/obj/machinery/filter_control/attack_hand(mob/user)
 	if(status & NOPOWER)
 		user << browse(null, "window=filter_control")
 		user.machine = null

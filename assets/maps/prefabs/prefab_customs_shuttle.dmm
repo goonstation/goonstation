@@ -126,7 +126,7 @@
 	pixel_x = 4;
 	pixel_y = 11
 	},
-/obj/item/skull/gold,
+/obj/item/device/light/zippo/gold,
 /turf/simulated/floor/carpet{
 	dir = 8;
 	icon_state = "fgreen2"
@@ -382,6 +382,7 @@
 	pixel_y = 11
 	},
 /obj/item/cigarbox/gold,
+/obj/blind_switch/area/east,
 /turf/simulated/floor/carpet{
 	dir = 5;
 	icon_state = "fgreen2"
@@ -430,7 +431,7 @@
 /turf/simulated/floor/damaged5,
 /area/prefab/crashed_hop_shuttle)
 "zB" = (
-/obj/item/acesscomputerunfolder,
+/obj/machinery/computer/card/portable,
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/hop,
 /turf/simulated/floor/carpet/purple/standard/edge/se,
@@ -554,7 +555,7 @@
 /turf/space,
 /area/prefab/crashed_hop_shuttle)
 "Ij" = (
-/turf/simulated/wall/asteroid,
+/turf/simulated/wall/auto/asteroid,
 /area/noGenerate)
 "IT" = (
 /obj/fluid_spawner{
@@ -628,7 +629,7 @@
 	pixel_y = 11
 	},
 /obj/item/spacecash/bag,
-/obj/item/material_piece/gold,
+/obj/item/stamped_bullion,
 /turf/simulated/floor/carpet{
 	dir = 6;
 	icon_state = "fgreen2"

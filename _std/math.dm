@@ -92,3 +92,6 @@ proc/text2num_safe(x)
 /proc/fixed_random(x, y)
 	. = sin(x * 12.9898 + y * 78.233) * 43758.5453
 	. -= round(.)
+
+// hyperbolic trig functions
+#define tanh(x) (((eulers**(2*x))-1)/((eulers**(2*x))+1))

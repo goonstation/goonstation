@@ -114,7 +114,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// if (!usesPoints)
 		// 	return 1
 		if (spooktober_GH.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			spooktober_GH.points = 0
 		if (cost > spooktober_GH.points)
 			boutput(owner, notEnoughPointsMessage)
@@ -453,7 +453,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		var/turf/T = get_turf(holder.owner)
-		var/S = pick("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg", "sound/effects/glitchy1.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg", "sound/effects/kaboom.ogg")
+		var/S = pick('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg', 'sound/effects/glitchy1.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg', 'sound/effects/kaboom.ogg')
 		playsound(T, S, 30, 0, -1)
 		boutput(holder.owner, "<span class='alert'>You make a spooky sound!</span>")
 
@@ -538,11 +538,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [string]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [string]")
 		G.icon_state = string
 		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
@@ -570,7 +570,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!istype(T, /turf/space) && !T.density)
 			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
-			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+			playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else

@@ -5,7 +5,7 @@
 	return ""
 
 /proc/trim_right(text)
-	for (var/i = length(text), i > 0, i--)
+	for (var/i = length(text) to 1 step -1)
 		if (text2ascii(text, i) > 32)
 			return copytext(text, 1, i + 1)
 
@@ -42,7 +42,7 @@ var/global/regex/is_blank_string_regex = new(@{"^(\s|[\u00A0\u00AC\u2000\u2001\u
 		return 1
 	return 0 //not blank
 
-var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):(\d{18})(?:>|&gt;)"}, "g")
+var/global/regex/discord_emoji_regex = new(@{"(?:<|&lt;)(?:a)?:([-a-zA-Z0-9_]+):(\d+)(?:>|&gt;)"}, "g")
 /proc/discord_emojify(text)
 	return discord_emoji_regex.Replace(text, {"<img src="https://cdn.discordapp.com/emojis/$2.gif" onerror="if (this.src != 'https://cdn.discordapp.com/emojis/$2.png') this.src = 'https://cdn.discordapp.com/emojis/$2.png';" title="$1" width="32" height="32">"})
 

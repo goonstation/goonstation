@@ -32,8 +32,8 @@
 
 	attack_self(var/mob/user)
 		if(used) return
-		if(alert("Using this item will reset ALL your reputation scores - are you sure you want to do this?",,"Yes","No") == "Yes")
-			if(alert("Really really sure?",,"Yes","No") == "Yes")
+		if(tgui_alert(user, "Using this item will reset ALL your reputation scores - are you sure you want to do this?", "Confirmation", list("Yes", "No")) == "Yes")
+			if(tgui_alert(user, "Really really sure?", "Confirmation", list("Yes", "No")) == "Yes")
 				used = 1
 				user.drop_item(src)
 				faction_reset(user.client)

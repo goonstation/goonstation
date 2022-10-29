@@ -15,9 +15,9 @@ proc/filter_is_character_setup_ringtone(type)
 	var/name = "Two-Beep"
 	var/desc = "The default alert tone used in nearly every Thinktronic Systems device ever built. A keen ear may recognize this classic tune as an excerpt from Frédéric Chopin's ‘Grande Valse’, but in fact it's based on a remix of Dimmy Spuud's minimalist reimagining ‘BEEP’, used with permission and possibly on a dare."
 	/// List of sounds
-	var/list/ringList = list("sound/machines/twobeep.ogg")
+	var/list/ringList = list('sound/machines/twobeep.ogg')
 	/// List of alternate sounds
-	var/list/ringShortList = list("sound/machines/twobeep.ogg")
+	var/list/ringShortList = list('sound/machines/twobeep.ogg')
 	/// What volume to play the sound at this index -- keep all these lists at the same length as ringlist!
 	var/list/volList = list(35)
 	/// Whether or not to vary the sound at this index
@@ -99,14 +99,14 @@ proc/filter_is_character_setup_ringtone(type)
 /datum/ringtone/dogs
 	name = "WOLF PACK"
 	desc = "LIVE BY THE TOOTH AND HOWL BY THE FANG RIDE AND DIE BY THE LIGHT OF THE MOON CRANKING THE MAN THROUGH THE FOREST FOREVER NIGHT CLAW SHEEP GET PAID LEAP WIGGLE HAIRBALL WOOF WOOF AWOO"
-	ringList = list("sound/voice/animal/werewolf_howl.ogg",\
-									"sound/voice/animal/howl1.ogg",\
-									"sound/voice/animal/howl2.ogg",\
-									"sound/voice/animal/howl3.ogg",\
-									"sound/voice/animal/howl4.ogg",\
-									"sound/voice/animal/howl5.ogg",\
-									"sound/voice/animal/howl6.ogg",\
-									"sound/voice/animal/dogbark.ogg")
+	ringList = list('sound/voice/animal/werewolf_howl.ogg',\
+									'sound/voice/animal/howl1.ogg',\
+									'sound/voice/animal/howl2.ogg',\
+									'sound/voice/animal/howl3.ogg',\
+									'sound/voice/animal/howl4.ogg',\
+									'sound/voice/animal/howl5.ogg',\
+									'sound/voice/animal/howl6.ogg',\
+									'sound/voice/animal/dogbark.ogg')
 	volList = list(100, 35, 35, 35, 35, 35, 35, 100)
 	varyList = list(1, 1, 1, 1, 1, 1, 1, 1)
 	alertList = list("AAAWOOOOOOO",\
@@ -133,13 +133,13 @@ proc/filter_is_character_setup_ringtone(type)
 /datum/ringtone/dogs/lessdogs
 	name = "dog pack"
 	desc = "live by the teeth and fang chase cats into the alley pounce and bark woof woof at the mailman"
-	ringList = list("sound/voice/animal/howl1.ogg",\
-									"sound/voice/animal/howl2.ogg",\
-									"sound/voice/animal/howl3.ogg",\
-									"sound/voice/animal/howl4.ogg",\
-									"sound/voice/animal/howl5.ogg",\
-									"sound/voice/animal/howl6.ogg",\
-									"sound/voice/animal/dogbark.ogg")
+	ringList = list('sound/voice/animal/howl1.ogg',\
+									'sound/voice/animal/howl2.ogg',\
+									'sound/voice/animal/howl3.ogg',\
+									'sound/voice/animal/howl4.ogg',\
+									'sound/voice/animal/howl5.ogg',\
+									'sound/voice/animal/howl6.ogg',\
+									'sound/voice/animal/dogbark.ogg')
 	volList = list(100, 35, 35, 35, 35, 35, 35, 100)
 	varyList = list(1, 1, 1, 1, 1, 1, 1, 1)
 	alertList = list("howloo",\
@@ -164,16 +164,16 @@ proc/filter_is_character_setup_ringtone(type)
 /datum/ringtone/numbers
 	name = "Norman Number's Counting Safari"
 	desc = "Welcome to Number Land! All of Norman Number's Numbermals have run away into the Math Forest! Learn the numbers 1 thru 10 as you find them all. INSTRUCTIONS: When you find a Numbermal, type its name in a message to your teacher. If you're correct, you'll get a gold star and this PDA will tell you how many Numbermals you've found! First Numberventurer to reach 10 wins! Supervision advised."
-	ringList = list("sound/vox/one.ogg",\
-									"sound/vox/two.ogg",\
-									"sound/vox/three.ogg",\
-									"sound/vox/four.ogg",\
-									"sound/vox/five.ogg",\
-									"sound/vox/six.ogg",\
-									"sound/vox/seven.ogg",\
-									"sound/vox/eight.ogg",\
-									"sound/vox/nine.ogg",\
-									"sound/vox/ten.ogg")
+	ringList = list('sound/vox/one.ogg',\
+									'sound/vox/two.ogg',\
+									'sound/vox/three.ogg',\
+									'sound/vox/four.ogg',\
+									'sound/vox/five.ogg',\
+									'sound/vox/six.ogg',\
+									'sound/vox/seven.ogg',\
+									'sound/vox/eight.ogg',\
+									'sound/vox/nine.ogg',\
+									'sound/vox/ten.ogg')
 	volList = list(35, 35, 35, 35, 35, 35, 35, 35, 35, 35)
 	varyList = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 	pitchList = list(1.1, 1.15, 1.2, 1.25, 1.3, 1.35, 1.4, 1.45, 1.5, 0.5)
@@ -237,7 +237,7 @@ proc/filter_is_character_setup_ringtone(type)
 /datum/ringtone/clown/horn
 	name = "Buzzo's Bleater"
 	desc = "piss"
-	ringList = list("sound/musical_instruments/Vuvuzela_1.ogg")
+	ringList = list('sound/musical_instruments/Vuvuzela_1.ogg')
 	volList = list(100)
 	varyList = list(0)
 	pitchList = list(1)
@@ -266,9 +266,9 @@ bathing in her ennui and showering her with money.
 /datum/ringtone/clown/harmonica
 	name = "Hobo's Harp"
 	desc = "Whether you're riding the rails in the boxcar in the sky or just slummin' it with your other unemployable friends, any good hobo clown isn't complete without a high-tech digital replica of a harmonica. Can of beans and floppy top-hat not included."
-	ringList = list("sound/musical_instruments/Harmonica_1.ogg",\
-									"sound/musical_instruments/Harmonica_2.ogg",\
-									"sound/musical_instruments/Harmonica_3.ogg")
+	ringList = list('sound/musical_instruments/Harmonica_1.ogg',\
+									'sound/musical_instruments/Harmonica_2.ogg',\
+									'sound/musical_instruments/Harmonica_3.ogg')
 	volList = list(35,\
 								 35,\
 								 35)
@@ -608,13 +608,13 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 /datum/ringtone/syndie
 	name = "KABLAMMO - Realistic Explosion FX"
 	desc = "HIT THE DECKS, DUCK AND COVER! Is what they'll say when they hear these 100% AUTHENTIC REALISTIC explosion effects! For licensing information, contact Ted."
-	ringList = list("sound/effects/Explosion1.ogg",\
-									"sound/effects/Explosion2.ogg",\
-									"sound/effects/explosion_new1.ogg",\
-									"sound/effects/explosion_new2.ogg",\
-									"sound/effects/explosion_new3.ogg",\
-									"sound/effects/explosion_new4.ogg",\
-									"sound/effects/explosionfar.ogg")
+	ringList = list('sound/effects/Explosion1.ogg',\
+									'sound/effects/Explosion2.ogg',\
+									'sound/effects/explosion_new1.ogg',\
+									'sound/effects/explosion_new2.ogg',\
+									'sound/effects/explosion_new3.ogg',\
+									'sound/effects/explosion_new4.ogg',\
+									'sound/effects/explosionfar.ogg')
 	volList = list(100, 100, 100, 100, 100, 100, 100)
 	varyList = list(1, 1, 1, 1, 1, 1, 1, 1)
 	alertList = list("This one was fun to make. Got me some fireworks, set em on fire. Yeaaah.",\
@@ -650,12 +650,12 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 /datum/ringtone/syndie/guns
 	name = "Modern Commando - Realistic Gunfire FX"
 	desc = "BANG BANG! These 100% AUTHENTIC REALISTIC gunfire effects are so realistic you can even hear the bullets careening toward some poor sod's lunch! For licensing information, contact THA VENGE."
-	ringList = list("sound/weapons/ak47shot.ogg",\
-									"sound/weapons/derringer.ogg",\
-									"sound/weapons/Gunshot.ogg",\
-									"sound/weapons/minigunshot.ogg",\
-									"sound/weapons/railgun.ogg",\
-									"sound/weapons/shotgunshot.ogg")
+	ringList = list('sound/weapons/ak47shot.ogg',\
+									'sound/weapons/derringer.ogg',\
+									'sound/weapons/Gunshot.ogg',\
+									'sound/weapons/minigunshot.ogg',\
+									'sound/weapons/railgun.ogg',\
+									'sound/weapons/shotgunshot.ogg')
 	volList = list(100, 100, 100, 100, 100, 100, 100)
 	varyList = list(1, 1, 1, 1, 1, 1, 1, 1)
 	alertList = list("SEVEN. SIX. TWO. <span style='color:#888888;font-size:40%'>RAPIDFIRE.</span>",\
@@ -714,7 +714,7 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 /datum/ringtone/syndie/lasersword
 	name = "SPACEBATTLE - Realistic Sci-Fi FX"
 	desc = "VOOSH! VHWAAAM! Louden up those climactic space battles -- GOOD versus SPACE -- with these 100% AUTHENTIC REALISTIC sci-fi sword-fight effects! For licensing information, contact Stern. <br> Text MALE or FEMALE followed by OPEN, CLOSE, HIT to this PDA to change the type of sword-sound. For example, 'MALE HIT' to set the sound set to the male-sword-hit-thing sounds!"
-	ringList = list("sound/weapons/female_cswordturnon.ogg")
+	ringList = list('sound/weapons/female_cswordturnon.ogg')
 	volList = list(100, 100)
 	varyList = list(1, 1)
 	alertList = list("hi.",\
@@ -731,12 +731,12 @@ ringtone.dm,58: Cannot read null.name (/datum/ringtone/retkid/ring8): return_tex
 	nameText = "SounPacK:"
 	descText = "DescrIptioN:"
 	readMessages = 1
-	var/list/openSwordMale = list("sound/weapons/male_cswordturnon.ogg")
-	var/list/openSwordFemale = list("sound/weapons/female_cswordturnon.ogg")
-	var/list/closeSwordMale = list("sound/weapons/male_cswordturnoff.ogg")
-	var/list/closeSwordFemale = list("sound/weapons/female_cswordturnoff.ogg")
-	var/list/ringListMale = list("sound/weapons/male_cswordattack1.ogg", "sound/weapons/male_cswordattack2.ogg")
-	var/list/ringListFemale = list("sound/weapons/female_cswordattack1.ogg", "sound/weapons/female_cswordattack2.ogg")
+	var/list/openSwordMale = list('sound/weapons/male_cswordturnon.ogg')
+	var/list/openSwordFemale = list('sound/weapons/female_cswordturnon.ogg')
+	var/list/closeSwordMale = list('sound/weapons/male_cswordturnoff.ogg')
+	var/list/closeSwordFemale = list('sound/weapons/female_cswordturnoff.ogg')
+	var/list/ringListMale = list('sound/weapons/male_cswordattack1.ogg', 'sound/weapons/male_cswordattack2.ogg')
+	var/list/ringListFemale = list('sound/weapons/female_cswordattack1.ogg', 'sound/weapons/female_cswordattack2.ogg')
 
 	DoSpecialThing(index)
 		animate_shockwave(src.holder)

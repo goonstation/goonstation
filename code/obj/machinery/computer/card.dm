@@ -5,8 +5,8 @@
 	var/obj/item/card/id/scan = null
 	var/obj/item/card/id/modify = null
 	var/obj/item/eject = null //Overrides modify slot set_loc. sometimes we want to eject something that's not a card. like an implant!
-	var/authenticated = 0.0
-	var/mode = 0.0
+	var/authenticated = 0
+	var/mode = 0
 	var/printing = null
 	var/list/scan_access = null
 	var/list/custom_names = list("Custom 1", "Custom 2", "Custom 3")
@@ -14,7 +14,7 @@
 	var/list/civilian_access_list = list(access_morgue, access_maint_tunnels, access_chapel_office, access_tech_storage, access_bar, access_janitor, access_crematorium, access_kitchen, access_hydro, access_ranch)
 	var/list/engineering_access_list = list(access_external_airlocks, access_construction, access_engineering, access_engineering_storage, access_engineering_power, access_engineering_engine, access_engineering_mechanic, access_engineering_atmos, access_engineering_control)
 	var/list/supply_access_list = list(access_hangar, access_cargo, access_supply_console, access_mining, access_mining_shuttle, access_mining_outpost)
-	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology)
+	var/list/research_access_list = list(access_medical, access_tox, access_tox_storage, access_medlab, access_medical_lockers, access_research, access_robotics, access_chemistry, access_pathology, access_researchfoyer, access_artlab, access_telesci, access_robotdepot)
 	var/list/security_access_list = list(access_security, access_brig, access_forensics_lockers, access_maxsec, access_securitylockers, access_carrypermit, access_contrabandpermit)
 	var/list/command_access_list = list(access_research_director, access_emergency_storage, access_change_ids, access_ai_upload, access_teleporter, access_eva, access_heads, access_captain, access_engineering_chief, access_medical_director, access_head_of_personnel, access_dwaine_superuser)
 	var/list/allowed_access_list
@@ -40,7 +40,7 @@
 	item_state = "hopcaseC"
 	icon_state = "hopcaseC"
 
-	force = 8.0
+	force = 8
 	throw_speed = 1
 	throw_range = 4
 	w_class = W_CLASS_BULKY
@@ -57,26 +57,8 @@
 		..(loc)
 		src.set_loc(loc)
 		src.name = "foldable portable identification computer"
-		src.desc = "A briefcase with a identification computer inside. A breakthrough in briefcase technology!"
+		src.desc = "A briefcase with an identification computer inside. A breakthrough in briefcase technology!"
 		BLOCK_SETUP(BLOCK_BOOK)
-
-	attack_self(mob/user)
-		deploy(user)
-
-	verb/unfold()
-		set src in view(1)
-		set category = "Local"
-		set name = "Unfold"
-		deploy(usr)
-
-	proc/deploy(var/mob/user)
-
-		if(src.loc == user)
-			user.drop_from_slot(src)
-		user.visible_message("<span class='alert'>[user] unfolds the foldable portable idendification computer from a briefcase!</span>")
-		var/obj/machinery/computer/card/portable/T = new/obj/machinery/computer/card/portable()
-		T.set_loc(get_turf(src))
-		qdel(src)
 
 /obj/machinery/computer/card/portable
 	name = "portable identification computer"
@@ -84,7 +66,6 @@
 	density = 0
 	var/obj/item/cell/cell //We have limited power! Immersion!!
 	var/setup_charge_maximum = 15000
-	var/obj/item/luggable_computer/personal/case //The object that holds us when we're all closed up.
 	var/deployed = 1
 
 	New()
@@ -94,40 +75,22 @@
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
 
+		var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
+		if(!fold_component?.the_briefcase)
+			return
+		var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
+		if (briefcase)
+			briefcase.set_loc(get_turf(src))
+			src.set_loc(briefcase)
+
 	disposing()
 		if (src.cell)
 			src.cell.dispose()
 			src.cell = null
-
-		if (case && case.loc == src)
-			case.dispose()
-			case = null
-
 		..()
 
-	verb/fold_up()
-		set src in view(1)
-
-		if(usr.stat)
-			return
-
-		src.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
-		src.undeploy()
-		return
-
-	proc/undeploy()
-		if(!src.case)
-			src.case = new /obj/item/luggable_computer(src)
-			src.case.luggable = src
-
-		src.case.set_loc(get_turf(src))
-		src.set_loc(src.case)
-		src.deployed = 0
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/disk/data/floppy)) //IDK i just dont want to screw this up
-
 			return
 
 		else if (ispryingtool(W))
@@ -135,7 +98,7 @@
 				boutput(user, "<span class='alert'>There is no energy cell inserted!</span>")
 				return
 
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.cell.set_loc(get_turf(src))
 			src.cell = null
 			user.visible_message("<span class='alert'>[user] removes the power cell from [src]!.</span>","<span class='alert'>You remove the power cell from [src]!</span>")
@@ -176,7 +139,12 @@
 		src.power_change()
 		return
 
-/obj/machinery/computer/card/attack_hand(var/mob/user as mob)
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
+/obj/machinery/computer/card/attack_hand(var/mob/user)
 	if(..())
 		return
 
@@ -185,14 +153,7 @@
 	if (!( ticker ))
 		return
 	if (src.mode) // accessing crew manifest
-
-		var/stored = ""
-		if(length(by_type[/obj/cryotron]))
-			var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-			for(var/L as anything in cryo_unit.stored_crew_names)
-				stored += "<i>- [L]<i><br>"
-		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[get_manifest()]<br><b>In Cryogenic Storage:</b><hr>[stored]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
-
+		dat = "<tt><b>Crew Manifest:</b><br>Please use security record computer to modify entries.<br>[get_manifest()]<a href='?src=\ref[src];print=1'>Print</a><br><br><a href='?src=\ref[src];mode=0'>Access ID modification console.</a><br></tt>"
 	else
 		var/header = "<b>Identification Card Modifier</b><br><i>Please insert the cards into the slots</i><br>"
 
@@ -238,7 +199,7 @@
 
 			//Jobs organised into sections
 			var/list/civilianjobs = list("Staff Assistant", "Bartender", "Chef", "Botanist", "Rancher", "Chaplain", "Janitor", "Clown")
-			var/list/maintainencejobs = list("Engineer", "Mechanic", "Miner", "Quartermaster")
+			var/list/maintainencejobs = list("Engineer", "Miner", "Quartermaster")
 			var/list/researchjobs = list("Scientist", "Medical Doctor", "Geneticist", "Roboticist", "Pathologist")
 			var/list/securityjobs = list("Security Officer", "Security Assistant", "Detective")
 			var/list/commandjobs = list("Head of Personnel", "Chief Engineer", "Research Director", "Medical Director", "Captain")
@@ -403,7 +364,7 @@
 					src.modify.access -= access_type
 				else
 					src.modify.access += access_type
-				logTheThing("station", usr, null, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
+				logTheThing(LOG_STATION, usr, "[access_allowed ? "adds" : "removes"] [get_access_desc(access_type)] access to the ID card (<b>[src.modify.registered]</b>).")
 
 	if (href_list["pronouns"])
 		if (src.authenticated && src.modify)
@@ -427,7 +388,7 @@
 				if(!src.modify || !src.authenticated)
 					return
 				t1 = strip_html(t1, 100, 1)
-				logTheThing("station", usr, null, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
+				logTheThing(LOG_STATION, usr, "changes the assignment on the ID card (<b>[src.modify.registered]</b>) from <b>[src.modify.assignment]</b> to <b>[t1]</b>.")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 			else
 				// preserve accesses which are otherwise unobtainable
@@ -436,7 +397,7 @@
 					if (!(access in get_all_accesses())) //fuck this proc name
 						bonus_access += list(access)
 				src.modify.access = get_access(t1) + bonus_access
-				logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
+				logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to <b>[t1]</b>.")
 
 			//Wire: This possibly happens after the input() above, so we re-do the initial checks
 			if (src.authenticated && src.modify)
@@ -451,7 +412,7 @@
 			t1 = strip_html(t1, 100, 1)
 
 			if ((src.authenticated && src.modify == t2 && (in_interact_range(src, usr) || (issilicon(usr) || isAI(usr))) && istype(src.loc, /turf)))
-				logTheThing("station", usr, null, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
+				logTheThing(LOG_STATION, usr, "changes the registered name on the ID card from <b>[src.modify.registered]</b> to <b>[t1]</b>.")
 				src.modify.registered = t1
 
 			playsound(src.loc, "keyboard", 50, 1, -15)
@@ -469,7 +430,7 @@
 					src.modify.pin = 9999
 				else
 					src.modify.pin = round(newpin)
-				logTheThing("station", usr, null, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
+				logTheThing(LOG_STATION, usr, "changes the pin on the ID card (<b>[src.modify.registered]</b>) to [src.modify.pin].")
 				playsound(src.loc, "keyboard", 50, 1, -15)
 
 	if (href_list["mode"])
@@ -482,13 +443,7 @@
 			P.set_loc(src.loc)
 
 			var/t1 = "<B>Crew Manifest:</B><hr>"
-			var/stored = ""
-			if(length(by_type[/obj/cryotron]))
-				var/obj/cryotron/cryo_unit = pick(by_type[/obj/cryotron])
-				for(var/L as anything in cryo_unit.stored_crew_names)
-					stored += "<i>- [L]<i><br>"
 			t1 += get_manifest()
-			t1 += "<br><b>In Cryogenic Storage:</b><hr>[stored]<br>"
 			P.info = t1
 			P.name = "paper- 'Crew Manifest'"
 			src.printing = null
@@ -519,13 +474,13 @@
 			src.custom_names[slot] = src.modify.assignment
 		src.custom_access_list[slot] = src.modify.access.Copy()
 		src.custom_access_list[slot] &= allowed_access_list //prevent saving non-allowed accesses
-		logTheThing("station", usr, null, "saves custom assignment <b>[src.custom_names[slot]]</b>.")
+		logTheThing(LOG_STATION, usr, "saves custom assignment <b>[src.custom_names[slot]]</b>.")
 	if (href_list["apply"])
 		var/slot = text2num_safe(href_list["apply"])
 		src.modify.assignment = src.custom_names[slot]
 		var/list/selected_access_list = src.custom_access_list[slot]
 		src.modify.access = selected_access_list.Copy()
-		logTheThing("station", usr, null, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
+		logTheThing(LOG_STATION, usr, "changes the access and assignment on the ID card (<b>[src.modify.registered]</b>) to custom assignment <b>[src.modify.assignment]</b>.")
 	if (src.modify)
 		src.modify.name = "[src.modify.registered]'s ID Card ([src.modify.assignment])"
 	if (src.eject)
@@ -542,7 +497,7 @@
 	src.updateUsrDialog()
 	return
 
-/obj/machinery/computer/card/attackby(obj/item/I as obj, mob/user as mob)
+/obj/machinery/computer/card/attackby(obj/item/I, mob/user)
 	//grab the ID card from an access implant if this is one
 	var/modify_only = 0
 	if (!istype(I,/obj/item/card/id))
