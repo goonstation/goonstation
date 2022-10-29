@@ -1757,8 +1757,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/crew_quarters/quarters_east)
 "aRJ" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -4844,8 +4843,7 @@
 	layer = 3.2;
 	name = "Transception Bay Door"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "nadir_qmio2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
@@ -9174,8 +9172,7 @@
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
 "eJC" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -10111,7 +10108,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "fjs" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/industrial,
@@ -10815,8 +10812,7 @@
 /turf/simulated/floor/black,
 /area/station/science/teleporter)
 "fyJ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "nadir_qmio"
 	},
 /obj/plasticflaps{
@@ -10998,8 +10994,7 @@
 /turf/simulated/floor/specialroom/gym/alt,
 /area/station/crew_quarters/fitness)
 "fEw" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -13121,8 +13116,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/secondary/exit)
 "gEb" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -14525,8 +14519,7 @@
 /area/station/hallway/primary/northwest)
 "hjG" = (
 /obj/lattice,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "loading belt - east";
 	operating = 1
 	},
@@ -16453,7 +16446,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "icO" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -16804,8 +16797,7 @@
 	name = "The Warrens"
 	})
 "ilt" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -18040,7 +18032,7 @@
 	name = "The Warrens"
 	})
 "iQX" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -19241,7 +19233,7 @@
 	})
 "jvq" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/circuit/red,
@@ -20088,8 +20080,7 @@
 	layer = 3.2;
 	name = "Transception Bay Door"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "nadir_qmio2"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
@@ -21521,8 +21512,7 @@
 /turf/simulated/floor/grey/blackgrime/other,
 /area/station/storage/tech)
 "kwF" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -22685,7 +22675,7 @@
 	name = "Head of Personnel's Quarters"
 	})
 "laH" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
@@ -23827,8 +23817,7 @@
 	},
 /area/station/bridge)
 "lCc" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -26411,8 +26400,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/courtroom)
 "mKn" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -30825,8 +30813,7 @@
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "pgD" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1
@@ -38846,7 +38833,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "tna" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/circuit/red,
@@ -45104,8 +45091,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "wJM" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "nadir_qmio"
 	},
 /obj/machinery/conveyor_switch{
@@ -45750,8 +45736,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_east)
 "xaL" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 6;
 	operating = 1

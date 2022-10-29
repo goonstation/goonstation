@@ -3367,16 +3367,14 @@
 	},
 /area/shuttle/arrival/station)
 "aoa" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "zeta_mail_in";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aob" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "zeta_mail_in";
 	operating = 1
 	},
@@ -3422,8 +3420,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/researchshuttle)
 "aon" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "zeta_mail_in";
 	operating = 1
 	},
@@ -3494,8 +3491,7 @@
 	},
 /area/station/hangar/arrivals)
 "aoB" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "zeta_mail_in";
 	operating = 1
 	},
@@ -3557,7 +3553,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aoS" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -3575,8 +3571,7 @@
 	},
 /area/shuttle/arrival/station)
 "aoX" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargobelt_out";
 	operating = 1
 	},
@@ -3614,8 +3609,7 @@
 /area/supply/spawn_point)
 "aph" = (
 /obj/machinery/light/incandescent,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargobelt_out";
 	operating = 1
 	},
@@ -3805,8 +3799,7 @@
 /area/station/quartermaster/office)
 "apM" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargobelt_out";
 	operating = 1
 	},
@@ -3814,7 +3807,7 @@
 /area/station/quartermaster/office)
 "apN" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -3902,7 +3895,7 @@
 	},
 /area/station/quartermaster/office)
 "aqb" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -4179,15 +4172,14 @@
 	},
 /area/station/quartermaster/office)
 "aqS" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cargobelt_out";
 	operating = 1
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "aqU" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -4769,7 +4761,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "asG" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -4973,7 +4965,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "atj" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/plasticflaps,
@@ -5689,33 +5681,33 @@
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "avV" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "avW" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "avX" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "avY" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "avZ" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -5918,7 +5910,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "awO" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -7587,7 +7579,7 @@
 	},
 /area/space)
 "aCf" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
 	operating = 1
 	},
@@ -7924,8 +7916,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/maintenance/northeast)
 "aCX" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "zeta_mail_in";
 	operating = 1
 	},
@@ -7940,7 +7931,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "aDa" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
 	operating = 1
 	},
@@ -8189,7 +8180,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/northeast)
 "aDH" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
 	operating = 1
 	},
@@ -8364,8 +8355,7 @@
 /turf/simulated/floor/engine/vacuum,
 /area/space)
 "aEv" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "zeta_mail_out";
 	operating = 1
 	},
@@ -8944,7 +8934,7 @@
 /area/station/maintenance/northeast)
 "aGi" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "zeta_mail_out";
 	operating = 1
 	},
@@ -22707,7 +22697,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/disposal)
 "bBd" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -22987,7 +22977,7 @@
 /turf/simulated/floor/bot,
 /area/station/storage/tools)
 "bBU" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -23174,7 +23164,7 @@
 /area/station/maintenance/disposal)
 "bCB" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -23457,7 +23447,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bDW" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -25350,7 +25340,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bKP" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -27580,7 +27570,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/medical/dome)
 "dLT" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -28684,7 +28674,7 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -30499,8 +30489,7 @@
 	},
 /area/station/chapel/sanctuary)
 "ggu" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -31631,7 +31620,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/refinery)
 "hkx" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargo-art-in";
 	operating = 1
 	},
@@ -32244,7 +32233,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "hKJ" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargo-art-in"
 	},
 /obj/plasticflaps,
@@ -32905,7 +32894,7 @@
 	id = "cargodock_in";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargobelt_in";
 	operating = 1
 	},
@@ -32970,7 +32959,7 @@
 	id = "cargoartdoor";
 	name = "Cargo Routing Door"
 	},
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "cargo-art-in";
 	operating = 1
 	},
@@ -33619,7 +33608,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
 "jaF" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -33661,7 +33650,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "jeb" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -35840,7 +35829,7 @@
 /area/station/solar/east)
 "laX" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -36254,7 +36243,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/psychiatrist)
 "lwl" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -36656,7 +36645,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "lLv" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargo-art-in"
 	},
 /turf/simulated/floor/plating,
@@ -37157,7 +37146,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/bridge)
 "mkM" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -38554,8 +38543,7 @@
 	dir = 4;
 	throw_range = 1
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -40972,7 +40960,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "pyu" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -41581,7 +41569,7 @@
 /turf/simulated/floor/purple,
 /area/station/science/chemistry)
 "qfn" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -41794,7 +41782,7 @@
 /turf/simulated/floor/delivery,
 /area/listeningpost)
 "qmQ" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/machinery/camera{
@@ -47322,7 +47310,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "uIh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 15
 	},
@@ -48166,7 +48154,7 @@
 /turf/simulated/floor/grey,
 /area/station/hydroponics/bay)
 "vrT" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "zetadisposals";
 	move_lag = 15
 	},
@@ -49127,8 +49115,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "wlU" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "zeta_mail_in";
 	operating = 1
 	},
@@ -49811,7 +49798,7 @@
 	},
 /area/station/quartermaster/magnet)
 "wVM" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "zetadisposals";
 	move_lag = 15
 	},

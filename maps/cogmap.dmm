@@ -61,15 +61,14 @@
 /turf/space,
 /area/space)
 "aan" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aao" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -128,8 +127,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/space)
 "aaz" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -140,8 +138,7 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aaB" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -2231,7 +2228,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/security)
 "aht" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -2636,7 +2633,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "aip" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -2981,7 +2978,7 @@
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "ajk" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -3734,7 +3731,7 @@
 /turf/simulated/floor/bot,
 /area/station/hallway/primary/east)
 "alo" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -12913,8 +12910,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJX" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "chapel"
 	},
 /obj/machinery/door/window/westleft{
@@ -14741,8 +14737,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -15594,8 +15589,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/routing/catering)
 "aQv" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -21956,7 +21950,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bgg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -22334,7 +22328,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -22672,8 +22666,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -22683,7 +22676,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bhR" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -23044,8 +23037,7 @@
 /turf/simulated/floor,
 /area/station/routing/eva)
 "biP" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -23066,15 +23058,14 @@
 /obj/window/reinforced{
 	dir = 2
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "biR" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -23108,8 +23099,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "biX" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -23138,7 +23128,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "bjc" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -23187,7 +23177,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/emergency)
 "bji" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -23318,8 +23308,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bjw" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -23387,8 +23376,7 @@
 /obj/window/reinforced{
 	dir = 1
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -23401,8 +23389,7 @@
 /obj/disposalpipe/segment/morgue{
 	name = "crematorium pipe"
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -23412,8 +23399,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/eva)
 "bjQ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -23483,16 +23469,14 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "bjU" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bjV" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -23506,8 +23490,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -23824,16 +23807,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bkR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bkS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -23852,16 +23833,14 @@
 /area/station/maintenance/east)
 "bkT" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bkU" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -23869,8 +23848,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bkV" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -23986,8 +23964,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "bln" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -24001,8 +23978,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -24013,8 +23989,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "blp" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -24025,8 +24000,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blr" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24139,8 +24113,7 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -24181,8 +24154,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blU" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -24200,8 +24172,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/depot)
 "blV" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24225,8 +24196,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/east)
 "blX" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -24237,7 +24207,7 @@
 /area/station/maintenance/east)
 "blY" = (
 /obj/disposalpipe/segment,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -24284,8 +24254,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bmd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24301,8 +24270,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bme" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24318,8 +24286,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bmf" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24330,8 +24297,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24809,16 +24775,14 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bnl" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bnm" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -24895,7 +24859,7 @@
 	},
 /area/station/janitor/office)
 "bns" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -24929,24 +24893,21 @@
 /area/space)
 "bnx" = (
 /obj/disposalpipe/segment,
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bny" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bnz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -25125,7 +25086,7 @@
 /area/station/ai_monitored/storage/eva)
 "bnR" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -25204,8 +25165,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -25213,8 +25173,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
 "bob" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -25222,8 +25181,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "bod" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -25239,8 +25197,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "boe" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -25261,8 +25218,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "bog" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -25320,8 +25276,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "bom" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -25975,7 +25930,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "bpP" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -26180,7 +26135,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/engine)
 "bqo" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -26737,8 +26692,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "bsb" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -28627,33 +28581,33 @@
 /turf/space,
 /area/space)
 "byb" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "byc" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "byd" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "bye" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "byf" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -28898,7 +28852,7 @@
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
 "byS" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -29344,7 +29298,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "bAb" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -29728,7 +29682,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/primary)
 "bAZ" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -30134,7 +30088,7 @@
 	},
 /area/station/hallway/secondary/entry)
 "bBX" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -30401,20 +30355,18 @@
 /turf/simulated/floor/bot,
 /area/station/storage/warehouse)
 "bCL" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "bCN" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo_shutter";
 	name = "cargo belt - west"
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo_shutter";
 	name = "cargo belt - south";
 	operating = 1
@@ -31511,8 +31463,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGh" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -31526,8 +31477,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bGi" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/plasticflaps,
@@ -31538,8 +31488,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bGj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -31917,8 +31866,7 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "bHC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -31928,8 +31876,7 @@
 /turf/simulated/floor/grime,
 /area/station/engine/coldloop)
 "bHF" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/plasticflaps,
@@ -31940,8 +31887,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bHG" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -31951,8 +31897,7 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bHH" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/disposalpipe/segment/morgue,
@@ -31995,8 +31940,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bHN" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -32007,8 +31951,7 @@
 /area/station/quartermaster/office)
 "bHO" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -32018,8 +31961,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bHP" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -32029,8 +31971,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bHR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/launcher_loader/west,
@@ -32041,8 +31982,7 @@
 /turf/simulated/floor,
 /area/station/hangar/qm)
 "bHS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -32059,15 +31999,13 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/qm)
 "bHT" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
 /area/supply/delivery_point)
 "bHU" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/lattice{
@@ -33598,7 +33536,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bLL" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -34178,7 +34116,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -34437,7 +34375,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "bNS" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/machinery/light_switch{
@@ -34447,7 +34385,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bNT" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/cable{
@@ -34901,7 +34839,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
 "bOM" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -35423,16 +35361,14 @@
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "bPW" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/routing/airbridge)
 "bPX" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -35492,8 +35428,7 @@
 /turf/simulated/floor/plating/airless,
 /area/station/turret_protected/Zeta)
 "bQd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -35511,8 +35446,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bQe" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -35522,8 +35456,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "bQf" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -35539,7 +35472,7 @@
 /obj/window/reinforced{
 	dir = 8
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -35676,15 +35609,13 @@
 /turf/simulated/floor/delivery,
 /area/station/storage/warehouse)
 "bQx" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo"
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "bQz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo"
 	},
 /turf/simulated/floor/plating,
@@ -36026,7 +35957,7 @@
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "bRt" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -36036,8 +35967,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/airbridge)
 "bRu" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -36047,8 +35977,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/airbridge)
 "bRv" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -36804,8 +36733,7 @@
 /turf/simulated/floor,
 /area/station/routing/airbridge)
 "bSX" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -38249,8 +38177,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bWS" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -43213,8 +43140,7 @@
 /turf/simulated/floor/delivery,
 /area/station/mining/staff_room)
 "cki" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
@@ -43228,8 +43154,7 @@
 	dir = 1;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /obj/plasticflaps,
@@ -43240,8 +43165,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "ckl" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /turf/simulated/floor/airless/plating/catwalk{
@@ -47563,8 +47487,7 @@
 /turf/simulated/floor/plating,
 /area/station/routing/medsci)
 "cvw" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -47926,8 +47849,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/routing/medsci)
 "cwy" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -50428,7 +50350,7 @@
 /turf/simulated/floor/black,
 /area/station/engine/hotloop)
 "djC" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /obj/decal/cleanable/cobweb,
@@ -50775,7 +50697,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/main)
 "dEh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/plasticflaps,
@@ -50879,8 +50801,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "dJk" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -51715,8 +51636,7 @@
 /area/station/ranch)
 "eJh" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -52419,8 +52339,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "fFv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -53053,8 +52972,7 @@
 	},
 /area/station/solar/south)
 "gsN" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -53552,8 +53470,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/medical/staff)
 "hbh" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -53698,7 +53615,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "hpa" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	operating = 1
 	},
 /obj/decal/cleanable/rust/jen,
@@ -53793,8 +53710,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "huI" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -54142,7 +54058,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "hRE" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	operating = 1
 	},
 /obj/decal/cleanable/generic,
@@ -54170,8 +54086,7 @@
 /turf/simulated/floor,
 /area/station/engine/hotloop)
 "hUb" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/decal/tile_edge/stripe/extra_big{
@@ -54296,8 +54211,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/hallway/secondary/entry)
 "iea" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -55312,7 +55226,7 @@
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "jKV" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	operating = 1
 	},
 /obj/decal/cleanable/generic,
@@ -55400,8 +55314,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "jPz" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -55514,7 +55427,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/market)
 "jWf" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	operating = 1
 	},
 /obj/plasticflaps,
@@ -55571,7 +55484,7 @@
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
 "jXG" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /obj/decal/cleanable/rust/jen,
@@ -55701,7 +55614,7 @@
 /turf/space,
 /area/shuttle/escape/station)
 "kgS" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /obj/decal/cleanable/dirt/dirt3,
@@ -56909,7 +56822,7 @@
 	},
 /area/station/hallway/primary/south)
 "mra" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "cargo"
 	},
 /obj/plasticflaps,
@@ -57362,8 +57275,7 @@
 /area/station/routing/engine)
 "mTV" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "enginesupply"
 	},
 /obj/firedoor_spawn,
@@ -57671,8 +57583,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/medbay/lobby)
 "ntC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -58604,7 +58515,7 @@
 	},
 /area/station/engine/elect)
 "oJH" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /turf/simulated/floor/plating,
@@ -59219,7 +59130,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/supplylobby)
 "pBZ" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	operating = 1
 	},
 /obj/decal/cleanable/dirt,
@@ -63580,8 +63491,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "vlm" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -64247,8 +64157,7 @@
 /turf/simulated/floor/grime,
 /area/station/hallway/secondary/entry)
 "wdc" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "cargo"
 	},
 /obj/plasticflaps,
@@ -64531,7 +64440,7 @@
 /turf/simulated/floor,
 /area/station/engine/elect)
 "wty" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	operating = 1
 	},
 /obj/decal/cleanable/dirt/dirt5,
@@ -64667,8 +64576,7 @@
 	},
 /area/station/science/chemistry)
 "wyJ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -65002,8 +64910,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "xbB" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -65466,7 +65373,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
 "xJl" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},

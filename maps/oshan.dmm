@@ -573,7 +573,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "abu" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
 /obj/machinery/mass_driver{
@@ -584,7 +584,7 @@
 /turf/simulated/floor/black,
 /area/station/maintenance/northwest)
 "abv" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
 /obj/machinery/launcher_loader/north{
@@ -614,7 +614,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aby" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "outbound"
 	},
 /obj/machinery/mass_driver{
@@ -625,7 +625,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "abz" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "outbound"
 	},
 /obj/machinery/launcher_loader/west{
@@ -3265,7 +3265,7 @@
 /area/station/medical/crematorium)
 "ahw" = (
 /obj/machinery/light/incandescent/blueish,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
 /turf/simulated/floor/black,
@@ -3486,7 +3486,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/sanctuary)
 "ahZ" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "chapel"
 	},
 /obj/machinery/door/airlock/pyro/glass{
@@ -3540,9 +3540,7 @@
 	name = "Genetic Research"
 	})
 "aig" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aih" = (
@@ -6416,7 +6414,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/turret_protected/Zeta)
 "apc" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/space/fluid,
@@ -9595,7 +9593,7 @@
 /turf/simulated/floor/black,
 /area/station/science/lobby)
 "awK" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -9840,14 +9838,14 @@
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "axl" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "axm" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -10030,7 +10028,7 @@
 /turf/simulated/floor/green/side,
 /area/station/turret_protected/Zeta)
 "axI" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -10982,7 +10980,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
 "azN" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -11693,7 +11691,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
 "aBA" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -12278,8 +12276,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northwest)
 "aDo" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -14867,7 +14864,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
 "aJE" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /obj/forcefield/energyshield/perma/doorlink,
@@ -15045,9 +15042,7 @@
 /area/station/science/chemistry)
 "aKf" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aKg" = (
@@ -17094,7 +17089,7 @@
 /turf/simulated/floor,
 /area/listeningpost)
 "aPM" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/NW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "aPN" = (
@@ -17923,7 +17918,7 @@
 /turf/space/fluid,
 /area/space)
 "aRU" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/misc,
@@ -21905,7 +21900,7 @@
 /turf/simulated/floor/darkpurple,
 /area/station/crew_quarters/data)
 "beL" = (
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "beM" = (
@@ -23186,7 +23181,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/bar)
 "biD" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/ES/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "biE" = (
@@ -23411,7 +23406,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "bjl" = (
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "bjm" = (
@@ -26398,9 +26393,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "bqQ" = (
@@ -32465,7 +32458,7 @@
 "bFN" = (
 /obj/plasticflaps,
 /obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "south";
 	move_lag = 10;
 	operating = 1
@@ -34038,7 +34031,7 @@
 	name = "QM Shutters";
 	opacity = 0
 	},
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/misc{
@@ -34293,7 +34286,7 @@
 /turf/simulated/floor/grass,
 /area/space)
 "bKq" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -34831,7 +34824,7 @@
 "bLR" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/incandescent/harsh,
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/misc,
@@ -35113,20 +35106,20 @@
 /turf/space/fluid,
 /area/supply/spawn_point)
 "bMO" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "bMP" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "bMQ" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "inbound"
 	},
 /turf/simulated/floor/caution/misc{
@@ -35414,7 +35407,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/security/beepsky)
 "bNA" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -35995,13 +35988,13 @@
 /area/space)
 "bPf" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "outbound"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "bPg" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "outbound"
 	},
 /turf/simulated/floor/caution/misc{
@@ -36529,8 +36522,7 @@
 	},
 /area/station/quartermaster/refinery)
 "bQq" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -36941,8 +36933,7 @@
 /area/space)
 "bRq" = (
 /obj/machinery/light/incandescent/harsh/very,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -37435,8 +37426,7 @@
 	layer = 4;
 	name = "Crusher Door"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -37889,8 +37879,7 @@
 /area/station/garden/zen)
 "bTC" = (
 /obj/machinery/crusher,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -37904,7 +37893,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bTE" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -38352,7 +38341,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bUO" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -38664,8 +38653,7 @@
 /area/station/maintenance/disposal)
 "bVH" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -38675,7 +38663,7 @@
 	},
 /area/station/maintenance/disposal)
 "bVI" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -38994,8 +38982,7 @@
 /turf/simulated/floor/grass/random,
 /area/station/garden/zen)
 "bWz" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -39293,8 +39280,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/storage)
 "bXh" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	move_lag = 30;
 	operating = 1
@@ -42135,9 +42121,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
 "cfQ" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /obj/plasticflaps,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -42197,9 +42181,7 @@
 	},
 /area/station/hallway/primary/west)
 "cga" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cgb" = (
@@ -42271,9 +42253,7 @@
 /turf/space/fluid/warp_z5,
 /area/space)
 "cgm" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/grime,
 /area/station/maintenance/inner/central)
 "cgn" = (
@@ -42536,9 +42516,7 @@
 /area/station/storage/warehouse)
 "cgX" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cgY" = (
@@ -43307,9 +43285,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
 "cjD" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjE" = (
@@ -43371,13 +43347,13 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjN" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/NE/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjO" = (
 /obj/forcefield/energyshield/perma,
 /obj/plasticflaps,
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cjP" = (
@@ -43409,14 +43385,12 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "cjV" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
 "cjW" = (
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /obj/machinery/light/incandescent/blueish,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -43428,14 +43402,12 @@
 /turf/space/fluid,
 /area/space)
 "cjY" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
 "cjZ" = (
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
@@ -43445,30 +43417,26 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/light/runway_light/delay2,
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /turf/space/fluid,
 /area/space)
 "ckb" = (
 /obj/lattice,
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/ES/carousel,
 /turf/space/fluid,
 /area/space)
 "ckc" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast,
+/obj/machinery/conveyor/EN/carousel,
 /turf/space/fluid,
 /area/space)
 "ckd" = (
 /obj/decal/tile_edge/stripe/extra_big,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cke" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
@@ -43520,7 +43488,7 @@
 "ckl" = (
 /obj/lattice,
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth,
+/obj/machinery/conveyor/SW/carousel,
 /turf/space/fluid,
 /area/space)
 "ckm" = (
@@ -43529,7 +43497,7 @@
 	name = "Pod Bay Blast Door Control";
 	pixel_x = 22
 	},
-/obj/machinery/conveyor/oshan_carousel,
+/obj/machinery/conveyor/NS/carousel,
 /obj/lattice,
 /turf/space/fluid,
 /area/space)
@@ -43571,11 +43539,11 @@
 /area/station/maintenance/inner/central)
 "cks" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westsouth,
+/obj/machinery/conveyor/SW/carousel,
 /turf/space/fluid,
 /area/space)
 "ckt" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/NW/carousel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 1;
@@ -43586,7 +43554,7 @@
 /area/station/maintenance/inner/central)
 "cku" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/northeast,
+/obj/machinery/conveyor/EN/carousel,
 /turf/space/fluid,
 /area/space)
 "ckv" = (
@@ -43594,11 +43562,11 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "ckw" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/eastsouth,
+/obj/machinery/conveyor/SE/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckx" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest,
+/obj/machinery/conveyor/WS/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "cky" = (
@@ -43613,17 +43581,17 @@
 /area/station/maintenance/inner/central)
 "ckA" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/westnorth,
+/obj/machinery/conveyor/NW/carousel,
 /turf/space/fluid,
 /area/space)
 "ckB" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southwest,
+/obj/machinery/conveyor/WS/carousel,
 /turf/space/fluid,
 /area/space)
 "ckC" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/southeast,
+/obj/machinery/conveyor/ES/carousel,
 /turf/space/fluid,
 /area/space)
 "ckD" = (
@@ -43674,7 +43642,7 @@
 /area/station/maintenance/inner/central)
 "ckN" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/NE/carousel,
 /turf/space/fluid,
 /area/space)
 "ckO" = (
@@ -43701,11 +43669,11 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/conveyor/oshan_carousel/coroner/eastnorth,
+/obj/machinery/conveyor/NE/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckS" = (
-/obj/machinery/conveyor/oshan_carousel/coroner/northwest,
+/obj/machinery/conveyor/WN/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckT" = (
@@ -43756,9 +43724,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "clc" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 10;
@@ -43929,8 +43895,7 @@
 /turf/simulated/floor/bot,
 /area/station/storage/tools)
 "clA" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "north";
 	move_lag = 10;
 	operating = 1
@@ -43944,8 +43909,7 @@
 /area/station/storage/tools)
 "clC" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "north";
 	move_lag = 10;
 	operating = 1
@@ -43972,9 +43936,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/info)
 "clH" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE/carousel,
 /obj/machinery/cargo_router/oshan_north,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
@@ -43999,9 +43961,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/info)
 "clL" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /obj/lattice,
 /obj/machinery/cargo_router/oshan_south,
 /turf/space/fluid,
@@ -44518,9 +44478,7 @@
 /obj/forcefield/energyshield/perma{
 	dir = 8
 	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "dKK" = (
@@ -44875,9 +44833,7 @@
 /area/station/medical/medbay/cloner)
 "fML" = (
 /obj/lattice,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/space/fluid,
 /area/space)
 "fQs" = (
@@ -45419,13 +45375,6 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/exit)
-"iqQ" = (
-/obj/lattice,
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
-/turf/space/fluid,
-/area/space)
 "isQ" = (
 /obj/disposalpipe/segment,
 /obj/decal/tile_edge/line/blue{
@@ -45471,9 +45420,7 @@
 /obj/cable/reinforced{
 	icon_state = "4-8-thick"
 	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "iAL" = (
@@ -45911,6 +45858,10 @@
 	},
 /turf/simulated/floor,
 /area/research_outpost)
+"knC" = (
+/obj/machinery/conveyor/SN/carousel,
+/turf/simulated/floor/shuttlebay,
+/area/station/maintenance/inner/central)
 "koq" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -47061,9 +47012,7 @@
 	name = "Catering Hangar"
 	})
 "qqX" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/SN/carousel,
 /obj/item/bananapeel,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
@@ -47579,9 +47528,7 @@
 /obj/forcefield/energyshield/perma{
 	dir = 8
 	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "tNj" = (
@@ -47618,9 +47565,7 @@
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 8
-	},
+/obj/machinery/conveyor/EW/carousel,
 /turf/space/fluid,
 /area/space)
 "tWw" = (
@@ -47882,9 +47827,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
 "vCx" = (
-/obj/machinery/conveyor/oshan_carousel{
-	dir = 1
-	},
+/obj/machinery/conveyor/EN/carousel,
 /turf/simulated/floor/shuttlebay,
 /area/station/maintenance/inner/central)
 "vEl" = (
@@ -86929,27 +86872,27 @@ cga
 cga
 cga
 ckd
-vCx
+knC
 ixM
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
-vCx
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
+knC
 qqX
 vCx
 ciW
@@ -88122,7 +88065,7 @@ aCs
 aBG
 ckw
 cga
-ckS
+cga
 ckS
 aEV
 aeB
@@ -88461,14 +88404,14 @@ aqn
 aqn
 aqn
 ckk
-fML
+cks
 cke
 cke
 cke
 cke
 cke
 cke
-iqQ
+cku
 cki
 aqn
 aqn
@@ -91787,7 +91730,7 @@ aqn
 cjX
 ckg
 aUp
-cjZ
+ckC
 ckA
 bvA
 bwM

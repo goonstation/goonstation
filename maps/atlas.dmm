@@ -278,7 +278,7 @@
 /turf/space,
 /area/space)
 "aD" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -345,7 +345,7 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "aK" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -419,7 +419,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "aU" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -502,7 +502,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "bg" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -661,8 +661,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/detectives_office)
 "bA" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "outbound";
 	name = "cargo belt - north";
 	operating = 1
@@ -674,7 +673,7 @@
 /turf/simulated/floor/caution/westeast,
 /area/station/quartermaster/office)
 "bC" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -687,8 +686,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/office)
 "bE" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "outbound";
 	name = "cargo belt - north";
 	operating = 1
@@ -969,8 +967,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/engine/elect)
 "cq" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "outbound";
 	name = "cargo belt - north";
 	operating = 1
@@ -1170,8 +1167,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "cT" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "outbound";
 	name = "cargo belt - north";
 	operating = 1
@@ -1208,7 +1204,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "cX" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -2698,8 +2694,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/main)
 "hm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -2924,8 +2919,7 @@
 	},
 /area/station/chapel/sanctuary)
 "hQ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -2934,8 +2928,7 @@
 	},
 /area/station/chapel/sanctuary)
 "hR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -3063,8 +3056,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "id" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -3541,8 +3533,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "jm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "delivery";
 	name = "cargo belt - east";
 	operating = 1
@@ -3559,8 +3550,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "delivery";
 	name = "cargo belt - east";
 	operating = 1
@@ -3568,8 +3558,7 @@
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "jo" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "delivery";
 	name = "cargo belt - east";
 	operating = 1
@@ -13044,8 +13033,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "FR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
 	operating = 1
@@ -13059,8 +13047,7 @@
 /turf/simulated/floor/plating,
 /area/station/janitor/office)
 "FS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
 	operating = 1
@@ -17012,7 +16999,7 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/east)
 "PE" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -17327,7 +17314,7 @@
 /turf/simulated/floor/plating,
 /area/station/bridge/united_command)
 "Qk" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "inbound";
 	name = "cargo belt - south";
 	operating = 1
@@ -17672,8 +17659,7 @@
 /turf/simulated/floor,
 /area/station/ranch)
 "Rd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "trash";
 	name = "cargo belt - east";
 	operating = 1

@@ -21428,9 +21428,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "bmY" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/caution/north,
@@ -21870,9 +21868,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnO" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor,
@@ -22069,7 +22065,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/assembly)
 "boi" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/caution/east,
@@ -25257,7 +25253,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "byG" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "byJ" = (
@@ -28348,7 +28344,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "bIo" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	id = null
@@ -30129,7 +30125,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crunch)
 "bNY" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
@@ -30278,7 +30274,7 @@
 /turf/unsimulated/floor/grime,
 /area/crunch)
 "bOw" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -30576,17 +30572,13 @@
 	},
 /area/crunch)
 "bPp" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPq" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -30599,9 +30591,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPr" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -30696,9 +30686,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bPF" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
@@ -30943,9 +30931,7 @@
 /turf/unsimulated/floor/bot,
 /area/crunch)
 "bQp" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -41378,9 +41364,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvT" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -44385,7 +44369,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/Owlopen)
 "cDy" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/plasticflaps,
@@ -44447,7 +44431,7 @@
 	},
 /area/owlery/Owlopen)
 "cDG" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /turf/unsimulated/floor/plating,
@@ -44953,7 +44937,7 @@
 	},
 /area/owlery/Owlopen)
 "cEN" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/machinery/crusher,
@@ -45001,7 +44985,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEU" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "owlery_trash";
 	operating = 1
 	},
@@ -45013,7 +44997,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cEV" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "owlery_trash";
 	operating = 1
 	},
@@ -45881,7 +45865,7 @@
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/Owlmait)
 "cHb" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/plasticflaps,
@@ -54513,9 +54497,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "dam" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/item/shipcomponent/engine/hermes,
