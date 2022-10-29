@@ -1027,6 +1027,7 @@
 	is_syndicate = TRUE
 	var/delimb_prob = 1
 	custom_suicide = 1
+
 /obj/item/swords/attack_self(mob/user)
 	. = ..()
 	for(var/obj/item/swords_sheaths/steath in user) //this working with chest items is intented according to my balance tests its ok its also funny
