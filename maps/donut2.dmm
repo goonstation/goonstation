@@ -1088,7 +1088,9 @@
 /area/station/crew_quarters/hor)
 "aeI" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/northeast,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "aeJ" = (
@@ -1170,7 +1172,9 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/southeast,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afc" = (
@@ -1414,7 +1418,9 @@
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "afT" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -15967,7 +15973,9 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bbJ" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 8
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -19694,7 +19702,9 @@
 /area/station/security/processing)
 "boZ" = (
 /obj/wingrille_spawn/auto/crystal/reinforced,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bpa" = (
@@ -20811,7 +20821,7 @@
 /area/station/engine/storage)
 "btK" = (
 /obj/disposalpipe/segment/mail,
-/obj/storage/closet/wardrobe/yellow/engineering,
+/obj/storage/secure/closet/engineering/electrical,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21031,7 +21041,7 @@
 "buM" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/light/incandescent,
-/obj/storage/secure/closet/engineering/electrical,
+/obj/storage/secure/closet/engineering/engineer,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -21862,11 +21872,11 @@
 	dir = 4;
 	pixel_x = 24
 	},
-/obj/storage/secure/closet/engineering/engineer,
 /obj/disposalpipe/segment/mail{
 	dir = 8;
 	icon_state = "pipe-c"
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -23557,7 +23567,9 @@
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
 "bEp" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/cold/northwest,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "bEq" = (
@@ -23854,7 +23866,9 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "bFn" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /obj/wingrille_spawn/auto/crystal/reinforced,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -24034,7 +24048,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/south)
 "bFN" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/space,
 /area/space)
 "bFO" = (
@@ -24187,7 +24203,9 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/east)
 "bGn" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/northwest,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
 /obj/lattice{
 	dir = 2;
 	icon_state = "lattice-dir"
@@ -24417,7 +24435,9 @@
 	},
 /obj/access_spawn/tox,
 /obj/firedoor_spawn,
-/obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bGU" = (
@@ -24428,7 +24448,9 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/magnet)
 "bGW" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/horizontal,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "bGX" = (
@@ -24456,7 +24478,10 @@
 	},
 /area/station/solar/east)
 "bHb" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/southwest,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10;
+	
+	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
@@ -24499,7 +24524,9 @@
 /turf/simulated/floor/grime,
 /area/station/quartermaster/magnet)
 "bHl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated/southeast,
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/science/lab)
 "bHn" = (
@@ -28892,7 +28919,9 @@
 /area/station/science/lobby)
 "eNh" = (
 /obj/decal/cleanable/cobweb,
-/obj/machinery/atmospherics/pipe/tank/sleeping_agent/south,
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent{
+	dir = 2
+	},
 /turf/simulated/floor/plating,
 /area/station/atmos/highcap_storage)
 "eNr" = (
@@ -29695,7 +29724,10 @@
 	text = "NF"
 	},
 /obj/machinery/vending/monkey/kitchen,
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/southwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10;
+	
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -30765,7 +30797,8 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/ai)
 "gqY" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/south{
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 2;
 	current_temperature = 250
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -30913,7 +30946,8 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/simple/northeast{
+/obj/machinery/atmospherics/pipe/simple{
+	dir = 5;
 	level = 2
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -30967,7 +31001,9 @@
 	},
 /area/station/engine/inner)
 "gEp" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 5
 	},
@@ -33347,7 +33383,9 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/courtroom)
 "iPp" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -34915,7 +34953,9 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
 "kmo" = (
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "kmt" = (
@@ -35036,7 +35076,8 @@
 /area/station/maintenance/west)
 "krp" = (
 /obj/machinery/meter,
-/obj/machinery/atmospherics/pipe/manifold/south{
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 2;
 	level = 2
 	},
 /turf/simulated/floor/specialroom/freezer{
@@ -37044,7 +37085,9 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/atmospherics/portables_connector/east,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/station/science/testchamber)
 "mgN" = (
@@ -41069,7 +41112,9 @@
 /turf/simulated/floor/stairs/medical/wide,
 /area/station/crew_quarters/pool)
 "pCd" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -43465,7 +43510,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "rBT" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/north{
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2
 	},
 /obj/machinery/light/incandescent,
@@ -44619,7 +44664,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -48401,7 +48448,9 @@
 	},
 /area/station/crew_quarters/bar)
 "vCY" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 4
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "vDc" = (
@@ -48597,7 +48646,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/horizontal,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 4
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366
@@ -48610,7 +48661,9 @@
 /area/station/mining/staff_room)
 "vKL" = (
 /obj/kitchenspike,
-/obj/machinery/atmospherics/pipe/simple/junction/east,
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4
+	},
 /obj/item/device/radio/intercom/catering,
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
@@ -51049,7 +51102,9 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
 "xYo" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
 /turf/simulated/floor/grime,
 /area/station/atmos/highcap_storage)
 "xZw" = (
@@ -51243,7 +51298,9 @@
 	pixel_x = 12;
 	pixel_y = 1
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging/northwest,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 9
+	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
 	oxygen = 30.8366

@@ -381,6 +381,8 @@ WET FLOOR SIGN
 // Its the old mop. It makes floors slippery
 /obj/item/mop/old
 	name = "antique mop"
+	icon_state = "mop_old"
+	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
 	afterattack(atom/A, mob/user as mob)
