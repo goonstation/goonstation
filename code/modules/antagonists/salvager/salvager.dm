@@ -26,7 +26,7 @@
 
 		var/obj/item/device/radio/headset/headset = H.ears
 		if(!headset)
-			var/obj/item/device/radio/headset/salvager/headset = new /obj/item/device/radio/headset/salvager
+			headset = new /obj/item/device/radio/headset/salvager
 			H.equip_if_possible(headset, H.slot_ears)
 		else
 			headset.protected_radio = TRUE
