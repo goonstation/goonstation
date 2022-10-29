@@ -199,7 +199,7 @@
 								boutput(flock.flockmind_mind.current, "success")
 								var/time = world.time
 								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
-									if (time - flocktrace.creation_time >= 1 SECOND)
+									if (time - flocktrace.creation_time >= 5 MINUTES)
 										flocktrace.unlock_medal("To the stars", TRUE)
 										boutput(flocktrace.mind.current, "success")
 
