@@ -121,7 +121,6 @@
 				M.implant += implanted
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
-				M.emote("scream")
 			qdel(src)
 			return
 

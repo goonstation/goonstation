@@ -230,7 +230,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			else if(!user.hand && istype(user.l_hand, /obj/item/gun))
 				G = user.l_hand
 
-			if (G && G.can_dual_wield && G.canshoot())
+			if (G && G.can_dual_wield && G.canshoot(user))
 				is_dual_wield = 1
 				if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
 					SPAWN(0.2 SECONDS)
@@ -243,7 +243,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			for(var/datum/handHolder/H in M.hands)
 				if(H.item && H.item != src && istype(H.item, /obj/item/gun) && H.item:can_dual_wield)
 					is_dual_wield = 1
-					if (H.item:canshoot())
+					if (H.item:canshoot(user))
 						guns += H.item
 			SPAWN(0)
 				for(var/obj/item/gun/gun in guns)
@@ -253,7 +253,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 						gun.shoot(target_turf,user_turf,user, pox+rand(-2,2), poy+rand(-2,2), is_dual_wield)
 
 	if(!ON_COOLDOWN(src, "shoot_delay", src.shoot_delay))
-		if(charge_up && !can_dual_wield && canshoot())
+		if(charge_up && !can_dual_wield && canshoot(user))
 			actions.start(new/datum/action/bar/icon/guncharge(src, pox, poy, user_turf, target_turf, charge_up, icon, icon_state), user)
 		else
 			shoot(target_turf, user_turf, user, pox, poy, is_dual_wield)
@@ -292,7 +292,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
 
-	if (charge_up && !skip_charge_up && !can_dual_wield && canshoot())
+	if (charge_up && !skip_charge_up && !can_dual_wield && canshoot(user))
 		actions.start(new/datum/action/bar/icon/guncharge_pointblank(src, target, user, second_shot, charge_up, icon, icon_state), user)
 		return
 
@@ -330,7 +330,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (!art_gun.activated)
 			return
 
-	if (!canshoot())
+	if (!canshoot(user))
 		if (!silenced)
 			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
 			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
@@ -412,7 +412,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (isghostdrone(user))
 		user.show_text("<span class='combat bold'>Your internal law subroutines kick in and prevent you from using [src]!</span>")
 		return FALSE
-	if (!canshoot())
+	if (!canshoot(user))
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
@@ -481,7 +481,8 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	src.UpdateIcon()
 	return TRUE
 
-/obj/item/gun/proc/canshoot()
+/// Check if the gun can shoot or not. `user` will be null if the gun is shot by a non-mob (gun component)
+/obj/item/gun/proc/canshoot(mob/user)
 	return 0
 
 /obj/item/gun/proc/log_shoot(mob/user, turf/T, obj/projectile/P)
@@ -517,7 +518,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/suicide(var/mob/living/carbon/human/user as mob)
 	if (!src.user_can_suicide(user))
 		return 0
-	if (!src.canshoot())
+	if (!src.canshoot(user))
 		return 0
 
 	user.visible_message("<span class='alert'><b>[user] places [src] against [his_or_her(user)] head!</b></span>")

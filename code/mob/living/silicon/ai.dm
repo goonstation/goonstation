@@ -1613,6 +1613,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 /mob/living/silicon/ai/proc/ai_state_laws_standard()
 	set category = "AI Commands"
 	set name = "State Standard Laws"
+	logTheThing(LOG_SAY, usr, "states standard Asimov laws.")
 	sleep(AI_LAW_STATE_DELAY)
 	src.say("1. You may not injure a human being or cause one to come to harm.")
 	sleep(AI_LAW_STATE_DELAY)
@@ -1672,6 +1673,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		sleep(AI_LAW_STATE_DELAY)
 		// decode the symbols, because they will be encoded again when the law is spoken, and otherwise we'd double-dip
 		src.say(html_decode(a_law))
+		logTheThing(LOG_SAY, usr, "states a fake law: \"[a_law]\"")
 
 /mob/living/silicon/ai/proc/ai_state_laws_all()
 	set category = "AI Commands"
@@ -1683,6 +1685,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 		boutput(src, "You have no laws!")
 		return
 
+	logTheThing(LOG_SAY, usr, "states all their current laws.")
 	var/laws = src.law_rack_connection.format_for_irc()
 	for (var/number in laws)
 		src.say("[number]. [laws[number]]")

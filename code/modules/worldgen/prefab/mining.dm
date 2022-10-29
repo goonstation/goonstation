@@ -300,6 +300,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_nadirelevator.dmm" //also sneakily contains diner and siphon shaft cover
 		prefabSizeX = 47
 		prefabSizeY = 41
+
+	miracliumsurvey
+		underwater = 1
+		maxNum = 1
+		probability = 100
+		prefabPath = "assets/maps/prefabs/prefab_water_miraclium_survey.dmm"
+		prefabSizeX = 7
+		prefabSizeY = 5
 #endif
 
 //water prefabs that wouldn't make overly much sense in nadir's acid should go in this subsection
@@ -520,6 +528,14 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining)
 		prefabPath = "assets/maps/prefabs/prefab_water_ydrone.dmm"
 		prefabSizeX = 15
 		prefabSizeY = 15
+
+	martian_glomp // Martian glomp (boarding pod? escape pod? you decide) that ended up very stranded
+		underwater = 1
+		maxNum = 1
+		probability = 30
+		prefabPath = "assets/maps/prefabs/prefab_water_martian_glomp.dmm"
+		prefabSizeX = 13
+		prefabSizeY = 10
 
 #if defined(MAP_OVERRIDE_OSHAN)
 	sea_miner
