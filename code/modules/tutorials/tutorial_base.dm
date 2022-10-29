@@ -3,7 +3,7 @@
 	var/mob/owner = null
 	var/list/steps = list()
 	var/current_step = 0
-	var/finished = 0
+	var/finished = FALSE
 
 	New(var/mob/M)
 		..()
@@ -92,6 +92,40 @@
 				return 1
 			else
 				return 0
+
+/datum/tutorial_base/regional
+	var/turf/initial_turf = null
+	var/datum/allocated_region/region = null
+	var/region_type = null
+	var/turf/exit_point = null
+
+	New(mob/M)
+		. = ..()
+		src.region = get_singleton(src.region_type).load()
+		logTheThing(LOG_DEBUG, usr, "<b>[src.name]</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+			if(region.turf_in_region(T))
+				initial_turf = T
+				break
+
+	Start()
+		. = ..()
+		if (!.)
+			return
+		if (!initial_turf)
+			logTheThing(LOG_DEBUG, usr, "<b>[src.name]</b>: Tutorial failed setup: missing landmark.")
+			throw EXCEPTION("Okay who removed the goddamn [src.name] landmark")
+		owner.set_loc(initial_turf)
+
+	Finish()
+		. = ..()
+		if (.)
+			src.owner.set_loc(src.exit_point)
+
+	disposing()
+		qdel(src.region)
+		landmarks[LANDMARK_TUTORIAL_START] -= src.initial_turf
+		..()
 
 /datum/tutorialStep
 	var/name = "Tutorial Step"

@@ -4,42 +4,26 @@
 	sound_group = "blob1"
 	dont_log_combat = TRUE
 
-/datum/tutorial_base/blob
+/datum/tutorial_base/regional/blob
 	name = "Blob tutorial"
 	var/mob/living/intangible/blob_overmind/bowner = null
-	var/turf/initial_turf = null
-	var/datum/allocated_region/region
+	region_type = /datum/mapPrefab/allocated/blob_tutorial
 
 	New()
 		..()
 		AddBlobSteps(src)
-		src.region = get_singleton(/datum/mapPrefab/allocated/blob_tutorial).load()
-		logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Got bottom left corner [log_loc(src.region.bottom_left)]")
-		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
-			if(region.turf_in_region(T))
-				initial_turf = T
-				break
-		if (!initial_turf)
-			logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Tutorial failed setup: missing landmark.")
-			throw EXCEPTION("Okay who removed the goddamn blob tutorial landmark")
+		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 
 	Start()
-		if (!initial_turf)
-			logTheThing(LOG_DEBUG, usr, "<b>Blob Tutorial</b>: Failed setup.")
-			boutput(usr, "<span class='alert'><b>Error setting up tutorial!</b></span>")
-			qdel(src)
-			return
 		if (..())
 			bowner = owner
 			bowner.sight &= ~SEE_TURFS
 			bowner.sight &= ~SEE_MOBS
 			bowner.sight &= ~SEE_OBJS
-			owner.set_loc(initial_turf)
 			bowner.add_ability(/datum/blob_ability/tutorial_exit)
 
 	Finish()
 		if (..())
-			bowner.set_loc(pick_landmark(LANDMARK_OBSERVER))
 			bowner.bio_points_max_bonus = initial(bowner.bio_points_max_bonus)
 			bowner.started = 0
 			for (var/obj/blob/B in bowner.blobs)
@@ -67,11 +51,6 @@
 			bowner.starter_buff = 1
 			qdel(src)
 
-	disposing()
-		qdel(src.region)
-		landmarks[LANDMARK_TUTORIAL_START] -= src.initial_turf
-		..()
-
 /datum/tutorialStep/blob
 	name = "Blob tutorial step"
 	instructions = "If you see this, tell a coder!!!11"
@@ -95,7 +74,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			must_deploy = locate(MT.initial_turf.x, MT.initial_turf.y + 1, MT.initial_turf.z)
 			must_deploy.UpdateOverlays(marker,"marker")
 
@@ -120,7 +99,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -154,7 +133,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -225,7 +204,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -264,7 +243,7 @@
 		SetUp()
 			..()
 			SPAWN(0)
-				var/datum/tutorial_base/blob/MT = tutorial
+				var/datum/tutorial_base/regional/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -299,7 +278,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/turf/T = locate(tx, ty, MT.initial_turf.z)
@@ -341,7 +320,7 @@
 		SetUp()
 			..()
 			SPAWN(0)
-				var/datum/tutorial_base/blob/MT = tutorial
+				var/datum/tutorial_base/regional/blob/MT = tutorial
 				var/tx = MT.initial_turf.x
 				var/ty = MT.initial_turf.y + 1
 				var/tz = MT.initial_turf.z
@@ -373,7 +352,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -400,7 +379,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -408,7 +387,7 @@
 			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			if (!MT.region.turf_in_region(get_turf(context)) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
 				return 0
 			else if (action == "clickmove" && context == target)
@@ -429,7 +408,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 1
 			var/tz = MT.initial_turf.z
@@ -457,7 +436,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			MT.bowner.evo_points = 500
 
 		PerformAction(var/action, var/context)
@@ -470,11 +449,11 @@
 			return 0
 
 		TearDown()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			MT.bowner.evo_points = 0
 
 		MayAdvance()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			return MT.bowner.has_upgrade(/datum/blob_upgrade/launcher) && MT.bowner.has_upgrade(/datum/blob_upgrade/devour_item) && MT.bowner.has_upgrade(/datum/blob_upgrade/reflective)
 
 	digestation
@@ -484,7 +463,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x + 1
 			var/ty = MT.initial_turf.y + 2
 			var/tz = MT.initial_turf.z
@@ -515,7 +494,7 @@
 
 		SetUp()
 			..()
-			var/datum/tutorial_base/blob/MT = tutorial
+			var/datum/tutorial_base/regional/blob/MT = tutorial
 			var/tx = MT.initial_turf.x
 			var/ty = MT.initial_turf.y + 3
 			var/tz = MT.initial_turf.z
@@ -562,7 +541,7 @@
 			sleep(5 SECONDS)
 			tutorial.Advance()
 
-proc/AddBlobSteps(var/datum/tutorial_base/blob/T)
+proc/AddBlobSteps(var/datum/tutorial_base/regional/blob/T)
 	T.AddStep(new /datum/tutorialStep/blob/deploy)
 	T.AddStep(new /datum/tutorialStep/blob/spread)
 	T.AddStep(new /datum/tutorialStep/blob/attack)
