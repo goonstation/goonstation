@@ -9568,12 +9568,6 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
-"eNS" = (
-/obj/machinery/drainage,
-/turf/simulated/floor/black,
-/area/station/bridge/customs{
-	name = "Bridge Reception"
-	})
 "eNW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94675,7 +94669,7 @@ sNC
 eZe
 wRm
 rul
-eNS
+eZe
 dzl
 tpy
 fjZ
