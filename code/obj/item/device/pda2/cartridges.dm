@@ -239,7 +239,7 @@
 	genetics
 		name = "\improper Deoxyribonucleic Amigo cartridge"
 		desc = "There was, at one point, a time when this cartridge often got use."
-		icon_state = "cart-med"
+		icon_state = "cart-gene"
 
 		New()
 			..()

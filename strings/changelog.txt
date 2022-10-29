@@ -1,5 +1,18 @@
 
+(t)sat oct 29 22
+(u)lofijuno
+(p)11507
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a western dress costume to the clothing booth.
+(u)Shiiba
+(p)11499
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)New sprite for Genetics PDA cartridge.
 (t)fri oct 28 22
+(u)LeahTheTech
+(p)11388
+(e)🆕🎨⚖🧛‍|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(*)Reworked the Flockmind heal ability to be an AOE.
 (u)Kubius
 (p)11643
 (e)🆕|C-Feature
