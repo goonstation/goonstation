@@ -554,6 +554,15 @@
 
 		return 0
 
+	afterattack(obj/target, mob/user, flag)
+		if(istype(target, /obj/reagent_dispensers) && target.reagents)
+			if (!target.reagents.total_volume)
+				boutput(user, "<span class='alert'>[target] is already empty.</span>")
+				return
+			playsound(src.loc, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			target.reagents.trans_to(src, src.reagents.maximum_volume)
+			return
+
 	proc/begin_application(mob/M as mob, mob/user as mob)
 		actions.start(new/datum/action/bar/icon/automender_apply(user,src,M), user)
 

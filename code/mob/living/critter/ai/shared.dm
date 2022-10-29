@@ -196,7 +196,7 @@
 		. = ..()
 		var/mob/living/critter/M = holder.owner
 		if (!M) return
-		holder.enabled = FALSE
+		holder.disable()
 		M.is_hibernating = TRUE
 		M.registered_area = get_area(M)
 		if(M.registered_area)
