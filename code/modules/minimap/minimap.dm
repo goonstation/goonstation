@@ -7,7 +7,7 @@
 
 	New()
 		. = ..()
-		map = new map_path
+		map = get_singleton(map_path)
 		icon = map.map_render
 
 	update_icon()
