@@ -621,6 +621,8 @@
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					P.unlocked = !P.unlocked
+					if(!P.unlocked)
+						P.loading = FALSE
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
@@ -637,7 +639,7 @@
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id().registered == P.owner || !P.owner)
+				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(R.product_path == text2path(params["target"]))
 							P.promoimage = R.icon
@@ -3073,6 +3075,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_security)
 
 	create_products()
@@ -3113,6 +3117,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_medical)
 
 	create_products()
@@ -3159,18 +3165,23 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_engineering)
 
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 6)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)

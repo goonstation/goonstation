@@ -462,3 +462,39 @@
 								"Electronic Voice",
 								"???")
 
+// prefab_water_miraclium_survey.dmm
+// nadir: survey site where the big ol' miraclium deposit was located
+
+/obj/item/device/audio_log/miraclium_survey
+
+		name = "hardened audio log"
+		desc = "A fairly spartan recording device. It seems to be constructed of non-standard materials, with an unfamiliar connector."
+		continuous = 0
+		audiolog_messages = list("Begin log. Technician Reed, survey report, site 2a.",
+								"Deep-crust probe reported improved density over site 1e.",
+								"Anomalous mineral yields estimated-",
+								"*loud clattering noise*",
+								"HARRY! GET YOUR ASS OVER HERE!",
+								"What the hell, Steve? I'm in the middle of a report!",
+								"Dude. We found the big one. Like, the REALLY big one.",
+								"*muffled footsteps*",
+								"Holy shit, you weren't kidding. Gimme one of those.",
+								"*loud thump*",
+								"Goddamn. That's the real deal. Rainbow rocks.",
+								"Let's get the hell back home. I can already taste the burger.",
+								"Shouldn't we grab the log? The tools?",
+								"Nobody's gonna give a shit about those. We found it.")
+		audiolog_speakers = list("gruff male voice",
+								"gruff male voice",
+								"gruff male voice",
+								"???",
+								"young male voice",
+								"gruff male voice",
+								"young male voice",
+								"???",
+								"gruff male voice",
+								"???",
+								"gruff male voice",
+								"gruff male voice",
+								"young male voice",
+								"gruff male voice")

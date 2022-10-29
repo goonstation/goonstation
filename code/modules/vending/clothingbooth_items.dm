@@ -1198,6 +1198,12 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westhat)
 	slot = SLOT_W_UNIFORM
 	cost = PAY_UNTRAINED/1
 
+/datum/clothingbooth_item/western/westerndress
+	name = "Western Saloon Dress"
+	path = /obj/item/clothing/under/misc/westerndress
+	slot = SLOT_W_UNIFORM
+	cost = PAY_UNTRAINED/1
+
 //shoes
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
