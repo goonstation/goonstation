@@ -416,7 +416,7 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/flock/repair/valid_target(var/mob/living/critter/flock/target)
+/datum/aiTask/sequence/goalbased/flock/repair/valid_target(mob/living/critter/flock/target)
 	var/mob/living/critter/flock/drone/drone = holder.owner
 	return target.flock == drone.flock
 
