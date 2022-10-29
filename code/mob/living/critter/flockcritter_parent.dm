@@ -114,6 +114,31 @@
 	if (istype(target, /obj/item) && target.loc == src) //no batong for radio birds
 		target.emp_act()
 
+/mob/living/critter/flock/weapon_attack(atom/target, obj/item/W, reach, params)
+	if (HAS_ATOM_PROPERTY(target, PROP_ATOM_FLOCK_THING) && target.density)
+		if (!reach && istype(W, /obj/item/gun))
+			boutput(src, "<span class='alert'>The grip tool refuses to harm this, jamming briefly.</span>")
+			return
+		return ..()
+	if (istype(W, /obj/item/gun))
+		if (src.a_intent == INTENT_GRAB && reach)
+			boutput(src, "<span class='alert'>You can't gun grab someone!</span>")
+			return
+		if (!reach || (reach && src.a_intent != INTENT_HELP))
+			if (prob(75))
+				boutput(src, "<span class='alert'>The grip tool can't quite reach the trigger!</span>")
+				playsound(src, 'sound/effects/brrp.ogg', 20, FALSE)
+				return
+			return ..()
+	if ((!ismob(target) && !iscritter(target) && !isvehicle(target)))
+		return ..()
+	if (prob(40))
+		src.visible_message("<span class='combat bold'>[src] attempts to hit [target] with [W] but the item slips!</span>")
+		playsound(target, 'sound/effects/swoosh.ogg', 50, FALSE)
+		src.lastattacked = target // prevents more than one failure in a row skipping attack cooldown
+		return
+	..()
+
 //trying out a world where you can't stun flockdrones
 /mob/living/critter/flock/do_disorient(stamina_damage, weakened, stunned, paralysis, disorient, remove_stamina_below_zero, target_type, stack_stuns)
 	src.changeStatus("slowed", max(weakened, stunned, paralysis, disorient))
