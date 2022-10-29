@@ -46,6 +46,7 @@
 	var/tmp/allow_unrestricted_hotbox = 0
 	var/wet = 0
 	var/sticky = FALSE
+	var/acidic = FALSE //Used by acid spit from brain slugs
 	throw_unlimited = 0 //throws cannot stop on this tile if true (also makes space drift)
 
 	var/step_material = 0

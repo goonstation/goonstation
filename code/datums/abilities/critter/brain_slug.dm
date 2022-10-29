@@ -394,3 +394,22 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		//Todo add a sound
 		holder.owner.visible_message("<span class='alert'>[holder.owner] spews a revolting stream of slime at [target]'s legs!</span>", "<span class='alert'>You spit restraining slime at [target] to hold them in place.</span>")
 		return FALSE
+
+/datum/targetable/brain_slug/acidic_spit
+	name = "Acidic Spit"
+	desc = "Spew a stream of acidic spit at the ground, melting whoever stands in it."
+	icon_state = "slimteshot"
+	cooldown = 60 SECONDS
+	targeted = 1
+	target_anything = 1
+	pointCost = 40
+
+	cast(atom/target)
+		if (GET_DIST(holder.owner, target) > 5)
+			boutput(holder.owner, "<span class='alert'>That is too far away!</span>")
+			return TRUE
+		var/obj/brain_slug/acidic_goo_ball = new /obj/brain_slug/acidic_goo_ball()
+		acidic_goo_ball.set_loc(holder.owner.loc)
+		acidic_goo_ball.throw_at(target, 5, 2)
+		holder.owner.visible_message("<span class='alert'>[holder.owner] spits out a glob of face melting acid at [target]!</span>")
+		return FALSE

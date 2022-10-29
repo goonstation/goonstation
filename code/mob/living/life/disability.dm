@@ -42,6 +42,20 @@
 						break
 				if(!interdictor_influence)
 					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
+			var/turf/T = get_turf(owner)
+			if(T.acidic)
+				//Melt off shoes
+				if (istype(owner, /mob/living/carbon/human))
+					var/mob/living/carbon/human/H = owner
+					if (H.shoes)
+						qdel(H.shoes)
+						H.visible_message("<span class='alert'>[H]'s shoes melt right off!</span>", "<span class='alert'>Your shoes melt instantly!</span>")
+				//Melt off faces
+				if (owner.lying)
+					random_burn_damage(owner, 9)
+				else
+					random_burn_damage(owner, 6)
+				playsound(owner, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability
