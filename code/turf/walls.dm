@@ -28,9 +28,7 @@
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
-		//for fluids
-		if (src.active_liquid && src.active_liquid.group)
-			src.active_liquid.group.displace(src.active_liquid)
+		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
@@ -128,6 +126,9 @@
 	newlight.base_state = parts.installed_base_state
 	newlight.fitting = parts.fitting
 	newlight.status = 1 // LIGHT_EMPTY
+	if (istype(src,/turf/simulated/wall/auto))
+		newlight.nostick = 0
+		newlight.autoposition()
 	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
 	user.u_equip(parts)

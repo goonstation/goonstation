@@ -123,6 +123,7 @@
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null
+	var/acid_survival_time //nadir support: set in minutes to override how long item will stay intact in contact with acid
 
 	var/tmp/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/tmp/last_processing_tick = -1
@@ -482,44 +483,6 @@
 	ClearSpecificOverlays("burn_overlay")
 	name = "[pick("charred","burned","scorched")] [name]"
 
-		/*if (src.reagents && src.reagents.reagent_list && length(src.reagents.reagent_list))
-
-			//boutput(world, "<span class='alert'><b>[src] is releasing chemsmoke!</b></span>")
-			//cogwerks note for drsingh: this was causing infinite server-killing problems
-			//someone brought a couple pieces of cheese into chemistry
-			//chlorine trifluoride foam set the cheese on fire causing it to releasee cheese smoke
-			//creating a dozen more cheeses on the floor
-			//which would catch on fire, releasing more cheese smoke
-			//i'm sure you can see where that is going
-			//this will happen with any reagents that create more reagent-containing items on turf reactions
-			var/location = get_turf(src)
-			var/max_vol = reagents.maximum_volume
-			var/rname = reagents.get_master_reagent_name()
-			var/color = reagents.get_master_color(1)
-			var/icon/overlay = icon('icons/effects/96x96.dmi',"smoke")
-			if (color)
-				overlay.Blend(color,ICON_MULTIPLY)
-			var/image/I = image(overlay)
-			I.pixel_x = -32
-			I.pixel_y = -32
-
-			var/the_dir = NORTH
-			for(var/i=0, i<8, i++)
-				var/obj/chem_smoke/C = new/obj/chem_smoke(location, reagents, max_vol)
-				C.overlays += I
-				if (rname) C.name = "[rname] smoke"
-				SPAWN(0)
-					var/my_dir = the_dir
-					var/my_time = rand(80,110)
-					var/my_range = 3
-					SPAWN(my_time) qdel(C)
-					for(var/b=0, b<my_range, b++)
-						sleep(1.5 SECONDS)
-						if (!C) break
-						step(C,my_dir)
-						C.expose()
-				the_dir = turn(the_dir,45) */
-
 /obj/item/temperature_expose(datum/gas_mixture/air, temperature, volume)
 	if (src.burn_possible && !src.burning)
 		if ((temperature > T0C + src.burn_point) && prob(5))
@@ -532,6 +495,11 @@
 	if (src.material)
 		src.material.triggerTemp(src, temperature)
 	..() // call your fucking parents
+
+/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
+/obj/item/proc/get_contraband()
+	// This needs to be a ternary because the value of the contraband override might be 0
+	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
 
 /obj/item/proc/update_stack_appearance()
 	return

@@ -98,9 +98,9 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(user, "sound/impact_sounds/Flesh_Cut_1.ogg", 50, 0)
+					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 0)
 				return 0
 			if (INTENT_GRAB)
 				if(!isturf(target.loc) && !isturf(target)) return

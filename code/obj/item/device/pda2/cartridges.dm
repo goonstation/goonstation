@@ -169,20 +169,6 @@
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
 			src.read_only = 1
 
-	mechanic
-		name = "\improper Analysis Made Easy cartridge"
-		desc = "More like, copyright infringement made easy."
-		icon_state = "cart-network"
-		file_amount = 64
-		New()
-			..()
-			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
-			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
-			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
-			src.read_only = 1
-
 	security
 		name = "\improper R.O.B.U.S.T. cartridge"
 		desc = "Reliably Ordered By Useless Security Teams."
@@ -279,14 +265,20 @@
 		name = "\improper Engine-buddy Atmospherics cartridge"
 		desc = "Great for the enterprising engineer in everyone!"
 		icon_state = "cart-engine"
+		file_amount = 128
 
 		New()
 			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
+			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.read_only = 1
 
 	chiefengineer

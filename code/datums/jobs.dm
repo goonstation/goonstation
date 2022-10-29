@@ -773,36 +773,13 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			return
 		M.bioHolder.AddEffect("training_miner")
 
-/datum/job/engineering/mechanic
-	name = "Mechanic"
-	limit = 4
-	wages = PAY_DOCTORATE
-
-	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_lhan = list(/obj/item/storage/toolbox/electrical/mechanic_spawn)
-	slot_glov = list(/obj/item/clothing/gloves/yellow)
-	slot_poc1 = list(/obj/item/device/pda2/mechanic)
-	slot_ears = list(/obj/item/device/radio/headset/mechanic)
-
-	New()
-		..()
-		src.access = get_access("Mechanic")
-		return
-
 /datum/job/engineering/engineer
 	name = "Engineer"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 4
-#else
-	limit = 5
-#endif
+	limit = 8
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/engineer)
+	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
@@ -1729,6 +1706,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 #elif defined(MAP_OVERRIDE_OSHAN)
 	limit = 1
 	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
+	limit = 1
+	special_spawn_location = null
 #else
 	limit = 1
 	special_spawn_location = LANDMARK_RADIO_SHOW_HOST
@@ -2044,7 +2024,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
 	slot_foot = list(/obj/item/clothing/shoes/brown)

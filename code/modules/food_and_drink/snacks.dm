@@ -183,21 +183,20 @@
 				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
 			..()
 
-	throw_impact(M)
-		..()
-		if (!sharpened || isnull(M))
-			return
-		if (sliced)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+	throw_impact(atom/A)
+		if (!sharpened || isnull(A) || !sliced)
+			..()
+		else
+			if (iscarbon(A))
+				var/mob/living/carbon/human/H = A
 				H.implant.Add(src)
-				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				src.visible_message("<span class='alert'>[src] gets embedded in [H]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
-				src.set_loc(M)
-				src.transfer_all_reagents(M)
-			random_brute_damage(M, 11)
-			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
+				src.set_loc(H)
+				src.transfer_all_reagents(H)
+			random_brute_damage(A, 11)
+			take_bleeding_damage(A, null, 25, DAMAGE_STAB)
 
 	proc/add_topping(var/num)
 		var/icon/I
@@ -827,7 +826,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			random_brute_damage(M, 3)
 			take_bleeding_damage(M, null, 0, DAMAGE_STAB, 0)
 			bleed(M, 3, 1)
-			M.emote("scream")
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1046,7 +1044,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					M.changeStatus("weakened", 4 SECONDS)
 				if(6 to 10)
 					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
-					M.emote("scream")
 					M.emote("sneeze")
 					M.changeStatus("weakened", 4 SECONDS)
 					SPAWN(0)
@@ -2212,7 +2209,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	var/obj/item/wrapped = null
-	var/maximum_wrapped_size = 2
+	var/maximum_wrapped_size = W_CLASS_SMALL
 	food_effects = list("food_energized")
 
 	attackby(obj/item/W, mob/user)
@@ -2342,7 +2339,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
 		random_brute_damage(M, 2)
-		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/pickle
 	name = "pickle"
