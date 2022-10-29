@@ -92,7 +92,11 @@ Custom Books
 	quartermaster
 		name = "Cargo Pocket Guide"
 		icon_state = "cargoguide"
+#ifdef MAP_OVERRIDE_NADIR
+		file_path = "strings/books/cargo_pocket_guide_nadir.txt"
+#else
 		file_path = "strings/books/cargo_pocket_guide.txt"
+#endif
 
 /****MatSci and Mining****/
 
