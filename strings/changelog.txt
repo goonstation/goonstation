@@ -1,5 +1,9 @@
 
 (t)sat oct 29 22
+(u)Kubius
+(p)11642
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's listening post has been overhauled and reflavored. It has moved to the southwest of its predecessor.
 (u)DrWolfy
 (p)11666
 (e)🆕💅|C-Feature, C-QoL
