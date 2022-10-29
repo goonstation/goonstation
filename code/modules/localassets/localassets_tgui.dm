@@ -51,13 +51,15 @@
 /// Fontawesome assets
 /datum/asset/basic/fontawesome
 	local_assets = list(
-		"all.min.css",
+		"fa-all.min.css",
 		"fa-regular-400.eot",
-		"fa-regular-400.woff",
+		"fa-regular-400.ttf",
 		"fa-solid-900.eot",
-		"fa-solid-900.woff"
+		"fa-solid-900.ttf"
 	)
 
-	url_map = list(
-		"all.min.css" = "http://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css"
-	)
+	init()
+		. = ..()
+		url_map = list(
+			"fa-all.min.css" = "[resource("css/tgui/fa-all.min.css")]"
+		)
