@@ -488,7 +488,7 @@
 	//by default we just walk somewhere
 	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
 	if (flockValidEnemy(target))
-		if (is_incapacitated(target))
+		if (ismob(target) && is_incapacitated(target))
 			task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 		else
 			task_type = /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
