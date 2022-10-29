@@ -138,6 +138,7 @@
 		return
 	logTheThing(LOG_GAMEMODE, src, "Flock relay[src.flock ? " belonging to flock [src.flock.name]" : ""] unleashes the signal, exploding at [log_loc(src)].")
 	src.finished = TRUE
+	src.flock.relay_finished = TRUE
 	processing_items -= src
 	var/turf/location = get_turf(src)
 	overlays += "structure-relay-sparks"

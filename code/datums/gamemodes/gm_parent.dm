@@ -194,6 +194,15 @@
 									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
 									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
 
+							if (flock.relay_finished)
+								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
+								boutput(flock.flockmind_mind.current, "success")
+								var/time = world.time
+								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
+									if (time - flocktrace.creation_time >= 1 SECOND)
+										flocktrace.unlock_medal("To the stars", TRUE)
+										boutput(flocktrace.mind.current, "success")
+
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES
 					if (istype(objective, /datum/objective/crew)) continue

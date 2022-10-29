@@ -10,9 +10,13 @@
 
 	compute = -FLOCKTRACE_COMPUTE_COST //it is expensive to run more threads
 
+	var/creation_time = 0
+
 	var/dying = FALSE
 
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
+	src.creation_time = world.time
+
 	if (free)
 		src.compute = 0
 	..(loc)
