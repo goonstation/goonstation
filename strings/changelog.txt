@@ -1,5 +1,9 @@
 
 (t)sat oct 29 22
+(u)DrWolfy
+(p)11666
+(e)🆕💅|C-Feature, C-QoL
+(+)Hyposprays and menders can now refill from reagent dispensers (foamtanks, welding tanks, etc)
 (u)Kubius
 (p)11578
 (e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
