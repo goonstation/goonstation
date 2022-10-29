@@ -148,10 +148,6 @@
 		poltergeists = null
 		..()
 
-	Stat()
-		..()
-		stat("Health:", src.health)
-
 	Life(parent)
 		if (..(parent))
 			return 1
