@@ -530,12 +530,10 @@ datum
 												human_host.visible_message("<span class='alert'>[human_host]'s head suddenly explodes in a shower of gore! Some horrific space slug jumps out of the horrible mess.</span>", "<span class='alert'>You leave [human_host]'s head in a delightfully horrific manner.</span>")
 											//Cleanup
 											if (human_host)
-												human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 												human_host.slug = null
 											if (animal_host)
-												animal_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-												animal_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 												animal_host.slug = null
+											host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 											host.death()
 
 

@@ -48,9 +48,6 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 		spawn(7 SECONDS)
 			C?.RemoveComponent(/datum/component/floor_slime)
 
-
-
-
 /datum/targetable/brain_slug/infest_host
 	name = "Infest a host"
 	desc = "Enter the body of a living animal host or a freshly dead human."
@@ -145,15 +142,13 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 		if (istype(current_target, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/T = current_target
 			T.slug = the_slug
-			T.addAbility(/datum/targetable/brain_slug/exit_host)
-			T.addAbility(/datum/targetable/brain_slug/infest_host)
+			T.add_basic_slug_abilities()
+
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
 			T.slug = the_slug
-			var/datum/abilityHolder/brain_slug/AH = current_target.add_ability_holder(/datum/abilityHolder/brain_slug)
-			AH.addAbility(/datum/targetable/brain_slug/exit_host)
-			AH.addAbility(/datum/targetable/brain_slug/infest_host)
-			AH.addAbility(/datum/targetable/brain_slug/spit_slime)
+			T.add_advanced_slug_abilities()
+
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
 
@@ -162,12 +157,10 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 			if(istype(caster, /mob/living/critter/small_animal))
 				var/mob/living/critter/small_animal/old_host = caster
 				old_host.slug = null
-				old_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-				old_host.removeAbility(/datum/targetable/brain_slug/infest_host)
 			if(istype(caster, /mob/living/carbon/human))
 				var/mob/living/carbon/human/old_host = caster
 				old_host.slug = null
-				old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
+			caster.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			spawn(5 SECONDS)
 				caster?.death()
 
@@ -204,8 +197,7 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 			//Dont immediately infest something again.
 			var/datum/targetable/ability = caster.slug.abilityHolder.getAbility(/datum/targetable/brain_slug/infest_host)
 			ability.doCooldown()
-			caster.removeAbility(/datum/targetable/brain_slug/exit_host)
-			caster.removeAbility(/datum/targetable/brain_slug/infest_host)
+			caster.remove_ability_holder(/datum/abilityHolder/brain_slug)
 			caster.slug = null
 			spawn(5 SECONDS)	//It doesnt have much of a brain anymore
 				caster?.death()
@@ -245,12 +237,10 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 				if (ishuman(containing_mob))
 					var/mob/living/carbon/human/old_host = containing_mob
 					old_host.slug = null
-					old_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				if (istype(containing_mob, /mob/living/critter/small_animal))
 					var/mob/living/critter/small_animal/old_host = containing_mob
 					old_host.slug = null
-					old_host.removeAbility(/datum/targetable/brain_slug/exit_host)
-					old_host.removeAbility(/datum/targetable/brain_slug/infest_host)
+				containing_mob.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				return FALSE
 			else
 				boutput(the_slug, "<span class='notice'>You aren't in a host!</span>")

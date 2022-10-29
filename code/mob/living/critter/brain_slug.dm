@@ -64,3 +64,34 @@
 			host.removeAbility(/datum/targetable/brain_slug/exit_host)
 			host.removeAbility(/datum/targetable/brain_slug/infest_host)
 		. = ..()
+
+///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
+/mob/living/proc/add_basic_slug_abilities()
+	var/datum/abilityHolder/AH = null
+	//Check if they already have a brain slug holder
+	if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
+		AH = src.abilityHolder
+	else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
+		var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
+		for (var/datum/holder in composite_holder.holders)
+			if (istype(holder, /datum/abilityHolder/brain_slug))
+				AH = holder
+	//If they do not, give them one
+	if (!AH)
+		AH = src.add_ability_holder(/datum/abilityHolder/brain_slug)
+
+	//Set the points to a lower amount if they are a critter
+	if (istype(src, /mob/living/critter/small_animal))
+		AH.points = 350
+
+	//Then add the abilities
+	AH.addAbility(/datum/targetable/brain_slug/exit_host)
+	AH.addAbility(/datum/targetable/brain_slug/infest_host)
+	return AH
+
+///Gives a brain slug host dangerous abilities. Used on humans.
+/mob/living/proc/add_advanced_slug_abilities()
+	var/datum/abilityHolder/AH = null
+	AH = src.add_basic_slug_abilities()
+	if (AH)
+		AH.addAbility(/datum/targetable/brain_slug/spit_slime)
