@@ -487,7 +487,7 @@
 		return
 	//by default we just walk somewhere
 	var/task_type = /datum/aiTask/sequence/goalbased/flock/build/targetable
-	if (ismob(target) && !isflockmob(target))
+	if (flockValidEnemy(target))
 		if (is_incapacitated(target))
 			task_type = /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/targetable
 		else

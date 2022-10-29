@@ -418,14 +418,14 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/repair/valid_target(mob/living/critter/flock/target)
 	var/mob/living/critter/flock/drone/drone = holder.owner
-	return target.flock == drone.flock
+	return target.flock == drone.flock && !isdead(drone)
 
 /datum/aiTask/sequence/goalbased/flock/repair/get_targets()
 	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(F.get_health_percentage() < 0.66 && !isdead(F))
+		if(src.valid_target(F) && F.get_health_percentage() < 0.66)
 			. += F
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
@@ -1364,7 +1364,7 @@ stare
 	switched_to()
 		..()
 		on_reset()
-		if (!(ismob(src.target) || iscritter(src.target) || isvehicle(src.target)) || isflockmob(src.target))
+		if (!flockValidEnemy(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid elimination target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
