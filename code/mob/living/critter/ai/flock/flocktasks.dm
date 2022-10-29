@@ -442,8 +442,7 @@ stare
 
 /datum/aiTask/succeedable/repair/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0)
+	if(!F || !holder.target || BOUNDS_DIST(holder.target, F) > 0)
 		return TRUE
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return TRUE
@@ -454,19 +453,19 @@ stare
 /datum/aiTask/succeedable/repair/on_tick()
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
-		var/mob/living/critter/flock/drone/T = holder.target
-		if(F && F.floorrunning)
+		if(F?.floorrunning)
 			F.end_floorrunning(TRUE)
-		if(T && T.floorrunning)
-			T.end_floorrunning(TRUE)
-		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+		if (isflockmob(holder.target))
+			var/mob/living/critter/flock/drone/T = holder.target
+			if(T?.floorrunning)
+				T.end_floorrunning(TRUE)
+		if(F && holder.target && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
-				F.hand_attack(T)
+				F.hand_attack(holder.target)
 				has_started = TRUE
 
 /datum/aiTask/succeedable/repair/on_reset()
-	..()
 	has_started = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
