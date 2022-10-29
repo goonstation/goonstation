@@ -491,14 +491,14 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/flock/deposit/valid_target(var/obj/flock_structure/ghost/target)
+/datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
 	var/mob/living/critter/flock/drone/F = holder.owner
 	return target.flock == F.flock && target.goal > target.currentmats
 
 /datum/aiTask/sequence/goalbased/flock/deposit/get_targets()
 	. = list()
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
-		if (valid_target(O) && IN_RANGE(holder.owner, O, max_dist))
+		if (src.valid_target(O) && IN_RANGE(holder.owner, O, max_dist))
 			. += O
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
@@ -694,7 +694,7 @@ stare
 	else
 		return FALSE // can't harvest anyway, if not a flockdrone
 
-/datum/aiTask/sequence/goalbased/flock/harvest/valid_target(var/obj/item/I)
+/datum/aiTask/sequence/goalbased/flock/harvest/valid_target(obj/item/I)
 	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/game_kit)
 
 /datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
@@ -1312,7 +1312,7 @@ stare
 	switched_to()
 		..()
 		on_reset()
-		if (!valid_target(holder.target))
+		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid deposit target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
@@ -1331,7 +1331,7 @@ stare
 	switched_to()
 		..()
 		on_reset()
-		if (!valid_target(holder.target))
+		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid repair target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
@@ -1350,7 +1350,7 @@ stare
 	switched_to()
 		..()
 		on_reset()
-		if (!valid_target(holder.target))
+		if (!src.valid_target(holder.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid harvest target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
