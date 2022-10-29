@@ -1027,6 +1027,12 @@
 	is_syndicate = TRUE
 	var/delimb_prob = 1
 	custom_suicide = 1
+/obj/item/swords/attack_self(mob/user)
+	. = ..()
+	for(var/obj/item/swords_sheaths/steath in user) //this working with chest items is intented according to my balance tests its ok its also funny
+		if(!steath.sword_inside && istype(src, steath.sword_path))
+			steath.Attackby(src,user)
+			break
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1269,11 +1275,9 @@
 		else
 			return ..()
 
-	attack_self(mob/living/carbon/human/user as mob)
-		if(user.r_hand == src || user.l_hand == src)
-			draw_sword(user)
-		else
-			return ..()
+	attack_self(mob/living/carbon/human/user)
+		. = ..()
+		draw_sword(user)
 
 	attackby(obj/item/W, mob/user)
 		if (!istype(W, sword_path))
