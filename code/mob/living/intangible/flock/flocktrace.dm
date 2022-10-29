@@ -15,7 +15,7 @@
 	var/dying = FALSE
 
 /mob/living/intangible/flock/trace/New(atom/loc, datum/flock/F, free = FALSE)
-	src.creation_time = world.time
+	src.creation_time = TIME
 
 	if (free)
 		src.compute = 0
