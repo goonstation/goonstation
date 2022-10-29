@@ -152,8 +152,7 @@
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
 		if (isflockmob(user))
-			var/mob/living/critter/flock/flock_creature = user
-			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
+			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
