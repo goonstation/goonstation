@@ -256,15 +256,3 @@ ABSTRACT_TYPE(/datum/material_property)
 		M.removeTrigger(M.triggersOnAdd, /datum/materialProc/n_radioactive_add)
 		M.removeTrigger(M.triggersOnRemove, /datum/materialProc/n_radioactive_remove)
 		return
-/datum/material_property/resonance // Just for molitz, not used for anything else and doubt it will be. Could tie instance boosts to resonance and give other mats resonance for purposes of being good to alloy with molitz.
-	name = "Resonance"
-	id = "resonance"
-	min_value = 1
-	max_value = 1
-	default_value = 0
-
-	prefix_high_min = 1
-	prefix_low_max = 1
-
-	getAdjective(var/datum/material/M)
-		return "harmonic"
