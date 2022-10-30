@@ -10,7 +10,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/needfork = 0
 	var/needspoon = 0
 	/// Color for various food items
-	var/food_color = null 
+	var/food_color = null
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -787,6 +787,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
+			for(var/obj/O in src.loc)
+				if(istype(O,/obj/surgery_tray))
+					var/obj/surgery_tray/target_tray = O
+					target_tray.attach(S)
+
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
 
