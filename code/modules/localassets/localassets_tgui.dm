@@ -61,9 +61,9 @@
 	init()
 		. = ..()
 		url_map = list(
-			"fa-regular-400.eot"	= "[resource("css/fonts/fa-all.min.css")]",
-			"fa-regular-400.ttf"	= "[resource("css/fonts/fa-all.min.css")]",
-			"fa-solid-900.eot"		= "[resource("css/fonts/fa-all.min.css")]",
-			"fa-solid-900.ttf"		= "[resource("css/fonts/fa-all.min.css")]",
+			"fa-regular-400.eot"	= "[resource("css/tgui/fa-all.min.css")]",
+			"fa-regular-400.ttf"	= "[resource("css/tgui/fa-all.min.css")]",
+			"fa-solid-900.eot"		= "[resource("css/tgui/fa-all.min.css")]",
+			"fa-solid-900.ttf"		= "[resource("css/tgui/fa-all.min.css")]",
 			"fa-all.min.css"		= "[resource("css/tgui/fa-all.min.css")]",
 		)
