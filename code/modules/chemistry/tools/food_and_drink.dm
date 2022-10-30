@@ -787,11 +787,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
-			for(var/obj/O in src.loc)
-				if(istype(O,/obj/surgery_tray))
-					var/obj/surgery_tray/target_tray = O
-					target_tray.attach(S)
-					break
+			for(var/obj/surgery_tray/target_tray in src.loc)
+				target_tray.attach(S)
+				break
 
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
