@@ -82,7 +82,7 @@ export const BarcodeComputer = (props, context) => {
               <Box align="center">
                 <IDCard card={card} act={act} />
                 <br />
-                {card ? `Account balance: $${card.balance}` : null}
+                {card ? `Account balance: ${card.balance}⪽` : null}
               </Box>
             </Section>
           </Stack.Item>
