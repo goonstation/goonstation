@@ -499,7 +499,7 @@
 		task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable
 	else if (istype(target, /obj/flock_structure) || isfeathertile(target))
 		task_type = /datum/aiTask/sequence/goalbased/flock/rally
-	else if (isflockmob(target) && !isintangible(target))
+	else if (istype(target, /mob/living/critter/flock))
 		var/mob/living/critter/flock/mob = target
 		if (isalive(mob))
 			task_type = /datum/aiTask/sequence/goalbased/flock/repair/targetable

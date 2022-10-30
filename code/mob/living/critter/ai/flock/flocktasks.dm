@@ -455,7 +455,7 @@ stare
 		var/mob/living/critter/flock/drone/F = holder.owner
 		if(F?.floorrunning)
 			F.end_floorrunning(TRUE)
-		if (isflockmob(holder.target))
+		if (istype(holder.target, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/T = holder.target
 			if(T?.floorrunning)
 				T.end_floorrunning(TRUE)
@@ -996,7 +996,7 @@ stare
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner || F.butcherer)
 			continue
-		if(valid_target(F))
+		if(src.valid_target(F))
 			. += F
 	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
