@@ -81,7 +81,7 @@ export const SpendSpacebux = (_props, context) => {
                 <Flex direction="row" align="center">
                   <Flex.Item grow={1}>
                     <Box>
-                      Balance: ${balance}⪽
+                      Balance: {balance}⪽
                     </Box>
                   </Flex.Item>
                   <Flex.Item>
