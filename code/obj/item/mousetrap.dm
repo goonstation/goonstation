@@ -315,7 +315,7 @@
 			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
 			P.gib()
 
-		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin)) //The admin mouse fears not your puny attempt to squish it.
+		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && src.armed) //The admin mouse fears not your puny attempt to squish it.
 			AM.visible_message("<span class='alert'>[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life.</span>")
 			new/obj/effect/supplyexplosion(src.loc)
 			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)

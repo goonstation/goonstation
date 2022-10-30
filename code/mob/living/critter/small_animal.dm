@@ -234,13 +234,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 2
 
 /mob/living/critter/small_animal/mouse/mad
-	ai_type = /datum/aiHolder/mouse_mad
-	var/obj/machinery/wraith/rat_den/linked_den = null	//for mice spawned by plaguerat dens
-
-	death()
-		if(linked_den.linked_critters > 0)
-			linked_den.linked_critters--
-		..()
+	ai_type = /datum/aiHolder/mouse/mad
 
 	seek_target(range)
 		. = list()
@@ -261,6 +255,14 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				bleed(H, rand(5,8), 5)
 				H.contract_disease(pick(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker), null, null, 1)
 
+//for mice spawned by plaguerat dens
+/mob/living/critter/small_animal/mouse/mad/rat_den
+	var/obj/machinery/wraith/rat_den/linked_den = null
+
+	death()
+		if(linked_den.linked_critters > 0)
+			linked_den.linked_critters--
+		..()
 /* -------------------- Remy -------------------- */
 
 /mob/living/critter/small_animal/mouse/remy
