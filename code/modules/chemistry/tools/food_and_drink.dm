@@ -791,6 +791,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if(istype(O,/obj/surgery_tray))
 					var/obj/surgery_tray/target_tray = O
 					target_tray.attach(S)
+					break
 
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
