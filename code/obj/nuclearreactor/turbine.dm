@@ -23,6 +23,7 @@
 	var/net_id = null
 	var/lastgen = 0
 	dir = EAST
+	custom_suicide = TRUE
 
 	var/stator_load = 10000
 	var/RPM = 0
@@ -165,3 +166,31 @@
 			src.network2?.update = TRUE
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"rpm=[src.RPM]&power=[src.lastgen]")
 
+	suicide(mob/user)
+		user.visible_message("<span class='alert'><b>[user] puts their head into blades of \the [src]!</b></span>")
+		switch(src.RPM)
+			if(0 to 1)
+				SPAWN(1 SECOND) //little delay for comedic effect
+					user.visible_message("<span class='alert'>...but the blades of \the [src] aren't moving, so [user] just looks like an idiot.</span>")
+				return FALSE
+			if(0 to 60)
+				user.visible_message("<span class='alert'>...but the blades of \the [src] are barely moving, so [user] just recieves a bonk on the head.</span>")
+				user.TakeDamageAccountArmor("head", ceil(src.RPM/6), 0, 0, DAMAGE_BLUNT)
+				user.changeStatus("stunned", 3 SECONDS)
+				return FALSE
+			if(60 to 100)
+				user.visible_message("<span class='alert'><b>The blades of \the [src] hit [user] with some force, giving them a nasty cut.</b></span>")
+				user.TakeDamageAccountArmor("head", src.RPM, 0, 0, DAMAGE_STAB)
+				user.changeStatus("stunned", 6 SECONDS)
+				user.changeStatus("weakened", 3 SECONDS)
+				return FALSE
+			if(100 to INFINITY)
+				user.visible_message("<span class='alert'><b>The blades of \the [src] decapitate [user] instantly!</b></span>")
+				if(isliving(user))
+					var/mob/living/suicider = user
+					var/obj/item/organ/head = suicider.organHolder.drop_organ("head")
+					head.splat(get_turf(user))
+					qdel(head)
+				else
+					user.TakeDamage("head", 200, 0, 0, DAMAGE_CRUSH)
+				return TRUE
