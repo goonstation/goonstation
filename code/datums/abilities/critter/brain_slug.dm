@@ -428,5 +428,5 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		var/obj/brain_slug/acidic_goo_ball = new /obj/brain_slug/acidic_goo_ball()
 		acidic_goo_ball.set_loc(holder.owner.loc)
 		acidic_goo_ball.throw_at(target, 5, 2)
-		holder.owner.visible_message("<span class='alert'>[holder.owner] spits out a glob of face melting acid at [target]!</span>")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] spits out a glob of skin-melting acid at [target]!</span>")
 		return FALSE

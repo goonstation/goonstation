@@ -7,7 +7,7 @@
 	anchored = 0
 	density = 0
 	_health = 30
-	var/acidic_range = 4
+	var/acidic_range = 1
 	var/mob/linked_mob = null
 	var/next_spawn_check = 10 SECONDS
 	var/acidify_duration = 20 SECONDS
