@@ -47280,8 +47280,7 @@
 	dir = 1;
 	name = "N APC";
 	noalerts = 1;
-	pixel_y = 24;
-	start_charge = 12
+	pixel_y = 24
 	},
 /obj/cable{
 	d2 = 8;
