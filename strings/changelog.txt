@@ -1,5 +1,9 @@
 
 (t)sat oct 29 22
+(u)Ikea
+(p)11260
+(e)🪲⚖🔊💨|C-Bug, C-Balance, C-Sound, A-Atmospherics
+(*)Molitz crystals now come with unique examination text relating to how much gas is left inside of them
 (u)pali
 (p)8395
 (e)|
