@@ -1,4 +1,9 @@
 
+(t)sun oct 30 22
+(u)Kubius
+(p)11701
+(e)🆕|C-Feature
+(+)Filling bowls of soup on trays, including kitchen islands, should no longer detach the bowl from the tray.
 (t)sat oct 29 22
 (u)Ikea
 (p)11260
