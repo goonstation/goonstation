@@ -24479,8 +24479,7 @@
 /area/station/solar/east)
 "bHb" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/plating,
@@ -29725,8 +29724,7 @@
 	},
 /obj/machinery/vending/monkey/kitchen,
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/specialroom/freezer{
 	nitrogen = 105.86;
@@ -31532,7 +31530,6 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/shrub,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/substation/north)
 "hbK" = (
