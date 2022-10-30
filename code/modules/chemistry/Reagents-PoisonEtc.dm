@@ -997,6 +997,15 @@ datum
 					var/do_an_ouch = TRUE
 
 					damage2deal = round(damage2deal)
+
+					//changelings don't take damage, but they do get a bit liquefied if they're wandering around
+					if(H && ischangeling(H))
+						if(damage2deal >= 5 && !H.disfigured && !H.wear_mask && !H.head)
+							boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
+						return
+
 					if(damage2deal >= 5) //scream and face melty
 						if(H)
 							if(do_an_ouch)
@@ -1020,6 +1029,12 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/blocked = FALSE
 							if (!H.wear_mask && !H.head)
+								if(ischangeling(H)) //disfigures you, but doesn't harm you. make sure to scream to play along
+									if(!H.disfigured)
+										boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+										H.disfigured = TRUE
+										H.UpdateName()
+									return
 								H.TakeDamage("head", 0, clamp((volume - 5), 8, 50), 0, DAMAGE_BURN)
 								H.emote("scream")
 								if(!H.disfigured)
@@ -1051,7 +1066,7 @@ datum
 
 								if (blocked)
 									return
-						else
+						else if(!ischangeling(M))
 							random_brute_damage(M, min(15,volume))
 					else if (volume >= 6)
 						M.emote("scream")
