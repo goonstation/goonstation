@@ -33222,6 +33222,15 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/arcade/dungeon)
+"qkW" = (
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/decal/poster/wallsign/keep_it_or_melt{
+	pixel_y = 28
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/station/hallway/primary/southeast)
 "qli" = (
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
@@ -44048,9 +44057,6 @@
 /obj/disposalpipe/switch_junction/right/west{
 	mail_tag = "QM";
 	name = "QM mail junction"
-	},
-/obj/decal/poster/wallsign/keep_it_or_melt{
-	pixel_y = 28
 	},
 /turf/simulated/floor/purpleblack{
 	dir = 1
@@ -96806,7 +96812,7 @@ fsX
 xAL
 tHl
 sOU
-huy
+qkW
 fdg
 dqX
 whK
