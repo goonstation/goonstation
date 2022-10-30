@@ -1543,6 +1543,14 @@ ABSTRACT_TYPE(/obj/item/clothing/head/barrette)
 		name = "gold barrettes"
 		icon_state = "barrette-gold"
 		item_state = "barrette-gold"
+	black
+		name = "black barrettes"
+		icon_state = "barrette-black"
+		item_state = "barrette-black"
+	silver
+		name = "silver barrettes"
+		icon_state = "barrette-silver"
+		item_state = "barrette-silver"
 
 // HAIRBOWS (jan.antilles loves you)
 

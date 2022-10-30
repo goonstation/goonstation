@@ -633,6 +633,7 @@
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
+	throwforce = 0
 
 //0.40
 /obj/item/ammo/bullets/blow_darts

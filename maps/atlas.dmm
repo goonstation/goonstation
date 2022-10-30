@@ -610,17 +610,20 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/central)
 "bv" = (
-/obj/machinery/firealarm{
-	pixel_y = 25
-	},
 /obj/machinery/plantpot,
+/obj/disposalpipe/trunk,
+/obj/machinery/disposal/small{
+	dir = 1;
+	pixel_y = 32
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "bw" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
 /obj/machinery/plantpot,
+/obj/disposalpipe/segment{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "bx" = (
@@ -7041,17 +7044,12 @@
 	dir = 1;
 	pixel_y = 32
 	},
-/obj/disposalpipe/trunk,
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "ro" = (
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "rp" = (
-/obj/disposalpipe/segment{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
 /obj/landmark/start{
 	name = "Botanist"
 	},
@@ -8310,7 +8308,11 @@
 	},
 /area/station/hallway/primary/north)
 "tU" = (
-/obj/disposalpipe/segment,
+/obj/machinery/plantpot,
+/obj/machinery/firealarm{
+	dir = 8;
+	pixel_x = -24
+	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
 "tV" = (
@@ -66498,7 +66500,7 @@ lU
 nz
 or
 qK
-qp
+tU
 ro
 sz
 uR
@@ -67103,7 +67105,7 @@ kM
 qo
 qK
 rn
-tU
+ro
 rp
 xO
 tO
