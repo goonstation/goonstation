@@ -243,7 +243,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\_wearertargeting.dm"
 #include "code\datums\components\analyzable.dm"
 #include "code\datums\components\arable.dm"
-#include "code\datums\components\autofill.dm"
+#include "code\datums\components\auto_reagent.dm"
 #include "code\datums\components\barber.dm"
 #include "code\datums\components\baseball_bat_reflect.dm"
 #include "code\datums\components\battleroyale_death.dm"

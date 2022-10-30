@@ -12,7 +12,6 @@ TYPEINFO(/datum/component/auto_reagent)
 	/// Number of reagents to produce per item process
 	var/units = 10
 	var/overflowing = FALSE
-	var/_added_to_items_processing = FALSE
 
 	Initialize(reagent_id=null, units=10, overflowing=FALSE)
 		if(!istype(parent,/atom))
@@ -23,44 +22,26 @@ TYPEINFO(/datum/component/auto_reagent)
 		src.overflowing = overflowing
 
 		if(!istext(src.reagent_id) || isnull(reagents_cache[src.reagent_id]))
-			return
+			return COMPONENT_INCOMPATIBLE
 		if(src.units <= 0)
-			return
+			return COMPONENT_INCOMPATIBLE
 
 		if(src.overflowing)
 			RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
+		global.processing_items.Add(src)
 
-		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
-			if(!(parent in global.processing_items))
-				global.processing_items.Add(parent)
-				src._added_to_items_processing = TRUE
-		else if(isliving(parent))
-			RegisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK), .proc/ticked)
-		else
-			global.processing_items.Add(src) //gross - in the event that this component is put on something that isn't an item, use the item processing loop anyway
+	UnregisterFromParent()
+		. = ..()
+		global.processing_items.Remove(src)
+		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 
+	/// Called every item process tick, handles adding additional reagent units and overflowing when applicable.
 	proc/process()
 		if(QDELETED(parent))
 			global.processing_items.Remove(src)
 			return
-		ticked(parent)
 
-	UnregisterFromParent()
-		. = ..()
-		if(src._added_to_items_processing)
-			global.processing_items.Remove(parent)
-		global.processing_items.Remove(src)
-		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
-		if(isitem(parent))
-			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
-		else if(ismob(parent))
-			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
-
-	/// Called every item process tick, handles adding additional reagent units and overflowing when applicable.
-	proc/ticked(atom/owner, mult=1)
 		var/atom/PA = parent
-
 		var/datum/reagents/R = new()
 		R.maximum_volume = src.units
 		R.add_reagent(src.reagent_id, src.units)
