@@ -543,6 +543,7 @@
 	name = "Blade of Light"
 	desc = "A knife made out of pure light. Now thats what I call blind faith"
 	item_state = "chap_dagger"
+	icon_state = "chap_dagger"
 	force = 14
 	throwforce = 18
 	stamina_cost = 5
@@ -550,6 +551,7 @@
 
 	New()
 		..()
+		src.AddComponent(/datum/component/holdertargeting/light, r = 0.94, g = 0.69, b = 0.27, height = 1)
 		setProperty("movespeed", -0.4)
 		SPAWN(0)
 			icon_state = "chap_knife_1"
