@@ -120,6 +120,7 @@
 
 	var/rand_pos = 0
 	var/obj/item/holding = null
+	var/obj/surgery_tray/paired_tray = null
 	var/rarity = ITEM_RARITY_COMMON // Just a little thing to indicate item rarity. RPG fluff.
 	pressure_resistance = 50
 	var/obj/item/master = null

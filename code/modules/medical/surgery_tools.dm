@@ -1505,6 +1505,7 @@ keeping this here because I want to make something else with it eventually
 		else if (istype(I, /obj/item/mechanics) || istype(I, /obj/item/storage/mechanics))
 			return
 		src.attached_objs.Add(I) // attach the item to the table
+		I.paired_tray = src
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
@@ -1512,6 +1513,7 @@ keeping this here because I want to make something else with it eventually
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)
+		I.paired_tray = null
 		UnregisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING))
 
 	attack_hand(mob/user)
