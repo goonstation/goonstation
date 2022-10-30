@@ -950,8 +950,9 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(1 * mult)
-				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
+				if(!ischangeling(M))
+					M.take_toxin_damage(1 * mult)
+					M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 
@@ -1068,7 +1069,7 @@ datum
 									return
 						else if(!ischangeling(M))
 							random_brute_damage(M, min(15,volume))
-					else if (volume >= 6)
+					else if (volume >= 6 && !ischangeling(M))
 						M.emote("scream")
 						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
