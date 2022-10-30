@@ -24,6 +24,7 @@
 	density = TRUE
 	mat_changename = FALSE
 	dir = EAST
+	custom_suicide = TRUE
 	var/list/obj/item/reactor_component/component_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	var/list/list/datum/neutron/flux_grid[REACTOR_GRID_WIDTH][REACTOR_GRID_HEIGHT]
 	var/radiationLevel = 0
@@ -428,6 +429,40 @@
 					if(src.component_grid[x][y] == A)
 						src.component_grid[x][y] = null
 						break
+
+	suicide(mob/user)
+		var/list/free_slots = list()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y] == null)
+					free_slots += list(list(x,y))
+		if(length(free_slots))
+			user.visible_message("<span class='alert'><b>[user] climbs into \the [src] and starts forcing [his_or_her(user)] body down into a channel!</b></span>")
+			var/list/chosen_slot = pick(free_slots)
+			user.set_loc(src)
+			SPAWN(1 SECOND)
+				playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				user.emote("scream")
+			SPAWN(2.5 SECONDS)
+				playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				user.emote("scream")
+			SPAWN(4 SECONDS)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
+				meat_rod.material.name = user.name
+				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
+					meat_rod.material.setProperty("radioactive", 3)
+				meat_rod.setMaterial(meat_rod.material)
+				src.component_grid[chosen_slot[1]][chosen_slot[2]] = meat_rod //hehe
+				user.visible_message("<span class='alert'><b>The bits of [user] that didn't fit spray everywhere!</b></span>")
+				user.set_loc(get_turf(src))
+				user.gib()
+			return TRUE
+		else
+			user.visible_message("<span class='alert'>[user] tries to climb into \the [src], but it's full. What a moron!</span>")
+			return FALSE
+
+
 
 /datum/neutron //this is literally just a tuple
 	var/dir = NORTH

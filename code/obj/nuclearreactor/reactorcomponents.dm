@@ -142,7 +142,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 //Fuel rod
 /obj/item/reactor_component/fuel_rod
 	name = "fuel rod"
-	desc = "A fuel rod for a nuclear reactor"
+	desc = "A fuel rod for a nuclear reactor."
 	icon_state_inserted = "fuel"
 	neutron_cross_section = 1.0
 	thermal_cross_section = 0.02
@@ -154,7 +154,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 //Control rod
 /obj/item/reactor_component/control_rod
 	name = "control rod"
-	desc = "A control rod assembly for a nuclear reactor"
+	desc = "A control rod assembly for a nuclear reactor."
 	icon_state_inserted = "control"
 	neutron_cross_section = 1.0 //essentially *actual* insertion level
 	var/configured_insertion_level = 1.0 //target insertion level
@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 //Heat exchanger
 /obj/item/reactor_component/heat_exchanger
 	name = "heat exchanger"
-	desc = "A heat exchanger component for a nuclear reactor"
+	desc = "A heat exchanger component for a nuclear reactor."
 	icon_state_inserted = "heat"
 	thermal_cross_section = 0.4
 	neutron_cross_section = 0.1
@@ -187,7 +187,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 //Gas channel
 /obj/item/reactor_component/gas_channel
 	name = "gas channel"
-	desc = "A gas coolant channel component for a nuclear reactor"
+	desc = "A gas coolant channel component for a nuclear reactor."
 	icon_state_inserted = "gas"
 	thermal_cross_section = 0.05
 	var/gas_thermal_cross_section = 0.95
