@@ -261,7 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") >= 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else

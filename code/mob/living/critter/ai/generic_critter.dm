@@ -22,11 +22,6 @@
 	//transition_tasks += holder.get_instance(/datum/aiTask/timed/wander, list(holder, src))
 	//transition_tasks += holder.get_instance(/datum/aiTask/sequence/goalbased/critter/attack, list(holder, src))
 
-/datum/aiTask/prioritizer/critter/on_tick()
-	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		holder.stop_move()
-
 /datum/aiTask/prioritizer/critter/on_reset()
 	..()
 	holder.stop_move()
