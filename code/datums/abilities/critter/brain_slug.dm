@@ -18,10 +18,25 @@
 	topBarRendered = 1
 	rendered = 1
 	points = 700
+	var/infestation_count = 0
 	onAbilityStat()
 		..()
 		.= list()
 		.["Stability:"] = round(src.points)
+		.["Infestation:"] = round(src.infestation_count)
+
+/datum/abilityHolder/brain_slug_master
+	usesPoints = 1
+	regenRate = 0
+	pointName = "Infestation"
+	tabName = "Abilities"
+	topBarRendered = 1
+	rendered = 1
+	points = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Infestation:"] = round(src.points)
 
 ABSTRACT_TYPE(/datum/targetable/brain_slug)
 /datum/targetable/brain_slug
@@ -142,12 +157,13 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 		if (istype(current_target, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/T = current_target
 			T.slug = the_slug
-			T.add_basic_slug_abilities()
+			T.add_basic_slug_abilities(the_slug)
 
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
+			the_slug.abilityHolder.points ++
 			T.slug = the_slug
-			T.add_advanced_slug_abilities()
+			T.add_advanced_slug_abilities(the_slug)
 
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")

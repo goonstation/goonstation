@@ -12,10 +12,6 @@
 	pet_text = list("squishes","pokes","slaps","prods curiously")
 	speechverb_say = "whispers"
 	speechverb_exclaim = "squeals"
-	add_abilities = list(/datum/targetable/brain_slug/slither,
-						/datum/targetable/brain_slug/infest_host,
-						/datum/targetable/brain_slug/exit_host,
-						/datum/targetable/brain_slug/take_control)
 	can_throw = 0
 	can_grab = 0
 	can_disarm = 0
@@ -24,6 +20,11 @@
 	New(var/turf/T)
 		..(T)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		src.abilityHolder = new /datum/abilityHolder/brain_slug_master(src)
+		src.abilityHolder.addAbility(/datum/targetable/brain_slug/slither)
+		src.abilityHolder.addAbility(/datum/targetable/brain_slug/infest_host)
+		src.abilityHolder.addAbility(/datum/targetable/brain_slug/exit_host)
+		src.abilityHolder.addAbility(/datum/targetable/brain_slug/take_control)
 
 	setup_healths()
 		..()
@@ -66,8 +67,8 @@
 		. = ..()
 
 ///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
-/mob/living/proc/add_basic_slug_abilities()
-	var/datum/abilityHolder/AH = null
+/mob/living/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
+	var/datum/abilityHolder/brain_slug/AH = null
 	//Check if they already have a brain slug holder
 	if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
 		AH = src.abilityHolder
@@ -87,12 +88,17 @@
 	//Then add the abilities
 	AH.addAbility(/datum/targetable/brain_slug/exit_host)
 	AH.addAbility(/datum/targetable/brain_slug/infest_host)
+
+	//Then set the infestation count to the slug's to keep track
+	if (slug)
+		AH.infestation_count = slug.abilityHolder.points
+
 	return AH
 
 ///Gives a brain slug host dangerous abilities. Used on humans.
-/mob/living/proc/add_advanced_slug_abilities()
+/mob/living/proc/add_advanced_slug_abilities(var/mob/living/critter/brain_slug/the_slug = null)
 	var/datum/abilityHolder/AH = null
-	AH = src.add_basic_slug_abilities()
+	AH = src.add_basic_slug_abilities(the_slug)
 	if (AH)
 		AH.addAbility(/datum/targetable/brain_slug/spit_slime)
 		AH.addAbility(/datum/targetable/brain_slug/restraining_spit)
