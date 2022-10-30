@@ -52,9 +52,9 @@
 						H.visible_message("<span class='alert'>[H]'s shoes melt right off!</span>", "<span class='alert'>Your shoes melt instantly!</span>")
 				//Melt off faces
 				if (owner.lying)
-					random_burn_damage(owner, 9)
+					random_burn_damage(owner, 11)
 				else
-					random_burn_damage(owner, 6)
+					random_burn_damage(owner, 8)
 				playsound(owner, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
 
 		if (owner.bioHolder)

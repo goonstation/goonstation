@@ -415,7 +415,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 /datum/targetable/brain_slug/acidic_spit
 	name = "Acidic Spit"
 	desc = "Spew a stream of acidic spit at the ground, melting whoever stands in it."
-	icon_state = "slimteshot"
+	icon_state = "slimeshot"
 	cooldown = 60 SECONDS
 	targeted = 1
 	target_anything = 1
@@ -430,3 +430,22 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		acidic_goo_ball.throw_at(target, 5, 2)
 		holder.owner.visible_message("<span class='alert'>[holder.owner] spits out a glob of skin-melting acid at [target]!</span>")
 		return FALSE
+
+/datum/targetable/brain_slug/glue_spit
+	name = "Adhesive Spit"
+	desc = "Cover something in a glue-like substance and render it adhesive."
+	icon_state = "slimeshot"
+	cooldown = 40 SECONDS
+	targeted = 1
+	target_anything = 1
+	pointCost = 40
+
+	cast(atom/target)
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to restrain.</span>")
+			return TRUE
+		var/datum/reagents/temp_reagents = new /datum/reagents(15)
+		temp_reagents.add_reagent("spaceglue",15)
+		temp_reagents.reaction(target, TOUCH, 15)
+		qdel(temp_reagents)
+		boutput(holder.owner, "<span class='notice'>You drool some mucus on [target], making it unpleasantly sticky.</span>")
