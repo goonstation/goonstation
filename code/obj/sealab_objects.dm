@@ -266,7 +266,7 @@
 				for (var/mob/C in vehicle)
 					shake_camera(C, 3, 5)
 				break_apart()
-				return 1
+				return TRUE
 		return ..()
 
 /obj/nadir_doodad/sinkspires
