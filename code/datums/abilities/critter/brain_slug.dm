@@ -161,7 +161,8 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
-			the_slug.abilityHolder.points ++
+			if (!isnpc(current_target) && !isnpcmonkey(current_target))
+				the_slug.abilityHolder.points ++
 			T.slug = the_slug
 			T.add_advanced_slug_abilities(the_slug)
 
