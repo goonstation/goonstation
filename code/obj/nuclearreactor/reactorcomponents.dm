@@ -136,6 +136,35 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			src.temperature += 10
 		return inNeutrons
 
+	proc/mob_holding_temp_react(mob/user, mult)
+		if(src.temperature < T0C + 80)
+			return FALSE
+
+		if(user.equipped(src))
+			var/obj/item/clothing/gloves/gloves
+			if (ishuman(user))
+				var/mob/living/carbon/human/H = user
+				gloves = H.gloves
+			else
+				gloves = null
+			if(!gloves || gloves.material?.getProperty("thermal") > 2)
+				boutput(user, "<span class='alert'>\The [src] burns your hand!</span>")
+				user.TakeDamageAccountArmor(user.hand ? "l_arm" : "r_arm", 0, min((src.temperature-T0C)/40, 50) * mult, 0, DAMAGE_BURN)
+
+		if(src.temperature > T0C + 400)
+			boutput(user, "<span class='alert'><b>\The [src] sets you on fire with its extreme heat!</b></span>")
+			user.TakeDamageAccountArmor("all", 0, min((src.temperature-T0C)/40, 50) * mult, 0, DAMAGE_BURN)
+			user.changeStatus("burning", 30 SECONDS)
+		return TRUE
+
+	pickup(mob/user)
+		. = ..()
+		if(src.mob_holding_temp_react(user))
+			RegisterSignal(user, COMSIG_LIVING_LIFE_TICK, .proc/mob_holding_temp_react)
+
+	dropped(mob/user)
+		. = ..()
+		UnregisterSignal(user, COMSIG_LIVING_LIFE_TICK)
 
 
 ////////////////////////////////////////////////////////////////
