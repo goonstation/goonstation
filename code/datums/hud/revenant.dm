@@ -17,8 +17,8 @@
 	proc/update_health()
 		var/effective_health = min(master.health, master.max_health)
 		var/health_num = round( (max (effective_health + 50, 0) / (initial_health + 50)) *7 ) // Revenants die at -50.
-		health.icon_state = "revhealth-[health_num2]"
-		switch(health_num2)
+		health.icon_state = "revhealth-[health_num]"
+		switch(health_num)
 			if (0)
 				health.desc = "You feel like you're falling apart!"
 			if (1)
