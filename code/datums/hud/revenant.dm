@@ -22,7 +22,7 @@
 			if (0)
 				health.desc = "You feel like you're falling apart!"
 			if (1)
-				health.desc = "Your feel your insides slosh and churn as you move."
+				health.desc = "You feel your insides slosh and churn as you move."
 			if (2)
 				health.desc = "You feel like your skin is loose and ill-fitting."
 			if (3)
