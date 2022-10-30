@@ -33,3 +33,8 @@ TYPEINFO(/datum/component/legs)
 	icon_path = 'icons/misc/mechanicsExpansion.dmi'
 	icon_state_name = "legs"
 	y_offset = -8
+
+/datum/component/legs/four
+	icon_path = 'icons/misc/mechanicsExpansion.dmi'
+	icon_state_name = "small_legs"
+	y_offset = 0

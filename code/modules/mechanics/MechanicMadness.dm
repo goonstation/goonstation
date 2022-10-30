@@ -3310,13 +3310,30 @@
 		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_CONFIG, "Set walk delay", .proc/set_speed)
 
 	secure()
-		src.loc.AddComponent(/datum/component/legs/six)
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			src.loc.AddComponent(/datum/component/legs/four)
+		else
+			src.loc.AddComponent(/datum/component/legs/six)
+		RegisterSignal(src.loc, COMSIG_MOVABLE_SET_LOC, .proc/container_check)
 
 	loosen()
-		var/datum/component/C = src.loc.GetComponent(/datum/component/legs/six)
+		var/datum/component/C
+		if (istype(src.loc, /obj/item/storage/mechanics/housing_handheld))
+			C = src.loc.GetComponent(/datum/component/legs/four)
+		else
+			C = src.loc.GetComponent(/datum/component/legs/six)
 		if (C)
 			C.RemoveComponent()
 		src.stop_moving()
+		UnregisterSignal(src.loc, COMSIG_MOVABLE_SET_LOC)
+
+	/// checks if we are in a container so we can stop walking
+	proc/container_check()
+		var/obj/item/storage/S = src.loc
+		if (!istype(S))
+			return
+		if (!isturf(S.loc))
+			stop_moving()
 
 	cabinet_state_change(var/obj/item/storage/mechanics/container)
 		if (container.anchored)
@@ -3369,6 +3386,7 @@
 		if (!istype(S))
 			return
 		S.glide_size = (32 / move_lag) * world.tick_lag
+		S.animate_movement = FORWARD_STEPS
 
 	proc/stop_moving()
 		var/obj/item/storage/S = src.loc
