@@ -576,6 +576,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
+	var/unexploded = 1
+	var/iterations = 4
 
 	New()
 		..()
@@ -585,12 +587,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		addTrigger(triggersOnHit, new /datum/materialProc/molitz_on_hit())
 		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
 
-
 	beta
 		mat_id = "molitz_b"
 		name = "molitz beta"
 		color = "#ff2288"
-		desc = "A rare form of Molitz. When heated produces a powerful plasma fire catalyst."
+		desc = "A rare form of Molitz. When heated under special conditions it produces a powerful plasma fire catalyst."
 
 		New()
 			..()

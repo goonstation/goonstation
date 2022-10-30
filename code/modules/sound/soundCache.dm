@@ -258,6 +258,7 @@ var/global/list/soundCache = list(
  	"sound/effects/manta_interface.ogg" = 'sound/effects/manta_interface.ogg',\
  	"sound/effects/mantamoving.ogg" = 'sound/effects/mantamoving.ogg',\
  	"sound/effects/mindkill.ogg" = 'sound/effects/mindkill.ogg',\
+ 	"sound/effects/molitzcrumble.ogg" = 'sound/effects/molitzcrumble.ogg',\
  	"sound/effects/normstethoscope.ogg" = 'sound/effects/normstethoscope.ogg',\
  	"sound/effects/pixelexplosion.ogg" = 'sound/effects/pixelexplosion.ogg',\
  	"sound/effects/plant_mutation.ogg" = 'sound/effects/plant_mutation.ogg',\
