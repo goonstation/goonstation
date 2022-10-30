@@ -64,7 +64,7 @@ TYPEINFO(/datum/component/auto_reagent)
 					PA.visible_message("[PA] spills onto [PA.loc].","You hear the sound of liquid hitting the ground.")
 				R.trans_to(T, R.total_volume)
 
-	/// Adds a line to examine text to indicate level of radiation produced
+	/// Adds a line to examine text to indicate it is overflowing
 	proc/examined(atom/owner, mob/examiner, list/lines)
-		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is dripping."
+		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] [ismob(owner) ? is_or_are(owner) : "is"] dripping."
 
