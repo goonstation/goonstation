@@ -65,7 +65,7 @@ $bg-map: colors.$bg-map !default;
     margin-bottom: 0;
   }
 
-  .fa, .fas, .far {
+  .fa, .fa-solid, .fa-regular {
     margin-left: -0.25em;
     margin-right: -0.25em;
     min-width: 1.333em;
@@ -75,7 +75,7 @@ $bg-map: colors.$bg-map !default;
 
 .Button--hasContent {
   // Add a margin to the icon to keep it separate from the text
-  .fa, .fas, .far {
+  .fa, .fa-solid, .fa-regular {
     margin-right: 0.25em;
   }
 }
