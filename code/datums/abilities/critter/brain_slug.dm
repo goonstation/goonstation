@@ -449,3 +449,4 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		temp_reagents.reaction(target, TOUCH, 15)
 		qdel(temp_reagents)
 		boutput(holder.owner, "<span class='notice'>You drool some mucus on [target], making it unpleasantly sticky.</span>")
+		return FALSE
