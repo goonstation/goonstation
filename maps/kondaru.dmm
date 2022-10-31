@@ -28857,10 +28857,6 @@
 /obj/disposalpipe/segment/bent/east,
 /turf/simulated/floor/grime,
 /area/station/security/brig)
-"bMs" = (
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/crew_quarters/courtroom)
 "bMt" = (
 /obj/stool/chair{
 	dir = 4
@@ -45722,6 +45718,9 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/sw,
 /area/station/bridge)
+"iQs" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/checkpoint/escape)
 "iQy" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -99536,12 +99535,12 @@ bLL
 xZF
 bAQ
 bZD
-bZD
-bZD
-bZD
-bZD
-bZD
-bZD
+cav
+cav
+cav
+cav
+cav
+cav
 cfL
 cgz
 cfL
@@ -99843,10 +99842,10 @@ cbr
 ccp
 cda
 cdT
-bZD
-bZD
-bZD
-bZD
+cav
+cav
+cav
+cav
 bZD
 aaa
 aaa
@@ -110933,7 +110932,7 @@ aaa
 apK
 aqN
 tna
-khm
+meT
 tna
 aqN
 avX
@@ -118544,13 +118543,13 @@ yfW
 tvw
 fGA
 bEv
-chs
-chs
-chs
-chs
-chs
-bMs
-chs
+wHZ
+wHZ
+wHZ
+wHZ
+wHZ
+bRH
+wHZ
 tiv
 nLL
 nLL
@@ -131489,14 +131488,14 @@ aTM
 doC
 doC
 doC
-doC
-doC
-aIS
-doC
-doC
-doC
-doC
-doC
+bku
+bku
+iQs
+bku
+bku
+bku
+bku
+bku
 aIS
 aIS
 xKv
