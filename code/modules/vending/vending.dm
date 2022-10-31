@@ -41,11 +41,11 @@
 		. = product_base64_cache[path]
 		if(isnull(.))
 			var/atom/dummy_atom = new path // people demand overlays on their vending machine bottles
-			SPAWN(0) // give it a chance to do icon changes
-				var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
-				qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
-				. = icon2base64(dummy_icon)
-				product_base64_cache[path] = .
+			sleep(0) // give it a chance to do icon changes
+			var/icon/dummy_icon = getFlatIcon(dummy_atom,initial(dummy_atom.dir),no_anim=TRUE)
+			qdel(dummy_atom) // above is a hack to get this to work. if anyone has any better way of doing this, go ahead.
+			. = icon2base64(dummy_icon)
+			product_base64_cache[path] = .
 
 
 /obj/machinery/vending
