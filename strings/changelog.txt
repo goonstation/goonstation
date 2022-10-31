@@ -1,5 +1,9 @@
 
 (t)sun oct 30 22
+(u)KolisDumb, DeadMan164
+(p)11727
+(e)🎨|C-Sprites
+(*)Added the tall chef hat to the game - a chef job reward available at chef level 2.
 (u)Kubius
 (p)11701
 (e)🆕|C-Feature
