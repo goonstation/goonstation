@@ -19,13 +19,16 @@
 
 	disposing()
 		. = ..()
-		REMOVE_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
-		linked_mob.anchored = FALSE
+		if (linked_mob)
+			REMOVE_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
+			linked_mob.anchored = FALSE
 
 	process()
 		src._health -= 1
 		if (linked_mob?.getStatusDuration("burning"))	//Burning will melt off the goo
 			src._health -= 2
+		if (src._health<= 0)
+			qdel(src)
 
 	attack_hand(mob/user)
 		. = ..()
@@ -37,7 +40,7 @@
 			qdel(src)
 
 	attackby(obj/item/P, mob/living/user)
-		src._health -= 2
+		src._health -= 3
 		attack_particle(user,src)
 		user.lastattacked = src
 		hit_twitch(src)
