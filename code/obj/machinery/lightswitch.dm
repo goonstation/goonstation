@@ -52,26 +52,34 @@
 
 /obj/machinery/light_switch/proc/autoposition()
 	var/turf/T = null
-	SPAWN(1 DECI SECOND)
-		for (var/dir in cardinal)
-			T = get_step(src,dir)
-			if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
-				src.set_dir(dir)
-				if (dir == EAST)
-					src.pixel_x = 24
-				else if (dir == WEST)
-					src.pixel_x = -24
-				else if (dir == NORTH)
-					src.pixel_y = 24
-				else
-					src.pixel_y = -24
-				break
-		T = null
+	for (var/dir in cardinal)
+		T = get_step(src,dir)
+		if (istype(T,/turf/simulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+			src.set_dir(dir)
+			if (dir == EAST)
+				src.pixel_x = 24
+			else if (dir == WEST)
+				src.pixel_x = -24
+			else if (dir == NORTH)
+				src.pixel_y = 24
+			else
+				src.pixel_y = -24
+		break
 
 /obj/machinery/light_switch/was_built_from_frame(mob/user, newly_built)
 	. = ..()
-	src.New()
+	if (!newly_built) // dont want the area to end up something wacky
+		src.area = get_area(src)
+		src.on = src.area.lightswitch
+		area.machines += src // i dont know why it doesn't end up in there
+		src.UpdateIcon()
+
 	src.autoposition()
+
+/obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
+	. = ..()
+	area.machines -= src
+
 
 /obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
@@ -157,5 +165,6 @@
 	name = "light switch"
 
 	New()
-		src.autoposition()
+		SPAWN(1 DECI SECOND)
+			src.autoposition()
 		..()
