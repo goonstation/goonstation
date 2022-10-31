@@ -38,7 +38,10 @@
 	var/wander_count = 0
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
-	src.ai = new /datum/aiHolder/flock/drone(src)
+	if (F?.flockmind.tutorial)
+		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
+	else
+		src.ai = new /datum/aiHolder/flock/drone(src)
 
 	..()
 	var/datum/abilityHolder/composite/composite = new(src)
