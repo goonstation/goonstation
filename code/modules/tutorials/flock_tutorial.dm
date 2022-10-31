@@ -38,6 +38,9 @@
 		. = ..()
 		src.ftutorial = src.tutorial
 
+	PerformAction(action, context)
+		return FALSE //fuck you, no action
+
 /datum/tutorialStep/flock/deploy
 	name = "Realizing"
 	instructions = "If at any point this tutorial glitches up and leaves in a stuck state, use the emergency tutorial stop verb. Choose a suitable area to spawn your rift. Try to choose an out of the way area with plenty of resources and delicious computers to eat."
@@ -63,7 +66,7 @@
 	name = "Gatecrash"
 	instructions = "Your flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
 
-	PerformAction(action, context)
+	PerformSilentAction(action, context)
 		if (action == "gatecrash")
 			src.finished = TRUE
 			return TRUE
@@ -100,6 +103,10 @@
 	name = "Conversion"
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
+	PerformAction(action, context)
+		if (action == "start conversion" && locate(/obj/window) in get_turf(context))
+			return TRUE
+
 	PerformSilentAction(var/action, var/context)
 		if (action == "claim turf" && locate(/obj/window) in context)
 			finished = TRUE
@@ -121,3 +128,10 @@
 		return
 	src.tutorial.Finish()
 	src.tutorial = null
+
+/obj/machinery/junk_spawner
+	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)
+	process(mult)
+		if (!(locate(/obj/item) in get_turf(src)))
+			var/type = pick(src.stuff)
+			new type(src.loc)

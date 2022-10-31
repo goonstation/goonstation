@@ -986,6 +986,8 @@
 	if (!istype(user))
 		return
 
+	if (!user.flock.flockmind.tutorial?.PerformAction("start conversion", target))
+		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
 			src.try_cage(target, user)

@@ -32,6 +32,7 @@
 	pixel_x = 5;
 	pixel_y = -6
 	},
+/obj/machinery/junk_spawner,
 /turf/simulated/floor,
 /area/space)
 "C" = (

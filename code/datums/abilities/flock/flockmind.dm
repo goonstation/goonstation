@@ -69,12 +69,14 @@
 	SPAWN(cooldown + 5)
 		holder?.updateButtons()
 
-/datum/targetable/flockmindAbility/proc/tutorial_check(var/id, var/atom/context)
+/datum/targetable/flockmindAbility/proc/tutorial_check(var/id, var/atom/context, var/silent = FALSE)
 	var/mob/living/intangible/flock/flockmind/flockmind_owner = src.holder.owner
 	if (istype(flockmind_owner))
 		if (flockmind_owner.tutorial)
-			if (!flockmind_owner.tutorial.PerformAction(id, context))
-				return FALSE
+			if (silent)
+				return flockmind_owner.tutorial.PerformSilentAction(id, context)
+			else
+				return flockmind_owner.tutorial.PerformAction(id, context)
 	return TRUE
 
 /////////////////////////////////////////
@@ -300,8 +302,7 @@
 	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
-	if (!src.tutorial_check("gatecrash", targets))
-		return TRUE
+	src.tutorial_check("gatecrash", targets, TRUE)
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
@@ -481,7 +482,7 @@
 		return TRUE
 	if (!isturf(target.loc) && !isturf(target))
 		return TRUE
-	src.tutorial_check("ping", target) //you can always ping
+	src.tutorial_check("ping", target, TRUE) //you can always ping
 	var/mob/living/intangible/flock/F = holder.owner
 	F.flock?.ping(target, holder.owner)
 

@@ -35,6 +35,7 @@
 			return 1
 
 		Advance()
+			playsound(get_turf(owner), 'sound/machines/ping.ogg', 50, pitch = 0.5)
 			if (current_step > steps.len)
 				return
 			var/datum/tutorialStep/T = steps[current_step]
