@@ -66,7 +66,7 @@
 	name = "Gatecrash"
 	instructions = "Your flockdrone is stuck in this room, use your Gatecrash ability to force the door open."
 
-	PerformSilentAction(action, context)
+	PerformAction(action, context)
 		if (action == "gatecrash")
 			src.finished = TRUE
 			return TRUE
@@ -75,7 +75,7 @@
 	name = "Move"
 	instructions = "Now move your flockdrone through the door by clicking and dragging it."
 
-	PerformSilentAction(action, context)
+	PerformAction(action, context)
 		if (action == "click drag move")
 			src.finished = TRUE
 			return TRUE
@@ -94,7 +94,7 @@
 	instructions = "In order to convert the station around you, you are going to need resources. Pick up some items using your manipulator hand and place them into your disintigrator (equip hotkey) to break them down into resources."
 	var/amount = 30
 
-	PerformSilentAction(action, context)
+	PerformAction(action, context)
 		if (action == "gain resources" && context >= amount)
 			src.finished = TRUE
 			return TRUE
@@ -103,11 +103,9 @@
 	name = "Conversion"
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
-	PerformAction(action, context)
+	PerformAction(var/action, var/context)
 		if (action == "start conversion" && locate(/obj/window) in get_turf(context))
 			return TRUE
-
-	PerformSilentAction(var/action, var/context)
 		if (action == "claim turf" && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE

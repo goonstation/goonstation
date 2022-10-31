@@ -382,13 +382,15 @@
 			target.UpdateOverlays(marker,"marker")
 
 		PerformAction(var/action, var/context)
+			if (action != "clickmove")
+				return TRUE
 			var/datum/tutorial_base/regional/blob/MT = tutorial
 			if (!MT.region.turf_in_region(get_turf(context)) || !istype(context, /turf/simulated/floor)) //Stop the player from suicide by cordon
-				return 0
+				return FALSE
 			else if (action == "clickmove" && context == target)
-				finished = 1
-				return 1
-			return 1 // bad but prevents chat spam which leads to crashes
+				finished = TRUE
+				return TRUE
+			return TRUE // bad but prevents chat spam which leads to crashes
 
 		TearDown()
 			target.UpdateOverlays(null,"marker")
@@ -435,13 +437,11 @@
 			MT.bowner.evo_points = 500
 
 		PerformAction(var/action, var/context)
+			if (action == "life")
+				tutorial.CheckAdvance()
+				return FALSE
 			if (action == "upgrade-digest" || action == "upgrade-reflective" || action == "upgrade-launcher" || action == "upgrade-replicator")
-				return 1
-			return 0
-
-		PerformSilentAction(var/action, var/context)
-			tutorial.CheckAdvance()
-			return 0
+				return TRUE
 
 		TearDown()
 			var/datum/tutorial_base/regional/blob/MT = tutorial
@@ -465,14 +465,13 @@
 			I = new(locate(tx, ty, tz))
 
 		PerformAction(var/action, var/context)
+			if (action == "life" || action == "blob-life")
+				tutorial.CheckAdvance()
+				return FALSE
 			if (action == "move")
 				return 1
 			if (action == "devour" && (context == I || context == get_turf(I)))
 				return 1
-
-		PerformSilentAction(var/action, var/context)
-			tutorial.CheckAdvance()
-			return 0
 
 		MayAdvance()
 			if (!I)
@@ -501,21 +500,18 @@
 
 		PerformAction(var/action, var/context)
 			if (action == "move")
-				return 1
+				return TRUE
 			if (!target)
 				return
 			if (action == "launcher" && context == get_turf(target))
-				return 1
+				return TRUE
+			if (action == "blob-life" && istype(context, /obj/blob/launcher))
+				return TRUE
 
 		TearDown()
 			target.UpdateOverlays(null,"marker")
 			if (H)
 				H.gib()
-
-		PerformSilentAction(var/action, var/context)
-			if (action == "blob-life" && istype(context, /obj/blob/launcher))
-				return 1
-			return 0
 
 		MayAdvance()
 			if (!H)

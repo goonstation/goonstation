@@ -87,7 +87,7 @@
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
-			if (T.PerformSilentAction(action, context))
+			if (T.PerformAction(action, context))
 				SPAWN(0)
 					CheckAdvance()
 				return 1
@@ -140,7 +140,5 @@
 		TearDown()
 		PerformAction(var/action, var/context)
 			return TRUE
-		PerformSilentAction(var/action, var/context)
-			return FALSE
 		MayAdvance()
 			return src.finished
