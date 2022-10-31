@@ -73,7 +73,6 @@
 		src.on = src.area.lightswitch
 		area.machines += src // i dont know why it doesn't end up in there
 		src.UpdateIcon()
-
 	src.autoposition()
 
 /obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
