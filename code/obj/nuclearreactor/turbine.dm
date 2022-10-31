@@ -87,14 +87,28 @@
 
 	process()
 		. = ..()
-		if(RPM > 1)
-			if(src.icon_state == "turbine_main")
-				src.icon_state = "turbine_spin"
-				UpdateIcon()
-		else
-			if(src.icon_state == "turbine_spin")
-				src.icon_state = "turbine_main"
-				UpdateIcon()
+		switch(src.RPM)
+			if(0 to 1)
+				if(src.icon_state != "turbine_main")
+					src.icon_state = "turbine_main"
+					UpdateIcon()
+			if(1 to 200)
+				if(src.icon_state != "turbine_spin_slow")
+					src.icon_state = "turbine_spin_slow"
+					UpdateIcon()
+			if(200 to 400)
+				if(src.icon_state != "turbine_spin")
+					src.icon_state = "turbine_spin"
+					UpdateIcon()
+			if(400 to 800)
+				if(src.icon_state != "turbine_spin_fast")
+					src.icon_state = "turbine_spin_fast"
+					UpdateIcon()
+			if(800 to INFINITY)
+				if(src.icon_state != "turbine_spin_overspeed")
+					src.icon_state = "turbine_spin_overspeed"
+					UpdateIcon()
+
 
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
