@@ -7,8 +7,6 @@
 /obj/machinery/atmospherics/binary/reactor_turbine
 	name = "Gas Turbine"
 	desc = "A large turbine used for generating power using hot gas."
-//	icon = 'icons/obj/atmospherics/pipes.dmi'
-//	icon_state = "circ1-off"
 	icon = 'icons/obj/large/96x160.dmi'
 	icon_state = "turbine_main" //TODO make rotated states of this
 	anchored = 1
@@ -36,6 +34,8 @@
 	var/stalling = FALSE
 	var/overspeed = FALSE
 	var/overtemp = FALSE
+
+	var/_last_rpm_icon_update = 0 //used to determine whether an icon update is required
 
 	New()
 		. = ..()
@@ -85,29 +85,28 @@
 
 		UpdateIcon()
 
+	proc/generate_icon()
+		//this is mildly cursed, I am sorry
+		var/icon/base_icon = new(initial(src.icon), "turbine_spin")
+		var/icon/result_icon = new(initial(src.icon), "turbine_spin")
+		result_icon.Insert(base_icon, "turbine_spin_speed", delay=max(2*(src.best_RPM/(8*src.RPM)), 0.125))
+		return result_icon
+
 	process()
 		. = ..()
-		switch(src.RPM)
-			if(0 to 1)
-				if(src.icon_state != "turbine_main")
-					src.icon_state = "turbine_main"
-					UpdateIcon()
-			if(1 to 200)
-				if(src.icon_state != "turbine_spin_slow")
-					src.icon_state = "turbine_spin_slow"
-					UpdateIcon()
-			if(200 to 400)
-				if(src.icon_state != "turbine_spin")
-					src.icon_state = "turbine_spin"
-					UpdateIcon()
-			if(400 to 800)
-				if(src.icon_state != "turbine_spin_fast")
-					src.icon_state = "turbine_spin_fast"
-					UpdateIcon()
-			if(800 to INFINITY)
-				if(src.icon_state != "turbine_spin_overspeed")
-					src.icon_state = "turbine_spin_overspeed"
-					UpdateIcon()
+
+		if(src.RPM < 1)
+			src._last_rpm_icon_update = -100 //force an update as soon as it starts moving
+			if(src.icon_state != "turbine_main")
+				src.icon = initial(src.icon)
+				src.icon_state = "turbine_main"
+				UpdateIcon()
+		else
+			if(abs(src._last_rpm_icon_update - src.RPM) > 10)
+				src._last_rpm_icon_update = src.RPM
+				src.icon = src.generate_icon()
+				src.icon_state = "turbine_spin_speed"
+				UpdateIcon()
 
 
 		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
