@@ -2316,9 +2316,9 @@ var/global/list/allowed_restricted_z_areas
 
 // DM simultaneously makes cursed shit like this work...
 // yet won't work with just the unicode raws - infinite pain
-var/___proper = "\proper"
-var/___improper = "\improper"
-var/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
