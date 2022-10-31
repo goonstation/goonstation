@@ -456,7 +456,7 @@
 				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
 					if(checkdoor && istype(O, /obj/machinery/door))
 						var/obj/machinery/door/door = O
-						if(door.isblocked())
+						if (door.isblocked())
 							return FALSE
 					if (ismob(passer) && O.allowed(passer) || id && O.check_access(id)) // do you have explicit access
 						continue
