@@ -531,6 +531,12 @@ proc/filter_trait_hats(var/type)
 	icon_state = "mailcap"
 	item_state = "mailcap"
 
+/obj/item/clothing/head/chefhattall
+    name = "Tall Chef's Hat"
+    desc = "Your toque blanche, now at least 50% taller!"
+    icon_state = "cheftall"
+    item_state = "cheftall"
+
 /obj/item/clothing/head/policecap
 	name = "Police hat"
 	desc = "An old surplus-issue police hat."
