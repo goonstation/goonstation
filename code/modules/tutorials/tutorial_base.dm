@@ -131,13 +131,15 @@
 	var/name = "Tutorial Step"
 	var/instructions = "Do something"
 	var/datum/tutorial_base/tutorial = null
+	var/finished = FALSE
 
 	proc
 		SetUp()
+			src.finished = FALSE
 		TearDown()
 		PerformAction(var/action, var/context)
-			return 1
+			return TRUE
 		PerformSilentAction(var/action, var/context)
-			return 0
+			return FALSE
 		MayAdvance()
-			return 1
+			return src.finished

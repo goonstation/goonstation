@@ -14,6 +14,8 @@
 	///Pity respawn max
 	var/max_tries = 3
 
+	var/datum/tutorial_base/regional/flock/tutorial = null
+
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	..()
@@ -28,9 +30,27 @@
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)
+		src.addAbility(/datum/targetable/flockmindAbility/tutorial)
 	else
 		src.started = TRUE
 		src.addAllAbilities()
+
+
+/mob/living/intangible/flock/flockmind/proc/start_tutorial()
+	if (src.tutorial)
+		return
+	src.tutorial = new(src)
+	if (src.tutorial.initial_turf)
+		src.tutorial.Start()
+	else
+		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+		src.tutorial = null
+
+/mob/living/intangible/flock/flockmind/Move(NewLoc, direct)
+	if (isturf(NewLoc))
+		if (istype(NewLoc, /turf/cordon))
+			return FALSE
+	..()
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -87,6 +107,7 @@
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.removeAbility(/datum/targetable/flockmindAbility/tutorial)
 	src.addAllAbilities()
 
 /mob/living/intangible/flock/flockmind/proc/addAllAbilities()
@@ -110,6 +131,7 @@
 		src.abilityHolder.removeAbilityInstance(ability)
 	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 	src.addAbility(/datum/targetable/flockmindAbility/ping)
+	src.addAbility(/datum/targetable/flockmindAbility/tutorial)
 	src.started = FALSE
 
 /mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)

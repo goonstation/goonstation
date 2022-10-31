@@ -69,6 +69,14 @@
 	SPAWN(cooldown + 5)
 		holder?.updateButtons()
 
+/datum/targetable/flockmindAbility/proc/tutorial_check(var/id, var/atom/context)
+	var/mob/living/intangible/flock/flockmind/flockmind_owner = src.holder.owner
+	if (istype(flockmind_owner))
+		if (flockmind_owner.tutorial)
+			if (!flockmind_owner.tutorial.PerformAction(id, context))
+				return FALSE
+	return TRUE
+
 /////////////////////////////////////////
 
 /datum/targetable/flockmindAbility/spawnEgg
@@ -111,6 +119,8 @@
 			if (O.density)
 				boutput(F, "<span class='alert'>That tile is blocked by [O].</span>")
 				return TRUE
+	if (!src.tutorial_check("spawn rift", T))
+		return TRUE
 	logTheThing(LOG_GAMEMODE, holder.get_controlling_mob(), "spawns a rift at [log_loc(src.holder.owner)].")
 	F.spawnEgg()
 
@@ -139,6 +149,8 @@
 			if (T == F.flock.busy_tiles[name])
 				boutput(holder.get_controlling_mob(), "<span class='alert'>This tile is already scheduled for conversion!</span>")
 				return TRUE
+	if (!src.tutorial_check("designate tile", T))
+		return TRUE
 	F.flock?.togglePriorityTurf(T)
 
 /////////////////////////////////////////
@@ -163,6 +175,9 @@
 	var/datum/flock/flock = F.flock
 
 	if (!flock)
+		return TRUE
+
+	if (!src.tutorial_check("designate enemy", M))
 		return TRUE
 
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
@@ -194,6 +209,8 @@
 	if(!holder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		return TRUE
 
+	if (!src.tutorial_check("partition mind"))
+		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	waiting = TRUE
 	SPAWN(0)
@@ -211,6 +228,8 @@
 
 /datum/targetable/flockmindAbility/healDrone/cast(atom/target)
 	if(..())
+		return TRUE
+	if (!src.tutorial_check("heal", target))
 		return TRUE
 	var/mob/living/intangible/flock/flockowner = holder.owner
 	var/healed = 0
@@ -258,6 +277,8 @@
 	if(F.flock.getComplexDroneCount() == 1)
 		boutput(F, "<span class='alert'>That's your last complex drone. Diffracting it would be suicide.</span>")
 		return TRUE
+	if (!src.tutorial_check("diffract drone", target))
+		return TRUE
 	boutput(F, "<span class='notice'>You diffract the drone.</span>")
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts diffract drone on [constructTarget(target)] at [log_loc(src.holder.owner)].")
 	target.split_into_bits()
@@ -279,6 +300,8 @@
 	for(var/obj/machinery/door/airlock/A in range(10, get_turf(holder.owner)))
 		if(A.canAIControl())
 			targets += A
+	if (!src.tutorial_check("gatecrash", targets))
+		return TRUE
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You force open all the doors around you.</span>")
@@ -309,6 +332,8 @@
 		var/obj/item/device/radio/R = M.ears // wont work on flock as they have no slot for this
 		if(istype(R) && R.listening) // working and toggled on
 			targets += M
+	if (!src.tutorial_check("radio stun", targets))
+		return TRUE
 	if(length(targets))
 		playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
 		boutput(holder.get_controlling_mob(), "<span class='notice'>You transmit the worst static you can weave into the headsets around you.</span>")
@@ -331,6 +356,8 @@
 
 /datum/targetable/flockmindAbility/directSay/cast(atom/target)
 	if(..())
+		return TRUE
+	if (!src.tutorial_check("narrowbeam", target))
 		return TRUE
 	var/obj/item/device/radio/R
 	var/message
@@ -390,6 +417,8 @@
 /datum/targetable/flockmindAbility/controlPanel/cast(atom/target)
 	if(..())
 		return TRUE
+	if (!src.tutorial_check("control panel", target))
+		return TRUE
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
 	F.flock.ui_interact(holder.get_controlling_mob(), F.flock.flockpanel)
 
@@ -415,6 +444,8 @@
 		return TRUE
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>There is already a flock structure on this flocktile!</span>")
+		return TRUE
+	if (!src.tutorial_check("fabricate structure", T))
 		return TRUE
 
 	var/list/friendlyNames = list()
@@ -450,6 +481,7 @@
 		return TRUE
 	if (!isturf(target.loc) && !isturf(target))
 		return TRUE
+	src.tutorial_check("ping", target) //you can always ping
 	var/mob/living/intangible/flock/F = holder.owner
 	F.flock?.ping(target, holder.owner)
 
@@ -467,12 +499,29 @@
 	if(HAS_ATOM_PROPERTY(target,PROP_ATOM_FLOCK_THING))
 		if (isflockdeconimmune(target)) // ghost structure on click opens tgui window
 			return TRUE
+		if (!src.tutorial_check("deconstruct flag", target))
+			return TRUE
 		var/mob/living/intangible/flock/F = holder.owner
 		F.flock.toggleDeconstructionFlag(target)
 		return FALSE
 	return TRUE
 
+/datum/targetable/flockmindAbility/tutorial
+	name = "Interactive Tutorial"
+	desc = "Check out the interactive flock tutorial to get started."
+	icon = 'icons/mob/blob_ui.dmi'
+	icon_state = "blob-tutorial"
+	cooldown = 0 SECONDS
+	targeted = FALSE
 
+/datum/targetable/flockmindAbility/tutorial/cast(atom/target)
+	if (..())
+		return TRUE
+	var/mob/living/intangible/flock/flockmind/flockmind = holder.owner
+	if (istype(flockmind) && flockmind.tutorial)
+		boutput(flockmind, "<span class='alert'>You're already in the tutorial!</span>")
+		return TRUE
+	flockmind.start_tutorial()
 
 /datum/targetable/flockmindAbility/droneControl
 	cooldown = 0

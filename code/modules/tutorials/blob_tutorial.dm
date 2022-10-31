@@ -55,17 +55,12 @@
 	name = "Blob tutorial step"
 	instructions = "If you see this, tell a coder!!!11"
 	var/static/image/marker = null
-	var/finished = 0
 
 	New()
 		..()
 		if (!marker)
 			marker = image('icons/effects/VR.dmi', "lightning_marker")
 			marker.filters= filter(type="outline", size=1)
-
-	SetUp()
-		..()
-		finished = 0
 
 	deploy
 		name = "Deploying"

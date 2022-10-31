@@ -15,6 +15,11 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 17
 	prefabSizeY = 18
 
+/datum/mapPrefab/allocated/flock_tutorial
+	prefabPath = "assets/maps/allocated/flock_tutorial.dmm"
+	prefabSizeX = 31
+	prefabSizeY = 31
+
 /datum/mapPrefab/allocated/cruiser_syndicate
 	prefabPath = "assets/maps/allocated/cruiser_syndicate.dmm"
 	prefabSizeX = 7

@@ -26,41 +26,50 @@
 	var/elapsed = getTimeInSecondsSinceTime(src.time_started)
 	src.info_tag.set_info_tag("Entry time: [round(src.build_time - elapsed)] seconds")
 	if(elapsed >= build_time)
-		src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
-		for(var/i in 1 to pick(3, 4))
-			var/obj/item/flockcache/x = new(src.contents)
-			x.resources = rand(40, 50)
-			eject += x
-		for(var/i in 1 to 4)
-			var/obj/flock_structure/egg/e = new(src.contents, src.flock)
-			eject += e
-		var/obj/flock_structure/egg/bit/bitegg = new(src.contents, src.flock)
-		eject += bitegg
-		var/list/candidate_turfs = list()
-		for(var/turf/simulated/floor/S in orange(src, 4))
-			candidate_turfs += S
-		var/sentinel_count = 2
-		for(var/i in 1 to 10)
-			for(var/S in candidate_turfs)
-				if(istype(S, /turf/simulated/floor/feather))
-					candidate_turfs -= S
-					continue
-				if(prob(25))
-					if (src.flock)
-						src.flock.claimTurf(flock_convert_turf(S))
-						if (sentinel_count > 0 && !flock_is_blocked_turf(S))
-							new /obj/flock_structure/sentinel(S, src.flock)
-							sentinel_count--
-					else
-						flock_convert_turf(S)
-					candidate_turfs -= S
-					break
-		flockdronegibs(src.loc, null, eject) //ejectables ejected here
-		src.flock.flockmind.started = TRUE
-		qdel(src)
+		if (src.flock.flockmind.tutorial) //simplify down to a single drone during tutorial
+			flockdronegibs(src.loc, null, list(new /obj/flock_structure/egg(src.contents, src.flock)))
+			src.flock.flockmind.started = TRUE
+			src.flock.flockmind.tutorial.PerformAction("rift complete")
+			qdel(src)
+		else
+			src.open()
 	else
 		var/severity = round(((build_time - elapsed)/build_time) * 5)
 		animate_shake(src, severity, severity)
+
+/obj/flock_structure/rift/proc/open()
+	src.visible_message("<span class='text-blue'>Multiple shapes exit out of [src]!</span>")
+	for(var/i in 1 to pick(3, 4))
+		var/obj/item/flockcache/x = new(src.contents)
+		x.resources = rand(40, 50)
+		eject += x
+	for(var/i in 1 to 4)
+		var/obj/flock_structure/egg/e = new(src.contents, src.flock)
+		eject += e
+	var/obj/flock_structure/egg/bit/bitegg = new(src.contents, src.flock)
+	eject += bitegg
+	var/list/candidate_turfs = list()
+	for(var/turf/simulated/floor/S in orange(src, 4))
+		candidate_turfs += S
+	var/sentinel_count = 2
+	for(var/i in 1 to 10)
+		for(var/S in candidate_turfs)
+			if(istype(S, /turf/simulated/floor/feather))
+				candidate_turfs -= S
+				continue
+			if(prob(25))
+				if (src.flock)
+					src.flock.claimTurf(flock_convert_turf(S))
+					if (sentinel_count > 0 && !flock_is_blocked_turf(S))
+						new /obj/flock_structure/sentinel(S, src.flock)
+						sentinel_count--
+				else
+					flock_convert_turf(S)
+				candidate_turfs -= S
+				break
+	flockdronegibs(src.loc, null, eject) //ejectables ejected here
+	src.flock.flockmind.started = TRUE
+	qdel(src)
 
 /obj/flock_structure/rift/disposing()
 	if (!src.flock?.flockmind?.started)

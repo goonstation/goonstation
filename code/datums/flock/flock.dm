@@ -613,6 +613,8 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	if (!T)
 		return
+	if (src.flockmind.tutorial)
+		src.flockmind.tutorial.PerformSilentAction("claim turf", T)
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
 	if (isfeathertile(T))
@@ -684,6 +686,11 @@ var/flock_signal_unleashed = FALSE
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
 	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
+
+/datum/flock/proc/z_level_check(var/atom/A)
+	if (src.flockmind.tutorial || A.z == Z_LEVEL_STATION)
+		return TRUE
+	return FALSE
 
 // ACHIEVEMENTS
 
