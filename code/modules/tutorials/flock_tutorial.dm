@@ -8,7 +8,10 @@
 		src.AddStep(new /datum/tutorialStep/flock/deploy)
 		src.AddStep(new /datum/tutorialStep/flock/gatecrash)
 		src.AddStep(new /datum/tutorialStep/flock/move)
+		src.AddStep(new /datum/tutorialStep/flock/control)
+		src.AddStep(new /datum/tutorialStep/flock/gather)
 		src.AddStep(new /datum/tutorialStep/flock/convert_window)
+		src.AddStep(new /datum/tutorialStep/flock/release_drone)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		src.fowner = M
 
@@ -64,7 +67,6 @@
 		if (action == "gatecrash")
 			src.finished = TRUE
 			return TRUE
-		return FALSE
 
 /datum/tutorialStep/flock/move
 	name = "Move"
@@ -75,16 +77,42 @@
 			src.finished = TRUE
 			return TRUE
 
+/datum/tutorialStep/flock/control
+	name = "Control drone"
+	instructions = "Sometimes you may want to take direct control of a single drone, for combat or fine movement control. Click drag yourself over the flockdrone to take control of it."
+
+	PerformAction(action, context)
+		if (action == "control drone")
+			src.finished = TRUE
+			return TRUE
+
+/datum/tutorialStep/flock/gather
+	name = "Gather resources"
+	instructions = "In order to convert the station around you, you are going to need resources. Pick up some items using your manipulator hand and place them into your disintigrator (equip hotkey) to break them down into resources."
+	var/amount = 30
+
+	PerformSilentAction(action, context)
+		if (action == "gain resources" && context >= amount)
+			src.finished = TRUE
+			return TRUE
+
 /datum/tutorialStep/flock/convert_window
 	name = "Conversion"
 	instructions = "Convert the window in front of you to allow you to pass through it. Convert it by clicking on it with your nanite spray (middle) hand."
 
 	PerformSilentAction(var/action, var/context)
-		if (action == "claim turf" && locate(/obj/window/auto/crystal) in context)
+		if (action == "claim turf" && locate(/obj/window) in context)
 			finished = TRUE
 			return TRUE
-		return FALSE
 
+/datum/tutorialStep/flock/release_drone
+	name = "Release control"
+	instructions = "Now use the eject button at the bottom right of your HUD to release control of this drone."
+
+	PerformAction(action, context)
+		if (action == "release drone")
+			finished = TRUE
+			return TRUE
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"

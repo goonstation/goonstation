@@ -143,6 +143,8 @@
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
+	if (!src.flock.flockmind.tutorial?.PerformAction("control drone", src))
+		return
 	src.controller = pilot
 	src.wake_from_ai_pause()
 	src.ai.stop_move()
@@ -640,6 +642,7 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
+	src.flock.flockmind.tutorial?.PerformSilentAction("gain resources", src.resources)
 	src.flock?.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
