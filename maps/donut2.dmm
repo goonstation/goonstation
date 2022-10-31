@@ -29451,6 +29451,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/computer/telescope,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
 	},
@@ -47321,6 +47322,10 @@
 	},
 /obj/cable{
 	icon_state = "1-8"
+	},
+/obj/stool/chair/office{
+	dir = 1;
+	icon_state = "office_chair"
 	},
 /turf/simulated/floor/white,
 /area/station/science/teleporter)
