@@ -50,8 +50,13 @@ var/global/list/job_start_locations = list()
 	name = "start"
 	icon_state = "player-start"
 	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
 	New()
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
 				job_start_locations[src.name] = list(src.loc)

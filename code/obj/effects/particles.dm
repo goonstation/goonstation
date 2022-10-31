@@ -166,3 +166,21 @@
 	gravity = list(0, 1, 0)
 	friction = 0.5
 	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/healing
+	icon = 'icons/effects/particles.dmi'
+	icon_state = list("plus")
+	color = generator("color", "#63c94e", "#368826", UNIFORM_RAND)
+	spawning = 0.75
+	lifespan = 15
+	fade = 6
+	fadein = 2
+	position = generator("circle", 6, 8, NORMAL_RAND)
+	scale = list(1.2, 1.2)
+	grow = list(-0.05, -0.05)
+	gravity = list(0, 1, 0)
+	friction = 0.5
+	drift = generator("vector", list(0.25,0,0), list(-0.25,0,0), UNIFORM_RAND)
+
+/particles/healing/flock
+	color = generator("color", "#89e2b8", "#5aeeb0", UNIFORM_RAND)

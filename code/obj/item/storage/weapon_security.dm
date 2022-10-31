@@ -18,12 +18,6 @@
 	icon_state = "evidence"
 	desc = "A box for collecting forensics evidence."
 
-/* Phased out with the forensic scanner overhaul. Was useless anyway (Convair880).
-/obj/item/storage/box/fcard_kit
-	name = "fingerprint card box"
-	icon_state = "id"
-	spawn_contents = list(/obj/item/f_card = 7)
-*/
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"

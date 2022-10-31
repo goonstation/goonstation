@@ -4,9 +4,13 @@
 
 #define hex2num(X) text2num(X, 16)
 
+#define hsl2rgb(hue, sat, lum) rgb(h=hue,s=sat,l=lum)
+
 #define hsv2rgb(hue, sat, val) rgb(h=hue,s=sat,v=val)
 
 #define hsv2rgblist(hue, sat, val) rgb2num(hsv2rgb(hue, sat, val))
+
+#define rgb2hsl(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSL)
 
 #define rgb2hsv(r, g, b) rgb2num(rgb(r, g, b), COLORSPACE_HSV)
 
@@ -269,6 +273,35 @@ proc/hsv_transform_color_matrix(h=0.0, s=1.0, v=1.0)
 		0, 0, 0, 1,
 		0, 0, 0, 0
 	)
+
+/**
+ * Takes an icon and optionally two non-zero Pixel Intervals and returns the average color of the icon.
+ *
+ * The pixel intervals represent the distance between each pixel scanned on the X/Y axes respectively, and default to 4 for performance.
+ * For example, an X interval of 1 and a Y interval of 3 will mean every X coordinate of every 3rd Y coordinate will be scanned.
+ */
+proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
+	var/rSum  = 0
+	var/gSum  = 0
+	var/bSum  = 0
+	var/total = 0
+	var/icon_width = I.Width()
+	var/icon_height = I.Height()
+	//estimate color
+	for (var/y = 1 to icon_height step yPixelInterval)
+		for (var/x = 1 to icon_width step xPixelInterval)
+			var/pixColor = I.GetPixel(x,y)
+			if (!pixColor)
+				continue
+			var/rgba = rgb2num(pixColor)
+			var/weight = length(rgba) >= 4 ? rgba[4] / 255 : 1
+			total += weight
+			rSum += rgba[1] * weight
+			gSum += rgba[2] * weight
+			bSum += rgba[3] * weight
+	if (total == 0)
+		return "#00000000"
+	return rgb(rSum/total,gSum/total,bSum/total)
 
 /client/proc/set_saturation(s=1)
 	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
