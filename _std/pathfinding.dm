@@ -19,11 +19,12 @@
  * * skip_first: Whether or not to delete the first item in the path. This would be done because the first item is the starting tile, which can break movement for some creatures.
  * * cardinal_only: Whether to find only paths consisting of cardinal steps.
  * * required_goals: How many goals to find to succeed. Null for all.
+ * * do_doorcheck: Whether or not to check if doors are blocked (welded, out of power, locked, etc...)
  *
  * Returns: List of turfs from the caller to the end or a list of lists of the former if multiple ends are specified.
  * If no paths were found, returns an empty list, which is important for bots like medibots who expect an empty list rather than nothing.
  */
-/proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null)
+/proc/get_path_to(caller, ends, max_distance = 30, mintargetdist, id=null, simulated_only=TRUE, turf/exclude=null, skip_first=FALSE, cardinal_only=TRUE, required_goals=null, do_doorcheck=FALSE)
 	if(isnull(ends))
 		return
 	var/single_end = !islist(ends)
@@ -32,7 +33,7 @@
 	if(!caller || !length(ends))
 		return
 
-	var/datum/pathfind/pathfind_datum = new(caller, ends, id, max_distance, mintargetdist, simulated_only, exclude, cardinal_only)
+	var/datum/pathfind/pathfind_datum = new(caller, ends, id, max_distance, mintargetdist, simulated_only, exclude, cardinal_only, do_doorcheck)
 	if(!isnull(required_goals))
 		pathfind_datum.n_target_goals = required_goals
 	pathfind_datum.search()
@@ -58,7 +59,7 @@
  * Note that this can only be used inside the [datum/pathfind][pathfind datum] since it uses variables from said datum.
  * If you really want to optimize things, optimize this, cuz this gets called a lot.
  */
-#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
+#define CAN_STEP(cur_turf, next) (next && jpsTurfPassable(next, source=cur_turf, passer=caller, id=id, checkdoor=do_doorcheck) && !(simulated_only && !istype(next, /turf/simulated)) && (next != avoid))
 /// Another helper macro for JPS, for telling when a node has forced neighbors that need expanding
 #define STEP_NOT_HERE_BUT_THERE(cur_turf, dirA, dirB) ((!CAN_STEP(cur_turf, get_step(cur_turf, dirA)) && CAN_STEP(cur_turf, get_step(cur_turf, dirB))))
 
@@ -145,8 +146,10 @@
 	var/turf/avoid
 	/// Whether we only want cardinal steps
 	var/cardinal_only = FALSE
+	/// Whether or not we check if doors are blocked (welded, out of power, locked, etc...)
+	var/do_doorcheck = FALSE
 
-/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE)
+/datum/pathfind/New(atom/movable/caller, list/atom/goals, id, max_distance, mintargetdist, simulated_only, avoid, cardinal_only=FALSE, do_doorcheck=FALSE)
 	..()
 	src.caller = caller
 	ends = list()
@@ -168,6 +171,7 @@
 	src.simulated_only = simulated_only
 	src.avoid = avoid
 	src.cardinal_only = cardinal_only
+	src.do_doorcheck = do_doorcheck
 	src.paths = list()
 
 /**
@@ -413,7 +417,7 @@
 
 /// this is a slight modification of /proc/checkTurfPassable to avoid indirect proc call overhead
 /// Returns false if there is a dense atom on the turf, unless a custom hueristic is passed.
-/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null)
+/proc/jpsTurfPassable(turf/T, turf/source=null, atom/passer=null, id=null, checkdoor=FALSE)
 	. = TRUE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
@@ -429,8 +433,8 @@
 	if(!is_cardinal(direction))
 		var/turf/corner_1 = get_step(source, turn(direction, 45))
 		var/turf/corner_2 = get_step(source, turn(direction, -45))
-		return jpsTurfPassable(corner_1, source, passer, id) && jpsTurfPassable(T, corner_1, passer, id) || \
-				jpsTurfPassable(corner_2, source, passer, id) && jpsTurfPassable(T, corner_2, passer, id)
+		return jpsTurfPassable(corner_1, source, passer, id, checkdoor) && jpsTurfPassable(T, corner_1, passer, id, checkdoor) || \
+				jpsTurfPassable(corner_2, source, passer, id, checkdoor) && jpsTurfPassable(T, corner_2, passer, id, checkdoor)
 	if(isnull(id) && istype(passer, /obj/machinery/bot))
 		var/obj/machinery/bot/bot = passer
 		id = bot.botcard
@@ -450,9 +454,9 @@
 			if (istype(A, /obj/overlay) || istype(A, /obj/effects)) continue
 			if ((passer || id) && A.density)
 				if (O.object_flags & BOTS_DIRBLOCK) //NEW - are we a door-like-openable-thing?
-					if(istype(O, /obj/machinery/door))
+					if(checkdoor && istype(O, /obj/machinery/door))
 						var/obj/machinery/door/door = O
-						if(!door.operating)
+						if(door.isblocked())
 							return FALSE
 					if (ismob(passer) && O.allowed(passer) || id && O.check_access(id)) // do you have explicit access
 						continue
