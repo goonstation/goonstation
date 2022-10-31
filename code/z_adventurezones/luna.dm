@@ -1255,7 +1255,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		src: url('glass_tty_vt220.eot');
 		src: url('glass_tty_vt220.eot') format('embedded-opentype'),
 			 url('glass_tty_vt220.ttf') format('truetype'),
-			 url('glass_tty_vt220.woff') format('woff'),
+			 url('glass_tty_vt220.woff') format('woff');
 	}
 
 	body {background-color:#999876;}
