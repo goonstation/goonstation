@@ -613,7 +613,10 @@
 			if (AH)
 				//under consideration
 				//AH.points --
-				if (AH.points > 350)
+				if (AH.points > 450)
+					if (prob(3))
+						src.emote(pick("drool", "twitch", "groan", "shiver"))
+				else if (AH.points > 250)
 					if (prob(4))
 						if(prob(50))
 							src.emote(pick("drool", "twitch_v", "sneeze", "groan", "shiver"))
