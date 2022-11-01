@@ -1710,12 +1710,12 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/west)
 "afL" = (
-/obj/cable{
-	icon_state = "0-4"
-	},
 /obj/machinery/power/smes{
 	chargelevel = 15000;
 	output = 10000
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/solar/north)
