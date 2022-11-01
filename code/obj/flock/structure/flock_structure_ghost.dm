@@ -100,8 +100,9 @@
 
 /obj/flock_structure/ghost/proc/completebuild()
 	if(src.building)
-		new building(get_turf(src), src.flock)
+		var/obj/flock_structure/structure = new src.building(get_turf(src), src.flock)
 		src.flock?.structures_made++
+		src.flock?.flockmind.tutorial?.PerformSilentAction("building complete", structure)
 	qdel(src)
 
 /obj/flock_structure/ghost/proc/cancelBuild()

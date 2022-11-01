@@ -16,7 +16,7 @@
 		var/mob/living/critter/flock/drone/F = master
 		if(F)
 			if (id == "release")
-				if (F.flock.flockmind.tutorial?.PerformAction("release drone"))
+				if (!F.flock.flockmind.tutorial || F.flock.flockmind.tutorial.PerformAction("release drone"))
 					F.release_control()
 			else if(id == "spawn")
 				F.create_egg()

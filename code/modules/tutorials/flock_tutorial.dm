@@ -15,6 +15,7 @@
 		src.AddStep(new /datum/tutorialStep/flock/floorrun)
 		src.AddStep(new /datum/tutorialStep/flock/release_drone)
 		src.AddStep(new /datum/tutorialStep/flock/kill)
+		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
 			if(src.region.turf_in_region(T))
@@ -57,8 +58,8 @@
 
 	SetUp()
 		..()
-		must_deploy = locate(ftutorial.initial_turf.x, ftutorial.initial_turf.y + 1, ftutorial.initial_turf.z)
-		must_deploy.UpdateOverlays(marker,"marker")
+		src.must_deploy = locate(ftutorial.initial_turf.x, ftutorial.initial_turf.y + 1, ftutorial.initial_turf.z)
+		src.must_deploy.UpdateOverlays(src.marker,"marker")
 
 	PerformAction(var/action, var/context)
 		if (action == "spawn rift" && context == must_deploy)
@@ -133,6 +134,8 @@
 
 	SetUp()
 		..()
+		var/mob/living/critter/flock/drone/first_drone = src.ftutorial.fowner.flock.units[/mob/living/critter/flock/drone/][1] // lol
+		first_drone.set_stupid(FALSE)
 		SPAWN(1 SECOND)
 			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 0.1 SECONDS)
 		for (var/i = 1 to 4)
@@ -165,11 +168,34 @@
 		qdel(portal)
 
 	PerformAction(action, context)
-		if (action == "designate enemy")
+		if (action == "designate enemy" || action == "start conversion")
 			return TRUE
 		if (action == "cage")
 			finished = TRUE
 			return TRUE
+
+/datum/tutorialStep/flock/build_thing
+	var/turf/location = null
+	var/structure_type = null
+
+	PerformAction(action, context)
+		if (action == "start conversion")
+			return TRUE
+		if (action == "place tealprint" && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
+			return TRUE
+		if (action == "building complete")
+			src.finished = TRUE
+			return TRUE
+
+/datum/tutorialStep/flock/build_thing/sentinel
+	name = "Construct Sentinel"
+	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one, then let your drones construct it. Sentinels are powerful electric stun turrets, effective at making any humans who come into your lair go horizontal."
+	structure_type = /obj/flock_structure/sentinel
+
+	SetUp()
+		..()
+		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
+		location.UpdateOverlays(marker, "marker")
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"

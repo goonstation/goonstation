@@ -446,8 +446,6 @@
 	if(locate(/obj/flock_structure) in T)
 		boutput(holder.get_controlling_mob(), "<span class='alert'>There is already a flock structure on this flocktile!</span>")
 		return TRUE
-	if (!src.tutorial_check("fabricate structure", T))
-		return TRUE
 
 	var/list/friendlyNames = list()
 	var/mob/living/intangible/flock/flockmind/F = holder.owner
@@ -464,7 +462,8 @@
 		return TRUE
 	var/datum/unlockable_flock_structure/ufs = friendlyNames[structurewanted]
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
-
+	if (!src.tutorial_check("place tealprint", structurewantedtype))
+		return TRUE
 	if(structurewantedtype)
 		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))

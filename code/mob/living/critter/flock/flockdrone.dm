@@ -38,11 +38,7 @@
 	var/wander_count = 0
 
 /mob/living/critter/flock/drone/New(var/atom/location, var/datum/flock/F=null)
-	if (F?.flockmind.tutorial)
-		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
-	else
-		src.ai = new /datum/aiHolder/flock/drone(src)
-
+	src.ai = new /datum/aiHolder/flock/drone(src)
 	..()
 	var/datum/abilityHolder/composite/composite = new(src)
 	abilityHolder = composite
@@ -143,7 +139,7 @@
 	if(controller)
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
-	if (!src.flock.flockmind.tutorial?.PerformAction("control drone", src))
+	if (src.flock.flockmind.tutorial && !src.flock.flockmind.tutorial.PerformAction("control drone", src))
 		return
 	src.controller = pilot
 	src.wake_from_ai_pause()
@@ -923,6 +919,12 @@
 	else
 		return TRUE
 
+/mob/living/critter/flock/drone/proc/set_stupid(var/value)
+	if (value)
+		src.ai = new /datum/aiHolder/flock/drone/tutorial(src)
+	else
+		src.ai = new /datum/aiHolder/flock/drone(src)
+
 /////////////////////////////////////////////////////////////////////////////////
 // FLOCKDRONE SPECIFIC LIMBS AND EQUIPMENT SLOTS
 /////////////////////////////////////////////////////////////////////////////////
@@ -987,7 +989,7 @@
 	if (!istype(user))
 		return
 
-	if (!user.flock.flockmind.tutorial?.PerformAction("start conversion", target))
+	if (user.flock.flockmind.tutorial && !user.flock.flockmind.tutorial.PerformAction("start conversion", target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
