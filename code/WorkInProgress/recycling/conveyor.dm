@@ -97,15 +97,19 @@
 
 	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
 
+/obj/machinery/conveyor/proc/can_convey(var/atom/movable/A)
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
+		return FALSE
+	if(istype(A, /obj/machinery/bot) && A:on)	//They drive against the motion of the conveyor, ok.
+		return FALSE
+	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
+		return FALSE
+	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
+		return FALSE
+	return TRUE
 
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
-		return
-	if(istype(A, /obj/machinery/bot) && A:on)	//They drive against the motion of the conveyor, ok.
-		return
-	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
-		return
-	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
+	if (!can_convey(A))
 		return
 	var/movedir = dir	// base movement dir
 	if(divert && dir == divdir)	// update if diverter present
@@ -145,6 +149,8 @@
 		return
 	if(!loc)
 		return
+	if (!can_convey(AM))
+		return
 
 	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
@@ -154,7 +160,6 @@
 		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
 			walk(AM, 0)
 			return
-
 	else
 		//Stop walking, we left the belt
 		var/mob/M = AM
