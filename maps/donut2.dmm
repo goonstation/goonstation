@@ -11433,9 +11433,6 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "aNW" = (
-/obj/cable{
-	icon_state = "2-8"
-	},
 /obj/machinery/sim/vr_bed{
 	dir = 8;
 	name = "VR simulation pod";
@@ -15341,9 +15338,6 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer/bank_data,
 /obj/disposalpipe/segment{
@@ -17232,7 +17226,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bgg" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/wrench/monkey,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
@@ -44938,9 +44932,6 @@
 	},
 /obj/machinery/door/airlock/pyro/glass/command,
 /obj/access_spawn/heads,
-/obj/cable{
-	icon_state = "2-4"
-	},
 /obj/disposalpipe/segment,
 /turf/simulated/floor/grey/side,
 /area/station/bridge)
@@ -46321,9 +46312,6 @@
 /turf/simulated/floor/plating,
 /area/space)
 "tKr" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/item/reagent_containers/glass/bottle/antitoxin{
 	pixel_x = 4;
 	pixel_y = 9
@@ -47926,9 +47914,6 @@
 /obj/item/storage/box/clothing/rancher,
 /obj/item/reagent_containers/glass/wateringcan{
 	pixel_y = 9
-	},
-/obj/cable{
-	icon_state = "0-2"
 	},
 /obj/item/sponge,
 /turf/simulated/floor/green/side{

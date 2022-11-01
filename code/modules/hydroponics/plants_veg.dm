@@ -30,6 +30,7 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	endurance = 5
 	genome = 16
 	nectarlevel = 10
+	assoc_reagents = list("juice_carrot","oculine")
 	commuts = list(/datum/plant_gene_strain/immunity_toxin,/datum/plant_gene_strain/mutations/bad)
 
 /datum/plant/veg/potato
