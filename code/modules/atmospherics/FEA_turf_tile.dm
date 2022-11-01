@@ -395,7 +395,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 
 	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
 		for(var/atom/movable/item in src)
-			if(isintangible(item) || isobserver(item))
+			if(isintangible(item) || isobserver(item) || istype(item, /obj/overlay) || istype(item, /obj/effects))
 				continue
 			var/datum/component/radioactive/R = item.GetComponent(/datum/component/radioactive)
 			if(R?.radStrength > RADGAS_MAXIMUM_CONTAMINATION)
