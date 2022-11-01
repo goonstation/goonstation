@@ -211,3 +211,18 @@
 		if (!(locate(/obj/item) in get_turf(src)))
 			var/type = pick(src.stuff)
 			new type(src.loc)
+
+/mob/living/carbon/human/normal/chef/shoot_gun_person
+	New()
+		..()
+		var/obj/item/gun/kinetic/zipgun/gun = new(src)
+		gun.failure_chance = 0
+		src.put_in_hand(gun)
+		while(!is_incapacitated(src))
+			for (var/dir in modulo_angle_to_dir)
+				src.set_dir(dir)
+				sleep(1.5 SECONDS)
+				gun.ammo.amount_left = 2
+				var/turf/target = get_step(src, dir)
+				gun.shoot(target, src.loc, src)
+
