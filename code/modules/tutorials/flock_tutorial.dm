@@ -2,6 +2,7 @@
 	name = "Flock tutorial"
 	var/mob/living/intangible/flock/flockmind/fowner = null
 	region_type = /datum/mapPrefab/allocated/flock_tutorial
+	var/obj/landmark/center = null
 
 	New(mob/M)
 		. = ..()
@@ -11,8 +12,16 @@
 		src.AddStep(new /datum/tutorialStep/flock/control)
 		src.AddStep(new /datum/tutorialStep/flock/gather)
 		src.AddStep(new /datum/tutorialStep/flock/convert_window)
+		src.AddStep(new /datum/tutorialStep/flock/floorrun)
 		src.AddStep(new /datum/tutorialStep/flock/release_drone)
+		src.AddStep(new /datum/tutorialStep/flock/kill)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
+			if(src.region.turf_in_region(T))
+				center = T
+				break
+		if (!center)
+			throw EXCEPTION("Okay who removed the goddamn [LANDMARK_TUTORIAL_FLOCKCONVERSION] landmark")
 		src.fowner = M
 
 	Finish()
@@ -110,12 +119,55 @@
 			finished = TRUE
 			return TRUE
 
+/datum/tutorialStep/flock/floorrun
+	name = "Floor running"
+	instructions = "While controlling a flockdrone you can press your sprint key to disappear into the floor, becoming untargetable and passing through flock walls and windows. Use it to pass through the window you just converted."
+
+	PerformAction(action, context)
+		if (action == "floorrun")
+			src.finished = TRUE
+			return TRUE
 /datum/tutorialStep/flock/release_drone
 	name = "Release control"
 	instructions = "Now use the eject button at the bottom right of your HUD to release control of this drone."
 
+	SetUp()
+		..()
+		SPAWN(1 SECOND)
+			flock_spiral_conversion(src.ftutorial.center, ftutorial.fowner.flock, 0.1 SECONDS)
+		for (var/i = 1 to 4)
+			var/mob/living/critter/flock/drone/flockdrone = new(locate(src.ftutorial.center.x + rand(-3,3), src.ftutorial.center.y + rand(-3,3), src.ftutorial.center.z), ftutorial.fowner.flock)
+			spawn_animation1(flockdrone)
+			sleep(0.2 SECONDS)
+		for (var/i = 1 to 2)
+			var/mob/living/critter/flock/bit/flockdrone = new(locate(src.ftutorial.center.x + rand(-3,3), src.ftutorial.center.y + rand(-3,3), src.ftutorial.center.z), ftutorial.fowner.flock)
+			spawn_animation1(flockdrone)
+			sleep(0.2 SECONDS)
+
 	PerformAction(action, context)
 		if (action == "release drone")
+			finished = TRUE
+			return TRUE
+
+/datum/tutorialStep/flock/kill
+	name = "Eliminate threat"
+	instructions = "That human has just violated causality to teleport right into your flock! Mark them for elimination using your \"designate enemy\" ability and watch as your drones attack."
+
+	SetUp()
+		..()
+		var/obj/portal/portal = new(locate(src.ftutorial.center.x, src.ftutorial.center.y + 3, src.ftutorial.center.z))
+		sleep(1 SECOND)
+		animate_portal_tele(portal)
+		playsound(portal.loc, "warp", 50, 1, 0.2, 1.2)
+		var/mob/living/carbon/human/normal/jerk = new(get_turf(portal))
+		step(jerk, SOUTH)
+		sleep(0.5 SECONDS)
+		qdel(portal)
+
+	PerformAction(action, context)
+		if (action == "designate enemy")
+			return TRUE
+		if (action == "cage")
 			finished = TRUE
 			return TRUE
 

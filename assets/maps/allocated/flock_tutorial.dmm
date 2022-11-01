@@ -2,6 +2,10 @@
 "a" = (
 /turf/space,
 /area/space)
+"e" = (
+/obj/machinery/vending/computer3,
+/turf/simulated/floor,
+/area/space)
 "f" = (
 /obj/machinery/light/small/floor,
 /turf/simulated/floor,
@@ -10,13 +14,32 @@
 /obj/landmark/tutorial_start,
 /turf/simulated/floor,
 /area/space)
+"h" = (
+/obj/machinery/light{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space)
 "j" = (
 /obj/machinery/door/airlock/pyro/command,
 /obj/access_spawn/heads,
 /turf/simulated/floor,
 /area/space)
+"k" = (
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/space)
 "l" = (
 /turf/simulated/wall/auto/supernorn,
+/area/space)
+"n" = (
+/obj/machinery/vending/book{
+	dir = 8;
+	pixel_x = 9
+	},
+/turf/simulated/floor,
 /area/space)
 "q" = (
 /obj/rack,
@@ -42,14 +65,63 @@
 /obj/wingrille_spawn/auto/crystal,
 /turf/simulated/floor,
 /area/space)
+"H" = (
+/obj/machinery/vending/coffee{
+	dir = 4;
+	pixel_x = -9
+	},
+/turf/simulated/floor,
+/area/space)
+"L" = (
+/obj/machinery/vending/floppy,
+/turf/simulated/floor,
+/area/space)
+"O" = (
+/obj/landmark/tutorial/flock_conversion,
+/turf/simulated/floor,
+/area/space)
+"P" = (
+/obj/machinery/light{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
+"Q" = (
+/obj/stool/chair/office/blue{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
 "R" = (
 /turf/cordon,
 /area/space)
+"S" = (
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/space)
+"T" = (
+/obj/table/reinforced/industrial/auto,
+/turf/simulated/floor,
+/area/space)
 "V" = (
 /obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/space)
+"X" = (
+/obj/machinery/vending/cola/blue{
+	credit = 12;
+	dir = 4;
+	pixel_x = -9
+	},
+/turf/simulated/floor,
+/area/space)
+"Z" = (
+/obj/machinery/vending/pizza{
+	anchored = 1;
+	dir = 8;
+	pixel_x = 9
 	},
 /turf/simulated/floor,
 /area/space)
@@ -328,15 +400,15 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+l
+l
+l
+l
+l
+l
+l
 a
 a
 a
@@ -360,17 +432,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+P
+H
+C
+C
+C
+X
+P
+l
+l
 a
 a
 a
@@ -392,19 +464,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+C
+C
+C
+C
+C
+C
+C
+C
+C
+l
+l
 a
 a
 a
@@ -424,20 +496,20 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-R
-R
-R
-R
+l
+l
+C
+C
+C
+C
+C
+f
+C
+C
+C
+C
+C
+l
 R
 R
 R
@@ -457,20 +529,20 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
-l
-l
-l
+V
+C
+C
+T
+T
+C
+C
+C
+T
+T
+C
+C
+S
 l
 l
 l
@@ -490,17 +562,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
+e
+C
+C
+T
+Q
+C
+C
+C
+Q
+T
 C
 C
 C
@@ -523,17 +595,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
 C
 C
 C
@@ -556,19 +628,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
 C
+C
 f
+C
+C
+C
+O
+C
+C
+C
+f
+C
 C
 D
 C
@@ -589,17 +661,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
+C
+C
+C
+C
+C
+C
+C
+C
+C
+C
 C
 C
 C
@@ -622,17 +694,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
+L
+C
+C
+T
+k
+C
+C
+C
+k
+T
 C
 C
 C
@@ -655,20 +727,20 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
 l
-l
-l
-l
+V
+C
+C
+T
+T
+C
+C
+C
+T
+T
+C
+C
+S
 l
 l
 l
@@ -688,20 +760,20 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-R
-R
-R
-R
+l
+l
+C
+C
+C
+C
+C
+f
+C
+C
+C
+C
+C
+l
 R
 R
 R
@@ -722,19 +794,19 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+C
+C
+C
+C
+C
+C
+C
+C
+C
+l
+l
 a
 a
 a
@@ -756,17 +828,17 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+h
+n
+C
+C
+C
+Z
+h
+l
+l
 a
 a
 a
@@ -790,15 +862,15 @@ a
 a
 a
 a
-a
-a
-a
-a
-a
-a
-a
-a
-a
+l
+l
+l
+l
+l
+l
+l
+l
+l
 a
 a
 a

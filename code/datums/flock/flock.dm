@@ -847,7 +847,7 @@ var/flock_signal_unleashed = FALSE
 
 	flock_spiral_conversion(T, F)
 
-/proc/flock_spiral_conversion(var/turf/T, datum/flock/F)
+/proc/flock_spiral_conversion(var/turf/T, datum/flock/F, delay = 0.2 SECONDS)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -865,7 +865,7 @@ var/flock_signal_unleashed = FALSE
 				F.claimTurf(flock_convert_turf(T))
 			else
 				flock_convert_turf(T)
-			sleep(0.2 SECONDS)
+			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
 		if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1-y))
