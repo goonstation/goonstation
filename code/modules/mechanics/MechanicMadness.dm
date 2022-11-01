@@ -3301,7 +3301,7 @@
 	cooldown_time = 1 SECOND
 	cabinet_only = TRUE
 	one_per_tile = TRUE
-	var/move_lag = BASE_SPEED
+	var/move_lag = 10
 
 	New()
 		..()
@@ -3314,7 +3314,6 @@
 			src.loc.AddComponent(/datum/component/legs/four)
 		else
 			src.loc.AddComponent(/datum/component/legs/six)
-		RegisterSignal(src.loc, COMSIG_MOVABLE_SET_LOC, .proc/container_check)
 
 	loosen()
 		var/datum/component/C
@@ -3325,15 +3324,6 @@
 		if (C)
 			C.RemoveComponent()
 		src.stop_moving()
-		UnregisterSignal(src.loc, COMSIG_MOVABLE_SET_LOC)
-
-	/// checks if we are in a container so we can stop walking
-	proc/container_check()
-		var/obj/item/storage/S = src.loc
-		if (!istype(S))
-			return
-		if (!isturf(S.loc))
-			stop_moving()
 
 	cabinet_state_change(var/obj/item/storage/mechanics/container)
 		if (container.anchored)
@@ -3348,17 +3338,17 @@
 		if (direction == null)
 			return
 		var/obj/item/storage/S = src.loc
-		if (!istype(S))
+		if (!walk_check(S))
 			return
-		if (S.anchored)
-			return
-		set_glide_size()
+		set_glide_size(S)
 		walk(S, direction, move_lag, (32 / move_lag) * world.tick_lag)
-		set_glide_size()
+		set_glide_size(S)
 		if (direction == 0)
-			UnregisterSignal(S, COMSIG_MOVABLE_MOVED)
+			UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+			REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 		else
-			RegisterSignal(S, COMSIG_MOVABLE_MOVED, .proc/set_glide_size, TRUE)
+			RegisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC), .proc/movement_stuff, TRUE)
+			APPLY_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 
 	proc/do_step(var/datum/mechanicsMessage/input)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
@@ -3369,31 +3359,42 @@
 		if (!direction)
 			return
 		var/obj/item/storage/S = src.loc
-		if (!istype(S))
+		if (!walk_check(S))
 			return
-		if (S.anchored)
-			return
-		set_glide_size()
+		set_glide_size(S)
 		step(S, direction, (32 / move_lag) * world.tick_lag)
-		set_glide_size()
-		if (direction == 0)
-			UnregisterSignal(S, COMSIG_MOVABLE_MOVED)
-		else
-			RegisterSignal(S, COMSIG_MOVABLE_MOVED, .proc/set_glide_size, TRUE)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
 
-	proc/set_glide_size()
+	/// set our glide size in case it was changed
+	/// check if we are in a container or space and stop in that case
+	proc/movement_stuff()
 		var/obj/item/storage/S = src.loc
-		if (!istype(S))
+		if (!walk_check(S))
+			stop_moving()
 			return
+		set_glide_size(S)
+
+	proc/set_glide_size(var/obj/item/storage/S)
 		S.glide_size = (32 / move_lag) * world.tick_lag
 		S.animate_movement = FORWARD_STEPS
+
+	/// checks if we may move right now
+	proc/walk_check(var/obj/item/storage/S)
+		if (!istype(S))
+			return FALSE
+		if (S.anchored)
+			return FALSE
+		if (!isturf(S.loc) || (istype(S.loc, /turf/space) && !istype(S.loc, /turf/space/fluid)))
+			return FALSE
+		return TRUE
 
 	proc/stop_moving()
 		var/obj/item/storage/S = src.loc
 		if (!istype(S))
 			return
 		walk(S, 0)
-		UnregisterSignal(S, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(S, list(COMSIG_MOVABLE_MOVED, COMSIG_MOVABLE_SET_LOC))
+		REMOVE_ATOM_PROPERTY(S, PROP_ATOM_FLOATING, "mech-component")
 
 	proc/set_speed(obj/item/W as obj, mob/user as mob)
 		// as fast as humans, but they can't sprint
