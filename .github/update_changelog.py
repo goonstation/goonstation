@@ -25,7 +25,7 @@ labels_to_emoji = {
 	'a-clothing': '🎩',
 	'a-events': '🌠',
 	'a-game-objects': '📦',
-	'a-gamemodes': '🧛‍',
+	'a-gamemodes': '🧛',
 	'a-github': '🏗',
 	'a-hydroponics': '🌱',
 	'a-internal': '⚙',

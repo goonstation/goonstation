@@ -56,7 +56,7 @@
 (t)fri oct 28 22
 (u)LeahTheTech
 (p)11388
-(e)🆕🎨⚖🧛‍|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(e)🆕🎨⚖🧛|C-Feature, C-Sprites, C-Balance, A-Gamemodes
 (*)Reworked the Flockmind heal ability to be an AOE.
 (u)Kubius
 (p)11643
@@ -72,7 +72,7 @@
 (+)Pies can now be sliced!
 (u)LeahTheTech
 (p)11613
-(e)🆕🔄🧛‍⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
+(e)🆕🔄🧛⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
 (+)LSD hallucinations are now a little more realistic.
 (t)thu oct 27 22
 (u)aloe
