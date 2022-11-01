@@ -480,17 +480,17 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		if (istype(holder.owner, /mob/living/critter/small_animal))
 			temp_animal = holder.owner
 		if (active)
-			APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_THERMALVISION_MK2, src)
+			APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
 			APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
 			if (temp_human) temp_human.slug_vision = TRUE
 			if (temp_animal) temp_animal.slug_vision = TRUE
 		else
-			REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_THERMALVISION_MK2, src)
+			REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
 			REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
 			if (temp_human) temp_human.slug_vision = FALSE
 			if (temp_animal) temp_animal.slug_vision = FALSE
 		return FALSE
 	disposing()
 		. = ..()
-		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_THERMALVISION_MK2, src)
+		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
 		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)
