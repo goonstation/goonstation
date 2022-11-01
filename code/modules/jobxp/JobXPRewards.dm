@@ -606,6 +606,27 @@ mob/verb/checkrewards()
 		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
 		return
 
+/datum/jobXpReward/chefhattall
+    name = "Tall Chef Hat"
+    desc = "Your iconic toque blanche but tall!"
+    required_levels = list("Chef"=2)
+    claimable = 1
+    var/path_to_spawn = /obj/item/clothing/head/chefhattall/
+
+    activate(var/client/C)
+        var/obj/item/clothing/head/chefhat/chefhat = locate(/obj/item/clothing/head/chefhat) in C.mob.contents
+
+        if (istype(chefhat))
+            C.mob.remove_item(chefhat)
+            qdel(chefhat)
+        else
+            boutput(C.mob, "You need to be holding a chef's hat in order to claim this reward")
+            return
+        var/obj/item/I = new path_to_spawn()
+        I.set_loc(get_turf(C.mob))
+        C.mob.put_in_hand_or_drop(I)
+        boutput(C.mob, "Your chef's hat suddenly elongates before your very eyes!")
+
 /////////////Mime////////////////
 
 /datum/jobXpReward/mime/mimefancy

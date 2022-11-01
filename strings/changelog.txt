@@ -1,5 +1,129 @@
 
+(t)mon oct 31 22
+(u)Kubius
+(p)11614
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Kondaru's engine is now atmospherically gapped from the station, connected by two airbridges and a conveyor belt. This should result in significantly fewer instances of adjacent departments being barbequed by ambitious TEG setups.
+(t)sun oct 30 22
+(u)KolisDumb, DeadMan164
+(p)11727
+(e)🎨|C-Sprites
+(*)Added the tall chef hat to the game - a chef job reward available at chef level 2.
+(u)Kubius
+(p)11701
+(e)🆕|C-Feature
+(+)Filling bowls of soup on trays, including kitchen islands, should no longer detach the bowl from the tray.
+(t)sat oct 29 22
+(u)Ikea
+(p)11260
+(e)🪲⚖🔊💨|C-Bug, C-Balance, C-Sound, A-Atmospherics
+(*)Molitz crystals now come with unique examination text relating to how much gas is left inside of them
+(u)pali
+(p)8395
+(e)|
+(*)Credits symbol has been changed from $ to ⪽
+(u)Hans
+(p)11095
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added stinging nettle to the list of plants botany can make! (More info in minor changes)
+(+)Stinging nettle will periodically inject anyone close with histamine and the chemicals spliced with it, similar to rafflesia but without the smoke.
+(+)Stinging nettle can be circumvented by wearing chemical protection, and the frequency of injecting people depends on it's endurance, while the amount of chemicals varies upon potency.
+(+)Leaf sprite provided by Clover.
+(u)Kubius
+(p)11642
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's listening post has been overhauled and reflavored. It has moved to the southwest of its predecessor.
+(u)DrWolfy
+(p)11666
+(e)🆕💅|C-Feature, C-QoL
+(+)Hyposprays and menders can now refill from reagent dispensers (foamtanks, welding tanks, etc)
+(u)Kubius
+(p)11578
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Substantially increased the extraction rate of Nadir's Harmonic Siphon and removed the cap of one yield per machine tick. Most mineral targets extract two to three times faster; energetic materials received a smaller buff, while gold received a larger one.
+(u)Kubius
+(p)11665
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Overhauled Nadir's kitchen to significantly improve workflow for Chefs.
+(u)lofijuno
+(p)11507
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a western dress costume to the clothing booth.
+(u)Shiiba
+(p)11499
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)New sprite for Genetics PDA cartridge.
+(t)fri oct 28 22
+(u)LeahTheTech
+(p)11388
+(e)🆕🎨⚖🧛|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(*)Reworked the Flockmind heal ability to be an AOE.
+(u)Kubius
+(p)11643
+(e)🆕|C-Feature
+(+)You can now make flippers for 5 rubber. Uniform manufacturers always have the ability to make them, and underwater maps also allow making them at general manufacturers and mining fabricators.
+(u)Bartimeus973
+(p)11599
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Flipping coins has been made more dramatic.
+(u)Jan.antilles
+(p)11600
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Pies can now be sliced!
+(u)LeahTheTech
+(p)11613
+(e)🆕🔄🧛⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
+(+)LSD hallucinations are now a little more realistic.
+(t)thu oct 27 22
+(u)aloe
+(*)Security's contraband locker now contains a box of 10 stickers which can be applied to an item to change that item's contraband value. The stickers can be adjusted from 0 to 10 contraband.
+(u)LeahTheTech
+(p)11621
+(e)🆕🍝|C-Feature, A-Catering
+(+)Putting ice in a deep fryer will now cause... predictable results.
+(u)Flaborized
+(p)11598
+(e)🎨🔬|C-Sprites, A-Science
+(+)Resprited long range teleporter.
+(u)pali
+(p)11616
+(e)💅📄|C-QoL, A-UI
+(+)Vendor UI is now more compact
+(t)wed oct 26 22
+(u)Kubius
+(p)11608
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Aqua tenebrae, Nadir's sea acid, will no longer vaporize your loose items if somebody smokes it.
+(u)ZWRh3
+(p)11605
+(e)🪲⚖📦|C-Bug, C-Balance, A-Game-Objects
+(+)Fixed an exploit which allowed flashes to stun at twice the intended speed.
+(u)TDHooligan
+(p)11607
+(e)🎨📦🍝|C-Sprites, A-Game-Objects, A-Catering
+(+)X Cakes and similar recipes will now more closely match the color of their ingredients, rather than being bright red.
+(u)Wisemonster
+(p)11553
+(e)🗺💅|A-Mapping, C-QoL
+(+)Mechanics storage has been modified on cog1 to now be merged with the engineering power room.
+(u)Kubius
+(p)11551
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(*)Mining fabricators are now capable of manufacturing dive suits while on an underwater map.
+(u)Kubius
+(p)11564
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Fifth fixbatch for Nadir, prominently including a third Janitor slot, removal of a nonstandard Security slot, and inner maintenance camera coverage adjustment. The Research hall is no longer radstorm immune.
+(t)tue oct 25 22
+(u)aloe
+(+)Gave the brobocop module a foam dart gun. It fires biodegradable bullets synthesized from the borg's battery.
+(u)Waffleloffle & amylizzle
+(p)11585
+(e)🎨|C-Sprites
+(+)Added a capybara to the game.
 (t)mon oct 24 22
+(u)tarmunora
+(+)Thermal printers now have a limited stock of paper that slowly replenishes.
 (u)Sord
 (+)Jobs with clothing vendors now have less clothing in their secure lockers.
 (+)This will be the standard going forward for any jobs that receive clothing vendors.
@@ -37,7 +161,7 @@
 (+)Audio logs now display maptext. This is accompanied by some internal code changes; please report any bugs that you may encounter.
 (u)Ikea
 (p)11015
-(e)⚖🧫🧛‍♂️|C-Balance, C-Experimental, A-Gamemodes
+(e)⚖🧫🧛|C-Balance, C-Experimental, A-Gamemodes
 (*)27-30 minutes into a rev round everyone recieves a tracker for revheads/heads on their pda.
 (u)Kubius
 (p)11541
@@ -45,7 +169,7 @@
 (+)Widened Nadir by two tiles to improve foot traffic flow in secondary hallways.
 (u)Momoberry
 (p)10909
-(e)⚖💅🧛‍♂️|C-Balance, C-QoL, A-Gamemodes
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
 (+)Wraiths blood writing no longer has a cooldown and costs 2 points, instead of 10.
 (t)sat oct 22 22
 (u)Sord
@@ -81,7 +205,7 @@
 (t)wed oct 19 22
 (u)LeahTheTech
 (p)11441
-(e)💅🧛‍♂️|C-QoL, A-Gamemodes
+(e)💅🧛|C-QoL, A-Gamemodes
 (+)Coagulated gnesis tinting now wears off after 3 minutes.
 (u)Kubius
 (p)7730
@@ -142,7 +266,7 @@
 (+)Can no longer kick with a bear/etc arm, bladed gloves, etc
 (u)Gannets
 (p)11359
-(e)🆕🎨⚖🧛‍♂️📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
+(e)🆕🎨⚖🧛📦|C-Feature, C-Sprites, C-Balance, A-Gamemodes, A-Game-Objects
 (*)Added the Veritate PDW to nuke ops Field Medic class crates.
 (t)sun oct 16 22
 (u)Glamurio (Ryou)
@@ -151,7 +275,7 @@
 (+)Added three new random rooms, a 5x3 and two 3x3s.
 (u)LeahTheTech
 (p)11377
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (+)Turned down the misstep applied by Flockmind radio stun ability.
 (u)Sord
 (*)Most standard shuttle interior doors are now not hackable, boltable, or weldable. We'll see if this stays.
@@ -238,7 +362,7 @@
 (+)Standardised the Cogmap2 Armoury.
 (u)LeahTheTech
 (p)11031
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Flock are now capped at 75 flockdrones per flock.
 (t)sat oct 08 22
 (u)Ikea
@@ -253,7 +377,7 @@
 (*)The Remy, bumblespider, and crow Spooktober jobs are now restricted to mentors only. Please ahelp if you see people still being griefy.
 (u)Bartimeus
 (p)11195
-(e)🆕⚖🧛‍♂️|C-Feature, C-Balance, A-Gamemodes
+(e)🆕⚖🧛|C-Feature, C-Balance, A-Gamemodes
 (+)Trickster wraiths now have access to a slippery trap.
 (u)Waffleloffle
 (p)11233
@@ -270,7 +394,7 @@
 (t)fri oct 07 22
 (u)Bartimeus
 (p)11063
-(e)🆕🧛‍♂️|C-Feature, A-Gamemodes
+(e)🆕🧛|C-Feature, A-Gamemodes
 (+)The harbinger wraith's summons now see in the dark and so does the trickster wraith.
 (u)Sord
 (+)Med and Sec clothing vendors now sell PDAs and headsets for those departments. They also have shoes for free.
@@ -326,15 +450,15 @@
 (+)Sticks-to-snakes spell snakes are mobs now. You can set them on fire and poison them.
 (u)Wisemonster
 (p)11157
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Disaster round wraiths can now evolve without having to absorb any corpses.
 (u)LeahTheTech
 (p)11090
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (*)Mixed "major threat" antagonists (Blob, Flock and Wraith) are now twice as common and replace fewer normal antagonists.
 (u)LeahTheTech
 (p)11140
-(e)🪲⚖🧛‍♂️|C-Bug, C-Balance, A-Gamemodes
+(e)🪲⚖🧛|C-Bug, C-Balance, A-Gamemodes
 (+)Flockdrone corpses no longer block 100% of shots
 (t)sun oct 02 22
 (u)Sord
@@ -377,11 +501,11 @@
 (+)The Security and Medical job clothing vendors can now be accessed by anyone who has access to those departments.
 (u)Amylizzle
 (p)11071
-(e)🪲⚖🧛‍♂️📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
+(e)🪲⚖🧛📦|C-Bug, C-Balance, A-Gamemodes, A-Game-Objects
 (+)Substantially buffed the Flock's Gnesis Turret.
 (u)ZWRh3
 (p)11101
-(e)⚖🧛‍♂️|C-Balance, A-Gamemodes
+(e)⚖🧛|C-Balance, A-Gamemodes
 (+)Removed vuvuzela gun from the battle royale gamemode.
 (u)FlameArrow57 and DimWhat
 (p)9043
@@ -409,7 +533,7 @@
 (+)Balloons need to be tied off before being thrown.
 (u)LeahTheTech
 (p)11077
-(e)🪲🧛‍♂️|C-Bug, A-Gamemodes
+(e)🪲🧛|C-Bug, A-Gamemodes
 (+)The Hydra smart pistol is now slightly smarter and no longer targets sawflies or nukeop gunbots.
 (t)thu sep 29 22
 (u)LeahTheTech

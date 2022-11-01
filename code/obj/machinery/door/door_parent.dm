@@ -347,7 +347,7 @@
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 
-	if (src.density && !src.operating && I.force > 5)
+	if (src.density && !src.operating && I?.force > 5)
 		var/resolvedForce = I.force
 		if (I.tool_flags & TOOL_CHOPPING)
 			resolvedForce *= 4

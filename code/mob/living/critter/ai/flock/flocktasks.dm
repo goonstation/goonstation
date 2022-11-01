@@ -66,11 +66,6 @@ stare
 /datum/aiTask/prioritizer/flock/New()
 	..()
 
-/datum/aiTask/prioritizer/flock/on_tick()
-	if(isdead(holder.owner))
-		holder.enabled = FALSE
-		walk(holder.owner, 0) // to prevent moving when dead
-
 /datum/aiTask/prioritizer/flock/on_reset()
 	..()
 	if(istype(holder.owner,/mob/living/critter/flock/drone))

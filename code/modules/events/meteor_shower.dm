@@ -26,6 +26,12 @@ var/global/meteor_shower_active = 0
 	var/meteor_type = /obj/newmeteor/massive
 #endif
 
+	is_event_available(var/ignore_time_lock = 0)
+		. = ..()
+		if(.)
+			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
+				. = FALSE
+
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
