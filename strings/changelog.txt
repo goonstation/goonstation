@@ -1,5 +1,9 @@
 
 (t)tue nov 01 22
+(u)Lord_Earthfire
+(p)11754
+(e)🪲|C-Bug
+(+)fixes carrot splices having no occuline or carrot juice
 (u)Kubius
 (p)11646
 (e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
