@@ -1035,6 +1035,7 @@
 	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
 	var/stomp_cooldown = 10 SECONDS
 	var/stomp_damage = 20
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!(the_item in the_mob.get_equipped_items()))

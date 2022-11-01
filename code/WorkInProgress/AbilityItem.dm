@@ -142,6 +142,7 @@
 	name = "(De)Activate Magboots"
 	icon_state = "magbootson"
 	desc = "Toggle your magboots.<br>When on, they firmly anchor you to the floor, preventing the majority of outside forces from moving you."
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
@@ -183,6 +184,7 @@
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
 	var/explosion_chance = 3
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -264,6 +266,7 @@
 /obj/ability_button/sonic
 	name = "Activate Shoes"
 	icon_state = "rocketshoes"
+	requires_equip = TRUE
 
 	execute_ability()
 		if(!the_item || !the_mob || !the_mob.canmove) return
@@ -301,6 +304,7 @@
 /obj/ability_button/cebelt_toggle
 	name = "Toggle overshield"
 	icon_state = "shieldceon"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/storage/belt/utility/prepared/ceshielded/C = the_item
@@ -447,6 +451,7 @@
 /obj/ability_button/jetpack2_toggle
 	name = "Toggle jetpack MKII"
 	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/jetpackmk2/J = the_item
@@ -458,6 +463,7 @@
 /obj/ability_button/jetpack_toggle
 	name = "Toggle jetpack"
 	icon_state = "jetoff"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/tank/jetpack/J = the_item
@@ -471,6 +477,7 @@
 /obj/ability_button/jetboot_toggle
 	name = "Toggle jet boots"
 	icon_state = "jeton"
+	requires_equip = TRUE
 
 	execute_ability()
 		var/obj/item/clothing/shoes/jetpack/J = the_item
@@ -510,6 +517,7 @@
 	name = "Rush"
 	icon_state = "rushon"
 	cooldown = 100
+	requires_equip = TRUE
 
 	ability_allowed()
 		if (!the_mob || !the_mob.canmove || the_mob.stat || the_mob.getStatusDuration("paralysis"))
@@ -755,10 +763,14 @@
 
 	proc/show_buttons()
 		if(!the_mob || !islist(src.ability_buttons) || !length(ability_buttons)) return
-		if(!the_mob.item_abilities.Find(ability_buttons[1]))
-			the_mob.item_abilities.Add(ability_buttons)
-			the_mob.need_update_item_abilities = 1
-			the_mob.update_item_abilities()
+		var/list/abilities_toadd = list()
+		for (var/obj/ability_button/AB in ability_buttons)
+			if (AB.requires_equip && !(AB.the_item in the_mob.get_equipped_items())) continue
+			abilities_toadd += AB
+		if (!length(abilities_toadd)) return
+		the_mob.item_abilities |= abilities_toadd
+		the_mob.need_update_item_abilities = 1
+		the_mob.update_item_abilities()
 
 	proc/hide_buttons()
 		if(!the_mob || !islist(src.ability_buttons)) return
@@ -805,6 +817,8 @@
 
 	var/targeted = 0 //does activating this ability let you click on something to target it?
 	var/target_anything = 0 //can you target any atom, not just people?
+
+	var/requires_equip = FALSE // can you see this button without equipping the item
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
