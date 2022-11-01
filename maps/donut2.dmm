@@ -17226,7 +17226,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "bgg" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/wrench/monkey,
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
