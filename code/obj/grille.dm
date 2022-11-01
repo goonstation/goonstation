@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if(src.auto)
 			SPAWN(0) //fix for sometimes not joining on map load
 				if (map_setting && ticker)
@@ -42,6 +43,7 @@
 				src.UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		var/list/neighbors = null
 		if (src.auto && src.anchored && map_setting)
 			neighbors = list()
