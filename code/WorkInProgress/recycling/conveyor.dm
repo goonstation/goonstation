@@ -409,29 +409,53 @@
 	..()
 	update()
 
-
 /obj/item/debug_conveyor_layer
 	name = "conveyor layer"
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "debug"
 	var/on = FALSE
+	var/list/obj/machinery/conveyor/conveyors
+	var/list/obj/machinery/conveyor_switch/switches
+	var/conv_id
 
 	attack_self(mob/user)
-		toggle_state()
-
-	proc/toggle_state()
 		if (!on)
-			on = TRUE
-			icon_state = "debug-on"
-			src.AddComponent(/datum/component/conveyorplacer, .proc/stop_laying)
+			switch_on(user)
 		else
-			stop_laying()
+			switch_off(user)
 
-	proc/stop_laying()
+	proc/switch_on(var/mob/user, var/use_id = null)
+		on = TRUE
+		icon_state = "debug-on"
+		conveyors = list()
+		switches = list()
+		conv_id = "[world.time]"
+		user.AddComponent(/datum/component/conveyorplacer, conveyors, conv_id)
+
+	proc/switch_off(var/mob/user)
 		on = FALSE
 		icon_state = "debug"
-		var/datum/component/conveyorplacer/CP = src.GetComponent(/datum/component/conveyorplacer)
+		var/datum/component/conveyorplacer/CP = user.GetComponent(/datum/component/conveyorplacer)
 		CP.RemoveComponent()
+		for (var/obj/machinery/conveyor/C in src.conveyors)
+			C.linked_switches = src.switches
+		for (var/obj/machinery/conveyor_switch/S in src.switches)
+			S.conveyors = src.conveyors
+
+	afterattack(atom/target, mob/user, reach, params)
+		if (on && isturf(target))
+			var/obj/machinery/conveyor_switch/sw = new /obj/machinery/conveyor_switch(target)
+			sw.id = conv_id
+			src.switches |= sw
+
+	dropped(mob/user)
+		. = ..()
+		switch_off(user)
+
+	disposing()
+		. = ..()
+		if (on && ismob(src.loc))
+			switch_off(src.loc)
 
 // conveyor diverter
 // extendable arm that can be switched so items on the conveyer are diverted sideways
