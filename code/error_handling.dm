@@ -20,6 +20,7 @@ var/global/runtime_count = 0
 		"file" = !invalid ? E.file : "",
 		"line" = !invalid ? E.line : "",
 		"desc" = E.desc ? E.desc : "",
+		"usr" = usr ? "[usr] ([usr.ckey])" : "null",
 		"seen" = timestamp,
 		"invalid" = invalid
 	)
@@ -33,6 +34,8 @@ var/global/runtime_count = 0
 		if (E.desc)
 			world.log << "[E.desc]"
 #endif
+
+	usr?.unlock_medal("Halt And Catch Fire", 1)
 
 
 /client/proc/cmd_view_runtimes()
