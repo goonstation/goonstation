@@ -93,11 +93,14 @@ var/global/list/turf/hotly_processed_turfs = list()
 			#ifdef ALPHA_GAS_OVERLAYS
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles-alpha", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 			#else
 			mutable_appearance('icons/effects/tile_effects.dmi', "plasma", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
 			mutable_appearance('icons/effects/tile_effects.dmi', "sleeping_agent", FLY_LAYER, PLANE_NOSHADOW_ABOVE),
+			mutable_appearance('icons/effects/tile_effects.dmi', "rad_particles", FLY_LAYER, PLANE_NOSHADOW_ABOVE)
 			#endif
 		)
+
 
 	var/tmp/dist_to_space = null
 
@@ -389,6 +392,18 @@ var/global/list/turf/hotly_processed_turfs = list()
 		for(var/atom/movable/item as anything in src)
 			item.temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 		temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
+
+	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
+		for(var/atom/movable/item in src)
+			if(isintangible(item) || isobserver(item))
+				continue
+			var/datum/component/radioactive/R = item.GetComponent(/datum/component/radioactive)
+			if(R?.radStrength > RADGAS_MAXIMUM_CONTAMINATION)
+				continue
+			item.AddComponent(/datum/component/radioactive,min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
+			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
+			if(src.air.radgas < RADGAS_MINIMUM_CONTAMINATION_MOLES)
+				break //no point continuing if we've dropped below threshold
 
 	return 1
 
