@@ -23,6 +23,7 @@ labels_to_emoji = {
 	'a-catering': '🍝',
 	'a-chemistry': '⚗',
 	'a-clothing': '🎩',
+	'a-events': '🌠',
 	'a-game-objects': '📦',
 	'a-gamemodes': '🧛‍',
 	'a-github': '🏗',
