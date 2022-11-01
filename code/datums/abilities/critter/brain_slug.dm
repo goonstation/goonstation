@@ -165,6 +165,9 @@ ABSTRACT_TYPE(/datum/targetable/brain_slug)
 				the_slug.abilityHolder.points ++
 			T.slug = the_slug
 			T.add_advanced_slug_abilities(the_slug)
+			switch(the_slug.abilityHolder.points)
+				if (4)
+					T.abilityHolder?.addAbility(/datum/targetable/brain_slug/pupate)
 
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")
@@ -450,3 +453,10 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		qdel(temp_reagents)
 		boutput(holder.owner, "<span class='notice'>You drool some mucus on [target], making it unpleasantly sticky.</span>")
 		return FALSE
+
+/datum/targetable/brain_slug/pupate
+	name = "Pupate"
+	desc = "Use all the nutrients in a human body and evolve into your final, deadly form."
+	icon_state = "slimeshot"
+	cooldown = 40 SECONDS
+	targeted = 0

@@ -19,7 +19,7 @@
 				acidify_turf(T, acidify_duration)
 		qdel(src)
 
-	proc/acidify_turf(turf/T, var/burn_duration = 20 SECONDS)
+	proc/acidify_turf(turf/T, var/burn_duration = 25 SECONDS)
 		//Todo add an overlay on turfs to make it bubbly and sizzly
 		T.acidic = TRUE
 		SPAWN(burn_duration)
