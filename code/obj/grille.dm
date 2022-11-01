@@ -88,6 +88,11 @@
 		connects_to_turf = null
 		event_handler_flags = 0
 
+		New()
+			..()
+			var/datum/material/M = getMaterial("steel")
+			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = TRUE)
+
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
 				return
