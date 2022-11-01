@@ -1,4 +1,9 @@
 
+(t)tue nov 01 22
+(u)Kubius
+(p)11646
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(+)Emergency suits' Nadir acid survival time has been doubled from 90 seconds to 3 minutes. As before, they are guaranteed for Nadir personnel.
 (t)mon oct 31 22
 (u)Kubius
 (p)11614
