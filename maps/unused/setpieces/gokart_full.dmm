@@ -829,7 +829,7 @@
 /turf/unsimulated/wall/other,
 /area/tdome/tdome1)
 "cf" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -862,7 +862,7 @@
 /turf/unsimulated/wall/other,
 /area/farm/bball)
 "ci" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -888,7 +888,7 @@
 /turf/unsimulated/wall/other,
 /area/tdome/tdome2)
 "ck" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -1358,7 +1358,7 @@
 	name = "Thunderdome Lounge"
 	})
 "dG" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 8;
@@ -1388,7 +1388,7 @@
 	name = "Thunderdome Lounge"
 	})
 "dH" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -1413,7 +1413,7 @@
 	name = "Thunderdome Lounge"
 	})
 "dI" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -1629,7 +1629,7 @@
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 10;

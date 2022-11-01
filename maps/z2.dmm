@@ -27156,9 +27156,6 @@
 	name = "indoor garden"
 	},
 /area/afterlife/heaven/hydroponics/inside)
-"bEN" = (
-/turf/space,
-/area/afterlife/heaven/hydroponics/inside)
 "bEO" = (
 /obj/shrub{
 	dir = 8
@@ -30834,7 +30831,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/toxins/south,
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQe" = (
@@ -31065,7 +31065,10 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bQH" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south,
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQI" = (
@@ -40108,7 +40111,7 @@
 /area/crunch/wtc)
 "cso" = (
 /obj/faint_shimmer,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csp" = (
@@ -43542,12 +43545,12 @@
 	},
 /area/owlery/staffhall)
 "cBz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBA" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBB" = (
@@ -43754,7 +43757,7 @@
 /area/owlery/gangzone)
 "cBY" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBZ" = (
@@ -45187,7 +45190,7 @@
 	},
 /area/owlery/owleryhall)
 "cFt" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cFu" = (
@@ -46796,7 +46799,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -47264,7 +47267,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cKt" = (
@@ -49644,7 +49647,7 @@
 	},
 /area/owlery/gangzone)
 "cQj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -135669,7 +135672,7 @@ aaa
 aaa
 aXt
 bkT
-bEN
+bkT
 bmX
 jbA
 bNP

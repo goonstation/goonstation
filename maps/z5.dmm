@@ -1009,7 +1009,7 @@
 /turf/simulated/floor/caution/west,
 /area/mining/miningoutpost)
 "qn" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup3)
 "qo" = (

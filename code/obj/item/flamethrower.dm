@@ -76,7 +76,7 @@ A Flamethrower in various states of assembly
 		AddComponent(/datum/component/holdertargeting/fullauto, src.shoot_delay, src.shoot_delay, 1)
 
 	/// Just check if there's a usable air and fuel tank
-	canshoot()
+	canshoot(mob/user)
 		if(istype(src.gastank) && src.gastank.air_contents && istype(src.fueltank) && src.fueltank.reagents)
 			return TRUE
 
@@ -119,7 +119,7 @@ A Flamethrower in various states of assembly
 		if(!P.proj_data)
 			return
 
-		if(!canshoot())
+		if(!canshoot(null)) //null because I can't be assed
 			return
 
 		var/list/P_special_data = P.special_data

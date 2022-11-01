@@ -368,7 +368,7 @@
 			if (R.product_hidden && !src.extended_inventory)
 				continue
 			if (R.product_amount > 0)
-				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
 		if (player_list)
@@ -377,15 +377,15 @@
 				var/obj/item/productholder = R.contents[1]
 				var/nextproduct = html_encode(sanitize(productholder.name))
 				if (!T.unlocked)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
 					//Player vending machines don't have "out of stock" items
 				else if (T.unlocked)
 					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>[R.product_cost][CREDIT_SIGN]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
-			html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+			html_parts += "<BR><B>Available Credits:</B> [src.credit][CREDIT_SIGN] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
 			if (!src.acceptcard)
 				html_parts += "<BR>This machine only takes credit bills."
 
@@ -597,11 +597,11 @@
 
 	switch(action)
 		if("cutwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.cut(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("mendwire")
-			if(params["wire"] && iscuttingtool(I))
+			if(params["wire"] && issnippingtool(I))
 				src.mend(src.vendwires[params["wire"]])
 				update_static_data(usr)
 		if("pulsewire")
@@ -621,6 +621,8 @@
 				var/obj/machinery/vending/player/P = src
 				if(usr.get_id()?.registered == P.owner || !P.owner)
 					P.unlocked = !P.unlocked
+					if(!P.unlocked)
+						P.loading = FALSE
 		if("setPrice")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
@@ -637,7 +639,7 @@
 		if("setIcon")
 			if(istype(src,/obj/machinery/vending/player))
 				var/obj/machinery/vending/player/P = src
-				if(usr.get_id().registered == P.owner || !P.owner)
+				if(usr.get_id()?.registered == P.owner || !P.owner)
 					for (var/datum/data/vending_product/player_product/R in player_list)
 						if(R.product_path == text2path(params["target"]))
 							P.promoimage = R.icon
@@ -2346,7 +2348,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			src.vending_HTML += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
 
 			if (src.pay)
-				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "$[src.credit]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "[src.credit][CREDIT_SIGN]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
 				if (!src.acceptcard)
 					src.vending_HTML += "<BR>This machine only takes credit bills."
 
@@ -3073,6 +3075,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "secclothing-off"
 	icon_broken = "secclothing-broken"
 	icon_fallen = "secclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_security)
 
 	create_products()
@@ -3113,6 +3117,8 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "medclothing-off"
 	icon_broken = "medclothing-broken"
 	icon_fallen = "medclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_medical)
 
 	create_products()
@@ -3159,18 +3165,23 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	icon_off = "engclothing-off"
 	icon_broken = "engclothing-broken"
 	icon_fallen = "engclothing-fallen"
+	pay = 1
+	acceptcard = 1
 	req_access = list(access_engineering)
 
 	create_products()
 		..()
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/yellow, 5)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/color/orange, 5)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/engineer, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/mechanic, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/misc/atmospheric_technician, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls, 2)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/under/rank/orangeoveralls/yellow, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/wintercoat/engineering, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/hi_vis, 4)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/suit/fire, 2)
-		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 4)
+		product_list += new/datum/data/vending_product(/obj/item/clothing/mask/gas, 6)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/black, 2)
 		product_list += new/datum/data/vending_product(/obj/item/clothing/gloves/yellow/unsulated, 2) //heh
 		product_list += new/datum/data/vending_product(/obj/item/clothing/shoes/brown, 4)
