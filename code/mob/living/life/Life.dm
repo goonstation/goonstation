@@ -335,8 +335,22 @@
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
 
+		//For brain slug business
 		if (src.slug)
 			src.handle_slug_process()
+
+		if (src.slug_vision)
+			src.setStatus("slowed", 4 SECONDS)
+			if (src.abilityHolder)
+				var/datum/abilityHolder/brain_slug/AH = null
+				if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
+					AH = src.abilityHolder
+				else if (istype(src.abilityHolder, /datum/abilityHolder/composite))
+					var/datum/abilityHolder/composite/composite_holder = src.abilityHolder
+					for (var/datum/holder in composite_holder.holders)
+						if (istype(holder, /datum/abilityHolder/brain_slug))
+							AH = holder
+				if (AH) AH.points -= 2
 
 	src.handle_pathogens()
 

@@ -104,3 +104,4 @@
 		AH.addAbility(/datum/targetable/brain_slug/restraining_spit)
 		AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
 		AH.addAbility(/datum/targetable/brain_slug/glue_spit)
+		AH.addAbility(/datum/targetable/brain_slug/neural_detection)
