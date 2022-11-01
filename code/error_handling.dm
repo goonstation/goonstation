@@ -35,7 +35,7 @@ var/global/runtime_count = 0
 			world.log << "[E.desc]"
 #endif
 
-	usr?.unlock_medal("Halt And Catch Fire", 1)
+	usr?.unlock_medal("Call 1-800-CODER", 1)
 
 
 /client/proc/cmd_view_runtimes()
