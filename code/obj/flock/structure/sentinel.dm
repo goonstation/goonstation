@@ -90,7 +90,7 @@
 						var/mob/M = A
 						if (isdead(M))
 							continue
-					if (ON_COOLDOWN(A, "sentinel_shock", 3 SECONDS))
+					if (ON_COOLDOWN(A, "sentinel_shock", 2 SECONDS))
 						continue
 					to_hit = A
 					break
