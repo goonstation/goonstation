@@ -1409,6 +1409,11 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
 				return TRUE
 
+	disposing()
+		. = ..()
+		wraith_mind = null
+		human_mind = null
+
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
 	icon_state = "terror"
