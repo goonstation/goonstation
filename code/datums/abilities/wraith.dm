@@ -1410,9 +1410,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 				return TRUE
 
 	disposing()
-		. = ..()
 		wraith_mind = null
 		human_mind = null
+		. = ..()
 
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
