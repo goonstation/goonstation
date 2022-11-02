@@ -167,9 +167,9 @@
 
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
 
-	flock.removeAlly(target)
-
-	if (flock.isEnemy(M))
+	if (flock.isAlly(M))
+		flock.removeAlly(M)
+	else if (flock.isEnemy(M))
 		flock.removeEnemy(M)
 		return
 
