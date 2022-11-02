@@ -1813,6 +1813,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "aOt" = (
@@ -28646,6 +28647,7 @@
 	dir = 1
 	},
 /obj/forcefield/energyshield/perma/doorlink,
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "ncu" = (
@@ -48562,6 +48564,7 @@
 /obj/forcefield/energyshield/perma/doorlink{
 	dir = 8
 	},
+/obj/access_spawn/security,
 /turf/simulated/floor/red,
 /area/station/security/checkpoint/escape)
 "wVB" = (
