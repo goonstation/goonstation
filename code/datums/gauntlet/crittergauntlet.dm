@@ -1020,9 +1020,15 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 				C.aggressive = 1
 				C.defensive = 1
 				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
-			else
+			else if (isliving(mob_or_critter))
 				var/mob/living/critter/C = mob_or_critter
-				C.health *= health_multiplier
+				C.health *= health_multiplier //for critters that don't user health holders
+				for(var/damage_key in C.healthlist) //for critters that do
+					var/datum/healthHolder/HH = C.healthlist[damage_key]
+					HH.maximum_value *= health_multiplier
+					HH.value *= health_multiplier
+			else
+				CRASH("Gauntlet tried to spawn [mob_or_critter ? mob_or_critter.type : "null"], but only /mob/living or /obj/critter are allowed.")
 			if (ev)
 				ev.onSpawn(mob_or_critter)
 			count--
