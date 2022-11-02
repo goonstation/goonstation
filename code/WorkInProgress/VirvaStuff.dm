@@ -15,8 +15,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "Flechette magazine"
 	ammo_type = new/datum/projectile/bullet/flechette
 	icon_state = "flech_mag"
-	amount_left = 40
-	max_amount = 40
+	amount_left = 20
+	max_amount = 20
 	ammo_cat = AMMO_FLECHETTE // the actual diameter of the flechette once free of the sabot
 	sound_load = 'sound/weapons/gunload_hitek.ogg'
 
@@ -24,7 +24,7 @@ obj/item/ammo/bullets/flechette_mag
 	name = "flechette"
 	shot_sound = 'sound/weapons/fleshot.ogg'
 	shot_volume = 70
-	power = 25
+	power = 30
 	cost = 2
 	ks_ratio = 1
 	hit_ground_chance = 100
@@ -51,7 +51,7 @@ obj/item/ammo/bullets/flechette_mag
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_FLECHETTE)
-	max_ammo_capacity = 40
+	max_ammo_capacity = 20
 	can_dual_wield = 0
 	two_handed = 1
 	auto_eject = 1
