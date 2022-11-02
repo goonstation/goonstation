@@ -1271,6 +1271,36 @@ ABSTRACT_TYPE(/area/diner)
 	name = "Tech Outpost"
 	icon_state = "storage"
 
+/area/pasiphae
+	name = "Pasiphae Primary Zone"
+	icon_state = "purple"
+	do_not_irradiate = 0
+
+/area/pasiphae/hangar
+	name = "Pasiphae Hangar"
+	icon_state = "hangar"
+
+/area/pasiphae/maint
+	name = "Pasiphae Maintenance"
+	icon_state = "maintcentral"
+	do_not_irradiate = 1
+
+/area/pasiphae/sys
+	name = "Pasiphae Systems Control"
+	icon_state = "engineering"
+
+/area/pasiphae/survey
+	name = "Pasiphae Survey Room"
+	icon_state = "science"
+
+/area/pasiphae/crew
+	name = "Pasiphae Crew Quarters"
+	icon_state = "green"
+
+/area/pasiphae/bridge
+	name = "Pasiphae Command Center"
+	icon_state = "blue"
+
 // Gore's Z5 Space generation areas //
 ABSTRACT_TYPE(/area/prefab)
 /area/prefab
