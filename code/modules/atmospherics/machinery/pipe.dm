@@ -62,7 +62,7 @@
 
 /obj/machinery/atmospherics/pipe/simple
 		icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
-		icon_state = "intact"//-f"
+		icon_state = "pipe"//-f"
 
 		name = "pipe"
 		desc = "A one meter section of regular pipe."
@@ -164,7 +164,7 @@
 	var/datum/gas_mixture/hi_side = gas
 	var/datum/gas_mixture/lo_side = environment
 
-	if(destroyed)
+if(destroyed)
 		parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
 		return
 
@@ -360,26 +360,23 @@
 				leak.alpha = clamp(ruptured * 10, 40, 200)
 			UpdateOverlays(leak,"leak")
 		else
-			icon_state = "intact"//[invisibility ? "-f" : "" ]"
+			icon_state = "pipe"
 			UpdateOverlays(null,"leak")
 		alpha = invisibility ? 128 : 255
 
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
-
-		dir = node1_direction|node2_direction
-		if(dir==3) dir = 1
-		else if(dir==12) dir = 4
-
 	else
-		icon_state = "exposed"//[invisibility ? "-f" : "" ]"
 		alpha = invisibility ? 128 : 255
-		var/node1_direction = get_dir(src, node1)
-		var/node2_direction = get_dir(src, node2)
+		var/connected = 0
+		var/unconnected = 0
 
-		dir = node1_direction|node2_direction
-		if(dir==3) dir = 1
-		else if(dir==12) dir = 4
+		if(node1)
+			connected |= get_dir(src, node1)
+		if(node2)
+			connected |= get_dir(src, node2)
+
+		unconnected = (~connected)&(initialize_directions)
+
+		icon_state = "pipe_[connected]_[unconnected]"
 
 		// Deletion should be added as part of constructable atmos
 		//else
