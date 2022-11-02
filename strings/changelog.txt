@@ -1,4 +1,27 @@
 
+(t)tue nov 01 22
+(u)Lord_Earthfire
+(p)11754
+(e)🪲|C-Bug
+(+)fixes carrot splices having no occuline or carrot juice
+(u)Kubius
+(p)11646
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(+)Emergency suits' Nadir acid survival time has been doubled from 90 seconds to 3 minutes. As before, they are guaranteed for Nadir personnel.
+(t)mon oct 31 22
+(u)Kubius
+(p)11614
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Kondaru's engine is now atmospherically gapped from the station, connected by two airbridges and a conveyor belt. This should result in significantly fewer instances of adjacent departments being barbequed by ambitious TEG setups.
+(t)sun oct 30 22
+(u)KolisDumb, DeadMan164
+(p)11727
+(e)🎨|C-Sprites
+(*)Added the tall chef hat to the game - a chef job reward available at chef level 2.
+(u)Kubius
+(p)11701
+(e)🆕|C-Feature
+(+)Filling bowls of soup on trays, including kitchen islands, should no longer detach the bowl from the tray.
 (t)sat oct 29 22
 (u)Ikea
 (p)11260
@@ -42,7 +65,7 @@
 (t)fri oct 28 22
 (u)LeahTheTech
 (p)11388
-(e)🆕🎨⚖🧛‍|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(e)🆕🎨⚖🧛|C-Feature, C-Sprites, C-Balance, A-Gamemodes
 (*)Reworked the Flockmind heal ability to be an AOE.
 (u)Kubius
 (p)11643
@@ -58,7 +81,7 @@
 (+)Pies can now be sliced!
 (u)LeahTheTech
 (p)11613
-(e)🆕🔄🧛‍⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
+(e)🆕🔄🧛⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
 (+)LSD hallucinations are now a little more realistic.
 (t)thu oct 27 22
 (u)aloe
