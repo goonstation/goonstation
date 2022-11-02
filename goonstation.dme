@@ -732,6 +732,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\arcfiend\abilities\ride_the_lightning.dm"
 #include "code\modules\antagonists\arcfiend\abilities\sap_power.dm"
 #include "code\modules\antagonists\blob\blob_abilities.dm"
+#include "code\modules\antagonists\brain_slug\mob\broodling.dm"
+#include "code\modules\antagonists\brain_slug\mob\ai\broodling.dm"
 #include "code\modules\antagonists\brain_slug\objs\acidic_goo_ball.dm"
 #include "code\modules\antagonists\brain_slug\objs\elastic_anchor.dm"
 #include "code\modules\antagonists\brain_slug\objs\machinery\restraining_goo.dm"

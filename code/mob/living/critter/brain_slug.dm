@@ -5,8 +5,8 @@
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "brain_slug"
-	health_brute = 25
-	health_burn = 25
+	health_brute = 50
+	health_burn = 40
 	flags = TABLEPASS | DOORPASS
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
 	pet_text = list("squishes","pokes","slaps","prods curiously")
@@ -65,7 +65,6 @@
 			host.removeAbility(/datum/targetable/brain_slug/exit_host)
 			host.removeAbility(/datum/targetable/brain_slug/infest_host)
 		. = ..()
-
 ///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
 /mob/living/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
 	var/datum/abilityHolder/brain_slug/AH = null
@@ -80,19 +79,18 @@
 	//If they do not, give them one
 	if (!AH)
 		AH = src.add_ability_holder(/datum/abilityHolder/brain_slug)
-
 	//Set the points to a lower amount if they are a critter
 	if (istype(src, /mob/living/critter/small_animal))
 		AH.points = 350
-
 	//Then add the abilities
 	AH.addAbility(/datum/targetable/brain_slug/exit_host)
 	AH.addAbility(/datum/targetable/brain_slug/infest_host)
-
+	AH.addAbility(/datum/targetable/brain_slug/spit_slime)
+	AH.addAbility(/datum/targetable/brain_slug/glue_spit)
+	AH.addAbility(/datum/targetable/brain_slug/neural_detection)
 	//Then set the infestation count to the slug's to keep track
 	if (slug)
 		AH.infestation_count = slug.abilityHolder.points
-
 	return AH
 
 ///Gives a brain slug host dangerous abilities. Used on humans.
@@ -100,9 +98,7 @@
 	var/datum/abilityHolder/AH = null
 	AH = src.add_basic_slug_abilities(the_slug)
 	if (AH)
-		AH.addAbility(/datum/targetable/brain_slug/spit_slime)
 		AH.addAbility(/datum/targetable/brain_slug/restraining_spit)
 		AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
-		AH.addAbility(/datum/targetable/brain_slug/glue_spit)
-		AH.addAbility(/datum/targetable/brain_slug/neural_detection)
 		AH.addAbility(/datum/targetable/brain_slug/sling_spit)
+		AH.addAbility(/datum/targetable/brain_slug/summon_brood)
