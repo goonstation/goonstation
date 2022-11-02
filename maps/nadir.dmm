@@ -12173,6 +12173,16 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"fNm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/black,
+/area/pasiphae)
 "fNs" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -20513,6 +20523,10 @@
 "jyl" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
 	},
 /turf/simulated/floor/sanitary/white,
 /area/pasiphae)
@@ -40603,6 +40617,10 @@
 	name = "South Catalytic Substation"
 	})
 "sVJ" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
 /turf/simulated/floor/sanitary/white,
 /area/pasiphae)
 "sVT" = (
@@ -117145,7 +117163,7 @@ rJg
 nTW
 qEm
 pmB
-jdb
+fNm
 jdb
 pmB
 qdc
