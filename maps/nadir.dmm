@@ -231,13 +231,6 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
-"aei" = (
-/obj/wingrille_spawn/auto/crystal,
-/obj/machinery/siphon/resonator,
-/turf/simulated/floor/plating,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "aeD" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sanitary,
@@ -9687,7 +9680,6 @@
 "eFf" = (
 /obj/machinery/light_switch/north,
 /obj/machinery/recharge_station,
-/obj/machinery/siphon/resonator,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -37396,12 +37388,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
-"rzP" = (
-/obj/machinery/siphon/resonator,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/construction{
-	name = "Extraction Nexus"
-	})
 "rAr" = (
 /obj/cable{
 	d1 = 1;
@@ -49442,6 +49428,9 @@
 	pixel_x = 4;
 	pixel_y = -2
 	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "xqt" = (
@@ -49478,9 +49467,6 @@
 /turf/simulated/floor/plating,
 /area/station/security/hos)
 "xrp" = (
-/obj/machinery/light/incandescent/netural{
-	dir = 1
-	},
 /obj/machinery/vending/medical_public,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
@@ -96866,7 +96852,7 @@ drI
 pfr
 drI
 ceO
-aei
+gXP
 ssa
 czo
 buP
@@ -97168,7 +97154,7 @@ drI
 qUy
 fRS
 agE
-rzP
+agE
 eFf
 gbk
 cUZ

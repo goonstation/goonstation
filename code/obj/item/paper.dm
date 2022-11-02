@@ -1626,7 +1626,7 @@ exposed to overconfident outbursts on the part of individuals unqualifed to embo
 	name = "Harmonic Siphon Brief"
 	desc = "A very official-looking sheet full of information you may or may not be able to wrap your head around."
 	icon_state = "postcard-owlery"
-	sizex = 1200
+	sizex = 1229 //pls
 	sizey = 650
 
 	New()
