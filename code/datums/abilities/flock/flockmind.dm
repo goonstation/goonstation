@@ -167,11 +167,41 @@
 
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
 
+	flock.removeAlly(target)
+
 	if (flock.isEnemy(M))
 		flock.removeEnemy(M)
 		return
 
 	flock.updateEnemy(M)
+
+
+/datum/targetable/flockmindAbility/designateAlly
+	name = "Designate ally"
+	desc = "Mark or unmark someone as an ally."
+	icon_state = "designate_ally"
+	cooldown = 0.1 SECONDS
+
+/datum/targetable/flockmindAbility/designateAlly/cast(atom/target)
+	if(..())
+		return TRUE
+
+	var/mob/living/intangible/flock/F = holder.owner
+
+	if (!(isliving(target) || iscritter(target) || isvehicle(target)) || isflockmob(target) || isintangible(target)) //TODO: replace this with the macro once #11654 gets merged
+		boutput(F, "<span class='alert'>That isn't a valid target.</span>")
+		return TRUE
+
+	if (!F.flock)
+		return TRUE
+
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(target)] as [F.flock.isAlly(target) ? "" : "not "]an ally at [log_loc(src.holder.owner)].")
+
+	if (F.flock.isAlly(target))
+		F.flock.removeAlly(target)
+	else
+		F.flock.removeEnemy(target)
+		F.flock.addAlly(target)
 
 /////////////////////////////////////////
 

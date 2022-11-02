@@ -28,6 +28,7 @@ var/flock_signal_unleashed = FALSE
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
 	var/list/enemies = list()
+	var/list/allies = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
 	///Static cache of annotation images
@@ -362,6 +363,13 @@ var/flock_signal_unleashed = FALSE
 	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
+	var/image/heart = image('icons/misc/featherzone.dmi', icon_state = "heart")
+	heart.blend_mode = BLEND_ADD
+	heart.plane = PLANE_ABOVE_LIGHTING
+	heart.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	heart.pixel_y = 16
+	.[FLOCK_ANNOTATION_ALLY] = heart
+
 ///proc to get the indexed list of annotations on a particular mob
 /datum/flock/proc/getAnnotations(atom/target)
 	var/active = src.annotations[target]
@@ -536,6 +544,8 @@ var/flock_signal_unleashed = FALSE
 	//vehicles can be enemies but drones will only attack them if they are occupied
 	if(!isliving(M) && !iscritter(M) && !isvehicle(M))
 		return
+	if (M in src.allies)
+		return
 	var/enemy_name = M
 	var/list/enemy_deets
 	if(!(enemy_name in src.enemies))
@@ -559,6 +569,17 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/isEnemy(atom/M)
 	var/enemy_name = M
 	return (enemy_name in src.enemies)
+
+/datum/flock/proc/addAlly(atom/A)
+	src.allies |= A
+	src.addAnnotation(A, FLOCK_ANNOTATION_ALLY)
+
+/datum/flock/proc/removeAlly(atom/A)
+	src.allies -= A
+	src.removeAnnotation(A, FLOCK_ANNOTATION_ALLY)
+
+/datum/flock/proc/isAlly(atom/A)
+	return A in src.allies
 
 // DEATH
 ///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
@@ -679,6 +700,9 @@ var/flock_signal_unleashed = FALSE
 		M = src.enemies[enemy]["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
+	for(var/atom/ally in src.allies)
+		if (QDELETED(ally))
+			src.removeAlly(ally)
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
