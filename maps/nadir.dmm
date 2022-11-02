@@ -14769,8 +14769,7 @@
 /area/station/crew_quarters/pool)
 "gUU" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/rack,
-/obj/item/clothing/mask/breath,
+/obj/machinery/rkit,
 /turf/simulated/floor/yellowblack,
 /area/pasiphae/sys)
 "gVf" = (
@@ -15916,8 +15915,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/rack,
-/obj/random_item_spawner/tools/one,
+/obj/machinery/manufacturer/mechanic,
 /turf/simulated/floor/yellowblack{
 	dir = 1
 	},
