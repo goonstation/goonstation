@@ -4,6 +4,7 @@ flockdrone_name_noun@=thing@,device@,machine@,construct@,apparatus@,object
 flockdrone_created@=online, flock protocols initiating@,awoken, concordance achieved@,existence achieved, analysing situation@,assembling process complete
 flockdrone_hurt@=damage sustained@,taking damage@,injured@,assistance requested, harmed@,structual integrity impaired
 flockdrone_enemy@=new enemy,@,new transgressor detected,@,new threat is@,being griefed by this idiot@,damage sustained, no thanks to@,new violent individual, be warned, ident is@,please destroy
+flockdrone_betrayal@=disregarding attack from ally@,betrayal by ally@,revenge not taken on ally
 flockdrone_death@=terminal damage, system malf---@,situation untenable, death imminen---@,severe damage, unable to recov---@,notification: unit death---
 flockdrone_player_kicked@=consciousness subsumed, resuming autonomous actions@,higher functions suspended successfully@,contributing more to flockmind@,sapience removed, falling back to preprogrammed directives@,allocating greater processing resources to flock
 flockdrone_split@=decomposing@,deconstructing self@,redistributing matter@,fragmenting@,compartmentalizing@,divide and conquer
