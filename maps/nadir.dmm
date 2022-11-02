@@ -11704,7 +11704,7 @@
 	name = "Book Nook"
 	})
 "fAQ" = (
-/obj/machinery/shieldgenerator/energy_shield/doorlink,
+/obj/machinery/shieldgenerator/energy_shield/doorlink/nocell,
 /turf/simulated/floor/yellowblack{
 	dir = 4
 	},
@@ -34011,9 +34011,11 @@
 	pixel_x = -12;
 	pixel_y = 7
 	},
-/obj/item/clothing/gloves/yellow,
 /obj/item/reagent_containers/food/drinks/mug{
-	pixel_x = -17
+	pixel_x = -7
+	},
+/obj/item/electronics/soldering{
+	pixel_y = 5
 	},
 /turf/simulated/floor/yellowblack{
 	dir = 1
