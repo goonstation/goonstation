@@ -231,6 +231,13 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"aei" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/machinery/siphon/resonator,
+/turf/simulated/floor/plating,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "aeD" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/sanitary,
@@ -3916,6 +3923,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/random_item_spawner/tools/one,
 /turf/simulated/floor/grey,
 /area/pasiphae/sys)
 "bQn" = (
@@ -9679,6 +9687,7 @@
 "eFf" = (
 /obj/machinery/light_switch/north,
 /obj/machinery/recharge_station,
+/obj/machinery/siphon/resonator,
 /turf/simulated/floor/purpleblack{
 	dir = 1
 	},
@@ -21479,14 +21488,6 @@
 /area/station/crew_quarters/heads{
 	name = "Diplomatic Quarters"
 	})
-"jUj" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/cleanable/dirt/jen,
-/obj/random_item_spawner/tools/one,
-/turf/simulated/floor/grey,
-/area/pasiphae/sys)
 "jUq" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/power/apc/autoname_west,
@@ -37395,6 +37396,12 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/communications/centre)
+"rzP" = (
+/obj/machinery/siphon/resonator,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/construction{
+	name = "Extraction Nexus"
+	})
 "rAr" = (
 /obj/cable{
 	d1 = 1;
@@ -96859,7 +96866,7 @@ drI
 pfr
 drI
 ceO
-gXP
+aei
 ssa
 czo
 buP
@@ -97161,7 +97168,7 @@ drI
 qUy
 fRS
 agE
-agE
+rzP
 eFf
 gbk
 cUZ
@@ -116869,7 +116876,7 @@ cVw
 jJq
 pPf
 jEw
-jUj
+yhk
 qoI
 aDB
 qQA
