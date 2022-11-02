@@ -538,13 +538,13 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/updateEnemy(atom/M)
 	if(!M)
 		return
+	if (M in src.allies)
+		return
 	if (isvehicle(M))
 		for (var/mob/occupant in M) // making assumption flock knows who everyone in the pod is
 			src.updateEnemy(occupant)
 	//vehicles can be enemies but drones will only attack them if they are occupied
 	if(!isliving(M) && !iscritter(M) && !isvehicle(M))
-		return
-	if (M in src.allies)
 		return
 	var/enemy_name = M
 	var/list/enemy_deets
@@ -902,6 +902,8 @@ var/flock_signal_unleashed = FALSE
 // anything else is arbitrarily too deeply hidden and stowed away to get the signal
 // (more practically, they won't hear it)
 /proc/find_radio_on(mob/M)
+	if (!istype(M))
+		return
 	if(istype(M.ears, /obj/item/device/radio))
 		return M.ears
 	. = M.find_type_in_hand(/obj/item/device/radio)
