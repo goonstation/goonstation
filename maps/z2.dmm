@@ -40111,7 +40111,7 @@
 /area/crunch/wtc)
 "cso" = (
 /obj/faint_shimmer,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csp" = (
@@ -43545,12 +43545,12 @@
 	},
 /area/owlery/staffhall)
 "cBz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBA" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBB" = (
@@ -43757,7 +43757,7 @@
 /area/owlery/gangzone)
 "cBY" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBZ" = (
@@ -45190,7 +45190,7 @@
 	},
 /area/owlery/owleryhall)
 "cFt" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cFu" = (
@@ -46799,7 +46799,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -47267,7 +47267,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cKt" = (
@@ -49647,7 +49647,7 @@
 	},
 /area/owlery/gangzone)
 "cQj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4

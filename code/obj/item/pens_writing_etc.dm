@@ -44,8 +44,8 @@
 	var/static/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 	"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 	"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
-	var/static/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
-	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle","Skull")
+	var/static/list/c_symbol = list("Dollar", "Euro", "Credit", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
+	"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentacle", "Skull")
 	var/static/list/c_char_to_symbol = list(
 		"!" = "Exclamation Point",
 		"?" = "Question Mark",
@@ -65,7 +65,8 @@
 		"/" = "Divided",
 		"=" = "Equals",
 		"<" = "Less Than",
-		">" = "Greater Than"
+		">" = "Greater Than",
+		"[CREDIT_SIGN]" = "Credit"
 	)
 
 	New()

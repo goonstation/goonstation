@@ -31180,7 +31180,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)

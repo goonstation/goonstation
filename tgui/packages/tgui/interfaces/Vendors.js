@@ -27,7 +27,7 @@ export const Vendors = (props, context) => {
     ((((a.cost <= cash) || (a.cost <= bankMoney)) || !requiresMoney) && (a.amount > 0))
   );
   const getCost = (a) => (
-    (((a.cost) && requiresMoney) ? `$${a.cost}` : "Vend")
+    (((a.cost) && requiresMoney) ? `${a.cost}⪽` : "Vend")
   );
 
   return (
@@ -184,12 +184,12 @@ export const Vendors = (props, context) => {
                         onClick={() => act('logout')}
                       />
                     )}
-                    {(cardname && bankMoney >= 0) && ("Money on account: $" + bankMoney)}
+                    {(cardname && bankMoney >= 0) && ("Money on account: " + bankMoney + "⪽")}
                   </Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell bold direction="row">
-                    {(cash > 0) && ("Cash: $" + cash)}
+                    {(cash > 0) && ("Cash: " + cash + "⪽")}
                     {(cash > 0 && cash) && (
                       <Button icon="eject"
                         ml="1%"
