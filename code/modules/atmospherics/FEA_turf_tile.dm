@@ -394,13 +394,13 @@ var/global/list/turf/hotly_processed_turfs = list()
 		temperature_expose(src.air, src.air.temperature, CELL_VOLUME)
 
 	if(src.air.radgas >= RADGAS_MINIMUM_CONTAMINATION_MOLES && !ON_COOLDOWN(src, "radgas_contaminate", RADGAS_CONTAMINATION_COOLDOWN)) //if fallout is in the air, contaminate objects on this tile and consume radgas
-		for(var/atom/movable/item in src)
-			if(isintangible(item) || isobserver(item) || istype(item, /obj/overlay) || istype(item, /obj/effects))
+		for(var/atom/movable/AM in src)
+			if(isintangible(AM) || isobserver(AM) || istype(AM, /obj/overlay) || istype(AM, /obj/effects))
 				continue
-			var/datum/component/radioactive/R = item.GetComponent(/datum/component/radioactive)
+			var/datum/component/radioactive/R = AM.GetComponent(/datum/component/radioactive)
 			if(R?.radStrength > RADGAS_MAXIMUM_CONTAMINATION)
 				continue
-			item.AddComponent(/datum/component/radioactive,min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
+			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
 			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
 			if(src.air.radgas < RADGAS_MINIMUM_CONTAMINATION_MOLES)
 				break //no point continuing if we've dropped below threshold
