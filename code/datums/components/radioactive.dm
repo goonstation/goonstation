@@ -32,6 +32,7 @@ TYPEINFO(/datum/component/radioactive)
 		src.effect_range = effectRange
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
+		RegisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY), .proc/get_radioactivity)
 		RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
 		RegisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -78,6 +79,7 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
 		PA.color = src._backup_color
+		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -150,3 +152,6 @@ TYPEINFO(/datum/component/radioactive)
 
 		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch [ismob(owner) ? him_or_her(owner) : "it"]!" : ""]"
 
+	/// Returns level of radioactivity (0 to 100) - note that SEND_SIGNAL returns 0 if the signal is not registered
+	proc/get_radioactivity()
+		return src.radStrength

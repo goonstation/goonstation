@@ -397,8 +397,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 		for(var/atom/movable/AM in src)
 			if(isintangible(AM) || isobserver(AM) || istype(AM, /obj/overlay) || istype(AM, /obj/effects))
 				continue
-			var/datum/component/radioactive/R = AM.GetComponent(/datum/component/radioactive)
-			if(R?.radStrength > RADGAS_MAXIMUM_CONTAMINATION)
+			if(AM.invisibility > INVIS_CLOAK) //invisible things don't get to be radioactive. Because space science reasons.
+				continue
+			if(SEND_SIGNAL(AM, COMSIG_ATOM_RADIOACTIVITY) > RADGAS_MAXIMUM_CONTAMINATION)
 				continue
 			AM.AddComponent(/datum/component/radioactive,min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK),TRUE,FALSE)
 			src.air.radgas -= min(src.air.radgas, RADGAS_MAXIMUM_CONTAMINATION_TICK)/RADGAS_CONTAMINATION_PER_MOLE
