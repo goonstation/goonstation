@@ -27,12 +27,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/static/list/ui_image_base64_cache = list()
 	var/gas_volume = 0
 
-	//this should probably be a global, but it isn't afaik
-	var/list/cardinals = list(NORTH, NORTHEAST, NORTHWEST, \
-		                    SOUTH, SOUTHEAST, SOUTHWEST, \
-		                    WEST, NORTHWEST, SOUTHWEST,  \
-		                    EAST, NORTHEAST, SOUTHEAST)
-
 	New(material_name="steel")
 		..()
 		src.setMaterial(getMaterial(material_name))
@@ -100,13 +94,13 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				//if a neutron is captured, we either do fission or we slow it down
 				if(N.velocity <= 1 & prob(src.material.getProperty("n_radioactive")*10)) //neutron stimulated emission
 					for(var/i in 1 to 5)
-						inNeutrons += new /datum/neutron(pick(cardinals), pick(2,3))
+						inNeutrons += new /datum/neutron(pick(alldirs), pick(2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 50
 				else if(N.velocity <= 1 & prob(src.material.getProperty("radioactive")*10)) //stimulated emission
 					for(var/i in 1 to 5)
-						inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+						inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 					inNeutrons -= N
 					qdel(N)
 					src.temperature += 25
@@ -124,13 +118,13 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 		if(prob(src.material.getProperty("n_radioactive")*10*src.neutron_cross_section)) //fast spontaneous emission
 			for(var/i in 1 to 3)
-				inNeutrons += new /datum/neutron(pick(cardinals), 3) //neutron radiation gets you fast neutrons
+				inNeutrons += new /datum/neutron(pick(alldirs), 3) //neutron radiation gets you fast neutrons
 			src.material.adjustProperty("n_radioactive", -0.01)
 			src.material.setProperty("radioactive", src.material.getProperty("radioactive") + 0.005)
 			src.temperature += 20
 		if(prob(src.material.getProperty("radioactive")*10*src.neutron_cross_section)) //spontaneous emission
 			for(var/i in 1 to 3)
-				inNeutrons += new /datum/neutron(pick(cardinals), pick(1,2,3))
+				inNeutrons += new /datum/neutron(pick(alldirs), pick(1,2,3))
 			src.material.adjustProperty("radioactive", -0.01)
 			src.material.setProperty("spent_fuel", src.material.getProperty("spent_fuel") + 0.005)
 			src.temperature += 10
@@ -253,7 +247,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				//Q = mcT
 				//dQ = mc(dT)
 				//dQ/mc = dT
-				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*0.05)
+				src.temperature += (gas_thermal_e - THERMAL_ENERGY(current_gas))/(420*7700*0.05) //specific heat capacity of steel (420 J/KgC) * density of steel (7700 Kg/m^3) * volume of material the gas channel is made of (m^3)
 				if(src.current_gas.temperature < 0 || src.temperature < 0)
 					CRASH("TEMP WENT NEGATIVE")
 			. = src.current_gas
