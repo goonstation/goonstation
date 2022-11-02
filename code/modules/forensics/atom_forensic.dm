@@ -290,7 +290,6 @@
 /mob/living/track_blood()
 	if (!islist(src.tracked_blood))
 		return
-	var/list/tracked_blood = src.tracked_blood // so it doesn't get overwriten or something as this proc does stuff
 	if (HAS_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS) && (tracked_blood["count"] > 0))
 		return
 	if (HAS_ATOM_PROPERTY(src, PROP_ATOM_FLOATING))
@@ -300,32 +299,32 @@
 	if (T.messy > 0)
 		B = locate(/obj/decal/cleanable/blood/dynamic) in T
 
-	var/blood_color_to_pass = tracked_blood["color"] ? tracked_blood["color"] : DEFAULT_BLOOD_COLOR
+	var/blood_color_to_pass = src.tracked_blood["color"] ? src.tracked_blood["color"] : DEFAULT_BLOOD_COLOR
 
 	if (!B)
 		if (T.active_liquid)
 			return
 		B = make_cleanable( /obj/decal/cleanable/blood/dynamic/tracks,get_turf(src))
-		B.set_sample_reagent_custom(tracked_blood["sample_reagent"], 0)
+		B.set_sample_reagent_custom(src.tracked_blood["sample_reagent"],0)
 
 	var/list/states = src.get_step_image_states()
 
 	if (states[1] || states[2])
 		if (states[1])
-			B.add_volume(blood_color_to_pass, tracked_blood["sample_reagent"], 0.5, 0.5, tracked_blood, states[1], src.last_move, 0)
+			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[1], src.last_move, 0)
 		if (states[2])
-			B.add_volume(blood_color_to_pass, tracked_blood["sample_reagent"], 0.5, 0.5, tracked_blood, states[2], src.last_move, 0)
+			B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 0.5, 0.5, src.tracked_blood, states[2], src.last_move, 0)
 	else
-		B.add_volume(blood_color_to_pass, tracked_blood["sample_reagent"], 1, 1, tracked_blood, "smear2", src.last_move, 0)
+		B.add_volume(blood_color_to_pass, src.tracked_blood["sample_reagent"], 1, 1, src.tracked_blood, "smear2", src.last_move, 0)
 
-	if (tracked_blood && isnum(tracked_blood["count"])) // mirror from below
-		tracked_blood["count"] --
-		if (tracked_blood["count"] <= 0)
-			tracked_blood = null
+	if (src.tracked_blood && isnum(src.tracked_blood["count"])) // mirror from below
+		src.tracked_blood["count"] --
+		if (src.tracked_blood["count"] <= 0)
+			src.tracked_blood = null
 			src.set_clothing_icon_dirty()
 			return
 	else
-		tracked_blood = null
+		src.tracked_blood = null
 		src.set_clothing_icon_dirty()
 		return
 
