@@ -387,7 +387,7 @@ this is already used where it needs to be used, you can probably ignore it.
 
 	var/blood_color_to_pass = DEFAULT_BLOOD_COLOR
 	var/reagents_to_transfer = (num_amount * (H.reagents?.total_volume/(H.reagents?.total_volume + H.blood_volume)))
-	var/blood_to_transfer = (num_amount - min(reagents_to_transfer, H.reagents.total_volume))
+	var/blood_to_transfer = num_amount - reagents_to_transfer
 
 	if (istype(H))
 		blood_color_to_pass = H.blood_color
