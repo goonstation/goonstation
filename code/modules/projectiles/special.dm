@@ -1152,6 +1152,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	hit_ground_chance = 0
 	ks_ratio = 1.0
 	shot_sound = 'sound/items/sponge.ogg'
+	projectile_speed = 24
 	var/stamina_cost = 60
 
 	on_hit(atom/hit, angle, var/obj/projectile/P)
@@ -1175,3 +1176,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				slime_image.alpha = 255
 				target.UpdateOverlays(slime_image, "slime")
 		qdel(P)
+
+/datum/projectile/special/spreader/uniform_burst/slime
+	name = "slime spread"
+	sname = "slime spread"
+	spread_angle = 35
+	pellets_to_fire = 3
+	spread_projectile_type = /datum/projectile/special/slug_slime
+	shot_sound = 'sound/items/sponge.ogg'

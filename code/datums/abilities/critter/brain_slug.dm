@@ -387,9 +387,9 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 			return 1
 
 		var/mob/shooter = holder.owner
-		var/obj/projectile/proj = initialize_projectile_ST(shooter, new/datum/projectile/special/slug_slime, get_turf(target))
+		var/obj/projectile/proj = initialize_projectile_ST(shooter, new/datum/projectile/special/spreader/uniform_burst/slime, get_turf(target))
 		while (!proj || proj.disposed)
-			proj = initialize_projectile_ST(shooter, new/datum/projectile/special/slug_slime, get_turf(target))
+			proj = initialize_projectile_ST(shooter, new/datum/projectile/special/spreader/uniform_burst/slime, get_turf(target))
 
 		proj.targets = list(target)
 
