@@ -1,5 +1,9 @@
 
 (t)wed nov 02 22
+(u)Amylizzle
+(p)11767
+(e)⚖💊|C-Balance, A-Medical
+(*)Too much burn damage to a limb can now incinerate that limb.
 (u)Kubius
 (p)11706
 (e)⚖🧛⚗|C-Balance, A-Gamemodes, A-Chemistry
