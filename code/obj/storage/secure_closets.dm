@@ -346,14 +346,12 @@
 
 /obj/storage/secure/closet/security/equipment
 	name = "\improper Security equipment locker"
-	spawn_contents = list(/obj/item/storage/box/clothing/security,
-	/obj/item/clothing/suit/wintercoat/security,
-	/obj/item/clothing/suit/armor/vest,
+	spawn_contents = list(/obj/item/clothing/suit/armor/vest,
 	/obj/item/clothing/head/helmet/hardhat/security,
 	/obj/item/clothing/glasses/sunglasses/sechud,
 	/obj/item/handcuffs,
+	/obj/item/handcuffs,
 	/obj/item/device/flash,
-	/obj/item/storage/backpack/security,
 	/obj/item/barrier)
 
 /obj/storage/secure/closet/security/forensics
@@ -402,6 +400,7 @@
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
+	spawn_contents = list(/obj/item/item_box/contraband)
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic
@@ -722,31 +721,27 @@
 	name = "\improper Mechanic's locker"
 	req_access = list(access_engineering_mechanic)
 	spawn_contents = list(/obj/item/storage/toolbox/electrical,
-	/obj/item/storage/backpack/engineering,
 	/obj/item/device/accessgun/lite,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/storage/box/clothing/mechanic,
 	/obj/item/clothing/gloves/yellow,
-	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/electronics/scanner,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/electronics/soldering,
 	/obj/item/deconstructor,
 	/obj/item/electronics/frame/mech_cabinet=2,
 	/obj/item/storage/mechanics/housing_handheld=1,
-	/obj/item/paper/manufacturer_blueprint/ai_status_display,
-	/obj/item/clothing/suit/hi_vis)
+	/obj/item/paper/manufacturer_blueprint/ai_status_display)
 
 /obj/storage/secure/closet/engineering/atmos
 	name = "\improper Atmospheric Technician's locker"
 	req_access = list(access_engineering_atmos)
-	spawn_contents = list(/obj/item/clothing/shoes/orange,
-	/obj/item/clothing/under/misc/atmospheric_technician,
-	/obj/item/clothing/suit/fire,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/clothing/head/helmet/hardhat,
+	spawn_contents = list(/obj/item/clothing/suit/fire,
+	/obj/item/clothing/head/helmet/firefighter,
+	/obj/item/device/analyzer/atmospheric/upgraded,
 	/obj/item/clothing/glasses/meson,
-	/obj/item/device/radio/headset/engineer)
+	/obj/item/storage/toolbox/mechanical,
+	/obj/item/extinguisher,
+	/obj/item/chem_grenade/firefighting,
+	/obj/item/chem_grenade/firefighting)
 
 /obj/storage/secure/closet/engineering/engineer
 	name = "\improper Engineer's locker"
@@ -756,16 +751,9 @@
 	/obj/item/clothing/shoes/stomp_boots,
 #endif
 	/obj/item/engivac,
-	/obj/item/storage/box/clothing/engineer,
-	/obj/item/storage/backpack/engineering,
-	/obj/item/clothing/suit/wintercoat/engineering,
-	/obj/item/clothing/mask/gas,
 	/obj/item/old_grenade/oxygen,
-	/obj/item/clothing/head/helmet/hardhat,
 	/obj/item/clothing/glasses/meson,
 	/obj/item/pen/infrared,
-	/obj/item/clothing/head/helmet/welding,
-	/obj/item/clothing/suit/hi_vis,
 	/obj/item/lamp_manufacturer/organic,
 	/obj/item/pinpointer/category/apcs/station)
 

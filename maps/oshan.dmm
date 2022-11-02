@@ -44568,7 +44568,7 @@
 "exU" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
-	name = "Arcade"
+	name = "Ranch"
 	},
 /obj/cable{
 	d1 = 4;

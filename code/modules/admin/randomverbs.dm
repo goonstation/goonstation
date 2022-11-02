@@ -1461,15 +1461,14 @@
 
 	ADMIN_ONLY
 
-	if(!A.reagents) A.create_reagents(100)
+	if(!A.reagents)
+		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
 		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
 
 	var/type
 	if(L.len == 1)
@@ -1483,19 +1482,29 @@
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	var/amount = input(usr,"Amount:","Amount",50) as null|num
-	if(!amount) return
+	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
+	if(!amount)
+		return
+	var/overflow = amount - (A.reagents.maximum_volume - A.reagents.total_volume)
+	if (overflow > 0) // amount exceeds reagent space
+		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
+			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
+			A.reagents.maximum_volume += overflow
+			if (ismob(A) && amount > 800) // rough estimate
+				if (tgui_alert(usr, "That amount of reagents will probably make [A] explode. Want to prevent them from exploding due to excessive blood?",
+					"Bloodgib Status", list("Yes", "No")) == "Yes")
+					APPLY_ATOM_PROPERTY(A, PROP_MOB_BLOODGIB_IMMUNE, usr)
+		else
+			// didn't increase cap, only report actual amount added.
+			amount = -(overflow - amount)
 
 	A.reagents.add_reagent(reagent.id, amount)
-	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name]</span>")
+	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name].</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
 	logTheThing(LOG_ADMIN, src, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
-	logTheThing(LOG_DIARY, usr, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].", "admin")
-	if (iscarbon(A)) // Not warranted for items etc, they aren't important enough to trigger an admin alert. Silicon mobs don't metabolize reagents.
-		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [key_name(A)] at [log_loc(A)].")
-
-	return
+	if (ismob(A))
+		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
