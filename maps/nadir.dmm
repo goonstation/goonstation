@@ -8144,10 +8144,6 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
-"dRk" = (
-/obj/wingrille_spawn/auto/reinforced,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/pasiphae/sys)
 "dRl" = (
 /obj/fitness/speedbag/wizard,
 /obj/machinery/light{
@@ -118060,7 +118056,7 @@ ivQ
 cCN
 hpE
 idI
-dRk
+jJq
 aZF
 nRr
 nBT
