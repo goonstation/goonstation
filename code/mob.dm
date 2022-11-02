@@ -219,6 +219,8 @@
 	var/ai_type = null
 	/// AI controller for this mob - only active if is_npc is TRUE, in which case it's called by the mobAI loop at a frequency depending on mob flags
 	var/datum/aiHolder/ai = null
+	///Do we add the special "Toggle AI" ability to this mob?
+	var/use_ai_toggle = TRUE
 	/// used for load balancing mob_ai ticks
 	var/ai_tick_schedule = null
 

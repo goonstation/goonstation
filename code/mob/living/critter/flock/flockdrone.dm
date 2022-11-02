@@ -18,6 +18,7 @@
 	health_brute = 30
 	health_burn = 30
 	repair_per_resource = 2
+	use_ai_toggle = FALSE
 
 	///Custom contextActions list so we can handle opening them ourselves
 	var/list/datum/contextAction/contexts = list()
