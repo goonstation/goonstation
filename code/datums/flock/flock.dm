@@ -571,12 +571,14 @@ var/flock_signal_unleashed = FALSE
 	return (enemy_name in src.enemies)
 
 /datum/flock/proc/addAlly(atom/A)
-	boutput(A, "<i class='flocksay'>You hear echoes of the signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
+	if (ismob(A) && find_radio_on(A))
+		boutput(A, "<i class='flocksay'>You hear echoes of the signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
 	src.allies |= A
 	src.addAnnotation(A, FLOCK_ANNOTATION_ALLY)
 
 /datum/flock/proc/removeAlly(atom/A)
-	boutput(A, "<i class='flocksay'>You hear harsh echoes of the signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
+	if (ismob(A) && find_radio_on(A))
+		boutput(A, "<i class='flocksay'>You hear harsh echoes of the signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
 	src.allies -= A
 	src.removeAnnotation(A, FLOCK_ANNOTATION_ALLY)
 
@@ -896,4 +898,12 @@ var/flock_signal_unleashed = FALSE
 		// get next turf
 		T = locate(ox + x, oy + y, z)
 
-
+// search for any radio device, starting with hands and then equipment
+// anything else is arbitrarily too deeply hidden and stowed away to get the signal
+// (more practically, they won't hear it)
+/proc/find_radio_on(mob/M)
+	if(istype(M.ears, /obj/item/device/radio))
+		return M.ears
+	. = M.find_type_in_hand(/obj/item/device/radio)
+	if(!.)
+		. = M.find_in_equipment(/obj/item/device/radio)

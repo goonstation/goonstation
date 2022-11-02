@@ -365,18 +365,9 @@
 	var/obj/item/device/radio/R
 	var/message
 	if(ismob(target))
-		var/mob/living/M = target
-		if(istype(M.ears, /obj/item/device/radio))
-			R = M.ears
-		else
-			// search for any radio device, starting with hands and then equipment
-			// anything else is arbitrarily too deeply hidden and stowed away to get the signal
-			// (more practically, they won't hear it)
-			R = M.find_type_in_hand(/obj/item/device/radio)
-			if(!R)
-				R = M.find_in_equipment(/obj/item/device/radio)
+		R = find_radio_on(target)
 		if(R)
-			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
+			message = html_encode(input("What would you like to transmit to [target.name]?", "Transmission", "") as text)
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"
@@ -385,7 +376,7 @@
 			if(flock)
 				flockName = flock.name
 			R.audible_message("<span class='radio' style='color: [R.device_color]'><span class='name'>Unknown</span><b> [bicon(R)]\[[flockName]\]</b> <span class='message'>crackles, \"[message]\"</span></span>")
-			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [M.name], \"[message]\"</span>")
+			boutput(holder.get_controlling_mob(), "<span class='flocksay'>You transmit to [target.name], \"[message]\"</span>")
 		else
 			boutput(holder.get_controlling_mob(), "<span class='alert'>They don't have any compatible radio devices that you can find.</span>")
 			return TRUE
