@@ -766,7 +766,6 @@ a.latejoin-card:hover {
 			src.Browse(null, "window=latechoices") //closes late choices window
 			src.Browse(null, "window=playersetup") //closes the player setup window
 			winshow(src, "joinmenu", 0)
-			winshow(src, "playerprefs", 0)
 
 	verb/declare_ready_use_token()
 		set hidden = 1

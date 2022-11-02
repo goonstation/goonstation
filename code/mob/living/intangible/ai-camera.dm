@@ -255,7 +255,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
-			visible_message("[CLEAN(src)] says, <b>[CLEAN(message)]</b>")
+			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
 		src.mainframe.say_radio()

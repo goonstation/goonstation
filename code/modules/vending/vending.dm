@@ -368,7 +368,7 @@
 			if (R.product_hidden && !src.extended_inventory)
 				continue
 			if (R.product_amount > 0)
-				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+				html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[R.product_name]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
 			else
 				html_parts += "<tr><td>[R.product_name]</a></td><td colspan='2' style='text-align: center;'><strong>SOLD OUT</strong></td></tr>"
 		if (player_list)
@@ -377,15 +377,15 @@
 				var/obj/item/productholder = R.contents[1]
 				var/nextproduct = html_encode(sanitize(productholder.name))
 				if (!T.unlocked)
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> $[R.product_cost]</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'> [R.product_cost][CREDIT_SIGN]</td></tr>"
 					//Player vending machines don't have "out of stock" items
 				else if (T.unlocked)
 					//Links for setting prices when player vending machines are unlocked
-					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>$[R.product_cost]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
+					html_parts += "<tr><td><a href='byond://?src=\ref[src];vend=\ref[R]'>[nextproduct]</a></td><td style='text-align: right;'>[R.product_amount]</td><td style='text-align: right;'><a href='byond://?src=\ref[src];setprice=\ref[R]'>[R.product_cost][CREDIT_SIGN]</a> (<a href='byond://?src=\ref[src];icon=\ref[R]'>*</a>)</td></tr>"
 		html_parts += "</table>";
 
 		if (src.pay)
-			html_parts += "<BR><B>Available Credits:</B> $[src.credit] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+			html_parts += "<BR><B>Available Credits:</B> [src.credit][CREDIT_SIGN] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
 			if (!src.acceptcard)
 				html_parts += "<BR>This machine only takes credit bills."
 
@@ -2348,7 +2348,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 			src.vending_HTML += "<A href='?src=\ref[src];cook=1'>Cook!</A><BR>"
 
 			if (src.pay)
-				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "$[src.credit]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
+				src.vending_HTML += "<BR><B>Available Credits:</B> [src.emagged ? "CREDIT CALCULATION ERROR" : "[src.credit][CREDIT_SIGN]"] <a href='byond://?src=\ref[src];return_credits=1'>Return Credits</A>"
 				if (!src.acceptcard)
 					src.vending_HTML += "<BR>This machine only takes credit bills."
 

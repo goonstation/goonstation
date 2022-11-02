@@ -213,18 +213,19 @@ ABSTRACT_TYPE(/obj/machinery/siphon)
 					if(ytcheck > M.sens_window) continue
 				extract_progressed = TRUE
 				if(src.extract_ticks >= M.tick_req)
-					src.extract_ticks -= M.tick_req
-					var/atom/movable/yielder = new M.product()
-					if(istype(yielder,/obj/item)) //items go into internal reservoir
-						src.contents += yielder
-						src.update_storage_bar()
-					else //pulled out something that isn't an item... what could it be?
-						yielder.set_loc(get_turf(src))
+					while(src.extract_ticks >= M.tick_req && length(src.contents) < src.max_held_items)
+						src.extract_ticks -= M.tick_req
+						var/atom/movable/yielder = new M.product()
+						if(istype(yielder,/obj/item)) //items go into internal reservoir
+							src.contents += yielder
+							src.update_storage_bar()
+						else //pulled out something that isn't an item... what could it be?
+							yielder.set_loc(get_turf(src))
 
 					//non-shear failures
-					//option 1 - too many extraction ticks buffered at once due to mismatch between intensity and requirement
+					//option 1 - too many extraction ticks buffered at once
 					//option 2 - running resonators with the panel open is a bad idea
-					if(src.extract_ticks > 50)
+					if(src.extract_ticks > 20)
 						if(src.extract_overloaded == FALSE) //warn if newly overloaded
 							src.visible_message("<span class='alert'><B>[src]</B> emits an excess accumulated EEU warning.<span>")
 							playsound(src, 'sound/machines/pod_alarm.ogg', 30, 1)

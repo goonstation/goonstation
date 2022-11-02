@@ -458,7 +458,7 @@
 	//you should only be able to make these from things with a metal material flag
 	proc/setupMaterial()
 		///Corrosion resistance slows decay per cycle by an amount proportional to resistance percentage. Total corrosion immunity = no decay.
-		var/decay_ratio_adjustment = src.material.getProperty("corrosion") * 0.00023
+		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
 		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
