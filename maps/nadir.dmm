@@ -4773,13 +4773,6 @@
 	dir = 1
 	},
 /area/station/security/checkpoint/escape)
-"cjm" = (
-/obj/machinery/drainage/big,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/pasiphae)
 "cjv" = (
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/purpleblack/corner,
@@ -117157,7 +117150,7 @@ nTW
 qEm
 pmB
 jdb
-cjm
+jdb
 pmB
 qdc
 jlr
