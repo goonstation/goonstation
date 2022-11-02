@@ -572,13 +572,13 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/addAlly(atom/A)
 	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>You hear echoes of the signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
+		boutput(A, "<i class='flocksay'>You hear echoes of the Signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
 	src.allies |= A
 	src.addAnnotation(A, FLOCK_ANNOTATION_ALLY)
 
 /datum/flock/proc/removeAlly(atom/A)
 	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>You hear harsh echoes of the signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
+		boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
 	src.allies -= A
 	src.removeAnnotation(A, FLOCK_ANNOTATION_ALLY)
 
