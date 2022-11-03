@@ -34,7 +34,6 @@
 				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
-			player.antag_fallthrough = TRUE
 			continue
 		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
 			continue
