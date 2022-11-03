@@ -1,5 +1,9 @@
 
 (t)thu nov 03 22
+(u)Bartimeus973
+(p)11723
+(e)🪲|C-Bug
+(+)Wraiths now inherit point regen rate and corpse counts when they evolve.
 (u)DrWolfy
 (p)11350
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
