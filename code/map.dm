@@ -940,7 +940,7 @@ var/global/list/mapNames = list(
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
 
-	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/office),
+	valid_nuke_targets = list("the quartermaster's office" = list(/area/station/quartermaster/cargooffice),
 		"the courtroom" = list(/area/station/crew_quarters/courtroom),
 		"security's central staff room" = list(/area/station/security/main),
 		"the engineering staff room" = list(/area/station/engine/engineering),

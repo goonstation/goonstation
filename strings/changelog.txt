@@ -1,4 +1,21 @@
 
+(t)wed nov 02 22
+(u)Bartimeus
+(p)11065
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)A manifested wraith/poltergeist cannot be immediately re-manifested after a spirit candle was used on them anymore.
+(u)pali
+(p)11753
+(e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
+(*)If you manage to make our code error-out you now get a medal, you monster.
+(u)Amylizzle
+(p)11767
+(e)⚖💊|C-Balance, A-Medical
+(*)Too much burn damage to a limb can now incinerate that limb.
+(u)Kubius
+(p)11706
+(e)⚖🧛⚗|C-Balance, A-Gamemodes, A-Chemistry
+(*)Changelings' biology has adapted to the unique variety of acid surrounding Nadir. Be watchful.
 (t)tue nov 01 22
 (u)Lord_Earthfire
 (p)11754
