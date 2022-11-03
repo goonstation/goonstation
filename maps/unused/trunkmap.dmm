@@ -9180,7 +9180,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aCS" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /obj/machinery/light{
 	dir = 4
 	},
@@ -9707,7 +9710,10 @@
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
 "aEP" = (
-/obj/machinery/atmospherics/portables_connector/west,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
 "aEQ" = (

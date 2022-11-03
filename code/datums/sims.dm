@@ -6,7 +6,7 @@
 	var/value = 100
 	var/last_life_value = 100
 	var/datum/simsHolder/holder
-	var/warning_cooldown = 10
+	var/warning_cooldown = 100
 	var/depletion_rate = 0.2
 	var/image/image_meter = null
 	var/image/image_change = null
@@ -33,6 +33,11 @@
 			hud.icon = icon
 			hud.icon_state = icon_state
 			hud.layer = HUD_LAYER
+
+			if (prob(20))
+				var/v = rand(50, 100)
+				value = v
+				last_life_value = v
 
 			updateHud()
 			if (!is_control)
@@ -136,7 +141,7 @@
 			var/warning = getWarningMessage()
 			if (warning)
 				showOwner(warning)
-				warning_cooldown = 40
+				warning_cooldown = 100
 		else
 			warning_cooldown--
 		onLife()
@@ -181,8 +186,6 @@
 				return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] [pick("starving", "unfed", "ravenous", "famished")]!</span>", "<span class='alert'>You feel like you could [pick("die of [pick("hunger", "starvation")] any moment now", "eat a [pick("donkey", "horse", "whale", "moon", "planet", "star", "galaxy", "universe", "multiverse")]")]!</span>")
 			else if (value < 50)
 				return "<span class='alert'>You feel [pick("hungry", "peckish", "ravenous", "undernourished", "famished", "esurient")]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You feel [pick("a bit", "slightly", "somewhat", "a little", "faintly")] [pick("hungry", "peckish", "famished")]!</span>"
 			else
 				return null
 
@@ -198,8 +201,6 @@
 					return pick("<span class='alert'>You are [pick("utterly", "absolutely", "positively", "completely", "extremely", "perfectly")] dry!</span>", "<span class='alert'>You feel [pick("like you could die of thirst any moment now", "as dry as [pick("sand", "the moon", "solid carbon dioxide", "bones")]")]!</span>")
 				else if (value < 50)
 					return "<span class='alert'>You feel [pick("thirsty", "dry")]!</span>"
-				else if (value < 75)
-					return "<span class='alert'>You feel [pick("a bit", "slightly", "somewhat", "a little", "faintly")] [pick("thirsty", "dry")]!</span>"
 				else
 					return null
 
@@ -227,8 +228,6 @@
 				return "<span class='alert'>You really feel like talking to someone, or you might [pick("go crazy", "go insane", "go nuts", "become unhinged", "become a lunatic", "become totally gaga", "go loco", "go bonkers", "go stark mad", "go mad")]!</span>"
 			else if (value < 50)
 				return "<span class='alert'>You feel [pick("rather ", "quite ", "moderately ", "kind of ", "pretty ", null)]socially deprived!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You could go for a [pick("good", "nice", "long", "short", "great", "pleasant", "delightful", "friendly")] [pick("conversation", "chat", "discussion", "talk", "social exchange", "banter", "head-to-head", trim("t[ascii2text(234)]te-[ascii2text(224)]-t[ascii2text(234)]te"))] right now.</span>"
 			else
 				return null
 
@@ -296,8 +295,6 @@
 				return pick("<span class='alert'>You [pick("smell", "stink", "reek")]!</span>", "<span class='alert'>You are [pick("absolutely", "utterly", "completely")] [pick("disgusting", "revolting", "repellent", "sickening", "nauseating", "stomach-churning", "gross")]!</span>", "<span class='alert'><b>Take a [pick("shower", "bath")]!</b></span>")
 			else if (value < 50)
 				return "<span class='alert'>You feel [pick("smelly", "stinky", "unclean", "filthy", "dirty", "a bit disgusting", "grimy", "mucky", "foul", "unwashed", "begrimed", "tainted")]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You feel [pick("a bit", "slightly", "somewhat", "a little", "faintly")] [pick("unclean", "dirty", "filthy", "stinky", "smelly")].</span>"
 			else
 				return null
 
@@ -315,8 +312,6 @@
 				return "<span class='alert'>You feel like you could [pick("wet", "piss", "pee", "urinate into", "leak into")] your pants any minute now!</span>"
 			else if (value < 50)
 				return "<span class='alert'>You feel a [pick("serious", "pressing", "critical", "dire", "burning")] [pick("inclination", "desire", "need", "call", "urge", "motivation")] to [to_urinate]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You feel a [pick("slight", "tiny", "faint", "distant", "minimal", "little")] [pick("inclination", "desire", "need", "urge", "call", "motivation")] to [to_urinate].</span>"
 			else
 				return null
 
@@ -358,8 +353,6 @@
 				return "<span class='alert'>You really [pick("need", "require", "feel the need for", "are in need of")] the [pick("hug", "feeling", "embrace", "comfort")] of a soft [pick("sofa", "bed", "chair", "pillow")]!</span>"
 			else if (value < 50)
 				return "<span class='alert'>You feel like [pick("sitting down", "lying down", "you need a bit of comfort")]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You feel [pick("slightly", "minimally", "a tiny bit", "a little", "just a bit")] uncomfortable.</span>"
 			else
 				return null
 
@@ -391,8 +384,6 @@
 				return "<span class='alert'>You are [pick("<b>so</b>", "so very", "painfully", "extremely", "excruciatingly", "rather uncomfortably")] bored![prob(25)? " You'd rather die!" : null]</span>"
 			else if (value < 50)
 				return "<span class='alert'>You're [pick("quite", "rather", "super", "really", "pretty", "moderately", "very")] bored!</span>"
-			else if (value < 75)
-				return pick("<span class='alert'>You feel like doing something fun.</span>", "<span class='alert'>You feel a bit bored.</span>")
 			else
 				return null
 
@@ -423,8 +414,6 @@
 				return "<span class='alert'>This place is a [pick("fucking", "complete", "total", "downright", "consummate", "veritable", "proper")] [a_mess].</span>"
 			else if (value < 50)
 				return "<span class='alert'>This place is a [a_mess]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>This place is a [pick("bit of a mess", "bit messy", "little messy")].</span>"
 			else
 				return null
 
@@ -489,8 +478,6 @@
 				return "<span class='alert'>You're [pick("extremely", "seriously", "incredibly", "tremendously", "overwhelmingly")] [pick("tired", "exhausted", "weary", "fatigued", "drowsy", "spent", "drained", "jaded")].</span>"
 			else if (value < 50)
 				return "<span class='alert'>You feel [pick("rather", "quite", "very", "pretty", "really")] [pick("tired", "sleepy", "drowsy")]!</span>"
-			else if (value < 75)
-				return "<span class='alert'>You feel [pick("somewhat", "a bit", "slightly", "a little", "a little bit", "a tiny bit")] tired.</span>"
 			else
 				return null
 
@@ -724,7 +711,7 @@ var/global/datum/simsControl/simsController = new()
 			cv += M.value
 		return cv / mv * base_mood_value
 
-	proc/addMotive(var/mt)
+	proc/addMotive(var/mt, var/rand_val)
 		var/datum/simsMotive/M = new mt
 		if (initial(M.name) in motives)
 			return

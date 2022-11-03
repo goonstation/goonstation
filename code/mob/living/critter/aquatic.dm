@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
@@ -633,7 +633,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if (no_logs != 1)
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
 	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"

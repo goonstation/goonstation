@@ -504,7 +504,7 @@ var/global/list/module_editors = list()
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name) as null|text
+			newname = tgui_input_text(src, "You are a Robot. Would you like to change your name to something else?", "Name Change", default_name)
 			if(newname && newname != default_name)
 				phrase_log.log_phrase("name-cyborg", newname, no_duplicates=TRUE)
 		if (!newname)
@@ -646,3 +646,8 @@ var/global/list/module_editors = list()
 	if (src.singing & LOUD_SINGING)
 		note_img = "[note_img][note_img]"
 	return "[adverb] [speech_verb],[note_img]<span class='game robotsing'><i>[text]</i></span>[note_img]"
+
+/mob/living/silicon/Exited(Obj, newloc)
+	. = ..()
+	if(Obj == src.cell)
+		src.cell = null

@@ -1,7 +1,7 @@
 // Salvager Gear
 
 /obj/item/salvager
-	name = "Salvage Reclaimer"
+	name = "salvage reclaimer"
 	desc = "A strange hodgepodge of industrial equipment used to break part equipment and structures and reclaim the material.  A retractable crank acts as a great belt hook and recharging aid."
 #ifndef SECRETS_ENABLED
 	icon_state = "broken_egun"
@@ -55,7 +55,11 @@
 				return
 			. = 20 SECONDS
 		else if (istype(A, /turf/simulated/floor))
+#ifdef UNDERWATER_MAP
+			. = 45 SECONDS
+#else
 			. = 30 SECONDS
+#endif
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
@@ -258,7 +262,7 @@
 		..()
 
 /obj/item/storage/box/salvager_frame_compartment
-	name = "Electronics Frame Compartment"
+	name = "electronics frame compartment"
 	desc = "A special compartment designed to neatly and safely store deconstructed eletronics and machinery frames."
 	max_wclass = W_CLASS_HUGE
 	can_hold = list(/obj/item/electronics/frame)
@@ -336,33 +340,22 @@
 
 	New()
 		..()
-		src.goods_sell += new /datum/commodity/boogiebot(src)
-		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
-		src.goods_sell += new /datum/commodity/podparts/artillery(src)
-		src.goods_sell += new /datum/commodity/contraband/flare(src)
-		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+
+		src.chat_text = new
+		src.vis_contents += src.chat_text
+
+		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
+			src.goods_sell += new sell_type(src)
 
 #ifdef SECRETS_ENABLED
-		src.goods_sell += new /datum/commodity/contraband/salvager/teleporter(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/pistol(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/ratstick(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/bullets_22(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/bullets_9mm(src)
-		src.goods_sell += new /datum/commodity/contraband/salvager/shotgun(src)
-
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/rare_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/rare_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/station_items(src)
-		src.goods_buy += new /datum/commodity/contraband/random_salvage/station_items(src)
-		src.goods_buy += new /datum/commodity/salvage/machine_frame(src)
-		src.goods_buy += new /datum/commodity/salvage/scrap_materials(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/rare_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
+		src.goods_buy += new /datum/commodity/magpie/random_buy/station_items(src)
 #endif
-		src.goods_buy += new /datum/commodity/salvage/scrap(src)
-		src.goods_buy += new /datum/commodity/robotics(src)
-		src.goods_buy += new /datum/commodity/tech/laptop(src)
-		src.goods_buy += new /datum/commodity/fuel(src)
-		src.goods_buy += new /datum/commodity/ore/gemstone(src)
-		src.goods_buy += new /datum/commodity/ore/telecrystal(src)
+
+		for(var/buy_type in concrete_typesof(/datum/commodity/magpie/buy))
+			src.goods_buy += new buy_type(src)
 
 		greeting= {"[src.name]'s light flash, and he states, \"Greetings, welcome to my shop. Please select from my available equipment.\""}
 
@@ -388,7 +381,43 @@
 
 		pickupdialoguefailure = "[src.name] states, \"I'm sorry, but you don't have anything to pick up\"."
 
+	var/list/speakverbs = list("beeps", "boops")
+	var/static/mutable_appearance/bot_speech_bubble = mutable_appearance('icons/mob/mob.dmi', "speech")
+	var/bot_speech_color
+
+	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
+		if (!message)
+			return
+		var/image/chat_maptext/chatbot_text = null
+		if (src.chat_text && !just_chat)
+			UpdateOverlays(bot_speech_bubble, "bot_speech_bubble")
+			SPAWN(1.5 SECONDS)
+				UpdateOverlays(null, "bot_speech_bubble")
+			if(!src.bot_speech_color)
+				var/num = hex2num(copytext(md5("[src.name][TIME]"), 1, 7))
+				src.bot_speech_color = hsv2rgb(num % 360, (num / 360) % 10 + 18, num / 360 / 10 % 15 + 85)
+			var/maptext_color
+			if (sing)
+				maptext_color ="#D8BFD8"
+			else
+				maptext_color = src.bot_speech_color
+			chatbot_text = make_chat_maptext(src, message, "color: [maptext_color];")
+			if(chatbot_text && src.chat_text && length(src.chat_text.lines))
+				chatbot_text.measure(src)
+				//hack until measure is unfucked
+				chatbot_text.measured_height = 20
+				for(var/image/chat_maptext/I in src.chat_text.lines)
+					if(I != chatbot_text)
+						I.bump_up(chatbot_text.measured_height)
+
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
+		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
+
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
-
 /obj/item/clothing/head/helmet/space/engineer/salvager
+/obj/salvager_cryotron
+ABSTRACT_TYPE(/datum/commodity/magpie/sell)
+/datum/commodity/magpie/sell
+ABSTRACT_TYPE(/datum/commodity/magpie/buy)
+/datum/commodity/magpie/buy

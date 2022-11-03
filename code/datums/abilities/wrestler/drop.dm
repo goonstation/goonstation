@@ -95,7 +95,6 @@
 
 			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "drop")] [target]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
-			M.emote("scream")
 
 			if (!fake)
 				if (falling == 1)

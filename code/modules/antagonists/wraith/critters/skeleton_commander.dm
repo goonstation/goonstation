@@ -98,9 +98,9 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(user, "sound/impact_sounds/Flesh_Cut_1.ogg", 50, 0)
+					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 0)
 				return 0
 			if (INTENT_GRAB)
 				if(!isturf(target.loc) && !isturf(target)) return
@@ -157,7 +157,7 @@
 			return 0
 		logTheThing("combat", user, target, "stabs [constructTarget(target,"combat")] with [src] at [log_loc(user)].")
 		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7))
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 6, 9, rand(5,7), can_punch = 0, can_kick = 0)
 		user.attack_effects(target, affecting)
 		var/action = pick("slashes", "stabs", "pierces")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"

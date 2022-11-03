@@ -566,13 +566,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 1 * prot
+					damage_burn = 1.5 * prot
 					howMuch = ""
 				if(2)
-					damage_burn = 2 * prot
+					damage_burn = 2.5 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 4 * prot
+					damage_burn = 5 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)
@@ -2200,3 +2200,16 @@
 			defib.set_icon_state("[defib.icon_base]-off")
 		if(duration <= 0)//timed out
 			playsound(owner, "sparks", 50, 1, -10)
+
+/datum/statusEffect/gnesis_tint
+	id = "gnesis_tint"
+	visible = FALSE
+	unique = TRUE
+
+	onAdd(optional)
+		. = ..()
+		owner.add_filter("gnesis_tint", 1, color_matrix_filter(normalize_color_to_matrix("#309179")))
+
+	onRemove()
+		. = ..()
+		owner.remove_filter("gnesis_tint")

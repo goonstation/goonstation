@@ -40,5 +40,6 @@ var/global/list/material_category_names = list(
 	"POW-2" = "Significant Power Source",
 	"POW-3" = "Extreme Power Source",
 	"REF-1" = "Reflective Material",
-	"ORG|RUB" = "Organic or Rubber Material"
+	"ORG|RUB" = "Organic or Rubber Material",
+	"RUB" = "Rubber Material"
 )

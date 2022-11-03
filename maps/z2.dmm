@@ -7592,7 +7592,7 @@
 	dir = 4;
 	pixel_y = -10
 	},
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	desc = "So, it was you!";
 	name = "source of all of those really atmospheric webs around"
 	},
@@ -10784,7 +10784,7 @@
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aJF" = (
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aJG" = (
@@ -11106,13 +11106,13 @@
 /area/lower_arctic/lower)
 "aKF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aKG" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/cobweb2,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKH" = (
@@ -11193,7 +11193,7 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
 "aKY" = (
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKZ" = (
@@ -11456,7 +11456,7 @@
 /area/lower_arctic/lower)
 "aLU" = (
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aLV" = (
@@ -11736,7 +11736,7 @@
 /area/lower_arctic/lower)
 "aMF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aMG" = (
@@ -14253,7 +14253,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aUq" = (
-/obj/critter/spider/ice/nice,
+/mob/living/critter/spider/ice/nice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aUr" = (
@@ -16127,7 +16127,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aZm" = (
-/obj/critter/spider/ice/queen,
+/mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -19143,7 +19143,7 @@
 "bhl" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/plasmastone,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bhm" = (
@@ -21236,7 +21236,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmv" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmw" = (
@@ -23271,7 +23271,7 @@
 "brR" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "brS" = (
@@ -27156,9 +27156,6 @@
 	name = "indoor garden"
 	},
 /area/afterlife/heaven/hydroponics/inside)
-"bEN" = (
-/turf/space,
-/area/afterlife/heaven/hydroponics/inside)
 "bEO" = (
 /obj/shrub{
 	dir = 8
@@ -30834,7 +30831,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/toxins/south,
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQe" = (
@@ -31065,7 +31065,10 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bQH" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south,
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQI" = (
@@ -40108,7 +40111,7 @@
 /area/crunch/wtc)
 "cso" = (
 /obj/faint_shimmer,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csp" = (
@@ -43542,12 +43545,12 @@
 	},
 /area/owlery/staffhall)
 "cBz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBA" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBB" = (
@@ -43754,7 +43757,7 @@
 /area/owlery/gangzone)
 "cBY" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBZ" = (
@@ -45187,7 +45190,7 @@
 	},
 /area/owlery/owleryhall)
 "cFt" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cFu" = (
@@ -46796,7 +46799,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -47264,7 +47267,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cKt" = (
@@ -49644,7 +49647,7 @@
 	},
 /area/owlery/gangzone)
 "cQj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -66577,7 +66580,7 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dPy" = (
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dPz" = (
@@ -135669,7 +135672,7 @@ aaa
 aaa
 aXt
 bkT
-bEN
+bkT
 bmX
 jbA
 bNP

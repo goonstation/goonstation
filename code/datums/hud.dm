@@ -58,7 +58,6 @@
 		src.screen_loc = null // idk if this is necessary but im writing it anyways so there
 		..()
 
-
 /datum/hud
 	var/list/mob/living/mobs = list()
 	var/list/client/clients = list()
@@ -149,7 +148,8 @@
 
 	proc/add_object(atom/movable/A, layer = HUD_LAYER, loc)
 		if (loc)
-			A.screen_loc = loc
+			//A.screen_loc = loc
+			A.screen_loc = do_hud_offset_thing(A, loc)
 		A.layer = layer
 		A.plane = PLANE_HUD
 		if (!(A in src.objects))

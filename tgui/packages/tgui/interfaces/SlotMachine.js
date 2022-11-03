@@ -108,7 +108,7 @@ const SlotWindow = (_props, context) => {
                 minValue={20}
                 maxValue={1000}
                 value={wager}
-                format={value => "$" + value}
+                format={value => value + "⪽"}
                 onDrag={(_e, value) => act('set_wager', { bet: value })}
               />
             </Stack.Item>
