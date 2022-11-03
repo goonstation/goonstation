@@ -35,6 +35,8 @@
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
 			continue
+		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
+			continue
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
 		if (J.requires_whitelist && !NT.Find(ckey(player.mind.key)))
@@ -183,6 +185,7 @@
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			player.antag_fallthrough = TRUE
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
