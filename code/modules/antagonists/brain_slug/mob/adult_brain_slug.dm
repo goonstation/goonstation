@@ -17,7 +17,8 @@
 	can_disarm = 1
 	can_help = 1
 	add_abilities = list(/datum/targetable/brain_slug/slug_burrow,
-						/datum/targetable/brain_slug/slug_molt)
+						/datum/targetable/brain_slug/slug_molt,
+						/datum/targetable/brain_slug/devolve)
 	var/bullet_reflect = FALSE
 
 	New(var/turf/T)
