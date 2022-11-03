@@ -187,6 +187,7 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_volume = 50 // holy fuck why was this so loud
 	dissipation_delay = 10
 	casing = /obj/item/casing/rifle_loud
 	impact_image_state = "bhole-small"
@@ -215,6 +216,7 @@ toxic - poisons
 	hit_type = DAMAGE_STAB
 	implanted = /obj/item/implant/projectile/bullet_308
 	shot_sound = 'sound/weapons/railgun.ogg'
+	shot_volume = 50 // holy fuck why was this so loud x2
 	dissipation_delay = 10
 	dissipation_rate = 0 //70 damage AP at all-ranges is fine, come to think of it
 	projectile_speed = 72
