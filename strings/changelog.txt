@@ -1,5 +1,11 @@
 
 (t)thu nov 03 22
+(u)DrWolfy
+(p)11350
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Floorbots now have color based on the toolbox used and use only one floor tile to be created.
+(+)Players can now put floor tiles inside toolboxes, as long as the toolbox is not empty.
+(+)Floorbots in the first stage of construction can now be deconstructed with an empty hand. The floor tile will be lost.
 (u)RSG250
 (p)11653
 (e)⚖🌠|C-Balance, A-Events
