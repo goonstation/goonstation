@@ -11,7 +11,7 @@
 	occupations = new_occupations
 	return
 
-/proc/FindOccupationCandidates(list/unassigned, job, level)
+/proc/FindOccupationCandidates(list/unassigned, job, level, set_antag_fallthrough = FALSE)
 	set background = 1
 
 	var/list/candidates = list()
@@ -34,6 +34,8 @@
 				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			if(set_antag_fallthrough)
+				player.antag_fallthrough = TRUE
 			continue
 		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
 			continue
@@ -214,7 +216,7 @@
 		// If there's no more slots for this job available, move onto the next one
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 		// First, rebuild the lists of who wants to be this job
-		pick2 = FindOccupationCandidates(unassigned,JOB.name,2)
+		pick2 = FindOccupationCandidates(unassigned,JOB.name,2, TRUE)
 		// Now loop through the candidates in order of priority, and elect them to the
 		// job position if possible - if at any point the job is filled, break the loops
 		for(var/mob/new_player/candidate in pick2)
@@ -247,7 +249,7 @@
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
 			continue
 
-		pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
+		pick3 = FindOccupationCandidates(unassigned,JOB.name,3, TRUE)
 		for(var/mob/new_player/candidate in pick3)
 			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
 				break
