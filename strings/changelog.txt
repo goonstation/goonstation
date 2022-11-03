@@ -1,5 +1,9 @@
 
 (t)wed nov 02 22
+(u)Bartimeus
+(p)11065
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)A manifested wraith/poltergeist cannot be immediately re-manifested after a spirit candle was used on them anymore.
 (u)pali
 (p)11753
 (e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
