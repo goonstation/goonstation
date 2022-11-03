@@ -1,5 +1,7 @@
 
 (t)thu nov 03 22
+(u)tarmunora
+(+)If you have an antag-ineligible role as favourite, you will not roll captain/HoP/detective on antag rounds.
 (u)Bartimeus973
 (p)11723
 (e)🪲|C-Bug
