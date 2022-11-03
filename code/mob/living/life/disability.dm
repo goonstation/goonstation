@@ -43,7 +43,7 @@
 				if(!interdictor_influence)
 					owner.take_radiation_dose((rand() * 0.5 SIEVERTS * A.irradiated * mult))
 			var/turf/T = get_turf(owner)
-			if(T.acidic)
+			if(T.acidic && !istype(owner, /mob/living/critter/brain_slug) && !istype(owner, /mob/living/critter/adult_brain_slug))
 				//Melt off shoes
 				if (istype(owner, /mob/living/carbon/human))
 					var/mob/living/carbon/human/H = owner

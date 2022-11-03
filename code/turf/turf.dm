@@ -1251,3 +1251,13 @@ proc/generate_space_color()
 		. = ..()
 		if(!mover.anchored)
 			mover.set_loc(null)
+
+///Gives a turf a damaging effect if you stand on it. Cancels after awhile.
+/turf/proc/acidify_turf(var/burn_duration = 25 SECONDS)
+	//Todo add an overlay on turfs to make it bubbly and sizzly
+	src.acidic = TRUE
+	if (istype(src, /turf/simulated/floor))
+		var/turf/simulated/floor/floor_turf = src
+		floor_turf.burn_tile()
+	SPAWN(burn_duration)
+		src.acidic = FALSE

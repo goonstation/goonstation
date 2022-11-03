@@ -15,14 +15,5 @@
 		..()
 		for (var/turf/T in range(acidic_range, src))
 			if (!istype(T, /turf/space) && !istype(T, /turf/unsimulated))
-				acidify_turf(T, acidify_duration)
+				T.acidify_turf(acidify_duration)
 		qdel(src)
-
-	proc/acidify_turf(turf/T, var/burn_duration = 25 SECONDS)
-		//Todo add an overlay on turfs to make it bubbly and sizzly
-		T.acidic = TRUE
-		if (istype(T, /turf/simulated/floor))
-			var/turf/simulated/floor/floor_turf = T
-			floor_turf.burn_tile()
-		SPAWN(burn_duration)
-			T.acidic = FALSE

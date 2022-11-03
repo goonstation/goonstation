@@ -30,9 +30,7 @@
 
 	death()
 		var/turf/T = get_turf(src)
-		T.acidic = TRUE
-		SPAWN(death_burn_duration)
-			T.acidic = FALSE
+		T.acidify_turf(15 SECONDS)
 		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -61,7 +59,7 @@
 	seek_target(range)
 		. = list()
 		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C) || isdead(C) || istype(C, /mob/living/critter/small_animal/broodling) || istype(C, /mob/living/critter/brain_slug) || (C == master)) continue
+			if (isintangible(C) || isdead(C) || istype(C, /mob/living/critter/small_animal/broodling) || istype(C, /mob/living/critter/brain_slug) || istype(C, /mob/living/critter/adult_brain_slug) || (C == master)) continue
 			. += C
 
 	critter_attack(target)
