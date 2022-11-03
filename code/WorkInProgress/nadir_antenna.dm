@@ -16,6 +16,11 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 //Delay after a successful transception before another one may begin
 #define TRANSCEPTION_COOLDOWN 0.1
 
+//Bounds for internal capacitor charge management; referred to by the array control computer
+#define MIN_FREE_POWER 10 KILO WATTS
+#define MAX_FREE_POWER 100 KILO WATTS
+#define MAX_CHARGE_RATE 10 KILO WATTS
+
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
 	desc = "Sends and receives both energy and matter over a considerable distance. Questionably safe."
@@ -25,20 +30,30 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	bound_width = 96
 	mats = 0
 
-	///Whether array permits transception; can be disabled temporarily by anti-overload measures, or toggled manually
+	///Whether array permits transception (false means just comms); can be disabled temporarily by anti-overload measures, or toggled manually
 	var/primed = TRUE
-	///Whether array is currently transceiving
+	///Whether array is currently transceiving (interfacing with a pad for the process of sending or receiving a thing)
 	var/is_transceiving = FALSE
-	///Beam overlay
+	///Beam overlay (this was made an object overlay for the purpose of having access to flick)
 	var/obj/overlay/telebeam
 
 	///Determines if failsafe threshold is equipment power threshold plus transception cost (true) or transception cost (false).
-	var/equipment_failsafe = TRUE
+	var/use_standard_failsafe = TRUE
 	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
 	var/failsafe_active = FALSE
 
+	///Internal capacitor; cell installed inside the array itself. Draws from grid surplus when available, configurable from the array computer.
+	var/obj/item/cell/intcap = null
+	///Amount of leftover grid power that's necessary before the array will attempt to refill its internal capacitor
+	var/grid_surplus_threshold = 25 KILO WATTS
+	///Whether the array is attempting to refill its internal capacitor; used for operational logic and overlay control
+	var/intcap_charging = FALSE
+	///How fast the internal capacitor will attempt to draw down grid power while intcap_charging is true
+	var/intcap_draw = 5 KILO WATTS
+
 	New()
 		. = ..()
+		src.intcap = new /obj/item/cell/charged(src)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -116,7 +131,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost = (0.3 * C.maxcharge) + ARRAY_STARTCOST
-		if (equipment_failsafe && C.charge < combined_cost)
+		if (use_standard_failsafe && C.charge < combined_cost)
 			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
 			src.failsafe_active = TRUE
@@ -138,7 +153,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		var/obj/item/cell/C = AC.cell
 		var/combined_cost
-		if (equipment_failsafe)
+		if (use_standard_failsafe)
 			combined_cost = (0.4 * C.maxcharge) + ARRAY_STARTCOST
 		else
 			combined_cost = (0.1 * C.maxcharge) + ARRAY_STARTCOST
@@ -214,7 +229,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			"cellDiff" = celldiff_val,
 			"sendsSafe" = safe_transceptions,
 			"sendsMax" = max_transceptions,
-			"failsafeThreshold" = transception_array.equipment_failsafe ? "STANDARD" : "MINIMUM",
+			"failsafeThreshold" = transception_array.use_standard_failsafe ? "STANDARD" : "MINIMUM",
 			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE HALT" : "OPERATIONAL",
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
 			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
@@ -225,7 +240,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 		if (.)
 			return
 		else if (action == "toggle_failsafe")
-			transception_array.equipment_failsafe = !(transception_array.equipment_failsafe)
+			transception_array.use_standard_failsafe = !(transception_array.use_standard_failsafe)
 
 #undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
