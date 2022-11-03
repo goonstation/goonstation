@@ -1562,12 +1562,13 @@
 						return
 
 					for (var/obj/item/roboupgrade/UPGR in src.contents) UPGR.upgrade_deactivate(src)
-					user.put_in_hand_or_drop(src.cell)
-					user.show_text("You remove [src.cell] from [src].", "red")
+					var/obj/item/cell/_cell = src.cell
+					user.put_in_hand_or_drop(_cell)
+					user.show_text("You remove [_cell] from [src].", "red")
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
-					cell.add_fingerprint(user)
-					cell.UpdateIcon()
+					_cell.add_fingerprint(user)
+					_cell.UpdateIcon()
 					src.part_chest.cell = null
 					src.cell = null
 
