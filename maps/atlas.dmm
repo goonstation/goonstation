@@ -19438,7 +19438,7 @@
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
-/obj/critter/spider/baby,
+/mob/living/critter/spider/baby,
 /obj/item/paper/fortune,
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating/random,
