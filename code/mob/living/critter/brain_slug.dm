@@ -106,3 +106,74 @@
 		AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
 		AH.addAbility(/datum/targetable/brain_slug/sling_spit)
 		AH.addAbility(/datum/targetable/brain_slug/summon_brood)
+
+///Checks if a thing can be infested by a brain slug and returns false if it cant be.
+proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
+	//Small animals are fair game except mentormice and adminmice for obvious reasons.
+	if (istype(mob_target, /mob/living/critter/small_animal) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor) && !istype(mob_target, /mob/living/critter/small_animal/mouse/weak/mentor/admin))
+		var/mob/living/critter/small_animal/animal_target = mob_target
+		if (!isalive(animal_target))
+			boutput(caster, "<span class='notice'>You got here a bit late. [animal_target] is already dead.</span>")
+			return FALSE
+		if (animal_target.mind == null)
+			return TRUE
+		else
+			boutput(caster, "<span class='notice'>This creature looks much too resilient to infest.</span>")
+			return FALSE
+
+	//Human corpses are also prime targets, if they are fresh
+	else if (ishuman(mob_target))
+		if (isalive(mob_target))
+			boutput(caster, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
+			return FALSE
+		var/mob/living/carbon/human/human_target = mob_target
+		if (!mob_target.organHolder.head)
+			boutput(caster, "<span class='notice'>Try as you might, you just can't find a head to crawl into.</span>")
+			return FALSE
+		if (human_target.decomp_stage >= DECOMP_STAGE_BLOATED)
+			boutput(caster, "<span class='notice'>That body is sadly too decomposed to use.</span>")
+			return FALSE
+
+		if (human_target.abilityHolder)
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/changeling))
+				boutput(caster, "<span class='notice'>That one's insides are all... wrong. You can't seem to make sense of it, much less so control it.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/werewolf))
+				boutput(caster, "<span class='notice'>This body doesnt look normal. You decide to leave it alone.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/arcfiend))
+				boutput(caster, "<span class='notice'>This body crackles faintly with electricity. You'd get zapped if you decided to control it.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/vampire))
+				boutput(caster, "<span class='notice'>This body's blood smells like poison and it emanates ominous dark magic. Best not to mess with it</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/vampiric_thrall))
+				boutput(caster, "<span class='notice'>This body's insides are all messed up and it seems to be leaking blood at an alarming rate. Best to leave it there.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/wizard))
+				boutput(caster, "<span class='notice'>Some residual magical energy resists your attempt to invade this body.</span>")
+				return FALSE
+			if (istype(human_target.abilityHolder,/datum/abilityHolder/composite))
+				var/datum/abilityHolder/composite/composite_holder = human_target.abilityHolder
+				for (var/datum/holder in composite_holder.holders)
+					if (istype(holder,/datum/abilityHolder/changeling))
+						boutput(caster, "<span class='notice'>That one's insides are all... wrong. You can't seem to make sense of it, much less so control it.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/werewolf))
+						boutput(caster, "<span class='notice'>This body doesnt look normal. You decide to leave it alone.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/arcfiend))
+						boutput(caster, "<span class='notice'>This body crackles faintly with electricity. You'd get zapped if you decided to control it.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/vampire))
+						boutput(caster, "<span class='notice'>This body's blood smells like poison and it emanates ominous dark magic. Best not to mess with it</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/vampiric_thrall))
+						boutput(caster, "<span class='notice'>This body's insides are all messed up and it seems to be leaking blood at an alarming rate. Best to leave it there.</span>")
+						return FALSE
+					if (istype(holder,/datum/abilityHolder/wizard))
+						boutput(caster, "<span class='notice'>Some residual magical energy resists your attempt to invade this body.</span>")
+						return FALSE
+		return TRUE
+
+	return FALSE

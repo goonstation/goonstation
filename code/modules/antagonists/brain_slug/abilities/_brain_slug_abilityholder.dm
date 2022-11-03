@@ -1,0 +1,50 @@
+/atom/movable/screen/ability/topBar/brain_slug
+	clicked(params)
+		if (!istype(owner, /datum/targetable/brain_slug))
+			return
+		if (!owner.holder)
+			return
+		..()
+	tens_offset_x = 19
+	tens_offset_y = 7
+	secs_offset_x = 23
+	secs_offset_y = 7
+
+/datum/abilityHolder/brain_slug
+	usesPoints = 1
+	regenRate = 0
+	pointName = "Stability"
+	tabName = "Abilities"
+	topBarRendered = 1
+	rendered = 1
+	points = 700
+	var/infestation_count = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Stability:"] = round(src.points)
+		.["Infestation:"] = round(src.infestation_count)
+
+/datum/abilityHolder/brain_slug_master
+	usesPoints = 1
+	regenRate = 0
+	pointName = "Infestation"
+	tabName = "Abilities"
+	topBarRendered = 1
+	rendered = 1
+	points = 0
+	onAbilityStat()
+		..()
+		.= list()
+		.["Infestation:"] = round(src.points)
+
+ABSTRACT_TYPE(/datum/targetable/brain_slug)
+/datum/targetable/brain_slug
+	icon = 'icons/mob/critter_ui.dmi'
+	var/border_icon = 'icons/mob/critter_ui.dmi'
+	var/border_state = "brain_slug_frame"
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image(border_icon, border_state), "mob_type")
