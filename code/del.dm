@@ -114,6 +114,16 @@ proc/qdel(var/datum/D)
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
 
+/datum/Del()
+	if(!disposed)
+		disposing()
+	..()
+
+/client/Del()
+	if(!disposed)
+		disposing()
+	..()
+
 // don't override this one, just call it instead of delete to get rid of something cheaply
 #ifdef DISPOSE_IS_QDEL
 /datum/proc/dispose(qdel_instead = TRUE)
