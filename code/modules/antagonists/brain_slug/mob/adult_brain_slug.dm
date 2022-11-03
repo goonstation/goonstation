@@ -16,6 +16,7 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
+	add_abilities = list(/datum/targetable/brain_slug/slug_burrow)
 
 	New(var/turf/T)
 		..(T)

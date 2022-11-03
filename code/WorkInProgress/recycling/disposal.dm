@@ -188,7 +188,7 @@
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 
-
+	var/holed_up = FALSE
 	var/image/pipeimg = null
 
 	// new pipe, set the icon_state as on map
@@ -481,6 +481,13 @@
 		C.update()
 
 		qdel(src)
+
+	//Todo add busted up overlay and chance for item to fly out.
+	proc/bust_open()
+		src.holed_up = TRUE
+
+	proc/fix_hole()
+		src.holed_up = FALSE
 
 #undef MISSING_DISPOSAL_IMAGE_COLOR
 
