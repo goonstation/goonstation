@@ -1,5 +1,9 @@
 
 (t)wed nov 02 22
+(u)pali
+(p)11753
+(e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
+(*)If you manage to make our code error-out you now get a medal, you monster.
 (u)Amylizzle
 (p)11767
 (e)⚖💊|C-Balance, A-Medical
