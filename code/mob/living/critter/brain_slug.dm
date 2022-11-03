@@ -65,6 +65,10 @@
 			host.removeAbility(/datum/targetable/brain_slug/exit_host)
 			host.removeAbility(/datum/targetable/brain_slug/infest_host)
 		. = ..()
+
+/mob/living/critter/brain_slug/is_spacefaring()
+	return TRUE
+
 ///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
 /mob/living/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
 	var/datum/abilityHolder/brain_slug/AH = null
