@@ -142,6 +142,7 @@ TYPEINFO_NEW(/obj/table/flock)
 /obj/storage/closet/flock
 	name = "flashy capsule"
 	desc = "It looks kinda like a closet. There's no handle, though. Also, it looks like a giant bar of soap."
+	var/flock_id = "Containment capsule"
 	icon_state = "flock"
 	icon_closed = "flock"
 	icon_opened = "flock-open"
@@ -229,7 +230,7 @@ TYPEINFO_NEW(/obj/table/flock)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Containment Capsule
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health_attack/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 
@@ -253,6 +254,7 @@ TYPEINFO_NEW(/obj/table/flock)
 /obj/machinery/light/flock
 	name = "shining cabochon"
 	desc = "It pulses and flares to a strange rhythm."
+	var/flock_id = "Light emitter"
 	icon_state = "flock1"
 	base_state = "flock"
 	brightness = 1.2
@@ -283,11 +285,11 @@ TYPEINFO_NEW(/obj/table/flock)
 	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
 	qdel(src)
 
-/obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
+/obj/machinery/light/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Light Emitter
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>###=-</span></span>"}
 
 /obj/machinery/light/flock/floor
@@ -300,6 +302,7 @@ TYPEINFO_NEW(/obj/table/flock)
 /obj/lattice/flock
 	desc = "Some sort of floating mesh in space, like a bendy lattice. Those wacky flock things."
 	name = "fibrenet"
+	var/flock_id = "Structural foundation"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "fibrenet"
 	mat_appearances_to_ignore = list("steel","gnesis")
@@ -308,7 +311,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/lattice/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_attack=FALSE)
 
@@ -339,6 +342,7 @@ TYPEINFO_NEW(/obj/table/flock)
 /obj/grille/flock
 	desc = "A glowing mesh of metallic fibres."
 	name = "barricade"
+	var/flock_id = "Reinforced barricade"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "barricade"
 	health = 50
@@ -374,7 +378,7 @@ TYPEINFO_NEW(/obj/table/flock)
 
 /obj/grille/flock/New()
 	..()
-	setMaterial("gnesis")
+	setMaterial(getMaterial("gnesis"), appearance=FALSE, setname=FALSE)
 	src.UpdateIcon()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -396,7 +400,7 @@ TYPEINFO_NEW(/obj/table/flock)
 	if (!isflockmob(user))
 		return
 	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
-		<br><span class='bold'>ID:</span> Reinforced Barricade
+		<br><span class='bold'>ID:</span> [src.flock_id]
 		<br><span class='bold'>System Integrity:</span> [round((src.health/src.health_max)*100)]%
 		<br><span class='bold'>###=-</span></span>"}
 

@@ -169,7 +169,7 @@
 
 	..(message) // caw at the non-drones
 
-	if (involuntary || message == "" || stat)
+	if (message == "" || stat)
 		return
 	if (dd_hasprefix(message, "*"))
 		return
@@ -177,9 +177,7 @@
 	var/prefixAndMessage = separate_radio_prefix_and_message(message)
 	message = prefixAndMessage[2]
 
-	if(!src.is_npc)
-		message = gradientText("#3cb5a3", "#124e43", message)
-	flock_speak(src, message, src.flock)
+	flock_speak(src, message, src.flock, involuntary)
 
 /mob/living/critter/flock/understands_language(var/langname)
 	if (langname == say_language || langname == "feather" || langname == "english")
@@ -243,7 +241,9 @@
 	src.update_health_icon()
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
-	src.flock?.removeDrone(src)
+	if (src.flock)
+		src.flock.deaths++
+		src.flock.removeDrone(src)
 	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
 
 /mob/living/critter/flock/disposing()

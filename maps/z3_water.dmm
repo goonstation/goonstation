@@ -348,7 +348,7 @@
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bi" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bj" = (
@@ -369,7 +369,7 @@
 /area/wrecknsspolaris)
 "bn" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/wrecknsspolaris)
 "bo" = (

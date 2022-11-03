@@ -186,7 +186,7 @@ var/global/area/current_battle_spawn = null
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
-	emergency_shuttle.disabled = 1
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 
 	return 1
 	// Things we are skipping:

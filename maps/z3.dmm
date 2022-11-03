@@ -3696,7 +3696,7 @@
 /turf/simulated/floor,
 /area/buddyfactory)
 "aqE" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aqF" = (
@@ -8339,7 +8339,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aMu" = (
@@ -9693,7 +9693,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQa" = (
@@ -9891,7 +9891,7 @@
 	icon_state = "0-2"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQJ" = (
@@ -9995,7 +9995,7 @@
 	icon_state = "0-8"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aQY" = (
@@ -10147,7 +10147,7 @@
 	icon_state = "0-4"
 	},
 /obj/cable,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aRy" = (
@@ -10551,7 +10551,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/disposalpipe/segment{
 	dir = 4
 	},
@@ -10636,7 +10636,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aSO" = (
@@ -10775,7 +10775,7 @@
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTd" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
 "aTf" = (
@@ -11048,7 +11048,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aTM" = (
@@ -14939,7 +14939,7 @@
 /area/space)
 "bgz" = (
 /obj/decal/cleanable/blood,
-/obj/spook,
+/obj/item/spook,
 /turf/simulated/floor/specialroom/cafeteria{
 	dir = 1
 	},
@@ -14962,11 +14962,7 @@
 /turf/space,
 /area/space)
 "bgE" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/space,
 /area/space)
@@ -15083,7 +15079,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bgT" = (
@@ -15094,7 +15090,7 @@
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
 "bgU" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/auto/reinforced,
 /obj/cable{
 	d1 = 1;
@@ -15236,7 +15232,7 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "bhl" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/lattice{
 	icon_state = "lattice-dir-b"
 	},
@@ -15247,7 +15243,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bhn" = (
@@ -15263,8 +15259,8 @@
 /turf/simulated/floor,
 /area/derelict_ai_sat)
 "bhq" = (
-/obj/grille,
-/obj/grille,
+/obj/grille/steel,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bhr" = (
@@ -15281,7 +15277,7 @@
 	d2 = 2;
 	icon_state = "0-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bht" = (
@@ -15696,7 +15692,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bim" = (
@@ -15710,7 +15706,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "bio" = (
@@ -16279,11 +16275,7 @@
 	},
 /area/salyut)
 "bkj" = (
-/obj/decal/poster/wallsign{
-	desc = "This navigational marker indicates a hazardous zone of space.";
-	icon_state = "mule_dropoff";
-	name = "DANGER"
-	},
+/obj/decal/nav_danger,
 /obj/map/light/dimred,
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -18524,7 +18516,7 @@
 	d2 = 4;
 	icon_state = "0-4"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "fQg" = (
@@ -20436,7 +20428,7 @@
 /obj/cable{
 	icon_state = "0-8"
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "luF" = (

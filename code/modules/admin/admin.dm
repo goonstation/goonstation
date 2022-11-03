@@ -347,11 +347,11 @@ var/global/noir = 0
 						var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","No reason given.") as null|text
 						if(!call_reason)
 							return
-						emergency_shuttle.incall()
-						command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
-						logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
-						logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-						message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+						if (emergency_shuttle.incall())
+							command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+							logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
+							logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+							message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station.</span>")
 
 					if("2")
 						if ((!( ticker ) || emergency_shuttle.location || emergency_shuttle.direction == 0))
@@ -362,11 +362,11 @@ var/global/noir = 0
 								var/call_reason = input("Enter the reason for the shuttle call (or just hit OK to give no reason)","Shuttle Call Reason","") as null|text
 								if(!call_reason)
 									call_reason = "No reason given."
-								emergency_shuttle.incall()
-								command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
-								logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
-								logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
-								message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
+								if (emergency_shuttle.incall())
+									command_announcement(call_reason + "<br><b><span class='alert'>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</span></b>", "The Emergency Shuttle Has Been Called", css_class = "notice")
+									logTheThing(LOG_ADMIN, usr, "called the Emergency Shuttle (reason: [call_reason])")
+									logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")
+									message_admins("<span class='internal'>[key_name(usr)] called the Emergency Shuttle to the station</span>")
 							if(1)
 								emergency_shuttle.recall()
 								boutput(world, "<span class='notice'><B>Alert: The shuttle is going back!</B></span>")
@@ -390,15 +390,26 @@ var/global/noir = 0
 
 		if("toggle_shuttle_calling")
 			if (src.level >= LEVEL_PA)
-				emergency_shuttle.disabled = !emergency_shuttle.disabled
-				logTheThing(LOG_ADMIN, usr, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle")
-				logTheThing(LOG_DIARY, usr, "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle", "admin")
-				message_admins("<span class='internal'>[key_name(usr)] [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle</span>")
+				if (!emergency_shuttle.disabled)
+					var/choice = tgui_alert(usr, "Which calls should be prevented?", "Shuttle Disabling", list("Manual Calls", "All Calls"))
+					switch(choice)
+						if ("Manual Calls")
+							emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
+						if ("All Calls")
+							emergency_shuttle.disabled = SHUTTLE_CALL_FULLY_DISABLED
+				else
+					emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
+
+				var/logmsg = "[emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle\
+					[emergency_shuttle.disabled ? emergency_shuttle.disabled == SHUTTLE_CALL_FULLY_DISABLED ? " completely and totally" : " manually" : ""]."
+
+				logTheThing(LOG_ADMIN, usr, logmsg)
+				message_admins("[usr] [logmsg]")
 				// someone forgetting about leaving shuttle calling disabled would be bad so let's inform the Admin Crew if it happens, just in case
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.owner:key
 				ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
-				ircmsg["msg"] = "Has [emergency_shuttle.disabled ? "dis" : "en"]abled calling the Emergency Shuttle"
+				ircmsg["msg"] = logmsg
 				ircbot.export_async("admin", ircmsg)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Administrator to enable/disable shuttle calling.")
@@ -632,7 +643,7 @@ var/global/noir = 0
 					if(player.cached_jobbans.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(player.cached_jobbans.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -648,7 +659,7 @@ var/global/noir = 0
 					logTheThing(LOG_DIARY, usr, "unbanned [constructTarget(M,"diary")] from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [key_name(M)] from [job]</span>")
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] unbanned [M.ckey] from [job]")
-					jobban_unban(M, job)
+					jobban_unban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has lifted your [job] job-ban.</b></span>")
 				else
 					logTheThing(LOG_ADMIN, usr, "banned [constructTarget(M,"admin")] from [job]")
@@ -657,26 +668,26 @@ var/global/noir = 0
 					addPlayerNote(M.ckey, usr.ckey, "[usr.ckey] banned [M.ckey] from [job]")
 					if(job == "Everything Except Assistant")
 						if(player.cached_jobbans.Find("Engineering Department"))
-							jobban_unban(M,"Engineering Department")
+							jobban_unban(M,"Engineering Department", usr.ckey)
 						if(player.cached_jobbans.Find("Security Department"))
-							jobban_unban(M,"Security Department")
+							jobban_unban(M,"Security Department", usr.ckey)
 						if(player.cached_jobbans.Find("Heads of Staff"))
-							jobban_unban(M,"Heads of Staff")
+							jobban_unban(M,"Heads of Staff", usr.ckey)
 						for(var/Trank1 in uniquelist(occupations))
 							if(player.cached_jobbans.Find("[Trank1]"))
-								jobban_unban(M,Trank1)
+								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(player.cached_jobbans.Find("[Trank2]"))
-								jobban_unban(M,Trank2)
+								jobban_unban(M,Trank2, usr.ckey)
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(player.cached_jobbans.Find("[Trank3]"))
-								jobban_unban(M,Trank3)
+								jobban_unban(M,Trank3, usr.ckey)
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 							if(player.cached_jobbans.Find("[Trank4]"))
-								jobban_unban(M,Trank4)
+								jobban_unban(M,Trank4, usr.ckey)
 					jobban_fullban(M, job, usr.ckey)
 					if (announce_jobbans) boutput(M, "<span class='alert'><b>[key_name(usr)] has job-banned you from [job].</b></span>")
 			else
@@ -692,7 +703,7 @@ var/global/noir = 0
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
 						tgui_alert(usr,"This person is banned from Everything Except Assistant. You must lift that ban first.")
 						return
-					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+					if(job in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 						if(cache.Find("Engineering Department"))
 							tgui_alert(usr,"This person is banned from Engineering Department. You must lift that ban first.")
 							return
@@ -708,7 +719,7 @@ var/global/noir = 0
 					logTheThing(LOG_DIARY, usr, "unbanned [M](Offline) from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [M](Offline) from [job]</span>")
 					addPlayerNote(M, usr.ckey, "[usr.ckey] unbanned [M](Offline) from [job]")
-					jobban_unban(M, job)
+					jobban_unban(M, job, usr.ckey)
 				else
 					logTheThing(LOG_ADMIN, usr, "banned [M](Offline) from [job]")
 					logTheThing(LOG_DIARY, usr, "banned [M](Offline) from [job]", "admin")
@@ -716,26 +727,26 @@ var/global/noir = 0
 					addPlayerNote(M, usr.ckey, "[usr.ckey] banned [M](Offline) from [job]")
 					if(job == "Everything Except Assistant")
 						if(cache.Find("Engineering Department"))
-							jobban_unban(M,"Engineering Department")
+							jobban_unban(M,"Engineering Department", usr.ckey)
 						if(cache.Find("Security Department"))
-							jobban_unban(M,"Security Department")
+							jobban_unban(M,"Security Department", usr.ckey)
 						if(cache.Find("Heads of Staff"))
-							jobban_unban(M,"Heads of Staff")
+							jobban_unban(M,"Heads of Staff", usr.ckey)
 						for(var/Trank1 in uniquelist(occupations))
 							if(cache.Find("[Trank1]"))
-								jobban_unban(M,Trank1)
+								jobban_unban(M,Trank1, usr.ckey)
 					else if(job == "Engineering Department")
-						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner","Mechanic"))
+						for(var/Trank2 in list("Mining Supervisor","Engineer","Atmospheric Technician","Miner"))
 							if(cache.Find("[Trank2]"))
-								jobban_unban(M,Trank2)
+								jobban_unban(M,Trank2, usr.ckey, usr.ckey)
 					else if(job == "Security Department")
 						for(var/Trank3 in list("Security Officer","Security Assistant","Vice Officer","Part-time Vice Officer","Detective"))
 							if(cache.Find("[Trank3]"))
-								jobban_unban(M,Trank3)
+								jobban_unban(M,Trank3, usr.ckey, usr.ckey)
 					else if(job == "Heads of Staff")
 						for(var/Trank4 in list("Captain","Head of Personnel","Head of Security","Chief Engineer","Research Director"))
 							if(cache.Find("[Trank4]"))
-								jobban_unban(M,Trank4)
+								jobban_unban(M,Trank4, usr.ckey, usr.ckey)
 					jobban_fullban(M, job, usr.ckey)
 			else
 				tgui_alert(usr,"You need to be at least a Secondary Administrator to work with job bans.")
@@ -3506,8 +3517,6 @@ var/global/noir = 0
 						src.owner:debug_variables(random_events)
 					if("disease")
 						src.owner:debug_variables(disease_controls)
-					if("mechanic")
-						src.owner:debug_variables(mechanic_controls)
 					if("artifact")
 						src.owner:debug_variables(artifact_controls)
 					if("gauntlet")
@@ -4266,7 +4275,6 @@ var/global/noir = 0
 			dat += "<b>Force players to use random names:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>[force_random_names ? "Yes" : "No"]</a><br>"
 			dat += "<b>Force players to use random appearances:</b> <A href='?src=\ref[src];action=secretsfun;type=forcerandomlooks'>[force_random_looks ? "Yes" : "No"]</a><br>"
 			//dat += "<A href='?src=\ref[src];action=secretsfun;type=forcerandomnames'>Politely suggest all players use random names</a>" // lol
-
 	if (src.level >= LEVEL_SA)
 		dat += "<hr>"
 		dat += "<A href='?src=\ref[src];action=create_object'>Create Object</A><br>"
@@ -4289,7 +4297,6 @@ var/global/noir = 0
 				<A href='?src=\ref[src];action=secretsadmin;type=manifest'>Crew Manifest</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=DNA'>Blood DNA</A> |
 				<A href='?src=\ref[src];action=secretsadmin;type=fingerprints'>Fingerprints</A><BR>
-
 			"}
 #ifdef SECRETS_ENABLED
 	dat += {"<A href='?src=\ref[src];action=secretsadmin;type=ideas'>Fun Admin Ideas</A>"}

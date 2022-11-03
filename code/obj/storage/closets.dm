@@ -218,7 +218,8 @@
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."

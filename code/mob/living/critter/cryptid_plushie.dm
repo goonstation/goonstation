@@ -223,7 +223,7 @@
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue
-			if (!isalive(M))
+			if (!isalive(M) || isintangible(M))
 				continue
 			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue

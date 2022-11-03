@@ -891,9 +891,8 @@
 
 		if(open)
 			if(cell && !user.equipped())
-				user.put_in_hand_or_drop(cell)
 				cell.UpdateIcon()
-				cell = null
+				user.put_in_hand_or_drop(cell)
 
 				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
@@ -1004,6 +1003,11 @@
 
 		if (mode_toggle) //reactivate in togglemode
 			activate()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/clothing/shoes/stomp_boots
 	name = "Stomper Boots"

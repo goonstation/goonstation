@@ -11,7 +11,7 @@
 	occupations = new_occupations
 	return
 
-/proc/FindOccupationCandidates(list/unassigned, job, level)
+/proc/FindOccupationCandidates(list/unassigned, job, level, set_antag_fallthrough = FALSE)
 	set background = 1
 
 	var/list/candidates = list()
@@ -34,6 +34,10 @@
 				continue
 
 		if (!J.allow_traitors && player.mind.special_role || !J.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			if(set_antag_fallthrough)
+				player.antag_fallthrough = TRUE
+			continue
+		if (!J.allow_antag_fallthrough && player.antag_fallthrough)
 			continue
 		if (J.needs_college && !player.has_medal("Unlike the director, I went to college"))
 			continue
@@ -183,6 +187,7 @@
 		if (JOB.requires_whitelist && !NT.Find(ckey(player.mind.key)))
 			continue
 		if (!JOB.allow_traitors && player.mind.special_role ||  !JOB.allow_spy_theft && player.mind.special_role == ROLE_SPY_THIEF)
+			player.antag_fallthrough = TRUE
 			continue
 		// If there's an open job slot for it, give the player the job and remove them from
 		// the list of unassigned players, hey presto everyone's happy (except clarks probly)
@@ -211,10 +216,13 @@
 		// If there's no more slots for this job available, move onto the next one
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit) continue
 		// First, rebuild the lists of who wants to be this job
-		pick2 = FindOccupationCandidates(unassigned,JOB.name,2)
+		pick2 = FindOccupationCandidates(unassigned,JOB.name,2, TRUE)
 		// Now loop through the candidates in order of priority, and elect them to the
 		// job position if possible - if at any point the job is filled, break the loops
 		for(var/mob/new_player/candidate in pick2)
+			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -224,8 +232,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
-				break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -243,8 +249,11 @@
 		if (JOB.limit > 0 && JOB.assigned >= JOB.limit)
 			continue
 
-		pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
+		pick3 = FindOccupationCandidates(unassigned,JOB.name,3, TRUE)
 		for(var/mob/new_player/candidate in pick3)
+			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -254,7 +263,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -433,6 +441,10 @@
 			H.traitHolder.removeTrait("pilot")
 			H.traitHolder.removeTrait("sleepy")
 			H.traitHolder.removeTrait("puritan")
+		if (map_setting == "NADIR") //Nadir: pilot trait screws the pilot and adds sub when sub should not otherwise exist.
+			if(H.traitHolder.hasTrait("pilot"))
+				H.traitHolder.removeTrait("pilot")
+				boutput(src, "<span class='alert'>Hazardous conditions prevented you from arriving in your pod.</span>")
 
 		H.Equip_Job_Slots(JOB)
 
@@ -509,6 +521,11 @@
 				src.setStatus("resting", INFINITE_STATUS)
 				src.setStatus("paralysis", 10 SECONDS)
 				src.force_laydown_standup()
+
+		// This should be here (overriding most other things), probably? - #11215
+		// Vampires spawning in the chapel is bad. :(
+		if (istype(src.loc.loc, /area/station/chapel) && (src.mind.special_role == ROLE_VAMPIRE))
+			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
 
 		if (prob(10) && islist(random_pod_codes) && length(random_pod_codes))
 			var/obj/machinery/vehicle/V = pick(random_pod_codes)
@@ -704,6 +721,9 @@
 	src.equip_sensory_items()
 
 /mob/living/carbon/human/proc/spawnId(rank)
+#ifdef DEBUG_EVERYONE_GETS_CAPTAIN_ID
+	rank = "Captain"
+#endif
 	var/obj/item/card/id/C = null
 	if(istype(get_area(src),/area/afterlife))
 		rank = "Captain"

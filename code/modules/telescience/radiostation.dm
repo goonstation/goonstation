@@ -241,31 +241,45 @@
 	icon_state = "mixtable-3"
 	anchored = 1
 	density = 1
-	var/has_record = 0
-	var/is_playing = 0
+	var/can_play_music = TRUE
+	var/has_record = FALSE
 	var/obj/item/record/record_inside = null
 
 	New()
-		..()
+		. = ..()
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_music)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/record_player/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/record))
-		if(has_record)
+		if (!src.can_play_music)
+			boutput(user, "<span class='alert'>You insert the record into the record player, but it won't turn on.</span>")
+			return
+		else if(has_record)
 			boutput(user, "The record player already has a record inside!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else
 			boutput(user, "You insert the record into the record player.")
 			var/inserted_record = W
 			src.visible_message("<span class='notice'><b>[user] inserts the record into the record player.</b></span>")
 			user.drop_item()
 			W.set_loc(src)
 			src.record_inside = W
-			src.has_record = 1
+			src.has_record = TRUE
 			var/R = copytext(html_encode(input("What is the name of this record?","Record Name", src.record_inside.record_name) as null|text), 1, MAX_MESSAGE_LEN)
 			if(!in_interact_range(src, user))
 				boutput(user, "You're out of range of the [src.name]!")
 				return
-			if(src.is_playing) // someone queuing up several input windows
+			if(is_music_playing()) // someone queuing up several input windows
 				return
 			if(!inserted_record || (inserted_record != src.record_inside)) // record was removed/changed before input confirmation
 				return
@@ -278,20 +292,17 @@
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [R].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			src.is_playing = 1
 #ifdef UNDERWATER_MAP
-			sleep(5000) // mbc : underwater map has the radio on-station instead of in space. so it gets played a lot more often + is breaking my immersion
+			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
 #else
-			sleep(3000)
+			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 #endif
-			src.is_playing = 0
 	else
 		..()
 
 /obj/submachine/record_player/attack_hand(mob/user)
 	if(has_record)
-		if(!is_playing)
+		if(!is_music_playing())
 			boutput(user, "You remove the record from the record player. It looks worse for the wear.")
 			src.visible_message("<span class='notice'><b>[user] removes the record from the record player.</b></span>")
 			user.put_in_hand_or_drop(src.record_inside)
@@ -789,34 +800,50 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	icon_state = "tapedeck"
 	anchored = 1
 	density = 1
-	var/has_tape = 0
-	var/is_playing = 0
+	var/has_tape = FALSE
+	var/can_play_tapes = TRUE
 	var/obj/item/radio_tape/tape_inside = null
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	get_desc()
+		if(!src.can_play_tapes)
+			. += " There's an \"out of order\" label on it."
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/submachine/tape_deck/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/radio_tape))
+		if(!src.can_play_tapes)
+			boutput(user, "<span class='alert'>You insert the tape into the tape deck, but it won't turn on.</span>")
+			return
 		if(has_tape)
 			boutput(user, "The tape deck already has a tape inserted!")
-		else if(!is_playing)
+		else if(is_music_playing())
+			boutput(user, "<span class='alert'>Music is already playing, it'd be rude to interrupt!</span>")
+		else if(GET_COOLDOWN(src, "play"))
+			boutput(user, "<span class='alert'>The tape deck is still rewinding!</span>")
+		else
 			src.visible_message("<span class='notice'><b>[user] inserts the compact tape into the tape deck.</b></span>",
 			"You insert the compact tape into the tape deck.")
 			user.drop_item()
 			W.set_loc(src)
 			src.tape_inside = W
-			src.has_tape = 1
-			src.is_playing = 1
+			src.has_tape = TRUE
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("command"="text_message", "sender_name"="RADIO-STATION", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
-			//////
-			sleep(6000)
-			is_playing = 0
+			EXTEND_COOLDOWN(src, "play", 600 SECONDS)
 
 /obj/submachine/tape_deck/attack_hand(mob/user)
 	if(has_tape)
-		if(!is_playing)
+		if(!is_music_playing() && !GET_COOLDOWN(src, "play"))
 			if(istype(src.tape_inside,/obj/item/radio_tape/advertisement))
 				src.visible_message("<span class='alert'><b>[src.tape_inside]'s copyright preserving self destruct feature activates!</b></span>")
 				qdel(src.tape_inside)

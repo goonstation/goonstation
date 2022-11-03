@@ -140,6 +140,10 @@ ABSTRACT_TYPE(/mob/living/critter)
 			if (abilityHolder)
 				abilityHolder.updateButtons()
 
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
 	disposing()
 		if(organHolder)
 			organHolder.dispose()
@@ -184,7 +188,7 @@ ABSTRACT_TYPE(/mob/living/critter)
 	///enables mob ai that was disabled by a hibernation task
 	proc/wake_from_hibernation()
 		if(src.is_npc)
-			src.ai?.enabled = TRUE
+			src.ai?.enable()
 			src.last_hibernation_wake_tick = TIME
 			src.registered_area?.registered_mob_critters -= src
 			src.registered_area = null
@@ -1381,12 +1385,12 @@ ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter/Logout()
 	..()
 	if (src.ai && !src.ai.enabled && src.is_npc)
-		ai.enabled = TRUE
+		ai.enable()
 
 /mob/living/critter/Login()
 	..()
 	if (src.ai?.enabled && src.is_npc)
-		ai.enabled = FALSE
+		ai.disable()
 		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
 		A?.updateObject()
 

@@ -27,7 +27,6 @@
 		HH.set_dir(get_dir(HH, M))
 		HH.changeStatus("stunned", 4 SECONDS)
 		M.visible_message("<span class='alert'><B>[M] starts flinging [HH] around like a ragdoll!</B></span>")
-		M.emote("scream")
 		for (var/i = 0, i < 10, i++)
 			var/delay = 3
 			switch (i)
