@@ -115,7 +115,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
 
 	disposing()
-		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		if(src.artitype)
+			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+
 		artitype = null
 		fx_image = null
 		holder = null
