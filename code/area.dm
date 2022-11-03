@@ -1273,7 +1273,7 @@ ABSTRACT_TYPE(/area/diner)
 
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
-	icon_state = "purple"
+	icon_state = "hallC"
 	do_not_irradiate = 0
 
 /area/pasiphae/hangar
