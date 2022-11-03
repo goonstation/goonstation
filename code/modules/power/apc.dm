@@ -583,8 +583,8 @@ var/zapLimiter = 0
 
 	if(opened && !isAIeye(user) && !issilicon(user))
 		if(cell)
-			user.put_in_hand_or_drop(cell)
 			cell.UpdateIcon()
+			user.put_in_hand_or_drop(cell)
 			src.cell = null
 			boutput(user, "You remove the power cell.")
 			charging = 0

@@ -2717,7 +2717,7 @@
 /area/wizard_station)
 "afT" = (
 /obj/window/auto,
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor5"
 	},

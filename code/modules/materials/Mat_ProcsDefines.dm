@@ -141,6 +141,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)
+	if(istext(mat1))
+		CRASH("setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
 		return
 	if(copy)
