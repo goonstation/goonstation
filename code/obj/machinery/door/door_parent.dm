@@ -120,10 +120,15 @@
 		if(P.proj_data.window_pass)
 			return !opacity
 	if(density && mover && mover.flags & DOORPASS && !src.cant_emag)
-		if (ismob(mover) && mover:pulling && src.bumpopen(mover))
-			// If they're pulling something and the door would open anyway,
-			// just let the door open instead.
-			return 0
+		if (ismob(mover))
+			var/mob/M = mover
+			if (M.pulling && src.bumpopen(M))
+				// If they're pulling something and the door would open anyway,
+				// just let the door open instead.
+				return 0
+			for (var/obj/item/grab/G in M.equipped_list(check_for_magtractor = 0))
+				if (G.state >= GRAB_STRONG)
+					return 0
 		animate_door_squeeze(mover)
 		return 1 // they can pass through a closed door
 
@@ -335,32 +340,22 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
 	else if (src.density && !ON_COOLDOWN(src, "deny_sound", 1 SECOND)) // stop the sound from spamming, if there is one
 		play_animation("deny")
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 
-	if (src.density && !src.operating && I)
+	if (src.density && !src.operating && I?.force > 5)
+		var/resolvedForce = I.force
+		if (I.tool_flags & TOOL_CHOPPING)
+			resolvedForce *= 4
 		user.lastattacked = src
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-		src.take_damage(I.force, user)
-/*
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-*/
-
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(resolvedForce, user)
-
-
-	return ..(I,user)
+		src.take_damage(resolvedForce, user)
+		return ..(I,user) // only call parent if force > 5; no material hit or attack message otherwise
 
 /obj/machinery/door/proc/bumpopen(atom/movable/AM)
 	if (src.operating)

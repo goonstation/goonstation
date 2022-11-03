@@ -7637,7 +7637,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aEu" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/freezer,
@@ -8572,7 +8572,8 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aIM" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
 	pixel_y = 1
 	},
 /obj/cable{
@@ -20116,7 +20117,9 @@
 /area/station/engine/inner)
 "csY" = (
 /obj/window/reinforced/west,
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 4
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -20499,7 +20502,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
 "cUl" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/south,
 /area/station/science/chemistry)
@@ -22514,7 +22517,9 @@
 /turf/simulated/floor,
 /area/station/bridge)
 "fGI" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1
+	},
 /obj/machinery/light,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -23853,7 +23858,7 @@
 /turf/simulated/floor/white,
 /area/station/turret_protected/AIsat)
 "hsp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/caution/north{
 	dir = 8
@@ -25168,7 +25173,9 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "iTR" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 2
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "iUA" = (
@@ -27324,7 +27331,9 @@
 	},
 /area/station/bridge)
 "lKP" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "lLJ" = (
@@ -30294,7 +30303,8 @@
 	},
 /area/station/engine/elect)
 "ppa" = (
-/obj/machinery/atmospherics/pipe/simple/junction/east{
+/obj/machinery/atmospherics/pipe/simple/junction{
+	dir = 4;
 	pixel_y = 1
 	},
 /obj/kitchenspike,
@@ -31170,7 +31180,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -31285,7 +31295,9 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "qtN" = (
-/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 1
+	},
 /turf/simulated/floor/plating/airless,
 /area/station/engine/proto)
 "que" = (
@@ -32861,7 +32873,9 @@
 	dir = 4
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/proto)
 "sfF" = (
@@ -34146,7 +34160,9 @@
 /area/station/turret_protected/AIsat)
 "ttP" = (
 /obj/lattice,
-/obj/machinery/atmospherics/pipe/manifold/overfloor/west,
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
 /obj/machinery/power/stats_meter{
 	name = "Hot Loop Outlet Meter";
 	tag = "Hot Loop Outlet Meter"

@@ -4,11 +4,15 @@
 	var/startTime = world.timeofday
 
 	total_chem_reactions.Cut()
+	chem_reactions_by_result.Cut()
 	for(var/R in childrentypesof(/datum/chemical_reaction))
 		var/datum/chemical_reaction/CR = new R
 
 		if(CR.id)
 			chem_reactions_by_id[CR.id] = CR
+
+		if (CR.result)
+			LAZYLISTADD(chem_reactions_by_result[CR.result], CR)
 
 		sortList(CR.required_reagents, /proc/cmp_text_asc)
 		for(var/reagent in CR.required_reagents)

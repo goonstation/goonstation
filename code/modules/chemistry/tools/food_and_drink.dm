@@ -9,7 +9,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/heal_amt = 0
 	var/needfork = 0
 	var/needspoon = 0
-	var/food_color = "#FF0000" //Color for various food items
+	/// Color for various food items
+	var/food_color = null
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -31,6 +32,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (istype(M, /obj/table))
 				return 1
 		return 0
+
+	proc/get_food_color()
+		if (food_color) // keep manually defined food colors
+			return food_color
+		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
+		food_color = get_average_color(I)
+		return food_color
 
 	proc/heal(var/mob/living/M)
 		var/healing = src.heal_amt
@@ -779,6 +787,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
+			for(var/obj/surgery_tray/target_tray in src.loc)
+				target_tray.attach(S)
+				break
+
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
 
@@ -1748,6 +1760,26 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			src.fluid_image = image('icons/obj/foodNdrink/drinks.dmi', "fluid-[glass_style]", -1)
 		src.fluid_image.color = average.to_rgba()
 		src.UpdateOverlays(src.fluid_image, "fluid")
+
+/obj/item/reagent_containers/food/drinks/pinkmug //for Jan's office
+	name = "pink latte mug"
+	desc = "Whoever owns this drinks a lot of lattes."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "pinkmug_full"
+	initial_volume = 50
+	initial_reagents = list("espresso"=40, "milk"=5, "chocolate"=5)
+
+	on_reagent_change()
+		..()
+		src.UpdateIcon()
+
+		if (src.reagents.total_volume == 0)
+			update_icon()
+			icon_state = "pinkmug_empty"
+		else
+			update_icon()
+			icon_state = "pinkmug_full"
+		return
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"

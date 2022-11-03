@@ -36,7 +36,7 @@
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
-			if(src.canshoot())
+			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
 

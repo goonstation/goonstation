@@ -225,11 +225,7 @@
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "fc" = (
-/obj/effects/background_objects/x4{
-	name = "Regina";
-	pixel_x = -64;
-	pixel_y = -64
-	},
+/obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
 "fh" = (
@@ -1013,7 +1009,7 @@
 /turf/simulated/floor/caution/west,
 /area/mining/miningoutpost)
 "qn" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup3)
 "qo" = (
@@ -47083,7 +47079,7 @@ Bt
 Bt
 bi
 ab
-ep
+cT
 ab
 ab
 ab
@@ -47387,7 +47383,7 @@ bi
 ab
 ab
 ab
-cT
+ab
 ab
 ab
 ab
@@ -48596,8 +48592,8 @@ IA
 Jv
 ab
 ab
-ab
 fc
+ab
 ab
 ab
 ab

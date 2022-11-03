@@ -125,7 +125,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_suffix = " cob"
 	desc = "The assistants call it maize."
 	icon_state = "corn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "clear corn cob"
 	desc = "Pure grain ethanol in a vague corn shape."
 	icon_state = "clearcorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
@@ -165,7 +165,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "Pepper corn cob"
 	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
@@ -175,7 +175,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soybean pod"
 	crop_suffix = " pod"
 	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soy"
 	bites_left = 3
 	heal_amt = 1
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "bean pod"
 	crop_suffix = " pod"
 	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
-	planttype = /datum/plant/crop/beans
+	planttype = /datum/plant/veg/beans
 	icon_state = "beanpod"
 	bites_left = 1
 	heal_amt = 1
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "pea pod"
 	crop_suffix = " pod"
 	desc = "These peas are like peas in a pod. Yeah."
-	planttype = /datum/plant/crop/peas
+	planttype = /datum/plant/veg/peas
 	icon_state = "peapod"
 	bites_left = 1
 	heal_amt = 1
@@ -221,7 +221,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
 	desc = "Contains high-energy plankton!"
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soylent"
 	bites_left = 3
 	heal_amt = 2
@@ -675,7 +675,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "cucumber"
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
-	planttype = /datum/plant/veg/cucumber
+	planttype = /datum/plant/fruit/cucumber
 	w_class = W_CLASS_TINY
 	bites_left = 2
 	heal_amt = 1
@@ -939,6 +939,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 			user.visible_message("[user] carefully hallows out [src] to make a nice bowl.", "You carefully hallow out [src] to make a nice bowl.")
 			var/obj/item/reagent_containers/food/drinks/bowl/pumpkin/bowl = new /obj/item/reagent_containers/food/drinks/bowl/pumpkin(user.loc)
 			bowl.reagents.add_reagent("juice_pumpkin", 30)
+			src.reagents.trans_to(bowl, src.reagents.maximum_volume)
 			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/plant/pumpkin/summon
@@ -966,10 +967,11 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		else
 			..()
 
-obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
+/obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 	name = "spiced pumpkin"
 	desc = "Autumny!"
 	icon_state = "pumpkinlatte"
+	planttype = /datum/plant/fruit/pumpkin
 	edible = 0
 	food_color = "#CC6600"
 	validforhat = 1
@@ -982,7 +984,8 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			qdel(src)
 		else if (isspooningtool(W))
 			user.visible_message("[user] carefully opens up [src] to make a drinkable beverage.", "You carefully spoon the top off of [src], mindful of the whipped cream.")
-			new /obj/item/reagent_containers/food/drinks/pumpkinlatte(get_turf(user))
+			var/obj/item/reagent_containers/food/drinks/pumpkinlatte/latte = new(get_turf(user))
+			src.reagents.trans_to(latte, src.reagents.total_volume)
 			qdel(src)
 
 /obj/item/clothing/head/pumpkinlatte
@@ -1286,7 +1289,8 @@ obj/item/reagent_containers/food/snacks/plant/pumpkinlatte
 			if(DNA)
 				HYPpassplantgenes(DNA,PDNA)
 			makeslices -= 1
-		new /obj/item/reagent_containers/food/drinks/coconut(T)
+		var/obj/item/reagent_containers/food/drinks/coconut/drink = new(T)
+		src.reagents.trans_to(drink, src.reagents.total_volume)
 		qdel(src)
 
 	proc/someone_landed_on_us(mob/living/L, datum/thrown_thing/thr)

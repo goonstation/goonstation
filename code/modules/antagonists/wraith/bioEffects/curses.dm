@@ -32,7 +32,7 @@
 			make_cleanable(/obj/decal/cleanable/blood,T)
 		if (probmult(3))
 			owner.visible_message("<span class='alert'>[owner] vomits a lot of blood!</span>")
-			playsound(owner.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(owner.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 			bleed(owner, rand(5,8), 5)
 
 

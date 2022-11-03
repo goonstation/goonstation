@@ -204,27 +204,36 @@
 
 /datum/targetable/flockmindAbility/healDrone
 	name = "Concentrated Repair Burst"
-	desc = "Fully heal a drone through acceleration of its repair processes."
+	desc = "Accelerate the repair processes of all flock units in an area (maximum 4 drones)."
 	icon_state = "heal_drone"
-	cooldown = 20 SECONDS
+	cooldown = 30 SECONDS
+	var/max_targets = 4 //maximum number of drones healed
 
-/datum/targetable/flockmindAbility/healDrone/cast(mob/living/critter/flock/drone/target)
+/datum/targetable/flockmindAbility/healDrone/cast(atom/target)
 	if(..())
 		return TRUE
-	if(!istype(target))
-		return TRUE
-	if (target.get_health_percentage() >= 1)
-		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] has no damage!</span>")
-		return TRUE
-	if (isdead(target))
-		boutput(holder.get_controlling_mob(), "<span class='notice'>[target.real_name] is dead!</span>")
-		return TRUE
+	var/mob/living/intangible/flock/flockowner = holder.owner
+	var/healed = 0
+	for (var/mob/living/critter/flock/flockcritter in range(3, target))
+		var/health_ratio = flockcritter.get_health_percentage()
+		if (isdead(flockcritter) || health_ratio >= 1 || flockcritter.flock != flockowner.flock)
+			continue
+		flockcritter.HealDamage("All", 30, 30) //half of a flockdrone's health
+		var/particles/healing/flock/particles = new
+		particles.spawning = 1 - health_ratio //more heal = more particles
+		flockcritter.UpdateParticles(particles, "flockmind_heal")
+		SPAWN(1.5 SECONDS)
+			particles.spawning = 0
+			sleep(1.5 SECONDS)
+			flockcritter.ClearSpecificParticles("flockmind_heal")
+		if (istype(flockcritter, /mob/living/critter/flock/drone))
+			healed++
+		if (healed >= src.max_targets)
+			break
 
 	playsound(holder.get_controlling_mob(), 'sound/misc/flockmind/flockmind_cast.ogg', 80, 1)
-	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on fixing [target.real_name]</span>")
-	target.HealDamage("All", 200, 200)
-	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst on [constructTarget(target)] at [log_loc(src.holder.owner)].")
-	target.visible_message("<span class='notice'><b>[target]</b> suddenly reforms its broken parts into a solid whole!</span>", "<span class='notice'>The flockmind has restored you to full health!</span>")
+	boutput(holder.get_controlling_mob(), "<span class='notice'>You focus the flock's efforts on repairing nearby units.</span>")
+	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "casts repair burst at [log_loc(src.holder.owner)].")
 
 /////////////////////////////////////////
 
@@ -307,7 +316,7 @@
 		for(var/mob/living/M in targets)
 			playsound(M, "sound/effects/radio_sweep[rand(1,5)].ogg", 70, 1)
 			boutput(M, "<span class='alert'>Horrifying static bursts into your headset, disorienting you severely!</span>")
-			M.apply_sonic_stun(3, 6, 60, 0, 0, rand(1, 3), rand(1, 3))
+			M.apply_sonic_stun(3, 6, 30, 0, 0, rand(1, 3), rand(1, 3))
 	else
 		boutput(holder.get_controlling_mob(), "<span class='alert'>No targets in range with active radio headsets.</span>")
 		return TRUE
@@ -425,6 +434,7 @@
 	var/obj/flock_structure/structurewantedtype = ufs.structType //this is a mildly cursed abuse of type paths, where you can cast a type path to a typed var to get access to its members
 
 	if(structurewantedtype)
+		logTheThing(LOG_STATION, holder.owner, "queues a [initial(structurewantedtype.flock_id)] tealprint ([log_loc(T)])")
 		return F.createstructure(structurewantedtype, initial(structurewantedtype.resourcecost))
 
 /////////////////////////////////////////

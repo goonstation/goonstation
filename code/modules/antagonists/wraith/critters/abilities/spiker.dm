@@ -66,7 +66,7 @@
 		if (!is_incapacitated(M))
 			boutput(holder.owner, "<span class='alert'>That is moving around far too much to immobilize.</span>")
 			return 1
-		playsound(holder.owner, "sound/impact_sounds/Flesh_Stab_1.ogg", 80, 1)
+		playsound(holder.owner, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
 		disabled = 1
 		SPAWN(0)
 			var/frenz = 5

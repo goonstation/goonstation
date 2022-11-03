@@ -145,6 +145,10 @@
 
 	execute_ability()
 		var/obj/item/clothing/shoes/magnetic/W = the_item
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
+
 		if(W.magnetic)
 			W.deactivate()
 			boutput(the_mob, "<span class='hint'>You power off your magnetic boots.</span><br><span class='alert'>You are no longer anchored to the floor.</span>", group = "magbootsoff")

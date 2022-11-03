@@ -90,3 +90,4 @@
 #define AMMO_HOWITZER "howitzer"
 #define AMMO_FLINTLOCK "flintlock"
 #define AMMO_COILGUN "coilgun"
+#define AMMO_KUVALDA "kuvalda"
