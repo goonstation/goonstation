@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
