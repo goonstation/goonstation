@@ -311,7 +311,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	shear = 666 //this is a very hard value to reach
 	sens_window = 0
 #ifdef SECRETS_ENABLED
-	product = /obj/glitchy_thing // temporary replacement until we figure out something cooler, but plutonium core is a no-no
+	product = /obj/item/activated_glitchy_thing // temporary replacement until we figure out something cooler, but plutonium core is a no-no
 #else
 	product = /obj/item/gnomechompski
 #endif
