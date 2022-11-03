@@ -11,7 +11,7 @@ TYPEINFO(/datum/component/acid_slime)
 /datum/component/acid_slime/proc/slime()
 	var/turf/T = get_turf(src.parent)
 	boutput(src.parent, T)
-	if (!T) return
+	if (!T || istype(T, /turf/simulated/shuttle) || istype(T, /turf/unsimulated) || istype(T, /turf/space)) return
 	T.acidify_turf(10 SECONDS)
 
 /datum/component/acid_slime/UnregisterFromParent()

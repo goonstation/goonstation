@@ -30,7 +30,8 @@
 
 	death()
 		var/turf/T = get_turf(src)
-		T.acidify_turf(15 SECONDS)
+		if (!istype(T, /turf/simulated/shuttle) && !istype(T, /turf/unsimulated) && !istype(T, /turf/space))
+			T.acidify_turf(15 SECONDS)
 		..()
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)

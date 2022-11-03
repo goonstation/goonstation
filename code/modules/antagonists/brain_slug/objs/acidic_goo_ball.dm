@@ -14,6 +14,6 @@
 	throw_impact(atom/A, datum/thrown_thing/thr)
 		..()
 		for (var/turf/T in range(acidic_range, src))
-			if (!istype(T, /turf/space) && !istype(T, /turf/unsimulated))
+			if (!istype(T, /turf/space) && !istype(T, /turf/unsimulated) && !istype(T, /turf/simulated/shuttle))
 				T.acidify_turf(acidify_duration)
 		qdel(src)
