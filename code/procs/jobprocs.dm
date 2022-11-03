@@ -218,6 +218,9 @@
 		// Now loop through the candidates in order of priority, and elect them to the
 		// job position if possible - if at any point the job is filled, break the loops
 		for(var/mob/new_player/candidate in pick2)
+			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -227,8 +230,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
-				break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 2 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
@@ -248,6 +249,9 @@
 
 		pick3 = FindOccupationCandidates(unassigned,JOB.name,3)
 		for(var/mob/new_player/candidate in pick3)
+			if (JOB.assigned >= JOB.limit || unassigned.len == 0)
+				break
+
 			if (istype(JOB, /datum/job/engineering/engineer))
 				engineering_staff += candidate
 			else if (istype(JOB, /datum/job/research/scientist))
@@ -257,7 +261,6 @@
 			else if (istype(JOB, /datum/job/security/security_officer))
 				security_officers += candidate
 
-			if (JOB.assigned >= JOB.limit || unassigned.len == 0) break
 			logTheThing(LOG_DEBUG, null, "<b>I Said No/Jobs:</b> [candidate] took [JOB.name] from Level 3 Job Picker")
 			candidate.mind.assigned_role = JOB.name
 			logTheThing(LOG_DEBUG, candidate, "assigned job: [candidate.mind.assigned_role]")
