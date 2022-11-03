@@ -4004,11 +4004,6 @@ datum
 					return
 				var/cleaning_amt = volume_passed
 				var/mob/living/carbon/human/H = M
-
-				if(H.sims && H.sims.getValue("Hygiene") < 100)
-					var/hygiene_initial = H.sims.getValue("Hygiene")
-					H.sims.affectMotive("Hygiene", cleaning_amt) // cleans you even if you have jumpsuit on
-					cleaning_amt = max(0, ((hygiene_initial + cleaning_amt) - 100))
 				H.setStatus("perfumed", (cleaning_amt * 6) SECONDS)
 
 		sakuride
