@@ -458,7 +458,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		START_TRACKING
 
 	disposing()
+		#ifdef XMAS
 		STOP_TRACKING
+		#endif
+
 		qdel(src.fire_image)
 		src.fire_image = null
 		..()
