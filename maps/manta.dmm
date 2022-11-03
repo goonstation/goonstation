@@ -17131,8 +17131,7 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aWW" = (
 /obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/table/reinforced/auto,
 /obj/item/clothing/head/helmet/space/santahat,
@@ -17634,8 +17633,7 @@
 /area/station/crew_quarters/quartersA)
 "aYn" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer{
-	dir = 1;
-	
+	dir = 1
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -17664,8 +17662,7 @@
 /obj/item/storage/box/ic_cones,
 /obj/item/storage/box/ic_cones,
 /obj/machinery/atmospherics/pipe/simple/junction{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
@@ -17697,15 +17694,13 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aYr" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	
+	dir = 4
 	},
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYs" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 4;
-	
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -17714,14 +17709,13 @@
 /area/station/crew_quarters/kitchen/freezer)
 "aYt" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 9;
-	
+	dir = 9
 	},
 /obj/machinery/light/incandescent/cool/very,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "aYu" = (
-/obj/storage/secure/closet/security/equipment,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -21253,8 +21247,7 @@
 /area/station/medical/medbay/lobby)
 "bhv" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	
+	dir = 1
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -23603,6 +23596,7 @@
 "bnf" = (
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk,
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
 "bng" = (
@@ -38029,8 +38023,7 @@
 /area/station/hangar/starboard)
 "nqf" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
-	dir = 1;
-	
+	dir = 1
 	},
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line3"
@@ -38626,6 +38619,7 @@
 	pixel_x = -24;
 	pixel_y = 10
 	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering/private)
 "oEs" = (
@@ -42359,8 +42353,7 @@
 /area/station/engine/inner)
 "xQw" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	
+	dir = 1
 	},
 /obj/decal/tile_edge/line/blue{
 	dir = 5;
