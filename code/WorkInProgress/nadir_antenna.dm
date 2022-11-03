@@ -21,6 +21,20 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 #define MAX_FREE_POWER 100 KILO WATTS
 #define MAX_CHARGE_RATE 10 KILO WATTS
 
+/*
+Breakdown of each transception (sending or receiving of a thing through the transception system), as happens through standard cargo operations:
+
+If purchasing an item, it'll be put in the shipping market's pending crates queue, to be pulled from later
+
+Interlink computer sends an instruction (build_command), optionally with an index from that queue (presence of this index makes it a "receive" signal)
+
+Transception pad receives its signal, and attempts to operate (attempt_transceive); this proc takes care of checking whether the pad and array can
+serve the transception request, and if they can, delegates the actual receiving or sending to receive_a_thing or send_a_thing respectively
+
+send_a_thing passes the things it sends into the shipping market;
+receive_a_thing pulls a thing out of the shipping market's queue when the transception starts, and returns it to the queue if the transception fails
+*/
+
 /obj/machinery/communications_dish/transception
 	name = "Transception Array"
 	desc = "Sends and receives both energy and matter over a considerable distance. Questionably safe."
@@ -79,7 +93,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return
 		if(!powered() || !src.primed)
 			return TRANSCEIVE_NOPOWER
-		if(src.apc_power_check())
+		if(src.failsafe_inquiry())
 			return TRANSCEIVE_POWERWARN
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
@@ -87,20 +101,20 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			return TRANSCEIVE_NOWIRE
 		return TRANSCEIVE_OK
 
-	///Respond to a pad's request to do a transception
+	///Respond to a pad's request to do a transception; if successful, do the transception animation, power draw and cooldown
 	proc/transceive(var/pad_netnum)
 		. = FALSE
 		if(src.is_transceiving)
 			return
 		if(!powered() || !src.primed)
 			return
-		if(src.apc_power_check())
+		if(src.failsafe_inquiry())
 			return
 		var/datum/powernet/powernet = src.get_direct_powernet()
 		var/netnum = powernet.number
 		if(netnum != pad_netnum)
 			return
-		if(!src.use_area_cell_power(ARRAY_STARTCOST))
+		if(!src.pay_startcost(ARRAY_STARTCOST))
 			return
 		src.is_transceiving = TRUE
 		use_power(ARRAY_TELECOST)
@@ -110,20 +124,29 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			src.is_transceiving = FALSE
 		return TRUE
 
-	///Directly discharge power from the area's cell
-	proc/use_area_cell_power(var/use_amount)
+	///Attempt to pay the "kick-start" cost for transception; uses internal capacitor first, then area power cell when it's expended
+	proc/pay_startcost(var/use_amount)
+		var/cost_to_apc = use_amount
+		if(intcap && intcap.charge > 0)
+
+
+		if(cost_to_apc == 0)
+			intcap.use(use_amount)
+			return 1
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return 0
 		var/obj/item/cell/C = AC.cell
-		if (!C || C.charge < use_amount)
+		if (!C || C.charge < cost_to_apc)
 			return 0
 		else
-			C.use(use_amount)
+			C.use(cost_to_apc)
+			if(cost_to_apc < use_amount)
+				intcap.use(use_amount - cost_to_apc)
 			return 1
 
-	///Checks status of local APC, disables transception if power is insufficient (just over 30% if equipment failsafe is enabled, 1 transception
-	proc/apc_power_check() //returns true if error
+	///Checks status of local APC, activates failsafe if power is insufficient (30% plus 1 startcost with standard failsafe, 1 startcost otherwise)
+	proc/failsafe_inquiry() //returns true if failsafe kicked in
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return
@@ -258,7 +281,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 	var/is_transceiving = FALSE
 	var/frequency = FREQ_TRANSCEPTION_SYS
 	var/net_id
-	///Used for clarity in transception interlink computer
+	///Fancy identifier, which you can see in the pad's name; lets you know which pad you're operating from the transception interlink computer
 	var/pad_id = null
 
 	New()
@@ -323,7 +346,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 20, freq)
 
-	///Polls to see if pad's transception connection is operable
+	///Polls to see if the pad can connect to the array, and if it can, whether said array is capable of completing the pad's request
 	proc/check_transceive()
 		. = "ERR_NO_ARRAY"
 		if(!transception_array)
@@ -347,7 +370,7 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 			else
 				return "ERR_OTHER" //what
 
-	///Attempts to perform a transception operation; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
+	///Try to receive or send a thing, contextually; receive if it was passed an index for pending inbound cargo or a manual receive, send otherwise
 	proc/attempt_transceive(var/cargo_index = null,var/obj/manual_receive = null)
 		if(src.is_transceiving)
 			return
