@@ -16,7 +16,9 @@
 	can_grab = 1
 	can_disarm = 1
 	can_help = 1
-	add_abilities = list(/datum/targetable/brain_slug/slug_burrow)
+	add_abilities = list(/datum/targetable/brain_slug/slug_burrow,
+						/datum/targetable/brain_slug/slug_molt)
+	var/bullet_reflect = FALSE
 
 	New(var/turf/T)
 		..(T)
@@ -41,6 +43,20 @@
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
 		return ..()
+
+	bullet_act(var/obj/projectile/P)
+		if(!src.bullet_reflect)
+			..()
+		if (!P.goes_through_mobs)
+			var/obj/projectile/Q = shoot_reflected_to_sender(P, src)
+			P.die()
+
+			src.visible_message("<span class='alert'>[Q.name] is reflected by [src]'s sticky mucus!</span>")
+			playsound(src.loc, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 0.1, 0, 2.6)
+
+			return
+		else
+			..()
 
 /mob/living/critter/adult_brain_slug/is_spacefaring()
 	return TRUE

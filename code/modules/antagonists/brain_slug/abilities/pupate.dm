@@ -25,7 +25,7 @@
 				if (!H || !H.slug)	return TRUE
 				var/mob/living/critter/adult_brain_slug/new_slug = new /mob/living/critter/adult_brain_slug(H)
 				H.mind.transfer_to(new_slug)
-				new_slug.visible_message("<span class='alert'>A gigantic monster bursts out of [H]! [pick("GOOD LORD!", "GOD JESUS WHAT THE FUCK!", "You're going to be sick")]!</span>", "<span class='notice'>You rise!</span>")
+				new_slug.visible_message("<span class='alert'>A gigantic monster bursts out of [H]! [pick("GOOD LORD!", "GOD JESUS WHAT THE FUCK!", "You're going to be sick.")]!</span>", "<span class='alert'>You rise!</span>")
 				var/mob/living/critter/brain_slug/old_slug = H.slug
 				qdel(old_slug)
 				H.gib()
