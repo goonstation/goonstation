@@ -46638,7 +46638,8 @@
 /area/station/turret_protected/Zeta)
 "vSK" = (
 /obj/machinery/door/airlock/pyro/security/alt{
-	dir = 4
+	dir = 4;
+	aiControlDisabled = 1
 	},
 /obj/access_spawn/hos,
 /obj/cable{
