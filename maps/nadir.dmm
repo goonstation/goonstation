@@ -12255,6 +12255,13 @@
 /area/station/maintenance/inner/south)
 "fPh" = (
 /obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_x = -6
+	},
+/obj/access_spawn/kitchen,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -12263,13 +12270,6 @@
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
-/obj/machinery/cashreg{
-	pixel_x = -6
-	},
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/kitchen,
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "fPl" = (
@@ -23034,9 +23034,11 @@
 	glass_amt = 5;
 	pixel_y = 4
 	},
-/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -23045,8 +23047,6 @@
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "kzz" = (
@@ -42729,6 +42729,11 @@
 /turf/simulated/floor/industrial,
 /area/ghostdrone_factory)
 "tRm" = (
+/obj/table/reinforced/auto,
+/obj/access_spawn/kitchen,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -42737,11 +42742,6 @@
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/kitchen,
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "tRz" = (
@@ -43455,9 +43455,11 @@
 /area/station/maintenance/northwest)
 "ulq" = (
 /obj/submachine/ice_cream_dispenser,
-/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/access_spawn/kitchen,
 /obj/access_spawn/bar,
+/obj/forcefield/energyshield/perma/doorlink,
+/obj/firedoor_spawn,
+/obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/machinery/door/poddoor/pyro{
 	density = 0;
 	icon_state = "pdoor0";
@@ -43466,8 +43468,6 @@
 	name = "Kitchen Shutter";
 	opacity = 0
 	},
-/obj/forcefield/energyshield/perma/doorlink,
-/obj/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "ulO" = (
