@@ -49,9 +49,8 @@
 	dissipation_rate = 1
 	dissipation_delay = 7
 	icon_state = ""
-	power = 1
+	damage = 1
 	hit_ground_chance = 0
-	ks_ratio = 1.0
 	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 	var/list/previous_line = list()
 	//This whole line thing might be a bit inneficient and chuggy.

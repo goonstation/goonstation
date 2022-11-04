@@ -23,8 +23,9 @@
 		if (src.on)
 			src.visible_message("<span class='notice'>[user] blows on [src], its eyes emit a threatening glow!</span>")
 			for(var/mob/wraith/W in orange(4, user))
-				if ((W.last_spirit_candle_time + (W.forced_haunt_duration * 2)) < TIME)
-					W.last_spirit_candle_time = TRUE
+				//Small grace period to run away after being manifested if you managed to survive so you dont get chain-manifested
+				if ((W.last_spirit_candle_time + (W.forced_haunt_duration + 6 SECONDS)) < TIME)
+					W.last_spirit_candle_time = TIME
 					W.setStatus("corporeal", W.forced_haunt_duration, TRUE)
 					boutput(W, "<span class='alert'>A malignant spirit pulls you into the physical world! You begin to gather your forces to try and escape to the spirit realm...</span>")
 				else

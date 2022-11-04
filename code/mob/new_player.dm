@@ -9,6 +9,7 @@ mob/new_player
 	var/adminspawned = 0
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
+	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0
@@ -766,7 +767,6 @@ a.latejoin-card:hover {
 			src.Browse(null, "window=latechoices") //closes late choices window
 			src.Browse(null, "window=playersetup") //closes the player setup window
 			winshow(src, "joinmenu", 0)
-			winshow(src, "playerprefs", 0)
 
 	verb/declare_ready_use_token()
 		set hidden = 1

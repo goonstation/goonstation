@@ -1235,8 +1235,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "afm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/cable{
@@ -1245,8 +1244,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "afn" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -1787,8 +1785,7 @@
 	},
 /area/station/engine/inner)
 "agW" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -4238,8 +4235,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "ard" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -4255,8 +4251,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "arl" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -4271,8 +4266,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/maintenance/solar/east)
 "arp" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/airlock/pyro/external{
@@ -5808,8 +5802,7 @@
 /turf/simulated/floor,
 /area/station/mining/staff_room)
 "axg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -5823,8 +5816,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
 "axi" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/light/small{
@@ -6309,8 +6301,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "azg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -6324,8 +6315,7 @@
 /turf/space,
 /area/supply/spawn_point)
 "azj" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/lattice{
@@ -6334,8 +6324,7 @@
 /turf/space,
 /area/space)
 "azk" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
@@ -7011,8 +7000,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "aBS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage";
 	operating = 1
 	},
@@ -8196,14 +8184,14 @@
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
 "aHf" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aHh" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -8463,7 +8451,7 @@
 /turf/simulated/floor,
 /area/station/security/main)
 "aIv" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -8754,7 +8742,7 @@
 	},
 /area/station/chapel/sanctuary)
 "aJt" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone_lower"
 	},
 /turf/simulated/floor/plating/random,
@@ -9058,7 +9046,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "aKv" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "ghostdrone_lower"
 	},
 /obj/machinery/ghostdrone_conveyor_sensor{
@@ -18217,8 +18205,7 @@
 /turf/space,
 /area/space)
 "bqG" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/blast/pyro{
@@ -18888,7 +18875,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "bsS" = (
-/obj/machinery/conveyor/south{
+/obj/machinery/conveyor/NS{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/plating/random,
@@ -23199,8 +23186,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/hallway/primary/west)
 "gzn" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -31180,7 +31166,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/structure/woodwall,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -31363,7 +31349,7 @@
 	},
 /area/station/bridge)
 "qws" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,

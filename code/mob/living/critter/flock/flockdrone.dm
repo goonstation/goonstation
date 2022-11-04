@@ -1193,7 +1193,8 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "stunbolt"
 	cost = 20
-	power = 44
+	stun = 40
+	damage = 4
 	dissipation_rate = 1
 	dissipation_delay = 3
 	sname = "stunbolt"
@@ -1206,7 +1207,6 @@
 	color_blue = 0.8
 	disruption = 10
 	hit_ground_chance = 50
-	ks_ratio = 0.1
 /////////////////////////////////////////////////////////////////////////////////
 
 /datum/equipmentHolder/flockAbsorption

@@ -103,7 +103,8 @@ var/datum/signal_holder/global_signal_holder
 /datum/component/disposing()
 	if(parent)
 		_RemoveFromParent()
-	SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
+	if(parent)
+		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
 	return ..()
 

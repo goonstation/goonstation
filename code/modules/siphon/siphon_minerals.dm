@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	///Whether this outcome should be indexed in the player-viewable settings compendium
 	var/indexed = TRUE
 	///How many extraction ticks (process iterations times resonator intensity) are required to produce this resource
-	var/tick_req = 30
+	var/tick_req = 10
 	///Target resonance horizontal strength, positive or negative based on relative X position of resonator multiplied by its power.
 	var/x_torque = null
 	///Target resonance vertical strength, positive or negative based on relative Y position of resonator multiplied by its power.
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/miraclium
 	name = "Direct Extraction"
-	tick_req = 60
+	tick_req = 16
 	x_torque = 0
 	y_torque = 0
 	shear = 0
@@ -50,7 +50,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/char
 	name = "Char"
-	tick_req = 15
+	tick_req = 8
 	x_torque = -16
 	y_torque = -4
 	shear = 16
@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/claretine
 	name = "Claretine"
-	tick_req = 40
+	tick_req = 15
 	x_torque = 32
 	y_torque = -4
 	shear = 20
@@ -133,7 +133,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/bohrum
 	name = "Bohrum"
-	tick_req = 40
+	tick_req = 15
 	x_torque = -16
 	y_torque = -16
 	shear = 24
@@ -167,7 +167,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/syreline
 	name = "Syreline"
-	tick_req = 40
+	tick_req = 20
 	x_torque = 88
 	shear = 6
 	sens_window = 1
@@ -175,7 +175,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/erebite
 	name = "Erebite"
-	tick_req = 60
+	tick_req = 50
 	x_torque = 6
 	y_torque = -22
 	shear = 33
@@ -188,7 +188,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/cerenkite
 	name = "Cerenkite"
-	tick_req = 50
+	tick_req = 30
 	x_torque = -24
 	y_torque = 8
 	shear = 16
@@ -201,7 +201,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/plasmastone
 	name = "Plasmastone"
-	tick_req = 60
+	tick_req = 50
 	x_torque = -16
 	y_torque = 13
 	shear = 4
@@ -214,7 +214,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/koshmarite
 	name = "Koshmarite"
-	tick_req = 35
+	tick_req = 18
 	shear = 58
 	product = /obj/item/raw_material/eldritch
 
@@ -224,7 +224,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/gemstone
 	name = "Gemstone"
-	tick_req = 80
+	tick_req = 35
 	x_torque = 0
 	y_torque = 0
 	shear = 64
@@ -232,7 +232,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 
 /datum/siphon_mineral/uqill
 	name = "Uqill"
-	tick_req = 100
+	tick_req = 40
 	shear = 54
 	sens_window = 2
 	product = /obj/item/raw_material/uqill
@@ -255,14 +255,13 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 //shear of 65 or higher should probably do Bad Things unless precisely set.
 /datum/siphon_mineral/gold
 	name = "Gold"
-	tick_req = 90
+	tick_req = 50
 	y_torque = 0
 	shear = 100
 	sens_window = 0
 	product = /obj/item/raw_material/gold
 
 	New()
-		src.tick_req = rand(25,32) * 10
 		src.shear = rand(45,50) * 2 // 90 to 100, in only even increments
 		..()
 
@@ -273,7 +272,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/starstone
 
 	New()
-		src.tick_req = rand(70,90) * 10
+		src.tick_req = rand(100,130) * 5
 		src.shear = rand(130,230)
 		..()
 
@@ -285,7 +284,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/material_piece/wad/blob
 
 	New()
-		src.tick_req = rand(12,22) * 10
+		src.tick_req = rand(8,11) * 10
 		src.shear = (rand(56,61) * 2) + 1 // 113 to 127, in only odd increments
 		..()
 
@@ -303,12 +302,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 303
 	shear = 420
 	sens_window = 0
-	product = /obj/item/plant/herb/cannabis/mega/spawnable
+	product = /obj/item/plant/herb/cannabis/spawnable
 
-/datum/siphon_mineral/forbidden //the end comes
+/datum/siphon_mineral/forbidden
 	indexed = FALSE
 	name = "DATA EXPUNGED"
 	tick_req = 666
-	shear = 666 //this is a very hard value to reach
+	shear = 666
 	sens_window = 0
-	product = /obj/item/plutonium_core
+	product = /obj/item/reagent_containers/food/snacks/ectoplasm

@@ -179,8 +179,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
@@ -390,8 +390,8 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
