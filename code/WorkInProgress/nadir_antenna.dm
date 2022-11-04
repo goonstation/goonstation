@@ -67,7 +67,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 	New()
 		. = ..()
-		src.intcap = new /obj/item/cell(src)
+		src.intcap = new /obj/item/cell/charged(src)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -274,31 +274,55 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			ui.open()
 
 	ui_data(mob/user)
-		var/obj/machinery/power/apc/arrayapc = get_local_apc(transception_array)
-		var/obj/item/cell/arraycell = arrayapc.cell
-		var/cellstat_formatted
-		var/celldiff_val
 		var/safe_transceptions
 		var/max_transceptions
-		if(arraycell)
-			cellstat_formatted = "[round(arraycell.charge)]/[arraycell.maxcharge]"
-			celldiff_val = arraycell.charge / arraycell.maxcharge
-			var/check_safe = round((arraycell.charge - (0.3 * arraycell.maxcharge)) / ARRAY_STARTCOST)
-			var/check_max = round(arraycell.charge / ARRAY_STARTCOST)
-			safe_transceptions = "[check_safe]"
-			max_transceptions = "[check_max]"
+		var/safe_transception_readout
+		var/max_transception_readout
+
+		var/obj/machinery/power/apc/arrayapc = get_local_apc(transception_array)
+		var/obj/item/cell/apc_cell = arrayapc.cell
+		var/apc_cellstat_formatted
+		var/apc_celldiff_val
+		if(apc_cell)
+			apc_cellstat_formatted = "[round(apc_cell.charge)]/[apc_cell.maxcharge]"
+			apc_celldiff_val = apc_cell.charge / apc_cell.maxcharge
+			safe_transceptions += round((apc_cell.charge - (0.3 * apc_cell.maxcharge)) / ARRAY_STARTCOST)
+			max_transceptions += round(apc_cell.charge / ARRAY_STARTCOST)
 		else
-			cellstat_formatted = "ERROR"
-			celldiff_val = 0
-			safe_transceptions = "ERROR"
-			max_transceptions = "ERROR"
+			apc_cellstat_formatted = "ERROR"
+			apc_celldiff_val = 0
+
+		var/obj/item/cell/arraycell = transception_array.intcap
+		var/array_cellstat_formatted
+		var/array_celldiff_val
+		if(arraycell)
+			array_cellstat_formatted = "[round(arraycell.charge)]/[arraycell.maxcharge]"
+			array_celldiff_val = arraycell.charge / arraycell.maxcharge
+			safe_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
+			max_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
+		else
+			array_cellstat_formatted = "ERROR"
+			array_celldiff_val = 0
+
+		if(safe_transceptions)
+			safe_transception_readout = "[safe_transceptions]"
+		else
+			safe_transception_readout = "0"
+		if(max_transceptions)
+			max_transception_readout = "[max_transceptions]"
+		else
+			max_transception_readout = "0"
 		. = list(
-			"cellStat" = cellstat_formatted,
-			"cellDiff" = celldiff_val,
-			"sendsSafe" = safe_transceptions,
-			"sendsMax" = max_transceptions,
+			"apcCellStat" = apc_cellstat_formatted,
+			"apcCellDiff" = apc_celldiff_val,
+			"arrayCellStat" = array_cellstat_formatted,
+			"arrayCellDiff" = array_celldiff_val,
+			"sendsSafe" = safe_transception_readout,
+			"sendsMax" = max_transception_readout,
 			"failsafeThreshold" = transception_array.use_standard_failsafe ? "STANDARD" : "MINIMUM",
 			"failsafeStat" = transception_array.primed ? "OPERATIONAL" : "FAILSAFE HALT",
+			"drawRateTarget" = transception_array.intcap_draw_rate,
+			"surplusThreshold" = transception_array.grid_surplus_threshold,
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
 			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
 		)
@@ -307,8 +331,20 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		. = ..()
 		if (.)
 			return
-		else if (action == "toggle_failsafe")
-			transception_array.use_standard_failsafe = !(transception_array.use_standard_failsafe)
+		switch(action)
+			if ("toggle_failsafe")
+				transception_array.use_standard_failsafe = !(transception_array.use_standard_failsafe)
+			if ("set_surplus")
+				var/new_surplus_value = params["surplusThreshold"]
+				if(text2num(new_surplus_value) != null)
+					transception_array.grid_surplus_threshold = clamp(text2num(new_surplus_value), MIN_FREE_POWER, MAX_FREE_POWER)
+					. = TRUE
+			if ("set_draw_rate")
+				var/new_draw_rate = params["drawRateTarget"]
+				if(text2num(new_draw_rate) != null)
+					transception_array.intcap_draw_rate = clamp(text2num(new_draw_rate), 0, MAX_CHARGE_RATE)
+					. = TRUE
+
 
 #undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
