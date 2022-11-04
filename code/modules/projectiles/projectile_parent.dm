@@ -250,6 +250,8 @@
 							src.collide(X, first = 0)
 					if(QDELETED(src))
 						return
+			else if (src.was_pointblank)
+				die()
 		else
 			die()
 
