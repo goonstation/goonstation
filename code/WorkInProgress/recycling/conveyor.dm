@@ -20,8 +20,8 @@
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
-	var/dir1 = NORTH
-	var/dir2 = SOUTH
+	var/dir1 = null
+	var/dir2 = null
 	var/currentdir = SOUTH
 
 	var/id = ""			// the control ID	- must match controller ID
@@ -160,6 +160,21 @@
 /obj/machinery/conveyor/New()
 	src.flags |= UNCRUSHABLE
 	..()
+
+	if(isnull(dir1)) // autodir
+		SPAWN(0)
+			if(isnull(dir2))
+				dir2 = dir
+			dir1 = turn(dir2, 180)
+			for(var/ndir in cardinal)
+				if(ndir == dir2)
+					continue
+				if(locate(/obj/machinery/conveyor, get_step(src, ndir)))
+					dir1 = ndir
+					break
+			currentdir = dir2
+			setdir()
+
 	currentdir = dir2
 	setdir()
 
