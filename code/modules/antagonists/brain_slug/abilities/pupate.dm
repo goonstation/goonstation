@@ -22,7 +22,7 @@
 			H.visible_message("<span class='alert'>[H]'s flesh appears to contort and shift as if something was trying to come out of [him_or_her(H)]!</span>", "<span class='alert'>You begin to evolve into your final form.</span>")
 			H.changeStatus("slowed", 8 SECONDS)
 			SPAWN (8 SECONDS)
-				if (!H || !H.slug)	return TRUE
+				if (!H || !H.slug)	return
 				var/mob/living/critter/adult_brain_slug/new_slug = new /mob/living/critter/adult_brain_slug(H)
 				H.mind.transfer_to(new_slug)
 				new_slug.visible_message("<span class='alert'>A gigantic monster bursts out of [H]! [pick("GOOD LORD!", "GOD JESUS WHAT THE FUCK!", "You're going to be sick.")]!</span>", "<span class='alert'>You rise!</span>")

@@ -31,4 +31,4 @@
 				H.visible_message("<span class='alert'>[H]'s flesh is ripped apart as some horrible creatures pour out of them!")
 				gibs(H.loc, headbits = FALSE)
 				random_brute_damage(H, 80)
-				return FALSE
+				return

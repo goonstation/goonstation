@@ -23,6 +23,8 @@
 			else
 				var/turf/simulated/floor/floor_turf = T
 				var/obj/disposalpipe/P
+				if (floor_turf.intact)
+					floor_turf.pry_tile(null, holder.owner)
 				P = locate(/obj/disposalpipe) in floor_turf
 				if (!P)
 					boutput(holder.owner, "<span class='alert'>There aren't any pipes here!</span>")
@@ -304,8 +306,6 @@
 		if (caster == null || !isalive(caster) || !can_act(caster) || the_floor == null || the_pipe == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (the_floor.intact)
-			the_floor.pry_tile(null, caster)
 		if (the_pipe.holed_up)
 			boutput(caster, "<span class=notice>You begin to enter the holed up pipe.</span>")
 			src.duration = src.duration / 2
