@@ -40595,8 +40595,7 @@
 	name = "Research Router"
 	})
 "ehC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -56904,8 +56903,7 @@
 	name = "Gas Transit Door";
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -60026,8 +60024,7 @@
 	name = "Gas Transit Door";
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},

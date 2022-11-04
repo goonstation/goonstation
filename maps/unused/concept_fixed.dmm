@@ -3780,8 +3780,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ahu" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
@@ -3816,15 +3815,13 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "ahz" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "ahA" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
 /obj/machinery/door/airlock/external{
@@ -4257,8 +4254,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ail" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage"
 	},
 /obj/machinery/door/poddoor/blast/single{
@@ -4274,8 +4270,7 @@
 /turf/space,
 /area/supply/delivery_point)
 "aio" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/lattice{
@@ -4284,15 +4279,13 @@
 /turf/space,
 /area/space)
 "aip" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/space,
 /area/space)
 "aiq" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/blast{
@@ -4304,15 +4297,13 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
 "air" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "ais" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
 /obj/machinery/door/airlock/external{
@@ -4321,16 +4312,14 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
 "ait" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cargo"
 	},
 /obj/plasticflaps,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
 "aiu" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "cargo"
 	},
 /turf/simulated/floor,
@@ -4440,8 +4429,7 @@
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
 "aiF" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage"
 	},
 /obj/machinery/crusher,
@@ -4800,15 +4788,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ajl" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "ajm" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "garbage"
 	},
 /obj/cable{
