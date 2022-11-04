@@ -21,7 +21,7 @@ dmm_suite
 	default to (1, 1, world.maxz+1)
 	*/
 	read_map(dmm_text as text, coordX as num, coordY as num, coordZ as num, tag as text, flags as num)
-		UNTIL(!location.delay_space_conversion())
+		UNTIL(!air_master?.is_busy())
 		src.flags = flags
 		if(flags & DMM_BESPOKE_AREAS)
 			src.area_cache = list()
