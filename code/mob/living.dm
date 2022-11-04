@@ -1886,7 +1886,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0) //kinetic weapons don't disorient
-					stun = stun / max(1, armor_value_bullet*0.75)
+					stun = stun / max(1, rangedprot_mod*0.75)
 					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -1903,7 +1903,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_SLASHING)
 				if (stun > 0) //kinetic weapons don't disorient
-					stun = stun / armor_value_bullet
+					stun = stun / rangedprot_mod
 					src.do_disorient(clamp(stun*4, P.proj_data.power*(1 - P.proj_data.ks_ratio)*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
 				if (rangedprot_mod > 1)
