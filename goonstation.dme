@@ -738,6 +738,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\antagonists\brain_slug\abilities\devolve.dm"
 #include "code\modules\antagonists\brain_slug\abilities\exit_host.dm"
 #include "code\modules\antagonists\brain_slug\abilities\glue_spit.dm"
+#include "code\modules\antagonists\brain_slug\abilities\incapacitate.dm"
 #include "code\modules\antagonists\brain_slug\abilities\infest_host.dm"
 #include "code\modules\antagonists\brain_slug\abilities\inject_brood.dm"
 #include "code\modules\antagonists\brain_slug\abilities\neural_detection.dm"

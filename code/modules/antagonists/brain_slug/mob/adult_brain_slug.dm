@@ -21,7 +21,9 @@
 						/datum/targetable/brain_slug/devolve,
 						/datum/targetable/brain_slug/acid_slither,
 						/datum/targetable/brain_slug/inject_brood,
-						/datum/targetable/brain_slug/glue_spit)
+						/datum/targetable/brain_slug/glue_spit,
+						/datum/targetable/brain_slug/restraining_spit,
+						/datum/targetable/brain_slug/devour_limb)
 	var/bullet_reflect = FALSE
 
 	New(var/turf/T)

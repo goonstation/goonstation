@@ -7,6 +7,11 @@
 	target_anything = 0
 	pointCost = 40
 
+	onAttach(datum/abilityHolder/holder)
+		if (istype(holder.owner, /mob/living/critter/adult_brain_slug))
+			src.pointCost = null
+		. = ..()
+
 	cast(atom/target)
 		if (target == holder.owner)
 			return TRUE

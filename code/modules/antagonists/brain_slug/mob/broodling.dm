@@ -25,7 +25,8 @@
 			src.master = summoner
 		if (duration)
 			SPAWN (duration)
-				src.death()
+				if (!src.slug)
+					src.death()
 		..()
 
 	death()
