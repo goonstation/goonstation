@@ -68,7 +68,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	New()
 		. = ..()
 		src.intcap = new /obj/item/cell(src)
-		src.intcap.give(2500)
+		src.intcap.give(1000)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -81,8 +81,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 	process()
 		. = ..()
-		if(src.intcap)
-			src.charge_intcap()
+		src.charge_intcap()
 		if(!src.primed)
 			src.attempt_restart()
 		src.UpdateIcon() //because of apc/intcap reporting, mainly
@@ -130,8 +129,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		var/cost_to_apc = use_amount
 		if(src.intcap && src.intcap.charge > 0)
 			if(src.intcap.charge >= use_amount) //can use internal capacitor to fully cover cost, skip the APC calcs
-				src.intcap.use(use_amount)
-				return 1
+				return use_intcap(use_amount)
 			else //internal capacitor lacks enough charge to handle the kick-start solo; prepare to expend from APC
 				cost_to_apc -= src.intcap.charge
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
@@ -143,7 +141,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		else
 			C.use(cost_to_apc)
 			if(cost_to_apc < use_amount)
-				src.intcap.use(use_amount - cost_to_apc)
+				return use_intcap(use_amount - cost_to_apc)
 			return 1
 
 	///Checks status of local APC, activates failsafe if power is insufficient (30% plus 1 startcost with standard failsafe, 1 startcost otherwise)
@@ -188,6 +186,10 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 	proc/charge_intcap()
 		if(src.intcap && src.intcap_draw_rate > 0)
+			if(src.intcap.rigged)
+				intcap_failure()
+				return
+
 			var/datum/powernet/powernet = src.get_direct_powernet()
 
 			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
@@ -211,8 +213,37 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		else
 			src.intcap_charging = FALSE
 
-	ex_act(severity) //tbi: damage and repair
-		return
+	///Layer for using internal capacitor; separated to intercept rigged cells and handle with custom damage behavior
+	proc/use_intcap(var/use_amount)
+		. = TRUE
+		if(src.intcap.rigged)
+			intcap_failure()
+			. = FALSE
+		else
+			src.intcap.use(use_amount)
+
+	///Sabotaged cells, instead of blowing out the turf, will blow out the associated microvoltage cabinet and bring the array offline
+	proc/intcap_failure()
+		src.intcap.rigged = FALSE
+		src.intcap_charging = FALSE
+		if (intcap.rigger)
+			message_admins("[key_name(intcap.rigger)]'s rigged cell damaged the transception array at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, intcap.rigger, "'s rigged cell damaged the transception array at [log_loc(src)].")
+
+		src.visible_message("<span class='alert'><b>[src]'s internal capacitor compartment explodes!</b></span>")
+
+		for(var/client/C in clients)
+			playsound(C.mob, 'sound/effects/explosionfar.ogg', 35, 0)
+
+		var/epicenter = get_turf(src)
+		playsound(epicenter, "explosion", 90, 1)
+
+		SPAWN(0)
+			qdel(src.intcap)
+			src.intcap = null
+
+	ex_act(severity)
+		return //it's a tough critter if you're not damaging it from the inside
 
 /obj/machinery/communications_dish/transception/update_icon()
 	if(powered())
@@ -228,7 +259,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		UpdateOverlays(primer, "primed", 0, 1)
 
 		var/intcap_charger = "allquiet"
-		if(src.intcap_charging)
+		if(src.intcap_charging == TRUE)
 			intcap_charger = "intcap_charging"
 		var/image/chargelight = SafeGetOverlayImage("charger", 'icons/obj/machines/transception.dmi', intcap_charger)
 		chargelight.plane = PLANE_ABOVE_LIGHTING
@@ -304,14 +335,14 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			safe_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
 			max_transceptions += round(arraycell.charge / ARRAY_STARTCOST)
 		else
-			array_cellstat_formatted = "ERROR"
+			array_cellstat_formatted = "NONE FOUND"
 			array_celldiff_val = 0
 
-		if(safe_transceptions)
+		if(safe_transceptions > 0)
 			safe_transception_readout = "[safe_transceptions]"
 		else
 			safe_transception_readout = "0"
-		if(max_transceptions)
+		if(max_transceptions > 0)
 			max_transception_readout = "[max_transceptions]"
 		else
 			max_transception_readout = "0"
