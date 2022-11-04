@@ -509,8 +509,7 @@
 /datum/targetable/flockmindAbility/tutorial
 	name = "Interactive Tutorial"
 	desc = "Check out the interactive flock tutorial to get started."
-	icon = 'icons/mob/blob_ui.dmi'
-	icon_state = "blob-tutorial"
+	icon_state = "question_mark"
 	cooldown = 0 SECONDS
 	targeted = FALSE
 
