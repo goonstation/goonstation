@@ -640,7 +640,7 @@
 
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
-	src.flock.flockmind?.tutorial?.PerformSilentAction("gain resources", src.resources)
+	src.flock?.flockmind.tutorial?.PerformSilentAction("gain resources", src.resources)
 	src.flock?.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)

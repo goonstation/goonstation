@@ -208,6 +208,8 @@
 		if (action == "place tealprint" && context == src.structure_type && get_turf(src.ftutorial.fowner) == src.location)
 			return TRUE
 		if (action == "building complete")
+			var/obj/flock_structure/struct = context
+			struct.process(200) //force a high mult process to immediately charge the structure if it needs it
 			src.finished = TRUE
 			src.location.UpdateOverlays(null, "marker")
 			return TRUE
@@ -215,7 +217,7 @@
 /datum/tutorialStep/flock/build_thing/sentinel
 	name = "Construct Sentinel"
 	//TODO: add instruction about using click controls to order deposit after #11654 is merged
-	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one, then let your drones construct it. Sentinels are powerful electric stun turrets, effective at making any humans who come into your lair go horizontal."
+	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one, then direct your drones to construct it. Sentinels are powerful electric stun turrets, effective at making any humans who come into your lair go horizontal."
 	structure_type = /obj/flock_structure/sentinel
 
 	SetUp()
@@ -235,12 +237,19 @@
 		src.location = locate(src.ftutorial.center.x - 1, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
 
+	PerformAction(action, context)
+		. = ..()
+		if (action == "building complete")
+			var/obj/flock_structure/interceptor/struct = context
+			OVERRIDE_COOLDOWN(struct, "bolt_gen_time", 0 SECONDS)
+			struct.power_projectile_checkers(TRUE)
+
 /datum/tutorialStep/flock/turret_demo
 	name = "Intercept"
 	instructions = "Watch the Interceptor destroy a bullet."
 	SetUp()
 		..()
-		var/turf/T = locate(src.ftutorial.center.x, src.ftutorial.center.y - 5, src.ftutorial.center.z)
+		var/turf/T = locate(src.ftutorial.center.x, src.ftutorial.center.y - 6, src.ftutorial.center.z)
 		var/obj/deployable_turret/riot/turret = new(T)
 		turret.set_angle(0)
 		turret.set_projectile()
