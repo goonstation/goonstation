@@ -109,8 +109,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
-			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.
-			H.update_burning(DNA.potency * 0.2)
+			var/p = max(DNA.potency, 0) //no vertical aymptote for you, buster
+			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
+			H.update_burning(p * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
 		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
