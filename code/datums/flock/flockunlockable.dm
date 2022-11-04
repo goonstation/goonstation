@@ -41,7 +41,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 	structType = /obj/flock_structure/relay
 
 	check_unlocked()
-		return ..() || (src.my_flock.total_compute() > 500 && !src.my_flock.relay_in_progress_or_finished)
+		return ..() || (src.my_flock.total_compute() >= 500 && !src.my_flock.relay_in_progress_or_finished)
 
 /datum/unlockable_flock_structure/collector
 	structType = /obj/flock_structure/collector
@@ -63,4 +63,10 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 
 	check_unlocked()
 		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
+
+/datum/unlockable_flock_structure/interceptor
+	structType = /obj/flock_structure/interceptor
+
+	check_unlocked()
+		return ..() || src.my_flock.hasAchieved(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 

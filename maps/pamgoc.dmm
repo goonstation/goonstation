@@ -12352,7 +12352,10 @@
 "ats" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment,
-/obj/machinery/atmospherics/pipe/manifold/east,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	
+	},
 /obj/cable{
 	d1 = 4;
 	d2 = 8;
@@ -15093,7 +15096,7 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "ayk" = (
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	name = "spider"
 	},
 /obj/cable{
@@ -30031,7 +30034,10 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
 "bee" = (
-/obj/landmark/magnet_center,
+/obj/landmark/magnet_center{
+	height = 13;
+	width = 13
+	},
 /turf/space,
 /area/mining/magnet)
 "bef" = (
@@ -34594,7 +34600,10 @@
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/west)
 "boF" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen/north,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/kitchen{
+	dir = 1;
+	
+	},
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 2;
@@ -36336,7 +36345,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "brN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/poster/wallsign/fire{
 	desc = "Please remember to drink responsibly.";
@@ -36349,7 +36358,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/cafeteria)
 "brO" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -36357,13 +36366,13 @@
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "brP" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor,
 /area/station/science/chemistry)
 "brQ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "brR" = (
@@ -63989,7 +63998,10 @@
 /obj/window/reinforced{
 	dir = 4
 	},
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 8;
+	
+	},
 /turf/simulated/floor/redwhite{
 	dir = 4
 	},
@@ -69339,7 +69351,7 @@
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
 "pqJ" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/machinery/light,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)

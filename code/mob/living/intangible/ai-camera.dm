@@ -107,9 +107,9 @@
 	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
-		src.closeContextActions()
+		src.contextActionsOnMove()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe?.closeContextActions()
+		src.mainframe?.contextActionsOnMove()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -255,7 +255,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
-			visible_message("[CLEAN(src)] says, <b>[CLEAN(message)]</b>")
+			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
 		src.mainframe.say_radio()

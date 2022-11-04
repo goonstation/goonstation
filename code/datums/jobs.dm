@@ -9,10 +9,13 @@
 	var/no_late_join = 0
 	var/no_jobban_from_this_job = 0
 	var/allow_traitors = 1
+	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
+	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
+	var/mentor_only = 0
 	var/requires_supervisor_job = null // Enter job name, this job will only be present if the entered job has joined already
 	var/needs_college = 0
 	var/assigned = 0
@@ -100,10 +103,11 @@
 				I.implanted(M)
 
 			if (src.special_spawn_location && !no_special_spawn)
+				var/location = special_spawn_location
 				if (!istype(special_spawn_location, /turf))
-					special_spawn_location = pick_landmark(special_spawn_location)
-				if (special_spawn_location != null)
-					M.set_loc(special_spawn_location)
+					location = pick_landmark(special_spawn_location)
+				if (!isnull(location))
+					M.set_loc(location)
 
 			if (ishuman(M) && src.bio_effects)
 				var/list/picklist = params2list(src.bio_effects)
@@ -151,6 +155,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 
 	slot_card = /obj/item/card/id/gold
 	slot_belt = list(/obj/item/device/pda2/captain)
@@ -198,6 +203,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	wages = PAY_IMPORTANT
 
 	allow_spy_theft = 0
+	allow_antag_fallthrough = FALSE
 	receives_miranda = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -390,15 +396,14 @@ ABSTRACT_TYPE(/datum/job/command)
 
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_belt = list(/obj/item/storage/belt/medical)
-	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/medical_director)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical_director)
 	slot_ears = list(/obj/item/device/radio/headset/command/md)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical_director)
-	items_in_backpack = list(/obj/item/device/flash, /obj/item/robodefibrillator)
+	items_in_backpack = list(/obj/item/device/flash)
 
 	New()
 		..()
@@ -531,6 +536,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	//allow_traitors = 0
 	receives_badge = 1
 	cant_spawn_as_rev = 1
+	allow_antag_fallthrough = FALSE
 	slot_back = list(/obj/item/storage/backpack/withO2)
 	slot_belt = list(/obj/item/storage/belt/security/shoulder_holster)
 	slot_poc1 = list(/obj/item/device/pda2/forensic)
@@ -662,16 +668,15 @@ ABSTRACT_TYPE(/datum/job/research)
 	wages = PAY_DOCTORATE
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_belt = list(/obj/item/storage/belt/medical)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/medical)
 	slot_suit = list(/obj/item/clothing/suit/labcoat/medical)
 	slot_foot = list(/obj/item/clothing/shoes/red)
-	slot_lhan = list(/obj/item/storage/firstaid/regular/doctor_spawn)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_eyes = list(/obj/item/clothing/glasses/healthgoggles/upgraded)
 	slot_poc1 = list(/obj/item/device/pda2/medical)
 	slot_poc2 = list(/obj/item/paper/book/from_file/pocketguide/medical)
-	items_in_backpack = list(/obj/item/crowbar, /obj/item/robodefibrillator) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
+	items_in_backpack = list(/obj/item/crowbar) // cogwerks: giving medics a guaranteed air tank, stealing it from roboticists (those fucks)
 	// 2018: guaranteed air tanks now spawn in boxes (depending on backpack type) to save room
 
 	New()
@@ -773,36 +778,13 @@ ABSTRACT_TYPE(/datum/job/engineering)
 			return
 		M.bioHolder.AddEffect("training_miner")
 
-/datum/job/engineering/mechanic
-	name = "Mechanic"
-	limit = 4
-	wages = PAY_DOCTORATE
-
-	slot_back = list(/obj/item/storage/backpack/engineering)
-	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_lhan = list(/obj/item/storage/toolbox/electrical/mechanic_spawn)
-	slot_glov = list(/obj/item/clothing/gloves/yellow)
-	slot_poc1 = list(/obj/item/device/pda2/mechanic)
-	slot_ears = list(/obj/item/device/radio/headset/mechanic)
-
-	New()
-		..()
-		src.access = get_access("Mechanic")
-		return
-
 /datum/job/engineering/engineer
 	name = "Engineer"
-#ifdef MAP_OVERRIDE_MANTA
-	limit = 4
-#else
-	limit = 5
-#endif
+	limit = 8
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_belt = list(/obj/item/storage/belt/utility/prepared)
-	slot_jump = list(/obj/item/clothing/under/rank/engineer)
+	slot_jump = list(/obj/item/clothing/under/rank/mechanic)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical/engineer_spawn)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
@@ -1409,7 +1391,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	linkcolor = "#9900FF"
 	wages = PAY_IMPORTANT
 	slot_card = /obj/item/card/id/research
-	slot_belt = list(/obj/item/device/pda2/medical_director)
+	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_jump = list(/obj/item/clothing/under/scrub/maroon)
@@ -1417,6 +1399,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_head = list(/obj/item/clothing/head/bouffant)
 	slot_ears = list(/obj/item/device/radio/headset/medical)
 	slot_rhan = list(/obj/item/storage/firstaid/docbag)
+	slot_poc1 = list(/obj/item/device/pda2/medical_director)
 	alt_names = list("Neurological Specialist", "Ophthalmic Specialist", "Thoracic Specialist", "Orthopaedic Specialist", "Maxillofacial Specialist",
 	  "Vascular Specialist", "Anaesthesiologist", "Acupuncturist", "Medical Director's Assistant")
 
@@ -1726,6 +1709,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	special_spawn_location = null
 #elif defined(MAP_OVERRIDE_OSHAN)
+	limit = 1
+	special_spawn_location = null
+#elif defined(MAP_OVERRIDE_NADIR)
 	limit = 1
 	special_spawn_location = null
 #else
@@ -2043,7 +2029,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_ears = list(/obj/item/device/radio/headset/command/captain)
+	slot_ears = list(/obj/item/device/radio/headset/ghost_buster)
 	slot_eyes = list(/obj/item/clothing/glasses/regular/ecto/goggles)
 	slot_jump = list(/obj/item/clothing/under/shirt_pants)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -2126,7 +2112,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		M.bioHolder.AddEffect("hell_fire", magical=1)
 
 /datum/job/special/halloween/superhero
-	name = "Discount Superhero"
+	name = "Discount Vigilante Superhero"
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
@@ -2181,7 +2167,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
 	wages = PAY_DUMBCLOWN
-	requires_whitelist = 1
+	mentor_only = TRUE
 	allow_traitors = 0
 	slot_ears = list()
 	slot_card = null
@@ -2189,8 +2175,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
-	limit = 1
-	requires_whitelist = 0
+	mentor_only = FALSE
+	limit = 2
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2206,7 +2192,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
+		C.flags = null
 
 /datum/job/special/halloween/critter/bumblespider
 	name = "Bumblespider"
@@ -2216,7 +2203,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/spider/nice)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
+		C.flags = null
 
 /datum/job/special/halloween/critter/crow
 	name = "Crow"
@@ -2226,7 +2214,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		M.critterize(/mob/living/critter/small_animal/bird/crow)
+		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
+		C.flags = null
 
 // end halloween jobs
 #endif
@@ -2266,6 +2255,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	radio_announcement = FALSE
 	special_spawn_location = LANDMARK_SYNDICATE
 	var/leader = FALSE
+	add_to_manifest = FALSE
+
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2304,6 +2295,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_poc2 = list(/obj/item/storage/pouch/bullet_9mm)
 	slot_lhan = list()
 	slot_rhan = list(/obj/item/gun/kinetic/pistol)
+	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2341,16 +2333,12 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 							/obj/item/device/pda2,
 							/obj/item/old_grenade/stinger/frag,
 							/obj/item/breaching_charge)
+	add_to_manifest = FALSE
+	special_spawn_location = LANDMARK_SYNDICATE
 
 	New()
 		..()
 		src.access = syndicate_spec_ops_access()
-
-#ifdef MAP_OVERRIDE_OSHAN
-	special_spawn_location = null
-#else
-	special_spawn_location = LANDMARK_SYNDICATE
-#endif
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2367,6 +2355,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_traitors = 0
 	allow_spy_theft = 0
 	cant_spawn_as_rev = 1
+	add_to_manifest = FALSE
 
 	slot_back = list(/obj/item/gun/energy/blaster_cannon)
 	slot_belt = list(/obj/item/storage/fanny)
@@ -2504,6 +2493,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_card = null
 	slot_back = list()
 	items_in_backpack = list()
+	add_to_manifest = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2800,6 +2790,7 @@ ABSTRACT_TYPE(/datum/job/special/pod_wars)
 		cant_allocate_unwanted = 1
 		access = list(access_syndicate_shuttle, access_medical, access_medical_lockers)
 		team = 2
+		add_to_manifest = FALSE
 
 		slot_back = list(/obj/item/storage/backpack/syndie)
 		slot_belt = list(/obj/item/gun/energy/blaster_pod_wars/syndicate)

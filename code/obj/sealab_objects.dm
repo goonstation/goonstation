@@ -37,7 +37,7 @@
 	var/database_id = null
 	var/random_color = 1
 	var/drop_type = 0
-	event_handler_flags = USE_FLUID_ENTER 
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
@@ -171,6 +171,126 @@
 /obj/sea_plant/tubesponge/small
 	icon_state = "tubesponge_small"
 	database_id = "sea_plant_tubesponge-small"
+
+//NADIR DOODADS (indev)
+//stony and weird "plants" and rocks that you can mine, sometimes yielding resources
+/obj/nadir_doodad
+	name = "strange thing"
+	icon = 'icons/obj/nadir_seaobj.dmi'
+	desc = "Is it a plant? A rock? Probably a rock plant."
+	anchored = 1
+	density = 1
+	var/random_color = TRUE
+	var/luminant = FALSE //automatically propagates a light overlay based on icon state name
+	var/image/luminant_img
+	//var/datum/light/point/light = null
+	var/init = 0
+
+	var/drop_table = list() //table of drops and their probabilities of appearing
+	var/dig_hp = 7 //how much mining power needs to go into breaking it apart
+
+	New()
+		..()
+		src.dir = pick(cardinal)
+		if (src.random_color)
+			src.color = rgb(rand(90,255), rand(90, 255), 255)
+	/*
+	disposing()
+		light = 0
+		..()
+	*/
+	initialize()
+		..()
+		if (luminant && !init)
+			init = 1
+			/*
+			var/datum/color/C = new
+			C.from_hex(src.color)
+			if (!light)
+				light = new
+				light.attach(src)
+			light.set_brightness(0.4)
+			light.set_color(C.r/255, C.g/255, 1)
+			light.enable()
+			*/
+			src.luminant_img = image('icons/obj/nadir_seaobj.dmi', "[src.icon_state]-glow", -1)
+			luminant_img.plane = PLANE_LIGHTING
+			luminant_img.layer = LIGHTING_LAYER_BASE
+			luminant_img.color = src.color
+			luminant_img.dir = src.dir
+			src.UpdateOverlays(luminant_img, "luminant_img")
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W,/obj/item/mining_tool))
+			if(!ON_COOLDOWN(user, "mine_a_doodad", 1.1 SECONDS))
+				var/obj/item/mining_tool/T = W
+				var/digstr = T.dig_strength
+				if (T.status)
+					T.process_charges(T.digcost)
+					playsound(user.loc, T.hitsound_charged, 50, 1)
+				else
+					playsound(user.loc, T.hitsound_uncharged, 50, 1)
+				src.dig_hp -= digstr
+				if(src.dig_hp <= 0)
+					src.visible_message("<span class='alert'>[src] breaks apart.</span>")
+					break_apart()
+			else
+				return
+		..()
+
+	meteorhit()
+		break_apart()
+
+	blob_act()
+		break_apart()
+
+	bullet_act()
+		break_apart()
+
+	proc/break_apart()
+		if(length(drop_table))
+			for(var/field in drop_table)
+				if(prob(drop_table[field]) && ispath(field))
+					var/obj/item/drop = new field
+					drop.set_loc(src.loc)
+		qdel(src)
+
+	Cross(atom/A)
+		if (istype(A, /obj/machinery/vehicle)) //handled here to make it so the vehicle never stops in the first place, improving smoothness
+			var/obj/machinery/vehicle/vehicle = A
+			var/vehicle_power = vehicle.get_move_velocity_magnitude()
+			if(vehicle_power > 5)
+				vehicle.health -= 1
+				vehicle.checkhealth()
+				playsound(vehicle.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 35, 1)
+				for (var/mob/C in vehicle)
+					shake_camera(C, 3, 5)
+				break_apart()
+				return TRUE
+		return ..()
+
+/obj/nadir_doodad/sinkspires
+	name = "sinkspire cluster"
+	icon_state = "sinkspires"
+	desc = "Strange pillars rising from cracks in the ground. They're covered in tiny pores."
+	luminant = TRUE
+	drop_table = list(
+		/obj/item/raw_material/rock = 60,
+		/obj/item/raw_material/molitz = 50,
+		/obj/item/raw_material/cobryl = 30,
+		/obj/item/raw_material/pharosium = 20
+	)
+
+/obj/nadir_doodad/bitelung
+	name = "bitelung"
+	icon_state = "bitelung"
+	desc = "A cairn-like organism. It seems to be 'breathing', almost too slowly to detect with the eye."
+	drop_table = list(
+		/obj/item/raw_material/rock = 100,
+		/obj/item/raw_material/rock = 80,
+		/obj/item/raw_material/mauxite = 60,
+		/obj/item/raw_material/fibrilith = 50
+	)
 
 //TURFS
 /turf/unsimulated/wall/trench

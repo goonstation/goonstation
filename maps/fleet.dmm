@@ -976,7 +976,7 @@
 /turf/space,
 /area/space)
 "ci" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
@@ -9067,7 +9067,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sz" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2;
+	
+	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay{
 	name = "Asclepius Primary Zone"
@@ -9083,7 +9086,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sB" = (
-/obj/machinery/atmospherics/unary/cryo_cell/south,
+/obj/machinery/atmospherics/unary/cryo_cell{
+	dir = 2;
+	
+	},
 /obj/cable{
 	d1 = 2;
 	d2 = 4;
@@ -9094,7 +9100,10 @@
 	name = "Asclepius Primary Zone"
 	})
 "sC" = (
-/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/south,
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{
+	dir = 2;
+	
+	},
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
@@ -10405,7 +10414,7 @@
 	name = "Hammer Crew Quarters"
 	})
 "uV" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria{
 	name = "Dionysus Primary Zone"
@@ -19616,7 +19625,8 @@
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
 	},
-/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/south{
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{
+	dir = 2;
 	frequency = 1225;
 	id = "Toxin Chamber Siphon";
 	on = 0
@@ -22065,7 +22075,7 @@
 	name = "Tenebrae Solar Array"
 	})
 "Qp" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/camera{
 	c_tag = "autotag";

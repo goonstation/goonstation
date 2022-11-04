@@ -181,6 +181,7 @@
 /mob/living/death(gibbed)
 	#define VALID_MOB(M) (!isVRghost(M) && !isghostcritter(M) && !inafterlife(M))
 	src.remove_ailments()
+	if (src.ai) src.ai.disable()
 	if (src.key) statlog_death(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
@@ -192,10 +193,10 @@
 
 		if (num_players <= 5 && master_mode != "battle_royale")
 			if (!emergency_shuttle.online && current_state != GAME_STATE_FINISHED && ticker.mode.crew_shortage_enabled)
-				emergency_shuttle.incall()
-				boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
-				boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
-				boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
+				if (emergency_shuttle.incall())
+					boutput(world, "<span class='notice'><B>Alert: The emergency shuttle has been called.</B></span>")
+					boutput(world, "<span class='notice'>- - - <b>Reason:</b> Crew shortages and fatalities.</span>")
+					boutput(world, "<span class='notice'><B>It will arrive in [round(emergency_shuttle.timeleft()/60)] minutes.</B></span>")
 	#undef VALID_MOB
 
 	// Active if XMAS or manually toggled.
@@ -405,12 +406,13 @@
 			var/success = dropping_organ.attach_organ(src, dropping_user)
 			if (success)
 				return
-		else if (istype(dropped, /obj/item/parts/human_parts/))
-			var/obj/item/parts/dropping_limb = dropped
-			dropping_limb.attach(src, dropping_user)
-		else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
-			var/obj/item/parts/robot_parts/dropping_limb = dropped
-			dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
+		else if (istype(dropped, /obj/item/parts))
+			if (istype(dropped, /obj/item/parts/human_parts/) || istype(dropped, /obj/item/parts/artifact_parts))
+				var/obj/item/parts/dropping_limb = dropped
+				dropping_limb.attach(src, dropping_user)
+			else if (istype(dropped, /obj/item/parts/robot_parts/arm/) || istype(dropped, /obj/item/parts/robot_parts/leg/))
+				var/obj/item/parts/robot_parts/dropping_limb = dropped
+				dropping_limb.attack(src, dropping_user) // Attaching robot parts to humans is a bit complicated so we're going to be lazy and re-use attack.
 	return ..()
 
 /mob/living/hotkey(name)
@@ -1869,8 +1871,8 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 	var/damage = 0
 	var/stun = 0 //HEY this doesnt actually stun. its the number to reduce stamina. gosh.
 	if (P.proj_data)  //ZeWaka: Fix for null.ks_ratio
-		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
-		stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
+		damage = P.power * P.proj_data.ks_ratio
+		stun = P.power * (1.0 - P.proj_data.ks_ratio)
 	var/armor_msg = ""
 	var/rangedprot_base = get_ranged_protection() //will be 1 unless overridden
 	if (P.proj_data) //Wire: Fix for: Cannot read null.damage_type
@@ -1884,7 +1886,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 		switch(P.proj_data.damage_type)
 			if (D_KINETIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod, 0.5) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.TakeDamage("chest", (damage/rangedprot_mod), 0, 0, P.proj_data.hit_type)
@@ -1893,7 +1895,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_PIERCING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.TakeDamage("chest", damage/rangedprot_mod, 0, 0, P.proj_data.hit_type)
@@ -1902,7 +1904,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_SLASHING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (rangedprot_mod > 1)
@@ -1923,7 +1925,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_BURNING)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (src.is_heat_resistant())
@@ -1935,7 +1937,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_RADIOACTIVE)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				src.reagents?.add_reagent("radium", damage/4) //fuckit
@@ -1947,7 +1949,7 @@ var/global/icon/human_static_base_idiocy_bullshit_crap = icon('icons/mob/human.d
 
 			if (D_TOXIC)
 				if (stun > 0)
-					src.remove_stamina(min(round(stun/rangedprot_mod) * 30, 125)) //thanks to the odd scaling i have to cap this.
+					src.remove_stamina(min(stun/rangedprot_mod * 30, 125)) //thanks to the odd scaling i have to cap this.
 					src.stamina_stun()
 
 				if (!P.reagents)

@@ -1293,6 +1293,8 @@ var/global/curr_day = null
 	set name ="apply-view-tint"
 
 	view_tint = !view_tint
+	if (src.mob?.respect_view_tint_settings)
+		src.set_color(length(src.mob.active_color_matrix) ? src.mob.active_color_matrix : COLOR_MATRIX_IDENTITY, src.mob.respect_view_tint_settings)
 
 /client/verb/adjust_saturation()
 	set hidden = TRUE

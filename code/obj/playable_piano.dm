@@ -271,7 +271,7 @@
 			var/string = lowertext("[note_names[i]][note_accidentals[i]][note_octaves[i]]")
 			compiled_notes += string
 		for (var/i = 1, i <= compiled_notes.len, i++)
-			var/string = "sound/piano/"
+			var/string = "sound/musical_instruments/player_piano/"
 			string += "[compiled_notes[i]].ogg"
 			if (!(string in soundCache))
 				src.visible_message("<span class='alert'>\The [src] makes an atrocious racket and beeps [i] times.</span>")
@@ -306,7 +306,7 @@
 			sleep((timing * 10)) //to get delay into 10ths of a second
 			if (!curr_note) // else we get runtimes when the piano is reset while playing
 				return
-			var/sound_name = "sound/piano/[compiled_notes[curr_note]].ogg"
+			var/sound_name = "sound/musical_instruments/player_piano/[compiled_notes[curr_note]].ogg"
 			playsound(src, sound_name, note_volumes[curr_note],0,10,0)
 
 	proc/set_notes(var/given_notes)

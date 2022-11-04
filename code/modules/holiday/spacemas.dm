@@ -458,7 +458,10 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		START_TRACKING
 
 	disposing()
+		#ifdef XMAS
 		STOP_TRACKING
+		#endif
+
 		qdel(src.fire_image)
 		src.fire_image = null
 		..()
@@ -507,6 +510,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	desc = "A snowball. Made of snow."
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "snowball"
+	item_state = "snowball_h"
 	bites_left = 2
 	w_class = W_CLASS_TINY
 	throwforce = 1

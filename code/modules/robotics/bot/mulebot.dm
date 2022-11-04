@@ -299,10 +299,10 @@
 
 				if("cellremove")
 					if(open && cell && !usr.equipped())
-						usr.put_in_hand_or_drop(cell)
 
 						cell.add_fingerprint(usr)
 						cell.UpdateIcon()
+						usr.put_in_hand_or_drop(cell)
 						cell = null
 
 						usr.visible_message("<span class='notice'>[usr] removes the power cell from [src].</span>", "<span class='notice'>You remove the power cell from [src].</span>")
@@ -640,7 +640,7 @@
 	// calculates a path to the current destination
 	// given an optional turf to avoid
 	proc/calc_path(var/turf/avoid = null)
-		src.path = get_path_to(src, src.target, max_distance=200, id=src.botcard, skip_first=FALSE, exclude=avoid, cardinal_only=TRUE)
+		src.path = get_path_to(src, src.target, max_distance=200, id=src.botcard, skip_first=FALSE, exclude=avoid, cardinal_only=TRUE, do_doorcheck=TRUE)
 
 	// sets the current destination
 	// signals all beacons matching the delivery code
@@ -861,6 +861,11 @@
 		kv["retn"] = auto_return
 		kv["pick"] = auto_pickup
 		post_signal_multiple(control_freq, kv)
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/machinery/bot/mulebot/QM1
 	home_destination = "QM #1"

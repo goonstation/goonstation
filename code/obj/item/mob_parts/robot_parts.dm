@@ -458,6 +458,11 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/chest)
 
 		else ..()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/parts/robot_parts/chest/standard
 	name = "standard cyborg chest"
 	desc = "The centerpiece of any cyborg. It wouldn't get very far without it."
@@ -1150,8 +1155,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			borg.set_loc(get_turf(src))
 
 			boutput(borg, "<B>You are playing a Robot. The Robot can interact with most electronic objects in its view point.</B>")
-			boutput(borg, "To use something, simply double-click it.")
-			boutput(borg, "Use say \":s to speak to fellow cyborgs and the AI through binary.")
+			boutput(borg, "To use something, simply click it.")
+			boutput(borg, "Use the prefix <B>:s</B> to speak to fellow cyborgs and the AI through binary.")
 
 			if (src.emagged || src.syndicate)
 				if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && borg.mind)

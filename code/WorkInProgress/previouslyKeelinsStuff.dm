@@ -304,33 +304,34 @@ var/reverse_mode = 0
 	icon_state = "relic"
 	name = "strange relic"
 	desc = "It feels cold..."
-	var/active = 0
 	var/using = 0
 	var/beingUsed = 0
 
-	New()
-		..()
-		loop()
+	pickup(mob/living/M)
+		SPAWN(1 MINUTE)
+			processing_items.Add(src)
 
-	proc/loop()
-		if (!active)
-			SPAWN(1 SECOND) loop()
-			return
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
+	process()
 		if (prob(1) && prob(50) && ismob(src.loc))
 			var/mob/M = src.loc
 			boutput(M, "<span class='alert'>You feel uneasy ...</span>")
 
 		if (prob(25))
 			for(var/obj/machinery/light/L in range(6, get_turf(src)))
-				if (prob(25)) L.broken()
+				if (prob(25))
+					L.broken()
 
 		if (prob(1) && prob(50) && !using)
 			new/obj/critter/spirit( get_turf(src) )
 
 		if (prob(3) && prob(50))
-			var/obj/o = new/obj/spook( get_turf(src) )
-			SPAWN(1 MINUTE) qdel(o)
+			var/obj/o = new/obj/item/spook( get_turf(src) )
+			SPAWN(1 MINUTE)
+				qdel(o)
 
 		if (prob(25))
 			for(var/obj/storage/L in range(6, get_turf(src)))
@@ -339,13 +340,10 @@ var/reverse_mode = 0
 
 		if (prob(25))
 			for(var/obj/stool/chair/L in range(6, get_turf(src)))
-				if (prob(15)) L.rotate()
+				if (prob(15))
+					L.rotate()
 
-		SPAWN(1 SECOND) loop()
-		return
 
-	pickup(var/mob/living/M)
-		SPAWN(1 MINUTE) active = 1
 
 	attack_self(var/mob/user)
 		if (user != loc)
@@ -474,15 +472,39 @@ var/reverse_mode = 0
 		SPAWN(rand(10,300))
 			src.sparks()
 
-/proc/testa()
-	fake_attack(usr)
+///Config datum for LSD fake sounds
+/datum/hallucinated_sound
+	///The sound file to play
+	var/path
+	///Max number of times to play it
+	var/max_count
+	///Min number of times to play it
+	var/min_count
+	///Delay between each play
+	var/delay
+	///Pitch to play it at
+	var/pitch
 
-/proc/testb()
-	fake_attack(input(usr) as mob in world)
+	New(path, min_count = 1, max_count = 1, delay = 0, pitch = 1)
+		..()
+		src.path = path
+		src.min_count = min_count
+		src.max_count = max_count
+		src.delay = delay
+		src.pitch = pitch
+
+	///Play the sound to a mob from a location
+	proc/play(var/mob/mob, var/atom/location)
+		SPAWN(0)
+			for (var/i = 1 to rand(src.min_count, src.max_count))
+				mob.playsound_local(location, src.path, 100, 1, pitch = src.pitch)
+				sleep(src.delay)
 
 /obj/fake_attacker
 	icon = null
 	icon_state = null
+	var/fake_icon = 'icons/misc/critter.dmi'
+	var/fake_icon_state = ""
 	name = ""
 	desc = ""
 	density = 0
@@ -490,8 +512,69 @@ var/reverse_mode = 0
 	opacity = 0
 	var/mob/living/carbon/human/my_target = null
 	var/weapon_name = null
+	///Does this hallucination constantly whack you
+	var/should_attack = TRUE
 	event_handler_flags = USE_FLUID_ENTER
 
+	proc/get_name()
+		return src.fake_icon_state
+
+	pig
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "pig"
+		get_name()
+			return pick("pig", "DAT FUKKEN PIG")
+	spider
+		fake_icon_state = "big_spide"
+		get_name()
+			return pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
+	slime
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "slime"
+		get_name()
+			return pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
+	shambler
+		fake_icon = 'icons/effects/hallucinations.dmi'
+		fake_icon_state = "shambler"
+		get_name()
+			return pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
+	legworm
+		fake_icon_state = "legworm"
+	handspider
+		fake_icon_state = "handspider"
+
+	eyespider
+		fake_icon_state = "eyespider"
+	buttcrab
+		fake_icon_state = "buttcrab"
+		should_attack = FALSE
+	bat
+		fake_icon_state = "bat"
+		get_name()
+			return pick("bat", "batty", "the roundest possible bat", "the giant bat that makes all of the rules")
+	snake
+		fake_icon_state = "rattlesnake"
+		get_name()
+			return pick("snek", "WHY DID IT HAVE TO BE SNAKES?!", "rattlesnake", "OH SHIT A SNAKE")
+
+	scorpion
+		fake_icon_state = "spacescorpion"
+		get_name()
+			return "space scorpion"
+
+	aberration
+		fake_icon_state = "aberration"
+		should_attack = FALSE
+		get_name()
+			return "transposed particle field"
+
+	capybara
+		fake_icon_state = "capybara"
+		should_attack = FALSE
+
+	frog
+		fake_icon_state = "frog"
+		should_attack = FALSE
 
 	disposing()
 		my_target = null
@@ -512,10 +595,16 @@ var/reverse_mode = 0
 			for(var/mob/O in oviewers(world.view , my_target))
 				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
 
+
 /obj/fake_attacker/New(location, target)
 	..()
 	SPAWN(30 SECONDS)	qdel(src)
+	src.name = src.get_name()
 	src.my_target = target
+	if (src.fake_icon && src.fake_icon_state)
+		var/image/image = image(icon = src.fake_icon, loc = src, icon_state = src.fake_icon_state)
+		image.override = TRUE
+		target << image
 	step_away(src,my_target,2)
 	process()
 
@@ -526,12 +615,12 @@ var/reverse_mode = 0
 	if (BOUNDS_DIST(src, my_target) > 0)
 		step_towards(src,my_target)
 	else
-		if (prob(15))
+		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
 				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 50, 0)
+					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
 				else
-					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 50, 1)
+					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
 				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
@@ -539,16 +628,17 @@ var/reverse_mode = 0
 						fake_blood(my_target)
 			else
 				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 50, 0)
+					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 40, 0)
 				else
-					my_target.playsound_local(my_target.loc, pick(sounds_punch), 50, 1)
+					my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
+			attack_twitch(src)
 
-	if (prob(15)) step_away(src,my_target,2)
-	SPAWN(0.5 SECONDS) .()
+	if (src.should_attack && prob(10)) step_away(src,my_target,2)
+	SPAWN(0.3 SECONDS) .()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)

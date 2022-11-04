@@ -21,7 +21,6 @@ client/proc/open_dj_panel()
 	var/loaded_sound = null // holds current song file
 	var/sound_volume = 50
 	var/sound_frequency = 1
-	var/admin_sound_channel = 1014
 	var/list/preloaded_sounds = list()
 
 /datum/dj_panel/ui_state(mob/user)
@@ -168,15 +167,15 @@ client/proc/open_dj_panel()
  */
 /datum/dj_panel/proc/move_admin_sound_channel(backwards = FALSE)
 	if (backwards)
-		if (admin_sound_channel > 1014)
+		if (admin_sound_channel > SOUNDCHANNEL_ADMIN_LOW)
 			admin_sound_channel--
-		else //At 1014, set it bring it up 10.
-			admin_sound_channel = 1024
+		else
+			admin_sound_channel = SOUNDCHANNEL_ADMIN_HIGH
 	else
-		if (admin_sound_channel < 1024)
+		if (admin_sound_channel < SOUNDCHANNEL_ADMIN_HIGH)
 			admin_sound_channel++
-		else //At 1024, set it back down 10.
-			admin_sound_channel = 1014
+		else
+			admin_sound_channel = SOUNDCHANNEL_ADMIN_LOW
 
 /**
  * Toggles the DJ Mode for a given client

@@ -225,6 +225,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	icon_state_dead = "remy-dead"
 	health_brute = 33
 	health_burn = 33
+	fits_under_table = 0
 	pull_w_class = W_CLASS_NORMAL
 
 	setup_overlays()
@@ -1231,6 +1232,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	death_text = "%src% lets out a final weak caw and keels over."
 	feather_color = "#212121"
 	good_grip = 1
+	fits_under_table = 0
 	species = "crow"
 	add_abilities = list(/datum/targetable/critter/peck/crow)
 
@@ -3080,10 +3082,14 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_exclaim = "mouse-admin-exclaim"
 	pull_w_class = W_CLASS_BULKY
 
-	New()
+	setup_hands()
 		..()
-		/*src.fur_color = "#d43b3b"
-		src.setup_overlays()*/
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "paw"
+		HH.limb_name = "claws"
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living))

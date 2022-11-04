@@ -91,7 +91,7 @@
 				if (currentTurfs > maxTurfs)
 					return
 
-				if (T.can_blob_spread_here(null, null, isadmin(owner)))
+				if (T.can_blob_spread_here(null, null, (isadmin(owner) || owner.admin_override)))
 					var/obj/blob/B
 					if (prob(5))
 						B = new /obj/blob/lipid(T)
@@ -199,7 +199,7 @@
 			boutput(owner, "<span class='alert'>You can't start in space!</span>")
 			return
 
-		if (!isadmin(owner)) //admins can spawn wherever
+		if (!(isadmin(owner) || owner.admin_override)) //admins can spawn wherever. So can AI blobs if we tell them to.
 			if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/blob/))
 				boutput(owner, "<span class='alert'>You need to start on the [station_or_ship()]!</span>")
 				return
@@ -232,6 +232,7 @@
 
 		var/turf/startTurf = get_turf(owner)
 		var/obj/blob/nucleus/C = new /obj/blob/nucleus(startTurf)
+		logTheThing(LOG_GAMEMODE, owner, "plants their start nucleus at [log_loc(startTurf)].")
 		C.layer++
 		owner.total_placed++
 		C.setOvermind(owner)
@@ -337,7 +338,7 @@
 
 				return 1
 
-		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, isadmin(owner))
+		var/obj/blob/B1 = T.can_blob_spread_here(owner, null, (isadmin(owner) || owner.admin_override))
 		if (!istype(B1))
 			return 1
 
@@ -364,7 +365,7 @@
 			for (var/turf/simulated/floor/Q in view(7, owner))
 				if (locate(/obj/blob) in Q)
 					continue
-				var/obj/blob/B3 = Q.can_blob_spread_here(null, null, isadmin(owner))
+				var/obj/blob/B3 = Q.can_blob_spread_here(null, null, (isadmin(owner) || owner.admin_override))
 				if (B3)
 					spreadability += Q
 
@@ -831,6 +832,7 @@
 			return 1
 
 		var/obj/blob/L = new build_path(T)
+		logTheThing(LOG_STATION, owner, "builds [L] at [T] ([log_loc(T)])")
 		L.setOvermind(owner)
 		L.setMaterial(B.material)
 		B.material = null

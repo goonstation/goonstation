@@ -325,9 +325,12 @@
 		if (!members || !F) return
 		if (length(src.members) == 1)
 			var/turf/T
+			var/blocked
 			for( var/dir in cardinal )
 				T = get_step( F, dir )
-				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) ) continue
+				if (! (istype(T, /turf/simulated/floor) || istype (T, /turf/unsimulated/floor)) )
+					blocked++
+					continue
 				if (T.Enter(src))
 					if (T.active_liquid && T.active_liquid.group)
 						T.active_liquid.group.join(src)
@@ -336,6 +339,10 @@
 						F.set_loc(T)
 						T.active_liquid = F
 					break
+				else
+					blocked++
+			if(blocked == length(cardinal)) // failed
+				src.remove(F,0,2)
 		else
 			var/turf/T
 			for( var/dir in cardinal )

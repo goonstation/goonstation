@@ -484,6 +484,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
+			src.recipes += new /datum/cookingrecipe/zongzi(src)
 
 			src.recipes += new /datum/cookingrecipe/baguette(src)
 			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)

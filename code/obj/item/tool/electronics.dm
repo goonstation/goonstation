@@ -597,7 +597,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -960,7 +960,7 @@
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
-		if(locate(/mob/living) in O)
+		if(length(get_all_mobs_in(O)))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
