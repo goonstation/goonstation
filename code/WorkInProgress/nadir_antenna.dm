@@ -16,10 +16,10 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 //Delay after a successful transception before another one may begin
 #define TRANSCEPTION_COOLDOWN 0.1
 
-//Bounds for internal capacitor charge management; referred to by the array control computer
+//Bounds for internal capacitor charging management; can be adjusted within these ranges by the array control computer
 #define MIN_FREE_POWER 10 KILO WATTS
-#define MAX_FREE_POWER 100 KILO WATTS
-#define MAX_CHARGE_RATE 10 KILO WATTS
+#define MAX_FREE_POWER 200 KILO WATTS
+#define MAX_CHARGE_RATE 50 KILO WATTS
 
 /*
 Breakdown of each transception (sending or receiving of a thing through the transception system), as happens through standard cargo operations:
@@ -31,8 +31,10 @@ Interlink computer sends an instruction (build_command), optionally with an inde
 Transception pad receives its signal, and attempts to operate (attempt_transceive); this proc takes care of checking whether the pad and array can
 serve the transception request, and if they can, delegates the actual receiving or sending to receive_a_thing or send_a_thing respectively
 
-send_a_thing passes the things it sends into the shipping market;
-receive_a_thing pulls a thing out of the shipping market's queue when the transception starts, and returns it to the queue if the transception fails
+send_a_thing passes the things it sends into the shipping market, assuming they're of a compatible type
+
+receive_a_thing pulls a thing out of a queue (shipping market or direct queue) when the transception starts,
+and delivers it to the pad after a few seconds, or returns it to the queue it came from if the transception fails
 */
 
 /obj/machinery/communications_dish/transception
@@ -44,8 +46,6 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 	bound_width = 96
 	mats = 0
 
-	///Whether array permits transception (false means just comms); can be disabled temporarily by anti-overload measures, or toggled manually
-	var/primed = TRUE
 	///Whether array is currently transceiving (interfacing with a pad for the process of sending or receiving a thing)
 	var/is_transceiving = FALSE
 	///Beam overlay (this was made an object overlay for the purpose of having access to flick)
@@ -53,21 +53,21 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 
 	///Determines if failsafe threshold is equipment power threshold plus transception cost (true) or transception cost (false).
 	var/use_standard_failsafe = TRUE
-	///While failsafe is active, communications capability is retained but cargo transception is unavailable. Prompts attempt_restart periodically.
-	var/failsafe_active = FALSE
+	///Whether array permits transception (false means just comms); disabled by the failsafe when power gets too low
+	var/primed = TRUE
 
 	///Internal capacitor; cell installed inside the array itself. Draws from grid surplus when available, configurable from the array computer.
 	var/obj/item/cell/intcap = null
-	///Amount of leftover grid power that's necessary before the array will attempt to refill its internal capacitor
-	var/grid_surplus_threshold = 25 KILO WATTS
-	///Whether the array is attempting to refill its internal capacitor; used for operational logic and overlay control
+	///Whether the array's conditions for refilling its internal capacitor are satisfied; used for load logic and overlay control
 	var/intcap_charging = FALSE
 	///How fast the internal capacitor will attempt to draw down grid power while intcap_charging is true
-	var/intcap_draw = 5 KILO WATTS
+	var/intcap_draw_rate = 5 KILO WATTS
+	///Amount of surplus past intcap_draw_rate that's required for charging, as a safeguard against spikes in demand
+	var/grid_surplus_threshold = 20 KILO WATTS
 
 	New()
 		. = ..()
-		src.intcap = new /obj/item/cell/charged(src)
+		src.intcap = new /obj/item/cell(src)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -80,11 +80,11 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 
 	process()
 		. = ..()
-		if(src.failsafe_active)
-			if(src.primed) //don't attempt restart if somehow primed while failsafe is online
-				src.failsafe_active = FALSE
-			else
-				src.attempt_restart()
+		if(src.intcap)
+			src.charge_intcap()
+		if(!src.primed)
+			src.attempt_restart()
+		src.UpdateIcon() //because of apc/intcap reporting, mainly
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
@@ -124,15 +124,15 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 			src.is_transceiving = FALSE
 		return TRUE
 
-	///Attempt to pay the "kick-start" cost for transception; uses internal capacitor first, then area power cell when it's expended
+	///Attempt to pay the "kick-start" cost for transception; uses internal capacitor first, then area power cell
 	proc/pay_startcost(var/use_amount)
 		var/cost_to_apc = use_amount
-		if(intcap && intcap.charge > 0)
-
-
-		if(cost_to_apc == 0)
-			intcap.use(use_amount)
-			return 1
+		if(src.intcap && src.intcap.charge > 0)
+			if(src.intcap.charge >= use_amount) //can use internal capacitor to fully cover cost, skip the APC calcs
+				src.intcap.use(use_amount)
+				return 1
+			else //internal capacitor lacks enough charge to handle the kick-start solo; prepare to expend from APC
+				cost_to_apc -= src.intcap.charge
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
 			return 0
@@ -142,7 +142,7 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 		else
 			C.use(cost_to_apc)
 			if(cost_to_apc < use_amount)
-				intcap.use(use_amount - cost_to_apc)
+				src.intcap.use(use_amount - cost_to_apc)
 			return 1
 
 	///Checks status of local APC, activates failsafe if power is insufficient (30% plus 1 startcost with standard failsafe, 1 startcost otherwise)
@@ -157,17 +157,15 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 		if (use_standard_failsafe && C.charge < combined_cost)
 			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
-			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
 		else if(C.charge <= ARRAY_STARTCOST)
 			playsound(src.loc, 'sound/effects/manta_alarm.ogg', 50, 1)
 			src.primed = FALSE
-			src.failsafe_active = TRUE
 			src.UpdateIcon()
 			. = TRUE
 
-	///Primed status restarts when power is sufficiently restored
+	///When array has failsafe active, this is called each machine tick to see if power has sufficiently recovered to restart transception
 	proc/attempt_restart()
 		var/obj/machinery/power/apc/AC = get_local_apc(src)
 		if (!AC)
@@ -183,27 +181,74 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 		if (C.charge > combined_cost)
 			playsound(src.loc, 'sound/machines/shieldgen_startup.ogg', 50, 1)
 			src.primed = TRUE
-			src.failsafe_active = FALSE
 			src.UpdateIcon()
 			. = TRUE
 		return
+
+	proc/charge_intcap()
+		if(src.intcap)
+			var/datum/powernet/powernet = src.get_direct_powernet()
+
+			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
+			var/total_load = src.intcap_charging ? powernet.load : powernet.load + src.intcap_draw_rate
+
+			if(powernet.avail - total_load >= src.grid_surplus_threshold) //netexcess exists but... isn't ever actually set up?
+				src.intcap_charging = TRUE
+				if(src.intcap.charge < src.intcap.maxcharge)
+					var/yield_to_cell = src.intcap_draw_rate * CELLRATE
+					var/final_draw = src.intcap_draw_rate
+					//this bit is so you don't spend more on charge than you actually need to charge the cell
+					if(intcap.charge + yield_to_cell > src.intcap.maxcharge)
+						yield_to_cell = src.intcap.maxcharge - src.intcap.charge
+						final_draw = yield_to_cell * 500
+					src.intcap.give(yield_to_cell)
+					powernet.newload += final_draw
+					var/area/arrayarea = get_area(src) //gotta let the grid know!
+					arrayarea.use_power(final_draw,EQUIP)
+			else
+				src.intcap_charging = FALSE
 
 	ex_act(severity) //tbi: damage and repair
 		return
 
 /obj/machinery/communications_dish/transception/update_icon()
 	if(powered())
-		var/primed_state = "allquiet"
+		var/image/commglow = SafeGetOverlayImage("commglow", 'icons/obj/machines/transception.dmi', "powered")
+		commglow.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(commglow, "commglow", 0, 1)
+
+		var/primed_state = "trsc_sys_warn"
 		if(src.primed)
-			primed_state = "glow_primed"
-
-		var/image/glowy = SafeGetOverlayImage("glows", 'icons/obj/machines/transception.dmi', "glow_online")
-		glowy.plane = PLANE_ABOVE_LIGHTING
-		UpdateOverlays(glowy, "glows", 0, 1)
-
+			primed_state = "trsc_sys_primed"
 		var/image/primer = SafeGetOverlayImage("primed", 'icons/obj/machines/transception.dmi', primed_state)
 		primer.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(primer, "primed", 0, 1)
+
+		var/intcap_charger = "allquiet"
+		if(src.intcap_charging)
+			intcap_charger = "intcap_charging"
+		var/image/chargelight = SafeGetOverlayImage("charger", 'icons/obj/machines/transception.dmi', intcap_charger)
+		chargelight.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(chargelight, "charger", 0, 1)
+
+		var/intcap_power = "allquiet"
+		if(src.intcap?.charge > 0)
+			var/charge_tier = ceil((src.intcap.charge / src.intcap.maxcharge) * 5) * 20
+			intcap_power = "intcap[charge_tier]"
+		var/image/intcapbar = SafeGetOverlayImage("intcap", 'icons/obj/machines/transception.dmi', intcap_power)
+		intcapbar.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(intcapbar, "intcap", 0, 1)
+
+		var/apc_power = "allquiet"
+		var/obj/machinery/power/apc/AC = get_local_apc(src)
+		if(AC?.cell?.charge > 0)
+			var/failsafe_maxcharge = AC.cell.maxcharge * 0.7
+			var/charge_over_threshold = max(0,AC.cell.charge - (AC.cell.maxcharge * 0.3))
+			var/charge_tier = ceil((charge_over_threshold / failsafe_maxcharge) * 5) * 20
+			apc_power = "apc[charge_tier]"
+		var/image/apcbar = SafeGetOverlayImage("apcbar", 'icons/obj/machines/transception.dmi', apc_power)
+		apcbar.plane = PLANE_ABOVE_LIGHTING
+		UpdateOverlays(apcbar, "apcbar", 0, 1)
 	else
 		ClearAllOverlays()
 
@@ -253,7 +298,7 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 			"sendsSafe" = safe_transceptions,
 			"sendsMax" = max_transceptions,
 			"failsafeThreshold" = transception_array.use_standard_failsafe ? "STANDARD" : "MINIMUM",
-			"failsafeStat" = transception_array.failsafe_active ? "FAILSAFE HALT" : "OPERATIONAL",
+			"failsafeStat" = transception_array.primed ? "OPERATIONAL" : "FAILSAFE HALT",
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
 			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
 		)
@@ -268,6 +313,10 @@ receive_a_thing pulls a thing out of the shipping market's queue when the transc
 #undef ARRAY_STARTCOST
 #undef ARRAY_TELECOST
 #undef TRANSCEPTION_COOLDOWN
+
+#undef MIN_FREE_POWER
+#undef MAX_FREE_POWER
+#undef MAX_CHARGE_RATE
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
