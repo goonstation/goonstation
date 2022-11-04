@@ -22,6 +22,9 @@ proc/pick_landmark(name, default=null)
 
 /obj/landmark/proc/init(delay_qdel=FALSE)
 	if(src.add_to_landmarks)
+		if(src.name == "landmark")
+			CRASH("Landmark [src] at [log_loc(src)] has no name override!")
+			qdel(src)
 		if(!landmarks)
 			landmarks = list()
 		var/name = src.name_override ? src.name_override : src.name
