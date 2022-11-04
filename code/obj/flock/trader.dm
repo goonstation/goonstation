@@ -126,12 +126,11 @@
 	var/range = 4
 
 	New()
-		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, src.range)
 		..()
 
 	disposing()
-		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		..()
 
 /obj/item/device/flockblocker/attack_self(mob/user as mob)

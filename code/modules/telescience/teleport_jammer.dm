@@ -27,7 +27,6 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,7 +40,7 @@
 		sound_off = null
 		sound_battwarning = null
 
-		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
 		..()
 
 	get_desc(dist, mob/user)

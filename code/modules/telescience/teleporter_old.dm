@@ -187,10 +187,9 @@
 
 
 	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (HAS_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER))
-			if (IN_RANGE(tmploc, A, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
-				m_blocked = 1
-				break
+		if (IN_RANGE(tmploc, A, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
+			m_blocked = 1
+			break
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
 	var/area/myArea = get_area(tmploc)
