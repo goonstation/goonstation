@@ -19,7 +19,9 @@
 	add_abilities = list(/datum/targetable/brain_slug/slug_burrow,
 						/datum/targetable/brain_slug/slug_molt,
 						/datum/targetable/brain_slug/devolve,
-						/datum/targetable/brain_slug/acid_slither)
+						/datum/targetable/brain_slug/acid_slither,
+						/datum/targetable/brain_slug/inject_brood,
+						/datum/targetable/brain_slug/glue_spit)
 	var/bullet_reflect = FALSE
 
 	New(var/turf/T)

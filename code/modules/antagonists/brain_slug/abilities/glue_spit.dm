@@ -5,7 +5,6 @@
 	cooldown = 40 SECONDS
 	targeted = 1
 	target_anything = 1
-	pointCost = 40
 
 	cast(atom/target)
 		if (BOUNDS_DIST(holder.owner, target) > 0)

@@ -30,7 +30,7 @@
 
 	New(var/atom/A, var/mob/living/caster)
 		START_TRACKING
-		for (var/mob/living/M in range(3, src))
+		for (var/mob/living/M in viewers(3, src))
 			if (M != caster)
 				var/atom/movable/slime_line = new /atom/movable(src.loc)
 				line_list += slime_line

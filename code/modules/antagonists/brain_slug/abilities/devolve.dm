@@ -46,6 +46,8 @@
 		var/mob/living/caster = owner
 		var/mob/living/critter/brain_slug/new_slug = new /mob/living/critter/brain_slug(caster.loc)
 		caster.mind.transfer_to(new_slug)
+		var/datum/abilityHolder/brain_slug_master/AH = new_slug.abilityHolder
+		AH.points = 2
 		new_slug.visible_message("<span class='alert'>A tiny slug bursts out of [caster]!</span>", "<span class='alert'>You return to a lesser form!</span>")
 		caster.death()
 
