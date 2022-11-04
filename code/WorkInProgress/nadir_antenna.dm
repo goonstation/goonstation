@@ -61,13 +61,14 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	///Whether the array's conditions for refilling its internal capacitor are satisfied; used for load logic and overlay control
 	var/intcap_charging = FALSE
 	///How fast the internal capacitor will attempt to draw down grid power while intcap_charging is true
-	var/intcap_draw_rate = 5 KILO WATTS
+	var/intcap_draw_rate = 10 KILO WATTS
 	///Amount of surplus past intcap_draw_rate that's required for charging, as a safeguard against spikes in demand
 	var/grid_surplus_threshold = 20 KILO WATTS
 
 	New()
 		. = ..()
-		src.intcap = new /obj/item/cell/charged(src)
+		src.intcap = new /obj/item/cell(src)
+		src.intcap.give(2500)
 		src.telebeam = new /obj/overlay/transception_beam()
 		src.vis_contents += telebeam
 		src.UpdateIcon()
@@ -186,7 +187,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		return
 
 	proc/charge_intcap()
-		if(src.intcap)
+		if(src.intcap && src.intcap_draw_rate > 0)
 			var/datum/powernet/powernet = src.get_direct_powernet()
 
 			//if we're not charging a cell yet, figure out what we'd be billing the powernet if we were
@@ -207,6 +208,8 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 					arrayarea.use_power(final_draw,EQUIP)
 			else
 				src.intcap_charging = FALSE
+		else
+			src.intcap_charging = FALSE
 
 	ex_act(severity) //tbi: damage and repair
 		return

@@ -6,7 +6,7 @@ import {
   Button,
   Divider,
   Flex,
-  Knob,
+  Slider,
   Section,
   Image,
   ProgressBar,
@@ -22,7 +22,7 @@ export const TrscArray = (props, context) => {
   const setSurplus = (e, value) => act('set_surplus', { surplusThreshold: value });
 
   return (
-    <Window width={400} height={550} title="Transception Systems">
+    <Window width={400} height={525} title="Transception Systems">
       <Window.Content>
         <Section title="Array Status" textAlign="center">
           <Box>
@@ -85,22 +85,26 @@ export const TrscArray = (props, context) => {
         <Section title="Internal Capacitor Control" textAlign="center">
           <Flex justify="space-around">
             <Flex.Item>
-              <strong>Target Charge Rate:<br />{formatPower(drawRateTarget)} </strong>
-              <Knob
+              <strong>Target Charge Rate:<br /></strong>
+              <Slider
+                value={drawRateTarget}
                 minValue={0}
                 maxValue={50000}
-                step={100}
-                value={drawRateTarget}
+                step={1000}
+                stepPixelSize={4}
+                format={drawRateTarget => formatPower(drawRateTarget)}
                 onDrag={setDrawRate}
               />
             </Flex.Item>
             <Flex.Item>
-              <strong>Required Surplus:<br />{formatPower(surplusThreshold)} </strong>
-              <Knob
+              <strong>Required Surplus:<br /></strong>
+              <Slider
+                value={surplusThreshold}
                 minValue={10000}
                 maxValue={200000}
-                step={100}
-                value={surplusThreshold}
+                step={5000}
+                stepPixelSize={4}
+                format={surplusThreshold => formatPower(surplusThreshold)}
                 onDrag={setSurplus}
               />
             </Flex.Item>
