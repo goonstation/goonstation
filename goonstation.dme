@@ -253,6 +253,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\cell_holder.dm"
 #include "code\datums\components\clown_disbelief_item.dm"
 #include "code\datums\components\controlled_by_mob.dm"
+#include "code\datums\components\conveyor_lay.dm"
 #include "code\datums\components\crayonwalk.dm"
 #include "code\datums\components\death_confetti.dm"
 #include "code\datums\components\disposing_confetti.dm"
