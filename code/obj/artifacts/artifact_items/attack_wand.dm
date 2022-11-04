@@ -2,7 +2,11 @@
 	name = "artifact attack wand"
 	associated_datum = /datum/artifact/attack_wand
 	flags =  FPRINT | CONDUCT | EXTRADELAY
-	module_research_no_diminish = 1
+
+	// this is necessary so that this returns null
+	// else afterattack will not be called when out of range
+	pixelaction(atom/target, params, mob/user, reach)
+		..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if (user.equipped() == src)
@@ -17,11 +21,12 @@
 			user.lastattacked = src
 			var/turf/U = (istype(target, /atom/movable) ? target.loc : target)
 			A.effect_click_tile(src,user,U)
-			src.ArtifactFaultUsed(user)
 
 /datum/artifact/attack_wand
 	associated_object = /obj/item/artifact/attack_wand
-	rarity_class = 3
+	type_name = "Elemental Wand"
+	type_size = ARTIFACT_SIZE_MEDIUM
+	rarity_weight = 200
 	validtypes = list("wizard")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/force)
@@ -32,17 +37,33 @@
 	var/attack_type = null
 	var/recharge_phrase = ""
 	var/error_phrase = ""
-	module_research = list("weapons" = 5, "energy" = 5, "tools" = 5)
-	module_research_insight = 2
+	var/list/powerVars = list()
 
 	New()
 		..()
 		recharge_phrase = pick("crackles with static.","emits a quiet tone.","bristles with energy!","heats up.")
 		error_phrase = pick("shudders briefly.","grows heavy for a moment.","emits a quiet buzz.","makes a small pop sound.")
 		attack_type = pick("lightning","fire","ice","sonic")
-		cooldown = rand(25,900)
-		if (prob(5))
-			cooldown = 0
+		if(prob(10))
+			attack_type = "all"
+		// cooldown
+		cooldown = rand(3 SECONDS, 70 SECONDS)
+		if(attack_type == "lightning")
+			cooldown = max(30 SECONDS, cooldown)
+		// fire
+		powerVars["fireTemp"] = rand(1000,10000)
+		if(prob(10))
+			powerVars["fireTemp"] *= 4
+		powerVars["fireRadius"] = rand(1,4)
+		// ice
+		powerVars["cubeHealth"] = rand(5,25) // default cube is 10, 100 units of cryostylane would make 20, for reference
+		powerVars["iceRadius"] = rand(1,4)
+		// lightning
+		powerVars["wattage"] = rand(30000,2e6) 				// goes up to 80 damage, so no potential electrogibs or anything
+		if(prob(5))																		// unless...
+			powerVars["wattage"] *= 2
+		// sonic
+		// yeah, I got nothing
 
 	effect_click_tile(var/obj/O,var/mob/living/user,var/turf/T)
 		if (..())
@@ -51,60 +72,54 @@
 			return
 
 		ready = 0
-		SPAWN_DBG(cooldown)
+		SPAWN(cooldown)
 			if (O.loc == user)
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			ready = 1
 
-		switch(attack_type)
+		var/curAttack = attack_type
+		if(attack_type == "all")
+			curAttack = pick("lightning","fire","ice","sonic")
+
+		switch(curAttack)
 			if("fire")
-				playsound(T, "sound/effects/bamf.ogg", 50, 1, 0)
-				fireflash(T, 2)
+				playsound(T, 'sound/effects/bamf.ogg', 50, 1, 0)
+				tfireflash(T, powerVars["fireRadius"], powerVars["fireTemp"])
 
 				ArtifactLogs(user, T, O, "used", "creating fireball on target turf", 0) // Attack wands need special log handling (Convair880).
 
 			if("ice")
-				playsound(T, "sound/effects/mag_iceburstlaunch.ogg", 50, 1, 0)
-				for (var/turf/TT in range(T,2))
+				playsound(T, 'sound/effects/mag_iceburstlaunch.ogg', 50, 1, 0)
+				for (var/turf/TT in range(T,powerVars["iceRadius"]))
 					if(locate(/obj/decal/icefloor) in TT.contents)
 						continue
 					var/obj/decal/icefloor/B = new /obj/decal/icefloor(TT)
-					SPAWN_DBG(80 SECONDS)
+					SPAWN(80 SECONDS)
 						B.dispose()
-				for (var/mob/living/M in range(T,2))
+				for (var/mob/living/M in range(T,powerVars["iceRadius"]))
 					if (M.bioHolder)
 						if (!M.is_cold_resistant())
-							new /obj/icecube(get_turf(M), M)
+							var/obj/icecube/cube = new /obj/icecube(get_turf(M), M)
+							cube.health = powerVars["cubeHealth"]
+							O.ArtifactFaultUsed(M)
 
 							ArtifactLogs(user, M, O, "weapon", "trapping them in an ice cube", 0)
 
 			if("lightning")
-				var/attack_amt = 0
-				for (var/mob/living/M in range(T,1))
-
+				arcFlashTurf(user, T, powerVars["wattage"])
+				for (var/mob/living/M in range(T,powerVars["iceRadius"]))
+					O.ArtifactFaultUsed(M)
 					ArtifactLogs(user, M, O, "weapon", "zapping them with electricity", 0)
 
-					attack_amt = 1
-					var/list/affected = DrawLine(get_turf(M), user, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-					for(var/obj/OB in affected)
-						SPAWN_DBG(0.6 SECONDS)
-							pool(OB)
-						M.TakeDamage("chest", 0, 25)
-						M.changeStatus("stunned", 50)
-				if (attack_amt)
-					playsound(user, "sound/effects/elec_bigzap.ogg", 40, 1)
-				else
-					boutput(user, "<span style=\"color:red\"><b>[O]</b> crackles with electricity for a moment. Perhaps it couldn't find a target?</span>")
-
 			if("sonic")
-				playsound(T, "sound/effects/screech.ogg", 100, 1, 0)
+				playsound(T, 'sound/effects/screech.ogg', 50, 1, 0)
 				particleMaster.SpawnSystem(new /datum/particleSystem/sonic_burst(T))
 
 				for (var/mob/living/M in all_hearers(world.view, T))
 					if (isintangible(M))
 						continue
 					if (!M.ears_protected_from_sound())
-						shake_camera(M, 10, 0)
+						O.ArtifactFaultUsed(M)
 					else
 						continue
 
@@ -125,8 +140,9 @@
 					R.maximum_volume = 15
 
 				R.add_reagent("sonicpowder_nofluff", 15, null, T0C + 200)
-				R.temperature_react()
 
 				if (R.total_volume)
 					R.clear_reagents()
+
+		O.ArtifactFaultUsed(user)
 		return

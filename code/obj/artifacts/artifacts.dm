@@ -12,13 +12,13 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype) AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin) AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -28,14 +28,16 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
+		user.lastattacked = src
 		src.ArtifactTouched(user)
 		return
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
+		user.lastattacked = src
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -44,23 +46,22 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -68,63 +69,23 @@
 	reagent_act(reagent_id,volume)
 		if (..())
 			return
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		src.ArtifactStimulus(reagent_id, volume)
-		switch(reagent_id)
-			if("radium","porktonium")
-				src.ArtifactStimulus("radiate", round(volume / 10))
-			if("polonium","strange_reagent")
-				src.ArtifactStimulus("radiate", round(volume / 5))
-			if("uranium")
-				src.ArtifactStimulus("radiate", round(volume / 2))
-			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
-					ArtifactDevelopFault(80)
-			if("phlogiston","dbreath","el_diablo","thermite","thalmerite","argine")
-				src.ArtifactStimulus("heat", 310 + (volume * 5))
-			if("infernite","kerosene","ghostchilijuice")
-				src.ArtifactStimulus("heat", 310 + (volume * 10))
-			if("napalm_goo","foof","ghostchilijuice")
-				src.ArtifactStimulus("heat", 310 + (volume * 15))
-			if("cryostylane")
-				src.ArtifactStimulus("heat", 310 - (volume * 10))
-			if("acid","acetic_acid")
-				src.ArtifactTakeDamage(volume * 2)
-			if("pacid","clacid","nitric_acid")
-				src.ArtifactTakeDamage(volume * 10)
-			if("george_melonium")
-				var/random_stimulus = pick("heat","force","radiate","elec")
-				var/random_strength = 0
-				switch(random_stimulus)
-					if ("heat")
-						random_strength = rand(200,400)
-					if ("elec")
-						random_strength = rand(5,5000)
-					if ("force")
-						random_strength = rand(3,30)
-					if ("radiate")
-						random_strength = rand(1,10)
-				src.ArtifactStimulus(random_stimulus,random_strength)
+		src.Artifact_reagent_act(reagent_id, volume)
 		return
 
 	emp_act()
-		src.ArtifactStimulus("elec", 800)
-		src.ArtifactStimulus("radiate", 3)
+		src.Artifact_emp_act()
 
 	blob_act(var/power)
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 
 	bullet_act(var/obj/projectile/P)
 		if(src.material) src.material.triggerOnBullet(src, src, P)
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
-				src.ArtifactStimulus("force", P.power)
 				for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 					I.impactpad_senseforce_shot(src, P)
+				src.ArtifactStimulus("force", P.power)
 			if(D_ENERGY)
 				src.ArtifactStimulus("elec", P.power * 10)
 			if(D_BURNING)
@@ -133,13 +94,17 @@
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
+
+	mob_flip_inside(mob/user)
+		. = ..()
+		src.ArtifactTakeDamage(rand(5,20))
+		boutput(user, "<span class='alert'>It seems to be a bit more damaged!</span>")
 
 /obj/machinery/artifact
 	name = "artifact large art piece"
@@ -153,14 +118,14 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -168,13 +133,12 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -188,14 +152,14 @@
 		if (A.activated)
 			A.effect_process(src)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.ArtifactTouched(user)
 		return
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
@@ -205,13 +169,13 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.ArtifactStimulus("force", 200)
 				src.ArtifactStimulus("heat", 500)
-			if(2.0)
+			if(2)
 				src.ArtifactStimulus("force", 75)
 				src.ArtifactStimulus("heat", 450)
-			if(3.0)
+			if(3)
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
 		return
@@ -219,52 +183,14 @@
 	reagent_act(reagent_id,volume)
 		if (..())
 			return
-		if (!src.ArtifactSanityCheck())
-			return
-		var/datum/artifact/A = src.artifact
-		src.ArtifactStimulus(reagent_id, volume)
-		switch(reagent_id)
-			if("radium","porktonium")
-				src.ArtifactStimulus("radiate", round(volume / 10))
-			if("polonium","strange_reagent")
-				src.ArtifactStimulus("radiate", round(volume / 5))
-			if("uranium")
-				src.ArtifactStimulus("radiate", round(volume / 2))
-			if("dna_mutagen","mutagen","omega_mutagen")
-				if (A.artitype == "martian")
-					ArtifactDevelopFault(80)
-			if("phlogiston","dbreath","el_diablo")
-				src.ArtifactStimulus("heat", 310 + (volume * 5))
-			if("infernite","foof","ghostchilijuice")
-				src.ArtifactStimulus("heat", 310 + (volume * 10))
-			if("cryostylane")
-				src.ArtifactStimulus("heat", 310 - (volume * 10))
-			if("acid")
-				src.ArtifactTakeDamage(volume * 2)
-			if("pacid")
-				src.ArtifactTakeDamage(volume * 10)
-			if("george_melonium")
-				var/random_stimulus = pick("heat","force","radiate","elec")
-				var/random_strength = 0
-				switch(random_stimulus)
-					if ("heat")
-						random_strength = rand(200,400)
-					if ("elec")
-						random_strength = rand(5,5000)
-					if ("force")
-						random_strength = rand(3,30)
-					if ("radiate")
-						random_strength = rand(1,10)
-				src.ArtifactStimulus(random_stimulus,random_strength)
+		src.Artifact_reagent_act(reagent_id, volume)
 		return
 
 	emp_act()
-		src.ArtifactStimulus("elec", 800)
-		src.ArtifactStimulus("radiate", 3)
+		src.Artifact_emp_act()
 
 	blob_act(var/power)
-		src.ArtifactStimulus("force", power)
-		src.ArtifactStimulus("carbtouch", 1)
+		src.Artifact_blob_act(power)
 
 	bullet_act(var/obj/projectile/P)
 		switch (P.proj_data.damage_type)
@@ -276,15 +202,14 @@
 			if(D_ENERGY)
 				src.ArtifactStimulus("elec", P.power * 10)
 			if(D_BURNING)
-				src.ArtifactStimulus("heat", P.power * 5)
+				src.ArtifactStimulus("heat", 310 + (P.power * 5))
 			if(D_RADIOACTIVE)
 				src.ArtifactStimulus("radiate", P.power)
 		..()
 
-	Bumped(M as mob|obj)
+	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isitem(M))
 			var/obj/item/ITM = M
-			src.ArtifactStimulus("force", ITM.throwforce)
 			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
 				I.impactpad_senseforce(src, ITM)
 		..()
@@ -298,13 +223,14 @@
 	mat_changedesc = 0
 	var/associated_datum = /datum/artifact/art
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
+		..()
 		var/datum/artifact/AS = new src.associated_datum(src)
-		if (forceartitype)
-			AS.validtypes = list("[forceartitype]")
+		if (forceartiorigin)
+			AS.validtypes = list("[forceartiorigin]")
 		src.artifact = AS
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.ArtifactSetup()
 
 	disposing()
@@ -312,32 +238,80 @@
 		..()
 
 	examine()
-		set src in oview()
-		boutput(usr, "You have no idea what this thing is!")
+		. = list("You have no idea what this thing is!")
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/A = src.artifact
 		if (istext(A.examine_hint))
-			boutput(usr, "[A.examine_hint]")
+			. += A.examine_hint
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (src.Artifact_attackby(W,user))
 			..()
 
+//ex_act is handled by the item parent
+
+	emp_act()
+		src.Artifact_emp_act()
+
+	reagent_act(reagent_id,volume)
+		if (..())
+			return
+		src.Artifact_reagent_act(reagent_id, volume)
+		return
+
+	hitby(atom/movable/M, datum/thrown_thing/thr)
+		if (isitem(M))
+			var/obj/item/ITM = M
+			for (var/obj/machinery/networked/test_apparatus/impact_pad/I in src.loc.contents)
+				I.impactpad_senseforce(src, ITM)
+		..()
+
 /obj/artifact_spawner
 	// pretty much entirely for debugging/gimmick use
-	New(var/loc,var/forceartitype = null,var/cinematic = 0)
+	New(var/loc,var/forceartiorigin = null,var/cinematic = 0)
+		..()
 		var/turf/T = get_turf(src)
 		if (cinematic)
-			T.visible_message("<span style=\"color:red\"><b>An artifact suddenly warps into existence!</b></span>")
-			playsound(T,"sound/effects/teleport.ogg",50,1)
-			var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
+			playsound(T, 'sound/effects/teleport.ogg', 50,1)
+			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
-			SPAWN_DBG(1.5 SECONDS)
-				pool(swirl)
-		Artifact_Spawn(T,forceartitype)
+			SPAWN(1.5 SECONDS)
+				qdel(swirl)
+		Artifact_Spawn(T,forceartiorigin)
 		qdel(src)
 		return
+
+/obj/artifact_type_spawner
+	var/list/types = list()
+
+	New(var/loc)
+		..()
+		if(length(types))
+			Artifact_Spawn(src.loc, forceartitype = pick(src.types))
+		else
+			CRASH("No artifact types provided.")
+		qdel(src)
+		return
+
+/obj/artifact_type_spawner/vurdalak
+
+	New(var/loc)
+		src.types = concrete_typesof(/datum/artifact)
+		..()
+
+// I removed mining artifacts from this list because they are kinda not in the game right now
+/obj/artifact_type_spawner/gragg
+	types = list(
+		/datum/artifact/activator_key,
+		/datum/artifact/wallwand,
+		/datum/artifact/melee,
+		/datum/artifact/telewand,
+		/datum/artifact/energygun,
+		/datum/artifact/watercan,
+		/datum/artifact/pitcher
+		)

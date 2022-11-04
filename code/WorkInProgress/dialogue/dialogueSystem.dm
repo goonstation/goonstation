@@ -30,11 +30,14 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 	var/dialogueName = "" //Name that is shown in the dialogue and title.
 	var/atom/master = null //The atom that this dialogueMaster belongs to.
 	var/visibleDialogue = 1 //Is the dialogue visible to everyone?
+	var/floatingText = 0 // Does this dialogue show floating chat?
+	var/floating_text_style = "" // Style for floating text?
 	var/windowSize = "400x700" //Size of the dialogue window.
 	var/maxDistance = -1 //If >=0 The user needs to be at least this close for the dialogue to work.
 	var/objectDialogueVerb = "says" //If the dialogueMaster belong to an object and showDialogue is one, what "verb" do we use for it's chat output.
 	var/list/dialogueFlags = list() //Holds simple string flags that can be used in dialogue. I.e. "Have we talked about this before"
 	var/list/allNodes = null //Complete list of nodes in the master.
+	var/wait_to_speak = 0 SECONDS // time to wait for more natural visible conversations
 
 	New(var/datum/M)
 		master = M
@@ -53,7 +56,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 			var/datum/dialogueNode/N = locate(href_list["link"])
 			var/client/C = locate(href_list["client"])
 			if(maxDistance >= 0)
-				if(get_dist(C.mob, master) > maxDistance)
+				if(GET_DIST(C.mob, master) > maxDistance)
 					boutput(C.mob, "You are too far away for that.")
 					return
 			if(N != null && N.canShow(C)) //The order of the stuff below is very important. You might break things if you change it.
@@ -81,8 +84,12 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 							var/mob/M = master
 							M.say(N.getNodeText(C))
 						else if(isobj(master))
+							sleep(wait_to_speak)
+							var/chat_text = null
+							if (floatingText)
+								chat_text = make_chat_maptext(master, N.getNodeText(C), floating_text_style)
 							for(var/mob/O in all_hearers(5, master.loc))
-								O.show_message("<span class='name'>[master.name]</span> [objectDialogueVerb], <span class='message'>\"[N.getNodeText(C)]\"</span>",2)
+								O.show_message("<span class='name'>[master.name]</span> [objectDialogueVerb], <span class='message'>\"[N.getNodeText(C)]\"</span>",2, assoc_maptext = chat_text)
 		return
 
 	proc/setFlag(var/client/C, var/flag="", var/value="") //Sets flag to value for this client in this dialogue master.
@@ -115,7 +122,7 @@ proc/getGlobalFlag(var/client/C, var/flag="")
 		if(C.dialogueNodePath)					//Optionally goes [steps] steps back and gets that node instead of the last one.
 			if(C.dialogueNodePath["\ref[src]"])
 				if(C.dialogueNodePath["\ref[src]"].len)
-					var/length = C.dialogueNodePath["\ref[src]"].len
+					var/length = length(C.dialogueNodePath["\ref[src]"])
 					if(steps > 0)
 						if(length > steps)
 							return C.dialogueNodePath["\ref[src]"][length - steps]

@@ -1,10 +1,12 @@
 
 /client/proc/wireTest()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "WireTest"
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	//mapWorldNew(src)
+	//boop2
 
 
 /proc/mapWorldNew(client/C)
@@ -118,20 +120,20 @@ var/global/deathConfettiActive = 0
 
 /mob/proc/deathConfetti()
 	particleMaster.SpawnSystem(new /datum/particleSystem/confetti(src.loc))
-	SPAWN_DBG(1 SECOND)
-		playsound(src.loc, "sound/voice/yayyy.ogg", 50, 1)
+	SPAWN(1 SECOND)
+		playsound(src.loc, 'sound/voice/yayyy.ogg', 50, 1)
 
 /client/proc/toggle_death_confetti()
 	set popup_menu = 0
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 	set name = "Toggle Death Confetti"
 	set desc = "Toggles the fun confetti effect and sound whenever a mob dies"
-	admin_only
+	ADMIN_ONLY
 
 	deathConfettiActive = !deathConfettiActive
 
-	logTheThing("admin", src, null, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
-	logTheThing("diary", src, null, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]", "admin")
+	logTheThing(LOG_ADMIN, src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
+	logTheThing(LOG_DIARY, src, "toggled Death Confetti [deathConfettiActive ? "on" : "off"]", "admin")
 	message_admins("[key_name(src)] toggled Death Confetti [deathConfettiActive ? "on" : "off"]")
 
 
@@ -191,33 +193,33 @@ var/global/deathConfettiActive = 0
 		return ..()
 
 	setup_healths()
-		add_hh_robot(-150, 150, 1.15)
+		add_hh_robot(150, 1.15)
 
 
 /client/proc/ghostdroneAll()
 	set name = "Ghostdrone All"
 	set desc = "Makes every single person a ghostdrone. Why are you doing this."
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set popup_menu = 0
 	set hidden = 1
-	admin_only
+	ADMIN_ONLY
 
 	for (var/mob/living/L in mobs)
 		if (L.client && !isghostdrone(L))
 			droneize(L, 0)
 
-	logTheThing("admin", src, null, "made everyone a ghostdrone!")
-	logTheThing("diary", src, null, "made everyone a ghostdrone!", "admin")
+	logTheThing(LOG_ADMIN, src, "made everyone a ghostdrone!")
+	logTheThing(LOG_DIARY, src, "made everyone a ghostdrone!", "admin")
 	message_admins("[key_name(src)] made everyone a ghostdrone!")
 
 
 /client/proc/toggle_hard_reboot()
-	set category = "Debug" // Not in toggles because it's not enabling/disabling game features
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER) // Not in toggles because it's not enabling/disabling game features
 	set name = "Toggle Hard Reboot"
 	set desc = "A hard reboot is when the game instance outright ends, and the backend server reinitialises it"
 
-	admin_only
+	ADMIN_ONLY
 
-	var/hardRebootFilePath = "data/hard-reboot"
 	var/hardRebootFileExists = fexists(hardRebootFilePath)
 	var/logMessage = ""
 
@@ -232,11 +234,11 @@ var/global/deathConfettiActive = 0
 	else
 		return
 
-	logTheThing("debug", src, null, logMessage)
-	logTheThing("diary", src, null, logMessage, "admin")
+	logTheThing(LOG_DEBUG, src, logMessage)
+	logTheThing(LOG_DIARY, src, logMessage, "admin")
 	message_admins("[key_name(src)] [logMessage]")
 
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["msg"] = logMessage
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)

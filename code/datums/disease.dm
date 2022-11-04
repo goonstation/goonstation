@@ -26,8 +26,8 @@
 	var/tickcount = 0
 	//IM SORRY
 
-	proc/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
-		if (!affected_mob || !D)
+	proc/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
+		if (QDELETED(affected_mob) || !D)
 			return 1
 		return 0
 
@@ -63,8 +63,6 @@
 	var/develop_resist = 0
 	var/associated_reagent = null // associated reagent, duh
 
-	var/list/disease_data = list() // A list of things for people to research about the disease to make it
-	var/list/strain_data = list()  // Used for Rhinovirus
 
 // IMPLEMENT PROPER CURE PROC
 
@@ -99,7 +97,7 @@
 
 		..()
 
-	proc/stage_act()
+	proc/stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -110,17 +108,20 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
-		master.stage_act(affected_mob,src)
+		master.stage_act(affected_mob, src, mult)
 
 		return 0
 
 	proc/scan_info()
-		var/text = "<span style='color:red'><b>"
+		var/text = "<span class='alert'><b>"
 		if (istype(src.master,/datum/ailment/disease) || istype(src.master,/datum/ailment/malady))
-			text += "[src.state] "
+			if (src.state == "Active" || src.state == "Acute")
+				text += "[src.state] "
+			else
+				text += "<span class='notice'>[src.state] </span>"
 		text += "[src.scantype ? src.scantype : src.master.scantype]:"
 
 		text += " [src.name ? src.name : src.master.name]</b> <small>(Stage [src.stage]/[src.master.max_stages])<br>"
@@ -150,8 +151,9 @@
 	var/virulence = 100    // how likely is this disease to spread
 	var/develop_resist = 0 // can you develop a resistance to this?
 	var/cycles = 0         // does this disease have a cyclical nature? if so, how many cycles have elapsed?
+	var/list/strain_data = list()  // Used for Rhinovirus, basically arbitrary data storage
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob || disposed)
 			return 1
 
@@ -170,9 +172,8 @@
 		var/advance_prob = stage_prob
 		if (state == "Acute")
 			advance_prob *= 2
-		advance_prob = max(0,min(advance_prob,100))
 
-		if (prob(advance_prob))
+		if (probmult(advance_prob))
 			if (state == "Remissive")
 				stage--
 				if (stage < 1)
@@ -183,11 +184,11 @@
 
 		// Common cures
 		if (cure != "Incurable")
-			if (cure == "Sleep" && affected_mob.sleeping && prob(33))
+			if (cure == "Sleep" && affected_mob.sleeping && probmult(33))
 				state = "Remissive"
 				return 1
 
-			else if (cure == "Self-Curing" && prob(5))
+			else if (cure == "Self-Curing" && probmult(5))
 				state = "Remissive"
 				return 1
 
@@ -209,19 +210,9 @@
 						var/we_are_cured = 0
 						var/reagcure_prob = reagentcure[current_id]
 						if (isnum(reagcure_prob))
-							if (prob(reagcure_prob))
+							if (probmult(reagcure_prob))
 								we_are_cured = 1
-						else if (islist(reagcure_prob)) // we want to roll more than one prob() in order to succeed, aka we want a very low chance
-							var/list/cureprobs = reagcure_prob
-							var/success = 1
-							for (var/thing in cureprobs)
-								if (!isnum(thing))
-									continue
-								if (!prob(thing))
-									success = 0
-							if (success)
-								we_are_cured = 1
-						else if (prob(recureprob))
+						else if (probmult(recureprob))
 							we_are_cured = 1
 						if (we_are_cured)
 							state = "Remissive"
@@ -230,12 +221,16 @@
 		if (state == "Asymptomatic" || state == "Dormant")
 			return 1
 
-		SPAWN_DBG(rand(1,5))
+		SPAWN(rand(1,5))
 			// vary it up a bit so the processing doesnt look quite as transparent
 			if (master)
-				master.stage_act(affected_mob,src)
+				master.stage_act(affected_mob, src, mult)
 
 		return 0
+
+	disposing()
+		strain_data = null
+		..()
 
 /datum/ailment_data/addiction
 	var/associated_reagent = null
@@ -258,7 +253,7 @@
 		src.cure = master.cure
 		src.was_setup = 1
 
-	stage_act()
+	stage_act(var/mult)
 		if (!affected_mob)
 			return
 
@@ -266,7 +261,7 @@
 			affected_mob.cure_disease(src)
 			return
 
-		if (!ismind(source))
+		if (istype(master, /datum/ailment/parasite/headspider) && !ismind(source))
 			affected_mob.cure_disease(src)
 			return
 
@@ -276,12 +271,12 @@
 		if (stage > master.max_stages)
 			stage = master.max_stages
 
-		if (prob(stage_prob) && stage < master.max_stages)
+		if (probmult(stage_prob) && stage < master.max_stages)
 			stage++
 
 
 		if(!stealth_asymptomatic)
-			master.stage_act(affected_mob,src,source)
+			master.stage_act(affected_mob,src,mult,source)
 
 		return
 
@@ -295,8 +290,7 @@
 		var/mob/living/carbon/human/H = src
 		resist_prob = H.get_disease_protection(ailment_path, ailment_name)
 	else
-		for(var/atom in src.get_equipped_items())
-			var/obj/item/C = atom
+		for (var/obj/item/C as anything in src.get_equipped_items())
 			resist_prob += C.getProperty("viralprot")
 
 	if (ispath(ailment_path) || istext(ailment_name))
@@ -337,7 +331,12 @@
 	else
 		return 1 // you caught the virus! do you want to give the captured virus a nickname? virus has been recorded in lurgydex
 
-/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = 0)
+/// Contract the specified disease.
+/// @param ailment_path Path of the ailment to add. If both ailment_path and ailment_name are passed, this is used.
+/// @param ailment_name Name of the ailment to add. This is not cosmetic; the ailment type is retrieved via this name.
+/// @param strain Instance of the ailment to add. Used to transfer an existing ailment to a person (such as in the case of a diseased organ transplant)
+/// @param bypass_resistance If disease resistance should be bypassed while adding a disease.
+/mob/living/proc/contract_disease(var/ailment_path, var/ailment_name, var/datum/ailment_data/disease/strain, bypass_resistance = FALSE)
 	if (!src)
 		return null
 	if (!ailment_path && !ailment_name && !(istype(strain,/datum/ailment_data/disease) || istype(strain,/datum/ailment_data/malady))) // maladies use strain to transfer specific instances of their selves via organ transplant/etc
@@ -363,8 +362,8 @@
 	if (count >= A.max_stacks)
 		return null
 
-	if (ischangeling(src) || isvampire(src) || src.nodamage)
-		//Vampires and changelings are immune to disease, as are the godmoded.
+	if (ischangeling(src) || isvampire(src) || isvampiricthrall(src) || iszombie(src) || src.nodamage)
+		//Vampires, thralls, zombies and changelings are immune to disease, as are the godmoded.
 		//This is here rather than in the resistance check proc because otherwise certain things could bypass the
 		//hard immunity these folks are supposed to have
 		return null
@@ -387,9 +386,11 @@
 			AD.detectability = strain.detectability
 			AD.develop_resist = strain.develop_resist
 			AD.cure = strain.cure
+			AD.spread = strain.spread
 			AD.info = strain.info
 			AD.resistance_prob = strain.resistance_prob
 			AD.temperature_cure = strain.temperature_cure
+			AD.strain_data = strain.strain_data.Copy()
 		else
 			AD.name = D.name
 			AD.stage_prob = D.stage_prob
@@ -399,6 +400,7 @@
 			AD.detectability = D.detectability
 			AD.develop_resist = D.develop_resist
 			AD.cure = D.cure
+			AD.spread = D.spread
 			AD.info = D.info
 			AD.resistance_prob = D.resistance_prob
 			AD.temperature_cure = D.temperature_cure
@@ -447,6 +449,21 @@
 		AD.on_infection()
 		return AD
 
+	else if (istype(A, /datum/ailment/parasite))
+		var/datum/ailment_data/parasite/AD = new /datum/ailment_data/parasite
+		AD.name = A.name
+		AD.stage_prob = A.stage_prob
+		AD.cure = A.cure
+		AD.reagentcure = A.reagentcure
+		AD.recureprob = A.recureprob
+		AD.master = A
+
+		AD.master = A
+		AD.affected_mob = src
+		src.ailments += AD
+
+		return AD
+
 	else
 		var/datum/ailment_data/AD = new /datum/ailment_data
 		AD.name = A.name
@@ -466,7 +483,7 @@
 	if (!src || !target || !istext(spread_type))
 		return
 
-	if (!src.ailments || !src.ailments.len)
+	if (!src.ailments || !length(src.ailments))
 		return
 
 	for (var/datum/ailment_data/disease/AD in src.ailments)
@@ -528,6 +545,7 @@
 	return null
 
 /mob/living/proc/Virus_ShockCure(var/probcure = 50)
+	src.changeStatus("defibbed", (12 * (probcure * 0.1)) SECONDS) // also makes it *slightly* harder to shitsec someone to death
 	for (var/datum/ailment_data/V in src.ailments)
 		if (V.cure == "Electric Shock" && prob(probcure))
 			src.cure_disease(V)
@@ -542,39 +560,39 @@
 	var/numMid = round((1 * shockInput) / 10)
 	var/numLow = round((1 * shockInput) / 20)
 	if (src.organHolder.heart && src.organHolder.heart.robotic && src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		src.add_stam_mod_regen("heart_shock", 5)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 5)
 		src.add_stam_mod_max("heart_shock", 20)
-		SPAWN_DBG(9000)
-			src.remove_stam_mod_regen("heart_shock")
+		SPAWN(9000)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numHigh))
-			boutput(src, "<span style='color:red'>Your cyberheart spasms violently!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
 			random_brute_damage(src, numHigh)
 		if (prob(numHigh))
-			boutput(src, "<span style='color:red'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
 			random_burn_damage(src, numHigh)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'><B>Your cyberheart stops beating!</B></span>")
+			boutput(src, "<span class='alert'><B>Your cyberheart stops beating!</B></span>")
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 		if (prob(numLow))
-			boutput(src, "<span style='color:red'><B>Your cyberheart shuts down!</B></span>")
-			src.organHolder.heart.broken = 1
+			boutput(src, "<span class='alert'><B>Your cyberheart shuts down!</B></span>")
+			src.organHolder.heart.breakme()
 			src.contract_disease(/datum/ailment/malady/flatline, null, null, 1)
 	else if (src.organHolder.heart && src.organHolder.heart.robotic && !src.organHolder.heart.emagged && !src.organHolder.heart.broken)
-		src.add_stam_mod_regen("heart_shock", 1)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock", 1)
 		src.add_stam_mod_max("heart_shock", 10)
-		SPAWN_DBG(9000)
-			src.remove_stam_mod_regen("heart_shock")
+		SPAWN(9000)
+			REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "heart_shock")
 			src.remove_stam_mod_max("heart_shock")
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart spasms violently!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart spasms violently!</span>")
 			random_brute_damage(src, numMid)
 		if (prob(numMid))
-			boutput(src, "<span style='color:red'>Your cyberheart shocks you painfully!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart shocks you painfully!</span>")
 			random_burn_damage(src, numMid)
 		if (prob(numLow))
-			boutput(src, "<span style='color:red'>Your cyberheart lurches awkwardly!</span>")
+			boutput(src, "<span class='alert'>Your cyberheart lurches awkwardly!</span>")
 			src.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)

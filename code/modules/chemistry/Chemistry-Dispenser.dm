@@ -1,180 +1,70 @@
-///////////////////////////////////////////////////////////////////////////////////////////////////
-/chui/window/chem_dispenser
-	name = "Chem Dispenser"
-	//template = "html/chemDispenserTemplate.html"
-	windowSize = "700x600"
-	var/obj/machinery/chem_dispenser/dispenser //The chem dispenser we attach to
+var/list/basic_elements = list(
+		"aluminium","barium","bromine","calcium","carbon","chlorine", \
+		"chromium","copper","ethanol","fluorine","hydrogen", \
+		"iodine","iron","lithium","magnesium","mercury","nickel", \
+		"nitrogen","oxygen","phosphorus","plasma","platinum","potassium", \
+		"radium","silicon","silver","sodium","sugar","sulfur","water"
+	)
 
-	disposing()
-		dispenser = null
-		theAtom = null
-		..()
-
-	proc/SetDispenser(var/obj/machinery/chem_dispenser/dispenser)
-		if (istype(dispenser))
-			src.dispenser = dispenser
-			theAtom = dispenser
-
-
-	GetBody()
-		if(!template)
-			template = grabResource("html/chemDispenserTemplate.html")
-		//DEBUG("Continuing dispenser body generation.")
-		return ..()
-
-	OnClick(var/client/who, var/id, var/data)
-		..()
-		//DEBUG("Client: [who], ID: [id], DATA: [data]")
-		if (dispenser) //Wire: Fix for: Cannot execute null.Topic()
-			dispenser.Topic("", list("[id]"=1) + params2list(data))
-
-	Subscribe(var/client/who)
-		var/reag = IsSubscribed(who)
-		..()
-		dispenser.ui_fullupdate(!reag)
-
+ABSTRACT_TYPE(/obj/machinery/chem_dispenser)
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
+	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
 	density = 1
 	anchored = 1
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
-	flags = NOSPLASH
-	mats = 30
+	flags = NOSPLASH | TGUI_INTERACTIVE
+	object_flags = NO_GHOSTCRITTER
+	var/health = 400
+	mats = list("MET-2" = 10, "CON-2" = 10, "miracle" = 20)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
-	var/list/dispensable_reagents = list("aluminium","barium","bromine","carbon","calcium","chlorine", \
-										"chromium","copper","ethanol","fluorine","hydrogen", \
-										"iodine","iron","lithium","magnesium","mercury","nickel", \
-										"nitrogen","oxygen","plasma","platinum","phosphorus","potassium", \
-										"radium","silicon","silver","sodium","sulfur","sugar","water")
+	var/list/dispensable_reagents = null
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
 	var/obj/item/card/id/user_id = null
 	var/datum/reagent_group_account/current_account = null
+	var/list/starting_groups
 	var/list/accounts = list()
-	var/doing_a_thing = 0
-	var/user_dispense_amt = 10 // users can set this to dispense a custom amount of stuff, rounded to 1 and between 1-50
-	var/user_remove_amt = 10 // same as above but for removing chems
-	var/HTML = null
-	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
-	var/dispense_data = ""
-	var/chui/window/chem_dispenser/ch_window = new
 	var/output_target = null
-
 	var/dispense_sound = 'sound/effects/zzzt.ogg'
+
+	var/list/recording_queue
+	var/list/recording_state = FALSE
 
 	New()
 		..()
-		UnsubscribeProcess()
-		ch_window.SetDispenser(src)
-		update_dispensable_data()
 		update_account()
+		recording_queue = list()
+
+		if(!starting_groups && current_state <= GAME_STATE_PREGAME)
+			var/area/A = get_area(src)
+			if(istype(A,/area/station/medical))
+				starting_groups = list(/datum/reagent_group/default/potassium_iodide,
+									   /datum/reagent_group/default/styptic,
+								       /datum/reagent_group/default/silver_sulfadiazine)
+
+		if(starting_groups)
+			for(var/P in starting_groups)
+				var/datum/reagent_group/default/G = new P
+				G.update_desc()
+				if (current_account)
+					current_account.groups += G
 
 	disposing()
 		beaker = null
-		qdel(ch_window)
-		ch_window = null
-
-
 		if (current_account.user_id == src)
 			current_account.user_id = null
 		for (var/datum/reagent_group_account/A in src.accounts)
 			if (A.user_id == src)
 				A.user_id = null
-
 		..()
 
-	proc/update_dispensable_data()
-		dispensable_reagents=sortList(dispensable_reagents)
-		dispense_data ="\["
-		for(var/R in dispensable_reagents)
-			var/datum/reagent/re = reagents_cache[R]
-			if(re)
-				dispense_data += {"{"name":"[re.name]","id":"[R]\"},"}
-
-		dispense_data = "[copytext(dispense_data,1,length(dispense_data))]]"
-
-	proc/ui_fullupdate(include_chems=0)
-		send_reagent_details(include_chems)
-		send_generic_details()
-		send_beaker_details()
-		send_group_details()
-
-	proc/send_reagent_details(include_chems=0)
-		//Update creatable reagents
-		var/data = {"{"}
-		var/show_stat = 0
-		if(!beaker)
-			data += {""stat_msg":"No [glass_name] loaded.\""}
-			show_stat = 1
-		else if (!beaker.reagents || beaker.reagents.total_volume >= beaker.reagents.maximum_volume)
-			data += {""stat_msg":"[capitalize(glass_name)] is full.\""}
-			show_stat = 1
-
-		data += {"[show_stat ? ",":null]"show_stat":[show_stat]"}
-		if (include_chems)
-			data += {","chems":[dispense_data]"}
-		data += "}"
-
-		//DEBUG_MESSAGE("send_reagent_details: [data]")
-		SPAWN_DBG(0) ch_window.CallJSFunction("updateChemSection", list(data))
-
-	proc/send_generic_details()
-		//Update info about the card and add/remove amounts
-		var/data
-		if(user_id)
-			data = {""card":1,"}
-
-		data += {""add_amt":[user_dispense_amt], "remove_amt":[user_remove_amt]"}
-		data = "{[data]}"
-
-		//DEBUG_MESSAGE("send_generic_details: [data]")
-		SPAWN_DBG(0) ch_window.CallJSFunction("updateGeneric", list(data))
-
-
-	proc/send_beaker_details()
-		//Update info about the existence of and contents of the current beaker
-		var/data
-		if(!beaker)
-			data = "{}"
-		else
-			var/list/data_parts = list()
-			data_parts += {"{"name":"[capitalize(glass_name)]""}
-			var/datum/reagents/R = beaker:reagents
-			if(istype(R) && R.reagent_list.len>0)
-				data_parts += {","reagents":\["}
-				var/first = 1
-				for(var/RID in R.reagent_list)
-					if(!first)
-						data_parts += ","
-					first = 0
-					var/datum/reagent/RE = R.reagent_list[RID]
-					data_parts += {"{"name":"[RE.name]","id":"[RID]","quantity":[RE.volume]}"}
-				data_parts += "]"
-			data_parts += "}"
-			data = jointext(data_parts, "")
-
-		//DEBUG_MESSAGE("send_beaker_details: [data]")
-		SPAWN_DBG(0) ch_window.CallJSFunction("updateBeaker", list(data))
-
-	proc/send_group_details()
-		//Update info about the groups in use
-		var/data = {"{"groups":\[ "}
-		if(current_account)
-
-			for (var/datum/reagent_group/group in current_account.groups)
-				data += {"{"name":"[group.name]","ref":"\ref[group]","info":"[group.group_desc]\"},"}
-
-			data = copytext(data, 1, length(data))
-
-		data ="[data]]}"
-		//DEBUG_MESSAGE("send_group_details: [data]")
-		SPAWN_DBG(0) ch_window.CallJSFunction("updateGroups", list(data))
-
-	attackby(var/obj/item/reagent_containers/glass/B as obj, var/mob/user as mob)
+	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
+		remove_distant_beaker()
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
 			if (src.user_id)
@@ -189,17 +79,32 @@
 			ID.set_loc(src)
 			src.user_id = ID
 			src.update_account()
-			send_generic_details()
-			send_group_details()
+			update_static_data(user)
+			tgui_process.update_uis(src)
 			return
 
-		if (!istype(B, glass_path) || B.incompatible_with_chem_dispensers == 1)
+		if (!istype(B, glass_path))
+			var/damage = B.force
+			if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
+				user.lastattacked = src
+				attack_particle(user,src)
+				hit_twitch(src)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
+				src.take_damage(damage)
+				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
+			else
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
+			return
+
+		if (B.incompatible_with_chem_dispensers == 1)
 			return
 
 		if (status & (NOPOWER|BROKEN))
 			user.show_text("[src] seems to be out of order.", "red")
 			return
 
+		/*
 		if (isrobot(user))
 			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
 			if (!the_reagent)
@@ -208,8 +113,8 @@
 			var/amount = input("How much of it do you want? (1 to [amtlimit])", "[dispenser_name] Dispenser", null, null) as null|num
 			if (isnull(amount) || amount <= 0)
 				return
-			amount = CLAMP(amount, 0, amtlimit)
-			if (get_dist(src,user) > 1)
+			amount = clamp(amount, 0, amtlimit)
+			if (BOUNDS_DIST(src, user) > 0)
 				boutput(user, "You need to move closer to get the chemicals!")
 				return
 			if (status & (NOPOWER|BROKEN))
@@ -218,36 +123,37 @@
 			B.reagents.add_reagent(the_reagent,amount)
 			B.reagents.handle_reactions()
 			return
+		*/
+		var/ejected_beaker = null
+		if (src.beaker?.loc == src)
+			ejected_beaker = src.beaker
+			user.put_in_hand_or_drop(ejected_beaker)
 
-		else
-			if (src.beaker)
-				boutput(user, "A [glass_name] is already loaded into the machine.")
-				return
-
-			src.beaker =  B
+		src.beaker =  B
+		if(!B.cant_drop)
 			user.drop_item()
-			B.set_loc(src)
-			boutput(user, "You add the [glass_name] to the machine!")
-			if(ch_window.IsSubscribed(user.client))
-				send_beaker_details()
-				send_reagent_details(0)
+			if(!B.qdeled)
+				B.set_loc(src)
+		if(B.qdeled)
+			B = null
+		else
+			if(ejected_beaker)
+				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
-				attack_hand(user)
-			src.update_icon()
-
-	handle_event(var/event, var/sender)
-		if (event == "reagent_holder_update")
-			src.send_beaker_details()
+				boutput(user, "You add the [glass_name] to the machine!")
+		src.UpdateIcon()
+		src.ui_interact(user)
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
-				qdel(src)
+			if(1)
+				SPAWN(0)
+					src.take_damage(400)
 				return
-			if(2.0)
-				if (prob(50))
-					qdel(src)
-					return
+			if(2)
+				SPAWN(0)
+					src.take_damage(150)
+				return
 
 	blob_act(var/power)
 		if (prob(25 * power/20))
@@ -257,226 +163,12 @@
 		qdel(src)
 		return
 
-	Topic(href, href_list)
-		if (status & (NOPOWER|BROKEN)) return
-		if (usr.stat || usr.restrained()) return
-		if (!in_range(src, usr)) return
-		if (isghostcritter(usr)) return
-		if (doing_a_thing) return
-
-		usr.machine = src
-		src.add_fingerprint(usr)
-
-		if (href_list["card"])
-			if (src.user_id)
-				src.eject_card()
-				src.update_account()
-				send_generic_details()
-				send_group_details()
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
-					usr.drop_item()
-					I.set_loc(src)
-					src.user_id = I
-					src.update_account()
-					send_generic_details()
-					send_group_details()
-			return
-
-		else if (href_list["new_group"])
-			doing_a_thing = 1
-			var/reagents = input("Which reagents (separated by semicolons, indicate amount with equals signs)?","New Group") as null|text
-			if (isnull(reagents) || !length(reagents))
-				doing_a_thing = 0
-				return
-			var/name = input("What should the reagent group be called?","New Group") as null|text
-			name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
-			if (isnull(name) || !length(name) || name == " ")
-				doing_a_thing = 0
-				return
-			//DEBUG(reagents)
-			var/list/reagentlist = params2list(reagents)
-			//DEBUG(list2params(reagentlist))
-
-			var/datum/reagent_group/G = new /datum/reagent_group()
-			for (var/reagent in reagentlist)
-				if (lowertext(reagent) in src.dispensable_reagents)
-					G.reagents += lowertext(reagent)
-					//Special amounts!
-					if (istext(reagentlist[reagent])) //Set a dispense amount
-						var/num = text2num(reagentlist[reagent])
-						if(!num) num = 10
-						G.reagents[lowertext(reagent)] = CLAMP(round(num), 1, 100)
-					else //Default to 10 if no specific amount given
-						G.reagents[lowertext(reagent)] = 10
-
-			if(G.reagents == 0)
-				doing_a_thing = 0
-				return
-
-			G.name = name
-			G.update_desc()
-			if (current_account)
-				current_account.groups += G
-			send_group_details()
-
-			doing_a_thing = 0
-			return
-
-		else if (href_list["eject"])
-			if (beaker)
-				// should this use "put in hands or drop"? seems like a better idea. idk
-				beaker:set_loc(src.output_target ? src.output_target : get_turf(src))
-				beaker = null
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, glass_path))
-					usr.drop_item()
-					I.set_loc(src)
-					src.beaker = I
-
-			update_icon()
-			send_beaker_details()
-			send_reagent_details(0)
-			return
-
-		else if (href_list["setaddamt"])
-			doing_a_thing = 1
-			var/nadd = input(usr, "Set custom dispense amount:", "New Dispense Amount", src.user_dispense_amt) as null|num
-			if (isnull(nadd) || get_dist(src,usr) > 1)
-				doing_a_thing = 0
-				return
-			src.user_dispense_amt = CLAMP(round(nadd), 1, 100)
-			src.updateUsrDialog()
-			doing_a_thing = 0
-			return
-
-		else if (href_list["setremoveamt"])
-			doing_a_thing = 1
-			var/nremove = input(usr, "Set custom removal amount:", "New Removal Amount", src.user_remove_amt) as null|num
-			if (isnull(nremove) || get_dist(src,usr) > 1)
-				doing_a_thing = 0
-				return
-			src.user_remove_amt = CLAMP(round(nremove), 1, 100)
-			src.updateUsrDialog()
-			doing_a_thing = 0
-			return
-
-		if (!src.beaker)
-			return
-
-		if (href_list["dispense"])
-			doing_a_thing = 1
-			var/id = href_list["dispense"]
-			if (!(id in dispensable_reagents))
-				doing_a_thing = 0
-				return
-			beaker.reagents.add_reagent(id,10)
-			beaker.reagents.handle_reactions()
-			src.update_icon()
-			src.send_beaker_details()
-			send_reagent_details()
-			doing_a_thing = 0
-			playsound(src.loc, dispense_sound, 50, 1, 0.3)
-			return
-
-		else if (href_list["dispensecustom"])
-			doing_a_thing = 1
-			var/id = href_list["dispensecustom"]
-			if (!(id in dispensable_reagents))
-				doing_a_thing = 0
-				return
-			beaker.reagents.add_reagent(id, isnum(src.user_dispense_amt) ? src.user_dispense_amt : 10)
-			beaker.reagents.handle_reactions()
-			src.update_icon()
-			src.send_beaker_details()
-			send_reagent_details()
-			doing_a_thing = 0
-			playsound(src.loc, dispense_sound, 50, 1, 0.3)
-			return
-
-		else if (href_list["group_dispense"])
-			doing_a_thing = 1
-			var/datum/reagent_group/group = locate(href_list["group_dispense"])
-			if(istype(group) && current_account && (group in current_account.groups))
-				for (var/reagent in group.reagents)
-					if ((reagent in dispensable_reagents))
-						var/amt = 10
-						if (isnum(group.reagents[reagent]))
-							amt = group.reagents[reagent]
-						beaker.reagents.add_reagent(reagent,amt)
-						beaker.reagents.handle_reactions()
-				src.update_icon()
-				src.send_beaker_details()
-				send_reagent_details()
-			doing_a_thing = 0
-			playsound(src.loc, dispense_sound, 50, 1, 0.3)
-			return
-
-		else if (href_list["group_delete"])
-			var/datum/reagent_group/group = locate(href_list["group_delete"]) in src.current_account.groups
-			if(group)
-				src.current_account.groups -= group
-				qdel(group)
-				send_group_details()
-			return
-
-		else if (href_list["isolate"])
-			beaker.reagents.isolate_reagent(href_list["isolate"])
-			src.update_icon()
-			send_beaker_details()
-			send_reagent_details()
-			return
-		else if (href_list["remove"])
-			beaker.reagents.del_reagent(href_list["remove"])
-			src.update_icon()
-			send_beaker_details()
-			send_reagent_details()
-			return
-		else if (href_list["removecustom"])
-			beaker.reagents.remove_reagent(href_list["removecustom"], isnum(src.user_remove_amt) ? src.user_remove_amt : 5)
-			src.update_icon()
-			send_beaker_details()
-			send_reagent_details()
-			return
-		else if (href_list["remove5"])
-			beaker.reagents.remove_reagent(href_list["remove5"], 5)
-			src.update_icon()
-			send_beaker_details()
-			send_reagent_details()
-			return
-		else if (href_list["remove1"])
-			beaker.reagents.remove_reagent(href_list["remove1"], 1)
-			src.update_icon()
-			send_beaker_details()
-			send_reagent_details()
-			return
-
-		else
-			ch_window.Unsubscribe(usr.client)
-			return
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_hand(mob/user as mob)
-		if(status & (NOPOWER|BROKEN))
-			return
-		user.machine = src
-		/*
-		src.update_html()
-		user.Browse("<TITLE>[dispenser_name] Dispenser</TITLE>[dispenser_name] dispenser:<BR>[src.HTML]", "window=chem_dispenser;size=500x800;title=Chemistry Dispenser")
-		*/
-		ch_window.Subscribe(user.client)
-		return
-
-	proc/update_html()
-
-
 	proc/eject_card()
 		if (src.user_id)
-			usr.put_in_hand_or_eject(src.user_id) // try to eject it into the users hand, if we can
+			if((BOUNDS_DIST(usr, src) == 0))
+				usr.put_in_hand_or_drop(src.user_id)
+			else
+				src.user_id.set_loc(src.loc)
 			src.user_id = null
 		return
 
@@ -502,32 +194,247 @@
 			src.accounts += new_account
 			src.current_account = new_account
 
-	proc/update_icon()
+	update_icon()
 		if (!beaker)
 			src.icon_state = src.icon_base
 		else
 			src.icon_state = "[src.icon_base][rand(1,5)]"
 
-	MouseDrop(over_object, src_location, over_location)
+	mouse_drop(over_object, src_location, over_location)
 		if(!isliving(usr))
-			boutput(usr, "<span style=\"color:red\">Only living mobs are able to set the dispenser's output target.</span>")
+			boutput(usr, "<span class='alert'>Only living mobs are able to set the dispenser's output target.</span>")
 			return
 
-		if(get_dist(over_object,src) > 1)
-			boutput(usr, "<span style=\"color:red\">The dispenser is too far away from the target!</span>")
+		if(BOUNDS_DIST(over_object, src) > 0)
+			boutput(usr, "<span class='alert'>The dispenser is too far away from the target!</span>")
 			return
 
-		if(get_dist(over_object,usr) > 1)
-			boutput(usr, "<span style=\"color:red\">You are too far away from the target!</span>")
+		if(BOUNDS_DIST(over_object, usr) > 0)
+			boutput(usr, "<span class='alert'>You are too far away from the target!</span>")
 			return
 
 		else if (istype(over_object,/turf/simulated/floor/))
 			src.output_target = over_object
-			boutput(usr, "<span style=\"color:blue\">You set the dispenser to output to [over_object]!</span>")
+			boutput(usr, "<span class='notice'>You set the dispenser to output to [over_object]!</span>")
 
 		else
-			boutput(usr, "<span style=\"color:red\">You can't use that as an output target.</span>")
+			boutput(usr, "<span class='alert'>You can't use that as an output target.</span>")
 		return
+
+	proc/take_damage(var/damage_amount = 5)
+		src.health -= damage_amount
+		if (src.health <= 0)
+			if (beaker)
+				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				beaker = null
+			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
+			robogibs(src.loc,null)
+			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
+			qdel(src)
+			return
+
+	proc/remove_distant_beaker()
+		// borgs and people with item arms don't insert the beaker into the machine itself
+		// but whenever something would happen to the dispenser and the beaker is far it should disappear
+		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+			beaker = null
+			src.UpdateIcon()
+
+	ui_interact(mob/user, datum/tgui/ui)
+		remove_distant_beaker()
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "ChemDispenser", src.name)
+			ui.open()
+
+	ui_static_data(mob/user)
+		. = list()
+		var/list/groupListTemp = list()
+		var/list/dispensableReagentsTemp = list()
+		if(dispensable_reagents)
+			for(var/reagent in dispensable_reagents)
+				var/datum/reagent/current_reagent = reagents_cache[reagent]
+				dispensableReagentsTemp.Add(list(list(
+					name = current_reagent.name,
+					colorR = current_reagent.fluid_r,
+					colorG = current_reagent.fluid_g,
+					colorB = current_reagent.fluid_b,
+					state = current_reagent.reagent_state,
+					id = reagent
+				)))
+		if(current_account)
+			for (var/datum/reagent_group/group in current_account.groups)
+				groupListTemp.Add(list(list(
+					name = group.name,
+					info = group.group_desc,
+					ref = ref(group)
+				)))
+		.["groupList"] = groupListTemp
+		.["beakerName"] = glass_name
+		.["dispensableReagents"] = dispensableReagentsTemp
+
+	ui_data(mob/user)
+		. = list()
+		var/list/beakerContentsTemp = list()
+		.["idCardInserted"] = !isnull(src.user_id)
+		.["idCardName"] = !isnull(src.user_id) ? src.user_id.registered : "None"
+		.["maximumBeakerVolume"] = (!isnull(beaker) ? beaker.reagents.maximum_volume : 0)
+		.["beakerTotalVolume"] = (!isnull(beaker) ? beaker.reagents.total_volume : 0)
+		.["isRecording"] = src.recording_state
+		.["activeRecording"] = src.get_recording_text()
+		if(beaker)
+			var/datum/reagents/R = beaker.reagents
+			var/datum/color/average = R.get_average_color()
+			.["currentBeakerName"] = beaker.name
+			.["finalColor"] = average.to_rgba()
+			if(istype(R) && R.reagent_list.len>0)
+				for(var/reagent in R.reagent_list)
+					var/datum/reagent/current_reagent = R.reagent_list[reagent]
+					beakerContentsTemp.Add(list(list(
+						name = reagents_cache[reagent],
+						id = reagent,
+						colorR = current_reagent.fluid_r,
+						colorG = current_reagent.fluid_g,
+						colorB = current_reagent.fluid_b,
+						state = current_reagent.reagent_state,
+						volume = current_reagent.volume
+					)))
+		.["beakerContents"] = beakerContentsTemp
+
+	proc/get_recording_text()
+		. = ""
+		for (var/reagent in src.recording_queue)
+			. += "[reagent]; "
+
+	ui_act(action, params, datum/tgui/ui)
+		if(..())
+			return
+		remove_distant_beaker()
+		switch(action)
+			if ("dispense")
+				if (!beaker || !(params["reagentId"] in dispensable_reagents))
+					return
+				var/amount = clamp(round(params["amount"]), 1, 100)
+				beaker.reagents.add_reagent(params["reagentId"], isnum(amount) ? amount : 10)
+				beaker.reagents.handle_reactions()
+				src.UpdateIcon()
+				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				use_power(10)
+				if(src.recording_state)
+					src.recording_queue += "[params["reagentId"]]=[isnum(amount) ? amount : 10]"
+				. = TRUE
+			if ("eject")
+				if (beaker)
+					if(beaker.loc == src)
+						if((BOUNDS_DIST(usr, src) == 0))
+							usr.put_in_hand_or_drop(beaker)
+						else
+							beaker.set_loc(src.loc)
+					beaker = null
+					src.UpdateIcon()
+					. = TRUE
+				else
+					var/obj/item/I = usr.equipped()
+					if (istype(I, glass_path))
+						if(!I.cant_drop) // borgs and item arms
+							usr.drop_item()
+							I.set_loc(src)
+						src.beaker = I
+						src.UpdateIcon()
+						. = TRUE
+			if ("remove")
+				if(!beaker)
+					return
+				var/amount = clamp(round(params["amount"]), 1, 100)
+				beaker.reagents.remove_reagent(params["reagentId"], isnum(amount) ? amount : 10)
+				src.UpdateIcon()
+				. = TRUE
+			if ("isolate")
+				if(!beaker)
+					return
+				beaker.reagents.isolate_reagent(params["reagentId"])
+				src.UpdateIcon()
+				. = TRUE
+			if ("all")
+				if(!beaker)
+					return
+				beaker.reagents.del_reagent(params["reagentId"])
+				src.UpdateIcon()
+				. = TRUE
+			if ("newGroup")
+				var/reagents = get_recording_text()
+				if (isnull(reagents) || !length(reagents))
+					return
+				var/name = params["groupName"]
+				name = copytext(sanitize(html_encode(name)), 1, MAX_MESSAGE_LEN)
+				if (isnull(name) || !length(name) || name == " ")
+					return
+
+				var/datum/reagent_group/G = new /datum/reagent_group()
+				G.reagents = src.recording_queue.Copy()
+
+				if(!length(G.reagents))
+					return
+				G.name = name
+				G.update_desc()
+				if (current_account)
+					current_account.groups += G
+				update_static_data(usr,ui)
+				. = TRUE
+			if ("deleteGroup")
+				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
+				if(group)
+					src.current_account.groups -= group
+					qdel(group)
+					update_static_data(usr,ui)
+					. = TRUE
+			if ("groupDispense")
+				if(!beaker)
+					return
+				var/datum/reagent_group/group = locate(params["selectedGroup"]) in src.current_account.groups
+				if(istype(group) && current_account && (group in current_account.groups))
+					for (var/reagent in group.reagents)
+						var/tuple = params2list(reagent)
+						var/key = tuple[1]
+						var/value = text2num_safe(tuple[tuple[1]])
+						if ((key in dispensable_reagents))
+							var/amt = 10
+							if (isnum(value))
+								amt = value
+							beaker.reagents.add_reagent(key,amt)
+							beaker.reagents.handle_reactions()
+					src.UpdateIcon()
+					use_power(length(group.reagents) * 10)
+				playsound(src.loc, dispense_sound, 50, 1, 0.3)
+				. = TRUE
+			if ("card")
+				if (src.user_id)
+					src.eject_card()
+					src.update_account()
+					update_static_data(usr,ui)
+				else
+					var/obj/item/I = usr.equipped()
+					if (istype(I, /obj/item/card/id) || istype(I, /obj/item/card/data))
+						usr.drop_item()
+						I.set_loc(src)
+						src.user_id = I
+						src.update_account()
+						update_static_data(usr,ui)
+				return
+			if ("record")
+				src.recording_state = !src.recording_state
+			if ("clear_recording")
+				src.recording_queue = list()
+
+/obj/machinery/chem_dispenser/chemical
+	New()
+		..()
+		src.dispensable_reagents = basic_elements
+
+/obj/machinery/chem_dispenser/chemical/med_test
+	starting_groups = list(/datum/reagent_group/default/potassium_iodide,
+								/datum/reagent_group/default/styptic,
+								/datum/reagent_group/default/silver_sulfadiazine)
 
 /obj/machinery/chem_dispenser/alcohol
 	name = "alcohol dispenser"
@@ -588,7 +495,7 @@
 	desc = "A soda fountain that definitely does not have a suspicious similarity to the alcohol and chemical dispensers. No sir."
 	dispensable_reagents = list("cola", "juice_lime", "juice_lemon", "juice_orange", \
 								"juice_cran", "juice_cherry", "juice_pineapple", "juice_tomato", \
-								"coconut_milk", "sugar", "water", "vanilla", "tea")
+								"coconut_milk", "sugar", "water", "vanilla", "tea", "grenadine")
 	icon_state = "alc_dispenser"
 	icon_base = "alc_dispenser"
 	glass_path = /obj/item/reagent_containers/food/drinks
@@ -627,12 +534,57 @@
 	var/name = null
 	var/list/reagents = list()
 	var/group_desc
+	var/custom_desc
 
 	proc/update_desc()
-		group_desc = ""
-		for (var/reagent in src.reagents)
-			var/amt = reagents[reagent]
-			if (!isnum(amt))
-				amt = 10
-			src.group_desc += "[reagent][!isnull(amt) ? " ([amt]u)" : null], "
-		group_desc = copytext(group_desc, 1, length(group_desc)-1)
+		if(custom_desc)
+			group_desc = custom_desc
+
+		else
+			group_desc = ""
+			for (var/reagent_data in src.reagents)
+				var/tuple = params2list(reagent_data)
+				var/key = tuple[1]
+				var/amt = text2num_safe(tuple[key])
+				if (!isnum(amt))
+					amt = 10
+				src.group_desc += "[key]([amt]u), "
+			group_desc = copytext(group_desc, 1, length(group_desc)-1)
+
+	proc/build_reagent_group_by_reaction(reaction_id, scale=1)
+		var/datum/chemical_reaction/C = chem_reactions_by_id[reaction_id]
+		var/datum/reagent/R  = reagents_cache[C?.result]
+
+		if(R && C)
+			if(!name)
+				src.name = R.name
+			for(var/reagent in C.required_reagents)
+				reagents += "[reagent]=[C.required_reagents[reagent] * scale]"
+
+	default
+		var/reaction_id
+		var/default_scale = 5
+
+		New()
+			..()
+			if(reaction_id)
+				build_reagent_group_by_reaction(reaction_id, default_scale)
+
+		potassium_iodide
+			reaction_id = "anti_rad"
+			custom_desc = "Anti-Radiation Medication"
+
+		styptic
+			name = "Styptic Powder"
+			custom_desc = "Control bleeding and heal physical wounds"
+			reagents = list("sulfur=1", "hydrogen=1", "oxygen=1", "aluminium=2", "oxygen=2", "hydrogen=2")
+
+		silver_sulfadiazine
+			name = "Burn Medication"
+			custom_desc = "This antibacterial compound is used to treat burn victims"
+			reagents = list("hydrogen=3","nitrogen=1","silver=3","sulfur=3","oxygen=3","chlorine=3")
+
+		space_cleaner
+			name = "Space cleaner"
+			custom_desc = "An industrial compound used to clean things. Lots of things."
+			reagents = list("hydrogen=3","nitrogen=1","ethanol=3", "water=3")

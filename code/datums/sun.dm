@@ -6,6 +6,7 @@
 	var/rate
 
 /datum/sun/New()
+	..()
 	rate = rand(75,125)/50 // 75% - 125% of standard rotation
 	if(prob(50))
 		rate = -rate
@@ -47,15 +48,11 @@
 
 	for(var/obj/machinery/power/tracker/T in machine_registry[MACHINES_POWER])
 		T.set_angle(angle)
-		LAGCHECK(LAG_LOW)
 
 	for(var/obj/machinery/power/solar/S in machine_registry[MACHINES_POWER])
 		occlusion(S)
-		LAGCHECK(LAG_LOW)
-
 
 // for a solar panel, trace towards sun to see if we're in shadow
-
 /datum/sun/proc/occlusion(var/obj/machinery/power/solar/S)
 
 	var/ax = S.x		// start at the solar panel
@@ -73,11 +70,9 @@
 		if(T.density)			// if we hit a solid turf, panel is obscured
 			S.obscured = 1
 			return
-		LAGCHECK(LAG_MED)
 
 	S.obscured = 0		// if hit the edge or stepped 20 times, not obscured
 	S.update_solar_exposure()
-
 
 //returns the north-zero clockwise angle in degrees, given a direction
 

@@ -99,7 +99,7 @@
 						temp_icon.action_tag = "system"
 						temp_icon.action_arg = "root"
 						temp_icon.icon_state = "arrow"
-						temp_icon.dir = 1
+						temp_icon.set_dir(1)
 						temp_icon.name = ""
 						temp_icon.no_drag = 1
 
@@ -197,8 +197,8 @@
 			if(coords.len != 2)
 				return
 
-			var/new_x = text2num(coords[1])
-			var/new_y = text2num(coords[2])
+			var/new_x = text2num_safe(coords[1])
+			var/new_y = text2num_safe(coords[2])
 			if(!isnum(new_x) || !isnum(new_y))
 				return
 

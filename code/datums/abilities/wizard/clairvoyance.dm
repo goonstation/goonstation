@@ -6,60 +6,63 @@
 	cooldown = 600
 	requires_robes = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/ClairvoyanceGrim.ogg"
-	voice_fem = "sound/voice/wizard/ClairvoyanceFem.ogg"
-	voice_other = "sound/voice/wizard/ClairvoyanceLoud.ogg"
+	voice_grim = 'sound/voice/wizard/ClairvoyanceGrim.ogg'
+	voice_fem = 'sound/voice/wizard/ClairvoyanceFem.ogg'
+	voice_other = 'sound/voice/wizard/ClairvoyanceLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
-		holder.owner.say("HAIDAN SEEHQ")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("HAIDAN SEEHQ", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/list/mob/targets = list()
-		for (var/mob/living/carbon/human/H in mobs)//world)
+		for (var/mob/living/carbon/human/H in mobs)
 			LAGCHECK(LAG_LOW)
 			targets += H
+		if (!length(targets))
+			return
+		targets = sortNames(targets)
+		var/input = tgui_input_list(holder.owner, "Select target", "Clairvoyance", targets)
+		var/mob/M = targets[input]
+		if (isnull(M) || !holder?.owner)
+			return
 
-		if (targets.len > 1)
-			targets = sortNames(targets)
+		var/turf/T = get_turf(M)
+		var/area/A = get_area(M)
+		if (isnull(T))
+			boutput(holder.owner, "<span class='alert'>[M] appears to be trapped in some sort of Schrödinger's cat-like existence neither truly residing in nor completely removed from the universe!</span>")
+			return //oh shit they're in null space
 
-		var/t1 = input(holder.owner, "Select target", "Clairvoyance") as null|anything in targets
-		if (!t1)
-			return 1
-
-		var/mob/M = targets[t1]
-		if (!M || !ismob(M))
-			return 1
-
-		var/atom/target_loc = M.loc
-		if (isrestrictedz(holder.owner.z))
-			if (!isrestrictedz(M.z))
-				boutput(holder.owner, "<span style=\"color:blue\"><B>[M.real_name]</B> is in [target_loc.loc].</span>")
-				return
-			else
-				boutput(holder.owner, "<span style=\"color:red\"><B>[M.real_name]</B> is in some strange place!</span>")
-				return
+		//immunity checks
 		if (M.traitHolder.hasTrait("training_chaplain"))
-			boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection. Your scrying spell fails!</span>")
-			boutput(M, "<span style=\"color:red\">You sense a Wizard's scrying spell!</span>")
-		else if(check_target_immunity( M ))
-			boutput( holder.owner, "<span style='color:red'>[M] seems to be warded from the effects!</span>" )
-			return 1
-		else
-			var/spellstring = "<B>[M.real_name]</B> is "
-			if (!istype(target_loc, /turf))
-				if (target_loc.loc.name == "Chapel")
-					spellstring = "<span style=\"color:red\">Your scrying spell fails! It just can't seem to find [M.real_name].</span>"
-					boutput(M, "<span style=\"color:red\">You sense a Wizard's scrying spell!</span>")
-					return
-				if(ismob(target_loc))
-					spellstring += "somehow inside <b>[target_loc.name]</b> in <b>[target_loc.loc.loc]</b>."
-				else if(istype(target_loc, /obj))
-					spellstring += "inside \a <b>[target_loc.name]</b> in <b>[target_loc.loc.loc]</b>."
-			else
-				spellstring += "in [target_loc.loc]."
-			if (isdead(M))
-				spellstring += " They also seem to be dead."
+			boutput(holder.owner, "<span class='alert'>[M] has divine protection. Your scrying spell fails!</span>")
+			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
+			JOB_XP(M, "Chaplain", 2)
+			return
+		else if(check_target_immunity(M))
+			boutput(holder.owner, "<span class='alert'>[M] seems to be warded from the effects!</span>" )
+			return
+		else if (A.name == "Chapel")
+			boutput(holder.owner, "<span class='alert'>Your scrying spell fails! It just can't seem to find [M.real_name].</span>")
+			boutput(M, "<span class='alert'>You sense a Wizard's scrying spell!</span>")
+			return
+		else if (isrestrictedz(M.z))
+			boutput(holder.owner, "<span class='alert'><B>[M.real_name]</B> is in some strange place!</span>")
+			return
 
-			boutput(holder.owner, "<span style=\"color:blue\">[spellstring]</span>")
+		var/spellstring = "<B>[M.real_name]</B> is "
+		if (M.loc != T) //inside something
+			if(ismob(M.loc))
+				spellstring += "somehow inside of <b>[M.loc]</b> in <b>[A]</b>."
+			else
+				spellstring += "inside \a <b>[M.loc]</b> in <b>[A]</b>."
+		else
+			spellstring += "in [A]."
+		if (isdead(M))
+			spellstring += " They also seem to be dead."
+
+		boutput(holder.owner, "<span class='notice'>[spellstring]</span>")
+		return

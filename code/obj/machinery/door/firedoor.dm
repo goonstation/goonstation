@@ -7,20 +7,24 @@
 	icon = 'icons/obj/doors/Doorfire.dmi'
 	icon_state = "f_spawn"
 
-	New()
-		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.setup()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+/obj/firedoor_spawn/New()
+	..()
+	SPAWN(1 DECI SECOND)
+		src.setup()
+		sleep(1 SECOND)
+		qdel(src)
 
-	proc/setup()
-		for (var/obj/machinery/door/D in src.loc)
-			var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
-			P.loc = src.loc
-			P.dir = D.dir
-			P.layer = D.layer + 0.01
-			break
+/obj/firedoor_spawn/proc/setup()
+	for (var/obj/machinery/door/D in src.loc)
+		var/obj/machinery/door/firedoor/pyro/P = new/obj/machinery/door/firedoor/pyro(src.loc)
+		P.set_dir(D.dir)
+		P.layer = D.layer + 0.01
+		#ifdef UPSCALED_MAP
+		P.bound_height = 64
+		P.bound_width = 64
+		P.transform = list(2, 0, 16, 0, 2, 16)
+		#endif
+		break
 
 /obj/machinery/door/firedoor
 	name = "Firelock"
@@ -31,12 +35,16 @@
 	opacity = 0
 	density = 0
 	var/nextstate = null
-	var/datum/radio_frequency/control_frequency = "1437"
-	var/zone
-	var/zone2 //mbc hack
+	var/control_frequency = FREQ_ALARM
 	var/image/welded_image = null
 	var/welded_icon_state = "welded"
-	has_crush = 0
+	has_crush = FALSE
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_DESTRUCT
+	mats = 30 // maybe a bit high??
+	health = 200
+	health_max = 200
+/obj/machinery/door/firedoor/xmasify()
+	return
 
 /obj/machinery/door/firedoor/border_only
 	name = "Firelock"
@@ -52,25 +60,26 @@
 
 /obj/machinery/door/firedoor/New()
 	..()
-	if(!zone)
-		var/area/A = get_area(loc)
-		if (A && A.name)
-			zone = A.name
-	SPAWN_DBG(0.5 SECONDS)
-		if (radio_controller)
-			radio_controller.add_object(src, "[control_frequency]")
+	SPAWN(0.5 SECONDS)
+		var/list/zones = list()
+		for (var/d in list(0) + cardinal)
+			var/turf/T = get_step(src,d)
+			if(T.density)
+				continue
+			var/area/A = get_area(T)
+			if (A?.name)
+				zones |= A.name
 
-		if (!zone2) //MBC : Hey, this is pretty shitty! But I want to be able to handle firelocks that are bordering 2 areas... without reworking the whole dang thing
-			for (var/d in cardinal)
-				var/area/A = get_area(get_step(src,d))
-				if (A && A.name && A.name != zone)
-					zone2 = A.name
-					break
-
-/obj/machinery/door/firedoor/disposing()
-	if (radio_controller)
-		radio_controller.remove_object(src, "[control_frequency]")
-	..()
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			"alarm", \
+			control_frequency, \
+			null, \
+			"receive_signal", \
+			FALSE, \
+			zones, \
+			FALSE \
+		)
 
 /obj/machinery/door/firedoor/proc/set_open()
 	if(!blocked)
@@ -90,21 +99,22 @@
 
 // listen for fire alert from firealarm
 /obj/machinery/door/firedoor/receive_signal(datum/signal/signal)
-	if((signal.data["zone"] == zone || signal.data["zone"] == zone2) && signal.data["type"] == "Fire")
+	if(!("address_tag" in signal.data) && !("address_1" in signal.data))
+		return
+	if(signal.data["type"] == "Fire")
 		if(signal.data["alert"] == "fire")
-			set_closed()
+			src.set_closed()
 		else
-			set_open()
-	return
+			src.set_open()
 
 
 /obj/machinery/door/firedoor/power_change()
 	if( powered(ENVIRON) )
-		status &= ~NOPOWER
+		src.status &= ~NOPOWER
 	else
-		status |= NOPOWER
+		src.status |= NOPOWER
 
-/obj/machinery/door/firedoor/bumpopen(mob/user as mob)
+/obj/machinery/door/firedoor/bumpopen(mob/user)
 	return
 
 /obj/machinery/door/firedoor/isblocked()
@@ -112,56 +122,48 @@
 		return 1
 	return 0
 
-/obj/machinery/door/firedoor/attackby(obj/item/C as obj, mob/user as mob)
-	src.add_fingerprint(user)
-	if ((istype(C, /obj/item/weldingtool) && !( src.operating ) && src.density))
-		var/obj/item/weldingtool/W = C
-		if(!W.try_weld(user, 1))
-			return
-		if (!( src.blocked ))
-			src.blocked = 1
-		else
-			src.blocked = 0
-		src.heal_damage()
-		update_icon()
+/obj/machinery/door/firedoor/emag_act(mob/user, obj/item/card/emag/E) //BELIEVE IT OR NOT, THIS AND THE CANT_EMAG VAR ARE DISTINCT
+	return
 
-		return
+/obj/machinery/door/firedoor/attackby(obj/item/C, mob/user)
+	src.add_fingerprint(user)
 	if (!ispryingtool(C))
-		if (src.density && !src.operating)
+		if (src.density)
 			user.lastattacked = src
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 50, 1, pitch = 1.6)
-			if (C) src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
+			if (C)
+				src.take_damage(C.force) //TODO: FOR MBC, WILL RUNTIME IF ATTACKED WITH BARE HAND, C IS NULL. ADD LIMB INTERACTIONS
 		return
 
 	if (!src.blocked && !src.operating)
 		if(src.density)
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("opening")
-				update_icon(1)
-				sleep(15)
+				src.UpdateIcon(1)
+				sleep(1.5 SECONDS)
 				src.set_density(0)
-				update_nearby_tiles()
+				src.update_nearby_tiles()
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 0
+					src.set_opacity(0)
 				else
 					src.RL_SetOpacity(0)
 				src.operating = 0
 				return
 		else //close it up again
-			SPAWN_DBG( 0 )
+			SPAWN( 0 )
 				src.operating = 1
 
 				play_animation("closing")
-				update_icon(1)
+				src.UpdateIcon(1)
 				src.set_density(1)
-				update_nearby_tiles()
-				sleep(15)
+				src.update_nearby_tiles()
+				sleep(1.5 SECONDS)
 
 				if (ignore_light_or_cam_opacity)
-					src.opacity = 1
+					src.set_opacity(1)
 				else
 					src.RL_SetOpacity(1)
 				src.operating = 0
@@ -172,11 +174,15 @@
 
 
 /obj/machinery/door/firedoor/attack_ai(mob/user as mob)
+	var/obj/machinery/door/airlock/mydoor = locate(/obj/machinery/door/airlock) in src.loc
+	if(mydoor?.aiControlDisabled == 1)
+		boutput(user, "<span class='notice'>You cannot control this firelock because its associated airlock's AI control is disabled!</span>")
+		return
 	if(!blocked && !operating)
 		if(density)
-			set_open()
+			src.set_open()
 		else
-			set_closed()
+			src.set_closed()
 	return
 
 /obj/machinery/door/firedoor/proc/check_nextstate()
@@ -196,44 +202,35 @@
 	check_nextstate()
 
 /obj/machinery/door/firedoor/border_only
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-		if(air_group)
-			var/direction = get_dir(src,target)
-			return (dir != direction)
-		else if(density)
-			if(!height)
-				var/direction = get_dir(src,target)
-				return (dir != direction)
+
+/obj/machinery/door/firedoor/border_only/gas_cross(turf/target)
+	return (dir != get_dir(src,target))
+
+/obj/machinery/door/firedoor/border_only/update_nearby_tiles(need_rebuild)
+	if(!air_master) return 0
+
+	var/turf/simulated/source = loc
+	var/turf/simulated/destination = get_step(source,dir)
+
+	if(need_rebuild)
+		if(istype(source)) //Rebuild/update nearby group geometry
+			if(source.parent)
+				air_master.groups_to_rebuild |= source.parent
 			else
-				return 0
+				air_master.tiles_to_update |= source
+		if(istype(destination))
+			if(destination.parent)
+				air_master.groups_to_rebuild |= destination.parent
+			else
+				air_master.tiles_to_update |= destination
 
-		return 1
+	else
+		if(istype(source)) air_master.tiles_to_update |= source
+		if(istype(destination)) air_master.tiles_to_update |= destination
 
-	update_nearby_tiles(need_rebuild)
-		if(!air_master) return 0
+	return 1
 
-		var/turf/simulated/source = loc
-		var/turf/simulated/destination = get_step(source,dir)
-
-		if(need_rebuild)
-			if(istype(source)) //Rebuild/update nearby group geometry
-				if(source.parent)
-					air_master.queue_update_group(source.parent)
-				else
-					air_master.queue_update_tile(source)
-			if(istype(destination))
-				if(destination.parent)
-					air_master.queue_update_group(destination.parent)
-				else
-					air_master.queue_update_tile(destination)
-
-		else
-			if(istype(source)) air_master.queue_update_tile(source)
-			if(istype(destination)) air_master.queue_update_tile(destination)
-
-		return 1
-
-/obj/machinery/door/firedoor/update_icon(var/toggling = 0)
+/obj/machinery/door/firedoor/update_icon(var/toggling = 0, override_parent = TRUE)
 	if(toggling? !density : density)
 		if (locked)
 			icon_state = "[icon_base]_locked"
@@ -252,16 +249,17 @@
 	return
 
 /obj/machinery/door/firedoor/custom_suicide = 1
+
 /obj/machinery/door/firedoor/suicide(var/mob/living/carbon/human/user as mob)
 	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
-		return 0
-	if (!src.allowed(user) || src.density)
-		return 0
-	user.visible_message("<span style='color:red'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
+		return FALSE
+	if (src.density)
+		return FALSE
+	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and closes it!</b></span>")
 	src.close()
 	var/obj/head = user.organHolder.drop_organ("head")
 	qdel(head)
 	make_cleanable( /obj/decal/cleanable/blood/gibs,src.loc)
-	playsound(src.loc, "sound/impact_sounds/Flesh_Break_2.ogg", 50, 1)
+	playsound(src.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
 
-	return 1
+	return TRUE

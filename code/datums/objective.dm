@@ -1,12 +1,21 @@
+ABSTRACT_TYPE(/datum/objective)
 /datum/objective
+	var/enabled = TRUE
 	var/datum/mind/owner
 	var/explanation_text
 	var/medal_name = null // Called by ticker.mode.declare_completion().
 	var/medal_announce = 1
 
-	New(var/text)
+	New(text, datum/mind/owner)
+		..()
 		if(text)
 			src.explanation_text = text
+		if(istype(owner))
+			src.owner = owner
+			owner.objectives += src
+		else
+			stack_trace("objective/New got called without a mind")
+		src.set_up()
 
 	proc/check_completion()
 		return 1
@@ -30,7 +39,7 @@
 				// 1) Wizard marked as another wizard's target.
 				// 2) Presence of wizard is revealed to other antagonists at round start.
 				// Both are bad.
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
@@ -46,7 +55,7 @@
 
 		return target
 
-	proc/find_target_by_role(var/role)
+	proc/find_target_by_role(role)
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
 				target = possible_target
@@ -57,28 +66,28 @@
 		return target
 
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
 				return 1
 			else
 				return 0
 		else
 			return 1
-	proc/create_objective_string(var/datum/mind/target)
-		if(!(target && target.current))
+	proc/create_objective_string(datum/mind/target)
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Assassinate [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role]"
-		objective_text += " [create_fluff(target)]."
+		objective_text += " [create_fluff(target)]. It doesn't count if they get revived unless it's as a cyborg/AI."
 
 		explanation_text = objective_text
 		targetname = target.current.real_name
 
 /datum/objective/regular/assassinate/bodyguard //the INVERSE of an assassin
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current) || inafterlife(target.current))
-				if (target.current.on_centcom())
+				if (in_centcom(target.current))
 					return 1
 				else
 					return 0
@@ -87,8 +96,8 @@
 		else
 			return 0
 
-	create_objective_string(var/datum/mind/target)
-		if(!(target && target.current))
+	create_objective_string(datum/mind/target)
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 		var/objective_text = "Ensure that [target.current.real_name] the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] escapes on the shuttle dead or alive."
@@ -98,7 +107,7 @@
 
 
 
-proc/create_fluff(var/datum/mind/target)
+proc/create_fluff(datum/mind/target)
 	if(!istype(target)) return ""
 
 	var/job = target.assigned_role == "MODE" ? target.special_role : target.assigned_role
@@ -114,7 +123,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	//Pick which flufftext we want to use
 	var/flufftext
-	if(general_fluff && special_fluff.len)
+	if(general_fluff && length(special_fluff))
 		flufftext = pick(prob(50) ? general_fluff : special_fluff)
 	else if (general_fluff)
 		flufftext = pick(general_fluff)
@@ -141,10 +150,15 @@ proc/create_fluff(var/datum/mind/target)
 		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "Head of Security\'s war medal", "Research Director\'s Diploma", "Medical Director\'s Medical License", "Head of Personnel\'s First Bill",
 		"much coveted Gooncode")
 
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
+
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
@@ -160,9 +174,9 @@ proc/create_fluff(var/datum/mind/target)
 			if("yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
-				steal_target = /obj/item/storage/belt/utility/ceshielded
+				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("Head of Security\'s war medal")
-				steal_target = /obj/item/hosmedal
+				steal_target = /obj/item/clothing/suit/hosmedal
 			if("Research Director\'s Diploma")
 				steal_target = /obj/item/rddiploma
 			if("Medical Director\'s Medical License")
@@ -171,15 +185,22 @@ proc/create_fluff(var/datum/mind/target)
 				steal_target = /obj/item/firstbill
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
 #else
 	set_up()
 		var/list/items = list("Head of Security\'s beret", "prisoner\'s beret", "DetGadget hat", "horse mask", "authentication disk",
-		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode")
+		"\'freeform\' AI module", "gene power module", "mainframe memory board", "yellow cake", "aurora MKII utility belt", "much coveted Gooncode", "golden crayon")
+
+		if(!countJob("Head of Security"))
+			items.Remove("Head of Security\'s beret")
+		if(!countJob("Captain"))
+			items.Remove("authentication disk")
 
 		target_name = pick(items)
 		switch(target_name)
 			if("Head of Security\'s beret")
-				steal_target = /obj/item/clothing/head/helmet/HoS
+				steal_target = /obj/item/clothing/head/hos_hat
 			if("prisoner\'s beret")
 				steal_target = /obj/item/clothing/head/beret/prisoner
 			if("DetGadget hat")
@@ -195,17 +216,21 @@ proc/create_fluff(var/datum/mind/target)
 			if("yellow cake")
 				steal_target = /obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake
 			if("aurora MKII utility belt")
-				steal_target = /obj/item/storage/belt/utility/ceshielded
+				steal_target = /obj/item/storage/belt/utility/prepared/ceshielded
 			if("much coveted Gooncode")
 				steal_target = /obj/item/toy/gooncode
+			if("horse mask")
+				steal_target = /obj/item/clothing/mask/horse_mask
+			if("golden crayon")
+				steal_target = /obj/item/pen/crayon/golden
 #endif
 
-		explanation_text = "Steal the [target_name]."
+		explanation_text = "Steal the [target_name] and have it anywhere on you at the end of the shift."
 		return steal_target
 
 	check_completion()
 		if(steal_target)
-			if(owner.current && owner.current.check_contents_for(steal_target, 1))
+			if(owner.current && owner.current.check_contents_for(steal_target, 1, 1))
 				return 1
 			else
 				return 0
@@ -286,9 +311,9 @@ proc/create_fluff(var/datum/mind/target)
 				multigrab_num = rand(2, 5)
 
 		if (target_name == "hearts")
-			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers."
+			explanation_text = "You're a real Romeo! Steal the hearts of [multigrab_num] crewmembers and have them all anywhere on you at the end of the shift."
 		else
-			explanation_text = "Steal [multigrab_num] [target_name]."
+			explanation_text = "Steal [multigrab_num] [target_name] and have them all anywhere on you at the end of the shift."
 
 		return multigrab_target
 
@@ -322,14 +347,12 @@ proc/create_fluff(var/datum/mind/target)
 		"Sneak into a department of your choice every once in awhile and mess with all the things inside.",
 		"Try to deprive the station of medical items and objects.",
 		"Try to deprive the station of tools and useful items.",
-		"Try to deprive the station of clothing.",
 		"Try to deprive the station of their ID cards.",
 		"Make the station as ugly and visually unpleasant as you can.",
 		"Become a literal arms dealer. Harvest as many body parts as possible from the crew.",
 		"Become a vigilante and violently harass people over the slightest suspicion.",
 		"Seek out any non-security vigilantes on the station and make their life utter hell.",
 		"Find another crew member's pet project and subvert it to a more violent purpose.",
-		"FUCK THE POLICE.",
 		"Try to become a supervillain by using costumes, treachery, and a lot of bluster and bravado.",
 		"Spy on the crew and uncover their deepest secrets.",
 		"Kidnap George and hold him for ransom.",
@@ -374,6 +397,22 @@ proc/create_fluff(var/datum/mind/target)
 
 /datum/objective/regular/bonsaitree
 	// Brought this back as a very rare gimmick objective (Convair880).
+#ifdef MAP_OVERRIDE_MANTA
+	explanation_text = "Destroy the Captain's ship in a bottle."
+
+	check_completion()
+		var/area/cap_quarters = locate(/area/station/captain)
+		var/obj/captain_bottleship/cap_ship
+
+		for (var/obj/captain_bottleship/T in cap_quarters)
+			cap_ship = T
+		if (!cap_ship)
+			return 1  // Somebody deleted it somehow, I suppose?
+		else if (cap_ship?.destroyed == 1)
+			return 1
+		else
+			return 0
+#else
 	explanation_text = "Destroy the Captain's prized bonsai tree."
 
 	check_completion()
@@ -383,12 +422,12 @@ proc/create_fluff(var/datum/mind/target)
 		for (var/obj/shrub/captainshrub/T in cap_quarters)
 			our_tree = T
 		if (!our_tree)
-			return 1  // Somebody deleted it somehow, I suppose?
-		else if (our_tree && our_tree.destroyed == 1)
+			return 1
+		else if (our_tree?.destroyed == 1)
 			return 1
 		else
 			return 0
-
+#endif
 ///////////////////////////////////////////////////////////////
 // Regular objectives not currently used in current gameplay //
 ///////////////////////////////////////////////////////////////
@@ -401,13 +440,6 @@ proc/create_fluff(var/datum/mind/target)
 		if(round(((world.time / 10) / 60)) < time)
 			return 1
 		return 0
-
-/datum/objective/regular/destroy_outpost
-	explanation_text = "Activate the computer mainframe's self-destruct charge."
-
-	check_completion()
-		if (outpost_destroyed == 1) return 1
-		else return 0
 
 /datum/objective/regular/cash
 	var/target_cash
@@ -425,7 +457,7 @@ proc/create_fluff(var/datum/mind/target)
 
 		// Tweaked to make it more reliable (Convair880).
 		var/list/L = owner.current.get_all_items_on_mob()
-		if (L && L.len)
+		if (length(L))
 			for (var/obj/item/card/id/C in L)
 				current_cash += C.money
 			for (var/obj/item/device/pda2/PDA in L)
@@ -434,9 +466,7 @@ proc/create_fluff(var/datum/mind/target)
 			for (var/obj/item/spacecash/C in L)
 				current_cash += C.amount
 
-		for (var/datum/data/record/Ba in data_core.bank)
-			if (Ba.fields["name"] == owner.current.real_name)
-				current_cash += Ba.fields["current_money"]
+		current_cash += data_core.bank.find_record("id", owner.current.datacore_id)?["current_money"] || 0
 
 		if (current_cash >= target_cash)
 			return 1
@@ -481,7 +511,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	set_up()
 		var/list/targets = list("Staff Assistant","Medical Doctor","Engineer","Security Officer",
-		"Geneticist","Scientist","Roboticist","Mechanic","Quartermaster","Miner","Botanist")
+		"Geneticist","Scientist","Roboticist","Quartermaster","Miner","Botanist")
 		target_job = pick(targets)
 		explanation_text = "Kill every [target_job] on the station. You do not need to kill yourself if you are a [target_job]."
 
@@ -546,7 +576,7 @@ proc/create_fluff(var/datum/mind/target)
 	var/damage_threshold = 50 // 25 was way too strict for larger rooms, causing people to fail the objective most of the time.
 
 	set_up()
-		var/list/target_areas = list(/area/station/chemistry,
+		var/list/target_areas = list(/area/station/science/chemistry,
 		/area/station/science/artifact,
 		/area/station/science/lab,
 		/area/station/science/teleporter,
@@ -559,7 +589,7 @@ proc/create_fluff(var/datum/mind/target)
 		/area/station/security/main,
 		/area/station/crew_quarters/quarters,
 		/area/station/crew_quarters/cafeteria,
-		/area/station/chapel/main,
+		/area/station/chapel/sanctuary,
 		/area/station/hydroponics,
 		/area/station/quartermaster/office,
 		/area/station/engine/elect,
@@ -626,7 +656,7 @@ proc/create_fluff(var/datum/mind/target)
 	medal_name = "Manhattan Project"
 
 	check_completion()
-		if (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/nuclear))
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/nuclear))
 			var/datum/game_mode/nuclear/N = ticker.mode
 			if (N && istype(N) && (N.finished == -1 || N.finished == -2))
 				return 1
@@ -647,17 +677,18 @@ proc/create_fluff(var/datum/mind/target)
 			if (mindCheck == owner)
 				continue
 
-			if (mindCheck && mindCheck.current && !isdead(mindCheck.current))
+			if (mindCheck?.current && !isdead(mindCheck.current))
 				return 0
 
 		return 1
 
 /datum/objective/specialist/absorb
+	medal_name = "Many names, many faces"
 	var/absorb_count
 
 	set_up()
 #ifdef RP_MODE
-		absorb_count = max(1, min(6, round((ticker.minds.len - 1) * 0.75)))
+		absorb_count = clamp(round((ticker.minds.len - 1) * 0.75), 1, 6)
 #else
 		absorb_count = min(10, (ticker.minds.len - 1))
 #endif
@@ -670,7 +701,7 @@ proc/create_fluff(var/datum/mind/target)
 		if(!owner.current || isdead(owner.current))
 			return 0
 
-		if(!src.owner.current.on_centcom())
+		if(!in_centcom(src.owner.current))
 			return 0
 
 		if (!owner.is_changeling)
@@ -729,6 +760,7 @@ proc/create_fluff(var/datum/mind/target)
 			if (player.client) num_players++
 		min_score = min(500, num_players * 10) + (rand(-5,5) * 10)
 		explanation_text = "Remain out of sight and accumulate [min_score] points."
+		owner.stealth_objective = 1
 
 	check_completion()
 		if(score >= min_score)
@@ -751,12 +783,13 @@ proc/create_fluff(var/datum/mind/target)
 			if (mindCheck == owner)
 				continue
 
-			if (mindCheck && mindCheck.current && !isdead(mindCheck.current))
+			if (mindCheck?.current && !isdead(mindCheck.current))
 				return 0
 
 		return 1
 
 /datum/objective/specialist/blob
+	medal_name = "Blob everywhere!"
 	var/blobtiletarget = 500
 
 	set_up()
@@ -778,10 +811,17 @@ proc/create_fluff(var/datum/mind/target)
 		if (O.blobs.len >= blobtiletarget)
 			return 1
 
+/datum/objective/specialist/flock
+	explanation_text = "Construct the relay and transmit The Signal."
+
+	check_completion()
+		return flock_signal_unleashed
+
+
 /datum/objective/specialist/wraith
 	explanation_text = "Be dastardly as heck!"
 
-	proc/onAbsorb(var/mob/M)
+	proc/onAbsorb(mob/M)
 		return
 	proc/onWeakened()
 		return
@@ -797,7 +837,7 @@ proc/create_fluff(var/datum/mind/target)
 	var/absorbs = 0
 	var/absorb_target
 
-	onAbsorb(var/mob/M)
+	onAbsorb(mob/M)
 		absorbs++
 	onWeakened()
 		absorbs = 0
@@ -805,7 +845,7 @@ proc/create_fluff(var/datum/mind/target)
 		stat("Currently absorbed:", "[absorbs] souls")
 
 	set_up()
-		absorb_target = max(1, min(7, round((ticker.minds.len - 5) / 2)))
+		absorb_target = clamp(round((ticker.minds.len - 5) / 2), 1, 7)
 		explanation_text = "Absorb and retain the life essence of at least [absorb_target] mortal(s) that inhabit this material structure."
 
 	check_completion()
@@ -831,20 +871,20 @@ proc/create_fluff(var/datum/mind/target)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
-		if(target && target.current)
+		if(target?.current)
 			setText()
 		else
 			explanation_text = "Be dastardly as heck!"
 
 		return target
 
-	proc/find_target_by_role(var/role)
+	proc/find_target_by_role(role)
 		for(var/datum/mind/possible_target in ticker.minds)
 			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
 				target = possible_target
 				break
 
-		if(target && target.current)
+		if(target?.current)
 			setText()
 		else
 			explanation_text = "Be dastardly as heck!"
@@ -852,7 +892,7 @@ proc/create_fluff(var/datum/mind/target)
 		return target
 
 	check_completion()
-		if(target && target.current)
+		if(target?.current)
 			if(isdead(target.current) || !iscarbon(target.current))
 				if (isobserver(target.current))
 					if (!(target.current:corpse))
@@ -867,7 +907,7 @@ proc/create_fluff(var/datum/mind/target)
 		explanation_text = "[target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] is a vessel for astral energies we haven't detected before. Absorb and retain their essence at all costs!"
 		targetname = target.current.real_name
 
-	onAbsorb(var/mob/M)
+	onAbsorb(mob/M)
 		if (M == target.current)
 			success = 1
 		else if (isobserver(target.current))
@@ -877,7 +917,7 @@ proc/create_fluff(var/datum/mind/target)
 	onWeakened()
 		if (success)
 			success = 0
-			boutput(owner.current, "<span style=\"color:red\">You lose the astral essence of your target!</span>")
+			boutput(owner.current, "<span class='alert'>You lose the astral essence of your target!</span>")
 
 	check_completion()
 		return success
@@ -886,13 +926,13 @@ proc/create_fluff(var/datum/mind/target)
 	var/max_escapees
 
 	set_up()
-		max_escapees = max(min(5, round(ticker.minds.len / 10)), 1)
+		max_escapees = clamp(round(ticker.minds.len / 10), 1, 5)
 		explanation_text = "Force the mortals to remain stranded on this structure. No more than [max_escapees] may escape!"
 
 	check_completion()
 		var/escapees = 0
 		for (var/mob/living/carbon/player in mobs)
-			if (player.on_centcom())
+			if (in_centcom(player))
 				escapees++
 
 		return escapees <= max_escapees
@@ -905,10 +945,9 @@ proc/create_fluff(var/datum/mind/target)
 		failed = 1
 
 	check_completion()
-		var/area/shuttle = locate(map_settings.escape_centcom)
 		if (failed)
 			return 0
-		if (get_turf(owner.current) in shuttle)
+		if (in_centcom(owner.current))
 			return 1
 		return 0
 
@@ -935,6 +974,7 @@ proc/create_fluff(var/datum/mind/target)
 		return !failed
 
 /datum/objective/specialist/werewolf/feed
+	medal_name = "Good feasting"
 	var/feed_count = 0
 	var/target_feed_count
 	var/list/mob/mobs_fed_on = list() // Stores bioHolder.Uid of previous victims, so we can't feed on the same person multiple times.
@@ -974,10 +1014,13 @@ proc/create_fluff(var/datum/mind/target)
 		if(isghostcritter(owner.current))
 			return 0
 
-		return src.owner.current.on_centcom()
+		return in_centcom(src.owner.current)
 
 /datum/objective/escape/hijack
-	explanation_text = "Hijack the emergency shuttle by escaping alone."
+	explanation_text = "Hijack the emergency shuttle by escaping alone. If someone else does sneak on, make sure they're dead before reaching Centcom."
+#ifdef RP_MODE
+	enabled = FALSE
+#endif
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
@@ -997,13 +1040,13 @@ proc/create_fluff(var/datum/mind/target)
 					return 0
 			else if (player.mind && (player.mind != owner))
 				if (!isdead(player) && !isghostcritter(player)) //they're not dead
-					if (get_turf(player) in shuttle)
+					if (in_centcom(player))
 						return 0
 
 		return 1
 
 /datum/objective/escape/survive
-	explanation_text = "Stay alive until the end."
+	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
 
 	check_completion()
 		if(!owner.current || isdead(owner.current))
@@ -1031,7 +1074,7 @@ proc/create_fluff(var/datum/mind/target)
 
 	check_completion()
 		for(var/mob/living/carbon/human/npc/monkey/stirstir/M in mobs)
-			if(!isdead(M) && istype(get_area(M), map_settings.escape_centcom))
+			if(!isdead(M) && in_centcom(M))
 				return 1
 		return 0
 
@@ -1044,7 +1087,7 @@ proc/create_fluff(var/datum/mind/target)
 
 		for(var/datum/mind/possible_target in ticker.minds)
 			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
-				if (possible_target.special_role == "wizard")
+				if (possible_target.special_role == ROLE_WIZARD)
 					continue
 				if (!possible_target.current.client)
 					continue
@@ -1053,20 +1096,20 @@ proc/create_fluff(var/datum/mind/target)
 		if(possible_targets.len > 0)
 			target = pick(possible_targets)
 
-		if(!(target && target.current))
+		if(!(target?.current))
 			explanation_text = "Be dastardly as heck!"
 			return
 
-		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom."
+		explanation_text = "Ensure that [target.current.real_name], the [target.assigned_role], safely arrives at Centcom alive and not as a cyborg/AI."
 		targetname = target.current.real_name
 
 	check_completion()
-		if(target && target.current && !isdead(target.current) && ishuman(target.current) && istype(get_area(target.current), map_settings.escape_centcom))
+		if(target?.current && !isdead(target.current) && ishuman(target.current) && in_centcom(target.current))
 			return 1
 		return 0
 
 /datum/objective/escape/hijack_group
-	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices."
+	explanation_text = "Hijack the emergency shuttle by escaping alone or with your accomplices. Anyone else who snuck on needs to die before you reach Centcom."
 	var/list/datum/mind/accomplices = list()
 
 	check_completion()
@@ -1079,12 +1122,10 @@ proc/create_fluff(var/datum/mind/target)
 		if(isghostcritter(owner.current))
 			return 0
 
-		var/area/shuttle = locate(map_settings.escape_centcom)
-
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
 				if (!isdead(player)) //they're not dead
-					if (get_turf(player) in shuttle)
+					if (in_centcom(player))
 						return 0
 
 		return 1
@@ -1093,6 +1134,7 @@ proc/create_fluff(var/datum/mind/target)
 // Conspirator objectives                              //
 /////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/datum/objective/conspiracy)
 /datum/objective/conspiracy
 	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
 
@@ -1102,8 +1144,8 @@ proc/create_fluff(var/datum/mind/target)
 /datum/objective/conspiracy/vandalize
 	explanation_text = "Vandalize as much of the station as possible without killing anyone."
 
-/datum/objective/conspiracy/frame
-	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
+// /datum/objective/conspiracy/frame
+// 	explanation_text = "Murder the diner patrons and frame a non-conspirator for it."
 
 /datum/objective/conspiracy/quiz
 	explanation_text = "Host an insane life-or-death quiz show and kidnap non-conspirators to serve as contestants."
@@ -1120,29 +1162,34 @@ proc/create_fluff(var/datum/mind/target)
 /datum/objective/conspiracy/technology
 	explanation_text = "Rid the station of any sort of advanced technology and promote an austere and simple lifestyle."
 
-/datum/objective/conspiracy/cluwne
-	explanation_text = "Floor cluwnes are real."
+// /datum/objective/conspiracy/curfew
+// 	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
 
-/datum/objective/conspiracy/curfew
-	explanation_text = "Establish a curfew for the station. Those wandering outside of crew quarters after curfew must be harassed and detained."
+// /datum/objective/conspiracy/party
+// 	explanation_text = "Throw a surprise party for the rest of the crew."
 
-/datum/objective/conspiracy/party
-	explanation_text = "Throw a surprise party for the rest of the crew."
+// /datum/objective/conspiracy/birthday
+// 	explanation_text = "Throw a birthday party for Shitty Bill."
 
-/datum/objective/conspiracy/birthday
-	explanation_text = "Throw a birthday party for Shitty Bill."
-
-/datum/objective/conspiracy/teaparty
-	explanation_text = "Host a murder mystery tea party."
+// /datum/objective/conspiracy/teaparty
+// 	explanation_text = "Host a murder mystery tea party."
 
 /datum/objective/conspiracy/embezzle
 	explanation_text = "Embezzle as much money as possible from the station accounts."
 
 /datum/objective/conspiracy/swap
-	explanation_text = "Swap the locations of two entire departments, their staff, and their equipment."
+	set_up()
+		//leaving out some of the more impossible ones like medical and security
+		var/list/departments = list("Genetics", "Robotics", "Cargo", "Mining", "Engineering", "Research", "Catering", "Botany")
 
-/datum/objective/conspiracy/jones
-	explanation_text = "Murder Jones and frame George for it."
+		var/department1 = pick(departments)
+		var/department2 = pick(departments)
+		while (department1 == department2)
+			department2 = pick(departments)
+		explanation_text = "Swap the locations of [department1] and [department2], complete with their staff and equipment."
+
+// /datum/objective/conspiracy/jones
+// 	explanation_text = "Murder Jones and frame George for it."
 
 /datum/objective/conspiracy/remodel
 	explanation_text = "Completely remodel the entire station."
@@ -1159,23 +1206,127 @@ proc/create_fluff(var/datum/mind/target)
 /datum/objective/conspiracy/dresscode
 	explanation_text = "Write up a new dress code for the station and enforce it on all crew."
 
-/datum/objective/conspiracy/dnd
-	explanation_text = "Start a D&D campaign and force crewmembers to participate."
+// /datum/objective/conspiracy/dnd
+// 	explanation_text = "Start a D&D campaign and force crewmembers to participate."
 
-/datum/objective/conspiracy/play
-	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
+// /datum/objective/conspiracy/play
+// 	explanation_text = "Organize a play or musical and persuade crewmembers to participate by offering notions of fame and grandeur."
 
 /datum/objective/conspiracy/flat
 	explanation_text = "Convince the crew that the station and in fact all of space is flat."
 
-/datum/objective/conspiracy/heisenbee
-	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
+// /datum/objective/conspiracy/heisenbee
+// 	explanation_text = "Explain to the crew how, yes, Heisenbee really was framed by the Chompski brothers."
 
 /datum/objective/conspiracy/centcom
 	explanation_text = "Convince the crew that Central Command has forsaken them."
 
 /datum/objective/conspiracy/spacelaw
 	explanation_text = "Establish and enforce a set of station protocols and policies."
+
+/datum/objective/conspiracy/discountdan
+	set_up()
+		explanation_text = "Transfer ownership of the station to [pick("Discount Dan", "the Space Wizards Federation", "Bombini")]. Ensure all the crew are loyal and the station is branded correctly."
+
+/datum/objective/conspiracy/cult
+	set_up()
+		//not including many of the "pets" that are often murdered immediately (Mr. Rathen, Remy etc.)
+		var/list/deities = list("Heisenbee", "Morty", "Dr. Acula", "Monsieur Stirstir", "Jones the cat", "Sylvester", "Hooty McJudgementowl", "the AI", "Discount Dan")
+		if (map_settings.name != "OSHAN") //pretty sure OSHAN is the only map with no engine
+			deities += "the engine"
+		explanation_text = "Start a cult worshipping [pick(deities)]."
+
+/datum/objective/conspiracy/underwater
+#ifdef UNDERWATER_MAP
+	explanation_text = "Convince the crew that the station is in space."
+#else
+	explanation_text = "Convince the crew that the station is underwater."
+#endif
+
+/datum/objective/conspiracy/imposters //sus
+	explanation_text = "Replace as many members of command with imposters as possible."
+
+/datum/objective/conspiracy/crime
+	explanation_text = "Set yourselves up as vigilantes and arrest people for made up crimes."
+
+/datum/objective/conspiracy/inspectors
+	explanation_text = "Pose as a team of undercover Nanotrasen inspectors and make an example out of anyone you deem incompetent or too competent at their job."
+
+/datum/objective/conspiracy/material
+	set_up()
+		var/list/materials = list()
+		if (rand(0,1)) //50/50 whether it's an ore material or something else
+			for (var/mtype in childrentypesof(/datum/commodity/ore))
+				var/datum/commodity/ore/material = new mtype
+				if (material.comname == "Gold Nugget")
+					materials += "Gold"
+					continue
+				materials += material.comname
+		else
+			materials += list("Glass", "Water", "Rubber", "Rock", "Flesh")
+#ifdef UNDERWATER_MAP
+		//but if we're underwater there's always a decent chance it's coral
+		materials += list("Coral", "Coral", "Coral")
+#endif
+		var/material1 = pick(materials)
+		var/material2 = pick(materials)
+		while (material1 == material2)
+			material2 = pick(materials)
+		explanation_text = "Turn as much of the station as you can into [material1] and [material2], including anyone who gets in your way."
+
+/datum/objective/conspiracy/organs
+	explanation_text = "Remind the crew of their own mortality by stockpiling as many of their organs as you can."
+
+/datum/objective/conspiracy/replace
+	explanation_text = "Replace the employees of an entire department with conspirators."
+
+/datum/objective/conspiracy/spike_food
+	explanation_text = "Make sure all available food and water is chemically spiked."
+
+/datum/objective/conspiracy/petty
+	explanation_text = "Turn command against each other for petty reasons."
+
+/datum/objective/conspiracy/framemurder
+	var/datum/mind/target
+	var/targetname
+
+	set_up()
+		var/list/possible_targets = list()
+		for(var/datum/mind/possible_target in ticker.minds)
+			if (possible_target && (possible_target != owner) && ishuman(possible_target.current))
+				if (possible_target.special_role == ROLE_CONSPIRATOR)
+					continue
+				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
+					continue
+				if (!possible_target.current.client)
+					continue
+				possible_targets += possible_target
+
+		if(possible_targets.len > 0)
+			target = pick(possible_targets)
+			target.current.mind.is_target = 1
+
+		create_objective_string(target)
+
+		return target
+
+	proc/find_target_by_role(role)
+		for(var/datum/mind/possible_target in ticker.minds)
+			if((possible_target != owner) && ishuman(possible_target.current) && (possible_target.assigned_role == role || (possible_target.assigned_role == "MODE" && possible_target.special_role == role)))
+				target = possible_target
+				break
+
+		create_objective_string(target)
+		return target
+
+	proc/create_objective_string(datum/mind/target)
+		if(!(target?.current))
+			explanation_text = "Be dastardly as heck!"
+			return
+		var/objective_text = "Frame [target.current.real_name], the [target.assigned_role == "MODE" ? target.special_role : target.assigned_role] for murder."
+		explanation_text = objective_text
+		targetname = target.current.real_name
+
 
 /*/datum/objective/conspiracy/escape
 	explanation_text = "Survive and ensure more living conspirators escape to Centcom than non-conspirators."
@@ -1248,6 +1399,25 @@ proc/create_fluff(var/datum/mind/target)
 		return 1
 
 /////////////////////////////////////////////////////////
+// Arcfiend Objectives                                 //
+/////////////////////////////////////////////////////////
+
+/datum/objective/specialist/powerdrain // this is basically just a repurposed vamp objective, but it should work.
+	var/powergoal
+
+	set_up()
+#ifdef RP_MODE
+		powergoal = rand(350,400) * 10
+#else
+		powergoal = rand(450,500) * 10
+#endif
+		explanation_text = "Accumulate at least [powergoal] units of charge in total."
+
+	check_completion()
+		var/datum/abilityHolder/arcfiend/AH = owner.current?.get_ability_holder(/datum/abilityHolder/arcfiend)
+		return (AH?.lifetime_energy >= powergoal)
+
+/////////////////////////////////////////////////////////
 // Neatly packaged objective sets for your convenience //
 /////////////////////////////////////////////////////////
 
@@ -1258,21 +1428,31 @@ proc/create_fluff(var/datum/mind/target)
 	/datum/objective/escape/hijack,
 	/datum/objective/escape/kamikaze)
 
-	New(var/datum/mind/enemy)
+	New(datum/mind/enemy)
+		..()
 		if(!istype(enemy))
 			return 1
 
 		for(var/X in objective_list)
 			if (!ispath(X))
 				continue
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.objective_list -= X
+				continue
 			ticker.mode.bestow_objective(enemy,X)
+
+		for(var/X in escape_choices)
+			var/datum/objective/objective = X
+			if(!initial(objective.enabled))
+				src.escape_choices -= X
 
 		if (escape_choices.len > 0)
 			var/escape_path = pick(escape_choices)
 			if (ispath(escape_path))
 				ticker.mode.bestow_objective(enemy,escape_path)
 
-		SPAWN_DBG(0)
+		SPAWN(0)
 			qdel(src)
 		return 0
 
@@ -1306,6 +1486,11 @@ proc/create_fluff(var/datum/mind/target)
 /datum/objective_set/blob
 	objective_list = list(/datum/objective/specialist/blob)
 	escape_choices = list(/datum/objective/escape/survive)
+
+/datum/objective_set/arcfiend
+	objective_list = list(/datum/objective/specialist/powerdrain)
+	escape_choices = list(/datum/objective/escape,
+	/datum/objective/escape/hijack)
 
 // Wraith not listed since it has its own dedicated proc
 

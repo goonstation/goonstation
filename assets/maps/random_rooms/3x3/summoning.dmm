@@ -1,0 +1,135 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/cable/hotpink,
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/space)
+"l" = (
+/obj/cable/hotpink{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "9-10"
+	},
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/obj/cable/yellow,
+/turf/simulated/floor/plating/random,
+/area/space)
+"s" = (
+/obj/cable/hotpink{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "5-6"
+	},
+/obj/cable/yellow,
+/obj/cable/yellow{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating/random,
+/area/space)
+"x" = (
+/obj/cable/hotpink{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/space)
+"z" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-10"
+	},
+/obj/cable/yellow{
+	icon_state = "2-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-5"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/plating/random,
+/area/space)
+"L" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "4-9"
+	},
+/obj/cable/yellow{
+	icon_state = "1-4"
+	},
+/obj/cable/yellow{
+	icon_state = "4-10"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/plating/random,
+/area/space)
+"N" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 4;
+	icon_state = "6-8"
+	},
+/obj/cable/yellow{
+	icon_state = "2-8"
+	},
+/obj/cable/yellow{
+	icon_state = "8-9"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/plating/random,
+/area/space)
+"Q" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/obj/cable/yellow{
+	icon_state = "1-8"
+	},
+/obj/cable/yellow{
+	icon_state = "6-8"
+	},
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/plating/random,
+/area/space)
+"T" = (
+/obj/cable/hotpink{
+	icon_state = "0-2"
+	},
+/obj/cable/hotpink{
+	icon_state = "0-4"
+	},
+/obj/cable/hotpink,
+/obj/cable/hotpink{
+	icon_state = "0-8"
+	},
+/obj/item/storage/pill_bottle,
+/turf/simulated/floor/plating/random,
+/area/space)
+
+(1,1,1) = {"
+z
+l
+L
+"}
+(2,1,1) = {"
+x
+T
+a
+"}
+(3,1,1) = {"
+N
+s
+Q
+"}

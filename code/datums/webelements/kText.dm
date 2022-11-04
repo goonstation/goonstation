@@ -85,8 +85,8 @@ kText
 		 * Finds the xth occurence of a string within another string.
 		 * @param string	The string to be queried.
 		 * @param sub		The string to search for.
-		 * @param which		Which occurrence of the string [sub] to look for.
-		 * @return the starting position of the xth (which) occurrence of [sub] within [string].
+		 * @param which		Which occurrence of the string {sub} to look for.
+		 * @return the starting position of the xth (which) occurrence of {sub} within {string}.
 		 * 0 if nothing is found.
 		 * IE: findWhich("a b a", "a", 2) would return 5 (where the second occurrence of "a" is).
 		 * if which is -1, it will find the last occurrence of the substring.
@@ -192,7 +192,7 @@ kText
 		 * @param string	The string to be queried.
 		 * @param sub		The string to be searched for.
 		 * @param replace	The string to be used as a replacement.
-		 * @return the given string, with all occurrences of [sub] replaced with [replace].
+		 * @return the given string, with all occurrences of {sub} replaced with {replace}.
 		 * IE: replaceText("i love cake", "cake", "pie") would return "i love pie".
 		 */
 		replaceText(string, sub, replace)
@@ -344,16 +344,21 @@ kText
 					return string
 
 		/**
-		 * Checks if any of the space-delimited words within [needle] match to the space-delimited words in [string].
+		 * Checks if any of the space-delimited words within {needle} match to the space-delimited words in {string}.
+		 *
 		 * This matching uses the same method of matching as autoComplete().
+		 *
 		 * Basically, "c p" matches "cake pie", because "c" and "p" autocomplete to "cake" and "pie", respectively.
-		 * It should also be noted that if one of the keywords in [needle] does not have a match in [string],
-		 * the match will fail.
-		 * @param	string		The set of words to match against.
-		 * @param	needle		The set of words to be searched for.
-		 * @return	if all the keywords in [needle] have a matching keyword in [string], returns [string].
-		 * otherwise, null.
+		 *
+		 * It should also be noted that if one of the keywords in {needle} does not have a match in {string}, the match will fail.
+		 *
+		 * * {string}	- The set of words to match against.
+		 * * {needle} - The set of words to be searched for.
+		 *
+		 * * return	- if all the keywords in {needle} have a matching keyword in {string}, returns {string}. Otherwise, null.
+		 *
 		 * matchKeys("giant king monster", "giant monster") would return "giant king monster".
+		 *
 		 * matchKeys("giant king monster", "giant snail") would return null, because "snail" has no match.
 		 */
 		matchKeys(string, needle)

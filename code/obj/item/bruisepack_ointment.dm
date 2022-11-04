@@ -3,7 +3,7 @@
 	icon = 'icons/obj/items/items.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	amount = 5
-	w_class = 1
+	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 20
 	var/heal_brute = 0
@@ -13,19 +13,10 @@
 	stamina_crit_chance = 3
 
 	examine()
-		set src in view(1)
-		set category = "Local"
+		. = ..()
+		. += "[bicon(src)] <span class='notice'>There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>"
 
-		if (src.amount <= 0)
-			qdel(src)
-			return
-
-		..()
-
-		boutput(usr, "[bicon(src)] <span style=\"color:blue\">There [src.amount == 1 ? "is" : "are"] [src.amount] [src.name]\s left on the stack!</span>")
-		return
-
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.r_hand == src || user.l_hand == src)
 			src.add_fingerprint(user)
 			var/obj/item/medical/split = new src.type(user)
@@ -40,7 +31,7 @@
 			..()
 			return
 
-	attackby(obj/item/medical/W as obj, mob/user as mob)
+	attackby(obj/item/medical/W, mob/user)
 		if (!istype(W, src.type))
 			return
 
@@ -55,7 +46,7 @@
 			qdel(src)
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (issilicon(M))
 			if (prob(5))
 				user.show_text("I'm a doctor, not a mechanic.", "red")
@@ -64,15 +55,9 @@
 			return
 		if (user)
 			if (M != user)
-				M.visible_message("<span style=\"color:red\">[M] has been applied with [src] by [user]</span>",)
+				M.visible_message("<span class='alert'>[user] applies [src] to [M].</span>",)
 			else
-				var/t_himself = "itself"
-				if (user.gender == MALE)
-					t_himself = "himself"
-				else if (user.gender == FEMALE)
-					t_himself = "herself"
-
-				M.visible_message("<span style=\"color:red\">[M] applied [src] on [t_himself]</span>")
+				M.visible_message("<span class='alert'>[M] applies [src] to [himself_or_herself(M)].</span>")
 
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -98,12 +83,11 @@
 						M.unlock_medal("Oh, Doctor!", 1)
 						user.unlock_medal("Oh, Doctor!", 1)
 			else
-				H.UpdateDamage()
+				health_update_queue |= H
 		else
 			M.HealDamage("All", src.heal_brute, src.heal_burn)
 
 		repair_bleeding_damage(M, 50, 1)
-		M.updatehealth()
 
 		src.amount--
 		if (src.amount <= 0)

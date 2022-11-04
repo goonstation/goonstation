@@ -78,7 +78,7 @@
 						src.holder.root.holder = src
 						src.holder.root.name = "root"
 
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.master.post_status(termid, "command", "term_message", "data", message, "render", render)
 				return 0
 
@@ -101,7 +101,7 @@
 						src.holder.root.holder = src
 						src.holder.root.name = "root"
 
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					src.master.post_file(termid, "data", exdata, file)
 				return 0
 
@@ -338,6 +338,7 @@
 				return null
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 
@@ -385,8 +386,7 @@
 		//Note: If you want your application to end intentionally, send the OS an "exit" signal.
 		//Use the mainframe_prog_exit macro.  The program will not exit otherwise, even if nothing bothers to send it more input
 		handle_quit()
-			if(src.master)
-				src.master.unload_program(src)
+			src.master?.unload_program(src)
 			return
 
 		process()
@@ -498,7 +498,7 @@
 			if(!data || !master)
 				return 1
 
-			if(useracc && useracc.user_file && ("id" in useracc.user_file.fields))
+			if(useracc?.user_file && ("id" in useracc.user_file.fields))
 				data["user"] = useracc.user_file.fields["id"]
 
 			return master.relay_progsignal(src, progid, data, file)
@@ -613,6 +613,7 @@
 
 	//substitution_feedback_thing = list()	//debug
 	while(1)
+		text = html_decode(text) // makes it so this works again
 		findPosition = findtext(text, separator, searchPosition, 0)
 		var/quotePoint = findtext(text, QUOTE_SYMBOL, searchPosition, findPosition)
 		if (quotePoint)

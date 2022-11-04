@@ -11,7 +11,7 @@
 
 	EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 
-		src.visible_message("<span style=\"color:red\">[src] dissolves into [F]!</span>")
+		src.visible_message("<span class='alert'>[src] dissolves into [F]!</span>")
 
 		if(src.batbomb)
 			src.batbomb()
@@ -19,15 +19,15 @@
 			return
 
 		var/turf/T = get_turf(src)
-		T.fluid_react(reagents,reagents.total_volume)
+		T?.fluid_react(reagents,reagents.total_volume)
 		qdel(src)
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
 
-		if (iscarbon(M) || iscritter(M))
+		if (iscarbon(M) || ismobcritter(M))
 			..()
 		else
 			return 0
@@ -45,16 +45,16 @@
 				return
 
 			if (!src.reagents || !src.reagents.total_volume)
-				boutput(user, "<span style=\"color:red\">[src] doesn't contain any reagents.</span>")
+				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
 				return
 			if (target.reagents.is_full())
-				boutput(user, "<span style=\"color:red\">[target] is full!</span>")
+				boutput(user, "<span class='alert'>[target] is full!</span>")
 				return
 			else
-				user.visible_message("<span style=\"color:red\">[user] puts [src] in [target].</span>",\
-				"<span style=\"color:green\">You dissolve [src] in [target].</span>")
+				user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
+				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing("combat", user, null, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			user.drop_item(src)
@@ -70,10 +70,10 @@
 				qdel(src)
 				return
 
-			user.visible_message("<span style=\"color:red\">[user] puts [src] in [target].</span>",\
-            "<span style=\"color:green\">You dissolve [src] in [target].</span>")
+			user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
+            "<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing("combat", user, null, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			var/turf/T = get_turf(target)
 			T.fluid_react(src.reagents,src.reagents.total_volume)
 			user.u_equip(src)
@@ -107,7 +107,7 @@
 					else
 						continue
 
-		src.visible_message("<span style=\"color:red\">[src] bursts into a furry mass!</span>")
+		src.visible_message("<span class='alert'>[src] bursts into a furry mass!</span>")
 		return
 
 	New()
@@ -252,4 +252,3 @@
 			R.add_reagent("nicotine",10)
 
 			src.color = R.get_average_color().to_rgb()
-

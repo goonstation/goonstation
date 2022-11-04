@@ -2,7 +2,7 @@
 This file serves as an example for various things that could be done with dialogues.
 */
 
-/mob/living/carbon/human/dummy/dialogueDummy
+/mob/living/carbon/human/dialogueDummy
 	name = "Admiral Wardson"
 	desc = "That *thing* is not a real person."
 	density = 1

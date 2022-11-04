@@ -1,5 +1,7 @@
 //Ye olde filter of yore (Pre-dev adjustable filter)
 
+//TODO: Make this more modular and use APPLY_TO_GASES
+
 //TODO: Hacking.
 obj/machinery/atmospherics/retrofilter
 	icon = 'icons/obj/atmospherics/retro_filter.dmi'
@@ -11,7 +13,7 @@ obj/machinery/atmospherics/retrofilter
 	initialize_directions = SOUTH|NORTH|WEST
 
 	req_access = list(access_engineering_atmos)
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 
 	var/datum/gas_mixture/air_in
 	var/datum/gas_mixture/air_out1
@@ -26,7 +28,7 @@ obj/machinery/atmospherics/retrofilter
 	var/datum/pipe_network/network_out2
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/transfer_ratio = 0.80 //Percentage of passing gas to consider for transfer.
+	var/transfer_ratio = 0.8 //Percentage of passing gas to consider for transfer.
 
 	var/filter_mode = 0 //Bitfield determining gases to filter.
 	var/const/MODE_OXYGEN = 1 //Let oxygen through
@@ -39,17 +41,6 @@ obj/machinery/atmospherics/retrofilter
 	var/open = 0
 	var/hacked = 0
 	var/emagged = 0
-
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-	var/net_id = null
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
 
 	New()
 		..()
@@ -66,19 +57,15 @@ obj/machinery/atmospherics/retrofilter
 		if(radio_controller)
 			initialize()
 
-		air_in = unpool(/datum/gas_mixture)
-		air_out1 = unpool(/datum/gas_mixture)
-		air_out2 = unpool(/datum/gas_mixture)
+		air_in = new /datum/gas_mixture
+		air_out1 = new /datum/gas_mixture
+		air_out2 = new /datum/gas_mixture
 
 		air_in.volume = 200
 		air_out1.volume = 200
 		air_out2.volume = 200
 
 	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-
-		loc = null
-
 		if(node_out1)
 			node_out1.disconnect(src)
 			if (network_out1)
@@ -102,11 +89,11 @@ obj/machinery/atmospherics/retrofilter
 		network_in = null
 
 		if(air_in)
-			pool(air_in)
+			qdel(air_in)
 		if(air_out1)
-			pool(air_out1)
+			qdel(air_out1)
 		if(air_out2)
-			pool(air_out2)
+			qdel(air_out2)
 
 		air_in = null
 		air_out1 = null
@@ -135,14 +122,14 @@ obj/machinery/atmospherics/retrofilter
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			user.Browse(null, "window=pipefilter")
-			user.machine = null
+			src.remove_dialog(user)
 			return
 
 		var/list/gases = list("O2", "N2", "CO2", "Plasma", "OTHER")
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<head><title>Gas Filtration Unit Mk VII</title></head><body><hr>"// "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 		for (var/i = 1; i <= gases.len; i++)
 			if (!issilicon(user) && src.locked)
@@ -150,8 +137,8 @@ obj/machinery/atmospherics/retrofilter
 			else
 				dat += "[gases[i]]: <a href='?src=\ref[src];toggle_gas=[1 << (i - 1)]'>[(src.filter_mode & (1 << (i - 1))) ? "Releasing" : "Passing"]</a><br>"
 
-		var/pressure = air_in.return_pressure()
-		var/total_moles = air_in.total_moles()
+		var/pressure = MIXTURE_PRESSURE(air_in)
+		var/total_moles = TOTAL_MOLES(air_in)
 
 		dat += "<hr>Gas Levels: <br>Gas Pressure: [round(pressure,0.1)] kPa<br><br>"
 
@@ -185,14 +172,14 @@ obj/machinery/atmospherics/retrofilter
 		if(..() || (status & NOPOWER))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		src.add_fingerprint(usr)
 		if (href_list["toggle_gas"] && (!src.locked || issilicon(usr)))
 			var/gasToToggle = text2num(href_list["toggle_gas"])
 			if (!gasToToggle)
 				return
-			gasToToggle = max(1, min(gasToToggle, 16))
+			gasToToggle = clamp(gasToToggle, 1, 16)
 			if (filter_mode & gasToToggle)
 				filter_mode &= ~gasToToggle
 			else
@@ -203,7 +190,7 @@ obj/machinery/atmospherics/retrofilter
 
 		else if (href_list["close"])
 			usr.Browse(null, "window=pipefilter")
-			usr.machine = null
+			src.remove_dialog(usr)
 			return
 		return
 
@@ -241,7 +228,7 @@ obj/machinery/atmospherics/retrofilter
 		if (!air_out2)
 			return
 
-		var/output_starting_pressure = air_out1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out1)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -260,7 +247,7 @@ obj/machinery/atmospherics/retrofilter
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_in.remove_ratio(transfer_ratio)//air_in.remove(transfer_moles)
 
-			var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 			if(air_in.temperature)
 				filtered_out.temperature = air_in.temperature
 
@@ -284,15 +271,12 @@ obj/machinery/atmospherics/retrofilter
 					filtered_out.carbon_dioxide = removed.carbon_dioxide
 					removed.carbon_dioxide = 0
 			if (filter_mode & MODE_TRACE)
-				if(removed && removed.trace_gases && removed.trace_gases.len)
-					for(var/datum/gas/trace_gas in removed.trace_gases)
+				if(removed && length(removed.trace_gases))
+					for(var/datum/gas/trace_gas as anything in removed.trace_gases)
 						if(trace_gas)
-							removed.trace_gases -= trace_gas
-							if(!removed.trace_gases.len)
-								removed.trace_gases = null
-							if(!filtered_out.trace_gases)
-								filtered_out.trace_gases = list()
-							filtered_out.trace_gases += trace_gas
+							var/datum/gas/filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+							filtered_gas.moles = trace_gas.moles
+							removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
@@ -301,8 +285,7 @@ obj/machinery/atmospherics/retrofilter
 			network_in.merge(network_out2)
 			network_out2 = network_in
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
 		if(network_out2)
 			network_out2.update = 1
@@ -318,7 +301,7 @@ obj/machinery/atmospherics/retrofilter
 		src.emagged = 1
 		if (user)
 			src.add_fingerprint(user)
-			src.visible_message("<span style=\"color:red\">[user] has shorted out the [src.name] with an electromagnetic card!</span>")
+			src.visible_message("<span class='alert'>[user] has shorted out the [src.name] with an electromagnetic card!</span>")
 		src.update_overlays()
 		return 1
 
@@ -326,18 +309,18 @@ obj/machinery/atmospherics/retrofilter
 		if (!src.emagged)
 			return 0
 		if (user)
-			user.show_message("You repair the [src.name]'s wiring!", "blue")
+			user.show_message("<span class='notice'>You repair the [src.name]'s wiring!</span>")
 		src.emagged = 1
 		src.update_overlays()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/device/pda2) && W:ID_card)
 			W = W:ID_card
 		if (istype(W, /obj/item/card/id))
 			src.add_fingerprint(user)
 			if (src.hacked)
-				boutput(user, "<span style=\"color:red\">Remove the foreign wires first!</span>")
+				boutput(user, "<span class='alert'>Remove the foreign wires first!</span>")
 				return
 			if (src.allowed(user))
 				src.locked = !src.locked
@@ -345,31 +328,31 @@ obj/machinery/atmospherics/retrofilter
 				src.updateUsrDialog()
 				src.update_overlays()
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		else if (isscrewingtool(W))
 			if(src.hacked)
-				user.show_message("<span style=\"color:red\">Remove the foreign wires first!</span>", 1)
+				user.show_message("<span class='alert'>Remove the foreign wires first!</span>", 1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
-			if (!do_after(user, 30))
+			user.show_message("<span class='alert'>Now [src.open ? "re" : "un"]securing the access system panel...</span>", 1)
+			if (!do_after(user, 3 SECONDS))
 				return
 			src.open = !src.open
-			user.show_message("<span style=\"color:red\">Done!</span>",1)
+			user.show_message("<span class='alert'>Done!</span>",1)
 			src.update_overlays()
 			return
 		else if (istype(W, /obj/item/cable_coil) && !hacked)
 			if(!src.open)
-				user.show_message("<span style=\"color:red\">You must remove the panel first!</span>",1)
+				user.show_message("<span class='alert'>You must remove the panel first!</span>",1)
 				return
 			var/obj/item/cable_coil/C = W
 			if(C.amount >= 4)
-				user.show_message("<span style=\"color:red\">You unravel some cable..</span>",1)
+				user.show_message("<span class='alert'>You unravel some cable..</span>",1)
 			else
-				user.show_message("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>",1)
+				user.show_message("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>",1)
 				return
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
+			user.show_message("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>", 1)
 			if(!do_after(user, 100))
 				return
 			C.use(4)
@@ -379,8 +362,8 @@ obj/machinery/atmospherics/retrofilter
 			return
 		else if (issnippingtool(W) && hacked)
 			src.add_fingerprint(user)
-			user.show_message("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
-			if (!do_after(user, 50))
+			user.show_message("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>", 1)
+			if (!do_after(user, 5 SECONDS))
 				return
 			src.hacked = 0
 			src.update_overlays()
@@ -394,29 +377,24 @@ obj/machinery/atmospherics/retrofilter
 		if( powered(ENVIRON) )
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				status |= NOPOWER
 
 		src.update_overlays()
 		return
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-		if(reference == node_out1)
-			if (!isnull(node_out1))
-				network_out1 = new_network
+		if(reference == node_in)
+			network_in = new_network
+
+		else if(reference == node_out1)
+			network_out1 = new_network
 
 		else if(reference == node_out2)
-			//network_out2 = new_network
-			if(!isnull(node_out2))
-				return node_out2.network_expand(new_network, src)
-
-		else if(reference == node_in)
-			//network_in = new_network
-			if (!isnull(node_in))
-				return node_in.network_expand(new_network, src)
+			network_out2 = new_network
 
 		if(new_network.normal_members.Find(src))
-			return 0
+			return FALSE
 
 		new_network.normal_members += src
 
@@ -445,9 +423,7 @@ obj/machinery/atmospherics/retrofilter
 				node_in = target
 				break
 
-		update_icon()
-
-		set_frequency(frequency)
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

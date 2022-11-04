@@ -11,24 +11,18 @@
 	var/const/shuttle_waittime = 4000
 
 /datum/game_mode/disaster/pre_setup()
-	var/list/candidates = list()
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player))
-			continue
-		if (player.client && player.ready && !candidates.Find(player.mind) && player.client.preferences.be_wraith)
-			candidates += player.mind
-	if (candidates.len == 0)
-		return 0
-	var/datum/mind/twraith = pick(candidates) // Just one for now
-	twraith.special_role = "wraith"
-	Agimmicks += twraith
+	var/list/candidates = get_possible_enemies(ROLE_WRAITH, 0)
+	if (length(candidates))
+		var/datum/mind/twraith = pick(candidates) // Just one for now
+		twraith.special_role = ROLE_WRAITH
+		Agimmicks += twraith
 
 	return 1
 
 /datum/game_mode/disaster/announce()
 	if(derelict_mode)
 		boutput(world, "<tt>BUG: MEM ERR 0000FF88 00F90045</tt>")
-		world << sound('sound/machines/glitch1.ogg')
+		playsound_global(world, 'sound/machines/glitch1.ogg', 60)
 		boutput(world, "<B>We are experiencing technical difficulties. Please remain calm. Help is on the way.</B>")
 		boutput(world, "<B>Report to your station's emergency rally point: CHAPEL.</B>")
 	else
@@ -37,115 +31,105 @@
 
 
 /datum/game_mode/disaster/post_setup()
-
-//	boutput(world, "disaster loaded :I")
 	for(var/datum/mind/wraith in Agimmicks)
-		var/wraith_spawn = observer_start.len ? pick(observer_start) : locate(150, 150, 1)
-		wraith.current.set_loc(wraith_spawn)
+		wraith.current.set_loc(pick_landmark(LANDMARK_OBSERVER, locate(150, 150, 1)))
 		generate_wraith_objectives(wraith)
 
-	emergency_shuttle.disabled = 1 //Disable the shuttle temporarily.
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED //Disable the shuttle temporarily.
 
 	if(derelict_mode)
-		SPAWN_DBG(1 SECOND)
-			var/list/CORPSES = list()
-			var/list/JUNK = list()
-			JUNK = halloweenspawn.Copy()
-			for(var/obj/landmark/S in landmarks)//world)
-				if (S.name == "peststart")
-					CORPSES.Add(S.loc)
-				LAGCHECK(LAG_LOW)
-			if(CORPSES.len)
-				for(var/turf/T in CORPSES)
-					var/obj/decal/skeleton/S = new/obj/decal/skeleton(T)
-					S.name = "corpse"
-					S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
-					S.icon = 'icons/misc/hstation.dmi'
-					S.icon_state = pick("body3","body4","body5","body6","body7","body8","clowncorpse")
-			if(JUNK.len)
-				for(var/turf/T in JUNK)
-					var/junk_type = rand(1,4)
-					switch(junk_type)
-						if(1)
-							new/obj/candle_light(T)
-						if(2)
-							new/obj/spook(T)
-						if(3)
-							new/obj/critter/floateye(T)
-						if(4)
-							var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
-							SPAWN_DBG(2 SECONDS)
-								G.on = 1
-								G.icon_state = "glowstick-on"
-								G.light.enable()
+		SPAWN(1 SECOND)
+			var/list/CORPSES = landmarks[LANDMARK_PESTSTART]
+			var/list/JUNK = landmarks[LANDMARK_HALLOWEEN_SPAWN]
+			for(var/turf/T in CORPSES)
+				var/obj/decal/fakeobjects/skeleton/S = new/obj/decal/fakeobjects/skeleton(T)
+				S.name = "corpse"
+				S.desc = "The mangled body of some poor [pick("chump","sap","chap","crewmember","jerk","dude","lady","idiot","employee","oaf")]."
+				S.icon = 'icons/misc/hstation.dmi'
+				S.icon_state = pick("body3","body4","body5","body6","body7","body8","clowncorpse")
+			for(var/turf/T in JUNK)
+				var/junk_type = rand(1,4)
+				switch(junk_type)
+					if(1)
+						new/obj/candle_light(T)
+					if(2)
+						new/obj/item/spook(T)
+					if(3)
+						new/obj/critter/floateye(T)
+					if(4)
+						var/obj/item/device/light/glowstick/G = new/obj/item/device/light/glowstick(T)
+						SPAWN(2 SECONDS)
+							G.on = 1
+							G.icon_state = "glowstick-on"
+							G.light?.enable()
 
 	var/start_wait = rand(waittime_l, waittime_h)
 
-	SPAWN_DBG (start_wait)
+	SPAWN(start_wait)
 		start_disaster()
 //
-	SPAWN_DBG (start_wait + shuttle_waittime)
-		emergency_shuttle.disabled = 0
+	SPAWN(start_wait + shuttle_waittime)
+		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 		emergency_shuttle.incall()
 		if(derelict_mode)
 			command_alert("Ev4C**!on shu9999999__ called. Prepare fo# evacua ****SIGNAL LOST****","Emergency Al&RT")
-			world << sound('sound/machines/engine_alert2.ogg')
+			playsound_global(world, 'sound/machines/engine_alert2.ogg', 60)
 		else
 			command_alert("The shuttle has been called.","Emergency Shuttle Update")
 
 	if(derelict_mode) // ready up some effects and noises
-		SPAWN_DBG(0.2 SECONDS)
+		SPAWN(0.2 SECONDS)
 			for(var/mob/living/carbon/human/H in mobs)
 				H.flash(3 SECONDS)
 
-		SPAWN_DBG(10 SECONDS)
-			world << sound('sound/effects/creaking_metal1.ogg')
+		SPAWN(10 SECONDS)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 3)
+				shake_camera(H, 8, 32)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(20 SECONDS)
-			if(scarysounds && scarysounds.len)
-				world << sound(pick(scarysounds))
+		SPAWN(20 SECONDS)
+			if(length(scarysounds))
+				playsound_global(world, pick(scarysounds), 50)
 
-		SPAWN_DBG(30 SECONDS)
-			if(scarysounds && scarysounds.len)
-				world << sound(pick(scarysounds))
+		SPAWN(30 SECONDS)
+			if(length(scarysounds))
+				playsound_global(world, pick(scarysounds), 50)
 
-		SPAWN_DBG(40 SECONDS)
-			world << sound('sound/effects/creaking_metal1.ogg')
+		SPAWN(40 SECONDS)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 8, 2)
+				shake_camera(H, 8, 24)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(1 MINUTE)
-			world << sound('sound/effects/creaking_metal1.ogg')
+		SPAWN(1 MINUTE)
+			playsound_global(world, 'sound/effects/creaking_metal1.ogg', 60)
 			for(var/mob/living/carbon/human/H in mobs)
-				shake_camera(H, 7, 1)
+				shake_camera(H, 7, 16)
 				H.change_misstep_chance(5)
 
-		SPAWN_DBG(80 SECONDS)
-			if(scarysounds && scarysounds.len)
-				world << sound(pick(scarysounds))
+		SPAWN(80 SECONDS)
+			if(length(scarysounds))
+				playsound_global(world, pick(scarysounds), 50)
 
 	return
 
 /datum/game_mode/disaster/declare_completion()
 	var/list/survivors = list()
-	var/area/escape_zone = locate(map_settings.escape_centcom)
 
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			if (!isdead(player))
-				var/turf/location = get_turf(player.loc)
-				if (location in escape_zone)
-					survivors[player.real_name] = "shuttle"
-					player.unlock_medal("Icarus", 1)
-				else
-					survivors[player.real_name] = "alive"
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (!isdead(player))
+			if (in_centcom(player))
+				survivors[player.real_name] = "shuttle"
+				player.unlock_medal("Icarus", 1)
+			else
+				survivors[player.real_name] = "alive"
 
 	if (survivors.len)
-		boutput(world, "<span style=\"color:blue\"><B>The following survived the [disaster_name] event!</B></span>")
+		boutput(world, "<span class='notice'><B>The following survived the [disaster_name] event!</B></span>")
 		for(var/survivor in survivors)
 			var/condition = survivors[survivor]
 			switch(condition)
@@ -155,7 +139,7 @@
 					boutput(world, "&emsp; <FONT size = 1>[survivor] stayed alive. Whereabouts unknown.</FONT>")
 
 	else
-		boutput(world, "<span style=\"color:blue\"><B>No one survived the [disaster_name] event!</B></span>")
+		boutput(world, "<span class='notice'><B>No one survived the [disaster_name] event!</B></span>")
 
 #ifdef RP_MODE // if rp do not set to secret
 		world.save_mode("extended")
@@ -176,8 +160,8 @@
 
 	if(derelict_mode)
 		command_alert("[disaster_name] eve## de####ed on **e stat!on. **$00AA curren#_ unava!l4ble due t0 [contrived_excuse]. All per#############ERR","Haz4rD*## Ev##_ A**Rt")
-		world << sound('sound/machines/siren_generalquarters_quiet.ogg')
-		SPAWN_DBG(0.5 SECONDS)
+		playsound_global(world, 'sound/machines/siren_generalquarters_quiet.ogg', 90)
+		SPAWN(0.5 SECONDS)
 			random_events.announce_events = 0
 			random_events.force_event("Power Outage","Scripted Disaster Mode Event")
 
@@ -186,11 +170,11 @@
 
 	for(var/turf/T in world)
 		if(prob(21) && T.z == 1 && istype(T,/turf/simulated/floor))
-			SPAWN_DBG(50+rand(0,6250))
+			SPAWN(50+rand(0,6250))
 				var/obj/vortex/P = new /obj/vortex( T )
 				P.name = disaster_name
-				if(prob(6) && scarysounds && scarysounds.len)
-					world << sound(pick(scarysounds))
+				if(prob(6) && length(scarysounds))
+					playsound_global(world, pick(scarysounds), 50)
 		LAGCHECK(LAG_LOW)
 
 	return

@@ -4,7 +4,9 @@
 
 /datum/artifact/plant_helper
 	associated_object = /obj/machinery/artifact/plant_helper
-	rarity_class = 2
+	type_name = "Plant waterer"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 350
 	validtypes = list("martian","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/carbon_touch)
 	activated = 0
@@ -31,21 +33,53 @@
 		if (..())
 			return
 		for (var/obj/machinery/plantpot/P in range(O,src.field_radius))
+			var/r = 0
+			var/g = 0
+			var/b = 0
+			var/total = 0
 			var/datum/plant/growing = P.current
 			for (var/X in src.helpers)
 				if (X == "water")
 					var/wateramt = P.reagents.get_reagent_amount("water")
 					if(wateramt > 200)
 						P.reagents.remove_reagent("water", 1)
+						r += 255
+						total++
 					if(wateramt < 100)
 						P.reagents.add_reagent("water", 1)
+						b += 255
+						total++
 				if (X == "growth" && growing)
 					P.growth++
+					g += 255
+					total++
 				if (X == "health" && growing)
 					P.health++
+					r += 255
+					g += 128
+					b += 128
+					total++
 				if (X == "weedkiller" && growing)
 					if (growing.growthmode == "weed")
 						P.health -= 3
+						r += 255
+						total++
 				if (X == "mutation" && growing)
 					if (prob(8))
 						P.HYPmutateplant()
+						total = INFINITY
+				if(total)
+					SPAWN(0)
+						var/lineColor = rgb(r/total, g/total, b/total)
+						var/datum/lineResult/R = drawLine(get_turf(O), P, "smooth", "smoothCap", getCrossed = 0)
+						var/globalImageKey = "plant_helper_line[TIME]_\ref[R]_[rand(1, 1e9)]"
+						R.lineImage.color = lineColor
+						R.lineImage.alpha = 0
+						R.lineImage.plane = PLANE_SELFILLUM
+						R.lineImage.blend_mode = BLEND_ADD
+						addGlobalImage(R.lineImage, globalImageKey)
+						animate(R.lineImage, alpha = 64, time = 1 SECOND)
+						animate(alpha = 0, time = 1 SECOND)
+						sleep(2 SECONDS)
+						removeGlobalImage(globalImageKey)
+						qdel(R.lineImage)

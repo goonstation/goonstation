@@ -1,4 +1,4 @@
-/mob/living/critter/drone/glitch
+/mob/living/critter/robotic/drone/glitch
 	name = "D²o-|"
 	drone_designation = "Glitch"
 	desc = "A highly dÄ:;g$r+us $yn§i#a{e $'+~`?? ???? ? ???? ??"
@@ -18,5 +18,5 @@
 		HH.can_range_attack = 1
 
 	setup_healths()
-		add_hh_robot(-4000, 4000, 1)
-		add_hh_robot_burn(-4000, 4000, 1)
+		add_hh_robot(4000, 1)
+		add_hh_robot_burn(4000, 1)

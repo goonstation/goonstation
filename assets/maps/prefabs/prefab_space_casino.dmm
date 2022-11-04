@@ -1,0 +1,1274 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/turf/simulated/floor/plating/airless/random,
+/area/prefab/space_casino)
+"ak" = (
+/obj/stool,
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/space_casino)
+"aH" = (
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 4
+	},
+/area/prefab/space_casino)
+"bj" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/carpet/red/fancy/edge/ne,
+/area/prefab/space_casino)
+"co" = (
+/obj/decal/fakeobjects/pipe,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"cy" = (
+/obj/machinery/bot/barbuddy,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"cN" = (
+/turf/simulated/floor/airless/engine/caution/east,
+/area/prefab/space_casino)
+"cY" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/airless/engine,
+/area/prefab/space_casino)
+"da" = (
+/turf/simulated/floor/airless/engine,
+/area/prefab/space_casino)
+"dg" = (
+/obj/machinery/door/airlock,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"di" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/space_casino)
+"dB" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"dR" = (
+/obj/roulette_table_w,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"es" = (
+/turf/simulated/floor/carpet/red/fancy/edge/sw,
+/area/prefab/space_casino)
+"eL" = (
+/obj/submachine/slot_machine/item,
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/space_casino)
+"eP" = (
+/turf/simulated/floor/airless/engine/caution/west,
+/area/prefab/space_casino)
+"fz" = (
+/obj/table/auto,
+/obj/submachine/mixer,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"fO" = (
+/obj/machinery/gibber,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"fY" = (
+/obj/stool,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/space_casino)
+"hQ" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"iH" = (
+/obj/table/auto,
+/obj/item/storage/box/plates,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"jC" = (
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/space_casino)
+"kk" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/fakeobjects/chefbot,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"le" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"li" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"lU" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/space_casino)
+"nI" = (
+/obj/table/auto,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"op" = (
+/obj/machinery/glass_recycler,
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"ou" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/space_casino)
+"oD" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/Doormaint.dmi';
+	icon_state = "door_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"pe" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"po" = (
+/obj/decal/fakeobjects/pipe,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"px" = (
+/obj/stool,
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab/space_casino)
+"qO" = (
+/obj/machinery/vending/alcohol,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"qU" = (
+/turf/simulated/floor/airless/engine/caution/north,
+/area/prefab/space_casino)
+"qY" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"rb" = (
+/obj/table/auto,
+/obj/random_item_spawner/snacks/one,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"sf" = (
+/obj/submachine/chef_sink{
+	dir = 8
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"sB" = (
+/obj/storage/secure/closet/fridge/opened,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/snacks/plant/tomato,
+/obj/item/reagent_containers/food/snacks/plant/cucumber,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"tm" = (
+/obj/machinery/chem_heater,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"tB" = (
+/turf/simulated/floor/carpet/red/fancy/edge/se,
+/area/prefab/space_casino)
+"tD" = (
+/turf/simulated/floor/carpet/red/fancy/edge/south,
+/area/prefab/space_casino)
+"uh" = (
+/obj/kitchenspike,
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"uw" = (
+/obj/item/instrument/large/jukebox,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"vk" = (
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 1
+	},
+/area/prefab/space_casino)
+"vy" = (
+/obj/table/auto,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"vz" = (
+/obj/stool,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/space_casino)
+"wL" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/stairs/wood2/wide{
+	dir = 6
+	},
+/area/prefab/space_casino)
+"wN" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"xU" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"xY" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"yu" = (
+/obj/decal/fakeobjects/barbuddy_dispenser,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"yH" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"zv" = (
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"zV" = (
+/obj/table/reinforced/roulette,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"Bj" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/stairs/wood2/middle,
+/area/prefab/space_casino)
+"Cr" = (
+/turf/simulated/floor/airless/engine/caution/corner{
+	dir = 8
+	},
+/area/prefab/space_casino)
+"Cs" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"CL" = (
+/turf/simulated/floor/airless/engine/caution/south,
+/area/prefab/space_casino)
+"Df" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Es" = (
+/obj/critter/domestic_bee/buddy,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Fg" = (
+/turf/simulated/floor/airless/engine/caution/corner,
+/area/prefab/space_casino)
+"Fw" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/card_box/plain,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"FJ" = (
+/obj/table/auto,
+/obj/item/storage/box/cutlery,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"FQ" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Gp" = (
+/obj/submachine/slot_machine,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/carpet/red/fancy/edge/north,
+/area/prefab/space_casino)
+"Gu" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"GJ" = (
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"Hx" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"HK" = (
+/obj/forcefield/energyshield/perma,
+/turf/simulated/floor/stairs/wood2/wide,
+/area/prefab/space_casino)
+"In" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"Ix" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Jb" = (
+/obj/decal/fakeobjects/pipe,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Jo" = (
+/obj/submachine/ATM,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/space_casino)
+"Kp" = (
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab/space_casino)
+"Lf" = (
+/obj/submachine/foodprocessor,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Lw" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"LC" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Mx" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"MO" = (
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"MT" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/space_casino)
+"Nm" = (
+/obj/machinery/door/window,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"NK" = (
+/obj/machinery/door/airlock/maintenance,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Od" = (
+/obj/submachine/chef_sink,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"Or" = (
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"OA" = (
+/obj/table/auto,
+/obj/random_item_spawner/snacks/maybe_few,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/space_casino)
+"PX" = (
+/turf/simulated/floor/carpet/red/fancy/edge/east,
+/area/prefab/space_casino)
+"Qa" = (
+/turf/space,
+/area/noGenerate)
+"QF" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Rc" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"RC" = (
+/obj/table/auto,
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"Sd" = (
+/obj/stool,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"Tb" = (
+/turf/simulated/wall/auto/asteroid,
+/area/prefab/space_casino)
+"Tq" = (
+/obj/machinery/door/airlock/maintenance,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Ug" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/carpet/red/fancy/edge/nw,
+/area/prefab/space_casino)
+"UU" = (
+/turf/space,
+/area/space)
+"Vl" = (
+/obj/submachine/slot_machine,
+/turf/simulated/floor/carpet/red/fancy/edge/west,
+/area/prefab/space_casino)
+"Wu" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/space_casino)
+"Xq" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+"XV" = (
+/obj/decal/fakeobjects/genetics_scrambler,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"XW" = (
+/obj/decal/fakeobjects/pipe,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Yt" = (
+/obj/table/auto,
+/obj/random_item_spawner/tools/few,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Yu" = (
+/obj/table/auto,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/item/paper/space_casino_note,
+/turf/simulated/floor/plating,
+/area/prefab/space_casino)
+"Zn" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"ZQ" = (
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"ZT" = (
+/turf/simulated/floor/carpet/red/fancy,
+/area/prefab/space_casino)
+"ZY" = (
+/obj/stool,
+/obj/decal/fakeobjects/brokengamblebot,
+/turf/simulated/floor/wood,
+/area/prefab/space_casino)
+"ZZ" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/black,
+/area/prefab/space_casino)
+
+(1,1,1) = {"
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+UU
+UU
+Qa
+Qa
+Qa
+UU
+UU
+"}
+(2,1,1) = {"
+UU
+UU
+UU
+UU
+UU
+UU
+di
+di
+di
+di
+di
+di
+di
+di
+di
+Tb
+Tb
+Tb
+Cr
+eP
+Fg
+UU
+UU
+"}
+(3,1,1) = {"
+UU
+UU
+UU
+UU
+UU
+Tb
+di
+Cs
+ZQ
+ZQ
+Zn
+ZQ
+ZQ
+Rc
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+UU
+"}
+(4,1,1) = {"
+UU
+UU
+UU
+UU
+Tb
+Tb
+di
+Fw
+Lw
+ZQ
+ZQ
+ZQ
+dR
+Lw
+di
+Tb
+Tb
+Tb
+qU
+cY
+CL
+Tb
+UU
+"}
+(5,1,1) = {"
+UU
+UU
+UU
+UU
+Tb
+Tb
+di
+ZY
+Lw
+ZQ
+ZQ
+ZQ
+zV
+ZY
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(6,1,1) = {"
+UU
+UU
+UU
+Tb
+Tb
+Tb
+di
+Lw
+Lw
+ZQ
+ZQ
+ZQ
+Lw
+Lw
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(7,1,1) = {"
+UU
+UU
+UU
+Tb
+Tb
+Tb
+di
+uw
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+Rc
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(8,1,1) = {"
+UU
+UU
+di
+di
+di
+di
+di
+di
+di
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+di
+Tb
+Tb
+Tb
+qU
+cY
+CL
+Tb
+Tb
+"}
+(9,1,1) = {"
+UU
+UU
+di
+Ug
+px
+Vl
+px
+Jo
+Nm
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+di
+di
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(10,1,1) = {"
+UU
+Tb
+di
+Gp
+ak
+lU
+vz
+di
+di
+Cs
+ZQ
+ZQ
+ZQ
+ZQ
+Rc
+di
+di
+di
+qU
+da
+CL
+Tb
+Tb
+"}
+(11,1,1) = {"
+UU
+Tb
+di
+jC
+ZT
+ZT
+ZT
+di
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+Kp
+es
+wL
+da
+da
+CL
+Tb
+Tb
+"}
+(12,1,1) = {"
+UU
+Tb
+di
+eL
+ak
+ZT
+ZT
+ZT
+ZT
+ZT
+ZT
+Wu
+ZT
+ZT
+ZT
+ZT
+tD
+Bj
+da
+cY
+CL
+Tb
+Tb
+"}
+(13,1,1) = {"
+UU
+Tb
+di
+jC
+ZT
+ZT
+ZT
+di
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+PX
+tB
+HK
+da
+da
+CL
+Tb
+Tb
+"}
+(14,1,1) = {"
+UU
+Tb
+di
+Gp
+ak
+lU
+vz
+di
+di
+Cs
+ZQ
+ZQ
+ZQ
+ZQ
+Rc
+di
+di
+di
+qU
+da
+CL
+Tb
+Tb
+"}
+(15,1,1) = {"
+Tb
+Tb
+di
+bj
+fY
+ou
+fY
+Jo
+Nm
+ZQ
+ZQ
+ZQ
+ZQ
+ZQ
+di
+di
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(16,1,1) = {"
+Tb
+Tb
+di
+di
+di
+di
+di
+di
+di
+Sd
+Sd
+Sd
+Sd
+Sd
+di
+Tb
+Tb
+Tb
+qU
+cY
+CL
+Tb
+Tb
+"}
+(17,1,1) = {"
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+di
+di
+ZZ
+li
+hQ
+di
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(18,1,1) = {"
+Tb
+Tb
+di
+di
+di
+di
+di
+di
+di
+tm
+Or
+Or
+Or
+qO
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(19,1,1) = {"
+Tb
+Tb
+di
+sB
+zv
+pe
+nI
+Ix
+di
+yu
+Or
+cy
+Or
+op
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+UU
+"}
+(20,1,1) = {"
+Tb
+Tb
+di
+Od
+zv
+zv
+zv
+zv
+di
+Xq
+Or
+Or
+Or
+RC
+di
+Tb
+Tb
+Tb
+qU
+cY
+CL
+Tb
+UU
+"}
+(21,1,1) = {"
+Tb
+Tb
+di
+Df
+zv
+rb
+zv
+zv
+dg
+Or
+Or
+Gu
+Or
+GJ
+di
+Tb
+Tb
+Tb
+qU
+da
+CL
+Tb
+UU
+"}
+(22,1,1) = {"
+UU
+Tb
+di
+qY
+kk
+vy
+zv
+Lf
+di
+di
+di
+di
+di
+di
+di
+di
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(23,1,1) = {"
+UU
+Tb
+di
+Df
+zv
+OA
+zv
+FJ
+di
+MO
+MO
+MO
+FQ
+MO
+MO
+di
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(24,1,1) = {"
+UU
+Tb
+di
+dB
+zv
+zv
+wN
+LC
+NK
+XW
+XW
+po
+QF
+MO
+MO
+oD
+ad
+ad
+qU
+cY
+CL
+Tb
+Tb
+"}
+(25,1,1) = {"
+UU
+UU
+di
+fz
+nI
+sf
+xU
+iH
+di
+MO
+MO
+MO
+le
+MO
+MO
+di
+Tb
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(26,1,1) = {"
+UU
+UU
+di
+di
+di
+di
+xY
+di
+di
+di
+di
+di
+di
+Tq
+di
+di
+di
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(27,1,1) = {"
+UU
+UU
+UU
+UU
+di
+uh
+Hx
+MT
+di
+Yt
+MO
+MO
+le
+MO
+MO
+MO
+di
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(28,1,1) = {"
+UU
+UU
+UU
+UU
+di
+uh
+In
+fO
+di
+Yu
+MO
+MO
+Mx
+Jb
+Jb
+co
+di
+Tb
+qU
+cY
+CL
+Tb
+Tb
+"}
+(29,1,1) = {"
+UU
+UU
+UU
+UU
+di
+di
+di
+di
+di
+Yt
+MO
+XV
+MO
+yH
+yH
+Es
+di
+Tb
+qU
+da
+CL
+Tb
+Tb
+"}
+(30,1,1) = {"
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+di
+di
+di
+di
+di
+di
+di
+di
+di
+Tb
+aH
+cN
+vk
+Tb
+UU
+"}
+(31,1,1) = {"
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+UU
+Tb
+Tb
+Tb
+Tb
+Tb
+Tb
+UU
+Qa
+Qa
+Qa
+UU
+UU
+"}

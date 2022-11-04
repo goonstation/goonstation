@@ -25,7 +25,7 @@
 		src.cell = new /obj/item/cell(src)
 		src.cell.maxcharge = setup_charge_maximum
 		src.cell.charge = src.cell.maxcharge
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "aitrack"
@@ -58,8 +58,8 @@
 		return
 
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		if ((!( yes ) || src.now_pushing))
+	bump(atom/movable/AM as mob|obj)
+		if (src.now_pushing)
 			return
 		src.now_pushing = 1
 
@@ -72,7 +72,7 @@
 			return
 
 		src.now_pushing = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -97,9 +97,8 @@
 			//src:cameraFollow = null
 			src.tracker.cease_track()
 			src:current = null
-			src:machine = null
 
-		src.updatehealth()
+		health_update_queue |= src
 
 
 		if (src.health < 0)
@@ -126,12 +125,12 @@
 					vision.set_color_mod("#ffffff")
 					src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS
 					src.see_in_dark = SEE_DARK_FULL
-					src.see_invisible = 2
+					src.see_invisible = INVIS_CLOAK
 				else
 					vision.set_color_mod("#000000")
 					src.sight = src.sight & ~(SEE_TURFS | SEE_MOBS | SEE_OBJS)
 					src.see_in_dark = 0
-					src.see_invisible = 0
+					src.see_invisible = INVIS_NONE
 
 					if ((!loc.power_equip) || istype(T, /turf/space))
 						if (src:aiRestorePowerRoutine==0)
@@ -139,10 +138,10 @@
 							boutput(src, "You've lost power!")
 							/*
 							// this shit is probably broken now but w/e mobile ais dont exist
-							SPAWN_DBG(5 SECONDS)
+							SPAWN(5 SECONDS)
 								while ((src:aiRestorePowerRoutine!=0) && stat!=2)
 									src.death_timer -= 1
-									sleep(50)
+									sleep(5 SECONDS)
 							*/
 
 		src.check_power()
@@ -164,7 +163,7 @@
 		check_power()
 			if(src.cell)
 				var/area/A = get_area(src)
-				if (A && A.powered(EQUIP) && !istype(src.loc, /turf/space))
+				if (A?.powered(EQUIP) && !istype(src.loc, /turf/space))
 					src.cell.give(5)
 					setalive(src)
 					return
@@ -228,7 +227,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.6 SECONDS)
+		SPAWN(0.6 SECONDS)
 			var/obj/overlay/U1 = new
 			U1.icon = src.icon
 			U1.icon_state = "railtrack"
@@ -255,7 +254,7 @@
 
 	return_mainframe()
 		if(!isAI(src.mainframe) || !src.mind)
-			boutput(src, "<span style=\"color:red\">--Host System Error</span>")
+			boutput(src, "<span class='alert'>--Host System Error</span>")
 			return 1
 
 		src.mind.transfer_to(src.mainframe)
@@ -265,7 +264,7 @@
 		src.dependent = 0
 		return 0
 
-	Bump(atom/movable/AM as mob|obj, yes)
+	bump(atom/movable/AM as mob|obj, yes = 1)
 		if ((!( yes ) || src.now_pushing))
 			return
 		src.now_pushing = 1
@@ -278,7 +277,7 @@
 			return
 
 		src.now_pushing = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			..()
 			if (!istype(AM, /atom/movable))
 				return

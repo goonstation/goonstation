@@ -25,6 +25,8 @@ html, body {
 	padding: 6px;
 	border: 2px solid #222;
 	background: #333;
+	user-select: none;
+	-ms-user-select: none;
 }
 
 .pinned .wrap .title {
@@ -176,3 +178,9 @@ p {
 	background: url({{resource("images/tooltips/newhud-br.gif")}});
 }
 .newhud .content {padding: 6px 10px; border-color: #0a131a; background: #0a131a url({{resource("images/tooltips/newhud-lines.gif")}});}
+
+/* for item description colors */
+.success {color: green;}
+.hint {color: ##9999FF;}
+.notice {color: ##9999FF;}
+.alert {color: #ff0000;}

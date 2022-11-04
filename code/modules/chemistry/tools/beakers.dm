@@ -11,33 +11,36 @@
 	icon_state = "beaker"
 	item_state = "beaker"
 	initial_volume = 50
-	module_research = list("science" = 2, "medicine" = 2)
-	module_research_type = /obj/item/reagent_containers/glass/beaker
 	var/image/fluid_image
 	var/icon_style = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
+	object_flags = NO_GHOSTCRITTER
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.underlays = null
 		if (reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "fluid-[src.icon_style]", -1)
-			icon_state = "[src.icon_style]1"
+				src.fluid_image = image(src.icon, "fluid-[src.icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.icon_state = "[src.icon_style][fluid_state]"
 			var/datum/color/average = reagents.get_average_color()
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
 		else
-			icon_state = src.icon_style
+			src.icon_state = src.icon_style
 
 		if (istype(src.master,/obj/item/assembly))
 			var/obj/item/assembly/A = src.master
 			A.c_state(1)
 		signal_event("icon_updated")
 
-	attackby(obj/A as obj, mob/user as mob)
+	attackby(obj/A, mob/user)
 		if (istype(A, /obj/item/assembly/time_ignite) && !(A:status))
 			var/obj/item/assembly/time_ignite/W = A
 			if (!W.part3)
@@ -89,6 +92,8 @@
 
 /obj/item/reagent_containers/glass/beaker/cryoxadone
 	name = "beaker (cryoxadone)"
+	icon_state = "roundflask"
+	icon_style = "roundflask"
 	initial_reagents = list("cryoxadone"=40)
 
 /obj/item/reagent_containers/glass/beaker/epinephrine
@@ -138,25 +143,25 @@
 	name = "silver sulfadiazine reserve tank"
 	initial_reagents = "silver_sulfadiazine"
 
-/obj/item/reagent_containers/food/drinks/reserve 
+/obj/item/reagent_containers/food/drinks/reserve
 	name = "reserve tank"
 	desc = "A specialized reserve tank."
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "largebottle"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = RC_SCALE
 
-/obj/item/reagent_containers/food/drinks/reserve/brute 
+/obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"
-	desc = "A high capacitiy reserve tank filled with stypic powder."
+	desc = "A high capacitiy reserve tank filled with styptic powder."
 	icon_state = "largebottle-brute"
 	initial_reagents = "styptic_powder"
 
-/obj/item/reagent_containers/food/drinks/reserve/burn 
+/obj/item/reagent_containers/food/drinks/reserve/burn
 	name = "high capacity silver sulfadiazine reserve tank"
 	desc = "A high capacity reserve tank filled with silver sulfadiazine."
 	icon_state = "largebottle-burn"
@@ -191,6 +196,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "eflask"
 	item_state = "flask"
+	var/icon_style = "eflask"
 	rc_flags = RC_SPECTRO | RC_FULLNESS | RC_VISIBLE
 	initial_volume = 15
 	var/smashed = 0
@@ -198,19 +204,59 @@
 	var/image/fluid_image
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 
-	proc/update_icon() //updates icon based on fluids inside
+	update_icon() //updates icon based on fluids inside
+		src.underlays = null
 		if (src.reagents && src.reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
 			var/datum/color/average = reagents.get_average_color()
 			var/average_rgb = average.to_rgba()
+			src.icon_state = "[src.icon_style][fluid_state]"
 			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-eflask", -1)
-				src.fluid_image.color = average_rgb
-				src.UpdateOverlays(src.fluid_image, "fluid")
+				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-[icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.fluid_image.color = average_rgb
+			src.underlays += fluid_image
 		else
-			src.UpdateOverlays(null, "fluid")
+			src.icon_state = src.icon_style
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
+
+/obj/item/reagent_containers/glass/flask/round
+	name = "round flask"
+	icon_state = "roundflask"
+	icon_style = "roundflask"
+
+/obj/item/reagent_containers/glass/flask/black_powder //prefab shit
+	initial_reagents = "blackpowder"
+
+/obj/item/reagent_containers/glass/flask/heartbottle //goes in Jan's admin office
+	name = "The Secret Ingredient"
+	desc = "You feel strangely warm and relaxed just looking at it."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "heartbottle"
+	icon_style = "heartbottle"
+	initial_volume = 50
+	initial_reagents = "love"
+
+	update_icon() //updates icon based on fluids inside
+		src.underlays = null
+		if (src.reagents && src.reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			var/datum/color/average = reagents.get_average_color()
+			var/average_rgb = average.to_rgba()
+			src.icon_state = "[src.icon_style][fluid_state]"
+			if (!src.fluid_image)
+				src.fluid_image = image('icons/misc/janstuff.dmi', "fluid-[icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.fluid_image.color = average_rgb
+			src.underlays += fluid_image
+		else
+			src.icon_state = src.icon_style

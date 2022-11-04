@@ -21,24 +21,22 @@ Contents:
 	ex_act(severity)
 		return
 
-	Entered(atom/A as mob|obj)
+	Entered(atom/movable/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
-		if (iceelefall.len)
-			var/turf/T = pick(iceelefall)
-			if (isturf(T))
-				visible_message("<span style=\"color:red\">[A] falls down [src]!</span>")
-				if (ismob(A))
-					var/mob/M = A
-					if(!M.stat && ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.gender == MALE) playsound(H.loc, "sound/voice/screams/male_scream.ogg", 100, 0, 0, H.get_age_pitch())
-						else playsound(H.loc, "sound/voice/screams/female_scream.ogg", 100, 0, 0, H.get_age_pitch())
-					random_brute_damage(M, 33)
-					M.changeStatus("stunned", 10 SECONDS)
-				T.contents += A
-				T.Entered(A)
-				return
+		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
+		if (isturf(T))
+			visible_message("<span class='alert'>[A] falls down [src]!</span>")
+			if (ismob(A))
+				var/mob/M = A
+				if(!M.stat && ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if(H.gender == MALE) playsound(H.loc, 'sound/voice/screams/male_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					else playsound(H.loc, 'sound/voice/screams/female_scream.ogg', 100, 0, 0, H.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				random_brute_damage(M, 33)
+				M.changeStatus("stunned", 10 SECONDS)
+			A.set_loc(T)
+			return
 		else ..()
 
 /turf/unsimulated/floor/arctic/snow
@@ -54,7 +52,7 @@ Contents:
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //okay these are getting messy as hell, i need to consolidate this shit later
 /turf/unsimulated/floor/arctic/snow/ice
@@ -101,12 +99,16 @@ Contents:
 
 	// this is the code for falling from abyss into ice caves
 	// could maybe use an animation, or better text. perhaps a slide whistle ogg?
-	Entered(atom/A as mob|obj)
+	Entered(atom/A as mob|obj, atom/old_loc)
 		if (isobserver(A) || isintangible(A))
 			return ..()
+		if(isobj(A))
+			var/obj/O = A
+			if(isnull(old_loc) || O.anchored)
+				return ..()
 
-		if (icefall.len)
-			var/turf/T = pick(icefall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_ICE)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()
@@ -144,7 +146,7 @@ Contents:
 	name = "deep abyss"
 	desc = "You can't see the bottom."
 	icon_state = "void_gray"
-	blocks_air = 1
+	gas_impermeable = 1
 	opacity = 1
 	density = 1
 	fullbright = 0

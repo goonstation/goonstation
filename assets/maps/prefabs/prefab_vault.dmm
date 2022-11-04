@@ -1,23 +1,153 @@
-"a" = (/turf/variableTurf/clear,/area)
-"b" = (/turf/simulated/wall/r_wall{icon = 'icons/misc/evilreaverstation.dmi'; icon_state = "old_rwall"},/area/noGenerate)
-"c" = (/turf/simulated/wall/r_wall{opacity = 0},/area/noGenerate)
-"d" = (/obj/rack,/obj/item/material_piece/uqill,/obj/item/material_piece/uqill,/obj/item/material_piece/uqill,/turf/simulated/floor/scorched2,/area/noGenerate)
-"e" = (/obj/rack,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/obj/item/material_piece/koshmarite,/turf/simulated/floor/scorched,/area/noGenerate)
-"f" = (/obj/rack,/obj/item/material_piece/gold,/obj/item/material_piece/gold,/obj/item/material_piece/gold,/turf/simulated/floor{icon_state = "damaged2"},/area/noGenerate)
-"g" = (/turf/simulated/floor{icon_state = "damaged2"},/area/noGenerate)
-"h" = (/turf/simulated/floor/scorched2,/area/noGenerate)
-"i" = (/obj/securearea,/turf/simulated/wall/r_wall{opacity = 0},/area/noGenerate)
-"j" = (/obj/machinery/door/airlock/classic{name = "rusty airlock"},/turf/simulated/floor/scorched,/area/noGenerate)
-"k" = (/turf/variableTurf/floor,/area/noGenerate)
-"l" = (/obj/item/storage/toolbox/mechanical,/obj/item/screwdriver,/obj/item/cable_coil,/turf/variableTurf/floor,/area/noGenerate)
-"m" = (/obj/item/device/light/flashlight,/turf/variableTurf/floor,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/space)
+"b" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/vault)
+"d" = (
+/obj/rack,
+/obj/item/raw_material/gold,
+/obj/item/raw_material/gold,
+/obj/item/raw_material/gold,
+/turf/unsimulated/floor/damaged3,
+/area/prefab/vault)
+"e" = (
+/obj/rack,
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/lattice,
+/obj/decal/floatingtiles{
+	dir = 4;
+	icon_state = "floattiles2"
+	},
+/obj/item/material_piece/uqill,
+/turf/unsimulated/floor/void,
+/area/prefab/vault)
+"f" = (
+/obj/rack,
+/obj/lattice,
+/obj/item/material_piece/koshmarite,
+/obj/item/material_piece/koshmarite,
+/obj/item/material_piece/koshmarite,
+/turf/unsimulated/floor/void,
+/area/prefab/vault)
+"g" = (
+/turf/unsimulated/floor/damaged2,
+/area/prefab/vault)
+"h" = (
+/obj/decal/floatingtiles{
+	dir = 1
+	},
+/obj/lattice,
+/turf/unsimulated/floor/void,
+/area/prefab/vault)
+"i" = (
+/obj/securearea,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/vault)
+"j" = (
+/obj/machinery/door/airlock/pyro/safe{
+	icon_state = "door_locked";
+	locked = 1
+	},
+/turf/simulated/floor/scorched,
+/area/prefab/vault)
+"k" = (
+/obj/decal/cleanable/writing/infrared{
+	desc = "The handwriting seems nearly human.";
+	pixel_x = -1;
+	pixel_y = 31;
+	words = "The Siren screams its song, the fool joins it and slowly sinks into its domain. Only the wise dont follow their predecessors and continue sailing without another thought."
+	},
+/turf/variableTurf/floor,
+/area/prefab/vault)
+"l" = (
+/obj/item/storage/toolbox/mechanical,
+/obj/item/screwdriver,
+/obj/item/cable_coil,
+/obj/item/device/multitool,
+/turf/variableTurf/floor,
+/area/prefab/vault)
+"m" = (
+/obj/item/device/light/flashlight,
+/turf/variableTurf/floor,
+/area/prefab/vault)
+"S" = (
+/obj/decal/cleanable/writing{
+	words = "Great Treasures inside! Screwdriver open the panel and pulse the wires with a multitool until the door is unbolted."
+	},
+/turf/variableTurf/floor,
+/area/prefab/vault)
+"T" = (
+/obj/decal/cleanable/writing{
+	words = "If pulsing any of the wires lead you to turning off the test light, snip and mend that wire, and carry on with your quest, searching for your wonderful prize!"
+	},
+/turf/variableTurf/floor,
+/area/prefab/vault)
 
 (1,1,1) = {"
-aaaaaaa
-abcccba
-acdefca
-acgghca
-abijiba
-akklkma
-aaaaaaa
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+b
+b
+b
+k
+a
+"}
+(3,1,1) = {"
+a
+b
+d
+g
+i
+S
+a
+"}
+(4,1,1) = {"
+a
+b
+e
+g
+j
+l
+a
+"}
+(5,1,1) = {"
+a
+b
+f
+h
+i
+T
+a
+"}
+(6,1,1) = {"
+a
+b
+b
+b
+b
+m
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
 "}

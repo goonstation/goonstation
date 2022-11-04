@@ -5,12 +5,16 @@
 
 /obj/machinery/conveyor
 	icon = 'icons/obj/recycling.dmi'
+#ifndef IN_MAP_EDITOR
 	icon_state = "conveyor0"
+#else
+	icon_state = "conveyor0-map"
+#endif
 	name = "conveyor belt"
 	desc = "A conveyor belt."
 	anchored = 1
 	power_usage = 100
-	layer = 2.5
+	layer = 2
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = 0	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = 1	// true if can operate (no broken segments in this belt run)
@@ -23,9 +27,9 @@
 	var/divdir = 0		// if diverting, will be conveyer dir needed to divert (otherwise dense)
 	var/move_lag = 4	// The lag at which the movement happens. Lower = faster
 	var/obj/machinery/conveyor/next_conveyor = null
-	var/obj/machinery/conveyor_switch/owner = null
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
-
+	event_handler_flags = USE_FLUID_ENTER
+	/// list of conveyor_switches that have us in their conveyors list
+	var/list/linked_switches
 
 /obj/machinery/conveyor/north
 	dir = NORTH
@@ -39,9 +43,19 @@
 	// create a conveyor
 
 /obj/machinery/conveyor/New()
+	src.flags |= UNCRUSHABLE
 	..()
 	basedir = dir
 	setdir()
+
+/obj/machinery/conveyor/initialize()
+	..()
+	setdir()
+
+/obj/machinery/conveyor/process()
+	if(status & NOPOWER || !operating)
+		return
+	use_power(power_usage)
 
 /obj/machinery/conveyor/disposing()
 	for(var/obj/machinery/conveyor/C in range(1,src))
@@ -49,17 +63,18 @@
 			C.next_conveyor = null
 	next_conveyor = null
 
-	if (owner) //conveyor switch could've been exploded
-		owner.conveyors -= src
+	for (var/obj/machinery/conveyor_switch/S as anything in linked_switches) //conveyor switch could've been exploded
+		S.conveyors -= src
+	id = null
 	..()
 
 	// set the dir and target turf depending on the operating direction
 
 /obj/machinery/conveyor/proc/setdir()
 	if(operating == -1)
-		dir = turn(basedir,180)
+		set_dir(turn(basedir,180))
 	else
-		dir = basedir
+		set_dir(basedir)
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 	update()
 
@@ -73,44 +88,29 @@
 
 	if(!operable)
 		operating = 0
-	if(!operating)
-		for(var/atom/A in loc.contents)
+	if(!operating || (status & NOPOWER))
+		for(var/atom/movable/A in loc.contents)
 			walk(A, 0)
+	else
+		for(var/atom/movable/A in loc.contents)
+			move_thing(A)
 
 	icon_state = "conveyor[(operating != 0) && !(status & NOPOWER)]"
 
 
-	// machine process
-	// move items to the target location
-/obj/machinery/conveyor/process()
-	if(status & (BROKEN | NOPOWER))
-		return
-	if(!operating)
-		return
-	if(!loc)
-		return
-
-	..()
-
-	for(var/atom/A in loc.contents)
-		move_thing(A)
-
 /obj/machinery/conveyor/proc/move_thing(var/atom/movable/A)
-	if (A.anchored)
-		return
-	if(isobserver(A))
+	if (A.anchored || A.temp_flags & BEING_CRUSHERED)
 		return
 	if(istype(A, /obj/machinery/bot) && A:on)	//They drive against the motion of the conveyor, ok.
 		return
 	if(istype(A, /obj/critter) && A:flying)		//They are flying above it, ok.
 		return
+	if(HAS_ATOM_PROPERTY(A, PROP_ATOM_FLOATING)) // Don't put new checks here, apply this atom prop instead.
+		return
 	var/movedir = dir	// base movement dir
-	if(divert && dir==divdir)	// update if diverter present
+	if(divert && dir == divdir)	// update if diverter present
 		movedir = divert
 
-	/* if (A.l_move_time == world.timeofday)
-		continue // already moved by another conveyor
-		*/
 	var/mob/M = A
 	if(istype(M) && M.buckled == src)
 		M.glide_size = (32 / move_lag) * world.tick_lag
@@ -127,7 +127,7 @@
 		walk(A, movedir, move_lag, (32 / move_lag) * world.tick_lag)
 		A.glide_size = (32 / move_lag) * world.tick_lag
 
-/obj/machinery/conveyor/HasEntered(var/atom/movable/AM, atom/oldloc)
+/obj/machinery/conveyor/Crossed(atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -135,10 +135,9 @@
 		return
 	if(!loc)
 		return
-	//DEBUG_MESSAGE("[AM] entered conveyor at [showCoords(src.x, src.y, src.z)] and is being moved.")
 	move_thing(AM)
 
-/obj/machinery/conveyor/HasExited(var/atom/movable/AM, var/atom/newloc)
+/obj/machinery/conveyor/Uncrossed(var/atom/movable/AM)
 	..()
 	if(status & (BROKEN | NOPOWER))
 		return
@@ -147,27 +146,23 @@
 	if(!loc)
 		return
 
-	if(next_conveyor && next_conveyor.loc == newloc)
+	if(src.next_conveyor && src.next_conveyor.loc == AM.loc)
 		//Ok, they will soon walk() according to the new conveyor
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto another conveyor! Wow!.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Transfer the buckle
 			M.buckled = next_conveyor
-		if(!next_conveyor.operating)
+		if(!next_conveyor.operating || next_conveyor.status & NOPOWER)
 			walk(AM, 0)
 			return
 
 	else
 		//Stop walking, we left the belt
-		//DEBUG_MESSAGE("[AM] exited conveyor at [showCoords(src.x, src.y, src.z)] onto the cold, hard floor.")
 		var/mob/M = AM
 		if(istype(M) && M.buckled == src) //Unbuckle
 			M.buckled = null
 			new /obj/item/cable_coil/cut(M.loc)
 		walk(AM, 0)
 
-
-// attack with item, place item on conveyor
 
 /obj/machinery/conveyor/attackby(var/obj/item/I, mob/user)
 	if (istype(I, /obj/item/grab))	// special handling if grabbing a mob
@@ -179,16 +174,16 @@
 		var/mob/M = locate() in src.loc
 		if(M)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] ties \himself to the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] ties [himself_or_herself(M)] to the conveyor.</span>")
 				// note don't check for lying if self-tying
 			else
 				if(M.lying)
-					user.visible_message("<span style=\"color:blue\">[M] has been tied to the conveyor by [user].</span>", "<span style=\"color:blue\">You tie [M] to the converyor!</span>")
+					user.visible_message("<span class='notice'>[M] has been tied to the conveyor by [user].</span>", "<span class='notice'>You tie [M] to the converyor!</span>")
 				else
-					boutput(user, "<span style=\"color:blue\">[M] must be lying down to be tied to the converyor!</span>")
+					boutput(user, "<span class='hint'>[M] must be lying down to be tied to the converyor!</span>")
 					return
 
-			M.buckled = src.loc
+			M.buckled = src //behold the most mobile of stools
 			src.add_fingerprint(user)
 			I:use(1)
 			M.lying = 1
@@ -203,39 +198,28 @@
 			M.buckled = null
 			src.add_fingerprint(user)
 			if (M == user)
-				src.visible_message("<span style=\"color:blue\">[M] cuts \himself free from the conveyor.</span>")
+				src.visible_message("<span class='notice'>[M] cuts [himself_or_herself(M)] free from the conveyor.</span>")
 			else
-				src.visible_message("<span style=\"color:blue\">[M] had been cut free from the conveyor by [user].</span>")
+				src.visible_message("<span class='notice'>[M] had been cut free from the conveyor by [user].</span>")
 			return
-
-	else if(istype(I, /obj/item/ore_scoop))
-		// this is handled in the ore scoop's afterattack proc
-		return
-	// otherwise drop and place on conveyor
-
-	if (issilicon(user))
-		return
-	user.drop_item()
-	if(I && I.loc)	I.set_loc(src.loc)
-	return
 
 // attack with hand, move pulled object onto conveyor
 
-/obj/machinery/conveyor/attack_hand(mob/user as mob)
+/obj/machinery/conveyor/attack_hand(mob/user)
 	if ((!( user.canmove ) || user.restrained() || !( user.pulling )))
 		return
 	if (user.pulling.anchored)
 		return
-	if ((user.pulling.loc != user.loc && get_dist(user, user.pulling) > 1))
+	if ((user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0))
 		return
 	if (ismob(user.pulling))
 		var/mob/M = user.pulling
-		M.pulling = null
+		M.remove_pulling()
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	else
 		step(user.pulling, get_dir(user.pulling.loc, src))
-		user.pulling = null
+		user.remove_pulling()
 	return
 
 
@@ -246,8 +230,7 @@
 	update()
 
 	var/obj/machinery/conveyor/C = locate() in get_step(src, basedir)
-	if(C)
-		C.set_operable(basedir, id, 0)
+	C?.set_operable(basedir, id, 0)
 
 	C = locate() in get_step(src, turn(basedir,180))
 	if(C)
@@ -285,7 +268,7 @@
 	desc = "A diverter arm for a conveyor belt."
 	anchored = 1
 	layer = FLY_LAYER
-	event_handler_flags = USE_FLUID_ENTER | USE_CHECKEXIT
+	event_handler_flags = USE_FLUID_ENTER
 	var/obj/machinery/conveyor/conv // the conveyor this diverter works on
 	var/deployed = 0	// true if diverter arm is extended
 	var/operating = 0	// true if arm is extending/contracting
@@ -324,7 +307,7 @@
 		if(SOUTHWEST)
 			divert_to = SOUTH
 			divert_from = WEST
-	SPAWN_DBG(0.2 SECONDS)
+	SPAWN(0.2 SECONDS)
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
@@ -366,20 +349,20 @@
 	if(deployed)
 		flick("diverter10",src)
 		icon_state = "diverter0"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 0
 	else
 		flick("diverter01",src)
 		icon_state = "diverter1"
-		sleep(10)
+		sleep(1 SECOND)
 		deployed = 1
 	operating = 0
 	update()
 	set_divert()
 
 // don't allow movement into the 'backwards' direction if deployed
-/obj/machinery/diverter/CanPass(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Cross(atom/movable/O)
+	var/direct = get_dir(O, src)
 	if(direct == divert_to)	// prevent movement through body of diverter
 		return 0
 	if(!deployed)
@@ -387,115 +370,114 @@
 	return(direct != turn(divert_from,180))
 
 // don't allow movement through the arm if deployed
-/obj/machinery/diverter/CheckExit(atom/movable/O, var/turf/target)
-	var/direct = get_dir(O, target)
+/obj/machinery/diverter/Uncross(atom/movable/O, do_bump=TRUE)
+	var/direct = get_dir(O, O.movement_newloc)
 	if(direct == turn(divert_to,180))	// prevent movement through body of diverter
-		return 0
-	if(!deployed)
-		return 1
-	return(direct != divert_from)
+		. = 0
+	else if(!deployed)
+		. = 1
+	else
+		. = direct != divert_from
+	UNCROSS_BUMP_CHECK(O)
 
 
 
 
 
-// the conveyor control switch
-//
-//
-
+/// the conveyor control switch
 /obj/machinery/conveyor_switch
 
 	name = "conveyor switch"
 	desc = "A conveyor control switch."
 	icon = 'icons/obj/recycling.dmi'
 	icon_state = "switch-off"
-	var/position = 0			// 0 off, -1 reverse, 1 forward
-	var/last_pos = -1			// last direction setting
-	var/operated = 1			// true if just operated
-
-	var/id = "" 				// must match conveyor IDs to control them
-
-	var/list/conveyors		// the list of converyors that are controlled by this switch
+	/// current direction setting
+	var/position = CONVEYOR_STOPPED
+	/// last direction setting
+	var/last_pos = CONVEYOR_REVERSE
+	// Checked against conveyor ID on link attempt
+	var/id = ""
+	/// the list of converyors that are controlled by this switch
+	var/list/conveyors
 	anchored = 1
+	/// time last used
+	var/last_used = 0
 
-
-
-/obj/machinery/conveyor_switch/New()
-	..()
-	conveyor_switches += src
-	update()
-
-	SPAWN_DBG(0.5 SECONDS)		// allow map load
+	New()
+		. = ..()
+		UnsubscribeProcess()
+		START_TRACKING
+		UpdateIcon()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"trigger", .proc/trigger)
 		conveyors = list()
-		for(var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
-			if(C.id == id)
-				conveyors += C
-				C.owner = src
+		SPAWN(0.5 SECONDS)
+			link_conveyors()
+			for (var/obj/machinery/conveyor/C as anything in conveyors)
+				if (C.id == src.id)
+					C.operating = position
+					C.setdir()
 
-		mechanics = new(src)
-		mechanics.master = src
-		mechanics.addInput("trigger", "trigger")
+	disposing()
+		STOP_TRACKING
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			C.linked_switches -= src
+		conveyors = null
+		. = ..()
 
-/obj/machinery/conveyor_switch/disposing()
-	conveyor_switches -= src
-	for(var/obj/machinery/conveyor/C in conveyors)
-		C.owner = null
-	conveyors = null
-	..()
+	proc/link_conveyors()
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
+			if (C.id == src.id)
+				conveyors |= C
+				if (!C.linked_switches)
+					C.linked_switches = list()
+				C.linked_switches |= src
 
-
-/obj/machinery/conveyor_switch/proc/trigger(var/inp)
-	attack_hand(usr) //bit of a hack but hey.
-	return
-
-// update the icon depending on the position
-
-/obj/machinery/conveyor_switch/proc/update()
-	if(position<0)
-		icon_state = "switch-rev"
-	else if(position>0)
-		icon_state = "switch-fwd"
-	else
-		icon_state = "switch-off"
-
-
-// timed process
-// if the switch changed, update the linked conveyors
-
-/obj/machinery/conveyor_switch/process()
-	if(!operated)
+	proc/trigger(var/inp)
+		attack_hand(usr) //bit of a hack but hey.
 		return
-	operated = 0
 
-	for(var/obj/machinery/conveyor/C in conveyors)
-		C.operating = position
-		C.setdir()
-
-// attack with hand, switch position
-/obj/machinery/conveyor_switch/attack_hand(mob/user)
-	if(position == 0)
-		if(last_pos < 0)
-			position = 1
-			last_pos = 0
+	/// update the icon depending on the position
+	update_icon()
+		if(position == CONVEYOR_REVERSE)
+			icon_state = "switch-rev"
+		else if(position == CONVEYOR_FORWARD)
+			icon_state = "switch-fwd"
 		else
-			position = -1
-			last_pos = 0
-	else
-		last_pos = position
-		position = 0
+			icon_state = "switch-off"
 
-	operated = 1
-	update()
+	// attack with hand, switch position
+	attack_hand(mob/user)
+		if (TIME < (last_used + 0.5 SECONDS))
+			return
+		last_used = TIME
+		if(position == CONVEYOR_STOPPED)
+			if (last_pos == CONVEYOR_REVERSE)
+				position = CONVEYOR_FORWARD
+				last_pos = CONVEYOR_STOPPED
+			else
+				position = CONVEYOR_REVERSE
+				last_pos = CONVEYOR_STOPPED
+			logTheThing(LOG_STATION, user, "turns the conveyor switch on in [last_pos == CONVEYOR_REVERSE ? "forward" : "reverse"] mode at [log_loc(src)].")
+		else
+			last_pos = position
+			position = CONVEYOR_STOPPED
+			logTheThing(LOG_STATION, user, "turns the conveyor switch off at [log_loc(src)].")
+		UpdateIcon()
 
-	// find any switches with same id as this one, and set their positions to match us
-	for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
-		if(S.id == src.id)
-			S.position = position
-			S.update()
-		LAGCHECK(LAG_MED)
+		// find any switches with same id as this one, and set their positions to match us
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
+			if (S == src) continue
+			if(S.id == src.id)
+				S.position = position
+				S.UpdateIcon()
+			LAGCHECK(LAG_MED)
 
-	if(mechanics) mechanics.fireOutgoing(mechanics.newSignal("switchTriggered"))
-
+		for (var/obj/machinery/conveyor/C as anything in conveyors)
+			if (C.id == src.id)
+				C.operating = position
+				C.setdir()
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"switchTriggered")
 
 //silly proc for corners that can be flippies
 /obj/machinery/conveyor/proc/rotateme()
@@ -519,9 +501,9 @@
 
 	setdir()
 		if(operating == -1)
-			dir = altdir
+			set_dir(altdir)
 		else
-			dir = startdir
+			set_dir(startdir)
 		next_conveyor = locate(/obj/machinery/conveyor) in get_step(src,dir)
 		update()
 
@@ -573,7 +555,7 @@
 	desc = "All power dumped into this power unit will boost the speed of the station's cargo carousel."
 	density = 1
 	anchored = 1
-	event_handler_flags = USE_CANPASS | USE_FLUID_ENTER
+	event_handler_flags =  USE_FLUID_ENTER
 
 	var/icon_base = "battery-"
 	var/icon_levels = 6 //there are 7 icons of power levels (6 + 1 for unpowered)
@@ -617,15 +599,15 @@
 
 		if (speedup != last_speedup)
 			update_belts()
-			update_icon()
+			UpdateIcon()
 
 	proc/update_belts()
-		for(var/obj/machinery/conveyor_switch/S in conveyor_switches)
+		for_by_tcl(S, /obj/machinery/conveyor_switch)
 			if(S.id == "carousel")
 				for(var/obj/machinery/conveyor/C in S.conveyors)
 					C.move_lag = max(initial(C.move_lag) - speedup, 0.1)
 				break
 
-	proc/update_icon()
-		var/ico = (speedup / speedup_max) * icon_levels
+	update_icon()
+		var/ico = clamp(((speedup / speedup_max) * icon_levels), 0, 6)
 		icon_state = "[icon_base][round(ico)]"

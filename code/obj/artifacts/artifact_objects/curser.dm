@@ -2,7 +2,7 @@
 	name = "artifact curser"
 	associated_datum = /datum/artifact/curser
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 
 	ArtifactActivated(var/mob/living/user as mob)
@@ -16,7 +16,8 @@
 
 /datum/artifact/curser
 	associated_object = /obj/artifact/curser
-	rarity_class = 5
+	type_name = "Curser"
+	rarity_weight = 0
 	validtypes = list("eldritch")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
@@ -36,14 +37,14 @@
 			N.flash(3 SECONDS)
 			if(N.client)
 				shake_camera(N, 6, 4)
-				O.visible_message("<span style=\"color:red\"><b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b></span>")
+				O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, releasing the curse that was locked inside it.</b></span>")
 		if (range > 0)
 			var/turf/T = get_turf(O)
 			for (var/mob/living/carbon/human/M in range(range,T))
 				if (M == user)
 					continue
-				playsound(M, "sound/effects/blood.ogg", 80, 1)
-				boutput(M, "<span style=\"color:red\">You have been cursed by an eldritch artifact!</span>")
+				playsound(M, 'sound/effects/blood.ogg', 80, 1)
+				boutput(M, "<span class='alert'>You have been cursed by an eldritch artifact!</span>")
 				M.changeStatus("bloodcurse",(rand(900,2000)))
 				artifact_controls.artifacts -= src
 				qdel(O)*/

@@ -156,7 +156,7 @@
 
 			src.master.updateSelfDialog()
 			if(speedup)
-				SPAWN_DBG(0.5 SECONDS) //Ugh the process loop for items is so slow most of the time
+				SPAWN(0.5 SECONDS) //Ugh the process loop for items is so slow most of the time
 					src.process(0)
 
 		return
@@ -410,7 +410,7 @@
 				src.temp = "You attack for [attackamt] damage!"
 				src.master.updateSelfDialog()
 
-				sleep(10)
+				sleep(1 SECOND)
 				src.enemy_hp -= attackamt
 				src.arcade_action()
 
@@ -421,7 +421,7 @@
 				src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 				src.master.updateSelfDialog()
 
-				sleep(10)
+				sleep(1 SECOND)
 				src.player_mp -= pointamt
 				src.player_hp += healamt
 				src.blocked = 1
@@ -435,7 +435,7 @@
 				src.player_mp += chargeamt
 
 				src.master.updateSelfDialog()
-				sleep(10)
+				sleep(1 SECOND)
 				src.arcade_action()
 
 		if (href_list["newgame"]) //Reset everything
@@ -463,7 +463,7 @@
 
 			if (src.player_mp <= 0)
 				src.gameover = 1
-				sleep(10)
+				sleep(1 SECOND)
 				src.temp = "You have been drained! GAME OVER"
 
 		else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
@@ -555,7 +555,7 @@
 			src.solution = ""
 
 		else if (href_list["giveup"])
-			if(alert("Are you sure you want to give up?","CodeBreaker","Yes","No") == "Yes")
+			if(tgui_alert(usr, "Are you sure you want to give up?", "CodeBreaker", list("Yes", "No")) == "Yes")
 				src.attempts = 0
 				src.playing = -1
 				src.temp = "<b>YOU LOSE!</b>"
@@ -566,7 +566,7 @@
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
-			if(lentext(attempt) != lentext(src.solution))
+			if(length(attempt) != length(src.solution))
 				src.temp = "Illegal move."
 				src.master.updateSelfDialog()
 				return
@@ -580,25 +580,20 @@
 				else
 					src.attempts--
 
-					var/length = lentext(src.solution)
+					var/length = length(src.solution)
 
 					var/list/lockcode_list = list()
 					for(var/i=0,i < length,i++)
-						//lockcode_list += "[copytext(bp.lockcode,i+1,i+2)]"
 						lockcode_list["[copytext(src.solution,i+1,i+2)]"]++
 
 					var/correct_full = 0
 					var/correct_char = 0
 					var/current
-					var/seek = 0
 					for(var/i=0,i < length,i++)
 						current = copytext(attempt,i+1,i+2)
 						if (current == copytext(src.solution,i+1,i+2))
 							correct_full++
-							//correct_char++
-							//continue
-						seek = lockcode_list.Find(current)
-						if (seek)
+						if (current in lockcode_list)
 							correct_char++
 							lockcode_list[current]--
 							if (lockcode_list[current] <= 0)
@@ -627,7 +622,7 @@
 		return
 
 	proc/set_difficulty(var/diff,var/code_length,var/attempts)
-		if (!diff || !code_length || !attempts || !code_chars.len)
+		if (!diff || !code_length || !attempts || !length(code_chars))
 			return null
 		src.difficulty = diff
 		src.code_length = code_length

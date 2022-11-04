@@ -107,13 +107,11 @@
 
 /datum/commodity/trader/gragg/artifact
 	comname = "Unknown Item"
-	comtype = /obj/item/artifact
+	comtype = /obj/artifact_type_spawner/gragg
 	amount = 1
 	price_boundary = list(1000,50000)
-	possible_alt_types = list(/obj/item/artifact/activator_key,/obj/item/artifact/forcewall_wand,
-	/obj/item/artifact/melee_weapon,/obj/item/artifact/teleport_wand,
-	/obj/item/cell/artifact,/obj/item/gun/energy/artifact,/obj/item/raw_material/miracle,/obj/item/mining_tool)
-	alt_type_chance = 90
+	possible_alt_types = list(/obj/item/raw_material/miracle)
+	alt_type_chance = 5
 	possible_names = list("SELLING WEIRD THING I DUG UP. DONT KNOW WHAT IS.",
 	"ODD LITTLE THING. DUG IT UP. NO IDEA. CAN BUY IF WANT.")
 
@@ -157,5 +155,5 @@
 /datum/commodity/trader/gragg/starstone
 	comname = "Rare star-shaped jewel"
 	comtype = /obj/item/raw_material/starstone
-	price_boundary = list(3000000,3000000)
+	price_boundary = list(300000,450000)
 	possible_names = list("WANT BUY PALE BLUE STAR-SHAPED GEMSTONE. EXTREMELY RARE. SELL TO ME IF FIND.")

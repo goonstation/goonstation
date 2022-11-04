@@ -1,26 +1,180 @@
-"a" = (/turf/variableTurf/clear,/area/noGenerate)
-"b" = (/obj/item/raw_material/scrap_metal,/turf/variableTurf/clear,/area/noGenerate)
-"c" = (/obj/decal/cleanable/machine_debris{icon_state = "gib7"},/turf/variableTurf/clear,/area/noGenerate)
-"d" = (/obj/item/scrap,/turf/variableTurf/clear,/area/noGenerate)
-"e" = (/obj/decal/cleanable/machine_debris,/turf/variableTurf/clear,/area/noGenerate)
-"f" = (/obj/item/raw_material/shard/glass,/turf/variableTurf/clear,/area)
-"g" = (/turf/unsimulated/floor/polarispit/polarispitwall,/area/noGenerate)
-"h" = (/obj/map/light/cyan,/turf/unsimulated/floor/polarispit/polarispitwall,/area/noGenerate)
-"i" = (/turf/unsimulated/floor/polarispit,/area/noGenerate)
-"j" = (/obj/map/light/cyan,/turf/unsimulated/floor/polarispit,/area/noGenerate)
-"k" = (/obj/item/raw_material/shard/glass,/turf/variableTurf/clear,/area/noGenerate)
-"l" = (/obj/ladder{id = "polaris"; layer = 2; pixel_y = 18},/turf/variableTurf/clear,/area/noGenerate)
-"m" = (/obj/item/device/gps{distress = 1; identifier = "NSS-POLARIS"},/turf/variableTurf/clear,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"b" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/decal/cleanable/machine_debris{
+	icon_state = "gib7"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"d" = (
+/obj/item/scrap,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"e" = (
+/obj/decal/cleanable/machine_debris,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"f" = (
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/clear,
+/area/space)
+"g" = (
+/turf/unsimulated/floor/polarispit/polarispitwall,
+/area/noGenerate)
+"h" = (
+/obj/map/light/cyan,
+/turf/unsimulated/floor/polarispit/polarispitwall,
+/area/noGenerate)
+"i" = (
+/turf/unsimulated/floor/polarispit,
+/area/noGenerate)
+"j" = (
+/obj/map/light/cyan,
+/turf/unsimulated/floor/polarispit,
+/area/noGenerate)
+"k" = (
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"l" = (
+/obj/ladder{
+	id = "polaris";
+	layer = 2;
+	pixel_y = 18
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"m" = (
+/obj/item/device/gps{
+	distress = 1;
+	identifier = "NSS-POLARIS"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
 
 (1,1,1) = {"
-aabacaadae
-abaaaaafba
-aaaghgaaaa
-akgiiigadk
-dajijiihaa
-aaiiiijiaa
-aaijiiiaka
-acaijlmkaa
-aaaaaeaaed
-aaakaaaaaa
+a
+a
+a
+a
+d
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+a
+k
+a
+a
+a
+c
+a
+a
+"}
+(3,1,1) = {"
+b
+a
+a
+g
+j
+i
+i
+a
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+g
+i
+i
+i
+j
+i
+a
+k
+"}
+(5,1,1) = {"
+c
+a
+h
+i
+j
+i
+i
+j
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+g
+i
+i
+i
+i
+l
+e
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+g
+i
+j
+i
+m
+a
+a
+"}
+(8,1,1) = {"
+d
+f
+a
+a
+h
+i
+a
+k
+a
+a
+"}
+(9,1,1) = {"
+a
+b
+a
+d
+a
+a
+k
+a
+e
+a
+"}
+(10,1,1) = {"
+e
+a
+a
+k
+a
+a
+a
+a
+d
+a
 "}

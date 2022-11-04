@@ -1,0 +1,237 @@
+#!/usr/bin/env bash
+## Copyright (c) 2020 Aleksej Komarov
+## SPDX-License-Identifier: MIT
+
+set -e
+shopt -s globstar
+shopt -s expand_aliases
+
+## Initial set-up
+## --------------------------------------------------------
+
+## Returns an absolute path to file
+alias tgui-realpath="readlink -f"
+
+## Fallbacks for GNU readlink
+## Detecting GNU coreutils http://stackoverflow.com/a/8748344/319952
+if ! readlink --version >/dev/null 2>&1; then
+  if hash greadlink 2>/dev/null; then
+    alias tgui-realpath="greadlink -f"
+  else
+    alias tgui-realpath="perl -MCwd -le 'print Cwd::abs_path(shift)'"
+  fi
+fi
+
+## Find a canonical path to tgui project root
+base_dir="$(dirname "$(tgui-realpath "${0}")")/.."
+base_dir="$(tgui-realpath "${base_dir}")"
+## Find a canonical path to repo root
+root_dir="$(dirname "$(tgui-realpath "${0}")")/../.."
+root_dir="$(tgui-realpath "${root_dir}")"
+## Find a canonical path to build target folder
+target_dir_name="tgui"
+target_dir="$(dirname "$(tgui-realpath "${0}")")/../../browserassets/${target_dir_name}"
+target_dir="$(tgui-realpath "${target_dir}")"
+
+## Fall back to running Yarn from the repo
+if ! hash yarn 2>/dev/null; then
+  yarn_releases=("${base_dir}"/.yarn/releases/yarn-*.cjs)
+  yarn_release="${yarn_releases[0]}"
+  yarn() {
+    node "${yarn_release}" "${@}"
+  }
+fi
+
+
+## Functions
+## --------------------------------------------------------
+
+## Installs node modules
+task-install() {
+  cd "${base_dir}"
+  yarn install
+}
+
+## Runs webpack
+task-webpack() {
+  cd "${base_dir}"
+  yarn run webpack-cli "${@}"
+}
+
+## Runs a development server
+task-dev-server() {
+  cd "${base_dir}"
+  yarn node packages/tgui-dev-server/index.esm.js "${@}"
+}
+
+## Run a linter through all packages
+task-lint() {
+  cd "${base_dir}"
+  yarn run tsc
+  echo "tgui: type check passed"
+  yarn run eslint packages --ext .js,.cjs,.ts,.tsx "${@}"
+  echo "tgui: eslint check passed"
+}
+
+task-test() {
+  cd "${base_dir}"
+  yarn run jest
+}
+
+## Mr. Proper
+task-clean() {
+  cd "${base_dir}"
+  ## Yarn artifacts
+  rm -rf .yarn/cache
+  rm -rf .yarn/unplugged
+  rm -rf .yarn/webpack
+  rm -f .yarn/build-state.yml
+  rm -f .yarn/install-state.gz
+  rm -f .yarn/install-target
+  rm -f .pnp.js
+  ## NPM artifacts
+  rm -rf **/node_modules
+  rm -f **/package-lock.json
+
+  ## Build artifacts
+  cd "${target_dir}"
+  rm -rf .tmp
+}
+
+## Validates current build against the build stored in git
+task-validate-build() {
+  cd "${target_dir}/.."
+  local diff
+  diff="$(git diff `ls $target_dir_name/* | grep -v css`)"
+  if [[ -n ${diff} ]]; then
+    echo "Error: our build differs from the build committed into git."
+    echo "Please rebuild tgui."
+    echo "Diff: ${diff}"
+    exit 1
+  fi
+  echo "tgui: build is ok"
+}
+
+## Installs merge drivers and git hooks
+task-install-git-hooks() {
+  cd "${base_dir}"
+  local git_root
+  local git_base_dir
+  git_root="$(git rev-parse --show-toplevel)"
+  git_base_dir="${base_dir/${git_root}/.}"
+  git config --replace-all merge.tgui-merge-bundle.driver \
+    "${git_base_dir}/bin/tgui --merge=bundle %O %A %B %L %P"
+  echo "tgui: Merge drivers have been successfully installed!"
+}
+
+## Bundle merge driver
+task-merge-bundle() {
+  local file_ancestor="${1}"
+  local file_current="${2}"
+  local file_other="${3}"
+  local conflict_marker_size="${4}"
+  local file_target="${5}"
+  echo "tgui: Rebuilding tgui bundle"
+  pushd .
+  task-install
+  task-webpack --mode=production
+  popd
+  cp "$file_target" "$file_current"
+  exit 0
+}
+
+
+## Main
+## --------------------------------------------------------
+
+if [[ ${1} == "--merge"* ]]; then
+  if [[ ${1} == "--merge=bundle" ]]; then
+    shift 1
+    task-merge-bundle "${@}"
+  fi
+  echo "Unknown merge strategy: ${1}"
+  exit 1
+fi
+
+if [[ ${1} == "--install-git-hooks" ]]; then
+  shift 1
+  task-install-git-hooks
+  exit 0
+fi
+
+## Continuous integration scenario
+if [[ ${1} == "--ci" ]]; then
+  shift 1
+  task-clean
+  task-install
+  task-lint "${@}"
+  task-webpack --mode=production
+  task-validate-build
+  exit 0
+fi
+
+if [[ ${1} == "--clean" ]]; then
+  task-clean
+  exit 0
+fi
+
+if [[ ${1} == "--dev" ]]; then
+  shift
+  task-install
+  task-dev-server "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--lint' ]]; then
+  shift 1
+  task-install
+  task-lint "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--lint-harder' ]]; then
+  shift 1
+  task-install
+  task-lint -c .eslintrc-harder.yml "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--fix' ]]; then
+  shift 1
+  task-install
+  task-lint --fix "${@}"
+  exit 0
+fi
+
+if [[ ${1} == '--test' ]]; then
+  shift 1
+  task-install
+  task-test "${@}"
+  exit 0
+fi
+
+## Analyze the bundle
+if [[ ${1} == '--analyze' ]]; then
+  task-install
+  task-webpack --mode=production --analyze
+  exit 0
+fi
+
+## Make a production webpack build
+if [[ ${1} == '--build' ]]; then
+  task-install
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Make a production webpack build + Run eslint
+if [[ -z ${1} ]]; then
+  task-install
+  task-lint --fix
+  task-webpack --mode=production
+  exit 0
+fi
+
+## Run webpack with custom flags
+task-install
+task-webpack "${@}"

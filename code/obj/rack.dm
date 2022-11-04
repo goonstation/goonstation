@@ -1,12 +1,18 @@
 /obj/rack
 	name = "rack"
 	icon = 'icons/obj/objects.dmi'
-	icon_state = "rack"
+	icon_state = "rack_base"
 	density = 1
+	layer = STORAGE_LAYER
 	flags = FPRINT | NOSPLASH
-	anchored = 1.0
+	anchored = 1
 	desc = "A metal frame used to hold objects. Can be wrenched and made portable."
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
+	mechanics_interaction = MECHANICS_INTERACTION_SKIP_IF_FAIL
+
+	proc/rackbreak()
+		icon_state += "-broken"
+		src.set_density(0)
 
 /obj/rack/New()
 	..()
@@ -24,18 +30,17 @@
 
 /obj/rack/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			//src.deconstruct()
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(50))
 				src.deconstruct()
 				return
-		if(3.0)
+		if(3)
 			if (prob(25))
-				src.icon_state = "rackbroken"
-				src.set_density(0)
+				rackbreak()
 		else
 	return
 
@@ -44,32 +49,29 @@
 		src.deconstruct()
 		return
 	else if(prob(power * 2.5))
-		src.icon_state = "rackbroken"
-		src.set_density(0)
+		rackbreak()
 		return
 
-/obj/rack/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
-	if(air_group || (height==0)) return 1
-
+/obj/rack/Cross(atom/movable/mover)
 	if (mover.flags & TABLEPASS)
 		return 1
 	else
 		return 0
 
 /obj/rack/MouseDrop_T(obj/O as obj, mob/user as mob)
-	if (!isitem(O) || !in_range(user, src) || !in_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
+	if (!isitem(O) || !in_interact_range(user, src) || !in_interact_range(user, O) || user.restrained() || user.getStatusDuration("paralysis") || user.sleeping || user.stat || user.lying)
 		return
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
 		if (S.contents.len < 1)
-			boutput(usr, "<span style='color:red'>There's nothing in [S]!</span>")
+			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 		else
-			user.visible_message("<span style='color:blue'>[user] dumps out [S]'s contents onto [src]!</span>")
+			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
 			for (var/obj/item/thing in S.contents)
 				thing.set_loc(src.loc)
 			S.desc = "A leather bag. It holds 0/[S.maxitems] [S.itemstring]."
-			S.satchel_updateicon()
+			S.UpdateIcon()
 			return
 	if (isrobot(user) || user.equipped() != I || (I.cant_drop || I.cant_self_remove))
 		return
@@ -78,9 +80,8 @@
 		step(I, get_dir(I, src))
 	return
 
-/obj/rack/dispose()
+/obj/rack/disposing()
 	var/turf/OL = get_turf(src)
-	loc = null
 	if (!OL)
 		return
 	if (!(locate(/obj/table) in OL) && !(locate(/obj/rack) in OL))
@@ -90,7 +91,7 @@
 		Ar.sims_score = max(Ar.sims_score, 0)
 	..()
 
-/obj/rack/attackby(obj/item/W as obj, mob/user as mob)
+/obj/rack/attackby(obj/item/W, mob/user)
 	if (iswrenchingtool(W))
 		actions.start(new /datum/action/bar/icon/rack_tool_interact(src, W), user)
 	else
@@ -108,8 +109,7 @@
 		qdel(src)
 		return
 	else
-		src.icon_state = "rackbroken"
-		src.set_density(0)
+		rackbreak()
 	return
 
 /datum/action/bar/icon/rack_tool_interact
@@ -134,12 +134,12 @@
 			duration = duration_i
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			if (H.traitHolder.hasTrait("carpenter"))
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
 				duration = round(duration / 2)
 
 	onUpdate()
 		..()
-		if (the_rack == null || the_tool == null || owner == null || get_dist(owner, the_rack) > 1)
+		if (the_rack == null || the_tool == null || owner == null || BOUNDS_DIST(owner, the_rack) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
@@ -148,11 +148,11 @@
 
 	onStart()
 		..()
-		playsound(get_turf(the_rack), "sound/items/Ratchet.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] begins disassembling [the_rack].</span>")
+		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, 1)
+		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
 
 	onEnd()
 		..()
-		playsound(get_turf(the_rack), "sound/items/Deconstruct.ogg", 50, 1)
-		owner.visible_message("<span style='color:blue'>[owner] disassembles [the_rack].</span>")
+		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, 1)
+		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
 		the_rack.deconstruct()

@@ -12,16 +12,19 @@
 		..()
 
 		if (!A) //manually called outside of BR gamemode
-			A = get_area(pick(peststart))
-		logTheThing("admin",null,null,"Supply drop at [A]")
+			A = get_area(pick_landmark(LANDMARK_PESTSTART))
+		logTheThing(LOG_ADMIN, null, "Supply drop at [A]")
 		var/list/turfs = get_area_turfs(A,1)
 		if (!turfs)	DEBUG_MESSAGE("Getting turfs failed for [A]")
 
 		for(var/x=0, x<howMany, x++)
-			SPAWN_DBG(rand(0, 20)) //Looks better with a bit of variance
+			SPAWN(rand(0, 20)) //Looks better with a bit of variance
 				new/obj/effect/supplymarker(pick(turfs), preDropTime)
-		for(var/datum/mind/M in battle_pass_holders)
-			boutput(M.current, "<span style=\"color:blue\">A supply drop will happen soon in the [A.name]</span>")
+		for(var/datum/mind/M in ticker.minds)
+			boutput(M.current, "<span class='notice'>A supply drop will happen soon in the [A.name]</span>")
+		SPAWN(20 SECONDS)
+			for(var/datum/mind/M in ticker.minds)
+				boutput(M.current, "<span class='notice'>A supply drop occured in [A.name]</span>!")
 
 /obj/effect/supplymarker
 	name = ""
@@ -31,38 +34,56 @@
 	anchored = 1
 	pixel_x = -16
 	pixel_y = -16
+	var/gib_mobs = TRUE
 
-	New(var/atom/location, var/preDropTime = 100)
-		src.loc = location
-		SPAWN_DBG(preDropTime)
-			new/obj/effect/supplydrop(src.loc)
+	New(var/atom/location, var/preDropTime = 100, var/obj_path, var/no_lootbox)
+		src.set_loc(location)
+		SPAWN(preDropTime)
+			if (gib_mobs)
+				new/obj/effect/supplydrop(src.loc, obj_path, no_lootbox)
+			else
+				new/obj/effect/supplydrop/safe(src.loc, obj_path, no_lootbox)
 			qdel(src)
 		..()
 
+/obj/effect/supplymarker/safe
+	gib_mobs = FALSE
+
 /obj/effect/supplydrop
 	name = "supply drop"
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "lootdrop"
 	density = 0
 	anchored = 1
 	plane = PLANE_FLOCKVISION
 	var/dropTime = 30
+	var/gib_mobs = TRUE
 
-	New()
+	New(atom/loc, var/obj_path, var/no_lootbox)
 		pixel_y = 480
 		animate(src, pixel_y = 0, time = dropTime)
-		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 100, 0)
-		SPAWN_DBG(dropTime)
+		playsound(src.loc, 'sound/effects/flameswoosh.ogg', 75, 0)
+		SPAWN(dropTime)
 			new/obj/effect/supplyexplosion(src.loc)
-			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 50, 1)
 			for(var/mob/M in view(7, src.loc))
-				shake_camera(M, 20, 1)
-				if(M.loc == src.loc)
+				shake_camera(M, 20, 8)
+				if(gib_mobs && M.loc == src.loc && isliving(M) && !isintangible(M))
+					if(isliving(M))
+						logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 					M.gib(1, 1)
-			sleep(5)
-			new/obj/lootbox(src.loc)
+			sleep(0.5 SECONDS)
+			if (obj_path && no_lootbox)
+				new obj_path(src.loc)
+			else if (no_lootbox)
+				makeRandomLootTrash().set_loc(src.loc)
+			else
+				new/obj/lootbox(src.loc, obj_path)
 			qdel(src)
 		..()
+
+/obj/effect/supplydrop/safe
+	gib_mobs = FALSE
 
 /obj/effect/supplyexplosion
 	name = ""
@@ -75,7 +96,7 @@
 	pixel_y = -32
 
 	New()
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			qdel(src)
 		..()
 
@@ -88,32 +109,42 @@
 	anchored = 0
 	density = 1
 	opacity = 0
+	var/obj_path
 
-	New()
-		filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
+	New(atom/loc, var/obj_path_arg)
+		add_filter("loot drop", 1, drop_shadow_filter(x=0, y=0, size=5, offset=0, color=rgb(240,202,133)))
+		obj_path = obj_path_arg
 		return ..()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(used) return
 		used = 1
 		set_density(0)
 		icon_state = "attachecase_open"
-		filters = list()
-		lootbox(user)
+		remove_filter("loot drop")
+		lootbox(user, obj_path)
 		return
 
-/proc/lootbox(var/mob/user)
+/proc/lootbox(var/mob/user, var/obj_path)
 	var/mob/living/carbon/human/H = user
-	if(istype(H)) H.hud.add_screen(new/obj/screen/lootcrateicon/crate(user))
+	if(istype(H)) H.hud.add_screen(new/atom/movable/screen/lootcrateicon/crate(user, obj_path))
 	return
 
 /proc/makeRandomLootTrash()
+	RETURN_TYPE(/atom/movable)
 	var/obj/item/I = null
 	var/list/permittedItemPaths = list(/obj/item/clothing)
 	var/pickedClothingPath = pick(typesof(pick(permittedItemPaths)))
+	var/list/obj/murder_supplies = list()
 
-	var/datum/syndicate_buylist/S = pick(syndi_buylist_cache)
-	var/pickedPath = pick(pickedClothingPath, S.item) //50-50 of either clothes or traitor item.
+	for(var/datum/syndicate_buylist/D in syndi_buylist_cache)
+		if(D.item)
+			if(!D.br_allowed)
+				continue
+			murder_supplies.Add(D.item)
+
+	var/datum/syndicate_buylist/S = pick(murder_supplies)
+	var/pickedPath = pick(pickedClothingPath, S) //50-50 of either clothes or traitor item.
 
 	I = new pickedPath()
 
@@ -143,7 +174,7 @@
 			doPaint = 1
 			numStats = 2
 			doMaterial = 1
-			statsMult = 1.50
+			statsMult = 1.5
 			prefix = pick("Dominating", "Incredible", "Awesome", "Super")
 		if(ITEM_RARITY_EPIC)
 			doPaint = 1
@@ -171,7 +202,7 @@
 
 	if(doMaterial)
 		var/list/material = pick(material_cache - list("cerenkite","ohshitium","plasmastone","koshmarite"))
-		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1, copy = FALSE)
 
 	I.name_prefix(prefix)
 
@@ -186,7 +217,7 @@
 
 	var/list/possibleStats = list()
 	for(var/x in globalPropList)
-		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty")
+		if(!I.hasProperty(x) && x != "negate_fluid_speed_penalty" && x != "movespeed")
 			possibleStats += x
 
 	for(var/i=0,i<numStats,i++)
@@ -207,8 +238,7 @@
 
 	return I
 
-/obj/screen/lootcratepreview
-	icon = null
+/atom/movable/screen/lootcratepreview
 	screen_loc = "1,1"
 	name = ""
 	mouse_opacity = 0
@@ -222,7 +252,7 @@
 			filters += filter(type="drop_shadow", x=0, y=0, size=5, offset=0, color=rgb(240,202,133))
 		..()
 
-/obj/screen/lootcrateicon
+/atom/movable/screen/lootcrateicon
 	icon = 'icons/effects/320x320.dmi'
 	screen_loc = "1,1"
 	name = ""
@@ -244,6 +274,11 @@
 	crate
 		icon_state = "lootb0"
 		var/opened = 0
+		var/obj_path = null
+
+		New(atom/loc, var/obj_path_arg)
+			obj_path = obj_path_arg
+			..()
 
 		clicked(list/params)
 			if(opened)
@@ -255,25 +290,29 @@
 			icon_state = "lootb2"
 			flick("lootb1", src)
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				var/mob/living/carbon/human/H = usr
-				var/obj/item/I = makeRandomLootTrash()
+				var/atom/movable/AM = null
+				if (obj_path)
+					AM = new obj_path()
+				else
+					AM = makeRandomLootTrash()
 				if(istype(H))
-					var/obj/screen/lootcrateicon/background/B = new/obj/screen/lootcrateicon/background(src)
-					var/obj/screen/lootcrateicon/sparks/S = new/obj/screen/lootcrateicon/sparks(src)
-					var/obj/screen/lootcratepreview/P = new/obj/screen/lootcratepreview(src)
-					P.icon = I.icon
-					P.icon_state = I.icon_state
-					P.color = I.color
+					var/atom/movable/screen/lootcrateicon/background/B = new/atom/movable/screen/lootcrateicon/background(src)
+					var/atom/movable/screen/lootcrateicon/sparks/S = new/atom/movable/screen/lootcrateicon/sparks(src)
+					var/atom/movable/screen/lootcratepreview/P = new/atom/movable/screen/lootcratepreview(src)
+					P.icon = AM.icon
+					P.icon_state = AM.icon_state
+					P.color = AM.color
 					H.hud.add_screen(B)
 					H.hud.add_screen(S)
 					H.hud.add_screen(P)
 
-					if (ishuman(usr) && I)
+					if (ishuman(usr) && AM)
 						var/mob/living/carbon/human/dude = usr
-						dude.put_in_hand_or_drop(I)
+						dude.put_in_hand_or_drop(AM)
 
-					SPAWN_DBG(2.5 SECONDS)
+					SPAWN(2.5 SECONDS)
 						del(B)
 						del(S)
 						del(P)

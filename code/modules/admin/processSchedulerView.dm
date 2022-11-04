@@ -3,7 +3,7 @@ var/global/datum/processSchedulerView/processSchedulerView
 /datum/processSchedulerView
 
 /datum/processSchedulerView/Topic(href, href_list)
-	usr_admin_only
+	USR_ADMIN_ONLY
 	if (!href_list["action"])
 		return
 
@@ -38,11 +38,11 @@ var/global/datum/processSchedulerView/processSchedulerView
 	for (var/list/data in processScheduler.getStatusData())
 		text += "<tr>"
 		text += "<td>[data["name"]]</td>"
-		text += "<td>[num2text(data["averageRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["lastRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["highestRunTime"]/10,3)]</td>"
-		text += "<td>[num2text(data["ticks"],4)]</td>"
-		text += "<td>[data["schedule"]]</td>"
+		text += "<td class='text-right'>[num2text(data["averageRunTime"]/10,3)]</td>"
+		text += "<td class='text-right'>[num2text(data["lastRunTime"]/10,3)]</td>"
+		text += "<td class='text-right'>[num2text(data["highestRunTime"]/10,3)]</td>"
+		text += "<td class='text-right'>[num2text(data["ticks"],4)]</td>"
+		text += "<td class='text-right'>[data["schedule"]]</td>"
 		text += "<td>[data["status"]]</td>"
 		text += "<td><button type='button' class=\"btn kill-btn\" data-process-name=\"[data["name"]]\" id=\"kill-[data["name"]]\">Kill</button>"
 		if (data["disabled"])
@@ -69,12 +69,13 @@ var/global/datum/processSchedulerView/processSchedulerView
 		<script type="text/javascript" src="[resource("js/jquery.min.js")]"></script>
 		<script type="text/javascript" src="[resource("js/bootstrap.min.js")]"></script>
 		<script type="text/javascript" src="[resource("js/processScheduler.js")]"></script>
+		<style type="text/css">.btn { padding: 0; }</style>
 	</head>
 	<body>
 		<div class="container-fluid">
 		<h2>Process Scheduler</h2>
 		<button type='button' id="btn-refresh" class="btn">Refresh</button>
-		<h3>The process scheduler controls [processScheduler.getProcessCount()] loops.<h3>"}
+		<h3>The process scheduler controls [processScheduler.getProcessCount()] loops.</h3>"}
 
 	text += "<div id=\"processTable\">"
 	text += getProcessTable()

@@ -8,6 +8,7 @@
 	icon_state = "arcade"
 	mats = 10
 	deconstruct_flags = DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/arcade
 	var/enemy_name = "Space Villian"
 	var/temp = "Winners Don't Use Spacedrugs" //Temporary message, for attack messages, etc
 	var/player_hp = 30 //Player health/attack points
@@ -18,43 +19,9 @@
 	var/blocked = 0 //Player cannot attack/heal while set
 	desc = "An arcade machine, you can win wonderful prizes!"
 
-	lr = 0.7
-	lg = 0.96
-	lb = 0.96
-
-/obj/machinery/computer/arcade/attackby(var/obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/arcade/M = new /obj/item/circuitboard/arcade( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/arcade/M = new /obj/item/circuitboard/arcade( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
+	light_r =0.7
+	light_g = 0.96
+	light_b = 0.96
 
 /obj/machinery/computer/arcade/New()
 	..()
@@ -70,18 +37,14 @@
 	src.enemy_name = replacetext((name_part1 + name_part2), "the ", "")
 	src.name = (name_action + name_part1 + name_part2)
 
-
-/obj/machinery/computer/arcade/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/arcade/attack_hand(mob/user as mob)
+/obj/machinery/computer/arcade/attack_hand(mob/user)
 	if(..())
 		return
 	show_ui(user)
 	return
 
 /obj/machinery/computer/arcade/proc/show_ui(var/mob/user)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a>"
 	dat += "<center><h4>[src.enemy_name]</h4></center>"
 
@@ -101,7 +64,10 @@
 	onclose(user, "arcade")
 
 /obj/machinery/computer/arcade/Topic(href, href_list)
-	if(..())
+	//Just check if we're in range for handhelds
+	if(..() && (!istype(src, /obj/machinery/computer/arcade/handheld)))
+		return
+	else if (!in_interact_range(src, usr))
 		return
 
 	if (!src.blocked)
@@ -112,7 +78,7 @@
 			src.temp = "You attack for [attackamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.enemy_hp -= attackamt
 			src.arcade_action()
 
@@ -124,7 +90,7 @@
 			src.temp = "You use [pointamt] magic to heal for [healamt] damage!"
 			src.updateUsrDialog()
 
-			sleep(10)
+			sleep(1 SECOND)
 			src.player_mp -= pointamt
 			src.player_hp += healamt
 			src.blocked = 1
@@ -139,11 +105,11 @@
 			src.player_mp += chargeamt
 
 			src.updateUsrDialog()
-			sleep(10)
+			sleep(1 SECOND)
 			src.arcade_action()
 
 	if (href_list["close"])
-		usr.machine = null
+		src.remove_dialog(usr)
 		usr.Browse(null, "window=arcade")
 
 	else if (href_list["newgame"]) //Reset everything
@@ -174,14 +140,14 @@
 		var/prizeselect = rand(1,8)
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+				var/obj/item/spacecash/P = new /obj/item/spacecash
 				P.setup(src.loc)
 				prize = P
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				if (isrestrictedz(z))
-					var/obj/item/spacecash/P = unpool(/obj/item/spacecash)
+					var/obj/item/spacecash/P = new /obj/item/spacecash
 					P.setup(src.loc)
 					prize = P
 					prize.name = "space ticket"
@@ -189,16 +155,14 @@
 				else
 					prize = new /obj/item/device/radio/beacon(src.loc)
 					prize.name = "electronic blink toy game"
+					prize.anchored = FALSE
 					prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo(src.loc)
 				prize.name = "Burno Lighter"
 				prize.desc = "Almost like a decent lighter!"
 			if(4)
-				if (prob(5))
-					prize = new /obj/item/device/key/virtual(src.loc)
-				else
-					prize = new /obj/item/toy/sword(src.loc)
+				prize = new /obj/item/toy/sword(src.loc)
 			if(5)
 				prize = new /obj/item/instrument/harmonica(src.loc)
 				prize.name = "reverse harmonica"
@@ -224,7 +188,7 @@
 
 		if (src.player_mp <= 0)
 			src.gameover = 1
-			sleep(10)
+			sleep(1 SECOND)
 			src.temp = "You have been drained! GAME OVER"
 
 	else if ((src.enemy_hp <= 10) && (src.enemy_mp > 4))
@@ -261,6 +225,6 @@
 			icon_state = initial(icon_state)
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				src.icon_state = "arcade0"
 				status |= NOPOWER

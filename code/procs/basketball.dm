@@ -16,10 +16,10 @@
 		return
 
 	M.verbs -= /mob/proc/bball_nova
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		M.verbs += /mob/proc/bball_nova
 
-	M.visible_message("<span style=\"color:red\">A swarm of basketballs erupts from [M]!</span>")
+	M.visible_message("<span class='alert'>A swarm of basketballs erupts from [M]!</span>")
 
 	for(var/turf/T in orange(1, M))
 		if(!T.density)
@@ -49,7 +49,7 @@
 		return
 
 	M.verbs -= /mob/proc/showboat_slam
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		M.verbs += /mob/proc/showboat_slam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -59,14 +59,14 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a mighty leap towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	M.visible_message("<span class='alert'>[M] takes a mighty leap towards the ceiling!</span>")
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.set_loc(target.loc)
 	M.transforming = 0
@@ -84,16 +84,16 @@
 	O.pixel_y = -96
 	O.icon = 'icons/effects/214x246.dmi'
 	O.icon_state = "explosion"
-	SPAWN_DBG(3.5 SECONDS) qdel(O)
+	SPAWN(3.5 SECONDS) qdel(O)
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 				random_brute_damage(N, 10)
 		if(N.client)
-			shake_camera(N, 6, 5)
-			N.show_message("<span style=\"color:red\">[M] showboat slams [target] to the ground!</span>", 1)
+			shake_camera(N, 6, 32)
+			N.show_message("<span class='alert'>[M] showboat slams [target] to the ground!</span>", 1)
 	random_brute_damage(target, 40)
 
 /mob/proc/holy_jam()
@@ -111,7 +111,7 @@
 		return
 
 	M.verbs -= /mob/proc/holy_jam
-	SPAWN_DBG(15 SECONDS)
+	SPAWN(15 SECONDS)
 		M.verbs += /mob/proc/holy_jam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -121,14 +121,14 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] takes a divine leap towards the ceiling!</span>")
+	M.visible_message("<span class='alert'>[M] takes a divine leap towards the ceiling!</span>")
 
-	playsound(M.loc, "sound/voice/heavenly.ogg", 50, 1)
+	playsound(M.loc, 'sound/voice/heavenly.ogg', 50, 1)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_y = 0
 	M.transforming = 0
 	M.layer = MOB_LAYER
@@ -137,16 +137,16 @@
 		B.item_state = "bball"
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, M) <= 6)
+		if(GET_DIST(N, M) <= 6)
 			if(N != M)
 				N.apply_flash(30, 5)
 				if(ishuman(N) && istype(N:mutantrace, /datum/mutantrace/zombie))
 					N.gib()
 		if(N.client)
-			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
+			shake_camera(N, 6, 16)
+			N.show_message("<span class='alert'>[M]'s basketball unleashes a brilliant flash of light!</span>", 1)
 
-	playsound(M.loc, "sound/weapons/flashbang.ogg", 50, 1)
+	playsound(M.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 /mob/proc/blitz_slam()
 	set category = "Spells"
@@ -177,13 +177,13 @@
 	if(!isturf(picked)) return
 	M.set_loc(picked)
 	M.verbs -= /mob/proc/blitz_slam
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		M.verbs += /mob/proc/blitz_slam
 
 /mob/proc/clown_jam(mob/living/target as mob in oview(6))
 	set category = "Spells"
 	set name = "Clown Jam"
-	set desc = "Jams the target into a fat cursed clown"
+	set desc = "Jams the target into a cursed clown"
 
 	var/mob/M = src
 
@@ -194,7 +194,7 @@
 	var/SPtime = 3000
 	if (M.bball_spellpower()) SPtime = 900
 	M.verbs -= /mob/proc/clown_jam
-	SPAWN_DBG(SPtime)
+	SPAWN(SPtime)
 	M.verbs += /mob/proc/clown_jam
 
 	for(var/obj/item/basketball/B in M.contents)
@@ -204,15 +204,15 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] comically leaps towards the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	M.visible_message("<span class='alert'>[M] comically leaps towards the ceiling!</span>")
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 10, i++)
 		M.pixel_y += 4
 		M.pixel_x = rand(-4, 4)
 		step_to(M, target)
-		sleep(1)
-	sleep(1)
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	M.pixel_x = 0
 	M.pixel_y = 0
 	M.set_loc(target.loc)
@@ -220,18 +220,18 @@
 	M.layer = MOB_LAYER
 
 	for(var/mob/N in AIviewers(M, null))
-		if(get_dist(N, target) <= 2)
+		if(GET_DIST(N, target) <= 2)
 			if(N != M)
 				N.changeStatus("weakened", 5 SECONDS)
 		if(N.client)
-			shake_camera(N, 6, 4)
-			N.show_message("<span style=\"color:red\">[M] clown jams [target]!</span>", 1)
+			shake_camera(N, 6, 16)
+			N.show_message("<span class='alert'>[M] clown jams [target]!</span>", 1)
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball"
 
 	playsound(target.loc, "explosion", 50, 1)
-	playsound(target.loc, "sound/musical_instruments/Bikehorn_1.ogg", 50, 1)
+	playsound(target.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
 
 
 	var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -240,7 +240,7 @@
 	smoke.start()
 
 	if(target.job != "Clown")
-		boutput(target, "<span style=\"color:red\"><B>You HONK painfully!</B></span>")
+		boutput(target, "<span class='alert'><B>You HONK painfully!</B></span>")
 		target.take_brain_damage(80)
 		target.stuttering = 120
 		target.job = "Clown"
@@ -263,7 +263,7 @@
 		var/mob/living/carbon/human/H = target
 		if(!istype(H))
 			return
-		boutput(H, "<span style=\"color:red\"><b>You don't feel very funny.</b></span>")
+		boutput(H, "<span class='alert'><b>You don't feel very funny.</b></span>")
 		H.take_brain_damage(-120)
 		H.stuttering = 0
 		H.job = "Lawyer"
@@ -312,19 +312,19 @@
 	if(istype(equipped_thing, /obj/item/basketball))
 		var/obj/item/basketball/BB = equipped_thing
 		if(!BB.payload)
-			boutput(M, __red("This b-ball doesn't have the right heft to it!"))
+			boutput(M, "<span class='alert'>This b-ball doesn't have the right heft to it!</span>")
 			return
 		else //Safety thing to ensure the plutonium core is only good for one dunk
 			var/pl = BB.payload
 			BB.payload = null
 			qdel(pl)
 	else
-		boutput(M, __red("You can't dunk without a b-ball, yo!"))
+		boutput(M, "<span class='alert'>You can't dunk without a b-ball, yo!</span>")
 		return
 
 	M.verbs -= /mob/proc/chaos_dunk
-
-	logTheThing("combat", M, null, "<b>triggers a chaos dunk in [M.loc.loc] ([showCoords(M.x, M.y, M.z)])!</b>")
+	APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")//you cannot move while doing this
+	logTheThing(LOG_COMBAT, M, "<b>triggers a chaos dunk in [M.loc.loc] ([log_loc(M)])!</b>")
 
 	for(var/obj/item/basketball/B in M.contents)
 		B.item_state = "bball2"
@@ -333,27 +333,26 @@
 	M.transforming = 1
 	M.layer = EFFECTS_LAYER_BASE
 
-	M.visible_message("<span style=\"color:red\">[M] flies through the ceiling!</span>")
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+	M.visible_message("<span class='alert'>[M] flies through the ceiling!</span>")
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 
 	for(var/i = 0, i < 50, i++)
 		M.pixel_y += 6
-		M.dir = turn(M.dir, 90)
-		sleep(1)
+		M.set_dir(turn(M.dir, 90))
+		sleep(0.1 SECONDS)
 	M.layer = 0
 	var/sound/siren = sound('sound/misc/airraid_loop_short.ogg')
 	siren.repeat = 1
 	siren.channel = 5
 	world << siren
-	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.")
+	command_alert("A massive influx of negative b-ball protons has been detected in [get_area(M)]. A Chaos Dunk is imminent. All personnel currently on [station_name(1)] have 15 seconds to reach minimum safe distance. This is not a test.", alert_origin = ALERT_ANOMALY)
 	for(var/area/A in world)
 		A.eject = 1
-		A.updateicon()
+		A.UpdateIcon()
 		LAGCHECK(LAG_LOW)
 	for(var/mob/N in mobs)
-		SPAWN_DBG(0)
-			shake_camera(N, 120, 2)
-	SPAWN_DBG(0)
+		shake_camera(N, 120, 8)
+	SPAWN(0)
 		var/thunder = 70
 		while(thunder > 0)
 			thunder--
@@ -361,27 +360,28 @@
 				world << sound('sound/effects/thunder.ogg', volume = 80)
 				for(var/mob/N in mobs)
 					N.flash(3 SECONDS)
-			sleep(5)
-	sleep(300)
-	playsound(M.loc, "sound/effects/bionic_sound.ogg", 50)
+			sleep(0.5 SECONDS)
+	sleep(30 SECONDS)
+	playsound(M.loc, 'sound/effects/bionic_sound.ogg', 50)
 	M.layer = EFFECTS_LAYER_BASE
 	for(var/i = 0, i < 20, i++)
 		M.pixel_y -= 12
-		M.dir = turn(M.dir, 90)
-		sleep(1)
-	sleep(1)
+		M.set_dir(turn(M.dir, 90))
+		sleep(0.1 SECONDS)
+	sleep(0.1 SECONDS)
 	siren.repeat = 0
 	siren.status = SOUND_UPDATE
 	siren.channel = 5
 	world << siren
-	M.visible_message("<span style=\"color:red\">[M] successfully executes a Chaos Dunk!</span>")
+	M.visible_message("<span class='alert'>[M] successfully executes a Chaos Dunk!</span>")
 	M.unlock_medal("Shut Up and Jam", 1)
-	explosion_new(src, get_turf(M), 1500, 22.78)
+	REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "chaosdunk")
+	explosion_new(src, get_turf(M), 2500)
 
 	for(var/area/A in world)
 		LAGCHECK(LAG_LOW)
 		A.eject = 0
-		A.updateicon()
+		A.UpdateIcon()
 
 /mob/proc/spin()
 	set category = "Spells"
@@ -401,23 +401,23 @@
 
 	for(var/mob/N in AIviewers(M, null))
 		if(N.client)
-			N.show_message("<span style=\"color:red\">[M] does a quick spin, knocking you off guard!</span>", 1)
-		if(get_dist(N, M) <= 2)
+			N.show_message("<span class='alert'>[M] does a quick spin, knocking you off guard!</span>", 1)
+		if(GET_DIST(N, M) <= 2)
 			if(N != M)
 				N.changeStatus("stunned", 2 SECONDS)
 
-	M.dir = NORTH
-	sleep(1)
-	M.dir = EAST
-	sleep(1)
-	M.dir = SOUTH
-	sleep(1)
-	M.dir = WEST
+	M.set_dir(NORTH)
+	sleep(0.1 SECONDS)
+	M.set_dir(EAST)
+	sleep(0.1 SECONDS)
+	M.set_dir(SOUTH)
+	sleep(0.1 SECONDS)
+	M.set_dir(WEST)
 
 	M.transforming = 0
 
 	M.verbs -= /mob/proc/spin
-	SPAWN_DBG(4 SECONDS)
+	SPAWN(4 SECONDS)
 		M.verbs += /mob/proc/spin
 
 /obj/item/bball_uplink
@@ -425,14 +425,14 @@
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "radio"
 	var/temp = null
-	var/uses = 4.0
-	var/selfdestruct = 0.0
-	var/traitor_frequency = 0.0
+	var/uses = 4
+	var/selfdestruct = 0
+	var/traitor_frequency = 0
 	var/obj/item/device/radio/origradio = null
 	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
 	item_state = "radio"
 	throwforce = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	throw_speed = 4
 	throw_range = 20
 	m_amt = 100
@@ -448,7 +448,7 @@
 	return
 
 /obj/item/bball_uplink/attack_self(mob/user as mob)
-	user.machine = src
+	src.add_dialog(user)
 	var/dat
 	if (src.selfdestruct)
 		dat = "Self Destructing..."
@@ -484,8 +484,8 @@
 	var/mob/living/carbon/human/H = usr
 	if (!( ishuman(H)))
 		return 1
-	if ((usr.contents.Find(src) || (in_range(src,usr) && istype(src.loc, /turf))))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src,usr) && istype(src.loc, /turf))))
+		src.add_dialog(usr)
 		if (href_list["spell_nova"])
 			if (src.uses >= 1)
 				src.uses -= 1
@@ -510,7 +510,7 @@
 			if (src.uses >= 1)
 				src.uses -= 1
 				usr.verbs += /mob/proc/clown_jam
-				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an obese, idiotic, horrible, and useless clown."
+				src.temp = "This unspoken jam bamboozles your target to the extent that they will become an idiotic, horrible, and useless clown."
 		if (href_list["spell_spin"])
 			usr.verbs += /mob/proc/spin
 			src.temp = "This spell lets you do a 360 spin, knocking down any fools tailing you."
@@ -523,7 +523,7 @@
 */
 		else if (href_list["lock"] && src.origradio)
 			// presto chango, a regular radio again! (reset the freq too...)
-			usr.machine = null
+			src.remove_dialog(usr)
 			usr.Browse(null, "window=radio")
 			var/obj/item/device/radio/T = src.origradio
 			var/obj/item/bball_uplink/R = src
@@ -540,7 +540,7 @@
 			src.temp = "<A href='byond://?src=\ref[src];selfdestruct2=1'>Self-Destruct</A>"
 		else if (href_list["selfdestruct2"])
 			src.selfdestruct = 1
-			SPAWN_DBG (100)
+			SPAWN(10 SECONDS)
 				explode()
 				return
 		else

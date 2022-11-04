@@ -9,8 +9,8 @@
 
 /client/proc/cmd_admin_show_player_stats()
 	set name = "Show Player Stats"
-	set category = null
-	admin_only
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text
 	src.holder.showPlayerStats(ckey)
@@ -18,8 +18,8 @@
 
 /client/proc/cmd_admin_show_player_ips()
 	set name = "Show Player IPs"
-	set category = null
-	admin_only
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text
 	src.holder.showPlayerIPs(ckey)
@@ -27,8 +27,8 @@
 
 /client/proc/cmd_admin_show_player_compids()
 	set name = "Show Player Computer IDs"
-	set category = null
-	admin_only
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	ADMIN_ONLY
 
 	var/ckey = input(usr, "Please enter a ckey", "Player Details", "") as text
 	src.holder.showPlayerCompIDs(ckey)
@@ -42,8 +42,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player stats of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player stats of %target%", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player stats of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player stats of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player stats.")
 		return
 
@@ -92,8 +92,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player IPs of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player IPs of %target%", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player IPs of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player IPs of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player IPs.")
 		return
 
@@ -128,8 +128,8 @@
 	if (!ckey)
 		return alert("You must provide a valid ckey.")
 	if(src.tempmin)
-		logTheThing("admin", usr, ckey, "tried to access the player compIDs of %target%")
-		logTheThing("diary", usr, ckey, "tried to access the player compIDs of %target%", "admin")
+		logTheThing(LOG_ADMIN, usr, "tried to access the player compIDs of [constructTarget(ckey,"admin")]")
+		logTheThing(LOG_DIARY, usr, "tried to access the player compIDs of [constructTarget(ckey,"diary")]", "admin")
 		alert("You need to be an actual admin to view player compIDs.")
 		return
 

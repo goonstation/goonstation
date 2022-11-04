@@ -55,7 +55,7 @@
 
     var/mob/living/M = src.occupant
 
-    M.changeStatus("paralysis", 60)
+    M.changeStatus("paralysis", 6 SECONDS)
     if(prob(33))
       playsound(src.loc, 'sound/effects/bubbles3.ogg', 60, 1)
 
@@ -63,7 +63,7 @@
       // work on cloning the current occupant
       if(src.do_rejection)
         // *price is right losing horn*
-        playsound(src, "sound/impact_sounds/Flesh_Tear_2.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 100, 1)
         M.emote("scream")
         src.visible_message("<span style='color: red;text-weight: bold;'>[src] spits out a pink fleshy lump!</span>")
         // eject martian brain
@@ -84,20 +84,18 @@
         else
           // patch up damage
           M.HealDamage("All", 2, 2) // biotech working better than cloner because fuck who knows
-          M.updatehealth()
           // do you need to get out yet?
           var/health_percent = (M.health / M.max_health) * 100
           if(health_percent >= src.eject_at_health_percent)
             // alright, get out
-            playsound(src, "sound/impact_sounds/Slimy_Splat_2.ogg", 100, 1)
+            playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 100, 1)
             src.visible_message("<span style='color: red; font-weight: bold;'>[src.occupant] is unceremoniously ejected from [src].</span>")
             setalive(M)
-            M.loc = src.loc
+            M.set_loc(src.loc)
             reset()
     else
       // work on eating the current occupant
       M.TakeDamage("All", 2, 2)
-      M.updatehealth()
       if(!isdead(M) && prob(40)) // you poor bastard
         M.emote("scream")
         boutput(M, "<span style='color:red; font-weight: bold;'>[pick("OH GOD IT BURNS! THE PAIN!!", "FUCK! FUCK! AGH!!", "IT'S LIKE YOUR FLESH IS BEING REMODELLED BY A DRUNK TEAM OF ANGRY MONKEYS!", "AUGH!!")]</span>")
@@ -105,18 +103,17 @@
       var/health_percent = (M.health / M.max_health) * 100
       if(health_percent <= src.consume_at_health_percent)
         src.visible_message("<span style='color: red; font-weight: bold;'>Horrible sounds come from [src]!</span>")
-        playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
-        playsound(src, "sound/effects/bubbles.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 100, 1)
+        playsound(src, 'sound/effects/bubbles.ogg', 100, 1)
         // if there's a ghost, time to pull them back
         if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
-          boutput(M.ghost, "<span style='color:blue'>You are dimly aware of bubbling fluid.</span>")
+          boutput(M.ghost, "<span class='notice'>You are dimly aware of bubbling fluid.</span>")
           M.ghost.mind.transfer_to(M)
           qdel(M.ghost)
         M = M.make_critter(src.growing_variant)
         src.occupant = M
-        M.loc = src // the value of target has changed, do not edit this/delete this
+        M.set_loc(src) // the value of target has changed, do not edit this/delete this
         M.TakeDamage("All", 30, 30)
-        M.updatehealth()
         src.growing = 1
   else
     // look around for dead bodies and consume them
@@ -138,29 +135,29 @@
     var/mob/living/M = src.occupant
     var/health_percent = round((M.health / M.max_health) * 100)
     if(src.growing)
-      boutput(user, "<span class='text-blue'>Current occupant is [health_percent]% grown.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [health_percent]% grown.</span>")
     else
-      boutput(user, "<span class='text-blue'>Current occupant is [100 - health_percent]% consumed.</span>")
+      boutput(user, "<span class='notice'>Current occupant is [100 - health_percent]% consumed.</span>")
   else if(src.cooldown > 0)
-    boutput(user, "<span class='text-blue'>Cloner is resting. Normal function will resume shortly.</span>")
+    boutput(user, "<span class='notice'>Cloner is resting. Normal function will resume shortly.</span>")
   else
-    boutput(user, "<span class='text-blue'>This device processes Martian bodies that are placed into it or next to it.</span>")
+    boutput(user, "<span class='notice'>This device processes Martian bodies that are placed into it or next to it.</span>")
 
-/obj/martianBiotech/cloner/attackby(obj/item/W as obj, mob/user as mob)
+/obj/martianBiotech/cloner/attackby(obj/item/W, mob/user)
   var/obj/item/grab/G = W
   if (ismartian(user) && istype(G) && ismob(G.affecting))
     if(src.in_use)
-      boutput(user, "<span style=\"color:blue\"><B>The cloner is already occupied!</B></span>")
+      boutput(user, "<span class='notice'><B>The cloner is already occupied!</B></span>")
     else if(src.cooldown > 0)
-      boutput(user, "<span style=\"color:blue\"><B>The cloner is resting!</B></span>")
+      boutput(user, "<span class='notice'><B>The cloner is resting!</B></span>")
     else
       var/mob/M = G.affecting
       if(src.can_process_other_species || ismartian(M))
-        boutput(user, "<span style=\"color:blue\"><B>The cloner snatches your offering from your tentacles!</B></span>")
+        boutput(user, "<span class='notice'><B>The cloner snatches your offering from your tentacles!</B></span>")
         src.consume(M, 0) // yes I know this bypasses the reject chance but who the fuck is going to notice when processing other species is an admin gimmick anyway
         qdel(G)
       else
-        boutput(user, "<span style=\"color:blue\"><B>The cloner's biology is incompatible with this subject's. Perhaps consider putting it into a biomass pool?</B></span>")
+        boutput(user, "<span class='notice'><B>The cloner's biology is incompatible with this subject's. Perhaps consider putting it into a biomass pool?</B></span>")
     return
   else
     ..(W, user)
@@ -181,8 +178,8 @@
     src.growing_variant = pick(whitelisted_martian_types)
   // now consume
   src.visible_message("<span style='color: red; font-weight: bold;'>[src] [pick("devours", "swallows", "consumes", "gulps down", "snaps up")] [target]![prob(20) ? " Holy shit!" : ""]</span>")
-  playsound(src, "sound/impact_sounds/Flesh_Tear_1.ogg", 100, 1)
-  target.loc = src
+  playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 100, 1)
+  target.set_loc(src)
   src.in_use = 1
   src.occupant = target
   src.icon_state = "cloner-on"

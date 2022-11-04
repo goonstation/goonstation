@@ -45,6 +45,7 @@ chui/window
 
 	//If overriden, be sure to call ..()
 	New(var/atom/adam)
+		..()
 		if(!chui) chui = new()
 		theme = chui.GetTheme( theme )
 		theAtom = adam
@@ -72,6 +73,8 @@ chui/window
 	//Chui will open the window on their client and have its content set appropriately.
 	//The window ref is the \ref[src] of the window.
 	proc/Subscribe( var/client/who )
+		if(isnull(who))
+			return 0
 		CDBG1( "[who] subscribed to [name]" )
 		if(!IsSubscribed(who) && !(who in connecting))
 
@@ -196,7 +199,7 @@ chui/window
 		if( winget( cli, "\ref[src]", "is-visible" ) == "false" )
 			CDBG2( "Validation failed for [cli] -- Not visible." )
 			return 0
-		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && get_dist( cli.mob.loc, theAtom.loc ) > 2 )
+		if( theAtom && (!isAI(cli.mob) && !issilicon(cli.mob)) && GET_DIST( cli.mob.loc, theAtom.loc ) > 2 )
 			CDBG2( "Validation failed for [cli] -- Too far." )
 			return 0
 		return 1
@@ -256,9 +259,9 @@ chui/window
 		callJSFunction( "chui._finishReceive", list( "id" = id )*/
 
 	//Override this instead of Topic()
-	proc/OnTopic( href, href_list[] )
-	//Called when a theme button is clicked. Includes which client did the deed and any other assorted gubbins
+	proc/OnTopic( client/clint, href, href_list[] )
 
+	//Called when a theme button is clicked. Includes which client did the deed and any other assorted gubbins
 	proc/OnClick(var/client/who, var/id, var/href_list )
 
 
@@ -295,9 +298,9 @@ chui/window
 					connecting -= C
 					subscribers |= C
 			else
-				OnTopic( usr.client, href, href_list )
+				OnTopic( usr.client, href, href_list ) //umm
 		else
-			OnTopic( href, href_list )
+			OnTopic( usr.client, href, href_list )
 
 
 //Called when the close button is clicked on both
@@ -318,11 +321,12 @@ chui/window
 				targetDatum.Topic("close=1", params2list("close=1"), targetDatum)
 
 		src << browse( null, "window=[window]" )//Might not be a standard chui window but we'll play along.
-		if(src && src.mob)
+		if(src?.mob)
 			//boutput(world, "[src] was [src.mob.machine], setting to null")
-			if(src.mob.machine && istype(src.mob.machine, /obj/machinery))
-				src.mob.machine.current_user = null
-			src.mob.machine = null
+			if (istype(win) && win.theAtom && isobj(win.theAtom))
+				win.theAtom:remove_dialog(src.mob)
+			else
+				src.mob.remove_dialogs()
 
 //A chui substitute for usr << browse()
 //Mostly the same syntax.
@@ -332,5 +336,3 @@ client/proc/Browse( var/html, var/opts, var/forceChui )
 mob/proc/Browse( var/html, var/opts, var/forceChui )
 	if( src.client )
 		chui.staticinst.bbrowse( src.client, html, opts, forceChui )
-
-//#define browse #error Use --.Browse() instead.

@@ -2,12 +2,21 @@
 	name = "artifact turret"
 	associated_datum = /datum/artifact/turret
 
+	ArtifactDestroyed()
+		var/datum/artifact/turret/A = src.artifact
+		new /obj/item/gun/energy/artifact(get_turf(src), A.artitype.name, list(A.bullet))
+		. = ..()
+
+
 /datum/artifact/turret
 	associated_object = /obj/machinery/artifact/turret
-	rarity_class = 3
+	type_name = "Turret"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 200
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "uncovers an array of guns!"
 	deact_text = "retracts the guns back into itself and falls quiet!"
@@ -22,15 +31,21 @@
 	examine_hint = "It is covered in very conspicuous markings."
 
 	New()
+		..()
 		bullet = new /datum/projectile/artifact
 		shot_range = rand(2,6)
 		if (prob(20))
 			capricious = 1
 		bullet.randomise()
 
+	post_setup()
+		. = ..()
+		bullet.turretArt = src.holder
+
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
+		O.ArtifactFaultUsed(user)
 		if (src.capricious > -1)
 			if (!src.friend || src.capricious)
 				src.friend = user
@@ -62,11 +77,11 @@
 
 	proc/target_is_valid(var/mob/living/M,var/obj/O)
 		if (!M || !O)
-			return 0
-		if (isdead(M))
-			return 0
+			return FALSE
+		if (isdead(M) || isintangible(M))
+			return FALSE
 		if (M == friend)
-			return 0
-		if (get_dist(M,O) > shot_range)
-			return 0
-		return 1
+			return FALSE
+		if (GET_DIST(M,O) > shot_range)
+			return FALSE
+		return TRUE

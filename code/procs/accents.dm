@@ -12,6 +12,7 @@
 	var/next_next_next_char = ""
 
 	New(var/str)
+		..()
 		if(isnull(str))	qdel(src)
 		string = str
 		curr_char_pos = 1
@@ -119,13 +120,11 @@
 	if (!istext(text))
 		CRASH("YOU HAVE TO PASS TEXT TO THE FUNCTIONS THAT DEAL WITH TEXT, IDIOT.")
 
-	var/regex/R = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
-	var/list/C = new()
+	var/regex/our_regex = regex(@"([^&]|&(?:[a-z0-9_-]+|#x?[0-9a-f]+);)", "gi")
+	. = list()
 
-	while (R.Find(text) != 0)
-		C.Add(R.group[1])
-
-	return C
+	while (our_regex.Find(text) != 0)
+		. += our_regex.group[1]
 
 
 /proc/elvis_parse(var/datum/text_roamer/R)
@@ -381,6 +380,9 @@
 			if (R.next_char == "u")
 				new_string = "oo"
 				used = 2
+			else if ((R.next_char == "n" && R.prev_char == "c") || (R.next_char == "n" && (R.next_next_char == "t" || (R.next_next_char == "'" && R.next_next_next_char == "t"))))
+				new_string = "een"
+				used = 2
 			else if (R.next_char == "n")
 				new_string = "un"
 				used = 2
@@ -390,6 +392,9 @@
 		if("A")
 			if (R.next_char == "U")
 				new_string = "OO"
+				used = 2
+			else if ((R.next_char == "N" && R.prev_char == "C") || (R.next_char == "N" && (R.next_next_char == "T" || (R.next_next_char == "'" && R.next_next_next_char == "T"))))
+				new_string = "EEN"
 				used = 2
 			else if (R.next_char == "N")
 				new_string = "UN"
@@ -415,216 +420,216 @@
 	switch (S)
 		if ("y")
 			if (cmptext(R.next_char, "a"))
-				new_string = "&#x44f;"	//Ya
+				new_string = "я"	//Ya
 				used = 2
 			else if (cmptext(R.next_char,"u"))
-				new_string = "&#x44e;"
+				new_string = "ю"
 				used = 2
 			else if (cmptext(R.next_char,"o"))
-				new_string = "&#x451;"
+				new_string = "ё"
 				used = 2
 			else if (cmptext(R.next_char, "e"))
-				new_string = "&#x435;"
+				new_string = "е"
 				used = 2
 			else
-				new_string = "&#x44b;"
+				new_string = "ы"
 				used = 1
 		if ("Y")
 			if (cmptext(R.next_char, "a"))
-				new_string = "&#x42f;"	//Ya
+				new_string = "Я"	//Ya
 				used = 2
 			else if (cmptext(R.next_char,"u"))
-				new_string = "&#x42e;"
+				new_string = "Ю"
 				used = 2
 			else if (cmptext(R.next_char,"o"))
-				new_string = "&#x401;"
+				new_string = "Ё"
 				used = 2
 			else if (cmptext(R.next_char, "e"))
-				new_string = "&#x415;"
+				new_string = "Е"
 				used = 2
 			else
-				new_string = "&#x42b;"
+				new_string = "Ы"
 				used = 1
 		if ("s")
 			if (cmptext(R.next_char,"h"))
 				if (cmptext(R.next_next_char, "c") && cmptext(R.next_next_next_char,"h"))
-					new_string = "&#x449;"
+					new_string = "щ"
 					used = 4
 				else
-					new_string = "&#x448;"
+					new_string = "ш"
 					used = 2
 			else
-				new_string = "&#x441;"
+				new_string = "с"
 				used = 1
 
 		if ("S")
 			if (cmptext(R.next_char,"h"))
 				if (cmptext(R.next_next_char, "c") && cmptext(R.next_next_next_char,"h"))
-					new_string = "&#x429;"
+					new_string = "Щ"
 					used = 4
 				else
-					new_string = "&#x428;"
+					new_string = "Ш"
 					used = 2
 			else
-				new_string = "&#x421;"
+				new_string = "С"
 				used = 1
 
 		if ("k")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x445;"	//x
+				new_string = "х"	//x
 				used = 2
 			else
-				new_string = "&#x43A;"	//k
+				new_string = "к"	//k
 				used = 1
 
 		if ("K")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x425;"	//x
+				new_string = "Х"	//x
 				used = 2
 			else
-				new_string = "&#x41A;"	//k
+				new_string = "К"	//k
 				used = 1
 
 		if ("c")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x447;"
+				new_string = "ч"
 				used = 2
 			else if (cmptext(R.next_char, "z"))
-				new_string = "&#x446;"	//ts
+				new_string = "ц"	//ts
 				used = 2
 
 		if ("C")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x427;"
+				new_string = "Ч"
 				used = 2
 			else if (cmptext(R.next_char,"z"))
-				new_string = "&#x426;"	//ts
+				new_string = "Ц"	//ts
 				used = 2
 
 		if ("t")
 			if (cmptext(R.next_char, "s"))
-				new_string = "&#x446;"	//ts
+				new_string = "ц"	//ts
 				used = 2
 			else
-				new_string = "&#x442;"	//t
+				new_string = "т"	//t
 				used = 1
 
 		if ("T")
 			if (cmptext(R.next_char, "s"))
-				new_string = "&#x426;"	//ts
+				new_string = "Ц"	//ts
 				used = 2
 			else
-				new_string = "&#x422;"	//t
+				new_string = "Т"	//t
 				used = 1
 
 		if ("i")
-			new_string = "&#x438;"
+			new_string = "и"
 		if ("I")
-			new_string = "&#x418;"
+			new_string = "И"
 
 		if ("z")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x436;"
+				new_string = "ж"
 				used = 2
 			else
-				new_string = "&#x437;"
+				new_string = "з"
 
 		if ("Z")
 			if (cmptext(R.next_char, "h"))
-				new_string = "&#x416;"
+				new_string = "Ж"
 				used = 2
 			else
-				new_string = "&#x417;"
+				new_string = "З"
 
 		if ("e")
 			if (!R.prev_char || R.prev_char == " ")
-				new_string = "&#x44d;"
+				new_string = "э"
 			else
-				new_string = "&#x435;"
+				new_string = "е"
 
 		if ("E")
 			if (!R.prev_char || R.prev_char == " ")
-				new_string = "&#x42d;"
+				new_string = "Э"
 			else
-				new_string = "&#x415;"
+				new_string = "Е"
 
 		if ("t")
-			new_string = "&#x442;"
+			new_string = "т"
 		if ("T")
-			new_string = "&#x422;"
+			new_string = "Т"
 
 		if ("u")
-			new_string = "&#x443;"
+			new_string = "у"
 		if ("U")
-			new_string = "&#x423;"
+			new_string = "У"
 
 		if ("p")
-			new_string = "&#x43f;"
+			new_string = "п"
 		if ("P")
-			new_string = "&#x41f;"
+			new_string = "П"
 
 		if ("n")
-			new_string = "&#x43d;"
+			new_string = "н"
 		if ("N")
-			new_string = "&#x41d;"
+			new_string = "Н"
 
 		if ("m")
-			new_string = "&#x43c;"
+			new_string = "м"
 		if ("M")
-			new_string = "&#x41c;"
+			new_string = "М"
 
 		if ("l")
-			new_string = "&#x43b;"
+			new_string = "л"
 		if ("L")
-			new_string = "&#x41b;"
+			new_string = "Л"
 
 		if ("d")
-			new_string = "&#x434;"
+			new_string = "д"
 		if ("D")
-			new_string = "&#x414;"
+			new_string = "Д"
 
 		if ("g")
-			new_string = "&#x433;"
+			new_string = "г"
 		if ("G")
-			new_string = "&#x413;"
+			new_string = "Г"
 
 		if ("b")
-			new_string = "&#x431;"
+			new_string = "б"
 		if ("B")
-			new_string = "&#x411;"
+			new_string = "Б"
 
 		if ("v","w")
-			new_string = "&#x432;"
+			new_string = "в"
 		if ("V","W")
-			new_string = "&#x412;"
+			new_string = "В"
 
 		if ("r")
-			new_string = "&#x440;"
+			new_string = "р"
 		if ("R")
-			new_string = "&#x420;"
+			new_string = "Р"
 
 		if ("f")
-			new_string = "&#x444;"
+			new_string = "ф"
 		if ("F")
-			new_string = "&#x424;"
+			new_string = "Ф"
 
 		if ("o")
-			new_string = "&#x43E;"
+			new_string = "о"
 		if ("O")
-			new_string = "&#x41E;"
+			new_string = "О"
 
 		if ("j")
-			new_string = "&#x439;"
+			new_string = "й"
 		if ("J")
-			new_string = "&#x419;"
+			new_string = "Й"
 
 		if ("a")
-			new_string = "&#x430;"
+			new_string = "а"
 		if ("A")
-			new_string = "&#x410;"
+			new_string = "А"
 
 		if ("'")
-			new_string = "&#x44a;"
+			new_string = "ъ"
 
 	if(new_string == "")
 		new_string = R.curr_char
@@ -791,7 +796,7 @@
 
 		// That legendary harsh R
 		if("r")
-			if(lowertext(R.next_char) != "r")
+			if(lowertext(R.next_char) != "r" && R.prev_char != ":") //stop duplicating the research radio shortcut
 				new_string = "rr"
 				used = 1
 		if("i")
@@ -806,7 +811,7 @@
 	P.string = upper ? uppertext(new_string) : new_string
 	P.chars_used = used
 	return P
-/* nnnoooooope! 
+/* nnnoooooope!
 /proc/wonk_parse(var/string)
 	string = lowertext(string)
 	if(prob(1))
@@ -834,14 +839,14 @@
 
 
 /proc/finnishify(var/string)
-	var/modded = ""
-	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
 	if(prob(50))
 		string = replacetextEx(string, " a ", "")
 		string = replacetextEx(string, " an ", "")
 	if(prob(25))
 		string = replacetextEx(string, " the ", "")
+
+	var/modded = ""
+	var/datum/text_roamer/T = new/datum/text_roamer(string)
 
 	for (var/i = 0, i < length(string), i=i)
 		var/datum/parse_result/P = finnish_parse(T)
@@ -904,7 +909,7 @@
 
 	return modded
 
-/* it's 2020 come on. 
+/* it's 2020 come on.
 /proc/wonkify(var/string)
 	return wonk_parse(string)
 */
@@ -922,12 +927,12 @@
 				if(lowertext(T.prev_char) == "n" || lowertext(T.prev_char) == "c")
 					modded += "gh"
 				else
-					modded += "g"
+					modded += "k"
 			if("K")
 				if(lowertext(T.prev_char) == "N" || lowertext(T.prev_char) == "C")
 					modded += "GH"
 				else
-					modded += "G"
+					modded += "K"
 
 			if("s")
 				modded += "sh"
@@ -939,17 +944,17 @@
 					modded += "du"
 					T.curr_char_pos++
 				else if(lowertext(T.prev_char) == "n")
-					modded += "thf"
+					modded += "dh"
 				else
-					modded += "ff"
+					modded += "dd"
 			if("T")
 				if(lowertext(T.next_char) == "H")
 					modded += "DU"
 					T.curr_char_pos++
 				else if(lowertext(T.prev_char) == "N")
-					modded += "THF"
+					modded += "DH"
 				else
-					modded += "FF"
+					modded += "DD"
 			else
 				modded += T.curr_char
 		T.curr_char_pos++
@@ -1187,6 +1192,9 @@
 		if("a")
 			if (lowertext(R.next_char) == "u")
 				new_string = "oo"
+				used = 2
+			else if ((lowertext(R.next_char) == "n" && lowertext(R.prev_char) == "c") || (lowertext(R.next_char) == "n" && (lowertext(R.next_next_char) == "t" || (lowertext(R.next_next_char) == "'" && lowertext(R.next_next_next_char) == "t"))))
+				new_string = "een"
 				used = 2
 			else if (lowertext(R.next_char) == "n")
 				new_string = "un"
@@ -1531,49 +1539,26 @@ var/list/zalgo_mid = list(
     P.chars_used = used
     return P
 
-//OwO whats this?
-/proc/owotalk(var/string)
-	var/modded = ""
-	var/datum/text_roamer/T = new/datum/text_roamer(string)
-
-	if(prob(13))
-		modded += "rawr x3 "
-
-	if(prob(10))
-		modded += "whats this? "
-
-	if(prob(9))
-		modded += "owo "
-
-	if(prob(8))
-		modded += "uwu "
-
-	if(prob(3))
-		modded += "fucko boingo "
-
-
-	for(var/i = 0, i < length(string), i=i)
-		var/datum/parse_result/P = owo_parse(T)
-		modded += P.string
-		i += P.chars_used
-		T.curr_char_pos = T.curr_char_pos + P.chars_used
-		T.update()
-
-	if(prob(15))
-		modded += " :3c"
-
-	if(prob(13))
-		modded += "~"
-
-	if(prob(10))
-		modded += " uwu"
-
-	if(prob(11))
-		modded += " owo"
-
-
-	return modded
-
+/**
+* uwutalk
+*
+* owo-talk version 2.
+* Nyo it's sewious!
+*/
+/proc/uwutalk(var/string)
+	var/regex/a1 = new(@"r|l", "g")
+	var/regex/a2 = new(@"R|L", "g")
+	// These are so that "no", "No", and "NO" become "nyo", "Nyo", and "NYO".
+	// Otherwise you end up with "nyoT wIKE THIS"
+	var/regex/a3 = new(@"n([aeiou])", "g")
+	var/regex/a4 = new(@"N([aeiou])", "g")
+	var/regex/a5 = new(@"N([AEIOU])", "g")
+	string = a1.Replace(string, "w")
+	string = a2.Replace(string, "W")
+	string = a3.Replace(string, @"ny$1")
+	string = a4.Replace(string, @"Ny$1")
+	string = a5.Replace(string, @"NY$1")
+	return string
 
 /proc/tabarnak(var/string)
 	var/modded = ""
@@ -2045,3 +2030,322 @@ var/list/zalgo_mid = list(
 
 	return modded
 
+// Ruh roh
+/proc/scoob_parse(var/datum/text_roamer/R)
+	var/new_string = ""
+	var/used = 0
+
+	switch(R.curr_char)
+
+		if("a")
+			if(lowertext(R.next_char) != "r")	// AI = rharhy, but harm =/= rghrahrm
+				new_string = "rha"
+				used = 4
+		if("A")
+			if(lowertext(R.next_char) != "r")	// AI = RhaRhy, but harm =/= rghrahrm
+				new_string = "Rha"
+				used = 4
+
+		if("b")
+			new_string = "brh"	// brhutt
+			used = 3
+		if("B")
+			new_string = "Brh"	// Brhutt
+			used = 3
+
+		if("c")
+			if(R.next_char == "e" || R.next_char == "i" || R.next_char == "y" ) // Soft "C"
+				new_string = "rh"
+				used = 2
+			else
+				// (R.next_char == "a" || R.next_char == "o" || R.next_char == "l" || R.next_char == "r" || R.next_char == "u" ) // Hard "C" default
+				new_string = "rr"
+				used = 2
+		if("C")
+			if(R.next_char == "e" || R.next_char == "i" || R.next_char == "y" ) // Soft "C"
+				new_string = "Rh"
+				used = 2
+			else
+				// (R.next_char == "a" || R.next_char == "o" || R.next_char == "l" || R.next_char == "r" || R.next_char == "u" ) // Hard "C" default
+				new_string = "Rr"
+				used = 2
+
+		if("d")
+			if(R.prev_char == "") // First "D" in a word
+				new_string = "dhr"	// Ghreh
+				used = 3
+		if("D")
+			if(R.prev_char == "")	// First "D" in a word
+				new_string = "Dhr"	// Dhroor
+				used = 3
+
+		if("f")
+			if(R.prev_char == "") 	// First "F" in a word
+				new_string = "rh"	// Rhench "rhies"
+				used = 2
+		if("F")
+			if(R.prev_char == "")	// First "F" in a word
+				new_string = "Rh"	// "Rhench" rhies
+				used = 2
+
+		if("h")
+			if(R.prev_char == "")	// First "h" in a word
+				new_string = "rh"	// rhelp mre!
+				used = 2
+		if("H")
+			if(R.prev_char == "")	// First "H" in a word
+				new_string = "Rh"	// Rhr
+				used = 2
+
+
+		if("i")
+			if(R.prev_char == "" && R.next_char == "")			// i
+				new_string = "rhi"
+				used = 3
+			else if(R.prev_char == "" && R.next_char == "'")	// i'm
+				new_string = "rhi"
+				used = 3
+			else if(R.prev_char == "" && R.next_char != "")		// First "i" in a word, and it ain't "i" or "i'm"
+				new_string = "rhy"
+				used = 3
+		if("I")
+			if(R.prev_char == "" && R.next_char == "")			// I
+				new_string = "Rhi"
+				used = 3
+			else if(R.prev_char == "" && R.next_char == "'")	// I'm
+				new_string = "Rhi"
+				used = 3
+			else if(R.prev_char == "" && R.next_char != "")		// First "i" in a word, and it ain't "I" or "I'm"
+				new_string = "Rhy"
+				used = 3
+
+		if("j")
+			new_string = "rrhr"
+			used = 4
+		if("J")
+			new_string = "Rrhr"
+			used = 4
+
+		if("k")
+			if(R.prev_char == "")	// First "k" in a word
+				new_string = "r"	// krakken = rakken
+				used = 1
+		if("K")
+			if(R.prev_char == "")	// First "K" in a word
+				new_string = "R"	// Krakken = Rakken
+				used = 1
+
+		if("l")
+			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
+				new_string = "rghl"
+				used = 4
+			else if(R.prev_char == "")				// first "l" of a word - lightly = wrightly
+				new_string = "wr"
+				used = 2
+			else
+				new_string = "rrl"					// any other "l" - heal = hearrl
+				used = 3
+		if("L")
+			if(lowertext(R.next_char) == "l")		// "ll" - hello = herghlo
+				new_string = "Rghl"
+				used = 4
+			else if(R.prev_char == "")				// first "l" of a word - lightly = wrightly
+				new_string = "Wr"
+				used = 2
+			else
+				new_string = "Rrl"					// any other "l" - heal = hearrl
+				used = 3
+
+		if("m")
+			if(R.prev_char == "")		// First "m" of a word
+				new_string = "mr"		// mime = mrime
+				used = 2
+		if("M")
+			if(R.prev_char == "")		// First "M" of a word
+				new_string = "Mr"		// Mime = Mrime
+				used = 2
+
+		if("n")
+			if(R.prev_char == "")		// First "n" of a word
+				new_string = "rh"		// nine = rhine
+				used = 2
+		if("N")
+			if(R.prev_char == "")		// First "N" of a word
+				new_string = "Rh"		// Nine = Rhine
+				used = 2
+
+		if("o")
+			if(lowertext(R.next_char) == "o")	// "oo"
+				new_string = "rooh"				// oops = roohps
+				used = 4
+			else if(lowertext(R.next_char) == "h")	// "oh"
+				new_string = "roh"				// oh = roh
+				used = 3
+			else								// all other "o"
+				new_string = "rho"				// orange = rhorange
+				used = 3
+		if("O")
+			if(lowertext(R.next_char) == "o")	// "Oo"
+				new_string = "Rooh"				// Oops = Roohps
+				used = 4
+			else if(lowertext(R.next_char) == "h")	// "Oh"
+				new_string = "Roh"				// Oh = Roh
+				used = 3
+			else								// all other "O"
+				new_string = "Rho"				// Orange = Rhorange
+				used = 3
+
+		if("p")
+			if(R.prev_char == "")		// First "p" of a word
+				new_string = "rh"		// paul = rhaul
+				used = 2
+			else						// All other "p"
+				new_string = "bh"		// tape = tabhe
+				used = 2
+		if("P")
+			if(R.prev_char == "")		// First "p" of a word
+				new_string = "Rh"		// Paul = Rhaul
+				used = 2
+			else						// All other "p"
+				new_string = "Bh"		//
+				used = 2
+
+		if("q")
+			if(R.prev_char == "" && lowertext(R.next_char) == "u")		// First "qu" of a word
+				new_string = "rhu"										// quit = rhuit
+				used = 3		// could probs leave out the u, looks like it'd work
+			else if(R.prev_char != "" && lowertext(R.next_char) == "u")	// Other "qu" of a word
+				new_string = "ghr"										// acquire = acghrire
+				used = 3
+			else														// All other "q"
+				new_string = "grh"										// qi = grh
+				used = 3												// triple dingus score
+		if("Q")
+			if(R.prev_char == "" && lowertext(R.next_char) == "u")		// First "Qu" of a word
+				new_string = "Rhu"										// Quit = Rhuit
+				used = 3		// could probs leave out the u, looks like it'd work
+			else if(R.prev_char != "" && lowertext(R.next_char) == "u")	// Other "Qu" of a word
+				new_string = "Ghr"										// acquire = acghrire
+				used = 3
+			else														// All other "q"
+				new_string = "Grh"										// Qi = Grh
+				used = 3												// triple dingus score
+
+		if("s")
+			if(lowertext(R.next_char) == "c")	// sc
+				new_string = "rr"				// scope = rrope
+				used = 2
+			else 								// Other s
+				new_string = "r"				// stab = rtab
+				used = 1						// ew
+		if("S")
+			if(lowertext(R.next_char) == "c")	// sc
+				new_string = "Rr"				// scope = rrope
+				used = 2
+			else 								// Other s
+				new_string = "R"				// stab = rtab
+				used = 1						// ew
+
+		if("t")
+			if(lowertext(R.next_char) == "e" && lowertext(R.next_next_char) == "e")	// tee
+				new_string = "tree"											// teeth = treeth
+				used = 4
+			else if(lowertext(R.next_char) == "y" || lowertext(R.next_char) == "i")	// ty, ti
+				new_string = "rhy"											// type = rhype
+				used = 3
+		if("T")
+			if(lowertext(R.next_char) == "e" && lowertext(R.next_next_char) == "e")	// tee
+				new_string = "Tree"											// teeth = treeth
+				used = 4
+			else if(lowertext(R.next_char) == "y" || lowertext(R.next_char) == "i")	// ty, ti
+				new_string = "Rhy"											// type = rhype
+				used = 3
+
+		if("v")
+			if(R.prev_char == "")		// First "v" of a word
+				new_string = "rh"		// very = rhery
+				used = 2
+			else						// All other "v"
+				new_string = "b"		// groovy = grooby
+				used = 1
+		if("V")
+			if(R.prev_char == "")		// First "V" of a word
+				new_string = "Rh"		// Very = Rhery
+				used = 2
+			else						// All other "V"
+				new_string = "B"		// GROOVY = GROOBY
+				used = 1
+
+		if("w")
+			new_string = "wr"		// w = wr
+			used = 2
+		if("W")
+			new_string = "Wr"		// w = wr
+			used = 2
+
+		if("z")
+			if(R.prev_char == "")		// First "z" of a word
+				new_string = "zhr"		// zebra = zhrebra
+				used = 3
+
+
+	if(new_string == "")
+		new_string = R.curr_char
+		used = 1
+
+	var/datum/parse_result/P = new/datum/parse_result
+	P.string = new_string
+	P.chars_used = used
+	return P
+
+// this whole thing was originally copied over from the Scots entry
+// so its also gonna use a strings file: strings/language/scoob.txt
+
+/proc/scoobify(var/string, var/less_shit)
+
+	var/list/tokens = splittext(string, " ")
+	var/list/modded_tokens = list()
+
+	var/regex/punct_check = regex("\\W+\\Z", "i")
+	for(var/token in tokens)
+		// check to see if we can just swap out the token
+		var/modified_token = ""
+		var/original_word = ""
+		var/punct = ""
+		var/punct_index = findtext(token, punct_check)
+		if(punct_index)
+			punct = copytext(token, punct_index)
+			original_word = copytext(token, 1, punct_index)
+		else
+			original_word = token
+
+		var/matching_token = strings("language/scoob.txt", lowertext(original_word), 1)
+		if(matching_token)
+			modified_token = replacetext(original_word, lowertext(original_word), matching_token)
+		else // otherwise run it through the fallback roamer
+			var/datum/text_roamer/T = new/datum/text_roamer(original_word)
+			for(var/i = 0, i < length(original_word), i=i)
+				var/datum/parse_result/P = scoob_parse(T)
+				if(less_shit && prob(50))
+					modified_token = T.string
+				else
+					modified_token += P.string
+				i += P.chars_used
+				T.curr_char_pos = T.curr_char_pos + P.chars_used
+				T.update()
+
+		modified_token += punct
+		modded_tokens += modified_token
+
+	var/modded = jointext(modded_tokens, " ")
+	if(prob(1))
+		modded += pick(" rhaggy!"," rir bruddy."," rhoinks!"," rharoo!")
+
+	return modded
+
+/proc/thrall_parse(var/string)
+	var/list/end_punctuation = list("!", "?", ".")
+	var/pos = length(string)
+	while (pos > 0 && (string[pos] in end_punctuation))
+		string = copytext(string, 1, pos--)
+	return string + "..."

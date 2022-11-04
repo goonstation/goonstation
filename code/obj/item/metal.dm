@@ -15,9 +15,10 @@ MATERIAL
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "rods"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	w_class = 3.0
-	force = 9.0
-	throwforce = 15.0
+	health = 3
+	w_class = W_CLASS_NORMAL
+	force = 9
+	throwforce = 15
 	throw_speed = 5
 	throw_range = 20
 	m_amt = 1875
@@ -27,82 +28,75 @@ MATERIAL
 	stamina_crit_chance = 25
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins gathering up metal rods!</span>")
+		user.visible_message("<span class='notice'>[user] begins gathering up metal rods!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish gathering rods.</span>")
+		boutput(user, "<span class='notice'>You finish gathering rods.</span>")
 
 	examine()
-		set src in view(1)
+		. = ..()
+		. += "There are [amount] rod\s in this stack."
 
-		..()
-		boutput(usr, text("There are [amount] rods in this stack."))
-		return
-
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many rods do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] rods from the stack, leaving [diff] rods behind.</span>")
 			src.amount = diff
-			var/obj/item/rods/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/rods/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+	attackby(obj/item/W, mob/user)
+		if (isweldingtool(W))
 			if(src.amount < 2)
-				boutput(user, "<span style=\"color:red\">You need at least two rods to make a metal sheet.</span>")
+				boutput(user, "<span class='alert'>You need at least two rods to make a metal sheet.</span>")
 				return
 			if (!istype(src.loc,/turf/))
 				if (issilicon(user))
-					boutput(user, "<span style=\"color:red\">Hardcore as it sounds, smelting parts of yourself off isn't big or clever.</span>")
+					boutput(user, "<span class='alert'>Hardcore as it sounds, smelting parts of yourself off isn't big or clever.</span>")
 				else
-					boutput(user, "<span style=\"color:red\">You should probably put the rods down first.</span>")
+					boutput(user, "<span class='alert'>You should probably put the rods down first.</span>")
 				return
-			if(!WELD.try_weld(user, 1))
+			if(!W:try_weld(user, 1))
 				return
 
 			var/weldinput = 1
 			if (src.amount > 3)
 				var/makemetal = round(src.amount / 2)
-				boutput(user, "<span style=\"color:blue\">You could make up to [makemetal] sheets by welding this stack.</span>")
+				boutput(user, "<span class='notice'>You could make up to [makemetal] sheets by welding this stack.</span>")
 				weldinput = input("How many sheets of metal do you want to make?","Welding",1) as num
-				if (weldinput < 1) return
+				if (weldinput < 1 || !isnum_safe(weldinput)) return
 				if (weldinput > makemetal) weldinput = makemetal
-			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(usr.loc)
+			var/obj/item/sheet/metal/M = new /obj/item/sheet/metal(user.loc)
 			if(src.material) M.setMaterial(src.material)
 			M.amount = weldinput
-			src.amount -= weldinput * 2
+			src.consume_rods(weldinput * 2)
 
-			WELD.eyecheck(user)
-			user.visible_message("<span style=\"color:red\"><B>[user]</B> welds the rods together into metal.</span>")
-			if(src.amount < 1)	qdel(src)
+			user.visible_message("<span class='alert'><B>[user]</B> welds the rods together into metal.</span>")
 			return
 		if (istype(W, /obj/item/rods))
 			var/obj/item/rods/R = W
 			if (R.amount == src.max_stack)
-				boutput(user, "<span style=\"color:red\">You can't put any more rods in this stack!</span>")
+				boutput(user, "<span class='alert'>You can't put any more rods in this stack!</span>")
 				return
-			if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
-				boutput(user, "<span style=\"color:red\">You can't mix 2 stacks of different metals!</span>")
+			if (W.material && src.material && !isSameMaterial(W.material, src.material))
+				boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 				return
 			if (R.amount + src.amount > src.max_stack)
 				src.amount = R.amount + src.amount - src.max_stack
 				R.amount = src.max_stack
-				boutput(user, "<span style=\"color:blue\">You add the rods to the stack. It now has [R.amount] rods.</span>")
+				boutput(user, "<span class='notice'>You add the rods to the stack. It now has [R.amount] rods.</span>")
 			else
 				R.amount += src.amount
-				boutput(user, "<span style=\"color:blue\">You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
-				//SN src = null
+				boutput(user, "<span class='notice'>You add [R.amount] rods to the stack. It now has [R.amount] rods.</span>")
 				qdel(src)
 				return
 		return
@@ -110,32 +104,33 @@ MATERIAL
 	attack_self(mob/user as mob)
 		if (user.weakened | user.getStatusDuration("stunned"))
 			return
-		if (locate(/obj/grille, usr.loc))
-			for(var/obj/grille/G in usr.loc)
+		if (locate(/obj/grille, user.loc))
+			for(var/obj/grille/G in user.loc)
 				if (G.destroyed)
 					G.health = G.health_max
 					G.set_density(1)
 					G.destroyed = 0
-					G.update_icon()
+					G.UpdateIcon()
 					if(src.material)
 						G.setMaterial(src.material)
-					boutput(user, "<span style=\"color:blue\">You repair the broken grille.</span>")
+					boutput(user, "<span class='notice'>You repair the broken grille.</span>")
 					src.amount--
 				else
-					boutput(user, "<span style=\"color:red\">There is already a grille here.</span>")
+					boutput(user, "<span class='alert'>There is already a grille here.</span>")
 				break
 		else
 			if (src.amount < 2)
-				boutput(user, "<span style=\"color:red\">You need at least two rods to build a grille.</span>")
+				boutput(user, "<span class='alert'>You need at least two rods to build a grille.</span>")
 				return
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> begins building a grille.</span>")
-			var/turf/T = usr.loc
-			SPAWN_DBG(1.5 SECONDS)
-				if (T == usr.loc && !usr.weakened && !usr.getStatusDuration("stunned"))
+			user.visible_message("<span class='notice'><b>[user]</b> begins building a grille.</span>")
+			var/turf/T = user.loc
+			SPAWN(1.5 SECONDS)
+				if (T == user.loc && !user.weakened && !user.getStatusDuration("stunned"))
 					src.amount -= 2
-					var/atom/G = new /obj/grille(usr.loc)
+					var/atom/G = new /obj/grille(user.loc)
 					G.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Grille in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing(LOG_STATION, user, "builds a Grille in [user.loc.loc] ([log_loc(user)])")
+					G.add_fingerprint(user)
 		if (src.amount < 1)
 			qdel(src)
 			return
@@ -155,10 +150,10 @@ MATERIAL
 	icon_state = "sheet"
 	desc = "A heavy sheet of metal."
 	m_amt = 3750
-	throwforce = 10.0
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of thick metal, from which one can construct a multitude of objects."
 		//cogwerks - burn vars
@@ -169,53 +164,48 @@ MATERIAL
 	burn_type = 1
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking metal sheets!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking metal sheets!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish stacking metal.</span>")
+		boutput(user, "<span class='notice'>You finish stacking metal.</span>")
 
 	metal/examine()
-		set src in view(1)
-		set category = "Local"
+		. = ..()
+		. += "There are [src.amount] metal sheet\s on the stack."
 
-		..()
-		boutput(usr, text("There are [] metal sheet\s on the stack.", src.amount))
-		return
-
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
 
-	attackby(obj/item/sheet/metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/metal) ))
 			return
-		if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
-			boutput(user, "<span style=\"color:red\">You can't mix 2 stacks of different metals!</span>")
+		if (W.material && src.material && !isSameMaterial(W.material, src.material))
+			boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 			return
 		if (W.amount >= src.max_stack)
-			boutput(user, "<span style=\"color:red\">You can't put any more sheets in this stack!</span>")
+			boutput(user, "<span class='alert'>You can't put any more sheets in this stack!</span>")
 			return
 		if (W.amount + src.amount > src.max_stack)
 			src.amount = W.amount + src.amount - src.max_stack
 			W.amount = src.max_stack
-			boutput(user, "<span style=\"color:blue\">You add the metal to the stack. It now has [W.amount] sheets.</span>")
+			boutput(user, "<span class='notice'>You add the metal to the stack. It now has [W.amount] sheets.</span>")
 		else
 			W.amount += src.amount
-			boutput(user, "<span style=\"color:blue\">You add the metal to the stack. It now has [W.amount] sheets.</span>")
-			//SN src = null
+			boutput(user, "<span class='notice'>You add the metal to the stack. It now has [W.amount] sheets.</span>")
 			qdel(src)
 			return
 		return
@@ -232,6 +222,7 @@ MATERIAL
 		L["light"] = "Light Fixture Parts (Needs 2 Sheets)<BR>"
 		L["stool"] = "stool"
 		L["chair"] = "chair"
+		L["railing"] = "railing"
 		L["bed"] = "Bed (Needs 2 Sheets)"
 		L["closet"] = "Closet (Needs 2 Sheets)<BR>"
 		L["construct"] = "Wall Girders (Needs 2 Sheets)"
@@ -258,16 +249,15 @@ MATERIAL
 				return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])
 				if("rods")
 					var/makerods = round(src.amount * 2)
 					if (makerods > 50) makerods = 50
-					boutput(usr, "<span style=\"color:blue\">You could make up to [makerods] rods with the amount of metal you have.</span>")
+					boutput(usr, "<span class='notice'>You could make up to [makerods] rods with the amount of metal you have.</span>")
 					var/rodsinput = input("How many rods do you want to make? (Minimum of 2)","Metal Crafting",1) as num
-					if (rodsinput < 2) return
+					if (rodsinput < 2 || !isnum_safe(rodsinput)) return
 					if (rodsinput > makerods) rodsinput = makerods
 
 					var/obj/item/rods/R = new /obj/item/rods(usr.loc)
@@ -276,14 +266,14 @@ MATERIAL
 					src.amount -= round(rodsinput / 2)
 				if("table")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to build table parts.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to build table parts.</span>"))
 						return
 					src.amount -= 2
 					var/atom/A = new /obj/item/furniture_parts/table( usr.loc )
 					A.setMaterial(src.material)
 				if("light")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to build a light fixture.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to build a light fixture.</span>"))
 						return
 					src.amount -= 2
 					var/atom/A = new /obj/item/light_parts( usr.loc )
@@ -296,16 +286,21 @@ MATERIAL
 					src.amount--
 					var/obj/stool/chair/C = new /obj/stool/chair( usr.loc )
 					C.setMaterial(src.material)
-					C.dir = usr.dir
+					C.set_dir(usr.dir)
 					if (C.dir == NORTH)
 						C.layer = 5 // TODO layer
+				if("railing")
+					src.amount--
+					var/obj/railing/R = new /obj/railing( usr.loc )
+					C.setMaterial(src.material)
+					C.set_dir(usr.dir)
 				if("rack")
 					src.amount--
 					var/atom/A = new /obj/item/furniture_parts/rack_parts( usr.loc )
 					A.setMaterial(src.material)
 				if("reinforced")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to make a reinforced metal sheet.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to make a reinforced metal sheet.</span>"))
 						return
 					src.amount -= 2
 					var/obj/item/sheet/r_metal/C = new /obj/item/sheet/r_metal( usr.loc )
@@ -313,18 +308,18 @@ MATERIAL
 					C.amount = 1
 				if("closet")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to build a closet.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to build a closet.</span>"))
 						return
 					src.amount -= 2
-					var/atom/A = new /obj/closet( usr.loc )
+					var/atom/A = new /obj/storage/closet( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Closet in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing(LOG_STATION, usr, "builds a Closet in [usr.loc.loc] ([log_loc(usr)])")
 				if("fl_tiles")
 					var/maketiles = round(src.amount * 4)
 					if (maketiles > 80) maketiles = 80
-					boutput(usr, "<span style=\"color:blue\">You could make up to [maketiles] tiles with the amount of metal you have.</span>")
+					boutput(usr, "<span class='notice'>You could make up to [maketiles] tiles with the amount of metal you have.</span>")
 					var/tileinput = input("How many tiles do you want to make? (Minimum of 4)","Metal Crafting",1) as num
-					if (tileinput < 4) return
+					if (tileinput < 4 || !isnum_safe(tileinput)) return
 					if (tileinput > maketiles) tileinput = maketiles
 
 					var/obj/item/tile/R = new /obj/item/tile( usr.loc )
@@ -333,49 +328,49 @@ MATERIAL
 					src.amount -= round(tileinput / 4)
 				if("pipef")
 					if (src.amount < 3)
-						boutput(usr, text("<span style=\"color:red\">You need at least three metal to build pipe frames.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least three metal to build pipe frames.</span>"))
 						return
 					src.amount -= 3
 					var/atom/A = new /obj/item/pipebomb/frame( usr.loc )
 					A.setMaterial(src.material)
 				if("bed")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to build a bed.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to build a bed.</span>"))
 						return
 					src.amount -= 2
 					var/atom/A = new /obj/stool/bed( usr.loc )
 					A.setMaterial(src.material)
 				if("computer")
 					if(src.amount < 5)
-						boutput(usr, text("<span style=\"color:red\">You need at least five metal to make a console frame.!</span>"))
+						boutput(usr, text("<span class='alert'>You need at least five metal to make a console frame.!</span>"))
 						return
 					src.amount -= 5
 					var/atom/A = new /obj/computerframe( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Console Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing(LOG_STATION, usr, "builds a Console Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("hcomputer")
 					if(src.amount < 5)
-						boutput(usr, text("<span style=\"color:red\">You need at least five metal to make a computer frame.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least five metal to make a computer frame.</span>"))
 						return
 					src.amount -= 5
 					var/atom/A = new /obj/computer3frame( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Computer Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing(LOG_STATION, usr, "builds a Computer Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("tcomputer")
 					if(src.amount < 3)
-						boutput(usr, text("<span style=\"color:red\">You need at least three metal to make a terminal computer frame.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least three metal to make a terminal computer frame.</span>"))
 						return
 					src.amount -= 3
 					var/atom/A = new /obj/computer3frame/terminal( usr.loc )
 					A.setMaterial(src.material)
-					logTheThing("station", usr, null, "builds a Terminal Frame in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+					logTheThing(LOG_STATION, usr, "builds a Terminal Frame in [usr.loc.loc] ([log_loc(usr)])")
 				if("construct")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You need at least two metal to build wall girders.</span>"))
+						boutput(usr, text("<span class='alert'>You need at least two metal to build wall girders.</span>"))
 						return
-					boutput(usr, "<span style=\"color:blue\">Building wall girders ...</span>")
+					boutput(usr, "<span class='notice'>Building wall girders ...</span>")
 					var/turf/location = usr.loc
-					sleep(20)
+					sleep(2 SECONDS)
 					if ((usr.loc == location))
 						if (!istype(location, /turf/simulated/floor))
 							return
@@ -383,18 +378,18 @@ MATERIAL
 						src.amount -= 2
 						var/atom/A = new /obj/structure/girder(location)
 						A.setMaterial(src.material)
-						logTheThing("station", usr, null, "builds Wall Girders in [usr.loc.loc] ([showCoords(usr.x, usr.y, usr.z)])")
+						logTheThing(LOG_STATION, usr, "builds Wall Girders in [usr.loc.loc] ([log_loc(usr)])")
 
 			if (src.amount <= 0)
 				usr << browse(null, "window=met_sheet")
 				onclose(usr, "met_sheet")
 				usr.u_equip(src)
-				boutput(usr, "<span style=\"color:red\">You use up the last of your metal.</span>")
+				boutput(usr, "<span class='alert'>You use up the last of your metal.</span>")
 				qdel(src)
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return
@@ -405,13 +400,13 @@ MATERIAL
 	desc = "A very heavy sheet of metal."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "sheet-r"
-	force = 5.0
+	force = 5
 	item_state = "sheet-metal"
 	m_amt = 7500
-	throwforce = 15.0
+	throwforce = 15
 	throw_speed = 1
 	throw_range = 4
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	flags = FPRINT | TABLEPASS | CONDUCT
 	desc = "A collection of reinforced metal, used for making thicker walls and stronger metal objects."
 		//cogwerks - burn vars
@@ -438,28 +433,28 @@ MATERIAL
 		onclose(user, "met_sheet")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((user.r_hand == src || user.l_hand == src) && src.amount > 1)
 			var/splitnum = round(input("How many sheets do you want to take from the stack?","Stack of [src.amount]",1) as num)
 			var/diff = src.amount - splitnum
-			if (splitnum >= amount || splitnum < 1)
-				boutput(user, "<span style=\"color:red\">Invalid entry, try again.</span>")
+			if (splitnum >= amount || splitnum < 1 || !isnum_safe(splitnum))
+				boutput(user, "<span class='alert'>Invalid entry, try again.</span>")
 				return
-			boutput(usr, "<span style=\"color:blue\">You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
+			boutput(user, "<span class='notice'>You take [splitnum] sheets from the stack, leaving [diff] sheets behind.</span>")
 			src.amount = diff
-			var/obj/item/sheet/r_metal/new_stack = new src.type(usr.loc, diff)
+			var/obj/item/sheet/r_metal/new_stack = new src.type(user.loc, diff)
 			if(src.material) new_stack.setMaterial(src.material)
 			new_stack.amount = splitnum
-			new_stack.attack_hand(user)
+			new_stack.Attackhand(user)
 			new_stack.add_fingerprint(user)
 		else
 			..(user)
 
-	attackby(obj/item/sheet/r_metal/W as obj, mob/user as mob)
+	attackby(obj/item/sheet/r_metal/W, mob/user)
 		if (!( istype(W, /obj/item/sheet/r_metal) ))
 			return
-		if (W.material && src.material && (W.material.mat_id != src.material.mat_id))
-			boutput(user, "<span style=\"color:red\">You can't mix 2 stacks of different metals!</span>")
+		if (W.material && src.material && !isSameMaterial(W.material, src.material))
+			boutput(user, "<span class='alert'>You can't mix 2 stacks of different metals!</span>")
 			return
 		if (W.amount >= src.max_stack)
 			return
@@ -468,7 +463,6 @@ MATERIAL
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return
@@ -480,20 +474,19 @@ MATERIAL
 			return
 		if (href_list["make"])
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 			switch(href_list["make"])
 				if("table")
 					if (src.amount < 2)
-						boutput(usr, text("<span style=\"color:red\">You haven't got enough metal to build the reinforced table parts!</span>"))
+						boutput(usr, text("<span class='alert'>You haven't got enough metal to build the reinforced table parts!</span>"))
 						return
 					src.amount -= 2
 					var/atom/A = new /obj/item/furniture_parts/table/reinforced( usr.loc )
 					if(src.material) A.setMaterial(src.material)
 				if("metal")
 					if (src.amount < 1)
-						boutput(usr, text("<span style=\"color:red\">You haven't got enough metal to build the metal sheets!</span>"))
+						boutput(usr, text("<span class='alert'>You haven't got enough metal to build the metal sheets!</span>"))
 						return
 					src.amount -= 1
 					var/obj/item/sheet/metal/C = new /obj/item/sheet/metal( usr.loc )
@@ -508,7 +501,7 @@ MATERIAL
 
 
 				return
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			src.attack_self(usr)
 			return
 		return

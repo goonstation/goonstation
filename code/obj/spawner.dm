@@ -132,7 +132,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 		// proximity
 		if (1)
@@ -155,7 +155,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 
 
 		// timer
@@ -178,7 +178,7 @@
 			PT.air_contents.temperature = btemp1 + T0C
 			OT.air_contents.temperature = btemp2 + T0C
 
-			V.update_icon()
+			V.UpdateIcon()
 	qdel(src)
 
 
@@ -218,14 +218,14 @@
 		if(!isturf(src.loc))
 			dispose()
 			return
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			explode()
 
 	Bumped(atom/A)
 		if(ismob(A))
 			walk(src, get_dir(A, src), 1)
 
-	Bump(atom/O)
+	bump(atom/O)
 		walk(src, 0)
 
 	ex_act(severity)
@@ -252,7 +252,7 @@
 		for(var/turf/T in oview(3, src))
 			if((T.x != src.x && T.y != src.y) || T.density)
 				continue
-			var/dist = get_dist(src.loc, T)
+			var/dist = GET_DIST(src.loc, T)
 			var/rel_dir = get_dir(src.loc, T)
 			if(dist <= 3)
 				for(var/atom/A in T)
@@ -268,7 +268,7 @@
 				var/atom/movable/overlay/A = new /atom/movable/overlay( T )
 				A.icon_state = "nothing"
 				A.icon = 'icons/effects/effects.dmi'
-				A.dir = rel_dir
+				A.set_dir(rel_dir)
 
 				if(dist == 3)
 					boom_tips.Add(A)
@@ -286,9 +286,9 @@
 			// drsingh for Cannot execute null.ex act()
 			if (!isnull(O)) O.ex_act(rand(1,2))
 		playsound(src.loc, "explosion", 100, 1)
-		playsound(src.loc, "sound/effects/explosionfar.ogg", 100, 1, 14)
-		sleep(10)
-		animation.dispose()
-		for(var/atom/movable/overlay/A in (boom + boom_tips))
-			A.dispose()
-		src.dispose()
+		playsound(src.loc, 'sound/effects/explosionfar.ogg', 100, 1, 14)
+		SPAWN(1 SECOND)
+			animation.dispose()
+			for(var/atom/movable/overlay/A in (boom + boom_tips))
+				A.dispose()
+			src.dispose()

@@ -1,5 +1,4 @@
 #define MAX_DICE_GROUP 6
-#define ROLL_WAIT_TIME 30
 var/list/rollList = list()
 
 /obj/item/dice
@@ -8,12 +7,11 @@ var/list/rollList = list()
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
 	throwforce = 0
-	w_class = 1.0
-	stamina_damage = 2
-	stamina_cost = 2
+	w_class = W_CLASS_TINY
+	stamina_damage = 0
+	stamina_cost = 0
 	var/sides = 6
 	var/last_roll = null
-	var/last_roll_time = null
 	var/can_have_pals = 1
 	var/list/obj/item/dice/dicePals = list() // for combined dice rolls, up to 9 in a stack
 	var/sound_roll = 'sound/items/dicedrop.ogg'
@@ -25,19 +23,18 @@ var/list/rollList = list()
 	var/loadnumber
 	var/loadprob
 	var/mob/living/carbon/human/hitmob
-	module_research = list("vice" = 5)
-	module_research_type = /obj/item/dice
 	rand_pos = 1
 	var/initialName = "die"
 	var/initialDesc = "A six-sided die."
 
 	New()
-		SPAWN_DBG(0)
+		..()
+		SPAWN(0)
 			initialName = name
 			initialDesc = desc
 
 	get_desc()
-		if (src.last_roll && !src.dicePals.len)
+		if (src.last_roll && !length(src.dicePals))
 			if (isnum(src.last_roll))
 				. += "<br>[src] currently shows [get_english_num(src.last_roll)]."
 			else
@@ -47,29 +44,28 @@ var/list/rollList = list()
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
+		user.visible_message("<span class='alert'><b>[user] attempts to swallow [src] and chokes on it.</b></span>")
 		user.take_oxygen_deprivation(160)
-		user.updatehealth()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
 
 	proc/roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
 		if (src.sound_roll)
-			playsound(get_turf(src), src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
-		src.set_loc(get_turf(src))
-		src.pixel_y = rand(-8,8)
-		src.pixel_x = rand(-8,8)
+		if (!src.cant_drop)
+			src.set_loc(get_turf(src))
+			src.pixel_y = rand(-8,8)
+			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 		if(src.colorcache)
 			src.color = src.colorcache
 			src.colorcache = null
@@ -79,7 +75,7 @@ var/list/rollList = list()
 			if(src.loadprob && src.loadnumber && prob(src.loadprob)) //important for loading dice
 				src.last_roll = src.loadnumber
 				if(prob(33))
-					src.visible_message("<span style=\"color:red\"><b>Something wasn't right about that roll...</b></span>")
+					src.visible_message("<span class='alert'><b>Something wasn't right about that roll...</b></span>")
 			else
 				src.last_roll = rand(1, src.sides)
 			roll_total = src.last_roll
@@ -90,7 +86,10 @@ var/list/rollList = list()
 #ifdef HALLOWEEN
 			if (last_roll == 13 && prob(5))
 				var/turf/T = get_turf(src)
-				for (var/obj/machinery/power/apc/apc in get_area(T))
+				var/area/tarea = get_area(T)
+				for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
+					if (get_area(apc) != tarea)
+						continue
 					apc.overload_lighting()
 
 				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
@@ -103,11 +102,12 @@ var/list/rollList = list()
 		else
 			src.last_roll = null
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
-
+		tooltip_rebuild = 1
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
-				D.set_loc(get_turf(src))
+				if (!D.cant_drop)
+					D.set_loc(get_turf(src))
 				if (prob(75))
 					step_rand(D)
 				roll_total += D.roll_dat_thang()
@@ -143,6 +143,8 @@ var/list/rollList = list()
 	proc/addPal(var/obj/item/dice/Pal, var/mob/user as mob)
 		if (!Pal || Pal == src || !istype(Pal, /obj/item/dice) || (src.dicePals.len + Pal.dicePals.len) >= MAX_DICE_GROUP)
 			return 0
+		if (!src.can_have_pals || !Pal.can_have_pals)
+			return 0
 		if (istype(Pal.loc, /obj/item/storage))
 			return 0
 
@@ -169,7 +171,8 @@ var/list/rollList = list()
 			src.colorcache = src.color //removes src color, then overlays a decoy image to make the icon look unchanged
 			src.color = null
 			src.decoyimageicon = new /icon(src.icon,src.icon_state)
-			decoyimageicon.Blend(colorcache, ICON_MULTIPLY)
+			if(src.colorcache)
+				decoyimageicon.Blend(src.colorcache, ICON_MULTIPLY)
 			src.decoyimage = image(decoyimageicon)
 			src.UpdateOverlays(src.decoyimage,"0") //dats a zero :P
 
@@ -190,7 +193,7 @@ var/list/rollList = list()
 		if(Pal.dicePals.len)
 			src.dicePals |= Pal.dicePals // |= adds things to lists that aren't already present
 
-			var/startoverlay = src.overlays.len
+			var/startoverlay = length(src.overlays)
 			var/endoverlay = (src.overlays.len-1)+(Pal.overlays.len-1)
 
 			for(var/i=startoverlay, i<=endoverlay, i++) //src.overlays.len will return dice position + 1 as the decoy overlay will be registered
@@ -262,12 +265,13 @@ var/list/rollList = list()
 			return ..()
 
 	attack_self(mob/user as mob)
-		user.u_equip(src)
+		if (!src.cant_drop)
+			user.u_equip(src)
 		src.roll_dat_thang()
 		diceInChat()
 		rollList = list()
 
-	throw_impact(var/atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if(istype(hit_atom, /mob))
 			if((istype(src, /obj/item/dice/weighted)) && (istype(hit_atom, /mob/living/carbon/human)))
 				src.hitmob = hit_atom
@@ -286,19 +290,19 @@ var/list/rollList = list()
 			if (src.addPal(O, user))
 				user.visible_message("<b>[user]</b> gathers up some dice.",\
 				"You gather up some dice.")
-				SPAWN_DBG(0.2 SECONDS)
+				SPAWN(0.2 SECONDS)
 					for (var/obj/item/dice/D in range(1, user))
 						if (D == src)
 							continue
 						if (!src.addPal(D, user))
 							break
 						else
-							sleep(2)
+							sleep(0.2 SECONDS)
 					return
 		else
 			return ..()
 
-// /obj/item/dice/HasEntered(AM as mob|obj)
+// /obj/item/dice/Crossed(atom/movable/AM as mob|obj)
 // 	if(ismob(AM))
 // 		var/mob/M = AM
 // 		if(ishuman(M))
@@ -307,14 +311,13 @@ var/list/rollList = list()
 // 				return
 // 			if(!H.shoes)
 // 				if((prob(2))&&(!istype(src,/obj/item/dice/magic8ball))&&(!istype(src,/obj/item/dice/coin)))
-// 					H.visible_message("<span style=\"color:red\"><B>[H.name] steps on the [src]!</B></span>", "<span style=\"color:red\"><B>You step on the [src]!</B></span>")
+// 					H.visible_message("<span class='alert'><B>[H.name] steps on the [src]!</B></span>", "<span class='alert'><B>You step on the [src]!</B></span>")
 // 					var/obj/item/affecting = H.organs[pick("l_leg", "r_leg")]
 // 					H.weakened = max(3, H.weakened)
 // 					affecting.take_damage(5, 0)
 // 					H.UpdateDamageIcon()
-// 					H.updatehealth()
 // 			if((prob(2)) && (H.m_intent != "walk") && (!istype(src,/obj/item/dice/coin)))
-// 				H.visible_message("<span style=\"color:red\"><B>[H.name] comically slips on the [src]!</B></span>", "<span style=\"color:red\"><B>You comically slip on the [src]!</B></span>")
+// 				H.visible_message("<span class='alert'><B>[H.name] comically slips on the [src]!</B></span>", "<span class='alert'><B>You comically slip on the [src]!</B></span>")
 // 				H.weakened = max(2, M.weakened)
 // 				H.stunned = max(2, M.stunned)
 // 	..()
@@ -363,14 +366,14 @@ var/list/rollList = list()
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] drop kicks [src], but it barely moves!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] drop kicks [src], but it barely moves!</b></span>")
 		user.visible_message("[src] shows <i>[pick("Goodbye","You done fucked up now","Time to die","Outlook terrible","That was a mistake","You should not have done that","Foolish","Very well")]</i>.")
 		if (src.loc == user)
 			user.u_equip(src)
 			src.layer = initial(src.layer)
 			src.set_loc(user.loc)
-		SPAWN_DBG(1 SECOND)
-			user.visible_message("<span style='color:red'><b>[user] is crushed into a bloody ball by an unseen force, and vanishes into nothingness!</b></span>")
+		SPAWN(1 SECOND)
+			user.visible_message("<span class='alert'><b>[user] is crushed into a bloody ball by an unseen force, and vanishes into nothingness!</b></span>")
 			user.implode()
 		return 1
 
@@ -419,14 +422,14 @@ var/list/rollList = list()
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] attempts to swallow [src] and gets sucked in!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] attempts to swallow [src] and gets sucked in!</b></span>")
 		user.mind.damned = 1
 		user.implode()
 		user.suiciding = 0
 		return 1
 
 	roll_dat_thang() // fine if I can't use proc/roll() then we'll all just have to suffer this
-		if (src.last_roll_time && world.time < (src.last_roll_time + ROLL_WAIT_TIME))
+		if (ON_COOLDOWN(src,"roll", 3 SECONDS))
 			return
 		var/roll_total = null
 
@@ -434,15 +437,15 @@ var/list/rollList = list()
 			usr.mind.damned = 1
 
 		if (src.sound_roll)
-			playsound(get_turf(src), src.sound_roll, 100, 1)
+			playsound(src, src.sound_roll, 50, 1)
 
-		src.set_loc(get_turf(src))
-		src.pixel_y = rand(-8,8)
-		src.pixel_x = rand(-8,8)
+		if (!src.cant_drop)
+			src.set_loc(get_turf(src))
+			src.pixel_y = rand(-8,8)
+			src.pixel_x = rand(-8,8)
 
-		src.name = initialName//initial(src.name)
-		src.desc = initialDesc//initial(src.desc)
-		//src.overlays = null
+		src.name = initialName
+		src.desc = initialDesc
 
 		if (src.sides && isnum(src.sides))
 			src.last_roll = rand(1, src.sides)
@@ -452,7 +455,10 @@ var/list/rollList = list()
 #ifdef HALLOWEEN
 			if (last_roll == 13 && prob(5))
 				var/turf/T = get_turf(src)
-				for (var/obj/machinery/power/apc/apc in get_area(T))
+				var/area/tarea = get_area(T)
+				for (var/obj/machinery/power/apc/apc in machine_registry[MACHINES_POWER])
+					if (get_area(apc) != tarea)
+						continue
 					apc.overload_lighting()
 
 				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
@@ -467,9 +473,10 @@ var/list/rollList = list()
 			src.visible_message("[src] shows... um. Something. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
 
 		if (src.dicePals.len)
-			shuffle(src.dicePals) // so they don't all roll in the same order they went into the pile
+			shuffle_list(src.dicePals) // so they don't all roll in the same order they went into the pile
 			for (var/obj/item/dice/D in src.dicePals)
-				D.set_loc(get_turf(src))
+				if (!D.cant_drop)
+					D.set_loc(get_turf(src))
 				if (prob(75))
 					step_rand(D)
 				roll_total += D.roll_dat_thang()
@@ -489,46 +496,87 @@ var/list/rollList = list()
 	name = "D6"
 	color = "#A3A3A3"
 
-/obj/item/dice_bot
-	name = "Probability Cube"
+/obj/item/dice/robot
+	name = "probability cube"
 	desc = "A device for the calculation of random probabilities. Especially ones between one and six."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "d6_6"
-	w_class = 1.0
-	var/sides = 6
-	var/last_roll = null
+	w_class = W_CLASS_TINY
+	sides = 6
+	can_have_pals = FALSE
+	flags = SUPPRESSATTACK
 
 	New()
 		..()
 		name = "[initial(name)] (d[sides])"
+		desc = "A device for the calculation of random probabilities. Especially ones between one and [get_english_num(sides)]."
 
-	proc/roll_dat_thang()
-		playsound(get_turf(src), "sound/items/dicedrop.ogg", 100, 1)
-		if (src.sides && isnum(src.sides))
-			src.last_roll = get_english_num(rand(1, src.sides))
-			//src.visible_message("[src] shows [src.last_roll].")
-		else
-			src.last_roll = null
-			src.visible_message("[src] shows... um. This isn't a number. It hurts to look at. [pick("What the fuck?", "You should probably find the chaplain.")]")
+	attack_self(mob/user)
+		var/old_name = src.name
+		switch (src.sides)
+			if (4)
+				src.name = "probability cube (d6)"
+				src.sides = 6
+				src.icon_state = "d6_6"
+			if (6)
+				src.name = "probability pentagonal trapezohedron (d10)" // yes, it's actually called that
+				src.sides = 10
+				src.icon_state = "d20"
+			if (10)
+				src.name = "probability dodecahedron (d12)"
+				src.sides = 12
+				src.icon_state = "d20"
+			if (12)
+				src.name = "probability icosahedron (d20)"
+				src.sides = 20
+				src.icon_state = "d20"
+			if (20)
+				src.name = "probability zocchihedron (d100)"
+				src.sides = 100
+				src.icon_state = "d100"
+			else
+				src.name = "probability tetrahedron (d4)"
+				src.sides = 4
+				src.icon_state = "d4"
 
-	attack_self(var/mob/user as mob)
-		src.roll_dat_thang()
+		src.desc = "A device for the calculation of random probabilities. Especially ones between one and [get_english_num(src.sides)]."
+		src.initialName = src.name
+		src.initialDesc = src.desc
+		src.last_roll = null
+		tooltip_rebuild = 1
+
+		user.show_text("You reconfigure the [old_name] into a [name].")
+		return
+
+	afterattack(atom/target, mob/user, inrange)
+		if (!src.cant_drop)
+			user.u_equip(src)
+		var/total = roll_dat_thang()
+		user.visible_message("[src] shows [get_english_num(total)].")
+		rollList = list()
+		return
 
 	d4
-		icon_state = "d4"
+		name = "probability tetrahedron"
 		sides = 4
+		icon_state = "d4"
 	d10
-		icon_state = "d20"
+		name = "probability pentagonal trapezohedron" // yes, it's still actually called that
 		sides = 10
+		icon_state = "d20"
 	d12
-		icon_state = "d20"
+		name = "probability dodecahedron"
 		sides = 12
-	d20
 		icon_state = "d20"
+	d20
+		name = "probability icosahedron"
 		sides = 20
+		icon_state = "d20"
 	d100
-		icon_state = "d100"
+		name = "probability zocchihedron"
 		sides = 100
+		icon_state = "d100"
+
 /obj/item/diceholder
 	name = "holder of dice (not an actual item)"
 	desc = "Parent item of various dice holders"
@@ -544,7 +592,7 @@ var/list/rollList = list()
 	var/diceinchatstring
 
 	proc/addDice(var/obj/item/dice/D as obj, var/baseoverlay, mob/living/user as mob) //takes a dice object, a base overlay (dicecup, diceboxt), and a user must be passed to the proc
-		var/looplength = D.dicePals.len
+		var/looplength = length(D.dicePals)
 		for(var/i=1,i<=looplength,i++)
 			if((istype(D.dicePals[i], /obj/item/dice/coin)) || (istype(D.dicePals[i], /obj/item/dice/magic8ball)))
 				user.put_in_hand_or_drop(D.contents[i])
@@ -589,7 +637,7 @@ var/list/rollList = list()
 		if((!D.dicePals.len)&&(src.diceposition<5))
 			if((!istype(D,/obj/item/dice/magic8ball))&&(!istype(D,/obj/item/dice/coin)))
 				src.diceposition++
-				user.visible_message("<span style=\"color:green\">[user] adds the [D] to the [src]</span>","<span style=\"color:green\">You add the [D] to the [src].</span>")
+				user.visible_message("<span class='success'>[user] adds the [D] to the [src]</span>","<span class='success'>You add the [D] to the [src].</span>")
 				src.overlaydie = new /icon('icons/obj/items/items.dmi',"[baseoverlay][src.diceposition]")
 				if((D.color)&&(D.color != "null"))
 					src.overlaydie.Blend(D.color, ICON_MULTIPLY)
@@ -599,7 +647,7 @@ var/list/rollList = list()
 				user.u_equip(D)
 				D.set_loc(src)
 		else
-			user.visible_message("<span style=\"color:red\">The [src] is full!</span>")
+			user.visible_message("<span class='alert'>The [src] is full!</span>")
 
 	proc/removeDie(mob/living/user as mob) //requires the user to be passed to the proc
 		if(istype(src.dicelist[src.diceposition], /obj/item/dice))
@@ -614,6 +662,7 @@ var/list/rollList = list()
 		for(var/i=1, i<=dicelist.len, i++) //shuffle the overlay colors to give the illusion of dice rolling inside the cup?
 			if (src.dicelist[i].sides && isnum(src.dicelist[i].sides)) //index out of bounds
 				src.dicelist[i].last_roll = rand(1, src.dicelist[i].sides)
+				src.dicelist[i].tooltip_rebuild = 1
 				src.localRollList.Add(list(list("sides"=src.dicelist[i].sides,"roll"=src.dicelist[i].last_roll,"color"=src.dicelist[i].color))) //need a check for dice without a color
 				if(src.dicelist[i].sides == 6)
 					src.dicelist[i].icon_state = "d6_[src.dicelist[i].last_roll]"
@@ -632,7 +681,7 @@ var/list/rollList = list()
 		src.dicelist = list()
 
 	proc/pourout(atom/target,mob/living/user as mob) //requires the target and user to be passed to the proc
-		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || (src.dicelist.len)&&(istype(target, /turf/unsimulated/floor)))
+		if((src.dicelist.len)&&(istype(target, /turf/simulated/floor)) || length(src.dicelist) && (istype(target, /turf/unsimulated/floor)))
 			hiddenroll()
 			src.ClearAllOverlays()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)
@@ -674,19 +723,19 @@ var/list/rollList = list()
 				src.UpdateOverlays(null,"[i]",0,1)
 			src.icon_state = "dicebox"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state != "dicebox"))
 			removeDie(user)
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state != "dicebox")
 			addDice(W,"diceboxt",user)
 
 /obj/item/diceholder/dicecup
 	name = "dice cup"
-	desc = "<span>A cup for rolling your dice!</span><br><span style=\"color:blue\">- Click a floor tile to roll your dice.</span><br><span style=\"color:blue\">- Click a table or drop on a non-help intent to flip the cup, concealing your roll.</span><br><span style=\"color:blue\">- Help Intent: view hidden roll</span><br><span style=\"color:blue\">- Non-help Intent: reveal dice</span><br>"
+	desc = "<span>A cup for rolling your dice!</span><br><span class='notice'>- Click a floor tile to roll your dice.</span><br><span class='notice'>- Click a table or drop on a non-help intent to flip the cup, concealing your roll.</span><br><span class='notice'>- Help Intent: view hidden roll</span><br><span class='notice'>- Non-help Intent: reveal dice</span><br>"
 	icon_state = "dicecup"
 
 	afterattack(atom/target, mob/user as mob)
@@ -704,18 +753,18 @@ var/list/rollList = list()
 	attack_self(mob/user as mob)
 		if(src.icon_state == "dicecup")
 			if(diceposition != 0)
-				user.visible_message("<span style=\"color:blue\">[user] shakes the dice cup!</span>","<span style=\"color:blue\">You shake the dice cup!</span>")
+				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
 			removeDie(user)
 		else if(src.icon_state == "dicecupf")
 			if(user.a_intent == "help")
 				if(user.name == diceowner)
-					user.visible_message("<span style=\"color:blue\">[user] peeks at their dice. </span>","<b>Your roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
+					user.visible_message("<span class='notice'>[user] peeks at their dice. </span>","<b>Your roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
 				else
-					user.visible_message("<span style=\"color:red\">[user] peeks at [diceowner]'s dice!</span>","<b>[src.diceowner]'s roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
+					user.visible_message("<span class='alert'>[user] peeks at [diceowner]'s dice!</span>","<b>[src.diceowner]'s roll:</b><br>[src.diceinchatstring]<br><b>Total: [src.localtotal]</b>")
 			else
 				dicespawn(src.loc)
 				src.icon_state = "dicecup"
@@ -725,7 +774,7 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W as obj, mob/living/user as mob)
+	attackby(obj/item/dice/W, mob/living/user)
 		if(src.icon_state == "dicecup")
 			addDice(W,"dicecup",user)
 
@@ -733,8 +782,8 @@ var/list/rollList = list()
 	name = "dice pouch"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "dicepouch"
-	max_wclass = 1
-	w_class = 1
+	max_wclass = W_CLASS_TINY
+	w_class = W_CLASS_TINY
 	var/setcolor
 	can_hold=list(/obj/item/dice)
 	spawn_contents = list(/obj/item/dice/d4,/obj/item/dice,/obj/item/dice/d8,/obj/item/dice/d10,/obj/item/dice/d12,/obj/item/dice/d20,/obj/item/dice/d100)

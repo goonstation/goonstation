@@ -1,9 +1,16 @@
+///This amount of potential target locations are picked, up to every defined plant spot for the map
+#define AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS 2
+
 /datum/game_mode/nuclear
 	name = "nuclear emergency"
 	config_tag = "nuclear"
 	shuttle_available = 2
-	var/target_location_name = null // The name of our target area. Used for text output.
-	var/list/target_location_type = list() // Our area.type, which can be multiple (e.g. medbay).
+	/// The name of our target area(s). Used for text output.
+	var/list/target_location_names = list()
+	/// Our area.type, which can be multiple per plant location (e.g. medbay).
+	var/list/target_location_type = list()
+	/// An output ready summation of every 1 to n plant locations, for the couple of places outside of this file that care for that.
+	var/concatenated_location_names
 	var/agent_number = 1
 	var/list/datum/mind/syndicates = list()
 	var/finished = 0
@@ -11,46 +18,52 @@
 	var/agent_radiofreq = 0 //:h for syndies, randomized per round
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
-	var/const/agents_possible = 6 //If we ever need more syndicate agents. cogwerks - raised from 5
+	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
+
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 	var/token_players_assigned = 0
+
+	do_antag_random_spawns = 0
+	antag_token_support = TRUE
+	escape_possible = 0
 
 /datum/game_mode/nuclear/announce()
 	boutput(world, "<B>The current game mode is - Nuclear Emergency!</B>")
 	boutput(world, "<B>[syndicate_name()] operatives are approaching [station_name(1)]! They intend to destroy the [station_or_ship()] with a nuclear warhead.</B>")
 
 /datum/game_mode/nuclear/pre_setup()
-	var/the_spawn = syndicatestart && islist(syndicatestart) && syndicatestart.len ? pick(syndicatestart) : null
 	var/list/possible_syndicates = list()
 
-	if (!the_spawn)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
+	if (!landmarks[LANDMARK_SYNDICATE])
+		boutput(world, "<span class='alert'><b>ERROR: couldn't find Syndicate spawn landmark, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	var/num_players = 0
-	for (var/mob/new_player/player in mobs)
-		if (player.client && player.ready)
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
 			num_players++
+	var/num_synds = clamp( round(num_players / 6 ), 1, agents_possible)
 
-	var/num_synds = max(1, min(round(num_players / 4), agents_possible))
-
-	possible_syndicates = get_possible_syndicates(num_synds)
+	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
 	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 
 	// I wandered in and made things hopefully a bit easier to work with since we have multiple maps now - Haine
 	var/list/list/target_locations = null
 
-	if (map_settings && islist(map_settings.valid_nuke_targets) && map_settings.valid_nuke_targets.len)
+	if (map_settings && islist(map_settings.valid_nuke_targets) && length(map_settings.valid_nuke_targets))
 		target_locations = map_settings.valid_nuke_targets
 	else
 		if (ismap("COGMAP2"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
@@ -60,9 +73,21 @@
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the genetics lab" = list(/area/station/medical/research))
 
+		else if (ismap("DONUT3"))
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"inner engineering (surrounding the singularity, not in it)" = list(/area/station/engine/inner),
+			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
+			"the inner hall of the medbay" = list(/area/station/medical/medbay),
+			"the main hallway in research" = list(/area/station/science/lobby),
+			"the chapel" = list(/area/station/chapel/sanctuary),
+			"the escape hallway" = list(/area/station/hallway/secondary/exit),
+			"the Research Director's office" = list(/area/station/crew_quarters/hor),
+			"the Chief Engineer's office" = list(/area/station/engine/engineering/ce),
+			"the kitchen" = list(/area/station/crew_quarters/kitchen))
+
 		else if (ismap("DESTINY") || ismap("CLARION"))
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the thermo-electric generator room" = list(/area/station/engine/core),
 			"the refinery (arc smelter)" = list(/area/station/mining/refinery),
@@ -72,52 +97,59 @@
 			"the artifact lab" = list(/area/station/science/artifact),
 			"the robotics lab" = list(/area/station/medical/robotics))
 
+		else if (ismap ("DONUT2"))
+			target_locations = list("the cargo bay (QM)" = list(/area/station/quartermaster/office),
+			"the public market" = list(/area/station/crew_quarters/market),
+			"the stock exchange" = list(/area/station/crew_quarters/stockex),
+			"the chapel" = list(/area/station/chapel/sanctuary),
+			"the bridge" = list(/area/station/bridge),
+			"the crew lounge" = list(/area/station/crew_quarters/quarters),
+			"the main brig area" = list(/area/station/security/brig),
+			"the main station pod bay" = list(/area/station/hangar/main))
+
+
 		else // COG1
 			target_locations = list("the main security room" = list(/area/station/security/main),
-			"the central research sector hub" = list(/area/station/science),
+			"the central research sector hub" = list(/area/station/science/lobby),
 			"the cargo bay (QM)" = list(/area/station/quartermaster/office),
 			"the engineering control room" = list(/area/station/engine/engineering, /area/station/engine/power),
 			"the central warehouse" = list(/area/station/storage/warehouse),
 			"the courtroom" = list(/area/station/crew_quarters/courtroom, /area/station/crew_quarters/juryroom),
 			"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
-			"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
 			"the EVA storage" = list(/area/station/ai_monitored/storage/eva),
+			"the main bridge" = list(/area/station/bridge),
 			"the robotics lab" = list(/area/station/medical/robotics))
 			//"the public pool" = list(/area/station/crew_quarters/pool)) // Don't ask, it just fits all criteria. Deathstar weakness or something.
 
-	if (!islist(target_locations) || !target_locations.len)
+	if (!islist(target_locations) || !length(target_locations))
 		target_locations = list("the station (anywhere)" = list(/area/station))
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
-		logTheThing("debug", null, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station! The round will be able to be played like this but it will be unbalanced! Please inform a coder!")
+		logTheThing(LOG_DEBUG, null, "<b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb and the target has defaulted to anywhere on the station.")
 
-#if ASS_JAM
-	var/station_only = prob(40)
-	target_locations = list()
-	for(var/area/A in world)
-		var/has_turfs = 0
-		for (var/turf/T in A)
-			has_turfs = 1
-			break
-		if(!has_turfs)
-			break
-		if(station_only && !istype(A, /area/station))
-			continue
-		if(!(A.name in target_locations))
-			target_locations[A.name] = list(A)
-		else
-			target_locations[A.name].Add(A)
-#endif
-
-	target_location_name = pick(target_locations)
-	if (!target_location_name)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
+	//bomb plant location strings
+	if (length(target_locations) > AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS)
+		do
+			var/thing = pick(target_locations)
+			if (!(thing in target_location_names))
+				target_location_names += thing //no duplicates pls
+		while (length(target_location_names) < AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS)
+	else //would love to just copy the list but it's associative so
+		for(var/i in 1 to length(target_locations))
+			target_location_names += target_locations[i]
+	if (!target_location_names)
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area name)!")
 		return 0
 
-	target_location_type = target_locations[target_location_name]
+	//bomb plant location typepaths
+	if (length(target_location_names) == 1)
+		target_location_type = target_locations[target_location_names[1]]
+	else //Add every single typepath into a list
+		for(var/i in 1 to length(target_location_names))
+			target_location_type += target_locations[target_location_names[i]]
 	if (!target_location_type)
-		boutput(world, "<span style='color:red'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
-		message_admins("<span style ='color:red'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
+		boutput(world, "<span class='alert'><b>ERROR: couldn't assign target location for bomb, aborting nuke round pre-setup.</b></span>")
+		message_admins("<span class='alert'><b>CRITICAL BUG:</b> nuke mode setup encountered an error while trying to choose a target location for the bomb (could not select area type)!")
 		return 0
 
 	// now that we've done everything that could cause the round to fail to start (in this proc, at least), we can deal with antag tokens
@@ -129,95 +161,104 @@
 		token_players.Remove(tplayer)
 		num_synds--
 		num_synds = max(num_synds, 0)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 
-	var/list/chosen_syndicates = antagWeighter.choose(pool = possible_syndicates, role = "nukeop", amount = num_synds, recordChosen = 1)
+	var/list/chosen_syndicates = antagWeighter.choose(pool = possible_syndicates, role = ROLE_NUKEOP, amount = num_synds, recordChosen = 1)
 	syndicates |= chosen_syndicates
 	for (var/datum/mind/syndicate in syndicates)
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
-		syndicate.special_role = "nukeop"
+		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
 
 	return 1
 
+/datum/game_mode/nuclear/proc/pick_leader()
+	RETURN_TYPE(/datum/mind)
+	var/list/datum/mind/possible_leaders = list()
+	for(var/datum/mind/mind in syndicates)
+		if(mind.current.client.preferences.be_syndicate_commander)
+			possible_leaders += mind
+	if(length(possible_leaders))
+		return pick(possible_leaders)
+	return pick(syndicates)
+
 /datum/game_mode/nuclear/post_setup()
-	var/synd_spawn = pick(syndicatestart)
-	var/obj/landmark/nuke_spawn = locate("landmark*Nuclear-Bomb")
-	var/obj/landmark/closet_spawn = locate("landmark*Nuclear-Closet")
-
 	var/leader_title = pick("Czar", "Boss", "Commander", "Chief", "Kingpin", "Director", "Overlord", "General", "Warlord", "Commissar")
-	var/leader_selected = 0
 
-	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons")
+	var/list/callsign_pool_keys = list("nato", "melee_weapons", "colors", "birds", "mammals", "moons", "arthurian")
 	//Alphabetical agent callsign lists are delcared here, seperated in to catagories.
 	var/list/callsign_list = strings("agent_callsigns.txt", pick(callsign_pool_keys))
 
-	for(var/datum/mind/synd_mind in syndicates)
-		synd_spawn = pick(syndicatestart) // So they don't all spawn on the same tile.
-		synd_mind.current.set_loc(synd_spawn)
+	var/datum/mind/leader_mind = src.pick_leader()
 
+	//Building the plant location strings
+	var/to_store_in_mind
+	var/to_output
+	concatenated_location_names = target_location_names[1]
+	//Note: (almost) every location name string already has a leading "the"
+	switch(length(target_location_names))
+		if(1) //Classic, the strings we're all familiar with
+			to_store_in_mind = "The bomb must be armed in <B>[src.target_location_names[1]]</B>."
+			to_output = "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_names[1]]</B> to obliterate [station_name(1)]."
+		if(2) //Worth making some nice adjusted strings for
+			concatenated_location_names += " or [src.target_location_names[2]]"
+			to_store_in_mind = "The bomb must be armed in <B>[src.target_location_names[1]]</B> or <B>[src.target_location_names[2]]</B>."
+			to_output = "We have identified two major structural weaknesses in the [station_or_ship()]'s design. Arm the bomb in either <B>[src.target_location_names[1]]</B> or <B>[src.target_location_names[2]]</B> to obliterate [station_name(1)]."
+		if(3 to INFINITY) //Alright now you're just getting list slop
+			for(var/i in 2 to length(target_location_names)) //The first entry is already added above the switch
+				concatenated_location_names += (((i != length(target_location_names)) ? ", " : " or ") + target_location_names[i])
+
+			to_store_in_mind = "The bomb must be armed in one of the following:<B>[concatenated_location_names]</B>."
+			to_output = "We have identified several major structural weaknesses in the [station_or_ship()]'s rickety excuse of a design. To obliterate [station_name(1)], arm the bomb in one of the following: <B>[concatenated_location_names]</B>."
+
+	for(var/datum/mind/synd_mind in syndicates)
 		bestow_objective(synd_mind,/datum/objective/specialist/nuclear)
 
 		var/obj_count = 1
-		boutput(synd_mind.current, "<span style=\"color:blue\">You are a [syndicate_name()] agent!</span>")
+		boutput(synd_mind.current, "<span class='notice'>You are a [syndicate_name()] agent!</span>")
 		for(var/datum/objective/objective in synd_mind.objectives)
 			boutput(synd_mind.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
 			obj_count++
 
-		synd_mind.store_memory("The bomb must be armed in <B>[src.target_location_name]</B>.", 0, 0)
-		boutput(synd_mind.current, "We have identified a major structural weakness in the [station_or_ship()]'s design. Arm the bomb in <B>[src.target_location_name]</B> to obliterate [station_name(1)].")
+		synd_mind.store_memory(to_store_in_mind, 0, 0)
+		boutput(synd_mind.current, to_output)
 
-		if(!leader_selected)
+		if(synd_mind == leader_mind)
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE_BOSS))
+			if(!synd_mind.current.loc)
+				synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			synd_mind.current.real_name = "[syndicate_name()] [leader_title]"
 			equip_syndicate(synd_mind.current, 1)
-			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, target_location_name)
-			if (ishuman(synd_mind.current))
-				var/mob/living/carbon/human/M = synd_mind.current
-				M.equip_if_possible(new /obj/item/pinpointer/disk(M), M.slot_in_backpack)
-			else
-				new /obj/item/pinpointer/disk(synd_mind.current.loc)
-			leader_selected = 1
+			new /obj/item/device/audio_log/nuke_briefing(synd_mind.current.loc, concatenated_location_names)
+			synd_mind.current.show_antag_popup("nukeop-commander")
 		else
+			synd_mind.current.set_loc(pick_landmark(LANDMARK_SYNDICATE))
 			var/callsign = pick(callsign_list)
 			synd_mind.current.real_name = "[syndicate_name()] Operative [callsign]" //new naming scheme
 			callsign_list -= callsign
 			equip_syndicate(synd_mind.current, 0)
-		boutput(synd_mind.current, "<span style=\"color:red\">Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
+			var/obj/item/device/radio/headset/syndicate/headset = synd_mind.current.ears
+			headset.icon_override = "syndie_letters/[copytext(callsign, 1, 2)]"
+			synd_mind.current.show_antag_popup("nukeop")
+		boutput(synd_mind.current, "<span class='alert'>Your headset allows you to communicate on the syndicate radio channel by prefacing messages with :h, as (say \":h Agent reporting in!\").</span>")
 
 		synd_mind.current.antagonist_overlay_refresh(1, 0)
-		SHOW_NUKEOP_TIPS(synd_mind.current)
 
-	if(nuke_spawn)
-		the_bomb = new /obj/machinery/nuclearbomb(nuke_spawn.loc)
+	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
+	new /obj/storage/closet/syndicate/nuclear(pick_landmark(LANDMARK_NUCLEAR_CLOSET))
 
-	if(closet_spawn)
-		new /obj/storage/closet/syndicate/nuclear(closet_spawn.loc)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_GEAR_CLOSET])
+		new /obj/storage/closet/syndicate/personal(T)
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BOMB])
+	new /obj/spawner/newbomb/timer/syndicate(pick_landmark(LANDMARK_SYNDICATE_BOMB))
+	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
+		for(var/i = 1 to 5)
+			new /obj/item/breaching_charge/thermite(T)
 
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Syndicate-Gear-Closet")
-			new /obj/storage/closet/syndicate/personal(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Syndicate-Bomb")
-			new /obj/spawner/newbomb/timer/syndicate(A.loc)
-			A.dispose()
-			continue
-
-		if (A.name == "Breaching-Charges")
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			new /obj/item/breaching_charge/thermite(A.loc)
-			A.dispose()
-			continue
-
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 	return
@@ -235,11 +276,11 @@
 		return 1
 
 	if (emergency_shuttle.location == SHUTTLE_LOC_RETURNED)
-		if (the_bomb && the_bomb.armed)
+		if (the_bomb?.armed)
 			// Minor Syndicate Victory - crew escaped but bomb was armed and counting down
 			finished = -1
 			return 1
-		if ((!the_bomb || (the_bomb && !the_bomb.armed)))
+		if ((!the_bomb || the_bomb.disposed || (the_bomb && !the_bomb.armed)))
 			if (all_operatives_dead())
 				// Major Station Victory - bombing averted, all operatives dead/captured
 				finished = 2
@@ -252,7 +293,7 @@
 	if (no_automatic_ending)
 		return 0
 
-	if (the_bomb && the_bomb.armed && the_bomb.det_time)
+	if (the_bomb?.armed && the_bomb.det_time && !the_bomb.disposed)
 		// don't end the game if the bomb is armed and counting, even if the ops are all dead
 		return 0
 
@@ -263,7 +304,7 @@
 
 	// Minor or major Station Victory - bombing averted in any case.
 	if (src.bomb_check_timestamp && world.time > src.bomb_check_timestamp + 300)
-		if (!src.the_bomb || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
+		if (!src.the_bomb || src.the_bomb.disposed || !istype(src.the_bomb, /obj/machinery/nuclearbomb))
 			if (src.all_operatives_dead())
 				finished = 2
 			else
@@ -272,35 +313,43 @@
 
 	return 0
 
-/datum/game_mode/nuclear/declare_completion()
+/datum/game_mode/nuclear/victory_msg()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			boutput(world, "<FONT size = 3><B>Total Syndicate Victory</B></FONT>")
-			boutput(world, "The operatives have destroyed [station_name(1)]!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
+					The operatives have destroyed [station_name(1)]!"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			boutput(world, "<FONT size = 3><B>Syndicate Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorwin")
-#endif
+			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
+					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
 		if(0) // Uhhhhhh
-			boutput(world, "<FONT size = 3><B>Stalemate</B></FONT>")
-			boutput(world, "Everybody loses!")
+			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
+					Everybody loses!"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			boutput(world, "<FONT size = 3><B>Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived.")
-#ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
-#endif
+			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			boutput(world, "<FONT size = 3><B>Total Crew Victory</B></FONT>")
-			boutput(world, "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!")
+			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
+					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+
+/datum/game_mode/nuclear/declare_completion()
+	boutput(world, src.victory_msg())
+
+	if(finished > 0)
+		var/value = world.load_intra_round_value("nukie_loss")
 #ifdef DATALOGGER
-			game_stats.Increment("traitorloss")
+		game_stats.Increment("traitorloss")
 #endif
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_loss", value + 1)
+	else if(finished < 0)
+		var/value = world.load_intra_round_value("nukie_win")
+#ifdef DATALOGGER
+		game_stats.Increment("traitorwin")
+#endif
+		if(isnull(value))
+			value = 0
+		world.save_intra_round_value("nukie_win", value + 1)
 
 	for(var/datum/mind/M in syndicates)
 		var/syndtext = ""
@@ -316,8 +365,6 @@
 #ifdef CREW_OBJECTIVES
 			if (istype(objective, /datum/objective/crew)) continue
 #endif
-			if (istype(objective, /datum/objective/miscreant)) continue
-
 			if (objective.check_completion())
 				if (!isnull(objective.medal_name) && !isnull(M.current))
 					M.current.unlock_medal(objective.medal_name, objective.medal_announce)
@@ -344,30 +391,6 @@
 	if (opcount == opdeathcount) return 1
 	else return 0
 
-/datum/game_mode/nuclear/proc/get_possible_syndicates(minimum_syndicates=1)
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < minimum_syndicates)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_syndicate set to yes, including players who don't want to be syndicates in the pool.")
-		for(var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in syndicates) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_syndicates > 1) && (candidates.len >= minimum_syndicates))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
 /datum/game_mode/nuclear/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
 	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
@@ -385,24 +408,21 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(ticker.minds))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 
 /datum/game_mode/nuclear/proc/random_radio_frequency()
-	var/f = 0
+	. = 0
 	var/list/blacklisted = list(0, 1451, 1457) // The old blacklist was rather incomplete and thus ineffective (Convair880).
-	blacklisted.Add(R_FREQ_BLACKLIST_HEADSET)
-	blacklisted.Add(R_FREQ_BLACKLIST_INTERCOM)
+	blacklisted.Add(R_FREQ_BLACKLIST)
 
 	do
-		f = rand(1352, 1439)
+		. = rand(1352, 1439)
 
-	while (blacklisted.Find(f))
-
-	return f
+	while (. in blacklisted)
 
 /datum/game_mode/nuclear/process()
 	set background = 1
@@ -417,10 +437,12 @@ var/syndicate_name = null
 	var/name = ""
 
 	// Prefix
-#ifdef XMAS
+#if defined(XMAS)
 	name += pick("Merry", "Jingle", "Holiday", "Santa", "Gift", "Elf", "Jolly")
+#elif defined(HALLOWEEN)
+	name += pick("Hell", "Demon", "Blood", "Murder", "Gore", "Grave", "Sin", "Slaughter")
 #else
-	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint")
+	name += pick("Clandestine", "Prima", "Blue", "Zero-G", "Max", "Blasto", "Waffle", "North", "Omni", "Newton", "Cyber", "Bonk", "Gene", "Gib", "Funk", "Joint", "Donk", "Elec")
 #endif
 	// Suffix
 	if (prob(80))
@@ -428,7 +450,7 @@ var/syndicate_name = null
 
 		// Full
 		if (prob(60))
-			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel")
+			name += pick("Syndicate", "Consortium", "Collective", "Corporation", "Consolidated", "Group", "Holdings", "Biotech", "Industries", "Systems", "Products", "Chemicals", "Enterprises", "Family", "Creations", "International", "Intergalactic", "Interplanetary", "Foundation", "Positronics", "Hive", "Cartel", "Company")
 		// Broken
 		else
 			name += pick("Syndi", "Corp", "Bio", "System", "Prod", "Chem", "Inter", "Hive")
@@ -441,3 +463,51 @@ var/syndicate_name = null
 
 	syndicate_name = name
 	return name
+
+/obj/cairngorm_stats/
+	name = "Mission Memorial"
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "memorial_mid"
+	anchored = 1
+	opacity = 0
+	density = 1
+
+
+
+	New()
+		..()
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+		var/last_reset_date = world.load_intra_round_value("nukie_last_reset")
+		var/last_reset_text = null
+		if(!isnull(last_reset_date))
+			var/days_passed = round((world.realtime - last_reset_date) / (1 DAY))
+			last_reset_text = "<h4>(memorial reset [days_passed] days ago)</h4>"
+		src.desc = "<center><h2><b>Battlecruiser Cairngorm Mission Memorial</b></h2><br> <h3>Successful missions: [wins]<br>\nUnsuccessful missions: [losses]</h3><br>[last_reset_text]</center>"
+
+	attack_hand(var/mob/user)
+		if (..(user))
+			return
+
+		var/wins = world.load_intra_round_value("nukie_win")
+		var/losses = world.load_intra_round_value("nukie_loss")
+		if(isnull(wins))
+			wins = 0
+		if(isnull(losses))
+			losses = 0
+
+		src.add_dialog(user)
+		user.Browse(src.desc, "title=Mission Memorial;window=cairngorm_stats_[src];size=300x300")
+		onclose(user, "cairngorm_stats_[src]")
+		return
+
+/obj/cairngorm_stats/left
+	icon_state = "memorial_left"
+
+/obj/cairngorm_stats/right
+	icon_state = "memorial_right"
+#undef AMOUNT_OF_VALID_NUKE_PLANT_LOCATIONS

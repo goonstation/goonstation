@@ -1,13 +1,3 @@
-@font-face
-{
-	font-family: 'Inhuman BB';
-	src: url('InhumanBB.eot');
-	src: url('InhumanBB.eot') format('embedded-opentype'),
-		 url('InhumanBB.ttf') format('truetype'),
-		 url('InhumanBB.woff') format('woff'),
-		 url('InhumanBB.svg') format('svg');
-}
-
 /*****************************************
 *
 * GLOBAL STYLES
@@ -43,6 +33,12 @@ a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
 .emoji {font-family: "Segoe UI Emoji" !important;}
+img.emoji {
+	height: 1em;
+	width: 1em;
+	margin: 0 .05em 0 .1em;
+	vertical-align: -0.1em;
+}
 
 
 /*****************************************
@@ -74,7 +70,18 @@ a.popt {text-decoration: none;}
 	padding: 0 5px;
 	border: 1px solid gray;
 	border-radius: 2px;
+	color: #121212;
 }
+
+#messages.filter-Admin .admin,
+#messages.filter-Combat .combat,
+#messages.filter-Radios .radio,
+#messages.filter-Speech .say,
+#messages.filter-OOC .ooc,
+#messages.filter-Misc .misc {
+	display: none;
+}
+
 #newMessages {
 	position: fixed;
 	display: block;
@@ -149,6 +156,41 @@ a.popt {text-decoration: none;}
 }
 #options .decreaseFont {border-top: 0;}
 
+/* TOOLTIPS */
+.tooltip {
+	position: relative;
+	display: inline-block;
+}
+
+.tooltip .tooltiptext {
+	visibility: hidden;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	padding: 5px 5px;
+	position: absolute;
+	z-index: 1;
+	bottom: 100%;
+	left: 50%;
+	white-space: nowrap;
+}
+
+.tooltip .tooltiptext::after {
+	content: " ";
+	position: absolute;
+	top: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color:#555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+	visibility: visible;
+}
+
 /* POPUPS */
 .popup {
 	position: fixed;
@@ -188,6 +230,10 @@ a.popt {text-decoration: none;}
 .changeFont {padding: 10px;}
 .changeFont a {display: block; text-decoration: none; padding: 3px; color: #333;}
 .changeFont a:hover {background: #ccc;}
+
+.changeTheme {padding: 10px;}
+.changeTheme a {display: block; text-decoration: none; padding: 3px; color: #333;}
+.changeTheme a:hover {background: #ccc;}
 
 .highlightPopup {padding: 10px; text-align: center;}
 .highlightPopup input[type=text] {display: block; width: 215px; text-align: left; margin-top: 5px;}
@@ -254,13 +300,11 @@ a.popt {text-decoration: none;}
 ******************************************/
 
 /* MOTD */
-.motd {color: #333; font-family: Verrdana, sans-serif; }
-.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: black; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
+.motd {color: #333; font-family: Verdana, sans-serif; }
+.motd h1, .motd h2, .motd h3, .motd h4, .motd h5, .motd h6 {color: #000; padding: 0 0.5em; border-bottom: 1px solid #aaa;}
 .motd a, .motd a:link, .motd a:visited {color: #00f;}
 .motd a:active, .motd a:hover {color: #007;}
-.motd div {
-	margin: 0 0.5em;
-}
+.motd div { margin: 0 0.5em }
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 
@@ -268,8 +312,15 @@ a.popt {text-decoration: none;}
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
 /* OUTPUT COLORS */
-.text-red {color: #ff0000;}
-.text-blue {color: #0000ff;}
+.regular { color: #000000; }
+.internal { color: #002fff; }
+.mhelp {color: #9a0eea;}
+.ahelp {color: #0000ff;}
+.success {color: green;}
+.hint {color: #0000ff;}
+.notice {color: #0000ff;}
+.subtle {color: #888888;}
+.emote {color: #605b59;}
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
@@ -285,27 +336,48 @@ a.popt {text-decoration: none;}
 .medal {color: #808000;}
 .combat {color: #ff0000;}
 .say {}
-.blobsay {color: #226622;}
+.sing {color: #B87AB8;}
+.robotsing {color: #7EBAB5;}
+.blobsay {color: white; background-color: #226622;}
+.bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
 .hivesay {color: #663500;}
-.ghoulsay {color: #600f89;}
-.kudzusay {color: #005c0e;}
+.thrallsay {color: white; background-color: #580283;}
+.thrallsay .vamp.name {color: #ff0000;}
+.kudzusay {color: white; background-color: #566B44;}
 .astralsay {color: #2AABA4;}
 .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
 .martianimperial {color: #C7376C; font-size: 14px;}
 .flocksay {color: #488276;}
 .flocksay a {color: #488276;}
 .flocksay a:visited {color: #488276;}
-.flockmindsay {color: #66ad9e; font-size: 120%;}
+.flocksay.sentient {color:white; background-color:#66ad9e;}
+.flocksay.sentient.flockmind {font-size: 120%;}
 .flocknpc {color: #869995; font-size: 80%;}
+.flocksay.ping {font-style: italic;}
 .ghostdronesay {color: #d81aef;}
+.roboticsay {color: white; background-color: #111; font-family: 'Courier New', Courier, monospace; font-weight: bold;}
+.roboticsay .name {text-decoration: underline;}
 .green, .radio {color: #008000;}
 .alert {color: #ff0000;}
 h1.alert, h2.alert {color: #000000;}
 .bigPM {font-size: 1.2em;}
 .adminHearing .name[data-ctx] {border-bottom: 1px dotted black;}
-.highlight {background: yellow;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
+.lawupdate {color: #6464ff}
+.monospace {font-family: monospace;}
+
+.rstandard {color: #008000;}
+.rintercom {color: #006080;}
+.rcommand {color: #334E6D;}
+.rsecurity {color: #E00000;}
+.rdetective {color: #a00000;}
+.rengineering {color: #A86800;}
+.rmedical {color: #153E7E;}
+.rresearch {color: #461B7E;}
+.rcivilian {color: #A10082;}
+.rsyndicate {color: #962121;}
+.rother {color: #800080;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
 .connectionClosed.restored {background: green;}
@@ -325,3 +397,128 @@ h1.alert, h2.alert {color: #000000;}
 	display: inline-block;
 	margin-right: 10px;
 }
+.highlight {
+	background: yellow;
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+
+/* bog-standard dark theme with easy, unsaturated colors */
+body.theme-dark { background-color: #23272a; color: #dfdfcf; }
+body.theme-dark .regular { color: #dfdfcf; }
+body.theme-dark .mhelp {color: #e75ae0;}
+body.theme-dark .ahelp {color:  #ffa135;}
+body.theme-dark .notice { color: #7996ff; }
+body.theme-dark .hint { color: #7996ff; }
+body.theme-dark .internal { color: #92b4ff; }
+body.theme-dark .alert { color: #FF6D6D; }
+body.theme-dark .system { color: #FF6D6D; }
+body.theme-dark .success { color: #92E592; }
+body.theme-dark .emote { color: #888888; }
+body.theme-dark .subtle { color: #7A7471; }
+body.theme-dark .ooc {color: #688eff;}
+body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .adminooc {color: #be6e53;}
+body.theme-dark .adminlooc {color: #ce8c76;}
+body.theme-dark .mentorooc {color: #a653ff;}
+body.theme-dark .mentorlooc {color: #be81ff;}
+body.theme-dark .medal {color: #caca20;}
+body.theme-dark .motd {color: rgb(190, 190, 190);}
+body.theme-dark .motd h1, body.theme-dark .motd h2, body.theme-dark .motd h3, body.theme-dark .motd h4, body.theme-dark .motd h5, body.theme-dark .motd h6 {color: rgb(255, 255, 255);}
+body.theme-dark .motd a, body.theme-dark .motd a:link, body.theme-dark .motd a:visited {color: rgb(100, 100, 255);}
+body.theme-dark .motd a:active, body.theme-dark .motd a:hover {color: rgb(48, 48, 223);}
+body.theme-dark .internal.boldnshit {color: rgb(95, 95, 253);}
+body.theme-dark .green {color: #3fcc3f;}
+body.theme-dark .radio {color: #3fcc3f;}
+body.theme-dark .contextMenu {background-color: rgb(48, 48, 48);}
+body.theme-dark .contextMenu a {color: rgb(216, 216, 216);}
+body.theme-dark .contextMenu a:hover {background-color: rgb(92, 92, 92);}
+body.theme-dark .popup {background-color: rgb(48, 48, 48);}
+body.theme-dark .popup .close {
+	background: #333;
+	color: #aaa;
+}
+body.theme-dark .popup .close:hover {background: #444;}
+body.theme-dark .popup .head {
+	background: rgb(22, 22, 22);
+	color: #ddd;
+	border-bottom: 2px solid rgb(3, 80, 3);
+}
+body.theme-dark .popup input {border: 1px solid rgb(104, 104, 104); background: rgb(61, 61, 61); color: rgb(204, 204, 204);}
+body.theme-dark .popup input[type=text]:hover, body.theme-dark .popup input[type=text]:active, body.theme-dark .popup input[type=text]:focus {border-color: green;}
+body.theme-dark .popup input[type=submit] {background: rgb(70, 70, 70); color: #ddd; }
+body.theme-dark .popup input[type=submit]:hover, body.theme-dark .popup input[type=submit]:focus, body.theme-dark .popup input[type=submit]:active {background: rgb(75, 75, 75);}
+
+
+body.theme-dark a {color: #6464ff;}
+body.theme-dark a:visited {color: #ae6fff;}
+body.theme-dark h1, h2, h3, h4, h5, h6 {color: #6464ff;}
+body.theme-dark #messages .entry > .streak-counter {color: #dfdfcf; border: 1px solid rgb(94, 94, 94);}
+body.theme-dark #newMessages {
+	background: rgb(63, 63, 63);
+	color: rgb(221, 221, 221);
+}
+body.theme-dark #newMessages:hover {background: rgb(83, 83, 83);}
+body.theme-dark #ping {background: #34393d;}
+body.theme-dark #options a {
+	background: #34393d;
+	color: rgb(189, 189, 189);
+    border-top: 1px solid #505050;}
+body.theme-dark #options a:hover {background: #34393d;}
+body.theme-dark #options .toggle {background: #34393d;}
+body.theme-dark  {
+	scrollbar-face-color: rgb(46, 46, 46);
+	scrollbar-shadow-color: #4d4d4d;
+	scrollbar-highlight-color: #4d4d4d;
+	scrollbar-3dlight-color: rgb(46, 46, 46);
+	scrollbar-darkshadow-color: rgb(46, 46, 46);
+	scrollbar-track-color: rgb(46, 46, 46);
+	scrollbar-arrow-color: #808080;
+}
+
+body.theme-dark .admin {color: #ecc300;}
+body.theme-dark .adminMsgWrap {color: #cb79d4;}
+body.theme-dark .gfartooc {color: #60c4e6;}
+body.theme-dark .gfartlooc {color: #92cbdf;}
+body.theme-dark .gfartadmin {color: #c2953c;}
+body.theme-dark .combat {color: #e20000;}
+body.theme-dark .sing {color: #D8BFD8;}
+body.theme-dark .robotsing {color: #E0FFFF;}
+body.theme-dark .blobsay {color: #111; background-color: #4ec44e;}
+body.theme-dark .bugsay {color: #EA5D17;}
+body.theme-dark .deadsay {color: #b27eff;}
+body.theme-dark .hivesay {color: #e2a059;}
+body.theme-dark .thrallsay {color: white; background-color: #6f00a7;}
+body.theme-dark .kudzusay {color: #111; background-color: #7B8F68;}
+body.theme-dark .astralsay {color: #60d4cf;}
+body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
+body.theme-dark .martianimperial {color: #e26794;}
+body.theme-dark .flocksay {color: #6fbbac;}
+body.theme-dark .flocksay a {color: #6dc0af;}
+body.theme-dark .flocksay a:visited {color: #6ec2b1;}
+body.theme-dark .flocksay.sentient {color: #111; background-color:#82dbc8;}
+body.theme-dark .flocksay.sentient.flockmind {font-size: 120%;}
+body.theme-dark .flocknpc {color: #afc9c3;}
+body.theme-dark .ghostdronesay {color: #ca4ed8;}
+body.theme-dark .roboticsay {color: #111; background-color: #c4c3c3;}
+body.theme-dark h1.alert {color: #cfcfcf;}
+body.theme-dark h2.alert {color: #cfcfcf;}
+body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
+body.theme-dark .blobalert {color: #9c74fc; }
+body.theme-dark .lawupdate {color: #6464FF; }
+
+body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
+body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
+body.theme-dark .connectionClosed.restored {background: green;}
+
+body.theme-dark .rstandard {color: #3fcc3f;}
+body.theme-dark .rintercom {color: #4dc1c9;}
+body.theme-dark .rcommand {color: #7ca6d6;}
+body.theme-dark .rsecurity {color: #e43535;}
+body.theme-dark .rdetective {color: #af4242;}
+body.theme-dark .rengineering {color: #dda448;}
+body.theme-dark .rmedical {color: #51DBCB;}
+body.theme-dark .rresearch {color: #bf83e2;}
+body.theme-dark .rcivilian {color: #ce45b2;}
+body.theme-dark .rsyndicate {color: #cf5757;}
+body.theme-dark .rother {color: #E896E5;}

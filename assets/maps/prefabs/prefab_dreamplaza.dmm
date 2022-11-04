@@ -1,0 +1,2586 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ae" = (
+/obj/decal/poster/wallsign/poster_clown{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/gangtag{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/turf/simulated/wall/auto/jen/dark1,
+/area/prefab/dreamplaza)
+"af" = (
+/obj/random_item_spawner/dressup/few,
+/obj/storage/crate/packing{
+	name = "merchandise samples"
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"at" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"aA" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/warp_beacon{
+	name = "DreamPlaza Mall Beacon"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"aJ" = (
+/obj/machinery/clothingbooth,
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"aT" = (
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/blood{
+	desc = "It looks like it's been here for months."
+	},
+/obj/decal/fakeobjects/skeleton{
+	name = "mall employee skeleton";
+	pixel_y = 12
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"bj" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = 4
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"bB" = (
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"cb" = (
+/obj/item/clothing/under/misc/casualjeanspurp{
+	pixel_x = 19;
+	pixel_y = -2;
+	rand_pos = 1
+	},
+/obj/item/clothing/under/misc/casualjeansskr{
+	pixel_x = 7;
+	pixel_y = 8;
+	rand_pos = 1
+	},
+/obj/item/clothing/under/misc/casualjeansacid{
+	pixel_x = -2;
+	pixel_y = -1;
+	rand_pos = 1
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/marble/border_bw,
+/area/prefab/dreamplaza)
+"cc" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/neonsparkle{
+	dir = 1
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"cI" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"df" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"dg" = (
+/obj/item/clothing/under/misc/casdressboltp{
+	pixel_x = 20;
+	pixel_y = 8;
+	rand_pos = 1
+	},
+/obj/item/clothing/under/misc/casdressbolty{
+	pixel_x = 11;
+	rand_pos = 1
+	},
+/obj/item/clothing/under/misc/casdressleop{
+	pixel_x = 3;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/misc/racingsuitprp{
+	pixel_x = -7;
+	pixel_y = -2
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/marble/border_bw,
+/area/prefab/dreamplaza)
+"dr" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"dt" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/stool/bench/auto,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"dE" = (
+/obj/table/reinforced/auto,
+/obj/item/plate,
+/obj/random_item_spawner/tableware/few,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"ei" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"eC" = (
+/obj/item/storage/wall/clothingrack/clothes1{
+	density = 0;
+	pixel_y = 15
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"eG" = (
+/obj/decal/cleanable/blood/splatter,
+/obj/item/paper{
+	icon_state = "paper_caution_bloody";
+	info = "Boss, the door is jammed again... please unlock when you get back from lunch, thx ";
+	name = "note to boss";
+	pixel_x = 8;
+	pixel_y = 7
+	},
+/obj/item/casing{
+	dir = 4;
+	pixel_x = 15;
+	pixel_y = -2
+	},
+/obj/item/casing{
+	pixel_x = 7;
+	pixel_y = -17
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 6
+	},
+/area/prefab/dreamplaza)
+"eK" = (
+/turf/simulated/floor/plating/damaged3,
+/area/prefab/dreamplaza)
+"fo" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher{
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"fs" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/cleanable/machine_debris,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fC" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/glass{
+	amount = 5;
+	pixel_x = 5;
+	pixel_y = 20
+	},
+/obj/item/sheet/steel{
+	amount = 5;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"fL" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fS" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/poster/wallsign/neonretro{
+	dir = 1
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"gt" = (
+/obj/stool/neon,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"gw" = (
+/obj/storage/crate/packing{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/chips,
+/turf/simulated/floor/plating,
+/area/prefab/dreamplaza)
+"gV" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"ie" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "bathroom"
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"ih" = (
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"iy" = (
+/obj/item/storage/wall/clothingrack/hatrack/hatrack_2{
+	pixel_x = 24
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"iz" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	icon_state = "maint_locked";
+	locked = 1;
+	name = "staff break room"
+	},
+/turf/simulated/floor/marble/black,
+/area/prefab/dreamplaza)
+"jh" = (
+/obj/structure/girder/reinforced,
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/prefab/dreamplaza)
+"jk" = (
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 12
+	},
+/obj/decal/poster/wallsign/stencil/left/x,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"jl" = (
+/obj/storage/crate/packing,
+/obj/item/furniture_parts/stool/neon,
+/obj/item/furniture_parts/stool/neon,
+/obj/item/furniture_parts/table/neon,
+/obj/item/furniture_parts/table/neon,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"jm" = (
+/obj/neon_lining{
+	dir = 9
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"jt" = (
+/obj/decal/cleanable/blood,
+/obj/item/implant/projectile/shrapnel,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"jv" = (
+/obj/stool/neon{
+	pixel_y = 6
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"jH" = (
+/obj/storage/secure/closet/fridge{
+	name = "dusty refrigerator"
+	},
+/obj/item/reagent_containers/food/snacks/danish_weed{
+	desc = "It's stale and crusty, but looks untouched.";
+	name = "extremely stale pastry"
+	},
+/obj/item/reagent_containers/food/drinks/cola{
+	name = "very flat cola";
+	rand_pos = 1
+	},
+/obj/item/paper{
+	desc = null;
+	icon_state = "postit-writing";
+	info = "If one more of you fuckos steal my snacks AGAIN I'm gonna quit, no joke. Wait. I'll kill you first, and THEN quit. -Cyg";
+	name = "angrily scrawled sticky note";
+	rand_pos = 1
+	},
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"jO" = (
+/turf/simulated/floor/marble/border_bw{
+	dir = 6
+	},
+/area/prefab/dreamplaza)
+"kv" = (
+/obj/critter/roach,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"kK" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "storage"
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"kN" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/neon_lining{
+	dir = 9
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"lo" = (
+/obj/lattice,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"lD" = (
+/obj/neon_lining{
+	dir = 5
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"lK" = (
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"lV" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/poster/wallsign/neonretro,
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"mI" = (
+/obj/decal/cleanable/blood/tracks{
+	pixel_y = 4
+	},
+/obj/item/casing{
+	dir = 4;
+	pixel_x = -9;
+	pixel_y = -12
+	},
+/obj/item/casing{
+	dir = 4;
+	pixel_y = -2
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"mV" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"nq" = (
+/obj/storage/crate/packing{
+	name = "merchandise samples"
+	},
+/obj/decal/fakeobjects/skeleton{
+	desc = "Looks like they were trapped here for some time.";
+	name = "employee skeleton"
+	},
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"nu" = (
+/obj/item/reagent_containers/food/snacks/burger/moldy{
+	pixel_x = -7;
+	pixel_y = 7
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"nv" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"nN" = (
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"oo" = (
+/turf/simulated/floor/stairs/medical/wide,
+/area/prefab/dreamplaza)
+"oO" = (
+/obj/machinery/chem_dispenser/chef{
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"pa" = (
+/turf/simulated/floor/marble/black,
+/area/prefab/dreamplaza)
+"pg" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"pi" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8;
+	name = "dressing room"
+	},
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/marble/black,
+/area/prefab/dreamplaza)
+"pq" = (
+/turf/simulated/wall/auto/reinforced/jen/dark1,
+/area/prefab/dreamplaza)
+"px" = (
+/obj/item/clothing/under/misc/racingsuitpnk{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/clothing/under/misc/racingsuitbee{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/marble/border_bw,
+/area/prefab/dreamplaza)
+"pM" = (
+/obj/decal/cleanable/dirt/dirt4,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/plating,
+/area/prefab/dreamplaza)
+"qa" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/bot/secbot/neon{
+	emagged = 2;
+	control_freq = 0
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"qo" = (
+/obj/table/reinforced/auto,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag22";
+	layer = 4;
+	pixel_y = 26
+	},
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"rA" = (
+/obj/decoration/floralarrangement{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/neon_lining{
+	dir = 6;
+	pixel_x = -8;
+	pixel_y = 5
+	},
+/obj/table/neon/auto,
+/obj/item/spacecash/random/small,
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"rB" = (
+/obj/table/neon/auto,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"rC" = (
+/obj/table/reinforced/auto,
+/obj/machinery/light/incandescent/purpleish{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/clothing/mask/cigarette/menthol,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"rS" = (
+/turf/simulated/floor/neutral/corner{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"rV" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/light/incandescent/purpleish{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"sa" = (
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 7;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"sh" = (
+/obj/item/storage/wall/clothingrack/clothes2{
+	density = 0;
+	pixel_y = 15
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"ss" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"sw" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor3"
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"sx" = (
+/turf/simulated/floor/neutral/corner,
+/area/prefab/dreamplaza)
+"sz" = (
+/obj/machinery/vending/cola/blue{
+	pixel_y = 8
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"sL" = (
+/obj/structure/girder/reinforced{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"sX" = (
+/obj/submachine/chef_oven{
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"tw" = (
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"un" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "D E L U X E"
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"vc" = (
+/obj/lattice,
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vu" = (
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 8;
+	pixel_y = -9
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"vJ" = (
+/obj/item/clothing/under/misc/sfjumpsuitbp{
+	pixel_x = 8;
+	pixel_y = -3;
+	rand_pos = 1
+	},
+/obj/item/clothing/under/misc/sfjumpsuitpnk{
+	pixel_x = -2;
+	pixel_y = 7;
+	rand_pos = 1
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/marble/border_wb{
+	dir = 9
+	},
+/area/prefab/dreamplaza)
+"vR" = (
+/obj/stool/neon,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"vT" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"wg" = (
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"wn" = (
+/obj/decal/poster/wallsign/neonretro,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"ws" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2"
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"wv" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/stool/chair/wooden/regal,
+/turf/simulated/floor/marble/border_wb,
+/area/prefab/dreamplaza)
+"wA" = (
+/obj/table/auto,
+/obj/item/storage/box/ic_cones{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/obj/item/spacecash/random/small,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"wT" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "icecream bar"
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"wY" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"xi" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "D E L U X E"
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"xm" = (
+/obj/table/glass/auto,
+/obj/item/clothing/under/misc/casualjeansgrey{
+	pixel_x = -6
+	},
+/obj/item/clothing/shoes/bootsblk{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"xu" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"xv" = (
+/obj/table/auto{
+	pixel_y = 5
+	},
+/obj/item/storage/box/ic_cones{
+	pixel_x = 6;
+	pixel_y = 17;
+	rand_pos = 1
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom{
+	pixel_x = -8;
+	pixel_y = 20
+	},
+/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom{
+	pixel_x = -1;
+	pixel_y = 15
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"xB" = (
+/obj/storage/crate/packing{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/sponge{
+	pixel_x = 8;
+	pixel_y = 4;
+	rand_pos = 1
+	},
+/turf/simulated/floor/neutral/corner{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"xC" = (
+/obj/machinery/light/small/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/stool/chair,
+/obj/map/light/pink{
+	color_b = 0.1;
+	color_g = 0
+	},
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"xD" = (
+/obj/storage/crate/packing{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/clothing/under/misc/sfjumpsuitbee,
+/obj/item/clothing/under/misc/sfjumpsuitrb{
+	pixel_x = 2;
+	pixel_y = 6
+	},
+/obj/item/clothing/under/misc/casdressleoy{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/clothing/under/misc/casdressblu{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"yN" = (
+/obj/decal/poster/wallsign/neonsparkle{
+	pixel_y = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"yS" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"yT" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"zf" = (
+/turf/simulated/floor/plating,
+/area/prefab/dreamplaza)
+"zh" = (
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"zv" = (
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 7
+	},
+/obj/decal/cleanable/dirt,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"zy" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/poster/wallsign/neonsparkle{
+	pixel_y = 4
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"zD" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/neon_lining{
+	dir = 5
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"zK" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/junk/four,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"Ab" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"AL" = (
+/obj/decal/stage_edge/alt,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"AQ" = (
+/obj/decal/poster/wallsign/neonretro,
+/turf/simulated/wall/auto/reinforced/jen/dark1,
+/area/prefab/dreamplaza)
+"Ba" = (
+/obj/decal/poster/wallsign/stencil/right/u{
+	pixel_x = 12
+	},
+/obj/decal/poster/wallsign/stencil/left/l,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"BD" = (
+/obj/decal/poster/wallsign/stencil/right/e{
+	pixel_x = 12
+	},
+/obj/decal/poster/wallsign/stencil/left/d,
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"BF" = (
+/obj/stool/bench/blue/auto,
+/obj/decal/cleanable/dirt/dirt2,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag16";
+	pixel_y = 30
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"BR" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"BS" = (
+/obj/decoration/decorativeplant/plant7,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Cg" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor2"
+	},
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"CA" = (
+/obj/storage/crate/packing{
+	pixel_y = 9
+	},
+/obj/item/wirecutters,
+/obj/item/device/multitool,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"CG" = (
+/obj/structure/girder/reinforced,
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"CK" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Dq" = (
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 9
+	},
+/area/prefab/dreamplaza)
+"Eh" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"Ej" = (
+/turf/simulated/floor/stairs/medical/wide/middle,
+/area/prefab/dreamplaza)
+"Eo" = (
+/obj/stool/neon,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"EE" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/map/light/purple,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"EL" = (
+/obj/neon_lining{
+	dir = 9
+	},
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "floor4"
+	},
+/obj/stool/neon,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"ER" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Fu" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/plating,
+/area/prefab/dreamplaza)
+"FI" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"FS" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/structure/girder/reinforced,
+/turf/space,
+/area/noGenerate)
+"FY" = (
+/obj/lattice,
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Gd" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "The goods inside the machine probably expired before you were even cloned.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "snack-broken";
+	name = "broken vending machine";
+	pixel_y = 10
+	},
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"Ge" = (
+/obj/decal/poster/wallsign/neonsparkle{
+	dir = 1;
+	pixel_y = 4
+	},
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"Gi" = (
+/obj/table/reinforced/auto,
+/obj/item/sheet/steel{
+	amount = 5
+	},
+/obj/item/screwdriver,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"Gj" = (
+/obj/item/clothing/shoes/flatsblu{
+	pixel_x = 16;
+	pixel_y = -1;
+	rand_pos = 1
+	},
+/obj/item/clothing/shoes/bootsbrn{
+	pixel_x = 2;
+	pixel_y = 11;
+	rand_pos = 1
+	},
+/obj/table/neon/auto,
+/obj/item/clothing/shoes/flatspnk{
+	pixel_x = -4;
+	pixel_y = -1
+	},
+/turf/simulated/floor/marble/border_bw,
+/area/prefab/dreamplaza)
+"GE" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/decal/poster/wallsign/neonsparkle{
+	dir = 1;
+	pixel_y = 4
+	},
+/obj/map/light/cyan,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"GO" = (
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"GP" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/junk/two,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Hu" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/raw_material/scrap_metal{
+	pixel_x = -8;
+	pixel_y = -6
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"HI" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/neonicecream,
+/obj/map/light/pink,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"HY" = (
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Ia" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"Id" = (
+/obj/neon_lining{
+	dir = 5
+	},
+/obj/item/raw_material/shard/glass{
+	pixel_x = 6;
+	pixel_y = -14
+	},
+/obj/stool/neon,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"IE" = (
+/obj/stool/bench/auto,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"IF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Jb" = (
+/obj/decal/cleanable/blood/splatter,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/prefab/dreamplaza)
+"Jp" = (
+/obj/submachine/chef_sink{
+	pixel_y = 5
+	},
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Jq" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"Jr" = (
+/obj/neon_lining{
+	dir = 9
+	},
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"JD" = (
+/obj/neon_lining{
+	dir = 5
+	},
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"JE" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"JJ" = (
+/obj/neon_lining{
+	dir = 6;
+	pixel_y = 5
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 5
+	},
+/area/prefab/dreamplaza)
+"JV" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Ke" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Kg" = (
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 6
+	},
+/area/prefab/dreamplaza)
+"Kk" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/marble/border_bw{
+	dir = 10
+	},
+/area/prefab/dreamplaza)
+"Ko" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/item/storage/toilet/random{
+	dir = 8
+	},
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"KF" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/turf/simulated/floor/marble/border_wb,
+/area/prefab/dreamplaza)
+"KU" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"Lo" = (
+/turf/simulated/wall/auto/jen/dark1,
+/area/prefab/dreamplaza)
+"Lq" = (
+/turf/simulated/floor/marble/border_wb,
+/area/prefab/dreamplaza)
+"Lx" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/storage/crate/packing,
+/obj/random_item_spawner/junk/lots,
+/turf/simulated/floor/neutral/corner{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"Lz" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"LJ" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/marble/border_wb{
+	dir = 8
+	},
+/area/prefab/dreamplaza)
+"LK" = (
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/dreamplaza)
+"Mi" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Ms" = (
+/obj/decal/stage_edge/alt,
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag12";
+	pixel_x = 28
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"MO" = (
+/obj/table/glass/reinforced/auto,
+/obj/decoration/floralarrangement{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 8;
+	pixel_y = -1
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"Ng" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"Nl" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/obj/structure/girder/displaced,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Nr" = (
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"NJ" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"NV" = (
+/turf/simulated/floor/neutral,
+/area/prefab/dreamplaza)
+"NX" = (
+/obj/machinery/vending/cigarette{
+	pixel_y = 8
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Ob" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = 6;
+	pixel_y = -8
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Ok" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"On" = (
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/prefab/dreamplaza)
+"Pj" = (
+/obj/map/light/pink,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Pn" = (
+/turf/simulated/floor/stairs/medical/wide/other,
+/area/prefab/dreamplaza)
+"Pw" = (
+/obj/machinery/door/airlock/pyro/glass{
+	name = "D E L U X E"
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/marble/black,
+/area/prefab/dreamplaza)
+"Px" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"PF" = (
+/obj/machinery/light/small/floor/purpleish,
+/obj/decoration/decorativeplant/plant7,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"PO" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"PP" = (
+/obj/decal/cleanable/blood/splatter{
+	icon_state = "gibbl2";
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/marble/border_wb{
+	dir = 4
+	},
+/area/prefab/dreamplaza)
+"Qd" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Rm" = (
+/obj/item/storage/wall/clothingrack/hatrack/hatrack_1{
+	pixel_x = 13
+	},
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"Rn" = (
+/obj/machinery/door/airlock/pyro/glass{
+	icon_state = "glass_locked";
+	locked = 1;
+	name = "North Promenade"
+	},
+/obj/map/light/purple{
+	brightness = 3
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Ru" = (
+/obj/decal/cleanable/oil,
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/prefab/dreamplaza)
+"RB" = (
+/turf/simulated/wall/auto/reinforced/jen/purple,
+/area/prefab/dreamplaza)
+"RQ" = (
+/obj/stool/neon,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"RS" = (
+/obj/item/storage/backpack/studdedwhite{
+	pixel_x = -5;
+	pixel_y = -2;
+	rand_pos = 1
+	},
+/obj/item/storage/backpack/studdedblack{
+	pixel_x = 12;
+	pixel_y = 4;
+	rand_pos = 1
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/marble/border_wb{
+	dir = 5
+	},
+/area/prefab/dreamplaza)
+"RX" = (
+/obj/machinery/cashreg{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/neon_lining{
+	dir = 6;
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/table/neon/auto,
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"Sd" = (
+/obj/machinery/light/emergency/exitsign{
+	dir = 4
+	},
+/obj/item/casing{
+	pixel_x = -11;
+	pixel_y = 11
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Sg" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Sk" = (
+/obj/decal/poster/wallsign/bar{
+	pixel_y = -1
+	},
+/turf/simulated/wall/auto/jen/purple,
+/area/prefab/dreamplaza)
+"Sm" = (
+/obj/decoration/decorativeplant/plant5,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Sr" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/decal/cleanable/machine_debris,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Sv" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Sw" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Sx" = (
+/obj/decoration/pottedfern{
+	pixel_y = 4
+	},
+/turf/simulated/floor/marble/border_wb{
+	dir = 10
+	},
+/area/prefab/dreamplaza)
+"SE" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"SP" = (
+/obj/storage/secure/closet/fridge/kitchen{
+	dir = 8;
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Tt" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"TM" = (
+/obj/table/neon/auto,
+/obj/item/reagent_containers/food/snacks/fries{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/terrazzo,
+/area/prefab/dreamplaza)
+"UK" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"UN" = (
+/obj/item/storage/wall/clothingrack/clothes4{
+	pixel_y = 10
+	},
+/turf/simulated/floor/marble/border_wb,
+/area/prefab/dreamplaza)
+"UQ" = (
+/turf/simulated/wall/auto/jen/purple,
+/area/prefab/dreamplaza)
+"VC" = (
+/obj/structure/girder/reinforced,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"VO" = (
+/obj/storage/crate/packing,
+/obj/random_item_spawner/dressup/some,
+/turf/simulated/floor/carpet/clowncarpet/border,
+/area/prefab/dreamplaza)
+"VX" = (
+/obj/machinery/light/small/floor/purpleish,
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"VY" = (
+/turf/simulated/floor/carpet/clowncarpet/border{
+	dir = 10
+	},
+/area/prefab/dreamplaza)
+"Wb" = (
+/obj/submachine/ice_cream_dispenser{
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Wd" = (
+/obj/machinery/vending/kitchen{
+	current_processing_tier = 1;
+	dir = 8;
+	layer = 3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/dreamplaza)
+"Wt" = (
+/obj/item/storage/wall/clothingrack/clothes3{
+	pixel_y = 10
+	},
+/turf/simulated/floor/marble/border_wb,
+/area/prefab/dreamplaza)
+"Ww" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"WA" = (
+/obj/table/reinforced/auto,
+/obj/machinery/cashreg{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"WK" = (
+/turf/simulated/floor/carpet/clowncarpet,
+/area/prefab/dreamplaza)
+"Xm" = (
+/obj/storage/crate/packing{
+	name = "merchandise samples";
+	pixel_x = 5;
+	pixel_y = 4
+	},
+/obj/item/storage/backpack/bpangel,
+/obj/item/clothing/suit/space/neon{
+	pixel_x = 9
+	},
+/obj/item/clothing/head/helmet/space/neon,
+/turf/simulated/floor,
+/area/prefab/dreamplaza)
+"XS" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Yc" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	name = "storage"
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"Yr" = (
+/obj/wingrille_spawn/auto,
+/obj/decal/poster/wallsign/neonsparkle,
+/obj/map/light/cyan,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+"YD" = (
+/obj/structure/girder/reinforced{
+	pixel_x = 11;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/prefab/dreamplaza)
+"YH" = (
+/obj/item/raw_material/shard/plasmacrystal,
+/obj/item/raw_material/shard/glass{
+	pixel_x = -6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"YT" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Zn" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/terrazzo/white,
+/area/prefab/dreamplaza)
+"Zp" = (
+/obj/storage/crate/bin{
+	pixel_y = 5
+	},
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/terrazzo/black,
+/area/prefab/dreamplaza)
+"ZD" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZM" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZN" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/purpleblack{
+	dir = 1
+	},
+/area/prefab/dreamplaza)
+
+(1,1,1) = {"
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(2,1,1) = {"
+UK
+UK
+UK
+UK
+UK
+Ng
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(3,1,1) = {"
+UK
+UK
+Ng
+VC
+Ng
+Ng
+Ng
+UK
+UK
+NJ
+ZD
+ZD
+yS
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+Ng
+Ng
+UK
+UK
+UK
+UK
+UK
+"}
+(4,1,1) = {"
+UK
+RB
+RB
+RB
+RB
+RB
+RB
+RB
+RB
+RB
+pq
+pq
+pq
+pq
+pq
+pq
+pq
+pq
+Nl
+UK
+UK
+UK
+UK
+Ng
+Ng
+UK
+UK
+UK
+UK
+UK
+"}
+(5,1,1) = {"
+UK
+RB
+ss
+nq
+Xm
+RB
+vu
+xm
+af
+UQ
+PF
+cI
+zh
+zh
+Mi
+ih
+YD
+Hu
+zf
+yS
+Sr
+yS
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(6,1,1) = {"
+UK
+RB
+xC
+GO
+eK
+RB
+aJ
+WK
+vR
+UQ
+Sg
+bB
+FI
+Zn
+Rn
+HY
+wY
+eK
+ei
+zf
+Ke
+pg
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(7,1,1) = {"
+UK
+RB
+LK
+GO
+GO
+wn
+sa
+WK
+vR
+UQ
+BF
+bB
+bB
+qa
+Rn
+Zn
+bB
+sw
+ei
+ei
+IF
+XS
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(8,1,1) = {"
+UK
+RB
+jH
+UQ
+iz
+UQ
+UQ
+pi
+UQ
+UQ
+Zp
+bB
+bB
+bB
+Rn
+pM
+FI
+LK
+zf
+pg
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(9,1,1) = {"
+UK
+RB
+RB
+RB
+eG
+PP
+bj
+lK
+RS
+Mi
+YH
+bB
+bB
+zh
+Mi
+ih
+sL
+Fu
+Px
+XS
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(10,1,1) = {"
+UK
+vT
+ei
+RB
+KF
+Dq
+df
+VY
+Gj
+GE
+zh
+bB
+bB
+zh
+pq
+pq
+pq
+pq
+FS
+UK
+UK
+UK
+aA
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(11,1,1) = {"
+UK
+Qd
+Ke
+yN
+Wt
+eC
+VX
+VO
+px
+lV
+ih
+bB
+mV
+Sm
+pq
+UK
+UK
+VC
+UK
+UK
+UK
+UK
+ZM
+UK
+UK
+UK
+UK
+Ng
+UK
+UK
+"}
+(12,1,1) = {"
+UK
+UK
+UK
+BD
+UN
+sh
+Ia
+Jb
+Kk
+un
+bB
+bB
+bB
+Sg
+Mi
+UK
+Ng
+UK
+UK
+UK
+UK
+fL
+ei
+yS
+UK
+Ww
+UK
+UK
+UK
+UK
+"}
+(13,1,1) = {"
+UK
+UK
+UK
+Ba
+Lq
+at
+WK
+On
+pa
+Pw
+bB
+bB
+bB
+ER
+Mi
+UK
+UK
+UK
+UK
+UK
+UK
+Sr
+vc
+pg
+UK
+fs
+yS
+UK
+UK
+UK
+"}
+(14,1,1) = {"
+UK
+UK
+UK
+jk
+Lq
+Rm
+WK
+On
+jO
+xi
+bB
+bB
+bB
+Sg
+Mi
+UK
+Ww
+UK
+UK
+Ng
+Ng
+pq
+eK
+UK
+NJ
+ei
+jh
+UK
+UK
+UK
+"}
+(15,1,1) = {"
+UK
+UK
+UK
+Ge
+Lq
+RX
+VX
+Ru
+dg
+fS
+ih
+bB
+sw
+BS
+Mi
+NJ
+ei
+yS
+UK
+UK
+Ng
+pq
+CG
+ei
+zf
+FY
+eK
+UK
+UK
+UK
+"}
+(16,1,1) = {"
+UK
+UK
+UK
+RB
+wv
+JJ
+xD
+Kg
+cb
+zy
+zh
+bB
+bB
+GP
+pq
+lo
+ei
+ei
+yS
+UK
+VC
+pq
+wY
+LK
+bB
+Zn
+pq
+UK
+UK
+UK
+"}
+(17,1,1) = {"
+UK
+UK
+fL
+RB
+Sx
+rA
+LJ
+iy
+vJ
+Mi
+zh
+bB
+bB
+zh
+pq
+pq
+pq
+pq
+pq
+pq
+pq
+pq
+Lz
+JE
+JE
+Lz
+pq
+UK
+UK
+UK
+"}
+(18,1,1) = {"
+UK
+UK
+UK
+RB
+UQ
+UQ
+UQ
+UQ
+UQ
+UQ
+NX
+bB
+bB
+JV
+Lo
+zv
+Nr
+wg
+Lo
+gw
+xB
+AQ
+Pj
+gV
+bB
+bB
+pq
+UK
+UK
+UK
+"}
+(19,1,1) = {"
+UK
+RB
+RB
+RB
+UQ
+UQ
+UQ
+UQ
+UQ
+Sk
+sz
+bB
+bB
+zh
+ie
+Nr
+Nr
+Nr
+Lo
+Lx
+Eh
+PO
+Zn
+Sw
+bB
+Ok
+pq
+UK
+UK
+UK
+"}
+(20,1,1) = {"
+UK
+Mi
+wA
+fo
+ZN
+Jr
+EL
+jm
+kN
+Jr
+AL
+wY
+bB
+zh
+Lo
+MO
+Ko
+BR
+ae
+GO
+nv
+kK
+SE
+Sw
+FI
+LK
+pq
+UK
+UK
+UK
+"}
+(21,1,1) = {"
+UK
+Mi
+sX
+Sv
+ZN
+RQ
+nu
+bB
+Eo
+FI
+oo
+bB
+bB
+zh
+Lo
+Lo
+Lo
+Lo
+Lo
+Cg
+zf
+kK
+bB
+dr
+mI
+aT
+pq
+UK
+UK
+UK
+"}
+(22,1,1) = {"
+UK
+wn
+Jp
+nN
+HI
+Nr
+RQ
+KU
+rB
+Nr
+Ej
+bB
+bB
+zh
+Lo
+Gi
+rC
+fC
+CA
+GO
+NV
+PO
+Sd
+rV
+jt
+pq
+pq
+UK
+UK
+UK
+"}
+(23,1,1) = {"
+UK
+Mi
+Wd
+kv
+Yr
+YT
+Nr
+bB
+Eo
+bB
+Ej
+bB
+bB
+tw
+Lo
+qo
+IE
+xu
+GO
+GO
+Jq
+pq
+pq
+pq
+pq
+pq
+UK
+UK
+UK
+UK
+"}
+(24,1,1) = {"
+UK
+Mi
+SP
+nN
+WA
+Nr
+bB
+Nr
+bB
+Nr
+Ej
+bB
+bB
+zh
+Yc
+Ab
+rS
+GO
+GO
+sx
+Eh
+pq
+ei
+pg
+UK
+UK
+UK
+Ng
+Ng
+UK
+"}
+(25,1,1) = {"
+UK
+RB
+xv
+nN
+dE
+bB
+Nr
+gt
+Nr
+bB
+Ej
+bB
+ws
+tw
+Lo
+Gd
+zf
+NV
+dt
+zK
+pq
+pq
+pg
+UK
+UK
+UK
+Ng
+Ng
+Ng
+UK
+"}
+(26,1,1) = {"
+UK
+Mi
+Wb
+yT
+cc
+Nr
+bB
+TM
+jv
+Tt
+Pn
+bB
+Zn
+zh
+pq
+pq
+pq
+pq
+pq
+pq
+pq
+UK
+UK
+UK
+UK
+UK
+Ng
+UK
+UK
+UK
+"}
+(27,1,1) = {"
+UK
+Mi
+oO
+CK
+wT
+zD
+lD
+Id
+lD
+JD
+Ms
+jl
+EE
+Ob
+pq
+VC
+UK
+UK
+Ng
+UK
+UK
+UK
+UK
+Ng
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(28,1,1) = {"
+UK
+RB
+Mi
+Mi
+RB
+Mi
+Mi
+RB
+Mi
+Mi
+pq
+Mi
+Mi
+pq
+pq
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(29,1,1) = {"
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}
+(30,1,1) = {"
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+UK
+"}

@@ -1,17 +1,79 @@
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
+	object_flags = NO_GHOSTCRITTER
 	soundproofing = 3
 	can_flip_bust = 1
 	p_class = 3
+	open_sound = 'sound/misc/locker_open.ogg'
+	close_sound = 'sound/misc/locker_close.ogg'
+	volume = 70
+	_max_health = LOCKER_HEALTH_WEAK
+	_health = LOCKER_HEALTH_WEAK
+	material_amt = 0.2
 
 	New()
 		. = ..()
 		START_TRACKING
-	
+		src.AddComponent(/datum/component/bullet_holes, 10, 0)
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
+
+	bullet_act(var/obj/projectile/P)
+		var/damage = 0
+		if (!P || !istype(P.proj_data,/datum/projectile/))
+			return
+		damage = round((P.power*P.proj_data.ks_ratio), 1.0)
+		if (damage < 1)
+			return
+
+		switch(P.proj_data.damage_type)
+			if(D_KINETIC)
+				take_damage(damage, P)
+			if(D_PIERCING)
+				take_damage(damage, P)
+			if(D_ENERGY)
+				take_damage(damage / 2, P)
+		return
+
+	proc/take_damage(var/amount, var/obj/projectile/P)
+		if (!P)
+			message_admins("P Gone")
+			return
+		if (!isnum(amount) || amount <= 0)
+			return
+		src._health -= amount
+		if(_health <= 0)
+			_health = 0
+			if (isnull(P))
+				logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. No projectile data.]")
+			else
+				var/shooter_data = null
+				var/vehicle
+				if (P.mob_shooter)
+					shooter_data = P.mob_shooter
+				else if (ismob(P.shooter))
+					var/mob/M = P.shooter
+					shooter_data = M
+				var/obj/machinery/vehicle/V
+				if (istype(P.shooter,/obj/machinery/vehicle/))
+					V = P.shooter
+					if (!shooter_data)
+						shooter_data = V.pilot
+					vehicle = 1
+				if(shooter_data)
+					logTheThing(LOG_COMBAT, shooter_data, "[vehicle ? "driving [V.name] " : ""]shoots and breaks open [src] at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+				else
+					logTheThing(LOG_COMBAT, src, "is hit and broken open by a projectile at [log_loc(src)]. <b>Projectile:</b> <I>[P.name]</I>[P.proj_data && P.proj_data.type ? ", <b>Type:</b> [P.proj_data.type]" :""]")
+			break_open()
+
+	proc/break_open()
+		src.welded = 0
+		src.unlock()
+		src.open()
+		playsound(src.loc, 'sound/impact_sounds/locker_break.ogg', 70, 1)
 
 /obj/storage/closet/emergency
 	name = "emergency supplies closet"
@@ -36,8 +98,9 @@
 			if (prob(2))
 				new /obj/item/clothing/mask/gas/emergency(src)
 			for (var/i=rand(2,3), i>0, i--)
+				new /obj/item/tank/emergency_oxygen(src)
 				if (prob(40))
-					new /obj/item/tank/emergency_oxygen(src)
+					new /obj/item/tank/mini_oxygen(src)
 				if (prob(40))
 					new /obj/item/clothing/mask/breath(src)
 
@@ -54,6 +117,8 @@
 		if (..()) // make_my_stuff is called multiple times due to lazy init, so the parent returns 1 if it actually fired and 0 if it already has
 			if (prob(80))
 				new /obj/item/extinguisher(src)
+			if (prob(50))
+				new /obj/item/clothing/head/helmet/firefighter(src)
 			if (prob(30))
 				new /obj/item/clothing/suit/fire(src)
 				new /obj/item/clothing/mask/gas/emergency(src)
@@ -75,6 +140,7 @@
 							/obj/item/device/light/flashlight,
 							/obj/item/clothing/shoes/galoshes,
 							/obj/item/reagent_containers/glass/bottle/cleaner,
+							/obj/item/storage/box/body_bag,
 							/obj/item/caution = 6)
 
 /obj/storage/closet/law
@@ -93,12 +159,17 @@
 	icon_state = "coffin"
 	icon_closed = "coffin"
 	icon_opened = "coffin-open"
-	layer = 2.2
+	layer = 2.5
+	icon_welded = "welded-coffin-4dirs"
+	open_sound = 'sound/misc/coffin_open.ogg'
+	close_sound = 'sound/misc/coffin_close.ogg'
+	volume = 70
 
 	wood
 		icon_closed = "woodcoffin"
 		icon_state = "woodcoffin"
 		icon_opened = "woodcoffin-open"
+		icon_welded = "welded-coffin-1dir"
 
 /obj/storage/closet/biohazard
 	name = "\improper Level 3 Biohazard Suit closet"
@@ -119,6 +190,14 @@
 	icon_closed = "syndicate"
 	icon_opened = "syndicate-open"
 
+	New()
+		..()
+		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		..()
+
 /obj/storage/closet/syndicate/personal
 	desc = "Gear preperations closet."
 	spawn_contents = list(
@@ -131,15 +210,16 @@
 #endif
 	/obj/item/clothing/under/misc/syndicate,
 #ifdef XMAS
-	/obj/item/clothing/head/helmet/space/santahat,
-	/obj/item/clothing/suit/space/santa,
+	/obj/item/clothing/head/helmet/space/santahat/noslow,
+	/obj/item/clothing/suit/space/santa/noslow,
 #else
 	/obj/item/clothing/head/helmet/space/syndicate,
 	/obj/item/clothing/suit/space/syndicate,
 #endif
 	/obj/item/crowbar,
 	/obj/item/cell/supercell/charged,
-	/obj/item/device/multitool)
+	/obj/item/device/multitool,
+	/obj/item/storage/backpack/syndie)
 
 /obj/storage/closet/syndicate/nuclear
 	desc = "Nuclear preperations closet."
@@ -166,7 +246,7 @@
 /* let us never forget this - haine
 /obj/closet/thunderdome/New()
 	..()
-	sleep(2)*/
+	sleep(0.2 SECONDS)*/
 
 /obj/storage/closet/thunderdome/red
 	icon_state = "syndicate"
@@ -175,10 +255,12 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/under/jersey/red,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
-	/obj/item/gun/energy/laser_gun/pred = 2,
+	/obj/item/knife/butcher/hunterspear = 2,
+	/obj/item/gun/energy/plasma_gun = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/thunderdome/green
 	icon_state = "syndicate1"
@@ -187,10 +269,12 @@
 	spawn_contents = list(/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/under/jersey/green,
 	/obj/item/clothing/shoes/black = 2,
-	/obj/item/knife_butcher/predspear = 2,
-	/obj/item/gun/energy/laser_gun/pred = 2,
+	/obj/item/knife/butcher/hunterspear = 2,
+	/obj/item/gun/energy/plasma_gun = 2,
 	/obj/item/stimpack = 2,
-	/obj/item/storage/belt/wrestling = 2)
+	/obj/item/storage/belt/wrestling = 2,
+	/obj/item/storage/box/kendo_box = 1,
+	/obj/item/storage/box/kendo_box/hakama = 1)
 
 /obj/storage/closet/electrical_supply
 	name = "electrical supplies closet"
@@ -203,6 +287,15 @@
 	desc = "A handy closet full of everything an aspiring apprentice welder could ever need."
 	spawn_contents = list(/obj/item/clothing/head/helmet/welding = 3,
 	/obj/item/weldingtool = 3)
+
+/obj/storage/closet/wrestling
+	name = "wrestling supplies closet"
+	desc = "A handy closet full of everything an aspiring fake showboater wrestler needs to launch his career."
+	spawn_contents = list(/obj/item/storage/belt/wrestling/fake = 3,
+	/obj/item/clothing/under/shorts/random = 3,
+	/obj/item/clothing/mask/wrestling/black = 1,
+	/obj/item/clothing/mask/wrestling/blue = 1,
+	/obj/item/clothing/mask/wrestling/green = 1)
 
 /obj/storage/closet/office
 	name = "office supply closet"
@@ -217,7 +310,7 @@
 			B2.pixel_y = 6
 			B2.pixel_x = 5
 
-			new /obj/item/postit_stack(src)
+			new /obj/item/item_box/postit(src)
 			new /obj/item/hand_labeler(src)
 
 			var/obj/item/pen/B3 = new /obj/item/pen(src)
@@ -252,6 +345,14 @@
 			B8.pixel_y = 6
 			B8.pixel_x = 0
 
+			var/obj/item/folder/B9 = new /obj/item/folder(src)
+			B9.pixel_y = 0
+			B9.pixel_x = 6
+
+			var/obj/item/folder/B10 = new /obj/item/canvas(src)
+			B10.pixel_y = 0	// everything else does it i guess
+			B10.pixel_x = 0
+
 			return 1
 
 //A closet that traps you when you step onto it!
@@ -259,14 +360,14 @@
 //A locker that traps folks.  I guess it's haunted.
 /obj/storage/closet/haunted
 	var/throw_strength = 100
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		..()
 		src.open()
 		return
 
-	HasEntered(atom/movable/A as mob|obj, atom/OldLoc)
+	Crossed(atom/movable/A as mob|obj)
 		if (!src.open || src.welded || !isliving(A))
 			return ..()
 
@@ -283,8 +384,8 @@
 		if (!istype(M) || M.loc != src)
 			return
 
-		if (M.throw_count || istype(OldLoc, /turf/space) || (M.m_intent != "walk"))
-			var/flingdir = turn(get_dir(src.loc, OldLoc), 180)
+		if (M.throwing || istype(A.last_turf, /turf/space) || (M.m_intent != "walk"))
+			var/flingdir = turn(get_dir(src.loc, A.last_turf), 180)
 			src.throw_at(get_edge_target_turf(src, flingdir), throw_strength, 1)
 			return
 
@@ -293,7 +394,7 @@
 /obj/storage/closet/mantacontainerred
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "mantacontainerleft"
 	icon_closed = "mantacontainerleft"
 	icon_opened = "mantacontainerleft-open"
@@ -302,14 +403,14 @@
 	bound_width = 32
 	anchored = 2
 
-	open(var/entangleLogic)
+	open(var/entangleLogic, mob/user)
 		if (src.open)
 			return 0
 		if (!src.can_open())
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_close())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		if(entangled && !entangleLogic)
@@ -320,7 +421,7 @@
 
 		src.dump_contents()
 		src.open = 1
-		src.update_icon()
+		src.UpdateIcon()
 		p_class = initial(p_class)
 		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
 		return 1
@@ -332,7 +433,7 @@
 			return 0
 
 		if(entangled && !entangleLogic && !entangled.can_open())
-			visible_message("<span style='color:red'>It won't budge!</span>")
+			visible_message("<span class='alert'>It won't budge!</span>")
 			return 0
 
 		src.open = 0
@@ -350,7 +451,7 @@
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
-				for (var/obj/storage/O in lockers_and_crates)
+				for_by_tcl(O, /obj/storage)
 					LAGCHECK(LAG_LOW)
 					if (O.z != src.z || O.open || !O.can_open())
 						continue
@@ -362,7 +463,7 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || istype(M, /mob/living/object))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
 				continue
 			if (src.crunches_contents)
 				src.crunch(M)
@@ -375,26 +476,35 @@
 			entangled.contents = src.contents
 			entangled.open(1)
 
-		src.update_icon()
-		playsound(src.loc, "sound/effects/cargodoor.ogg", 15, 1, -3)
+		src.UpdateIcon()
+		playsound(src.loc, 'sound/effects/cargodoor.ogg', 15, 1, -3)
+		SEND_SIGNAL(src, COMSIG_OBJ_STORAGE_CLOSED)
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cargotele))
 			return
 
 		else if (istype(W, /obj/item/satchel/))
-			var/amt = W.contents.len
+			if(secure && locked)
+				user.show_text("Access Denied", "red")
+				return
+			if (count_turf_items() >= max_capacity || length(contents) >= max_capacity)
+				user.show_text("[src] cannot fit any more items!", "red")
+				return
+			var/amt = length(W.contents)
 			if (amt)
-				user.visible_message("<span style='color:blue'>[user] dumps out [W]'s contents into [src]!</span>")
+				user.visible_message("<span class='notice'>[user] dumps out [W]'s contents into [src]!</span>")
 				var/amtload = 0
 				for (var/obj/item/I in W.contents)
+					if(length(contents) >= max_capacity)
+						break
 					if (open)
 						I.set_loc(src.loc)
 					else
 						I.set_loc(src)
 					amtload++
-				W:satchel_updateicon()
+				W:UpdateIcon()
 				if (amtload)
 					user.show_text("[amtload] [W:itemstring] dumped into [W]!", "blue")
 				else
@@ -402,22 +512,21 @@
 				return
 
 		if (src.open)
-			if (!src.is_short && istype(W, /obj/item/weldingtool))
+			if (!src.is_short && isweldingtool(W))
 				return
 
 			else if (iswrenchingtool(W))
 				return
 
-		else if (!src.open && istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/welder = W
-			if(!welder.try_weld(user, 1, burn_eyes = 1))
+		else if (!src.open && isweldingtool(W))
+			if(!W:try_weld(user, 1, burn_eyes = 1))
 				return
 			if (!src.welded)
-				src.weld(1, welder, user)
-				src.visible_message("<span style='color:red'>[user] welds [src] closed with [welder].</span>")
+				src.weld(1, W, user)
+				src.visible_message("<span class='alert'>[user] welds [src] closed with [W].</span>")
 			else
-				src.weld(0, welder, user)
-				src.visible_message("<span style='color:red'>[user] unwelds [src] with [welder].</span>")
+				src.weld(0, W, user)
+				src.visible_message("<span class='alert'>[user] unwelds [src] with [W].</span>")
 			return
 
 		if (src.secure)
@@ -429,8 +538,8 @@
 				if (src.allowed(user) || !src.registered || (istype(W, /obj/item/card/id) && src.registered == I.registered))
 					//they can open all lockers, or nobody owns this, or they own this locker
 					src.locked = !( src.locked )
-					user.visible_message("<span style='color:blue'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					user.visible_message("<span class='notice'>The locker has been [src.locked ? null : "un"]locked by [user].</span>")
+					src.UpdateIcon()
 					if (!src.registered)
 						src.registered = I.registered
 						src.name = "[I.registered]'s [src.name]"
@@ -441,8 +550,8 @@
 			else if (!src.personal && src.allowed(user))
 				if (!src.open)
 					src.locked = !src.locked
-					user.visible_message("<span style='color:blue'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
-					src.update_icon()
+					user.visible_message("<span class='notice'>[src] has been [src.locked ? null : "un"]locked by [user].</span>")
+					src.UpdateIcon()
 					for (var/mob/M in src.contents)
 						src.log_me(user, M, src.locked ? "locks" : "unlocks")
 					return
@@ -456,8 +565,8 @@
 			return
 /*
 		else if (issilicon(user))
-			if (get_dist(src, user) <= 1)
-				return src.attack_hand(user)
+			if (BOUNDS_DIST(src, user) == 0)
+				return src.Attackhand(user)
 */
 		else
 			return ..()
@@ -466,7 +575,7 @@
 /obj/storage/closet/mantacontainerred/right
 	name = "shipping container"
 	desc = "It's a shipping container, they are frequently used to ship different goods securely across oceans."
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_closed = "mantacontainerright"
 	icon_state = "mantacontainerright"
 	icon_opened = "mantacontainerright-open"
@@ -491,11 +600,28 @@
 /obj/storage/closet/medicalclothes
 	name = "medical clothing locker"
 	icon = 'icons/obj/large_storage.dmi'
-	icon_closed = "medicalclothes"
-	icon_state = "medicalclothes"
-	icon_opened = "secure_white-open"
+	icon_closed = "red-medical"
+	icon_state = "red-medical"
+	icon_opened = "open-white"
 	desc = "A handy medical locker for storing your doctoring apparel."
-	spawn_contents = list(/obj/item/clothing/head/nursehat = 1,
-					/obj/item/clothing/suit/nursedress = 1,
-					/obj/item/clothing/head/headmirror = 1,
-					/obj/item/clothing/suit/labcoat/medical = 2)
+	spawn_contents = list(/obj/item/clothing/head/nursehat = 2,
+					/obj/item/clothing/head/traditionalnursehat = 2,
+					/obj/item/clothing/suit/nursedress = 3,
+					/obj/item/clothing/suit/wintercoat/medical = 3,
+					/obj/item/clothing/head/headmirror = 3,
+					/obj/item/clothing/suit/labcoat = 2)
+
+/obj/storage/closet/command/ruined //replacements for azones and mining level flavor
+	name = "Dented command locker"
+	desc = "This thing looks ransacked."
+	icon = 'icons/obj/large_storage.dmi'
+	icon_state = "dented_c"
+	icon_closed = "dented_c"
+	icon_opened = "dented_c-open"
+	spawn_contents = list()
+
+/obj/storage/closet/command/ruined/hos //rejoice HoS players
+	name = "Dented Head of Security's locker"
+	desc = "A banged up Head of Security locker. Looks like somebody took the law into their own hands."
+	spawn_contents = list(/obj/item/clothing/shoes/brown,
+	/obj/item/paper/iou)

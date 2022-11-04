@@ -18,15 +18,21 @@ obj/machinery/atmospherics/binary/pump
 
 	name = "Gas pump"
 	desc = "A pump"
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 
 	var/on = 0
 	var/target_pressure = ONE_ATMOSPHERE
 
 	var/datum/pump_ui/ui
 
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+
 	attack_hand(mob/user)
 		//on = !on
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		if(node1&&node2)
@@ -47,14 +53,14 @@ obj/machinery/atmospherics/binary/pump
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air2.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to pump gas if target is already reached!
 			return 1
 
 		//Calculate necessary moles to transfer using PV=nRT
-		if((air1.total_moles() > 0) && (air1.temperature>0))
+		if((TOTAL_MOLES(air1) > 0) && (air1.temperature>0))
 			var/pressure_delta = target_pressure - output_starting_pressure
 			var/transfer_moles = pressure_delta*air2.volume/(air1.temperature * R_IDEAL_GAS_EQUATION)
 
@@ -62,55 +68,36 @@ obj/machinery/atmospherics/binary/pump
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 			air2.merge(removed)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
-			if(network2)
-				network2.update = 1
+			network2?.update = 1
 
-			use_power((target_pressure) * (0.10)) // cogwerks: adjust the multiplier if needed
+			use_power((target_pressure) * (0.1)) // cogwerks: adjust the multiplier if needed
 
 		return 1
 
-	//Radio remote control
+	proc/broadcast_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+		signal.data["tag"] = id
+		signal.data["device"] = "AGP"
+		signal.data["power"] = on ? "on" : "off"
+		signal.data["target_output"] = target_pressure
+		signal.data["address_tag"] = "pumpcontrol"
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
-
-			signal.data["tag"] = id
-			signal.data["device"] = "AGP"
-			signal.data["power"] = on ? "on" : "off"
-			signal.data["target_output"] = target_pressure
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
+		return 1
 
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	initialize()
 		..()
-		if(frequency)
-			set_frequency(frequency)
 		ui = new/datum/pump_ui/basic_pump_ui(src)
 
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -118,7 +105,7 @@ obj/machinery/atmospherics/binary/pump
 
 		switch(signal.data["command"])
 			if("broadcast_status")
-				SPAWN_DBG(0.5 SECONDS) broadcast_status()
+				SPAWN(0.5 SECONDS) broadcast_status()
 
 			if("power_on")
 				on = 1
@@ -130,18 +117,18 @@ obj/machinery/atmospherics/binary/pump
 				on = !on
 
 			if("set_output_pressure")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), ONE_ATMOSPHERE*50)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, ONE_ATMOSPHERE*50)
 
 				target_pressure = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
+			SPAWN(0.5 SECONDS) broadcast_status()
 
-		update_icon()
+		UpdateIcon()
 
-obj/machinery/atmospherics/binary/pump/attackby(obj/item/W as obj, mob/user as mob)
-	if(ispulsingtool(W))
+obj/machinery/atmospherics/binary/pump/attackby(obj/item/W, mob/user)
+	if(ispulsingtool(W) || iswrenchingtool(W))
 		ui.show_ui(user)
 
 datum/pump_ui/basic_pump_ui
@@ -154,16 +141,17 @@ datum/pump_ui/basic_pump_ui
 	var/obj/machinery/atmospherics/binary/pump/our_pump
 
 datum/pump_ui/basic_pump_ui/New(obj/machinery/atmospherics/binary/pump/our_pump)
+	..()
 	src.our_pump = our_pump
 	pump_name = our_pump.name
 
 datum/pump_ui/basic_pump_ui/set_value(val_to_set)
 	our_pump.target_pressure = val_to_set
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/basic_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/basic_pump_ui/is_on()
 	return our_pump.on

@@ -2,7 +2,7 @@
 //mbc : the indentation of this file got all fucked up somehow. That's why we work on different indentation levels depending on the proc. Have fun!
 
 /mob/living/critter/changeling
-	name = "fire cirr into the sun"
+	name = "fire me into the sun"
 	real_name = "for this should not be seen"
 	desc = "dial 555-imcoder now for prizes"
 	density = 1
@@ -12,19 +12,30 @@
 	can_disarm = 1
 	blood_id = "bloodc"
 	table_hide = 0
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
+	butcherable = TRUE
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
+	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
+	var/obj/item/original_bodypart
 
 	// IMPORTANT gimmick features
 	var/obj/item/clothing/head/hat = null
 	var/hat_shown = 0
-	var/hat_icon = 'icons/obj/aibots.dmi' //yeah just use the buddy hats whatever close enough
+	var/hat_icon = 'icons/obj/bots/aibots.dmi' //yeah just use the buddy hats whatever close enough
 	var/hat_x_offset = -4
 	var/hat_y_offset = -2
 
+	New(loc, obj/item/bodypart)
+		..()
+		if (bodypart)
+			bodypart.name = "mutagenic [initial(bodypart.name)]"
+		src.original_bodypart = bodypart
+		src.original_bodypart.set_loc(src)
+
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -32,7 +43,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -45,25 +56,25 @@
 	canRideMailchutes()
 		return 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/clothing/head))
 			if(src.hat)
-				boutput(user, "<span style=\"color:red\">[src] is already wearing a hat!</span>")
+				boutput(user, "<span class='alert'>[src] is already wearing a hat!</span>")
 				return
 			if(!(W.icon_state in BUDDY_HATS))
-				boutput(user, "<span style=\"color:red\">It doesn't fit!</span>")
+				boutput(user, "<span class='alert'>It doesn't fit!</span>")
 				return
 
 			src.hat = W
 			user.drop_item()
 			W.set_loc(src)
 
-			src.update_icon()
+			src.UpdateIcon()
 			user.visible_message("<b>[user]</b> puts a hat on [src]!","You put a hat on [src]!")
 			return
 		..()
 
-	proc/update_icon()
+	update_icon()
 		if (src.hat && !src.hat_shown)
 			var/image/hat_image = image(src.hat_icon, "bhat-[src.hat.icon_state]",,layer = src.layer + 0.005)
 			hat_image.pixel_x = hat_x_offset
@@ -87,14 +98,25 @@
 		if (hat)
 			hat.set_loc(src.loc)
 			hat = 0
-			update_icon()
+			UpdateIcon()
 		if (!gibbed)
-			playsound(get_turf(src), 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
 		death_effect()
 		..()
 
+	butcher(mob/user)
+		src.original_bodypart?.set_loc(src.loc)
+		src.original_bodypart = null
+		return ..(user, FALSE)
+
+	disposing()
+		..()
+		qdel(src.original_bodypart)
+		src.original_bodypart = null
+
 	// functionality here greatly differs between the changeling critters, but they still need it
 	proc/return_to_master()
+		return
 
 /mob/living/critter/changeling/proc/death_effect()
 	if (hivemind_owner)
@@ -109,7 +131,8 @@
 /datum/abilityHolder/critter/handspider
 	onAbilityStat()
 		..()
-		stat("Collected DNA Points:", owner:absorbed_dna)
+		.= list()
+		.["DNA Collected:"] = owner?:absorbed_dna
 
 
 /mob/living/critter/changeling/handspider
@@ -119,15 +142,46 @@
 	icon_state = "handspider"
 	icon_state_dead = "handspider-dead"
 	abilityHolder
+	can_grab = 1
+	can_disarm = 1
 	hand_count = 1
 	var/absorbed_dna = 0
+
+	New()
+		..()
+		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
+		//todo : move to add_abilities list because its cleaner that way
+		abilityHolder.addAbility(/datum/targetable/critter/dna_gnaw)
+		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
+		abilityHolder.updateButtons()
+		src.flags ^= TABLEPASS
+
+		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
+		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
+
+	disposing()
+		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
+		..()
+
+	proc/stop_sprint()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
+
+	proc/enable_sprint()
+		REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
+
+	special_movedelay_mod(delay,space_movement,aquatic_movement)
+		.= delay
+		if (src.lying)
+			. += 14
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT))
+			. += 7
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
 					var/list/mob/living/possible_targets = list()
@@ -140,13 +194,13 @@
 						var/mob/living/L = pick(possible_targets)
 						var/dir = get_dir(L, src)
 						if(dir & (EAST | WEST))
-							src.dir = dir
+							src.set_dir(dir)
 						else if (dir & (NORTH | SOUTH))
-							src.dir = get_dir(src,L)
+							src.set_dir(get_dir(src,L))
 
 						src.icon_state = "[icon_prefix]handspider-flip"
 						animate_handspider_flipoff(src, prob(50) ? "L" : "R", 1, 0)
-						SPAWN_DBG(0.7 SECONDS)
+						SPAWN(0.7 SECONDS)
 							//Adding check for icon_state in case they die mid-flipoff (heck)
 							if(!isdead(src)) src.icon_state = "[icon_prefix]handspider"
 						//Flipoff
@@ -189,7 +243,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -199,20 +253,11 @@
 		HH.icon_state = "mouth"			 // the icon state of the hand UI background
 		HH.limb_name = "teeth"					// name for the dummy holder
 		HH.limb = new /datum/limb
-		HH.can_hold_items = 0
-
-	New()
-		..()
-		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
-		//todo : move to add_abilities list because its cleaner that way
-		abilityHolder.addAbility(/datum/targetable/critter/dna_gnaw)
-		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
-		abilityHolder.updateButtons()
-		src.flags ^= TABLEPASS
+		HH.can_hold_items = 1
 
 	setup_healths()
-		add_hh_flesh(-5, 5, 1)
-		add_hh_flesh_burn(-10, 4, 1.25)
+		add_hh_flesh(5, 1)
+		add_hh_flesh_burn(4, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
@@ -240,17 +285,19 @@
 					C.limbs.r_arm:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their arm stump!</B></span>"))
 
-		var/dna_gain = absorbed_dna + 4
+		var/dna_gain = absorbed_dna
 		if (isdead(src))	//if the handspider is dead, the changeling can only gain half of what they collected
 			dna_gain = dna_gain / 2
-		boutput(hivemind_owner.owner, __blue("A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!"))
+		dna_gain += 4
+		boutput(hivemind_owner.owner, "<span class='notice'>A handspider has returned to your body! You gain <B>[dna_gain]</B> DNA points from the spider!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
 
 ///////////////////////////
 // EYESPIDER
@@ -258,9 +305,10 @@
 /datum/abilityHolder/critter/eyespider
 	onAbilityStat()
 		..()
+		.= list()
 		var/mob/T = owner:marked_target
 		if(istype(T))
-			stat("Mark:", T)
+			.["Mark:"] = T
 			// let's stop eyespiders from helping their masters game the adventure zone (taken from clairvoyance)
 			var/atom/target_loc = T.loc
 			var/locName = ""
@@ -278,19 +326,22 @@
 					locName = "No longer confined to this world we understand"
 			else
 				locName = "In [target_loc.loc]"
-			stat("Location:", locName)
+			.["Location:"] = locName
 		else
-			stat("No Marked Target")
+			.["Mark:"] = "None"
 
 /mob/living/critter/changeling/eyespider
 	name = "eyespider"
 	real_name = "eyespider"
 	desc = "It's a living disembodied eye with freaky spindly legs... That's messed up!"
-	density = 1
+	density = 0
 	icon_state = "eyespider"
 	icon_state_dead = "eyespider-dead"
 	abilityHolder
 	var/marked_target = null
+	base_move_delay = 1.65
+	base_walk_delay = 3
+	layer = 2.89
 
 	New()
 		..()
@@ -305,12 +356,12 @@
 		// EYE CAN SEE FOREVERRRR
 		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
 		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = 2
+		src.see_invisible = INVIS_CLOAK
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
-		add_hh_flesh(-3, 3, 1)
-		add_hh_flesh_burn(-10, 2, 1.25)
+		add_hh_flesh(3, 1)
+		add_hh_flesh_burn(2, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 	return_to_master()
@@ -324,20 +375,33 @@
 				var/obj/item/organ/eye/E = new /obj/item/organ/eye()
 				E.donor = C
 				if(!C.organHolder.left_eye)
-					C.organHolder.receive_organ(E, "left_eye", 2.0)
+					C.organHolder.receive_organ(E, "left_eye", 2)
 					C.update_body()
 				else
-					C.organHolder.receive_organ(E, "right_eye", 2.0)
+					C.organHolder.receive_organ(E, "right_eye", 2)
 					C.update_body()
 			else
 				dna_gain = 2 // bad_ideas.txt
 
-		if (isdead(src))
-			dna_gain = dna_gain / 2
-		boutput(hivemind_owner.owner, __blue("An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]"))
+		boutput(hivemind_owner.owner, "<span class='notice'>An eyespider has returned to your body![dna_gain > 0 ? " You gain <B>[dna_gain]</B> DNA points from the spider!" : ""]</span>")
 		hivemind_owner.points += dna_gain
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		if(src.marked_target && src.client)
+			var/image/arrow = image(icon = 'icons/mob/screen1.dmi', icon_state = "arrow", loc = src, layer = HUD_LAYER)
+			arrow.color = "#ff0000ff"
+			arrow.transform = matrix(arrow.transform, -2, -2, MATRIX_SCALE)
+			var/angle = get_angle(src, src.marked_target)
+			arrow.transform = matrix(arrow.transform, angle, MATRIX_ROTATE)
+			arrow.transform = matrix(arrow.transform, sin(angle)*40, cos(angle)*40, MATRIX_TRANSLATE)
+			src.client.images += arrow
+			animate(arrow, time = 3 SECONDS, alpha = 0)
+			SPAWN(3 SECONDS)
+				src.client?.images -= arrow
+				qdel(arrow)
 
 ///////////////////////////
 // LEGWORM
@@ -358,8 +422,8 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -400,7 +464,7 @@
 					src.layer = target.layer - 0.01
 					src.visible_message("[src] hides under [target]!")
 				src.hat_shown = 0
-				update_icon()
+				UpdateIcon()
 
 	setup_hands()
 		..()
@@ -419,10 +483,11 @@
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
+		src.add_stam_mod_max("small_animal", 25)
 
 	setup_healths()
-		add_hh_flesh(-16, 16, 1)
-		add_hh_flesh_burn(-10, 5, 1.25)
+		add_hh_flesh(16, 1)
+		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
@@ -443,14 +508,12 @@
 					C.limbs.r_leg:set_skin_tone()
 					C.set_body_icon_dirty()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and attaches it to their own body!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and attaches itself to their leg stump!</B></span>"))
 
 		var/dna_gain = 6 //spend dna
-		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
-			dna_gain = dna_gain / 2
-		boutput(hivemind_owner.owner, __blue("A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!"))
+		boutput(hivemind_owner.owner, "<span class='notice'>A legworm has returned to your body! You gain <B>[dna_gain]</B> DNA points from the leg!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -478,8 +541,10 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src),"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] farts!</span></b>"
+					playsound(src,"sound/voice/farts/fart[rand(1,6)].ogg", 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					var/turf/fart_turf = get_turf(src)
+					fart_turf.fluid_react_single("[prob(20)?"very_":""]toxic_fart",1,airborne = 1)
+					return "<b><span class='alert'>[src] farts!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -496,9 +561,10 @@
 		src.flags ^= TABLEPASS
 
 	setup_healths()
-		add_hh_flesh(-16, 16, 1)
-		add_hh_flesh_burn(-10, 5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+		add_hh_flesh(16, 1)
+		add_hh_flesh_burn(5, 1.25)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -508,14 +574,12 @@
 				C.organHolder.receive_organ(E,"butt",0)
 				C.update_body()
 				if (isdead(src))
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[hivemind_owner.owner] grabs on to [src] and.. JESUS FUCKING CHRIST LOOK AWAY OH GOD!</B></span>"))
 				else
-					hivemind_owner.owner.visible_message(text("<span style=\"color:red\"><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
+					hivemind_owner.owner.visible_message(text("<span class='alert'><B>[src] climbs on to [hivemind_owner.owner] and... oh. Oh my. You really wish you hadnt seen that.</B></span>"))
 
 		var/dna_gain = 1 //spend dna
-		if (isdead(src))	//if the legworm is dead, the changeling can only gain half of what was spent
-			dna_gain = 0
-		boutput(hivemind_owner.owner, __blue("A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!"))
+		boutput(hivemind_owner.owner, "<span class='notice'>A buttcrab has returned to your body! You gain <B>[dna_gain]</B> DNA points from the butt!</span>")
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
@@ -535,14 +599,13 @@
 
 
 	var/datum/abilityHolder/changeling/changeling = null
-	var/datum/mind/owner = null
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7)
-					return "<b><span style='color:red'>[src] screams!</span></b>"
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -565,40 +628,36 @@
 		..()
 		abilityHolder.addAbility(/datum/targetable/critter/slam)
 		abilityHolder.updateButtons()
-		src.flags ^= TABLEPASS
+		src.flags ^= TABLEPASS | DOORPASS
 
 	setup_healths()
-		add_hh_flesh(-40, 40, 1)
-		add_hh_flesh_burn(-20, 20, 1.25)
+		add_hh_flesh(40, 1)
+		add_hh_flesh_burn(20, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
 
 /mob/living/critter/changeling/headspider/proc/filter_target(var/mob/living/C)
-		//Don't want a dead mob, don't want a mob with the same mind as the owner
-		return ismob(C) && !isdead(C) && (!owner || C.mind != owner) && src.loc != C
+		//Don't want a dead mob or a nonliving mob
+		return istype(C) && !isdead(C) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
-	if(ishuman(M))
+	if(ishuman(M) && isalive(M))
 		var/mob/living/carbon/human/H = M
-		src.set_loc(H.loc)
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
-		H.setStatus("paralysis", max(H.getStatusDuration("paralysis"), 100))
+		H.setStatusMin("paralysis", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = owner
+		HS.source = src.mind
 		var/datum/ailment/parasite/headspider/HSD = HS.master
 		HSD.changeling = changeling
 		H.ailments += HS
 
-		if(owner)
-			logTheThing("combat", owner.current ? owner.current : owner, H, "'s headspider enters %target% at [log_loc(src)].")
-
-		//qdel(src)
-		return
+		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))
@@ -619,19 +678,14 @@
 				src.layer = target.layer - 0.01
 				src.visible_message("[src] hides under [target]!")
 			src.hat_shown = 0
-			update_icon()
+			UpdateIcon()
 
 /mob/living/critter/changeling/headspider/death_effect()
-	var/datum/abilityHolder/changeling/C = changeling
-	if (C)
-		if (C.points < 10)
-			boutput(src, "You try to release a headspider but don't have enough DNA points (requires 10)!")
-		for (var/mob/living/critter/changeling/spider in C.hivemind)
-			boutput(spider, __red("Your telepathic link to your master has been destroyed!"))
+	if (changeling) // don't do this if we're an empty headspider (already took control of a body)
+		for (var/mob/living/critter/changeling/spider in changeling.hivemind)
+			boutput(spider, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 			spider.hivemind_owner = 0
-		for (var/mob/dead/target_observer/hivemind_observer/obs in C.hivemind)
-			boutput(obs, __red("Your telepathic link to your master has been destroyed!"))
+		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
+			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
 			obs.boot()
-		if (C.hivemind.len > 0)
-			boutput(src, "Contact with the hivemind has been lost.")
-		C.hivemind = list()
+		changeling.hivemind.Cut()

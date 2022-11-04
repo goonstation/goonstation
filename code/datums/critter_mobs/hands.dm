@@ -11,7 +11,7 @@
 	var/obj/item/item							// the item held in the hand
 	var/icon/icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
 	var/icon_state = "handn"					// the icon state of the hand UI background
-	var/obj/screen/hud/screenObj				// ease of life
+	var/atom/movable/screen/hud/screenObj				// ease of life
 	var/limb_name = "left arm"					// name for the dummy holder
 	var/datum/limb/limb							// if not null, the special limb to use when attack_handing
 	var/can_hold_items = 1						// self-explanatory
@@ -27,6 +27,20 @@
 		..()
 		obscurer = image('icons/mob/critter_ui.dmi', icon_state="hand_cooldown", layer=HUD_LAYER+2)
 
+	disposing()
+		if(screenObj)
+			screenObj.dispose()
+			screenObj = null
+		item = null
+		if(limb)
+			limb.dispose()
+			limb = null
+		if(limbholder)
+			limbholder.dispose()
+			limbholder = null
+		holder = null
+		..()
+
 	proc/spawn_dummy_holder()
 		if (!limb)
 			return
@@ -39,11 +53,11 @@
 	proc/set_cooldown_overlay()
 		if (!limb || !screenObj || cooldown_overlay)
 			return
-		var/cd = limb.is_on_cooldown()
+		var/cd = limb.is_on_cooldown(src.holder)
 		if (cd > 0)
 			cooldown_overlay = 1
 			screenObj.overlays += obscurer
-			SPAWN_DBG (cd)
+			SPAWN(cd)
 				cooldown_overlay = 0
 				screenObj.overlays -= obscurer
 

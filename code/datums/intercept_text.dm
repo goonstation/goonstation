@@ -42,7 +42,7 @@
 			src.text = ""
 			src.build_malf(correct_mob)
 			return src.text
-		if("changeling")
+		if(ROLE_CHANGELING)
 			src.text = ""
 			src.build_changeling(correct_mob)
 			return src.text
@@ -58,7 +58,7 @@
 
 /datum/intercept_text/proc/pick_fingerprints()
 	var/mob/living/carbon/human/dude = src.pick_mob()
-	var/print = "[md5(dude.bioHolder.Uid)]"
+	var/print = "[dude.bioHolder.fingerprints]"
 	return print
 
 /datum/intercept_text/proc/build_traitor(correct_mob)
@@ -67,7 +67,7 @@
 	var/fingerprints
 	var/traitor_name
 	var/prob_right_dude = rand(prob_correct_person_lower, prob_correct_person_higher)
-	if(prob(prob_right_dude) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/traitor)))
+	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/traitor)))
 		if (correct_mob)
 			traitor_name = correct_mob:current
 	else if(prob(prob_right_dude))
@@ -96,9 +96,9 @@
 			traitor_job = correct_mob:assigned_role
 	else
 		var/list/job_tmp = get_all_jobs()
-		job_tmp.Remove("Captain", "Security Officer", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
+		job_tmp.Remove("Captain", "Security Officer", "Security Assistant", "Vice Officer", "Detective", "Head Of Security", "Head of Personnel", "Chief Engineer", "Research Director")
 		traitor_job = pick(job_tmp)
-	if(prob(prob_right_dude) && (ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/revolution)))
+	if(prob(prob_right_dude) && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
 		if (correct_mob)
 			traitor_name = correct_mob:current
 	else
@@ -121,7 +121,7 @@
 	src.text += "Known attributes include: Brown sandals, a large blue hat, a voluptous white beard, and an inclination to cast spells."
 
 /datum/intercept_text/proc/build_nuke(correct_mob)
-	src.text += "<BR><BR>Cent. Com recently recieved a report of a plot to destroy one of our stations in your area. We believe an elite strike team is "
+	src.text += "<BR><BR>Cent. Com recently received a report of a plot to destroy one of our stations in your area. We believe an elite strike team is "
 	src.text += "preparing to plant and activate a nuclear device aboard one of them. The security department should take all necessary precautions "
 	src.text += "to repel an enemy boarding party if the need arises. As this may cause panic among the crew, all efforts should be made to keep this "
 	src.text += "information a secret from all but the most trusted members."

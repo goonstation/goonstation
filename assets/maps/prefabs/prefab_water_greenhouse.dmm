@@ -1,54 +1,543 @@
-"a" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating/random,/area/helianthus)
-"b" = (/turf/variableTurf/clear,/area)
-"c" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/helianthus)
-"d" = (/obj/machinery/chem_master,/turf/simulated/floor,/area/helianthus)
-"e" = (/obj/machinery/chem_dispenser,/turf/simulated/floor,/area/helianthus)
-"f" = (/obj/submachine/chem_extractor,/turf/simulated/floor,/area/helianthus)
-"g" = (/obj/machinery/light/incandescent/greenish,/turf/simulated/floor,/area/helianthus)
-"h" = (/turf/simulated/floor,/area/helianthus)
-"i" = (/obj/table/glass/reinforced/auto,/obj/item/storage/box/beakerbox,/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/obj/item/reagent_containers/dropper/mechanical,/turf/simulated/floor,/area/helianthus)
-"j" = (/obj/table/glass/reinforced/auto,/obj/item/clothing/mask/gas/emergency,/turf/simulated/floor,/area/helianthus)
-"k" = (/obj/machinery/chem_heater,/turf/simulated/floor,/area/helianthus)
-"l" = (/obj/decal/cleanable/paper,/obj/stool/chair/office/green{icon_state = "office_chair_green"; dir = 4},/turf/simulated/floor,/area/helianthus)
-"m" = (/obj/table/glass/reinforced/auto,/obj/item/paper_bin,/obj/item/pen,/obj/machinery/light/incandescent/greenish,/turf/simulated/floor,/area/helianthus)
-"n" = (/obj/storage/crate,/obj/item/seed/alien,/obj/item/seed/alien,/turf/simulated/floor,/area/helianthus)
-"o" = (/obj/table/glass/reinforced/auto,/obj/item/paper{icon_state = "paper"; info = "<li>Things that are good for your eyes? Like, things with vitamin A?</li><br><li>Things that are hard to see, or see-through? Like, water, but not water, because that seems way too simple?</li><br><li>Things that help you see other things? Like, grinded up night vision goggle particles? Ha ha...</li>"; name = "paper-'Transparium?'"},/obj/item/paper{icon_state = "paper"; info = "If I see you bring your lunch in here again, I am going to <i>scream</i> and very possibly murder you. How many times do I have to tell you that this is a testing environment and that things must be as clean and uncontaminated as possible?! Sure, we're not messing around with petri dishes or clones, but we <i>are</i> doing <i>very</i> important work that really should not be fucked up by your meatloaf or chicken salad. For fuck's sake. Do you not realize that there are other people in the world besides yourself? How can you be so fucking self-absorbed? We already had to throw out a batch of last week's tests. Do you really want to continue this? I swear to god that you're going to have the absolute worst midlife crisis when you realize that no, other people actually have their own lives and stories and dreams and fears, and <i>do not</i> need you to disregard them and treat them like shit. Show some empathy, you fucker."; name = "paper-'Note to Matt'"; pixel_x = 3; pixel_y = 3},/turf/simulated/floor,/area/helianthus)
-"p" = (/turf/variableTurf/clear,/area/noGenerate)
-"q" = (/obj/table/glass/reinforced/auto,/obj/item/reagent_containers/glass/wateringcan,/turf/simulated/floor,/area/helianthus)
-"r" = (/obj/item/reagent_containers/glass/happyplant,/obj/machinery/light/incandescent/greenish,/obj/storage/crate,/obj/item/reagent_containers/glass/happyplant,/turf/simulated/floor,/area/helianthus)
-"s" = (/obj/stool/chair/office/green{icon_state = "office_chair_green"; dir = 4},/turf/simulated/floor,/area/helianthus)
-"t" = (/obj/table/glass/reinforced/auto,/obj/item/seed/cannabis,/obj/item/seed/crystal{pixel_x = 6; pixel_y = 8},/obj/item/seed/creeper{pixel_x = -6; pixel_y = 4},/obj/landmark/artifact/seed,/turf/simulated/floor,/area/helianthus)
-"u" = (/obj/wingrille_spawn/auto,/turf/simulated/floor,/area/helianthus)
-"v" = (/turf/simulated/floor/stairs/wide/green,/area/helianthus)
-"w" = (/turf/simulated/floor/stairs/wide/middle,/area/helianthus)
-"x" = (/turf/simulated/floor/stairs/wide/other,/area/helianthus)
-"y" = (/obj/machinery/plantpot{anchored = 1},/turf/simulated/floor/grass,/area/helianthus)
-"z" = (/obj/machinery/light/incandescent/greenish,/turf/simulated/floor/grass,/area/helianthus)
-"A" = (/turf/simulated/floor/grass,/area/helianthus)
-"B" = (/obj/submachine/seed_vendor,/turf/simulated/floor/grass,/area/helianthus)
-"C" = (/obj/machinery/vending/hydroponics/mean_solarium_bullshit,/turf/simulated/floor/grass,/area/helianthus)
-"D" = (/obj/submachine/seed_manipulator,/obj/machinery/light/incandescent/greenish,/turf/simulated/floor/grass,/area/helianthus)
-"E" = (/obj/machinery/hydro_mister,/turf/simulated/floor/grass,/area/helianthus)
-"F" = (/obj/machinery/hydro_growlamp,/turf/simulated/floor/grass,/area/helianthus)
-"G" = (/obj/reagent_dispensers/compostbin,/turf/simulated/floor/grass,/area/helianthus)
-"H" = (/obj/reagent_dispensers/watertank/big,/turf/simulated/floor/grass,/area/helianthus)
-"I" = (/obj/machinery/door/airlock/pyro/glass,/turf/simulated/floor/grass,/area/helianthus)
-"J" = (/obj/item/device/gps{identifier = "GR-N"},/turf/simulated/floor/grass,/area/helianthus)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating/random,
+/area/prefab/helianthus)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/helianthus)
+"d" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"e" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"f" = (
+/obj/submachine/chem_extractor,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"g" = (
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"h" = (
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"i" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/storage/box/beakerbox,
+/obj/item/storage/box/beakerbox,
+/obj/item/device/reagentscanner,
+/obj/item/reagent_containers/dropper/mechanical,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"j" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/clothing/mask/gas/emergency,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"k" = (
+/obj/machinery/chem_heater,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"l" = (
+/obj/decal/cleanable/paper,
+/obj/stool/chair/office/green{
+	icon_state = "office_chair_green";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"m" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"n" = (
+/obj/storage/crate,
+/obj/item/seed/alien,
+/obj/item/seed/alien,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"o" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<li>Things that are good for your eyes? Like, things with vitamin A?</li><br><li>Things that are hard to see, or see-through? Like, water, but not water, because that seems way too simple?</li><br><li>Things that help you see other things? Like, grinded up night vision goggle particles? Ha ha...</li>";
+	name = "paper-'Transparium?'"
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "If I see you bring your lunch in here again, I am going to <i>scream</i> and very possibly murder you. How many times do I have to tell you that this is a testing environment and that things must be as clean and uncontaminated as possible?! Sure, we're not messing around with petri dishes or clones, but we <i>are</i> doing <i>very</i> important work that really should not be fucked up by your meatloaf or chicken salad. For fuck's sake. Do you not realize that there are other people in the world besides yourself? How can you be so fucking self-absorbed? We already had to throw out a batch of last week's tests. Do you really want to continue this? I swear to god that you're going to have the absolute worst midlife crisis when you realize that no, other people actually have their own lives and stories and dreams and fears, and <i>do not</i> need you to disregard them and treat them like shit. Show some empathy, you fucker.";
+	name = "paper-'Note to Matt'";
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"p" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"q" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"r" = (
+/obj/item/reagent_containers/glass/happyplant,
+/obj/machinery/light/incandescent/greenish,
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/happyplant,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"s" = (
+/obj/stool/chair/office/green{
+	icon_state = "office_chair_green";
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"t" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/seed/cannabis,
+/obj/item/seed/crystal{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/obj/item/seed/creeper{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/seed/alien,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"u" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor,
+/area/prefab/helianthus)
+"v" = (
+/turf/simulated/floor/stairs/wide/green,
+/area/prefab/helianthus)
+"w" = (
+/turf/simulated/floor/stairs/wide/middle,
+/area/prefab/helianthus)
+"x" = (
+/turf/simulated/floor/stairs/wide/other,
+/area/prefab/helianthus)
+"y" = (
+/obj/machinery/plantpot{
+	anchored = 1
+	},
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"z" = (
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"A" = (
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"B" = (
+/obj/submachine/seed_vendor,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"C" = (
+/obj/machinery/vending/hydroponics/mean_solarium_bullshit,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"D" = (
+/obj/submachine/seed_manipulator,
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"E" = (
+/obj/machinery/hydro_mister,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"F" = (
+/obj/machinery/hydro_growlamp,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"G" = (
+/obj/reagent_dispensers/compostbin,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"H" = (
+/obj/reagent_dispensers/watertank/big,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"I" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
+"J" = (
+/obj/item/device/gps{
+	identifier = "GR-N"
+	},
+/turf/simulated/floor/grass,
+/area/prefab/helianthus)
 
 (1,1,1) = {"
-bbbbbbbppppbbbbbbbbbb
-bbbbbbbpaaaccbbbbbbbb
-bbbbbbppadefcbbbbbbbb
-bbbbbppaaghhccbbbbbbb
-bbbbbppaihhhjcbbbbbbb
-bbbbppaakhhlmccbbbbbb
-bbbpppanhhhhoqcbbbbbb
-bbpppparhhhhstcbbbbbb
-bppaaaauuvwxccccccbbb
-pppayzyyyAJABCDEFcbbb
-paaayAAAAAAAAAAAAcccb
-payAAAAAAAAAAAAAAzGcb
-payzyyyAAAzAAAAAAAHcb
-paaaaaaaaacccIIcccccb
-ppppppppppbbppppbbbbb
+b
+b
+b
+b
+b
+b
+b
+b
+b
+p
+p
+p
+p
+p
+p
+"}
+(2,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+p
+p
+a
+a
+a
+a
+p
+"}
+(3,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+p
+p
+p
+a
+y
+y
+a
+p
+"}
+(4,1,1) = {"
+b
+b
+b
+b
+b
+b
+p
+p
+a
+a
+a
+A
+z
+a
+p
+"}
+(5,1,1) = {"
+b
+b
+b
+b
+b
+p
+p
+p
+a
+y
+y
+A
+y
+a
+p
+"}
+(6,1,1) = {"
+b
+b
+b
+p
+p
+p
+p
+p
+a
+z
+A
+A
+y
+a
+p
+"}
+(7,1,1) = {"
+b
+b
+p
+p
+p
+a
+a
+a
+a
+y
+A
+A
+y
+a
+p
+"}
+(8,1,1) = {"
+p
+p
+p
+a
+a
+a
+n
+r
+u
+y
+A
+A
+A
+a
+p
+"}
+(9,1,1) = {"
+p
+a
+a
+a
+i
+k
+h
+h
+u
+y
+A
+A
+A
+a
+p
+"}
+(10,1,1) = {"
+p
+a
+d
+g
+h
+h
+h
+h
+v
+A
+A
+A
+A
+a
+p
+"}
+(11,1,1) = {"
+p
+a
+e
+h
+h
+h
+h
+h
+w
+J
+A
+A
+z
+c
+b
+"}
+(12,1,1) = {"
+b
+c
+f
+h
+h
+l
+h
+h
+x
+A
+A
+A
+A
+c
+b
+"}
+(13,1,1) = {"
+b
+c
+c
+c
+j
+m
+o
+s
+c
+B
+A
+A
+A
+c
+p
+"}
+(14,1,1) = {"
+b
+b
+b
+c
+c
+c
+q
+t
+c
+C
+A
+A
+A
+I
+p
+"}
+(15,1,1) = {"
+b
+b
+b
+b
+b
+c
+c
+c
+c
+D
+A
+A
+A
+I
+p
+"}
+(16,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+c
+E
+A
+A
+A
+c
+p
+"}
+(17,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+c
+F
+A
+A
+A
+c
+b
+"}
+(18,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+z
+A
+c
+b
+"}
+(19,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+G
+H
+c
+b
+"}
+(20,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+c
+c
+c
+c
+b
+"}
+(21,1,1) = {"
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
 "}

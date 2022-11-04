@@ -37,11 +37,11 @@
 
 		var/sensortext = pick("sensors", "technicians", "probes", "satellites", "monitors")
 		var/pickuptext = pick("picked up", "detected", "found", "sighted", "reported")
-		var/anomlytext = pick("spooky infestation", "loud claking noise","rattling of bones")
+		var/anomlytext = pick("spooky infestation", "loud clacking noise","rattling of bones")
 		var/ohshittext = pick("en route for collision with", "rapidly approaching", "heading towards")
-		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Be wary of closets.", "Anomaly Alert")
+		command_alert("Our [sensortext] have [pickuptext] \a [anomlytext] [ohshittext] the station. Be wary of closets.", "Anomaly Alert", alert_origin = ALERT_ANOMALY)
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			for(var/i = 0, i<spawn_amount, i++)
 				if(closets.len > 0)
 					var/obj/storage/temp = pick(closets)
@@ -50,14 +50,14 @@
 					if(temp.open)
 						closets -= temp
 						continue
-					temp.visible_message("<span style=\"color:red\"><b>[temp]</b> emits a loud thump and rattles a bit.</span>")
-					playsound(get_turf(temp), "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+					temp.visible_message("<span class='alert'><b>[temp]</b> emits a loud thump and rattles a bit.</span>")
+					playsound(temp, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 					var/wiggle = 6
 					while(wiggle > 0)
 						wiggle--
 						temp.pixel_x = rand(-3,3)
 						temp.pixel_y = rand(-3,3)
-						sleep(1)
+						sleep(0.1 SECONDS)
 					temp.pixel_x = 0
 					temp.pixel_y = 0
 					new/obj/critter/magiczombie(temp)

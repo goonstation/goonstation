@@ -1,76 +1,40 @@
 /obj/machinery/computer/operating
 	name = "Operating Computer"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "operating"
 	desc = "Shows information on a patient laying on an operating table."
 	power_usage = 500
+	can_reconnect = TRUE
+	circuit_type = /obj/item/circuitboard/operating
 
 	var/mob/living/carbon/human/victim = null
 
 	var/obj/machinery/optable/table = null
-	var/id = 0.0
+	id = 0
 
 /obj/machinery/computer/operating/New()
 	..()
-	SPAWN_DBG(0.5 SECONDS)
-		src.table = locate(/obj/machinery/optable, orange(2,src))
+	SPAWN(0.5 SECONDS)
+		connection_scan()
 
-/obj/machinery/computer/operating/attack_ai(mob/user)
-	add_fingerprint(user)
-	if(status & (BROKEN|NOPOWER))
-		return
-	interact(user)
+/obj/machinery/computer/operating/connection_scan()
+	src.table = locate(/obj/machinery/optable, orange(2,src))
 
 /obj/machinery/computer/operating/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
-/obj/machinery/computer/operating/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/operating/M = new /obj/item/circuitboard/operating( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/operating/M = new /obj/item/circuitboard/operating( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
+/obj/machinery/computer/operating/proc/interacted(mob/user)
+	if (!in_interact_range(src,user) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=op")
+		return
 
-/obj/machinery/computer/operating/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user) && !isAI(user))
-			user.machine = null
-			user.Browse(null, "window=op")
-			return
-
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Operating Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=op'>Close</A><br><br>" //| <A HREF='?src=\ref[user];update=1'>Update</A>"
 	if(src.table && (src.table.check_victim()))
@@ -102,10 +66,10 @@
 /obj/machinery/computer/operating/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
 //		if (href_list["update"])
-//			src.interact(usr)
+//			src.interacted(usr)
 	return
 
 /obj/machinery/computer/operating/process()

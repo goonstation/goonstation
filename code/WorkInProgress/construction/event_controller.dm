@@ -14,6 +14,7 @@
 	var/next_event_at = 0
 
 	New()
+		..()
 		for (var/evtype in typesof(/datum/construction_event))
 			var/datum/construction_event/E = new evtype()
 			if (E.is_abstract)
@@ -120,8 +121,8 @@
 	var/player_modifier = 0
 
 	proc/early_warning()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
-			C.add_centcom_report("[command_name()] Update", early_warning_text)
+		for_by_tcl(C, /obj/machinery/communications_dish)
+			C.add_centcom_report(ALERT_GENERAL, early_warning_text)
 
 		if (!early_warning_heading)
 			command_alert(early_warning_text)
@@ -129,8 +130,8 @@
 			command_alert(early_warning_text, early_warning_heading)
 
 	proc/set_up()
-		for (var/obj/machinery/communications_dish/C in comm_dishes)
-			C.add_centcom_report("[command_name()] Update", warning_text)
+		for_by_tcl(C, /obj/machinery/communications_dish)
+			C.add_centcom_report(ALERT_GENERAL, warning_text)
 
 		if (!warning_heading)
 			command_alert(warning_text)
@@ -147,8 +148,9 @@
 
 	proc/calculate_player_modifier()
 		player_modifier = 1
-		for (var/mob/living/M in mobs)
-			if (M.client && M.stat < 2)
+
+		for (var/client/C)
+			if (C.mob && !isdead(C.mob))
 				player_modifier += player_scaling
 
 	proc/calculate_time_modifier()
@@ -367,7 +369,7 @@
 /datum/construction_event/siege/animals
 	name = "Animal Siege"
 	warning_text = "A pack of animals have been teleported on board our station!"
-	attacker_types = list(/obj/critter/spacebee, /obj/critter/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /obj/critter/cat, /obj/critter/nicespider, /obj/critter/spider/spacerachnid)
+	attacker_types = list(/obj/critter/wasp, /obj/critter/mouse, /obj/critter/goose, /obj/critter/goose/swan, /obj/critter/owl, /obj/critter/bat/buff, /obj/critter/cat, /mob/living/critter/spider/nice, /mob/living/critter/spider/spacerachnid)
 	bosses = list(/obj/critter/lion, /obj/critter/bear)
 	original_size = 30
 	original_bosses = 5

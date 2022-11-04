@@ -7,23 +7,12 @@
 
 /client/proc/toggle_mentorhelps()
 	set name = "Toggle Mentorhelps"
-	set category = "Special Verbs"
+	set category = "Commands"
 	set desc = "Show or hide mentorhelp messages. You will also no longer show up as a mentor in OOC and via the Who command if you disable mentorhelps."
 
 	if (!src.is_mentor() && !src.holder)
-		boutput(src, "<span style='color:red'>Only mentors may use this command.</span>")
+		boutput(src, "<span class='alert'>Only mentors may use this command.</span>")
 		src.verbs -= /client/proc/toggle_mentorhelps // maybe?
 		return
 
 	src.set_mentorhelp_visibility()
-
-/*
-/proc/proxy_check(address)
-	if(address)
-		var/result = world.Export("http://autisticpowers.info/ss13/check_ip.php?ip=[address]")
-		if("STATUS" in result && lowertext(result["STATUS"]) == "200 ok")
-			var/using_proxy = text2num(file2text(result["CONTENT"]))
-			if(using_proxy)
-				return 1
-	return 0
-*/

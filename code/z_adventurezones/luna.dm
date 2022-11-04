@@ -19,8 +19,6 @@ Contents:
 	ambient_light = rgb(0.9 * 255, 0.9 * 255, 0.9 * 255)
 	sound_group = "moon"
 
-var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambience/station/Machinery_Computers2.ogg', 'sound/ambience/station/Machinery_Computers3.ogg')
-
 /area/moon/underground
 	name = "Lunar Underground"
 	icon_state = "orange"
@@ -34,73 +32,25 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	name = "Museum of Lunar History"
 	icon_state = "purple"
 	ambient_light = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
+	sound_loop = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
+	sound_loop_vol = 60
 
-	var/sound/ambientSound = 'sound/ambience/industrial/LavaPowerPlant_Rumbling1.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
+/area/moon/museum/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-	New()
-		..()
-		fxlist = lunar_fx_sounds
-		if (ambientSound)
+/area/moon/museum/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-			SPAWN_DBG (60)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/moon/museum/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/loop/Wind_Low.ogg',\
+		'sound/ambience/station/Machinery_Computers2.ogg',\
+		'sound/ambience/station/Machinery_Computers3.ogg')
 
-				soundSubscribers = list()
-				process()
-
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN_DBG(sound_delay)
-							H << S
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 60)
 
 /area/shuttle/lunar_elevator/museum/upper
 	icon_state = "shuttle"
@@ -122,11 +72,12 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	force_fullbright = 0
 	name = "Elevator"
 
-
 /area/moon/museum/west
+	name = "Museum of Lunar History West Wing"
 	icon_state = "red"
 
 /area/moon/museum/giftshop
+	name = "Museum of Lunar History Gift Shop"
 	icon_state = "green"
 
 /area/moon/monorail_station/museum
@@ -144,37 +95,32 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
-					dir = 4
+					set_dir(4)
 
 				else
 					//Upper right
-					dir = 1
+					set_dir(1)
 
 			else
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower left
-					dir = 8
+					set_dir(8)
 
 				else
 					//Upper left
-					dir = 2
+					set_dir(2)
 
 
 	Entered(atom/A as mob|obj)
 		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
 			return ..()
 
-		if (isHemera && moonfall_hemera.len)
-			var/turf/T = pick(moonfall_hemera)
-			fall_to(T, A)
-			return
-
-		else if (!isHemera && moonfall_museum.len)
-			var/turf/T = pick(moonfall_museum)
+		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
+		if (T)
 			fall_to(T, A)
 			return
 
@@ -205,6 +151,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	desc = "More regolith, now in big solid chunk form!"
 	icon = 'icons/turf/walls.dmi'
 	icon_state = "lunar"
+	plane = PLANE_NOSHADOW_ABOVE // shadow makes it look grody with current sprites that include the floor
 	carbon_dioxide = 0
 	nitrogen = 0
 	oxygen = 0
@@ -305,6 +252,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 	ex_employee
 		New()
+			..()
 			fields = list("MLH_INTERNAL",
 "*SEC",
 "LOCALHOST",
@@ -541,7 +489,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	New()
 		..()
 
-		SPAWN_DBG (10)
+		SPAWN(1 SECOND)
 			if (src.botcard)
 				src.botcard.access += 999
 
@@ -602,11 +550,11 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	tour0
 		name = "tour beacon - start"
 		location = "tour0"
-		codes_txt = "tour;next_tour=tour1;desc=Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!\nBefore we begin, there is a request that all guests from Soviet bloc countries move down the hall to my right for special screening.\nThis, um, includes those from Zvezda.  Even if you have a day pass.  I'm sorry, I hope this isn't too much of a bother!"
+		codes_txt = "tour;next_tour=tour1;desc=Oh, hello!  I apologize, I wasn't expecting guests before the renovations were done!  Welcome to the Museum of Lunar History!  Before we begin, there is a request that all guests from Soviet bloc countries move down the hall to my right for special screening.  This, um, includes those from Zvezda.  Even if you have a day pass.  I'm sorry, I hope this isn't too much of a bother!"
 
 	tour1
 		location = "tour1"
-		codes_txt = "tour;next_tour=tour2;desc=FAAE or, as it is commonly called, Plasma, was first discovered here on the moon in 1969.\nIt's not actually native to the moon, though!  It was discovered embedded in the site of a meteorite impact, extending down really far, almost like it grew outward!|pBut it didn't, because plasma crystals can't grow, ha ha..|pIt makes sense that more plasma was found in the asteroid belt.  Oh, and through the Channel, um, as much as weird holes in space time make sense."
+		codes_txt = "tour;next_tour=tour2;desc=FAAE or, as it is commonly called, Plasma, was first discovered here on the moon in 1969.  It's not actually native to the moon, though!  It was discovered embedded in the site of a meteorite impact, extending down really far, almost like it grew outward!|pBut it didn't, because plasma crystals can't grow, ha ha..|pIt makes sense that more plasma was found in the asteroid belt.  Oh, and through the Channel, um, as much as weird holes in space time make sense."
 
 	tour2
 		location = "tour2"
@@ -675,21 +623,24 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		location = "tour17"
 		codes_txt = "tour;"
 
-#define NT_DISCOUNT    1
-#define NT_CLOAKER     2
-#define NT_OTHERGUIDE  4
-#define NT_PONZI       8
-#define NT_SPY		  16
-#define NT_BILL		  32
-#define NT_BEE		  64
-#define NT_SOLARIUM	 128
-#define NT_CHEGET	 256
-#define NT_SOVBUDDY	1024
+#define NT_DISCOUNT   (1<<0)
+#define NT_CLOAKER    (1<<1)
+#define NT_OTHERGUIDE	(1<<2)
+#define NT_PONZI      (1<<3)
+#define NT_SPY        (1<<4)
+#define NT_BILL       (1<<5)
+#define NT_BEE        (1<<6)
+#define NT_SOLARIUM   (1<<7)
+#define NT_CHEGET     (1<<8)
+#define NT_SOVBUDDY   (1<<9)
 
-#define NT_HEMERA      1
-#define NT_MNX         2
-#define NT_RISING_SUN  4
+#define NT_HEMERA     (1<<0)
+#define NT_MNX        (1<<1)
+#define NT_RISING_SUN (1<<2)
 
+#define MAPTEXT_PAUSE (5 SECONDS)
+#define FOUND_NEAT(FLAG) src.distracted = TRUE; src.neat_things |= FLAG; SPAWN(0)
+#define END_NEAT sleep(MAPTEXT_PAUSE*2); src.distracted = FALSE
 
 /datum/computer/file/guardbot_task/tourguide/lunar
 
@@ -702,97 +653,105 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 		var/area/ourArea = get_area(src.master)
 		if (istype(ourArea, /area/moon/underground))
 			if (!has_been_underground)
-				has_been_underground = 1
-
+				has_been_underground = TRUE
+				src.distracted = TRUE
 				master.speak("Um, this isn't part of the tour.  The transit station is technically owned by the city, not the museum.")
-				SPAWN_DBG (10)
+				SPAWN(5 SECOND)
 					if (master)
 						master.speak("I guess I could narrate?  I um, haven't ever been in the tunnels before.")
+					src.distracted = FALSE
 
 			if (!(neat_things_underground & NT_HEMERA) && istype(ourArea, /area/moon/underground/hemera))
+				src.distracted = TRUE
 				neat_things_underground |= NT_HEMERA
 
-				master.speak("Oh, this is an office building, um...Hemera!  Oh man, these guys used to do all kind of secret science stuff. Before Nanotrasen drove them out of business, I mean.")
+				speak_with_maptext("Oh, this is an office building, um...Hemera!  Oh man, these guys used to do all kind of secret science stuff. Before Nanotrasen drove them out of business, I mean.")
+				src.distracted = FALSE
 				return
 
 			if (!(neat_things_underground & NT_MNX))
 				var/obj/machinery/embedded_controller/radio/maintpanel/MNXpanel = locate("MNXpanel") in view(7, master)
 				if (istype(MNXpanel))
+					src.distracted = TRUE
 					neat_things_underground |= NT_MNX
 					//todo
-
+					src.distracted = FALSE
 					return
 
 			if (prob(1) && prob(5) && !(neat_things_underground & NT_RISING_SUN))
+				src.distracted = TRUE
 				neat_things_underground |= NT_RISING_SUN
 
 				master.speak("There is a house on Luna that they call the Rising Sun.")
-				SPAWN_DBG (10)
+				SPAWN(5 SECOND)
 					if (master)
 						master.speak("It's been the ruin of many a poor bud and God, I know I'm one.")
+					src.distracted = FALSE
 			//todo
 
 			return
 
 		if (istype(ourArea, /area/solarium) && !(src.neat_things & NT_SOLARIUM))
-			src.neat_things |= NT_SOLARIUM
-
-			master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
-			if (prob(25))
-				SPAWN_DBG (10)
+			FOUND_NEAT(NT_SOLARIUM)
+				master.speak("Huh, this place is weird!  This is some ship and that's our sun, right?")
+				if (prob(25))
 					if (master)
-						master.speak("I, um, am going to need to go back to work.  My shift isn't over yet.")
+						speak_with_maptext("I, um, am going to need to go back to work.  My shift isn't over yet.")
+				END_NEAT
 			return
 
 		for (var/atom/movable/AM in view(7, master))
 			if (ishuman(AM))
 				var/mob/living/carbon/human/H = AM
 				if (!(src.neat_things & NT_BILL) && cmptext(H.real_name, "shitty bill"))
-					src.neat_things |= NT_BILL
-
-					master.visible_message("<b>[master]</b> points at [H].")
-					master.speak("Oh no, not you again.  Uh, I mean...hey...guyyy.")
-
-				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
-					src.neat_things |= NT_DISCOUNT
-
-					master.speak("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
-					SPAWN_DBG (15)
-						if (master)
-							master.speak("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
-						sleep(8)
-						if (master)
-							master.speak("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
-
+					FOUND_NEAT(NT_BILL)
+						master.visible_message("<b>[master]</b> points at [H].")
+						speak_with_maptext("Oh no, not you again.  Uh, I mean...hey...guyyy.")
+						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > 0)
-					src.master.speak("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
-					src.neat_things |= NT_CLOAKER
+
+				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
+					FOUND_NEAT(NT_DISCOUNT)
+						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
+						sleep(5.5 SECONDS)
+						if (master)
+							speak_with_maptext("Oh, I'm sorry.  Your position is not eligible.  Actually, um, well this is weird.")
+						sleep(5.8 SECONDS)
+						if (master)
+							speak_with_maptext("There is a log indicating that all employees of Research Station #13 are to be charged 10% extra.  I've never seen that before.  Huh.")
+						END_NEAT
+					return
+
+				if (!(src.neat_things & NT_CLOAKER) && H.invisibility > INVIS_NONE)
+					FOUND_NEAT(NT_CLOAKER)
+						speak_with_maptext("This is a reminder that cloaking technology is illegal within the inner solar system.  Please remain opaque to the visible spectrum as a courtesy to your fellow guests.  Thanks!")
+						END_NEAT
 					return
 
 				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
-					src.neat_things |= NT_PONZI
-					src.master.speak("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
-					H.unlock_medal("To the Moon!",1)
+					FOUND_NEAT(NT_PONZI)
+						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
+						H.unlock_medal("To the Moon!",1)
+						END_NEAT
 					return
 
 			if (istype(AM, /obj/machinery/bot/guardbot) && AM != src.master)
 				if (istype(AM, /obj/machinery/bot/guardbot/old/tourguide) && !(src.neat_things & NT_OTHERGUIDE))
-					src.neat_things |= NT_OTHERGUIDE
-					src.master.visible_message("<b>[master]</b> nods professionally at [AM].<br>Well, really it's more of a shake from suddenly halting the drive motors, but you get the intent.")
+					FOUND_NEAT(NT_OTHERGUIDE)
+						src.master.visible_message("<b>[master]</b> nods professionally at [AM].<br>Well, really it's more of a shake from suddenly halting the drive motors, but you get the intent.")
 
-					animate(master, pixel_x = -4, time = 10, loop = 1, easing = SINE_EASING)
+						animate(master, pixel_x = -4, time = 10, loop = 1, easing = SINE_EASING)
 
-					animate(pixel_x = 0, transform = matrix(10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
-					animate(transform = matrix(-10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
-
+						animate(pixel_x = 0, transform = matrix(10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
+						animate(transform = matrix(-10, MATRIX_ROTATE), time = 10, loop = 1, easing = SINE_EASING)
+						END_NEAT
 					return
 
 				if (istype(AM, /obj/machinery/bot/guardbot/soviet) && !(src.neat_things & NT_SOVBUDDY))
-					src.neat_things |= NT_SOVBUDDY
-					src.master.speak("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
-					SPAWN_DBG (10)
+					FOUND_NEAT(NT_SOVBUDDY)
+						speak_with_maptext("Oh, um, hi.  So are you one of those Russian robuddies?  Nice to meet you..?")
+						sleep(5 SECOND)
 						if (src.master)
 							var/area/masterArea = get_area(src.master)
 							if (istype(masterArea, /area/russian) || istype(masterArea, /area/salyut) || istype(masterArea, /area/hospital/samostrel))
@@ -801,31 +760,33 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 								src.master.speak("You um, don't have to visit the security annex.  That's for humans.  Oh, also fruit.  If you have any fruit or seeds you need to check that in.")
 							else
 								src.master.speak("Is this one of those \"Khrushchev in a supermarket\" things?")
+						END_NEAT
 					return
 
 			if (istype(AM, /obj/critter/moonspy) && !(src.neat_things & NT_SPY))
-				src.neat_things |= NT_SPY
-				master.visible_message("<b>[master]</b> points at [AM].")
-				src.master.speak("Attention guests, there appears to be a coat rack or something available if needed.")
-				SPAWN_DBG (10)
+				FOUND_NEAT(NT_SPY)
+					master.visible_message("<b>[master]</b> points at [AM].")
+					speak_with_maptext("Attention guests, there appears to be a coat rack or something available if needed.")
+					sleep(5 SECOND)
 					if (src.master)
-						src.master.speak("You know, because of all the coats that you are clearly wearing.")
-
+						speak_with_maptext("You know, because of all the coats that you are clearly wearing.")
+					END_NEAT
 				return
 
 			if (istype(AM, /obj/critter/domestic_bee) && !(src.neat_things & NT_BEE))
-				src.neat_things |= NT_BEE
-				master.visible_message("<b>[master]</b> points at [AM].")
-				src.master.speak("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
-
+				FOUND_NEAT(NT_BEE)
+					master.visible_message("<b>[master]</b> points at [AM].")
+					speak_with_maptext("Ah, a space bee!  Space bees count as minors under 12 for the purposes of ticket pricing.")
+					END_NEAT
 				return
 
 			if ((istype(AM, /obj/item/luggable_computer/cheget) || istype(AM, /obj/machinery/computer3/luggable/cheget)) && !(src.neat_things & NT_CHEGET))
-				src.neat_things |= NT_CHEGET
-				src.master.speak("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
-				SPAWN_DBG (10)
+				FOUND_NEAT(NT_CHEGET)
+					speak_with_maptext("Huh, what's with the briefcase?  Did that come out of the security annex?  Somebody should probably call security or the embassy or something.")
+					sleep(5.5 SECONDS)
 					if (src.master)
-						src.master.speak("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
+						speak_with_maptext("I think they dealt with some kind of briefcase key the week before renovations started?  There's some sad office worker out there right now.")
+					END_NEAT
 				return
 
 		//wip
@@ -841,16 +802,17 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 				src.master.mover.master = null //master mover master mover master mover help HELP
 				src.master.mover = null
 			master.moving = 0
+			src.awaiting_beacon = 10
 
-			sleep(10)
-			src.master.speak("Uh.  That isn't supposed to happen.")
-			src.state = 0	//Yeah, let's find that route.
+			SPAWN(1 SECOND)
+				src.master.speak("Uh.  That isn't supposed to happen.")
+				src.state = 0	//Yeah, let's find that route.
 
-			SPAWN_DBG(1 SECOND)
+				sleep(5.5 SECOND)
 				if (src.master)
 					src.master.speak("I guess we need to take another route.  Please follow me.")
 					src.state = 0
-					src.awaiting_beacon = 0
+					src.awaiting_beacon = 3
 					next_beacon_id = current_beacon_id
 					src.task_act()
 
@@ -868,11 +830,14 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 
 #undef NT_MNX
 #undef NT_RISING_SUN
+#undef MAPTEXT_PAUSE
+#undef FOUND_NEAT
+#undef END_NEAT
 
 /obj/machinery/door/poddoor/blast/lunar
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
-	autoclose = 0
+	autoclose = FALSE
 	req_access_txt = ""
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -890,22 +855,22 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG (0)
+			SPAWN(0)
 				tourDoor.open(src)
 
 		if(!src.operating) //in case of emag
 			src.operating = 1
 		flick("bdoor[doordir]c0", src)
 		src.icon_state = "bdoor[doordir]0"
-		sleep(10)
-		src.set_density(0)
-		src.RL_SetOpacity(0)
-		update_nearby_tiles()
+		SPAWN(1 SECOND)
+			src.set_density(0)
+			src.RL_SetOpacity(0)
+			update_nearby_tiles()
 
-		if(operating == 1) //emag again
-			src.operating = 0
-		if(autoclose)
-			SPAWN_DBG(15 SECONDS)
+			if(operating == 1) //emag again
+				src.operating = 0
+			if(autoclose)
+				sleep(15 SECONDS)
 				autoclose()
 		return 1
 
@@ -921,7 +886,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			if (tourDoor == callerDoor)
 				continue
 
-			SPAWN_DBG (0)
+			SPAWN(0)
 				tourDoor.close(src)
 
 		flick("bdoor[doordir]c1", src)
@@ -931,24 +896,25 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			src.RL_SetOpacity(1)
 		update_nearby_tiles()
 
-		sleep(10)
+		sleep(1 SECOND)
 		src.operating = 0
 		return
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		src.add_fingerprint(user)
 		return
 
 
 /obj/machinery/door/lunar_breakdoor
 	name = "External Airlock"
-	icon = 'icons/misc/lunar.dmi'
-	icon_state = "breakairlock0"
+	icon = 'icons/obj/doors/SL_doors.dmi'
+	icon_state = "airlock_closed"
+	icon_base = "airlock"
 	anchored = 1
 	density = 1
 	opacity = 1
-	autoclose = 0
-	cant_emag = 1
+	autoclose = FALSE
+	cant_emag = TRUE
 	req_access_txt = "999"
 
 	var/broken = 0
@@ -968,18 +934,16 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			return
 
 		src.broken = 1
+		src.operating = -1 // set operating to -1 so A* fails on door check
 
 		playsound(src.loc, 'sound/machines/airlock_break_very_temp.ogg', 50, 1)
-		SPAWN_DBG (0)
+		SPAWN(0)
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
-			src.opacity = 0
-			sleep(6)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
-			pool(s)
+			src.set_opacity(0)
+			sleep(0.6 SECONDS)
+			elecflash(src,power=2,exclude_center = 0)
 
 		for (var/obj/machinery/door/airlock/otherDoor in view(7, src))
 			if (777 in otherDoor.req_access)
@@ -1002,7 +966,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	pixel_x = -8
 	var/somebody_fucked_up = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!user)
 			return
 
@@ -1010,10 +974,10 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			boutput(user, "If you got really close, you could probably compare foot sizes.")
 			return
 
-		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span style=\"color:blue\">You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
+		user.visible_message("<b>[user]</b> steps right into [src.name].", "<span class='notice'>You step into the footprint. Ha ha, oh man, your foot fits right into that!</span>")
 		if (!somebody_fucked_up)
 			desc += " There's some total idiot fucker's footprint smooshed into the center."
-			boutput(user, "<span style=\"color:red\">OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
+			boutput(user, "<span class='alert'>OH FUCK you left your footprint over it!  You fucked up a 90 year old famous footprint. You assumed it was covered in some kind of protective resin or something, shit!!</span>")
 
 		somebody_fucked_up = 1
 
@@ -1073,16 +1037,17 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	flying = 0
 	death_text = "%src% tips over, its joints seizing and locking up.  It does not move again."
 	angertext = "seems to stare at"
+	is_pet = 0
 
 	var/does_creepy_stuff = 0
 	var/typeName = "Generic"
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> awkwardly bashes [src.target]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
-		SPAWN_DBG(1 SECOND)
+		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	process()
@@ -1092,17 +1057,17 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 			return
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
+			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
+			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
+			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
+			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-			src.dir = pick(alldirs)
+			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
+			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
+			src.set_dir(pick(alldirs))
 
 /obj/critter/moonspy
 	name = "\proper not a syndicate spy probe"
@@ -1114,7 +1079,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	aggressive = 0
 	defensive = 1
 	wanderer = 0
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -1123,32 +1088,28 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	sleeping_icon_state = "drone_service_bot_off"
 	flying = 0
 	generic = 0
-	death_text = "%src% stops moving."
+	death_text = "%src% blows apart! But not in a way at all like surveillance equipment. More like a washing machine or something."
 
 	var/static/list/non_spy_weapons = list("something that isn't a high gain microphone", "an object distinct from a tape recorder", "object that is, in all likelihood, not a spy camera")
 
 	ChaseAttack(mob/M)
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> launches itself towards [M]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> launches itself towards [M]!</span>")
 		if (prob(20)) M.changeStatus("stunned", 2 SECONDS)
 		random_brute_damage(M, rand(2,5))
 
 	CritterAttack(mob/M)
 		src.attacking = 1
-		src.visible_message("<span style=\"color:red\">The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
+		src.visible_message("<span class='alert'>The <B>[src.name]</B> [pick("conks", "whacks", "bops")] [src.target] with [pick(non_spy_weapons)]!</span>")
 		random_brute_damage(src.target, rand(2,4),1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
 	CritterDeath()
 		if (!src.alive) return
-		src.alive = 0
-		walk_to(src,0)
-		src.visible_message("<b>[src]</b> blows apart!  But not in a way at all like surveillance equipment.  More like a washing machine or something.")
+		..()
 
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+		SPAWN(0)
+			elecflash(src,power=2,exclude_center = 0)
 			qdel(src)
 
 
@@ -1156,7 +1117,7 @@ var/list/lunar_fx_sounds = list('sound/ambience/loop/Wind_Low.ogg','sound/ambien
 	name = "museum of lunar history t-shirt"
 	desc = "Size small.  However, just fifty years ago this would have been considered an XXL."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "moon_tshirt"
 	item_state = "moon_tshirt"
@@ -1194,7 +1155,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		light.set_brightness(0.4)
 		light.enable()
 
-		SPAWN_DBG (5)
+		SPAWN(0.5 SECONDS)
 			if (src.tag)
 				src.id_tag = src.tag
 				src.tag = null
@@ -1211,11 +1172,11 @@ obj/machinery/embedded_controller/radio/maintpanel
 	attackby(obj/item/I, mob/user)
 		if (istype(I, /obj/item/card/id))
 			if (user && src.allowed(user))
-				boutput(user, "<font style='color: green;'>Access approved..</font>")
+				boutput(user, "<span class='success'>Access approved..</span>")
 				src.locked = !src.locked
 				updateUsrDialog()
 			else
-				boutput(user, "<font style='color: red;'>Access denied.</font>")
+				boutput(user, "<font class='alert'>Access denied.</font>")
 
 		else
 			return ..()
@@ -1232,9 +1193,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 				wired_connection.post_signal(src, signal)
 
 		else
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(radio_connection)
-				return radio_connection.post_signal(src, signal, 100)
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, 100)
 
 	initialize()
 		..()
@@ -1247,7 +1206,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			new_prog.do_setup(setup_string)
 
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if(!signal || signal.encryption)
 			return
 
@@ -1269,7 +1228,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 
 	process()
 		if (status & NOPOWER)
-			update_icon()
+			UpdateIcon()
 			return
 
 		return ..()
@@ -1281,7 +1240,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 			icon_state = blinking ? "museum_control_blink" : "museum_control"
 
 	attack_hand(mob/user)
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = {"<!DOCTYPE html>
 <html>
 <head>
@@ -1296,8 +1255,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		src: url('glass_tty_vt220.eot');
 		src: url('glass_tty_vt220.eot') format('embedded-opentype'),
 			 url('glass_tty_vt220.ttf') format('truetype'),
-			 url('glass_tty_vt220.woff') format('woff'),
-			 url('glass_tty_vt220.svg') format('svg');
+			 url('glass_tty_vt220.woff') format('woff');
 	}
 
 	body {background-color:#999876;}
@@ -1341,7 +1299,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		word-break: break-all;
 		background-color:#111F10;
 		color:#31C131;
-		font-family: Glass_TTY_VT220;
+		font-family: Glass_TTY_VT220 !important;
 		font-size: 14pt;
 	}
 
@@ -1550,33 +1508,32 @@ obj/machinery/embedded_controller/radio/maintpanel
 		if (status & NOPOWER)
 			return
 
-		if (get_dist(src, usr) > 1 && !issilicon(usr))
+		if (BOUNDS_DIST(src, usr) > 0 && !issilicon(usr))
 			return
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(!(status & NOPOWER) && program)
 			program.process()
 
-		update_icon()
+		UpdateIcon()
 
 	updateUsrDialog(var/reason)
 		var/list/nearby = viewers(1, src)
 		for(var/mob/M in nearby)
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				if (reason || updateFlags)
 					src.dynamicUpdate(M, reason|updateFlags)
 					updateFlags = REASON_NONE
 				else
-					src.attack_hand(M)
+					src.Attackhand(M)
 
 		if (issilicon(usr))
 			if (!(usr in nearby))
-				if (usr.client && usr.machine==src)
+				if (usr.using_dialog_of(src))
 					if (reason || updateFlags)
 						src.dynamicUpdate(usr, reason|updateFlags)
 						updateFlags = REASON_NONE
@@ -1638,13 +1595,13 @@ datum/computer/file/embedded_program/maintpanel
 			memory += "display_add[line]"
 			memory["display_add[line]"] = ""
 
-		SPAWN_DBG (10)
+		SPAWN(1 SECOND)
 			updateDisplay()
 
 	disposing()
 		if (device_entries)
 			for (var/datum/entry in device_entries)
-				entry.disposing()
+				entry.dispose()
 
 			device_entries = null
 
@@ -1654,7 +1611,7 @@ datum/computer/file/embedded_program/maintpanel
 
 	proc/do_setup(var/setupString)
 		var/list/setupList = splittext(setupString, ";")
-		if (!setupList || !setupList.len)
+		if (!setupList || !length(setupList))
 			return
 
 		for (var/setupEntry in setupList)
@@ -1674,7 +1631,7 @@ datum/computer/file/embedded_program/maintpanel
 
 			var/obj/controlTarget = locate(setupEntry)
 			if (!controlTarget)
-				logTheThing("debug", null, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
+				logTheThing(LOG_DEBUG, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
 				continue
 
 			if (istype(controlTarget, /obj/machinery/door/airlock))
@@ -1736,7 +1693,7 @@ datum/computer/file/embedded_program/maintpanel
 
 		return
 
-	receive_signal(datum/signal/signal, receive_method, receive_param)
+	receive_signal(datum/signal/signal, receive_method, receive_param, connection_id)
 		if (signal.data["sender"] in src.sessions)
 			var/datum/maintpanel_device_entry/entry = src.sessions[signal.data["sender"]]
 			src.sessions -= signal.data["sender"]
@@ -1971,8 +1928,8 @@ datum/maintpanel_device_entry
 
 		getControlMenu()
 			return list("  ACTOR ID: [mannequinName]",\
-			"  ACTIVE: [(ourMannequin && ourMannequin.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
-			"  CONDITION: [ourMannequin && ourMannequin.alive ? "OK" : "REPAIRS NEEDED"]")
+			"  ACTIVE: [(ourMannequin?.alive) ? (src.active ? "YES" : "NO") : "NO"]",\
+			"  CONDITION: [ourMannequin?.alive ? "OK" : "REPAIRS NEEDED"]")
 
 		New(datum/computer/file/embedded_program/maintpanel/newMaster, obj/critter/mannequin/mannequin, entryName)
 			..()
@@ -2084,18 +2041,18 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	New()
 		..()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!locate("MNXpanel"))
 				src.tag = "MNXpanel"
 				src.id_tag = src.tag
 
 /obj/item/kitchen/everyflavor_box/wax
-	attack_hand(mob/user as mob, unused, flag)
+	attack_hand(mob/user, unused, flag)
 		if (flag)
 			return ..()
 		if(user.r_hand == src || user.l_hand == src)
 			if(src.amount == 0)
-				boutput(user, "<span style=\"color:red\">You're out of beans. You feel strangely sad.</span>")
+				boutput(user, "<span class='alert'>You're out of beans. You feel strangely sad.</span>")
 				return
 			else
 				var/obj/item/reagent_containers/food/snacks/candy/B = new /obj/item/reagent_containers/food/snacks/candy {name = "A Farty Snott's Every Flavour Bean"; desc = "A favorite halloween sweet worldwide!"; icon_state = "bean"; amount = 1; initial_volume = 100;} (user)
@@ -2128,25 +2085,25 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		return attack_hand(user)
 
 	attack_hand(mob/living/user)
-		if (!istype(user) || user.stat || (get_dist(src, user) > 1) || well_fuck_its_armed)
+		if (!istype(user) || user.stat || (BOUNDS_DIST(src, user) > 0) || well_fuck_its_armed)
 			return
 
 		well_fuck_its_armed = 1
 		user.visible_message("<b>[user]</b> prods [src].", "You prod at [src].  It's a pretty accurate replica, it seems.  Neat.")
-		SPAWN_DBG (10)
-			src.visible_message("<span style='color:red'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
+		SPAWN(1 SECOND)
+			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
-			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 50)
 
-			sleep(30)
+			sleep(3 SECONDS)
 			//do tiny baby explosion noise
 			//Todo: a squeakier blast sound.
-			playsound(src.loc, "sound/effects/Explosion2.ogg", 40, 0, 0, 4)
+			playsound(src.loc, 'sound/effects/Explosion2.ogg', 40, 0, 0, 4)
 
 			new /obj/effects/explosion/tiny_baby (src.loc)
 			for (var/mob/living/carbon/unfortunate_jerk in range(1, src))
 				if (!isdead(unfortunate_jerk) && unfortunate_jerk.client)
-					shake_camera(unfortunate_jerk, 12, 4)
+					shake_camera(unfortunate_jerk, 12, 32)
 				unfortunate_jerk.changeStatus("stunned", 4 SECONDS)
 				unfortunate_jerk.stuttering += 4
 				unfortunate_jerk.lying = 1
@@ -2161,7 +2118,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "aisleshelf"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W))
 			return
 
@@ -2183,7 +2140,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	anchored = 1
 	density = 0
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/device/key))
 			user.visible_message("<b>[user]</b> dully bumps a key against [src].  It's not even going in the lock.  Uhhh.","Really?  We're really doing this?  No, the key doesn't fit.  Do we need to stage an intervention?")
 			return

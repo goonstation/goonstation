@@ -14,7 +14,7 @@
 	stage_prob = 5
 	var/robo_restart = 0
 
-/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/heartfailure/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 
@@ -28,64 +28,63 @@
 			return
 		else if (H.organHolder.heart && H.organHolder.heart.robotic && !H.organHolder.heart.broken && !src.robo_restart)
 			var/datum/organHolder/oH = H.organHolder
-			boutput(H, "<span style='color:red'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
+			boutput(H, "<span class='alert'>Your cyberheart detects a cardiac event and attempts to return to its normal rhythm!</span>")
 			if (prob(40) && oH.heart.emagged)
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
-						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
+						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else if (prob(25))
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
 						H.cure_disease(D)
-						boutput(H, "<span style='color:red'>Your cyberheart returns to its normal rhythm!</span>")
+						boutput(H, "<span class='alert'>Your cyberheart returns to its normal rhythm!</span>")
 					return
 			else
 				src.robo_restart = 1
-				SPAWN_DBG(oH.heart.emagged ? 200 : 300)
+				SPAWN(oH.heart.emagged ? 200 : 300)
 					src.robo_restart = 0
-				SPAWN_DBG(3 SECONDS)
+				SPAWN(3 SECONDS)
 					if (H)
-						boutput(H, "<span style='color:red'>Your cyberheart fails to return to its normal rhythm!</span>")
+						boutput(H, "<span class='alert'>Your cyberheart fails to return to its normal rhythm!</span>")
 
 	switch (D.stage)
 		if (1)
 			if (prob(1) && prob(10))
-				boutput(affected_mob, "<span style='color:blue'>You feel better.</span>")
+				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.cure_disease(D)
 				return
 			if (prob(8))
 				affected_mob.emote(pick("pale", "shudder"))
 			if (prob(5))
-				boutput(affected_mob, "<span style='color:red'>Your arm hurts!</span>")
+				boutput(affected_mob, "<span class='alert'>Your arm hurts!</span>")
 			else if (prob(5))
-				boutput(affected_mob, "<span style='color:red'>Your chest hurts!</span>")
+				boutput(affected_mob, "<span class='alert'>Your chest hurts!</span>")
 		if (2)
 			if (prob(1) && prob(10))
-				boutput(affected_mob, "<span style='color:blue'>You feel better.</span>")
+				boutput(affected_mob, "<span class='notice'>You feel better.</span>")
 				affected_mob.resistances += src.type
 				affected_mob.ailments -= src
 				return
 			if (prob(8))
 				affected_mob.emote(pick("pale", "groan"))
 			if (prob(5))
-				boutput(affected_mob, "<span style='color:red'>Your heart lurches in your chest!</span>")
+				boutput(affected_mob, "<span class='alert'>Your heart lurches in your chest!</span>")
 				affected_mob.losebreath++
 			if (prob(3))
-				boutput(affected_mob, "<span style='color:red'>Your heart stops beating!</span>")
+				boutput(affected_mob, "<span class='alert'>Your heart stops beating!</span>")
 				affected_mob.losebreath+=3
 			if (prob(5))
 				affected_mob.emote(pick("faint", "collapse", "groan"))
 		if (3)
 			affected_mob.take_oxygen_deprivation(1)
-			affected_mob.updatehealth()
 			if (prob(8))
 				affected_mob.emote(pick("twitch", "gasp"))
 			if (prob(1)) // down from 5

@@ -6,11 +6,11 @@
 	name = "Air Monitor"
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "alarm0"
-	anchored = 1.0
+	anchored = 1
 	var/skipprocess = 0 //Experimenting
-	var/alarm_frequency = "1437"
+	var/alarm_frequency = FREQ_ALARM
 	var/alarm_zone = null
-	var/control_frequency = "1439"
+	var/control_frequency = FREQ_AIR_ALARM_CONTROL
 	var/id
 	var/locked = 1
 
@@ -20,13 +20,10 @@
 	var/e_gas = 0
 	var/last_safe = 2
 
-	disposing()
-		radio_controller.remove_object(src, alarm_frequency)
-		radio_controller.remove_object(src, control_frequency)
-		..()
-
 /obj/machinery/alarm/New()
 	..()
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("alarm", alarm_frequency)
+	MAKE_SENDER_RADIO_PACKET_COMPONENT("control", control_frequency) // seems to be unused?
 
 	if(!alarm_zone)
 		var/area/A = get_area(loc)
@@ -65,17 +62,17 @@
 		safe = -1
 		return
 
-	var/environment_pressure = environment.return_pressure()
+	var/environment_pressure = MIXTURE_PRESSURE(environment)
 
-	if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+	if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 		//Pressure sensor
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			safe = 0
 		else safe = 1
 
-	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10)))
+	if(safe && ((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1)))
 		//Oxygen Levels Sensor
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			safe = 0
 		else safe = 1
 
@@ -98,8 +95,8 @@
 		else safe = 1
 
 	var/tgmoles = 0
-	if(environment.trace_gases && environment.trace_gases.len)
-		for(var/datum/gas/trace_gas in environment.trace_gases)
+	if(length(environment.trace_gases))
+		for(var/datum/gas/trace_gas as anything in environment.trace_gases)
 			tgmoles += trace_gas.moles
 
 	if(tgmoles > 1)
@@ -119,13 +116,6 @@
 	return
 
 /obj/machinery/alarm/proc/post_alert(alert_level)
-
-	LAGCHECK(LAG_LOW)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency(alarm_frequency)
-
-	if(!frequency) return
-
 	var/datum/signal/alert_signal = get_free_signal()
 	alert_signal.source = src
 	alert_signal.transmission_method = 1
@@ -140,25 +130,25 @@
 		if (2)
 			alert_signal.data["alert"] = "reset"
 
-	frequency.post_signal(src, alert_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, alert_signal, null, "alarm")
 
-/obj/machinery/alarm/attackby(var/obj/item/W as obj, user as mob)
+/obj/machinery/alarm/attackby(var/obj/item/W, user)
 	if (issnippingtool(W))
 		status ^= BROKEN
 		src.add_fingerprint(user)
-		src.visible_message("<span style=\"color:red\">[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
+		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
 		return
 	if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
 		if (status & (BROKEN|NOPOWER))
-			boutput(user, "<span style=\"color:red\">The local air monitor has no power!</span>")
+			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
 			return
 		if (src.allowed(usr))
 //			locked = !locked
 //			boutput(user, "You [ locked ? "lock" : "unlock"] the local air monitor.")
-			boutput(user, "<span style=\"color:red\">Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
+			boutput(user, "<span class='alert'>Error: No atmospheric pipe network detected.</span>") // <-- dumb workaround until atmos processing is better
 			return
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 	return ..()
 
@@ -166,13 +156,13 @@
 	if(status & (NOPOWER|BROKEN))
 		return
 	user.Browse(return_text(user),"window=atmos")
-	user.machine = src
+	src.add_dialog(user)
 	onclose(user, "atmos")
 
 /obj/machinery/alarm/proc/return_text(mob/user)
-	if ( (get_dist(src, user) > 1 ))
+	if ( (BOUNDS_DIST(src, user) > 0 ))
 		if (!issilicon(user))
-			user.machine = null
+			src.remove_dialog(user)
 			user.Browse(null, "window=atmos")
 		return
 
@@ -182,12 +172,12 @@
 		output += "<FONT color = 'red'>ERROR: Unable to determine environmental status!</FONT><BR><BR>"
 		safe = -1
 	else
-		var/environment_pressure = environment.return_pressure()
-		var/total_moles = environment.total_moles()
+		var/environment_pressure = MIXTURE_PRESSURE(environment)
+		var/total_moles = TOTAL_MOLES(environment)
 
-		if((environment_pressure < ONE_ATMOSPHERE*0.80) || (environment_pressure > ONE_ATMOSPHERE*1.20))
+		if((environment_pressure < ONE_ATMOSPHERE*0.8) || (environment_pressure > ONE_ATMOSPHERE*1.2))
 			output += "<FONT color = 'red'>"
-		else if((environment_pressure < ONE_ATMOSPHERE*0.90) || (environment_pressure > ONE_ATMOSPHERE*1.10))
+		else if((environment_pressure < ONE_ATMOSPHERE*0.9) || (environment_pressure > ONE_ATMOSPHERE*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -203,9 +193,9 @@
 
 		output += "<B>Composition:</B><BR>"
 
-		if(environment.nitrogen < MOLES_N2STANDARD*0.80)
+		if(environment.nitrogen < MOLES_N2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.nitrogen < MOLES_N2STANDARD*0.90) || (environment.nitrogen > MOLES_N2STANDARD*1.10))
+		else if((environment.nitrogen < MOLES_N2STANDARD*0.9) || (environment.nitrogen > MOLES_N2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -214,9 +204,9 @@
 		else
 			output += "N2: N/A</FONT><BR>"
 
-		if(environment.oxygen < MOLES_O2STANDARD*0.80)
+		if(environment.oxygen < MOLES_O2STANDARD*0.8)
 			output += "<FONT color = 'red'>"
-		else if((environment.oxygen < MOLES_O2STANDARD*0.90) || (environment.oxygen > MOLES_O2STANDARD*1.10))
+		else if((environment.oxygen < MOLES_O2STANDARD*0.9) || (environment.oxygen > MOLES_O2STANDARD*1.1))
 			output += "<FONT color = 'orange'>"
 		else
 			output += "<FONT color = 'blue'>"
@@ -251,9 +241,11 @@
 		else
 			output += ""
 
+		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
+
 		var/tgmoles = 0
-		if(environment.trace_gases && environment.trace_gases.len)
-			for(var/datum/gas/trace_gas in environment.trace_gases)
+		if(length(environment.trace_gases))
+			for(var/datum/gas/trace_gas as anything in environment.trace_gases)
 				tgmoles += trace_gas.moles
 
 		if(tgmoles > 1)

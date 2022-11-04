@@ -8,36 +8,38 @@
 	name = "smoke"
 	icon_state = "smoke"
 	opacity = 1
-	anchored = 0.0
+	anchored = 0
 	mouse_opacity = 0
-	var/amount = 6.0
+	var/amount = 6
 	//Remove this bit to use the old smoke
 	icon = 'icons/effects/96x96.dmi'
 	pixel_x = -32
 	pixel_y = -32
-	event_handler_flags = USE_HASENTERED
 
 /obj/effects/bad_smoke/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/M in get_turf(src))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.c_flags & MASKINTERNALS))
+		if (issmokeimmune(M))
 		else
 			M.drop_item()
 			if (prob(25))
 				M.changeStatus("stunned", 1 SECOND)
 			M.take_oxygen_deprivation(1)
-			M.emote("cough")
+			if(!ON_COOLDOWN(M, "bad_smoke_cough", 0.2 SECONDS))
+				M.emote("cough")
 	return
 
-/obj/effects/bad_smoke/HasEntered(mob/living/carbon/M as mob )
+/obj/effects/bad_smoke/Crossed(atom/movable/AM)
 	..()
-	if(iscarbon(M))
-		if (M.internal != null && M.wear_mask && (M.wear_mask.c_flags & MASKINTERNALS))
+	if(iscarbon(AM))
+		var/mob/living/carbon/M = AM
+		if (issmokeimmune(M))
 			return
 		else
 			M.drop_item()
 			if (prob(25))
 				M.changeStatus("stunned", 1 SECOND)
 			M.take_oxygen_deprivation(1)
-			M.emote("cough")
+			if(!ON_COOLDOWN(M, "bad_smoke_cough", 0.2 SECONDS))
+				M.emote("cough")
 	return

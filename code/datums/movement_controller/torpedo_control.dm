@@ -32,8 +32,9 @@
 			if("fire")
 				master.fire()
 			if("exit")
+				master.inUse = FALSE
 				master.exit()
 
-	modify_keymap(datum/keymap/keymap, client/C)
+	modify_keymap(client/C)
 		..()
-		keymap.merge(C.get_keymap("torpedo"))
+		C.apply_keybind("torpedo")

@@ -1,101 +1,815 @@
-"aa" = (/turf/variableTurf/wall,/area)
-"ab" = (/turf/variableTurf/wall,/area/noGenerate)
-"ac" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"ad" = (/turf/variableTurf/clear,/area)
-"ae" = (/turf/simulated/wall/auto/reinforced/gannets,/area/noGenerate)
-"af" = (/obj/item/raw_material/rock,/turf/variableTurf/floor,/area/noGenerate)
-"ag" = (/obj/decal/cleanable/rust,/turf/simulated/wall/auto/reinforced/gannets,/area/noGenerate)
-"ah" = (/obj/table/reinforced/auto,/obj/item/pen/pencil,/obj/decal/cleanable/cobweb,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"ai" = (/obj/table/reinforced/auto,/obj/item/clipboard/with_pen,/obj/item/paper,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"aj" = (/obj/table/reinforced/auto,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"ak" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/turf/variableTurf/floor,/area/noGenerate)
-"al" = (/obj/table/reinforced/auto,/obj/item/device/audio_log/radioship/large/sleepership,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"am" = (/obj/stool/chair/office{icon_state = "office_chair"; dir = 1},/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"an" = (/obj/stool/chair/office{icon_state = "office_chair"; dir = 1},/turf/simulated/floor/airless/grime,/area/noGenerate)
-"ao" = (/obj/table/reinforced/auto,/obj/item/paper/cryo,/obj/item/reagent_containers/food/drinks/water,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"ap" = (/turf/variableTurf/floor,/area/noGenerate)
-"aq" = (/obj/decal/floatingtiles{icon_state = "floattiles6"; dir = 8},/turf/variableTurf/floor,/area/noGenerate)
-"ar" = (/obj/item/raw_material/rock{icon_state = "rock2"},/turf/variableTurf/floor,/area/noGenerate)
-"as" = (/obj/decal/fakeobjects{tag = "icon-offbroken (EAST)"; name = "broken computer"; desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so."; icon = 'icons/obj/computer.dmi'; icon_state = "offbroken"; dir = 4; density = 1; anchored = 1},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"at" = (/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"au" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"av" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. "; dir = 8; icon = 'icons/obj/computer.dmi'; icon_state = "offbroken"; name = "broken computer"},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"aw" = (/obj/decal/poster/wallsign/space,/turf/simulated/wall/auto/reinforced/gannets,/area/noGenerate)
-"ax" = (/obj/item/storage/wall/emergency,/obj/decal/cleanable/rust,/turf/simulated/wall/auto/gannets,/area/noGenerate)
-"ay" = (/turf/simulated/wall/auto/gannets,/area/noGenerate)
-"az" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"aA" = (/obj/item/storage/wall/emergency,/turf/simulated/wall/auto/gannets,/area/noGenerate)
-"aB" = (/obj/decal/poster/wallsign/space,/obj/decal/cleanable/rust,/turf/simulated/wall/auto/reinforced/gannets,/area/noGenerate)
-"aC" = (/obj/decal/floatingtiles{icon_state = "floattiles6"},/turf/variableTurf/floor,/area/noGenerate)
-"aD" = (/obj/machinery/door/airlock/pyro/external{icon_state = "airlock_closed"; dir = 4},/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"aE" = (/obj/item/storage/wall/random,/turf/simulated/floor/airless/damaged5,/area/noGenerate)
-"aF" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/grime,/area/noGenerate)
-"aG" = (/turf/simulated/floor/airless/grime,/area/noGenerate)
-"aH" = (/obj/item/storage/wall/random,/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"aI" = (/obj/decal/cleanable/cobweb2,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/grime,/area/noGenerate)
-"aJ" = (/obj/decal/cleanable/rust,/turf/simulated/wall/auto/gannets,/area/noGenerate)
-"aK" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"aL" = (/turf/variableTurf/floor,/area)
-"aM" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 1},/turf/variableTurf/floor,/area/noGenerate)
-"aN" = (/obj/machinery/sleeper{icon_state = "sleeper"; dir = 4},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"aO" = (/obj/cable/conduit{icon_state = "conduit"; dir = 5},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aP" = (/obj/cable/conduit{icon_state = "conduit"; dir = 9},/turf/simulated/floor/airless/plating/damaged3,/area/noGenerate)
-"aQ" = (/obj/decal/fakeobjects/sealedsleeper{icon_state = "sealedsleeper"; dir = 8},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"aR" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/turf/variableTurf/floor,/area/noGenerate)
-"aS" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/turf/variableTurf/floor,/area/noGenerate)
-"aT" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 4},/turf/simulated/floor/airless/damaged5,/area/noGenerate)
-"aU" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aV" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,/obj/item/reagent_containers/glass/beaker/cryoxadone,/obj/decal/cleanable/water{desc = "An old puddle of cryo fluid."; name = "cryoxadone puddle"},/turf/simulated/floor/airless/plating/damaged1,/area/noGenerate)
-"aW" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 8},/turf/simulated/floor/airless/damaged5,/area/noGenerate)
-"aX" = (/obj/lattice{icon_state = "lattice-dir"; dir = 6},/turf/variableTurf/floor,/area/noGenerate)
-"aY" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/turf/variableTurf/floor,/area/noGenerate)
-"aZ" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/cable/conduit{icon_state = "conduit"; dir = 9},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"ba" = (/obj/machinery/sleeper{icon_state = "sleeper"; dir = 8},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"bb" = (/turf/simulated/floor/airless/plating,/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/cable/conduit{icon_state = "conduit"; dir = 5},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/turf/simulated/floor/airless/plating/damaged2,/area/noGenerate)
-"bc" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 4},/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"bd" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,/turf/simulated/floor/airless/plating/damaged1,/area/noGenerate)
-"be" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bf" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 8},/turf/simulated/floor/airless/grime,/area/noGenerate)
-"bg" = (/obj/decal/fakeobjects/sealedsleeper{icon_state = "sealedsleeper"; dir = 4},/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"bh" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/cable/conduit{icon_state = "conduit"; dir = 5},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bi" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/cable/conduit{icon_state = "conduit"; dir = 9},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bj" = (/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bk" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 4},/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"bl" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/turf/variableTurf/floor,/area/noGenerate)
-"bm" = (/obj/machinery/atmospherics/unary/cold_sink/freezer{icon_state = "freezer_0"; dir = 8},/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"bn" = (/obj/decal/fakeobjects/falseladder,/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"bo" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/item/cable_coil/cut{icon_state = "coil1"},/obj/item/storage/toolbox/electrical,/obj/item/screwdriver,/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bp" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/obj/item/cable_coil,/turf/simulated/floor/airless/plating/damaged3,/area/noGenerate)
-"bq" = (/obj/decal/fakeobjects/falseladder,/turf/simulated/floor/airless/grime,/area/noGenerate)
-"br" = (/obj/decal/fakeobjects/shuttleengine{icon_state = "alt_heater"; dir = 2},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"bs" = (/obj/decal/fakeobjects/apc_broken,/turf/simulated/wall/auto/gannets,/area/noGenerate)
-"bt" = (/obj/item/cable_coil/cut,/obj/table/reinforced/auto,/obj/item/reagent_containers/glass/beaker/cryoxadone,/turf/simulated/floor/airless/damaged2,/area/noGenerate)
-"bu" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating/damaged3,/area/noGenerate)
-"bv" = (/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bw" = (/obj/table/reinforced/auto,/obj/item/device/audio_log/radioship/small/sleepership,/turf/simulated/floor/airless/damaged5,/area/noGenerate)
-"bx" = (/turf/simulated/floor/airless/plating,/obj/cable/conduit{icon_state = "conduit"; dir = 1},/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,/turf/simulated/floor/airless/plating/damaged2,/area/noGenerate)
-"by" = (/obj/decal/fakeobjects/operatorconsole,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"bz" = (/obj/decal/fakeobjects/vacuumtape,/turf/simulated/floor/airless/circuit/vintage,/area/noGenerate)
-"bA" = (/obj/decal/fakeobjects/shuttlethruster{icon_state = "alt_propulsion"; dir = 2},/turf/variableTurf/floor,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/variableTurf/wall,
+/area/space)
+"ab" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"ac" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"ad" = (
+/turf/variableTurf/clear,
+/area/space)
+"ae" = (
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/noGenerate)
+"af" = (
+/obj/item/raw_material/rock,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ag" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/noGenerate)
+"ah" = (
+/obj/table/reinforced/auto,
+/obj/item/pen/pencil,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"ai" = (
+/obj/table/reinforced/auto,
+/obj/item/clipboard/with_pen,
+/obj/item/paper,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"aj" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"ak" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"al" = (
+/obj/table/reinforced/auto,
+/obj/item/device/audio_log/radioship/large/sleepership,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"am" = (
+/obj/stool/chair/office{
+	icon_state = "office_chair";
+	dir = 1
+	},
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"an" = (
+/obj/stool/chair/office{
+	icon_state = "office_chair";
+	dir = 1
+	},
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"ao" = (
+/obj/table/reinforced/auto,
+/obj/item/paper/cryo,
+/obj/item/reagent_containers/food/drinks/water,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"ap" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aq" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6";
+	dir = 8
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ar" = (
+/obj/item/raw_material/rock{
+	icon_state = "rock2"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"as" = (
+/obj/decal/fakeobjects{
+	tag = "icon-offbroken (EAST)";
+	name = "broken computer";
+	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	dir = 4;
+	density = 1;
+	anchored = 1
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"at" = (
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"au" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"av" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"aw" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/noGenerate)
+"ax" = (
+/obj/item/storage/wall/emergency,
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/gannets,
+/area/noGenerate)
+"ay" = (
+/turf/simulated/wall/auto/gannets,
+/area/noGenerate)
+"az" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"aA" = (
+/obj/item/storage/wall/emergency,
+/turf/simulated/wall/auto/gannets,
+/area/noGenerate)
+"aB" = (
+/obj/decal/poster/wallsign/space,
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/noGenerate)
+"aC" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles6"
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aD" = (
+/obj/machinery/door/airlock/pyro/external{
+	icon_state = "airlock_closed";
+	dir = 4
+	},
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"aE" = (
+/obj/item/storage/wall/random,
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"aF" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"aG" = (
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"aH" = (
+/obj/item/storage/wall/random,
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"aI" = (
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"aJ" = (
+/obj/decal/cleanable/rust,
+/turf/simulated/wall/auto/gannets,
+/area/noGenerate)
+"aK" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"aL" = (
+/turf/variableTurf/floor,
+/area/space)
+"aM" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles4";
+	dir = 1
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aN" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 4
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"aO" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 5
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aP" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/damaged3,
+/area/noGenerate)
+"aQ" = (
+/obj/decal/fakeobjects/sealedsleeper{
+	icon_state = "sealedsleeper";
+	dir = 8
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"aR" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 6
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aS" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 10
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aT" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 4
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"aU" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aV" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/obj/decal/cleanable/water{
+	desc = "An old puddle of cryo fluid.";
+	name = "cryoxadone puddle"
+	},
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"aW" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 8
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"aX" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 6
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aY" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (NORTHWEST)";
+	icon_state = "lattice-dir-b";
+	dir = 9
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aZ" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"ba" = (
+/obj/machinery/sleeper{
+	icon_state = "sleeper";
+	dir = 8
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"bb" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/noGenerate)
+"bc" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 4
+	},
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"bd" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southwest,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/noGenerate)
+"be" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bf" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 8
+	},
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"bg" = (
+/obj/decal/fakeobjects/sealedsleeper{
+	icon_state = "sealedsleeper";
+	dir = 4
+	},
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"bh" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 5
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bi" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 9
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bj" = (
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bk" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 4
+	},
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"bl" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
+"bm" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	icon_state = "freezer_0";
+	dir = 8
+	},
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"bn" = (
+/obj/decal/fakeobjects/falseladder,
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"bo" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/obj/item/storage/toolbox/electrical,
+/obj/item/screwdriver,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bp" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/item/cable_coil,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/noGenerate)
+"bq" = (
+/obj/decal/fakeobjects/falseladder,
+/turf/simulated/floor/airless/grime,
+/area/noGenerate)
+"br" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater";
+	dir = 2
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"bs" = (
+/obj/decal/fakeobjects/apc_broken,
+/turf/simulated/wall/auto/gannets,
+/area/noGenerate)
+"bt" = (
+/obj/item/cable_coil/cut,
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/glass/beaker/cryoxadone,
+/turf/simulated/floor/airless/damaged2,
+/area/noGenerate)
+"bu" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating/damaged3,
+/area/noGenerate)
+"bv" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/vertical,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bw" = (
+/obj/table/reinforced/auto,
+/obj/item/device/audio_log/radioship/small/sleepership,
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"bx" = (
+/obj/cable/conduit{
+	icon_state = "conduit";
+	dir = 1
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe/southeast,
+/turf/simulated/floor/airless/plating/damaged2,
+/area/noGenerate)
+"by" = (
+/obj/decal/fakeobjects/operatorconsole,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"bz" = (
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/airless/circuit/vintage,
+/area/noGenerate)
+"bA" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	icon_state = "alt_propulsion";
+	dir = 2
+	},
+/turf/variableTurf/floor,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaaaaaababababaaaaadadadadad
-aaaaabababacaeacaaaaaaadadadad
-aaabababafagahaiajaaaaaaadadad
-abababafakacalamanaoacaaaaadad
-ababapaqaracasatauavacapaaaaad
-ababafarawaxayazazayaAaBaaaaaa
-abapapaCaDataEaFaGaHaIaDaLaLaL
-abapafapaBayaJazaKayaJawabaaaL
-apapapaMaRacaNaOaPaQacaSabaaaa
-apapapapaXacaTaUaVaWacapababad
-abapapapaYacaNbbaZbaacblababad
-ababapapagaybcbdbebfayaeapabab
-abababagaeaybgbhbibaayaeaeapab
-aaababaebjaybkaUbxbmaybjaeapab
-aaababaeayaybnbobpbqayayaeapab
-aaaaabbrbrbsbtbubvbwaybrbrapab
-aaaaabbAbAaeaebybzaeagbAbAabab
-adaaababapaYaeaeaeagblapababaa
-adaaaaababaaaaaaaaaaaaaaaaaaaa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ap
+ap
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+ad
+ad
+"}
+(2,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ap
+ap
+ap
+ap
+ap
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+ab
+ab
+ab
+ap
+af
+ap
+af
+ap
+ap
+ap
+ap
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+"}
+(4,1,1) = {"
+aa
+ab
+ab
+af
+aq
+ar
+aC
+ap
+aM
+ap
+ap
+ap
+ag
+ae
+ae
+br
+bA
+ab
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+af
+ak
+ar
+aw
+aD
+aB
+aR
+aX
+aY
+ag
+ae
+bj
+ay
+br
+bA
+ap
+ab
+"}
+(6,1,1) = {"
+ab
+ac
+ag
+ac
+ac
+ax
+at
+ay
+ac
+ac
+ac
+ay
+ay
+ay
+ay
+bs
+ae
+aY
+aa
+"}
+(7,1,1) = {"
+ab
+ae
+ah
+al
+as
+ay
+aE
+aJ
+aN
+aT
+aN
+bc
+bg
+bk
+bn
+bt
+ae
+ae
+aa
+"}
+(8,1,1) = {"
+ab
+ac
+ai
+am
+at
+az
+aF
+az
+aO
+aU
+bb
+bd
+bh
+aU
+bo
+bu
+by
+ae
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aj
+an
+au
+az
+aG
+aK
+aP
+aV
+aZ
+be
+bi
+bx
+bp
+bv
+bz
+ae
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+ao
+av
+ay
+aH
+ay
+aQ
+aW
+ba
+bf
+ba
+bm
+bq
+bw
+ae
+ag
+aa
+"}
+(11,1,1) = {"
+ad
+aa
+aa
+ac
+ac
+aA
+aI
+aJ
+ac
+ac
+ac
+ay
+ay
+ay
+ay
+ay
+ag
+bl
+aa
+"}
+(12,1,1) = {"
+ad
+ad
+aa
+aa
+ap
+aB
+aD
+aw
+aS
+ap
+bl
+ae
+ae
+bj
+ay
+br
+bA
+ap
+aa
+"}
+(13,1,1) = {"
+ad
+ad
+ad
+aa
+aa
+aa
+aL
+ab
+ab
+ab
+ab
+ap
+ae
+ae
+ae
+br
+bA
+ab
+aa
+"}
+(14,1,1) = {"
+ad
+ad
+ad
+ad
+aa
+aa
+aL
+aa
+aa
+ab
+ab
+ab
+ap
+ap
+ap
+ap
+ab
+ab
+aa
+"}
+(15,1,1) = {"
+ad
+ad
+ad
+ad
+ad
+aa
+aL
+aL
+aa
+ad
+ad
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
 "}

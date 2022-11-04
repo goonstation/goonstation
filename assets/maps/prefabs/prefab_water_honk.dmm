@@ -1,185 +1,1480 @@
-"aa" = (/turf/unsimulated/wall/auto/reinforced/gannets,/area/slimy_honk)
-"ab" = (/obj/item/reagent_containers/food/snacks/candy/negativeonebar,/obj/decal/cleanable/slime,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"ac" = (/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"ad" = (/obj/ladder{desc = "Is this supposed to be here?"; icon_state = "ladder_wall"; id = "slimy_house"; layer = 2.5; pixel_y = 32},/turf/simulated/floor/black/grime,/area/slimy_honk)
-"ae" = (/obj/table/round/auto,/obj/item/storage/firstaid/toxin,/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"af" = (/obj/table/round/auto,/obj/item/decoration/flower_vase,/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"ag" = (/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ah" = (/obj/machinery/light/small/floor/cool,/turf/simulated/floor/black,/area/slimy_honk)
-"ai" = (/turf/simulated/floor/black,/area/slimy_honk)
-"aj" = (/turf/simulated/floor/black/grime,/area/slimy_honk)
-"ak" = (/obj/machinery/light/small/floor/blueish,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"al" = (/obj/machinery/light/small/floor/blueish,/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"am" = (/obj/machinery/door/airlock/gannets/glass,/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"an" = (/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ao" = (/obj/ladder{id = "slimy_house"; layer = 2},/turf/simulated/floor/black,/area/slimy_honk)
-"ap" = (/obj/machinery/door/airlock/gannets/glass,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"aq" = (/obj/mopbucket,/obj/item/mop,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"ar" = (/obj/item/reagent_containers/glass/bottle/ammonia/janitors,/turf/simulated/floor/black,/area/slimy_honk)
-"as" = (/obj/item/pen/crayon/random,/turf/simulated/floor/black,/area/slimy_honk)
-"at" = (/obj/item/pen/crayon/red,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"au" = (/obj/table/round/auto,/obj/item/paper{icon_state = "paper"; info = "Slimy's House of Fun and Burgers<br>- sign your name here if you had a great time with slimy the clown!<br>GUESTBOOK:<br>"},/obj/item/pen,/turf/simulated/floor/carpet/blue,/area/slimy_honk)
-"av" = (/obj/decal/cleanable/balloon,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"aw" = (/turf/variableTurf/clear,/area)
-"ax" = (/obj/item/clothing/shoes/clown_shoes/purple,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ay" = (/obj/machinery/drainage/big,/turf/simulated/floor/black,/area/slimy_honk)
-"az" = (/obj/table,/obj/random_item_spawner/tableware,/obj/item/storage/box/cutlery,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aA" = (/obj/decal/oven,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aB" = (/obj/table,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/flour,/obj/item/reagent_containers/food/snacks/ingredient/meat,/obj/item/reagent_containers/food/snacks/ingredient/meat,/obj/item/reagent_containers/food/snacks/ingredient/meat,/obj/item/reagent_containers/emergency_injector/charcoal,/obj/item/reagent_containers/emergency_injector/charcoal,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aC" = (/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"aD" = (/obj/decal/cleanable/balloon,/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"aE" = (/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"aF" = (/obj/machinery/light/small/floor/cool,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"aG" = (/obj/item/tank/oxygen,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"aH" = (/obj/item/cigbutt,/obj/submachine/chef_sink{icon_state = "sink"; dir = 4},/turf/simulated/floor/carpet,/area/slimy_honk)
-"aI" = (/obj/item/clothing/mask/cigarette/random,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aJ" = (/turf/simulated/floor/carpet,/area/slimy_honk)
-"aK" = (/obj/item/reagent_containers/food/snacks/candy/peach_ring,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aL" = (/obj/machinery/light/small/floor/warm,/obj/machinery/chem_dispenser/soda,/obj/decal/cleanable/slime,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aM" = (/obj/item/balloon_animal/random,/obj/decal/cleanable/slime,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aN" = (/obj/item/balloon_animal/random,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aO" = (/obj/item/reagent_containers/food/snacks/condiment/syrup,/obj/decal/cleanable/slime,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aP" = (/obj/machinery/door/airlock/gannets/glass/alt,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aQ" = (/obj/item/chair/folded,/obj/decal/cleanable/balloon,/obj/item/reagent_containers/food/snacks/candy/chocolate,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"aR" = (/obj/item/clothing/mask/cigarette/menthol,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aS" = (/obj/item/cigbutt,/obj/item/device/igniter,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet,/area/slimy_honk)
-"aT" = (/obj/item/clothing/shoes/clown_shoes/pink,/obj/item/reagent_containers/food/snacks/candy/peach_ring,/obj/item/clothing/mask/clown_hat/pink,/obj/decal/cleanable/slime,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aU" = (/obj/stool/chair{icon_state = "chair"; dir = 4},/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aV" = (/obj/table/round/auto,/obj/decal/cleanable/balloon,/obj/item/reagent_containers/food/snacks/burger/bigburger,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aW" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aX" = (/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"aY" = (/obj/item/reagent_containers/food/snacks/candy/caramel,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"aZ" = (/obj/item/balloon_animal/random,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ba" = (/obj/item/reagent_containers/food/snacks/candy/chocolate,/obj/machinery/door/airlock/gannets/glass,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bb" = (/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,/obj/item/mousetrap/armed,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bc" = (/obj/table/round/auto,/obj/item/device/pda2/clown,/obj/item/reagent_containers/food/snacks/donkpocket/honk,/obj/item/reagent_containers/food/snacks/donkpocket/honk,/obj/item/reagent_containers/food/snacks/donkpocket/honk,/obj/item/reagent_containers/food/snacks/donkpocket/honk,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bd" = (/obj/table/round/auto,/obj/machinery/microwave,/turf/simulated/floor/carpet,/area/slimy_honk)
-"be" = (/obj/machinery/light/small/floor/warm/very,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bf" = (/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bg" = (/obj/table,/obj/item/paper{icon_state = "paper"; info = "fuck you, slimy.<br>i am so sick of burgers"; layer = 2},/obj/item/reagent_containers/food/snacks/burger/vr,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bh" = (/obj/kitchenspike,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bi" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bj" = (/obj/table/round/auto,/obj/item/storage/firstaid/oxygen,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bk" = (/obj/table/round/auto,/obj/machinery/light/small/floor/warm,/obj/item/instrument/bikehorn,/obj/item/instrument/bikehorn,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bl" = (/obj/table/round/auto,/obj/item/reagent_containers/balloon,/obj/item/reagent_containers/food/snacks/cereal_box,/obj/item/reagent_containers/food/snacks/burger/cheeseburger,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bm" = (/obj/lattice{icon_state = "lattice-dir"; dir = 4},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bn" = (/obj/table/round/auto,/obj/item/sticker/balloon,/obj/lattice{tag = "icon-lattice-dir-b (EAST)"; icon_state = "lattice-dir-b"; dir = 4},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bo" = (/obj/table/round/auto,/obj/item/clothing/mask/clown_hat,/obj/lattice{icon_state = "lattice-dir"; dir = 4},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bp" = (/obj/lattice{icon_state = "lattice-dir"; dir = 4},/obj/decal/cleanable/vomit/spiders,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bq" = (/obj/machinery/light/small/floor/warm/very,/obj/critter/spider/clown,/obj/item/reagent_containers/food/snacks/candy/nougat,/turf/simulated/floor/carpet,/area/slimy_honk)
-"br" = (/obj/decal/cleanable/balloon,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bs" = (/obj/item/clothing/mask/clown_hat/yellow,/obj/decal/cleanable/ketchup,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bt" = (/obj/item/reagent_containers/food/snacks/candy/candy_apple,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/obj/item/reagent_containers/food/snacks/condiment/ketchup,/obj/item/shaker/ketchup,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bu" = (/obj/item/clothing/mask/cigarette/propuffs,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bv" = (/obj/item/cigbutt,/obj/storage/crate{desc = "It reeks of disinfectant and cleaning supplies. Guess they couldn't afford a freezer."; name = "burger storage crate"},/obj/item/reagent_containers/food/snacks/burger/cheeseburger_m,/obj/item/reagent_containers/food/snacks/burger/coconutburger,/obj/item/reagent_containers/food/snacks/burger/fishburger,/obj/item/reagent_containers/food/snacks/burger/heartburger,/obj/item/reagent_containers/food/snacks/burger/luauburger,/obj/item/reagent_containers/food/snacks/burger/butterburger,/obj/item/reagent_containers/food/snacks/burger/roburger,/obj/item/reagent_containers/food/snacks/burger/mysteryburger,/obj/item/reagent_containers/food/snacks/burger/synthburger,/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bw" = (/obj/machinery/vending/monkey,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bx" = (/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"by" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/obj/item/reagent_containers/balloon,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bz" = (/obj/table/round/auto,/obj/item/storage/goodybag,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bA" = (/obj/stool/chair,/obj/item/clothing/under/misc/clown/pink,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bB" = (/obj/decal/cleanable/vomit/spiders,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bC" = (/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bD" = (/obj/stool,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bE" = (/obj/table/round/auto,/obj/machinery/light/small/floor/harsh,/obj/item/card/id/clown{desc = "The name on the ID card is too smudged to read."; name = "smudged identification card"},/obj/item/stamp/clown,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bF" = (/obj/item/shaker/ketchup,/obj/item/shaker/ketchup,/obj/machinery/door/airlock/gannets/glass,/turf/simulated/floor/carpet,/area/slimy_honk)
-"bG" = (/obj/item/chair/folded,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bH" = (/obj/item/clothing/gloves/latex/pink,/turf/simulated/floor/grass{name = "astroturf"},/area/slimy_honk)
-"bI" = (/obj/item/instrument/whistle,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bJ" = (/obj/stool/chair{icon_state = "chair"; dir = 4},/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bK" = (/obj/item/reagent_containers/food/snacks/candy/everyflavor,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bL" = (/obj/vehicle/skateboard,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bM" = (/obj/item/reagent_containers/food/snacks/candy/everyflavor,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bN" = (/obj/decal/cleanable/vomit/spiders,/obj/decal/ballpit,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"bO" = (/obj/decal/ballpit,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"bP" = (/obj/machinery/computer/arcade,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bQ" = (/obj/item/balloon_animal/random,/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"bR" = (/obj/item/reagent_containers/food/snacks/burger/moldy,/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"bS" = (/obj/machinery/door/airlock/gannets/glass,/obj/lattice/barricade,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"bT" = (/obj/item/clothing/suit/monkey,/obj/item/reagent_containers/food/snacks/burger/monkeyburger,/obj/decal/ballpit,/obj/decal/cleanable/slime,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"bU" = (/obj/item/clothing/mask/clown_hat/purple,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bV" = (/obj/lattice{icon_state = "lattice-dir"; dir = 9},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"bW" = (/obj/fitness/speedbag/clown,/obj/item/storage/box/balloonbox,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"bX" = (/obj/machinery/light/small/floor/harsh/very,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"bY" = (/obj/lattice/barricade,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"bZ" = (/obj/machinery/light/small/floor/cool,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ca" = (/obj/machinery/door/airlock/gannets/glass,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cb" = (/obj/item/chair/folded,/obj/machinery/light/small/floor/harsh,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cc" = (/obj/table/round/auto,/obj/item/item_box/balloon,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cd" = (/obj/fitness/speedbag/clown,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"ce" = (/obj/critter/spider/clown,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cf" = (/obj/reagent_dispensers/spiders,/obj/item/mousetrap/armed,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cg" = (/obj/item/mousetrap/armed,/obj/item/mousetrap/armed,/obj/decal/ballpit,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"ch" = (/obj/item/chair/folded,/obj/item/clothing/under/misc/clown/purple,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ci" = (/obj/item/chair/folded,/obj/item/clothing/gloves/latex/purple,/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"cj" = (/obj/item/chair/folded,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ck" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cl" = (/obj/item/chair/folded,/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"cm" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 2},/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cn" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 2},/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"co" = (/obj/machinery/light/small/floor/cool,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cp" = (/obj/decal/ballpit,/obj/decal/cleanable/slime,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"cq" = (/obj/decal/cleanable/vomit/spiders,/obj/decal/ballpit,/obj/decal/cleanable/slime,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"cr" = (/obj/structure/girder/reinforced,/turf/simulated/floor/black/grime,/area/slimy_honk)
-"cs" = (/obj/item/clothing/shoes/clown_shoes/purple,/obj/critter/spider/clown,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"ct" = (/obj/lattice{tag = "icon-lattice-dir-b (WEST)"; icon_state = "lattice-dir-b"; dir = 8},/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"cu" = (/obj/lattice{icon_state = "lattice-dir"; dir = 6},/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cv" = (/obj/critter/spider/clownqueen,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cw" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 1},/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/purple,/area/slimy_honk)
-"cx" = (/obj/decal/cleanable/balloon,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cy" = (/obj/reagent_dispensers/spiders,/obj/decal/cleanable/vomit/spiders,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cz" = (/obj/machinery/light/small/floor/harsh/very,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cA" = (/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cB" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 5},/turf/simulated/floor/carpet/green,/area/slimy_honk)
-"cC" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 1},/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cD" = (/obj/item/material_piece/cloth/spidersilk,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cE" = (/obj/item/material_piece/cloth/spidersilk,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cF" = (/obj/table/round/auto,/obj/item/material_piece/cloth/spidersilk,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cG" = (/obj/decal/cleanable/slime,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cH" = (/obj/table/round/auto,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cI" = (/obj/reagent_dispensers/spiders,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cJ" = (/obj/critter/spider/clown/cluwne,/obj/item/material_piece/cloth/spidersilk,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cK" = (/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cL" = (/obj/reagent_dispensers/spiders,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cM" = (/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cN" = (/obj/fitness/speedbag/clown,/obj/item/storage/fanny/funny,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cO" = (/obj/critter/spider/clown,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade,/area/slimy_honk)
-"cP" = (/obj/item/clothing/under/misc/clown/blue,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cQ" = (/obj/table/round/auto,/obj/item/gun/bling_blaster,/obj/item/paper{icon_state = "paper"; info = "BALL PIT RULES>br>- no vomiting.<br>seriously, do NOT let anyone who's eaten the food come in here"; layer = 2},/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cR" = (/obj/item/pen/crayon/random,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cS" = (/obj/reagent_dispensers/spiders,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cT" = (/obj/decal/cleanable/vomit/spiders,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cU" = (/obj/lattice,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cV" = (/obj/machinery/light/small/floor/harsh/very,/obj/critter/bear,/obj/fitness/speedbag/clown,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cW" = (/obj/lattice{icon_state = "lattice-dir"; dir = 5},/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cX" = (/obj/reagent_dispensers/spiders,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"cY" = (/obj/item/clothing/mask/clown_hat/blue,/obj/item/clothing/shoes/clown_shoes/blue,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/half,/area/slimy_honk)
-"cZ" = (/obj/item/mousetrap/armed,/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"da" = (/obj/decal/cleanable/slime,/turf/simulated/floor/carpet/arcade/blank,/area/slimy_honk)
-"db" = (/obj/decal/skeleton/decomposed_corpse,/obj/decal/ballpit,/obj/decal/cleanable/slime,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"dc" = (/obj/item/reagent_containers/food/snacks/burger/monkeyburger,/obj/decal/ballpit,/obj/decal/cleanable/slime,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
-"dd" = (/obj/item/paper{icon_state = "paper"; info = "BALL PIT RULES<br>- no vomiting.<br>seriously, do NOT let anyone who's eaten the food come in here"; layer = 2},/obj/decal/ballpit,/turf/unsimulated/floor/ballpit,/area/slimy_honk)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/unsimulated/wall/auto/reinforced/gannets,
+/area/prefab/slimy_honk)
+"ab" = (
+/obj/item/reagent_containers/food/snacks/candy/negativeonebar,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"ac" = (
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"ad" = (
+/obj/ladder{
+	desc = "Is this supposed to be here?";
+	icon_state = "ladder_wall";
+	id = "slimy_house";
+	layer = 2.5;
+	pixel_y = 32
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"ae" = (
+/obj/table/round/auto,
+/obj/item/storage/firstaid/toxin,
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"af" = (
+/obj/table/round/auto,
+/obj/item/decoration/flower_vase,
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"ag" = (
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ah" = (
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"ai" = (
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"aj" = (
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"ak" = (
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"al" = (
+/obj/machinery/light/small/floor/blueish,
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"am" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"an" = (
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ao" = (
+/obj/ladder{
+	id = "slimy_house";
+	layer = 2
+	},
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"ap" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"aq" = (
+/obj/mopbucket,
+/obj/item/mop,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"ar" = (
+/obj/item/reagent_containers/glass/bottle/ammonia/janitors,
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"as" = (
+/obj/item/pen/crayon/random,
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"at" = (
+/obj/item/pen/crayon/red,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"au" = (
+/obj/table/round/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Slimy's House of Fun and Burgers<br>- sign your name here if you had a great time with slimy the clown!<br>GUESTBOOK:<br>"
+	},
+/obj/item/pen,
+/turf/simulated/floor/carpet/blue,
+/area/prefab/slimy_honk)
+"av" = (
+/obj/decal/cleanable/balloon,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"aw" = (
+/turf/variableTurf/clear,
+/area/space)
+"ax" = (
+/obj/item/clothing/shoes/clown_shoes/purple,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ay" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/black,
+/area/prefab/slimy_honk)
+"az" = (
+/obj/table,
+/obj/random_item_spawner/tableware,
+/obj/item/storage/box/cutlery,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aA" = (
+/obj/decal/fakeobjects/oven,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aB" = (
+/obj/table,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/flour,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/food/snacks/ingredient/meat,
+/obj/item/reagent_containers/emergency_injector/charcoal,
+/obj/item/reagent_containers/emergency_injector/charcoal,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aC" = (
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"aD" = (
+/obj/decal/cleanable/balloon,
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"aE" = (
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"aF" = (
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"aG" = (
+/obj/item/tank/oxygen,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"aH" = (
+/obj/item/cigbutt,
+/obj/submachine/chef_sink{
+	icon_state = "sink";
+	dir = 4
+	},
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aI" = (
+/obj/item/clothing/mask/cigarette/random,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aJ" = (
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aK" = (
+/obj/item/reagent_containers/food/snacks/candy/peach_ring,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aL" = (
+/obj/machinery/light/small/floor/warm,
+/obj/machinery/chem_dispenser/soda,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aM" = (
+/obj/item/balloon_animal/random,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aN" = (
+/obj/item/balloon_animal/random,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aO" = (
+/obj/item/reagent_containers/food/snacks/condiment/syrup,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aP" = (
+/obj/machinery/door/airlock/gannets/glass/alt,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aQ" = (
+/obj/item/chair/folded,
+/obj/decal/cleanable/balloon,
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"aR" = (
+/obj/item/clothing/mask/cigarette/menthol,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aS" = (
+/obj/item/cigbutt,
+/obj/item/device/igniter,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"aT" = (
+/obj/item/clothing/shoes/clown_shoes/pink,
+/obj/item/reagent_containers/food/snacks/candy/peach_ring,
+/obj/item/clothing/mask/clown_hat/pink,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aU" = (
+/obj/stool/chair{
+	icon_state = "chair";
+	dir = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aV" = (
+/obj/table/round/auto,
+/obj/decal/cleanable/balloon,
+/obj/item/reagent_containers/food/snacks/burger/bigburger,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aW" = (
+/obj/stool/chair{
+	icon_state = "chair";
+	dir = 8
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aX" = (
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"aY" = (
+/obj/item/reagent_containers/food/snacks/candy/caramel,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"aZ" = (
+/obj/item/balloon_animal/random,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ba" = (
+/obj/item/reagent_containers/food/snacks/candy/chocolate,
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bb" = (
+/obj/item/reagent_containers/food/snacks/candy/wrapped_pbcup,
+/obj/item/mousetrap/armed,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bc" = (
+/obj/table/round/auto,
+/obj/item/device/pda2/clown,
+/obj/item/reagent_containers/food/snacks/donkpocket/honk,
+/obj/item/reagent_containers/food/snacks/donkpocket/honk,
+/obj/item/reagent_containers/food/snacks/donkpocket/honk,
+/obj/item/reagent_containers/food/snacks/donkpocket/honk,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bd" = (
+/obj/table/round/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"be" = (
+/obj/machinery/light/small/floor/warm/very,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bf" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bg" = (
+/obj/table,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "fuck you, slimy.<br>i am so sick of burgers";
+	layer = 2
+	},
+/obj/item/reagent_containers/food/snacks/burger/vr,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bh" = (
+/obj/kitchenspike,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bi" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bj" = (
+/obj/table/round/auto,
+/obj/item/storage/firstaid/oxygen,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bk" = (
+/obj/table/round/auto,
+/obj/machinery/light/small/floor/warm,
+/obj/item/instrument/bikehorn,
+/obj/item/instrument/bikehorn,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bl" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/balloon,
+/obj/item/reagent_containers/food/snacks/cereal_box,
+/obj/item/reagent_containers/food/snacks/burger/cheeseburger,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bm" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bn" = (
+/obj/table/round/auto,
+/obj/item/sticker/balloon,
+/obj/lattice{
+	tag = "icon-lattice-dir-b (EAST)";
+	icon_state = "lattice-dir-b";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bo" = (
+/obj/table/round/auto,
+/obj/item/clothing/mask/clown_hat,
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bp" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 4
+	},
+/obj/decal/cleanable/vomit/spiders,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bq" = (
+/obj/machinery/light/small/floor/warm/very,
+/mob/living/critter/spider/clown,
+/obj/item/reagent_containers/food/snacks/candy/nougat,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"br" = (
+/obj/decal/cleanable/balloon,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bs" = (
+/obj/item/clothing/mask/clown_hat/yellow,
+/obj/decal/cleanable/ketchup,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bt" = (
+/obj/item/reagent_containers/food/snacks/candy/candy_apple,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/item/reagent_containers/food/snacks/condiment/ketchup,
+/obj/item/shaker/ketchup,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bu" = (
+/obj/item/clothing/mask/cigarette/propuffs,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bv" = (
+/obj/item/cigbutt,
+/obj/storage/crate{
+	desc = "It reeks of disinfectant and cleaning supplies. Guess they couldn't afford a freezer.";
+	name = "burger storage crate"
+	},
+/obj/item/reagent_containers/food/snacks/burger/cheeseburger_m,
+/obj/item/reagent_containers/food/snacks/burger/coconutburger,
+/obj/item/reagent_containers/food/snacks/burger/fishburger,
+/obj/item/reagent_containers/food/snacks/burger/heartburger,
+/obj/item/reagent_containers/food/snacks/burger/luauburger,
+/obj/item/reagent_containers/food/snacks/burger/butterburger,
+/obj/item/reagent_containers/food/snacks/burger/roburger,
+/obj/item/reagent_containers/food/snacks/burger/mysteryburger,
+/obj/item/reagent_containers/food/snacks/burger/synthburger,
+/obj/item/reagent_containers/food/snacks/burger/sloppyjoe,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bw" = (
+/obj/machinery/vending/monkey,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bx" = (
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"by" = (
+/obj/stool/chair{
+	icon_state = "chair";
+	dir = 8
+	},
+/obj/item/reagent_containers/balloon,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bz" = (
+/obj/table/round/auto,
+/obj/item/storage/goodybag,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bA" = (
+/obj/stool/chair,
+/obj/item/gun/reagent/syringe/love,
+/obj/item/clothing/under/misc/clown/pink,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bB" = (
+/obj/decal/cleanable/vomit/spiders,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bC" = (
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bD" = (
+/obj/stool,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bE" = (
+/obj/table/round/auto,
+/obj/machinery/light/small/floor/harsh,
+/obj/item/card/id/clown{
+	desc = "The name on the ID card is too smudged to read.";
+	name = "smudged identification card"
+	},
+/obj/item/stamp/clown,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bF" = (
+/obj/item/shaker/ketchup,
+/obj/item/shaker/ketchup,
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/carpet,
+/area/prefab/slimy_honk)
+"bG" = (
+/obj/item/chair/folded,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bH" = (
+/obj/item/clothing/gloves/latex/pink,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/slimy_honk)
+"bI" = (
+/obj/item/instrument/whistle,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bJ" = (
+/obj/stool/chair{
+	icon_state = "chair";
+	dir = 4
+	},
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bK" = (
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bL" = (
+/obj/vehicle/skateboard,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bM" = (
+/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bN" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/decal/ballpit,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"bO" = (
+/obj/decal/ballpit,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"bP" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bQ" = (
+/obj/item/balloon_animal/random,
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"bR" = (
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"bS" = (
+/obj/machinery/door/airlock/gannets/glass,
+/obj/lattice/barricade,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"bT" = (
+/obj/item/clothing/suit/monkey,
+/obj/item/reagent_containers/food/snacks/burger/monkeyburger,
+/obj/decal/ballpit,
+/obj/decal/cleanable/slime,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"bU" = (
+/obj/item/clothing/mask/clown_hat/purple,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bV" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 9
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"bW" = (
+/obj/fitness/speedbag/clown,
+/obj/item/storage/box/balloonbox,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"bX" = (
+/obj/machinery/light/small/floor/harsh/very,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"bY" = (
+/obj/lattice/barricade,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"bZ" = (
+/obj/machinery/light/small/floor/cool,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ca" = (
+/obj/machinery/door/airlock/gannets/glass,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cb" = (
+/obj/item/chair/folded,
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cc" = (
+/obj/table/round/auto,
+/obj/item/item_box/balloon,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cd" = (
+/obj/fitness/speedbag/clown,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"ce" = (
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cf" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/obj/item/mousetrap/armed,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cg" = (
+/obj/item/mousetrap/armed,
+/obj/item/mousetrap/armed,
+/obj/decal/ballpit,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"ch" = (
+/obj/item/chair/folded,
+/obj/item/clothing/under/misc/clown/purple,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ci" = (
+/obj/item/chair/folded,
+/obj/item/clothing/gloves/latex/purple,
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"cj" = (
+/obj/item/chair/folded,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ck" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 6
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cl" = (
+/obj/item/chair/folded,
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 10
+	},
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"cm" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 2
+	},
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cn" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 2
+	},
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"co" = (
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cp" = (
+/obj/decal/ballpit,
+/obj/decal/cleanable/slime,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"cq" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/decal/ballpit,
+/obj/decal/cleanable/slime,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"cr" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/black/grime,
+/area/prefab/slimy_honk)
+"cs" = (
+/obj/item/clothing/shoes/clown_shoes/purple,
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"ct" = (
+/obj/lattice{
+	tag = "icon-lattice-dir-b (WEST)";
+	icon_state = "lattice-dir-b";
+	dir = 8
+	},
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"cu" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 6
+	},
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cv" = (
+/mob/living/critter/spider/clownqueen,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cw" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 1
+	},
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/purple,
+/area/prefab/slimy_honk)
+"cx" = (
+/obj/decal/cleanable/balloon,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cy" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/obj/decal/cleanable/vomit/spiders,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cz" = (
+/obj/machinery/light/small/floor/harsh/very,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cA" = (
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cB" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 5
+	},
+/turf/simulated/floor/carpet/green,
+/area/prefab/slimy_honk)
+"cC" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b";
+	dir = 1
+	},
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cD" = (
+/obj/item/material_piece/cloth/spidersilk,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cE" = (
+/obj/item/material_piece/cloth/spidersilk,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cF" = (
+/obj/table/round/auto,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cG" = (
+/obj/decal/cleanable/slime,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cH" = (
+/obj/table/round/auto,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cI" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cJ" = (
+/mob/living/critter/spider/clown/cluwne,
+/obj/item/material_piece/cloth/spidersilk,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cK" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cL" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cM" = (
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cN" = (
+/obj/fitness/speedbag/clown,
+/obj/item/storage/fanny/funny,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cO" = (
+/mob/living/critter/spider/clown,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade,
+/area/prefab/slimy_honk)
+"cP" = (
+/obj/item/clothing/under/misc/clown/blue,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cQ" = (
+/obj/table/round/auto,
+/obj/item/gun/bling_blaster,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "BALL PIT RULES>br>- no vomiting.<br>seriously, do NOT let anyone who's eaten the food come in here";
+	layer = 2
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cR" = (
+/obj/item/pen/crayon/random,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cS" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cT" = (
+/obj/decal/cleanable/vomit/spiders,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cU" = (
+/obj/lattice,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cV" = (
+/obj/machinery/light/small/floor/harsh/very,
+/obj/critter/bear,
+/obj/fitness/speedbag/clown,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cW" = (
+/obj/lattice{
+	icon_state = "lattice-dir";
+	dir = 5
+	},
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cX" = (
+/obj/reagent_dispensers/cleanable/spiders,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"cY" = (
+/obj/item/clothing/mask/clown_hat/blue,
+/obj/item/clothing/shoes/clown_shoes/blue,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/slimy_honk)
+"cZ" = (
+/obj/item/mousetrap/armed,
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"da" = (
+/obj/decal/cleanable/slime,
+/turf/simulated/floor/carpet/arcade/blank,
+/area/prefab/slimy_honk)
+"db" = (
+/obj/decal/fakeobjects/skeleton/decomposed_corpse,
+/obj/decal/ballpit,
+/obj/decal/cleanable/slime,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"dc" = (
+/obj/item/reagent_containers/food/snacks/burger/monkeyburger,
+/obj/decal/ballpit,
+/obj/decal/cleanable/slime,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
+"dd" = (
+/obj/item/paper{
+	icon_state = "paper";
+	info = "BALL PIT RULES<br>- no vomiting.<br>seriously, do NOT let anyone who's eaten the food come in here";
+	layer = 2
+	},
+/obj/decal/ballpit,
+/turf/unsimulated/floor/ballpit,
+/area/prefab/slimy_honk)
 
 (1,1,1) = {"
-awawawawawawawawawawawawawawawawawawawawawawawaw
-awawawawawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawaw
-awawawawawaaacadaeafafaabPbPbPbPaaahaiaiajaaawaw
-awawawawawaaajakajalacamaganagagaaaiaoaiajapawaw
-awaaaaaaaaaaaqarasatauaaavagagaxaaajaiayaiaaawaw
-awaaazaAaBaaaaaaaaaaaaaaaCaDaEaCaaaFaGajahaaawaw
-awaaaHaIaJaaaKabaLaMaOaPagaQagagaaaaaaaaaaaaawaw
-awaaaRaJaSaPaTaUaVaWaXaabfanaYaZbabbbcbdbeaaawaw
-awaabDbgbhaabibjbkblbiaabmbnbobpaabqbrbsbtaaawaw
-awaabubvbwaabxbybzbAbBaabCbJbEagaaaaaaaabFaaawaw
-awaaaaaaaaaaaNaXbibGbHaabIagbLbMbfbfbZcwbfaaawaw
-awaacqbOddaaaPaaaaaaaPaabQaEaCbRaaaaaaaabSaaawaw
-awaacpbTcpaaagaCanaZaZaCbKbUagbVaabWbXbYcxaaawaw
-awaacpcqcpcacbaCagagagaEccavanagaacdcecfbYaaawaw
-awaacqcgcpaachcicjanckclagcmagbKaaaaaacncoaaawaw
-awaadbcpdcaaaacrcraacraaaaaacsagagctaacuaaaaawaw
-awaabOcpbNaacvcyczcvcEcFcAaaaaaaaacBaacCcdaaawaw
-awaaaaaaaaaacDcGcJcKcOcHcIcUcWcXaaaaaacMcNaaawaw
-awawawawawaacYcPcQcRcvcScAaacTcocZdadacLcVaaawaw
-awawawawawaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaawaw
-awawawawawawawawawawawawawawawawawawawawawawawaw
-awawawawawawawawawawawawawawawawawawawawawawawaw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+"}
+(2,1,1) = {"
+aw
+aw
+aw
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+aw
+aw
+aw
+"}
+(3,1,1) = {"
+aw
+aw
+aw
+aw
+aa
+az
+aH
+aR
+bD
+bu
+aa
+cq
+cp
+cp
+cq
+db
+bO
+aa
+aw
+aw
+aw
+aw
+"}
+(4,1,1) = {"
+aw
+aw
+aw
+aw
+aa
+aA
+aI
+aJ
+bg
+bv
+aa
+bO
+bT
+cq
+cg
+cp
+cp
+aa
+aw
+aw
+aw
+aw
+"}
+(5,1,1) = {"
+aw
+aw
+aw
+aw
+aa
+aB
+aJ
+aS
+bh
+bw
+aa
+dd
+cp
+cp
+cp
+dc
+bN
+aa
+aw
+aw
+aw
+aw
+"}
+(6,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aP
+aa
+aa
+aa
+aa
+aa
+ca
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+aw
+"}
+(7,1,1) = {"
+aw
+aa
+ac
+aj
+aq
+aa
+aK
+aT
+bi
+bx
+aN
+aP
+ag
+cb
+ch
+aa
+cv
+cD
+cY
+aa
+aw
+aw
+"}
+(8,1,1) = {"
+aw
+aa
+ad
+ak
+ar
+aa
+ab
+aU
+bj
+by
+aX
+aa
+aC
+aC
+ci
+cr
+cy
+cG
+cP
+aa
+aw
+aw
+"}
+(9,1,1) = {"
+aw
+aa
+ae
+aj
+as
+aa
+aL
+aV
+bk
+bz
+bi
+aa
+an
+ag
+cj
+cr
+cz
+cJ
+cQ
+aa
+aw
+aw
+"}
+(10,1,1) = {"
+aw
+aa
+af
+al
+at
+aa
+aM
+aW
+bl
+bA
+bG
+aa
+aZ
+ag
+an
+aa
+cv
+cK
+cR
+aa
+aw
+aw
+"}
+(11,1,1) = {"
+aw
+aa
+af
+ac
+au
+aa
+aO
+aX
+bi
+bB
+bH
+aP
+aZ
+ag
+ck
+cr
+cE
+cO
+cv
+aa
+aw
+aw
+"}
+(12,1,1) = {"
+aw
+aa
+aa
+am
+aa
+aa
+aP
+aa
+aa
+aa
+aa
+aa
+aC
+aE
+cl
+aa
+cF
+cH
+cS
+aa
+aw
+aw
+"}
+(13,1,1) = {"
+aw
+aa
+bP
+ag
+av
+aC
+ag
+bf
+bm
+bC
+bI
+bQ
+bK
+cc
+ag
+aa
+cA
+cI
+cA
+aa
+aw
+aw
+"}
+(14,1,1) = {"
+aw
+aa
+bP
+an
+ag
+aD
+aQ
+an
+bn
+bJ
+ag
+aE
+bU
+av
+cm
+aa
+aa
+cU
+aa
+aa
+aw
+aw
+"}
+(15,1,1) = {"
+aw
+aa
+bP
+ag
+ag
+aE
+ag
+aY
+bo
+bE
+bL
+aC
+ag
+an
+ag
+cs
+aa
+cW
+cT
+aa
+aw
+aw
+"}
+(16,1,1) = {"
+aw
+aa
+bP
+ag
+ax
+aC
+ag
+aZ
+bp
+ag
+bM
+bR
+bV
+ag
+bK
+ag
+aa
+cX
+co
+aa
+aw
+aw
+"}
+(17,1,1) = {"
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+ba
+aa
+aa
+bf
+aa
+aa
+aa
+aa
+ag
+aa
+aa
+cZ
+aa
+aw
+aw
+"}
+(18,1,1) = {"
+aw
+aa
+ah
+ai
+aj
+aF
+aa
+bb
+bq
+aa
+bf
+aa
+bW
+cd
+aa
+ct
+cB
+aa
+da
+aa
+aw
+aw
+"}
+(19,1,1) = {"
+aw
+aa
+ai
+ao
+ai
+aG
+aa
+bc
+br
+aa
+bZ
+aa
+bX
+ce
+aa
+aa
+aa
+aa
+da
+aa
+aw
+aw
+"}
+(20,1,1) = {"
+aw
+aa
+ai
+ai
+ay
+aj
+aa
+bd
+bs
+aa
+cw
+aa
+bY
+cf
+cn
+cu
+cC
+cM
+cL
+aa
+aw
+aw
+"}
+(21,1,1) = {"
+aw
+aa
+aj
+aj
+ai
+ah
+aa
+be
+bt
+bF
+bf
+bS
+cx
+bY
+co
+aa
+cd
+cN
+cV
+aa
+aw
+aw
+"}
+(22,1,1) = {"
+aw
+aa
+aa
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+aw
+"}
+(23,1,1) = {"
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+"}
+(24,1,1) = {"
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
 "}

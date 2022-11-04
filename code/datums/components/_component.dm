@@ -1,5 +1,3 @@
-#define QDELETED(thing) (!thing || thing.disposed)
-
 /datum
 	/**
 		* Components attached to this datum
@@ -14,13 +12,16 @@
 		*/
 	var/list/comp_lookup
 	/// Lazy associated list in the structure of `signals:proctype` that are run when the datum receives that signal
-	var/list/list/datum/callback/signal_procs
+	var/tmp/list/list/datum/callback/signal_procs
 	/**
 		* Is this datum capable of sending signals?
 		*
 		* Set to true when a signal has been registered
 		*/
 	var/signal_enabled = FALSE
+
+TYPEINFO(/datum/component)
+	var/initialization_args = null // let the user select any initialization arguments
 
 /**
   * # Component
@@ -62,6 +63,10 @@
 	  */
 	var/can_transfer = FALSE
 
+/// Dummy datum used for holding onto global signals, initialized in preMapLoad
+/datum/signal_holder
+var/datum/signal_holder/global_signal_holder
+
 /**
   * Create a new component.
   *
@@ -71,6 +76,7 @@
   * * datum/P the parent datum this component reacts to signals from
   */
 /datum/component/New(list/raw_args)
+	..()
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
@@ -97,7 +103,8 @@
 /datum/component/disposing()
 	if(parent)
 		_RemoveFromParent()
-	SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
+	if(parent)
+		SEND_SIGNAL(parent, COMSIG_COMPONENT_REMOVING, src)
 	parent = null
 	return ..()
 
@@ -190,11 +197,13 @@
   *
   * Arguments:
   * * datum/target The target to listen for signals from
-  * * sig_type_or_types Either a string signal name, or a list of signal names (strings)
+  * * sig_type_or_types Either a string signal name, or a list of signal names (strings).
+	* 		Complex signals (of the form list(component_type, string) can also be used.)
   * * proctype The proc to call back when the signal is emitted
   * * override If a previous registration exists you must explicitly set this
+	* * other arguments get passed to complexsignal/register in the case of a complex signal
   */
-/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE)
+/datum/proc/RegisterSignal(datum/target, sig_type_or_types, proctype, override = FALSE, ...)
 	if(QDELETED(src) || QDELETED(target))
 		return
 
@@ -207,8 +216,17 @@
 	if(!lookup)
 		target.comp_lookup = lookup = list()
 
-	var/list/sig_types = islist(sig_type_or_types) ? sig_type_or_types : list(sig_type_or_types)
+	var/list/sig_types = (islist(sig_type_or_types) && !IS_COMPLEX_SIGNAL(sig_type_or_types)) ? sig_type_or_types : list(sig_type_or_types)
 	for(var/sig_type in sig_types)
+		if(IS_COMPLEX_SIGNAL(sig_type))
+			var/complexsignal_component_type = sig_type[1]
+			var/datum/component/complexsignal/comp = target.LoadComponent(complexsignal_component_type)
+			var/list/register_args = args.Copy()
+			register_args[2] = sig_type[2] // replacing sig_type_or_types
+			register_args[1] = src // comp.register's first argument is the LISTENER not the target
+			comp.register(arglist(register_args))
+			continue
+
 		if(!override && procs[target][sig_type])
 			stack_trace("[sig_type] overridden. Use override = TRUE to suppress this warning")
 
@@ -238,13 +256,24 @@
   * * sig_typeor_types Signal string key or list of signal keys to stop listening to specifically
   */
 /datum/proc/UnregisterSignal(datum/target, sig_type_or_types)
+	if (!target)
+		return
 	var/list/lookup = target.comp_lookup
 	if(!signal_procs || !signal_procs[target] || !lookup)
 		return
-	if(!islist(sig_type_or_types))
+	if(!islist(sig_type_or_types) || IS_COMPLEX_SIGNAL(sig_type_or_types))
 		sig_type_or_types = list(sig_type_or_types)
 	for(var/sig in sig_type_or_types)
+		if(IS_COMPLEX_SIGNAL(sig))
+			var/complexsignal_component_type = sig[1]
+			var/datum/component/complexsignal/comp = target.GetComponent(complexsignal_component_type)
+			if(isnull(comp))
+				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
+			comp.unregister(src, sig[2])
+			continue
 		if(!signal_procs[target][sig])
+			if(!istext(sig))
+				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
 		switch(length(lookup[sig]))
 			if(2)
@@ -257,6 +286,8 @@
 						target.comp_lookup = null
 						break
 			if(0)
+				if(lookup[sig] != src)
+					continue
 				lookup -= sig
 				if(!length(lookup))
 					target.comp_lookup = null
@@ -332,18 +363,17 @@
 /datum/proc/_SendSignal(sigtype, list/arguments)
 	var/target = comp_lookup[sigtype]
 	if(!length(target))
-		var/datum/C = target
-		if(!C.signal_enabled)
-			return 0
-		var/proctype = C.signal_procs[src][sigtype]
-		return 0 | CallAsync(C, proctype, arguments)
+		var/datum/listening_datum = target
+		return 0 | call(listening_datum, listening_datum.signal_procs[src][sigtype])(arglist(arguments))
 	. = 0
-	for(var/I in target)
-		var/datum/C = I
-		if(!C.signal_enabled)
-			continue
-		var/proctype = C.signal_procs[src][sigtype]
-		. |= CallAsync(C, proctype, arguments)
+	// This exists so that even if one of the signal receivers unregisters the signal,
+	// all the objects that are receiving the signal get the signal this final time.
+	// AKA: No you can't cancel the signal reception of another object by doing an unregister in the same signal.
+	var/list/queued_calls = list()
+	for(var/datum/listening_datum as anything in target)
+		queued_calls[listening_datum] = listening_datum.signal_procs[src][sigtype]
+	for(var/datum/listening_datum as anything in queued_calls)
+		. |= call(listening_datum, queued_calls[listening_datum])(arglist(arguments))
 
 // The type arg is casted so initial works, you shouldn't be passing a real instance into this
 /**
@@ -355,7 +385,8 @@
   * * datum/component/c_type The typepath of the component you want to get a reference to
   */
 /datum/proc/GetComponent(datum/component/c_type)
-	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+	RETURN_TYPE(c_type)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
@@ -374,7 +405,8 @@
   * * datum/component/c_type The typepath of the component you want to get a reference to
   */
 /datum/proc/GetExactComponent(datum/component/c_type)
-	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED)
+	RETURN_TYPE(c_type)
+	if(initial(c_type.dupe_mode) == COMPONENT_DUPE_ALLOWED || initial(c_type.dupe_mode) == COMPONENT_DUPE_SELECTIVE)
 		stack_trace("GetComponent was called to get a component of which multiple copies could be on an object. This can easily break and should be changed. Type: \[[c_type]\]")
 	var/list/dc = datum_components
 	if(!dc)
@@ -394,12 +426,10 @@
   * * c_type The component type path
   */
 /datum/proc/GetComponents(c_type)
-	var/list/dc = datum_components
-	if(!dc)
-		return null
-	. = dc[c_type]
-	if(!length(.))
-		return list(.)
+	var/list/components = datum_components?[c_type]
+	if(!components)
+		return list()
+	return islist(components) ? components : list(components)
 
 /**
   * Creates an instance of `new_type` in the datum and attaches to it as parent
@@ -415,6 +445,10 @@
 /datum/proc/_AddComponent(list/raw_args)
 	var/new_type = raw_args[1]
 	var/datum/component/nt = new_type
+
+	if(src.disposed)
+		CRASH("Attempted to add a new component of type \[[nt]\] to a qdeleting parent of type \[[type]\]!")
+
 	var/dm = initial(nt.dupe_mode)
 	var/dt = initial(nt.dupe_type)
 
@@ -430,7 +464,7 @@
 
 	raw_args[1] = src
 
-	if(dm != COMPONENT_DUPE_ALLOWED)
+	if(dm != COMPONENT_DUPE_ALLOWED && dm != COMPONENT_DUPE_SELECTIVE)
 		if(!dt)
 			old_comp = GetExactComponent(nt)
 		else
@@ -458,21 +492,20 @@
 						old_comp.InheritComponent(arglist(arguments))
 					else
 						old_comp.InheritComponent(new_comp, TRUE)
-				if(COMPONENT_DUPE_SELECTIVE)
-					var/list/arguments = raw_args.Copy()
-					arguments[1] = new_comp
-					var/make_new_component = TRUE
-					for(var/i in GetComponents(new_type))
-						var/datum/component/C = i
-						if(C.CheckDupeComponent(arglist(arguments)))
-							make_new_component = FALSE
-							qdel(new_comp)
-							new_comp = null
-							break
-					if(!new_comp && make_new_component)
-						new_comp = new nt(raw_args)
 		else if(!new_comp)
 			new_comp = new nt(raw_args) // There's a valid dupe mode but there's no old component, act like normal
+	else if(dm == COMPONENT_DUPE_SELECTIVE)
+		var/list/arguments = raw_args.Copy()
+		arguments[1] = new_comp
+		var/make_new_component = TRUE
+		for(var/datum/component/existing_component as anything in GetComponents(new_type))
+			if(existing_component.CheckDupeComponent(arglist(arguments)))
+				make_new_component = FALSE
+				qdel(new_comp)
+				new_comp = null
+				break
+		if(!new_comp && make_new_component)
+			new_comp = new nt(raw_args)
 	else if(!new_comp)
 		new_comp = new nt(raw_args) // Dupes are allowed, act like normal
 
@@ -490,10 +523,10 @@
   * * component_type The typepath of the component to create or return
   * * ... additional arguments to be passed when creating the component if it does not exist
   */
-/datum/proc/LoadComponent(component_type, ...)
-	. = GetComponent(component_type)
+/datum/proc/_LoadComponent(list/arguments)
+	. = GetComponent(arguments[1])
 	if(!.)
-		return _AddComponent(args)
+		return _AddComponent(arguments)
 
 /**
   * Removes the component from parent, ends up with a null parent
@@ -553,29 +586,8 @@
 		if(C.can_transfer)
 			target.TakeComponent(comps)
 
-/proc/CallAsync(datum/object, delegate, list/callingArguments) // Adapted from /datum/callback/proc/InvokeAsync, which is PD, unlike this proc on tg
-	set waitfor = 0
-	if (isnull(object))
-		CRASH("Cannot call null. [delegate]")
-	return call(object, delegate)(arglist(callingArguments))
-
-/proc/type2parent(child)
-	var/string_type = "[child]"
-	var/last_slash = findlasttext(string_type, "/")
-	if(last_slash == 1)
-		switch(child)
-			if(/datum)
-				return null
-			if(/obj || /mob)
-				return /atom/movable
-			if(/area || /turf)
-				return /atom
-			else
-				return /datum
-	return text2path(copytext(string_type, 1, last_slash))
-
-/proc/stack_trace(var/thing_to_crash)
-	CRASH(thing_to_crash)
-
-/datum/proc/AdminAddComponent(...)
-	_AddComponent(args)
+/**
+ * Return the object that is the host of any UI's that this component has
+ */
+/datum/component/ui_host()
+	return parent

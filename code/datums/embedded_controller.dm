@@ -5,8 +5,7 @@ datum/computer/file/embedded_program
 
 	proc
 		post_signal(datum/signal/signal, comm_line)
-			if(master)
-				master.post_signal(signal, comm_line)
+			master?.post_signal(signal, comm_line)
 			//else
 			//	qdel(signal)
 
@@ -404,7 +403,7 @@ obj/machinery/embedded_controller
 
 	attack_hand(mob/user)
 		user.Browse(return_text(), "window=computer")
-		user.machine = src
+		src.add_dialog(user)
 		onclose(user, "computer")
 
 	disposing()
@@ -416,7 +415,6 @@ obj/machinery/embedded_controller
 
 		..()
 
-	proc/update_icon()
 	proc/return_text()
 
 	proc/post_signal(datum/signal/signal, comm_line)
@@ -432,42 +430,26 @@ obj/machinery/embedded_controller
 		if(..())
 			return 0
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
-		if(program)
-			program.process()
+		program?.process()
 
-		update_icon()
+		UpdateIcon()
 		src.updateDialog()
 		..()
 
 	radio
 		var/frequency
-		var/datum/radio_frequency/radio_connection
 
-		disposing()
-			radio_controller.remove_object(src,"[frequency]")
+		New()
 			..()
-
-		initialize()
-			set_frequency(frequency)
+			MAKE_SENDER_RADIO_PACKET_COMPONENT(null, frequency)
 
 		post_signal(datum/signal/signal)
-			signal.transmission_method = TRANSMISSION_RADIO
-			if(radio_connection)
-				return radio_connection.post_signal(src, signal)
-			//else
-				//qdel(signal)
-
-		proc
-			set_frequency(new_frequency)
-				radio_controller.remove_object(src, "[frequency]")
-				frequency = new_frequency
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 
 obj/machinery/embedded_controller/radio/access_controller
@@ -477,7 +459,7 @@ obj/machinery/embedded_controller/radio/access_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -543,7 +525,7 @@ obj/machinery/embedded_controller/radio/airlock_controller
 	name = "Airlock Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -625,7 +607,7 @@ obj/machinery/embedded_controller/radio/department_controller
 	name = "Access Console"
 	density = 0
 
-	frequency = 1449
+	frequency = FREQ_AIRLOCK_CONTROL
 
 	// Setup parameters only
 	var/id_tag
@@ -653,13 +635,12 @@ obj/machinery/embedded_controller/radio/department_controller
 			icon_state = "access_control_off"
 
 	Topic(href, href_list)
-		if (src.locked && !issilicon(usr))
+		if (src.locked && !can_access_remotely(usr))
 			return
 
-		if(program)
-			program.receive_user_command(href_list["command"])
+		program?.receive_user_command(href_list["command"])
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 	process()
 		if(status & NOPOWER)
@@ -669,9 +650,9 @@ obj/machinery/embedded_controller/radio/department_controller
 			if (update)
 				src.updateDialog()
 
-		update_icon()
+		UpdateIcon()
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/device/pda2) && I:ID_card)
 			I = I:ID_card
 		if(istype(I, /obj/item/card/id))
@@ -679,7 +660,7 @@ obj/machinery/embedded_controller/radio/department_controller
 				user.visible_message("[user] [src.locked ? "unlocks" : "locks"] the access panel.","You [src.locked ? "unlock" : "lock"] the access panel.")
 				src.locked = !src.locked
 			else
-				boutput(user, "<span style=\"color:red\">Access denied.</span>")
+				boutput(user, "<span class='alert'>Access denied.</span>")
 		else
 			..()
 
@@ -692,7 +673,7 @@ obj/machinery/embedded_controller/radio/department_controller
 		if (src.status & NOPOWER)
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
 		var/state_options = null
 

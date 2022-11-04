@@ -1,6 +1,6 @@
 var triggerError = attachErrorHandler('tooltipDebug', true, function(msg) {
 	//I am sick and tired of the billions of absolutely useless error messages tooltips produce
-	if (msg === 'Script error') {
+	if (msg === 'Script error.') {
 		return true;
 	}
 });
@@ -223,6 +223,8 @@ var tooltip = {
 				top--; //Pods do some weird funky shit with view and well just trust me that this is needed
 			} 
 		}
+		
+		var yloc = top;
 
 		//Handle manually set offsets (whether to adjust the tooltip along an axis by a pixel amount)
 		if (tooltip.options.hasOwnProperty('offset')) {
@@ -279,6 +281,13 @@ var tooltip = {
 			if ($.inArray('top', tooltip.params.flags) !== -1) { //TOOLTIP_TOP
 				alignment = 'top';
 				posY = (posY - docHeight) - realIconSizeY - (tooltip.padding * 2);
+			}
+			if ($.inArray('top2', tooltip.params.flags) !== -1) { //TOOLTIP_TOP_2 (give 1 tile of margin if tooltipping something at the bottom of view  (hud))
+				alignment = 'top';
+				posY = (posY - docHeight) - realIconSizeY - (tooltip.padding * 2);
+				if (yloc<=1){
+					posY = posY - (realIconSizeY)
+				}
 			}
 			if ($.inArray('right', tooltip.params.flags) !== -1) { //TOOLTIP_RIGHT
 				alignment = 'right';

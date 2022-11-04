@@ -13,7 +13,7 @@
 		sound_fart = 'sound/voice/virtual_gassy.ogg'
 		sound_snap = 'sound/voice/virtual_snap.ogg'
 		sound_fingersnap = 'sound/voice/virtual_snap.ogg'
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.set_mutantrace(/datum/mutantrace/virtual)
 
 	Life(datum/controller/process/mobs/parent)
@@ -26,12 +26,12 @@
 		if (!escape_vr)
 			var/area/A = get_area(src)
 			if ((T && !(T.z == 2)) || (A && !A.virtual))
-				boutput(src, "<span style=\"color:red\">Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
+				boutput(src, "<span class='alert'>Is this virtual?  Is this real?? <b>YOUR MIND CANNOT TAKE THIS METAPHYSICAL CALAMITY</b></span>")
 				src.gib()
 				return
 
 			if(!isghost && src.body)
-				if(isdead(src.body) || !src.body:network_device)
+				if(!isAIeye(src) && isdead(src.body) || !src.body:network_device)
 					src.gib()
 					return
 		return
@@ -43,13 +43,13 @@
 
 		Station_VNet.Leave_Vspace(src)
 
+		. = ..()
 		qdel(src)
-		return
 
 	disposing()
 		if (isghost && src.client)
 			var/mob/dead/observer/O = src.ghostize()
-			var/arrival_loc = pick(latejoin)
+			var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 			O.real_name = src.isghost
 			O.name = O.real_name
 			O.set_loc(arrival_loc)
@@ -78,7 +78,7 @@
 
 		. = src.say_dead(message, 1)
 
-	emote(var/act, var/voluntary = 0)
+	emote(var/act, var/voluntary = 0, var/emoteTarget = null)
 		if(isghost)
 			if (findtext(act, " ", 1, null))
 				var/t1 = findtext(act, " ", 1, null)
@@ -89,7 +89,7 @@
 				return
 		..()
 
-	whisper(message as text)
+	whisper(message as text, forced=FALSE)
 		if (isghost)
 			boutput(usr, "You may not use that emote as a Virtual Spectre.")
 			return
@@ -127,14 +127,15 @@
 
 	cast()
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
-		setdead(holder.owner)
-		holder.owner.death(0)
+		var/mob/M = holder.owner
+		setdead(M)
+		M.death(FALSE)
 
-		Station_VNet.Leave_Vspace(holder.owner)
+		Station_VNet.Leave_Vspace(M)
 
 
 
-/obj/screen/ability/topBar/virtual
+/atom/movable/screen/ability/topBar/virtual
 	clicked(params)
 		var/datum/targetable/virtual/spell = owner
 		//var/datum/abilityHolder/holder = owner.holder
@@ -157,7 +158,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 		*/

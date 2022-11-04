@@ -7,13 +7,14 @@ Atmos alert computer
 /obj/machinery/computer/atmosphere
 	name = "atmos"
 
-	lr = 0.85
-	lg = 0.86
-	lb = 1
+	light_r =0.85
+	light_g = 0.86
+	light_b = 1
 
 /obj/machinery/computer/atmosphere/alerts
 	name = "Alert Computer"
 	icon_state = "atmos"
+	circuit_type = /obj/item/circuitboard/atmospherealerts
 	var/alarms = list("Fire"=list(), "Atmosphere"=list())
 	machine_registry_idx = MACHINES_ATMOSALERTS
 
@@ -33,56 +34,15 @@ Atmos alert computer
 
 
 //the atmos alerts computer
-/obj/machinery/computer/atmosphere/alerts/attack_ai(mob/user)
-	add_fingerprint(user)
-
-	if(status & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
 /obj/machinery/computer/atmosphere/alerts/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
-
-/obj/machinery/computer/atmosphere/alerts/attackby(var/obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/atmospherealerts/M = new /obj/item/circuitboard/atmospherealerts( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/atmospherealerts/M = new /obj/item/circuitboard/atmospherealerts( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
+	interacted(user)
 
 
-/obj/machinery/computer/atmosphere/alerts/proc/interact(mob/user)
-	usr.machine = src
+/obj/machinery/computer/atmosphere/alerts/proc/interacted(mob/user)
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>Current Station Alerts</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=alerts'>Close</A><br><br>"
 	for (var/cat in src.alarms)

@@ -200,7 +200,7 @@
 							src.print_text("New mailserver address set.")
 
 					if (2)
-						var/new_max_lines = round(text2num(command))
+						var/new_max_lines = round(text2num_safe(command))
 						if (new_max_lines < 1 || new_max_lines > 64)
 							src.print_text("Invalid value.")
 						else
@@ -238,7 +238,7 @@
 						src.print_text("Mode set to: Reply to Mail Entry.")
 
 					else
-						var/index_number = round( max( text2num(command), 0) )
+						var/index_number = round( max( text2num_safe(command), 0) )
 						if (index_number == 0)
 							src.menu = MENU_MAIN
 							src.master.temp = null
@@ -260,10 +260,10 @@
 								src.header_temp = null
 								message_server("command=mail&args=get [index_number]") //Request mail
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									var/dat = ""
-									var/end_max = max( min(mail_temp.len, max_lines) - 8, 0)
+									var/end_max = clamp(length(mail_temp), 8, max_lines) - 8
 									for (var/i = 1, i <= end_max, i++)
 										dat += "<br>[mail_temp[i]]"
 
@@ -279,7 +279,7 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -289,7 +289,7 @@
 
 								src.mail_index = null
 								message_server("command=mail&args=index")
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(src.mail_index))
 									src.master.temp = null
 									src.print_text(mailbox_text())
@@ -297,7 +297,7 @@
 									return
 
 								src.print_text("Unable to refresh mailbox.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -306,7 +306,7 @@
 								src.mail_temp = null
 								message_server("command=mail&args=get [index_number]") //Request mail
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									src.print_text("Please enter new target address. \"AddressName--MailGroup\"")
 									src.menu = MENU_EDIT
@@ -314,7 +314,7 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
@@ -322,7 +322,7 @@
 								src.mail_temp = null
 								message_server("command=mail&args=get [index_number]")
 								src.menu = -1
-								sleep(8)
+								sleep(0.8 SECONDS)
 								if (istype(mail_temp))
 									src.print_text("Please enter body text, \"!send\" to send,<br>\"!del\" to remove last line or JUST 0 to return.")
 									if (src.mail_temp)
@@ -332,13 +332,13 @@
 									return
 
 								src.print_text("Error retrieving mail.")
-								sleep(10)
+								sleep(1 SECOND)
 								src.menu = MENU_MAIL_INDEX
 								src.print_text(mainmenu_text())
 								return
 
 			if (MENU_MAIL_VIEW)
-				if (command == "0" || (!src.mail_temp || !src.mail_temp.len))
+				if (command == "0" || (!src.mail_temp || !length(src.mail_temp)))
 					src.menu = MENU_MAIL_INDEX
 					src.master.temp = null
 					src.print_text(mailbox_text())
@@ -464,7 +464,7 @@
 
 									src.mail_index = null
 									message_server("command=mail&args=index")
-									sleep(8)
+									sleep(0.8 SECONDS)
 									if (istype(src.mail_index))
 										src.master.temp = null
 										src.print_text(mailbox_text())
@@ -472,13 +472,13 @@
 										return
 
 									src.print_text("Unable to refresh mailbox.")
-									sleep(10)
+									sleep(1 SECOND)
 									src.menu = MENU_MAIL_INDEX
 									src.print_text(mainmenu_text())
 									return
 
 								if ("!del")
-									if (!istype(src.mail_temp) || !src.mail_temp.len)
+									if (!istype(src.mail_temp) || !length(src.mail_temp))
 										return
 
 									src.mail_temp.len--
@@ -500,7 +500,7 @@
 						return
 
 					if (EDIT_MODE_FWD_TARGET)
-						if (command == "0" || !istype(mail_temp) || !mail_temp.len)
+						if (command == "0" || !istype(mail_temp) || !length(mail_temp))
 							src.menu = MENU_MAIL_INDEX
 							src.master.temp = null
 							src.print_text(mailbox_text())
@@ -524,7 +524,7 @@
 						if (!findtext(attemptAddress, "@"))
 							attemptAddress += "@[defaultDomain]"
 
-						if (header_temp && header_temp.len) //email from grandma, FWD: RE: FWD: FWD: Space-President Jordan WQIT'XFWQ' Wilkins actually syndicate martian infiltrator!!
+						if (length(header_temp)) //email from grandma, FWD: RE: FWD: FWD: Space-President Jordan WQIT'XFWQ' Wilkins actually syndicate martian infiltrator!!
 							src.menu = -1
 							header_temp["subj"] = "FWD: [header_temp["subj"]]"
 							header_temp["target"] = attemptAddress
@@ -542,7 +542,7 @@
 
 							src.mail_index = null
 							message_server("command=mail&args=index")
-							sleep(8)
+							sleep(0.8 SECONDS)
 							if (istype(src.mail_index))
 								src.master.temp = null
 								src.print_text(mailbox_text())
@@ -550,7 +550,7 @@
 								return
 
 						src.print_text("Unable to refresh mailbox.")
-						sleep(10)
+						sleep(1 SECOND)
 						src.menu = MENU_MAIL_INDEX
 						src.print_text(mainmenu_text())
 						return
@@ -624,7 +624,7 @@
 								src.mail_temp = null
 
 							var/list/headerList = params2list(entryRecord.fields[1])
-							if (!headerList || !headerList.len)
+							if (!headerList || !length(headerList))
 								return
 
 							src.header_temp = headerList
@@ -694,7 +694,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 
 			src.peripheral_command("transmit", signal, "\ref[netCard]")
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return 0
 
 			return 0
@@ -735,7 +735,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 			src.peripheral_command("ping", null, "\ref[netCard]")
 
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return (potential_server_netid == null)
 
 			return 0
@@ -769,7 +769,7 @@ SUBJECT: [ckeyEx(headerList["subj"]) ? copytext(uppertext(headerList["subj"]), 1
 
 		mailbox_text()
 			. = "Message List:"
-			if (istype(mail_index) && mail_index.len)
+			if (istype(mail_index) && length(mail_index))
 				var/leadingZeroCount = length("[mail_index.len]")
 				for (var/i = 1, i <= mail_index.len, i++)
 					var/iTitle = mail_index[i]

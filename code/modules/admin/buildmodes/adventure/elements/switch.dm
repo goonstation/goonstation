@@ -9,14 +9,14 @@
 	var/selection
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		button_type = input("Button type", "Button type", "ancient") in list("ancient", "red")
 		color_rgb = input("Color", "Color", "#ffffff") as color
 		button_name = input("Button name", "Button name", "button") as text
 		var/bdstr = input("Is the button dense (impassable)?", "Passability", "yes") in list("yes", "no")
 		button_density = (bdstr == "yes") ? 1 : 0
-		boutput(usr, "<span style=\"color:blue\">Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">NOTE: Select stuff first, then make buttons for extra comfort!</span>")
+		boutput(usr, "<span class='notice'>Left click to place buttons, right click triggerables to (de)select them for automatic assignment to the buttons. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>NOTE: Select stuff first, then make buttons for extra comfort!</span>")
 
 	proc/clear_selections()
 		for (var/obj/O in selected_triggerable)
@@ -25,12 +25,13 @@
 
 	disposing()
 		clear_selections()
-		pool(selection)
+		qdel(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				clear_selections()
 				return
@@ -42,9 +43,9 @@
 				button.set_density(button_density)
 				button.triggered = selected_triggerable.Copy()
 				button.triggered_unpress = selected_triggerable_untrigger.Copy()
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					button.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable))
 				if (object in selected_triggerable)
 					object.overlays -= selection
@@ -52,7 +53,7 @@
 					selected_triggerable_untrigger -= object
 				else
 					var/list/actions = object:trigger_actions()
-					if (islist(actions) && actions.len)
+					if (islist(actions) && length(actions))
 						var/act_name = input("Do what on press?", "Do what?", actions[1]) in actions
 						var/act = actions[act_name]
 						var/unact_name = input("Do what on unpress?", "Do what?", actions[1]) in actions
@@ -63,7 +64,7 @@
 						selected_triggerable_untrigger += object
 						selected_triggerable_untrigger[object] = unact
 					else
-						boutput(usr, "<span style=\"color:red\">ERROR: Missing actions definition for triggerable [object].</span>")
+						boutput(user, "<span class='alert'>ERROR: Missing actions definition for triggerable [object].</span>")
 
 /obj/adventurepuzzle/triggerer/twostate/switch
 	icon = 'icons/obj/randompuzzles.dmi'
@@ -76,11 +77,11 @@
 	var/button_type
 	var/pressed = 0
 
-	attack_hand(var/mob/living/user as mob)
+	attack_hand(var/mob/living/user)
 		if (!istype(user))
 			return
 		if (!(user in range(1)))
-			boutput(user, "<span style=\"color:red\">You must go closer!</span>")
+			boutput(user, "<span class='alert'>You must go closer!</span>")
 			return
 		if (!pressed)
 			pressed = 1

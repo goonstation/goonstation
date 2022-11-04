@@ -7,6 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
+	not_when_in_an_object = FALSE
 	when_stunned = 2
 	not_when_handcuffed = 0
 	dont_lock_holder = 1
@@ -22,8 +23,8 @@
 		if (!M)
 			return 1
 
-		if (iscritter(M) && !istype(H))
-			boutput(M, __red("Critter mobs currently don't have to worry about blood. Lucky you."))
+		if (ismobcritter(M) && !istype(H))
+			boutput(M, "<span class='alert'>Critter mobs currently don't have to worry about blood. Lucky you.</span>")
 			return 1
 
 		if (H.vamp_blood_tracking == 1)
@@ -31,5 +32,5 @@
 		else
 			H.vamp_blood_tracking = 1
 
-		boutput(M, __blue("Blood tracking turned [H.vamp_blood_tracking == 1 ? "on" : "off"]."))
+		boutput(M, "<span class='notice'>Blood tracking turned [H.vamp_blood_tracking == 1 ? "on" : "off"].</span>")
 		return 0

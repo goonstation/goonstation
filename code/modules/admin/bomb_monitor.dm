@@ -49,6 +49,13 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 		for(var/obj/item/device/transfer_valve/TV in TVs)
 			if(!filter_active_only || (TV.tank_one || TV.tank_two))
 				var/turf/T = get_turf(TV)
+				var/device_name = TV.attached_device?.name
+				if(istype(TV.attached_device, /obj/item/device/radio/signaler))
+					var/obj/item/device/radio/signaler/remotesignaler = TV.attached_device
+					device_name += ", frequency: [remotesignaler.frequency]"
+					if(remotesignaler.frequency == FREQ_SIGNALER)
+						device_name += " (DEFAULT)"
+
 				if (!T || !isturf(T)) continue
 				var/ref_a = "<a href='?src=\ref[src];airmon=\ref[TV.tank_one]'>[TV.tank_one]</a>"
 				var/ref_b = "<a href='?src=\ref[src];airmon=\ref[TV.tank_two]'>[TV.tank_two]</a>"
@@ -69,7 +76,7 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 								[TV.tank_two ? ref_b : "Nothing"]
 							</td>
 							<td>
-								[TV.attached_device ? TV.attached_device : "Nothing"]
+								[TV.attached_device ? device_name : "Nothing"]
 							</td>
 							<td>
 								[TV.fingerprintslast ? TV.fingerprintslast : "N/A"]
@@ -292,21 +299,21 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			if(O)
 				boutput(usr, scan_atmospheric(O)) // We've got a global proc for that now (Convair880).
 			else
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 
 		else if(href_list["toggle_dud"])
 			var/obj/item/I = locate(href_list["toggle_dud"])
 
 			if (!I)
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			if (istype(I, /obj/item/assembly/detonator) || istype(I, /obj/item/device/transfer_valve) || istype(I, /obj/item/assembly/proximity_bomb) || istype(I, /obj/item/assembly/time_bomb/) || istype(I, /obj/item/assembly/radio_bomb/))
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
-				logTheThing("admin", usr, null, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
-				logTheThing("diary", usr, null, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].", "admin")
+				logTheThing(LOG_ADMIN, usr, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
+				logTheThing(LOG_DIARY, usr, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].", "admin")
 
 		else  if(href_list["filter"])
 			filter_active_only = !filter_active_only
@@ -318,18 +325,18 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 			var/turf/T = get_turf(I)
 
 			if (!I || !T || !isturf(T)) // Cannot read null.x
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			if (alert("Are you sure you want to detonate \the [I] at [T.x], [T.y], [T.z] ([get_area(I)])?", "Blow shit up.", "Yes", "No") != "Yes") return
 
 			if (!I) // Alerts wait for user input. Bomb might not exist anymore.
-				boutput(usr, "<span style=\"color:red\">Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
+				boutput(usr, "<span class='alert'>Unable to locate the object (it's been deleted, somehow. Explosion, probably).</span>")
 				return
 
 			message_admins("[key_name(usr)] made \the [I] at [log_loc(I)] detonate!")
-			logTheThing("admin", usr, null, "made \the [I] at [log_loc(I)] detonate!")
-			logTheThing("diary", usr, null, "made \the [I] at [log_loc(I)]  detonate!", "admin")
+			logTheThing(LOG_ADMIN, usr, "made \the [I] at [log_loc(I)] detonate!")
+			logTheThing(LOG_DIARY, usr, "made \the [I] at [log_loc(I)]  detonate!", "admin")
 
 			if (istype(I, /obj/item/assembly/detonator))
 				var/obj/item/assembly/detonator/D = I

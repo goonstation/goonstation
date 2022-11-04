@@ -51,6 +51,8 @@
 				return 0 // It's not a Port-a-Sci, okay.
 
 		var/turf/our_loc = get_turf(src.master)
+		if(isAIeye(test_mob))
+			our_loc = get_turf(test_mob)
 		if (our_loc.loc:teleport_blocked == 2) return 0
 
 		// We don't have to loop through the PDA.loc checks as well if we send the device back to its home turf.
@@ -149,7 +151,6 @@
 
 				. += "Location: [get_area(P2)] (Home: [P2.homeloc ? "[get_area(P2.homeloc)]" : "N/A"])"
 
-				. += "<BR>\[<A href='byond://?src=\ref[src];op=summon'>Summon</A>\] "
 				. += "\[<A href='byond://?src=\ref[src];op=return'>Send to home turf</A>\]<BR>"
 				. += "<HR><A href='byond://?src=\ref[src];op=machinerylist'>Return to list</A>"
 
@@ -185,7 +186,7 @@
 						P3.locked = 1
 
 					if (P3.occupant)
-						logTheThing("station", usr, P3.occupant, "[P3.locked ? "locks" : "unlocks"] [P3.name] with %target% inside at [log_loc(P3)].")
+						logTheThing(LOG_STATION, usr, "[P3.locked ? "locks" : "unlocks"] [P3.name] with [constructTarget(P3.occupant,"station")] inside at [log_loc(P3)].")
 
 					PDA.display_alert("<span style=\"color:blue\">The [src.machinery_name] is now [P3.locked ? "locked" : "unlocked"].</span>")
 
@@ -196,8 +197,8 @@
 				var/turf/our_loc = get_turf(PDA)
 				if (isAIeye(usr))
 					our_loc = get_turf(usr)
-					if (!(our_loc.cameras && our_loc.cameras.len))
-						boutput(usr, "<span style=\"color:red\">This area is not within your range of influence.</span>")
+					if (!(our_loc.camera_coverage_emitters && length(our_loc.camera_coverage_emitters)))
+						boutput(usr, "<span class='alert'>This area is not within your range of influence.</span>")
 						return
 
 				// Z-level check bypass for Port-a-Sci.
@@ -234,9 +235,9 @@
 							var/obj/storage/closet/port_a_sci/PS = P4
 							PS.on_teleport()
 
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, P4)
-						s.start()
+						flick("[P4.icon_state]-tele", P4)
+						elecflash(P4)
+						logTheThing(LOG_STATION, usr, "teleports [P4] to [log_loc(our_loc)].")
 
 			if ("return")
 				var/obj/P5 = src.active
@@ -278,13 +279,13 @@
 								var/obj/machinery/sleeper/port_a_medbay/PM2 = P5
 								if (PM2.occupant)
 									PM2.occupant.set_loc(PM2)
+									PM2.PDA_alert_check()
 						if (istype(P5, /obj/storage/closet/port_a_sci/))
 							var/obj/storage/closet/port_a_sci/PS2 = P5
 							PS2.on_teleport()
-
-						var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-						s.set_up(5, 1, P5)
-						s.start()
+						flick("[P5.icon_state]-tele", P5)
+						elecflash(P5)
+						logTheThing(LOG_STATION, usr, "teleports [P5] to its home turf [log_loc(dest_loc)].")
 
 		PDA.updateSelfDialog()
 		return
@@ -299,8 +300,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/port_a_brig/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/port_a_brig/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -318,8 +318,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/sleeper/port_a_medbay/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -337,8 +336,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/machinery/vending/port_a_nanomed/M in portable_machinery)
 			var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue
@@ -357,8 +355,7 @@
 		if (!src.master)
 			return
 
-		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)//world)
-			LAGCHECK(LAG_LOW)
+		for (var/obj/storage/closet/port_a_sci/M in portable_machinery)
 			/*var/turf/M_loc = get_turf(M)
 			if (M && M_loc && isturf(M_loc) && isrestrictedz(M_loc.z)) // Don't show stuff in "somewhere", okay.
 				continue*/

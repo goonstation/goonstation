@@ -7,12 +7,12 @@
 		..()
 		foam_size = input("How many units of fluorosurfactant and water to mix?", "Foam size", 25) as num
 		reagent = input("What reagent to foam? (reagent id)", "Reagent", "lube")
-		boutput(usr, "<span style=\"color:blue\">Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Left click to place trap. Ctrl+click anywhere to finish.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -23,7 +23,7 @@
 
 /obj/adventurepuzzle/triggerable/foamtrap
 	name = "foam trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beakerlarge"
 	density = 0
@@ -39,9 +39,7 @@
 	var/static/list/triggeracts = list("Activate" = "act", "Disable" = "off", "Destroy" = "del", "Do nothing" = "nop", "Enable" = "on")
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(5000)
-		reagents = R
-		R.my_atom = src
+		src.create_reagents(5000)
 		..()
 
 	trigger_actions()

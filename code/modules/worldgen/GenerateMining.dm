@@ -1,8 +1,6 @@
 #define ISDISTEDGE(A, D) (((A.x > (world.maxx - D) || A.x <= D)||(A.y > (world.maxy - D) || A.y <= D))?1:0) //1 if A is within D tiles range from edge of the map.
-#define SPAWN(TYPE,LOC,NUM) for(var/i=0, i<NUM, i++) new TYPE(LOC)
 
 var/list/miningModifiers = list()
-var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 //Notes:
 //Anything not encased in an area inside a prefab may be replaced with asteroids during generation. In other words, everything not inside that area is considered "transparent"
@@ -17,48 +15,41 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		place()
 
 	proc/place()
-		#ifdef UNDERWATER_MAP
-		return new/turf/space/fluid/trench(src)
-		#else
-		return new/turf/space(src)
-		#endif
+		if (map_currently_underwater)
+			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+		else
+			src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 	floor //Replaced with map appropriate floor tile for mining level (asteroid floor on all maps currently)
 		name = "variable floor"
 		icon_state = "floor"
 		place()
-			#ifdef UNDERWATER_MAP
-			return new/turf/space/fluid/trench(src)
-			#else
-			return new/turf/simulated/floor/plating/airless/asteroid/noborders(src)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/simulated/floor/plating/airless/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	wall //Replaced with map appropriate wall tile for mining level (asteroid wall on all maps currently)
 		name = "variable wall"
 		icon_state = "wall"
 		place()
-			#ifdef UNDERWATER_MAP
-			return new/turf/simulated/wall/asteroid/trench(src)
-			#else
-			return new/turf/simulated/wall/asteroid(src)
-			#endif
+			src.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 
 	clear //Replaced with map appropriate clear tile for mining level (asteroid floor on oshan, space on other maps)
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			#ifdef UNDERWATER_MAP
-			return new/turf/space/fluid/trench(src)
-			#else
-			return new/turf/space(src)
-			#endif
+			if (map_currently_underwater)
+				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
+			else
+				src.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 
 /area/noGenerate
-	name = ""
+	name = "BLOCK GENERATION"
 	icon_state = "blockgen"
 
 /area/allowGenerate //Areas of this type do not block asteroid/cavern generation.
-	name = ""
+	name = "ALLOW GENERATION"
 	icon_state = "allowgen"
 
 	trench
@@ -71,7 +62,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		ambient_light = TRENCH_LIGHT
 
 /proc/decideSolid(var/turf/current, var/turf/center, var/sizemod = 0)
-	if(!current || !center || (current.loc.type != /area && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
+	if(!current || !center || (current.loc.type != /area/space && !istype(current.loc , /area/allowGenerate)) || !istype(current, /turf/space))
 		return 0
 	if(ISDISTEDGE(current, AST_MAPBORDER))
 		return 0
@@ -94,10 +85,12 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	var/endFill = -1 //Reduce minSolid by this much in the last few passes (produces tighter corridors)
 	var/passTwoRange = 2 //Range Threshold for second pass (fill pass, see fillLarge). The higher the number, the larger the cavern needs to be before it is filled in.
 
+	var/width = length(L)
+	var/height = length(L[1])
 	var/count = 0
 	for(var/xx=-1, xx<=1, xx++)
 		for(var/yy=-1, yy<=1, yy++)
-			if(currentX+xx <= world.maxx && currentX+xx >= 1 && currentY+yy <= world.maxy && currentY+yy >= 1)
+			if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 				count += L[currentX+xx][currentY+yy]
 			else //OOB, count as wall.
 				count += default
@@ -107,7 +100,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/xx=-passTwoRange, xx<=passTwoRange, xx++)
 			for(var/yy=-passTwoRange, yy<=passTwoRange, yy++)
 				if(abs(xx)==passTwoRange && abs(yy)==passTwoRange) continue //Skip diagonals for this one. Better results
-				if(currentX+xx <= world.maxx && currentX+xx >= 1 && currentY+yy <= world.maxy && currentY+yy >= 1)
+				if(currentX+xx <= width && currentX+xx >= 1 && currentY+yy <= height && currentY+yy >= 1)
 					count2 += L[currentX+xx][currentY+yy]
 				else //OOB, count as wall.
 					count2 += default
@@ -115,28 +108,40 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 	return (count >= minSolid + ((generation==4||generation==3) ? endFill : 0 ) || (count2<=(generation==4?1:2) && fillLarge && (generation==3 || generation==4)) ) //Remove ((generation==4||generation==3)?-1:0) for larger corridors
 
 /datum/mapGenerator/seaCaverns //Cellular automata based generator. Produces cavern-like maps. Empty space is filled with asteroid floor.
-	generate(var/list/miningZ)
-		var/map[world.maxx][world.maxy]
-		for(var/x=1,x<=world.maxx,x++)
-			for(var/y=1,y<=world.maxy,y++)
+	generate(var/list/miningZ, var/z_level = AST_ZLEVEL, var/generate_borders = TRUE)
+		var/width = world.maxx
+		var/height = world.maxy
+		var/n_iterations = 5
+
+		#ifdef UPSCALED_MAP
+		n_iterations = 3
+		width /= 2
+		height /= 2
+		#endif
+
+		var/map[width][height]
+		for(var/x=1,x<=width,x++)
+			for(var/y=1,y<=height,y++)
 				map[x][y] = pick(90;1,100;0) //Initialize randomly.
 
-		for(var/i=0, i<5, i++) //5 Passes to smooth it out.
-			var/mapnew[world.maxx][world.maxy]
-			for(var/x=1,x<=world.maxx,x++)
-				for(var/y=1,y<=world.maxy,y++)
+		for(var/i=0, i<n_iterations, i++) //5 Passes to smooth it out.
+			var/mapnew[width][height]
+			for(var/x=1,x<=width,x++)
+				for(var/y=1,y<=height,y++)
 					mapnew[x][y] = CAGetSolid(map, x, y, i)
 					LAGCHECK(LAG_REALTIME)
 			map = mapnew
 
 		for(var/x=1,x<=world.maxx,x++)
 			for(var/y=1,y<=world.maxy,y++)
-				var/turf/T = locate(x,y,AST_ZLEVEL)
-				if(map[x][y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)) )
-					var/turf/simulated/wall/asteroid/N = new/turf/simulated/wall/asteroid(T)
+				var/map_x = clamp(round(x / world.maxx * width), 1, width)
+				var/map_y = clamp(round(y / world.maxy * height), 1, height)
+				var/turf/T = locate(x,y,z_level)
+				if(map[map_x][map_y] && !ISDISTEDGE(T, 3) && T.loc && ((T.loc.type == /area/space) || istype(T.loc , /area/allowGenerate)) )
+					var/turf/simulated/wall/auto/asteroid/N = T.ReplaceWith(/turf/simulated/wall/auto/asteroid/dark, FALSE, TRUE, FALSE, TRUE)
 					N.quality = rand(-101,101)
 					generated.Add(N)
-				if(T.loc.type == /area || istype(T.loc, /area/allowGenerate))
+				if(T.loc.type == /area/space || istype(T.loc, /area/allowGenerate))
 					new/area/allowGenerate/trench(T)
 				LAGCHECK(LAG_REALTIME)
 
@@ -144,7 +149,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/s=0, s<20, s++)
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
-			for(var/turf/simulated/wall/asteroid/A in orange(5,TU))
+			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))
 				L.Add(A)
 			seeds.Add(TU)
 			seeds[TU] = L
@@ -157,14 +162,14 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 				for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 					holeList.Add(T)
 					T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-					if(!istype(T, /turf/simulated/wall/asteroid)) continue
-					var/turf/simulated/wall/asteroid/ast = T
+					if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+					var/turf/simulated/wall/auto/asteroid/ast = T
 					ast.destroy_asteroid(0)
 
 
 		for(var/i=0, i<80, i++)
 			var/list/L = list()
-			for (var/turf/simulated/wall/asteroid/A in range(4,pick(generated)))
+			for (var/turf/simulated/wall/auto/asteroid/dark/A in range(4,pick(generated)))
 				L+=A
 
 			Turfspawn_Asteroid_SeedOre(L, rand(2,8), rand(1,70))
@@ -182,27 +187,36 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 		for(var/i=0, i<40, i++)
 			Turfspawn_Asteroid_SeedEvents(generated)
 
-		var/list/border = list()
-		border |= (block(locate(1,1,AST_ZLEVEL), locate(AST_MAPBORDER,world.maxy,AST_ZLEVEL))) //Left
-		border |= (block(locate(1,1,AST_ZLEVEL), locate(world.maxx,AST_MAPBORDER,AST_ZLEVEL))) //Bottom
-		border |= (block(locate(world.maxx-(AST_MAPBORDER-1),1,AST_ZLEVEL), locate(world.maxx,world.maxy,AST_ZLEVEL))) //Right
-		border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),AST_ZLEVEL), locate(world.maxx,world.maxy,AST_ZLEVEL))) //Top
+		if(generate_borders)
+			var/list/border = list()
+			border |= (block(locate(1,1,z_level), locate(AST_MAPBORDER,world.maxy,z_level))) //Left
+			border |= (block(locate(1,1,z_level), locate(world.maxx,AST_MAPBORDER,z_level))) //Bottom
+			border |= (block(locate(world.maxx-(AST_MAPBORDER-1),1,z_level), locate(world.maxx,world.maxy,z_level))) //Right
+			border |= (block(locate(1,world.maxy-(AST_MAPBORDER-1),z_level), locate(world.maxx,world.maxy,z_level))) //Top
 
-		for(var/turf/T in border)
-			new/turf/unsimulated/wall/trench(T)
-			new/area/cordon/dark(T)
-			LAGCHECK(LAG_REALTIME)
+			for(var/turf/T in border)
+				T.ReplaceWith(/turf/unsimulated/wall/trench, FALSE, TRUE, FALSE, TRUE)
+				new/area/cordon/dark(T)
+				LAGCHECK(LAG_REALTIME)
+
+		for (var/i=0, i<55, i++)
+			var/turf/T = locate(rand(1,world.maxx),rand(1,world.maxy),z_level)
+			for (var/turf/space/fluid/TT in range(rand(2,4),T))
+				TT.spawningFlags |= SPAWN_TRILOBITE
 
 		return miningZ
 
 /datum/mapGenerator/asteroidsDistance //Generates a bunch of asteroids based on distance to seed/center. Super simple.
 	generate(var/list/miningZ)
 		var/numAsteroidSeed = AST_SEEDS + rand(1, 5)
+		#ifdef UPSCALED_MAP
+		numAsteroidSeed *= 4
+		#endif
 		for(var/i=0, i<numAsteroidSeed, i++)
 			var/turf/X = pick(miningZ)
 			var/quality = rand(-101,101)
 
-			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area && !istype(X.loc , /area/allowGenerate)))
+			while(!istype(X, /turf/space) || ISDISTEDGE(X, AST_MAPSEEDBORDER) || (X.loc.type != /area/space && !istype(X.loc , /area/allowGenerate)))
 				X = pick(miningZ)
 				LAGCHECK(LAG_REALTIME)
 
@@ -212,7 +226,7 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			var/sizeMod = rand(-AST_SIZERANGE,AST_SIZERANGE)
 
-			while(edgeTiles.len)
+			while(length(edgeTiles))
 				var/turf/curr = edgeTiles[1]
 				edgeTiles.Remove(curr)
 
@@ -239,8 +253,8 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			var/list/placed = list()
 			for(var/turf/T in solidTiles)
-				if(!isnull(T) && T.loc && ((T.loc.type == /area) || istype(T.loc , /area/allowGenerate)))
-					var/turf/simulated/wall/asteroid/AST = new/turf/simulated/wall/asteroid(T)
+				if((T?.loc?.type == /area/space) || istype(T?.loc , /area/allowGenerate))
+					var/turf/simulated/wall/auto/asteroid/AST = T.ReplaceWith(/turf/simulated/wall/auto/asteroid, FALSE, TRUE, FALSE, TRUE)
 					placed.Add(AST)
 					AST.quality = quality
 				LAGCHECK(LAG_REALTIME)
@@ -252,9 +266,9 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 
 			Turfspawn_Asteroid_SeedEvents(placed)
 
-			if(placed.len)
+			if(length(placed))
 				generated.Add(placed)
-				if(placed.len > 9)
+				if(length(placed) > 9)
 					seeds.Add(X)
 					seeds[X] = placed
 					var/list/holeList = list()
@@ -263,456 +277,108 @@ var/list/miningModifiersUsed = list()//Assoc list, type:times used
 						for(var/j=0, j<rand(AST_RNGWALKCNT,round(AST_RNGWALKCNT*1.5)), j++)
 							holeList.Add(T)
 							T = get_step(T, pick(NORTH,EAST,SOUTH,WEST))
-							if(!istype(T, /turf/simulated/wall/asteroid)) continue
-							var/turf/simulated/wall/asteroid/ast = T
+							if(!istype(T, /turf/simulated/wall/auto/asteroid)) continue
+							var/turf/simulated/wall/auto/asteroid/ast = T
 							ast.destroy_asteroid(0)
 		return miningZ
 
 /proc/makeMiningLevel()
-	var/list/miningZ = list()
 	var/startTime = world.timeofday
 	if(world.maxz < AST_ZLEVEL)
-		boutput(world, "<span style=\"color:red\">Skipping Mining Generation!</span>")
+		boutput(world, "<span class='alert'>Skipping Mining Generation!</span>")
 		return
 	else
-		boutput(world, "<span style=\"color:red\">Generating Mining Level ...</span>")
+		boutput(world, "<span class='alert'>Generating Mining Level ...</span>")
 
-	for(var/turf/T)
-		if(T.z == AST_ZLEVEL)
-			miningZ.Add(T)
+	var/list/miningZ = block(locate(1, 1, AST_ZLEVEL), locate(world.maxx, world.maxy, AST_ZLEVEL))
 
-	var/extra = rand(0,AST_NUMPREFABSEXTRA)
-	for(var/n=0, n<AST_NUMPREFABS+extra, n++)
-		var/datum/generatorPrefab/M = pickPrefab()
-		if(M)
+	var/num_to_place = AST_NUMPREFABS + rand(0,AST_NUMPREFABSEXTRA)
+	#ifdef UPSCALED_MAP
+	num_to_place *= 3
+	#endif
+	for (var/n = 1, n <= num_to_place, n++)
+		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
+			wanted_tags = map_currently_underwater ? list("underwater") : null,
+			unwanted_tags = map_currently_underwater ? null : list("underwater"))
+		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (M.required ? 200:33)
-			while(!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(1+AST_MAPBORDER, maxX), rand(1+AST_MAPBORDER,maxY), AST_ZLEVEL)
 				var/ret = M.applyTo(target)
-				if(ret == 0)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
+				if (ret == 0)
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [log_loc(target)]")
 				else
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
 					stop = 1
 				count++
-				if(count >= 33)
-					logTheThing("debug", null, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [showCoords(target.x, target.y, target.z)]")
+				if (count >= 33)
+					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""]. [target] @ [log_loc(target)]")
 		else break
 
 	var/datum/mapGenerator/D
 
 	if(map_currently_underwater)
+		bioluminescent_algae = new()
+		bioluminescent_algae.setup()
 		D = new/datum/mapGenerator/seaCaverns()
 	else
 		D = new/datum/mapGenerator/asteroidsDistance()
 
+	game_start_countdown?.update_status("Setting up mining level...\nGenerating terrain...")
 	miningZ = D.generate(miningZ)
 
-	boutput(world, "<span style=\"color:red\">Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
-
-	if (map_currently_underwater)
-		hotspot_controller.generate_map()
-
-/proc/pickPrefab()
-	var/list/eligible = list()
-	var/list/required = list()
-
-	for(var/datum/generatorPrefab/M in miningModifiers)
-		if(M.underwater != map_currently_underwater) continue
-		if(M.type in miningModifiersUsed)
-			if(M.required) continue
-			if(M.maxNum != -1)
-				if(miningModifiersUsed[M.type] >= M.maxNum)
-					continue
-				else
-					eligible.Add(M)
-					eligible[M] = M.probability
-			else
-				eligible.Add(M)
-				eligible[M] = M.probability
+	// remove temporary areas
+	for (var/turf/T in get_area_turfs(/area/noGenerate))
+		if (map_currently_underwater)
+			new /area/allowGenerate/trench(T)
 		else
-			eligible.Add(M)
-			eligible[M] = M.probability
-			if(M.required) required.Add(M)
+			new /area/space(T)
+	if (!map_currently_underwater)
+		for (var/turf/T in get_area_turfs(/area/allowGenerate))
+			new /area/space(T)
 
-	if(required.len)
-		var/datum/generatorPrefab/P = required[1]
-		miningModifiersUsed.Add(P.type)
-		miningModifiersUsed[P.type] = 1
-		return P
-	else
-		if(eligible.len)
-			var/datum/generatorPrefab/P = pickweight(eligible)
-			if(P.type in miningModifiersUsed)
-				miningModifiersUsed[P.type] = (miningModifiersUsed[P.type] + 1)
-			else
-				miningModifiersUsed.Add(P.type)
-				miningModifiersUsed[P.type] = 1
-			return P
-		else return null
+	boutput(world, "<span class='alert'>Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!</span>")
+	logTheThing(LOG_DEBUG, null, "Generated Mining Level in [((world.timeofday - startTime)/10)] seconds!")
 
-/datum/generatorPrefab
-	var/probability = 0
-	var/maxNum = 0
-	var/prefabPath = ""
-	var/prefabSizeX = 5
-	var/prefabSizeY = 5
-	var/underwater = 0 //prefab will only be used if this matches map_currently_underwater. I.e. if this is 1 and map_currently_underwater is 1 then the prefab may be used.
-	var/required = 0   //If 1 we will try to always place thing thing no matter what. Required prefabs will only ever be placed once.
+	// this generates the PDA Mining Map (Space) / Trench Map (Underwater)
+	hotspot_controller.generate_map()
 
-	proc/applyTo(var/turf/target)
-		var/adjustX = target.x
-		var/adjustY = target.y
+var/global/datum/bioluminescent_algae/bioluminescent_algae
+/datum/bioluminescent_algae
+	/// our randomized seed values
+	var/list/seeds
+	///the random offset applied to square coordinates, causes intermingling at biome borders
+	var/const/random_square_drift = 2
+	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
+	var/perlin_zoom = 65
+	///The absolute lowest a color value can be, e.g. if the noise at the coords was 0. To help give us bright vibrant colors
+	var/const/color_alpha = 30
 
-		 //Move prefabs backwards if they would end up outside the map.
-		if((adjustX + prefabSizeX) > (world.maxx - AST_MAPBORDER))
-			adjustX -= ((adjustX + prefabSizeX) - (world.maxx - AST_MAPBORDER))
+	proc/setup()
+		seeds = list()
+		seeds["hue"] = rand(0, 50000)
+		seeds["saturation"] = rand(0, 50000)
+		seeds["value"] = rand(0, 50000)
+		seeds["salinity"] = rand(0, 50000)
 
-		if((adjustY + prefabSizeY) > (world.maxy - AST_MAPBORDER))
-			adjustY -= ((adjustY + prefabSizeY) - (world.maxy - AST_MAPBORDER))
+	proc/get_color(atom/A)
+		var/drift_x = (A.x + rand(-random_square_drift, random_square_drift)) / perlin_zoom
+		var/drift_y = (A.y + rand(-random_square_drift, random_square_drift)) / perlin_zoom
 
-		var/turf/T = locate(adjustX, adjustY, target.z)
+		var/salinity = text2num(rustg_noise_get_at_coordinates("[seeds["salinity"]]", "[drift_x]", "[drift_y]"))
+		if (salinity > 0.25) // no algae for you :(
+			return
+		var/hue_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["hue"]]", "[drift_x]", "[drift_y]"))
+		var/saturation_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["saturation"]]", "[drift_x]", "[drift_y]"))
+		var/value_multiplier = text2num(rustg_noise_get_at_coordinates("[seeds["value"]]", "[drift_x]", "[drift_y]"))
 
-		for(var/x=0, x<prefabSizeX; x++)
-			for(var/y=0, y<prefabSizeX; y++)
-				var/turf/L = locate(T.x+x, T.y+y, T.z)
-				if(L && L.loc && ((L.loc.type != /area) && !istype(L.loc , /area/allowGenerate))) // istype(L.loc, /area/noGenerate)
-					return 0
 
-		var/loaded = file2text(prefabPath)
-
-		if(T && loaded)
-			var/dmm_suite/D = new/dmm_suite()
-			D.read_map(loaded,T.x,T.y,T.z,prefabPath)
-			return 1
-		else return 0
-
-	clown
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_clown.dmm"
-		prefabSizeX = 5
-		prefabSizeY = 5
-
-	vault
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_vault.dmm"
-		prefabSizeX = 7
-		prefabSizeY = 7
-
-	shuttle
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_shuttle.dmm"
-		prefabSizeX = 19
-		prefabSizeY = 13
-
-	cannibal
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_cannibal.dmm"
-		prefabSizeX = 10
-		prefabSizeY = 10
-
-	sleepership
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_sleepership.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 19
-
-	rockworms
-		maxNum = 10
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_rockworms.dmm"
-		prefabSizeX = 5
-		prefabSizeY = 5
-
-	beacon // warp beacon for easy z5 teleporting.
-		required = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_beacon.dmm"
-		prefabSizeX = 5
-		prefabSizeY = 5
-
-	outpost // rest stop/outpost for miners to eat/rest/heal at.
-		required = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_outpost.dmm"
-		prefabSizeX = 20
-		prefabSizeY = 20
-
-	ksol // The wreck of the old radio buoy, rip
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_ksol.dmm"
-		prefabSizeX = 35
-		prefabSizeY = 27
-
-	habitat // kube's habitat thing
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_habitat.dmm"
-		prefabSizeX = 25
-		prefabSizeY = 20
-
-	smuggler // kube's smuggler thing
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_smuggler.dmm"
-		prefabSizeX = 19
-		prefabSizeY = 18
-
-	tomb // small little tomb
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_tomb.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 10
-
-	janitor // adhara's janitorial hideout
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_janitor.dmm"
-		prefabSizeX = 16
-		prefabSizeY = 15
-	
-	pie_ship // Urs's ship originally built for the pie eating contest event
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_pie_ship.dmm"
-		prefabSizeX = 16
-		prefabSizeY = 21
-
-	//UNDERWATER AREAS FOR OSHAN
-
-	pit
-		required = 1
-		underwater = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_water_oshanpit.dmm"
-		prefabSizeX = 8
-		prefabSizeY = 8
-
-	mantahole
-		required = 1
-		underwater = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_water_mantahole.dmm"
-		prefabSizeX = 10
-		prefabSizeY = 10
-
-#if defined(MAP_OVERRIDE_OSHAN)
-	elevator
-		required = 1
-		underwater = 1
-		maxNum = 1
-		probability = 100
-		prefabPath = "assets/maps/prefabs/prefab_water_oshanelevator.dmm"
-		prefabSizeX = 11
-		prefabSizeY = 11
-#endif
-	robotfactory
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_robotfactory.dmm"
-		prefabSizeX = 20
-		prefabSizeY = 28
-
-	racetrack
-		underwater = 1
-		maxNum = 1
-		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_water_racetrack.dmm"
-		prefabSizeX = 24
-		prefabSizeY = 25
-
-	zoo
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_zoo.dmm"
-		prefabSizeX = 20
-		prefabSizeY = 17
-
-	outpost
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_outpost.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 21
-
-	sandyruins
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_sandyruins.dmm"
-		prefabSizeX = 11
-		prefabSizeY = 13
-
-	greenhouse
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_greenhouse.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-
-	genelab
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_genelab.dmm"
-		prefabSizeX = 12
-		prefabSizeY = 11
-
-	beetrader
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_beetrader.dmm"
-		prefabSizeX = 13
-		prefabSizeY = 18
-
-	stripmall
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_stripmall.dmm"
-		prefabSizeX = 20
-		prefabSizeY = 22
-
-	blindpig
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_blindpig.dmm"
-		prefabSizeX = 23
-		prefabSizeY = 20
-
-	strangeprison
-		underwater = 1
-		maxNum = 1
-		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_water_strangeprison.dmm"
-		prefabSizeX = 35
-		prefabSizeY = 21
-
-	seamonkey
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_seamonkey.dmm"
-		prefabSizeX = 33
-		prefabSizeY = 25
-
-	ghost_house
-		underwater = 1
-		maxNum = 1
-		probability = 30
-		prefabPath = "assets/maps/prefabs/prefab_water_ghosthouse.dmm"
-		prefabSizeX = 23
-		prefabSizeY = 34
-
-	drone_battle
-		underwater = 1
-		maxNum = 1
-		probability = 20
-		prefabPath = "assets/maps/prefabs/prefab_water_drone_battle.dmm"
-		prefabSizeX = 24
-		prefabSizeY = 21
-
-	ydrone
-		underwater = 1
-		maxNum = 1
-		probability = 10
-		prefabPath = "assets/maps/prefabs/prefab_water_ydrone.dmm"
-		prefabSizeX = 15
-		prefabSizeY = 15
-
-	honk
-		underwater = 1
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_water_honk.dmm"
-		prefabSizeX = 24
-		prefabSizeY = 22
-
-	disposal
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_disposal.dmm"
-		prefabSizeX = 16
-		prefabSizeY = 13
-
-	sketchy
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_sketchy.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-
-#if defined(MAP_OVERRIDE_OSHAN)
-	sea_miner
-		underwater = 1
-		maxNum = 1
-		probability = 35
-		prefabPath = "assets/maps/prefabs/prefab_water_miner.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-#endif
-
-#if defined(MAP_OVERRIDE_MANTA)
-	sea_miner
-		underwater = 1
-		maxNum = 1
-		required = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_miner_manta.dmm"
-		prefabSizeX = 21
-		prefabSizeY = 15
-#endif
-
-	cache_small_loot
-		underwater = 1
-		maxNum = -1
-		probability = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_cache_smallloot.dmm"
-		prefabSizeX = 4
-		prefabSizeY = 4
-
-	cache_small_oxygen
-		underwater = 1
-		maxNum = -1
-		probability = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_cache_smalloxygen.dmm"
-		prefabSizeX = 4
-		prefabSizeY = 4
-
-	cache_small_skull
-		underwater = 1
-		maxNum = -1
-		probability = 1
-		prefabPath = "assets/maps/prefabs/prefab_water_cache_smallskull.dmm"
-		prefabSizeX = 3
-		prefabSizeY = 3
-
-	sea_crashed
-		underwater = 1
-		maxNum = 1
-		probability = 25
-		prefabPath = "assets/maps/prefabs/prefab_water_crashed.dmm"
-		prefabSizeX = 24
-		prefabSizeY = 32
+		var/list/color_vals
+		color_vals = hsv2rgblist(hue_multiplier * 360, (saturation_multiplier * 25) + 60, (value_multiplier * 15) + 85)
+		color_vals += color_alpha
+		return color_vals

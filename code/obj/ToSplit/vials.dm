@@ -7,7 +7,7 @@
 	name = "water"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	var/canmove = 1
 	density = 0
 	anchored = 1
@@ -19,21 +19,17 @@
 	desc = "an incredibly fragile glass test tube"
 	icon_state = "vial0"
 	item_state = "vial"
-	throwforce = 3.0
+	throwforce = 3
 	throw_speed = 1
 	throw_range = 8
-	force = 3.0
-	w_class = 1.0
+	force = 3
+	w_class = W_CLASS_TINY
+	initial_volume = 30
 
 	amount_per_transfer_from_this = 5
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 
 	var/contained = null
-
-	New()
-		var/datum/reagents/R = new/datum/reagents(30)
-		reagents = R
-		R.my_atom = src
 
 /obj/item/reagent_containers/glass/vial/green
 	name = "glass test tube"
@@ -55,7 +51,7 @@
 //////////////////////////////////////////////////////////
 
 ///////////////////////////////////////////////////////***
-/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom)
+/obj/item/reagent_containers/glass/vial/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
 	src.shatter()
 
@@ -65,7 +61,6 @@
 	var/A = src
 
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
 	var/obj/overlay/O2 = new /obj/overlay( sourceloc )
@@ -87,19 +82,17 @@
 		for(i=0, i<5, i++)
 			for(var/mob/living/carbon/H in view(5, sourceloc))
 				H.contract_disease(src.contained,null,null,0)
-			sleep(20)
+			sleep(2 SECONDS)
 
 	flick("greenshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 	return
 
 //Generic Vial Drink
 /obj/item/reagent_containers/glass/vial/proc/drink(user)
 	var/A = src
-
-	src = null
 	qdel(A)
 	if(istype(src.contained,/datum/ailment/))
 		var/mob/living/M = user
@@ -108,14 +101,13 @@
 				M.weakened += 5
 				M.contract_disease(src.contained,null,null,1)
 			if(2)
-				SPAWN_DBG(20 SECONDS)
+				SPAWN(20 SECONDS)
 					M.contract_disease(src.contained,null,null,1)
 	return
 
 /obj/item/reagent_containers/glass/vial/blue/drink(user)
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
@@ -134,17 +126,16 @@
 
 	liquify(user)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 	qdel(O)
 
 /obj/item/reagent_containers/glass/vial/blue/shatter()
 
 	var/A = src
 	var/atom/sourceloc = get_turf(src.loc)
-	src = null
 	qdel(A)
 
 	var/obj/overlay/O = new /obj/overlay( sourceloc )
@@ -164,10 +155,10 @@
 	for(var/mob/living/carbon/human/H in view(1, sourceloc))
 		liquify(H)
 
-	sleep(20)
+	sleep(2 SECONDS)
 	flick("blueshatter2",O)
 	O.icon_state = "nothing"
-	sleep(5)
+	sleep(0.5 SECONDS)
 
 	qdel(O)
 
@@ -187,7 +178,7 @@
 /proc/liquify(var/mob/H, time = 150)
 
 	if(H.stat) return
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/mobloc = get_turf(H.loc)
 		var/obj/dummy/liquid/holder = new /obj/dummy/liquid( mobloc )
 		var/atom/movable/overlay/animation = new /atom/movable/overlay( mobloc )
@@ -200,13 +191,13 @@
 		animation.master = holder
 		flick("liquify",animation)
 		H.canmove = 0
-		sleep(4)
+		sleep(0.4 SECONDS)
 		H.set_loc(holder)
 		H.canmove = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/i
 			for(i=0, i<10, i++)
-				SPAWN_DBG(0)
+				SPAWN(0)
 					var/obj/effects/water/water1 = new /obj/effects/water( mobloc )
 					var/direction = pick(alldirs)
 					water1.name = "water"
@@ -214,9 +205,9 @@
 					water1.icon = 'icons/effects/water.dmi'
 					water1.icon_state = "extinguish"
 					for(i=0, i<pick(1,2,3), i++)
-						sleep(5)
+						sleep(0.5 SECONDS)
 						step(water1,direction)
-					SPAWN_DBG(2 SECONDS)
+					SPAWN(2 SECONDS)
 						qdel(water1)
 
 		sleep(time)
@@ -225,7 +216,7 @@
 		animation.set_loc(mobloc)
 		var/b
 		for(b=0, b<10, b++)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/turf = mobloc
 				var/direction = pick(alldirs)
 				var/c
@@ -236,12 +227,12 @@
 				water2.icon = 'icons/effects/water.dmi'
 				water2.icon_state = "extinguish"
 				walk_to(water2,mobloc,-1,5)
-				sleep(20)
+				sleep(2 SECONDS)
 				qdel(water2)
 
-		sleep(20)
+		sleep(2 SECONDS)
 		flick("reappear",animation)
-		sleep(5)
+		sleep(0.5 SECONDS)
 		H.set_loc(mobloc)
 		H.canmove = 1
 		qdel(animation)
@@ -273,7 +264,7 @@
 			src.y--
 			src.x--
 	src.canmove = 0
-	SPAWN_DBG(2 SECONDS) canmove = 1
+	SPAWN(2 SECONDS) canmove = 1
 
 /obj/dummy/liquid/ex_act(blah)
 	return
@@ -297,23 +288,23 @@
 
 	attackby(obj/item/W, mob/user as mob)
 		if (src.contents.len >= 7)
-			boutput(user, "<span style=\"color:blue\">The test tube rack is full</span>")
+			boutput(user, "<span class='notice'>The test tube rack is full</span>")
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
-			boutput(user, "<span style=\"color:blue\">You insert the test tube into the test tube rack</span>")
+			boutput(user, "<span class='notice'>You insert the test tube into the test tube rack</span>")
 			user.drop_vial()
 			W.set_loc(src)
 			return
 		..()
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.contents.len > 0)
-			boutput(user, "<span style=\"color:blue\">You slide a random test tube carefully out of the rack</span>")
+			boutput(user, "<span class='notice'>You slide a random test tube carefully out of the rack</span>")
 			var/obj/item/reagent_containers/glass/vial/V = pick(src.contents)
 			src.contents -= V
 			V.set_loc(src.loc)
 		else
-			boutput(user, "<span style=\"color:blue\">There are no test tubes in the rack</span>")
+			boutput(user, "<span class='notice'>There are no test tubes in the rack</span>")
 		return
 */

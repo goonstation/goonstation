@@ -17,21 +17,21 @@
 		if (!M || !target || !ismob(target))
 			return 1
 		if (M == target)
-			boutput(M, __red("How could you afflict yourself with your own affliction?"))
+			boutput(M, "<span class='alert'>How could you afflict yourself with your own affliction?</span>")
 			return 1
-		if (get_dist(M, target) > src.max_range)
-			boutput(M, __red("[target] is too far away."))
+		if (GET_DIST(M, target) > src.max_range)
+			boutput(M, "<span class='alert'>[target] is too far away.</span>")
 			return 1
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
-			boutput(M, __red("[target] probably wouldn't make a very good werewolf."))
+			boutput(M, "<span class='alert'>[target] probably wouldn't make a very good werewolf.</span>")
 			return 1
 		if (target.stat == 2) //can't pass affliction on to the dead
-			boutput(M, __red("A dead [target] probably wouldn't make a very good werewolf."))
+			boutput(M, "<span class='alert'>A dead [target] probably wouldn't make a very good werewolf.</span>")
 			return 1
 		if (target.canmove)
-			boutput(M, __red("[target] is moving around too much."))
+			boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 			return 1
-		logTheThing("combat", M, target, "starts to afflict %target% at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "starts to afflict [constructTarget(target,"combat")] at [log_loc(M)].")
 		actions.start(new/datum/action/bar/private/icon/werewolf_spread_affliction(target, src), M)
 		return 0
 /datum/action/bar/private/icon/werewolf_spread_affliction
@@ -51,7 +51,7 @@
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		// It's okay when the victim expired half-way through the spread, we're interrupted, find a new "victim"
@@ -60,44 +60,44 @@
 			return
 		A.locked = 1
 		playsound(M.loc, pick('sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-		M.visible_message("<span style=\"color:red\"><B>[M] lunges at [target]!</b></span>")
+		M.visible_message("<span class='alert'><B>[M] lunges at [target]!</b></span>")
 	onUpdate()
 		..()
 		var/mob/living/M = owner
 		var/datum/abilityHolder/A = spread.holder
-		if (!spread || get_dist(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
+		if (!spread || GET_DIST(M, target) > spread.max_range || target == null || M == null || !ishuman(target) || !ishuman(M) || !A || !istype(A))
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		var/done = world.time - started
-		var/complete = max(min((done / duration), 1), 0)
+		var/done = TIME - started
+		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.1 && last_complete < 0.1)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if (complete >= 0.3 && last_complete < 0.3)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if (complete >= 0.5 && last_complete < 0.5)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if (complete >= 0.7 && last_complete < 0.7)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if (complete >= 0.8 && last_complete < 0.8)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		if (complete >= 0.9 && last_complete < 0.9)
 			if (M.werewolf_attack(target, "spread") != 1)
-				boutput(M, __red("[target] is moving around too much."))
+				boutput(M, "<span class='alert'>[target] is moving around too much.</span>")
 				interrupt(INTERRUPT_ALWAYS)
 				return
 		last_complete = complete
@@ -111,30 +111,30 @@
 		if (istype(A, /datum/abilityHolder/werewolf))
 			var/datum/abilityHolder/werewolf/W = A
 			if (iswizard(HH))
-				boutput(M, __red("[HH]'s magic stops the affliction from taking hold!"))
+				boutput(M, "<span class='alert'>[HH]'s magic stops the affliction from taking hold!</span>")
 			else if (isvampire(HH))
-				boutput(M, __red("[HH] doesn't seem to be affected by the bite much at all!"))
+				boutput(M, "<span class='alert'>[HH] doesn't seem to be affected by the bite much at all!</span>")
 			else if (ischangeling(HH))
-				boutput(M, __red("Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect them!"))
+				boutput(M, "<span class='alert'>Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect them!</span>")
 			else if (isabomination(HH))
-				boutput(M, __red("This abomination doesn't seem to be able to take any werewolf DNA into its collective!"))
+				boutput(M, "<span class='alert'>This abomination doesn't seem to be able to take any werewolf DNA into its collective!</span>")
 			else if (iswrestler(HH))
-				boutput(M, __red("A Werewolf Wrestler?! As if anyone can imagine something so ridiculous!"))
+				boutput(M, "<span class='alert'>A Werewolf Wrestler?! As if anyone can imagine something so ridiculous!</span>")
 			else if (ishuman(HH))
 				if (isturf(M.loc) && isturf(HH.loc))
 					if (!HH.disease_resistance_check("/datum/ailment/disease/lycanthropy","Lycanthropy"))
-						HH.make_werewolf(1)
+						HH.make_werewolf()
 						HH.full_heal()
-						HH.setStatus("weakened",150)
-						HH.werewolf_transform(0, 0) // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
+						HH.setStatus("weakened", 15 SECONDS)
+						HH.werewolf_transform() // Not really a fan of this. I wish werewolves all suffered from lycanthropy and that should be how you pass it on, but w/e
 						remove_antag(M, null, 0, 1)
-						boutput(W, __red("You passed your terribly affliction onto [HH]! You are no longer a werewolf!"))
-						logTheThing("combat", M, target, "turns %target% into a werewolf at [log_loc(M)].")
+						boutput(W, "<span class='alert'>You passed your terribly affliction onto [HH]! You are no longer a werewolf!</span>")
+						logTheThing(LOG_COMBAT, M, "turns [constructTarget(target,"combat")] into a werewolf at [log_loc(M)].")
 		if (A && istype(A))
 			A.locked = 0
 	onInterrupt()
 		..()
 		var/datum/abilityHolder/A = spread.holder
-		boutput(owner, __red("Your spread was interrupted."))
+		boutput(owner, "<span class='alert'>Your spread was interrupted.</span>")
 		if (A && istype(A))
 			A.locked = 0

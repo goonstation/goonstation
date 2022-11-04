@@ -35,14 +35,14 @@
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "party"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!ismob(user) || !user.client || !istype(user, /mob/living/carbon/human/virtual/))
 			return
 		src.add_fingerprint(user)
 
 		// Won't delete the VR character otherwise, which can be confusing (detective's goggles sending you to the existing body in the bomb VR etc).
 		setdead(user)
-		user.death(0)
+		user.death(FALSE)
 
 		Station_VNet.Leave_Vspace(user)
 		return
@@ -66,30 +66,26 @@ datum/v_space
 		if(!user)
 			return
 		if(!active)
-			boutput(user, "<span style=\"color:red\">Unable to connect to the Net!</span>")
+			boutput(user, "<span class='alert'>Unable to connect to the Net!</span>")
 			return
 		if(!network_device)
-			boutput(user, "<span style=\"color:red\">You lack a device able to connect to the net!</span>")
+			boutput(user, "<span class='alert'>You lack a device able to connect to the net!</span>")
 			return
 		if(!user:client)
 			return
 		if(!user.mind)
-			boutput(user, "<span style=\"color:red\">You don't have a mind!</span>")
+			boutput(user, "<span class='alert'>You don't have a mind!</span>")
 			return
 
 //		var/range_check = In_Network(user, network_device, network)
 //		if(!range_check)
-//			boutput(user, "<span style=\"color:red\">Out of network range!</span>")
+//			boutput(user, "<span class='alert'>Out of network range!</span>")
 //			return
 
-		var/obj/landmark/B = null
-		for (var/obj/landmark/A in landmarks)//world)
-			LAGCHECK(LAG_LOW)
-			if (A.name == network)
-				B = A
-				break
-		if(!B)//no entry landmark
-			boutput(user, "<span style=\"color:red\">Invalid network!</span>")
+		var/turf/B = pick_landmark(network)
+
+		if(!B) //no entry landmark
+			boutput(user, "<span class='alert'>Invalid network!</span>")
 			return
 
 
@@ -102,11 +98,11 @@ datum/v_space
 			V.body = user
 			user.mind.transfer_to(V)
 			character = V
-			character.visible_message("<span style=\"color:blue\"><b>[user.name] logs in!</b></span>")
+			character.visible_message("<span class='notice'><b>[user.name] logs in!</b></span>")
 		else
-			character = create_Vcharacter(user, network_device, network)
-			character.set_loc(B.loc)
-			character.visible_message("<span style=\"color:blue\"><b>[character.name] logs in!</b></span>")
+			character = create_Vcharacter(user, network_device, network, B)
+			character.set_loc(B)
+			character.visible_message("<span class='notice'><b>[character.name] logs in!</b></span>")
 		users.Add(character)
 		// Made much more prominent due to frequent a- and mhelps (Convair880).
 		character.show_text("<h2><font color=red><B>Death in virtual reality will result in a log-out. You can also press one of the logout buttons to leave.</B></font></h2>", "red")
@@ -124,7 +120,7 @@ datum/v_space
 			user.client.reset_view()
 
 		for(var/mob/O in oviewers())
-			boutput(O, "<span style=\"color:red\"><b>[user] logs out!</b></span>")
+			boutput(O, "<span class='alert'><b>[user] logs out!</b></span>")
 		if (istype(user.loc,/obj/racing_clowncar/kart))
 			var/obj/racing_clowncar/kart/car = user.loc
 			car.reset()
@@ -153,7 +149,7 @@ datum/v_space
 			else
 				var/mob/dead/observer/O = user.ghostize()
 				if (O)
-					var/arrival_loc = pick(latejoin)
+					var/arrival_loc = pick_landmark(LANDMARK_LATEJOIN)
 					O.real_name = user.isghost
 					O.name = O.real_name
 					O.set_loc(arrival_loc)
@@ -175,7 +171,7 @@ datum/v_space
 		return 0
 
 
-	proc/create_Vcharacter(var/mob/user, var/network_device, var/network)
+	proc/create_Vcharacter(var/mob/user, var/network_device, var/network, turf/B)
 		var/mob/living/carbon/human/virtual/virtual_character
 
 		if (inactive_bodies.len)
@@ -186,7 +182,7 @@ datum/v_space
 				inactive_bodies -= virtual_character
 			virtual_character.full_heal()
 		else
-			virtual_character = new(src)
+			virtual_character = new(B)
 
 		virtual_character.network_device = network_device
 		virtual_character.body = user
@@ -211,7 +207,7 @@ datum/v_space
 			virtual_character.real_name = "Virtual [user.real_name]"
 		user.mind.virtual = virtual_character
 		user.mind.transfer_to(virtual_character)
-		SPAWN_DBG (8)
+		SPAWN(0.8 SECONDS)
 			if (virtual_character)
 				virtual_character.update_face()
 				virtual_character.update_body()
@@ -234,20 +230,6 @@ datum/v_space
 		character.bioHolder.mobAppearance.customization_first = user.bioHolder.mobAppearance.customization_first
 		character.bioHolder.mobAppearance.customization_second = user.bioHolder.mobAppearance.customization_second
 		character.bioHolder.mobAppearance.customization_third = user.bioHolder.mobAppearance.customization_third
-		if(user.bioHolder.mobAppearance.customization_first in customization_styles)
-			character.cust_one_state = customization_styles[user.bioHolder.mobAppearance.customization_first]
-		else
-			character.cust_one_state = "None"
-
-		if(user.bioHolder.mobAppearance.customization_second in customization_styles)
-			character.cust_two_state = customization_styles[user.bioHolder.mobAppearance.customization_second]
-		else
-			character.cust_two_state = "None"
-
-		if(user.bioHolder.mobAppearance.customization_third in customization_styles)
-			character.cust_two_state = customization_styles[user.bioHolder.mobAppearance.customization_third]
-		else
-			character.cust_two_state = "none"
 
 		character.bioHolder.mobAppearance.underwear = user.bioHolder.mobAppearance.underwear
 		character.bioHolder.mobAppearance.u_color = user.bioHolder.mobAppearance.u_color
@@ -265,15 +247,15 @@ datum/v_space
 		if (AH.customization_first_color == null)
 			AH.customization_first_color = "#101010"
 		if (AH.customization_first == null)
-			AH.customization_first = "None"
+			AH.customization_first = new /datum/customization_style/none
 		if (AH.customization_second_color == null)
 			AH.customization_second_color = "#101010"
 		if (AH.customization_second == null)
-			AH.customization_second = "None"
+			AH.customization_second = new /datum/customization_style/none
 		if (AH.customization_third_color == null)
 			AH.customization_third_color = "#101010"
 		if (AH.customization_third == null)
-			AH.customization_third = "None"
+			AH.customization_third = new /datum/customization_style/none
 		if (AH.e_color == null)
 			AH.e_color = "#101010"
 		if (AH.u_color == null)

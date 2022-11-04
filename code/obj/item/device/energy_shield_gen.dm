@@ -6,7 +6,8 @@
 	density = 0
 	opacity = 0
 	anchored = 0
-	w_class = 2.0
+	health = 5
+	w_class = W_CLASS_SMALL
 	pressure_resistance = 2*ONE_ATMOSPHERE
 	var/list/tiles = new/list()
 	var/active = 0
@@ -22,20 +23,20 @@
 		..()
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iswrenchingtool(W) && isturf(loc) && !istype(loc, /turf/space))
 			if(secured)
-				boutput(usr, "<span style=\"color:red\">You unsecure the generator.</span>")
+				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 			else
-				boutput(usr, "<span style=\"color:red\">You secure the generator.</span>")
+				boutput(user, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
-				playsound(src, "sound/items/Ratchet.ogg", 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(secured)
-			boutput(user, "<span style=\"color:red\">Its secured to the ground.</span>")
+			boutput(user, "<span class='alert'>Its secured to the ground.</span>")
 			return
 		else
 			return ..()
@@ -44,10 +45,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 		range = min(range+1,3)
-		boutput(usr, "<span style=\"color:blue\">Range set to : [range]</span>")
+		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
 		if(active)
 			turn_off()
 			turn_on()
@@ -56,10 +57,10 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 		range = max(range-1,1)
-		boutput(usr, "<span style=\"color:blue\">Range set to : [range]</span>")
+		boutput(usr, "<span class='notice'>Range set to : [range]</span>")
 		if(active)
 			turn_off()
 			turn_on()
@@ -90,7 +91,7 @@
 				A = locate((src.x + xa),(src.y + ya),src.z)
 				if (!A.density)
 					var/obj/shieldwall/created = new /obj/shieldwall ( locate((src.x + xa),(src.y + ya),src.z) )
-					created.dir = piece
+					created.set_dir(piece)
 					tiles += created
 					created.health_max = 16 - (range*2)
 					created.health = 16 - (range*2)
@@ -107,7 +108,7 @@
 			S.health = 0
 			S.icon_state = "shield0"
 			S.name = "weakened shield"
-			SPAWN_DBG(20 SECONDS)
+			SPAWN(20 SECONDS)
 				if(S)
 					S.health = S.health_max
 					S.check()
@@ -127,15 +128,15 @@
 		set src in view(1)
 		if (!isliving(usr)) return
 		if (!isturf(loc))
-			boutput(usr, "<span style=\"color:red\">You must place the generator on the ground to use it.</span>")
+			boutput(usr, "<span class='alert'>You must place the generator on the ground to use it.</span>")
 			return
 
 		if (!active)
 			turn_on()
-			boutput(usr, "<span style=\"color:blue\">You activate the generator.</span>")
+			boutput(usr, "<span class='notice'>You activate the generator.</span>")
 		else
 			turn_off()
-			boutput(usr, "<span style=\"color:blue\">You deactivate the generator.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the generator.</span>")
 
 /obj/shieldwall
 	name = "shield"
@@ -146,15 +147,21 @@
 	opacity = 0
 	anchored = 1
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0
+	gas_impermeable = TRUE
 
-	CanPass(atom/A, turf/T)
+	Cross(atom/A)
 		if (broken) return 1
 		if (ismob(A)) return 1
 		else return 0
+
+	gas_cross(turf/target)
+		. = ..()
+		if(broken)
+			. = 1
 
 	ex_act(severity)
 		if(broken) return
@@ -165,7 +172,7 @@
 		if(broken) return
 		health--
 		check()
-		playsound(src, "sound/impact_sounds/Energy_Hit_1.ogg", 40, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
 		qdel(O)
 
 	proc/check()
@@ -173,8 +180,8 @@
 			broken = 1
 			icon_state = "shield0"
 			name = "weakened shield"
-			playsound(src, "sound/effects/shielddown2.ogg", 45, 1)
-			SPAWN_DBG(45 SECONDS)
+			playsound(src, 'sound/effects/shielddown2.ogg', 45, 1)
+			SPAWN(45 SECONDS)
 				health = health_max
 				check()
 		else

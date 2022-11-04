@@ -62,7 +62,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 
 			src.net_id = generate_net_id(src)
 
@@ -85,7 +85,7 @@
 				src.bootstrap = new setup_bootstrap_path
 				src.bootstrap.master = src
 
-			sleep(54)
+			sleep(5.4 SECONDS)
 			src.posted = 0
 			src.post_system()
 
@@ -127,7 +127,7 @@
 	attack_ai(mob/user as mob)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (user.stat || user.restrained())
 			return
 
@@ -135,7 +135,7 @@
 			if(!src.hd)
 				return
 
-			boutput(user, "<span style=\"color:red\">The mainframe is trashed, but the memory core could probably salvaged.</span>")
+			boutput(user, "<span class='alert'>The mainframe is trashed, but the memory core could probably salvaged.</span>")
 			return
 
 		var/dat = "<html><head><title>Mainframe Access Panel</title></head><body><hr>"
@@ -161,21 +161,21 @@
 		if(status & BROKEN)
 			return
 
-		if (istype(src.loc, /turf) && get_dist(src, usr) <= 1)
+		if (istype(src.loc, /turf) && BOUNDS_DIST(src, usr) == 0)
 			if (usr.stat || usr.restrained())
 				return
 
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if(href_list["core"])
 
 				if(!(status & NOPOWER))
-					boutput(usr, "<span style=\"color:red\">The electromagnetic lock is still on!</span>")
+					boutput(usr, "<span class='alert'>The electromagnetic lock is still on!</span>")
 					return
 
 				//Ai/cyborgs cannot physically remove a memory board from a room away.
-				if(issilicon(usr) && get_dist(src, usr) > 1)
-					boutput(usr, "<span style=\"color:red\">You cannot physically touch the board.</span>")
+				if(issilicon(usr) && BOUNDS_DIST(src, usr) > 0)
+					boutput(usr, "<span class='alert'>You cannot physically touch the board.</span>")
 					return
 
 				if(src.hd)
@@ -207,7 +207,7 @@
 							boutput(usr, "You insert [I].")
 
 			else if (href_list["dipsw"] && (status & NOPOWER))
-				var/switchNum = text2num(href_list["dipsw"])
+				var/switchNum = text2num_safe(href_list["dipsw"])
 				if (switchNum < 1 || switchNum > 8)
 					return 1
 
@@ -221,13 +221,13 @@
 			src.add_fingerprint(usr)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
 			if (!(status & BROKEN))
 				return
 
 			if (!src.hd)
-				boutput(usr, "<span style=\"color:red\">The memory core has already been removed.</span>")
+				boutput(user, "<span class='alert'>The memory core has already been removed.</span>")
 				return
 
 			status |= MAINT
@@ -236,7 +236,7 @@
 			src.hd = null
 			src.posted = 0
 
-			boutput(usr, "You pry out the memory core.")
+			boutput(user, "You pry out the memory core.")
 			src.updateUsrDialog()
 			return
 
@@ -247,12 +247,13 @@
 
 
 	process()
+		set waitfor = 0
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return
 		use_power(500)
 		if(prob(3))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_computer), 50, 1)
 
 		for (var/progIndex = 1, progIndex <= src.processing.len, progIndex++)
@@ -261,8 +262,13 @@
 				if (prog.disposed)
 					src.processing[progIndex] = null
 					continue
-
-				prog.process()
+				try
+					prog.process()
+				catch(var/exception/e)
+					if(findtext(e.name, "Maximum recursion level reached"))
+						src.unload_all()
+					else
+						throw e
 /*
 		for(var/datum/computer/file/mainframe_program/P in src.processing)
 			if (P)
@@ -304,7 +310,7 @@
 		//Otherwise, if they aren't addressing us, ignore them
 		if(signal.data["address_1"] != src.net_id)
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")) && signal.data["sender"])
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id)
 
 			return
@@ -319,12 +325,11 @@
 					//something might be wrong here, disconnect them!
 					var/datum/terminal_connection/conn = src.terminals[target]
 					src.terminals.Remove(target)
-					if(src.os)
-						src.os.closed_connection(conn)
+					src.os?.closed_connection(conn)
 					//qdel(conn)
 					if (conn)
 						conn.dispose()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -356,7 +361,9 @@
 					file = signal.data_file.copy_file()
 				if(src.os && data)
 					src.os.term_input(data, target, file)
-					//qdel(file)
+					if(!isnull(usr))
+						var/atom/source = signal.source
+						logTheThing(LOG_STATION, usr, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 
@@ -369,7 +376,7 @@
 
 			if("term_ping")
 				if(!(target in src.terminals))
-					SPAWN_DBG(0.3 SECONDS) //Go away!!
+					SPAWN(0.3 SECONDS) //Go away!!
 						src.post_status(target, "command","term_disconnect")
 					return
 				if(target in src.timeout_list)
@@ -381,8 +388,7 @@
 			if("term_disconnect")
 				if(target in src.terminals)
 					var/datum/terminal_connection/conn = src.terminals[target]
-					if(src.os)
-						src.os.closed_connection(conn)
+					src.os?.closed_connection(conn)
 					src.terminals -= target
 					//qdel(conn)
 					if (conn)
@@ -408,7 +414,7 @@
 			status &= ~NOPOWER
 			src.post_system() //Will simply return if POSTed already.
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = initial(src.icon_state)
 				src.icon_state += "0"
 				status |= NOPOWER
@@ -439,14 +445,14 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				//dispose()
 				src.dispose()
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else
@@ -496,7 +502,7 @@
 					return 0
 
 			if(!(program in src.processing))
-				if (src.os == program && src.processing.len)
+				if (src.os == program && length(src.processing))
 					src.processing.len++
 					for (var/x = src.processing.len, x > 0, x--)
 						var/datum/computer/file/mainframe_program/P = src.processing[x]
@@ -522,7 +528,7 @@
 
 					if (!success)
 						src.processing += program
-						program.progid = src.processing.len
+						program.progid = length(src.processing)
 
 			if (user && !allow_fork)
 				program.useracc = user
@@ -610,8 +616,7 @@
 			device_netid = lowertext(device_netid)
 			if (device_netid in src.terminals)
 				var/datum/terminal_connection/conn = src.terminals[device_netid]
-				if(src.os)
-					src.os.closed_connection(conn)
+				src.os?.closed_connection(conn)
 				src.terminals -= device_netid
 				//qdel(conn)
 				if (conn)
@@ -705,7 +710,7 @@
 		src.stage = 1
 		src.ping_wait = 4
 		src.current = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.master.post_status("ping","data","NETBOOT","net","[src.master.net_number]")
 		return
 
@@ -762,7 +767,7 @@
 			return
 
 		if( !(senderid in master.terminals) && (sendertype == "PNET_DATA_BANK" || sendertype == "HUI_TERMINAL"))
-			SPAWN_DBG(rand(1,4))
+			SPAWN(rand(1,4))
 				src.master.post_status(senderid,"command","term_connect","device",master.device_tag)
 		return
 
@@ -911,7 +916,7 @@
 			if(!src.holder || !src.holder.root)
 				return 0
 
-			for(var/datum/computer/C in src.holder.root)
+			for(var/datum/computer/C in src.holder.root.contents)
 				if(C == src || C == src.holding_folder)
 					continue
 
@@ -934,7 +939,7 @@
 				conn.dispose()
 
 				var/tempx = x
-				SPAWN_DBG(rand(1,4))
+				SPAWN(rand(1,4))
 					src.master.post_status(tempx, "command", "term_disconnect")
 
 
@@ -949,7 +954,7 @@
 	if (!the_message)
 		return 1
 
-	for (var/obj/machinery/networked/mainframe/aMainframe in machine_registry[MACHINES_MAINFRAMES])
+	for (var/obj/machinery/networked/mainframe/aMainframe as anything in machine_registry[MACHINES_MAINFRAMES])
 		LAGCHECK(LAG_LOW)
 		if (aMainframe.z != 1)
 			continue

@@ -44,8 +44,8 @@
 		system
 			name = "Atlas Survey Mission chart X0"
 			desc = "A chart of nearby moons and Nanotrasen assets around . Not to scale."
-			sizex = 1024
-			sizey = 683
+			sizex = 1033
+			sizey = 724
 
 			New()
 				..()
@@ -54,7 +54,7 @@
 				info = "<html><body style='margin:0px'><img src='[resource("images/charts/AtlasSurvey_PlasmaGiant.png")]'></body></html>"
 
 			examine()
-				..()
+				return ..()
 
 			attackby()
 				return

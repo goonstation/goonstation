@@ -15,46 +15,41 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			scanner = new /obj/machinery/clone_scanner(src) //Built-in scanner.
 			pod1 = new /obj/machinery/clonepod(src) //Built-in cloning pod.
 			computer = new /obj/machinery/computer/cloning(src) //Inbuilt computer for i/o.
+			computer.max_pods = 1 //Don't connect to external pods.
 
 			if(computer) computer.portable = 1
 			if(pod1) pod1.portable = 1
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			computer.scanner = scanner
-			computer.pod1 = pod1
+			computer.linked_pods += pod1
 
-			computer.temp = ""
-			if (isnull(computer.scanner))
-				computer.temp += " <font color=red>SCNR-ERROR</font>"
-			if (isnull(computer.pod1))
-				computer.temp += " <font color=red>POD1-ERROR</font>"
+			if (!isnull(pod1))
+				pod1.connected = computer
+
+			if (isnull(computer.scanner) || isnull(pod1))
+				computer.show_message((isnull(pod1) && "POD1-ERROR") || (isnull(computer.scanner) && "SCNR-ERROR"), "success")
+				return
 			else
-				computer.pod1.connected = computer
+				computer.show_message("System ready.", "success")
+				return
 
-			if (computer.temp == "")
-				computer.temp = "System ready."
-			return
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (W)
 			if (istype(W, /obj/item/disk/data/floppy) || isscrewingtool(W) || istype(W, /obj/item/cloner_upgrade))
-				computer.attackby(W,user)
+				computer.Attackby(W,user)
 				src.add_fingerprint(user)
 
 			else if (istype(W, /obj/item/grab))
-				scanner.attackby(W,user)
+				scanner.Attackby(W,user)
 				src.add_fingerprint(user)
 
 			else if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card) || istype(W, /obj/item/card/emag) || istype(W, /obj/item/reagent_containers/glass))
-				pod1.attackby(W,user)
+				pod1.Attackby(W,user)
 				src.add_fingerprint(user)
 
-	attack_ai(mob/user as mob)
-		return attack_hand(user)
-
-	attack_hand(mob/user as mob)
-		return computer.attack_hand(user)
+	attack_hand(mob/user)
+		return computer.Attackhand(user)

@@ -6,7 +6,6 @@
 	opacity = 1
 	anchored = 0
 	mouse_opacity = 0
-	event_handler_flags = USE_HASENTERED
 	var/amount = 6
 	var/mob/living/fartowner = null
 
@@ -16,9 +15,9 @@
 			if (H == src.fartowner)
 				continue
 			if (prob(20))
-				boutput(H, "<span style=\"color:red\">Oh god! The <i>smell</i>!!!</span>")
+				boutput(H, "<span class='alert'>Oh god! The <i>smell</i>!!!</span>")
 			H.reagents.add_reagent("jenkem",0.1)
-		sleep(15)
+		sleep(1.5 SECONDS)
 		if(amount < 1)
 			dispose()
 			return
@@ -30,12 +29,12 @@
 	if (owner)
 		fartowner = owner
 	amount = rand(3,8)
-	SPAWN_DBG(0)
+	SPAWN(0)
 		src.Life()
 	return
 
 /obj/effects/fart_cloud/Move()
-	..()
+	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
 		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
 			continue
@@ -44,9 +43,10 @@
 		R.reagents.add_reagent("jenkem",1)
 	return
 
-/obj/effects/fart_cloud/HasEntered(mob/living/carbon/human/R as mob )
+/obj/effects/fart_cloud/Crossed(atom/movable/AM)
 	..()
-	if (ishuman(R))
+	if (ishuman(AM))
+		var/mob/living/carbon/human/R = AM
 		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
 			return
 		if (R == src.fartowner)

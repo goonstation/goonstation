@@ -28,12 +28,12 @@
 
 /datum/ticket_reward/tonic
 	name = "Tonic"
-	path = /obj/item/reagent_containers/food/drinks/bottle/drowsy
+	path = /obj/item/reagent_containers/food/drinks/bottle/soda/drowsy
 	description = "A divine lemon soda tonic that synchronizes your circadian rhythm and empowers your REM sleep."
 
 /datum/ticket_reward/ale
 	name = "Ginger Ale"
-	path = /obj/item/reagent_containers/food/drinks/bottle/gingerale
+	path = /obj/item/reagent_containers/food/drinks/bottle/soda/gingerale
 	description = "A soothing ginger root drink, chock full of vitamins A through K."
 
 /datum/ticket_reward/peach_drink
@@ -48,7 +48,7 @@
 
 /datum/ticket_reward/donut
 	name = "Donut"
-	path = /obj/item/reagent_containers/food/snacks/donut/cinnamon
+	path = /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon
 	description = "An absurdly delicious cinammon donut."
 
 /datum/ticket_reward/strudel
@@ -149,21 +149,21 @@
 		light.attach(src)
 		light.enable()
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if(istype(I, /obj/item/ticket/golden))
 			qdel(I)
-			boutput(user, "<span style=\"color:blue\">You insert the golden ticket into the GTM.</span>")
+			boutput(user, "<span class='notice'>You insert the golden ticket into the GTM.</span>")
 			src.current_tickets++
 			src.updateUsrDialog()
 		else
-			src.attack_hand(user)
+			src.Attackhand(user)
 		return
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/dat = "<span style=\"inline-flex\">"
 		dat += "<BR>Current balance: [src.current_tickets] tickets"
 
@@ -179,7 +179,7 @@
 	Topic(href, href_list)
 		if(..())
 			return
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if(href_list["redeem"])
 			src.temp = "<BR><B>Please select the rewards that you would like to redeem your tickets for:</B><BR><BR>"
@@ -233,7 +233,7 @@
 	name = "ticket"
 	desc = "It's a ticket."
 	icon = 'icons/obj/discountdans.dmi'
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 
 /obj/item/ticket/golden
 	name = "golden ticket"
@@ -252,7 +252,7 @@
 	desc = "A magnifying glass made from solid oak, which is quite rare in space. It has a huge lens and the letters DD etched on the handle."
 	icon = 'icons/obj/discountdans.dmi'
 	icon_state = "magnifying_glass"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 /* Idea stuff here
 

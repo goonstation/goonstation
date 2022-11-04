@@ -1,0 +1,11 @@
+/**
+ * Copyright (c) 2021 Ben Lubar
+ * SPDX-License-Identifier: MIT
+ */
+
+@use 'partial/genetek';
+
+.theme-genetek {
+  @include genetek.genetek-theme;
+  @include genetek.genetek-theme-buttons;
+}

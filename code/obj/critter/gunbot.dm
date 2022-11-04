@@ -8,7 +8,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 0
 	atcritter = 1
@@ -32,16 +32,16 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0
@@ -60,15 +60,15 @@
 				src.target = C
 				src.oldtarget_name = C.name
 
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> fires at [src.target]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> fires at [src.target]!</span>")
 
-				playsound(src.loc, "sound/weapons/Gunshot.ogg", 50, 1)
+				playsound(src.loc, 'sound/weapons/Gunshot.ogg', 50, 1)
 				var/tturf = get_turf(target)
-				SPAWN_DBG(1 DECI SECOND)
+				SPAWN(1 DECI SECOND)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.4 SECONDS)
+				SPAWN(0.4 SECONDS)
 					Shoot(tturf, src.loc, src)
-				SPAWN_DBG(0.6 SECONDS)
+				SPAWN(0.6 SECONDS)
 					Shoot(tturf, src.loc, src)
 
 				src.attack = 0
@@ -79,19 +79,17 @@
 	CritterDeath()
 		if (!src.alive) return
 		..()
-		if (get_area(src) != colosseum_controller.colosseum)
-			var/turf/Ts = get_turf(src)
-			var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left, /obj/item/parts/robot_parts/arm/right)
-			var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left, /obj/item/parts/robot_parts/arm/right)
 
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			new drop1(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
-			new drop2(Ts)
-			make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		var/turf/Ts = get_turf(src)
+		var/obj/item/drop1 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
+		var/obj/item/drop2 = pick(/obj/item/electronics/battery,/obj/item/electronics/board,/obj/item/electronics/buzzer,/obj/item/electronics/frame,/obj/item/electronics/resistor,/obj/item/electronics/screen,/obj/item/electronics/relay, /obj/item/parts/robot_parts/arm/left/standard, /obj/item/parts/robot_parts/arm/right/standard)
 
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(3, 1, src)
-			s.start()
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		new drop1(Ts)
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+		new drop2(Ts)
+		make_cleanable( /obj/decal/cleanable/robot_debris,Ts)
+
+		SPAWN(0)
+			elecflash(src,2)
 			qdel(src)

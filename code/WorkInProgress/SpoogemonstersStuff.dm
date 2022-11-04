@@ -8,7 +8,7 @@
 			removeChem(chem)
 
 		if(istext(amount))
-			amount = text2num(amount)
+			amount = text2num_safe(amount)
 
 		chems.Add(chem)
 		amounts[chem] = amount
@@ -18,7 +18,7 @@
 		amounts[chem] = 0
 
 	proc/setTemp(var/ttemp as text)
-		temp = text2num(ttemp)
+		temp = text2num_safe(ttemp)
 
 	proc/createBeaker(var/holder)
 		var/obj/item/reagent_containers/glass/B = new(holder)
@@ -86,14 +86,15 @@
 	var/list/temps = list()
 
 	New()
+		..()
 		UnsubscribeProcess()
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -124,14 +125,14 @@
 	Topic(href, href_list)
 		switch(href_list["action"])
 			if("add")
-				addChem(href_list["chem"], text2num(href_list["amount"]), text2num(href_list["beaker"]))
+				addChem(href_list["chem"], text2num_safe(href_list["amount"]), text2num_safe(href_list["beaker"]))
 
 				usr << output(href_list["chem"] + ";" + href_list["amount"], "cheminterface.browser:addCallback")
 			if("remove")
-				removeChem(href_list["chem"], text2num(href_list["beaker"]))
+				removeChem(href_list["chem"], text2num_safe(href_list["beaker"]))
 
 			if("temp")
-				setTemp(href_list["temp"], text2num(href_list["beaker"]))
+				setTemp(href_list["temp"], text2num_safe(href_list["beaker"]))
 
 			if("grenade")
 				grenade(href_list["name"])
@@ -157,7 +158,7 @@
 
 	proc/removeChem(var/chem as text, var/beaker=1)
 		if(istext(beaker))
-			beaker = text2num(beaker)
+			beaker = text2num_safe(beaker)
 
 		if(beaker > beakerSpecs.len || isnull(beakerSpecs[beaker]))
 			return
@@ -252,7 +253,10 @@
 		R.my_atom = adminPatch
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
+		if(!isadmin(user) && current_state < GAME_STATE_FINISHED)
+			boutput(user, "<span class='alert'>This dispenser is too powerful for you!</span>")
+			return
 		panel()
 
 	proc/panel()
@@ -287,7 +291,7 @@
 		span.addChildElement(chemSelect)
 		chemSelect.setId("chemselect")
 		chemSelect.setName("chemselect")
-		for(var/rtype in global.reagents_cache)
+		for(var/rtype in all_functional_reagent_ids)
 			chemSelect.addOption(rtype,rtype)
 
 		span = new

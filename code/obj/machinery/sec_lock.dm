@@ -1,7 +1,7 @@
 /obj/machinery/sec_lock/attack_ai(user as mob)
-	return //src.attack_hand(user)
+	return //src.Attackhand(user)
 
-/obj/machinery/sec_lock/attack_hand(var/mob/user as mob)
+/obj/machinery/sec_lock/attack_hand(var/mob/user)
 	if(..())
 		return
 	use_power(10)
@@ -13,11 +13,11 @@
 	return
 
 /obj/machinery/sec_lock/attackby(nothing, user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/sec_lock/New()
 	..()
-	SPAWN_DBG( 2 )
+	SPAWN( 2 )
 		if (src.a_type == 1)
 			src.d2 = locate(/obj/machinery/door, locate(src.x - 2, src.y - 1, src.z))
 			src.d1 = locate(/obj/machinery/door, get_step(src, SOUTHWEST))
@@ -35,10 +35,10 @@
 	if(..())
 		return
 	if ((!( src.d1 ) || !( src.d2 )))
-		boutput(usr, "<span style=\"color:red\">Error: Cannot interface with door security!</span>")
+		boutput(usr, "<span class='alert'>Error: Cannot interface with door security!</span>")
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr))))
+		src.add_dialog(usr)
 		if (href_list["card"])
 			if (src.scan)
 				src.scan.set_loc(src.loc)
@@ -53,22 +53,22 @@
 			if (src.scan)
 				if (src.check_access(src.scan))
 					if (src.d1.density)
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d1.open()
 							return
 					else
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d1.close()
 							return
 		if (href_list["door2"])
 			if (src.scan)
 				if (src.check_access(src.scan))
 					if (src.d2.density)
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d2.open()
 							return
 					else
-						SPAWN_DBG( 0 )
+						SPAWN( 0 )
 							src.d2.close()
 							return
 		if (href_list["em_cl"])
@@ -77,20 +77,20 @@
 					if (!( src.d1.density ))
 						src.d1.close()
 						return
-					sleep(1)
-					SPAWN_DBG( 0 )
+					sleep(0.1 SECONDS)
+					SPAWN( 0 )
 						if (!( src.d2.density ))
 							src.d2.close()
 						return
 		if (href_list["em_op"])
 			if (src.scan)
 				if (src.check_access(src.scan))
-					SPAWN_DBG( 0 )
+					SPAWN( 0 )
 						if (src.d1.density)
 							src.d1.open()
 						return
-					sleep(1)
-					SPAWN_DBG( 0 )
+					sleep(0.1 SECONDS)
+					SPAWN( 0 )
 						if (src.d2.density)
 							src.d2.open()
 						return

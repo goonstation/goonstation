@@ -1,3 +1,5 @@
+ABSTRACT_TYPE(/obj/item/parts)
+
 /obj/item/parts
 	name = "body part"
 	icon = 'icons/obj/robot_parts.dmi'
@@ -5,6 +7,7 @@
 	item_state = "buildpipe"
 	flags = FPRINT | ONBELT | TABLEPASS
 	override_attack_hand = 0
+	var/skin_tone = "#FFFFFF"
 	var/slot = null // which part of the person or robot suit does it go on???????
 	var/streak_decal = /obj/decal/cleanable/blood // what streaks everywhere when it's cut off?
 	var/streak_descriptor = "bloody" //bloody, oily, etc
@@ -14,7 +17,34 @@
 	var/side = "left" //used for streak direction
 	var/remove_stage = 0 //2 will fall off, 3 is removed
 	var/no_icon = 0 //if the only icon is above the clothes layer ie. in the handlistPart list
-	var/skintoned = 1 // is this affected by human skin tones?
+	var/skintoned = 1 // is this affected by human skin tones? Also if the severed limb uses a separate bloody-stump icon layered on top
+
+	/// Gets overlaid onto the severed limb, under the stump if the limb is skintoned
+	/// The icon of this overlay
+	var/severed_overlay_1_icon
+	/// The state of this overlay
+	var/severed_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/severed_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this limb, like kudzu vines. Only handles the limb, not the hand/foot!
+	var/image/limb_overlay_1
+	/// The icon of this overlay
+	var/limb_overlay_1_icon
+	/// The state of this overlay
+	var/limb_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/limb_overlay_1_color
+
+	/// Gets sent to update_body to overlay something onto this hand/foot, like kudzu vines. Only handles the hand/foot, not the limb!
+	var/image/handfoot_overlay_1
+	/// The icon of this overlay
+	var/handfoot_overlay_1_icon
+	/// The state of this overlay
+	var/handfoot_overlay_1_state
+	/// The color reference. null for uncolored("#ffffff"), CUST_1/2/3 for one of the mob's haircolors, SKIN_TONE for the mob's skintone
+	var/handfoot_overlay_1_color
+
 	var/easy_attach = 0 //Attachable without surgery?
 
 	var/decomp_affected = 1 // set to 1 if this limb has decomposition icons
@@ -23,29 +53,46 @@
 
 	var/mob/living/holder = null
 
-	var/image/standImage
-	var/image/lyingImage
-	var/partIcon = 'icons/mob/human.dmi'
+	var/image/standImage	// Used by getMobIcon to pass off to update_body. Typically holds image(the_limb's_icon, "[src.slot]")
+	var/image/lyingImage	// Appears to be unused, since we just rotate the sprite through animagic
+	var/partIcon = 'icons/mob/human.dmi'	// The icon the mob sprite uses when attached, change if the limb's icon isnt in 'icons/mob/human.dmi'
 	var/partDecompIcon = 'icons/mob/human_decomp.dmi'
-	var/handlistPart
-	var/partlistPart
+	var/handlistPart	// Used by getHandIconState to determine the attached-to-mob-sprite hand sprite
+	var/partlistPart	// Ditto, but for foot sprites, presumably
 	var/datum/bone/bones = null // for medical crap
 	var/brute_dam = 0
 	var/burn_dam = 0
 	var/tox_dam = 0
 	var/siemens_coefficient = 1
 	var/step_image_state = null // for legs, we leave footprints in this style (located in blood.dmi)
+	var/accepts_normal_human_overlays = 1 //for avoiding istype in update icon
+	var/datum/movement_modifier/movement_modifier // When attached, applies this movement modifier
+	/// If TRUE, it'll resist mutantraces trying to change them
+	var/limb_is_unnatural = FALSE
+	/// Limb is not attached to its original owner
+	var/limb_is_transplanted = FALSE
+	/// What kind of limb is this? So we dont have to do dozens of typechecks. is bitflags, check defines/item.dm
+	var/kind_of_limb
+	/// Can we roll this limb as a random limb?
+	var/random_limb_blacklisted = 0
 
 	New(atom/new_holder)
 		..()
 		if(istype(new_holder, /mob/living))
 			src.holder = new_holder
 		src.limb_data = new src.limb_type(src)
+		if (holder && movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 
 	disposing()
 		if (limb_data)
 			limb_data.holder = null
 		limb_data = null
+
+		if(ishuman(holder))
+			var/mob/living/carbon/human/H = holder
+			if(H.limbs.vars[src.slot] == src)
+				H.limbs.vars[src.slot] = null
 
 		if (holder)
 			if (holder.organHolder)
@@ -55,20 +102,23 @@
 					if(holder.organHolder.organ_list[thing] == src)
 						holder.organHolder.organ_list[thing] = null
 
-			if (holder.organs)
-				holder.organs -= src
+			if (holder?.organs?[src.slot] == src)
+				holder.organs[src.slot] = null
 		holder = null
 
 		if (bones)
-			bones.disposing()
+			bones.dispose()
 
 		..()
 
 	//just get rid of it. don't put it on the floor, don't show a message
 	proc/delete()
+		if (holder && movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			H.limbs.vars[src.slot] = null
+			H.organs[src.slot] = null
 			if(remove_object)
 				if (H.l_hand == remove_object)
 					H.l_hand = null
@@ -90,6 +140,9 @@
 				qdel(src)
 			return
 
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
+
 		var/obj/item/object = src
 		if(remove_object)
 			object = remove_object
@@ -97,15 +150,13 @@
 			object.cant_drop = initial(object.cant_drop)
 		else
 			remove_stage = 3
-		object.loc = src.holder.loc
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
+		object.set_loc(src.holder.loc)
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]"
 		object.add_fingerprint(src.holder)
 
-		if(show_message) holder.visible_message("<span style=\"color:red\">[holder.name]'s [object.name] falls off!</span>")
+		if(show_message) holder.visible_message("<span class='alert'>[holder.name]'s [object.name] falls off!</span>")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
@@ -128,6 +179,8 @@
 		else if(remove_object)
 			src.remove_object = null
 			qdel(src)
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	proc/sever(var/mob/user)
@@ -138,8 +191,11 @@
 				qdel(src)
 			return
 
+		if (movement_modifier)
+			REMOVE_MOVEMENT_MODIFIER(holder, movement_modifier, src.type)
+
 		if (user)
-			logTheThing("admin", user, src.holder, "severed %target%'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
+			logTheThing(LOG_ADMIN, user, "severed [constructTarget(src.holder,"admin")]'s limb, [src] (<i>type: [src.type], side: [src.side]</i>)")
 
 		var/obj/item/object = src
 		if(remove_object)
@@ -149,16 +205,14 @@
 		else
 			remove_stage = 3
 
-		object.loc = src.holder.loc
+		object.set_loc(src.holder.loc)
 		var/direction = src.holder.dir
-		if(hasvar(object,"skin_tone"))
-			object:skin_tone = holder.bioHolder.mobAppearance.s_tone
 
 		//https://forum.ss13.co/showthread.php?tid=1774
 		//object.name = "[src.holder.real_name]'s [initial(object.name)]" //Luis Smith's Dr. Kay's Luis Smith's Sailor Dave's Left Arm
 		object.add_fingerprint(src.holder)
 
-		holder.visible_message("<span style=\"color:red\">[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
+		holder.visible_message("<span class='alert'>[holder.name]'s [object.name] flies off in a [src.streak_descriptor] arc!</span>")
 
 		switch(direction)
 			if(NORTH)
@@ -174,14 +228,16 @@
 			direction = turn(direction,180)
 
 		if (isitem(object))
-			object.streak(direction, src.streak_decal)
+			object.streak_object(direction, src.streak_decal)
 
-		if(prob(60)) holder.emote("scream")
+		if(prob(60))
+			INVOKE_ASYNC(holder, /mob.proc/emote, "scream")
 
 		if(ishuman(holder))
 			var/mob/living/carbon/human/H = holder
 			holder = null
-			H.limbs.vars[src.slot] = null
+			if(H.limbs.vars[src.slot] == src) //BAD BAD HACK FUCK FUCK UGLY SHITCODE - Tarm
+				H.limbs.vars[src.slot] = null
 			if(remove_object)
 				src.remove_object = null
 				qdel(src)
@@ -201,60 +257,53 @@
 			src.remove_object = null
 			holder = null
 			qdel(src)
-
+		if(!QDELETED(src))
+			src.holder = null
 		return object
 
 	//for humans
-	attach(var/mob/living/carbon/human/attachee,var/mob/attacher,var/both_legs = 0)
-		if(!both_legs) attachee.limbs.vars[src.slot] = src
-		else
-			attachee.limbs.l_leg = src
-			attachee.limbs.r_leg = src
+	attach(var/mob/living/carbon/human/attachee,var/mob/attacher)
+		if(!ishuman(attachee) || attachee.limbs.vars[src.slot])
+			return ..()
+		if(attacher)
+			if(!can_act(attacher))
+				return
+			if(!src.easy_attach)
+				if(!surgeryCheck(attachee, attacher))
+					return
+			if(attacher.zone_sel.selecting != slot)
+				return ..()
+
+			attacher.remove_item(src)
+
+			playsound(attachee, 'sound/effects/attach.ogg', 50, 1)
+			attacher.visible_message("<span class='alert'>[attacher] attaches [src] to [attacher == attachee ? his_or_her(attacher) : "[attachee]'s"] stump. It [src.easy_attach ? "fuses instantly" : "doesn't look very secure"]!</span>")
+
+		attachee.limbs.vars[src.slot] = src
 		src.holder = attachee
-		attacher.remove_item(src)
 		src.layer = initial(src.layer)
 		src.screen_loc = ""
 		src.set_loc(attachee)
-		src.remove_stage = 2
+		src.remove_stage = src.easy_attach ? 0 : 2
 
-		for(var/mob/O in AIviewers(attachee, null))
-			if(O == (attacher || attachee))
-				continue
-			if(attacher == attachee)
-				O.show_message("<span style=\"color:red\">[attacher] attaches a [src] to \his own stump[both_legs? "s" : ""]!</span>", 1)
-			else
-				O.show_message("<span style=\"color:red\">[attachee] has a [src] attached to \his stump[both_legs? "s" : ""] by [attacher].</span>", 1)
+		if (movement_modifier)
+			APPLY_MOVEMENT_MODIFIER(src.holder, movement_modifier, src.type)
 
-		if (src.easy_attach) //No need to make it drop off later if it attaches instantly.
-			if(attachee != attacher)
-				boutput(attachee, "<span style=\"color:red\">[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It fuses instantly with the muscles and tendons!</span>")
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
-			else
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to your own stump[both_legs? "s" : ""]. It fuses instantly with the muscle and tendons!</span>")
-			src.remove_stage = 0
-		else
-			if(attachee != attacher)
-				boutput(attachee, "<span style=\"color:red\">[attacher] attaches a [src] to your stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to [attachee]'s stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-			else
-				boutput(attacher, "<span style=\"color:red\">You attach a [src] to your own stump[both_legs? "s" : ""]. It doesn't look very secure!</span>")
-
-			SPAWN_DBG(rand(150,200))
-				if(remove_stage == 2) src.remove()
+		SPAWN(rand(150,200))
+			if(remove_stage == 2) src.remove()
 
 		attachee.update_clothing()
 		attachee.update_body()
-		attachee.set_body_icon_dirty()
 		attachee.UpdateDamageIcon()
 		if (src.slot == "l_arm" || src.slot == "r_arm")
 			attachee.hud.update_hands()
 
-		return
+		return TRUE
 
 	proc/surgery(var/obj/item/I) //placeholder
 		return
 
-	proc/getMobIcon(var/lying, var/decomp_stage = 0)
+	proc/getMobIcon(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if(no_icon) return 0
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
@@ -277,12 +326,12 @@
 			src.standImage = image(used_icon, "[src.slot][decomp]")
 			return standImage
 
-	proc/getAttachmentIcon(var/decomp_stage = 0)
+	proc/getAttachmentIcon(var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		if (src.decomp_affected && decomp_stage)
 			return src.partDecompIcon
 		return src.partIcon
 
-	proc/getHandIconState(var/lying, var/decomp_stage = 0)
+	proc/getHandIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -290,7 +339,7 @@
 		//boutput(world, "Attaching standing hand [src.slot][decomp]_s on decomp stage [decomp_stage].")
 		return "[src.handlistPart][decomp]"
 
-	proc/getPartIconState(var/lying, var/decomp_stage = 0)
+	proc/getPartIconState(var/lying, var/decomp_stage = DECOMP_STAGE_NO_ROT)
 		var/decomp = ""
 		if (src.decomp_affected && decomp_stage)
 			decomp = "_decomp[decomp_stage]"
@@ -301,13 +350,60 @@
 	proc/on_holder_examine()
 		return
 
-/obj/item/proc/streak(var/direction, var/streak_splatter) //stolen from gibs
-	SPAWN_DBG (0)
-		if (istype(direction, /list))
-			direction = pick(direction)
-		for (var/i = 0, i < rand(1,3), i++)
-			LAGCHECK(LAG_LOW)//sleep(3)
-			if (i > 0 && ispath(streak_splatter))
-				make_cleanable(streak_splatter,src.loc)
-			if (!step_to(src, get_step(src, direction), 0))
-				break
+/obj/item/proc/streak_object(var/list/directions, var/streak_splatter) //stolen from gibs
+	var/destination
+	var/dist = rand(1,6)
+	if(prob(10))
+		dist = 30 // Occasionally throw the chunk somewhere *interesting*
+	if(length(directions))
+		destination = pick(directions)
+		if(!(destination in cardinal))
+			destination = null
+
+	if(destination)
+		destination = GetRandomPerimeterTurf(get_turf(src), dist, destination)
+	else
+		destination = GetRandomPerimeterTurf(get_turf(src), dist)
+
+	var/list/linepath = getline(src, destination)
+
+	SPAWN(0)
+		/// Number of tiles where it should try to make a splatter
+		var/num_splats = rand(round(dist * 0.2), dist) + 1
+		for (var/turf/T in linepath)
+			if(step_to(src, T, 0, 300) || num_splats-- >= 1)
+				if (ispath(streak_splatter))
+					make_cleanable(streak_splatter,src.loc)
+			sleep(0.1 SECONDS)
+
+
+var/global/list/all_valid_random_right_arms = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_right_arm_slot)
+var/global/list/all_valid_random_left_arms = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_left_arm_slot)
+var/global/list/all_valid_random_right_legs = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_right_leg_slot)
+var/global/list/all_valid_random_left_legs = filtered_concrete_typesof(/obj/item/parts, /proc/goes_in_left_leg_slot)
+
+/proc/goes_in_right_arm_slot(var/type)
+	var/obj/item/parts/fakeInstance = type
+	return (((initial(fakeInstance.slot) == "r_arm")) && !(initial(fakeInstance.random_limb_blacklisted)))
+
+/proc/goes_in_left_arm_slot(var/type)
+	var/obj/item/parts/fakeInstance = type
+	return (((initial(fakeInstance.slot) == "l_arm")) && !(initial(fakeInstance.random_limb_blacklisted)))
+
+/proc/goes_in_right_leg_slot(var/type)
+	var/obj/item/parts/fakeInstance = type
+	return (((initial(fakeInstance.slot) == "r_leg")) && !(initial(fakeInstance.random_limb_blacklisted)))
+
+/proc/goes_in_left_leg_slot(var/type)
+	var/obj/item/parts/fakeInstance = type
+	return (((initial(fakeInstance.slot) == "l_leg")) && !(initial(fakeInstance.random_limb_blacklisted)))
+
+/proc/randomize_mob_limbs(var/mob/living/carbon/human/target, var/mob/user, var/zone = "all", var/showmessage = 1)
+	if (!target)
+		return 0
+	var/datum/human_limbs/targetlimbs = target.limbs
+	if (!targetlimbs)
+		return 0
+	return targetlimbs.randomize(zone, user, showmessage)
+
+

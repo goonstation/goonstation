@@ -6,7 +6,7 @@
 
 
 /client/proc/main_loop_context()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Main Loop Context"
 	set desc = "Displays the current main loop context information (lastproc: lasttask \[world.timeofday\])"
 	if(src.holder)
@@ -16,7 +16,7 @@
 
 // this is a godawful hack for now, pending cleanup as part of a better main loop control panel. but hey it works
 /client/proc/main_loop_tick_detail()
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set name = "Main Loop Tick Detail"
 	set desc = "Displays detailed tick information for the main loops that support it."
 	if(src.holder)

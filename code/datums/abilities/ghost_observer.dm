@@ -6,13 +6,22 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	var/points = 0
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
-	var/net_points = list()				//assoc list of ckeys to their net points.
+	var/earned_points = list()				//assoc list of ckeys to their gained points.
+	var/spent_points = list()				//assoc list of ckeys to their spent points.
+	var/maxed_out = 0					//set to 1 if the points get up to MAX_POINTS so we can play the special event/thing
 
-	var/obj/screen/spooktober_meter/meter = new()
+	var/atom/movable/screen/spooktober_meter/meter = new()
 
 	proc/change_points(var/ckey, var/added as num)
-		net_points[ckey] += added
+		if (ckey)
+			if (added > 0)
+				earned_points[ckey] += added
+			else
+				spent_points[ckey] += added
 		src.points += added
+		if (src.points >= MAX_POINTS)
+			do_event()
+
 
 	proc/update()
 
@@ -27,11 +36,22 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		last_meter_location = cur_meter_location
 
-/obj/screen/spooktober_meter
+	proc/do_event()
+		//Only 1 per round
+		if (maxed_out)
+			return
+		maxed_out = 1
+
+
+/atom/movable/screen/spooktober_meter
 	icon = 'icons/mob/spooktober_ghost_hud160x32.dmi'
 	icon_state = "empty"
 	name = "Spooktober Spookpoints Meter"
+	desc = "Seems to indicate how spooky the current ghosts are in this sector."
 	var/theme = null // for wire's tooltips, it's about time this got varized
+
+	get_desc()
+		. += "[spooktober_GH.points] Points!"
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
@@ -41,7 +61,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
 				"title" = "spooktober spook points",//src.name,
-				"content" = "[spooktober_GH.points] Points",//(src.desc ? src.desc : null),
+				"content" = "[spooktober_GH.points] Points <br>All Points are shared between ghosts. <br>Spinning chairs, flipping, using the ouija board, and farting on people as a ghost generates more points faster.",//(src.desc ? src.desc : null),
 				"theme" = theme
 			))
 
@@ -51,16 +71,22 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 #endif
 
-/obj/screen/ability/topBar/ghost_observer
+/atom/movable/screen/ability/topBar/ghost_observer
 	clicked(params)
 		var/datum/targetable/ghost_observer/abil = owner
 		if (!istype(abil))
 			return
 		if (!abil.holder)
 			return
-		SPAWN_DBG(0)
+		SPAWN(0)
 			abil.handleCast()
 
+#ifdef HALLOWEEN
+	//total hack here, but lazy and in a hurry. -Kyle
+	update_cooldown_cost()
+		owner?.holder.points = spooktober_GH.points
+		..()
+#endif
 /datum/abilityHolder/ghost_observer
 	usesPoints = 0
 	regenRate = 0
@@ -71,20 +97,24 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 #ifdef HALLOWEEN
 	usesPoints = 1
 	var/points_since_last_tick = 0		//resets every life tick, prevents you from getting more than 10 points a tick from spam nonsense.
+	var/spooking = 0		//if they're in their extra spooky form where they're visible and blurry.
 
 	proc/change_points(var/amt as num)
 		if (owner.client)
 			if (points_since_last_tick < 50)
+				var/k = 1
 				if (amt > 0)
 					points_since_last_tick += amt
+					k = 1 //3 //when ready with event.
 
-				spooktober_GH.change_points(owner.client.ckey, amt*3)
+				spooktober_GH.change_points(owner.client.ckey, amt*k)		//idk why I did this with the multiplying by a constant, but I'll keep it
+				src.points = spooktober_GH.points
 
 	pointCheck(cost)
 		// if (!usesPoints)
 		// 	return 1
 		if (spooktober_GH.points < 0) // Just-in-case fallback.
-			logTheThing("debug", usr, null, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
+			logTheThing(LOG_DEBUG, usr, "'s ability holder ([src.type]) was set to an invalid value (points less than 0), resetting.")
 			spooktober_GH.points = 0
 		if (cost > spooktober_GH.points)
 			boutput(owner, notEnoughPointsMessage)
@@ -93,7 +123,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	deductPoints(cost)
 		..()
-		spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
+		if (owner.client)
+			spooktober_GH.change_points(owner.client.ckey, -abs(cost))	//idk what format this comes in, I'll be safe
 
 
 #endif
@@ -112,11 +143,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (display_buttons)
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 0
+					A.object.invisibility = INVIS_NONE
 		else
 			for (var/datum/targetable/ghost_observer/A in src.abilities)
 				if (!istype (A, /datum/targetable/ghost_observer/toggle_HUD) && istype(A.object))
-					A.object.invisibility = 100
+					A.object.invisibility = INVIS_ALWAYS_ISH
 
 	proc/add_all_abilities()
 		src.addAbility(/datum/targetable/ghost_observer/toggle_HUD)
@@ -127,10 +158,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/afterlife_Bar)
 		// src.addAbility(/datum/targetable/ghost_observer/respawn_animal)	//moved to respawn_options menu
 		src.addAbility(/datum/targetable/ghost_observer/respawn_options)
-		
-#if ASS_JAM
-		src.addAbility(/datum/targetable/ghost_observer/ass_day_arena)
-#endif
+
+
 #ifdef HALLOWEEN
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_hud)
 
@@ -139,6 +168,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.addAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.addAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.addAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.addAbility(/datum/targetable/ghost_observer/manifest)
 
 		src.addAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
@@ -163,10 +193,20 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		// src.removeAbility(/datum/targetable/ghost_observer/levitate_chair)
 		src.removeAbility(/datum/targetable/ghost_observer/spooky_sounds)
 		src.removeAbility(/datum/targetable/ghost_observer/summon_bat)
+		src.removeAbility(/datum/targetable/ghost_observer/manifest)
 		src.removeAbility(/datum/targetable/ghost_observer/decorate)
 		src.removeAbility(/datum/targetable/ghost_observer/spooktober_writing)
 #endif
 		src.updateButtons()
+
+#ifdef HALLOWEEN
+
+/datum/abilityHolder/ghost_observer/proc/stop_spooking()
+	var/datum/targetable/ghost_observer/manifest/ability = getAbility(/datum/targetable/ghost_observer/manifest)
+	if (istype(ability))
+		ability.stop_spooking()
+
+#endif
 
 /datum/targetable/ghost_observer
 	cooldown = 0
@@ -302,6 +342,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		displaying_buttons = !displaying_buttons
+		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
+			boutput(holder.owner, "Sorry, respawn options aren't availbale during football mode.")
+			displaying_buttons = 0
 		if (!displaying_buttons)
 			holder.owner.closeContextActions()
 
@@ -325,7 +368,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	desc = "Go to the Respawn Arena."
 	icon_state = "ass_day_arena"
 	targeted = 0
-	cooldown = 15
+	cooldown = 0
 
 	cast(atom/target)
 		if (holder && istype(holder.owner, /mob/dead/observer))
@@ -333,7 +376,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			ghost.go_to_respawn_arena()
 
 		else
-			boutput(usr, "Uhhh something broke. Oops. Please go yell at [pick("Firebarrage","Kyle","Flourish","Azungar","Gannets","Bubs","Simian","Hydrofloric")] to get this fixed.")
+			boutput(usr, "Uhhh something broke. Oops. Please go yell at a coder to get this fixed.")
 
 #ifdef HALLOWEEN
 /datum/targetable/ghost_observer/spooktober_hud
@@ -373,8 +416,10 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (!holder)
 			return 1
 
-		boutput(holder.owner, "<span style=\"color:red\">You exert some force to levitate [target]!</span>")
-		SPAWN_DBG(rand(30,50))
+		boutput(holder.owner, "<span class='alert'>You exert some force to levitate [target]!</span>")
+		SPAWN(rand(30,50))
+			if (!holder)
+				return
 			//levitates the target chair, as well as any mobs mobs buckled in. Since buckled mobs are placed into the chair/bed's contents
 			//only doing chair. doing the bed levatate moves the mobs on it in a weird way, and I don't wanna spend the time to fix it
 			if (istype(target, /obj/stool/chair)/* || istype(target, /obj/stool/bed)*/)
@@ -382,12 +427,12 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 					if (L.buckled)
 						animate_levitate(L, 1, 10)
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span style=\"color:red\">You levitate[target] and its occupant(s)!</span>")
+				boutput(holder.owner, "<span class='alert'>You levitate[target] and its occupant(s)!</span>")
 			else if (istype(target, /obj/item))
 				animate_levitate(target, 1, 10)
-				boutput(holder.owner, "<span style=\"color:red\">You levitate[target]!</span>")
+				boutput(holder.owner, "<span class='alert'>You levitate[target]!</span>")
 			else
-				boutput(holder.owner, "<span style=\"color:red\">But it's beyond your power!</span>")
+				boutput(holder.owner, "<span class='alert'>But it's beyond your power!</span>")
 
 
 /datum/targetable/ghost_observer/spooky_sounds
@@ -408,9 +453,9 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		var/turf/T = get_turf(holder.owner)
-		var/S = pick("sound/ambience/nature/Wind_Cold1.ogg", "sound/ambience/nature/Wind_Cold2.ogg", "sound/ambience/nature/Wind_Cold3.ogg","sound/ambience/nature/Cave_Bugs.ogg", "sound/ambience/nature/Glacier_DeepRumbling1.ogg", "sound/effects/bones_break.ogg", "sound/effects/glitchy1.ogg",	"sound/effects/gust.ogg", "sound/effects/static_horror.ogg", "sound/effects/blood.ogg", "sound/effects/kaboom.ogg")
+		var/S = pick('sound/ambience/nature/Wind_Cold1.ogg', 'sound/ambience/nature/Wind_Cold2.ogg', 'sound/ambience/nature/Wind_Cold3.ogg','sound/ambience/nature/Cave_Bugs.ogg', 'sound/ambience/nature/Glacier_DeepRumbling1.ogg', 'sound/effects/bones_break.ogg', 'sound/effects/glitchy1.ogg',	'sound/effects/gust.ogg', 'sound/effects/static_horror.ogg', 'sound/effects/blood.ogg', 'sound/effects/kaboom.ogg')
 		playsound(T, S, 30, 0, -1)
-		boutput(holder.owner, "<span style=\"color:red\">You make a spooky sound!</span>")
+		boutput(holder.owner, "<span class='alert'>You make a spooky sound!</span>")
 
 
 /datum/targetable/ghost_observer/decorate
@@ -447,11 +492,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (4)
 					new/obj/item/reagent_containers/food/snacks/plant/pumpkin/summon(T)
 				if (5)
-					new/obj/decal/skeleton/unanchored/summon(T)
+					new/obj/decal/fakeobjects/skeleton/unanchored/summon(T)
 				if (6)
 					new/obj/decal/cleanable/vomit/spiders(T)
 
-			boutput(usr, "<span style=\"color:blue\">Matter from your realm appears near the designated location!</span>")
+			boutput(usr, "<span class='notice'>Matter from your realm appears near the designated location!</span>")
 
 
 /datum/targetable/ghost_observer/spooktober_writing
@@ -462,7 +507,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	cooldown = 3 MINUTES
 	start_on_cooldown = 1
 	target_anything = 1
-	var/in_use = 0
 	special_screen_loc = "SOUTH,CENTER+1"
 	pointCost = 300
 
@@ -471,41 +515,40 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 		if (..())
 			return 1
 
-		var/turf/T = get_turf(target)
-		if (isturf(T))
-			write_on_turf(T, holder.owner, params)
-
-
-	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params)
-		if (!T || !user || src.in_use)
-			return
-		src.in_use = 1
 		var/list/c_default = list("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",
 		"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Exclamation Point", "Question Mark", "Period", "Comma", "Colon", "Semicolon", "Ampersand", "Left Parenthesis", "Right Parenthesis",
 		"Left Bracket", "Right Bracket", "Percent", "Plus", "Minus", "Times", "Divided", "Equals", "Less Than", "Greater Than")
 		var/list/c_symbol = list("Dollar", "Euro", "Arrow North", "Arrow East", "Arrow South", "Arrow West",
 		"Square", "Circle", "Triangle", "Heart", "Star", "Smile", "Frown", "Neutral Face", "Bee", "Pentagram")
 
-		var/t = input(user, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
+		var/string = input(holder.owner, "What do you want to write?", null, null) as null|anything in (c_default + c_symbol)
 
-		if (!t)
-			src.in_use = 0
+		if (!string)
 			return 1
+
+		var/turf/T = get_turf(target)
+		if (isturf(T) && holder.owner)
+			write_on_turf(T, holder.owner, params, string)
+
+
+	proc/write_on_turf(var/turf/T as turf, var/mob/user as mob, params, string)
+		if (!T && !user && !string)
+			return
+
 		var/obj/decal/cleanable/writing/spooky/G = make_cleanable(/obj/decal/cleanable/writing/spooky,T)
 		G.artist = user.key
 
-		logTheThing("station", user, null, "writes on [T] with [src] [log_loc(T)]: [t]")
-		G.icon_state = t
-		G.words = t
+		logTheThing(LOG_STATION, user, "writes on [T] with [src] [log_loc(T)]: [string]")
+		G.icon_state = string
+		G.words = string
 		if (islist(params) && params["icon-y"] && params["icon-x"])
-			// playsound(src.loc, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			// playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 
 			G.pixel_x = text2num(params["icon-x"]) - 16
 			G.pixel_y = text2num(params["icon-y"]) - 16
 		else
 			G.pixel_x = rand(-4,4)
 			G.pixel_y = rand(-4,4)
-		src.in_use = 0
 
 /datum/targetable/ghost_observer/summon_bat
 	name = "Summon Bat"
@@ -516,7 +559,6 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	max_range = 0
 	cooldown = 10 MINUTES
 	start_on_cooldown = 1
-	pointCost = 30
 	special_screen_loc = "SOUTH,CENTER+2"
 	pointCost = 1000
 
@@ -526,12 +568,58 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 		var/turf/T = get_turf(holder.owner)
 		if (!istype(T, /turf/space) && !T.density)
-			var/obj/itemspecialeffect/poof/P = unpool(/obj/itemspecialeffect/poof)
+			var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 			P.setup(T)
-			playsound(T,"sound/effects/poff.ogg", 50, 1, pitch = 1)
+			playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
 			new /obj/critter/bat(T)
-			boutput(holder.owner, "<span style=\"color:red\">You call forth a bat!</span>")
+			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
-			boutput(holder.owner, "<span style=\"color:red\">You can't put a bat there!</span>")
+			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+
+/datum/targetable/ghost_observer/manifest
+	name = "Manifest"
+	desc = "Push yourself more fully into the material realm and be a bit more powerful for 30 seconds."
+	icon_state = "manifest"
+	targeted = 0
+	target_anything = 0
+	max_range = 0
+	cooldown = 7 MINUTES
+	start_on_cooldown = 1
+	special_screen_loc = "SOUTH,CENTER+3"
+	pointCost = 1500
+	var/time_to_manifest = 1 MINUTES		//How much time should they spend in the form if left uninterrupted.
+	var/applied_filter_index
+
+
+	cast()
+		if (!holder)
+			return 1
+
+		start_spooking()
+		//////////////////////////////////////////////////////////////////////
+		sleep(time_to_manifest)
+		//////////////////////////////////////////////////////////////////////
+		stop_spooking()
+
+
+
+	proc/start_spooking()
+		src.holder.owner.color = rgb(170, 0, 0)
+		anim_f_ghost_blur(src.holder.owner)
+
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 1
+		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner)
+		boutput(holder.owner, "<span class='notice'>You start being spooky! The living can all see you!</span>")
+
+	//remove the filter animation when we're done.
+	proc/stop_spooking()
+		src.holder.owner.color = null
+		if (istype(holder, /datum/abilityHolder/ghost_observer))
+			var/datum/abilityHolder/ghost_observer/GAH = holder
+			GAH.spooking = 0
+		APPLY_ATOM_PROPERTY(src.holder.owner, PROP_MOB_INVISIBILITY, src.holder.owner, ghost_invisibility)
+		boutput(holder.owner, "<span class='alert'>You stop being spooky!</span>")
 
 #endif

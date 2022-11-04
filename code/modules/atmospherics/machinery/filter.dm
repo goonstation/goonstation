@@ -34,20 +34,6 @@ Filter types:
 4: Other Gases (i.e. Sleeping Agent & Other trace gases)
 */
 
-	var/frequency = 0
-	var/datum/radio_frequency/radio_connection
-
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
-
-	disposing()
-		radio_controller.remove_object(src,"[frequency]")
-		..()
-
 	New()
 		..()
 		switch(dir)
@@ -62,16 +48,15 @@ Filter types:
 		if(radio_controller)
 			initialize()
 
-		air_in = unpool(/datum/gas_mixture)
-		air_out1 = unpool(/datum/gas_mixture)
-		air_out2 = unpool(/datum/gas_mixture)
+		air_in = new /datum/gas_mixture
+		air_out1 = new /datum/gas_mixture
+		air_out2 = new /datum/gas_mixture
 
 		air_in.volume = 200
 		air_out1.volume = 200
 		air_out2.volume = 200
 
 	disposing()
-		loc = null
 
 		if (network_in)
 			network_in.air_disposing_hook(air_in, air_out1, air_out2)
@@ -103,11 +88,11 @@ Filter types:
 		network_in = null
 
 		if(air_in)
-			pool(air_in)
+			qdel(air_in)
 		if(air_out1)
-			pool(air_out1)
+			qdel(air_out1)
 		if(air_out2)
-			pool(air_out2)
+			qdel(air_out2)
 
 		air_in = null
 		air_out1 = null
@@ -143,7 +128,7 @@ Filter types:
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air_out2.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air_out2)
 
 		if(output_starting_pressure >= target_pressure)
 			//No need to mix if target is already full!
@@ -162,7 +147,7 @@ Filter types:
 		if(transfer_moles > 0)
 			var/datum/gas_mixture/removed = air_in.remove(transfer_moles)
 
-			var/datum/gas_mixture/filtered_out = unpool(/datum/gas_mixture)
+			var/datum/gas_mixture/filtered_out = new /datum/gas_mixture
 			//if(filtered_out.temperature)
 			if(removed.temperature)
 				filtered_out.temperature = removed.temperature
@@ -194,29 +179,20 @@ Filter types:
 
 				if(4) //removing trace gases
 					if(removed)
-						if(removed.trace_gases && removed.trace_gases.len)
-							for(var/datum/gas/trace_gas in removed.trace_gases)
-								if(trace_gas)
-									removed.trace_gases -= trace_gas
-									if(!removed.trace_gases.len)
-										removed.trace_gases = null
-									if(!filtered_out.trace_gases)
-										filtered_out.trace_gases = list()
-									filtered_out.trace_gases += trace_gas
-
-
+						if(length(removed.trace_gases))
+							for(var/datum/gas/trace_gas as anything in removed.trace_gases)
+								var/datum/gas/filter_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
+								filter_gas.moles = trace_gas.moles
+								removed.remove_trace_gas(trace_gas)
 
 			air_out1.merge(filtered_out)
 			air_out2.merge(removed)
 
-		if(network_out1)
-			network_out1.update = 1
+		network_out1?.update = 1
 
-		if(network_out2)
-			network_out2.update = 1
+		network_out2?.update = 1
 
-		if(network_in)
-			network_in.update = 1
+		network_in?.update = 1
 		return 1
 
 // Housekeeping and pipe network stuff below
@@ -230,7 +206,7 @@ Filter types:
 		else if(reference == node_in)
 			network_in = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src
@@ -262,9 +238,7 @@ Filter types:
 				node_in = target
 				break
 
-		update_icon()
-
-		set_frequency(frequency)
+		UpdateIcon()
 
 	build_network()
 		if(!network_out1 && node_out1)

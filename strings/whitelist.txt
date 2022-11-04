@@ -1,1 +1,0 @@
-#When the config setting WHITELIST_ENABLED is set, only keys in this file will be allowed to join the server. One key per line, admins are exempt.

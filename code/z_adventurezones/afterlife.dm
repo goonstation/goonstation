@@ -5,6 +5,7 @@ Afterlife bar areas
 Hell area (send people here if they die in a shameful way)
 */
 /area/afterlife
+	dont_log_combat = TRUE
 
 /area/afterlife/bar
 	name = "The Afterlife Bar"
@@ -13,6 +14,11 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_bar"
 	requires_power = 0
 	teleport_blocked = 1
+
+/area/afterlife/bar/sanctuary
+	name = "The Afterlife Lounge"
+	icon_state = "afterlife_lounge"
+	sanctuary = 1
 
 /area/afterlife/heaven
 	name = "Heaven"
@@ -51,12 +57,13 @@ Hell area (send people here if they die in a shameful way)
 
 
 /area/afterlife/bar/barspawn
-	name = "The Afterlife Bar"
+	name = "Afterlife Bar Revival Point"
 	skip_sims = 1
 	sims_score = 100
 	icon_state = "afterlife_bar_spawn"
 	requires_power = 0
 	teleport_blocked = 1
+	sanctuary = 1
 
 /area/afterlife/hell
 	name = "Hell"
@@ -81,6 +88,7 @@ Hell area (send people here if they die in a shameful way)
 	icon_state = "afterlife_hell"
 	requires_power = 0
 	teleport_blocked = 1
+	ambient_light = "#222222"
 
 /area/afterlife/arenaspawn
 	name = "THE ARENA SPAWN"

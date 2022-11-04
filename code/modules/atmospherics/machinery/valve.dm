@@ -5,7 +5,8 @@ obj/machinery/atmospherics/valve
 	desc = "A pipe valve"
 	dir = SOUTH
 	initialize_directions = SOUTH|NORTH
-	layer = PIPE_LAYER
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW
 	var/open = 0
 	var/high_risk = 0 //Does this valve have enough grief potential that the admins should be messaged when this is opened?
 	var/obj/machinery/atmospherics/node1
@@ -61,29 +62,15 @@ obj/machinery/atmospherics/valve
 				dir = EAST
 
 		attack_ai(mob/user as mob)
-			return src.attack_hand(user)
+			return src.Attackhand(user)
 
-		//Radio remote control
-
-		proc
-			set_frequency(new_frequency)
-				radio_controller.remove_object(src, "[frequency]")
-				frequency = new_frequency
-				if(frequency)
-					radio_connection = radio_controller.add_object(src, "[frequency]")
-
-		disposing()
-			radio_controller.remove_object(src, "[frequency]")
-			..()
 
 		var/frequency = 0
 		var/id = null
-		var/datum/radio_frequency/radio_connection
 
-		initialize()
+		New()
 			..()
-			if(frequency)
-				set_frequency(frequency)
+			MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 		receive_signal(datum/signal/signal)
 			if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -113,15 +100,17 @@ obj/machinery/atmospherics/valve
 	update_icon(animation)
 		if(animation)
 			flick("valve[src.open][!src.open]",src)
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 		else
 			icon_state = "valve[open]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
-			if(NORTH || SOUTH)
+			if(NORTH, SOUTH)
 				initialize_directions = NORTH|SOUTH
-			if(EAST || WEST)
+			if(EAST, WEST)
 				initialize_directions = EAST|WEST
 
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
@@ -135,7 +124,7 @@ obj/machinery/atmospherics/valve
 			if(open)
 				network_node1 = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src
@@ -151,8 +140,6 @@ obj/machinery/atmospherics/valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)
@@ -173,9 +160,9 @@ obj/machinery/atmospherics/valve
 
 		if(open) return 0
 
-		playsound(src.loc, "sound/machines/hiss.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/hiss.ogg', 50, 1)
 		open = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node1&&network_node2)
 			network_node1.merge(network_node2)
@@ -193,15 +180,13 @@ obj/machinery/atmospherics/valve
 		if(!open)
 			return 0
 
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		open = 0
-		update_icon()
+		UpdateIcon()
 
-		if(network_node1)
-			network_node1.dispose()
+		network_node1?.dispose()
 		network_node1 = null
-		if(network_node2)
-			network_node2.dispose()
+		network_node2?.dispose()
 		network_node2 = null
 
 		build_network()
@@ -212,21 +197,21 @@ obj/machinery/atmospherics/valve
 		boutput(user, "This valve is manually controlled.")
 		return
 
-	attack_hand(mob/user as mob)
-		update_icon(1)
-		sleep(10)
-		logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
+	attack_hand(mob/user)
+		UpdateIcon(1)
+		sleep(1 SECOND)
+		logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 		if (src.open)
 			src.close()
 		else
 			src.open()
 			if(high_risk) message_admins("[key_name(user)] has opened the valve: [src] at [log_loc(src)]")
 
-	attackby(var/obj/item/G as obj, var/mob/user as mob)
+	attackby(var/obj/item/G, var/mob/user)
 		if (iswrenchingtool(G))
-			update_icon(1)
-			sleep(10)
-			logTheThing("station", user, null, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
+			UpdateIcon(1)
+			sleep(1 SECOND)
+			logTheThing(LOG_STATION, user, "has [src.open ? "closed" : "opened"] the valve: [src] at [log_loc(src)]")
 			if (src.open)
 				src.close()
 
@@ -350,7 +335,6 @@ obj/machinery/atmospherics/manifold_valve
 
 	var/frequency = "1439"
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	north
 		dir = NORTH
@@ -361,20 +345,16 @@ obj/machinery/atmospherics/manifold_valve
 	west
 		dir = WEST
 
-	proc/set_frequency(new_frequency)
-		radio_controller.remove_object(src, "[frequency]")
-		frequency = new_frequency
-		if(frequency)
-			radio_connection = radio_controller.add_object(src, "[frequency]")
-
 	update_icon(animation)
 		if(animation)
 			flick("valve[src.divert][!src.divert]",src)
-			playsound(src.loc, "sound/effects/valve_creak.ogg", 50, 1)
+			playsound(src.loc, 'sound/effects/valve_creak.ogg', 50, 1)
 		else
 			icon_state = "manifold_valve[divert]"
 
 	New()
+		..()
+		UnsubscribeProcess()
 		switch(dir)
 			if(SOUTH)
 				initialize_directions = EAST|WEST|NORTH
@@ -385,16 +365,7 @@ obj/machinery/atmospherics/manifold_valve
 			if(WEST)
 				initialize_directions = SOUTH|NORTH|EAST
 
-		if(radio_controller)
-			set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
-
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
-
-
 		if(reference == node1)
 			network_node1 = new_network
 			if(!divert)
@@ -431,8 +402,6 @@ obj/machinery/atmospherics/manifold_valve
 		return null
 
 	disposing()
-		loc = null
-
 		if(node1)
 			node1.disconnect(src)
 			if (network_node1)
@@ -460,7 +429,7 @@ obj/machinery/atmospherics/manifold_valve
 		if(divert) return 0
 
 		divert = 1
-		update_icon()
+		UpdateIcon()
 
 		if(network_node2)
 			network_node2.dispose()
@@ -485,7 +454,7 @@ obj/machinery/atmospherics/manifold_valve
 			return 0
 
 		divert = 0
-		update_icon()
+		UpdateIcon()
 
 		if(network_node3)
 			network_node3.dispose()
@@ -504,7 +473,7 @@ obj/machinery/atmospherics/manifold_valve
 
 		return 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		..()
 
 
@@ -515,17 +484,12 @@ obj/machinery/atmospherics/manifold_valve
 		else if(!divert && (!node1 || !node2))
 			divert()
 
-		if(!radio_connection)
-			return
-
 		var/datum/signal/signal = get_free_signal()
 		signal.transmission_method = 1 //radio signal
 		signal.data["tag"] = tag
 		signal.data["timestamp"] = air_master.current_cycle
 		signal.data["valve_diverting"] = divert
-		radio_connection.post_signal(src, signal)
-
-		return
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	initialize()
 		if(node1 && node2 && node3) return
@@ -550,8 +514,7 @@ obj/machinery/atmospherics/manifold_valve
 				node3 = target
 				break
 
-		if(frequency)
-			set_frequency(frequency)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	build_network()
 		if(!network_node1 && node1)

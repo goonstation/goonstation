@@ -24,9 +24,12 @@ obj/machinery/atmospherics/binary/volume_pump
 
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	var/datum/pump_ui/volume_pump_ui/ui
+
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
 		if(node1&&node2)
@@ -53,46 +56,29 @@ obj/machinery/atmospherics/binary/volume_pump
 
 		air2.merge(removed)
 
-		if(network1)
-			network1.update = 1
+		network1?.update = 1
 
-		if(network2)
-			network2.update = 1
+		network2?.update = 1
 
 		return 1
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+	proc/broadcast_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
+		signal.data["tag"] = id
+		signal.data["device"] = "APV"
+		signal.data["power"] = on
+		signal.data["transfer_rate"] = transfer_rate
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			signal.data["tag"] = id
-			signal.data["device"] = "APV"
-			signal.data["power"] = on
-			signal.data["transfer_rate"] = transfer_rate
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
+		return 1
 
 	initialize()
 		..()
 		ui = new/datum/pump_ui/volume_pump_ui(src)
-		set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -109,14 +95,14 @@ obj/machinery/atmospherics/binary/volume_pump
 				on = !on
 
 			if("set_transfer_rate")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), air1.volume)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, air1.volume)
 
 				transfer_rate = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+			SPAWN(0.5 SECONDS) broadcast_status()
+		UpdateIcon()
 
 obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
@@ -138,11 +124,11 @@ datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/o
 
 datum/pump_ui/volume_pump_ui/set_value(val)
 	our_pump.transfer_rate = val
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/volume_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
-	our_pump.update_icon()
+	our_pump.UpdateIcon()
 
 datum/pump_ui/volume_pump_ui/is_on()
 	return our_pump.on

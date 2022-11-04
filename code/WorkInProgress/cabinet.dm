@@ -20,7 +20,7 @@
 
 	RawClick(location,control,params)
 		var/mob/user = usr
-		if (ismobcritter(user))
+		if (ismobcritter(user) || issilicon(user) || isobserver(user) || isAI(user))
 			return
 		if(can_act(user) && can_reach(user, src))
 			var/list/paramList = params2list(params)
@@ -54,7 +54,7 @@
 					slotItem.set_loc(user.loc)
 					slots["[slotNum]"] = null
 					user.put_in_hand(slotItem, user.hand)
-					boutput(user, "<span style=\"color:blue\"><B>You take the [slotItem] out of the cabinet.</B></span>")
+					boutput(user, "<span class='notice'><B>You take the [slotItem] out of the cabinet.</B></span>")
 					rebuildOverlays()
 					return
 			else
@@ -62,10 +62,10 @@
 					if(canHold(I))
 						takeItem(user, I, "[slotNum]") //aaaah.
 					else
-						boutput(user, "<span style=\"color:red\"><B>You can't put that item in the cabinet.</B></span>")
+						boutput(user, "<span class='alert'><B>You can't put that item in the cabinet.</B></span>")
 
 	proc/takeItem(var/mob/user, var/obj/item/I, var/slotNum = null)
-		if (ismobcritter(user))
+		if (!ishuman(user))
 			return
 		if(!slotNum) //Didnt pass in a slot number, find next free slot.
 			for(var/X in slots)
@@ -74,7 +74,7 @@
 					break
 
 		if(!slotNum) //Still no free slot number, we're full.
-			boutput(user, "<span style=\"color:red\"><B>The cabinet is full.</B></span>")
+			boutput(user, "<span class='alert'><B>The cabinet is full.</B></span>")
 			return
 
 		if(I && I == user.equipped())
@@ -82,10 +82,14 @@
 			I.set_loc(src)
 			slots[slotNum] = I
 			rebuildOverlays()
-			boutput(user, "<span style=\"color:blue\"><B>You put the [I] into the cabinet.</B></span>")
+			boutput(user, "<span class='notice'><B>You put the [I] into the cabinet.</B></span>")
 		return
 
 	proc/canHold(var/obj/item/I)
+		if(isnull(I))
+			return null
+		if(I.cant_drop)
+			return 0
 		for(var/X in deniedTypes)
 			if(istype(I, X))
 				return 0
@@ -141,10 +145,10 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					qdel(src)
 					return
@@ -160,12 +164,14 @@
 /obj/cabinet/pathology
 
 	New()
+		#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
 		slots["1"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["2"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["3"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["4"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["5"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
 		slots["6"] = new/obj/item/reagent_containers/glass/vial/prepared(src)
+		#endif
 		rebuildOverlays()
 		return ..()
 
@@ -233,10 +239,43 @@
 
 	New()
 		slots["1"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["2"] = new/obj/item/reagent_containers/mender/brute(src)
-		slots["3"] = new/obj/item/reagent_containers/mender/brute(src)
+		slots["2"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
+		slots["3"] = new/obj/item/reagent_containers/mender_refill_cartridge/brute(src)
 		slots["4"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["5"] = new/obj/item/reagent_containers/mender/burn(src)
-		slots["6"] = new/obj/item/reagent_containers/mender/burn(src)
+		slots["5"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
+		slots["6"] = new/obj/item/reagent_containers/mender_refill_cartridge/burn(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/psychiatry
+
+	New()
+		slots["1"] = new /obj/item/device/audio_log(src)
+		slots["2"] = new /obj/item/paper_bin(src)
+		slots["3"] = new /obj/item/storage/box/crayon(src)
+		slots["4"] = new /obj/item/storage/box/cookie_tin/sugar(src)
+		slots["5"] = new /obj/item/item_box/gold_star(src)
+		slots["6"] = new /obj/item/toy/plush/small/stress_ball(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/taffy // for psychiatrists to prescribe
+
+	New()
+		slots["1"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
+		slots["2"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
+		slots["3"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		slots["4"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/cherry(src)
+		slots["5"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/watermelon(src)
+		slots["6"] = new /obj/item/reagent_containers/food/snacks/candy/taffy/blueraspberry(src)
+		rebuildOverlays()
+		return ..()
+
+/obj/cabinet/ammo // for the shooting range prefab
+	New()
+		slots["1"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["2"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["3"] = new /obj/item/ammo/bullets/foamdarts(src)
+		slots["4"] = new /obj/item/ammo/bullets/bullet_22(src)
 		rebuildOverlays()
 		return ..()

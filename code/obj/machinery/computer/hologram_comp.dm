@@ -4,14 +4,14 @@
 	icon_state = "holo_console0"
 	var/obj/machinery/hologram_proj/projector = null
 	var/temp = null
-	var/lumens = 0.0
-	var/h_r = 245.0
-	var/h_g = 245.0
-	var/h_b = 245.0
+	var/lumens = 0
+	var/h_r = 245
+	var/h_g = 245
+	var/h_b = 245
 
 /obj/machinery/computer/hologram_comp/New()
 	..()
-	SPAWN_DBG( 10 )
+	SPAWN( 10 )
 		src.projector = locate(/obj/machinery/hologram_proj, get_step(src.loc, NORTH))
 		return
 	return
@@ -35,7 +35,7 @@
 
 /obj/machinery/computer/hologram_comp/proc/show_console(var/mob/user as mob)
 	var/dat
-	user.machine = src
+	src.add_dialog(user)
 	if (src.temp)
 		dat = text("[]<BR><BR><A href='?src=\ref[];temp=1'>Clear</A>", src.temp, src)
 	else
@@ -47,12 +47,11 @@
 /obj/machinery/computer/hologram_comp/Topic(href, href_list)
 	if(..())
 		return
-	if (in_range(src, usr))
+	if (in_interact_range(src, usr))
 		flick("holo_console1", src)
 		if (href_list["power"])
 			if (src.projector.projection)
 				src.projector.icon_state = "hologram0"
-				//src.projector.projection = null
 				qdel(src.projector.projection)
 			else
 				src.projector.projection = new /obj/projection(src.projector.loc)
@@ -63,26 +62,26 @@
 		else
 			if (href_list["h_r"])
 				if (src.projector.projection)
-					src.h_r += text2num(href_list["h_r"])
-					src.h_r = min(max(src.h_r, 0), 255)
+					src.h_r += text2num_safe(href_list["h_r"])
+					src.h_r = clamp(src.h_r, 0, 255)
 					render()
 			else
 				if (href_list["h_g"])
 					if (src.projector.projection)
-						src.h_g += text2num(href_list["h_g"])
-						src.h_g = min(max(src.h_g, 0), 255)
+						src.h_g += text2num_safe(href_list["h_g"])
+						src.h_g = clamp(src.h_g, 0, 255)
 						render()
 				else
 					if (href_list["h_b"])
 						if (src.projector.projection)
-							src.h_b += text2num(href_list["h_b"])
-							src.h_b = min(max(src.h_b, 0), 255)
+							src.h_b += text2num_safe(href_list["h_b"])
+							src.h_b = clamp(src.h_b, 0, 255)
 							render()
 					else
 						if (href_list["light"])
 							if (src.projector.projection)
-								src.lumens += text2num(href_list["light"])
-								src.lumens = min(max(src.lumens, -185.0), 35)
+								src.lumens += text2num_safe(href_list["light"])
+								src.lumens = clamp(src.lumens, -185.0, 35)
 								render()
 						else
 							if (href_list["reset"])
@@ -93,6 +92,6 @@
 								if (href_list["temp"])
 									src.temp = null
 		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
+			if (M.using_dialog_of(src))
 				src.show_console(M)
 	return

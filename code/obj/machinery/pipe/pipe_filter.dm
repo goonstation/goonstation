@@ -4,25 +4,25 @@
 	..()
 	p_dir = (NORTH|SOUTH|EAST|WEST) ^ turn(dir, 180)
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
-	f_gas = unpool(/datum/gas_mixture)
-	f_ngas = unpool(/datum/gas_mixture)
+	f_gas = new /datum/gas_mixture
+	f_ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipefilter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	if(f_gas)
-		pool(f_gas)
+		qdel(f_gas)
 	if(f_ngas)
-		pool(f_ngas)
+		qdel(f_ngas)
 	..()
-	
+
 /obj/machinery/pipefilter/buildnodes()
 	var/turf/T = src.loc
 
@@ -45,17 +45,17 @@
 /*	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode1, delta_gt)
 	else
 		leak_to_turf(1)
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode2, delta_gt)
 	else
 		leak_to_turf(2)
 	if(vnode3)
-		delta_gt = FLOWFRAC * ( vnode3.get_gas_val(src) - f_gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode3.get_gas_val(src) - TOTAL_MOLES(f_gas) / capmult)
 		calc_delta( src, f_gas, f_ngas, vnode3, delta_gt)
 	else
 		leak_to_turf(3)
@@ -70,7 +70,7 @@
 	src.updateUsrDialog()*/ //TODO: FIX
 
 /obj/machinery/pipefilter/get_gas_val(from)
-	return ((from == vnode3) ? f_gas.total_moles() : gas.total_moles())/capmult
+	return ((from == vnode3) ? TOTAL_MOLES(f_gas) : TOTAL_MOLES(gas))/capmult
 
 /obj/machinery/pipefilter/get_gas(from)
 	return (from == vnode3) ? f_gas : gas
@@ -120,65 +120,65 @@
 		return ..()
 	if (isscrewingtool(W))
 		if(bypassed)
-			user.show_message(text("<span style=\"color:red\">Remove the foreign wires first!</span>"), 1)
+			user.show_message(text("<span class='alert'>Remove the foreign wires first!</span>"), 1)
 			return
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
-		sleep(30)
+		user.show_message(text("<span class='alert'>Now []securing the access system panel...</span>", (src.locked) ? "un" : "re"), 1)
+		sleep(3 SECONDS)
 		locked =! locked
-		user.show_message(text("<span style=\"color:red\">Done!</span>"),1)
-		src.updateicon()
+		user.show_message(text("<span class='alert'>Done!</span>"),1)
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/cable_coil) && !bypassed)
 		if(src.locked)
-			user.show_message(text("<span style=\"color:red\">You must remove the panel first!</span>"),1)
+			user.show_message(text("<span class='alert'>You must remove the panel first!</span>"),1)
 			return
 		var/obj/item/weapon/cable_coil/C = W
 		if(C.use(4))
-			user.show_message(text("<span style=\"color:red\">You unravel some cable..</span>"),1)
+			user.show_message(text("<span class='alert'>You unravel some cable..</span>"),1)
 		else
-			user.show_message(text("<span style=\"color:red\">Not enough cable! <I>(Requires four pieces)</I></span>"),1)
+			user.show_message(text("<span class='alert'>Not enough cable! <I>(Requires four pieces)</I></span>"),1)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
-		sleep(100)
+		user.show_message(text("<span class='alert'>Now bypassing the access system... <I>(This may take a while)</I></span>"), 1)
+		sleep(10 SECONDS)
 		bypassed = 1
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if (issnippingtool(W) && bypassed)
 		src.add_fingerprint(user)
-		user.show_message(text("<span style=\"color:red\">Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
-		sleep(50)
+		user.show_message(text("<span class='alert'>Now removing the bypass wires... <I>(This may take a while)</I></span>"), 1)
+		sleep(5 SECONDS)
 		bypassed = 0
-		src.updateicon()
+		src.UpdateIcon()
 		return
 	if(istype(W, /obj/item/weapon/card/emag) && (!emagged))
 		emagged++
 		src.add_fingerprint(user)
 		for(var/mob/O in viewers(user, null))
-			O.show_message(text("<span style=\"color:red\">[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
+			O.show_message(text("<span class='alert'>[] has shorted out the [] with an electromagnetic card!</span>", user, src), 1)
 		src.overlays += image('pipes2.dmi', "filter-spark")
-		sleep(6)
-		src.updateicon()
-		return src.attack_hand(user)
-	return src.attack_hand(user)
+		sleep(0.6 SECONDS)
+		src.UpdateIcon()
+		return src.Attackhand(user)
+	return src.Attackhand(user)
 
 // pipefilter interact/topic
 /obj/machinery/pipefilter/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
-/obj/machinery/pipefilter/attack_hand(mob/user as mob)
+/obj/machinery/pipefilter/attack_hand(mob/user)
 /*	if(status & NOPOWER)
 		user << browse(null, "window=pipefilter")
 		user.machine = null
 		return
 
 	var/list/gases = list("O2", "N2", "Plasma", "CO2", "N2O")
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "Filter Release Rate:<BR><br><A href='?src=\ref[src];fp=-[num2text(src.maxrate, 9)]'>M</A> <A href='?src=\ref[src];fp=-100000'>-</A> <A href='?src=\ref[src];fp=-10000'>-</A> <A href='?src=\ref[src];fp=-1000'>-</A> <A href='?src=\ref[src];fp=-100'>-</A> <A href='?src=\ref[src];fp=-1'>-</A> [src.f_per] <A href='?src=\ref[src];fp=1'>+</A> <A href='?src=\ref[src];fp=100'>+</A> <A href='?src=\ref[src];fp=1000'>+</A> <A href='?src=\ref[src];fp=10000'>+</A> <A href='?src=\ref[src];fp=100000'>+</A> <A href='?src=\ref[src];fp=[num2text(src.maxrate, 9)]'>M</A><BR><br>"
 	for (var/i = 1; i <= gases.len; i++)
 		dat += "[gases[i]]: <A HREF='?src=\ref[src];tg=[1 << (i - 1)]'>[(src.f_mask & 1 << (i - 1)) ? "Releasing" : "Passing"]</A><BR><br>"
-	if(gas.total_moles())
-		var/totalgas = gas.total_moles()
+	if(TOTAL_MOLES(gas))
+		var/totalgas = TOTAL_MOLES(gas)
 		var/pressure = round(totalgas / gas.maximum * 100)
 		var/nitrogen = gas.n2 / totalgas * 100
 		var/oxygen = gas.oxygen / totalgas * 100
@@ -198,21 +198,21 @@
 	..()
 	if(usr.restrained() || usr.lying)
 		return
-	if ((((get_dist(src, usr) <= 1 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
-		usr.machine = src
+	if ((((BOUNDS_DIST(src, usr) == 0 || usr.telekinesis == 1) || isAI(usr)) && istype(src.loc, /turf)))
+		src.add_dialog(usr)
 		if (href_list["close"])
 			usr << browse(null, "window=pipefilter;")
 			usr.machine = null
 			return
 		if (src.allowed(usr) || src.emagged || src.bypassed)
 			if (href_list["fp"])
-				src.f_per = min(max(round(src.f_per + text2num(href_list["fp"])), 0), src.maxrate)
+				src.f_per = clamp(round(src.f_per + text2num_safe(href_list["fp"])), 0, src.maxrate)
 			else if (href_list["tg"])
 				// toggle gas
-				src.f_mask ^= text2num(href_list["tg"])
-				src.updateicon()
+				src.f_mask ^= text2num_safe(href_list["tg"])
+				src.UpdateIcon()
 		else
-			usr.see("<span style=\"color:red\">Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
+			usr.see("<span class='alert'>Access Denied ([src.name] operation restricted to authorized atmospheric technicians.)</span>")
 		AutoUpdateAI(src)
 		src.updateUsrDialog()
 		src.add_fingerprint(usr)
@@ -226,10 +226,10 @@
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	//so all the filters don't come on at once
-		updateicon()
+	SPAWN(rand(1,15))	//so all the filters don't come on at once
+		UpdateIcon()
 
-/obj/machinery/pipefilter/proc/updateicon()
+/obj/machinery/pipefilter/UpdateIcon()
 	src.overlays = null
 	if(status & NOPOWER)
 		icon_state = "filter-off"

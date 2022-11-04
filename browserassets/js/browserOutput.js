@@ -1,8 +1,8 @@
-/*****************************************
+/*
 *
 * FUNCTION AND VAR DECLARATIONS
 *
-******************************************/
+*/
 
 var triggerError = attachErrorHandler('chatDebug', true);
 
@@ -11,11 +11,11 @@ var decoder = decodeURIComponent || unescape;
 
 //Globals
 window.status = 'Output';
-var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic;
+var $messages, $subOptions, $contextMenu, $filterMessages, $playMusic, $lastEntry;
 var opts = {
     //General
     'messageCount': 0, //A count...of messages...
-    'messageLimit': 2053, //A limit...for the messages...
+    'messageLimit': 4000, //A limit...for the messages...
     'scrollSnapTolerance': 20, //If within x pixels of bottom
     'clickTolerance': 10, //Keep focus if outside x pixels of mousedown position on mouseup
     'popups': 0, //Amount of popups opened ever
@@ -24,20 +24,23 @@ var opts = {
     'priorChatHeight': 0, //Thing for height-resizing detection
     'restarting': false, //Is the round restarting?
     'volume': 0.5,
-    'lastMessage': '', //the last message sent to chat
+    'lastMessage': '', //the last message sent to chatks
     'maxStreakGrowth': 20, //at what streak point should we stop growing the last entry?
+	'messageClasses': ['admin','combat','radio','say','ooc','internal'],
 
     //Options menu
     'subOptionsLoop': null, //Contains the interval loop for closing the options menu
     'suppressOptionsClose': false, //Whether or not we should be hiding the suboptions menu
     'highlightTerms': [],
-    'highlightLimit': 5,
+    'highlightLimit': 10,
     'highlightColor': '#FFFF00', //The color of the highlighted message
     'pingDisabled': false, //Has the user disabled the ping counter
+    'twemoji': true, // whether Twemoji are used instead of the default emoji
+    'messageLimitEnabled': true, // whether old messages get deleted
 
     //Ping display
     'pingCounter': 0, //seconds counter
-    'pingLimit': 30, //seconds limit
+    'pingLimit': 10, //seconds limit
     'pingTime': 0, //Timestamp of when ping sent
     'pongTime': 0, //Timestamp of when ping received
     'noResponse': false, //Tracks the state of the previous ping request
@@ -54,7 +57,15 @@ var opts = {
     //Client Connection Data
     'clientDataLimit': 5,
     'clientData': [],
+
+    // Theme stuff
+    'currentTheme': 'theme-default',
 };
+
+var themes = { // "css-class": "Option name"
+    'theme-default': 'Windows 3.1 (default)',
+    'theme-dark': 'Dark',
+}
 
 //Polyfill for fucking date now because of course IE8 and below don't support it
 if (!Date.now) {
@@ -94,7 +105,7 @@ function getTextNodes(elem, pattern) {
 
 // Highlight all text terms matching the registered regex patterns
 function highlightTerms(el) {
-    var pattern = new RegExp("(" + opts.highlightTerms.join('|') + ")", 'gi');
+    var pattern = new RegExp('(' + opts.highlightTerms.join('|') + ')', 'gi');
     var nodes = getTextNodes(el, pattern);
 
     nodes.each(function (idx, node) {
@@ -150,83 +161,43 @@ function handleStreakCounter($el) {
 
 // Wrap all emojis in an element so we can enforce styles
 function parseEmojis(message) {
-    var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
-    return message.replace(pattern, '<span class="emoji">$1</span>');
+    if (opts.twemoji) {
+      return twemoji.parse(message, {
+        folder: 'svg',
+        ext: '.svg'
+      });
+    }
+    else {
+      var pattern = /((?:\u00a9|\u00ae|[\u2000-\u3300]|\ud83c[\ud000-\udfff]|\ud83d[\ud000-\udfff]|\ud83e[\ud000-\udfff])+)/g;
+      return message.replace(pattern, '<span class="emoji">$1</span>');
+    }
 }
 
 //Send a message to the client
-function output(message, group) {
+function output(message, group, skipNonEssential, forceScroll) {
     if (typeof message === 'undefined') {
         return;
     }
     if (typeof group === 'undefined') {
         group = '';
     }
-
-
-    //The behemoth of filter-code (for Admin message filters)
-    //Note: This is proooobably hella inefficient
-    var filteredOut = false;
-    if (opts.hasOwnProperty('showMessagesFilters') && !opts.showMessagesFilters['All'].show) {
-        //Get this filter type (defined by class on message)
-        var messageHtml = $.parseHTML(message),
-            messageClasses;
-        if (opts.hasOwnProperty('filterHideAll') && opts.filterHideAll) {
-            var internal = false;
-            messageClasses = (!!$(messageHtml).attr('class') ? $(messageHtml).attr('class').split(/\s+/) : false);
-            if (messageClasses) {
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    if (messageClasses[i] == 'internal') {
-                        internal = true;
-                        break;
-                    }
-                }
-            }
-            if (!internal) {
-                filteredOut = 'All';
-            }
-        } else {
-            //If the element or it's child have any classes
-            if (!!$(messageHtml).attr('class') || !!$(messageHtml).children().attr('class')) {
-                messageClasses = $(messageHtml).attr('class').split(/\s+/);
-                if (!!$(messageHtml).children().attr('class')) {
-                    messageClasses = messageClasses.concat($(messageHtml).children().attr('class').split(/\s+/));
-                }
-                var tempCount = 0;
-                for (var i = 0; i < messageClasses.length; i++) { //Every class
-                    var thisClass = messageClasses[i];
-                    $.each(opts.showMessagesFilters, function(key, val) { //Every filter
-                        if (key !== 'All' && val.show === false && typeof val.match != 'undefined') {
-                            for (var i = 0; i < val.match.length; i++) {
-                                var matchClass = val.match[i];
-                                if (matchClass == thisClass) {
-                                    filteredOut = key;
-                                    break;
-                                }
-                            }
-                        }
-                        if (filteredOut) return false;
-                    });
-                    if (filteredOut) break;
-                    tempCount++;
-                }
-            } else {
-                if (!opts.showMessagesFilters['Misc'].show) {
-                    filteredOut = 'Misc';
-                }
-            }
-        }
+    if (typeof skipNonEssential === 'string' || skipNonEssential instanceof String) {
+        skipNonEssential = parseInt(skipNonEssential);
     }
+    if (typeof forceScroll === 'string' || forceScroll instanceof String) {
+        forceScroll = parseInt(forceScroll);
+    }
+
 
     //Stuff we do along with appending a message
     var atBottom = false;
-    if (!filteredOut) {
+    if (!skipNonEssential) {
         var bodyHeight = $('body').height();
         var messagesHeight = $messages.outerHeight();
-        var scrollPos = $('body,html').scrollTop();
+        var scrollPos = document.documentElement.scrollTop;
 
         //Should we snap the output to the bottom?
-        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance) {
+        if (bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance || forceScroll) {
             atBottom = true;
             if ($('#newMessages').length) {
                 $('#newMessages').remove();
@@ -257,12 +228,10 @@ function output(message, group) {
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
-    if (opts.messageCount >= opts.messageLimit) {
-        $messages.children('div.entry:first-child').remove();
-        opts.messageCount--; //I guess the count should only ever equal the limit
+    if (opts.messageCount >= opts.messageLimit && opts.messageLimitEnabled && !skipNonEssential) {
+        $messages.children('div.entry:nth-child(-n+' + opts.messageLimit / 2 + ')').remove();
+        opts.messageCount -= opts.messageLimit / 2; //I guess the count should only ever equal the limit
     }
-
-    var $lastEntry = $messages.children('.entry').last();
 
     //message is identical to the last message, do the streak counter stuff
     if (message === opts.lastMessage) {
@@ -300,18 +269,27 @@ function output(message, group) {
             entry = document.createElement('div');
             entry.className = 'entry';
 
-            if (filteredOut) {
-                entry.className += ' hidden';
-                entry.setAttribute('data-filter', filteredOut);
-            }
-
             if (group) {
                 entry.className += ' hasGroup';
                 entry.setAttribute('data-group', group);
-            }
+			}
+
+			//get classes from messages, compare if its in messageclasses, and if so, add to entry
+			let addedClass = false;
+			let $message = $('<span>'+message+'</span>');
+			$.each(opts.messageClasses, function (key, value) {
+				if ($message.find("." + value).length !== 0 || $message.hasClass(value)) {
+					entry.className += ' ' + value;
+					addedClass = true;
+				}
+			});
+			// fallback, if no class found in the classlist
+			if (!addedClass) {
+				entry.className += ' misc';
+			}
 
             entry.innerHTML = message;
-            $messages[0].appendChild(entry);
+            $lastEntry = $($messages[0].appendChild(entry));
             opts.lastMessage = message;
         }
 
@@ -322,8 +300,21 @@ function output(message, group) {
     }
 
     //Actually do the snap
-    if (!filteredOut && atBottom) {
-        $('body,html').scrollTop($messages.outerHeight());
+    if (atBottom && !skipNonEssential) {
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+}
+
+//Receive a large number of messages all at once to cut down on round trips.
+function outputBatch(messages) {
+    var list = JSON.parse(messages);
+    var bodyHeight = $('body').height();
+    var messagesHeight = $messages.outerHeight();
+    var scrollPos = document.documentElement.scrollTop;
+    var shouldScroll = bodyHeight + scrollPos >= messagesHeight - opts.scrollSnapTolerance;
+
+    for (var i = 0; i < list.length; i++) {
+        output(list[i].message, list[i].group, i < list.length - 1, shouldScroll || list[i].forceScroll);
     }
 }
 
@@ -356,9 +347,9 @@ function getCookie(cname) {
 function rgbToHex(R,G,B) {return toHex(R)+toHex(G)+toHex(B);}
 function toHex(n) {
     n = parseInt(n,10);
-    if (isNaN(n)) return "00";
+    if (isNaN(n)) return '00';
     n = Math.max(0,Math.min(n,255));
-    return "0123456789ABCDEF".charAt((n-n%16)/16) + "0123456789ABCDEF".charAt(n%16);
+    return '0123456789ABCDEF'.charAt((n-n%16)/16) + '0123456789ABCDEF'.charAt(n%16);
 }
 
 function changeMode(mode) {
@@ -376,6 +367,15 @@ function changeMode(mode) {
             //remove loaded stylesheet/s
             opts.chatMode = 'default';
     }
+}
+
+
+function changeTheme(theme) {
+    var body = $('body');
+    body.removeClass(opts.currentTheme);
+    body.addClass(theme);
+    opts.currentTheme = theme;
+    setCookie('theme', theme, 365);
 }
 
 function handleClientData(ckey, ip, compid) {
@@ -456,11 +456,18 @@ function ehjaxCallback(data) {
             } else {
                 handleClientData(data.clientData.ckey, data.clientData.ip, data.clientData.compid);
             }
+        } else if (data.changeTheme) {
+            changeTheme(data.changeTheme);
         } else if (data.loadAdminCode) {
             if (opts.adminLoaded) {return;}
             var adminCode = data.loadAdminCode;
             $('body').append(adminCode);
             opts.adminLoaded = true;
+        } else if (data.loadPerfMon) {
+            if (opts.perfMonLoaded) {return;}
+            var perfMon = data.loadPerfMon;
+            $('body').append(perfMon);
+            opts.perfMonLoaded = true;
         } else if (data.modeChange) {
             changeMode(data.modeChange);
         } else if (data.firebug) {
@@ -488,8 +495,8 @@ function ehjaxCallback(data) {
 
                     $playMusic.attr('src', data.playMusic);
                     var music = $playMusic.get(0);
-                    music.volume = data.volume;
-                    if (music.paused) {
+                    music.volume = data.volume * 0.5; /*   Added the multiplier here because youtube is consistently   */
+                    if (music.paused) {                /* louder than admin music, which makes people lower the volume. */
                         music.play();
                     }
                 } catch (e) {
@@ -554,7 +561,7 @@ $(function() {
         return;
     }
     readyCalled = true;
-    
+
     $messages = $('#messages');
     $subOptions = $('#subOptions');
     $playMusic = $('#play-music');
@@ -562,10 +569,11 @@ $(function() {
     //Hey look it's a controller loop!
     setInterval(function() {
         if (opts.pingCounter >= opts.pingLimit && !opts.restarting) { //Every pingLimit seconds
+            let pingDuration = (opts.pongTime - opts.pingTime) / 2;
             opts.pingCounter = 0; //reset
             opts.pongTime = 0; //reset
             opts.pingTime = Date.now();
-            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping');
+            runByond('?action=ehjax&window=browseroutput&type=datum&datum=chatOutput&proc=ping&param[last_ping]=' + pingDuration);
             setTimeout(function() {
                 if (!opts.pongTime) { //If no response within 10 seconds of ping request
                     if (!opts.noResponse) { //Only actually append a message if the previous ping didn't also fail (to prevent spam)
@@ -574,7 +582,6 @@ $(function() {
                         output('<div class="connectionClosed internal" data-count="'+opts.noResponseCount+'">You are either experiencing lag or the connection has closed.</div>');
                     }
                 } else {
-                    opts.pongTime = 0; //reset
                     if (opts.noResponse) { //Previous ping attempt failed ohno
                         $('.connectionClosed[data-count="'+opts.noResponseCount+'"]:not(.restored)').addClass('restored').text('Your connection has been restored (probably)!');
                         opts.noResponse = false;
@@ -597,6 +604,9 @@ $(function() {
         'spingDisabled': getCookie('pingdisabled'),
         'shighlightTerms': getCookie('highlightterms'),
         'shighlightColor': getCookie('highlightcolor'),
+        'stheme': getCookie('theme'),
+        'stwemoji': getCookie('twemoji'),
+        'smessageLimitEnabled': getCookie('messageLimitEnabled')
     };
 
     if (savedConfig.sfontSize) {
@@ -627,6 +637,19 @@ $(function() {
     if (savedConfig.shighlightColor) {
         opts.highlightColor = savedConfig.shighlightColor;
         output('<span class="internal boldnshit">Loaded highlight color of: '+savedConfig.shighlightColor+'</span>');
+    }
+    if (savedConfig.stheme) {
+        var body = $('body');
+        body.removeClass(opts.currentTheme);
+        body.addClass(savedConfig.stheme);
+        opts.currentTheme = savedConfig.stheme;
+        output('<span class="internal boldnshit">Loaded theme setting of: '+themes[savedConfig.stheme]+'</span>');
+    }
+    if (savedConfig.stwemoji) {
+      opts.twemoji = true;
+    }
+    if (savedConfig.smessageLimitEnabled) {
+      opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
 
     (function() {
@@ -843,6 +866,22 @@ $(function() {
         setCookie('fonttype', font, 365);
     });
 
+    $('#chooseTheme').click(function(e) {
+        if ($('.popup .changeTheme').is(':visible')) {return;}
+        var popupContent = '<div class="head">Change Theme</div><div id="changeTheme" class="changeTheme">';
+        $.each(themes, function(themeclass, themename) {
+          popupContent = popupContent + '<a href="#" data-theme="'+themeclass+'">'+themename+'</a>';
+        })
+
+        popupContent = popupContent + '</div>';
+        createPopup(popupContent, 200);
+    });
+
+    $('body').on('click', '#changeTheme a', function(e) {
+        var theme = $(this).attr('data-theme');
+        changeTheme(theme);
+    });
+
     $('#togglePing').click(function(e) {
         if (opts.pingDisabled) {
             $('#ping').slideDown('fast');
@@ -854,33 +893,40 @@ $(function() {
         setCookie('pingdisabled', (opts.pingDisabled ? 'true' : 'false'), 365);
     });
 
+    $('#toggleEmojiFont').click(function(e) {
+        opts.twemoji = !opts.twemoji;
+        setCookie('twemoji', opts.twemoji, 365);
+        output('<span class="internal boldnshit">Emoji set to '+(opts.twemoji?'Twemoji':'Windows emoji')+'</span>');
+    });
+
+    $('#toggleMessageLimit').click(function(e) {
+        opts.messageLimitEnabled = !opts.messageLimitEnabled;
+        setCookie('messageLimitEnabled', opts.messageLimitEnabled, 365);
+        output('<span class="internal boldnshit">'+(opts.messageLimitEnabled ? 'Old messages will get deleted.' : 'Old messages no longer get deleted. This might cause performance issues.')+'</span>');
+    });
+
     $('#saveLog').click(function(e) {
         var saved = '';
 
         if (window.XMLHttpRequest) {
             xmlHttp = new XMLHttpRequest();
         } else {
-            xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            xmlHttp = new ActiveXObject('Microsoft.XMLHTTP');
         }
-        xmlHttp.open('GET', 'browserOutput.css', false);
+        xmlHttp.open('GET', 'https://cdn.goonhub.com/css/browserOutput.css', false);
         xmlHttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         xmlHttp.send();
         saved += '<style>'+xmlHttp.responseText+'</style>';
+        saved += '<body class="' + opts.currentTheme + '">';
 
         saved += $messages.html();
-        saved = saved.replace(/&/g, '&amp;');
-        saved = saved.replace(/</g, '&lt;');
+        saved += '</body>';
 
-        var win;
-        try {
-            win = window.open('', 'Chat Log', 'toolbar=no, location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=yes, width=780, height=200, top='+(screen.height-400)+', left='+(screen.width-840));
-        } catch (e) {
-            return;
-        }
-        if (win && win.document && window.document.body) {
-            win.document.body.innerHTML = saved;
-        }
-    });
+        var now = new Date();
+        var filename = 'log_' + now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate() + '_' + now.getHours() + '-' + now.getMinutes() + '.html';
+
+        navigator.msSaveBlob(new Blob([saved], {type : 'text/html'}), filename);
+      });
 
     $('#highlightTerm').click(function(e) {
         if ($('.popup .highlightTerm').is(':visible')) {return;}

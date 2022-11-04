@@ -21,13 +21,13 @@
 	smoke.set_up(10, 0, usr.loc)
 	smoke.start()
 	for(var/turf/T in range(1))
-		SPAWN_DBG(0)
+		SPAWN(0)
 			new /mob/living/carbon/human/fake_waldo(T)
 	var/turf/picked = pick(turfs)
 	if(!isturf(picked)) return
 	usr.set_loc(picked)
 	usr.verbs -= /client/proc/waldo_decoys
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		usr.verbs += /client/proc/waldo_decoys
 
 /client/proc/mass_teleport()
@@ -47,17 +47,17 @@
 
 
 	var/SPcool = 3000
-	if (usr.wizard_spellpower()) SPcool = 600
+	if (usr.wizard_spellpower(null)) SPcool = 600
 
 	var/A
 	usr.verbs -= /client/proc/mass_teleport
-	SPAWN_DBG(SPcool)
+	SPAWN(SPcool)
 		usr.verbs += /client/proc/mass_teleport
 
 	var/list/theareas = new/list()
 	for(var/area/AR in world)
 		LAGCHECK(LAG_LOW)
-		if(theareas.Find(AR.name)) continue
+		if(AR.name in theareas) continue
 		var/turf/picked = pick(get_area_turfs(AR.type))
 		if (picked.z == usr.z)
 			theareas += AR.name
@@ -73,7 +73,7 @@
 	animation.icon = 'icons/effects/effects.dmi'
 	animation.master = usr
 
-	sleep(30)
+	sleep(3 SECONDS)
 	qdel(animation)
 	usr.buckled = null
 	if(!usr.stat)
@@ -95,7 +95,7 @@
 
 		var/list/mob/teleportees = list()
 		for(var/mob/living/M in orange(usr, 4))
-			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", "wizard")))
+			if(!isdead(M) && M.mind && (M.mind.special_role in list("waldo", "odlaw", ROLE_WIZARD)))
 				teleportees.Add(M)
 
 		usr.set_loc(pick(L))

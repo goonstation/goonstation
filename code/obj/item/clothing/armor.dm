@@ -4,11 +4,12 @@
 	name = "armor"
 	desc = "A suit worn primarily for protection against injury."
 	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/overcoats/worn_suit_armor.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
 	icon_state = "armor"
 	item_state = "armor"
 	body_parts_covered = TORSO|LEGS|ARMS
+	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
 
 	setupProperties()
 		..()
@@ -26,15 +27,14 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	New()
 		..()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = 0, setname = 0)
-		return .
+		src.setMaterial(getMaterial("carbonfibre"), appearance = FALSE, setname = FALSE)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/assembly/anal_ignite))
 			var/obj/item/assembly/anal_ignite/AI = W
 			if (!AI.status)
@@ -55,12 +55,10 @@
 			AI.add_fingerprint(user)
 			R.add_fingerprint(user)
 			user.put_in_hand_or_drop(R)
-			return
 		else
-			..()
-			return
+			return ..()
 
-	attack_self(mob/user as mob)
+	attack_self(mob/user)
 		user.show_text("You change the armor vest's style.")
 		if (src.icon_state == "armorvest")
 			src.icon_state = "armorvest-old"
@@ -68,6 +66,24 @@
 			src.icon_state = "armorvest-light"
 		else
 			src.icon_state = "armorvest"
+
+/obj/item/clothing/suit/armor/vest/light
+	name = "light armor vest"
+	desc = "A cheap armored vest that gives a little bit of protection."
+	icon_state = "armorvest-old"
+	uses_multiple_icon_states = 0
+	item_state = "armorvest-old"
+
+	setupProperties()
+		..()
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
+
+	attackby(obj/item/W, mob/user)
+		return
+
+	attack_self(mob/user)
+		return
 
 // Added support for old-style grenades and pipe bombs. Also a bit of code streamlining (Convair880).
 /obj/item/clothing/suit/armor/suicide_bomb
@@ -77,9 +93,9 @@
 	uses_multiple_icon_states = 1
 	item_state = "armorvest"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	c_flags = ONESIZEFITSALL
 	body_parts_covered = TORSO
 	bloodoverlayimage = SUITBLOOD_ARMOR
+	hides_from_examine = 0
 
 	var/obj/item/clothing/suit/armor/vest/part_vest = null
 	var/obj/item/assembly/anal_ignite/part_igniter = null // Just for show. Doesn't do anything here or in the igniter code.
@@ -92,23 +108,19 @@
 
 	New()
 		..()
-		SPAWN_DBG (5)
-			if (src && !src.part_vest)
-				src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
-			if (src && !src.part_igniter)
-				src.part_igniter = new /obj/item/assembly/anal_ignite(src)
-		return
+		if (!src.part_vest)
+			src.part_vest = new /obj/item/clothing/suit/armor/vest(src)
+		if (!src.part_igniter)
+			src.part_igniter = new /obj/item/assembly/anal_ignite(src)
 
 	examine()
-		set src in oview(2)
-		..()
+		. = ..()
 		if (src.payload)
-			boutput(usr, "<span style=\"color:red\">Looks like the payload is a [src.payload].</span>")
+			. += "<span class='alert'>Looks like the payload is a [src.payload].</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">There doesn't appear to be a payload attached.</span>")
-		return
+			. += "<span class='alert'>There doesn't appear to be a payload attached.</span>"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		src.add_fingerprint(user)
 
 		if (istype(W, /obj/item/chem_grenade/))
@@ -222,15 +234,15 @@
 		if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.beaker)
 			return
 		if (!isdead(wearer) || (wearer.suiciding && prob(60))) // Don't abuse suiciding.
-			wearer.visible_message("<span style=\"color:red\"><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
+			wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks softly, but nothing happens.</b></span>")
 			return
 
 		if (!src.payload)
 			src.payload = "*unknown or null*"
 
-		wearer.visible_message("<span style=\"color:red\"><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
+		wearer.visible_message("<span class='alert'><b>[wearer]'s suicide bomb vest clicks loudly!</b></span>")
 		message_admins("[key_name(wearer)]'s suicide bomb vest triggers (Payload: [src.payload]) at [log_loc(wearer)].")
-		logTheThing("bombing", wearer, null, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
+		logTheThing(LOG_BOMBING, wearer, "'s suicide bomb vest triggers (<b>Payload:</b> [src.payload])[src.payload == "beaker" ? " [log_reagents(src.beaker)]" : ""] at [log_loc(wearer)].")
 
 		if (src.grenade)
 			src.grenade.explode()
@@ -258,39 +270,59 @@
 			src.beaker.reagents.temperature_reagents(4000, 400)
 			// Icon_state and payload don't change because the beaker isn't used up.
 
-		return
+/obj/item/clothing/suit/armor/makeshift
+	name = "makeshift armor"
+	desc = "A standard cyborg chest modified to function as uncomfortable, somewhat flimsy improvised armor."
+	icon_state = "makeshift"
+	item_state = "makeshift"
+	body_parts_covered = TORSO
+	hides_from_examine = 0
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.8)
+		setProperty("movespeed", 0.5)
+		setProperty("disorient_resist", 20)
 
 /obj/item/clothing/suit/armor/captain
 	name = "captain's armor"
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+
 	setupProperties()
 		..()
 		setProperty("meleeprot", 7)
 		setProperty("rangedprot", 1.5)
 
-	attack_self(mob/user as mob) //Azungar was here and added some of his own styles to this thing.
-		user.show_text("You change the armor's style.")
-		if (src.icon_state == "caparmor")
-			src.icon_state = "caparmor-alt"
-			src.item_state = "caparmor-alt"
+/obj/item/clothing/suit/armor/capcoat //old alt armour for the captain
+	name = "captain's coat"
+	desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
+	icon_state = "capcoat"
+	item_state = "capcoat"
+	hides_from_examine = 0
 
-		else
-			src.icon_state = "caparmor"
-			src.item_state = "caparmor"
-
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
 
 /obj/item/clothing/suit/armor/hopcoat
 	name = "Head of Personnel's naval coat"
 	desc = "A rather well armored coat tailored in a traditional naval fashion."
 	icon_state = "hopcoat"
 	item_state = "hopcoat"
+	hides_from_examine = 0
 
 	setupProperties()
 		..()
-		setProperty("meleeprot", 6)
-		setProperty("rangedprot", 1.5)
+		setProperty("coldprot", 35)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.5)
 
 /obj/item/clothing/suit/armor/centcomm
 	name = "administrator's armor"
@@ -306,18 +338,36 @@
 		icon_state = "centcom-red"
 		item_state = "centcom-red"
 
+/obj/item/clothing/suit/armor/centcommcoat //coat version of the centcom armour
+	name = "administator's coat"
+	desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders. It seems to be made out of some thermally resistant material."
+	icon_state = "centcoat"
+	item_state = "centcoat"
+	hides_from_examine = 0
+	setupProperties()
+		..()
+		setProperty("coldprot", 35)
+		setProperty("heatprot", 35)
+		setProperty("meleeprot", 4)
+		setProperty("rangedprot", 0.9)
+
+	red //for the red reward
+		icon_state = "centcoat-red"
+		item_state = "centcoat-red"
+
 /obj/item/clothing/suit/armor/heavy
 	name = "heavy armor"
 	desc = "A heavily armored suit that protects against moderate damage."
 	icon_state = "heavy"
 	item_state = "heavy"
+	hides_from_examine = C_UNIFORM
 	setupProperties()
 		..()
 		setProperty("meleeprot", 12)
 		setProperty("rangedprot", 3)
 		setProperty("pierceprot",25)
-		setProperty("disorient_resist", 25)
-		setProperty("movespeed", 2)
+		setProperty("disorient_resist", 45)
+		setProperty("movespeed", 1.5)
 
 /obj/item/clothing/suit/armor/death_commando
 	name = "death commando armor"
@@ -368,40 +418,44 @@
 	icon_state = "ntarmor"
 	item_state = "ntarmor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
+	hides_from_examine = 0
 
 /obj/item/clothing/suit/armor/NT_alt
-	name = "NT-SO armor"
-	desc = "Durable armor used by NanoTrasen's corporate operatives."
+	name = "old armored vest"
+	desc = "A grungy surplus armored vest. Smelly and not very clean."
 	icon_state = "nt2armor"
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
-	c_flags = ONESIZEFITSALL
+	hides_from_examine = 0
 	setupProperties()
 		..()
-		setProperty("meleeprot", 8)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 6)
+		setProperty("rangedprot", 1)
 
 /obj/item/clothing/suit/armor/EOD
 	name = "bomb disposal suit"
 	desc = "A suit designed to absorb explosive force; very bulky and unwieldy to maneuver in."
 	icon_state = "eod"
 	item_state = "eod"
-	w_class = 3
+	w_class = W_CLASS_NORMAL
+	hides_from_examine = C_UNIFORM|C_GLOVES
 	setupProperties()
 		..()
 		setProperty("meleeprot", 9)
 		setProperty("rangedprot", 2)
 		setProperty("disorient_resist", 10)
-		setProperty("movespeed", 0.6)
+		setProperty("movespeed", 0.45)
+		setProperty("exploprot", 60)
 
 /obj/item/clothing/suit/armor/hoscape
-	name = "head of securitys cape"
-	desc = "A rather dashing cape."
+	name = "Head of Security's cape"
+	desc = "A lightly-armored and stylish cape, made of heat-resistant materials. It probably won't keep you warm, but it would make a great security blanket!"
 	icon_state = "hos-cape"
 	item_state = "hos-cape"
-
+	hides_from_examine = 0
 	setupProperties()
 		..()
-		setProperty("meleeprot", 7)
-		setProperty("rangedprot", 1.5)
+		setProperty("meleeprot", 3)
+		setProperty("rangedprot", 0.7)
+		setProperty("coldprot", 5)
+		setProperty("heatprot", 35)

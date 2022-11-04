@@ -16,6 +16,8 @@
 	sname = "single shot stun"
 //file location for the sound you want it to play
 	shot_sound = 'sound/weapons/LaserOLD.ogg'
+//volume the shot is played at, large pods double the gun and thus the shot sound!
+	shot_volume = 30
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
@@ -36,6 +38,10 @@ toxic - poisons
 
 	disruption = 12
 
+	color_red = 0.2
+	color_green = 0.2
+	color_blue = 1
+
 //Any special things when it hits shit?
 	on_hit(atom/hit)
 		if(istype(hit,/obj/window))
@@ -46,6 +52,7 @@ toxic - poisons
 /datum/projectile/disruptor/burst
 	icon_state = "disrupt"
 	shot_sound = 'sound/weapons/rocket.ogg'
+	shot_volume = 30
 	cost = 60
 	shot_number = 3
 	ks_ratio = 0.5
@@ -55,6 +62,7 @@ toxic - poisons
 /datum/projectile/disruptor/high
 	power = 60
 	shot_sound = 'sound/weapons/laserultra.ogg'
+	shot_volume = 30
 	icon_state = "disrupt_lethal"
 	shot_number = 1
 	cost = 30

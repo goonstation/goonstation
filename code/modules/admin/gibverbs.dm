@@ -1,16 +1,16 @@
 
 /client/proc/cmd_admin_gib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Gib"
-	set popup_menu = 1
+	set popup_menu = 0
 
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has gibbed %target%")
-			logTheThing("diary", usr, M, "has gibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has gibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has gibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has gibbed [key_name(M)]")
 		M.transforming = 1
 
@@ -22,15 +22,15 @@
 		O.pixel_y = -96
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
-		//SPAWN_DBG(0.5 SECONDS)
+		//SPAWN(0.5 SECONDS)
 		M.gib()
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			if (O)
 				O.delaydispose()
 
 
 /client/proc/cmd_admin_partygib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Party Gib"
 	set popup_menu = 0
 
@@ -38,16 +38,16 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has partygibbed %target%")
-			logTheThing("diary", usr, M, "has partygibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has partygibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has partygibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has partygibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.partygib()
+		M.partygib()
 
 /client/proc/cmd_admin_owlgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Owl Gib"
 	set popup_menu = 0
 
@@ -55,16 +55,16 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has owlgibbed %target%")
-			logTheThing("diary", usr, M, "has owlgibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has owlgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has owlgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has owlgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.owlgib()
+		M.owlgib()
 
 /client/proc/cmd_admin_firegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Fire Gib"
 	set popup_menu = 0
 
@@ -72,16 +72,16 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has firegibbed %target%")
-			logTheThing("diary", usr, M, "has firegibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has firegibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has firegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has firegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.firegib()
+		M.firegib()
 
 /client/proc/cmd_admin_elecgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Elec Gib"
 	set popup_menu = 0
 
@@ -89,16 +89,16 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has elecgibbed %target%")
-			logTheThing("diary", usr, M, "has elecgibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has elecgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has elecgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has elecgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.elecgib()
+		M.elecgib()
 
 /client/proc/cmd_admin_icegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Ice Gib"
 	set popup_menu = 0
 
@@ -107,19 +107,19 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be icegibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be icegibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has icegibbed %target%")
-			logTheThing("diary", usr, M, "has icegibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has icegibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has icegibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has icegibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:become_ice_statue()
+		M.become_statue_ice()
 
 /client/proc/cmd_admin_goldgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Gold Gib"
 	set popup_menu = 0
 
@@ -128,20 +128,20 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be goldgibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be goldgibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has goldgibbed %target%")
-			logTheThing("diary", usr, M, "has goldgibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has goldgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has goldgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has goldgibbed [key_name(M)]")
 
 		M.desc = "A dumb looking statue. Very shiny, though."
-		SPAWN_DBG(0.5 SECONDS) M:become_gold_statue()
+		M.become_statue(getMaterial("gold"))
 
 /client/proc/cmd_admin_spidergib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Spider Gib"
 	set popup_menu = 0
 
@@ -150,19 +150,21 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be spidergibbed.</span>")
+		boutput(src, "<span class='alert'>Only humans can be spidergibbed.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	var/mob/living/carbon/human/spiderman = M
+
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has spidergibbed %target%")
-			logTheThing("diary", usr, M, "has spidergibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has spidergibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has spidergibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has spidergibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:spidergib()
+		spiderman.spidergib()
 
 /client/proc/cmd_admin_implodegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Implode Gib"
 	set popup_menu = 0
 
@@ -171,19 +173,19 @@
 		return
 
 	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be imploded.</span>")
+		boutput(src, "<span class='alert'>Only humans can be imploded.</span>")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has imploded %target%")
-			logTheThing("diary", usr, M, "has imploded %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has imploded [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has imploded [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has imploded [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:implode()
+		M.implode()
 
 /client/proc/cmd_admin_buttgib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Butt Gib"
 	set popup_menu = 0
 
@@ -191,20 +193,33 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (!ishuman(M))
-		boutput(src, "<span style=\"color:red\">Only humans can be buttgibbed.</span>")
-		return
-
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has buttgibbed %target%")
-			logTheThing("diary", usr, M, "has buttgibbed %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has buttgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has buttgibbed [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has buttgibbed [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M:buttgib()
+		M.buttgib()
+
+/client/proc/cmd_admin_flockgib(mob/M as mob in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Flockbit gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has flockbit gibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has flockbit gibbed [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has flockbit gibbed [key_name(M)]")
+
+		M.flockbit_gib()
 
 /client/proc/cmd_admin_cluwnegib(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Cluwne Gib"
 	set desc = "Summon the fearsome floor cluwne..."
 	set popup_menu = 0
@@ -213,18 +228,18 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to gib [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		var/duration = input("Input duration in 1/10ths of seconds (10 - 100)", "The Honkening", 30) as num
 		if(!duration) return
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has set a floor cluwne upon %target%")
-			logTheThing("diary", usr, M, "has set a floor cluwne upon %target%", "admin")
+			logTheThing(LOG_ADMIN, usr, "has set a floor cluwne upon [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has set a floor cluwne upon [constructTarget(M,"diary")]", "admin")
 			message_admins("[key_name(usr)] has set a floor cluwne upon [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.cluwnegib(duration)
+		SPAWN(0.5 SECONDS) M.cluwnegib(duration)
 
 /client/proc/cmd_admin_admindamn(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Damn"
 	set desc = "Darn them right to heck"
 	set popup_menu = 0
@@ -233,16 +248,16 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to damn [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to damn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has damned %target% to hell")
-			logTheThing("diary", usr, M, "has damned %target% to hell", "admin")
+			logTheThing(LOG_ADMIN, usr, "has damned [constructTarget(M,"admin")] to hell")
+			logTheThing(LOG_DIARY, usr, "has damned [constructTarget(M,"diary")] to hell", "admin")
 			message_admins("[key_name(usr)] has damned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.damn()
+		SPAWN(0.5 SECONDS) M.damn()
 
 /client/proc/cmd_admin_adminundamn(mob/M as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "UnDamn"
 	set desc = "Un-Darn them right out of heck"
 	set popup_menu = 0
@@ -251,17 +266,17 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	if (alert(src, "Are you sure you want to undamn [M]?", "Confirmation", "Yes", "No") == "Yes")
+	if (tgui_alert(src.mob, "Are you sure you want to undamn [M]?", "Confirmation", list("Yes", "No")) == "Yes")
 		if(usr.key != M.key && M.client)
-			logTheThing("admin", usr, M, "has undamned %target% from hell")
-			logTheThing("diary", usr, M, "has undamned %target% from hell", "admin")
+			logTheThing(LOG_ADMIN, usr, "has undamned [constructTarget(M,"admin")] from hell")
+			logTheThing(LOG_DIARY, usr, "has undamned [constructTarget(M,"diary")] from hell", "admin")
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
-		SPAWN_DBG(0.5 SECONDS) M.un_damn()
+		M.un_damn()
 
 /client/proc/cmd_admin_gib_self()
-	set name = "gibself"
-	set category = "Special Verbs"
+	set name = "Gibself"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	var/turf/T = get_turf(src.mob)
 	if(T)
@@ -274,12 +289,12 @@
 		O.icon = 'icons/effects/214x246.dmi'
 		O.icon_state = "explosion"
 		O.mouse_opacity = 0
-		SPAWN_DBG(3.5 SECONDS)
+		SPAWN(3.5 SECONDS)
 			qdel(O)
-	src.mob.gib()
+	src.mob.gib(FALSE, TRUE)
 
 /client/proc/cmd_admin_tysonban(mob/tysontarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set name = "Tyson Ban"
 	set popup_menu = 0
 	var/startx = 1
@@ -290,7 +305,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 	else
-		switch(alert("Temporary Ban?",,"Yes","No"))
+		switch(tgui_alert(src.mob, "Ban [tysontarget]?", "Confirmation", list("Yes", "No")))
 			if("Yes")
 				var/tysonmins = input(usr,"How long (in minutes)?","Ban time",1440) as num
 				if(!tysonmins)
@@ -305,25 +320,12 @@
 				var/time = input(usr,"How long until it gives up and cheats? No relation to real time.","time","4") as num
 				if(!time)
 					return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 				boutput(tysontarget, "Uh oh.")
 				tysontarget << sound('sound/misc/Boxingbell.ogg')
-				sleep(200)
+				sleep(20 SECONDS)
 				startx = tysontarget.x - rand(-11, 11)
 				starty = tysontarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(tysontarget:range(10)))
 				var/turf/pickedstart = locate(startx, starty, tysontarget.z)
 				var/obj/bantyson/Q = new /obj/bantyson(pickedstart)
 				Q.tysonmins2 = tysonmins
@@ -332,20 +334,14 @@
 				Q.tysonreason = reason
 				Q.timelimit = time
 				Q.tysonspeed = speed
-//				boutput(tysontarget, "<span style=\"color:red\"><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span style=\"color:red\">This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.")
-				logTheThing("diary", usr, tysontarget, "has tysoned %target%. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span style=\"color:blue\">[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
+				logTheThing(LOG_DIARY, usr, "has tysoned [constructTarget(tysontarget,"diary")]. Reason: [reason]. This will be removed in [tysonmins] minutes.", "admin")
 
 /client/proc/cmd_admin_tysongib(mob/tysontarget as mob in world)
-	set category = null
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Tyson Gib"
 	set popup_menu = 0
 	var/startx = 1
 	var/starty = 1
-//	var/startside = pick(cardinal)
-//	var/pickstarter = null
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -353,35 +349,16 @@
 	var/speed = input(usr,"How fast is Mike Tyson? Lower is faster.","speed","5") as num
 	if(!speed)
 		return
-//				switch(startside)
-//					if(NORTH)
-//						starty = world.maxy-2
-//						startx = rand(2, world.maxx-2)
-//					if(EAST)
-//						starty = rand(2,world.maxy-2)
-//						startx = world.maxx-2
-//					if(SOUTH)
-//						starty = 2
-//						startx = rand(2, world.maxx-2)
-//					if(WEST)
-//						starty = rand(2, world.maxy-2)
-//						startx = 2
+
 	boutput(tysontarget, "Uh oh.")
 	tysontarget << sound('sound/misc/Boxingbell.ogg')
 	startx = tysontarget.x - rand(-11, 11)
 	starty = tysontarget.y - rand(-11, 11)
-//				pickedstarter = get_turf(pick(tysontarget:range(10)))
 	var/turf/pickedstart = locate(startx, starty, tysontarget.z)
 	var/obj/gibtyson/Q = new /obj/gibtyson(pickedstart)
 	Q.tysontarget2 = tysontarget
 	Q.caller = usr
 	Q.tysonspeed = speed
-//				boutput(tysontarget, "<span style=\"color:red\"><BIG><B>You have been banned by [usr.client.ckey].<br>Reason: [reason].</B></BIG></span>")
-//				boutput(tysontarget, "<span style=\"color:red\">This is a temporary ban, it will be removed in [tysonmins] minutes.</span>")
-//				logTheThing("admin", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.")
-//				logTheThing("diary", usr, tysontarget, "has tysoned %target%.<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.", "admin")
-//				message_admins("<span style=\"color:blue\">[usr.client.ckey] has banned [tysontarget.ckey].<br>Reason: [reason]<br>This will be removed in [tysonmins] minutes.</span>")
-
 
 /obj/bantyson/
 	name = "Mike Tyson"
@@ -400,20 +377,21 @@
 	var/tysonspeed = 1
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(1)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN(0.4 SECONDS)
+				M.density = 1
+		SPAWN(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
-		while (!disposed)
+		while (!disposed && tysontarget2)
 			if (tysoncantreach >= timelimit)
 				if (tysoncantreach >= 20)
 					qdel(src)
@@ -423,9 +401,9 @@
 				src.z = tysontarget2.z
 				banproc()
 				return
-			else if (get_dist(src, src.tysontarget2) <= 1)
+			else if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> punches [tysontarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
@@ -433,15 +411,15 @@
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 				tysoncantreach++
 
 	proc/banproc()
 		// drsingh for various cannot read null.
 		for(var/mob/O in AIviewers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src]</B> bans [tysontarget2] in one punch!</span>", 1)
+			O.show_message("<span class='alert'><B>[src]</B> bans [tysontarget2] in one punch!</span>", 1)
 		playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-		if(tysontarget2 && tysontarget2.client)
+		if(tysontarget2?.client)
 			if(tysontarget2.client.holder)
 				boutput(tysontarget2, "Here is where you'd get banned.")
 				qdel(src)
@@ -454,19 +432,13 @@
 			addData["akey"] = caller:ckey
 			addData["mins"] = tysonmins2
 			addBan(addData)
-			boutput(tysontarget2, "<span style=\"color:red\"><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
-			boutput(tysontarget2, "<span style=\"color:red\">This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
-			logTheThing("admin", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
-			logTheThing("diary", caller:client, tysontarget2, "has tysonbanned %target%. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
-			message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
+			boutput(tysontarget2, "<span class='alert'><BIG><B>You have been tysoned by [usr.client.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.</B></BIG></span>")
+			boutput(tysontarget2, "<span class='alert'>This is a temporary tysonban, it will be removed in [tysonmins2] minutes.</span>")
+			logTheThing(LOG_ADMIN, caller:client, "has tysonbanned [constructTarget(tysontarget2,"admin")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.")
+			logTheThing(LOG_DIARY, caller:client, "has tysonbanned [constructTarget(tysontarget2,"diary")]. Reason: [tysonreason] and he couldn't escape the tyson. This will be removed in [tysonmins2] minutes.", "admin")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysonbanned [tysontarget2.ckey].<br>Reason: [tysonreason] and he couldn't escape the tyson.<br>This will be removed in [tysonmins2] minutes.</span>")
 			del(tysontarget2.client)
 			tysontarget2.gib()
-//			if(ishuman(tysontarget2))
-//				animation = new(src.loc)
-//				animation.icon_state = "blank"
-//				animation.icon = 'icons/mob/mob.dmi'
-//				animation.master = src
-//			if (tysontarget2:client)
 		playsound(src.loc, pick('sound/misc/Boxingbell.ogg'), 50, 0)
 		qdel(src)
 
@@ -483,50 +455,50 @@
 	var/mob/caller = null
 
 	New()
-		SPAWN_DBG(0) process()
+		SPAWN(0) process()
 		..()
 
-	Bump(M as turf|obj|mob)
-		M:density = 0
-		SPAWN_DBG(0.4 SECONDS)
-			M:density = 1
-		sleep(1)
-		var/turf/T = get_turf(M)
-		src.x = T.x
-		src.y = T.y
+	bump(atom/M as turf|obj|mob)
+		if(M.density)
+			M.density = 0
+			SPAWN(0.4 SECONDS)
+				M.density = 1
+		SPAWN(0.1 SECONDS)
+			var/turf/T = get_turf(M)
+			src.x = T.x
+			src.y = T.y
 
 	proc/process()
 		while (!disposed)
-			if (get_dist(src, src.tysontarget2) <= 1)
+			if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 				for(var/mob/O in AIviewers(src, null))
-					O.show_message("<span style=\"color:red\"><B>[src]</B> punches [tysontarget2]!</span>", 1)
+					O.show_message("<span class='alert'><B>[src]</B> punches [tysontarget2]!</span>", 1)
 				tysontarget2.changeStatus("weakened", 10 SECONDS)
 				tysontarget2.changeStatus("stunned", 10 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 50, 1, -1)
 				icon_state = "punch"
-				sleep(5)
+				sleep(0.5 SECONDS)
 				icon_state = "idle"
 				gibproc()
 				return
 			else
 				walk_towards(src, src.tysontarget2, tysonspeed)
-				sleep(10)
+				sleep(1 SECOND)
 
 	proc/gibproc()
 		// drsingh for various cannot read null.
-		sleep(15)
-		if (get_dist(src, src.tysontarget2) <= 1)
+		sleep(1.5 SECONDS)
+		if (BOUNDS_DIST(src, src.tysontarget2) == 0)
 			for(var/mob/O in AIviewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
+				O.show_message("<span class='alert'><B>[src]</B> KOs [tysontarget2] in one punch!</span>", 1)
 			playsound(src.loc, 'sound/impact_sounds/generic_hit_3.ogg', 30, 1, -2)
-			if(tysontarget2 && tysontarget2.client)
-				logTheThing("admin", caller:client, tysontarget2, "tysongibbed %target%")
-				logTheThing("diary", caller:client, tysontarget2, "tysongibbed %target%", "admin")
-				message_admins("<span style=\"color:blue\">[caller?.client?.ckey] has tysongibbed [tysontarget2.ckey].</span>")
-				tysontarget2.gib()
-			sleep(5)
+			logTheThing(LOG_ADMIN, caller:client, "tysongibbed [constructTarget(tysontarget2,"admin")]")
+			logTheThing(LOG_DIARY, caller:client, "tysongibbed [constructTarget(tysontarget2,"diary")]", "admin")
+			message_admins("<span class='internal'>[caller?.client?.ckey] has tysongibbed [tysontarget2] ([tysontarget2.ckey]).</span>")
+			tysontarget2.gib()
+			sleep(0.5 SECONDS)
 			playsound(src.loc, pick('sound/misc/knockout.ogg'), 50, 0)
-			sleep(5)
+			sleep(0.5 SECONDS)
 			qdel(src)
 		else
 			process()

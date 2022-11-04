@@ -2,6 +2,7 @@ chui/template
 	var/chui/window/winder
 
 	New(var/window)
+		..()
 		winder = window
 
 	proc/SetTemplate( var/code )

@@ -234,8 +234,8 @@
 						var/datum/computer/file/workfile = worklist[1]
 						if (istype(workfile))
 							var/newval = worklist[3]
-							if (isnum(text2num(newval)))
-								newval = text2num(newval)
+							if (isnum(text2num_safe(newval)))
+								newval = text2num_safe(newval)
 							workfile.metadata["[worklist[2]]"] = newval
 
 					to_adjust -= sessionid
@@ -295,7 +295,7 @@
 			//file.holder = src.holder
 			lastOperationResponse = null
 			message_device("command=filestore&session=[sessionid]", file)
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			return (lastOperationResponse == "success")
 
@@ -311,7 +311,7 @@
 			contents_mirror -= file
 			lastOperationResponse = null
 			message_device("command=delfile&fname=[file.name]&session=[sessionid]")
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 			return (lastOperationResponse == "success")
 
@@ -330,7 +330,7 @@
 		to_adjust[sessionid] = list(file, field, newval)
 		lastOperationResponse = null
 		message_device("command=modfile&fname=[file.name]&field=[field]&val=[newval]&session=[sessionid]")
-		sleep(5)
+		sleep(0.5 SECONDS)
 
 		return (lastOperationResponse == "success")
 
@@ -360,7 +360,7 @@
 				F.holding_folder = src
 				src.contents_mirror += F
 				arc.contained_files -= F
-				//boutput(world, "Scooting over \ref[F] [F && F.disposed]")
+				//boutput(world, "Scooting over \ref[F] [F?.disposed]")
 				if (!F.metadata)
 					F.metadata = list()
 
@@ -478,7 +478,7 @@
 		return 0
 
 	process()
-		if (..() || !initialized || !to_print.len)
+		if (..() || !initialized || !length(to_print))
 			return
 
 		if (printer_wait)
@@ -639,22 +639,22 @@
 
 		switch (lowertext(data["command"]))
 			if ("set_coords")
-				var/new_x = text2num(data["x"])
+				var/new_x = text2num_safe(data["x"])
 				if (!isnum(new_x))
 					return ESIG_USR1
 				new_x = round(new_x, 0.01)
 
-				var/new_y = text2num(data["y"])
+				var/new_y = text2num_safe(data["y"])
 				if (!isnum(new_y))
 					return ESIG_USR1
 				new_y = round(new_y, 0.01)
 
-				var/new_z = text2num(data["z"])
+				var/new_z = text2num_safe(data["z"])
 				if (!isnum(new_z))
 					return ESIG_USR1
 				new_z = round(new_z, 0.01)
 
-				var/datum/computer/file/coords/new_coords = unpool(/datum/computer/file/coords)
+				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
 				new_coords.destx = (new_x * XMULTIPLY) - XSUBTRACT
 				new_coords.desty = (new_y * YMULTIPLY) - YSUBTRACT
 				new_coords.destz = new_z - ZSUBTRACT
@@ -664,43 +664,43 @@
 				sessions[sessionid] = ESIG_USR1
 
 				message_device("command=set_coords&session=[sessionid]", new_coords)
-				sleep(6)
+				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
 				sessions -= sessionid
 				return .
 
 			if ("relay") //sshh
-				var/source_x = text2num(data["x1"])
+				var/source_x = text2num_safe(data["x1"])
 				if (!isnum(source_x))
 					return ESIG_USR1
 				source_x = round(source_x, 0.01)
 
-				var/source_y = text2num(data["y1"])
+				var/source_y = text2num_safe(data["y1"])
 				if (!isnum(source_y))
 					return ESIG_USR1
 				source_y = round(source_y, 0.01)
 
-				var/source_z = text2num(data["z1"])
+				var/source_z = text2num_safe(data["z1"])
 				if (!isnum(source_z))
 					return ESIG_USR1
 				source_z = round(source_z, 0.01)
 
-				var/dest_x = text2num(data["x2"])
+				var/dest_x = text2num_safe(data["x2"])
 				if (!isnum(dest_x))
 					return ESIG_USR1
 				dest_x = round(dest_x, 0.01)
 
-				var/dest_y = text2num(data["y2"])
+				var/dest_y = text2num_safe(data["y2"])
 				if (!isnum(dest_y))
 					return ESIG_USR1
 				dest_y = round(dest_y, 0.01)
 
-				var/dest_z = text2num(data["z2"])
+				var/dest_z = text2num_safe(data["z2"])
 				if (!isnum(dest_z))
 					return ESIG_USR1
 				dest_z = round(dest_z, 0.01)
 
-				var/datum/computer/file/coords/new_coords = unpool(/datum/computer/file/coords)
+				var/datum/computer/file/coords/new_coords = new /datum/computer/file/coords
 				new_coords.destx = (dest_x * XMULTIPLY) - XSUBTRACT
 				new_coords.desty = (dest_y * YMULTIPLY) - YSUBTRACT
 				new_coords.destz = dest_z - ZSUBTRACT
@@ -718,7 +718,7 @@
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				sessions[sessionid] = ESIG_USR1
 				message_device("command=[lowertext(data["command"])]&session=[sessionid]")
-				sleep(6)
+				sleep(0.6 SECONDS)
 				. = sessions[sessionid]
 				sessions -= sessionid
 				return .
@@ -769,7 +769,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Coords) to set target coordinates. Specify x y z.|n (Send) to send to target.|n (Receive) to receive from target.|n (Portal) to open bidirectional portal to target.|n (Scan) to scan target atmosphere.","multiline")
 			mainframe_prog_exit
 			return
@@ -783,9 +783,9 @@
 		driver_id &= ~ESIG_DATABIT
 		var/command = lowertext(initlist[1])
 		if (cmptext(command, "-p") && initlist.len > 2)
-			. = text2num(initlist[2])
+			. = text2num_safe(initlist[2])
 			if (isnum(.))
-				. = max(0, min(round(.), 64))
+				. = clamp(round(.), 0, 64)
 				var/list/possibleDrivers = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="s_telepad"))
 				if (istype(possibleDrivers))
 					for (var/x = 1, x <= possibleDrivers.len, x++)
@@ -809,7 +809,7 @@
 							if ("x","X")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_x = text2num(copytext(initlist[i], equalsPoint+1))
+									new_x = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_x))
 										state = 1
 										continue
@@ -820,7 +820,7 @@
 							if ("y","Y")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_y = text2num(copytext(initlist[i], equalsPoint+1))
+									new_y = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_y))
 										state = 2
 										continue
@@ -831,7 +831,7 @@
 							if ("z","Z")
 								var/equalsPoint = findtext(initlist[i], "=", 2)
 								if (equalsPoint)
-									new_z = text2num(copytext(initlist[i], equalsPoint+1))
+									new_z = text2num_safe(copytext(initlist[i], equalsPoint+1))
 									if (!isnum(new_z))
 										state = 3
 										continue
@@ -843,7 +843,7 @@
 								continue
 
 							else
-								var/numIn = text2num(initlist[i])
+								var/numIn = text2num_safe(initlist[i])
 								if (isnum(numIn))
 									switch (state)
 										if (0)
@@ -901,7 +901,7 @@
 					var/state = 0
 
 					for (var/i = 2, i <= initlist.len, i++)
-						var/numIn = text2num(initlist[i])
+						var/numIn = text2num_safe(initlist[i])
 						if (isnum(numIn))
 							switch (state++)
 								if (0)
@@ -965,7 +965,9 @@
 			if ("scan")
 				var/list/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
 				if (istype(success))
-					message_user("Scan Results:|nAtmosphere: O2:[success["o2"]], Tox:[success["tox"]], N2:[success["n2"]], CO2:[success["co2"]],  [success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					#define _TELESCI_ATMOS_SCAN(GAS, _, NAME, ...) "[NAME]: [success[#GAS]], " +
+					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 				else if (istext(success))
 					message_user("Invalid coordinates ([success])")
@@ -1062,7 +1064,7 @@
 				if (!isnum(data["time"]))
 					return ESIG_GENERIC
 
-				var/newtime = max(0, min(data["time"], 440))
+				var/newtime = clamp(data["time"], MIN_NUKE_TIME, MAX_NUKE_TIME)
 
 				var/sessionid = "[world.timeofday%100][rand(0,9)]"
 				message_device("command=settime&time=[newtime]&session=[sessionid]")
@@ -1126,11 +1128,11 @@
 				return
 
 			if ("n_status")
-				var/stat_time = text2num(datalist["timeleft"])
+				var/stat_time = text2num_safe(datalist["timeleft"])
 				if (!isnum(stat_time))
 					return
 
-				src.nuke_time = min(max(stat_time, 0), 512)
+				src.nuke_time = clamp(stat_time, 0, 512)
 
 				src.nuke_active = (datalist["active"] == "1")
 
@@ -1174,7 +1176,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Status) for detonator status.|n (Auth) to authorize detonation.|n (Deauth) to revoke authorizations.|n (Time) to set charge timer.|n (Activate) to activate detonation sequence|n (Abort) to halt activation sequence.","multiline")
 			mainframe_prog_exit
 			return
@@ -1219,13 +1221,13 @@
 						if(istype(callobj.loc, /obj/machinery/computer3))
 							calling_term = callobj.loc
 						if(istype(calling_term))
-							if(calling_term.current_user)
-								logUser = calling_term.current_user
+							if(usr)
+								logUser = usr
 							else
 								logUser = "Terminal \[[src.useracc.user_id]]"
 
 						message_admins("NUKE: Research Sector nuclear charge activated by [key_name(logUser)].")
-						logTheThing("combat", logUser, null, "Activated the Research Sector nuclear charge.")
+						logTheThing(LOG_COMBAT, logUser, "Activated the Research Sector nuclear charge.")
 
 						message_user("!Transmitting Activation Code!")
 					if (ESIG_USR1)
@@ -1252,8 +1254,8 @@
 
 			if ("time")
 				if (initlist.len >= 2)
-					var/newtime = text2num(initlist[2])
-					if (isnum(newtime) && (newtime <= 440) && (newtime >= 30))
+					var/newtime = text2num_safe(initlist[2])
+					if (isnum(newtime) && (newtime <= MAX_NUKE_TIME) && (newtime >= MIN_NUKE_TIME))
 						var/success = signal_program( 1, list("command"=DWAINE_COMMAND_DMSG,"target"=driver_id,"dcommand"="settime","time"=newtime))
 						switch(success)
 							if (ESIG_SUCCESS)
@@ -1264,9 +1266,9 @@
 								message_user("Error: Could not associate with charge driver.")
 
 					else
-						message_user("Error: Invalid time argument supplied (Must be between 30 and 440).")
+						message_user("Error: Invalid time argument supplied (Must be between [MIN_NUKE_TIME] and [MAX_NUKE_TIME]).")
 				else
-					message_user("Error: No time argument supplied (Must be between 30 and 440).")
+					message_user("Error: No time argument supplied (Must be between [MIN_NUKE_TIME] and [MAX_NUKE_TIME]).")
 
 
 			else
@@ -1481,13 +1483,13 @@
 							if (!istype(locatedTask))
 								return 1
 
-							var/model = (text2num(parsedFields["model"]) == 1 ? 1: 0)
+							var/model = (text2num_safe(parsedFields["model"]) == 1 ? 1: 0)
 
 							locatedTask.configure(parsedFields)
 							message_device("command=upload&overwrite=1&newmodel=[model]", locatedTask)
 
 							src.contents_mirror -= locatedTask
-							SPAWN_DBG(0.5 SECONDS)
+							SPAWN(0.5 SECONDS)
 								//qdel(locatedTask)
 								if (locatedTask)
 									locatedTask.dispose()
@@ -1564,7 +1566,7 @@
 /datum/computer/file/mainframe_program/guardbot_interface
 	name = "prman"
 	size = 4
-	var/const/buddyFreq = 1219
+	var/const/buddyFreq = FREQ_BUDDY
 
 	initialize(var/initparams)
 		if (..())
@@ -1578,13 +1580,13 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Arguments:|n \"list\" to list known docking stations.|n \"stat (PR-6 Net ID)\" to view unit status. |n \"upload (PR-6 Net ID) (task filepath) \[configuration filepath]\" to upload task.|n \"wake (PR-6 Net ID)\" to wake unit.|n \"wipe (PR-6 Net ID)\" to clear unit memory.|n \"recall (PR-6 Net ID | \'all\')\" to recall unit.","multiline")
 			mainframe_prog_exit
 			return
 
 		var/list/driverlist = signal_program(1, list("command"=DWAINE_COMMAND_DLIST, "dtag"="pr6_charg", "mode"=1))
-		if (!istype(driverlist) || !driverlist.len)
+		if (!istype(driverlist) || !length(driverlist))
 			message_user("Error: Could not detect PR-6 driver(s).")
 			mainframe_prog_exit
 			return
@@ -1614,10 +1616,10 @@
 				var/statmessage = "Status for Unit \[[lowertext(initlist[2])]]|n"
 				if (statrec.fields["id"] != "nobot")
 					statmessage += " Charge: "
-					if (!isnum(text2num(statrec.fields["charge"])))
+					if (!isnum(text2num_safe(statrec.fields["charge"])))
 						statmessage += "No cell!|n"
 					else
-						statmessage += "[text2num(statrec.fields["charge"])]%|n"
+						statmessage += "[text2num_safe(statrec.fields["charge"])]%|n"
 
 					statmessage += " Current Tool: [statrec.fields["tool"] ? statrec.fields["tool"] : "NONE"]|n"
 					statmessage += " Current Task: [statrec.fields["curtask"] ? statrec.fields["curtask"] : "NONE"]|n"
@@ -1796,7 +1798,7 @@
 	disposing()
 		for (var/a_user_id in radio_users)
 			var/list/id_stuff = radio_users[a_user_id]
-			if (istype(id_stuff) && id_stuff.len)
+			if (istype(id_stuff) && length(id_stuff))
 				signal_program(1, list("command"=DWAINE_COMMAND_TKILL, "target"=id_stuff[1]))
 
 		if (radio_users)
@@ -1810,7 +1812,7 @@
 			return 1
 
 		var/list/dataList = params2list(data)
-		if (!dataList || !dataList.len)
+		if (!dataList || !length(dataList))
 			return 1
 
 		if (dataList["sender"])
@@ -1936,7 +1938,7 @@
 			return 1
 
 		else if (istype(theFile, /datum/computer/folder))
-			var/newFreqName = text2num(theFile.name)
+			var/newFreqName = text2num_safe(theFile.name)
 			if (newFreqName < 1000 || newFreqName > 1500 || newFreqName != round(newFreqName))
 				theFile.dispose()
 				return 0
@@ -2115,13 +2117,13 @@
 			var/newCover = data["cover"]
 
 			if (!isnull(newEquip))
-				commandString += "&equip=[round(max(0, min(newEquip, 3)))]"
+				commandString += "&equip=[round(clamp(newEquip, 0, 3))]"
 
 			if (!isnull(newLight))
-				commandString += "&light=[round(max(0, min(newLight, 3)))]"
+				commandString += "&light=[round(clamp(newLight, 0, 3))]"
 
 			if (!isnull(newEnviron))
-				commandString += "&environ=[round(max(0, min(newEnviron, 3)))]"
+				commandString += "&environ=[round(clamp(newEnviron, 0, 3))]"
 
 			if (!isnull(newCover))
 				commandString += "&cover=[newCover ? "1" : "0"]"
@@ -2147,19 +2149,19 @@
 				return
 
 			if ("status")
-				var/newEquip = text2num(datalist["equip"])
-				var/newLight = text2num(datalist["light"])
-				var/newEnviron = text2num(datalist["environ"])
-				var/newCover = text2num(datalist["cover"])
+				var/newEquip = text2num_safe(datalist["equip"])
+				var/newLight = text2num_safe(datalist["light"])
+				var/newEnviron = text2num_safe(datalist["environ"])
+				var/newCover = text2num_safe(datalist["cover"])
 
 				if (!isnull(newEquip))
-					apcEquip = round(max(0, min(newEquip, 3)))
+					apcEquip = round(clamp(newEquip, 0, 3))
 
 				if (!isnull(newLight))
-					apcLight = round(max(0, min(newLight, 3)))
+					apcLight = round(clamp(newLight, 0, 3))
 
 				if (!isnull(newEnviron))
-					apcEnviron = round(max(0, min(newEnviron, 3)))
+					apcEnviron = round(clamp(newEnviron, 0, 3))
 
 				if (newCover)
 					apcCover = 1
@@ -2232,7 +2234,7 @@
 			return
 
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			message_user("Invalid commmand argument.|nValid Commands:|n (Status) for emitter status.|n (Activate) to activate emitter|n (Deactivate) to shut down emitter.","multiline")
 			mainframe_prog_exit
 			return
@@ -2405,7 +2407,7 @@
 			if ("poke") //Set an arbitrary (device-specific) configuration value on the device.
 				if (!isnull(data["field"]) && !isnull(data["value"]))
 					if (isnum(data["value"]))
-						data["value"] = round(max(1, min(data["value"], 255)))
+						data["value"] = round(clamp(data["value"], 1, 400)) // 400 is highest stimulus value for heater
 
 					var/sessionid = "[world.timeofday%100][rand(0,9)]"
 					sessions["[sessionid]"] = sendid
@@ -2432,7 +2434,7 @@
 				if (!isnum(pulseDuration))
 					pulseDuration = 1
 
-				pulseDuration = max(1, min(pulseDuration, 255))
+				pulseDuration = clamp(pulseDuration, 1, 255)
 				message_device("command=pulse&duration=[pulseDuration]")
 				return ESIG_SUCCESS
 
@@ -2645,7 +2647,7 @@
 
 				if (!isnull(readData))
 					if (knownReadings.len < knownReadingFields.len)
-						knownReadings.len = knownReadingFields.len
+						knownReadings.len = length(knownReadingFields)
 
 					for (var/i = 1, i <= knownReadingFields.len && i <= readData.len, i++)
 						knownReadings[i] = readData[i]
@@ -2821,7 +2823,7 @@
 
 		var/command = null
 		var/list/initlist = splittext(initparams, " ")
-		if (!initparams || !initlist.len)
+		if (!initparams || !length(initlist))
 			command = "index"
 		else
 			command = ckey(initlist[1])
@@ -2846,7 +2848,7 @@
 					var/printerName = copytext(ckeyEx(initlist[2]), 1,33)
 					var/datum/computer/file/record/printerStatus = signal_program(1, list("command"=DWAINE_COMMAND_FGET,"path"="/mnt/lp-[printerName]/status"))
 					var/theStatus = "???"
-					if (istype(printerStatus) && printerStatus.fields && printerStatus.fields.len)
+					if (istype(printerStatus) && printerStatus.fields && length(printerStatus.fields))
 						theStatus = "[printerStatus.fields[1]]"
 					message_user("print_status|n[theStatus]","multiline")
 
@@ -2979,7 +2981,7 @@
 				return
 
 			if ("remove_report")
-				. = round( max(0, min(text2num(datalist["filenum"]),127 ) ))
+				. = round( clamp(text2num_safe(datalist["filenum"]), 0, 127 ) )
 				if (!isnum(.))
 					return
 
@@ -2992,3 +2994,5 @@
 				return
 
 		return
+
+#undef _TELESCI_ATMOS_SCAN

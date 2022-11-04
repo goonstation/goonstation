@@ -13,12 +13,17 @@
 	blood_id = "methamphetamine"
 	burning_suffix = "humanoid"
 
+	on_pet(mob/user)
+		if (..())
+			return 1
+		user.unlock_medal("Bear Hug", 1) //new method to get since obesity is removed
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(get_turf(src), "sound/voice/MEraaargh.ogg", 70, 1)
-					return "<b><span style='color:red'>[src] roars!</span></b>"
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
 	specific_emote_type(var/act)
@@ -48,8 +53,8 @@
 		HH.limb_name = "right bear arm"
 
 	setup_healths()
-		add_hh_flesh(-75, 75, 0.85)
-		add_hh_flesh_burn(-75, 75, 1.25)
+		add_hh_flesh(75, 0.85)
+		add_hh_flesh_burn(75, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 		add_health_holder(/datum/healthHolder/suffocation)
 		add_health_holder(/datum/healthHolder/brain)

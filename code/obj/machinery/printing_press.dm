@@ -1,8 +1,8 @@
 /obj/machinery/printing_press //this makes books
-	name = "printing press"
-	desc = "Some machinery that's supposed to be able to write on a lot of pages super quickly. It looks pretty old."
-	icon = 'icons/obj/64x32.dmi' //lets immortalise =atamusvaleo= in the code forever, i miss him
-	icon_state = "" //proper icon is set in update_icon
+	name = "\improper Academy automated printing press"
+	desc = "This is an Aurora Lithographics 'Academy' model automated printing press, used to reproduce books and pamphlets. This doesn't still use stone plates, does it?"
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "printing_press" //proper icon is set in UpdateIcon
 	anchored = 1
 	density = 1
 	bound_width = 64 //the game just handles xtra wide objects already halleluiah
@@ -56,7 +56,7 @@
 //Appearance stuff//
 ////////////////////
 
-	proc/update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
+	update_icon() //this runs every time something would change the amt of paper, or if its working or done working, handles paper overlay and work animation
 		if (paper_amt || was_paper)
 			if (GetOverlayImage("paper"))
 				ClearSpecificOverlays("paper")
@@ -71,7 +71,6 @@
 			src.UpdateOverlays(I, "ink")
 		if (is_running)
 			flick("printing_press-work", src)
-			sleep(24)
 			return
 		icon_state = "printing_press-idle"
 
@@ -120,7 +119,7 @@
 				new/obj/effect/supplyexplosion(src.loc)
 				playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
 				for(var/mob/M in view(7, src.loc))
-					shake_camera(M, 20, 1)
+					shake_camera(M, 20, 16)
 
 				sleep(2 SECONDS)
 				new /obj/item/electronics/frame/press_frame(src.loc)
@@ -129,7 +128,7 @@
 				return
 
 			src.x -= 1
-		update_icon()
+		UpdateIcon()
 
 	// this bad boy requires two tiles of space so we'll check it out
 	proc/is_fuckled(var/where)
@@ -149,7 +148,7 @@
 //Interaction stuff//
 /////////////////////
 
-	attackby(var/obj/item/W as obj, mob/user as mob)
+	attackby(var/obj/item/W, mob/user)
 		if (istype(W, /obj/item/paper_bin))
 			var/obj/item/paper_bin/P = W
 			if (P.amount > 0 && paper_amt <= paper_max) //if the paper bin has paper, and adding the paper bin doesnt add too much paper
@@ -157,7 +156,7 @@
 				var/amount_to_take = paper_max - paper_amt
 				var/amount_taken = min(amount_to_take, P.amount)
 				paper_amt += amount_taken
-				update_icon()
+				UpdateIcon()
 				P.amount = P.amount - amount_taken
 				P.update()
 				return
@@ -174,7 +173,7 @@
 			if (paper_amt < paper_max)
 				boutput(user, "You load \the [W] into \the [src].")
 				paper_amt++
-				update_icon()
+				UpdateIcon()
 				user.drop_item()
 				qdel(W)
 			else
@@ -211,7 +210,7 @@
 					if ((ink_level + 100) <= ink_max) //500ink internal resevoir
 						ink_level += 100
 						boutput(user, "Ink refilled.")
-						update_icon() //to show ink level change
+						UpdateIcon() //to show ink level change
 					else
 						boutput(user, "\The [src] doesn't need an ink refill yet.")
 						return
@@ -219,12 +218,12 @@
 					boutput(user, "no good, asshole >:\[")
 					return
 			qdel(W)
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 
 		else
 			..()
 
-	attack_hand(var/mob/user as mob) //all of our mode controls and setters here, these control what the books are/look like/have as contents
+	attack_hand(var/mob/user) //all of our mode controls and setters here, these control what the books are/look like/have as contents
 		if (is_running)
 			boutput(user, "\The [src] is busy.") //machine is running
 			return
@@ -281,7 +280,7 @@
 						if ("bible")
 							book_cover = "bible"
 						if ("old")
-							book_cover = "bookkiy"
+							book_cover = "oldbook"
 						else
 							book_cover = "book0"
 				boutput(user, "Book cover set.")
@@ -356,7 +355,7 @@
 					// you can't even print a single book. nice one, doofus
 					src.visible_message("Not enough ink.")
 					return
-				logTheThing("say", user, null, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
+				logTheThing(LOG_SAY, user, "made some books with the name: [book_name] | the author: [book_author] | the contents: [book_info]") //book logging
 				make_books()
 				return
 
@@ -464,11 +463,11 @@
 					src.visible_message("\The [src] runs out of ink and stops printing.")
 
 				is_running = 0
-				update_icon()
+				UpdateIcon()
 				break
 
-			playsound(src.loc, "sound/machines/printer_press.ogg", 50, 1)
-			update_icon()
+			playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 1)
+			UpdateIcon()
 
 			var/obj/item/paper/book/custom/B = new(get_turf(src))
 
@@ -529,7 +528,7 @@
 			paper_amt -= 2
 
 		is_running = 0
-		update_icon() //just in case?
+		UpdateIcon() //just in case?
 		src.visible_message("\The [src] finishes printing and shuts down.")
 
 /obj/item/press_upgrade //parent just to i dont have to set name and icon a bunch i am PEAK lazy
@@ -544,7 +543,7 @@
 	desc = "Looks like this upgrade module is for letting your press customise book covers!"
 	icon_state = "press_books"
 
-/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest bitch
+/obj/item/press_upgrade/ink //using press_upgrade so i dont have to set icon i really am the laziest coder
 	name = "ink cartridge"
 	desc = "Looks like this is an ink restock cartridge for the printing press!"
 	icon_state = "press_ink"
@@ -564,14 +563,17 @@
 /obj/item/paper/press_warning
 	name = "printing press setup warning"
 	info = {"
-<b>WARNING FOR ALL PROSPECTIVE BUILDERS OF THE NT-112 PRINTING PRESS</b>
-<br>In this shipment you recieved a frame for your new NT-112 Printing Press.
+<b>WARNING BEFORE INSTALLING your new ACADEMY PRINTING PRESS by AURORA LITHOGRAPHICS</b>
+<br>In this shipment you received a frame for your new Academy automated offset Printing Press.
 <br>This device takes up 2 standard floor tiles once fully deployed.
-<br>If you are seeking to set up your own NT-112 Printing Press, be aware:
+<br>If you are seeking to set up your own Academy Printing Press, be aware:
 <ul>
 	<li>The left side of the device will be deployed on the tile where the frame is.
 	<li>The right side of the device will be one tile to the right of the frame.
 	<li>If the device cannot fit, it will attempt to deploy one tile to the left.
 	<li>If there is no space available at all, the device will fail to deploy.
 </ul>
-Have a secure day."}
+<br>Congratulations on your new adventure in self-publishing!
+<br><i>Aurora Lithographics</i>
+<br><i>Aurora-on-Cayuga, NY</i>
+"}

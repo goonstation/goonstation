@@ -1,4 +1,4 @@
-/obj/screen/release
+/atom/movable/screen/release
 	name = "Release object"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x"
@@ -13,14 +13,14 @@
 	clicked(params)
 		..()
 		if (owner)
-			owner.death(0)
+			owner.death(FALSE)
 
 	//WIRE TOOLTIPS
 	MouseEntered(location, control, params)
 		if (usr.client.tooltipHolder)
 			usr.client.tooltipHolder.showHover(src, list(
-				"params" = params, 
-				"title" = src.name, 
+				"params" = params,
+				"title" = src.name,
 				"content" = (src.desc ? src.desc : null)
 			))
 
@@ -32,7 +32,7 @@
 	mymob.zone_sel = new(mymob, "SOUTH,EAST")
 	mymob.attach_hud(mymob.zone_sel)
 
-	mymob.i_select = new /obj/screen/intent_sel( src )
+	mymob.i_select = new /atom/movable/screen/intent_sel( src )
 	mymob.i_select.name = "intent"
 	mymob.i_select.icon_state = (mymob.a_intent == "harm" ? "harm" : mymob.a_intent)
 	mymob.i_select.screen_loc = "SOUTH,EAST-1"

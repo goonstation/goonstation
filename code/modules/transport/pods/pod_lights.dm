@@ -5,7 +5,6 @@
 	power_used = 30
 	system = "Lights"
 	//icon_state = "lights"
-	var/datum/light/light1
 	var/col_r = 0.9
 	var/col_g = 0.8
 	var/col_b = 0.7
@@ -21,44 +20,39 @@
 	// pod_1x1 are the default lighting given to all pods, override this if you need to use a bigger pod
 	pod_1x1
 
-		New()
-			..()
-			light1 = new /datum/light/point
-			light1.set_brightness(1)
-			light1.set_color(col_r, col_g, col_b)
-
 		// defined to have a single light point
 		activate()
 			..()
-			light1.attach(ship)
-			light1.enable()
+			ship.add_sm_light("pod_lights\ref[src]", list(col_r*255,col_g*255,col_b*255,255), directional = 1)
+			ship.toggle_sm_light(1)
 			return
 
 		deactivate()
 			..()
-			light1.disable()
-			light1.detach(ship)
+			ship.toggle_sm_light(0)
 			return
 
 	pod_2x2
+		var/datum/light/light1
 		var/datum/light/light2
 		var/datum/light/light3
 		var/datum/light/light4
 
 		// Turns on four lights because I can't figure out how to do two lights out front facing the direction the pod is heading
+		// TODO : fix this, it's 2x the load than we need out of this
 		New()
 			..()
-			var/brightness = 0.85
-			light1 = new /datum/light/point
+			var/brightness = 2
+			light1 = new /datum/light/line
 			light1.set_brightness(brightness)
 			light1.set_color(col_r, col_g, col_b)
-			light2 = new /datum/light/point
+			light2 = new /datum/light/line
 			light2.set_brightness(brightness)
 			light2.set_color(col_r, col_g, col_b)
-			light3 = new /datum/light/point
+			light3 = new /datum/light/line
 			light3.set_brightness(brightness)
 			light3.set_color(col_r, col_g, col_b)
-			light4 = new /datum/light/point
+			light4 = new /datum/light/line
 			light4.set_brightness(brightness)
 			light4.set_color(col_r, col_g, col_b)
 
@@ -93,10 +87,6 @@
 
 	var/weeoo_in_progress = 0
 
-	New()
-		..()
-		light1 = new /datum/light/point
-		light1.set_brightness(1)
 
 	activate()
 		..()
@@ -116,16 +106,18 @@
 			return
 
 		weeoo_in_progress = 10
-		SPAWN_DBG (0)
-			playsound(src.loc, "sound/machines/siren_police.ogg", 50, 1)
-			light1.attach(ship)
-			light1.enable()
+		SPAWN(0)
+			playsound(src.loc, 'sound/machines/siren_police.ogg', 50, 1)
+
+			ship.add_sm_light("pod_lights\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
+			src.toggle_sm_light(1)
+
 			while (weeoo_in_progress--)
-				light1.set_color(0.9, 0.1, 0.1)
-				sleep(3)
-				light1.set_color(0.1, 0.1, 0.9)
-				sleep(3)
-			light1.disable()
-			light1.detach(ship)
+				ship.add_sm_light("pod_lights\ref[src]", list(0.9*255,0.1*255,0.1*255,200), directional = 1)
+				sleep(0.3 SECONDS)
+				ship.add_sm_light("pod_lights\ref[src]", list(0.1*255,0.1*255,0.9*255,200), directional = 1)
+				sleep(0.3 SECONDS)
+			src.toggle_sm_light(0)
 			weeoo_in_progress = 0
 			src.deactivate()
+

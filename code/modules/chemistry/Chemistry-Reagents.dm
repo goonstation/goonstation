@@ -1,10 +1,15 @@
-//The reaction procs must ALWAYS set src = null, this detaches the proc from the object (the reagent)
 //so that it can continue working when the reagent is deleted while the proc is still active.
 
 //important MBC reagent note : implement mult for on_mob_life(). needed for proper realtime processing. lookk for examples, there are plenty
 //dont put them on byond-time effects like drowsy. just use them for damage, counters, statuseffects(realtime) etc.
 
-var/list/booster_enzyme_reagents_to_check = list("charcoal","synaptizine","styptic_powder","teporone","salbutamol","methamphetamine","omnizine","perfluorodecalin","penteticacid","oculine","epinephrine","mannitol","synthflesh", "saline", "anti_rad", "salicylic_acid", "menthol", "silver_sulfadiazine"/*,"coffee", "sugar", "espresso", "energydrink", "ephedrine", "crank"*/) //these last ones are probably an awful idea. Uncomment to buff booster a decent amount
+///List of 2 letter shorthands for the reagent, currently only used by the cybernetic hypospray
+var/list/reagent_shorthands = list(
+	"salbutamol" = "Sb",
+	"anti_rad" = "KI"
+)
+
+ABSTRACT_TYPE(/datum/reagent)
 
 datum
 	reagent
@@ -30,9 +35,10 @@ datum
 		var/reacting = 0 // fuck off chemist spam
 		var/overdose = 0 // if reagents are at or above this in a mob, it's an overdose - if double this, it's a major overdose
 		var/depletion_rate = 0.4 // this much goes away per tick
+		var/flushing_multiplier = 1 // this decides how succeptible it is to other chemical's flushing
 		var/penetrates_skin = 0 //if this reagent can enter the bloodstream through simple touch.
 		var/touch_modifier = 1 //If this does penetrate skin, how much should be transferred by default (assuming naked dude)? 1 = transfer full amount, 0.5 = transfer half, etc.
-		var/taste = "uninteresting"
+		var/taste = null
 		var/value = 1 // how many credits this is worth per unit
 		var/thirst_value = 0
 		var/hunger_value = 0
@@ -43,9 +49,20 @@ datum
 		var/viscosity = 0 // determines interactions in fluids. 0 for least viscous, 1 for most viscous. use decimals!
 		var/block_slippy = 0 //fluid flag for slippage control
 		var/list/target_organs
-		var/heat_capacity = 100 /* how much heat a reagent can hold */
+		var/heat_capacity = 100 /* how much heat a reagent can hold */ // ACTUALLY, THIS IS SPECIFIC HEAT CAPACITY, HOPE THIS HELPS!! - Emily
 		var/blocks_sight_gas = 0 //opacity
 		var/pierces_outerwear = 0//whether or not this penetrates outerwear that may protect the victim(e.g. biosuit)
+		var/stun_resist = 0
+		var/smoke_spread_mod = 0 //base minimum-required-to-spread on a smoke this chem is in. Highest value in the smoke is used
+		var/minimum_reaction_temperature = INFINITY // Minimum temperature for reaction_temperature() to occur, use -INFINITY to bypass this check
+		var/random_chem_blacklisted = 0 // will not appear in random chem sources oddcigs/artifacts/etc
+		var/boiling_point = T0C + 100
+		var/can_crack = 0 // used by organic chems
+		var/threshold_volume = null //defaults to not using threshold
+		var/threshold = null
+		/// Has this chem been in the person's bloodstream for at least one cycle?
+		var/initial_metabolized = FALSE
+
 		New()
 			..()
 			if (src.viscosity == 0 && src.reagent_state == SOLID)
@@ -53,25 +70,42 @@ datum
 
 		disposing()
 			holder = null
-			..()
-
-		pooled()
-			..()
-			transparency = initial(transparency)
-			fluid_r = initial(fluid_r)
-			fluid_b = initial(fluid_b)
-			fluid_g = initial(fluid_g)
-			holder = null
 			data = null
-			volume = 0
-			reacting = 0
-
+			..()
 
 		proc/on_add()
 			return
 
 		proc/on_remove()
 			return
+
+		/// Called once on the first cycle that this chem is processed in the target
+		proc/initial_metabolize()
+			return
+
+		proc/check_threshold()
+			SHOULD_NOT_OVERRIDE(TRUE)
+
+			if (src.threshold == THRESHOLD_UNDER && src.volume >= (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_over()
+			else if (src.threshold == THRESHOLD_OVER && src.volume < (src.threshold_volume || src.depletion_rate))
+				src.cross_threshold_under()
+
+		proc/cross_threshold_over()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_OVER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+
+		proc/cross_threshold_under()
+			SHOULD_CALL_PARENT(TRUE)
+			threshold = THRESHOLD_UNDER
+			if (stun_resist > 0 && ismob(holder?.my_atom))
+				var/mob/M = holder.my_atom
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
 
 		proc/on_copy(var/datum/reagent/new_reagent)
 			//To support deep copying of a reagent holder
@@ -96,28 +130,36 @@ datum
 		// YES i know this is kind of backwards - however it's much easier to change these return values to 1 than to change every single reagent
 
 		proc/reaction_blob(var/obj/blob/B, var/volume)
+			SHOULD_CALL_PARENT(TRUE)
 			if (!blob_damage)
 				return 1
+			src.holder.remove_reagent(src.id, volume)
 			B.take_damage(blob_damage, volume, "poison")
-			return 1
+			return 0
 
-		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0) //By default we have a chance to transfer some
+		//Proc to check a mob's chemical protection in advance of reaction.
+		//Modifies the effective volume applied to the mob, but preserves the raw volume so it can be accessed for special behaviors.
+		proc/reaction_mob_chemprot_layer(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
+			var/raw_volume = volume
+			if(method == TOUCH && !src.pierces_outerwear && !("ignore_chemprot" in paramslist))
+				var/percent_protection = clamp(GET_ATOM_PROPERTY(M, PROP_MOB_CHEMPROT), 0, 100)
+				if(percent_protection)
+					percent_protection = 1 - (percent_protection/100) //inverts the percentage to get the multiplier on effective reagents
+					volume *= percent_protection
+			. = reaction_mob(M, method, volume, paramslist, raw_volume)
+			return
+
+		proc/reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume) //By default we have a chance to transfer some
+			SHOULD_CALL_PARENT(TRUE)
 			var/datum/reagent/self = src					  //of the reagent to the mob on TOUCHING it.
 			var/did_not_react = 1
 			switch(method)
 				if(TOUCH)
 					if (penetrates_skin && !("nopenetrate" in paramslist))
-						var/modifier = touch_modifier
-						if(!src.pierces_outerwear)
-							for(var/atom in M.get_equipped_items())
-								if (istype(atom, /obj/item/clothing))
-									var/obj/item/clothing/C = atom
-									modifier -= (1 - C.permeability_coefficient)/3
-
 						if(M.reagents)
-							M.reagents.add_reagent(self.id,volume*modifier,self.data)
+							M.reagents.add_reagent(self.id,volume*touch_modifier,self.data)
 							did_not_react = 0
-					if (ishuman(M) && hygiene_value)
+					if (ishuman(M) && hygiene_value && method == TOUCH)
 						var/mob/living/carbon/human/H = M
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
@@ -125,54 +167,31 @@ datum
 
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
-					/*var/addProb = addiction_prob
-					if(ishuman(M))
-						var/mob/living/carbon/human/H = M
-						if(H.traitHolder.hasTrait("strongwilled"))
-							addProb = round(addProb / 2)
-					if(prob(addProb) && ishuman(M) && !AD)
-						// i would set up a proc for this but this is the only place that adds addictions
-						boutput(M, "<span style=\"color:red\"><B>You suddenly feel invigorated and guilty...</B></span>")
-						AD = new
-						AD.associated_reagent = src.name
-						AD.last_reagent_dose = world.timeofday
-						AD.name = "[src.name] addiction"
-						AD.affected_mob = M
-						AD.max_severity = src.max_addiction_severity
-						M.ailments += AD
-					else */if (AD)
-						boutput(M, "<span style='color:blue'><b>You feel slightly better, but for how long?</b></span>")
+					if (AD)
+						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
 						AD.stage = 1
-/*					if (ishuman(M) && thirst_value)
-						var/mob/living/carbon/human/H = M
-						if (H.sims)
-							H.sims.affectMotive("Thirst", volume * thirst_value)
-*/
-			if(M.material)
-				M.material.triggerChem(M, src, volume)
+
+			M.material?.triggerChem(M, src, volume)
 			for(var/atom/A in M)
 				if(A.material) A.material.triggerChem(A, src, volume)
-			src = null
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
-			src = null						//if it can hold reagents. nope!
-			if(O.material)
-				O.material.triggerChem(O, src, volume)
-			//if(O.reagents)
-			//	O.reagents.add_reagent(id,volume/3)
+								//if it can hold reagents. nope!
+			O.material?.triggerChem(O, src, volume)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
-			src = null
-			if(T.material)
-				T.material.triggerChem(T, src, volume)
+			T.material?.triggerChem(T, src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
 
 		proc/how_many_depletions(var/mob/M)
 			var/deplRate = depletion_rate
+			if(!deplRate)
+				return
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
@@ -190,6 +209,7 @@ datum
 
 		//mult is used to handle realtime metabolizations over byond time
 		proc/on_mob_life(var/mob/M, var/mult = 1)
+			SHOULD_CALL_PARENT(TRUE)
 			if (!M || !M.reagents)
 				return
 			if (!holder)
@@ -199,6 +219,12 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
+				if (H.organHolder)
+					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
+						deplRate /= 2
+					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
+						deplRate /= 2
+
 				if (H.sims)
 					if (src.thirst_value)
 						H.sims.affectMotive("Thirst", thirst_value)
@@ -215,10 +241,13 @@ datum
 			if (src.volume - deplRate <= 0)
 				src.on_mob_life_complete(M)
 
-			holder.remove_reagent(src.id, deplRate) //By default it slowly disappears.
+			if (!initial_metabolized)
+				initial_metabolized = TRUE
+				initial_metabolize(M)
+
+			holder?.remove_reagent(src.id, deplRate) //By default it slowly disappears.
 
 			if(M && overdose > 0) check_overdose(M, mult)
-			//if(M && isdead(M) && src.id != "montaguone" && src.id != "montaguone_extra") M.reagents.del_reagent(src.id) // no more puking corpses and such
 			return
 
 		//when we entirely drained from sstem, do this
@@ -237,7 +266,7 @@ datum
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if(H.traitHolder.hasTrait("chemresist"))
-					amount *= (0.65 ** mult)
+					amount *= (0.65)
 			if (amount >= src.overdose * 2)
 				return do_overdose(2, M, mult)
 			else if (amount >= src.overdose)
@@ -263,8 +292,8 @@ datum
 				return AD
 			var/addProb = addiction_prob
 			//DEBUG_MESSAGE("addProb [addProb]")
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+			if (isliving(M))
+				var/mob/living/H = M
 				if (H.traitHolder.hasTrait("strongwilled"))
 					addProb = round(addProb / 2)
 					rate /= 2
@@ -279,8 +308,8 @@ datum
 			holder.addiction_tally[src.id] += rate
 			var/current_tally = holder.addiction_tally[src.id]
 			//DEBUG_MESSAGE("current_tally [current_tally], min [addiction_min]")
-			if (addiction_min < current_tally && ishuman(M) && prob(addProb) && prob(addiction_prob2))
-				boutput(M, "<span style='color:red'><b>You suddenly feel invigorated and guilty...</b></span>")
+			if (addiction_min < current_tally && isliving(M) && prob(addProb) && prob(addiction_prob2))
+				boutput(M, "<span class='alert'><b>You suddenly feel invigorated and guilty...</b></span>")
 				AD = new
 				AD.associated_reagent = src.name
 				AD.last_reagent_dose = world.timeofday
@@ -290,6 +319,12 @@ datum
 				M.ailments += AD
 				//DEBUG_MESSAGE("became addicted: [AD.name]")
 				return AD
+			return
+
+		proc/flush(var/mob/M, var/amount, var/list/flush_specific_reagents)
+			for (var/reagent_id in M.reagents.reagent_list)
+				if ((reagent_id != src.id) && ((reagent_id in flush_specific_reagents) || !flush_specific_reagents))//checks if there's a specific reagent list to flush or if it should flush all reagents.
+					holder.remove_reagent(reagent_id, (amount * M.reagents.reagent_list[reagent_id].flushing_multiplier))
 			return
 
 		// reagent state helper procs
@@ -306,6 +341,25 @@ datum
 		proc/physical_shock(var/force)
 			return
 
+		proc/crack(var/amount) //this proc is called by organic chemistry machines. It should return nothing.
+			return							//rather it should subtract its own volume and create the appropriate byproducts.
+
+		/// Returns a representation of this reagent's recipes in text form
+		proc/get_recipes_in_text(allow_secret = FALSE)
+			. = ""
+			for (var/datum/chemical_reaction/recipe in chem_reactions_by_result[src.id])
+				. += "<b>Recipe for [recipe.result_amount] unit[recipe.result_amount > 1 ? "s": ""] of [reagents_cache[recipe.result] || "NULL"]:</b>"
+				if (recipe.hidden && !allow_secret)
+					. += "<br>&emsp;<b>\[RECIPE REDACTED\]</br>"
+				else
+					if (recipe.required_temperature != -1)
+						. += "<br>&emsp;Required temperature: [T0C + recipe.required_temperature]°C"
+					for (var/id in recipe.required_reagents)
+						. += "<br>&emsp;[reagents_cache[id]] - [recipe.required_reagents[id]] unit[recipe.required_reagents[id] > 1 ? "s" : ""]" // English name - Required amount
+				. += "<br><br>"
+			if (!.) // empty string is falsey
+				. += "<b>No known recipes.</b>"
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -321,10 +375,9 @@ datum
 			transparency = 40
 
 			reaction_turf(var/turf/T, var/volume)
-				src = null
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

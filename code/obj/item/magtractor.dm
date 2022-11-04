@@ -7,13 +7,13 @@
 	icon_state = "magtractor"
 	opacity = 0
 	density = 0
-	anchored = 0.0
+	anchored = 0
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
-	force = 10.0
-	throwforce = 10.0
+	force = 10
+	throwforce = 10
 	throw_speed = 1
 	throw_range = 5
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	m_amt = 50000
 	mats = 12
 	stamina_damage = 15
@@ -28,8 +28,7 @@
 
 	New(mob/user)
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		if (user)
 			src.holder = user
 			src.verbs |= /obj/item/magtractor/proc/toggleHighPower
@@ -37,7 +36,7 @@
 	process()
 		//power usage here maybe??
 
-		if (!src.holding && src.holder && processHeld) //If the item has been consumed somehow
+		if ((!src.holding || src.holding.disposed) && src.holder && processHeld) //If the item has been consumed somehow
 			actions.stopId("magpickerhold", src.holder)
 			processHeld = 0
 		return
@@ -54,24 +53,24 @@
 		src.holder = null
 		src.verbs -= /obj/item/magtractor/proc/toggleHighPower
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return 0
 
-		if (get_dist(get_turf(src), get_turf(W)) > 1)
-			out(user, "<span style='color: red;'>\The [W] is too far away!</span>")
+		if (BOUNDS_DIST(get_turf(src), get_turf(W)) > 0)
+			out(user, "<span class='alert'>\The [W] is too far away!</span>")
 			return 0
 
 		if (src.holding)
-			out(user, "<span style='color: red;'>\The [src] is already holding \the [src.holding]!</span>")
+			out(user, "<span class='alert'>\The [src] is already holding \the [src.holding]!</span>")
 			return 0
 
-		if (W.anchored || W.w_class >= 4) //too bulky for backpacks, too bulky for this
-			out(user, "<span style='color: blue;'>\The [src] can't possibly hold that heavy an item!</span>")
+		if (W.anchored || W.w_class >= W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
+			out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 			return 0
 
 		if (istype(W, /obj/item/magtractor))
 			var/turf/T = get_ranged_target_turf(user, turn(user.dir, 180), 7)
-			playsound(user.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			user.visible_message("<span class='combat bold'>\The [src]'s magnets violently repel as they counter a similar magnetic field!</span>")
 			user.throw_at(T, 7, 10)
 			user.changeStatus("stunned", 2 SECONDS)
@@ -82,7 +81,7 @@
 		return 1
 
 	attack_self(mob/user as mob)
-		if (src.holding)
+		if (src.holding && !src.holding.disposed)
 			//activate held item (if possible)
 			src.holding.attack_self(user)
 			src.updateHeldOverlay(src.holding) //for items that update icon on activation (e.g. welders)
@@ -94,13 +93,13 @@
 
 		if (!src.holding)
 			if (!isitem(A)) return 0
-			if (get_dist(get_turf(src), get_turf(A)) > 1)
-				out(user, "<span style='color: red;'>\The [A] is too far away!</span>")
+			if (BOUNDS_DIST(get_turf(src), get_turf(A)) > 0)
+				out(user, "<span class='alert'>\The [A] is too far away!</span>")
 				return 0
 			var/obj/item/target = A
 
-			if (target.anchored || target.w_class == 4) //too bulky for backpacks, too bulky for this
-				out(user, "<span style='color: blue;'>\The [src] can't possibly hold that heavy an item!</span>")
+			if (target.anchored || target.w_class == W_CLASS_BULKY) //too bulky for backpacks, too bulky for this
+				out(user, "<span class='notice'>\The [src] can't possibly hold that heavy an item!</span>")
 				return 0
 
 			if (istype(target, /obj/item/magtractor))
@@ -109,8 +108,8 @@
 			//pick up item
 			actions.start(new/datum/action/bar/private/icon/magPicker(target, src), user)
 
-		else if (src.holding && src.holding.loc != src) // it's gone!!
-			actions.stopId("magpickerhold", usr)
+		else if ((src.holding && src.holding.loc != src) || src.holding.disposed) // it's gone!!
+			actions.stopId("magpickerhold", user)
 
 		return 1
 
@@ -122,18 +121,16 @@
 
 	dropped(mob/user as mob)
 		..()
-		actions.stopId("magpicker", usr)
+		actions.stopId("magpicker", user)
 		if (src.holding)
-			actions.stopId("magpickerhold", usr)
+			actions.stopId("magpickerhold", user)
 
 	examine()
-		..()
-		var/msg = "<span style='color: blue;'>"
+		. = ..()
 		if (src.highpower)
-			msg += "The [src] has HPM enabled!<br>"
+			. += "<span class='notice'>The [src] has HPM enabled!</span>"
 		if (src.holding)
-			msg += "\The [src.holding] is enveloped in the magnetic field.<br>"
-		out(usr, "[msg]</span>")
+			. += "<span class='notice'>\The [src.holding] is enveloped in the magnetic field.</span>"
 
 	proc/releaseItem()
 		set src in usr
@@ -154,7 +151,7 @@
 		if (!src || usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) return 0
 
 		var/image/magField = GetOverlayImage("magField")
-		var/msg = "<span style='color: blue;'>You toggle the [src]'s HPM "
+		var/msg = "<span class='notice'>You toggle the [src]'s HPM "
 		if (src.highpower)
 			if (src.holdAction) src.holdAction.interrupt_flags |= INTERRUPT_MOVE
 			if (magField) magField.color = "#66ebe0" //blue
@@ -170,11 +167,12 @@
 		return 1
 
 	proc/updateHeldOverlay(obj/item/W as obj)
-		if (W)
+		if (W && !W.disposed)
 			var/image/heldItem = GetOverlayImage("heldItem")
-			if (!heldItem) heldItem = image(W.icon, W.icon_state)
+			if (!heldItem)
+				heldItem = image(W.icon, W.icon_state)
+				heldItem.transform *= 0.85
 			heldItem.color = W.color
-			heldItem.transform *= 0.85
 			heldItem.pixel_y = 1
 			heldItem.layer = -1
 			src.UpdateOverlays(heldItem, "heldItem")
@@ -199,7 +197,7 @@
 
 		src.holding = W
 		src.processHeld = 1
-		src.w_class = 4.0 //bulky
+		src.w_class = W_CLASS_BULKY //bulky
 		src.useInnerItem = 1
 		src.icon_state = "magtractor-active"
 
@@ -215,8 +213,7 @@
 		src.UpdateOverlays(I, "magField")
 		src.updateHeldOverlay(W)
 
-		playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
-		//user.visible_message("<span class='bold' style='color: blue;'>[user] pulls \the [W] into the [src.name]</span>", "<span style='color: blue;'>The [src.name] pulls \the [W] into it's magnetic field and flickers worryingly.[src.highpower ? "" : " You must hold still while using this item."]</span>")
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"
@@ -235,11 +232,11 @@
 		if (isitem(src.holding) && usr)
 			src.holding.dropped(usr)
 		src.working = 1
-		src.w_class = 3.0 //normal
+		src.w_class = W_CLASS_NORMAL //normal
 		src.useInnerItem = 0
 		var/turf/T = get_turf(src)
 
-		var/msg = "<span class='bold' style='color: blue;'>\The [src] deactivates its magnetic field"
+		var/msg = "<span class='bold notice'>\The [src] deactivates its magnetic field"
 		if (src.holding) //item still exists, dropping
 			if (src.holding.loc == src && setloc)
 				src.holding.set_loc(T)
@@ -263,5 +260,9 @@
 		src.processHeld = 0
 
 		return 1
+
+	Exited(Obj, newloc) // handles the held item going byebye
+		if(Obj == src.holding  && src.holder)
+			actions.stopId("magpickerhold", src.holder)
 
 /obj/item/magtractor/abilities = list(/obj/ability_button/magtractor_toggle, /obj/ability_button/magtractor_drop)

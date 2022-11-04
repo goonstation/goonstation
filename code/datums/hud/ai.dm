@@ -1,7 +1,7 @@
-/datum/hud/ai
+/datum/hud/silicon/ai
 	var/mob/living/silicon/ai/master
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		health
 		cell
 		tracking
@@ -11,27 +11,24 @@
 		radio
 		pda
 		laws
-		killswitch
+		viewport
+		hologram
+		map
+		core
+		coreatk
 
 	var/list/spinner = list("/", "-", "\\", "|")
 	var/spinner_num = 1
 
 	New(M)
+		..()
 		master = M
-		
+
 		health = create_screen("health", "Core Health", 'icons/mob/hud_ai.dmi', "health", "EAST, NORTH+0.5", HUD_LAYER)
 		health.underlays += "underlay"
 		health.maptext_width = 96
 		health.maptext_x = -96
 		health.maptext_y = -1
-
-		killswitch = create_screen("killswitch", "OH FUCK YOU'RE KILLSWITCHED", 'icons/mob/hud_ai.dmi', "killswitch", "CENTER, NORTH+0.5", HUD_LAYER)
-		killswitch.underlays += "killswitchu"
-		killswitch.maptext_width = 256
-		killswitch.maptext_height = 128
-		killswitch.maptext_x = -112
-		killswitch.maptext_y = -129
-		killswitch.invisibility = 101
 
 		cell = create_screen("cell", "Core Cell Charge", 'icons/mob/hud_ai.dmi', "cell", "EAST, NORTH", HUD_LAYER)
 		cell.underlays += "underlay"
@@ -57,6 +54,22 @@
 		laws = create_screen("laws", "Show Laws", 'icons/mob/hud_ai.dmi', "laws", "WEST, NORTH-2", HUD_LAYER)
 		laws.underlays += "button"
 
+		viewport = create_screen("viewport", "Create Viewport", 'icons/mob/hud_ai.dmi', "viewport", "WEST, NORTH-2.5", HUD_LAYER)
+		viewport.underlays += "button"
+
+		hologram = create_screen("hologram", "Create Hologram", 'icons/mob/hud_ai.dmi', "hologram", "WEST, NORTH-3", HUD_LAYER)
+		hologram.underlays += "button"
+
+		map = create_screen("map", "Show Map", 'icons/mob/hud_ai.dmi', "map", "WEST, NORTH-3.5", HUD_LAYER)
+		map.underlays += "button"
+
+		core = create_screen("core", "Return to Core", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		core.underlays += "button"
+
+		coreatk = create_screen("coreatk", "Core Damaged!", 'icons/mob/hud_ai.dmi', "core", "WEST, NORTH-4", HUD_LAYER)
+		coreatk.underlays += "killswitchu"
+		coreatk.invisibility = INVIS_ALWAYS
+
 		tracking = create_screen("tracking", "Tracking", 'icons/mob/hud_ai.dmi', "track", "WEST, SOUTH", HUD_LAYER)
 		tracking.underlays += "button"
 		tracking.maptext_width = 32*15
@@ -69,22 +82,22 @@
 		master = null
 		..()
 
+	update_health()
+		..()
+		var/pct = round(100 * master.health/master.max_health, 1)
+		health.maptext = "<span class='ol vga r' style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[add_lspace(pct, 3)]%</span>"
+		if (pct > 25)
+			core.invisibility = INVIS_NONE
+			coreatk.invisibility = INVIS_ALWAYS
+		else
+			core.invisibility = INVIS_ALWAYS
+			coreatk.invisibility = INVIS_NONE
+
 	proc
 		update()
 			update_health()
 			update_charge()
 			update_tracking()
-
-		update_health()
-			if (master.killswitch)
-				killswitch.invisibility = 0
-				killswitch.maptext = "<span class='vga vt c ol' style='color: red;'>KILLSWITCH TIMER\n<span style='font-size: 24px;'>[add_zero(master.killswitch_time - 2,2)]</span></span>"
-			else
-				killswitch.invisibility = 101
-				killswitch.maptext = ""
-
-			var/pct = round(100 * master.health/master.max_health, 1)
-			health.maptext = "<span class='ol vga r' style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[add_lspace(pct, 3)]%</span>"
 
 		update_charge()
 			if (master.cell)
@@ -114,16 +127,16 @@
 				tracking.maptext = ""
 
 
-	clicked(id, mob/user, list/params)
+	relay_click(id, mob/user, list/params)
 		switch (id)
 			if ("health")
 				//output health info
 				boutput(user, "Health: [master.health]/[master.max_health] - Brute: [master.bruteloss] - Burn: [master.fireloss]")
-			
+
 			if ("cell")
 				// Output cell info
 				boutput(user, "Cell: [master.cell.charge]/[master.cell.maxcharge]")
-			
+
 			if ("status")
 				// Change status
 				master.ai_statuschange()
@@ -144,7 +157,7 @@
 				else
 					master.ai_camera_track()
 				update_tracking()
-			
+
 			if ("pda")
 				master.access_internal_pda()
 
@@ -153,3 +166,20 @@
 
 			if ("laws")
 				master.show_laws()
+
+			if ("viewport")
+				if(master.deployed_to_eyecam)
+					master.eyecam.create_viewport()
+				else
+					boutput(master, "Deploy to an AI Eye first to create a viewport.")
+			if ("hologram")
+				if(master.deployed_to_eyecam)
+					master.create_hologram()
+				else
+					boutput(master, "Deploy to an AI Eye first to create a hologram.")
+			if ("map")
+				master.open_map()
+			if ("core")
+				master.return_to(user)
+			if ("coreatk")
+				master.return_to(user)

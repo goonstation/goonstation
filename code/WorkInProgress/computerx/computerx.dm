@@ -10,11 +10,11 @@ var/compx_gridx_max = 5
 
 /obj/machinery/computerx
 	name = "computer"
-	desc = "A computer workstation."
+	desc = "A computer that uses a bleeding-edge command line OS."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 1.0
+	anchored = 1
 	var/base_icon_state = "computer_generic"
 	var/datum/computer/file/terminalx_program/os/host_program //Our best pal, the operating system!
 	var/list/processing_programs = list()
@@ -40,7 +40,7 @@ var/compx_gridx_max = 5
 		if(!compx_grid_spacer)
 			compx_grid_spacer = new
 
-		SPAWN_DBG(0.4 SECONDS)
+		SPAWN(0.4 SECONDS)
 			if(ispath(src.setup_starting_drive))
 				new src.setup_starting_drive(src)
 
@@ -89,11 +89,11 @@ var/compx_gridx_max = 5
 
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(..())
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 		src.current_user = user
 
 		var/wincheck = winexists(user, "compx_\ref[src]")
@@ -157,7 +157,7 @@ var/compx_gridx_max = 5
 		if(..())
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 
 		if((href_list["conin"]) && src.host_program)
 			src.host_program.input_text(href_list["conin"])
@@ -179,7 +179,7 @@ var/compx_gridx_max = 5
 			icon_state = src.base_icon_state
 			status &= ~NOPOWER
 		else
-			SPAWN_DBG(rand(0, 15))
+			SPAWN(rand(0, 15))
 				icon_state = src.base_icon_state
 				src.icon_state += "0"
 				status |= NOPOWER
@@ -194,13 +194,13 @@ var/compx_gridx_max = 5
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				qdel(src)
 				return
-			if(2.0)
+			if(2)
 				if (prob(50))
 					set_broken()
-			if(3.0)
+			if(3)
 				if (prob(25))
 					set_broken()
 			else
@@ -303,7 +303,7 @@ var/compx_gridx_max = 5
 			src.updateUsrDialog()
 			src.host_program = null
 
-			SPAWN_DBG(2 SECONDS)
+			SPAWN(2 SECONDS)
 				//src.restarting = 0
 				src.post_system()
 
@@ -348,7 +348,7 @@ var/compx_gridx_max = 5
 				src.override_temp += "<font color=red>ERR - BOOT FAILURE</font><br>"
 
 			src.updateUsrDialog()
-			sleep(20)
+			sleep(2 SECONDS)
 
 			src.restarting = 0
 			if(to_run)

@@ -57,8 +57,8 @@ About the Holder:
 		del_reagent(var/reagent)
 			Completely remove the reagent with the matching id.
 
-		reaction_fire(exposed_temp)
-			Simply calls the reaction_fire procs of all contained reagents.
+		temperature_react()
+			Simply calls the temperature_react procs of all contained reagents.
 
 		update_total()
 			This one simply updates the total volume of the holder.

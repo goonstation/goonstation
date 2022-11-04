@@ -2,7 +2,7 @@
 	name = "artifact sealed container"
 	associated_datum = /datum/artifact/container
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
 
 	ArtifactActivated(var/mob/living/user as mob)
@@ -45,10 +45,13 @@
 
 /datum/artifact/container
 	associated_object = /obj/artifact/container
-	rarity_class = 1
+	type_name = "Container"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 450
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "deposits its contents on the ground."
 	deact_text = "ceases functioning."
 	react_xray = list(7,50,40,11,"HOLLOW")
@@ -60,14 +63,16 @@
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		for(var/obj/I in O.contents)
+		for(var/atom/movable/I in (O.contents-O.vis_contents))
 			I.set_loc(O.loc)
 		for(var/mob/N in viewers(O, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
-		O.visible_message("<span style=\"color:red\"><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
-		playsound(O.loc, "sound/effects/warp2.ogg", 50, 1)
+				shake_camera(N, 6, 16)
+		O.visible_message("<span class='alert'><b>With a blinding light [O] vanishes, leaving its contents behind.</b></span>")
+		O.ArtifactFaultUsed(user)
+		playsound(O.loc, 'sound/effects/warp2.ogg', 50, 1)
+		O.remove_artifact_forms()
 		artifact_controls.artifacts -= src
 		qdel(O)
 		return

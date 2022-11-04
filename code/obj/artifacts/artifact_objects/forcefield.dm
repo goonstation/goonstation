@@ -4,10 +4,13 @@
 
 /datum/artifact/forcefield_gen
 	associated_object = /obj/artifact/forcefield_generator
-	rarity_class = 1
+	type_name = "Forcefield Generator"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/carbon_touch,
 	/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activated = 0
 	activ_text = "comes to life, projecting out a wall of force!"
 	deact_text = "shuts down, causing the forcefield to vanish!"
@@ -17,6 +20,7 @@
 	var/field_time = 80
 	var/icon_state = "shieldsparkles"
 	var/next_activate = 0
+	var/list/forcefields = list()
 
 	New()
 		..()
@@ -31,7 +35,7 @@
 		if (!..())
 			return 0
 		if (ticker.round_elapsed_ticks < next_activate)
-			O.visible_message("<span style=\"color:red\">[O] emits a loud pop and lights up momentarily but nothing happens!</span>")
+			O.visible_message("<span class='alert'>[O] emits a loud pop and lights up momentarily but nothing happens!</span>")
 			return 0
 		return 1
 
@@ -40,16 +44,19 @@
 			return
 		O.anchored = 1
 		var/turf/Aloc = get_turf(O)
-		var/list/forcefields = list()
 		for (var/turf/T in range(field_radius,Aloc))
-			if(get_dist(O,T) == field_radius)
-				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state)
-				forcefields += FF
-		SPAWN_DBG(field_time)
-			for (var/obj/forcefield/F in forcefields)
-				forcefields -= F
-				qdel(F)
-			next_activate = ticker.round_elapsed_ticks + cooldown
+			if(GET_DIST(O,T) == field_radius)
+				var/obj/forcefield/wand/FF = new /obj/forcefield/wand(T,0,src.icon_state,O)
+				src.forcefields += FF
+		SPAWN(field_time)
 			if (O)
 				O.ArtifactDeactivated()
-				O.anchored = 0
+
+	effect_deactivate(obj/O)
+		if(..())
+			return
+		O.anchored = 0
+		for (var/obj/forcefield/F in src.forcefields)
+			src.forcefields -= F
+			qdel(F)
+		next_activate = ticker.round_elapsed_ticks + cooldown

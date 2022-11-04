@@ -10,8 +10,8 @@
 //Hopefully this operation (adding/removing overlays) isn't too costly - it doesn't seem like it is that bad so far? otherwise I can do the lame old pool overlays i guess
 
 
-/mob/var/list/submerged_images = list()
-/mob/var/is_submerged = 0
+/mob/var/tmp/list/submerged_images = list()
+/mob/var/tmp/is_submerged = 0
 
 /mob/living/New()
 	..()
@@ -20,7 +20,7 @@
 //nah, i dont care anemore
 ///mob/living/carbon/human/update_clothing()
 //	if ( clothing_dirty & (C_SUIT|C_BACK|C_HEAD) )
-//		SPAWN_DBG(0) src.create_submerged_images()
+//		SPAWN(0) src.create_submerged_images()
 //	..()
 
 
@@ -40,6 +40,8 @@
 /mob/living/carbon/human/create_submerged_images()
 	submerged_images.len = 0
 
+	var/mutable_appearance/ma
+
 	for(var/i = 1, i <= 4, i++)
 		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
 		var/icon/body = new /icon('icons/mob/human.dmi', "submerged_fill")
@@ -54,10 +56,12 @@
 		I.Blend(body, ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)
-		submerged_image.layer = src.layer + 0.1
-		submerged_image.appearance_flags = RESET_COLOR
-		submerged_image.icon = I
-		submerged_image.blend_mode = BLEND_MULTIPLY
+		ma = new(submerged_image)
+		ma.layer = src.layer + 0.1
+		ma.appearance_flags = RESET_COLOR
+		ma.icon = I
+		ma.blend_mode = BLEND_MULTIPLY
+		submerged_image.appearance = ma
 		submerged_images += submerged_image
 
 
@@ -76,8 +80,8 @@
 
 	src.is_submerged = depth
 
-/obj/var/list/submerged_images = 0
-/obj/var/is_submerged = 0
+/obj/var/tmp/list/submerged_images = 0
+/obj/var/tmp/is_submerged = 0
 
 //submachine - i cant find the parents for these. just define here ok
 /obj/submachine/flags = FPRINT | FLUID_SUBMERGE
@@ -92,20 +96,25 @@
 
 /obj/proc/create_submerged_images()
 	submerged_images.len = 0
+
+	var/mutable_appearance/ma
+
 	for(var/i = 1, i <= 4, i++)
 		var/icon/I = new /icon('icons/obj/fluid.dmi', "overlay_[i]")
 		I.Blend(new /icon(src.icon, src.icon_state),ICON_MULTIPLY)
 
 		var/image/submerged_image = image(I)
-		submerged_image.layer = src.layer + 1
-		submerged_image.appearance_flags = RESET_COLOR
-		submerged_image.icon = I
-		submerged_image.blend_mode = BLEND_MULTIPLY
+		ma = new(submerged_image)
+		ma.layer = src.layer + 1
+		ma.appearance_flags = RESET_COLOR
+		ma.icon = I
+		ma.blend_mode = BLEND_MULTIPLY
+		submerged_image.appearance = ma
 		submerged_images += submerged_image
 
 /obj/proc/show_submerged_image(var/depth) //depth from 0 - 4
 	if (depth == 1) depth = 0
-	if (!submerged_images || !submerged_images.len) return
+	if (!submerged_images || !length(submerged_images)) return
 	if (src.is_submerged == depth) return
 
 	if (depth)

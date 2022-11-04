@@ -3,12 +3,13 @@
 	icon_state = "shock_kit"
 	var/obj/item/clothing/head/helmet/part1 = null
 	var/obj/item/device/radio/electropack/part2 = null
-	status = 0.0
-	w_class = 5.0
+	status = 0
+	w_class = W_CLASS_HUGE
 	flags = FPRINT | TABLEPASS| CONDUCT
 
 /obj/item/assembly/shock_kit/New()
-	SPAWN_DBG (20)
+	..()
+	SPAWN(2 SECONDS)
 		if (src)
 			if (!(src.part1 && istype(src.part1)))
 				src.part1 = new /obj/item/clothing/head/helmet(src)
@@ -16,7 +17,6 @@
 			if (!(src.part2 && istype(src.part2)))
 				src.part2 = new /obj/item/device/radio/electropack(src)
 				src.part2.master = src
-	return
 
 /obj/item/assembly/shock_kit/disposing()
 	if (src.part1)
@@ -26,9 +26,8 @@
 		qdel(src.part2)
 		src.part2 = null
 	..()
-	return
 
-/obj/item/assembly/shock_kit/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/shock_kit/attackby(obj/item/W, mob/user)
 	src.add_fingerprint(user)
 
 	if (iswrenchingtool(W))
@@ -56,6 +55,6 @@
 	if (src.master && istype(src.master, /obj/stool/chair/e_chair))
 		var/obj/stool/chair/e_chair/C = src.master
 		if (C.buckled_guy)
-			logTheThing("signalers", usr, C.buckled_guy, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking %target% at [log_loc(C)].") // Added (Convair880).
+			logTheThing(LOG_SIGNALERS, usr, "signalled an electric chair (setting: [C.lethal ? "lethal" : "non-lethal"]), shocking [constructTarget(C.buckled_guy,"signalers")] at [log_loc(C)].") // Added (Convair880).
 		C.shock()
 	return

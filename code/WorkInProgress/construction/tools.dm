@@ -6,9 +6,10 @@
 	density = 1
 	anchored = 1
 	New()
-		SPAWN_DBG(1 SECOND)
+		..()
+		SPAWN(1 SECOND)
 			var/obj/term = new /obj/machinery/power/terminal(get_step(get_turf(src), dir))
-			term.dir = get_dir(get_turf(term), src)
+			term.set_dir(get_dir(get_turf(term), src))
 			new /obj/machinery/power/smes(get_turf(src))
 			qdel(src)
 
@@ -28,7 +29,7 @@
 		src.overlays += image('icons/mob/ai.dmi', "topopen")
 		src.overlays += image('icons/mob/ai.dmi', "batterymode")
 
-	attackby(var/obj/item/I as obj, user as mob)
+	attackby(var/obj/item/I, user)
 		if (istype(I, /obj/item/organ/brain) && !processing)
 			processing = 1
 			var/valid = 0
@@ -38,14 +39,13 @@
 					if(B.owner.current.client)
 						valid = 1
 			if (!valid)
-				boutput(user, "<span style=\"color:red\">This brain doesn't look any good to use!</span>")
+				boutput(user, "<span class='alert'>This brain doesn't look any good to use!</span>")
 				processing = 0
 				return
 			var/mob/M = B.owner.current
 			M.set_loc(get_turf(src))
 			var/mob/living/silicon/ai/TheAI = M.AIize(0, 1)
 			TheAI.set_loc(src)
-			src.loc = null
 			B.set_loc(TheAI)
 			TheAI.brain = B
 			TheAI.anchored = 0
@@ -89,7 +89,7 @@
 					power_usage = 750
 				else
 					var/target = pick(targets)
-					src.dir = get_dir(src, target)
+					src.set_dir(get_dir(src, target))
 					if (src.enabled)
 						power_usage = 750
 						src.shootAt(target)
@@ -111,18 +111,17 @@
 				turrets += T
 				T.control = src
 
-	attack_hand(var/mob/user as mob)
-		if ( (get_dist(src, user) > 1 ))
-			if (!issilicon(user))
-				boutput(user, text("Too far away."))
-				user.machine = null
-				user.Browse(null, "window=turretid")
-				return
+	attack_hand(var/mob/user)
+		if (!in_interact_range(src,user))
+			boutput(user, text("Too far away."))
+			src.remove_dialog(user)
+			user.Browse(null, "window=turretid")
+			return
 
-		user.machine = src
+		src.add_dialog(user)
 		var/t = "<TT><B>Turret Control Panel</B><BR><B>Controlled turrets:</B> [turrets.len] (<A href='?src=\ref[src];rescan=1'>Rescan</a>)<HR>"
 
-		if(src.locked && (!issilicon(user)))
+		if(src.locked && !can_access_remotely(user))
 			t += "<I>(Swipe ID card to unlock control panel.)</I><BR>"
 		else
 			t += text("Turrets [] - <A href='?src=\ref[];toggleOn=1'>[]?</a><br><br>", src.enabled?"activated":"deactivated", src, src.enabled?"Disable":"Enable")
@@ -135,7 +134,7 @@
 
 	Topic(href, href_list)
 		if (src.locked)
-			if (!issilicon(usr))
+			if (!can_access_remotely(usr))
 				boutput(usr, "Control panel is locked!")
 				return
 		if (href_list["rescan"])
@@ -174,62 +173,126 @@
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "room"
 	item_state = "gun"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	mats = 6
 	var/using = 0
-	var/datum/progress/designated = null
-
-	attack_self(var/mob/user)
-		if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
-			boutput(user, "<span style=\"color:red\">You can only use this tool in construction mode.</span>")
-		var/datum/game_mode/construction/C = ticker.mode
-		var/list/pickable = list()
-		for (var/datum/progress/P in C.milestones)
-			if (P.is_room && !P.completed)
-				pickable += P
-		if (!pickable.len)
-			boutput(user, "<span style=\"color:red\">No rooms available for designation.</span>")
-		designated = input("Which room would you like to designate?", "Room", pickable[1]) in pickable
-		boutput(user, "<span style=\"color:blue\">Using this tool will now designate the room: [designated]. A room is surrounded by dense objects or walls on all sides.</span>")
-		if (designated.minimum_width)
-			boutput(user, "<span style=\"color:blue\">The room must be at least [designated.minimum_width] tiles wide (including the walls).</span>")
-		if (designated.minimum_height)
-			boutput(user, "<span style=\"color:blue\">The room must be at least [designated.minimum_height] tiles high (including the walls).</span>")
-		if (designated.requirements_cache)
-			boutput(user, "<span style=\"color:blue\">The room must contain at least the following objects: [designated.requirements_cache].</span>")
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		var/area/A = get_area(target)
 		if (!isturf(target))
 			return
-		if (!designated)
-			boutput(user, "<span style=\"color:red\">No designated room selected.</span>")
-			return
-		if (designated.completed)
-			boutput(user, "<span style=\"color:blue\">The designated room already exists.</span>")
-			designated = null
+		if(!istype(A,/area/built_zone))
+			boutput(user, "<span class='alert'>This tool will only work on built zones!</span>")
 			return
 		if (using)
-			boutput(user, "<span style=\"color:red\">Already verifying a room. Please wait.</span>")
+			boutput(user, "<span class='alert'>Already validating a room. Please wait.</span>")
 			return
 		using = 1
-		boutput(user, "<span style=\"color:blue\">Designating room.</span>")
-		SPAWN_DBG(0)
-			if (designated.check_completion(target))
-				boutput(user, "<span style=\"color:blue\">Designation successful, room matches required parameters.</span>")
-				//new /obj/machinery/power/apc(get_turf(target))
-				//boutput(user, "<span style=\"color:red\">Yes I am aware that that APC is in a shit place. You will have to make do until I can actually finish working on power stuff okay???</span>")
-				designated = null
+		boutput(user, "<span class='notice'>Validating room...</span>")
+		SPAWN(0)
+			var/list/tiles = identify_room(target)
+			if (tiles)
+				combine_areas(tiles)
+				boutput(user, "<span class='notice'>Validation successful! Room designated.</span>")
 			else
-				boutput(user, "<span style=\"color:red\">Designation failed.</span>")
+				boutput(user, "<span class='alert'>Validation failed!</span>")
 			using = 0
+
+	proc/combine_areas(var/list/room)
+		var/area/TargA = new /area/built_zone()
+		for (var/turf/T in room)
+			var/area/A = get_area(T)
+			if (A != TargA)
+				if (istype(A,/area/built_zone))
+					TargA.contents += T // steal the turf from the old
+
+			if (A.area_apc) // steal the APCs
+				var/obj/machinery/power/apc/Aapc = A.area_apc
+				Aapc.area = TargA
+				Aapc.name = "[TargA.name] APC"
+				if (!TargA.area_apc)
+					TargA.area_apc = Aapc
+
+			for (var/obj/machinery/M in A.machines) // steal all the machines too
+				A.machines -= M
+				TargA.machines += M
+				if (istype(M,/obj/machinery/light)) // steal all the lights
+					A.remove_light(M)
+					TargA.add_light(M)
+
+			SPAWN(0.5 SECONDS) // apc code does this too
+				if (TargA.area_apc)
+					TargA.area_apc.update()
+
+	proc/identify_room(var/turf/T) // stolen from what this was using before
+		var/list/affected = list()
+		var/list/next = list()
+		var/list/processed = list()
+		next += T
+		processed += T
+		while (next.len)
+			var/turf/C = next[1]
+			next -= C
+
+			affected += C
+
+			if (C.density)
+				continue
+
+			var/dense = 0
+			for (var/obj/O in C)
+				if (istype(O, /obj/machinery/door) || istype(O, /obj/grille) || istype(O, /obj/window) || istype(O, /obj/table))
+					dense = 1
+					break
+			if (dense)
+				continue
+
+			if (istype(C, /turf/space) || istype(C, /turf/unsimulated)) // terrainify uses unsimmed turfs as space
+				return null
+
+			var/turf/N = get_step(C, NORTH)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, SOUTH)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, WEST)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+			N = get_step(C, EAST)
+			if (N && !(N in processed))
+				next += N
+				processed += N
+
+		return affected
 
 /obj/item/clothing/glasses/construction
 	name = "\improper Construction Visualizer"
-	icon_state = "meson"
-	item_state = "glasses"
+	icon_state = "construction"
+	item_state = "construction"
 	mats = 6
 	desc = "The latest technology in viewing live blueprints."
+
+/obj/item/lamp_manufacturer/organic
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings. Load metal sheets before using."
+	icon_state = "bio-white"
+	flags = FPRINT | TABLEPASS | EXTRADELAY
+	w_class = W_CLASS_SMALL
+	click_delay = 1
+	prefix = "bio"
+	metal_ammo = 20
+	inventory_counter_enabled = 1
+	New()
+		..()
+		inventory_counter.update_number(metal_ammo)
 
 /obj/item/material_shaper
 	name = "\improper Window Planner"
@@ -248,7 +311,7 @@
 
 	var/processing = 0
 
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 	var/sound/sound_process = sound('sound/effects/pop.ogg')
 	var/sound/sound_grump = sound('sound/machines/buzz-two.ogg')
@@ -261,11 +324,11 @@
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -275,32 +338,32 @@
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
-				boutput(user, "<span style=\"color:red\">[D] incompatible with current metal or glass.</span>")
+				boutput(user, "<span class='alert'>[D] incompatible with current metal or glass.</span>")
 				return null
 		else if (DM.material_flags & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (metal.mat_id == DM.mat_id)
+			else if (isSameMaterial(metal, DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
-				boutput(user, "<span style=\"color:red\">[D] incompatible with current metal.</span>")
+				boutput(user, "<span class='alert'>[D] incompatible with current metal.</span>")
 				return null
 		else if (DM.material_flags & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (glass.mat_id == DM.mat_id)
+			else if (isSameMaterial(glass, DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
-				boutput(user, "<span style=\"color:red\">[D] incompatible with current glass.</span>")
+				boutput(user, "<span class='alert'>[D] incompatible with current glass.</span>")
 				return null
 		else
 			playsound(src.loc, sound_grump, 40, 1)
-			boutput(user, "<span style=\"color:red\">[D] is not a metal or glass material.</span>")
+			boutput(user, "<span class='alert'>[D] is not a metal or glass material.</span>")
 		if (!which)
 			playsound(src.loc, sound_grump, 40, 1)
-			boutput(user, "<span style=\"color:red\">[D] is not a metal or glass material.</span>")
+			boutput(user, "<span class='alert'>[D] is not a metal or glass material.</span>")
 
 		if (which == "metal" && !metal)
 			metal = DM
@@ -321,26 +384,26 @@
 			metal = null
 		if (glass_count <= 0)
 			glass = null
-		boutput(usr, "<span style=\"color:blue\">The shaper has [metal_count] units of metal and [glass_count] units of glass left.</span>")
+		boutput(usr, "<span class='notice'>The shaper has [metal_count] units of metal and [glass_count] units of glass left.</span>")
 
 	examine()
-		..()
+		. = ..()
 		if (metal)
-			boutput(usr, "<span style=\"color:blue\">Metal: [metal_count] units of [metal.name].</span>")
+			. += "<span class='notice'>Metal: [metal_count] units of [metal.name].</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">Metal: 0 units.</span>")
+			. += "<span class='alert'>Metal: 0 units.</span>"
 
 		if (glass)
-			boutput(usr, "<span style=\"color:blue\">Glass: [glass_count] units of [glass.name].</span>")
+			. += "<span class='notice'>Glass: [glass_count] units of [glass.name].</span>"
 		else
-			boutput(usr, "<span style=\"color:red\">Glass: 0 units</span>")
+			. += "<span class='alert'>Glass: 0 units</span>"
 
 	attack_self(mob/user as mob)
 		mode = !mode
 		if (!mode)
-			boutput(user, "<span style=\"color:blue\">Mode: marking/unmarking plans for grille and glass structures.</span>")
+			boutput(user, "<span class='notice'>Mode: marking/unmarking plans for grille and glass structures.</span>")
 		else
-			boutput(user, "<span style=\"color:blue\">Mode: constructing planned grille and glass structures.</span>")
+			boutput(user, "<span class='notice'>Mode: constructing planned grille and glass structures.</span>")
 
 	attackby(var/obj/item/W, mob/user as mob)
 		if (W.disposed)
@@ -349,10 +412,10 @@
 			var/obj/item/material_piece/D = W
 			var/which = determine_material(D, user)
 			if (which == "metal")
-				pool(W)
+				qdel(W)
 				metal_count += 10
 			else if (which == "glass")
-				pool(W)
+				qdel(W)
 				glass_count += 10
 			else
 				return
@@ -372,7 +435,7 @@
 		else
 			new /obj/plan_marker/glass_shaper(T)
 
-		boutput(user, "<span style=\"color:blue\">Done.</span>")
+		boutput(user, "<span class='notice'>Done.</span>")
 		return 1
 
 	MouseDrop_T(var/obj/over_object, mob/user as mob)
@@ -390,7 +453,7 @@
 			var/obj/item/material_piece/D = over_object
 			if (!D.material)
 				playsound(src.loc, sound_grump, 40, 1)
-				boutput(user, "<span style=\"color:red\">That does not have a usable material.</span>")
+				boutput(user, "<span class='alert'>That does not have a usable material.</span>")
 				return
 
 			var/which = determine_material(D, user)
@@ -406,7 +469,7 @@
 				processing = 0
 				return
 
-			user.visible_message("<span style=\"color:blue\">[user] begins stuffing materials into [src].</span>")
+			user.visible_message("<span class='notice'>[user] begins stuffing materials into [src].</span>")
 
 			for (var/obj/item/material_piece/M in over_object.loc)
 				if (user.loc != procloc)
@@ -414,86 +477,158 @@
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (MT.mat_id == DM.mat_id)
+				if (isSameMaterial(MT, DM))
 					playsound(src.loc, sound_process, 40, 1)
-					M.loc = null
 					if (which == "metal")
 						metal_count += 10
 					else
 						glass_count += 10
-					pool(M)
-					sleep(1)
+					qdel(M)
+					sleep(0.1 SECONDS)
 			processing = 0
-			user.visible_message("<span style=\"color:blue\">[user] finishes stuffing materials into [src].</span>")
+			user.visible_message("<span class='notice'>[user] finishes stuffing materials into [src].</span>")
 
 /obj/item/room_planner
-	name = "\improper Floor and Wall Planner"
+	name = "\improper Floor and Wall Designer"
 	icon = 'icons/obj/construction.dmi'
 	icon_state = "plan"
 	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	mats = 6
-	w_class = 2
+	w_class = W_CLASS_SMALL
 	click_delay = 1
 
 	var/selecting = 0
-	var/mode = "floors"
-	var/icons = list("floors" = 'icons/turf/construction_floors.dmi', "walls" = 'icons/turf/construction_walls.dmi')
+	var/mode = null
+	var/icons = list("floors", "walls", "restore original")
 	var/marker_class = list("floors" = /obj/plan_marker/floor, "walls" = /obj/plan_marker/wall)
-	var/selected = "floor"
-	var/pod_turf = 0
+	/// icon file selected
+	var/selectedicon
+	/// iconstate selected
+	var/selectedtype
+	/// mod to use for generating smoothwalls
+	var/selectedmod
+	// var/pod_turf = 0
 	var/turf_op = 0
+
+	var/list/wallicons = list(
+		"diner" = 'icons/turf/walls_derelict.dmi',
+		"martian" = 'icons/turf/walls_martian.dmi',
+		"shuttle blue" = 'icons/turf/walls_shuttle.dmi',
+		"shuttle white" = 'icons/turf/walls_shuttle-debris.dmi',
+		"shuttle dark" = 'icons/turf/walls_shuttle-debris.dmi',
+		"overgrown" = 'icons/turf/walls_overgrown.dmi',
+		"meat" = 'icons/turf/walls_meat.dmi',
+		"ancient" = 'icons/turf/walls_ancient.dmi',
+		"cave" = 'icons/turf/walls_cave.dmi',
+		"lead blue" = 'icons/turf/walls_lead.dmi',
+		"lead gray" = 'icons/turf/walls_lead.dmi',
+		"lead white" = 'icons/turf/walls_lead.dmi',
+		"ancient smooth" = 'icons/turf/walls_iomoon.dmi',
+	)
+	var/list/wallmods = list(
+		"diner" = "oldr-",
+		"martian" = "martian-",
+		"shuttle blue" = "",
+		"shuttle white" = "shuttle-",
+		"shuttle dark" = "dshuttle-",
+		"overgrown" = "root-",
+		"meat" = "meatier-",
+		"ancient" = "ancient-",
+		"cave" = "cave-",
+		"lead blue" = "leadb-",
+		"lead gray" = "leadg-",
+		"lead white" = "leadw-",
+		"ancient smooth" = "interior-",
+	)
 
 	attack_self(mob/user as mob)
 		// This seems to not actually stop anything from working so just axing it.
-		//if (!(ticker && ticker.mode && istype(ticker.mode, /datum/game_mode/construction)))
-		//	boutput(user, "<span style=\"color:red\">You can only use this tool in construction mode.</span>")
+		//if (!(ticker?.mode && istype(ticker.mode, /datum/game_mode/construction)))
+		//	boutput(user, "<span class='alert'>You can only use this tool in construction mode.</span>")
 
 		if (selecting)
 			return
 
 		selecting = 1
-		mode = input("What to mark?", "Marking", mode) in icons
-		selected = null
+
+		// mode selection for floor planner
+		mode = tgui_input_list(message="What to mark?", title="Marking", items=icons)
+		if(!mode)
+			mode = "floors"
 		var/states = list()
+		if (mode == "restore original")
+			boutput(user, "<span class='notice'>Now set for restoring appearance.</span>")
+			selecting = 0
+			return
+
+		// icon selection
+		// selectedicon is the file we selected
+		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
+		if (mode == "floors")
+			states += icon_states('icons/turf/construction_floors.dmi')
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(!selectedtype)
+				selectedtype = states[1]
+			selectedicon = 'icons/turf/construction_floors.dmi'
 		if (mode == "walls")
-			states += "* AUTO *"
-		states += icon_states(icons[mode])
-		selected = input("What kind?", "Marking", states[1]) in states
-		if (mode == "floors" && findtext(selected, "catwalk") != 0)
-			pod_turf = 1
-		else
-			pod_turf = 0
-		if (mode == "floors" || (mode == "walls" && findtext(selected, "window") != 0))
+			states += wallicons
+			selectedtype = tgui_input_list(message="What kind?", title="Marking", items=states)
+			if(!selectedtype)
+				selectedtype = states[1]
+			selectedicon = wallicons[selectedtype]
+			selectedmod = wallmods[selectedtype]
+
+
+
+		if (mode == "floors" || (mode == "walls" && findtext(selectedtype, "window") != 0))
 			turf_op = 0
 		else
 			turf_op = 1
-		boutput(user, "<span style=\"color:blue\">Now marking plan for [mode] of type [selected].</span>")
+
+		boutput(user, "<span class='notice'>Now marking plan for [mode] of type '[selectedtype]'.</span>")
 		selecting = 0
 
 	pixelaction(atom/target, params, mob/user)
 		var/turf/T = target
 		if (!istype(T))
 			T = get_turf(T)
-		if (!T)
+		if (!T || !mode)
 			return 0
 
+		if (mode == "restore original") //For those who want to undo the carnage
+			if (istype(T, /turf/simulated/floor))
+				if (!T.intact)
+					return
+				var/turf/simulated/floor/F = T
+				F.icon = initial(F.icon)
+				F.icon_state = F.roundstart_icon_state
+				F.set_dir(F.roundstart_dir)
+			else if (istype(T, /turf/simulated/wall))
+				T.icon = initial(T.icon)
+				//T.icon_state = initial(T.icon_state)
+				if (istype(T, /turf/simulated/wall/auto))
+					var/turf/simulated/wall/auto/W = T
+					W.UpdateIcon()
+					W.update_neighbors()
+			return
 		var/obj/plan_marker/old = null
 		for (var/obj/plan_marker/K in T)
 			if (istype(K, /obj/plan_marker/floor) || istype(K, /obj/plan_marker/wall))
 				old = K
 				break
 		if (old)
-			old.attackby(src, user)
+			old.Attackby(src, user)
 		else
 			var/class = marker_class[mode]
-			old = new class(T, selected)
-			old.dir = get_dir(user, T)
-			if (pod_turf)
-				old:allows_vehicles = 1
+			old = new class(T, selectedicon, selectedtype, mode)
+
+			old.set_dir(get_dir(user, T))
+			// if (pod_turf)
+			// 	old:allows_vehicles = 1
 			old.turf_op = turf_op
-			old:check()
-		boutput(user, "<span style=\"color:blue\">Done.</span>")
+			old:check(selectedmod)
+		boutput(user, "<span class='notice'>Done.</span>")
 
 		return 1
 
@@ -504,25 +639,27 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 	var/allows_vehicles = 0
 	var/turf_op = 1
 
 	alpha = 128
 
-	New(var/initial_loc, var/initial_state)
+	New(var/initial_loc, var/initial_icon, var/selectedtype, var/mode)
 		..()
 		color = rgb(0, 255, 0)
-		icon_state = initial_state
+		icon = initial_icon
+		if(mode == "floors")
+			icon_state = selectedtype
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/room_planner))
 			qdel(src)
 			return
 		var/turf/T = get_turf(src)
 		if (T)
-			T.attackby(W, user)
-			W.afterattack(T, user)
+			T.Attackby(W, user)
+			W.AfterAttack(T, user)
 
 /obj/plan_marker/glass_shaper
 	name = "\improper Window Plan Marker"
@@ -531,7 +668,7 @@
 	anchored = 1
 	density = 0
 	opacity = 0
-	invisibility = 8
+	invisibility = INVIS_CONSTRUCTION
 
 	var/static/image/wE = null
 	var/static/image/wW = null
@@ -638,13 +775,13 @@
 			return
 		var/turf/T = src.loc
 		if (T.density)
-			boutput(usr, "<span style=\"color:red\">Cannot complete material shaping: plan inside dense turf.</span>")
+			boutput(usr, "<span class='alert'>Cannot complete material shaping: plan inside dense turf.</span>")
 			filling = 0
 			return
 		else
 			for (var/atom/movable/O in T)
 				if ((istype(O, /obj) && O.density) || isliving(O))
-					boutput(usr, "<span style=\"color:red\">Cannot complete material shaping: [O] blocking construction.</span>")
+					boutput(usr, "<span class='alert'>Cannot complete material shaping: [O] blocking construction.</span>")
 					filling = 0
 					return
 		var/datum/material/metal = origin.metal
@@ -663,25 +800,23 @@
 		var/mask = bmask
 		if (mask & 1)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 1
+			W.set_dir(1)
 			W.setMaterial(glass)
 
 		if (mask & 2)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 2
+			W.set_dir(2)
 			W.setMaterial(glass)
 
 		if (mask & 4)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 4
+			W.set_dir(4)
 			W.setMaterial(glass)
 
 		if (mask & 8)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.dir = 8
+			W.set_dir(8)
 			W.setMaterial(glass)
-
-		src.loc = null
 		qdel(src)
 
 	proc/cancelled()
@@ -689,7 +824,6 @@
 		var/turf/S = locate(x, y - 1, 1)
 		var/turf/W = locate(x - 1, y, 1)
 		var/turf/E = locate(x + 1, y, 1)
-		src.loc = null
 		if (N)
 			var/obj/plan_marker/glass_shaper/G = locate() in N
 			if (G)
@@ -716,9 +850,9 @@
 			if (W:has_materials(2, borders))
 				spawn_in(W)
 			else
-				boutput(usr, "<span style=\"color:red\">Insufficient materials -- requires 2 metal and [borders] glass.</span>")
+				boutput(usr, "<span class='alert'>Insufficient materials -- requires 2 metal and [borders] glass.</span>")
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/material_shaper))
 			handle_shaper(W)
 		else
@@ -728,27 +862,19 @@
 	name = "\improper Wall Plan Marker"
 	desc = "Build a wall here to complete the plan."
 
-	proc/check()
+	proc/check(var/selectedmod)
 		var/turf/T = get_turf(src)
 		// Originally worked only on this type specifically.
 		// Which meant it didn't work with the fancy new auto-walls
-		if (istype(T, /turf/simulated/wall))
-			// Only update if the wall should have a different type
-			if (src.icon_state != "* AUTO *")
-				T.icon = src.icon
-				T.icon_state = src.icon_state
-				T.dir = src.dir
-				T:allows_vehicles = src.allows_vehicles
-			else if (istype(T, /turf/simulated/wall/auto))
-				var/turf/simulated/wall/auto/AT = T
-				AT.icon = initial(AT.icon)
-				AT.icon_state = initial(AT.icon_state)
-				AT.dir = initial(AT.dir)
-				AT:allows_vehicles = initial(AT.allows_vehicles)
-				AT.update_icon()
-				AT.update_neighbors()
 
-			src.loc = null
+		// this has been reworked to use auto walls that i resprited a while back.
+		if (istype(T, /turf/simulated/wall/auto))
+			var/typeinfo/turf/simulated/wall/auto/typinfo = get_type_typeinfo(T.type)
+			var/connectdir = get_connected_directions_bitflag(typinfo.connects_to, typinfo.connects_to_exceptions, TRUE, typinfo.connect_diagonal)
+			var/turf/simulated/wall/auto/AT = T
+			AT.icon = src.icon
+			AT.icon_state = "[selectedmod][connectdir]"
+
 			qdel(src)
 
 /obj/plan_marker/floor
@@ -758,12 +884,11 @@
 
 	proc/check()
 		var/turf/T = get_turf(src)
-		if (istype(T, /turf/simulated/floor))
+		if (istype(T, /turf/simulated/floor) && T.intact)
 			// Same deal as above, only checked for that specific type of floor
 			// so the various alternate designs weren't able to be converted
 			T.icon = src.icon
 			T.icon_state = src.icon_state
-			T.dir = src.dir
-			T:allows_vehicles = src.allows_vehicles
-			src.loc = null
-			qdel(src)
+			T.set_dir(src.dir)
+			// T:allows_vehicles = src.allows_vehicles
+		qdel(src)

@@ -13,14 +13,14 @@ VUVUZELA
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "banana-peel"
 	item_state = "banana-peel"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throwforce = 0
 	throw_speed = 4
 	throw_range = 20
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	var/mob/living/carbon/human/last_touched
 
@@ -28,31 +28,39 @@ VUVUZELA
 	last_touched = user
 	..()
 
-/obj/item/bananapeel/HasEntered(AM as mob|obj)
+/obj/item/bananapeel/proc/on_mob_throw_end(mob/M)
+	UnregisterSignal(M, COMSIG_MOVABLE_THROW_END)
+	LAZYLISTREMOVE(M.attached_objs, src)
+	src.glide_size = initial(src.glide_size)
+
+/obj/item/bananapeel/Crossed(atom/movable/AM as mob|obj)
+	..()
 	if(istype(src.loc, /turf/space))
 		return
 	if (iscarbon(AM))
 		var/mob/M =	AM
-		if (!M.can_slip())
-			return
-		M.pulling = null
-		boutput(M, "<span style=\"color:blue\">You slipped on the banana peel!</span>")
-		if (ishuman(M))
-			var/mob/living/carbon/human/H = M
-			if (H.sims)
-				H.sims.affectMotive("fun", -10)
-				if (H == last_touched)
+		LAZYLISTADDUNIQUE(M.attached_objs, src)
+		src.glide_size = M.glide_size
+		RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
+		if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
+			boutput(M, "<span class='notice'>You slipped on the banana peel!</span>")
+			if (ishuman(M))
+				var/mob/living/carbon/human/H = M
+				if (H.sims)
 					H.sims.affectMotive("fun", -10)
-		if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != M)
-			if (last_touched.sims)
-				last_touched.sims.affectMotive("fun", 10)
-		playsound(src.loc, "sound/misc/slip.ogg", 50, 1, -3)
-		if(M.bioHolder.HasEffect("clumsy"))
-			M.changeStatus("stunned", 80)
-			M.changeStatus("weakened", 5 SECONDS)
+					if (H == last_touched)
+						H.sims.affectMotive("fun", -10)
+			if (istype(last_touched) && (last_touched in viewers(src)) && last_touched != M)
+				if (last_touched.sims)
+					last_touched.sims.affectMotive("fun", 10)
+			if(M.bioHolder.HasEffect("clumsy"))
+				M.changeStatus("weakened", 5 SECONDS)
+				JOB_XP(M, "Clown", 2)
+			else
+				if (prob(20))
+					JOB_XP(last_touched, "Clown", 1)
 		else
-			M.changeStatus("weakened", 2 SECONDS)
-		M.force_laydown_standup()
+			src.on_mob_throw_end(M)
 
 /obj/item/canned_laughter
 	name = "Canned laughter"
@@ -68,14 +76,20 @@ VUVUZELA
 			return
 		opened = 1
 		icon_state = "crushed-5"
-		playsound(user.loc, "sound/items/can_open.ogg", 50, 0)
+		playsound(user.loc, 'sound/items/can_open.ogg', 50, 0)
 
-		SPAWN_DBG(5)
+		SPAWN(0.5 SECONDS)
 			// Wow your joke sucks
 			if(prob(5))
-				playsound(user.loc,"sound/misc/laughter/boo.ogg",50,0)
+				playsound(user.loc, 'sound/misc/laughter/boo.ogg', 50,0)
 			else
-				playsound(user.loc,"sound/misc/laughter/laughtrack[pick("1","2","3","4")].ogg",50,0)
+				playsound(user.loc,"sound/misc/laughter/laughtrack[rand(1, 4)].ogg",50,0)
+
+	crushed
+		name = "used up Canned laughter"
+		opened = 1
+		icon_state = "crushed-5"
+		desc = "Someone had a good laugh - that is for certain!"
 
 /obj/item/storage/box/box_o_laughs
 	name = "Box o' Laughs"

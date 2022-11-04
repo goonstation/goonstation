@@ -49,23 +49,21 @@
 		src.process()
 
 	examine()
-		set src in view()
-		..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
+		. = ..()
+		if(src.hiddenFrom?.Find(usr.client)) //invislist
 			return
 		if(!alive)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien is not moving</B></span>"))
+			. += "<span class='alert'><B>the alien is not moving</B></span>"
 		else if (src.health > 15)
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks fresh, just out of the egg</B></span>"))
+			. += "<span class='alert'><B>the alien looks fresh, just out of the egg</B></span>"
 		else
-			boutput(usr, text("<span style=\"color:red\"><B>the alien looks pretty beat up</B></span>"))
+			. += "<span class='alert'><B>the alien looks pretty beat up</B></span>"
+
+
+	attack_hand(user)
 		return
 
-
-	attack_hand(user as mob)
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		switch(W.damtype)
 			if("fire")
 				src.health -= W.force * 0.75
@@ -75,7 +73,7 @@
 		if (src.health <= 0)
 			src.death()
 		else if (W.force)
-			if(ishuman(user) || ismonkey(user))
+			if(ishuman(user), ismonkey(user))
 				src.target = user
 				src.state = 1
 		..()
@@ -100,9 +98,9 @@
 
 	ex_act(severity)
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.death()
-			if(2.0)
+			if(2)
 				src.health -= 15
 				healthcheck()
 		return
@@ -121,11 +119,11 @@
 			src.target = AM
 			set_attack()
 		else if(ismob(AM))
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/turf/T = get_turf(src)
 				AM:set_loc(T)
 
-	Bump(atom/A)
+	bump(atom/A)
 		if(ismob(A) && (ishuman(A) || ismonkey(A)))
 			src.target = A
 			set_attack()
@@ -141,12 +139,12 @@
 		set name = "follow me"
 		if(!alive) return
 		if(!isalien(usr))
-			boutput(usr, text("<span style=\"color:red\"><B>The alien ignores you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien ignores you.</B></span>"))
 			return
 		if(state != 2 || health < maxhealth)
-			boutput(usr, text("<span style=\"color:red\"><B>The alien is too busy to follow you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien will now try to follow you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien will now try to follow you.</B></span>"))
 		trg_idle = usr
 		path_idle = new/list()
 		return
@@ -156,12 +154,12 @@
 		set name = "stop following"
 		if(!alive) return
 		if(!isalien(usr))
-			boutput(usr, text("<span style=\"color:red\"><B>The alien ignores you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien ignores you.</B></span>"))
 			return
 		if(state != 2)
-			boutput(usr, text("<span style=\"color:red\"><B>The alien is too busy to follow you.</B></span>"))
+			boutput(usr, text("<span class='alert'><B>The alien is too busy to follow you.</B></span>"))
 			return
-		boutput(usr, text("<span style=\"color:green\"><B>The alien stops following you.</B></span>"))
+		boutput(usr, text("<span class='success'><B>The alien stops following you.</B></span>"))
 		set_null()
 		return
 */
@@ -221,7 +219,7 @@
 				idle()
 
 		else if(target)
-			var/turf/distance = get_dist(src, target)
+			var/turf/distance = GET_DIST(src, target)
 			set_attack()
 
 			if(can_see(src,target,viewrange))
@@ -230,7 +228,7 @@
 				//var/turf/trg_turf = get_turf(target)
 				if(distance <= 1) //&& trg_turf.Enter(src))
 					for(var/mob/O in AIviewers(world.view,src))
-						O.show_message("<span style=\"color:red\"><B>[src.target] has been leapt on by the alien!</B></span>", 1, "<span style=\"color:red\">You hear someone fall</span>", 2)
+						O.show_message("<span class='alert'><B>[src.target] has been leapt on by the alien!</B></span>", 1, "<span class='alert'>You hear someone fall</span>", 2)
 					random_brute_damage(target, 10)
 					target:paralysis = max(target:paralysis, 10)
 					src.set_loc(target.loc)
@@ -243,7 +241,7 @@
 						return
 					else
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 
 				step_towards(src,get_step_towards2(src , target))
@@ -253,7 +251,7 @@
 					path_attack(target)
 					if(!path_target)
 						set_null()
-						SPAWN_DBG(cycle_pause) src.process()
+						SPAWN(cycle_pause) src.process()
 						return
 				else
 					var/turf/next = path_target[1]
@@ -261,7 +259,7 @@
 					if(next in range(1,src))
 						path_attack(target)
 
-					if(!path_target || !path_target.len)
+					if(!path_target || !length(path_target))
 						src.frustration += 5
 					else
 						next = path_target[1]
@@ -269,15 +267,15 @@
 						step_towards(src,next)
 						quick_move = 1
 
-			if (get_dist(src, src.target) >= distance) src.frustration++
+			if (GET_DIST(src, src.target) >= distance) src.frustration++
 			else src.frustration--
 			if(frustration >= 35) set_null()
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				src.process()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				src.process()
 
 	proc/idle()
@@ -287,10 +285,10 @@
 
 		if(locate(/obj/alien/weeds) in src.loc && health < maxhealth)
 			health++
-			SPAWN_DBG(cycle_pause) idle()
+			SPAWN(cycle_pause) idle()
 			return
 
-		if(!path_idle || !path_idle.len)
+		if(!path_idle || !length(path_idle))
 
 			if(isalien(trg_idle))
 				if(can_see(src,trg_idle,viewrange))
@@ -300,7 +298,7 @@
 					if(!path_idle)
 						trg_idle = null
 						set_idle()
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 			else
 				var/obj/alien/weeds/W = null
@@ -319,18 +317,18 @@
 					path_idle(W)
 					if(!path_idle)
 						trg_idle = null
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 				else
 					for(var/mob/living/carbon/alien/humanoid/H in range(1,src))
-						SPAWN_DBG(cycle_pause) src.idle()
+						SPAWN(cycle_pause) src.idle()
 						return
 					step(src,pick(cardinal))
 
 		else
 
 			if(can_see(src,trg_idle,viewrange))
-				switch(get_dist(src, trg_idle))
+				switch(GET_DIST(src, trg_idle))
 					if(1)
 						if(istype(trg_idle,/obj/alien/weeds))
 							step_towards(src,get_step_towards2(src , trg_idle))
@@ -349,7 +347,7 @@
 					path_idle(trg_idle)
 
 				if(!path_idle)
-					SPAWN_DBG(cycle_pause) src.idle()
+					SPAWN(cycle_pause) src.idle()
 					return
 				else
 					next = path_idle[1]
@@ -358,10 +356,10 @@
 					quick_move = 1
 
 		if(quick_move)
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				idle()
 		else
-			SPAWN_DBG(cycle_pause)
+			SPAWN(cycle_pause)
 				idle()
 
 	proc/path_idle(var/atom/trg)
@@ -379,9 +377,8 @@
 		icon_state = "facehugger_l"
 		set_null()
 		for(var/mob/O in hearers(src, null))
-			O.show_message("<span style=\"color:red\"><B>[src] curls up into a ball!</B></span>", 1)
+			O.show_message("<span class='alert'><B>[src] curls up into a ball!</B></span>", 1)
 
 	proc/healthcheck()
 		if (src.health <= 0)
 			src.death()
-

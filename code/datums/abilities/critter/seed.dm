@@ -13,8 +13,8 @@
 
   var/turf/T = get_turf(holder.owner)
 
-  playsound(T, "sound/effects/ghost2.ogg", 100, 1)
-  holder.owner.visible_message("<span style='color: blue;'><b>[holder.owner]</b> summons a biotech seed from... somewhere, probably.</span>", "<span class='color: blue;'>You get a biotech seed.[prob(10) ? " Somehow." : ""]</span>")
+  playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
+  holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons a biotech seed from... somewhere, probably.</span>", "<span class='notice'>You get a biotech seed.[prob(10) ? " Somehow." : ""]</span>")
 
   new /obj/item/martianSeed(holder.owner.loc)
 

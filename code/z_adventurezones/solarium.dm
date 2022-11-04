@@ -27,6 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
+	anchored = 2 // This stopped being funny weeks ago.
 
 	New()
 		..()
@@ -36,7 +37,7 @@ var/global/the_sun = null
 		light.set_height(3)
 		light.set_color(0.9, 0.5, 0.3)
 		light.enable()
-		SPAWN_DBG (10)
+		SPAWN(1 SECOND)
 			if (!the_sun)
 				the_sun = src
 
@@ -50,14 +51,15 @@ var/global/the_sun = null
 			the_sun = null
 		..()
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		if (istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
-				O:light(user, "<span style=\"color:red\"><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
+				O:light(user, "<span class='alert'><b>[user]</b> lights [O] on [src] and casually takes a drag from it. Wow.</span>")
 				if (!user.is_heat_resistant())
-					SPAWN_DBG (10)
-						user.visible_message("<span style=\"color:red\"><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
-						"<span style=\"color:red\"><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+					SPAWN(1 SECOND)
+						user.visible_message("<span class='alert'><b>[user]</b> burns away into ash! It's almost as though being that close to a star wasn't a great idea!</span>",\
+						"<span class='alert'><b>You burn away into ash! It's almost as though being that close to a star wasn't a great idea!</b></span>")
+						logTheThing(LOG_COMBAT, user, "was firegibbed by [src] ([src.type]) at [log_loc(user)].")
 						user.firegib()
 				else
 					user.unlock_medal("Helios", 1)
@@ -85,11 +87,11 @@ var/global/derelict_mode = 0
 		if (world.name)
 			name = world.name
 
-	attackby(obj/item/O as obj, mob/user as mob)
+	attackby(obj/item/O, mob/user)
 		..()
 		if (server_kicked_over && istype(O, /obj/item/clothing/mask/cigarette))
 			if (!O:on)
-				O:light(user, "<span style=\"color:red\">[user] lights the [O] with [src]. That's pretty meta.</span>")
+				O:light(user, "<span class='alert'>[user] lights the [O] with [src]. That's pretty meta.</span>")
 				user.unlock_medal("Nero", 1)
 
 		if (!O || !O.force)
@@ -98,29 +100,29 @@ var/global/derelict_mode = 0
 		src.breakdown()
 
 	bullet_act(var/obj/projectile/P)
-		if (P && P.proj_data.ks_ratio > 0)
+		if (P?.proj_data.ks_ratio > 0)
 			src.breakdown()
 
 	proc/eaten(var/mob/living/carbon/human/that_asshole)
 		if (server_kicked_over)
-			boutput(that_asshole, "<span style=\"color:red\">Frankly, it doesn't look as tasty when it's broken. You have no appetite for that.</span>")
+			boutput(that_asshole, "<span class='alert'>Frankly, it doesn't look as tasty when it's broken. You have no appetite for that.</span>")
 			return
-		src.visible_message("<span style=\"color:red\"><b>[that_asshole] devours the server!<br>OH GOD WHAT</b></span>")
-		src.loc = null
+		src.visible_message("<span class='alert'><b>[that_asshole] devours the server!<br>OH GOD WHAT</b></span>")
+		src.set_loc(null)
 		world.save_intra_round_value("somebody_ate_the_fucking_thing", 1)
 		breakdown()
-		SPAWN_DBG(5 SECONDS)
-			boutput(that_asshole, "<span style=\"color:red\"><b>IT BURNS!</b></span>")
+		SPAWN(5 SECONDS)
+			boutput(that_asshole, "<span class='alert'><b>IT BURNS!</b></span>")
 
 	proc/breakdown()
 		if (server_kicked_over)
 			return
 
 		server_kicked_over = 1
-		sleep(10)
+		sleep(1 SECOND)
 		src.icon_state = "serverf"
-		src.visible_message("<span style=\"color:red\"><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
-		SPAWN_DBG(0)
+		src.visible_message("<span class='alert'><b>[src] bursts into flames!</b><br>UHHHHHHHH</span>")
+		SPAWN(0)
 			var/area/the_solarium = get_area(src)
 			for (var/mob/living/M in the_solarium)
 				if (isdead(M))
@@ -136,41 +138,39 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
-			world << sound('sound/machines/lavamoon_plantalarm.ogg')
-			SPAWN_DBG(1 DECI SECOND)
+			playsound_global(world, 'sound/machines/lavamoon_plantalarm.ogg', 70)
+			SPAWN(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
 					H.flash(3 SECONDS)
-					shake_camera(H, 210, 2)
-					SPAWN_DBG(rand(1,10))
-						H.bodytemperature = 1000
-						H.update_burning(50)
-					SPAWN_DBG(rand(50,90))
+					shake_camera(H, 210, 16)
+					SPAWN(rand(1,10))
+						// H.bodytemperature = 1000
+						H.update_burning(10)
+					SPAWN(rand(50,90))
 						H.emote("scream")
 			creepify_station() // creep as heck
-			sleep(125)
+			sleep(12.5 SECONDS)
 			var/datum/hud/cinematic/cinematic = new
 			for (var/client/C in clients)
 				cinematic.add_client(C)
 			cinematic.play("sadbuddy")
-			sleep(10)
+			sleep(1 SECOND)
 			boutput(world, "<tt>BUG: CPU0 on fire!</tt>")
+			logTheThing(LOG_DIARY, null, "The server would have restarted, if I hadn't removed the line of code that does that. Instead, we play through.", "game")
 
-			sleep(150)
-			logTheThing("diary", null, null, "Rebooting due to completion of solarium quest.", "game")
-			Reboot_server()
+			SPAWN(5 SECONDS)
+				for (var/client/C in clients)
+					cinematic.remove_client(C)
+
+
+			// sleep(15 SECONDS)
+			// Reboot_server()
 
 proc/voidify_world()
-	var/turf/unsimulated/wall/the_ss13_screen = locate("the_ss13_screen")
-	if(istype(the_ss13_screen))
-		// change this when someone finds a widescreen sprite for disaster
-		var/image/broken_logo = new/image('icons/misc/fullscreen.dmi', "title_broken")
-		broken_logo.pixel_x = -the_ss13_screen.pixel_x
-		the_ss13_screen.overlays += broken_logo
+	lobby_titlecard = new /datum/titlecard/disaster()
+	lobby_titlecard.set_pregame_html()
 
-		/*the_ss13_screen.icon = 'icons/misc/fullscreen.dmi'
-		the_ss13_screen.icon_state = "title_broken"
-		the_ss13_screen.pixel_x = 0*/
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for (var/turf/space/space in world)
 			LAGCHECK(LAG_LOW)
 			if(was_eaten)
@@ -199,5 +199,5 @@ proc/voidify_world()
 			Automaton.aggressive = 1
 			Automaton.atkcarbon = 1
 			Automaton.atksilicon = 1
-		world << sound('sound/ambience/industrial/Precursor_Drone1.ogg')
+		playsound_global(world, 'sound/ambience/industrial/Precursor_Drone1.ogg', 70)
 	return

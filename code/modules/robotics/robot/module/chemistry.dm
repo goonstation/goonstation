@@ -4,11 +4,12 @@
 	icon_state = "chemistry"
 	mod_hudicon = "chemistry"
 	included_cosmetic = /datum/robot_cosmetic/chemistry
-	included_items = /datum/robot/module_item_creator/recursive/module/chemistry
+	included_tools = /datum/robot/module_tool_creator/recursive/module/chemistry
 	radio_type = /obj/item/device/radio/headset/research
+	mailgroups = list(MGD_SCIENCE, MGO_SILICON, MGD_PARTY)
 
 /datum/robot_cosmetic/chemistry
 	ches_mod = "Lab Coat"
 	fx = list(0, 0, 255)
 	painted = 1
-	paint = list(0, 0, 100)
+	paint = "#000064"

@@ -13,7 +13,7 @@
 				drone_list += D
 
 		if (drone_list.len < 1)
-			boutput(user, "<span style=\"color:red\">No usable drones detected.</span>")
+			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 
 		var/mob/living/silicon/drone/which = input("Which drone do you want to control?","Drone Controls") as mob in drone_list
@@ -21,9 +21,9 @@
 			var/attempt = which.connect_to_drone(user)
 			switch(attempt)
 				if(1)
-					boutput(user, "<span style=\"color:red\">Connection error: Drone not found.</span>")
+					boutput(user, "<span class='alert'>Connection error: Drone not found.</span>")
 				if(2)
-					boutput(user, "<span style=\"color:red\">Connection error: Drone already in use.</span>")
+					boutput(user, "<span class='alert'>Connection error: Drone already in use.</span>")
 
 /mob/living/silicon/drone
 	name = "Drone"
@@ -75,34 +75,17 @@
 		src.health = src.health_max
 		src.botcard.access = get_all_accesses()
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		//hud.update_health()
-		if (hud)
-			hud.update_charge()
-			hud.update_tools()
-
-		if(src.observers.len)
-			for(var/mob/x in src.observers)
-				if(x.client)
-					src.updateOverlaysClient(x.client)
-
 	examine()
-		..()
-		if(src.hiddenFrom && hiddenFrom.Find(usr.client)) //invislist
-			return
-
+		. = ..()
 		if (src.controller)
-			boutput(usr, "It is currently active and being controlled by someone.")
+			. += "It is currently active and being controlled by someone."
 		else
-			boutput(usr, "It is currently shut down and not being used.")
+			. += "It is currently shut down and not being used."
 		if (src.health < 100)
 			if (src.health < 50)
-				boutput(usr, "<span style=\"color:red\">It's rather badly damaged. It probably needs some wiring replaced inside.</span>")
+				. += "<span class='alert'>It's rather badly damaged. It probably needs some wiring replaced inside.</span>"
 			else
-				boutput(usr, "<span style=\"color:red\">It's a bit damaged. It looks like it needs some welding done.</span>")
+				. += "<span class='alert'>It's a bit damaged. It looks like it needs some welding done.</span>"
 
 	movement_delay()
 		var/tally = 0
@@ -113,58 +96,57 @@
 			tally -= src.propulsion.speed
 		return tally
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
+	attackby(obj/item/W, mob/user)
+		if(isweldingtool(W))
 			if (user.a_intent == INTENT_HARM)
-				if (WELD.welding)
-					user.visible_message("<span style=\"color:red\"><b>[user] burns [src] with [W]!</b></span>")
-					damage_heat(WELD.force)
+				if (W:try_weld(user,0,-1,0,0))
+					user.visible_message("<span class='alert'><b>[user] burns [src] with [W]!</b></span>")
+					damage_heat(W.force)
 				else
-					user.visible_message("<span style=\"color:red\"><b>[user] beats [src] with [W]!</b></span>")
-					damage_blunt(WELD.force)
+					user.visible_message("<span class='alert'><b>[user] beats [src] with [W]!</b></span>")
+					damage_blunt(W.force)
 			else
 				if (src.health >= src.health_max)
-					boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+					boutput(user, "<span class='alert'>It isn't damaged!</span>")
 					return
 				if (get_fraction_of_percentage_and_whole(src.health,src.health_max) < 33)
-					boutput(user, "<span style=\"color:red\">You need to use wire to fix the cabling first.</span>")
+					boutput(user, "<span class='alert'>You need to use wire to fix the cabling first.</span>")
 					return
-				if(WELD.try_weld(user, 1))
-					src.health = max(1,min(src.health + 10,src.health_max))
-					user.visible_message("<b>[user]</b> uses [WELD] to repair some of [src]'s damage.")
+				if(W:try_weld(user, 1))
+					src.health = clamp(src.health + 10, 1, src.health_max)
+					user.visible_message("<b>[user]</b> uses [W] to repair some of [src]'s damage.")
 					if (src.health == src.health_max)
-						boutput(user, "<span style=\"color:blue\"><b>[src] looks fully repaired!</b></span>")
+						boutput(user, "<span class='notice'><b>[src] looks fully repaired!</b></span>")
 
 		else if (istype(W,/obj/item/cable_coil/))
 			if (src.health >= src.health_max)
-				boutput(user, "<span style=\"color:red\">It isn't damaged!</span>")
+				boutput(user, "<span class='alert'>It isn't damaged!</span>")
 				return
 			var/obj/item/cable_coil/C = W
 			if (get_fraction_of_percentage_and_whole(src.health,src.health_max) >= 33)
-				boutput(usr, "<span style=\"color:red\">The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
+				boutput(user, "<span class='alert'>The cabling looks fine. Use a welder to repair the rest of the damage.</span>")
 				return
 			C.use(1)
-			src.health = max(1,min(src.health + 10,src.health_max))
+			src.health = clamp(src.health + 10, 1, src.health_max)
 			user.visible_message("<b>[user]</b> uses [C] to repair some of [src]'s cabling.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 			if (src.health >= 50)
-				boutput(user, "<span style=\"color:blue\">The wiring is fully repaired. Now you need to weld the external plating.</span>")
+				boutput(user, "<span class='notice'>The wiring is fully repaired. Now you need to weld the external plating.</span>")
 
 		else
-			user.visible_message("<span style=\"color:red\"><b>[user] attacks [src] with [W]!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] attacks [src] with [W]!</b></span>")
 			damage_blunt(W.force)
 
 	proc/take_damage(var/amount)
 		if (!isnum(amount))
 			return
 
-		src.health = max(0,min(src.health - amount,100))
+		src.health = clamp(src.health - amount, 0, 100)
 
 		if (amount > 0)
 			playsound(src.loc, src.sound_damaged, 50, 2)
 			if (src.health == 0)
-				src.visible_message("<span style=\"color:red\"><b>[src.name] is destroyed!</b></span>")
+				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
 				robogibs(src.loc,null)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
@@ -188,7 +170,7 @@
 			if (src.active_tool && isitem(src.active_tool))
 				var/obj/item/I = src.active_tool
 				I.dropped(src) // Handle light datums and the like.
-			switchto = max(1,min(switchto,5))
+			switchto = clamp(switchto, 1, 5)
 			active_tool = equipment_slots[switchto]
 			if (isitem(src.active_tool))
 				var/obj/item/I2 = src.active_tool
@@ -198,39 +180,30 @@
 
 	click(atom/target, params)
 		var/obj/item/equipped = src.active_tool
-		var/use_delay = !(target in src.contents) && !istype(target,/obj/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
+		var/use_delay = !(target in src.contents) && !istype(target,/atom/movable/screen) && (!disable_next_click || ismob(target) || (target && target.flags & USEDELAY) || (equipped && equipped.flags & USEDELAY))
 		if (use_delay && world.time < src.next_click)
 			return src.next_click - world.time
 
-		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
+		if (GET_DIST(src, target) > 0)
+			set_dir(get_dir(src, target))
 
 		var/reach = can_reach(target, src)
 		if (equipped && (reach || (equipped.flags & EXTRADELAY)))
 			if (use_delay)
 				src.next_click = world.time + (equipped ? equipped.click_delay : src.click_delay)
 
-			target.attackby(equipped, src)
+			target.Attackby(equipped, src)
 			if (equipped)
-				equipped.afterattack(target, src, reach)
+				equipped.AfterAttack(target, src, reach)
 
 			if (src.lastattacked == target && use_delay) //If lastattacked was set, this must be a combat action!! Use combat click delay.
 				src.next_click = world.time + (equipped ? max(equipped.click_delay,src.combat_click_delay) : src.combat_click_delay)
 				src.lastattacked = null
 
-	Bump(atom/movable/AM as mob|obj, yes)
-		SPAWN_DBG( 0 )
-			if ((!( yes ) || src.now_pushing))
+	bump(atom/movable/AM as mob|obj)
+		SPAWN( 0 )
+			if (src.now_pushing)
 				return
-			src.now_pushing = 1
-			if(ismob(AM))
-				var/mob/tmob = AM
-				if(ishuman(tmob) && tmob.bioHolder && tmob.bioHolder.HasEffect("fat"))
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> can't get past [AM.name]'s fat ass!</span>")
-					src.now_pushing = 0
-					src.unlock_medal("That's no moon, that's a GOURMAND!", 1)
-					return
-			src.now_pushing = 0
 			..()
 			if (!istype(AM, /atom/movable))
 				return
@@ -296,13 +269,13 @@
 				emote_sound = beeps_n_boops[5]
 				message = "<B>[src]</B> buzzes dejectedly."
 			if ("glitch","malfunction")
-				playsound(src.loc, pick(glitchy_noise), 50, 1)
-				src.visible_message("<span style=\"color:red\"><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
+				playsound(src.loc, pick(glitchy_noise), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				src.visible_message("<span class='alert'><B>[src]</B> freaks the fuck out! That's [pick(glitch_con)] [pick(glitch_adj)]!</span>")
 				animate_glitchy_freakout(src)
 				return
 
 		if (emote_sound)
-			playsound(src.loc, emote_sound, 50, 1)
+			playsound(src.loc, emote_sound, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 		if (message)
 			src.visible_message(message)
 		return
@@ -365,31 +338,30 @@
 			user.drop_item()
 			item_used.set_loc(src)
 
-		icon_state = "frame-" + max(0,min(change_to,6))
+		icon_state = "frame-" + clamp(change_to, 0, 6)
 		overlays = list()
-		if (part_propulsion && part_propulsion.drone_overlay)
+		if (part_propulsion?.drone_overlay)
 			overlays += part_propulsion.drone_overlay
 
 	examine()
-		..()
+		. = ..()
 		switch(construct_stage)
 			if(0)
-				boutput(usr, "It's nothing but a pile of scrap right now. Wrench the parts together to build it up or weld it back down to metal sheets.")
+				. += "It's nothing but a pile of scrap right now. Wrench the parts together to build it up or weld it back down to metal sheets."
 			if(1)
-				boutput(usr, "It's still a bit rickety. Weld it to make it more secure or wrench it to take it apart.")
+				. += "It's still a bit rickety. Weld it to make it more secure or wrench it to take it apart."
 			if(2)
-				boutput(usr, "It needs cabling. Add some to build it up or take the circuit board out to deconstruct it.")
+				. += "It needs cabling. Add some to build it up or take the circuit board out to deconstruct it."
 			if(3)
-				boutput(usr, "A radio needs to be added, or you could take the cabling out to deconstruct it.")
+				. += "A radio needs to be added, or you could take the cabling out to deconstruct it."
 			if(4)
-				boutput(usr, "A power cell needs to be added, or you could remove the radio to deconstruct it.")
+				. += "A power cell needs to be added, or you could remove the radio to deconstruct it."
 			if(5)
-				boutput(usr, "It needs a propulsion system, or you could remove the power cell to deconstruct it.")
+				. += "It needs a propulsion system, or you could remove the power cell to deconstruct it."
 			if(6)
-				boutput(usr, "It looks almost finished, all that's left to add is extra optional components.")
-				boutput(usr, "Wrench it together to activate it, or remove all parts and the power cell to deconstruct it.")
+				. += "It looks almost finished, all that's left to add is extra optional components.\nWrench it together to activate it, or remove all parts and the power cell to deconstruct it."
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
 		switch(construct_stage)
 			if(3)
 				user.put_in_hand_or_drop(cable_type)
@@ -408,12 +380,11 @@
 				part_propulsion = null
 				change_stage(5)
 			else
-				boutput(usr, "You can't figure out what to do with it. Maybe a closer examination is in order.")
+				boutput(user, "You can't figure out what to do with it. Maybe a closer examination is in order.")
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if(istype(W, /obj/item/weldingtool))
-			var/obj/item/weldingtool/WELD = W
-			if(WELD.try_weld(user, 1))
+	attackby(obj/item/W, mob/user)
+		if(isweldingtool(W))
+			if(W:try_weld(user, 1))
 				switch(construct_stage)
 					if(0)
 						src.visible_message("<b>[user]</b> welds [src] back down to metal.")
@@ -434,7 +405,7 @@
 						src.visible_message("<b>[user]</b> disconnects [src]'s welded joints.")
 						src.construct_stage = 1
 					else
-						boutput(user, "<span style=\"color:red\">[user.real_name], there's a time and a place for everything! But not now.</span>")
+						boutput(user, "<span class='alert'>[user.real_name], there's a time and a place for everything! But not now.</span>")
 
 		else if (iswrenchingtool(W))
 			switch(construct_stage)
@@ -455,24 +426,25 @@
 					var/mob/living/silicon/drone/D = new /mob/living/silicon/drone(src.loc)
 					if (part_cell)
 						D.cell = part_cell
-						part_cell.loc = D
+						part_cell.set_loc(D)
 					if (part_radio)
 						D.radio = part_radio
-						part_radio.loc = D
+						part_radio.set_loc(D)
 					if (part_propulsion)
 						D.propulsion = part_propulsion
-						part_propulsion.loc = D
+						part_propulsion.set_loc(D)
 					if (part_plating)
 						D.plating = part_plating
-						part_plating.loc = D
+						part_plating.set_loc(D)
 					qdel(src)
 				else
-					boutput(user, "<span style=\"color:red\">There's lots of good times to use a wrench, but this isn't one of them.</span>")
+					boutput(user, "<span class='alert'>There's lots of good times to use a wrench, but this isn't one of them.</span>")
 
 		else if(istype(W, /obj/item/cable_coil) && construct_stage == 2)
 			var/obj/item/cable_coil/C = W
 			src.visible_message("<b>[user]</b> adds [C] to [src].")
-			cable_type = C.take(1, src)
+			cable_type = C.split_stack(1)
+			cable_type.set_loc(src)
 			change_stage(3)
 
 		else if(istype(W, /obj/item/device/radio) && construct_stage == 3)

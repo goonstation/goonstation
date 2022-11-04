@@ -1,0 +1,1885 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ab" = (
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 2;
+	pixel_y = -8
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"ap" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/toy/plush/small/monkey/assistant{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"av" = (
+/obj/item/storage/pill_bottle/cyberpunk{
+	pixel_x = 7;
+	pixel_y = 7
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"ay" = (
+/obj/decal/poster/wallsign/framed_award/firstbill,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
+"bk" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"ci" = (
+/obj/stool/bench/red,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/prefab/drug_den/party)
+"cR" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/random_item_spawner/junk/one,
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den)
+"dp" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/prefab/drug_den)
+"dK" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = 3;
+	pixel_y = -5
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den)
+"eg" = (
+/obj/machinery/door/airlock/pyro/external,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den/party)
+"eA" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/space,
+/area/noGenerate)
+"eN" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "airlock_open";
+	name = "broken external airlock"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/prefab/drug_den)
+"fy" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/submachine/mixer,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"gy" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den)
+"gD" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"hC" = (
+/turf/space,
+/area/noGenerate)
+"ii" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"iW" = (
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = -3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"je" = (
+/obj/item/cigpacket/propuffs{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"jl" = (
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"ks" = (
+/obj/machinery/power/apc/autoname_east/nopoweralert,
+/obj/cable,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"kC" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"kT" = (
+/obj/item/reagent_containers/syringe{
+	pixel_x = -6;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/syringe/morphine{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"lJ" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/kitchen/rollingpin{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/kitchen/utensil/knife/bread{
+	pixel_x = 5;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/icing{
+	pixel_x = 5;
+	pixel_y = -2
+	},
+/obj/item/paper/book/from_file/cookbook{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"mb" = (
+/turf/space,
+/area/allowGenerate)
+"mE" = (
+/obj/grille/catwalk{
+	dir = 10;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 10
+	},
+/area/noGenerate)
+"mT" = (
+/obj/grille/catwalk{
+	dir = 9;
+	icon_state = "catwalk_cross"
+	},
+/obj/machinery/vehicle/miniputt/armed,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 9
+	},
+/area/noGenerate)
+"ng" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/noGenerate)
+"oB" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"oL" = (
+/obj/submachine/foodprocessor{
+	dir = 8
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"oX" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
+"pw" = (
+/obj/machinery/vending/cigarette,
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"pP" = (
+/obj/decal/poster/wallsign/poster_clown,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den/party)
+"pU" = (
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 4;
+	pixel_y = 3
+	},
+/obj/decal/cleanable/vomit{
+	pixel_y = 1
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"qg" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/royal,
+/obj/item/reagent_containers/syringe/krokodil{
+	pixel_x = -3;
+	pixel_y = -12
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"qh" = (
+/obj/grille/catwalk{
+	dir = 9
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	icon_state = "catwalk_cross"
+	},
+/area/noGenerate)
+"qJ" = (
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = 4;
+	pixel_y = 6
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"rR" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"sa" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den/party)
+"sP" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"tp" = (
+/obj/machinery/deep_fryer{
+	dir = 8
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"tY" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"ub" = (
+/obj/machinery/light/incandescent/blueish{
+	dir = 1
+	},
+/obj/storage/closet/dresser/random,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"ud" = (
+/obj/table/wood/round/auto,
+/obj/machinery/microwave,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"uJ" = (
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"vP" = (
+/obj/item/pen/sleepypen/discount{
+	layer = 5;
+	pixel_x = -5;
+	pixel_y = 8
+	},
+/obj/table/wood/auto,
+/obj/item/paper/mice_problem{
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"wk" = (
+/obj/random_item_spawner/med_kit/one,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"wx" = (
+/obj/item/sponge{
+	pixel_y = 7
+	},
+/turf/space,
+/area/noGenerate)
+"xK" = (
+/obj/item/reagent_containers/glass/beaker{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"yg" = (
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = -5;
+	pixel_y = 3
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"yR" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
+	pixel_x = 7
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"zn" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Ad" = (
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Ap" = (
+/obj/decal/poster/wallsign/stencil/left/n,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
+"AF" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"Bd" = (
+/obj/decal/poster/wallsign/testsubject,
+/turf/simulated/wall/auto/jen,
+/area/prefab/drug_den)
+"Be" = (
+/obj/machinery/light/small/blueish{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/popcorn{
+	desc = "It's a little stale...";
+	name = "old popcorn";
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/pill/ipecac{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"Bg" = (
+/obj/machinery/computer/arcade,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"Bo" = (
+/obj/submachine/chef_sink,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"BO" = (
+/obj/grille/catwalk{
+	dir = 5;
+	icon_state = "catwalk_cross"
+	},
+/obj/item/spraybottle/cleaner{
+	pixel_x = -8;
+	pixel_y = -4
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 5
+	},
+/area/prefab/drug_den)
+"Cp" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den)
+"Db" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den/party)
+"EF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/incandescent/netural,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"EW" = (
+/obj/critter/mouse/mad,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"Fd" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/prefab/drug_den/party)
+"FZ" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/prefab/drug_den/party)
+"GV" = (
+/turf/unsimulated/floor/plating/damaged3,
+/area/prefab/drug_den/party)
+"Hq" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fblue2"
+	},
+/area/prefab/drug_den/party)
+"HM" = (
+/obj/machinery/disposal/small,
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fblue2"
+	},
+/area/prefab/drug_den/party)
+"HS" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/airless/plating,
+/area/prefab/drug_den/party)
+"Ih" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/auto/jen,
+/area/prefab/drug_den)
+"It" = (
+/obj/table/reinforced/chemistry/auto{
+	desc = "A black countertop table for storing kitchen-y objects.";
+	name = "kitchen counter"
+	},
+/obj/item/reagent_containers/food/drinks/duo{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/pill/methamphetamine{
+	layer = 4;
+	pixel_x = 6;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/pill/methamphetamine{
+	layer = 4;
+	pixel_x = 9
+	},
+/obj/item/reagent_containers/pill/methamphetamine{
+	layer = 4;
+	pixel_x = -7;
+	pixel_y = 14
+	},
+/obj/item/device/reagentscanner{
+	pixel_x = 7;
+	pixel_y = 1
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Jl" = (
+/obj/grille/catwalk{
+	dir = 6;
+	icon_state = "catwalk_cross"
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 6
+	},
+/area/prefab/drug_den)
+"Jm" = (
+/obj/item/reagent_containers/pill/bathsalts{
+	pixel_x = -7;
+	pixel_y = -8
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = -10;
+	pixel_y = 10
+	},
+/obj/item/device/light/zippo/gold{
+	pixel_x = 5;
+	pixel_y = -1
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"Kt" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"Kw" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/drinks/duo{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/item/reagent_containers/food/drinks/duo{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/drinks/duo{
+	pixel_y = 4
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/prefab/drug_den)
+"KH" = (
+/obj/item/storage/wall/fire,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den/party)
+"Lu" = (
+/obj/table/wood/round/auto,
+/obj/item/paper/neonlining{
+	layer = 4;
+	pixel_x = 5
+	},
+/obj/item/storage/box/glowstickbox/assorted{
+	pixel_x = 2;
+	pixel_y = 7
+	},
+/obj/item/neon_lining/shipped{
+	layer = 6;
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"LH" = (
+/obj/submachine/chef_oven,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"LO" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"LQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/prefab/drug_den/party)
+"LZ" = (
+/obj/critter/mouse/mad,
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Mc" = (
+/obj/stool/chair/comfy{
+	dir = 8;
+	icon_state = "chair_comfy"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"Mu" = (
+/obj/storage/secure/closet/fridge/kitchen,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"MJ" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"NW" = (
+/obj/rack,
+/obj/item/clothing/glasses/monocle{
+	pixel_x = -5
+	},
+/obj/item/spacecash/random/small{
+	pixel_x = 4;
+	pixel_y = -5
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"OH" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"OO" = (
+/obj/critter/mouse/mad,
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Pt" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/obj/item/clothing/under/rank/janitor{
+	pixel_x = 4;
+	pixel_y = -7
+	},
+/turf/space,
+/area/noGenerate)
+"Qa" = (
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = -3;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = 1;
+	pixel_y = 5
+	},
+/obj/decal/cleanable/vomit{
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"QJ" = (
+/obj/table/wood/auto,
+/obj/item/device/light/lava_lamp{
+	pixel_x = -6;
+	pixel_y = 16
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = -1
+	},
+/obj/item/matchbook{
+	pixel_x = 6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"QX" = (
+/obj/decal/cleanable/vomit{
+	pixel_x = -1;
+	pixel_y = 5
+	},
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fblue2"
+	},
+/area/prefab/drug_den/party)
+"Rb" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"Rf" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Si" = (
+/obj/item/device/light/glowstick/green_on{
+	pixel_x = 3;
+	pixel_y = 1
+	},
+/obj/machinery/light/incandescent/blueish,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"SG" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/carpet/arcade/half,
+/area/prefab/drug_den)
+"Tb" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/prefab/drug_den/party)
+"Ti" = (
+/obj/critter/mouse/mad,
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"Tv" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"TA" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/space,
+/area/noGenerate)
+"TN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/disposalpipe/segment{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"TY" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/syringe/jenkem{
+	pixel_x = -2;
+	pixel_y = 12
+	},
+/turf/simulated/floor/white/checker2{
+	dir = 1
+	},
+/area/prefab/drug_den)
+"Ur" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"Uv" = (
+/turf/simulated/wall/auto/jen,
+/area/prefab/drug_den)
+"UD" = (
+/obj/table/auto,
+/obj/machinery/phone{
+	name = "Drug Den"
+	},
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = 2;
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/pill/methamphetamine{
+	layer = 4;
+	pixel_x = -9;
+	pixel_y = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+"UL" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4
+	},
+/area/noGenerate)
+"UU" = (
+/obj/disposaloutlet/east,
+/obj/grille/catwalk,
+/obj/disposalpipe/trunk{
+	dir = 8
+	},
+/obj/map/light/yellow,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 1
+	},
+/area/prefab/drug_den)
+"UZ" = (
+/obj/stool/bench/red,
+/obj/machinery/light_switch/auto,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/prefab/drug_den/party)
+"VU" = (
+/obj/machinery/vending/kitchen{
+	freestuff = 1;
+	req_access_txt = null
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"VV" = (
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fblue2"
+	},
+/area/prefab/drug_den/party)
+"Wk" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"XN" = (
+/obj/decal/poster/wallsign/stencil/left/e,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
+"XR" = (
+/obj/decal/poster/wallsign/stencil/left/d,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/drug_den)
+"Yu" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/random_item_spawner/junk/one,
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/cafeteria,
+/area/prefab/drug_den)
+"YK" = (
+/obj/item/instrument/large/jukebox{
+	anchored = 0;
+	desc = "I wonder who fixed this thing? Oh wait - hmm...strange it feels very light?"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8;
+	nostick = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/drug_den/party)
+
+(1,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(2,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+mb
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(3,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(4,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+"}
+(5,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+ii
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+"}
+(6,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+tY
+eA
+tY
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(7,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+Rb
+mT
+qh
+mE
+OH
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+"}
+(8,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+mb
+mb
+hC
+hC
+hC
+hC
+Tv
+UL
+ng
+ng
+TA
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+"}
+(9,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+hC
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+Db
+HS
+Db
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(10,1,1) = {"
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+KH
+GV
+Db
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(11,1,1) = {"
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+Db
+Db
+HS
+Db
+Db
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+"}
+(12,1,1) = {"
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+tY
+hC
+Db
+Db
+YK
+VV
+HM
+Db
+Db
+TA
+hC
+hC
+hC
+mb
+mb
+"}
+(13,1,1) = {"
+mb
+mb
+hC
+hC
+hC
+oX
+oX
+oX
+oX
+oX
+hC
+hC
+Kt
+hC
+Db
+pw
+je
+QX
+Hq
+oB
+sa
+hC
+hC
+hC
+hC
+mb
+mb
+"}
+(14,1,1) = {"
+mb
+hC
+hC
+hC
+hC
+oX
+Lu
+Be
+Qa
+oX
+oX
+gy
+gy
+gy
+pP
+UD
+Ti
+jl
+rR
+QJ
+sa
+hC
+hC
+hC
+hC
+hC
+mb
+"}
+(15,1,1) = {"
+mb
+hC
+hC
+hC
+hC
+oX
+ud
+qJ
+SG
+yg
+eN
+cR
+dK
+Cp
+eg
+LQ
+Tb
+Fd
+pU
+Mc
+sa
+hC
+hC
+hC
+hC
+hC
+mb
+"}
+(16,1,1) = {"
+mb
+hC
+hC
+hC
+hC
+oX
+Bg
+iW
+Jm
+oX
+oX
+gy
+gy
+gy
+Db
+UZ
+ci
+FZ
+TN
+ks
+sa
+hC
+hC
+hC
+hC
+hC
+mb
+"}
+(17,1,1) = {"
+mb
+hC
+hC
+hC
+hC
+oX
+ub
+EW
+Si
+XR
+hC
+hC
+Kt
+hC
+Uv
+Kw
+TY
+dp
+Uv
+Db
+Db
+TA
+hC
+hC
+hC
+mb
+mb
+"}
+(18,1,1) = {"
+mb
+mb
+hC
+hC
+hC
+ay
+NW
+av
+vP
+XN
+hC
+hC
+kC
+hC
+Uv
+Rf
+uJ
+EF
+Uv
+hC
+eA
+hC
+hC
+hC
+hC
+mb
+mb
+"}
+(19,1,1) = {"
+mb
+hC
+hC
+hC
+hC
+oX
+gy
+qg
+gy
+Ap
+hC
+hC
+hC
+hC
+Bd
+yR
+wk
+Ur
+Uv
+hC
+eA
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(20,1,1) = {"
+mb
+mb
+hC
+hC
+hC
+hC
+gy
+gy
+gy
+hC
+hC
+hC
+hC
+hC
+Uv
+It
+ap
+Wk
+gy
+hC
+eA
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(21,1,1) = {"
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+zn
+hC
+hC
+hC
+hC
+hC
+Uv
+Uv
+fy
+lJ
+Yu
+gy
+hC
+eA
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(22,1,1) = {"
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+zn
+hC
+hC
+hC
+hC
+hC
+Uv
+Mu
+uJ
+Ad
+OO
+Uv
+hC
+eA
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(23,1,1) = {"
+mb
+mb
+mb
+mb
+hC
+hC
+Rb
+sP
+OH
+hC
+hC
+hC
+hC
+Uv
+LH
+kT
+bk
+gD
+Uv
+hC
+eA
+hC
+hC
+hC
+hC
+mb
+mb
+"}
+(24,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+Uv
+Bo
+LZ
+ab
+uJ
+Uv
+hC
+eA
+hC
+hC
+hC
+hC
+mb
+mb
+"}
+(25,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+Uv
+VU
+xK
+tp
+oL
+Uv
+hC
+eA
+hC
+hC
+hC
+mb
+mb
+mb
+"}
+(26,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+Uv
+Uv
+Uv
+Ih
+Uv
+Uv
+AF
+LO
+hC
+hC
+mb
+mb
+mb
+mb
+"}
+(27,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+Tv
+BO
+UU
+Jl
+TA
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+"}
+(28,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+MJ
+Pt
+LO
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+"}
+(29,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+wx
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(30,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(31,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+mb
+mb
+hC
+hC
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}
+(32,1,1) = {"
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+hC
+hC
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+mb
+"}

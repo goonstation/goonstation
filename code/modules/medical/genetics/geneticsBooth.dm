@@ -7,6 +7,7 @@
 	var/id = null
 	var/uses = 5
 	var/registered_sale_id = null
+	var/locked = FALSE
 
 	New(bioeffect, description, price, registered)
 		BE = bioeffect
@@ -34,13 +35,14 @@
 /obj/machinery/genetics_booth
 	name = "gene booth"
 	desc = "A luxury booth that will exchange genetic upgrades for cash. It automatically bills your account using advanced magnet technology. It's safe!"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "genebooth"
 	pixel_x = -3
 	anchored = 1
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
-	appearance_flags = TILE_BOUND
+	event_handler_flags = USE_FLUID_ENTER
+	appearance_flags = TILE_BOUND | PIXEL_SCALE | LONG_GLIDE
+	req_access = list(access_captain, access_head_of_personnel, access_maxsec, access_medical_director)
 
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
@@ -56,15 +58,14 @@
 	var/datum/geneboothproduct/selected_product = null
 	var/list/offered_genes = list()
 
-	var/spam_time = 0
 	var/started = 0
 	mats = 40
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL | DECON_NO_ACCESS
 
 	var/datum/light/light
-	var/lr = 0.88
-	var/lg = 0.88
-	var/lb = 1
+	var/light_r =0.88
+	var/light_g = 0.88
+	var/light_b = 1
 
 	New()
 		..()
@@ -72,12 +73,12 @@
 		light.attach(src)
 		light.set_brightness(0.6)
 		light.set_height(1.5)
-		light.set_color(lr,lg,lb)
+		light.set_color(light_r, light_g, light_b)
 
 		contextLayout = new /datum/contextLayout/flexdefault(4, 32, 32)
 
-		genetics_computers += src
-		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/64x64.dmi', "genebooth_screen")
+		START_TRACKING
+		screenoverlay = SafeGetOverlayImage("screen", 'icons/obj/large/64x64.dmi', "genebooth_screen")
 		screenoverlay.blend_mode = BLEND_MULTIPLY
 		screenoverlay.layer = src.layer + 0.2
 
@@ -94,30 +95,36 @@
 		workingoverlay.pixel_y = 2
 		workingoverlay.layer = src.layer + 0.1
 
-	disposing()
-		genetics_computers -= src
-		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
+	disposing()
+		STOP_TRACKING
+		if(occupant)
+			occupant.set_loc(get_turf(src.loc))
+			occupant = null
+		..()
 
 	process()
 		if (occupant)
 			if (!powered())
 				eject_occupant(0)
-			if (occupant.loc != src)
+			if (occupant?.loc != src)
 				eject_occupant(0)
+			if(!occupant)
+				return
 
 			started++
 			if (started == 2)
 				if (!try_billing(occupant))
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
-					occupant.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
+					occupant.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"<b>[occupant.name]<b>! You can't afford [selected_product.name] with a bank account like that.\"</span></span>", 2)
 
 					eject_occupant(0)
 		else if (started)
 			eject_occupant(0)
 
-		updateicon()
+		UpdateIcon()
 		..()
 
 
@@ -126,61 +133,116 @@
 			user.show_text("[src] is currently occupied. Wait until it's done.", "blue")
 			return
 
-		if (offered_genes && offered_genes.len)
-			user.show_text("Something went wrong, showing backup menu...", "blue")
+		if (status & (NOPOWER | BROKEN))
+			boutput(user, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+			return
+
+
+		if (length(offered_genes))
 			var/list/names = list()
-
-			for (var/datum/geneboothproduct/P in offered_genes)
-				names += P.name
-
-			var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
-			if (!name_sel)
-				return
-			if(occupant && occupant != user)
-				user.show_text("There's someone else inside!")
-				return
-
-			for (var/datum/geneboothproduct/P in offered_genes)
-				if (name_sel == P.name)
-					select_product(P)
-					break
+			show_admin_panel(user)
+			for (var/datum/geneboothproduct/P as anything in offered_genes)
+				if(!P.locked)
+					names += P.name
+			if(length(names))
+				user.show_text("Something went wrong, showing backup menu...", "blue")
+				var/name_sel = input(user, "Offered Products", "Selection") as null|anything in names
+				if (!name_sel)
+					return
+				for (var/datum/geneboothproduct/P as anything in offered_genes)
+					if (name_sel == P.name)
+						select_product(P)
+						break
 		else
 			user.show_text("[src] has no products available for purchase right now.", "blue")
 
 	proc/reload_contexts()//IM ASORRY
-		for(var/datum/contextAction/C in src.contextActions)
-			C.disposing()
+		for(var/datum/contextAction/C as anything in src.contextActions)
+			C.dispose()
 		src.contextActions = list()
 
-		for (var/datum/geneboothproduct/P in offered_genes)
-			var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
-			newcontext.GBP = P
-			newcontext.GB = src
-			contextActions += newcontext
+		for (var/datum/geneboothproduct/P as anything in offered_genes)
+			if(!P.locked)
+				var/datum/contextAction/genebooth_product/newcontext = new /datum/contextAction/genebooth_product
+				newcontext.GBP = P
+				newcontext.GB = src
+				contextActions += newcontext
+
+	proc/show_admin_panel(mob/user)
+		if(user && src.allowed(user))
+			if(length(offered_genes))
+				. = ""
+				for (var/datum/geneboothproduct/P as() in offered_genes)
+					. += "<u>[P.name]</u><small> "
+					. += " * Price: <A href='?src=\ref[src];op=\ref[P];action=price'>[P.cost]</A>"
+					. += " * <A href='?src=\ref[src];op=\ref[P];action=lock'>[P.locked ? "Locked" : "Unlocked"]</A></small><BR/>"
+
+			else
+				. += "[src] has no products available for purchase right now."
+			src.add_dialog(user)
+			user.Browse("<HEAD><TITLE>Genebooth Administrative Control Panel</TITLE></HEAD><TT>[.]</TT>", "window=genebooth")
+			onclose(user, "genebooth")
+
+	Topic(href, href_list)
+		if (usr.stat)
+			return
+		if ((in_interact_range(src, usr) && istype(src.loc, /turf)) || (issilicon(usr)))
+			var/datum/geneboothproduct/P
+			src.add_dialog(usr)
+
+			switch(href_list["action"])
+
+				if("price")
+					if(href_list["op"])
+						P = locate(href_list["op"])
+						var/price = input(usr, "Please enter price for [P.name].", "Gene Price", 0) as null|num
+						if(!isnum_safe(price))
+							return
+						price = max(price,0)
+						P.cost = price
+
+				if("lock")
+					if(href_list["op"])
+						P = locate(href_list["op"])
+						if(P)
+							P.locked = !P.locked
+							if(!selected_product || selected_product.locked)
+								selected_product = null
+								just_pick_anything()
+								UpdateIcon()
+							reload_contexts()
+
+			show_admin_panel(usr)
+		else
+			usr.Browse(null, "window=genebooth")
+			src.remove_dialog(usr)
+		return
 
 	proc/select_product(var/datum/geneboothproduct/P)
 		selected_product = P
 		abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-		updateicon()
+		UpdateIcon()
 
 		usr.show_text("You have selected [P.name]. Walk into an opening on the side of this machine to purchase this item.", "blue")
-		playsound(src.loc, "sound/machines/keypress.ogg", 50, 1, pitch = 0.60)
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, extrarange = -15, pitch = 0.6)
 
 	proc/just_pick_anything()
-		for (var/datum/geneboothproduct/P in offered_genes)
+		for (var/datum/geneboothproduct/P as anything in offered_genes)
+			if(P.locked)
+				continue
 			selected_product = P
 			abilityoverlay = SafeGetOverlayImage("abil", P.BE.icon, P.BE.icon_state,src.layer + 0.1)
-			updateicon()
+			UpdateIcon()
 			break
 
-	proc/updateicon()
+	update_icon()
 		if (powered())
 			light.enable()
 			if (occupant && started>1)
 				UpdateOverlays(workingoverlay, "abil", 0, 1)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
-				playsound(src.loc, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1, pitch = 1.4)
+				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
 				if (entry_time + process_time < world.timeofday)
 					eject_occupant()
 			else
@@ -193,20 +255,20 @@
 			ClearSpecificOverlays("screen")
 
 
-	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1)
+	proc/eject_occupant(var/add_power = 1,var/do_throwing = 1, var/override_dir = null)
 		if (occupant)
 
 			if (add_power)
-				if(selected_product && selected_product.BE)
+				if(selected_product?.BE)
 
 					var/datum/bioEffect/NEW = new selected_product.BE.type()
 					copy_datum_vars(selected_product.BE,NEW)
-					occupant.bioHolder.AddEffectInstance(NEW,1)
+					occupant.bioHolder.AddEffectInstanceNoDelay(NEW)
 
 					selected_product.uses -= 1
 					if (selected_product.uses <= 0 || !selected_product.BE)
 						notify_empty(selected_product)
-						selected_product.disposing()
+						selected_product.dispose()
 						offered_genes -= selected_product
 						reload_contexts()
 
@@ -220,10 +282,10 @@
 				occupant.throw_at(get_edge_target_turf(src, eject_dir), 2, 1)
 			occupant = null
 
-			updateicon()
+			UpdateIcon()
 
 		started = 0
-		var/turf/dispense = get_step(src.loc,eject_dir)
+		var/turf/dispense = (override_dir ? get_step(src.loc, override_dir) : get_step(src.loc, eject_dir))
 		for (var/atom in src)
 			var/atom/movable/A = atom
 			A.set_loc(dispense)
@@ -247,17 +309,17 @@
 				if (istype(perp_id))
 
 					//subtract from perp bank account
-					var/datum/data/record/account = null
+					var/datum/db_record/account = null
 					account = FindBankAccountByName(perp_id.registered)
 					if (account)
-						if (account.fields["current_money"] >= selected_product.cost)
-							account.fields["current_money"] -= selected_product.cost
+						if (account["current_money"] >= selected_product.cost)
+							account["current_money"] -= selected_product.cost
 
 							//add to genetecists budget etc
 							if (selected_product.registered_sale_id)
 								account = FindBankAccountByName(selected_product.registered_sale_id)
 								if (account)
-									account.fields["current_money"] += selected_product.cost/2
+									account["current_money"] += selected_product.cost/2
 									wagesystem.research_budget += selected_product.cost/2
 								else
 									wagesystem.research_budget += selected_product.cost
@@ -268,7 +330,7 @@
 								//if (src.glitchy_slogans)
 								//	O.show_message("<span class='game say'><span class='name'>[src]</span> beeps,</span> \"[voidSpeak(message)]\"", 2)
 								//else
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Thank you for your patronage, <b>[M.name]<b>.\"</span></span>", 2)
 
 
 							.= 1
@@ -277,78 +339,76 @@
 						M.show_text("No bank account found for [perp_id.registered]!", "blue")
 
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [budget_inc] credits earned from last booth sale."
 		if (split_with)
 			string += "Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
 
 	proc/notify_empty(var/datum/geneboothproduct/GBP)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
 
 		var/string = "Notification: [GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT",  "group"="medresearch", "sender"="00000000", "message"=string)
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(src, pdaSignal)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=list(MGD_MEDRESEACH, MGA_SALES), "sender"="00000000", "message"=string)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
-	CanPass(var/mob/M, var/atom/oldloc)
+	Cross(var/mob/M)
 		.= ..()
-		if (oldloc && oldloc.y == src.y)
+		if (M && M.y == src.y)
+			if (src.status & (NOPOWER | BROKEN))
+				if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+					boutput(M, "<span class='alert'>The gene booth is currently nonfunctional.</span>")
+				return
 			if (!occupant && selected_product && ishuman(M))
 				var/mob/living/carbon/human/H = M
 				if (H.bioHolder && !H.bioHolder.HasEffect(selected_product.id))
-					eject_dir = get_dir(oldloc,src)
+					eject_dir = get_dir(M,src)
 					M.set_loc(src)
 					occupant = M
 					letgo_hp = initial(letgo_hp)
 					entry_time = world.timeofday
 					started = 0
 
-					if (world.time > spam_time + 3 SECONDS)
-						playsound(src.loc, "sound/machines/heater_on.ogg", 90, 1, pitch = 0.78)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
+						playsound(src.loc, 'sound/machines/heater_on.ogg', 90, 1, pitch = 0.78)
 						M.show_text("[src] is warming up. Please hold still.", "blue")
-						spam_time = world.time
 
-					updateicon()
+					UpdateIcon()
 					.= 1
 				else
-					if (world.time > spam_time + 3 SECONDS)
+					if (!ON_COOLDOWN(M, "genebooth_message_antispam", 3 SECONDS))
 						M.show_text("You already have the offered mutation!", "blue")
-						spam_time = world.time
 
 
 	mob_flip_inside(var/mob/user)
 		..(user)
-		user.show_text("<span style=\"color:red\">[src] [pick("bends","shakes","groans")].</span>")
-		if (prob(8))
+		user.show_text("<span class='alert'>[src] [pick("bends","shakes","groans")].</span>")
+		if (prob(33))
 			src.eject_occupant(add_power = 0)
 
 	relaymove(mob/user, direction)
 		if (direction != eject_dir)
-			if (direction & WEST || direction & EAST)
+			if (direction == WEST || direction == EAST)
 				if (occupant == user && !(started>1))
-					src.eject_occupant(0,0)
-					step(user,direction)
+					src.eject_occupant(0,0, direction)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		letgo_hp -= W.force
 		attack_particle(user,src)
-		playsound(src.loc, "sound/impact_sounds/Metal_Clang_3.ogg", 50, 1, pitch = 0.8)
+		playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, pitch = 0.8)
 
 		if (letgo_hp <= 0)
 			src.eject_occupant(add_power = 0)
+
+	was_deconstructed_to_frame(mob/user)
+		src.eject_occupant(do_throwing=FALSE)
 
 //next :
 	//sound effects

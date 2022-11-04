@@ -10,7 +10,7 @@
 
 	To-Do:
 	Wall-mounted shotgun racks
-	A cool rack for the barman's shotgun
+	A cool rack for the bartender's shotgun
 */
 
 /obj/machinery/weapon_stand
@@ -21,9 +21,9 @@
 	var/amount = 1
 	anchored = 1
 	density = 1
-	object_flags = CAN_REPROGRAM_ACCESS
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
-	var/contained_weapon = /obj/item/katana_sheath
+	var/contained_weapon = /obj/item/swords_sheaths/katana
 	var/contained_weapon_name = "katana"
 	var/recharges_contents = 0
 	var/max_amount = 1
@@ -76,6 +76,10 @@
 			stand_type = "taser_charge_rack"
 			recharges_contents = 1
 
+			empty
+				icon_state = "taser_rack0"
+				amount = 0
+
 	egun_rack
 		name = "energy gun rack"
 		desc = "A storage rack that fits 4 energy guns. Tidy!"
@@ -107,9 +111,6 @@
 		contained_weapon_name = "riot shotgun"
 		req_access = list(access_security)
 
-		pbr
-			contained_weapon = /obj/item/gun/kinetic/riotgun/pbr
-
 	rifle_rack
 		name = "pulse rifle rack"
 		desc = "A rack that charges up to 3 pulse rifles."
@@ -130,17 +131,18 @@
 		if(!recharges_contents)
 			UnsubscribeProcess()
 
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if (!ispath(src.contained_weapon))
-				logTheThing("debug", src, null, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
+			src.update()
 
 	get_desc(dist)
 		if (dist <= 1)
 			. += "There's [(src.amount > 0) ? src.amount : "no" ] [src.contained_weapon_name][s_es(src.amount)] in [src]."
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			if (!src.panelopen)
 				src.overlays += image('icons/obj/vending.dmi', "grife-panel")
@@ -157,7 +159,7 @@
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
@@ -171,16 +173,16 @@
 
 //no, this isnt even an item its not allowed. if you wanna move racks around, code an unscrew behavior or something
 /*
-	MouseDrop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
+	mouse_drop(mob/user as mob) // no I ain't even touchin this mess it can keep doin whatever it's doin
 		// I finally came back and touched that mess because it was broke - Haine
 		// When I was working on this in the 2016 release, some stuff was broken and I didn't know why. Then when I got coder, it'd already been fixed! Thanks Haine! ~Gannets
-		if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+		if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 			if (!user.put_in_hand(src))
 				return ..()
 */
 
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.panelopen || isAI(user))
 			var/list/rackwires = list(
 			"Puce" = 1,
@@ -206,15 +208,15 @@
 
 			user.Browse(pdat, "window=rackpanel")
 			onclose(user, "rackpanel")
-		
+
 		if(!ishuman(user) || !isliving(user))
 			return
 
 		if (src.malfunction)
-			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
+			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 		if (!src.allowed(user) && !hacked)
-			boutput(user, "Access denied.")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
 		src.add_fingerprint(user)
@@ -231,9 +233,9 @@
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
 		src.update()
-		try // : is bad, but let's try and do it anyway.
-			myWeapon:update_icon() // Update the icon of the weapon, so it shows the right level of charge.
-		catch // Did : throw an exception? Catch it! Before it gets loose!
+		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
+		if (src.amount <= 0) //prevents a runtime if it's empty
+			return
 
 	proc/update()
 		src.icon_state = "[src.stand_type][src.amount]"
@@ -244,15 +246,15 @@
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
 				if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
-				A:charge(10) //You passed the if test, charge the item(A) in increments of a number(10) (Rechargers charge by 20, so this makes racks half as fast.)
+				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
 	Topic(href, href_list)
-		if(get_dist(usr,src) > 1 && !issilicon(usr) && !isAI(usr))
-			boutput(usr, "<span style=\"color:red\">You need to be closer to the rack to do that!</span>")
+		if(BOUNDS_DIST(usr, src) > 0 && !issilicon(usr) && !isAI(usr))
+			boutput(usr, "<span class='alert'>You need to be closer to the rack to do that!</span>")
 			return
 
 		if ((href_list["cutwire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["cutwire"])
+			var/twire = text2num_safe(href_list["cutwire"])
 			if (!usr.find_tool_in_hand(TOOL_SNIPPING))
 				boutput(usr, "You need a snipping tool!")
 				return
@@ -261,7 +263,7 @@
 			src.updateUsrDialog()
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
-			var/twire = text2num(href_list["pulsewire"])
+			var/twire = text2num_safe(href_list["pulsewire"])
 			if (!usr.find_tool_in_hand(TOOL_PULSING) && !isAI(usr))
 				boutput(usr, "You need a multitool or similar!")
 				return
@@ -314,7 +316,7 @@
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)
 			if(user)
-				boutput(user, "<span style=\"color:blue\">You disable the [src]'s cardlock!</span>")
+				boutput(user, "<span class='notice'>You disable the [src]'s cardlock!</span>")
 			src.hacked = 1
 			src.updateUsrDialog()
 			return 1

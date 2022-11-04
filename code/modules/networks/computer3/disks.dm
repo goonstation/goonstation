@@ -15,10 +15,10 @@
 
 /obj/item/disk/data
 	name = "data disk"
-	icon = 'icons/obj/cloning.dmi'
+	icon = 'icons/obj/items/disks.dmi'
 	icon_state = "datadisk0" //Gosh I hope syndies don't mistake them for the nuke disk.
 	item_state = "card-id"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	//DNA machine vars
 	var/data = ""
 	var/ue = 0
@@ -31,7 +31,9 @@
 	var/file_used = 0
 	var/portable = 1
 	var/title = "Data Disk"
+
 	New()
+		..()
 		src.root = new /datum/computer/folder
 		src.root.holder = src
 		src.root.name = "root"
@@ -42,7 +44,7 @@
 			root = null
 
 		data = null
-		..()
+		. = ..()
 
 	clone()
 		var/obj/item/disk/data/D = ..()
@@ -63,11 +65,30 @@
 
 		return D
 
+	proc/wipe_or_zap(mob/user)
+		if(!read_only)
+			user.visible_message("<span class='alert'><b>[user] wipes the [src.name]!</b></span>")
+			elecflash(src,0, power=2, exclude_center = 0)
+			if (src.root)
+				src.root.dispose()
+
+			src.root = new /datum/computer/folder
+			src.root.holder = src
+			src.root.name = "root"
+		else
+			user.visible_message("<span class='alert'><b>[user] is zapped as the multitool backfires! The [src.name] seems unphased.</b></span>")
+			elecflash(user,0, power=2, exclude_center = 0)
+
+	attackby(obj/item/W, mob/user)
+		if (ispulsingtool(W))
+			user.visible_message("<span class='alert'><b>[user] begins to wipe [src.name]!</b></span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/disk/data/proc/wipe_or_zap, list(user), src.icon, src.icon_state, null, null)
+
 /obj/item/disk/data/floppy
 	var/random_color = 1
 
 /obj/item/disk/data/floppy/New()
-	..()
+	. = ..()
 	if(random_color)
 		var/diskcolor = pick(0,1,2)
 		src.icon_state = "datadisk[diskcolor]"
@@ -77,10 +98,8 @@
 	boutput(user, "You flip the write-protect tab to [src.read_only ? "protected" : "unprotected"].")
 
 /obj/item/disk/data/floppy/examine()
-	set src in oview(5)
-	..()
-	boutput(usr, text("The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."))
-	return
+	. = ..()
+	. += "The write-protect tab is set to [src.read_only ? "protected" : "unprotected"]."
 
 /obj/item/disk/data/floppy/demo
 	name = "data disk - 'Farmer Jeff'"
@@ -109,39 +128,25 @@
 	file_amount = 640
 	portable = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (ispulsingtool(W))
-			user.visible_message("<span style=\"color:red\"><b>[user] begins to clear the [src]!</b></span>","You begin to clear the [src].")
-			if(do_after(user, 30))
-				user.visible_message("<span style=\"color:red\"><b>[user] clears the [src]!</b></span>","You clear the [src].")
-				//qdel(src.root)
-				if (src.root)
-					src.root.dispose()
-
-				src.root = new /datum/computer/folder
-				src.root.holder = src
-				src.root.name = "root"
-			return
-
 /obj/item/disk/data/tape
 	name = "ThinkTape"
 	desc = "A form of proprietary magnetic data tape used by Thinktronic Data Systems, LLC."
 	title = "MAGTAPE"
 	icon_state = "tape"
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
 	item_state = "paper"
 	file_amount = 128
 	portable = 0
 
 	New()
-		..()
+		. = ..()
 		src.root.gen = 99 //No subfolders!!
-		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new tape label", src.name, null) as text
 			t = copytext(strip_html(t), 1, 36)
-			if (!in_range(src, usr) && src.loc != usr)
+			if (!in_interact_range(src, user) && src.loc != user)
 				return
 			if (!t)
 				src.name = "ThinkTape"
@@ -150,23 +155,22 @@
 			src.name = "ThinkTape-'[t]'"
 		else
 			..()
-		return
 
 //Floppy disks that are read-only ONLY.
 //It's good to have a more permanent source of programs when somebody deletes everything (until they space all the disks)
 //Remember to actually set them as read only after adding files in New()
 /obj/item/disk/data/floppy/read_only
-	name = "Permafloppy"
+	name = "permafloppy"
 
 	attack_self(mob/user as mob)
-		boutput(user, "<span style=\"color:red\">You can't flip the write-protect tab, it's held in place with glue or something!</span>")
+		boutput(user, "<span class='alert'>You can't flip the write-protect tab, it's held in place with glue or something!</span>")
 		return
 
 /obj/item/disk/data/floppy/computer3boot
 	name = "data disk-'ThinkDOS'"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/main_os(src))
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"
@@ -183,7 +187,7 @@
 	title = "Network Help"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/background/ping(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
@@ -198,7 +202,7 @@
 	title = "Med-Trak 4"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/medical_records(src))
 		src.read_only = 1
 
@@ -208,7 +212,7 @@
 	title = "SecMate 6"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/secure_records(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
@@ -219,7 +223,7 @@
 	title = "Research"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/robotics_research(src))
 		src.read_only = 1
 
@@ -229,7 +233,7 @@
 	title = "Research"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/artifact_research(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/disease_research(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/robotics_research(src))
@@ -241,7 +245,7 @@
 	title = "TermOS"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/os/terminal_os(src))
 		src.read_only = 1
 
@@ -251,7 +255,7 @@
 	title = "COMMaster"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/communications(src))
 		src.root.add_file( new /datum/computer/file/terminal_program/manifest(src))
 		src.read_only = 1
@@ -262,7 +266,7 @@
 	title = "EngineDisk"
 
 	New()
-		..()
+		. = ..()
 		src.root.add_file( new /datum/computer/file/terminal_program/engine_control(src))
 		src.read_only = 1
 #endif
@@ -270,18 +274,18 @@
 /obj/item/disk/data/floppy/read_only/authentication
 	name = "Authentication Disk"
 	desc = "Capable of storing entire kilobytes of information, this disk carries activation codes for various secure things that aren't nuclear bombs."
-	icon = 'icons/obj/items/items.dmi'
 	icon_state = "nucleardisk"
 	item_state = "card-id"
-	w_class = 1.0
+	object_flags = NO_GHOSTCRITTER
+	w_class = W_CLASS_TINY
 	mats = 15
 	random_color = 0
-	file_amount = 32.0
+	file_amount = 32
 
 	New()
-		..()
-		SPAWN_DBG (10) //Give time to actually generate network passes I guess.
-			//src.root.add_file( new /datum/computer/file/nuclear_auth(src))
+		. = ..()
+		SPAWN(1 SECOND) //Give time to actually generate network passes I guess.
+			if (!root) return
 			var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "GENAUTH";} (src)
 			authrec.fields = list("HEADS"="[netpass_heads]",
 								"SEC"="[netpass_security]",
@@ -298,7 +302,7 @@
 //A fixed disk with some structure already set up for the main os I guess
 /obj/item/disk/data/fixed_disk/computer3
 	New()
-		..()
+		. = ..()
 		//First off, create the directory for logging stuff
 		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
 		newfolder.name = "logs"
@@ -315,3 +319,19 @@
 			newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
 		else
 			newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))
+
+//A computer disk with the hottest software, for nerds
+/obj/item/disk/data/fixed_disk/techcomputer3
+	New()
+		. = ..()
+		var/datum/computer/folder/newfolder = new /datum/computer/folder(  )
+		newfolder.name = "logs"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/record/c3help(src))
+		newfolder = new /datum/computer/folder
+		newfolder.name = "bin"
+		src.root.add_file( newfolder )
+		newfolder.add_file( new /datum/computer/file/terminal_program/sigpal(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/background/signal_catcher(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/writewizard(src))
+		newfolder.add_file( new /datum/computer/file/terminal_program/file_transfer(src))

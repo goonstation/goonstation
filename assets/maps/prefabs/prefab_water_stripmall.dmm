@@ -1,90 +1,884 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/mobius)
-"ab" = (/turf/variableTurf/clear,/area)
-"ac" = (/obj/machinery/vending/snack,/turf/simulated/floor/yellow/checker,/area/mobius)
-"ad" = (/obj/decal/poster/wallsign/stencil/right/s{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/obj/shrub{icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"; dir = 1},/turf/simulated/floor/red/checker,/area/mobius)
-"ae" = (/obj/machinery/light/incandescent/warm,/obj/decal/poster/wallsign/stencil/left/t{pixel_y = 42},/obj/decal/poster/wallsign/stencil/right/r{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/turf/simulated/floor/red/checker,/area/mobius)
-"af" = (/obj/decal/poster/wallsign/stencil/left/i{pixel_y = 42},/obj/decal/poster/wallsign/stencil/right/p{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/turf/simulated/floor/white,/area/mobius)
-"ag" = (/obj/decal/poster/wallsign/stencil/right/m{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/turf/simulated/floor/white,/area/mobius)
-"ah" = (/obj/decal/poster/wallsign/stencil/left/a{pixel_y = 42},/obj/decal/poster/wallsign/stencil/right/l{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/turf/simulated/floor/red/checker,/area/mobius)
-"ai" = (/obj/decal/poster/wallsign/stencil/left/l{pixel_y = 42},/obj/decal/tinsel{icon_state = "lights3"; name = "broken seamas lights"; pixel_y = 28},/obj/shrub{icon = 'icons/obj/stationobjs.dmi'; icon_state = "plant"; dir = 1},/obj/item/device/gps{identifier = "MALL"},/turf/simulated/floor/red/checker,/area/mobius)
-"aj" = (/obj/machinery/vending/coffee,/turf/simulated/floor/purple/checker,/area/mobius)
-"ak" = (/obj/submachine/GTM{pixel_y = 32},/turf/simulated/floor/yellow/checker,/area/mobius)
-"al" = (/turf/simulated/floor/yellow/checker,/area/mobius)
-"am" = (/turf/simulated/floor/red/checker,/area/mobius)
-"an" = (/obj/disco_ball{pixel_x = 16},/turf/simulated/floor/white,/area/mobius)
-"ao" = (/turf/simulated/floor/white,/area/mobius)
-"ap" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/red/checker,/area/mobius)
-"aq" = (/turf/simulated/floor/purple/checker,/area/mobius)
-"ar" = (/obj/submachine/ATM{pixel_x = 0; pixel_y = 32},/turf/simulated/floor/purple/checker,/area/mobius)
-"as" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/yellow/checker,/area/mobius)
-"at" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/yellow/checker,/area/mobius)
-"au" = (/obj/table/glass/reinforced/auto,/obj/item/toy/sword,/turf/simulated/floor/red/checker,/area/mobius)
-"av" = (/obj/table/glass/reinforced/auto,/obj/item/cigpacket/random,/turf/simulated/floor/red/checker,/area/mobius)
-"aw" = (/turf/variableTurf/clear,/area/noGenerate)
-"ax" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/purple/checker,/area/mobius)
-"ay" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/purple/checker,/area/mobius)
-"az" = (/obj/table/glass/reinforced/auto,/obj/item/balloon_animal/random,/turf/simulated/floor/red/checker,/area/mobius)
-"aA" = (/obj/table/glass/reinforced/auto,/obj/item/football,/turf/simulated/floor/red/checker,/area/mobius)
-"aB" = (/obj/decal/fakeobjects/teleport_pad,/obj/marker/supplymarker,/turf/simulated/floor/red/checker,/area/mobius)
-"aC" = (/obj/npc/trader/twins,/turf/simulated/floor/white,/area/mobius)
-"aD" = (/obj/table/glass/reinforced/auto,/obj/item/c_tube,/turf/simulated/floor/red/checker,/area/mobius)
-"aE" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/red/checker,/area/mobius)
-"aF" = (/obj/table/glass/reinforced/auto,/obj/item/kitchen/everyflavor_box/wax,/turf/simulated/floor/yellow/checker,/area/mobius)
-"aG" = (/obj/machinery/light/incandescent/warm,/turf/simulated/floor/blackwhite/whitegrime,/area/mobius)
-"aH" = (/turf/simulated/floor/blackwhite/whitegrime,/area/mobius)
-"aI" = (/obj/table/glass/reinforced/auto,/obj/item/a_gift/easter,/turf/simulated/floor/purple/checker,/area/mobius)
-"aJ" = (/obj/table/glass/reinforced/auto,/obj/item/kitchen/peach_rings,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/yellow/checker,/area/mobius)
-"aK" = (/obj/machinery/drainage/big,/turf/simulated/floor/blackwhite/whitegrime,/area/mobius)
-"aL" = (/obj/table/glass/reinforced/auto,/obj/item/a_gift/easter,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/purple/checker,/area/mobius)
-"aM" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/blackwhite/whitegrime,/area/mobius)
-"aN" = (/obj/table/glass/reinforced/auto,/obj/item/reagent_containers/food/snacks/snack_cake,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/yellow/checker,/area/mobius)
-"aO" = (/obj/table/glass/reinforced/auto,/obj/item/a_gift/festive,/obj/machinery/light/incandescent/warm,/turf/simulated/floor/purple/checker,/area/mobius)
-"aP" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/green/checker,/area/mobius)
-"aQ" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/mobius/mfortuna)
-"aR" = (/obj/machinery/door/airlock/pyro,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"aS" = (/turf/simulated/floor/green/checker,/area/mobius)
-"aT" = (/obj/decal/fakeobjects/pcb,/turf/simulated/floor/green/checker,/area/mobius)
-"aU" = (/obj/machinery/light/incandescent/cool,/turf/simulated/floor/green/checker,/area/mobius)
-"aV" = (/obj/storage/crate,/obj/item/peripheral/videocard,/turf/simulated/floor/green/checker,/area/mobius)
-"aW" = (/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"aX" = (/obj/machinery/light/incandescent/purpleish,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"aY" = (/obj/table/glass/reinforced/auto,/obj/item/storage/toolbox/electrical,/turf/simulated/floor/green/checker,/area/mobius)
-"aZ" = (/obj/storage/crate,/obj/item/cell/supercell/charged,/obj/item/cell/supercell/charged,/turf/simulated/floor/green/checker,/area/mobius)
-"ba" = (/obj/critter/golem,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"bb" = (/obj/table/glass/reinforced/auto,/obj/item/decoration/ashtray,/obj/item/clothing/mask/cigarette/propuffs,/turf/simulated/floor/green/checker,/area/mobius)
-"bc" = (/obj/table/glass/reinforced/auto,/obj/item/paper{icon_state = "paper"; info = "File your fucking tax return, you fiend. Goddamnit, you're holding up all the other businesses."; name = "crumpled paper"; pixel_x = -2; pixel_y = 1},/obj/item/paper{icon_state = "paper"; info = "<li>Elektro-Arc tool module (100 units)</li><br><li><i>The Buddy Book</i> (1 unit)</li>"; name = "sale invoice"; pixel_x = 3; pixel_y = 3},/obj/machinery/cashreg,/turf/simulated/floor/green/checker,/area/mobius)
-"bd" = (/obj/table/glass/reinforced/auto,/obj/item/plate{pixel_y = 4},/obj/item/reagent_containers/food/snacks/donkpocket{pixel_y = 4},/turf/simulated/floor/green/checker,/area/mobius)
-"be" = (/obj/storage/crate,/obj/item/parts/robot_parts/arm/left/light{desc = "A metal arm for a robuddy."; name = "Robuddy Arm"},/obj/item/parts/robot_parts/arm/left/light{desc = "A metal arm for a robuddy."; name = "Robuddy Arm"},/turf/simulated/floor/green/checker,/area/mobius)
-"bf" = (/obj/stool/chair/comfy/blue{icon_state = "chair_comfy-blue"; dir = 4},/obj/decal/float/clock,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"bg" = (/obj/table/glass/reinforced/auto,/obj/item/card_box/tarot,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"bh" = (/obj/table/glass/reinforced/auto,/obj/item/paper{icon_state = "paper"; info = "Out fishing. Come back later."; name = "note"; pixel_x = -2; pixel_y = 1},/obj/item/dice/magic8ball,/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"bi" = (/obj/stool/chair/comfy/blue{icon_state = "chair_comfy-blue"; dir = 8},/turf/simulated/floor/blue/checker,/area/mobius/mfortuna)
-"bj" = (/obj/table/glass/reinforced/auto,/obj/item/paper_bin,/obj/item/pen,/turf/simulated/floor/green/checker,/area/mobius)
-"bk" = (/obj/stool/chair/office/green{icon_state = "office_chair_green"; dir = 8},/turf/simulated/floor/green/checker,/area/mobius)
-"bl" = (/obj/storage/crate,/obj/item/guardbot_frame/old,/obj/item/guardbot_core/old,/obj/machinery/light/incandescent/cool,/turf/simulated/floor/green/checker,/area/mobius)
-"bm" = (/obj/storage/crate,/obj/item/device/guardbot_tool/tesla,/obj/item/device/guardbot_tool/flash,/turf/simulated/floor/green/checker,/area/mobius)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/mobius)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"ad" = (
+/obj/decal/poster/wallsign/stencil/right/s{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	dir = 1
+	},
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"ae" = (
+/obj/machinery/light/incandescent/warm,
+/obj/decal/poster/wallsign/stencil/left/t{
+	pixel_y = 42
+	},
+/obj/decal/poster/wallsign/stencil/right/r{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"af" = (
+/obj/decal/poster/wallsign/stencil/left/i{
+	pixel_y = 42
+	},
+/obj/decal/poster/wallsign/stencil/right/p{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/turf/simulated/floor/white,
+/area/prefab/mobius)
+"ag" = (
+/obj/decal/poster/wallsign/stencil/right/m{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/turf/simulated/floor/white,
+/area/prefab/mobius)
+"ah" = (
+/obj/decal/poster/wallsign/stencil/left/a{
+	pixel_y = 42
+	},
+/obj/decal/poster/wallsign/stencil/right/l{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"ai" = (
+/obj/decal/poster/wallsign/stencil/left/l{
+	pixel_y = 42
+	},
+/obj/decal/tinsel{
+	icon_state = "lights3";
+	name = "broken seamas lights";
+	pixel_y = 28
+	},
+/obj/shrub{
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant";
+	dir = 1
+	},
+/obj/item/device/gps{
+	identifier = "MALL"
+	},
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aj" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"ak" = (
+/obj/submachine/GTM{
+	pixel_y = 32
+	},
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"al" = (
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"am" = (
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"an" = (
+/obj/disco_ball{
+	pixel_x = 16
+	},
+/turf/simulated/floor/white,
+/area/prefab/mobius)
+"ao" = (
+/turf/simulated/floor/white,
+/area/prefab/mobius)
+"ap" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aq" = (
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"ar" = (
+/obj/submachine/ATM{
+	pixel_x = 0;
+	pixel_y = 32
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"as" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"at" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"au" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/toy/sword,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"av" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/cigpacket/random,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aw" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ax" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"ay" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"az" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/balloon_animal/random,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aA" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/football,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aB" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/marker/supplymarker,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aC" = (
+/obj/npc/trader/twins,
+/turf/simulated/floor/white,
+/area/prefab/mobius)
+"aD" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/c_tube,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aE" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/red/checker,
+/area/prefab/mobius)
+"aF" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/kitchen/everyflavor_box/wax,
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"aG" = (
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/mobius)
+"aH" = (
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/mobius)
+"aI" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/a_gift/easter,
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"aJ" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/kitchen/peach_rings,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"aK" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/mobius)
+"aL" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/a_gift/easter,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"aM" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/blackwhite/whitegrime,
+/area/prefab/mobius)
+"aN" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/snack_cake,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/yellow/checker,
+/area/prefab/mobius)
+"aO" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/a_gift/festive,
+/obj/machinery/light/incandescent/warm,
+/turf/simulated/floor/purple/checker,
+/area/prefab/mobius)
+"aP" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aQ" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/mobius/mfortuna)
+"aR" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"aS" = (
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aT" = (
+/obj/decal/fakeobjects/pcb,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aU" = (
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aV" = (
+/obj/storage/crate,
+/obj/item/peripheral/videocard,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aW" = (
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"aX" = (
+/obj/machinery/light/incandescent/purpleish,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"aY" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/storage/toolbox/electrical,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"aZ" = (
+/obj/storage/crate,
+/obj/item/cell/supercell/charged,
+/obj/item/cell/supercell/charged,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"ba" = (
+/obj/critter/golem,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"bb" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/decoration/ashtray,
+/obj/item/clothing/mask/cigarette/propuffs,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bc" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "File your fucking tax return, you fiend. Goddamnit, you're holding up all the other businesses.";
+	name = "crumpled paper";
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/paper{
+	icon_state = "paper";
+	info = "<li>Elektro-Arc tool module (100 units)</li><br><li><i>The Buddy Book</i> (1 unit)</li>";
+	name = "sale invoice";
+	pixel_x = 3;
+	pixel_y = 3
+	},
+/obj/machinery/cashreg,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bd" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/plate{
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/donkpocket{
+	pixel_y = 4
+	},
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"be" = (
+/obj/storage/crate,
+/obj/item/parts/robot_parts/arm/left/light{
+	desc = "A metal arm for a robuddy.";
+	name = "Robuddy Arm"
+	},
+/obj/item/parts/robot_parts/arm/left/light{
+	desc = "A metal arm for a robuddy.";
+	name = "Robuddy Arm"
+	},
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bf" = (
+/obj/stool/chair/comfy/blue{
+	icon_state = "chair_comfy-blue";
+	dir = 4
+	},
+/obj/decal/float/clock,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"bg" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/card_box/tarot,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"bh" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper{
+	icon_state = "paper";
+	info = "Out fishing. Come back later.";
+	name = "note";
+	pixel_x = -2;
+	pixel_y = 1
+	},
+/obj/item/dice/magic8ball,
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"bi" = (
+/obj/stool/chair/comfy/blue{
+	icon_state = "chair_comfy-blue";
+	dir = 8
+	},
+/turf/simulated/floor/blue/checker,
+/area/prefab/mobius/mfortuna)
+"bj" = (
+/obj/table/glass/reinforced/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bk" = (
+/obj/stool/chair/office/green{
+	icon_state = "office_chair_green";
+	dir = 8
+	},
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bl" = (
+/obj/storage/crate,
+/obj/item/guardbot_frame/old,
+/obj/item/guardbot_core/old,
+/obj/machinery/light/incandescent/cool,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
+"bm" = (
+/obj/storage/crate,
+/obj/item/device/guardbot_tool/tesla,
+/obj/item/device/guardbot_tool/flash,
+/turf/simulated/floor/green/checker,
+/area/prefab/mobius)
 
 (1,1,1) = {"
-abababababababababababababababababababab
-ababababaaaaaaaaaaaaaaaaaaaaaaaaabababab
-abababaaaaacaaadaeafagahaiaaajaaaaababab
-abababaaakalaaamamanaoamapaaaqaraaababab
-abababaaasalatamauaoaoavamaxaqayaaababab
-abababaaalalatamazaoaoaAamaxaqaqaaababab
-abababaaalalaaapaBaCaoaDamaaaqaqaaababab
-abababaaalalaaamamaoaoapamaaaqaqaaababab
-abababaaasalaaaaaaaEaEaaaaaaaqayaaababab
-abababaaalalalaFaaaGaHaaaIaqaqaqaaababab
-abababaaalalalaJaaaKaKaaaLaqaqaqaaababab
-abababaaalalaaaaaaaMaMaaaaaaaqaqaaababab
-abaaaaaaalasaaawawawawawawaaayaqaaaaaaab
-abaaaNalalalaaawawawawawawaaaqaqaqaOaaab
-abaaaaaPaPaaaaaaaaawawaQaQaQaQaRaRaQaQab
-abaaaSaSaSaTaUaVaaawawaQaWaXaWaWaWaWaQab
-abaaaUaSaSaYaSaZaaawawaQaWaWbaaWaWaWaQab
-abaaaSbbbcbdaSbeaaawawaQaWbfbgbhbiaWaQab
-abaaaSbjbkaSaSblaaawawaQaWaWaWbaaWaWaQab
-abaaaSaUaSaSaSbmaaawawaQaWaWaWaWaXaWaQab
-abaaaaaaaaaaaaaaaaawawaQaQaQaQaQaQaQaQab
-abababababababawawawawawawababababababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aN
+aa
+aS
+aU
+aS
+aS
+aS
+aa
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+al
+aP
+aS
+aS
+bb
+bj
+aU
+aa
+ab
+"}
+(5,1,1) = {"
+ab
+aa
+aa
+ak
+as
+al
+al
+al
+as
+al
+al
+al
+al
+al
+aP
+aS
+aS
+bc
+bk
+aS
+aa
+ab
+"}
+(6,1,1) = {"
+ab
+aa
+ac
+al
+al
+al
+al
+al
+al
+al
+al
+al
+as
+al
+aa
+aT
+aY
+bd
+aS
+aS
+aa
+ab
+"}
+(7,1,1) = {"
+ab
+aa
+aa
+aa
+at
+at
+aa
+aa
+aa
+al
+al
+aa
+aa
+aa
+aa
+aU
+aS
+aS
+aS
+aS
+aa
+ab
+"}
+(8,1,1) = {"
+ab
+aa
+ad
+am
+am
+am
+ap
+am
+aa
+aF
+aJ
+aa
+aw
+aw
+aa
+aV
+aZ
+be
+bl
+bm
+aa
+aw
+"}
+(9,1,1) = {"
+ab
+aa
+ae
+am
+au
+az
+aB
+am
+aa
+aa
+aa
+aa
+aw
+aw
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aw
+"}
+(10,1,1) = {"
+ab
+aa
+af
+an
+ao
+ao
+aC
+ao
+aE
+aG
+aK
+aM
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+"}
+(11,1,1) = {"
+ab
+aa
+ag
+ao
+ao
+ao
+ao
+ao
+aE
+aH
+aK
+aM
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+aw
+"}
+(12,1,1) = {"
+ab
+aa
+ah
+am
+av
+aA
+aD
+ap
+aa
+aa
+aa
+aa
+aw
+aw
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aw
+"}
+(13,1,1) = {"
+ab
+aa
+ai
+ap
+am
+am
+am
+am
+aa
+aI
+aL
+aa
+aw
+aw
+aQ
+aW
+aW
+aW
+aW
+aW
+aQ
+aw
+"}
+(14,1,1) = {"
+ab
+aa
+aa
+aa
+ax
+ax
+aa
+aa
+aa
+aq
+aq
+aa
+aa
+aa
+aQ
+aX
+aW
+bf
+aW
+aW
+aQ
+ab
+"}
+(15,1,1) = {"
+ab
+aa
+aj
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+aq
+ay
+aq
+aQ
+aW
+ba
+bg
+aW
+aW
+aQ
+ab
+"}
+(16,1,1) = {"
+ab
+aa
+aa
+ar
+ay
+aq
+aq
+aq
+ay
+aq
+aq
+aq
+aq
+aq
+aR
+aW
+aW
+bh
+ba
+aW
+aQ
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aq
+aR
+aW
+aW
+bi
+aW
+aX
+aQ
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aO
+aQ
+aW
+aW
+aW
+aW
+aW
+aQ
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+aQ
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

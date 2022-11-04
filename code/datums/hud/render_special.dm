@@ -1,18 +1,24 @@
 /datum/hud/render_special //This entire file is a bodged-together hack and we should be ashamed
 	var
-		obj/screen/center_light
+		atom/movable/screen/center_light
 		center_light_scale = 1
+		atom/movable/screen/lighting_darkness // makes it so stuff poking outside view() gets hidden / darkened
 
 		// hi it's cirr adding a hack to a hack
-		obj/screen/left_fill
-		obj/screen/right_fill
+		atom/movable/screen/left_fill
+		atom/movable/screen/right_fill
 
 	New()
+		..()
 		center_light = create_screen("", "", 'icons/effects/vision_default.dmi', "default", "CENTER-1, CENTER-1", LIGHTING_LAYER_BASE)
 		center_light.mouse_opacity = 0 // this is really a giant hack and shouldn't be in the HUD system, but there aren't many good ways to handle this
 		center_light.blend_mode = BLEND_ADD
 		center_light.plane = PLANE_LIGHTING
 		center_light.color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255)
+		#ifdef UPSCALED_MAP
+		center_light.Scale(3, 3)
+		center_light.color = rgb(0.3 * 255, 0.3 * 255, 0.3 * 255)
+		#endif
 
 	proc/set_centerlight_icon(state, color = rgb(0.15 * 255, 0.15 * 255, 0.15 * 255), blend_mode = BLEND_ADD, plane = PLANE_LIGHTING, wide = 0, alpha = 255)
 		switch(state)

@@ -1,0 +1,129 @@
+
+(t)tue jul 12 22
+(u)Azrun & Virvatuli
+(p)5663
+(e)⚖🍑🔄|balance, ass-jam, rework
+(*)Slamguns are back!
+(+)Zipguns no longer accept shotgun shells.
+(t)fri sep 18 20
+(u)UrsulaMajor
+(p)2211
+(e)🍑⚖|ass-jam, balance
+(*)Wages and vending machine prices have been standardized. Please give feedback on the PR if anything seems off.
+(t)sat sep 12 20
+(u)Sartorius7
+(p)2163
+(e)🍑|ass-jam
+(+)Two new assday items, screaming shoes and farting flipflops, adminspawn.
+(t)thu sep 10 20
+(u)pali
+(*)Temporary hotspots (e.g. from welderbombs, fireballs, shitty grills...) now more consistently affect atmos temperature. Let's test it out.
+(t)tue sep 08 20
+(u)pali
+(*)Burning items now release their contents as smoke. Bring back infinicheese 2020.
+(t)wed aug 26 20
+(u)pali
+(p)1962
+(e)🍑|ass-jam
+(*)Red cross symbols violated the Geneva Convention. They were replaced by a more appropriate medbay symbol.
+(t)sun jul 05 20
+(u)Kubius
+(p)1357
+(e)🍑🗺|ass-jam, mapping
+(*)The Bellerophon Fleet has a new vessel.
+(t)fri jun 12 20
+(u)Kubius
+(p)1040
+(e)🍑🆕|ass-jam, feature
+(+)Assjam mode vote has received weighted abstain - it's now much easier for the vote to succeed if people aren't actively objecting.
+(u)Comradef191
+(p)686
+(e)🍑🗺|ass-jam, mapping
+(*)Various Changes & Upgrades to Cogmap1, View Minor Changes for full list of Changes
+(+)"Upgraded" the Engine
+(+)"Upgraded" the Bridge
+(+)"Upgraded" Cargo
+(+)"Upgraded" Mining-Now the Magnet is only in z3
+(+)Brought back the AI Satellite
+(+)Removed Research
+(+)Removed Pathology (Maybe...)
+(+)Shrunk the Market
+(t)mon jun 08 20
+(u)Kubius
+(p)938
+(e)🍑🗺|ass-jam, mapping
+(*)New assjam map: Icarus! Vaguely triangular, singularity-driven, nominally a cruise liner.
+(t)wed may 20 20
+(u)Mithsaxel
+(p)713
+(e)🍑🆕🎨|ass-jam, enhancement, sprites
+(*)Adds Crabgun, a traitor weapon which can turn people into crabs.
+(t)wed may 13 20
+(u)pali
+(*)The ass arena is now a bit brighter
+(*)Dropping the ass relic now stops the respawn
+(*)Joining the arena now has a 2 minute cooldown (since you last <i>joined</i>)
+(*)The relic slows you down a bit
+(u)TrustworthyFella
+(p)685
+(e)🍑⚖|ass-jam, balance
+(+)Changed nukie to crew ratio on ass jam from 1:2 to 1:3
+(u)pali
+(p)680
+(e)🍑|ass-jam
+(+)Mr. Rathen is immortal.
+(u)TrustworthyFella
+(p)661
+(e)🍑🆕|ass-jam, enhancement
+(*)Gave the captain a 5% chance to be Tommy Wiseau
+(*)Brought back podseeker gibbing
+(*)Removed HoS whitelist
+(*)Made HoS a priority job
+(*)Replaced the Ammotech with a Kinetitech, which is filled with lethals and stuff security can't actually use.
+(*)Made the ratio of nuke ops to crew 1:2 rather than 1:4, and raised the maximum number of nuke ops to 30.
+(*)Adds 300 latejoin meatcube slots, which are able to be traitors.
+(+)Meatcubes are announced when they join, like heads of staff are.
+(+)Lets Heads of Security change their name when they spawn
+(u)pali
+(p)676
+(e)🆕|enhancement
+(*)Ass day classic vote now appears in the Status tab (just like map votes).
+(t)tue may 12 20
+(u)RichardGere
+(p)665
+(e)🍑🆕|ass-jam, enhancement
+(*)ASS JAM: Added a third emag stage to securitrons
+(u)Tarmunora
+(p)541
+(e)🍑|ass-jam
+(+)ASS_JAM: experimental change to newsmoke spreading
+(t)fri may 08 20
+(u)Tarmunora
+(p)605
+(e)🍑|ass-jam
+(+)ASS JAM: Changed pulse to pullse
+(t)tue apr 28 20
+(u)Fosstar
+(p)450
+(e)🍑⚖🗺|ass-jam, balance, mapping
+(*)Modernized and fixed up Donut 2 a bunch. The map is available during Ass Jam!
+(t)mon apr 13 20
+(u)ASS_JAM
+(*)Hello It is ASS_JAM. Please remember, you must not grief on ASS_JAM as a non-antag. Just play as usual. The entertainment this month is brought to you by:
+(*)Pali - AIs have a 5% chance to start with legs, HoS locker contains The Loose Cannon, trinket pool is unrestricted (all items), 25% chance for the game to pick a mutation at roundstart and give it to everyone - and much more
+(*)Moonlol - New wizard spell: Timestop. "This very handy dandy feature surely wont cause any runtimes"
+(*)Polivilas - Disables zipgun, adds a slamgun. "I will pay out 100k spacebux for better sprites - contact 2027#2027 on discord for more details."
+(*)Kubius - 2 new maps: Fleet and Kondaru. Do they compile? A mystery!!
+(*)Warcrimes - Updated reskinned Trunkmap, a couple tweaks here and there. Also enabled voting for most of the maps in the codebase.
+(*)UrsulaMajor - Updated Density, map smol.
+(t)sun apr 12 20
+(u)Goonstation Administration Team
+(*)Hello, we're changing ass day! Griefing is no longer allowed and we're adding a bunch of small fun changes. Click <a target="_blank" href="https://forum.ss13.co/showthread.php?tid=14330">here</a> for more details.
+(t)sun apr 05 20
+(u)pali
+(*)Nukies on ass day can now get much wilder target locations.
+(t)wed nov 13 19
+(u)Firebarrage and Hyrdofloric
+(*)A new Ass Day event: The Ass Day Arena!
+(*)Travel there with your ghost ability buttons, just like the afterlife bar
+(*)In the arena is a special artifact. If you pick it up and dont let anyone else pick it up for 30 seconds you will respawn!

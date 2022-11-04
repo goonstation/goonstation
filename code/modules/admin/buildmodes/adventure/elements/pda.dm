@@ -28,22 +28,22 @@ But if the document contains &lt;1&gt; &lt;2&gt; &lt;4&gt; then the number of ac
 			// ------
 			var/html_file = input("Select HTML source file.", "HTML Source", null) as file|null
 			if (!html_file)
-				boutput(usr, "<span style=\"color:blue\">File loading cancelled. Not using custom HTML.</span>")
+				boutput(usr, "<span class='notice'>File loading cancelled. Not using custom HTML.</span>")
 				is_custom = "No"
 			else
 				html_content = file2text(html_file)
 				if (!html_content)
-					boutput(usr, "<span style=\"color:red\">Error loading file. Not using custom HTML.</span>")
+					boutput(usr, "<span class='alert'>Error loading file. Not using custom HTML.</span>")
 					is_custom = "No"
 				else
-					boutput(usr, "<span style=\"color:blue\">Verifying file sanity.</span>")
+					boutput(usr, "<span class='notice'>Verifying file sanity.</span>")
 					if (findtext(html_content, "href"))
-						boutput(usr, "<span style=\"color:red\">Sorry, the HTML content file cannot contain additional links.</span>")
+						boutput(usr, "<span class='alert'>Sorry, the HTML content file cannot contain additional links.</span>")
 						html_content = null
 						is_custom = "No"
 					var/regex/jsep = new("on[a-zA-Z]+\\s*=", "i")
 					else if (findtext(html_content, "script") || jsep.Find(html_content))
-						boutput(usr, "<span style=\"color:red\">Sorry, the HTML content file cannot contain javascript.</span>")
+						boutput(usr, "<span class='alert'>Sorry, the HTML content file cannot contain javascript.</span>")
 						html_content = null
 						is_custom = "No"
 					else
@@ -54,16 +54,16 @@ But if the document contains &lt;1&gt; &lt;2&gt; &lt;4&gt; then the number of ac
 							finding = "<[id]>"
 						action_slots = id - 1
 						if (!action_slots)
-							boutput(usr, "<span style=\"color:red\">No action slots found in the HTML template.</span>")
+							boutput(usr, "<span class='alert'>No action slots found in the HTML template.</span>")
 							html_content = null
 							is_custom = "No"
 						else
-							boutput(usr, "<span style=\"color:blue\">File is probably sanitary. Allowed. Goodbye universe.</span>")
-			boutput(usr, "<span style=\"color:blue\">STAGE 1: Select triggerables and associate actions with left click. Right Click to associate a name with this action group and start a new action group.</span>")
-			boutput(usr, "<span style=\"color:blue\">All actions in a single group will be executed at once by the associated named button.</span>")
-			boutput(usr, "<span style=\"color:blue\">CTRL+Right Click to end the action assignment phase and place handheld computers.</span>")
-			boutput(usr, "<span style=\"color:blue\">You will not be able to assign new actions after you end this stage.</span>")
-			boutput(usr, "<span style=\"color:blue\">If you loaded custom HTML, the number of action groups must match the amount of action slots defined by the HTML.</span>")
+							boutput(usr, "<span class='notice'>File is probably sanitary. Allowed. Goodbye universe.</span>")
+			boutput(usr, "<span class='notice'>STAGE 1: Select triggerables and associate actions with left click. Right Click to associate a name with this action group and start a new action group.</span>")
+			boutput(usr, "<span class='notice'>All actions in a single group will be executed at once by the associated named button.</span>")
+			boutput(usr, "<span class='hint'>CTRL+Right Click to end the action assignment phase and place handheld computers.</span>")
+			boutput(usr, "<span class='notice'>You will not be able to assign new actions after you end this stage.</span>")
+			boutput(usr, "<span class='notice'>If you loaded custom HTML, the number of action groups must match the amount of action slots defined by the HTML.</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		switch (stage)

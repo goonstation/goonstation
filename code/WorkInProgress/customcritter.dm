@@ -19,7 +19,7 @@
 	boutput(F, null)
 	F.ImportText("/", file2text(target))
 	if (!F)
-		boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+		boutput(usr, "<span class='alert'>Import failed.</span>")
 	else
 		var/datum/sandbox/S = new()
 		var/obj/critter/custom/template = new()
@@ -77,12 +77,12 @@
 			on_wake()
 
 		switch(severity)
-			if(1.0)
+			if(1)
 				src.health -= 200 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
 				return
-			if(2.0)
+			if(2)
 				src.health -= 75 * explosivevuln
 				if (src.health <= 0)
 					src.CritterDeath()
@@ -106,7 +106,7 @@
 		if (on_death)
 			on_death.tick()
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		..()
 		if (W.force || istype(W, /obj/item/artifact/melee_weapon))
 			for (var/datum/critterEvent/E in events)
@@ -149,8 +149,8 @@
 		tokenized_message(chase_text, target)
 		play_optional_sound(chase_sound)
 		if (stun_prob)
-			SPAWN_DBG(1 SECOND)
-				if (get_dist(src, target) <= 1)
+			SPAWN(1 SECOND)
+				if (BOUNDS_DIST(src, target) == 0)
 					if (prob(stun_prob))
 						M.changeStatus("stunned", 3 SECONDS)
 						tokenized_message(stun_text, target)
@@ -167,13 +167,10 @@
 				random_burn_damage(src.target, damage)
 			if ("toxin")
 				M.take_toxin_damage(damage)
-				M.updatehealth()
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
-				M.updatehealth()
 			if ("radiation")
-				M.changeStatus("radiation", damage*10, 3)
-				M.updatehealth()
+				M.take_radiation_dose(damage)
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -187,25 +184,22 @@
 		for (var/datum/critterEvent/E in events)
 			if (E.attachment_point == EVENT_ATTACHMENT_POINT_MELEE)
 				E.trigger()
-		SPAWN_DBG(2.5 SECONDS)
+		SPAWN(2.5 SECONDS)
 			src.attacking = 0
 
 	CritterDeath()
 		if (!src.alive)
 			return
-		//src.icon_state += "-dead"
-		src.alive = 0
-		src.anchored = 0
-		src.set_density(0)
+		..()
 		loot_table.drop()
 		if (dead_change_icon)
 			icon = dead_icon
 			icon_state = dead_icon_state
-		tokenized_message(death_text, null)
+		else // ughh, admins and their custom critters
+			src.icon_state = replacetext(src.icon_state, "-dead", "") //can't assume it's going to have a dead state...
 		play_optional_sound(death_sound)
 		if (on_death)
 			on_death.doOnDeath()
-		walk_to(src,0)
 
 	clone()
 		var/obj/critter/custom/C = ..()
@@ -237,7 +231,7 @@
 			C.on_death = on_death.clone()
 			C.on_death.C = C
 
-		C.abil.len = abil.len
+		C.abil.len = length(abil)
 		for (var/i = 1, i <= abil.len, i++)
 			var/datum/critterAbility/A = abil[i]
 			if (istype(A))
@@ -271,7 +265,7 @@
 		F["[path].dead_change_icon"] << dead_change_icon
 		icon_serializer(F, "[path].dead_icon", sandbox, dead_icon, dead_icon_state)
 		loot_table.serialize(F, "[path].loot_table", sandbox)
-		F["[path].abil.LEN"] << abil.len
+		F["[path].abil.LEN"] << length(abil)
 		if (on_death)
 			F["[path].on_death.type"] << on_death.type
 			on_death.serialize(F, "[path].on_death", sandbox)
@@ -328,7 +322,7 @@
 					A.attach(src)
 					abil[i] = A
 				else
-					logTheThing("debug", null, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
+					logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
@@ -348,14 +342,14 @@
 
 	proc/blank(var/mob/M)
 		if (!M.client)
-			boutput(M, "<span style=\"color:red\">Hello.</span>")
+			boutput(M, "<span class='alert'>Hello.</span>")
 			return 0
 		// look I think it's okay if you maybe let non-admins access this sometimes
 		/*if (!M.client.holder)
-			boutput(M, "<span style=\"color:red\">What are you doing here?</span>")
+			boutput(M, "<span class='alert'>What are you doing here?</span>")
 			return 0
 		if (M.client.holder.level < LEVEL_PA)
-			boutput(M, "<span style=\"color:red\">You must be at least PA to use this.</span>")
+			boutput(M, "<span class='alert'>You must be at least PA to use this.</span>")
 			return 0*/
 		var/key = M.ckey
 		if (!(key in critterCreators))
@@ -459,7 +453,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/clone()
 		var/datum/critterLootTable/LT = new type()
 		LT.maxDropped = maxDropped
-		LT.loot.len = loot.len
+		LT.loot.len = length(loot)
 		for (var/i = 1, i <= loot.len, i++)
 			var/datum/critterLoot/L = loot[i]
 			var/datum/critterLoot/L2 = L.clone()
@@ -469,7 +463,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	proc/serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		F["[path].maxDropped"] << maxDropped
-		F["[path].loot.LEN"] << loot.len
+		F["[path].loot.LEN"] << length(loot)
 		for (var/i = 1, i <= loot.len, i++)
 			var/datum/critterLoot/L = loot[i]
 			L.serialize(F, "[path].loot.[i]", sandbox)
@@ -545,7 +539,6 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			gibs(C.loc, list())
 		else
 			robogibs(C.loc, list())
-		C.loc = null
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -583,9 +576,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		var/L = C.loc
-		SPAWN_DBG (delay)
+		SPAWN(delay)
 			explosion_new(C, L, power)
-			C.loc = null
 			qdel(C)
 
 /datum/critterDeath/smoke
@@ -623,12 +615,11 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		var/L = C.loc
-		SPAWN_DBG (delay)
+		SPAWN(delay)
 			var/datum/reagents/holder = new()
 			holder.my_atom = C
 			holder.add_reagent(reagent, 50)
 			smoke_reaction(holder, 4, L)
-			C.loc = null
 			qdel(C)
 
 /datum/critterEvent
@@ -732,7 +723,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			RT = C.vars[matchVar] * mult
 			last_value = C.vars[matchVar]
 		else
@@ -788,7 +779,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = threshold / 100.0
+			var/mult = threshold / 100
 			real_threshold = C.vars[matchVar] * mult
 		else if (matchVar)
 			real_threshold = threshold
@@ -817,9 +808,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			CRASH("Cannot attach event to [CR]: [matchVar] does not exist.")
 		..()
 		if (matchVar && is_percentage)
-			var/mult = minimum / 100.0
+			var/mult = minimum / 100
 			RM = C.vars[matchVar] * mult
-			mult = maximum / 100.0
+			mult = maximum / 100
 			RX = C.vars[matchVar] * mult
 		else
 			RM = minimum
@@ -944,7 +935,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			event.deserialize(F, "[path].event", sandbox)
 			event.attached = src
 		else
-			logTheThing("debug", "usr", null, "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
+			logTheThing(LOG_DEBUG, "usr", "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
 
 	proc/attach(var/obj/critter/custom/CR)
 		C = CR
@@ -1047,14 +1038,14 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	use_ability()
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(critical_text, M)
 			C.play_optional_sound(critical_sound)
 			M.TakeDamageAccountArmor("chest", bonus_damage, 0)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1113,18 +1104,18 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	use_ability()
 		if (!C)
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
 			return 0
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
-			if (melee && get_dist(C, M) > C.attack_range)
+			if (melee && GET_DIST(C, M) > C.attack_range)
 				return 0
 			C.tokenized_message(inject_text, M)
 			C.play_optional_sound(inject_sound)
 			M.reagents.add_reagent(reagent_id, inject_amount)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1328,21 +1319,21 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		C.tokenized_message(frenzy_text)
 		C.play_optional_sound(frenzy_sound)
 		C.suspend_ai = 1
-		SPAWN_DBG(frenzy_duration)
+		SPAWN(frenzy_duration)
 			frenzying = 0
 			C.suspend_ai = 0
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while(frenzying)
 				var/turf/T = get_turf(atmob)
 				if (!T)
 					return
 				C.set_loc(T)
-				C.dir = pick(1,2,4,8)
+				C.set_dir(pick(1,2,4,8))
 				C.tokenized_message(frenzy_attack, atmob)
 				C.play_optional_sound(frenzy_attack_sound)
 				C.dodamage(atmob, attacktype, max(rand(attack_power), rand(attack_power)))
 				if (stunlocks)
-					atmob.changeStatus("weakened", (attack_cooldown / 3 * 2)*10)
+					atmob.changeStatus("weakened", (attack_cooldown / 3 * 2) SECONDS)
 				sleep(attack_cooldown)
 		return 1
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1433,6 +1424,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/sound/shockwave_sound
 
 	New()
+		..()
 		dummyHolder = new()
 		ability = new()
 		dummyHolder.abilities += ability
@@ -1503,6 +1495,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	abstract = 0
 
 	New()
+		..()
 		template = new /obj/critter/domestic_bee
 		stattype = /obj/critter/domestic_bee
 
@@ -1546,7 +1539,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 					stattype = null
 					template = temp
 				else
-					boutput(usr, "<span style=\"color:red\">Loading failed.</span>")
+					boutput(usr, "<span class='alert'>Loading failed.</span>")
 			if ("spawn_text")
 				spawn_text = configurer.getText("spawn text", spawn_text)
 		configurer.sound_router(list("abilconf" = which), "abilconf", "spawn_sound", src, "spawn_sound")
@@ -1605,15 +1598,15 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		for (var/mob/living/M in view(7, C))
 			affected += M
 		var/curr_W = lightning_wattage / mobs_struck
-		while (strike > 0 && affected.len)
+		while (strike > 0 && length(affected))
 			strike--
 			var/mob/M = pick(affected)
 			arcFlash(C, M, curr_W)
 			affected -= M
 			previous += M
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (chain_depth > 0)
-				sleep(2)
+				sleep(0.2 SECONDS)
 				curr_W /= 2
 				chain_depth--
 				var/previous_copy = previous.Copy()
@@ -1664,9 +1657,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	var/static/list/presets = list("Alien" = "alien", "Cat" = "cat1", "Chicken" = "chicken", "Darkness" = "darkness", "Death" = "death", "Floating Eye" = "floateye", "Killer Tomato" = "ktomato" ,\
 "Ice Spider" = "icespider", "Ice Spider Baby" = "babyicespider", "Ice Spider Queen" = "gianticespider", "Lion" = "lion",\
 "Man Eater" = "maneater", "Martian" = "martian", "Martian (psychic)" = "martianP", "Martian (sapper)" = "martianSP", "Martian (soldier)" = "martianS", "Martian (warrior)" = "martianW", "Mouse" = "mouse",\
-"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", "TURD" = "TURDS", \
-"Weird Thing" = "ancientrobot", "Wendigo" = "wendigo",\
-"Wendigo King" = "wendigoking", "Zombie" = "zombie", "Zombie (science)" = "scizombie", "Zombie (security)" = "seczombie", "cancel" = "cancel")
+"Mutant" = "blobman", "Plasma Spore" = "spore", "Roach" = "roach", "Spider" = "spider", "Town Guard" = "townguard", \
+"Weird Thing" = "ancientrobot", "Brullbar" = "brullbar",\
+"Brullbar King" = "brullbarking", "Zombie" = "zombie", "Zombie (science)" = "scizombie", "Zombie (security)" = "seczombie", "cancel" = "cancel")
 	var/static/list/ability_cache = list()
 	var/static/list/death_cache = list()
 	var/static/list/sound_presets = list("Bang" = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', "Beep 1" = 'sound/misc/ancientbot_beep1.ogg', "Beep 2" = 'sound/misc/ancientbot_beep2.ogg', "Beep 3" = 'sound/misc/ancientbot_beep3.ogg', "'Beware coward'" = 'sound/voice/MEbewarecoward.ogg',\
@@ -1680,7 +1673,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 "Glitch 6" = 'sound/machines/glitch2.ogg', "Glitch 7" = 'sound/machines/glitch3.ogg', "Glitch 8" = 'sound/machines/glitch4.ogg', "Glitch 9" = 'sound/machines/glitch5.ogg', "Goose Honk" = 'sound/voice/animal/goose.ogg',\
 "Groan 1" = 'sound/voice/Zgroan1.ogg', "Groan 2" = 'sound/voice/Zgroan2.ogg', "Groan 3" = 'sound/voice/Zgroan3.ogg', "Groan 4" = 'sound/voice/Zgroan4.ogg',\
 "Growl" = 'sound/voice/animal/YetiGrowl.ogg', "Hiss" = 'sound/voice/animal/cat_hiss.ogg', "'I hunger'" = 'sound/voice/MEhunger.ogg', "'I live'" = 'sound/voice/MEilive.ogg', "Meow" = 'sound/voice/animal/cat.ogg', "Punch 1" = 'sound/impact_sounds/Generic_Punch_2.ogg', "Punch 2" = 'sound/impact_sounds/Generic_Hit_1.ogg',\
-"Punch 3" = 'sound/impact_sounds/Generic_Punch_1.ogg', "Roar 1" = 'sound/voice/animal/wendigo_roar.ogg', "Roar 2" = 'sound/voice/animal/wendigo_scream.ogg', "Roar 3" = 'sound/voice/MEraaargh.ogg', "Roar (distant)" = 'sound/effects/mag_pandroar.ogg', "Robot gib" = 'sound/impact_sounds/Machinery_Break_1.ogg',\
+"Punch 3" = 'sound/impact_sounds/Generic_Punch_1.ogg', "Roar 1" = 'sound/voice/animal/brullbar_roar.ogg', "Roar 2" = 'sound/voice/animal/brullbar_scream.ogg', "Roar 3" = 'sound/voice/MEraaargh.ogg', "Roar (distant)" = 'sound/effects/mag_pandroar.ogg', "Robot gib" = 'sound/impact_sounds/Machinery_Break_1.ogg',\
 "'Run coward'" = 'sound/voice/MEruncoward.ogg', "Shock 1" = 'sound/effects/electric_shock.ogg', "Shock 2" = 'sound/effects/elec_bzzz.ogg', "Shock 3" = 'sound/effects/elec_bigzap.ogg', "Splat" = 'sound/impact_sounds/Slimy_Splat_1.ogg', \
 "Thunder" = 'sound/effects/thunder.ogg')
 
@@ -1748,7 +1741,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 		return copytext(typetext, last)
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		if (href_list["name"])
 			template.name = getText("name", template.name)
 		else if (href_list["desc"])
@@ -1919,7 +1912,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			F << null
 			F.ImportText("/", file2text(target))
 			if (!F)
-				boutput(usr, "<span style=\"color:red\">Import failed.</span>")
+				boutput(usr, "<span class='alert'>Import failed.</span>")
 			else
 				var/datum/sandbox/S = new()
 				template = new()
@@ -1932,15 +1925,15 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			if (!(template.name in critter_creator_controller.activeCritterTypes))
 				critter_creator_controller.activeCritterTypes += template.name
 			critter_creator_controller.activeCritterTypes[template.name] = template.clone()
-			boutput(usr, "<span style=\"color:blue\">Critter current state saved as [template.name]</span>")
+			boutput(usr, "<span class='notice'>Critter current state saved as [template.name]</span>")
 		else if (href_list["roundload"])
 			if (critter_creator_controller.activeCritterTypes.len)
 				var/cname = input("Which critter?", "Which critter?", null) in critter_creator_controller.activeCritterTypes
 				var/obj/critter/custom/CR = critter_creator_controller.activeCritterTypes[cname]
 				template = CR.clone()
-				boutput(usr, "<span style=\"color:blue\">Loaded [template.name].</span>")
+				boutput(usr, "<span class='notice'>Loaded [template.name].</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">Nothing saved yet.</span>")
+				boutput(usr, "<span class='alert'>Nothing saved yet.</span>")
 
 		sound_router(href_list, "sounds", "anger_sound", template, "anger_sound")
 		sound_router(href_list, "sounds", "chase_sound", template, "chase_sound")
@@ -1987,17 +1980,17 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/show_interface(var/mob/M)
 		if (!template)
 			create_template()
-		var/output = "<html><head><style>"
-		output += {"
-body { font-family: monospace; white-space: pre-wrap; font-size: 0.5em; }
-table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; }
-tr { border:none; }
-td { border:none; vertical-align: top; }
-th.half, td.half { width: 50%; }
-td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
-.subtitle { font-size: 1.2em; font-weight: bold; }
-.attribute-name { font-weight: bold; }
-.active { font-weight: bold; }
+		var/output = {"
+	<style type='text/css'>
+		body { font-family: Consolas, monospace; white-space: pre-wrap; }
+		table { width: 100%; text-align: left; border: none; border-spacing: 0; border-collapse: collapse; font-size: 110%; }
+		tr { border:none; }
+		td { border:none; vertical-align: top; }
+		th.half, td.half { width: 50%; }
+		td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
+		.subtitle { font-size: 1.2em; font-weight: bold; }
+		.attribute-name { font-weight: bold; }
+		.active { font-weight: bold; }
 		"}
 		output += "</style></head><body>"
 		output += "<table><tr><td colspan='2' class='title'>Critter creation kit</td></tr>"
@@ -2113,7 +2106,7 @@ td.title { font-size: 1.4em; font-weight: bold; text-align: center; }
 
 /client/proc/critter_creator_debug()
 	set name = "Critter Creator (WIP)"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set hidden = 0
 
 	var/datum/critterCreator/CR = critter_creator_controller.getCreator(src.mob)

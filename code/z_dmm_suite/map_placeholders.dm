@@ -6,7 +6,7 @@
 /obj/dmm_suite/comment
 	icon = 'icons/effects/mapeditor.dmi'
 	icon_state = "comment"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	layer = FLY_LAYER+1
 	var/coordinates
@@ -15,12 +15,13 @@
 		. = ..()
 		// Must assign at runtime so initial() != runtime when saving
 		icon = null
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			qdel(src)
 
 //-- Used in generating turf underlay stacks -----
 turf/dmm_suite/underlay
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 
 //-- Fills maps when writing with IGNORE_TURFS ---
@@ -29,6 +30,7 @@ turf/dmm_suite/clear_turf
 	icon_state = "clear_turf"
 	layer = FLY_LAYER
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)
 //-- Fills maps when writing with IGNORE_AREAS ---
 area/dmm_suite/clear_area
@@ -36,4 +38,5 @@ area/dmm_suite/clear_area
 	icon_state = "clear_area"
 	layer = FLY_LAYER
 	New()
+		SHOULD_CALL_PARENT(FALSE)
 		qdel(src)

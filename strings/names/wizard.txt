@@ -1,34 +1,35 @@
-Arry Potter
-Merlin Houdini
-Prof. Pompous
-Blackwolf Pissbeard
-Scatomancer
-Waldo the Crafty
-Arthur Pendragon
-Elminster Dorkwood
-Ricfire Darkeyes
-Leoros Loyalar
-Jenkem Wavedonk
-Jamster Serpenthelm
-Shaaver Droverson
-Xanmorn Trannyth
-Wilfire Loyalar
-Lord Doomeshite
-Fredrick Fingermage
-Hehi M'goku
-Penwick Newtlips 
-Bilbo Fnaghns 
-Traian Arcantoble
-Petlamin Goldweaver
-Adoroar Shrumpus 
-Shiteiros Dicksbane
-Davros Soldshort
-Udolamin Urthadar
-Davward Pegason
-Sharos Shieldheart
-Cruros Tumblebelly
-Norril Duskwalker
-Seafalcon Chandler
-Zanneiros Cupshigh
-Pankul Shortcloak
-Handsome Pete
+names@=
+	Arry Potter
+	Merlin Houdini
+	Prof. Pompous
+	Blackwolf Pissbeard
+	Scatomancer
+	Waldo the Crafty
+	Arthur Pendragon
+	Elminster Dorkwood
+	Ricfire Darkeyes
+	Leoros Loyalar
+	Jenkem Wavedonk
+	Jamster Serpenthelm
+	Shaaver Droverson
+	Xanmorn Trannyth
+	Wilfire Loyalar
+	Lord Doomeshite
+	Fredrick Fingermage
+	Hehi M'goku
+	Penwick Newtlips
+	Bilbo Fnaghns
+	Traian Arcantoble
+	Petlamin Goldweaver
+	Adoroar Shrumpus
+	Shiteiros Dicksbane
+	Davros Soldshort
+	Udolamin Urthadar
+	Davward Pegason
+	Sharos Shieldheart
+	Cruros Tumblebelly
+	Norril Duskwalker
+	Seafalcon Chandler
+	Zanneiros Cupshigh
+	Pankul Shortcloak
+	Handsome Pete

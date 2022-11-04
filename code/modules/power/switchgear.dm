@@ -28,7 +28,7 @@
 
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 /obj/machinery/power/switchgear/attack_hand(mob/user)
 	add_fingerprint(user)
@@ -37,12 +37,12 @@
 		return
 
 	if (open)
-		interact(user)
+		interacted(user)
 	else
 		if (locked)
-			boutput(user, "<span style=\"color:red\">The access panel is locked.</span>")
+			boutput(user, "<span class='alert'>The access panel is locked.</span>")
 		else
-			boutput(user, "<span style=\"color:blue\">You open the access panel.</span>")
+			boutput(user, "<span class='notice'>You open the access panel.</span>")
 			// todo: update icon to open state
 			open = 1
 			icon_state = initial(icon_state)
@@ -51,25 +51,24 @@
 	if(istype(W, /obj/item/card/id))
 		if (src.allowed(user))
 			if (src.open)
-				boutput(user, "<span style=\"color:red\">You need to close the panel first.</span>")
+				boutput(user, "<span class='alert'>You need to close the panel first.</span>")
 				return
 			src.locked = !src.locked
-			boutput(user, "<span style=\"color:blue\">You [src.locked ? "lock" : "unlock"] the switchgear access panel.</span>")
+			boutput(user, "<span class='notice'>You [src.locked ? "lock" : "unlock"] the switchgear access panel.</span>")
 		else
-			boutput(user, "<span style=\"color:red\">Access denied.</span>")
+			boutput(user, "<span class='alert'>Access denied.</span>")
 	else
 		return ..(W, user)
 
-/obj/machinery/power/switchgear/proc/interact(mob/user)
+/obj/machinery/power/switchgear/proc/interacted(mob/user)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			user.machine = null
-			user.Browse(null, "window=switchgear")
-			return
+	if ( (!in_interact_range(src, user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=switchgear")
+		return
 
 
-	user.machine = src
+	src.add_dialog(user)
 	var/t = "<TT><B>Switchgear Control</B><BR><A href='?src=\ref[src];close=1'>Close Panel</A><HR>"
 
 	if(!powernet)
@@ -108,31 +107,31 @@
 
 /obj/machinery/power/switchgear/Topic(href, href_list)
 	..()
-	if ((usr.contents.Find(src) || ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr)))
+	if ((usr.contents.Find(src) || ((BOUNDS_DIST(src, usr) == 0) && istype(src.loc, /turf))) || (isAI(usr)))
 		if( href_list["set_main"] )
-			var/value = text2num(href_list["set_main"])
+			var/value = text2num_safe(href_list["set_main"])
 			mainsupply = value
 			src.updateDialog()
 			return
 		if( href_list["set_apc"] )
 			var/obj/machinery/power/apc/A = locate(href_list["set_apc"])
-			if (A) A.circuit_disabled = min(max(0, text2num(href_list["circuit_disabled"])), 1)
+			if (A) A.circuit_disabled = clamp(text2num_safe(href_list["circuit_disabled"]), 0, 1)
 			// todo: messing with the APC was a hack, need to have the APCs check the switchgear somehow
 			src.updateDialog()
 			return
 		if( href_list["close"] )
 			if (isAI(usr))
-				boutput(usr, "<span style=\"color:red\">You'd close the panel, if only you had hands.</span>")
+				boutput(usr, "<span class='alert'>You'd close the panel, if only you had hands.</span>")
 				return
 			usr.Browse(null, "window=switchgear")
-			usr.machine = null
+			src.remove_dialog(usr)
 			src.open = 0
 			icon_state = "c_unpowered"
 			// update icon to closed state
 			return
 	else
 		usr.Browse(null, "window=switchgear")
-		usr.machine = null
+		src.remove_dialog(usr)
 
 /obj/machinery/power/switchgear/process()
 	if(!(status & (NOPOWER|BROKEN)) )
@@ -151,6 +150,6 @@
 				icon_state = initial(icon_state)
 				status &= ~NOPOWER
 			else
-				SPAWN_DBG(rand(0, 15))
+				SPAWN(rand(0, 15))
 				src.icon_state = "c_unpowered"
 				status |= NOPOWER

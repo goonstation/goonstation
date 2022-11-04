@@ -12,7 +12,7 @@ var/global/the_automaton = null
 	aggressive = 0
 	defensive = 0
 	wanderer = 0
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.5
@@ -32,7 +32,7 @@ var/global/the_automaton = null
 
 	New()
 		..()
-		SPAWN_DBG (10)
+		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
 
@@ -51,10 +51,10 @@ var/global/the_automaton = null
 		atkcarbon = 1
 		atksilicon = 1
 		wanderer = 1
-		opensdoors = 1
+		opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 
 	CritterAttack(mob/M)
-		playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		..()
 
 	process()
@@ -63,21 +63,21 @@ var/global/the_automaton = null
 		if (!alive)
 			return
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
 			if (!src.muted)
-				src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
+				src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 			if (!src.muted)
-				src.visible_message("<span style=\"color:red\"><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
+				src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_spaz.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			spin()
 
 		if ((src.aggressive || prob(6)) && locate(/obj/critter/domestic_bee) in view(7,src))
 			for (var/obj/critter/domestic_bee/moonbeeMaybe in view(7, src))
 				if (moonbeeMaybe.desc == "A moon bee.  It's like a regular space bee, but it has a peculiar gleam in its eyes...") //Because bee names are customizable, but desc isn't!
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("points at", "stares at", "gesticulates at", "madly gestures towards")] [moonbeeMaybe]!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> [pick("points at", "stares at", "gesticulates at", "madly gestures towards")] [moonbeeMaybe]!</span>")
 					if (!saw_moon_bee)
 						saw_moon_bee = 1
 
@@ -88,23 +88,23 @@ var/global/the_automaton = null
 
 					if (moonbeeMaybe.alive && prob(75))
 						if (!moonbeeMaybe.muted)
-							moonbeeMaybe.visible_message("<span style=\"color:red\"><b>[moonbeeMaybe]</b> buzzes [pick("grumpily","in a confused manner", "excitedly")] at [src]!</span>")
+							moonbeeMaybe.visible_message("<span class='alert'><b>[moonbeeMaybe]</b> buzzes [pick("grumpily","in a confused manner", "excitedly")] at [src]!</span>")
 
 					return
 
 				else if (moonbeeMaybe.desc == "A sun bee.  It's like a regular space bee, but it has a look of fiery passion.  Passion for doing bee stuff.") //Oh, it's the sun bee
 					if (src.aggressive)
-						src.visible_message("<span style=\"color:red\"><b>[src]</b> sees [moonbeeMaybe] and seems to calm down. Phew!</span>")
+						src.visible_message("<span class='alert'><b>[src]</b> sees [moonbeeMaybe] and seems to calm down. Phew!</span>")
 						src.aggressive = 0
 						src.attacking = 0
 						src.atkcarbon = 0
 						src.atksilicon = 0
 					saw_moon_bee = 2
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("points at", "stares at", "gesticulates at", "madly gestures towards")] [moonbeeMaybe]!</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> [pick("points at", "stares at", "gesticulates at", "madly gestures towards")] [moonbeeMaybe]!</span>")
 
 					if (moonbeeMaybe.alive && prob(75))
 						if (!moonbeeMaybe.muted)
-							moonbeeMaybe.visible_message("<span style=\"color:red\"><b>[moonbeeMaybe]</b> buzzes [pick("grumpily","in a confused manner", "excitedly")] at [src]!</span>")
+							moonbeeMaybe.visible_message("<span class='alert'><b>[moonbeeMaybe]</b> buzzes [pick("grumpily","in a confused manner", "excitedly")] at [src]!</span>")
 
 					return
 
@@ -117,15 +117,15 @@ var/global/the_automaton = null
 				M1 = pick(mobsnearby)
 			if (M1 && prob(50)) // do we see anyone
 				if (!src.muted)
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> stares at [M1].</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> stares at [M1].</span>")
 			else
 				var/area/current_loc = get_area(src)
 				switch (current_loc.type)
 					if (/area/solarium)
 
-						src.dir = 4
+						src.set_dir(4)
 						if (!src.muted)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> stares into the sun.</span>")
+							src.visible_message("<span class='alert'><b>[src]</b> stares into the sun.</span>")
 					if (/area/station/engine/core)
 						if (!admiring_target)
 							for (var/obj/machinery/power/generatorTemp/G in range(7, src))
@@ -133,16 +133,16 @@ var/global/the_automaton = null
 								break
 						var/obj/machinery/power/generatorTemp/G = admiring_target
 						if (istype(G) && G.lastgenlev >= 26)
-							src.dir = get_dir(src, G)
-							src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("stares","gazes","glares","looks")] [pick("alluringly", "enticingly", "lovingly", "fanatically", "zealously", "warmly", "obediently", "calmly")] at the [G.name].</span>")
+							src.set_dir(get_dir(src, G))
+							src.visible_message("<span class='alert'><b>[src]</b> [pick("stares","gazes","glares","looks")] [pick("alluringly", "enticingly", "lovingly", "fanatically", "zealously", "warmly", "obediently", "calmly")] at the [G.name].</span>")
 
 
 	proc/spin()
 		if (!src.muted)
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
-		src.dir = pick(alldirs)
+			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
+		src.set_dir(pick(alldirs))
 
-	proc/inserted_key()
+	proc/inserted_key(mob/user)
 		switch (keycount)
 			if (2)
 				for (var/mob/M in range(5))
@@ -156,8 +156,13 @@ var/global/the_automaton = null
 				for (var/mob/M in range(5))
 					M.flash(3 SECONDS)
 				random_events.force_event("Solar Flare","Solarium Event (6 keys)")
+				var/ircmsg[] = new()
+				ircmsg["key"] = user.key
+				ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
+				ircmsg["msg"] = "inserted the 6th key into the Automaton and began the Solar Flare event at [round(ticker.round_elapsed_ticks / 600)] minutes into the round."
+				ircbot.export("admin", ircmsg)
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
+	attackby(obj/item/W, mob/living/user)
 		if (!alive)
 			return ..()
 		if (aggressive)
@@ -167,90 +172,90 @@ var/global/the_automaton = null
 
 			if(K.dodgy)
 				//Oh, you've done it now.
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-				user.changeStatus("stunned", 50)
+				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then <B>forcefully grabs [user]!</B>.</span>")
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+				user.changeStatus("stunned", 5 SECONDS)
 				user.canmove = 0
 				user.anchored = 1
 				user.set_loc(src.loc)
 				K.burn_possible = 1
-				SPAWN_DBG(2 SECONDS)
-					src.visible_message("<span style=\"color:red\"><B>[src] forces [user] inside one of the keyholes!</B>.</span>")
+				SPAWN(2 SECONDS)
+					src.visible_message("<span class='alert'><B>[src] forces [user] inside one of the keyholes!</B>.</span>")
 					user.implode()
 					K.combust()
 				return
 
 			if (keycount >= AUTOMATON_MAX_KEYS)
-				boutput(user, "<span style=\"color:red\"><b>[src]</b> ignores you.  Perhaps the time for that has passed?</span>")
+				boutput(user, "<span class='alert'><b>[src]</b> ignores you.  Perhaps the time for that has passed?</span>")
 				return
 
-			user.visible_message("<span style=\"color:red\">[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
+			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
 
 			if (istype(W, /obj/item/device/key/skull) && W.icon_state == "bloodyskull")
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a while, then hands it back.  It doesn't seem to want it in the state it's in.</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.  It doesn't seem to want it in the state it's in.</span>")
 				return
 
-			if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			if (istype(W, /obj/item/device/key/generic))
+				user.visible_message("<span class='alert'><b>[src]</b> studies [src]'s open hand for a moment, then looks disappointed.</span>", "<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back. Maybe this key isn't special enough?</span>")
 				return
 
 			if (istype(W, /obj/item/device/key/cheget)) //I don' like yer new-fangled mumbo-jumbo
 				user.u_equip(W)
 				W.dropped(user)
-				W.loc = src
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> takes \the [W] and studies it intently for a moment.</span>")
-				sleep(30)
+				W.set_loc(src)
+				src.visible_message("<span class='alert'><b>[src]</b> takes \the [W] and studies it intently for a moment.</span>")
+				sleep(3 SECONDS)
 				if (!got_cheget_key)
 					got_cheget_key = 1
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
-					playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-					W.loc = src.loc
+					src.visible_message("<span class='alert'><B>[src]</B> clacks angrily and throws \the [W] at [user]!</span>")
+					playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+					W.set_loc(src.loc)
 					W.throw_at(user, 20, 2)
 				else
-					src.visible_message("<span style=\"color:red\"><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")
-					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-					var/obj/item/raw_material/scrap_metal/scrapmetal = unpool(/obj/item/raw_material/scrap_metal)
+					src.visible_message("<span class='alert'><B>[src]</B> makes a loud ratcheting noise and crumples up \the [W]!</span>")
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+					var/obj/item/raw_material/scrap_metal/scrapmetal = new /obj/item/raw_material/scrap_metal
 					scrapmetal.set_loc(src.loc)
 					qdel(W)
 				return
 
 			if (istype(W, /obj/item/device/key/filing_cabinet))
-				boutput(user, "<span style=\"color:red\"><B>[src]</B> ignores you. This may be related to their lack of circular key holes.")
+				boutput(user, "<span class='alert'><B>[src]</B> ignores you. This may be related to their lack of circular key holes.")
 				return
 
 			if (istype(W, /obj/item/device/key/hospital))
-				user.visible_message("<span style=\"color:red\"><b>[src]</b> studies [src]'s open hand for a moment, then looks disappointed.</span>", "<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe it's not yet time?</span>")
+				user.visible_message("<span class='alert'><b>[src]</b> studies [src]'s open hand for a moment, then looks disappointed.</span>", "<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe it's not yet time?</span>")
 				return
 
 			//Normal keys below
 			if (dd_hasprefix(ckey(W.name), "iridium"))
 				if (keycount < (AUTOMATON_MAX_KEYS-1))
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe it's not yet time?</span>")
+					src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe it's not yet time?</span>")
 				else
 					keycount = AUTOMATON_MAX_KEYS
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
-					playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+					src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
+					playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+					playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 					qdel(W)
-					sleep(5)
-					playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-					sleep(8)
-					src.visible_message("<span style=\"color:red\"><b>[src]</b> twitches before locking into a pose of contemplation.  Its hand held before it, as if reading from a text.</span>")
+					sleep(0.5 SECONDS)
+					playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+					sleep(0.8 SECONDS)
+					src.visible_message("<span class='alert'><b>[src]</b> twitches before locking into a pose of contemplation.  Its hand held before it, as if reading from a text.</span>")
 
 			else if (dd_hasprefix(ckey(W.name), "lead"))
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe the material is off?</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, then hands it back.  Maybe the material is off?</span>")
 				return
 
 			else if (dd_hasprefix(ckey(W.name), "solar"))
 				keycount = AUTOMATON_MAX_KEYS
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into a central key hole in its chest.</span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+				playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 				qdel(W)
-				sleep(5)
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-				sleep(8)
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> makes a curious sign in the air. Huh.</span>")
+				sleep(0.5 SECONDS)
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+				sleep(0.8 SECONDS)
+				src.visible_message("<span class='alert'><b>[src]</b> makes a curious sign in the air. Huh.</span>")
 
 				for (var/mob/M in range(5))
 					M.flash(3 SECONDS)
@@ -262,75 +267,71 @@ var/global/the_automaton = null
 					Sun.icon_state = "sun"
 					Sun.desc = "Hey, it looks better again!"
 
-				sleep(8)
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> tips over.</span>")
+				sleep(0.8 SECONDS)
+				src.visible_message("<span class='alert'><b>[src]</b> tips over.</span>")
 				src.health = 0
 				src.CritterDeath() // rip
 
 
 			else
 				keycount = min(keycount+1, AUTOMATON_MAX_KEYS-1)
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, before secreting it away into one of many key holes in its chest.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
-				playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+				src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a moment, before secreting it away into one of many key holes in its chest.</span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
+				playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 				qdel (W)
-				sleep(5)
-				inserted_key()
+				sleep(0.5 SECONDS)
+				inserted_key(user)
 
-				playsound(src.loc, "sound/misc/automaton_spaz.ogg", 60, 1)
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime) && keycount < AUTOMATON_MAX_KEYS)
-			user.visible_message("<span style=\"color:red\">[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
+				playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 60, 1)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pie/lime))
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
-			if (keycount < (AUTOMATON_MAX_KEYS-1) && !pied)
-				keycount++
-				inserted_key()
-				pied = 1
-
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> studies [W] intently for a moment, before secreting it away into a pie-shaped hole in its chest. How did you not notice that before?</span>")
-			playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 50, 1)
-			qdel (W)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/pizza) && W.name == "cheese keyzza") // vOv
+			src.visible_message("<span class='alert'><b>[src]</b> studies [W] intently for a while, then hands it back.</span>")
+			return
 
 		else if (istype(W, /obj/item/skull))
 			if (keycount != AUTOMATON_MAX_KEYS)
-				user.visible_message("<span style=\"color:red\"><b>[src]</b> ignores [user].  Perhaps it's not time for that?</span>",\
-				"<span style=\"color:red\"><b>[src]</b> ignores you.  Perhaps it's not time for that?</span>")
+				user.visible_message("<span class='alert'><b>[src]</b> ignores [user].  Perhaps it's not time for that?</span>",\
+				"<span class='alert'><b>[src]</b> ignores you.  Perhaps it's not time for that?</span>")
 				return
 
 			if (!istype(W, /obj/item/skull/crystal) || W.icon_state != "skull_crystal")
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> holds [W] out for a moment, staring into its empty face, then hands it back </span>")
+				src.visible_message("<span class='alert'><b>[src]</b> holds [W] out for a moment, staring into its empty face, then hands it back </span>")
 				return
 
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> holds [W] out, staring into its empty eye sockets.<br>Alas, poor Yorick?</span>")
+			src.visible_message("<span class='alert'><b>[src]</b> holds [W] out, staring into its empty eye sockets.<br>Alas, poor Yorick?</span>")
 			qdel(W)
 			//todo: good ending???? egg ending????
 
 		else if (istype(W, /obj/item/iomoon_key))
-			user.visible_message("<span style=\"color:red\"><b>[src]</b> totally ignores [user]. Maybe this is the wrong puzzle for [W] or something, sheesh.</span>",\
-			"<span style=\"color:red\">Okay, no. Good thought, but this is totally the wrong puzzle for that.</span>")
+			user.visible_message("<span class='alert'><b>[src]</b> totally ignores [user]. Maybe this is the wrong puzzle for [W] or something, sheesh.</span>",\
+			"<span class='alert'>Okay, no. Good thought, but this is totally the wrong puzzle for that.</span>")
 
 		else if (istype(W, /obj/item/alchemy/stone))
-			src.visible_message("<span style=\"color:red\">[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
+			src.visible_message("<span class='alert'>[src] studies [W] intently. It looks impressed, but hands [W] back. Perhaps it's not the right time for this yet?</span>")
 
 		#ifdef SECRETS_ENABLED
 		else if (istype(W, /obj/item/onyxphoto))
 			if (!W:used)
-				src.visible_message("<span style=\"color:blue\"><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")
+				src.visible_message("<span class='notice'><b>[src]</b> studies [W] intently, then hands it back after a short pause.</span>")
 
 				W:used = 1
 				W.name = "empty photo"
 				W.desc = "The key seems to be gone from the photo."
 				if (keycount < (AUTOMATON_MAX_KEYS-1))
 					keycount++
-					inserted_key()
-					playsound(src.loc, "sound/musical_instruments/Gong_Rumbling.ogg", 60, 1)
+					inserted_key(user)
+					playsound(src.loc, 'sound/musical_instruments/Gong_Rumbling.ogg', 60, 1)
 			else
-				boutput(user, "<span style=\"color:red\">[src] no longer seems interested in [W].</span>")
+				boutput(user, "<span class='alert'>[src] no longer seems interested in [W].</span>")
 		#endif
 
 		else if (istype(W, /obj/item/space_thing)) // if I'm gunna make a weird widget it may as well have some interaction with the automaton
 			var/obj/item/space_thing/ST = W
 			if (ST.icon_state == "thing")
-				src.visible_message("<span style=\"color:red\">[src] studies [ST] for a moment. It rotates it, and then hands it back.</span>")
+				src.visible_message("<span class='alert'>[src] studies [ST] for a moment. It rotates it, and then hands it back.</span>")
 				ST.icon_state = "thing2"
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
@@ -351,37 +352,37 @@ var/global/the_automaton = null
 						src.sun_spin += 100
 						DEBUG_MESSAGE("<B>HAINE DEBUG:</b> spin now [src.sun_spin]")
 			else
-				user.visible_message("<span style=\"color:red\">[src] studies [ST] for a moment. It hands it back.</span>")
+				user.visible_message("<span class='alert'>[src] studies [ST] for a moment. It hands it back.</span>")
 
 		else if (istype(W, /obj/item/book_kinginyellow))
 			if (keycount < AUTOMATON_MAX_KEYS || derelict_mode)
-				user.visible_message("<span style=\"color:red\"><b>[src]</b> ignores [user]'s attempts to hand over the book, even if \he waves it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>",\
-				"<span style=\"color:red\"><b>[src]</b> ignores your attempts to hand over the book, even if you wave it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>")
+				user.visible_message("<span class='alert'><b>[src]</b> ignores [user]'s attempts to hand over the book, even if \he waves it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>",\
+				"<span class='alert'><b>[src]</b> ignores your attempts to hand over the book, even if you wave it right in its face and get all obnoxious about it.  Maybe this isn't the right time?</span>")
 				return
 
-			user.visible_message("<span style=\"color:red\">[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> appears to read from [W].</span>")
+			user.visible_message("<span class='alert'>[user] hands [W] to [src]!</span>", "You hand [W] to [src].")
+			src.visible_message("<span class='alert'><b>[src]</b> appears to read from [W].</span>")
 			user.drop_item()
 			W.set_loc(src)
-			sleep(10)
+			sleep(1 SECOND)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
-			src.visible_message("<span style=\"color:red\"><b>[src] frantically tears [W] to pieces! What!</b></span>")
+			src.visible_message("<span class='alert'><b>[src] frantically tears [W] to pieces! What!</b></span>")
 			if (narrator_mode)
 				playsound(src.loc, 'sound/vox/ghost.ogg', 60, 1)
 			else
 				playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				var/i = rand(4,8)
 				while (i-- > 0)
-					var/obj/item/paper/tornpaper = unpool(/obj/item/paper)
+					var/obj/item/paper/tornpaper = new /obj/item/paper
 					tornpaper.set_loc(src.loc)
 
 					tornpaper.name = "torn page"
 					tornpaper.info = "A page torn from a book.  Most of the text is illegible."
-					sleep(3)
+					sleep(0.3 SECONDS)
 					tornpaper.combust()
 				keycount = INFINITY
-				world << sound('sound/musical_instruments/Gong_Rumbling.ogg')
+				playsound_global(world, 'sound/musical_instruments/Gong_Rumbling.ogg', 70)
 				//var/obj/overlay/the_sun = locate("the_sun")
 				//if (istype(the_sun))
 				if (the_sun)
@@ -405,16 +406,16 @@ var/global/the_automaton = null
 
 		saw_moon_bee = 2
 		var/turf/target_turf = locate(src.x - 1, src.y, src.z)
-		var/obj/decal/teleport_swirl/swirl = unpool(/obj/decal/teleport_swirl)
+		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
-		playsound(target_turf, "sound/effects/teleport.ogg", 50, 1)
-		SPAWN_DBG(1.5 SECONDS)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
-			pool(swirl)
+			qdel(swirl)
 
-		src.visible_message("<span style=\"color:red\">[src.name] seems to tense up and freeze.</span>")
-		playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
+		src.visible_message("<span class='alert'>[src.name] seems to tense up and freeze.</span>")
+		playsound(src.loc, 'sound/machines/glitch1.ogg', 50, 1)
 		alive = 0
 
 		it_is_okay_to_do_the_endgame_thing = 1
@@ -422,7 +423,7 @@ var/global/the_automaton = null
 			new /obj/the_server_ingame_whoa(target_turf)
 		else
 			new /obj/item/sticker/gold_star(target_turf)
-			src.visible_message("<span style=\"color:red\">[src.name] looks very annoyed. It just wanted to relax!</span>")
+			src.visible_message("<span class='alert'>[src.name] looks very annoyed. It just wanted to relax!</span>")
 /*
 	proc/ending_death()
 
@@ -431,8 +432,8 @@ var/global/the_automaton = null
 		spin()
 		random_events.force_event("Solar Flare","Solarium Event (DEATH)")
 
-		src.visible_message("<span style=\"color:red\">[src.name] staggers!</span>")
-		playsound(src.loc, "sound/machines/glitch1.ogg", 50, 1)
+		src.visible_message("<span class='alert'>[src.name] staggers!</span>")
+		playsound(src.loc, 'sound/machines/glitch1.ogg', 50, 1)
 		spin()
 
 		var/range = 7
@@ -440,56 +441,56 @@ var/global/the_automaton = null
 
 		var/temp_effect_limiter = 7
 		for (var/turf/T in view(range, src))
-			var/T_dist = get_dist(T, src)
+			var/T_dist = GET_DIST(T, src)
 			var/T_effect_prob = 100 * (1 - (max(T_dist-1,1) / range))
 			if (prob(8) && limiter.canISpawn(/obj/effects/sparks))
-				var/obj/sparks = unpool(/obj/effects/sparks)
+				var/obj/sparks = new /obj/effects/sparks
 				sparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS) if (sparks) pool(sparks)
+				SPAWN(2 SECONDS) if (sparks) qdel(sparks)
 
 			for (var/obj/item/I in T)
 				if ( prob(T_effect_prob) )
 					animate_float(I, 5, 10)
 			if (prob(T_effect_prob))
-				SPAWN_DBG(rand(30, 50))
+				SPAWN(rand(30, 50))
 					if (T)
 						playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 40, 0)
-						var/obj/somesparks = unpool(/obj/effects/sparks)
+						var/obj/somesparks = new /obj/effects/sparks
 						somesparks.set_loc(T)
-						SPAWN_DBG(2 SECONDS) if (somesparks) pool(somesparks)
+						SPAWN(2 SECONDS) if (somesparks) qdel(somesparks)
 						var/list/tempEffect
 						if (temp_effect_limiter-- > 0)
 							tempEffect = DrawLine(src, somesparks, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
-						sleep(6)
+						sleep(0.6 SECONDS)
 						for (var/obj/O in tempEffect)
-							pool(O)
-		world << sound('sound/misc/automaton_spaz.ogg')
+							qdel(O)
+		world << sound('sound/misc/automaton_scratch.ogg')
 		sleep (10)
 		world << sound('sound/ambience/spooky/Void_Screaming.ogg')
 		spin()
 		sleep (10)
 		world << sound('sound/ambience/spooky/Void_Wail.ogg')
 		world << sound('sound/effects/thunder.ogg')
-		boutput(world, "<span style=\"color:red\"><tt><b>Something feels terribly, terribly wrong.</b></tt></span>")
+		boutput(world, "<span class='alert'><tt><b>Something feels terribly, terribly wrong.</b></tt></span>")
 		sleep (10)
 		spin()
 
 		for(var/mob/living/carbon/human/H in mobs)
 			animate_float(H, 5, 10)
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				H.flash(3 SECONDS)
 				shake_camera(H, 210, 2)
-			SPAWN_DBG(rand(10,70))
+			SPAWN(rand(10,70))
 				H.emote("scream")
 		var/turf/T = get_turf(src)
-		sleep(1)
+		sleep(0.1 SECONDS)
 		new /obj/effects/void_break(T)
-		src.visible_message("<span style=\"color:red\"><b>[src]</b> shatters! Oh shit!</span>")
+		src.visible_message("<span class='alert'><b>[src]</b> shatters! Oh shit!</span>")
 		new /obj/effects/shockwave(T)
 		new /obj/effects/exposion/smoky(T)
 		src.health = 0
 		src.CritterDeath()
-		sleep(2)
+		sleep(0.2 SECONDS)
 		qdel(src)
 		*/
 

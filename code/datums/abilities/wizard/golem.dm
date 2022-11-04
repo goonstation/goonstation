@@ -5,11 +5,13 @@
 	targeted = 0
 	cooldown = 500
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
 	cooldown_staff = 1
-	voice_grim = "sound/voice/wizard/GolemGrim.ogg"
-	voice_fem = "sound/voice/wizard/GolemFem.ogg"
-	voice_other = "sound/voice/wizard/GolemLoud.ogg"
+	voice_grim = 'sound/voice/wizard/GolemGrim.ogg'
+	voice_fem = 'sound/voice/wizard/GolemFem.ogg'
+	voice_other = 'sound/voice/wizard/GolemLoud.ogg'
+	maptext_colors = list("#fcdf74", "#d75015")
 
 	cast()
 		if(!holder)
@@ -38,15 +40,16 @@
 
 
 		if(!AnItem)
-			boutput(holder.owner, "<span style=\"color:red\">You must be holding a container in your hand.</span>")
+			boutput(holder.owner, "<span class='alert'>You must be holding a container in your hand.</span>")
 			return 1 // No cooldown when it fails.
 
 		if(!TheReagents)
-			boutput(holder.owner, "<span style=\"color:red\">You have no material to convert into a golem.</span>")
+			boutput(holder.owner, "<span class='alert'>You have no material to convert into a golem.</span>")
 			return 1
 
 
-		holder.owner.say("CLAE MASHON")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("CLAE MASHON", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/obj/critter/golem/TheGolem
@@ -60,6 +63,7 @@
 
 		qdel(TheReagents)
 		qdel(AnItem)
-		boutput(holder.owner, "<span style=\"color:blue\">You conjure up [TheGolem]!</span>")
-		holder.owner.visible_message("<span style=\"color:red\">[holder.owner] conjures up [TheGolem]!</span>")
-		playsound(holder.owner.loc, "sound/effects/mag_golem.ogg", 25, 1, -1)
+		boutput(holder.owner, "<span class='notice'>You conjure up [TheGolem]!</span>")
+		logTheThing(LOG_COMBAT, holder.owner, "created a [constructTarget(TheGolem,"combat")] at [log_loc(holder.owner)].")
+		holder.owner.visible_message("<span class='alert'>[holder.owner] conjures up [TheGolem]!</span>")
+		playsound(holder.owner.loc, 'sound/effects/mag_golem.ogg', 25, 1, -1)

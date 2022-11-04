@@ -19,6 +19,7 @@
 
 	var/g_smx
 	var/g_smy
+	do_antag_random_spawns = 0
 
 /datum/generation_marker
 	var/x
@@ -33,9 +34,13 @@
 
 /datum/game_mode/construction/pre_setup()
 	in_setup = 1
-	for (var/mob/new_player/M in mobs)
-		if (M.ready)
-			M.close_spawn_windows()
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
+			player.close_spawn_windows()
+
 	var/datum/job/special/station_builder/C = new /datum/job/special/station_builder()
 	C.limit = -1
 	enabled_jobs += C
@@ -112,14 +117,14 @@
 					new /obj/machinery/door/airlock/external(T)
 			new /area/station/hallway/secondary/construction(T)
 			if (holds_items)
-				if (cx == manx && manufacturers.len)
+				if (cx == manx && length(manufacturers))
 					var/object = pick(manufacturers)
 					manufacturers -= object
 					new object(T)
 				else
 					if (prob(5))
 						var/obj/artifact/lamp/L = new /obj/artifact/lamp(T)
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							L.ArtifactActivated()
 					if (prob(100 / (picks + 1)))
 						new /obj/item/mining_tool(T)
@@ -221,7 +226,7 @@
 			minor_ores += mining_controls.get_ore_from_path(pick(common_ores))
 			minor_ores += mining_controls.get_ore_from_path(pick(rare_ores))
 	var/datum/generation_marker/initial = new
-	logTheThing("debug", null, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
+	logTheThing(LOG_DEBUG, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
 	initial.x = ax
 	initial.y = ay
 	initial.z = 1
@@ -233,23 +238,31 @@
 		tiles -= marker
 		var/turf/T = locate(marker.x, marker.y, marker.z)
 		processing -= T
-		var/turf/simulated/wall/asteroid/AST = new /turf/simulated/wall/asteroid(T)
+		var/turf/simulated/wall/auto/asteroid/AST = new /turf/simulated/wall/auto/asteroid(T)
 		processing += T
 		var/datum/ore/ORE = null
-		switch (rand(1,5))
-			if (3 to 4)
+		switch (rand(1, 5))
+			if (1 to 2)
 				ORE = major_ore
-			if (5)
+			if (3)
 				ORE = pick(minor_ores)
+			else
+				// default
 		if (ORE)
 			AST.ore = ORE
 			AST.hardness += ORE.hardness_mod
 			AST.amount = rand(ORE.amount_per_tile_min,ORE.amount_per_tile_max)
-			var/image/ore_overlay = image('icons/turf/asteroid.dmi',ORE.name)
-			ore_overlay.transform = turn(ore_overlay.transform, pick(0,90,180,-90))
-			ore_overlay.pixel_x += rand(-6,6)
-			ore_overlay.pixel_y += rand(-6,6)
-			AST.overlays += ore_overlay
+			AST.ClearAllOverlays() // i know theres probably a better way to handle this
+			AST.UpdateIcon()
+			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
+			ore_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER // so meson goggle nerds can still nerd away
+			AST.UpdateOverlays(ore_overlay, "ast_ore")
+
+#ifndef UNDERWATER_MAP // We don't want fullbright ore underwater.
+			AST.UpdateOverlays(new /image/fullbright, "fullbright")
+#endif
+
 			ORE.onGenerate(AST)
 			AST.mining_health = ORE.mining_health
 			AST.mining_max_health = ORE.mining_health
@@ -302,7 +315,7 @@
 				M.z = marker.z
 				M.probability = marker.probability * 0.75
 				tiles += M
-	for (var/turf/simulated/wall/asteroid/AST in processing)
+	for (var/turf/simulated/wall/auto/asteroid/AST in processing)
 		AST.space_overlays()
 
 
@@ -407,7 +420,7 @@
 
 /proc/debug_supply_pack()
 	var/thepath = input("Path", "Path", "/datum/supply_packs") as text
-	if (!lentext(thepath))
+	if (!length(thepath))
 		return
 	var/therealpath = text2path(thepath)
 	if (therealpath)

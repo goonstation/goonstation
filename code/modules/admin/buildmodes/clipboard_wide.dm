@@ -15,9 +15,9 @@ Left Mouse Button                      = Paste selected area. Selected tile will
 Right Mouse Button                     = Select area to copy with two clicks<br>
 ***********************************************************"}
 	icon_state = "buildmode11"
-	var/turf/A
-	var/list/clipboard = list()
-	var/copying = 0
+	var/tmp/turf/A
+	var/tmp/list/clipboard = list()
+	var/tmp/copying = 0
 
 	deselected()
 		..()
@@ -29,14 +29,14 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			A = null
 			copying = 0
 			clipboard.len = 0
-			boutput(usr, "<span style=\"color:red\">Reset.</span>")
+			boutput(usr, "<span class='alert'>Reset.</span>")
 			update_button_text("Clipboard empty.")
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!clipboard.len)
 			return
 		if (copying)
-			boutput(usr, "<span style=\"color:red\">Copying, please wait.</span>")
+			boutput(usr, "<span class='alert'>Copying, please wait.</span>")
 			return
 		var/turf/T = get_turf(object)
 		var/tx = T.x
@@ -47,9 +47,9 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			var/turf/TheOneToReplace = locate(tx + CBT.rel_x, ty + CBT.rel_y, tz)
 			if (!TheOneToReplace)
 				continue
-			var/turf/R = new CBT.turf_type(TheOneToReplace)
+			var/turf/R = TheOneToReplace.ReplaceWith(CBT.turf_type, FALSE, TRUE, FALSE, TRUE)
 			R.appearance = CBT.turf_appearance
-			R.dir = CBT.turf_dir
+			R.set_dir(CBT.turf_dir)
 			for (var/obj/O in CBT.objects)
 				O.clone(R)
 			blink(R)
@@ -57,16 +57,16 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (copying)
-			boutput(usr, "<span style=\"color:red\">Copying, please wait.</span>")
+			boutput(usr, "<span class='alert'>Copying, please wait.</span>")
 			return
 		if (!A)
 			A = get_turf(object)
-			boutput(usr, "<span style=\"color:blue\">Corner 1 set.</span>")
+			boutput(usr, "<span class='notice'>Corner 1 set.</span>")
 			update_button_text("Corner 1 set.")
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			update_button_text("Copying...")
 			copying = 1
@@ -74,7 +74,7 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 			var/minx = min(A.x, B.x)
 			var/miny = min(A.y, B.y)
 			var/workgroup = 0
-			SPAWN_DBG(0)
+			SPAWN(0)
 				for (var/turf/Q in block(A,B))
 					var/datum/clipboardTurf/CBT = new()
 					CBT.rel_x = Q.x - minx
@@ -91,8 +91,8 @@ Right Mouse Button                     = Select area to copy with two clicks<br>
 					blink(Q)// NO. NO MORE LAG.
 					if (workgroup > 8)
 						workgroup = 0
-						sleep(1)
-				boutput(usr, "<span style=\"color:blue\">Copying complete!</span>")
+						sleep(0.1 SECONDS)
+				boutput(usr, "<span class='notice'>Copying complete!</span>")
 				update_button_text("Ready to paste.")
 				copying = 0
 				A = null

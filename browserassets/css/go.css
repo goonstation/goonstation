@@ -1,0 +1,29 @@
+* {
+	overflow: hidden;
+}
+
+body{
+	background: #332B1B;
+}
+
+map {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+
+.gridclass {
+	display: grid;
+	width: 595px;
+	height: 595px;
+}
+
+.fit {
+	position: absolute;
+	width: 595px;
+	height: 595px;
+	top: 0;
+	left: 0;
+	grid-column: 1;
+	grid-row: 1;
+}

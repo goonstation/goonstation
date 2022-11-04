@@ -1,0 +1,71 @@
+/**
+* @file
+* @copyright 2020
+* @author ThePotato97 (https://github.com/ThePotato97)
+* @license ISC
+*/
+
+.cloning-console {
+  &__flex {
+    &__table {
+      /* Display & Box Model */
+      position: relative;
+      display: flex;
+      overflow: none;
+      width: 100vw;
+      /* Text Styling */
+      flex-direction: column;
+    }
+    &__head {
+      /* Display & Box Model */
+      display: flex;
+      height: 25px;
+      flex: 0 0 auto;
+      padding: 0 5px;
+      /* Text Styling */
+      font-size: 12px;
+    }
+  }
+  &__head {
+    &__row {
+      /* Display & Box Model */
+      display: flex;
+      flex: 1 1 auto;
+      align-items: center;
+      justify-content: space-between;
+      /* Text Styling */
+      text-transform: uppercase;
+    }
+    &__item {
+      /* Display & Box Model */
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5px;
+    }
+  }
+  &__body {
+    &__row {
+      /* Positioning & Sizing */
+      display: flex;
+      height: 30px;
+      flex: 0 0 auto;
+      align-items: center;
+      justify-content: space-around;
+      /* Text Styling */
+      border-bottom: 2px solid rgba(51, 51, 51, 0.4);
+    }
+    &__item {
+      /* Display & Box Model */
+      display: flex;
+      overflow: hidden;
+      height: 30px;
+      align-items: baseline;
+      justify-content: center;
+      /* Text Styling */
+      text-overflow: ellipsis;
+    }
+  }
+}

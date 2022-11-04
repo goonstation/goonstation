@@ -4,7 +4,7 @@ var/can_pray = 0
 
 /client/proc/become_god(godName as text)
 	set name = "Become God"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 	set desc = "(\"godly name\") Enter a godly name. (Type nothing for a random name)"
 
 	if(!(usr.client in god_list))
@@ -20,8 +20,8 @@ var/can_pray = 0
 				god_name = godName
 
 			boutput(world, "<h2 class='alert'><font color='red'>KNEEL, MORTALS! '[god_name]' LIVES!</font></h2>")
-			world << sound('sound/effects/thunder.ogg', volume = 80)
-			boutput(world, "<span style=\"color:blue\">You may now pray in the Chapel.</span>")
+			playsound_global(world, 'sound/effects/thunder.ogg', 80)
+			boutput(world, "<span class='notice'>You may now pray in the Chapel.</span>")
 			boutput(usr, "You have become a god.")
 
 			can_pray = 1
@@ -35,15 +35,15 @@ var/can_pray = 0
 
 /client/proc/revoke_god()
 	set name = "Revoke God"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 
 	if(usr.client in god_list)
 		god_list -= usr.client
 
 		if(!length(god_list))
 			boutput(world, "<h2 class='alert'><font color='red'>YOU MORTALS HAVE A GOD NO MORE</font></h2>")
-			world << sound('sound/effects/thunder.ogg', volume = 80)
-			boutput(world, "<span style=\"color:blue\">You cannot pray anymore</span>")
+			playsound_global(world, 'sound/effects/thunder.ogg', 80)
+			boutput(world, "<span class='notice'>You cannot pray anymore</span>")
 
 			can_pray = 0
 
@@ -51,7 +51,7 @@ var/can_pray = 0
 
 /client/proc/check_gods()
 	set name = "Check Gods"
-	set category = "Special Verbs"
+	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
 
 	if(!length(god_list))
 		boutput(usr, "There are no gods.")
@@ -81,4 +81,4 @@ var/can_pray = 0
 	boutput(usr, "You pray to [god_name]!")
 
 	for(var/god in god_list)
-		boutput(god, "<span style=\"color:blue\"><B>PRAYER [usr.name]/[usr.key]</B>: [message]</span>")
+		boutput(god, "<span class='notice'><B>PRAYER [usr.name]/[usr.key]</B>: [message]</span>")

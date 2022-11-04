@@ -4,9 +4,6 @@
  * A pathogen microbody identifies the cause of the disease.
  * Most of the real life causes for diseases have been added already.
  * Each microbody defines a specific characteristic for a pathogen:
- * - How fast does the infection spiral out of control on the station (mutativeness)
- * - How bad will the disease eventually evolve? (maliciousness multiplier)
- * - How fast is the evolution of the disease? (mutation speed multiplier)
  * - How powerful is a disease caused by the microbody (stages).
  * - What is a fertile soil to cultivate this pathogen? (growth medium)
  *
@@ -30,13 +27,6 @@ datum/microbody
 
 	// An inverse of rarity. A value of 10 means a ten times relative chance to a value of 1.
 	var/commonness = 10
-
-	// Base mutativeness value for this microbody.
-	var/mutativeness = 6
-
-	// Multiplier for randomly generated maliciousness and mutation speed with this microbody.
-	var/maliciousness_multiplier = 1
-	var/mutation_speed_multiplier = 1
 
 	// The amount of stages a pathogen with this microbody has.
 	// Technically, this means there are less aggressive and more aggressive infections depending on the microbody.
@@ -71,24 +61,27 @@ datum/microbody
 	// The amount of nutrition of each type required per unit of pathogen to continue cultivation.
 	var/amount = 0.07
 
-	disposing()
-		CRASH("ALERT MICROBODY IS BEING DELETED")
+	/// The amount of sequences worth of symptoms the microbody can support. -1 is unlimited
+	var/seqMax = -1
+
+	/// The maximum amount of points that can be spread over the various stats
+	var/maxStats = 100
 
 	disposing()
-		CRASH("ALERT MICROBODY IS BEING DISPOSED")
+		SHOULD_CALL_PARENT(FALSE) //Looks like these should never be deleted.
+		CRASH("ALERT MICROBODY IS BEING DELETED")
+
 
 datum/microbody/virus
 	name = "Virus"
 	singular = "virus"
 	plural = "viruses"
 
-	mutativeness = 15
-	maliciousness_multiplier = 2
-	mutation_speed_multiplier = 3
-
 	stages = 5
 
 	activity = list(1, 5, 20, 30, 40)
+
+	seqMax = 12
 
 	// Grows in eggs.
 	growth_medium = "egg"
@@ -105,13 +98,11 @@ datum/microbody/bacteria
 	singular = "bacterium"
 	plural = "bacteria"
 
-	mutativeness = 6
-	maliciousness_multiplier = 1
-	mutation_speed_multiplier = 1
-
-	activity = list(7, 15, 25, 30, 35)
+	activity = list(30, 30, 30, 30, 30)
 
 	stages = 3
+
+	seqMax = 25
 
 	growth_medium = "bacterialmedium"
 
@@ -127,13 +118,9 @@ datum/microbody/fungi
 	singular = "fungus"
 	plural = "fungi"
 
-	mutativeness = 0
-	maliciousness_multiplier = 2
-	mutation_speed_multiplier = 1
+	stages = 1
 
-	stages = 4
-
-	activity = list(7, 8, 10, 14, 25)
+	activity = list(10, 10, 10, 10, 10)
 
 	growth_medium = "fungalmedium"
 
@@ -142,19 +129,18 @@ datum/microbody/fungi
 
 	uniqueid = 3
 	module_id = "fungi"
+	auto_immunize = 1
 
 datum/microbody/parasite
 	name = "Parasites"
 	singular = "parasite"
 	plural = "parasites"
 
-	mutativeness = 3
-	maliciousness_multiplier = 4
-	mutation_speed_multiplier = 3
-
 	stages = 5
 
-	activity = list(30, 20, 10, 8, 8)
+	activity = list(50, 40, 30, 20, 10)
+
+	seqMax = 18
 
 	growth_medium = "parasiticmedium"
 
@@ -162,8 +148,9 @@ datum/microbody/parasite
 
 	uniqueid = 4
 	module_id = "parasite"
+	auto_immunize = 1
 
-datum/microbody/gmcell
+datum/microbody/gmcell // TODO: I kind of removed mutations so I should really rename this, I guess
 	name = "Great Mutatis cell"
 	singular = "great mutatis cell"
 	plural = "great mutatis cells"
@@ -172,10 +159,6 @@ datum/microbody/gmcell
 	commonness = 2
 
 	activity = list(20, 20, 20, 20, 20)
-
-	mutativeness = 45
-	maliciousness_multiplier = 7
-	mutation_speed_multiplier = 5
 
 	stages = 5
 
@@ -189,4 +172,5 @@ datum/microbody/gmcell
 	module_id = "gmcell"
 
 	nutrients = list("dna_mutagen")
+	auto_immunize = 1
 	amount = 0.35

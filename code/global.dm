@@ -5,6 +5,8 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
+var/global/list/detailed_machine_power = list()
+var/global/list/detailed_machine_power_prev = list()
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -12,10 +14,9 @@ var/global/list/queue_stat_list = list()
 #endif
 
 // dumb, bad
-var/list/extra_resources = list('code/pressstart2p.ttf', 'ibmvga9.ttf', 'inhumanbb.ttf')
+var/list/extra_resources = list('interface/fonts/pressstart2p.ttf', 'interface/fonts/ibmvga9.ttf', 'interface/fonts/xfont.ttf', 'interface/fonts/statusdisp.ttf')
 // Press Start 2P - 6px
 // PxPlus IBM VGA9 - 12px
-//Inhuman BB - 12px
 
 
 // -------------------- GLOBAL VARS --------------------
@@ -26,62 +27,31 @@ var/global
 
 	lagcheck_enabled = 0
 
-	datum/datacore/data_core = null
-	obj/overlay/plmaster = null
-	obj/overlay/slmaster = null
-	obj/overlay/w1master = null
-	obj/overlay/w2master = null
-	obj/overlay/w3master = null
+	vpn_blacklist_enabled = TRUE
 
-	icon/aiIcon = icon('icons/mob/16.dmi',"ai",SOUTH,1) //Used for AI chat icon.
-	icon/roboIcon = icon('icons/mob/16.dmi',"robo",SOUTH,1)
-	icon/headIcon = icon('icons/mob/16.dmi',"head",SOUTH,1)
-	icon/sciIcon = icon('icons/mob/16.dmi',"sci",SOUTH,1)
-	icon/medIcon = icon('icons/mob/16.dmi',"med",SOUTH,1)
-	icon/engIcon = icon('icons/mob/16.dmi',"eng",SOUTH,1)
-	icon/secIcon = icon('icons/mob/16.dmi',"sec",SOUTH,1)
-	icon/qmIcon = icon('icons/mob/16.dmi',"qm",SOUTH,1)
-	icon/civIcon = icon('icons/mob/16.dmi',"civ",SOUTH,1)
-	icon/syndieIcon = icon('icons/mob/16.dmi',"syndie",SOUTH,1)
-	icon/syndiebossIcon = icon('icons/mob/16.dmi',"syndieboss",SOUTH,1)
-	icon/capIcon = icon('icons/mob/16.dmi',"cap",SOUTH,1)
-	icon/rdIcon = icon('icons/mob/16.dmi',"rd",SOUTH,1)
-	icon/mdIcon = icon('icons/mob/16.dmi',"md",SOUTH,1)
-	icon/ceIcon = icon('icons/mob/16.dmi',"ce",SOUTH,1)
-	icon/hopIcon = icon('icons/mob/16.dmi',"hop",SOUTH,1)
-	icon/hosIcon = icon('icons/mob/16.dmi',"hos",SOUTH,1)
-	icon/clownIcon = icon('icons/mob/16.dmi',"clown",SOUTH,1)
+	datum/datacore/data_core = null
 
 	turf/buzztile = null
 
-	//obj/hud/main_hud1 = null
-
-	list/list/by_type = list()
-
-	obj/screen/renderSourceHolder
+	atom/movable/screen/renderSourceHolder
+	obj/overlay/zamujasa/round_start_countdown/game_start_countdown	// Countdown clock for round start
 	list/globalImages = list() //List of images that are always shown to all players. Management procs at the bottom of the file.
 	list/image/globalRenderSources = list() //List of images that are always attached invisibly to all player screens. This makes sure they can be used as rendersources.
 	list/aiImages = list() //List of images that are shown to all AIs. Management procs at the bottom of the file.
-	list/cameras = list()
+	list/aiImagesLowPriority = list() //Same as above but these can wait a bit when sending to clients
 	list/clients = list()
 	list/mobs = list()
-	list/AIs = list() //sorry, quicker loop through when we searching for AIs
-	list/doors = list()
-	list/allcables = list()
-	list/atmos_machines = list() // need another list to pull atmos machines out of the main machine loop and in with the pipe networks
+	list/ai_mobs = list()
 	list/processing_items = list()
+	list/health_update_queue = list()
 	list/processing_fluid_groups = list()
 	list/processing_fluid_spreads = list()
 	list/processing_fluid_drains = list()
 	list/processing_fluid_turfs = list()
-	list/light_generating_fluid_turfs = list()
 	list/warping_mobs = list()
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
-	//list/total_deletes = list() //List of things totally deleted
-	list/critters = list()
-	list/ghost_drones = list()
 	list/muted_keys = list()
 
 	server_start_time = 0
@@ -89,14 +59,17 @@ var/global
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
+	regex/full_url_regex = null
 	force_random_names = 0			// for the pre-roundstart thing
 	force_random_looks = 0			// same as above
 
-	list/health_mon_icons = new/list()
-	list/arrestIconsAll = new/list()
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
 	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
+
+	list/browse_item_icons = list()
+	list/browse_item_clients = list()
+	browse_item_initial_done = 0
 
 	list/rewardDB = list() //Contains instances of the reward datums
 	list/materialRecipes = list() //Contains instances of the material recipe datums
@@ -104,32 +77,23 @@ var/global
 
 	list/factions = list()
 
-	list/lockers_and_crates = list()
-
-	list/traitList = list() //List of trait objects
-
-	//IRC_alerted_keys = list()
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
 	list/random_pod_codes = list() // if /obj/random_pod_spawner exists on the map, this will be filled with refs to the pods they make, and people joining up will have a chance to start with the unlock code in their memory
 
-	list/pods_and_cruisers = list() //things that we want enemy gunbots or turrets etc to target that are not mobs (keep this list small and use it for vehicles mainly)
-
 	list/spacePushList = list()
-
-	list/bad_smoke_list = list()
-
-	list/nervous_mobs = list()
-
-	list/comm_dishes = list()
-
-	list/conveyor_switches = list()
-
-
-	//list/disposed_things_that_dont_work = list()
+	/// All the accessible areas on the station in one convenient place
+	list/station_areas = list()
+	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
+	area_list_is_up_to_date = 0
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
+
+	footstep_extrarange = 0 // lol same (modified hackily in mobs.dm to avoid lag from sound at high player coutns)
+
+	max_sound_range = MAX_SOUND_RANGE_NORMAL
 
 	list/cursors_selection = list("Default" = 'icons/cursors/target/default.dmi',
 	"Red" = 'icons/cursors/target/red.dmi',
@@ -142,150 +106,14 @@ var/global
 	"Animated Rainbow" = 'icons/cursors/target/rainbowanimated.dmi',
 	"Flashing" = 'icons/cursors/target/flashing.dmi',
 	"Minimalistic" = 'icons/cursors/target/minimalistic.dmi',
+	"Flat" = 'icons/cursors/target/flat.dmi',
 	"Small" = 'icons/cursors/target/small.dmi')
 
 	list/hud_style_selection = list("New" = 'icons/mob/hud_human_new.dmi',
 	"Old" = 'icons/mob/hud_human.dmi',
 	"Classic" = 'icons/mob/hud_human_classic.dmi',
 	"Mithril" = 'icons/mob/hud_human_quilty.dmi',
-	"Colorblind" = 'icons/mob/hud_human_new_colorblind.dmi')
-
-	list/customization_styles = list("None" = "none",
-	"Balding" = "balding",
-	"Tonsure" = "tonsure",
-	"Buzzcut" = "cut",
-	"Trimmed" = "short",
-	"Bangs" = "bangs",
-	"Combed" = "combed_s",
-	"Mohawk" = "mohawk",
-	"Mohawk: Fade from End" = "mohawkFT",
-	"Mohawk: Fade from Root" = "mohawkFB",
-	"Mohawk: Stripes" = "mohawkS",
-	"Flat Top" = "flattop",
-	"Pompadour" = "pomp",
-	"Pompadour: Greaser Shine" = "pompS",
-	"Temsik" = "temsik",
-	"Ponytail" = "ponytail",
-	"Mullet" = "long",
-	"Emo" = "emo",
-	"Emo: Highlight" = "emoH",
-	"Bun" = "bun",
-	"Bieber" = "bieb",
-	"Bowl Cut" = "bowl",
-	"Parted Hair" = "part",
-	"Einstein" = "einstein",
-	"Einstein: Alternating" = "einalt",
-	"Clown" = "clown",
-	"Clown: Top" = "clownT",
-	"Clown: Middle Band" = "clownM",
-	"Clown: Bottom" = "clownB",
-	"Draped" = "shoulders",
-	"Bedhead" = "bedhead",
-	"Dreadlocks" = "dreads",
-	"Dreadlocks: Alternating" = "dreadsA",
-	"Afro" = "afro",
-	"Afro: Left Half" = "afroHR",
-	"Afro: Right Half" = "afroHL",
-	"Afro: Top" = "afroST",
-	"Afro: Middle Band" = "afroSM",
-	"Afro: Bottom" = "afroSB",
-	"Afro: Left Side" = "afroSL",
-	"Afro: Right Side" = "afroSR",
-	"Afro: Center Streak" = "afroSC",
-	"Afro: NE Corner" = "afroCNE",
-	"Afro: NW Corner" = "afroCNW",
-	"Afro: SE Corner" = "afroCSE",
-	"Afro: SW Corner" = "afroCSW",
-	"Afro: Tall Stripes" = "afroSV",
-	"Afro: Long Stripes" = "afroSH",
-	"Long Braid" = "longbraid",
-	"Very Long" = "vlong",
-	"Hairmetal" = "80s",
-	"Hairmetal: Faded" = "80sfade",
-	"Glammetal" = "glammetal",
-	"Glammetal: Faded" = "glammetalO",
-	"Kingmetal" = "king-of-rock-and-roll",
-	"Scraggly" = "scraggly",
-	"Fabio" = "fabio",
-	"Right Half-Shaved" = "halfshavedL",
-	"Left Half-Shaved" = "halfshavedR",
-	"Long Half-Shaved" = "halfshaved_s",
-	"High Ponytail" = "spud",
-	"Low Ponytail" = "band",
-	"High Flat Top" = "charioteers",
-	"Double Braids" = "indian",
-	"Shoulder Drape" = "pulledf",
-	"Punky Flip" = "shortflip",
-	"Pigtails" = "pig",
-	"Low Pigtails" = "lowpig",
-	"Mini Pigtails" = "minipig",
-	"Mid-Back Length" = "midb",
-	"Split-Tails" = "twotail",
-	"Double Buns" = "doublebun",
-	"Shimada" = "geisha_s",
-	"Bobcut" = "bobcut",
-	"Bobcut Alt" = "baum_s",
-	"Combed Bob" = "combedbob_s",
-	"Shoulder Length" = "shoulderl",
-	"Shoulder-Length Mess" = "slightlymessy_s",
-	"Pulled Back" = "pulledb",
-	"Choppy Short" = "chop_short",
-	"Long and Froofy" = "froofy_long",
-	"Mermaid" = "mermaid",
-	"Captor" = "sakura",
-	"Sage" = "sage",
-	"Fun Bun" = "fun_bun",
-	"Croft" = "croft",
-	"Disheveled" = "disheveled",
-	"Mid-Length Curl" = "bluntbangs_s",
-	"Long Flip" = "longsidepart_s",
-	"Wavy Ponytail" = "wavy_tail",
-	"Chaplin" = "chaplin",
-	"Selleck" = "selleck",
-	"Watson" = "watson",
-	"Old Nick" = "devil",
-	"Biker" = "fu",
-	"Twirly" = "villain",
-	"Dali" = "dali",
-	"Hogan" = "hogan",
-	"Van Dyke" = "vandyke",
-	"Hipster" = "hip",
-	"Robotnik" = "robo",
-	"Elvis" = "elvis",
-	"Goatee" = "gt",
-	"Chinstrap" = "chin",
-	"Neckbeard" = "neckbeard",
-	"Abe" = "abe",
-	"Full Beard" = "fullbeard",
-	"Braided Beard" = "braided",
-	"Puffy Beard" = "puffbeard",
-	"Long Beard" = "longbeard",
-	"Tramp" = "tramp",
-	"Tramp: Beard Stains" = "trampstains",
-	"Eyebrows" = "eyebrows",
-	"Huge Eyebrows" = "thufir",
-	"Hair Streak" = "streak",
-	"Beard Streaks" = "bstreak",
-	"Right Bang" = "chub_s",
-	"Left Bang" = "chub2_s",
-	"Eyeshadow" = "eyeshadow",
-	"Lipstick" = "lipstick",
-	"Heterochromia Left" = "hetcroL",
-	"Heterochromia Right" = "hetcroR")
-
-	list/customization_styles_gimmick = list("Goku" = "goku",
-	"Homer" = "homer",
-	"Bart" = "bart",
-	"Jetson" = "jetson",
-	"X-COM Rookie" = "xcom",
-	"Zapped" = "zapped",
-	"Rainbow Afro" = "afroRB",
-	"Flame Hair" = "flames",
-	"Sailor Moon" = "sailor_moon",
-	"Sakura" = "sakura",
-	"Elegant Wave" = "ewave_s",
-	"Wizard" = "wiz",
-	"Afro: Alternating Halves" = "afroHA")
+	"Vaporized" = 'icons/mob/hud_human_vapor.dmi')
 
 	list/underwear_styles = list("No Underwear" = "none",
 	"Briefs" = "briefs",
@@ -407,11 +235,7 @@ var/global
 	"Yesteryear",
 	"Zeyada")
 
-	skipupdate = 0
-	///////////////
-	event = 0
-	//blobevent = 0
-	///////////////
+	list/selectable_ringtones = list()
 
 	//april fools
 	manualbreathing = 0
@@ -419,6 +243,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
+	traitorsseeeachother = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -426,10 +251,10 @@ var/global
 	soundpref_override = 0
 
 	diary = null
+	diary_name = null
 	hublog = null
-	game_version = "Goon Station 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + vcs_revision + ")"
 
-	going = 1.0
 	master_mode = "traitor"
 
 	host = null
@@ -441,22 +266,20 @@ var/global
 	dooc_allowed = 1
 	player_capa = 0
 	player_cap = 55
+	player_cap_grace = list()
 	traitor_scaling = 1
 	deadchat_allowed = 1
 	debug_mixed_forced_wraith = 0
 	debug_mixed_forced_blob = 0
+	debug_mixed_forced_flock = 0
 	farting_allowed = 1
 	blood_system = 1
 	bone_system = 0
 	pull_slowing = 0
 	suicide_allowed = 1
 	dna_ident = 1
-	special_respawning = 1
 	abandon_allowed = 1
 	enter_allowed = 1
-	shuttle_frozen = 0
-	shuttle_left = 0
-	turd_location = 0
 	johnbus_location = 1
 	johnbus_destination = 0
 	johnbus_active = 0
@@ -467,7 +290,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
-	station_creepified = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -476,15 +299,15 @@ var/global
 	blowout = 0
 	farty_party = 0
 	deep_farting = 0
-	ass_day = 0
+	no_emote_cooldowns = 0
+	spooky_light_mode = 0
+	// Default ghost invisibility. Set when the game is over
+	ghost_invisibility = INVIS_GHOST
 
-	turf/unsimulated/wall/titlecard/lobby_titlecard
+	datum/titlecard/lobby_titlecard
 
 	total_souls_sold = 0
 	total_souls_value = 0
-
-	/*total_corrupted_terrain = 0
-	total_corruptible_terrain = 0*/
 
 	///////////////
 	//Radio network passwords
@@ -495,99 +318,51 @@ var/global
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
 
-	///////////////
-	list/logs = list ( //Loooooooooogs
-		"admin_help" = list (  ),
-		"speech" = list (  ),
-		"ooc" = list (  ),
-		"combat" = list (  ),
-		"station" = list (  ),
-		"pdamsg" = list (  ),
-		"admin" = list (  ),
-		"mentor_help" = list (  ),
-		"telepathy" = list (  ),
-		"bombing" = list (  ),
-		"signalers" = list (  ),
-		"atmos" = list (  ),
-		"debug" = list (  ),
-		"pathology" = list (  ),
-		"deleted" = list (  ),
-		"vehicle" = list (  ),
-		"audit" = list()//im a rebel, i refuse to add that gross SPACING
+	//
+	//cyberorgan damage thresholds for emagging without emag
+	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
+
+	/// Loooooooooogs
+	list/logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_PDAMSG		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
+		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_TOPIC		=	list(),
 	)
-	savefile/compid_file 	//The file holding computer ID information
-	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
-	list/admins = list(  )
-	list/onlineAdmins = list(  )
-	list/whitelistCkeys = list(  )
-	list/shuttles = list(  )
-	list/reg_dna = list(  )
-//	list/traitobj = list(  )
+	/// The file holding computer ID information
+	savefile/compid_file
+
+	/// Should we be analysing the comp IDs of new clients?
+	do_compid_analysis = 1
+
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
-	chui/window/dj_panel/admin_dj = new()
+	datum/dj_panel/dj_panel = new()
+	datum/player_panel/player_panel = new()
 
-	CELLRATE = 0.002  // multiplier for watts per tick <> cell storage (eg: .002 means if there is a load of 1000 watts, 20 units will be taken from a cell per second)
-	CHARGELEVEL = 0.001 // Cap for how fast cells charge, as a percentage-per-tick (.001 means cellcharge is capped to 1% per second)
-
-	list/monkeystart = list()
-	list/wizardstart = list()
-	list/predstart = list()
-	list/syndicatestart = list()
-	list/battle_royale_spawn = list()
-	list/newplayer_start = list()
-	list/latejoin = list()
-	list/rp_latejoin = list()
-	list/observer_start = list()
-	list/clownstart = list()
-	list/prisonwarp = list()	//prisoners go to these
-	//list/mazewarp = list()
-	list/tdome1 = list()
-	list/tdome2 = list()
-	list/prisonsecuritywarp = list()	//prison security goes to these
 	list/prisonwarped = list()	//list of players already warped
-	list/blobstart = list()
-	list/kudzustart = list()
-	list/peststart = list()
-	list/blobs = list()
-	list/wormholeturfs = list()
-	list/halloweenspawn = list()
-	list/nuclear_auths = list()
-	list/telesci = list() // special turfs from map landmarks to always allow telescience to access
-						  // telesci landmarks add a 3z3 area centered on themselves to this list
-	list/icefall = list() // list of locations for people to fall if they enter the deep abyss on the ice moon
-	list/iceelefall = list() // list of locations for people to fall if they enter the ice moon elevator shaft
-	list/deepfall = list() // list of locations for people to fall into the precursor pit area
-	list/ancientfall = list() // list of locations for people to fall into the ancient pit area
-	list/greekfall = list() // list of locations for people to fall into the greek pit area
-	list/bioelefall = list() // biodome elevator shaft
 	bioele_accidents = 0
 	bioele_shifts_since_accident = 0
-	list/moonfall_hemera = list() //Hemera lunar office elevator shaft
-	list/moonfall_museum = list() //Lunar museum elevator shaft
-	list/seafall = list() // oshan trench elevator
-	list/escape_pod_success = list() // escape pods flying to the shuttle
-	list/polarisfall = list() // list of locations for people to fall if they enter the deep in the trench
-
-#ifdef TWITCH_BOT_ALLOWED
-	list/billspawn = list() // shitty bill twitch bot respawn
-#endif
-	list/shittybills = list()
-	list/johnbills = list()
-	list/tourguides = list()
-	list/npcmonkeypals = list()
-	list/teleport_jammers = list()
-
-
 
 	// Controllers
-	datum/research/disease/disease_research = new()
-	datum/research/artifact/artifact_research = new()
-	datum/research/robotics/robotics_research = new()
 	datum/wage_system/wagesystem
 	datum/shipping_market/shippingmarket
+	datum/betting_controller/bettingcontroller
 
-	datum/station_state/start_state = null
 	datum/configuration/config = null
 	datum/sun/sun = null
 
@@ -595,11 +370,6 @@ var/global
 	datum/admin_changelog/admin_changelog = null
 
 	list/datum/powernet/powernets = null
-
-	Debug = 0	// global debug switch
-	Debug2 = 0
-
-	shuttlecoming = 0
 
 	join_motd = null
 	rules = null
@@ -617,6 +387,9 @@ var/global
 
 	narrator_mode = 0
 
+	// Zam note: this is horrible
+	forced_desussification = 0
+
 	disable_next_click = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
@@ -631,58 +404,51 @@ var/global
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
 
-	global_jobban_cache = ""		// once jobban list is ready this is set to a giant string of all the jobban data. the new panel chops it up for use client side with javascript
-	global_jobban_cache_rev = 0 	// increments every time the ban panel is built so clients know if they have the latest
-	global_jobban_cache_built = 0	// set to world.timeofday when the cache is built
-
-	building_jobbans = 0	// ditto
-	jobban_count = 0		// ditto
-
 	// drsingh global reaction cache to reduce cpu usage in handle_reactions (Chemistry-Holder.dm)
 	list/chemical_reactions_cache = list()
 
 	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
 	list/total_chem_reactions = list()
-	list/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
 
-	// if you want stuff to not be spawnable by the list or buildmode, put it in here:
-	list/do_not_spawn = list("/obj/bhole","/obj/item/old_grenade/gravaton","/mob/living/carbon/human/krampus")
-
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
-
-	// list of ghost-respawn critters for objective tracking
-	list/reincarnated_critters = list()
-
 	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
-	antag_generic = mutable_appearance('icons/mob/antag_overlays.dmi', "generic")
-	antag_syndieborg = mutable_appearance('icons/mob/antag_overlays.dmi', "syndieborg")
-	antag_traitor = mutable_appearance('icons/mob/antag_overlays.dmi', "traitor")
-	antag_changeling = mutable_appearance('icons/mob/antag_overlays.dmi', "changeling")
-	antag_wizard = mutable_appearance('icons/mob/antag_overlays.dmi', "wizard")
-	antag_vampire = mutable_appearance('icons/mob/antag_overlays.dmi', "vampire")
-	antag_hunter = mutable_appearance('icons/mob/antag_overlays.dmi', "hunter")
-	antag_werewolf = mutable_appearance('icons/mob/antag_overlays.dmi', "werewolf")
-	antag_emagged = mutable_appearance('icons/mob/antag_overlays.dmi', "emagged")
-	antag_mindslave = mutable_appearance('icons/mob/antag_overlays.dmi', "mindslave")
-	antag_vampthrall = mutable_appearance('icons/mob/antag_overlays.dmi', "vampthrall")
-	antag_head = mutable_appearance('icons/mob/antag_overlays.dmi', "head")
-	antag_rev = mutable_appearance('icons/mob/antag_overlays.dmi', "rev")
-	antag_revhead = mutable_appearance('icons/mob/antag_overlays.dmi', "rev_head")
-	antag_syndicate = mutable_appearance('icons/mob/antag_overlays.dmi', "syndicate")
-	antag_spyleader = mutable_appearance('icons/mob/antag_overlays.dmi', "spy")
-	antag_spyslave = mutable_appearance('icons/mob/antag_overlays.dmi', "spyslave")
-	antag_gang = mutable_appearance('icons/mob/antag_overlays.dmi', "gang")
-	antag_gang_leader = mutable_appearance('icons/mob/antag_overlays.dmi', "gang_head")
-	antag_grinch = mutable_appearance('icons/mob/antag_overlays.dmi', "grinch")
-	antag_wraith = mutable_appearance('icons/mob/antag_overlays.dmi', "wraith")
-	antag_omnitraitor = mutable_appearance('icons/mob/antag_overlays.dmi', "omnitraitor")
-	antag_blob = mutable_appearance('icons/mob/antag_overlays.dmi', "blob")
-	antag_wrestler = mutable_appearance('icons/mob/antag_overlays.dmi', "wrestler")
-	antag_spy_theft = mutable_appearance('icons/mob/antag_overlays.dmi', "spy_thief")
+	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
+	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
+	antag_traitor = image('icons/mob/antag_overlays.dmi', icon_state = "traitor")
+	antag_changeling = image('icons/mob/antag_overlays.dmi', icon_state = "changeling")
+	antag_wizard = image('icons/mob/antag_overlays.dmi', icon_state = "wizard")
+	antag_vampire = image('icons/mob/antag_overlays.dmi', icon_state = "vampire")
+	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
+	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
+	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
+	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
+	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
+	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
+	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
+	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
+	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
+	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
+	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
+	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
+	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
+	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
+	antag_wraith = image('icons/mob/antag_overlays.dmi', icon_state = "wraith")
+	antag_omnitraitor = image('icons/mob/antag_overlays.dmi', icon_state = "omnitraitor")
+	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
+	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
+	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
+	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
+	antag_salvager = image('icons/mob/antag_overlays.dmi', icon_state = "salvager")
+
+	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
+	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
+	pod_wars_SY = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
+	pod_wars_SY_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
@@ -725,22 +491,27 @@ var/global
 	"l_leg" = "left leg",
 	"r_leg" = "right leg")
 
-	switchMap = null
-
 	transparentColor = "#ff00e4"
 
 	pregameHTML = null
 
-	list/cooldowns = list()
+	list/cooldowns
 
-	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("credits","bux","tokens","cash","dollars","tokens","dollarydoos","tickets","souls","doubloons","Pesos","Rubles","Rupees")]"
+	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-var/global/mentorhelp_text_color = "#CC0066"
-/proc/set_mentorhelp_color(var/new_color as color)
-	if (!new_color)
-		new_color = input(usr, "Select Mentorhelp color", "Selection", mentorhelp_text_color) as null|color
-	if (new_color)
-		mentorhelp_text_color = new_color
+	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
+		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
+		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
+		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
+#if defined(MAP_OVERRIDE_POD_WARS)
+		,"pod_wars"
+#endif
+	)
+
+	hardRebootFilePath = "data/hard-reboot"
+
+	/// The map object used to display the AI station map
+	obj/station_map/ai_station_map
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
@@ -785,10 +556,13 @@ var/global/mentorhelp_text_color = "#CC0066"
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key)
+/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
 	if(I && length(key))
-		aiImages[key] = I
-		for(var/mob/M in AIs)
+		if(low_priority)
+			aiImagesLowPriority[key] = I
+		else
+			aiImages[key] = I
+		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.client)
 				M << I
 		return I
@@ -796,6 +570,7 @@ var/global/mentorhelp_text_color = "#CC0066"
 
 /proc/getAIImage(var/key)
 	if(length(key) && aiImages[key]) return aiImages[key]
+	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
 	else return null
 
 /proc/removeAIImage(var/key)
@@ -804,4 +579,43 @@ var/global/mentorhelp_text_color = "#CC0066"
 			C.images -= aiImages[key]
 		aiImages[key] = null
 		aiImages.Remove(key)
+	if(length(key) && aiImagesLowPriority[key])
+		for(var/client/C in clients)
+			C.images -= aiImagesLowPriority[key]
+		aiImagesLowPriority[key] = null
+		aiImagesLowPriority.Remove(key)
 	return
+
+/// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
+// Note that a client that clears its cache won't get new icons. Deal with it. BYOND's browse_rsc is shite.
+/proc/getItemIcon(var/atom/path, var/state, var/dir, var/key = null, var/client/C)
+	if (!key)
+		if (!state)
+			state = initial(path.icon_state)
+		if (!dir)
+			dir = initial(path.dir)
+
+		key = replacetext("[path]-[state]-[dir].png", "/", "~")
+		if (!browse_item_icons[key])
+			browse_item_icons[key] = new/icon(initial(path.icon), state, dir)
+
+	if (C && !(C in browse_item_clients[key]))
+		if (!browse_item_clients[key])
+			browse_item_clients[key] = list()
+		C << browse_rsc(browse_item_icons[key], key)
+		browse_item_clients[key] += C
+
+	return key
+
+/// Sends all of the item icons to a client. Kinda gross, but whatever.
+// The worst part of this is that client latency impacts this, so someone who is running slow
+// is probably gonna break everything.
+/proc/sendItemIcons(var/client/C)
+	for (var/key in browse_item_icons)
+		getItemIcon(key = key, C = C)
+
+/// Sends all item icons to all clients. Used at world startup to preload things.
+/proc/sendItemIconsToAll()
+	browse_item_initial_done = 1
+	for (var/client/C in clients)
+		sendItemIcons(C)

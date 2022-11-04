@@ -13,6 +13,10 @@
 
 	New()
 		..()
+		#ifdef UPSCALED_MAP
+		groups_to_create *= 4
+		#endif
+		#ifdef UNDERWATER_MAP
 		var/datum/sea_hotspot/new_hotspot = 0
 		for (var/i = 1, i <= groups_to_create, i++)
 			new_hotspot = new
@@ -25,41 +29,53 @@
 				maxsearch--
 
 			new_hotspot.move_center_to(T)
-
+		#endif
 		//var/image/I = image(icon = 'icons/obj/sealab_power.dmi')
 		//var/obj/item/photo/P = new/obj/item/photo(get_turf(locate(1,1,1)), I, map, "test", "blah")
 
   		//var/obj/A = new /obj(locate(1,1,1))
   		//A.icon = map
 
+	#ifdef UNDERWATER_MAP
+	var/list/map_colors = list(
+		empty = rgb(0, 0, 50),
+		solid = rgb(0, 0, 255),
+		station = rgb(255, 153, 58),
+		other = rgb(120, 200, 120))
+	#else
+	var/list/map_colors = list(
+		empty = rgb(30, 30, 45),
+		solid = rgb(180,180,180),
+		station = rgb(27, 163, 186),
+		other = rgb(186, 0, 60))
+	#endif
 
 	proc/generate_map()
 		if (!map)
-			Z_LOG_DEBUG("Hotspot Map", "Generating map ...")
-			var/list/map_colors = list(
-				empty = rgb(0, 0, 50),
-				solid = rgb(0, 0, 255),
-				station = rgb(255, 153, 58),
-				other = rgb(120, 200, 120))
+			Z_LOG_DEBUG("Mining Map", "Generating map ...")
 			map = icon('icons/misc/trenchMapEmpty.dmi', "template")
 			var/turf_color = null
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-
 					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
 						turf_color = "solid"
-					else if (T.name == "trench floor")
+					else if (T.name == "trench floor" || T.name == "\proper space")
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower))
+						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
 							turf_color = "station"
 						else
 							turf_color = "other"
 
 					map.DrawBox(map_colors[turf_color], x * 2, y * 2, x * 2 + 1, y * 2 + 1)
 
-			Z_LOG_DEBUG("Hotspot Map", "Map generation complete")
+			for (var/beacon in by_type[/obj/warp_beacon])
+				if (istype(beacon, /obj/warp_beacon/miningasteroidbelt))
+					var/turf/T = get_turf(beacon)
+					map.DrawBox(map_colors["station"], T.x * 2 - 2, T.y * 2 - 2, T.x * 2 + 2, T.y * 2 + 2)
+
+			Z_LOG_DEBUG("Mining Map", "Map generation complete")
 			generate_map_html()
 
 	proc/generate_map_html()
@@ -76,7 +92,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>Trench Map</title>
+	[map_currently_underwater?"<title>Trench Map</title>":"<title>Mining Map</title>"]
 	<meta http-equiv="X-UA-Compatible" content="IE=edge;">
 	<style type="text/css">
 		body {
@@ -124,12 +140,11 @@
 			width: 1em;
 			border: 1px solid white;
 		}
-		.empty { background-color: rgb(0, 0, 50); }
-		.solid { background-color: rgb(0, 0, 255); }
-		.station { background-color: rgb(255, 153, 58); }
-		.other { background-color: rgb(120, 200, 120); }
+		.empty { background-color: [map_colors["empty"]]; }
+		.solid { background-color: [map_colors["solid"]]; }
+		.station { background-color: [map_colors["station"]]; }
+		.other { background-color: [map_colors["other"]]; }
 		.vent { background-color: rgb(255, 120, 120); }
-
 	</style>
 </head>
 <body>
@@ -141,8 +156,8 @@
 			<span><span class='solid'></span> Solid Rock</span>
 			<span><span class='station'></span> NT Asset</span>
 			<span><span class='other'></span> Unknown</span>
-			<span><span class='vent'></span> Hotspot</span>
-		</div>
+			[map_currently_underwater?"<span><span class='vent'></span> Hotspot</span>":""]
+			</div>
 </body>
 </html>
 "}
@@ -174,21 +189,18 @@
 			if(S.get_tile_heat(T))
 				.= S
 				break
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_list(var/turf/T)
 		.= list()
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= S
-			LAGCHECK(LAG_HIGH)
 
 	proc/get_hotspots_amount(var/turf/T)
 		.= 0
 		for (var/datum/sea_hotspot/S in hotspot_groups)
 			if(S.get_tile_heat(T))
 				.+= 1
-			LAGCHECK(LAG_HIGH)
 
 	proc/probe_turf(var/turf/T)
 		.= 0
@@ -197,7 +209,6 @@
 				.+= (S.get_tile_heat(T) / S.vent_capture_amt) * (2 - (1 / (S.vent_capture_amt - 1))) //lessen individual output of multiple capture units on the same hotspot, but with a small boost to overall output
 			else
 				.+= S.get_tile_heat(T)
-			LAGCHECK(LAG_HIGH)
 
 		var/amt = hotspot_controller.get_hotspots_amount(T)
 		var/mult = ( (amt > 1) ? (1 + (amt / 2.3)) : (1) ) //stack bonus (2.3 is the magic number that contorls the bonus scaling)
@@ -213,12 +224,8 @@
 			if (heat)
 				S.bonus_heat += S.per_activity
 			tally += heat
-			LAGCHECK(LAG_HIGH)
-
 		if (tally)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(4, 1, T)
-			s.start()
+			elecflash(T)
 
 	proc/stomp_turf(var/turf/T) //Move hotspot 1 tile and set its dir to the difference between stomp loc and hotspot center
 		.= 0
@@ -227,7 +234,7 @@
 
 				//ahhhh shit
 				var/turf/center = S.center.turf()
-				if (get_dist(T,center) > 1) //smash center to lock me in place
+				if (BOUNDS_DIST(T, center) > 0) //smash center to lock me in place
 					S.can_drift = 1
 					.= 1
 				else
@@ -236,8 +243,6 @@
 				S.drift_dir = vector_to_dir(center.x - T.x, center.y - T.y)
 
 				S.move_center_to(get_step(S.center.turf(), S.drift_dir))
-
-			LAGCHECK(LAG_MED)
 
 	proc/colorping_at_turf(var/turf/T)
 		for (var/datum/sea_hotspot/S in hotspot_groups)
@@ -256,7 +261,7 @@
 	var/static/heat_dropoff_per_dist_unit = 0.1 // possible todo : a quad curve
 	var/static/base_heat = 1000
 	//var/static/max_activity_heat_bonus = 2000 //when mining underneath this hotspot on the trench zlevel, increase bonus heat (NOT USED)
-	//var/static/heat_polled_past_max_factor = 0.10 //When polled at cap, return heat with this multiplier applied.
+	//var/static/heat_polled_past_max_factor = 0.1 //When polled at cap, return heat with this multiplier applied.
 
 	var/static/per_activity = 95
 
@@ -313,9 +318,6 @@
 				if (H && H.closest_hotspot == src)
 					dowsers += H
 
-
-				LAGCHECK(LAG_HIGH)
-
 			for (var/thing in dowsers)
 				var/obj/item/heat_dowsing/H = thing
 				if (H.deployed)
@@ -354,20 +356,17 @@
 				phenomena_flags |= PH_FIRE
 
 		var/found = 0
-		LAGCHECK(LAG_REALTIME)
 		for (var/mob/living/M in range(6, C))
 			found = 1
 			if (phenomena_flags & PH_QUAKE_WEAK)
-				shake_camera(M, 4, 0.1)
-				M.show_text("<span style='color:red'><b>The ground rumbles softly.</b></span>")
+				shake_camera(M, 4, 4)
+				M.show_text("<span class='alert'><b>The ground rumbles softly.</b></span>")
 
 			if (phenomena_flags & PH_QUAKE)
-				shake_camera(M, 5, 0.5)
+				shake_camera(M, 5, 16)
 				random_brute_damage(M, 3)
 				M.changeStatus("weakened", 1 SECOND)
-				M.show_text("<span style='color:red'><b>The ground quakes and rumbles violently!</b></span>")
-
-			LAGCHECK(LAG_HIGH)
+				M.show_text("<span class='alert'><b>The ground quakes and rumbles violently!</b></span>")
 
 		if (phenomena_flags & PH_FIRE_WEAK)
 			fireflash(phenomena_point,0)
@@ -376,31 +375,32 @@
 			fireflash(phenomena_point,1)
 
 		if (phenomena_flags & PH_EX)
-			explosion(0, phenomena_point, -1, -1, 2, 3)
+			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
 			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
 		else if (found)
 			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
 
-
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
-			if (recursion <= 0)
+			var/areaname = get_area_name(phenomena_point)
+			if (recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "BIG hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
-			SPAWN_DBG(5 SECONDS)
+			SPAWN(5 SECONDS)
 				LAGCHECK(LAG_HIGH)
 				src.do_phenomena( recursion++, heat - (9000 + (9000 * recursion)) )
 		else
-			if (phenomena_flags > PH_QUAKE && recursion <= 0)
+			var/areaname = get_area_name(phenomena_point)
+			if (phenomena_flags > PH_QUAKE && recursion <= 0 && areaname && areaname != "Ocean")
 				var/logmsg = "Hotspot phenomena (Heat : [heat])  at [log_loc(phenomena_point)]."
 				message_admins(logmsg)
-				logTheThing("bombing", null, null, logmsg)
-				logTheThing("diary", null, null, logmsg, "game")
+				logTheThing(LOG_BOMBING, null, logmsg)
+				logTheThing(LOG_DIARY, null, logmsg, "game")
 
 
 	proc/poll_capture_amt(var/turf/center)
@@ -412,7 +412,7 @@
 
 	proc/get_tile_heat(var/turf/T)
 
-		d = get_dist(T, center.turf())
+		d = GET_DIST(T, center.turf())
 		if (d > radius)
 			.= 0
 			if (d <= radius + cool_cushion)
@@ -440,6 +440,7 @@
 	var/z = 0
 
 	New(x=0,y=0,z=0)
+		..()
 		src.x = x
 		src.y = y
 		src.z = z
@@ -461,14 +462,14 @@
 	item_state = "dowsing"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	desc = "Stick this rod into the sea floor to poll for underground heat. Distance readings may fluctuate based on the frequency of vibrational waves.<br>If the mass of heat moves via drift, this rod will follow its movements." //doppler effect lol i'm science
-	plane = 11
+	plane = PLANE_ABOVE_LIGHTING
 	throwforce = 6
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	force = 6
 	throw_speed = 4
 	throw_range = 5
-	stamina_damage = 25
-	stamina_cost = 10
+	stamina_damage = 30
+	stamina_cost = 15
 	stamina_crit_chance = 1
 	//two_handed = 1
 	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
@@ -492,8 +493,7 @@
 	disposing()
 		deployed = 0
 		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+		processing_items -= src
 		..()
 
 	process()
@@ -534,17 +534,17 @@
 					if (src.loc == center)
 						true_center += 1
 
-					var/d = get_dist(src.loc,center)
+					var/d = GET_DIST(src.loc,center)
 					if (d < dist_last)
 						closest_hotspot = H
-						dist_last = get_dist(src.loc,center)
+						dist_last = GET_DIST(src.loc,center)
 
-					val += get_dist(src.loc,center)
+					val += GET_DIST(src.loc,center)
 					if (H.can_drift)
 						var/turf/dir_step = get_step(center, H.drift_dir)
 
-						var/angle = atan2(src.loc.y - center.y, src.loc.x - center.x)
-						var/angle2 = atan2(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
+						var/angle = arctan(src.loc.y - center.y, src.loc.x - center.x)
+						var/angle2 = arctan(dir_step.y - center.y, dir_step.x - center.x) //todo : atan2 not necessary here. Make some dir2angle function for speed.
 
 						var/diff = abs(angledifference(angle,angle2))
 						diff -= 90
@@ -552,44 +552,64 @@
 
 						val += round(diff, 1)
 
-				val = min(max(val,0),20)
+				val = clamp(val, 0, 20)
 
 				if (placed)
 					placed = 0
 
 					for (var/mob/O in hearers(src, null))
-						O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
+						O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Estimated distance to center : [val]\"</span></span>", 2)
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
 
 						else
 							for (var/mob/O in hearers(src, null))
-								O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"True center has been located!\"</span></span>", 2)
 
 
 				speech_bubble.icon_state = "[val]"
 				UpdateOverlays(speech_bubble, "speech_bubble")
-				SPAWN_DBG(1.5 SECONDS)
+				SPAWN(1.5 SECONDS)
 					UpdateOverlays(null, "speech_bubble")
 
-
-	attack_hand(var/mob/living/carbon/human/user as mob)
-		icon_state = "dowsing_hands"
-		deployed = 0
-		closest_hotspot = 0
-		if (src in processing_items)
-			processing_items.Remove(src)
+	attackby(var/obj/item/I, var/mob/M)
+		if (ispryingtool(I))
+			if (deployed)
+				src.undeploy()
+			else
+				if (src in M.contents)
+					src.force_drop()
+				src.deploy()
 		..()
 
+	attack_hand(var/mob/living/carbon/human/user)
+		src.undeploy()
+		..()
+
+	afterattack(var/turf/T, var/mob/user)
+		if (istype(T) && !T.density)
+			processing_items |= src
+
+			user.drop_item()
+			src.set_loc(T)
+			src.deploy()
+
+			return
+		..()
+
+	proc/undeploy()
+		src.icon_state = "dowsing_hands"
+		deployed = 0
+		closest_hotspot = 0
+		processing_items -= src
 
 	proc/deploy()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
 		src.icon_state = "dowsing_deployed_[0]"
 		speak_count = speak_interval
 		pixel_x = 0
@@ -607,22 +627,9 @@
 /turf/space/fluid/attack_hand(var/mob/user)
 	var/obj/item/heat_dowsing/H = locate() in src
 	if (H)
-		H.attack_hand(user)
+		H.Attackhand(user)
 
 /turf/space/fluid/attackby(var/obj/item/W, var/mob/user)
-	if (istype(W,/obj/item/heat_dowsing))
-		if (!(W in processing_items))
-			processing_items.Add(W)
-
-		var/obj/item/heat_dowsing/H = W
-
-		user.drop_item()
-		W.set_loc(src)
-
-		H.deploy()
-
-		return
-
 	if (istype(W,/obj/item/shovel) || istype(W,/obj/item/slag_shovel))
 		actions.start(new/datum/action/bar/icon/dig_sea_hole(src), user)
 		return
@@ -711,16 +718,18 @@
 			user.show_text("You need to dig a hole first!", "blue")
 
 	proc/finish_build(var/turf/T)
+		if(!isturf(src.loc) || T != src.loc)
+			return
 		var/obj/machinery/power/vent_capture/V = new /obj/machinery/power/vent_capture(src.loc)
 		V.built = 1
 		//V.built = 0
-		//V.update_icon()
+		//V.UpdateIcon()
 		qdel(src)
 
 /obj/machinery/power/vent_capture
 	name = "vent capture unit"
 	desc = "A piece of machinery that converts vent output into electricity."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "hydrovent_1"
 	density = 1
 	anchored = 1
@@ -732,6 +741,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 1
@@ -740,11 +750,12 @@
 	ex_act(severity)
 		return //nah
 
-	proc/update_icon()
+	update_icon()
 		icon_state = icon_state = "hydrovent_[built]"
 
 	disposing()
 		..()
+		STOP_TRACKING
 		if (istype(src.loc,/turf/space/fluid))
 			var/turf/space/fluid/T = src.loc
 			T.captured = 0
@@ -784,11 +795,11 @@
 		if (!built)
 			if (ispryingtool(W)) //blah i don care
 				built = 1
-				update_icon()
+				UpdateIcon()
 				return
 		else
 			if (istype(W,/obj/item/cable_coil))
-				src.loc.attackby(W,user)
+				src.loc.Attackby(W,user)
 				return
 		..()
 
@@ -827,7 +838,7 @@
 /obj/machinery/power/stomper
 	name = "stomper unit"
 	desc = "This machine is used to disturb the flow of underground magma and redirect it."
-	icon = 'icons/obj/32x48.dmi'
+	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "stomper0"
 	density = 1
 	anchored = 0
@@ -844,12 +855,13 @@
 	var/powerdownsfx = 'sound/machines/engine_alert3.ogg'
 
 	mats = 8
-	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS
+	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_DESTRUCT
 	flags = FPRINT
 
 	var/mode_toggle = 0
 	var/set_anchor = 1
 
+	var/emagged = FALSE
 
 	New()
 		..()
@@ -861,31 +873,34 @@
 		return //nah
 
 	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.emagged)
+			user?.show_message("<span class='alert'>[src] has already had its safety restrictions disabled.</span>")
+			return
+		src.emagged = TRUE
 		power_up_realtime = 10
 		set_anchor = 0
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
-		..()
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Safety restrictions disabled.\"</span></span>", 2)
+		return TRUE
 
-	proc/update_icon()
+	update_icon()
 		icon_state = "stomper[on]"
 
-	attack_hand(var/mob/living/carbon/human/user as mob)
+	attack_hand(var/mob/living/carbon/human/user)
 		src.add_fingerprint(user)
 
 		if(open)
-			if(cell && !usr.equipped())
-				usr.put_in_hand_or_drop(cell)
-				cell.updateicon()
-				cell = null
+			if(cell && !user.equipped())
+				cell.UpdateIcon()
+				user.put_in_hand_or_drop(cell)
 
-				usr.visible_message("<span style=\"color:blue\">[usr] removes the power cell from \the [src].</span>", "<span style=\"color:blue\">You remove the power cell from \the [src].</span>")
+				user.visible_message("<span class='notice'>[user] removes the power cell from \the [src].</span>", "<span class='notice'>You remove the power cell from \the [src].</span>")
 		else
 			activate()
 
 			playsound(src.loc, 'sound/machines/engine_alert3.ogg', 50, 1, 0.1, on ? 1 : 0.6)
-			update_icon()
-			user.visible_message("<span style=\"color:blue\">[user] switches [on ? "on" : "off"] the [src].</span>","<span style=\"color:blue\">You switch [on ? "on" : "off"] the [src].</span>")
+			UpdateIcon()
+			user.visible_message("<span class='notice'>[user] switches [on ? "on" : "off"] the [src].</span>","<span class='notice'>You switch [on ? "on" : "off"] the [src].</span>")
 
 	proc/activate()
 		on = !on
@@ -905,10 +920,13 @@
 		set src in oview(1)
 		set category = "Local"
 
+		if(!isliving(usr) || !isalive(usr))
+			return
+
 		mode_toggle = !mode_toggle
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Stomp mode : [mode_toggle ? "automatic" : "single"].\"</span></span>", 2)
 
 	attackby(obj/item/I, mob/user)
 		if(istype(I, /obj/item/cell))
@@ -918,21 +936,21 @@
 					return
 				else
 					// insert cell
-					var/obj/item/cell/C = usr.equipped()
+					var/obj/item/cell/C = user.equipped()
 					if(istype(C))
 						user.drop_item()
 						cell = C
 						C.set_loc(src)
-						C.add_fingerprint(usr)
+						C.add_fingerprint(user)
 
-						user.visible_message("<span style=\"color:blue\">[user] inserts a power cell into [src].</span>", "<span style=\"color:blue\">You insert the power cell into [src].</span>")
+						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
 				boutput(user, "The hatch must be open to insert a power cell.")
 				return
 		else if (ispryingtool(I))
 			open = !open
-			user.visible_message("<span style=\"color:blue\">[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span style=\"color:blue\">You [open ? "open" : "close"] the hatch on the [src].</span>")
-			update_icon()
+			user.visible_message("<span class='notice'>[user] [open ? "opens" : "closes"] the hatch on the [src].</span>", "<span class='notice'>You [open ? "open" : "close"] the hatch on the [src].</span>")
+			UpdateIcon()
 		else
 			..()
 
@@ -951,29 +969,30 @@
 			return
 
 		on = 0
-		update_icon()
+		UpdateIcon()
 		flick("stomper2",src)
 
 		if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
-			SPAWN_DBG (4)
+			SPAWN(0.4 SECONDS)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
-			if (get_dist(src,H.center.turf()) <= 1)
-				playsound(src, "sound/machines/twobeep.ogg", 50, 1,0.1,0.7)
+			if (BOUNDS_DIST(src, H.center.turf()) == 0)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 99, 1, 0.1, 0.7)
 
 		for (var/mob/M in src.loc)
-			random_brute_damage(M, 55, 1)
-			M.changeStatus("weakened", 1 SECOND)
-			M.emote("scream")
-			playsound(M.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 70, 1)
+			if (isliving(M))
+				random_brute_damage(M, 55, 1)
+				M.changeStatus("weakened", 1 SECOND)
+				INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
 
 		for (var/mob/C in viewers(src))
-			shake_camera(C, 5, 1)
+			shake_camera(C, 5, 8)
 
 		//squash person
 
@@ -985,7 +1004,114 @@
 		if (mode_toggle) //reactivate in togglemode
 			activate()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
+/obj/item/clothing/shoes/stomp_boots
+	name = "Stomper Boots"
+	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
+	icon_state = "stompboots"
+	kick_bonus = 3
+	step_sound = "step_plating"
+	step_priority = STEP_PRIORITY_LOW
+	laces = LACES_NONE
+	mats = 20
+	burn_possible = 0
+	abilities = list(/obj/ability_button/stomper_boot_stomp)
+
+	setupProperties()
+		. = ..()
+		src.setProperty("movespeed", 0.8)
+		src.setProperty("disorient_resist", 15)
+
+/obj/ability_button/stomper_boot_stomp
+	name = "Stomp"
+	icon_state = "magbootson"
+	desc = "Stomp the ground, pinning hotspots under you and moving any others nearby."
+	var/jump_height = 1.5 //! Jump height, in tiles.
+	var/jump_time = 1 SECONDS//! Time the jump takes, in seconds.
+	var/stomp_cooldown = 10 SECONDS
+	var/stomp_damage = 20
+
+	execute_ability()
+		if(!(the_item in the_mob.get_equipped_items()))
+			boutput(the_mob, "<span class='alert'>Try wearing [src] first.</span>")
+			return
+		if (!ON_COOLDOWN(src, "stomp", src.stomp_cooldown))
+			// Mostly stolen from jumpy
+			if (istype(the_mob.loc, /turf/))
+				the_mob.visible_message("<span class='alert'><b>[the_mob]</b> activates the boost on their stomper boots!</span>")
+				playsound(src.loc, 'sound/items/miningtool_on.ogg', 50, 1)
+				var/prevLayer = the_mob.layer
+				var/prevPlane = the_mob.plane
+				the_mob.layer = EFFECTS_LAYER_4 // need to be above posters and shit
+				the_mob.plane = PLANE_NOSHADOW_ABOVE
+				APPLY_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+				the_mob.flags |= TABLEPASS
+
+				if (prob(10))
+					the_mob.emote("flip")
+
+				animate(the_mob,
+					pixel_y = jump_height * 32,
+					time = jump_time / 2,
+					easing = EASE_OUT | CIRCULAR_EASING,
+					flags = ANIMATION_RELATIVE | ANIMATION_PARALLEL)
+				animate(
+					pixel_y = -jump_height * 32,
+					time = jump_time / 2,
+					easing = EASE_IN | CIRCULAR_EASING,
+					flags = ANIMATION_RELATIVE)
+
+				SPAWN(0)
+					sleep(jump_time)
+					the_mob.layer = prevLayer
+					the_mob.plane = prevPlane
+					REMOVE_ATOM_PROPERTY(the_mob, PROP_ATOM_NEVER_DENSE, src)
+					the_mob.flags &= ~TABLEPASS
+					playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg', 50, 1, 0.1, 0.7)
+
+					if (hotspot_controller.stomp_turf(get_turf(src))) //we didn't stomped center, do an additional SFX
+						SPAWN(0.4 SECONDS)
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, 0.1, 0.7)
+
+					for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
+						if (BOUNDS_DIST(src, H.center.turf()) == 0)
+							playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+							for (var/mob/O in hearers(the_mob, null))
+								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
+
+					for (var/mob/M in get_turf(src))
+						if (isliving(M) && M != the_mob)
+							random_brute_damage(M, src.stomp_damage, TRUE)
+							M.changeStatus("weakened", 1 SECOND)
+							playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 70, 1)
+
+
+			else if (istype(the_mob.loc, /obj/))
+				var/obj/container = the_mob.loc
+				boutput(the_mob, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+				the_mob.changeStatus("paralysis", 5 SECONDS)
+				the_mob.changeStatus("weakened", 5 SECONDS)
+				container.visible_message("<span class='alert'><b>[the_mob.loc]</b> emits a loud thump and rattles a bit.</span>")
+				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+				animate_storage_thump(container)
+		else
+			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
+			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
+
+/obj/item/clothing/shoes/stomp_boots/extreme
+	name = "STOMP BOOTS HYPERMURDER EDITION"
+	desc = "PAPA'S GOT A BRAND NEW SHOE"
+	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
+
+/obj/ability_button/stomper_boot_stomp/extreme
+	name = "EARTH SHATTERING MEGA STOMP"
+	desc = "EXTREMELY HAZARDOUS TO ALL LIFE"
+	stomp_cooldown = 0 SECONDS
+	stomp_damage = 200
 
 ////////////////////////////////////////////////////////////
 //actions
@@ -1008,21 +1134,26 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || V == null || owner == null || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || V == null || owner == null || T == null || V.loc != T)
 			interrupt(INTERRUPT_ALWAYS)
 			return
+		if(locate(/obj/machinery/power/vent_capture) in T)
+			V.visible_message("<span class='notice'>[V] beeps grumpily and aborts construction.</span>", "<span class='notice'>You hear a grumpy beeping.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 		if(owner && V && T)
 			V.finish_build(T)
 
@@ -1040,19 +1171,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, V) > 1 || V == null || owner == null)
+		if(BOUNDS_DIST(owner, V) > 0 || V == null || owner == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(owner && V)
@@ -1073,19 +1204,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, T) > 1 || T == null)
+		if(BOUNDS_DIST(owner, T) > 0 || T == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -1107,10 +1238,10 @@
 /obj/item/trench_map
 	name = "sea trench map"
 	desc = null
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/posters.dmi'
 	icon_state = "wall_poster_trench"
 	throwforce = 0
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 15
 	layer = OBJ_LAYER+1
@@ -1118,25 +1249,30 @@
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
-	health = 100
+	health = 4
 	var/can_put_up = 1
 
-	examine()
-		if (usr.client && hotspot_controller)
-			hotspot_controller.show_map(usr.client)
+	examine(mob/user)
+		if (user.client && hotspot_controller)
+			hotspot_controller.show_map(user.client)
+			return list()
 		else
 			return ..()
 
-	attack_hand(mob/user as mob)
+	attack_self(mob/user)
+		. = ..()
+		src.examine(user)
+
+	attack_hand(mob/user)
 		if (!src.anchored)
 			return ..()
 		if (user.a_intent != INTENT_HARM)
-			if (usr.client && hotspot_controller)
-				hotspot_controller.show_map(usr.client)
+			if (user.client && hotspot_controller)
+				hotspot_controller.show_map(user.client)
 			return
 		var/turf/T = src.loc
-		user.visible_message("<span style=\"color:red\"><b>[user]</b> rips down [src] from [T]!</span>",\
-		"<span style=\"color:red\">You rip down [src] from [T]!</span>")
+		user.visible_message("<span class='alert'><b>[user]</b> rips down [src] from [T]!</span>",\
+		"<span class='alert'>You rip down [src] from [T]!</span>")
 		var/obj/decal/cleanable/ripped_poster/decal = make_cleanable(/obj/decal/cleanable/ripped_poster, T)
 		decal.icon_state = "[src.icon_state]-rip2"
 		decal.pixel_x = src.pixel_x

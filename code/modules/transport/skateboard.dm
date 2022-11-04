@@ -19,13 +19,13 @@
 	onDelete()
 		bar.icon = 'icons/ui/actions.dmi'
 		border.icon = 'icons/ui/actions.dmi'
-		del(bar.img)
-		del(border.img)
+		qdel(bar.img)
+		qdel(border.img)
 		..()
 
 	onUpdate()
 		if (bar)
-			var/complete = max(min((sCurr / sMax), 1), 0)
+			var/complete = clamp((sCurr / sMax), 0, 1)
 			var/matrix/newMtx = matrix(complete, 1, MATRIX_SCALE)
 			animate( bar, transform = newMtx, pixel_x = -nround( ((30 - (30 * complete)) / 2) ), time = 3 )
 		//..()
@@ -42,10 +42,11 @@
 	pixel_x = -32
 
 	New(var/location = null, var/state = null)
+		..()
 		if(location)
-			src.loc = location
+			src.set_loc(location)
 		else
-			src.loc = usr.loc
+			src.set_loc(usr.loc)
 
 		if(state)
 			icon_state = "[state]"
@@ -56,7 +57,7 @@
 		animate(src, transform = matrix(), alpha = 255, time = 5)
 		animate(time = 5, alpha = 253)
 		animate(pixel_y = 64, alpha = 0, time = 5)
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			qdel(src)
 
 
@@ -74,13 +75,15 @@
 	var/atom/last_bumped_atom = null
 	var/list/bumped_queue = list()
 	density = 0
+	mob_flip_inside(var/mob/user)
+		animate_spin(src, prob(50) ? "L" : "R", 1, 0)
 
 /obj/vehicle/skateboard/New()
 	..()
 
 /obj/vehicle/skateboard/proc/adjustSickness(var/mod)
 	var/oldSick = sickness
-	sickness = min(100, max(0, sickness + mod))
+	sickness = clamp(sickness + mod, 0, 100)
 	var/howSick = round(sickness / 5)
 	if(howSick > round(oldSick / 5))
 		trickPopup(howSick)
@@ -105,14 +108,14 @@
 		if(81 to 100)
 			speed_delay = 0
 
-	if(runningAction && runningAction.bar)
+	if(runningAction?.bar)
 		if(sickness >= 60)
 			runningAction.bar.color = "#00DD00"
 		else
 			runningAction.bar.color = "#0000FF"
 
 /obj/vehicle/skateboard/proc/trickName()
-	var/list/adjectives = list("sicknasty", "sick", "sweet", "bitchin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
+	var/list/adjectives = list("sicknasty", "sick", "sweet", "ballin'", "darkside", "goofy", "aggro", "gnarly", "mondo", "backside", "blindside", "bomb", "frontside", "juicy", "180", "360", "720", "totally sweet", "totally sick", "tubular")
 	var/list/nouns = list("grind", "aerial", "cabbalerial", "eggplant", "rollo", "flip", "heel flip", "kick flip", "nollie kick flip", "aerial", "lipslide", "mctwist", "tailslide", "finger flip", "butter flip", "calf wrap", "g-turn", "coco-slide", "handstand", "heli-pop", "gazelle", "m80", "kickback", "jaywalk", "pogo", "pressure flip", "streetplant", "shove-it", "railslide")
 	return pick(adjectives) + " " + pick(nouns)
 
@@ -133,7 +136,7 @@
 			continue
 		C.show_message(textother, 1, group = "[src]_Skateboard")
 
-/obj/vehicle/skateboard/Bump(atom/AM as mob|obj|turf)
+/obj/vehicle/skateboard/bump(atom/AM as mob|obj|turf)
 	if(in_bump)
 		return
 
@@ -144,6 +147,10 @@
 	if(AM == rider || !rider)
 		return
 
+	var/turf/T = get_turf(src)
+	if(isrestrictedz(T.z))
+		sickness = 0
+
 	..()
 	src.stop()
 	in_bump = 1
@@ -152,7 +159,7 @@
 	if(AM in bumped_queue)
 		give_points = 0
 	if(last_bumped_atom)
-		if(get_dist(last_bumped_atom, AM) <= 3)
+		if(GET_DIST(last_bumped_atom, AM) <= 3)
 			give_points = 0
 
 	last_bumped_atom = AM
@@ -160,39 +167,39 @@
 	if(bumped_queue.len >= 9)
 		bumped_queue.Cut(1,2)
 
-	if(isturf(AM) || istype(AM, /mob/living/carbon/wall) || istype(AM, /obj/window) || istype(AM, /obj/grille))
+	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
 		if(sickness < 100 || z == 2 || z == 4)
-			src.messageNearby("<span style=\"color:red\"><B>You crash into the [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] crashes into the [AM] with the [src]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You crash into the [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into the [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
-			src.loc = AM
+			src.set_loc(AM)
 			walk(src, dir, speed_delay)
 
 	else if(ismob(AM))
 		if(sickness < 60)
-			src.messageNearby("<span style=\"color:red\"><B>You crash into [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] crashes into [AM] with the [src]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You crash into [AM]!</B></span>", "<span class='alert'><B>[rider] crashes into [AM] with the [src]!</B></span>")
 			playsound(src, pick(sb_fails), 55, 1)
 			adjustSickness(-sickness)
 			eject_rider(2)
 		else
 			var/trick = trickName()
-			src.messageNearby("<span style=\"color:red\"><B>You do a [trick] over [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] does a [trick] over [AM]!</B></span>")
+			src.messageNearby("<span class='alert'><B>You do a [trick] over [AM]!</B></span>", "<span class='alert'><B>[rider] does a [trick] over [AM]!</B></span>")
 			if(give_points)
 				adjustSickness(6)
 			trickAnimate()
-			src.loc = AM.loc
+			src.set_loc(AM.loc)
 			walk(src, turn(dir, pick(180, 90, -90)), speed_delay)
 			playsound(src, pick(sb_tricks), 65, 1)
 
 			input_lockout += 1
-			SPAWN_DBG(0.4 SECONDS)
+			SPAWN(0.4 SECONDS)
 				input_lockout -= 1
 
 	else if(isobj(AM))
 		var/trick = trickName()
-		src.messageNearby("<span style=\"color:red\"><B>You do a [trick] on the [AM]!</B></span>", "<span style=\"color:red\"><B>[rider] does a [trick] on the [AM]!</B></span>")
+		src.messageNearby("<span class='alert'><B>You do a [trick] on the [AM]!</B></span>", "<span class='alert'><B>[rider] does a [trick] on the [AM]!</B></span>")
 		if(give_points)
 			adjustSickness(4)
 		trickAnimate()
@@ -204,7 +211,7 @@
 		walk(src, newdir, speed_delay)
 		playsound(src, pick(sb_tricks), 65, 1)
 		input_lockout += 1
-		SPAWN_DBG(0.4 SECONDS)
+		SPAWN(0.4 SECONDS)
 			input_lockout -= 1
 
 	if(runningAction)
@@ -215,21 +222,22 @@
 	return
 
 /obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
-	if (!rider)
+	if (!src.rider)
 		return
 
 	density = 0
 
-	rider.set_loc(src.loc)
+	var/mob/living/rider = src.rider
+	..()
 	rider.pixel_y = 0
 
 	src.stop()
 
 	if(crashed)
 		if(crashed > 30)
-			playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 70, 1)
 
-		src.messageNearby("<span style=\"color:red\"><B>You are flung off the [src]!</B></span>", "<span style=\"color:red\"><B>[rider] is flung off the [src]!</B></span>")
+		src.messageNearby("<span class='alert'><B>You are flung off the [src]!</B></span>", "<span class='alert'><B>[rider] is flung off the [src]!</B></span>")
 
 		rider.changeStatus("stunned", 2 SECONDS)
 		rider.changeStatus("weakened", 2 SECONDS)
@@ -238,7 +246,7 @@
 		rider.TakeDamageAccountArmor("All", round(sickness / 4), round(sickness / 4), 0, DAMAGE_BLUNT)
 	else
 		if(selfdismount)
-			src.messageNearby("<span style=\"color:blue\">You dismount from the [src].</span>", "<B>[rider]</B> dismounts from the [src].")
+			src.messageNearby("<span class='notice'>You dismount from the [src].</span>", "<B>[rider]</B> dismounts from the [src].")
 
 	actions.stop(runningAction, src)
 	runningAction = null
@@ -262,11 +270,11 @@
 			M.set_loc(src.loc)
 
 /obj/vehicle/skateboard/MouseDrop_T(mob/living/target, mob/user)
-	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || get_dist(user, src) > 1 || get_dist(user, target) > 1 || user.getStatusDuration("paralysis") || user.getStatusDuration("stunned") || user.getStatusDuration("weakened") || user.stat || isAI(user))
+	if (rider || !istype(target) || target.buckled || LinkBlocked(target.loc,src.loc) || BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0 || is_incapacitated(user) || isAI(user))
 		return
 
 	if(target == user && !user.stat)
-		src.messageNearby("<span style=\"color:blue\">You climb onto the [src].</span>", "[user.name] climbs onto the [src].")
+		src.messageNearby("<span class='notice'>You climb onto the [src].</span>", "[user.name] climbs onto the [src].")
 	else
 		return
 
@@ -295,7 +303,7 @@
 		eject_rider(0, 1)
 	return
 
-/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M as mob)
+/obj/vehicle/skateboard/attack_hand(mob/living/carbon/human/M)
 	if(!M || !rider)
 		..()
 		return
@@ -303,32 +311,22 @@
 	switch(M.a_intent)
 		if("harm", "disarm")
 			if(prob(60))
-				playsound(src.loc, "sound/impact_sounds/Generic_Shove_1.ogg", 50, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has shoved [rider] off of the [src]!</B></span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+				src.visible_message("<span class='alert'><B>[M] has shoved [rider] off of the [src]!</B></span>")
 				src.log_me(src.rider, M, "shoved_off")
 				rider.weakened = 2
 				eject_rider()
 			else
-				playsound(src.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
-				src.visible_message("<span style=\"color:red\"><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
+				src.visible_message("<span class='alert'><B>[M] has attempted to shove [rider] off of the [src]!</B></span>")
 	*/
 	return
 
-/obj/vehicle/skateboard/bullet_act(flag, A as obj)
-	if(rider)
-		rider.bullet_act(flag, A)
-		eject_rider()
-	return
 
-/obj/vehicle/skateboard/meteorhit()
-	if(rider)
-		eject_rider()
-		rider.meteorhit()
-	return
 
 /obj/vehicle/skateboard/disposing()
 	if(rider)
-		boutput(rider, "<span style=\"color:red\"><B>Your skateboard is somehow destroyed!</B></span>")
+		boutput(rider, "<span class='alert'><B>Your skateboard is somehow destroyed!</B></span>")
 		eject_rider()
 	..()
 	return

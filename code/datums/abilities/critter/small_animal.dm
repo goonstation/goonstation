@@ -1,6 +1,5 @@
 
 // a lot of these are probably gunna just be copy/paste jobs because eh.
-
 /datum/targetable/critter/bite/small
 	name = "Bite"
 	desc = "Bite down on a mob, causing a little damage."
@@ -20,7 +19,7 @@
 /datum/targetable/critter/peck
 	name = "Peck"
 	desc = "Peck at a mob."
-	icon_state = "blind"
+	icon_state = "scuffed_peck"
 	cooldown = 100
 	targeted = 1
 	target_anything = 1
@@ -36,21 +35,19 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to peck there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to peck there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to peck."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to peck.</span>")
 			return 1
 
 		var/mob/MT = target
 		if (iscarbon(MT) && prob(60))
 			holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> pecks [MT] in the eyes!</span>")
-			playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_2.ogg", 30, 1)
+			playsound(target, 'sound/impact_sounds/Flesh_Stab_2.ogg', 30, 1)
 			MT.take_eye_damage(rand(5,10)) //High variance because the bird might not hit well
-			if (!isdead(MT))
-				MT.emote("scream")
 			if (src.take_eyes && ishuman(MT) && prob(20))
 				var/mob/living/carbon/human/H = MT
 				var/chosen_eye = prob(50) ? "left_eye" : "right_eye"
@@ -64,7 +61,7 @@
 				if (E)
 					holder.owner.visible_message("<span class='combat'><B>[holder.owner] [pick("tears","yanks","rips")] [MT]'s eye out! <i>Holy shit!!</i></B></span>")
 					E = H.drop_organ(chosen_eye)
-					playsound(get_turf(target), "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+					playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 					if (holder.owner.put_in_hand_or_drop(E))
 						E.set_loc(holder.owner)
 					else
@@ -75,7 +72,6 @@
 			if (prob(10))
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R] and snips an important-looking cable!</span>")
 				R.compborg_take_critter_damage(null, 0 ,rand(40,70))
-				MT.emote("scream")
 				return 0
 			else
 				holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> bites [R]!</span>")
@@ -88,12 +84,14 @@
 			return 0
 
 /datum/targetable/critter/peck/crow
+	icon_state = "peck_crow"
 	take_eyes = 1
 
 /datum/targetable/critter/pounce
 	name = "Pounce"
 	desc = "Pounce on a mob, causing a short stun."
 	cooldown = 200
+	icon_state = "pounce_polymorph"
 	targeted = 1
 	target_anything = 1
 
@@ -107,15 +105,15 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to pounce on there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to pounce on there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to pounce on."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to pounce on.</span>")
 			return 1
 		var/mob/MT = target
-		playsound(target, "sound/impact_sounds/Generic_Hit_1.ogg", 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
 		MT.changeStatus("stunned", 2 SECONDS)
 		MT.changeStatus("weakened", 2 SECONDS)
 		if (prob(25))
@@ -131,6 +129,7 @@
 /datum/targetable/critter/trip
 	name = "Trip"
 	desc = "Weave around the legs of a mob, causing them to trip."
+	icon_state = "tail_trip"
 	cooldown = 250
 	targeted = 1
 	target_anything = 1
@@ -145,18 +144,18 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to trip there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to trip there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to trip."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to trip.</span>")
 			return 1
 		var/mob/MT = target
 		var/tostun = rand(0,3)
 		var/toweak = rand(0,3)
-		MT.changeStatus("stunned", tostun * 10)
-		MT.changeStatus("weakened", toweak * 10)
+		MT.changeStatus("stunned", tostun SECONDS)
+		MT.changeStatus("weakened", toweak SECONDS)
 		holder.owner.visible_message("<span class='combat'><B>[holder.owner]</B> weaves around [MT]'s legs!</span>",\
 		"<span class='combat'>You weave around [MT]'s legs!</span>")
 		if (toweak)
@@ -166,8 +165,9 @@
 /datum/targetable/critter/wasp_sting
 	name = "Sting"
 	desc = "Sting a mob, injecting them with venom."
-	cooldown = 50
+	cooldown = 5 SECONDS
 	targeted = 1
+	icon_state = "waspbee_sting"
 	target_anything = 1
 	var/venom1 = "histamine"
 	var/amt1 = 12
@@ -184,21 +184,77 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to sting there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to sting there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to sting."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to sting.</span>")
 			return 1
 		var/mob/MT = target
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] stings [MT]!</b></span>",\
 		"<span class='combat'>You sting [MT]!</span>")
+		playsound(target, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 		if (MT.reagents)
 			MT.reagents.add_reagent(venom1, amt1)
 			MT.reagents.add_reagent(venom2, amt2)
 		else // um idk??  do some damage w/e
 			MT.TakeDamageAccountArmor("All", rand(2,8), 0, 0, DAMAGE_STAB)
+		return 0
+
+	scorpion_sting
+		icon_state = "scorpion_sting"
+		cooldown = 20 SECONDS
+		venom1 = "neurotoxin"
+		amt1 = 15
+		venom2 = "toxin"
+		amt2 = 6
+
+/datum/targetable/critter/pincer_grab
+	name = "Grab"
+	desc = "Grab a mob with your pincers, imobilizing them for a bit"
+	cooldown = 200
+	targeted = 1
+	icon_state = "pincer_grab"
+	target_anything = 1
+
+	var/datum/projectile/slam/proj = new
+
+
+	cast(atom/target)
+		if (!holder)
+			return
+
+		var/mob/living/M = holder.owner
+
+		if (!M)
+			return
+
+		if (..())
+			return 1
+		if (isobj(target))
+			target = get_turf(target)
+		if (isturf(target))
+			target = locate(/mob/living) in target
+			if (!target)
+				boutput(holder.owner, "<span class='alert'>Nothing to grab there.</span>")
+				return 1
+		if (target == holder.owner)
+			return 1
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to grab.</span>")
+			return 1
+		var/mob/MT = target
+		holder.owner.visible_message("<span class='combat'><b>[holder.owner] grabs [MT] with [his_or_her(holder.owner)] pincers!</b></span>",\
+		"<span class='combat'>You grab [MT]!</span>")
+		playsound(target, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+		playsound(target, 'sound/items/Wirecutter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+		MT.TakeDamageAccountArmor("All", 0, 0, rand(5,15), DAMAGE_STAB)
+		MT.changeStatus("weakened", 6 SECONDS)
+		MT.force_laydown_standup()
+		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
+		SPAWN(6 SECONDS)
+			REMOVE_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, "pincergrab")
 		return 0
 
 /datum/targetable/critter/hootat
@@ -214,7 +270,7 @@
 			return 1
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner] hoots seductively!</b></span>",\
 		"<span class='combat'>You hoot seductively!</span>")
-		playsound(get_turf(holder.owner), "sound/voice/animal/hoot.ogg", 90, 0)
+		playsound(holder.owner, 'sound/voice/animal/hoot.ogg', 90, 0)
 		flick("bhooty-flap", holder.owner)
 		var/obj/decal/D = new/obj/decal(holder.owner.loc)
 		D.name = ""
@@ -223,6 +279,6 @@
 		D.anchored = 1
 		D.layer = EFFECTS_LAYER_2
 		holder.owner.attached_objs += D
-		SPAWN_DBG(4 SECONDS)
+		SPAWN(4 SECONDS)
 			qdel(D)
 

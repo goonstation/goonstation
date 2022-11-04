@@ -1,9 +1,9 @@
 /datum/abilityHolder/vampire/var/list/bat_orbiters
 
 /datum/abilityHolder/vampire/proc/launch_bat_orbiters()
-	if (bat_orbiters && bat_orbiters.len)
+	if (length(bat_orbiters))
 		for (var/obj/projectile/P in bat_orbiters)
-			if (get_dist(P,src.owner) < 4)
+			if (GET_DIST(P,src.owner) < 4)
 				P.targets = 0
 
 		bat_orbiters.len = 0
@@ -59,7 +59,7 @@
 					i++
 
 		else
-			boutput(M, __red("The bats did not respond to your call!"))
+			boutput(M, "<span class='alert'>The bats did not respond to your call!</span>")
 			return 1 // No cooldown here, though.
 
 		if (src.pointCost && istype(H))
@@ -67,7 +67,7 @@
 
 		playsound(M.loc, 'sound/effects/gust.ogg', 60, 1)
 
-		logTheThing("combat", M, null, "uses call bats at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
 		return 0
 
 
@@ -97,8 +97,8 @@
 			return 1
 
 		if (M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/muzzle))
-			boutput(M, __red("How do you expect this to work? You're muzzled!"))
-			M.visible_message("<span style=\"color:red\"><b>[M]</b> makes a loud noise.</span>")
+			boutput(M, "<span class='alert'>How do you expect this to work? You're muzzled!</span>")
+			M.visible_message("<span class='alert'><b>[M]</b> makes a loud noise.</span>")
 			if (istype(H)) H.blood_tracking_output(src.pointCost)
 			return 0 // Cooldown because spam is bad.
 
@@ -111,9 +111,9 @@
 			for (var/obj/critter/bat/buff/B in range(M, 1))
 				B.friends += M
 		else
-			boutput(M, __red("The bats did not respond to your call!"))
+			boutput(M, "<span class='alert'>The bats did not respond to your call!</span>")
 			return 1 // No cooldown here, though.
 
 		if (istype(H)) H.blood_tracking_output(src.pointCost)
-		logTheThing("combat", M, null, "uses call bats at [log_loc(M)].")
+		logTheThing(LOG_COMBAT, M, "uses call bats at [log_loc(M)].")
 		return 0

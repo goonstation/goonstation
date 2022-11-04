@@ -1,25 +1,12 @@
-/obj/screen/ability/topBar/critter
+/atom/movable/screen/ability/topBar/critter
 	clicked(params)
-		var/datum/targetable/critter/spell = owner
-		if (!istype(spell))
+		if (!istype(owner, /datum/targetable/critter))
 			return
-		if (!spell.holder)
+		if (!owner.holder)
 			return
 		if (!isturf(usr.loc))
 			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN_DBG(0)
-				spell.handleCast()
-		return
+		..()
 
 /datum/abilityHolder/critter
 	usesPoints = 0
@@ -44,7 +31,8 @@
 	preferred_holder_type = /datum/abilityHolder/critter
 
 	New()
-		var/obj/screen/ability/topBar/critter/B = new /obj/screen/ability/topBar/critter(null)
+		..()
+		var/atom/movable/screen/ability/topBar/critter/B = new /atom/movable/screen/ability/topBar/critter(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -55,7 +43,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/critter()
+			src.object = new /atom/movable/screen/ability/topBar/critter()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -77,14 +65,14 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, __red("You cannot use that ability at this time."))
+			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 

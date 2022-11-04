@@ -10,7 +10,7 @@
   desc = "Pointy!"
   icon = 'icons/obj/martian.dmi'
   icon_state = "seed"
-  w_class = 1.0
+  w_class = W_CLASS_TINY
   stamina_damage = 1
   stamina_cost = 1
   rand_pos = 1
@@ -42,13 +42,13 @@
     if(active)
       boutput(user, "It's already active, use it on a non-space tile to plant it!")
     else
-      playsound(src.loc, pick("sound/machines/ArtifactMar1.ogg", "sound/machines/ArtifactMar2.ogg"), 60, 1)
+      playsound(src.loc, pick('sound/machines/ArtifactMar1.ogg', 'sound/machines/ArtifactMar2.ogg'), 60, 1)
       icon_state = "seed_active"
       active = 1
-      user.visible_message("<span style='color:blue;'><b>[user]</b> activates the seed!</span>", "<span style='color:blue;'>You activate the seed!</span>")
+      user.visible_message("<span class='notice'><b>[user]</b> activates the seed!</span>", "<span class='notice'>You activate the seed!</span>")
       src.martianDesc = "It's active. Apply to the ground to form a new structure."
   else
-    boutput(user, "<span style='color:red;'>You have no idea how to use this!</span>")
+    boutput(user, "<span class='alert'>You have no idea how to use this!</span>")
 
 /obj/item/martianSeed/proc/plant(var/turf/T=null)
   if(!T)
@@ -56,7 +56,7 @@
   if(istype(T, /turf/space))
     return
   if(src.active)
-    playsound(T, "sound/impact_sounds/Flesh_Stab_2.ogg", 60, 1)
+    playsound(T, 'sound/impact_sounds/Flesh_Stab_2.ogg', 60, 1)
     T.visible_message("<span style='game'>[src] is planted on [T].</span>")
     //T = new /turf/simulated/martian/floor(T)
     new /obj/martianBiotech/structureSpawner(T, src.spawn_path)
@@ -109,11 +109,11 @@
       if(100 to INFINITY)
         // we're done here
         src.active = 0
-        playsound(src, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
-        playsound(src, "sound/impact_sounds/Slimy_Splat_2.ogg", 100, 1)
+        playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+        playsound(src, 'sound/impact_sounds/Slimy_Splat_2.ogg', 100, 1)
         src.visible_message("<span style='color: red; font-weight: bold;'>[src] bursts open!</span>")
         new spawn_path(src.loc)
         src.icon_state = "seed_dead"
         flick("seed_burst", src)
-        sleep(100)
+        sleep(10 SECONDS)
         qdel(src)

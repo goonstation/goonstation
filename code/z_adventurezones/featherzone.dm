@@ -15,11 +15,14 @@
 	name = "strange glowing floor"
 	icon_state = "floor-on"
 
+
+TYPEINFO_NEW(/turf/unsimulated/wall/auto/feather)
+	. = ..()
+	connects_to = typecacheof(list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather))
 /turf/unsimulated/wall/auto/feather
 	name = "strange glowing wall"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "0"
-	connects_to = list(/turf/unsimulated/wall/auto/feather, /obj/machinery/door/feather)
 
 // DECALS/FAKEOBJS
 
@@ -45,5 +48,5 @@
 			src.underlays += O
 			O.set_loc(src)
 
-	attack_hand(mob/user as mob)
-		user.visible_message("<span class='combat'><b>[user]</b> kicks [src], but it doesn't budge.</span>", "<span style=\"color:red\">You kick [src], but it doesn't budge.</span>")
+	attack_hand(mob/user)
+		user.visible_message("<span class='combat'><b>[user]</b> kicks [src], but it doesn't budge.</span>", "<span class='alert'>You kick [src], but it doesn't budge.</span>")

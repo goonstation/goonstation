@@ -16,6 +16,8 @@ module.exports = function (grunt) {
   // Automatically load required grunt tasks
   require('jit-grunt')(grunt);
 
+	var os = require('os');
+
   // Configurable paths
   var config = {
     app: '.',
@@ -23,7 +25,10 @@ module.exports = function (grunt) {
   };
 
   var rev = grunt.file.read('revision') || '1';
-  var cdn = 'http://cdn.goonhub.com';
+  rev = rev.replace(/(\r\n|\n|\r)/gm, '');
+	var serverType = grunt.option('servertype') || '';
+	if (serverType === 'main') serverType = '';
+  var cdn = 'https://cdn'+serverType+'.goonhub.com';
 
   // Define the configuration for all the tasks
   grunt.initConfig({
@@ -91,6 +96,9 @@ module.exports = function (grunt) {
     // The following *-min tasks produce minified files in the dist folder
     imagemin: {
       dist: {
+        options: {
+          concurrency: Math.max(1, Math.round(os.cpus().length / 2))
+        },
         files: [{
           expand: true,
           cwd: '<%= config.app %>/images',
@@ -122,8 +130,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       },
@@ -137,8 +145,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       },
@@ -152,8 +160,8 @@ module.exports = function (grunt) {
         options: {
           replacements: [{
             pattern: /\{\{resource\(\"(.*?)\"\)\}\}/ig,
-            //replacement: cdn + '/$1' + '?cdnrev=' + rev
-            replacement: cdn + '/$1'
+            replacement: cdn + '/$1' + '?v=' + rev
+            //replacement: cdn + '/$1'
           }]
         }
       }
@@ -210,8 +218,9 @@ module.exports = function (grunt) {
           src: [
             'images/{,*/}*.webp',
             'css/fonts/**',
-			'sounds/**',
-			'misc/**'
+						'sounds/**',
+						'misc/**',
+						'tgui/**'
           ]
         },
         ]

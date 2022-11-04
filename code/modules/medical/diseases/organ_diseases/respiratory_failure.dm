@@ -18,7 +18,7 @@
 /datum/ailment/disease/respiratory_failure/right
 	failing_organ = "r"
 
-/datum/ailment/disease/respiratory_failure/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/respiratory_failure/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 
@@ -43,38 +43,37 @@
 
 		//handle roborespiratory failuer. should do some stuff I guess
 		// else if (H.organHolder.respiratory && H.organHolder.respiratory.robotic && !H.organHolder.heart.health > 0)
-	if (prob(D.stage * 30))
+	if (probmult(D.stage * 30))
 		H.organHolder.damage_organs(0, 0, D.stage, 50, list("left_lung", "right_lung"))
 	switch (D.stage)
 		if (1)
-			if (prob(1) && prob(10))
-				boutput(H, "<span style=\"color:blue\">You feel better.</span>")
+			if (probmult(0.1))
+				boutput(H, "<span class='notice'>You feel better.</span>")
 				H.cure_disease(D)
 				return
-			if (prob(8)) H.emote(pick("pale", "shudder"))
-			if (prob(5))
-				boutput(H, "<span style=\"color:red\">Your ribs hurt!</span>")
+			if (probmult(8)) H.emote(pick("pale", "shudder"))
+			if (probmult(5))
+				boutput(H, "<span class='alert'>Your ribs hurt!</span>")
 		if (2)
-			if (prob(1) && prob(10))
-				boutput(H, "<span style=\"color:blue\">You feel better.</span>")
+			if (probmult(0.1))
+				boutput(H, "<span class='notice'>You feel better.</span>")
 				H.resistances += src.type
 				H.ailments -= src
 				return
-			if (prob(8)) H.emote(pick("pale", "groan"))
-			if (prob(10))
-				boutput(H, "<span style=\"color:red\">It hurts to breathe!</span>")
+			if (probmult(8)) H.emote(pick("pale", "groan"))
+			if (probmult(10))
+				boutput(H, "<span class='alert'>It hurts to breathe!</span>")
 				H.losebreath++
 
-			if (prob(5)) H.emote(pick("faint", "collapse", "groan"))
+			if (probmult(5)) H.emote(pick("faint", "collapse", "groan"))
 		if (3)
-			if (prob(8)) H.emote(pick("twitch", "gasp"))
-				
-			if (prob(20)) 
+			if (probmult(8)) H.emote(pick("twitch", "gasp"))
+
+			if (probmult(20))
 				H.emote(pick("twitch", "gasp"))
-				boutput(H, "<span style=\"color:red\">You can hardly breathe due to the pain!</span>")
+				boutput(H, "<span class='alert'>You can hardly breathe due to the pain!</span>")
 
 				H.organHolder.damage_organs(0, 0, 3, 60, list("left_lung", "right_lung"))
 				H.losebreath+=3
 
-			H.take_oxygen_deprivation(1)
-			H.updatehealth()
+			H.take_oxygen_deprivation(1 * mult)

@@ -11,7 +11,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Owlize"
 //file location for the sound you want it to play
@@ -53,5 +53,5 @@
 	on_hit(atom/hit)
 
 		if(ishuman(hit))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 			hit:owlgib()

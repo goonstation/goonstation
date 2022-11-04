@@ -1,11 +1,7 @@
 var/datum/dynamicQueue/delete_queue = new /datum/dynamicQueue(100) //List of items that want to be deleted
 
 var/list/datum/delete_queue_2[DELQUEUE_SIZE][0]
-var/datum/delqueue_pos = 1
-
-// hi i fucked up this file p bad. if it ends up being as bad as
-// it looks pls do "git revert (whatever hash this has)"
-// otherwise this will stink up everything forever
+var/delqueue_pos = 1
 
 /**
  * qdel
@@ -13,70 +9,55 @@ var/datum/delqueue_pos = 1
  * queues a var for deletion by the delete queue processor.
  * if used on /world, /list, /client, or /savefile, it just skips the queue.
  */
-proc/qdel(var/datum/O)
-	if(!O)
+proc/qdel(var/datum/D)
+	if(!D)
+		return
+	if(isturf(D))
+		var/turf/T = D
+		T.ReplaceWithSpaceForce()
 		return
 
-	/*
-	// debugging is a nightmare and i want to die
-	var/mob/fuck = O
-	if (istype(fuck))
-		if (fuck.client)
-			Z_LOG_ERROR("qdel", "Hey asshole you're trying to qdel a mob (\ref[fuck] [fuck]) that still has a client ([fuck.client])! What the fuck do you think you're doing???")
-			CRASH("Trying to qdel a mob ([fuck]) that still has a client ([fuck.client])")
-		else
-			Z_LOG_WARN("qdel", "Deleting a mob (\ref[fuck] [fuck]) (no client)")
-			spawn(-1)
-				CRASH("Deleting a mob (\ref[fuck] [fuck]) (no client)")
-	*/
+	if (istype(D))
+		D.dispose(qdel_instead = FALSE)
 
-	if (istype(O))
-		// only queue deletions if the round is running, otherwise the queue isn't being processed
-		if (current_state >= GAME_STATE_PLAYING)
-			O.dispose()
-			if (istype(O, /atom/movable))
-				O:loc = null
+		if (ismovable(D) && length(D:contents) > 0)
+			for (var/C in D:contents)
+				qdel(C)
 
-			if (isloc(O) && O:contents:len > 0)
-				for (var/C in O:contents)
-					qdel(C)
+		/**
+			* We'll assume here that the object will be GC'ed.
+			* If the object is not GC'ed and must be explicitly deleted,
+			* the delete queue process will decrement the gc counter and
+			* increment the explicit delete counter for the type.
+			*/
+		#ifdef DELETE_QUEUE_DEBUG
+		detailed_delete_gc_count[D.type]++
+		#endif
 
-			/**
-			 * We'll assume here that the object will be GC'ed.
-			 * If the object is not GC'ed and must be explicitly deleted,
-			 * the delete queue process will decrement the gc counter and
-			 * increment the explicit delete counter for the type.
-			 */
-			#ifdef DELETE_QUEUE_DEBUG
-			detailed_delete_gc_count[O.type]++
-			#endif
+		// In the delete queue, we need to check if this is actually supposed to be deleted.
+		D.qdeled = 1
 
-			// In the delete queue, we need to check if this is actually supposed to be deleted.
-			O.qdeled = 1
+		/**
+			* We will only enqueue the ref for deletion. This gives the GC time to work,
+			* and makes less work for the delete queue to do.
+			*/
+		//if (!D.qdeltime)
+		//	D.qdeltime = world.time
 
-			/**
-			 * We will only enqueue the ref for deletion. This gives the GC time to work,
-			 * and makes less work for the delete queue to do.
-			 */
-			//if (!O.qdeltime)
-			//	O.qdeltime = world.time
-
-			// delete_queue.enqueue("\ref[O]")
-			delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += "\ref[O]"
-		else
-			del(O)
+		// delete_queue.enqueue("\ref[O]")
+		delete_queue_2[((delqueue_pos + DELQUEUE_WAIT) % DELQUEUE_SIZE) + 1] += "\ref[D]"
 	else
-		if(islist(O))
-			O:len = 0
-			del(O)
-		else if(O == world)
-			del(O)
+		if(islist(D))
+			D:len = 0
+			del(D)
+		else if(D == world)
+			del(D)
 			CRASH("Cannot qdel /world! Fuck you!")
-		else if(isclient(O))
-			del(O)
+		else if(isclient(D))
+			del(D)
 			CRASH("Cannot qdel /client! Fuck you!")
-		else if(istype(O, /savefile))
-			del(O)
+		else if(istype(D, /savefile))
+			del(D)
 			CRASH("Cannot qdel /savefile! Fuck you!")
 		else
 			CRASH("Cannot qdel this unknown type")
@@ -97,8 +78,13 @@ proc/qdel(var/datum/O)
 /datum/var/tmp/disposed = 0
 /datum/var/tmp/qdeled = 0
 
+
 // override this in children for your type specific disposing implementation, make sure to call ..() so the root disposing runs too
 /datum/proc/disposing()
+	PROTECTED_PROC(TRUE)
+	SHOULD_CALL_PARENT(TRUE)
+	SHOULD_NOT_SLEEP(TRUE)
+
 	src.tag = null // not part of components but definitely should happen
 
 	signal_enabled = FALSE
@@ -106,8 +92,7 @@ proc/qdel(var/datum/O)
 	if(dc)
 		var/all_components = dc[/datum/component]
 		if(length(all_components))
-			for(var/I in all_components)
-				var/datum/component/C = I
+			for (var/datum/component/C as anything in all_components)
 				qdel(C, FALSE, TRUE)
 		else
 			var/datum/component/C = all_components
@@ -119,8 +104,7 @@ proc/qdel(var/datum/O)
 		for(var/sig in lookup)
 			var/list/comps = lookup[sig]
 			if(length(comps))
-				for(var/i in comps)
-					var/datum/component/comp = i
+				for (var/datum/component/comp as anything in comps)
 					comp.UnregisterSignal(src, sig)
 			else
 				var/datum/component/comp = comps
@@ -130,10 +114,31 @@ proc/qdel(var/datum/O)
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
 
+/datum/Del()
+	if(!disposed)
+		disposing()
+	..()
+
+/client/Del()
+	if(!disposed)
+		disposing()
+	..()
+
 // don't override this one, just call it instead of delete to get rid of something cheaply
-/datum/proc/dispose()
+#ifdef DISPOSE_IS_QDEL
+/datum/proc/dispose(qdel_instead = TRUE)
+#else
+/datum/proc/dispose(qdel_instead = FALSE)
+#endif
+	SHOULD_NOT_OVERRIDE(TRUE)
+	if(qdel_instead)
+		qdel(src)
+		return
 	if (!disposed)
+		disposed = TRUE
 		SEND_SIGNAL(src, COMSIG_PARENT_PRE_DISPOSING)
 		disposing()
-		SEND_SIGNAL(src, COMSIG_PARENT_POST_DISPOSING)
-		disposed = 1
+	else if (isatom(src))
+		// Uh oh, we tried to delete something which is already deleted. Just send it to null if it's an atom so it doesn't hang around and fuck anything up.
+		src:set_loc(null)
+	// If it isn't an atom we don't care

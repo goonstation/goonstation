@@ -5,15 +5,15 @@
 	var/obj/adventurepuzzle/triggerer/selected
 
 	initialize()
-		selection = unpool(/obj/adventurepuzzle/marker)
-		boutput(usr, "<span style=\"color:blue\">Left click a triggerer to select it. Left click a triggerable while a triggerer is selected to assign, right click to unassign. Ctrl+click to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
-		boutput(usr, "<span style=\"color:blue\">Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
+		selection = new /obj/adventurepuzzle/marker
+		boutput(usr, "<span class='notice'>Left click a triggerer to select it. Left click a triggerable while a triggerer is selected to assign, right click to unassign. Ctrl+click to finish.</span>")
+		boutput(usr, "<span class='notice'>Valid triggerers: trigger, button, pressure pad, key, remote control</span>")
+		boutput(usr, "<span class='notice'>Valid triggerables: door, spawn location, light emitter, sliding wall, traps</span>")
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
 		var/turf/T = get_turf(object)
-		if (pa.Find("left"))
-			if (pa.Find("ctrl"))
+		if ("left" in pa)
+			if ("ctrl" in pa)
 				finished = 1
 				clear_markers()
 				return
@@ -25,7 +25,7 @@
 			if (istype(object, /obj/adventurepuzzle/triggerer) || istype(object, /obj/item/adventurepuzzle/triggerer) || use_as == "triggerer")
 				clear_markers()
 				selected = object
-				boutput(usr, "Selected [object]. Showing connections.")
+				boutput(user, "Selected [object]. Showing connections.")
 				equip_markers()
 			else if ((istype(object, /obj/adventurepuzzle/triggerable) || use_as == "triggerable") && selected)
 				if (object in selected.triggered)
@@ -43,8 +43,8 @@
 					selected.special_trigger_input(object)
 					object.overlays += selection
 			else if (istype(object, /obj/adventurepuzzle/triggerable) || use_as == "triggerable")
-				boutput(usr, "<span style=\"color:red\">Select a triggerer first!</span>")
-		else if (pa.Find("right"))
+				boutput(user, "<span class='alert'>Select a triggerer first!</span>")
+		else if ("right" in pa)
 			if (T)
 				if (istype(object, /obj/adventurepuzzle/triggerable))
 					if (object in selected.triggered)
@@ -54,7 +54,8 @@
 
 	disposing()
 		clear_markers()
-		pool(selection)
+		qdel(selection)
+		..()
 
 	proc/clear_markers()
 		if (!selected)

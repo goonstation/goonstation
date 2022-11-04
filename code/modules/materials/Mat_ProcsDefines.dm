@@ -1,71 +1,70 @@
-/proc/testMat()
-	boutput(world, "[materialProps.len]")
-	sleep(10)
-	usr.client.debug_variables(material_cache["cerenkite"])
-	sleep(10)
-	usr.client.debug_variables(new/datum/material/metal/cerenkite())
-	return
 
-var/global/list/material_cache = list()
+var/global/list/material_cache = buildMaterialCache()
+
 /atom/var/datum/material/material = null
+/atom/var/material_amt = 1
 
 /proc/isExploitableObject(var/atom/A)
-	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet)) return 1
+	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
 	return 0
 
-//This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
-var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersFail", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
+/// This contains the names of the trigger lists on materials. Required for copying materials. Remember to keep this updated if you add new triggers.
+var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "triggersTemp", "triggersChem", "triggersPickup", "triggersDrop", "triggersExp", "triggersOnAdd", "triggersOnLife", "triggersOnAttack", "triggersOnAttacked", "triggersOnEntered")
 
-//Returns one of the base materials by id.
-/proc/getMaterial(var/mat)
-	if(!istext(mat) || !length(mat)) return null
-	if(!material_cache.len) buildMaterialCache()
-	if(material_cache.Find(mat))
-		return material_cache[mat]
-	return null
+/// Returns one of the base materials by id.
+/proc/getMaterial(mat)
+	if(!istext(mat))
+		return null
+	return material_cache?[mat]
 
-/proc/mergeProperties(var/list/l1, var/list/l2, var/bias=0.5)
-	var/oBias = 1 - bias
+/proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
+	var/leftBias = 1 - rightBias
 
 	var/list/merged = list()
 
-	for(var/o in l1)
+	for(var/o in leftProps)
 		//merged.Add(o)
-		merged[o] = l1[o]
+		merged[o] = leftProps[o] * leftBias
 
-	if(l2)
-		for(var/x in l2)
-			if(merged.Find(x))
-				merged[x] = round(merged[x] * oBias + l2[x] * bias)
+	if(rightProps)
+		for(var/x in rightProps)
+			if(x in merged)
+				merged[x] += rightProps[x] * rightBias
 			else
 				merged.Add(x)
-				merged[x] = l2[x]
+				merged[x] = rightProps[x] * rightBias
+
+	for(var/x in merged)
+		merged[x] = round(merged[x])
 
 	return merged
 
-//Returns a copy of a given material.
+/// Returns a copy of a given material.
 /proc/copyMaterial(var/datum/material/base)
 	if(!base || !istype(base, /datum/material))
-		var/datum/material/M = new/datum/material()
+		var/datum/material/M = new/datum/material/interpolated()
 		return M
 	else
-		var/datum/material/M = new base.type ()
-		M.properties = mergeProperties(base.properties)
+		var/datum/material/M = new base.type()
+		M.properties = mergeProperties(base.properties, rightBias = 0)
 		for(var/X in base.vars)
-			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties") continue
+			if(X == "type" || X == "parent_type" || X == "tag" || X == "vars" || X == "properties" || X == "datum_components" || X == "comp_lookup" || X == "signal_procs" || X == "signal_enabled") continue
 
 			if(X in triggerVars)
-				M.vars[X] = getFusedTriggers(base.vars[X], list()) //Pass in an empty list to basically copy the first one.
+				M.vars[X] = getFusedTriggers(base.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
 			else
-				if(M.vars.Find(X))
-					if(istype(base.vars[X],/list))
-						var/list/oldList = base.vars[X]
-						M.vars[X] = oldList.Copy()
-					else
-						M.vars[X] = base.vars[X]
+				if(istype(base.vars[X],/list))
+					var/list/oldList = base.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = base.vars[X]
 		return M
 
 /proc/isSameMaterial(var/datum/material/M1, var/datum/material/M2) //Compares two materials to determine if stacking should be allowed.
+	if(isnull(M1) != isnull(M2))
+		return 0
+	if(isnull(M1) && isnull(M2))
+		return 1
 	if(M1.properties.len != M2.properties.len || M1.mat_id != M2.mat_id)
 		return 0
 	if(M1.value != M2.value || M1.name != M2.name  || M1.color != M2.color ||M1.alpha != M2.alpha || M1.material_flags != M2.material_flags || M1.texture != M2.texture)
@@ -85,8 +84,20 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return 1
 
-//Simply removes a material from an object.
+
+/// Called AFTER the material of the object was changed.
+/atom/proc/onMaterialChanged()
+	if(istype(src.material))
+		explosion_resistance = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_resistance
+		explosion_protection = material.hasProperty("density") ? round(material.getProperty("density") / 3) : explosion_protection
+		if( !(flags & CONDUCT) && (src.material.getProperty("electrical") >= 5)) flags |= CONDUCT
+
+
+/// Simply removes a material from an object.
 /atom/proc/removeMaterial()
+	if(src.material)
+		src.material.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
 	if(src.mat_changename)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
@@ -102,12 +113,11 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 	src.UpdateOverlays(null, "material")
 
 	src.material = null
-	return
 
 //Time for some super verbose proc names.
 /proc/get_material_trait_desc(var/datum/material/mat1)
 	var/string = ""
-	var/list/allTriggers = (mat1.triggersFail + mat1.triggersTemp + mat1.triggersChem + mat1.triggersPickup + mat1.triggersDrop + mat1.triggersExp + mat1.triggersOnAdd + mat1.triggersOnLife + mat1.triggersOnAttack + mat1.triggersOnAttacked + mat1.triggersOnEntered)
+	var/list/allTriggers = (mat1.triggersTemp + mat1.triggersChem + mat1.triggersPickup + mat1.triggersDrop + mat1.triggersExp + mat1.triggersOnAdd + mat1.triggersOnLife + mat1.triggersOnAttack + mat1.triggersOnAttacked + mat1.triggersOnEntered)
 	for(var/datum/materialProc/P in allTriggers)
 		if(length(P.desc))
 			if(length(string))
@@ -117,30 +127,35 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				string = P.desc
 	return string
 
-// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
+/// if a material is listed in here then we don't take on its color/alpha (maybe, if this works)
 /atom/var/list/mat_appearances_to_ignore = null
 
-/proc/getMaterialPrefixList(var/datum/material/base)
-	var/list/thelist = list()
+/proc/getMaterialPrefixList(datum/material/base)
+	. = list()
 
-	for(var/datum/material_property/P in base.properties)
+	for(var/datum/material_property/P as anything in base.properties)
 		if(base.properties[P] >= P.prefix_high_min)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
-			continue
+			. |= P.getAdjective(base)
 		else if(base.properties[P] <= P.prefix_low_max)
-			if(!thelist.Find(P.getAdjective(base)))
-				thelist.Add(P.getAdjective(base))
-			continue
-	return thelist
+			. |= P.getAdjective(base)
 
-//Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
-/atom/proc/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
-	if(!mat1 ||!istype(mat1, /datum/material)) return
-	if(copy) mat1 = copyMaterial(mat1)
+/// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
+/atom/proc/setMaterial(datum/material/mat1, appearance = TRUE, setname = TRUE, copy = TRUE, use_descriptors = FALSE)
+	if(istext(mat1))
+		CRASH("setMaterial() called with a string instead of a material datum.")
+	if(!mat1 ||!istype(mat1, /datum/material))
+		return
+	if(copy)
+		mat1 = copyMaterial(mat1)
+
 	var/traitDesc = get_material_trait_desc(mat1)
 	var/strPrefix = jointext(mat1.prefixes, " ")
 	var/strSuffix = jointext(mat1.suffixes, " ")
+
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
+
+	if(length(mat1?.triggersOnEntered))
+		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
 	for(var/X in getMaterialPrefixList(mat1))
 		strPrefix += " [X]"
@@ -165,25 +180,29 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			src.desc = "[initial(src.desc)] It is made of [mat1.name].[length(traitDesc) ? " " + traitDesc : ""]"
 		if (mat1.mat_id == "gold") //marks material gold as not a good choice to sell for people who dont already know
 			src.desc += " It's probably not very valuable to a reputable buyer."
+	if(appearance)
+		src.setMaterialAppearance(mat1)
 
-	var/set_color_alpha = 1
-	src.alpha = 255
-	src.color = null
-	src.UpdateOverlays(null, "material")
-	if (islist(src.mat_appearances_to_ignore) && src.mat_appearances_to_ignore.len)
-		if (src.mat_appearances_to_ignore.Find(mat1.name))
-			set_color_alpha = 0
-	if (set_color_alpha && src.mat_changeappearance && appearance && mat1.applyColor)
-		if (mat1.texture)
-			src.setTexture(mat1.texture, mat1.texture_blend, "material")
-		src.alpha = mat1.alpha
-		src.color = mat1.color
-
+	src.material?.triggerOnRemove(src)
 	src.material = mat1
 	mat1.owner = src
 	mat1.triggerOnAdd(src)
 	src.onMaterialChanged()
-	return
+
+/// sets the *appearance* of a material, but does not trigger any tiggerOnAdd or onMaterialChanged behaviour
+/atom/proc/setMaterialAppearance(var/datum/material/mat1)
+	var/set_color_alpha = TRUE
+	src.alpha = 255
+	src.color = null
+	src.UpdateOverlays(null, "material")
+	if (islist(src.mat_appearances_to_ignore) && length(src.mat_appearances_to_ignore))
+		if (mat1.name in src.mat_appearances_to_ignore)
+			set_color_alpha = FALSE
+	if (set_color_alpha && src.mat_changeappearance && mat1.applyColor)
+		if (mat1.texture)
+			src.setTexture(mat1.texture, mat1.texture_blend, "material")
+		src.alpha = mat1.alpha
+		src.color = mat1.color
 
 /proc/getProcessedMaterialForm(var/datum/material/MAT)
 	if (!istype(MAT))
@@ -205,7 +224,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return /obj/item/material_piece
 
-//Increases generations on material triggers and handles removal if over the generation cap.
+/// Increases generations on material triggers and handles removal if over the generation cap.
 /proc/handleTriggerGenerations(var/list/toDo)
 	for(var/datum/materialProc/current in toDo)
 		if(current.max_generations != -1 && (toDo[current] + 1) > current.max_generations)
@@ -214,8 +233,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			toDo[current] = (toDo[current] + 1)
 	return toDo
 
- //Fuses two material trigger lists.
-/proc/getFusedTriggers(var/list/L1 , var/list/L2)
+ /// Fuses two material trigger lists.
+/proc/getFusedTriggers(var/list/L1 , var/list/L2, datum/material/newMat)
 	var/list/newList = list()
 	for(var/datum/materialProc/toCopy in L1) //Copy list 1 with new instances of trigger datum.
 		var/datum/materialProc/P = new toCopy.type()
@@ -225,6 +244,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 			if(!issaved(toCopy.vars[varCopy])) continue
 			P.vars[varCopy] = toCopy.vars[varCopy]
+		if(newMat)
+			P.owner = newMat
 
 	for(var/datum/materialProc/A in L2) //Go through second list
 		if((locate(A.type) in newList))	//We already have that trigger type from the other list
@@ -239,15 +260,17 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 				if(varCopy == "type" || varCopy == "id" || varCopy == "parent_type" || varCopy == "tag" || varCopy == "vars") continue
 				if(!issaved(A.vars[varCopy])) continue
 				newProc.vars[varCopy] = A.vars[varCopy]
+			if(newMat)
+				newProc.owner = newMat
 	return newList
 
+/// Merges two materials and returns result as new material.
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
-	//Merges two materials and returns result as new material.
 	return getInterpolatedMaterial(mat1, mat2, 0.5)
 
 /proc/getInterpolatedMaterial(var/datum/material/mat1,var/datum/material/mat2,var/t)
 	var/ot = 1 - t
-	var/datum/material/newMat = new()
+	var/datum/material/interpolated/newMat = new()
 
 	newMat.quality = round(mat1.quality * ot + mat2.quality * t)
 
@@ -256,31 +279,37 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	newMat.value = round(mat1.value * ot + mat2.value * t)
 	newMat.name = getInterpolatedName(mat1.name, mat2.name, 0.5)
+	newMat.desc = "This is an alloy of [mat1.name] and [mat2.name]"
 	newMat.mat_id = "([mat1.mat_id]+[mat2.mat_id])"
 	newMat.alpha = round(mat1.alpha * ot + mat2.alpha * t)
-	newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
+	if(islist(mat1.color) || islist(mat2.color))
+		var/list/colA = normalize_color_to_matrix(mat1.color)
+		var/list/colB = normalize_color_to_matrix(mat2.color)
+		newMat.color = list()
+		for(var/i in 1 to length(colA))
+			newMat.color += colA[i] * ot + colB[i] * t
+	else
+		newMat.color = rgb(round(GetRedPart(mat1.color) * ot + GetRedPart(mat2.color) * t), round(GetGreenPart(mat1.color) * ot + GetGreenPart(mat2.color) * t), round(GetBluePart(mat1.color) * ot + GetBluePart(mat2.color) * t))
 	newMat.properties = mergeProperties(mat1.properties, mat2.properties, t)
 
 	newMat.edible_exact = round(mat1.edible_exact * ot + mat2.edible_exact * t)
-	if(newMat.edible_exact >= 0.5) newMat.edible = 1
-	else newMat.edible = 0
+	if(newMat.edible_exact >= 0.5) newMat.edible = TRUE
+	else newMat.edible = FALSE
 
-	newMat.mixOnly = 0
+	newMat.mixOnly = FALSE
 
 	//--
-	newMat.triggersFail = getFusedTriggers(mat1.triggersFail, mat2.triggersFail)
-	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp)
-	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem)
-	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup)
-	newMat.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop)
-	newMat.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp)
-	newMat.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd)
-	newMat.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife)
-	newMat.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack)
-	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked)
-	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered)
+	newMat.triggersTemp = getFusedTriggers(mat1.triggersTemp, mat2.triggersTemp, newMat)
+	newMat.triggersChem = getFusedTriggers(mat1.triggersChem, mat2.triggersChem, newMat)
+	newMat.triggersPickup = getFusedTriggers(mat1.triggersPickup, mat2.triggersPickup, newMat)
+	newMat.triggersDrop = getFusedTriggers(mat1.triggersDrop, mat2.triggersDrop, newMat)
+	newMat.triggersExp = getFusedTriggers(mat1.triggersExp, mat2.triggersExp, newMat)
+	newMat.triggersOnAdd = getFusedTriggers(mat1.triggersOnAdd, mat2.triggersOnAdd, newMat)
+	newMat.triggersOnLife = getFusedTriggers(mat1.triggersOnLife, mat2.triggersOnLife, newMat)
+	newMat.triggersOnAttack = getFusedTriggers(mat1.triggersOnAttack, mat2.triggersOnAttack, newMat)
+	newMat.triggersOnAttacked = getFusedTriggers(mat1.triggersOnAttacked, mat2.triggersOnAttacked, newMat)
+	newMat.triggersOnEntered = getFusedTriggers(mat1.triggersOnEntered, mat2.triggersOnEntered, newMat)
 
-	handleTriggerGenerations(newMat.triggersFail)
 	handleTriggerGenerations(newMat.triggersTemp)
 	handleTriggerGenerations(newMat.triggersChem)
 	handleTriggerGenerations(newMat.triggersPickup)
@@ -334,14 +363,14 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 
 	return newMat
 
-//Merges two material names into one.
+/// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
 	var/ot = 1 - t
 	var/part1 = copytext(mat1, 1, round((length(mat1) * ot) + 0.5))
 	var/part2 = copytext(mat2, round((length(mat2) * ot) + 0.5), 0)
 	return capitalize(ckey("[part1][part2]"))
 
-//Returns a string for when a material fail or breaks depending on its material flags.
+/// Returns a string for when a material fail or breaks depending on its material flags.
 /proc/getMatFailString(var/flag)
 	if(flag & MATERIAL_METAL && flag & MATERIAL_CRYSTAL && flag & MATERIAL_CLOTH)
 		return "frays apart into worthless dusty fibers"
@@ -371,7 +400,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		return "melts into an unworkable pile of slop"
 	return "comes apart"
 
-//Translates a material flag into a string.
+/// Translates a material flag into a string.
 /proc/getMatFlagString(var/flag)
 	switch(flag)
 		if(MATERIAL_CRYSTAL)
@@ -389,7 +418,7 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		else
 			return "Unknown"
 
-//Simply returns a string for a given quality. Used as prefix for objects.
+/// Simply returns a string for a given quality. Used as prefix for objects.
 /proc/getQualityName(var/quality)
 	switch(quality)
 		if(-INFINITY to -101)
@@ -441,15 +470,19 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		else
 			return "odd"
 
-//Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
+/// Checks if a material matches a recipe and returns the recipe if a match is found. returns null if nothing matches it.
 /proc/matchesMaterialRecipe(var/datum/material/M)
 	for(var/datum/material_recipe/R in materialRecipes)
 		if(R.validate(M)) return R
 	return null
 
-//Searches the parent materials of the given material, up to a given generation, for an id.
-//Useful if you want to figure out if a given material was used in the making of another material.
-//Keep in mind that this can be expensive so use it only when you have to.
+/**
+	* Searches the parent materials of the given material, up to a given generation, for an id.
+	*
+	* Useful if you want to figure out if a given material was used in the making of another material.
+	*
+	* Keep in mind that this can be expensive so use it only when you have to.
+	*/
 /proc/hasParentMaterial(var/datum/material/M, var/search_id, var/max_generations = 3)
 	return searchMatTree(M, search_id, 0, max_generations)
 
@@ -463,8 +496,8 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 			if(temp) return temp
 	return null
 
-//Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
-/proc/applyCableMaterials(var/atom/C, var/datum/material/insulator, var/datum/material/conductor)
+/// Yes hello apparently we need a proc for this because theres a million types of different wires and cables.
+/proc/applyCableMaterials(atom/C, datum/material/insulator, datum/material/conductor, copy_material = TRUE)
 	if(!conductor) return // silly
 
 	if(istype(C, /obj/cable))
@@ -473,24 +506,24 @@ var/global/list/triggerVars = list("triggersOnBullet", "triggersOnEat", "trigger
 		cable.conductor = conductor
 
 		if (cable.insulator)
-			cable.setMaterial(cable.insulator)
+			cable.setMaterial(cable.insulator, copy = copy_material)
 			cable.name = "[cable.insulator.name]-insulated [cable.conductor.name]-cable"
 			cable.color = cable.insulator.color
 		else
-			cable.setMaterial(cable.conductor)
+			cable.setMaterial(cable.conductor, copy = copy_material)
 			cable.name = "uninsulated [cable.conductor.name]-cable"
 			cable.color = cable.conductor.color
 
-	if(istype(C, /obj/item/cable_coil))
+	else if(istype(C, /obj/item/cable_coil))
 		var/obj/item/cable_coil/coil = C
 
 		coil.insulator = insulator
 		coil.conductor = conductor
 
 		if (coil.insulator)
-			coil.setMaterial(coil.insulator)
+			coil.setMaterial(coil.insulator, copy = copy_material)
 			coil.color = coil.insulator.color
 		else
-			coil.setMaterial(coil.conductor)
+			coil.setMaterial(coil.conductor, copy = copy_material)
 			coil.color = coil.conductor.color
 		coil.updateName()

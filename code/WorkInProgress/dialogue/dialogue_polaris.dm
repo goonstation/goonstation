@@ -14,12 +14,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse1
@@ -58,12 +58,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse2
@@ -93,12 +93,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse7
@@ -137,12 +137,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse8(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse8
@@ -170,7 +170,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	syndicatecorpse8_takeitem
@@ -200,12 +200,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse11(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse11
@@ -245,12 +245,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse5(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse5
@@ -289,12 +289,12 @@
 		dialogue = new/datum/dialogueMaster/syndicatecorpse10(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/syndicatecorpse10
@@ -322,7 +322,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 
@@ -340,12 +340,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse1(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse1
@@ -384,12 +384,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse2(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse2
@@ -428,12 +428,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse6(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse6
@@ -473,12 +473,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse3(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse3
@@ -518,12 +518,12 @@
 		dialogue = new/datum/dialogueMaster/securitycorpse7(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/securitycorpse7
@@ -564,12 +564,12 @@
 		dialogue = new/datum/dialogueMaster/sergeantscomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/sergeantscomputer
@@ -587,7 +587,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Sgt. Wilkins Private Computer","Password") as text
 				if (X == "Icarus")
@@ -610,7 +610,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log2
@@ -623,7 +623,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log3
@@ -636,7 +636,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log4
@@ -649,7 +649,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log5
@@ -661,7 +661,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 		getNodeText(var/client/C)
@@ -681,12 +681,12 @@
 		dialogue = new/datum/dialogueMaster/plantoflosthope(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/plantoflosthope
@@ -736,12 +736,12 @@
 		dialogue = new/datum/dialogueMaster/bustedmantapc(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/bustedmantapc
@@ -766,12 +766,12 @@
 		var/taken = 0
 
 		canShow(var/client/C)
-			if(taken == 0 && istype(C.mob.equipped(), /obj/item/crowbar)) return 1
+			if(taken == 0 && ispryingtool(C.mob.equipped())) return 1
 			else return 0
 
 		onActivate(var/client/C)
 			taken = 1
-			playsound(C.mob.loc, "sound/items/Crowbar.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/items/Crowbar.ogg', 50, 1,1)
 			C.mob.put_in_hand_or_drop(new/obj/item/blackbox, C.mob.hand)
 			return
 
@@ -788,12 +788,12 @@
 		dialogue = new/datum/dialogueMaster/engineeringcomputer(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineeringcomputer
@@ -811,7 +811,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Engineering Computer","Password") as text
 				if (X == "Congaline")
@@ -834,7 +834,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log2
@@ -847,7 +847,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log3
@@ -860,7 +860,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log4
@@ -873,7 +873,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 //ENGINEER
@@ -889,12 +889,12 @@
 		dialogue = new/datum/dialogueMaster/engineerscorpse(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/engineerscorpse
@@ -925,7 +925,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	engineerscorpse_takeitem
@@ -957,12 +957,12 @@
 		dialogue = new/datum/dialogueMaster/polariscrate(src)
 		..()
 
-	attack_hand(mob/user as mob)
-		if(get_dist(usr, src) > 1 || usr.z != src.z) return
+	attack_hand(mob/user)
+		if(BOUNDS_DIST(user, src) > 0 || user.z != src.z) return
 		dialogue.showDialogue(user)
 		return
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		return attack_hand(user)
 
 /datum/dialogueMaster/polariscrate
@@ -994,7 +994,7 @@
 
 		onActivate(var/client/C)
 			flick("futurecrateopen",master.master)
-			playsound(C.mob.loc, "sound/effects/polaris_crateopening.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/polaris_crateopening.ogg', 50, 1,1)
 			master.master.icon_state = "futurecrateopened"
 			return
 

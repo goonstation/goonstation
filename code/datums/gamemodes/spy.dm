@@ -1,5 +1,5 @@
 
-//[00:45]	AngriestIBM	Let me generate a round backstory in 5 seconds: This is how the syndicate determines who gets higher ranking positions -- by handing the candidates quad-injectors of mindslaves and having them fight to the death
+//[00:45]	AngriestIBM	Let me generate a round backstory in 5 seconds: This is how the syndicate determines who gets higher ranking positions -- by handing the candidates quad-injectors of mindhacks and having them fight to the death
 
 // Idea: each leader gets a unique goofy experimental piece of equipment, traitor gear that needs field testing (Or worse)
 // ex: bottle of corrosive fermid oil, OmegaFlash (field effect turboflash), etc
@@ -22,19 +22,23 @@
 	boutput(world, "<B>The Syndicate is using the [station_or_ship()] as a battleground to train elite operatives!</B>")
 
 /datum/game_mode/spy/pre_setup()
-	var/list/leaders_possible = get_possible_leaders()
+	var/list/leaders_possible = get_possible_enemies(ROLE_SPY_THIEF, 1)
 
 	if (!leaders_possible.len)
 		return 0
 
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.ready)
+			num_players++
 
 	var/i = rand(5)
-	var/num_teams = max(setup_min_teams, min(round((num_players + i) / 7), setup_max_teams))
+	var/num_teams = clamp(round((num_players + i) / 7), setup_min_teams, setup_max_teams)
 	if (num_teams > leaders_possible.len)
-		num_teams = leaders_possible.len
+		num_teams = length(leaders_possible)
 
 	var/list/chosen_spies = antagWeighter.choose(pool = leaders_possible, role = "spy", amount = num_teams, recordChosen = 1)
 	for (var/datum/mind/spy in chosen_spies)
@@ -63,12 +67,12 @@
 			if (3,4)
 				spyObjective = bestow_objective(leaderMind,/datum/objective/regular/steal)
 
-		SHOW_SPY_TIPS(leaderMind.current)
-		boutput(leaderMind.current, "<span style=\"color:red\">Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
+		leaderMind.current.show_antag_popup("spy")
+		boutput(leaderMind.current, "<span class='alert'>Oh yes, and <b>one more thing:</b> <b>[spyObjective.explanation_text]</b> That is, if you <i>really</i> want that new position.</span>")
 
 		equip_leader(leaderMind.current)
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()
@@ -86,7 +90,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(leaders))
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -96,7 +100,7 @@
 	if (!istype(leader))
 		return
 
-	//equip_traitor(leader) <- Quad mindslaves and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
+	//equip_traitor(leader) <- Quad mindhacks and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
 
 	var/the_slot = null
 	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
@@ -107,7 +111,7 @@
 		leader.put_in_hand_or_drop(K2)
 		the_slot = "hand"
 
-	boutput(leader, "<span style=\"color:blue\">You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindslaved henchmen!</span>")
+	boutput(leader, "<span class='notice'>You've been supplied with a <b>special quad-use implanter</b> in the spy starter kit in your [!isnull(the_slot) ? "[the_slot]" : "UNKNOWN"]. Use it to recruit some mindhacked henchmen!</span>")
 	return
 
 /datum/game_mode/spy/proc/add_spy(mob/living/new_spy, mob/living/leader)
@@ -125,7 +129,7 @@
 
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
-	spymind.special_role = "spyslave"
+	spymind.special_role = "spyminion"
 	spymind.master = leader.ckey
 
 	return 1
@@ -135,27 +139,6 @@
 	spy.mind.special_role = null
 	spy.mind.master = null
 	return 1
-
-/datum/game_mode/spy/proc/get_possible_leaders()
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_spy)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Not enough players with be_spy set to yes, so we're adding players who don't want to be spy leaders to the pool.")
-		for(var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in leaders) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/spy/declare_completion()
 
@@ -168,7 +151,7 @@
 		text = ""
 		if(leader_mind.current)
 			text += "[leader_mind.current.real_name]"
-			var/turf/T = get_turf_loc(leader_mind.current)
+			var/turf/T = get_turf(leader_mind.current)
 			if(isdead(leader_mind.current))
 				text += " (Dead)"
 			else
@@ -233,14 +216,14 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/charges = 4
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "revimplanter[min(4, round((src.charges/initial(src.charges)), 0.25) * 4)]"
 		return
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (!iscarbon(M))
 			return
 
@@ -251,7 +234,7 @@
 					continue
 
 				if (user.mind && (user.mind == implant_check.leader_mind))
-					boutput(user, "<span style=\"color:red\">Injecting the same person twice won't solve anything!</span>")
+					boutput(user, "<span class='alert'>Injecting the same person twice won't solve anything!</span>")
 					return
 				else
 					override = (override || prob(10))
@@ -269,7 +252,7 @@
 					break
 
 			var/obj/item/implant/spy_implant/new_imp = new
-			M.visible_message("<span style=\"color:red\">[M] has been implanted by [user].</span>", "<span style=\"color:red\">You have been implanted by [user].</span>")
+			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
 
 			if(ishuman(M))
 				var/mob/living/carbon/human/H = M
@@ -278,15 +261,15 @@
 			new_imp.set_loc(M)
 			new_imp.implanted = 1
 			new_imp.owner = M
-			user.show_message("<span style=\"color:red\">You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
+			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
 			new_imp.implanted(M, user, override)
 
 			src.charges--
-			src.update_icon()
+			src.UpdateIcon()
 
 
 /obj/item/implant/spy_implant
-	name = "mind slave XL"
+	name = "mind hack XL"
 	var/leader_name = null
 	var/datum/mind/leader_mind = null
 	var/datum/objective/linked_objective = null
@@ -295,32 +278,32 @@
 		..()
 
 		if (!istype(ticker.mode, /datum/game_mode/spy))
-			boutput(M, "<span style=\"color:red\">A stunning pain shoots through your brain!</span>")
+			boutput(M, "<span class='alert'>A stunning pain shoots through your brain!</span>")
 			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to...</font>yourself.</h1>Maybe the implant was defective? Oh dear, act natural!")
 			return
 
 		if (M == Implanter)
-			boutput(M, "<span style=\"color:red\">This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
+			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
 			alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
 		if (override == -1)
-			logTheThing("combat", M, Implanter, "'s loyalties are unchanged! (Injector: %target%)")
+			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
 			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
 			return
 
 		var/datum/game_mode/spy/spymode = ticker.mode
 
 		if (M.mind && (M.mind in spymode.leaders))
-			boutput(M, "<span style=\"color:red\">A sharp pain flares behind your eyes, but quickly subsides.</span>")
-			boutput(M, "<span style=\"color:red\">You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
+			boutput(M, "<span class='alert'>A sharp pain flares behind your eyes, but quickly subsides.</span>")
+			boutput(M, "<span class='alert'>You have undergone special mental conditioning to gain immunity from the control implants of competing agents.</span>")
 			return
 
 		var/datum/mind/oldLeader = leader_mind
 		leader_name = Implanter.real_name
 		leader_mind = Implanter.mind
 		//todo - implantation when there is another XL already in here
-		boutput(M, "<span style=\"color:red\">A brilliant pain flashes through your brain!</span>")
+		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
 			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
 			alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
@@ -330,17 +313,16 @@
 						qdel(I)
 						break
 		else
-			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey \his every order! Do not tell anyone about this unless your master tells you to!", "YOU HAVE BEEN MADE A MINDSLAVE!")
+			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
+			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
 		if (M.mind)
 			if (!src.linked_objective)
-				src.linked_objective = new /datum/objective(  )
-				M.mind.objectives += src.linked_objective
+				src.linked_objective = new /datum/objective(null, M.mind)
 
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
-		if (leader_mind && leader_mind.current && M.client)
+		if (leader_mind?.current && M.client)
 			var/I = image(antag_spyleader, loc = leader_mind.current)
 			M.client.images += I
 
@@ -351,7 +333,7 @@
 		..()
 
 		if (leader_name)
-			boutput(M, "<h1><font color=red>Your loyalty to [(leader_mind && leader_mind.current) ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
+			boutput(M, "<h1><font color=red>Your loyalty to [leader_mind?.current ? leader_mind.current.real_name : leader_name] fades away!</font></h1>")
 
 			if (istype(ticker.mode, /datum/game_mode/spy))
 				var/datum/game_mode/spy/spymode = ticker.mode

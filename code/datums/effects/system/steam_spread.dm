@@ -20,25 +20,17 @@ steam.start() -- spawns the effect
 	var/cardinals = 0
 	var/turf/location
 	var/atom/holder
+	var/color = null
+	var/plane = null
 
-/datum/effects/system/steam_spread/pooled()
-	..()
-	number = initial(number)
-	cardinals = initial(cardinals)
-	location = null
-	holder = null
-
-/datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc)
+/datum/effects/system/steam_spread/proc/set_up(n = 3, c = 0, turf/loc, color=null, plane=null)
 	if(n > 10)
 		n = 10
-	number = n
-	cardinals = c
-	location = loc
-
-/*
-/datum/effects/system/steam_spread/disposing()
-	pool(src)
-*/
+	src.number = n
+	src.cardinals = c
+	src.location = loc
+	src.color = color
+	src.plane = plane
 
 /datum/effects/system/steam_spread/proc/attach(atom/atom)
 	holder = atom
@@ -48,10 +40,14 @@ steam.start() -- spawns the effect
 		src.location = get_turf(holder)
 		src.holder = null
 	for(var/i=0, i<src.number, i++)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(holder)
 				src.location = get_turf(holder)
-			var/obj/effects/steam/steam = unpool(/obj/effects/steam)
+			var/obj/effects/steam/steam = new /obj/effects/steam
+			if(src.color)
+				steam.color = src.color
+			if(src.plane)
+				steam.plane = src.plane
 			steam.set_loc(src.location)
 			var/direction
 			if(src.cardinals)
@@ -59,9 +55,9 @@ steam.start() -- spawns the effect
 			else
 				direction = pick(alldirs)
 			for(var/j=0, j<pick(1,2,3), j++)
-				sleep(5)
+				sleep(0.5 SECONDS)
 				step(steam,direction)
-			SPAWN_DBG(2 SECONDS)
-				if (steam)
-					pool(steam)
+			sleep(2 SECONDS)
+			if (steam)
+				qdel(steam)
 

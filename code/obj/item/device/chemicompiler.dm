@@ -21,11 +21,22 @@
 	New()
 		..()
 		executor = new(src, /datum/chemicompiler_core/portableCore)
+		processing_items += src
+
+	disposing()
+		. = ..()
+		processing_items -= src
 
 	attack_self(mob/user as mob)
 		executor.panel()
 
 	proc/topicPermissionCheck(action)
-		if(src.loc != usr || (executor.core.running && action != "getUIState"))
+		if(src.loc != usr)
 			return 0
+		if(executor.core.running)
+			return action in list("getUIState", "reportError", "abortCode")
 		return 1
+
+	process()
+		. = ..()
+		executor?.on_process()

@@ -1,137 +1,106 @@
 // the power monitoring computer
 // for the moment, just report the status of all APCs in the same powernet
 
-/obj/machinery/power/monitor
+/obj/machinery/computer/power_monitor
 	name = "Power Monitoring Computer"
-	icon = 'icons/obj/computer.dmi'
-	icon_state = "power2"
-	density = 1
-	anchored = 1
 	desc = "Shows the power usage of the station."
+	icon_state = "power2"
+	power_usage = 0
+	circuit_type = /obj/item/circuitboard/powermonitor
 	var/window_tag = "powcomp"
+	var/list/history
+	var/const/history_max = 50
 
-/obj/machinery/power/monitor/attack_ai(mob/user)
-	add_fingerprint(user)
-
-	if(status & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
-/obj/machinery/power/monitor/attack_hand(mob/user)
-	add_fingerprint(user)
-
-	if(status & (BROKEN|NOPOWER))
-		return
-	interact(user)
-
-/obj/machinery/power/monitor/proc/interact(mob/user)
-
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			user.machine = null
-			user.Browse(null, "window=[window_tag]")
-			return
-
-	user.machine = src
-	var/t = "<TT><B>Power Monitoring</B><HR>"
-
-	if(!powernet)
-		t += "<span style=\"color:red\">No connection</span>"
-	else
-
-		var/list/L = list()
-		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/apc))
-				var/obj/machinery/power/apc/A = term.master
-				L += A
-
-		t += "<PRE>Total power: [engineering_notation(powernet.avail)]W<BR>Total load:  [engineering_notation(powernet.viewload)]W<BR>"
-
-		t += "<FONT SIZE=-1>"
-
-		if(L.len > 0)
-
-			t += "Area                           Eqp./Lgt./Env.  Load   Cell  | Area                           Eqp./Lgt./Env.  Load   Cell<HR>"
-
-			var/list/S = list(" Off","AOff","  On", " AOn")
-			var/list/chg = list("N","C","F")
-
-			var/do_newline = 0
-			for(var/obj/machinery/power/apc/A in L)
-
-				t += copytext(add_tspace(A.area.name, 30), 1, 30)
-				t += " [S[A.equipment+1]] [S[A.lighting+1]] [S[A.environ+1]] [add_lspace(A.lastused_total, 6)]  [A.cell ? "[add_lspace(round(A.cell.percent()), 3)]% [chg[A.charging+1]]" : "  N/C"][do_newline ? "<BR>" : " | "]"
-				do_newline = !do_newline
-
-		t += "</FONT></PRE>"
-
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	user.Browse(t, "window=[window_tag];size=840x700")
-	onclose(user, window_tag)
-
-/obj/machinery/power/monitor/Topic(href, href_list)
+/obj/machinery/computer/power_monitor/New()
 	..()
-	if( href_list["close"] )
-		usr.Browse(null, "window=[window_tag]")
-		usr.machine = null
+	history = list()
+
+/obj/machinery/computer/power_monitor/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if (!ui)
+		ui = new(user, src, "PowerMonitor", src.name)
+		ui.open()
+
+/obj/machinery/computer/power_monitor/ui_static_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
+	. = list(
+		"type" = "apc",
+		"apcNames" = list(),
+	)
+
+	var/list/L = list()
+	for(var/obj/machinery/power/terminal/term in powernet.nodes)
+		var/obj/machinery/power/apc/A = term.master
+		if(istype(A) && (!A.area || A.area.requires_power))
+			L += A
+
+	for(var/obj/machinery/power/apc/A as anything in L)
+		.["apcNames"] += list(
+			"\ref[A]" =  A.area.name
+		)
+
+/obj/machinery/computer/power_monitor/ui_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
+	. = list(
+		"available" = powernet.avail,
+		"load" = powernet.viewload,
+		"apcs" = list(),
+		"history" = src.history,
+	)
+
+	var/list/L = list()
+	for(var/obj/machinery/power/terminal/term in powernet.nodes)
+		var/obj/machinery/power/apc/A = term.master
+		if(istype(A) && (!A.area || A.area.requires_power))
+			L += A
+
+	for(var/obj/machinery/power/apc/A as anything in L)
+		var/list/data = list(
+			"\ref[A]",
+			A.equipment,
+			A.lighting,
+			A.environ,
+			A.lastused_total,
+		)
+
+		if (A.cell)
+			data += round(A.cell.percent())
+			data += A.charging
+
+		.["apcs"] += list(data)
+
+/obj/machinery/computer/power_monitor/process()
+	if (status & (NOPOWER|BROKEN))
 		return
 
-/obj/machinery/power/monitor/process()
-	if(!(status & (NOPOWER|BROKEN)) )
-		use_power(250)
+	use_power(250)
+	add_history()
+	if (src.history.len > src.history_max)
+		src.history.Cut(1, 2) //drop the oldest entry
 
-	src.updateDialog()
+/obj/machinery/computer/power_monitor/proc/add_history()
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
+	src.history += list(list(
+		powernet.avail,
+		powernet.viewload,
+	))
 
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "c_unpowered"
-				status |= NOPOWER
-
-/obj/machinery/power/monitor/console_upper
+/obj/machinery/computer/power_monitor/console_upper
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power1"
 
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "power10"
-				status |= NOPOWER
-
-/obj/machinery/power/monitor/console_lower
+/obj/machinery/computer/power_monitor/console_lower
 	icon = 'icons/obj/computerpanel.dmi'
 	icon_state = "power2"
 
-/obj/machinery/power/monitor/power_change()
-
-	if(status & BROKEN)
-		icon_state = "broken"
-	else
-		if( powered() )
-			icon_state = initial(icon_state)
-			status &= ~NOPOWER
-		else
-			SPAWN_DBG(rand(0, 15))
-				src.icon_state = "power20"
-				status |= NOPOWER
-
 // tweaked version to hook up to the engine->smes powernet and show SMES usage stats and power produced
-/obj/machinery/power/monitor/smes
+/obj/machinery/computer/power_monitor/smes
 	name = "SMES Monitoring Computer"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "power"
@@ -139,56 +108,70 @@
 	anchored = 1
 	desc = "Shows the SMES usage and power produced by the engine."
 	window_tag = "smespowcomp"
+	circuit_type = /obj/item/circuitboard/powermonitor_smes
 
-/obj/machinery/power/monitor/smes/interact(mob/user)
+/obj/machinery/computer/power_monitor/smes/ui_static_data(mob/user)
+	. = list(
+		"type" = "smes",
+		"unitNames" = list(),
+	)
 
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			user.machine = null
-			user.Browse(null, "window=[window_tag]")
-			return
+	var/list/L = list()
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
+	for(var/obj/machinery/power/terminal/term in powernet.nodes)
+		if(istype(term.master, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/A = term.master
+			L += A
+		else if(istype(term.master, /obj/machinery/power/pt_laser))
+			var/obj/machinery/power/pt_laser/P = term.master
+			L += P
 
+	for(var/obj/machinery/power/A as anything in L)
+		var/area/place = get_area(A)
+		if (place)
+			.["unitNames"] += list(
+				"\ref[A]" = place.name
+			)
 
-	user.machine = src
-	var/t = "<TT><B>Engine and SMES Monitoring</B><HR>"
+/obj/machinery/computer/power_monitor/smes/ui_data(mob/user)
+	var/datum/powernet/powernet = src.get_direct_powernet()
+	if (!istype(powernet))
+		return
+	. = list(
+		"available" = powernet.avail,
+		"load" = powernet.viewload,
+		"units" = list(),
+		"history" = src.history,
+	)
 
+	var/list/L = list()
+	for(var/obj/machinery/power/terminal/term in powernet.nodes)
+		if(istype(term.master, /obj/machinery/power/smes))
+			var/obj/machinery/power/smes/A = term.master
+			L += A
+		else if(istype(term.master, /obj/machinery/power/pt_laser))
+			var/obj/machinery/power/pt_laser/P = term.master
+			L += P
 
-	if(!powernet)
-		t += "<span style=\"color:red\">No connection</span>"
-	else
+	for(var/obj/machinery/power/smes/A in L)
+		.["units"] += list(list(
+			"\ref[A]",
+			round(100.0*A.charge/A.capacity, 0.1),
+			A.charging,
+			A.chargelevel,
+			A.output,
+			A.online,
+			A.loaddemand
+		))
 
-		var/list/L = list()
-		for(var/obj/machinery/power/terminal/term in powernet.nodes)
-			if(istype(term.master, /obj/machinery/power/smes))
-				var/obj/machinery/power/smes/A = term.master
-				L += A
-			else if(istype(term.master,/obj/machinery/power/pt_laser))
-				var/obj/machinery/power/pt_laser/P = term.master
-				L += P
-
-		t += "<PRE>Engine Output: [engineering_notation(powernet.avail)]W<BR>SMES/PTL Draw:     [engineering_notation(powernet.viewload)]W<BR>"
-
-		t += "<FONT SIZE=-1>"
-
-		if(L.len > 0)
-
-			t += "Area                   Stored Power | Charging |   Input |  Output | Active | Load<HR>"
-
-			for(var/obj/machinery/power/smes/A in L)
-				var/area/place = get_area(A)
-				t += copytext(add_tspace(place.name, 30), 1, 30)
-
-				t += "[add_lspace(round(100.0*A.charge/A.capacity, 0.1), 5)]% |      [A.charging ? "Yes" : " No"] | [add_lspace(A.chargelevel,7)] | [add_lspace(A.output,7)] |    [A.online ? "Yes" : " No"] | [A.loaddemand]<BR>"
-
-			for(var/obj/machinery/power/pt_laser/P in L)
-				var/area/place = get_area(P)
-				t += copytext(add_tspace(place.name, 30), 1, 30)
-
-				t += "[add_lspace(round(100.0*P.charge/P.output, 0.1), 5)]% |      [P.charging ? "Yes" : " No"] | [add_lspace(P.chargelevel,7)] | [add_lspace(P.output,7)] |    [P.online ? "Yes" : " No"] | N/A<BR>"
-
-		t += "</FONT></PRE>"
-
-	t += "<BR><HR><A href='?src=\ref[src];close=1'>Close</A></TT>"
-
-	user.Browse(t, "window=[window_tag];size=660x400")
-	onclose(user, window_tag)
+	for(var/obj/machinery/power/pt_laser/P in L)
+		.["units"] += list(list(
+			"\ref[P]",
+			P.output ? round(100.0*P.charge/P.output, 0.1) : 0,
+			P.charging,
+			P.chargelevel,
+			P.output,
+			P.online,
+		))

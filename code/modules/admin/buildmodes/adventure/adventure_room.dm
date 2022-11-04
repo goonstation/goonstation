@@ -18,7 +18,7 @@
 		else
 			var/turf/B = get_turf(object)
 			if (A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">The two corners must be on the same Z!</span>")
+				boutput(usr, "<span class='alert'>The two corners must be on the same Z!</span>")
 				return
 
 			var/tz = A.z
@@ -30,8 +30,9 @@
 
 			if (minx >= maxx - 1 || miny >= maxy - 1)
 				for(var/turf/T in block(A, B))
-					var/atom/at = new walltype(T)
-					at.dir = holder.dir
+					var/atom/at = T
+					T.ReplaceWith(walltype, keep_old_material=0, force=1)
+					at.set_dir(holder.dir)
 					blink(get_turf(at))
 					new /area/adventure(at)
 					reset_lum(at)
@@ -49,10 +50,12 @@
 					tx = minx
 					adj = locate(tx - 1, ty, tz)
 					if (!adj || adj.density || istype(adj, /turf/space))
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
-					C.dir = WEST
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
+					C.set_dir(WEST)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -61,10 +64,12 @@
 					tx = maxx
 					adj = locate(tx + 1, ty, tz)
 					if (!adj || adj.density || istype(adj, /turf/space))
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
-					C.dir = EAST
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
+					C.set_dir(EAST)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -74,10 +79,12 @@
 					ty = miny
 					adj = locate(tx, ty - 1, A.z)
 					if (!adj || adj.density || istype(adj, /turf/space))
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
-					C.dir = SOUTH
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
+					C.set_dir(SOUTH)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -86,10 +93,12 @@
 					ty = maxy
 					adj = locate(tx, ty + 1, A.z)
 					if (!adj || adj.density || istype(adj, /turf/space))
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
-					C.dir = NORTH
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
+					C.set_dir(NORTH)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -103,12 +112,15 @@
 					adj3 = locate(tx - 1, ty, tz)
 					adj4 = locate(tx, ty - 1, tz)
 					if (!adj3 || !adj4 || istype(adj3, /turf/space) || istype(adj4, /turf/space) || adj3.density || adj4.density)
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
 				else
-					C = new walltype(locate(tx, ty, tz))
-				C.dir = SOUTHWEST
+					C = locate(tx, ty, tz)
+					C.ReplaceWith(walltype, keep_old_material=0, force=1)
+				C.set_dir(SOUTHWEST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -122,12 +134,15 @@
 					adj3 = locate(tx + 1, ty, tz)
 					adj4 = locate(tx, ty - 1, tz)
 					if (!adj3 || !adj4 || istype(adj3, /turf/space) || istype(adj4, /turf/space) || adj3.density || adj4.density)
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
 				else
-					C = new walltype(locate(tx, ty, tz))
-				C.dir = SOUTHEAST
+					C = locate(tx, ty, tz)
+					C.ReplaceWith(walltype, keep_old_material=0, force=1)
+				C.set_dir(SOUTHEAST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -141,12 +156,15 @@
 					adj3 = locate(tx - 1, ty, tz)
 					adj4 = locate(tx, ty + 1, tz)
 					if (!adj3 || !adj4 || istype(adj3, /turf/space) || istype(adj4, /turf/space) || adj3.density || adj4.density)
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
 				else
-					C = new walltype(locate(tx, ty, tz))
-				C.dir = NORTHWEST
+					C = locate(tx, ty, tz)
+					C.ReplaceWith(walltype, keep_old_material=0, force=1)
+				C.set_dir(NORTHWEST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -160,12 +178,15 @@
 					adj3 = locate(tx + 1, ty, tz)
 					adj4 = locate(tx, ty + 1, tz)
 					if (!adj3 || !adj4 || istype(adj3, /turf/space) || istype(adj4, /turf/space) || adj3.density || adj4.density)
-						C = new walltype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(walltype, keep_old_material=0, force=1)
 					else
-						C = new floortype(locate(tx, ty, tz))
+						C = locate(tx, ty, tz)
+						C.ReplaceWith(floortype, keep_old_material=0, force=1)
 				else
-					C = new walltype(locate(tx, ty, tz))
-				C.dir = NORTHEAST
+					C = locate(tx, ty, tz)
+					C.ReplaceWith(walltype, keep_old_material=0, force=1)
+				C.set_dir(NORTHEAST)
 				blink(C)
 				new /area/adventure(C)
 				reset_lum(C)
@@ -174,8 +195,9 @@
 				B = locate(maxx - 1, maxy - 1, tz)
 
 				for(var/turf/T in block(Q, B))
-					C = new floortype(T)
-					C.dir = holder.dir
+					C = T
+					C.ReplaceWith(floortype, keep_old_material=0, force=1)
+					C.set_dir(holder.dir)
 					blink(C)
 					new /area/adventure(C)
 					reset_lum(C)
@@ -190,4 +212,4 @@
 		var/wallname = "[kind] wall"
 		floortype = turfs[turfname]
 		walltype = turfs[wallname]
-		boutput(usr, "<span style=\"color:blue\">Now building [kind] rooms in wide area spawn mode.</span>")
+		boutput(usr, "<span class='notice'>Now building [kind] rooms in wide area spawn mode.</span>")

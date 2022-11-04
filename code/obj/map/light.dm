@@ -20,6 +20,11 @@
 		light.set_brightness(src.brightness / 5)
 		light.enable()
 
+	disposing()
+		qdel(src.light)
+		src.light = null
+		..()
+
 	// some common presets
 	cyan
 		name = "glow - CYAN";
@@ -98,6 +103,13 @@
 		color_g = 0.35
 		color_r = 0.35
 
+	brighterwhite
+		name = "glow - BRIGHTER WHITE"
+		brightness = 5
+		color_b = 0.35
+		color_g = 0.35
+		color_r = 0.35
+
 	green
 		icon_state = "lightG"
 		name = "glow - GREEN"
@@ -126,3 +138,17 @@
 		color_r = 0.8
 		color_g = 0.8
 		color_b = 0.8
+
+	pink
+		name = "glow - PINK"
+		brightness = 4
+		color_r = 0.9
+		color_g = 0.4
+		color_b = 0.7
+
+	purple
+		name = "glow - PURPLE"
+		brightness = 4
+		color_r = 0.7
+		color_g = 0.4
+		color_b = 0.9

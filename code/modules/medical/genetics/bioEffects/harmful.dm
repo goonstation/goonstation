@@ -6,7 +6,7 @@
 	name = "Blindness"
 	desc = "Disconnects the optic nerves from the brain, rendering the subject unable to see."
 	id = "blind"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You can't seem to see anything!"
@@ -25,7 +25,7 @@
 	name = "Frontal Gyrus Suspension"
 	desc = "Completely shuts down the speech center of the subject's brain."
 	id = "mute"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	msgGain = "You feel unable to express yourself at all."
@@ -37,13 +37,13 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	icon_state  = "bad"
+	icon_state  = "speech_mime"
 
 /datum/bioEffect/deaf
 	name = "Deafness"
 	desc = "Diminishes the subject's tympanic membrane, rendering them unable to hear."
 	id = "deaf"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
@@ -75,35 +75,35 @@
 	name = "Dyspraxia"
 	desc = "Hinders transmissions in the subject's nervous system, causing poor motor skills."
 	id = "clumsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -10
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
 	name = "Narcolepsy"
 	desc = "Alters the sleep center of the subject's brain, causing bouts of involuntary sleepiness."
 	id = "narcolepsy"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	isBad = 1
 	msgGain = "You feel a bit sleepy."
 	msgLose = "You feel wide awake."
 	reclaim_fail = 15
-	stability_loss = -5
+	stability_loss = -15
 	var/sleep_prob = 4
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
-		if (prob(sleep_prob))
+		if (probmult(sleep_prob))
 			L.sleeping = 1
 
 /datum/bioEffect/narcolepsy/super
@@ -120,70 +120,38 @@
 	can_reclaim = 0
 	can_scramble = 0
 	curable_by_mutadone = 0
-	sleep_prob = 35
+	sleep_prob = 10 //reduced from 35
 	icon_state  = "bad"
 
 /datum/bioEffect/coprolalia
 	name = "Coprolalia"
 	desc = "Causes involuntary outbursts from the subject."
 	id = "coprolalia"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "You can't seem to shut up!"
 	msgLose = "You feel more in control."
 	reclaim_fail = 15
 	var/talk_prob = 10
-	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","TITS","ARGH","WOOF","CRAP","BALLS")
+	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
 		if (isdead(L))
 			return
-		if (prob(talk_prob))
+		if (probmult(talk_prob))
 			L.say(pick(talk_strings))
-
-/datum/bioEffect/fat
-	name = "Obesity"
-	desc = "Greatly slows the subject's metabolism, enabling greater buildup of lipid tissue."
-	id = "fat"
-	probability = 99
-	effectType = effectTypeDisability
-	isBad = 1
-	msgGain = "You feel blubbery and lethargic!"
-	msgLose = "You feel fit!"
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnAdd()
-		..()
-		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-			owner.unlock_medal("Space Ham", 1)
-
-	OnRemove()
-		..()
-		if (ishuman(owner))
-			owner:set_body_icon_dirty()
-
-	OnLife()
-		if(..()) return
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (prob(1) && !H.find_ailment_by_type(/datum/ailment/malady/heartdisease))
-				H.contract_disease(/datum/ailment/malady/heartdisease,null,null,1)
-		return
 
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"
 	desc = "Reduces the subject's ability to see clearly without glasses or other visual aids."
 	id = "bad_eyesight"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 99
 	isBad = 1
 	msgGain = "Your vision blurs."
@@ -221,11 +189,11 @@
 					applied = 0
 		return
 
-/datum/bioEffect/epilepsy
-	name = "Epilepsy"
-	desc = "Causes damage to the subject's brain structure, resulting in occasional siezures from brain misfires."
-	id = "epilepsy"
-	effectType = effectTypeDisability
+/datum/bioEffect/stupefaction
+	name = "Stupefaction"
+	desc = "Causes damage to the subject's brain structure, occassionally utterly stupefying and stunning them."
+	id = "stupefaction"
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 66
 	blockCount = 3
@@ -235,21 +203,20 @@
 	stability_loss = -10
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult = 1)
 		if(..()) return
 		if (isdead(owner))
 			return
-		if (prob(1) && !owner.getStatusDuration("paralysis"))
-			owner:visible_message("<span style=\"color:red\"><B>[owner] starts having a seizure!</span>", "<span style=\"color:red\">You have a seizure!</span>")
-			owner.setStatus("paralysis", max(owner.getStatusDuration("paralysis"), 20))
-			owner:make_jittery(100)
+		if (probmult(1) && !owner.getStatusDuration("paralysis"))
+			owner:visible_message("<span class='alert'><B>[owner] looks totally stupefied!</span>", "<span class='alert'>You feel totally stupefied!</span>")
+			owner.setStatusMin("paralysis", 2 SECONDS * mult)
 		return
 
 /datum/bioEffect/thermal_vuln
 	name = "Thermal Vulnerability"
 	desc = "Cripples the subject's thermoregulation, rendering them more vulnerable to abnormal temperatures."
 	id = "thermal_vuln"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 40
 	blockCount = 3
@@ -258,6 +225,7 @@
 	reclaim_fail = 15
 	stability_loss = -20
 	icon_state  = "bad"
+	effect_group = "thermal"
 
 	OnAdd()
 		..()
@@ -275,7 +243,7 @@
 	name = "Blood Toxification"
 	desc = "Impairs the subject's blood filtration, resulting in gradual toxic buildup that must be purged by outside assistance."
 	id = "toxification"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 13
 	blockCount = 3
@@ -286,67 +254,34 @@
 	var/tox_amount = 1
 	var/tox_prob = 10
 	icon_state  = "bad"
+	effect_group = "tox"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (iscarbon(owner))
 			var/mob/living/carbon/C = owner
 			if (prob(tox_prob))
-				C.toxloss += tox_amount
-
-/datum/bioEffect/tourettes
-	name = "Tourettes"
-	desc = "Alters the subject's brain structure, causing periodic involuntary movements and outbursts."
-	id = "tourettes"
-	effectType = effectTypeDisability
-	isBad = 1
-	probability = 66
-	msgGain = "You feel like you can't control your actions fully."
-	msgLose = "You feel in full control of yourself once again."
-	reclaim_fail = 15
-	stability_loss = -5
-	icon_state  = "bad"
-
-	OnLife()
-		if(..()) return
-		if (isdead(owner))
-			return
-		if ((prob(10) && !owner.getStatusDuration("paralysis")))
-			owner.changeStatus("stunned", 3 SECONDS)
-			SPAWN_DBG( 0 )
-				switch(rand(1, 3))
-					if (1 to 2)
-						owner.emote("twitch")
-					if (3)
-						if (owner.client)
-							var/enteredtext = winget(owner, "mainwindow.input", "text")
-							if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)
-								winset(owner, "mainwindow.input", "text=\"\"")
-								if (prob(50))
-									owner.say(uppertext(copytext(enteredtext,6,0)))
-								else
-									owner.say(copytext(enteredtext,6,0))
-		return
+				C.take_toxin_damage(tox_amount*mult)
 
 /datum/bioEffect/cough
 	name = "Chronic Cough"
 	desc = "Enhances the sensitivity of nerves in the subject's throat, causing periodic coughing fits."
 	id = "cough"
 	probability = 99
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your throat."
 	msgLose = "Your throat clears up."
 	reclaim_fail = 15
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (isdead(owner))
 			return
-		if ((prob(5) && !owner.getStatusDuration("paralysis")))
+		if ((probmult(5) && !owner.getStatusDuration("paralysis")))
 			owner:drop_item()
-			SPAWN_DBG (0)
+			SPAWN(0)
 				owner:emote("cough")
 				return
 		return
@@ -357,14 +292,14 @@
 	name = "Motor Neuron Signal Enhancement" // heh
 	desc = "Causes involuntary muscle contractions in limbs, due to a loss of inhibition of motor neurons."
 	id = "funky_limb"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 4
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -20
+	stability_loss = -25
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -400,7 +335,7 @@
 			src.limb_type = LIMB_IS_LEG
 			return
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		if (!src.limb || (src.limb.loc != src.owner))
 			return
@@ -408,33 +343,33 @@
 			return
 
 		if (src.limb_type == LIMB_IS_ARM)
-			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
-			else if (prob(2))
+			if (probmult(5))
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] makes a [pick("rude", "funny", "weird", "lewd", "strange", "offensive", "cruel", "furious")] gesture!</span>")
+			else if (probmult(2))
 				owner.emote("slap")
-			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+			else if (probmult(2))
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
-			else if (prob(1))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
+			else if (probmult(1))
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
 				while (prob(80) && owner.bioHolder.HasEffect("funky_limb"))
 					owner.losebreath = max(owner.losebreath, 2)
-					sleep(10)
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
+					sleep(1 SECOND)
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] stops trying to strangle [him_or_her(owner)].</span>")
 			return
 
 		else if (src.limb_type == LIMB_IS_LEG)
-			if (prob(5))
-				owner.visible_message("<span style=\"color:red\">[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
-			else if (prob(3))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
+			if (probmult(5))
+				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] twitches [pick("rudely", "awkwardly", "weirdly", "lewdly", "strangely", "offensively", "cruelly", "furiously")]!</span>")
+			else if (probmult(3))
+				owner.visible_message("<span class='alert'><B>[owner.name] trips over [his_or_her(owner)] own [src.limb]!</B></span>")
 				owner.changeStatus("weakened", 2 SECONDS)
-			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
-				owner.changeStatus("paralysis", 70)
+			else if (probmult(2))
+				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] kicks [him_or_her(owner)] in the head somehow!</B></span>")
+				owner.changeStatus("paralysis", 7 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(5,10), 0, 0, DAMAGE_BLUNT)
-			else if (prob(2))
-				owner.visible_message("<span style=\"color:red\"><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
+			else if (probmult(2))
+				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
 
@@ -449,7 +384,7 @@
 	name = "Radioactive"
 	desc = "The subject suffers from constant radiation sickness and causes the same on nearby organics."
 	id = "radioactive"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	probability = 66
 	blockCount = 3
 	blockGaps = 3
@@ -459,28 +394,25 @@
 	msgLose = "You no longer feel awful and sick all over."
 	reclaim_fail = 15
 	icon_state  = "bad"
+	effect_group = "rad"
 
 	OnAdd()
 		if (ishuman(owner))
 			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#BBD90F"
+		owner.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE)
 		..()
 
-	OnLife()
-		if(..()) return
-		owner.changeStatus("radiation", 30, 1)
-		for(var/mob/living/L in range(1, owner))
-			if (L == owner)
-				continue
-			boutput(L, "<span style=\"color:red\">You are enveloped by a soft green glow emanating from [owner].</span>")
-			L.changeStatus("radiation", 50, 1)
-		return
+	OnRemove()
+		. = ..()
+		var/datum/component/radioactive/R = owner.GetComponent(/datum/component/radioactive)
+		R?.RemoveComponent()
 
 /datum/bioEffect/mutagenic_field
 	name = "Mutagenic Field"
 	desc = "The subject emits low-level radiation that may cause everyone in range to mutate."
 	id = "mutagenic_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -493,7 +425,7 @@
 	lockedDiff = 4
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
-	stability_loss = 50
+	stability_loss = 35
 	var/affect_others = 0
 	var/field_range = 2
 	var/proc_prob = 5
@@ -507,9 +439,9 @@
 			if (prob(5))
 				mutation_type = "good"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(proc_prob))
+		if (probmult(proc_prob))
 			owner.bioHolder.RandomEffect(mutation_type,1)
 			if (affect_others)
 				for(var/mob/living/L in range(field_range, get_turf(owner)))
@@ -522,7 +454,7 @@
 	name = "Spatial Destabilization"
 	desc = "Causes the subject's molecular structure to become partially unstuck in space."
 	id = "involuntary_teleporting"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	probability = 33
 	blockCount = 3
@@ -534,28 +466,30 @@
 	lockedDiff = 3
 	lockedChars = list("G","C","A","T")
 	lockedTries = 8
-	stability_loss = 15
+	stability_loss = 10
 	var/tele_prob = 5
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!isturf(L.loc))
 			return
 
 		if (isrestrictedz(L.z))
-			boutput(L, "<span style=\"color:blue\">You feel quite strange. Almost as if you're not supposed to be here.</span>")
+			boutput(L, "<span class='notice'>You feel quite strange. Almost as if you're not supposed to be here.</span>")
 			return
 
-		if (prob(tele_prob))
+		if (probmult(tele_prob))
 			var/list/randomturfs = new/list()
 			for(var/turf/simulated/floor/T in orange(L, 10))
 				randomturfs.Add(T)
 
 			if (randomturfs.len > 0)
 				L.emote("hiccup")
-				L.set_loc(pick(randomturfs))
+				var/turf/destination = pick(randomturfs)
+				logTheThing(LOG_COMBAT, L, "was teleported by Spatial Destabilization from [log_loc(L)] to [log_loc(destination)].")
+				L.set_loc(pick(destination))
 
 //////////////
 // Annoying //
@@ -565,7 +499,7 @@
 	name = "Irritable Bowels"
 	desc = "Causes the subject to experience frequent involuntary flatus."
 	id = "farty"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -574,15 +508,78 @@
 	var/emote_type = "fart"
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
 		var/mob/living/L = owner
 		if (!L)
 			return
 		if (isdead(L))
 			return
-		if (prob(emote_prob))
+		if (probmult(emote_prob))
 			L.emote(emote_type)
+
+/datum/bioEffect/colorblindness
+	name = "Protanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing red-green colorblindness."
+	id = "protanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot more yellow."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_PROTANOPIA, COLOR_MATRIX_PROTANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_PROTANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/greenblind
+	name = "Deuteranopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing green to be indistinguishable from red."
+	id = "deuteranopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less green."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_DEUTERANOPIA, COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_DEUTERANOPIA_LABEL)
+		return
+
+/datum/bioEffect/colorblindness/blueblind
+	name = "Tritanopia"
+	desc = "Selectively inhibits the L-cones in the subject's eyes, causing blue colorblindness."
+	id = "tritanopia"
+	effectType = EFFECT_TYPE_DISABILITY
+	isBad = 1
+	msgGain = "Everything starts looking a lot less blue."
+	msgLose = "You notice a few extra colors."
+	probability = 99
+	icon_state  = "bad"
+
+	OnAdd()
+		src.removed = 0
+		owner.apply_color_matrix(COLOR_MATRIX_TRITANOPIA, COLOR_MATRIX_TRITANOPIA_LABEL)
+		return
+
+	OnRemove()
+		src.removed = 1
+		owner.remove_color_matrix(COLOR_MATRIX_TRITANOPIA_LABEL)
+		return
 
 /datum/bioEffect/emoter/screamer
 	name = "Paranoia"
@@ -640,7 +637,7 @@
 	name = "Nectar Perspiration"
 	desc = "Causes the subject to perspire nectar that attracts abnormally small bees."
 	id = "buzz"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "Your guts are rumbling."
 	msgLose = "Your guts settle down."
@@ -648,25 +645,38 @@
 	stability_loss = -10	//maybe 5
 	var/prob_sting = 10;
 	icon_state  = "bad"
+	var/obj/effects/bees/effect
 
 	OnAdd()
 		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "buzz", layer = MOB_EFFECT_LAYER)
+			effect = new/obj/effects/bees(owner)
 		..()
 
-	OnLife()
+	OnRemove()
+		qdel(effect)
+
+	OnLife(var/mult)
 		var/mob/living/L = owner
 		if (!istype(L) || (L.stat == 2))
 			return
-		if (prob(prob_sting))
-			boutput(src, "<span style=\"color:red\">A bee in your cloud stung you! How rude!</span>")
+		if (probmult(prob_sting))
+			if (ishuman(L))
+				var/mob/living/carbon/human/H = L
+				if (prob(50))
+					if (istype(H.wear_suit, /obj/item/clothing/suit/bio_suit/beekeeper))
+						boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your suit protects you.</span>")
+						return
+				else if (istype(H.head, /obj/item/clothing/head/bio_hood/beekeeper))
+					boutput(owner, "<span class='subtle'>A bee in your cloud tries to sting you, but your hood protects you.</span>")
+					return
+			boutput(owner, "<span class='alert'>A bee in your cloud stung you! How rude!</span>")
 			L.reagents.add_reagent("histamine", 2)
 
 /datum/bioEffect/emp_field
 	name = "Electromagnetic Field"
 	desc = "The subject produces small, random electromagnetic pulses around it."
 	id = "emp_field"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	msgGain = "You feel more connected to electromagnetic fields."
 	msgLose = "You feel less connected to electromagnetic fields."
 	blockCount = 1
@@ -676,31 +686,30 @@
 	stability_loss = -10
 	var/const/radius = 2
 	icon_state  = "bad"
+	var/roundedmultremainder
 
-	OnLife()
+	OnLife(var/mult)
 		..()
-		if (prob(50))
-			return
+		if (probmult(50))
+			var/turf/T
+			//don't really need this but to make it more harmful to the user.
+			if (prob(5))
+				T = get_turf(owner)
+			else
+				T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), 1)
 
-		var/turf/T
-		//don't really need this but to make it more harmful to the user.
-		if (prob(5))
-			T = get_turf(owner)
-		else
-			T = locate(owner.x + rand(-radius/2,radius+2), owner.y+rand(-radius/2,radius/2), 1)
+			var/obj/overlay/pulse = new/obj/overlay(T)
+			pulse.icon = 'icons/effects/effects.dmi'
+			pulse.icon_state = "emppulse"
+			pulse.name = "emp pulse"
+			pulse.anchored = 1
+			SPAWN(2 SECONDS)
+				if (pulse) qdel(pulse)
 
-		var/obj/overlay/pulse = new/obj/overlay(T)
-		pulse.icon = 'icons/effects/effects.dmi'
-		pulse.icon_state = "emppulse"
-		pulse.name = "emp pulse"
-		pulse.anchored = 1
-		SPAWN_DBG (20)
-			if (pulse) qdel(pulse)
-
-		//maybe have this only emp some things on the tile.
-		if(istype(T))
-			for (var/atom/O in T.contents)
-				O.emp_act()
+			//maybe have this only emp some things on the tile.
+			if(istype(T))
+				for (var/atom/O in T.contents)
+					O.emp_act()
 
 /datum/bioEffect/fitness_debuff
 	name = "Physically Unfit"
@@ -708,7 +717,7 @@
 	id = "fitness_debuff"
 	probability = 60
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	blockCount = 2
 	blockGaps = 3
 	reclaim_mats = 30
@@ -718,34 +727,35 @@
 	lockedGaps = 1
 	lockedDiff = 3
 	lockedTries = 8
-	stability_loss = 5
+	stability_loss = -10
 	icon_state  = "bad"
+	effect_group = "fit"
 
 	OnAdd()
-		src.owner.add_stam_mod_regen("g-fitness-debuff", -2)
+		APPLY_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff", -2)
 		src.owner.add_stam_mod_max("g-fitness-debuff", -30)
 
 	OnRemove()
-		src.owner.remove_stam_mod_regen("g-fitness-debuff")
+		REMOVE_ATOM_PROPERTY(src.owner, PROP_MOB_STAMINA_REGEN_BONUS, "g-fitness-debuff")
 		src.owner.remove_stam_mod_max("g-fitness-debuff")
 
 /datum/bioEffect/tinnitus
 	name = "Tinnitus"
 	desc = "Causes the subject to almost constantly hear a terrible/annoying ringing in their ears."
 	id = "tinnitus"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You hear a ringing in your ears."
 	msgLose = "The ringing has stopped...Finally. Thank the Space-Gods."
-	stability_loss = -5
+	stability_loss = 0
 	probability = 99
 	var/ring_prob = 6
 	icon_state  = "bad"
 
-	OnLife()
-		if (prob(ring_prob) && owner.client)
-			// owner.client << sound("phone-ringing.wav")		//play sound only for client. Untested, don't know the sound
-			owner.client << sound("sound/machines/phones/ring_incoming.ogg")		//play sound only for client. Untested, don't know the sound
+	OnLife(var/mult)
+		if (probmult(ring_prob) && owner.client)
+			// owner.client << sound('sound/machines/phones/ring_incoming.ogg')		//hee hoo let's give someone legit tinnitus with the mutation, that's good game design (it's actually not)
+			owner.playsound_local(owner.loc, 'sound/machines/phones/ring_incoming.ogg', 40, 1)
 
 /datum/bioEffect/anemia
 	name = "Anemia"
@@ -753,19 +763,20 @@
 	id = "anemia"
 	probability = 55
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "You feel lightheaded."
 	msgLose = "Your lightheadedness fades."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
-	OnLife()
+	OnLife(var/mult)
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume > 400 && H.blood_volume > 0)
-				H.blood_volume -= 2
+				H.blood_volume -= 2*mult
 
 /datum/bioEffect/polycythemia
 	name = "Polycythemia"
@@ -773,20 +784,21 @@
 	id = "polycythemia"
 	probability = 45
 	isBad = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	msgGain = "Your breathing quickens."
 	msgLose = "Your breathing returns to normal."
-	stability_loss = -5
+	stability_loss = -10
 	var/run = 1
 	icon_state  = "bad"
+	effect_group = "blood"
 
-	OnLife()
+	OnLife(var/mult)
 
 		if (ishuman(owner))
 			var/mob/living/carbon/human/H = owner
 
 			if (H.blood_volume < 600 && H.blood_volume > 0)
-				H.blood_volume += 2
+				H.blood_volume += 2*mult
 
 
 ////////////////////////////
@@ -797,7 +809,7 @@
 	name = "Meta-Neural Transferral"
 	desc = "The subject's brainwaves will occasionally involuntarily switch with those of another near them."
 	id = "mind_jockey"
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
@@ -810,9 +822,12 @@
 	var/proc_prob = 5
 	icon_state  = "bad"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(proc_prob))
+		var/turf/T = get_turf(owner)
+		if(isrestrictedz(T?.z))
+			return
+		if (probmult(proc_prob))
 			var/list/potential_victims = list()
 			for(var/mob/living/carbon/human/H in range(7,owner))
 				if (!H.client || H.stat)
@@ -820,8 +835,8 @@
 				potential_victims += H
 			if (potential_victims.len)
 				var/mob/living/carbon/human/this_one = pick(potential_victims)
-				boutput(src, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
-				boutput(this_one, "<span style=\"color:red\">Your mind twangs uncomfortably!</span>")
+				boutput(src, "<span class='alert'>Your mind twangs uncomfortably!</span>")
+				boutput(this_one, "<span class='alert'>Your mind twangs uncomfortably!</span>")
 				owner.mind.swap_with(this_one)
 
 /datum/bioEffect/mutagenic_field/prenerf
@@ -858,11 +873,11 @@
 	stability_loss = 15
 	var/prob_per_tick = 15
 	var/list/emotes = list("slap","snap","hiccup","burp","fart","dance","tantrum","flipoff","flip","boggle")
-	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/Saxophone_CarelessWhisper.ogg',
+	var/list/noises = list('sound/musical_instruments/WeirdHorn_0.ogg','sound/voice/animal/cat.ogg','sound/musical_instruments/piano/furelise.ogg',
 	'sound/machines/engine_alert3.ogg','sound/machines/fortune_riff.ogg','sound/misc/ancientbot_grump2.ogg',
 	'sound/voice/farts/diarrhea.ogg','sound/misc/sad_server_death.ogg','sound/voice/animal/werewolf_howl.ogg',
 	'sound/voice/MEruncoward.ogg','sound/voice/macho/macho_become_enraged01.ogg',
-	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordstart.ogg')
+	'sound/voice/macho/macho_rage_81.ogg','sound/voice/macho/macho_rage_73.ogg','sound/weapons/male_cswordturnon.ogg')
 	icon_state  = "bad"
 
 	New(var/for_global_list = 0)
@@ -870,9 +885,9 @@
 		if (!for_global_list)
 			name = "Booster Gene"
 
-	OnLife()
+	OnLife(var/mult)
 		if(..()) return
-		if (prob(prob_per_tick))
+		if (probmult(prob_per_tick))
 			var/mob/living/L = owner
 			var/picker = rand(1,5)
 			switch(picker)
@@ -881,7 +896,7 @@
 				if (2)
 
 					if (isrestrictedz(L.z))
-						boutput(L, "<span style=\"color:blue\">You feel your genes tingling inside you. Strange.</span>")
+						boutput(L, "<span class='notice'>You feel your genes tingling inside you. Strange.</span>")
 						return
 
 					var/list/randomturfs = new/list()
@@ -898,7 +913,7 @@
 					var/turf/T = get_turf(L)
 					T.color = random_color()
 				if (5)
-					L.visible_message("<span style=\"color:red\"><b>[L.name]</b> makes a weird noise!</span>")
+					L.visible_message("<span class='alert'><b>[L.name]</b> makes a weird noise!</span>")
 					playsound(L.loc, pick(noises), 50, 0)
 
 /datum/bioEffect/sneeze
@@ -906,18 +921,17 @@
 	desc = "Enhances the sensitivity of nerves in the subject's nose, causing periodic sneezing."
 	id = "sneeze"
 	probability = 66
-	effectType = effectTypeDisability
+	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel an irritating itch in your nose."
 	msgLose = "Your nose clears up."
 	reclaim_fail = 15
 	icon_state  = "bad"
 
-	OnLife()
-		if (prob(5))
+	OnLife(var/mult)
+		if (probmult(5))
 			if (isdead(owner))
 				return
 			else
 				owner:emote("sneeze")
 		return
-

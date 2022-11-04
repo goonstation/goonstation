@@ -63,9 +63,9 @@
 
 		return desc_string
 
-	attackby(var/obj/item/w as obj, var/mob/user as mob) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
+	attackby(var/obj/item/w, var/mob/user) //handles reloading with paper, scanning paper, scanning photos, scanning paper photos
 		if (src.use_state == 2) //photocopier is busy?
-			boutput(user, "<span style=\"color:red\">/The [src] is busy! Try again later!</span>")
+			boutput(user, "<span class='alert'>/The [src] is busy! Try again later!</span>")
 			return
 
 		else if (src.use_state == 1) //is the photocopier open?
@@ -85,11 +85,11 @@
 						boutput(user, "You put the picture on the scan bed, close the lid, and press start...")
 					else
 						boutput(user, "You put the paper on the scan bed, close the lid, and press start...")
-				sleep(3)
+				sleep(0.3 SECONDS)
 				src.icon_state = "close_sesame"
 				flick("scan", src)
-				playsound(src.loc, "sound/machines/scan.ogg", 50, 1)
-				sleep(18)
+				playsound(src.loc, 'sound/machines/scan.ogg', 50, 1)
+				sleep(1.8 SECONDS)
 				src.icon_state = "open_sesame"
 				w.set_loc(get_turf(src))
 				src.visible_message("\The [src] finishes scanning and opens automatically!")
@@ -103,9 +103,14 @@
 
 				else if (istype(w, /obj/item/paper))
 					var/obj/item/paper/P = w
-					src.paper_info += P.name
-					src.paper_info += P.desc
-					src.paper_info += P.info
+					src.paper_info["name"] = P.name
+					src.paper_info["desc"] = P.desc
+					src.paper_info["info"] = P.info
+					src.paper_info["stamps"] = P.stamps
+					src.paper_info["form_fields"] = P.form_fields
+					src.paper_info["field_counter"] = P.field_counter
+					src.paper_info["icon_state"] = P.icon_state
+					src.paper_info["overlays"] = P.overlays
 
 				else if (istype(w, /obj/item/clothing/head/butt))
 					src.butt_stuff = 1
@@ -121,7 +126,10 @@
 		else //photocopier is closed? if someone varedits use state this'll screw up but if they do theyre dumb so
 			if (istype(w, /obj/item/paper))
 				if (src.paper_amount >= 30.0)
-					boutput(user, "<span style=\"color:red\">You can't fit any more paper into \the [src].</span>")
+					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
+					return
+				var/obj/item/paper/P = w
+				if (P.info != "" && tgui_alert(user, "This paper has writing on it, are you sure you want to put it in the inlet tray?", "Warning", list("Yes", "No")) == "No")
 					return
 				boutput(user, "You load the sheet of paper into \the [src].")
 				src.paper_amount++
@@ -130,31 +138,33 @@
 
 			else if (istype(w, /obj/item/paper_bin))
 				if ((w.amount + src.paper_amount) > 30.0)
-					boutput(user, "<span style=\"color:red\">You can't fit any more paper into \the [src].</span>")
+					boutput(user, "<span class='alert'>You can't fit any more paper into \the [src].</span>")
 					return
 				boutput(user, "You load the paper bin into \the [src].")
 				var/obj/item/paper_bin/P = w
 				src.paper_amount += w.amount
-				P.amount = 0.0
+				P.amount = 0
 				P.update()
 				return
 
 		..()
 
-	attack_hand(var/mob/user as mob) //handles choosing amount, printing, scanning
+	attack_hand(var/mob/user) //handles choosing amount, printing, scanning
 		if (src.use_state == 2)
-			boutput(user, "<span style=\"color:red\">\The [src] is busy right now! Try again later!</span>")
+			boutput(user, "<span class='alert'>\The [src] is busy right now! Try again later!</span>")
 			return
-		var/mode_sel =  input("Which do you want to do?", "Photocopier Controls") as null|anything in list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid")
-		if (get_dist(user, src) <= 1)
+		var/mode_sel = tgui_input_list(user, "Which do you want to do?", "Photocopier Controls", list("Reset Memory", "Print Copies", "Adjust Amount", "Toggle Lid"))
+		if (BOUNDS_DIST(user, src) == 0)
+			if (!mode_sel)
+				return
 			switch(mode_sel)
 				if ("Reset Memory")
 					if (src.use_state == 2)
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					src.reset_all()
-					playsound(src.loc, "sound/machines/bweep.ogg", 50, 1)
-					boutput(user, "<span style=\"color:blue\">You reset \the [src]'s memory.</span>")
+					playsound(src.loc, 'sound/machines/bweep.ogg', 20, 1)
+					boutput(user, "<span class='notice'>You reset \the [src]'s memory.</span>")
 					return
 
 				if ("Print Copies")
@@ -172,8 +182,8 @@
 						if (paper_amount <= 0)
 							break
 						flick("print", src)
-						sleep(18)
-						playsound(src.loc, "sound/machines/printer_thermal.ogg", 50, 1)
+						sleep(1.8 SECONDS)
+						playsound(src.loc, 'sound/machines/printer_thermal.ogg', 30, 1)
 						paper_amount --
 						src.print_stuff()
 					src.use_state = 0
@@ -186,14 +196,14 @@
 						boutput(user, "\The [src] is busy right now! Try again later!")
 						return
 					var/num_sel = input("How many copies do you want to make?", "Photocopier Controls") as num
-					if (num_sel && get_dist(user, src) <= 1)
+					if (isnum_safe(num_sel) && num_sel && BOUNDS_DIST(user, src) == 0)
 						if (num_sel <= src.paper_amount)
 							src.make_amount = num_sel
-							playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+							playsound(src.loc, 'sound/machines/ping.ogg', 20, 1)
 							boutput(user, "Amount set to: [num_sel] sheets.")
 							return
 						else
-							boutput(user, "<span style=\"color:red\">There's not enough paper for that!</span>")
+							boutput(user, "<span class='alert'>There's not enough paper for that!</span>")
 							return
 
 				if ("Toggle Lid")
@@ -210,10 +220,14 @@
 	proc/print_stuff() //handles printing photos, papers
 		if (src.paper_info.len)
 			var/obj/item/paper/P = new(get_turf(src))
-			P.name = src.paper_info[1]
-			P.desc = src.paper_info[2]
-			P.info = src.paper_info[3]
-			P.icon_state = "paper" //bugfix for blank sheets being printed
+			P.name = src.paper_info["name"]
+			P.desc = src.paper_info["desc"]
+			P.info = src.paper_info["info"]
+			P.stamps = src.paper_info["stamps"]
+			P.form_fields = src.paper_info["form_fields"]
+			P.field_counter = src.paper_info["field_counter"]
+			P.icon_state = src.paper_info["icon_state"]
+			P.overlays = src.paper_info["overlays"]
 
 		else if (src.photo_info.len)
 			var/obj/item/photo/P = new(get_turf(src))

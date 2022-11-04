@@ -9,39 +9,45 @@
 	name = "organic floor"
 	icon_state = "floor1"
 
-/turf/simulated/floor/martian/attackby(obj/item/C as obj, mob/user as mob, params)
+/turf/unsimulated/martian/floor
+	icon = 'icons/turf/martian.dmi'
+	name = "organic floor"
+	icon_state = "floor1"
+
+/turf/simulated/floor/martian/attackby(obj/item/C, mob/user, params)
 	if (istype(C, /obj/item/martianSeed))
 		var/obj/item/martianSeed/S = C
 		if(S)
 			S.plant(src)
-			logTheThing("station", user, null, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "plants a martian biotech seed (<b>Structure:</b> [S.spawn_path]) at [log_loc(src)].")
 			return
 	else
-	 ..()
+		..()
 
 /turf/simulated/martian/wall
 	name = "organic wall"
 	icon_state = "wall1"
 	opacity = 1
 	density = 1
-	blocks_air = 1
+	gas_impermeable = 1
 
 	var/health = 40
 
 	proc/checkhealth()
 		if(src.health <= 0)
-			gib(src.loc)
-			ReplaceWithSpace()
+			SPAWN(0)
+				gib(src.loc)
+				ReplaceWithSpace()
 
 /turf/simulated/martian/wall/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			src.health -= 40
 			checkhealth()
-		if(2.0)
+		if(2)
 			src.health -= 20
 			checkhealth()
-		if(3.0)
+		if(3)
 			src.health -= 5
 			checkhealth()
 
@@ -55,16 +61,16 @@
 	gib = make_cleanable( /obj/decal/cleanable/machine_debris,location)
 	if (prob(25))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 	LAGCHECK(LAG_LOW)
 
 	// SOUTH
 	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(25))
 		gib2.icon_state = "gibdown1"
-	gib2.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib2.streak_cleanable(SOUTH)
 	LAGCHECK(LAG_LOW)
 
 	// RANDOM
 	gib2 = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib2.streak(alldirs)
+	gib2.streak_cleanable(cardinal)

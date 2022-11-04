@@ -1,16 +1,17 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell."
+	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
 	item_state = "cell"
 	flags = FPRINT|TABLEPASS
-	force = 5.0
-	throwforce = 5.0
+	force = 5
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
-	w_class = 3.0
+	health = 8
+	w_class = W_CLASS_NORMAL
 	pressure_resistance = 80
 	var/charge = 0	// note %age conveted to actual charge in New
 	var/maxcharge = 7500
@@ -23,30 +24,12 @@
 	stamina_damage = 10
 	stamina_cost = 10
 	stamina_crit_chance = 10
-	module_research = list("energy" = 8, "engineering" = 1, "miniaturization" = 3)
-	module_research_type = /obj/item/cell
 
 	disposing()
 		if (istype(src.loc,/obj/machinery/power/apc))
 			var/obj/machinery/power/apc/APC = src.loc
 			APC.cell = null
 		..()
-
-	onMaterialChanged()
-		..()
-		if (istype(src.material))
-			if(src.material.hasProperty("radioactive"))
-				genrate = round((material.getProperty("radioactive") / 6.333))
-			else
-				genrate = 0
-
-			if(src.material.hasProperty("electrical"))
-				maxcharge = round((src.material.getProperty("electrical") ** 2) * 3.333)
-			else
-				maxcharge = 2500
-
-			charge = maxcharge
-		return
 
 /obj/item/cell/supercell
 	maxcharge = 15000
@@ -55,7 +38,7 @@
 	name = "erebite power cell"
 	desc = "A small battery/generator unit powered by the unstable mineral Erebite. Do not expose to high temperatures or fire."
 	icon_state = "erebcell"
-	maxcharge = 15000
+	maxcharge = 20000
 	genrate = 10
 	specialicon = 1
 
@@ -72,6 +55,13 @@
 	desc = "A rechargable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
 
+/obj/item/cell/hypercell
+	name = "hyper capacity power cell"
+	desc = "A hyper capacity power cell utilizing the latest in high density energy storage. Warning: Do no- *the rest is scratched out*"
+	icon_state = "hypercell"
+	maxcharge = 25000
+	specialicon = 1
+
 /obj/item/cell/custom
 	name = "Large power cell"
 	desc = "A custom large power cell."
@@ -79,8 +69,31 @@
 
 	New()
 		..()
-		if (!(src in processing_items))
-			processing_items.Add(src)
+		processing_items |= src
+
+	onMaterialChanged()
+		..()
+		if (istype(src.material))
+			genrate = 0
+			if(src.material.hasProperty("radioactive"))
+				genrate += round(material.getProperty("radioactive"))
+			if(src.material.hasProperty("n_radioactive"))
+				genrate += round(material.getProperty("n_radioactive") * 2)
+			if(src.material.hasProperty("electrical"))
+				maxcharge = round((src.material.getProperty("electrical") ** 2) * 300, 500)
+			else
+				maxcharge = 2500
+
+			charge = maxcharge
+		return
+
+	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
+		src.setMaterial(coreMat)
+		if(genMat)
+			src.name = "[genMat.name]-doped [src.name]"
+			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
+			maxcharge = round((conductivity ** 2) * 300, 500)
+			genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
 
 /obj/item/cell/charged
 	charge = 7500
@@ -89,13 +102,16 @@
 	charge = 15000
 
 /obj/item/cell/erebite/charged
-	charge = 15000
+	charge = 20000
 
 /obj/item/cell/cerenkite/charged
 	charge = 15000
 
 /obj/item/cell/shell_cell/charged
 	charge = 4000
+
+/obj/item/cell/hypercell/charged
+	charge = 25000
 
 /obj/item/cell/New()
 	..()
@@ -107,19 +123,17 @@
 
 //	charge = charge * maxcharge/100.0		// map obj has charge as percentage, convert to real value here
 
-	SPAWN_DBG(0.5 SECONDS)
-		updateicon()
+	SPAWN(0.5 SECONDS)
+		UpdateIcon()
 
-	if (genrate && !(src in processing_items))
-		processing_items.Add(src)
+	if (genrate)
+		processing_items |= src
 
 /obj/item/cell/disposing()
-	if (src in processing_items)
-		processing_items.Remove(src)
+	processing_items -= src
 	..()
 
-/obj/item/cell/proc/updateicon()
-
+/obj/item/cell/update_icon()
 	if(src.specialicon) return
 
 	if(maxcharge <= 2500) icon_state = "cell"
@@ -146,7 +160,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 // recharge the cell
@@ -155,7 +169,7 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 /obj/item/cell/process()
@@ -165,17 +179,17 @@
 	if (genrate > 0) give(genrate)
 	if (!genrate) ..()
 
-/obj/item/cell/examine()
-	set src in view(1)
-	set category = "Local"
+/obj/item/cell/examine(mob/user)
+	. = ..()
+
 	if (src.artifact || src.unusualCell)
-		..()
 		return
-	if(usr && !usr.stat)
+
+	if(user && !user.stat)
 		if(maxcharge <= 2500)
-			boutput(usr, "[desc]<br>The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%.")
+			. += "The manufacturer's label states this cell has a power rating of [maxcharge], and that you should not swallow it.<br>The charge meter reads [round(src.percent() )]%."
 		else
-			boutput(usr, "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%.")
+			. += "This power cell has an exciting chrome finish, as it is an uber-capacity cell type! It has a power rating of [maxcharge]!!!<br>The charge meter reads [round(src.percent() )]%."
 
 /obj/item/cell/attackby(obj/item/W, mob/user) // Moved the stungloves stuff to gloves.dm (Convair880).
 	if (istype(W, /obj/item/reagent_containers/syringe))
@@ -185,12 +199,11 @@
 		if (S.reagents.has_reagent("plasma", 1))
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				logTheThing("combat", user, null, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				boutput(user, "<span style=\"color:red\">The plasma reacts with the erebite and explodes violently!</span>")
+				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
+				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				message_admins("[key_name(user)] rigged [src] to explode at [log_loc(user)].")
-				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
 		S.reagents.clear_reagents()
@@ -212,7 +225,7 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for(var/obj/item/storage/bible/B in by_type[/obj/item/storage/bible])
+		for_by_tcl(B, /obj/item/storage/bible)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)
@@ -224,17 +237,17 @@
 
 	explosion(src, T, 0, 1, 2, 2)
 
-	SPAWN_DBG(1 DECI SECOND)
+	SPAWN(1 DECI SECOND)
 		qdel(src)
 
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
-	if (user.shock(src, src.charge, user.hand == 1 ? "l_arm" : "r_arm", 1, ignores_gloves))
-		boutput(user, "<span style=\"color:red\">[src] shocks you!</span>")
+	if (user.shock(src, src.charge, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, ignores_gloves))
+		boutput(user, "<span class='alert'>[src] shocks you!</span>")
 
 		for(var/mob/M in AIviewers(src))
 			if(M == user)	continue
-			M.show_message("<span style=\"color:red\">[user:name] was shocked by the [src:name]!</span>", 3, "<span style=\"color:red\">You hear an electrical crack</span>", 2)
+			M.show_message("<span class='alert'>[user:name] was shocked by the [src:name]!</span>", 3, "<span class='alert'>You hear an electrical crack</span>", 2)
 		return 1
 
 /obj/item/cell/ex_act(severity)
@@ -243,7 +256,7 @@
 
 /obj/item/cell/temperature_expose(null, temp, volume)
 	if (istype(src,/obj/item/cell/erebite))
-		src.visible_message("<span style=\"color:red\">[src] violently detonates!</span>")
+		src.visible_message("<span class='alert'>[src] violently detonates!</span>")
 		src.explode()
 	else ..()
 
@@ -260,26 +273,25 @@
 				det.attachedTo.visible_message("<span class='bold' style='color: #B7410E;'>The timer flashes ominously.</span>")
 		if ("cut")
 			src.visible_message("<span class='bold' style='color: #B7410E;'>The failsafe timer buzzes refusingly before going quiet forever.</span>")
-			SPAWN_DBG(0)
+			SPAWN(0)
 				det.detonate()
 
 //kubius potato battery: main def
-//you may need to alter the plant analyzer path
 
 /obj/item/cell/potato
 	name = "potato cell"
 	desc = "An improvised organic power cell. It looks a bit limp."
 	icon = 'icons/obj/potatocell.dmi'
 	icon_state = "king_tater"
-	maxcharge = 300
+	maxcharge = 600
 	genrate = 0
 	specialicon = 1
 	unusualCell = 1
 
 /obj/item/cell/potato/New(var/loc, var/potency, var/endurance)
 	src.maxcharge += rand(1,100) //slight deviation by specimen
-	src.maxcharge += round(potency*(4+rand())) //more deviation
-	src.genrate = round(endurance/rand(18,24))
+	src.maxcharge += round(potency*(6+rand(1,4))) //more deviation
+	src.genrate = round(endurance/rand(12,16))
 	if(genrate) desc = "An improvised organic power cell. It seems to be holding up well."
 	src.charge = src.maxcharge
 	..()
@@ -294,7 +306,7 @@
 		..()
 
 
-/obj/item/ammo/power_cell/potato
+/obj/item/ammo/power_cell/self_charging/potato
 	name = "potato battery"
 	desc = "An improvised organic power cell, cut down to a compact size. It seems somewhat impractical."
 	icon = 'icons/obj/potatocell.dmi'
@@ -302,16 +314,21 @@
 	unusualCell = 1
 	m_amt = 20000
 	g_amt = 20000
-	max_charge = 10.0
+	max_charge = 10
+	recharge_rate = 0
 
-/obj/item/ammo/power_cell/potato/New(var/loc, var/potency)
-	var/rngfactor = 4 + rand()
+/obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
+	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
+	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
 	src.charge = src.max_charge
 	..()
 
-/obj/item/ammo/power_cell/potato/attackby(obj/item/W, mob/user)
+/obj/item/ammo/power_cell/self_charging/potato/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/plantanalyzer/))
-		boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs remaining.")
+		if(recharge_rate)
+			boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs charge remaining, and a regeneration rate of [recharge_rate].")
+		else
+			boutput(user, "The potato battery has [src.charge] of [src.max_charge] PUs charge remaining, and no capacity for regeneration.")
 	else
 		..()

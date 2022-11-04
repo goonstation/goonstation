@@ -24,10 +24,10 @@
 		src.overlays += image('icons/obj/objects.dmi', "DAn-Oe")
 
 	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
+		return src.Attackhand(user)
 
-	attack_hand(var/mob/user as mob)
-		user.machine = src
+	attack_hand(var/mob/user)
+		src.add_dialog(user)
 		if (!src.working)
 			var/dat = {"<B>Virus Manipulator</B><BR>
 			<HR><BR>
@@ -56,7 +56,7 @@
 
 	Topic(href, href_list)
 		if(href_list["ops"])
-			var/operation = text2num(href_list["ops"])
+			var/operation = text2num_safe(href_list["ops"])
 			if(operation == 1) // Attempt to Create Vaccine
 				if (src.datareagent == "N/A" || src.datareagent == "No virii detected")
 					for(var/mob/O in hearers(src, null))
@@ -70,7 +70,7 @@
 				src.icon_state = "DAn-on"
 				for(var/mob/O in hearers(src, null))
 					O.show_message(text("<b>[]</b> states, 'Commencing work.'", src), 1)
-				if(src.active_vial.reagents && src.active_vial.reagents.reagent_list.len)
+				if(src.active_vial.reagents && length(src.active_vial.reagents.reagent_list))
 					for(var/current_id in src.active_vial.reagents.reagent_list)
 						var/datum/reagent/disease/current_disease = src.active_vial.reagents.reagent_list[current_id]
 						if(istype(current_disease))
@@ -79,7 +79,7 @@
 								if (current_disease.Rvaccine) src.datavaccine = "Yes"
 								else src.datavaccine = "No"
 
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					var/vacannounce
@@ -127,7 +127,7 @@
 							if(prob(50))
 								current_disease.Rprob = rand(-3,3)
 								src.dataprob = current_disease.Rprob
-				SPAWN_DBG(rand(100,150))
+				SPAWN(rand(100,150))
 					src.working = 0
 					src.icon_state = "DAn-off"
 					for(var/mob/O in hearers(src, null))
@@ -187,7 +187,7 @@
 					for(var/reagent_id in src.active_vial.reagents.reagent_list)
 						log_reagents += " [reagent_id]"
 
-				logTheThing("combat", usr, null, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
+				logTheThing(LOG_COMBAT, usr, "modified <i>(<b>[log_reagents]</b>)</i> to [src.dataspread], cure = [src.datacure], curable = [src.datacurable], regress = [src.dataregress], speed =[src.dataprob], vaccine = [src.datavaccine]")
 				for(var/obj/item/reagent_containers/glass/vial/V in src.contents)
 					V.set_loc(get_turf(src))
 				src.active_vial = null
@@ -204,15 +204,15 @@
 				src.updateUsrDialog()
 			src.updateUsrDialog()
 
-	attackby(var/obj/item/W as obj, var/mob/user as mob)
+	attackby(var/obj/item/W, var/mob/user)
 		if (src.working)
-			boutput(user, "<span style=\"color:red\">The manipulator is busy!</span>")
+			boutput(user, "<span class='alert'>The manipulator is busy!</span>")
 			return
 		if(istype(W, /obj/item/reagent_containers/glass/vial))
 			if(src.active_vial)
-				boutput(user, "<span style=\"color:red\">A vial is already loaded into the manipulator.</span>")
+				boutput(user, "<span class='alert'>A vial is already loaded into the manipulator.</span>")
 				return
-			boutput(user, "<span style=\"color:blue\">You add the [W] to the manipulator!</span>")
+			boutput(user, "<span class='notice'>You add the [W] to the manipulator!</span>")
 			src.datavial = W.name
 			src.active_vial = W
 			user.drop_item()
@@ -253,5 +253,5 @@
 				src.dataregress = "N/A"
 				src.datavaccine = "N/A"
 		else
-			boutput(user, "<span style=\"color:red\">The manipulator cannot accept that!</span>")
+			boutput(user, "<span class='alert'>The manipulator cannot accept that!</span>")
 			return

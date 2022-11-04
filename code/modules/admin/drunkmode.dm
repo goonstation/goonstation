@@ -22,7 +22,6 @@ var/list/dangerousVerbs = list(\
 
 //Shitguy stuff
 /client/proc/debug_variables,\
-/client/proc/cmd_mass_modify_object_variables,\
 /client/proc/cmd_debug_mutantrace,\
 /client/proc/cmd_debug_del_all,\
 /client/proc/general_report,\
@@ -31,14 +30,12 @@ var/list/dangerousVerbs = list(\
 /client/proc/air_status,\
 /client/proc/fix_next_move,\
 /client/proc/debugreward,\
-/client/proc/cmd_modify_object_variables,\
 
 //Coder stuff this is mostly all dangerous shit
 /client/proc/cmd_modify_market_variables,\
 /client/proc/BK_finance_debug,\
 /client/proc/BK_alter_funds,\
 /client/proc/debug_pools,\
-/client/proc/cmd_claim_rs_verbs,\
 /client/proc/debug_variables,\
 /client/proc/debug_global_variable,\
 /client/proc/call_proc,\
@@ -46,19 +43,16 @@ var/list/dangerousVerbs = list(\
 /client/proc/ticklag,\
 /client/proc/cmd_debug_vox,\
 /client/proc/mapWorld,\
-/client/proc/call_proc_atom,\
 /client/proc/haine_blood_debug,\
 /client/proc/debug_messages,\
 /client/proc/debug_reaction_list,\
 /client/proc/debug_reagents_cache,\
-/client/proc/debug_check_possible_reactions,\
 /client/proc/set_admin_level,\
 /client/proc/show_camera_paths, \
 /*/client/proc/remove_camera_paths_verb, \*/
 /client/proc/check_gang_scores,\
 /client/proc/critter_creator_debug,\
 /client/proc/debug_deletions,\
-/client/proc/Debug2,\
 /client/proc/cmd_modify_controller_variables,\
 /client/proc/cmd_modify_ticker_variables,\
 /client/proc/find_thing,\
@@ -85,27 +79,29 @@ var/list/dangerousVerbs = list(\
 )
 
 /client/proc/enableDrunkMode()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Enable Drunk Mode"
 	set desc = "Are you drunk and slightly responsible still? Turn this on!"
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	if (alert("Enable drunk mode for yourself?", "Confirmation", "Yes", "No") == "Yes")
+		var/not_drunk_but_high = (alert("Are you boozin' or weedin'", "drugs", "Drunk", "High") == "High")
+
 		if (src)
 			src.verbs -= /client/proc/enableDrunkMode
 			src.verbs += /client/proc/disableDrunkMode
-			src.toggleDrunkMode(src)
+			src.toggleDrunkMode(src, not_drunk_but_high)
 	return
 
 /client/proc/disableDrunkMode()
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Disable Drunk Mode"
 	set desc = "Done being drunk? We'll see."
 	set popup_menu = 0
 
-	admin_only
+	ADMIN_ONLY
 
 	//Puzzle goes here
 	var/message = "Hello! You are drunk! Think you're not? Solve this simple puzzle then.\n\n"
@@ -114,7 +110,7 @@ var/list/dangerousVerbs = list(\
 	var/num2 = rand(10,99)
 	var/answer = num1 + num2
 	message += "What is [num1] + [num2]?\n\n"
-	message += "You have to give your answer in WORDS! e.g. 10 = ten"
+	message += "You have to give your answer in WORDS! e.g. 310 = three hundred and ten"
 
 	answer = get_english_num(answer)
 
@@ -132,14 +128,14 @@ var/list/dangerousVerbs = list(\
 
 
 /client/proc/forceDrunkMode(var/client/C in onlineAdmins)
-	set category = "Admin"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
 	set name = "Force Drunk Mode"
 	set desc = "Is another admin drunk as a skunk? Put them in drunk mode sharpish."
 	set popup_menu = 0
 
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	//Apparently if the onlineAdmins list contains only one entry, it just picks it by default without giving any input
 	if (src == C)
@@ -149,10 +145,10 @@ var/list/dangerousVerbs = list(\
 	src.toggleDrunkMode(C)
 
 
-/client/proc/toggleDrunkMode(var/client/C)
+/client/proc/toggleDrunkMode(var/client/C, var/is_actually_high = 0)
 	if (!C) return
 
-	admin_only
+	ADMIN_ONLY
 
 	var/forced = 0
 	if (C != src)
@@ -180,8 +176,8 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/enableDrunkMode
 
 		var/logMessage = (forced ? "was forced out of drunk-mode by [key_name(src)]" : "has disabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
 	else
@@ -197,18 +193,30 @@ var/list/dangerousVerbs = list(\
 			C.verbs += /client/proc/disableDrunkMode
 
 		var/logMessage = (forced ? "was forced into drunk-mode by [key_name(src)]" : "has enabled drunk-mode for themselves")
-		logTheThing("admin", C, null, logMessage)
-		logTheThing("diary", C, null, logMessage, "admin")
+		logTheThing(LOG_ADMIN, C, logMessage)
+		logTheThing(LOG_DIARY, C, logMessage, "admin")
 		message_admins("[key_name(C)] [logMessage]")
 
-		//Make centcom announcement
-		var/list/announce = list(\
-			"is drunk as a skunk",\
-			"makes poor life choices",\
-			"likes to get wasted and play terrible space farting games. What a loser",\
-			"is here to ruin everyone's round",\
-			"\"I'm drunk it doesn't have to make sense\""\
-		)
-		command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
+		if (!is_actually_high)
+			//Make centcom announcement
+			var/list/announce = list(\
+				"is drunk as a skunk",\
+				"makes poor life choices",\
+				"likes to get wasted and play terrible space farting games. What a loser",\
+				"is here to ruin everyone's round",\
+				"\"I'm drunk it doesn't have to make sense\""\
+			)
+			command_alert("[C.key] [pick(announce)].", "Drunkmin detected")
 
-		boutput(C, "<span style=\"color:red\"><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")
+		else
+			//Make centcom announcement
+			var/list/announce = list(\
+				"is high as a kite",\
+				"makes poor life choices",\
+				"likes to get stoned and play terrible space farting games. What a loser",\
+				"is here to ruin everyone's round",\
+				"\"I'm high it doesn't have to make sense\""\
+			)
+			command_alert("[C.key] [pick(announce)].", "Weedmin detected")
+
+		boutput(C, "<span class='alert'><b><big>You are now in drunk-mode!</big></b><br>You will have reduced powers so you can't fuck shit up so much.<br>Use \"Disable Drunk Mode\" to disable this.</span>")

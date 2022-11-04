@@ -9,7 +9,7 @@
 	var/obj/item/item							// the item being worn in this slot
 
 	var/list/type_filters = list()				// a list of parent types whose subtypes are equippable
-	var/obj/screen/hud/screenObj				// ease of life
+	var/atom/movable/screen/hud/screenObj				// ease of life
 
 	var/mob/holder = null
 
@@ -18,6 +18,15 @@
 	New(var/mob/M)
 		..()
 		holder = M
+
+	disposing()
+		if(screenObj)
+			screenObj.dispose()
+			screenObj = null
+		item = null
+		holder = null
+		..()
+
 
 	proc/can_equip(var/obj/item/I)
 		for (var/T in type_filters)
@@ -31,7 +40,7 @@
 		if (screenObj)
 			I.screen_loc = screenObj.screen_loc
 		item = I
-		item.loc = holder
+		item.set_loc(holder)
 		holder.update_clothing()
 		on_equip()
 		return 1
@@ -41,12 +50,12 @@
 			return 0
 		if ((item.cant_drop || item.cant_other_remove) && !force)
 			return 0
-		item.loc = get_turf(holder)
+		item.set_loc(get_turf(holder))
 		item.master = null
 		item.layer = initial(item.layer)
+		on_unequip()
 		item = null
 		holder.update_clothing()
-		on_unequip()
 		return 1
 
 	proc/remove()
@@ -56,8 +65,8 @@
 			return 0
 		if (!holder.put_in_hand(item))
 			return 0
-		item = null
 		on_unequip()
+		item = null
 		return 1
 
 	proc/on_update()
@@ -97,6 +106,13 @@
 					offset_y = B.hat_offset_y
 					offset_x = B.hat_offset_x
 
+
+		bee
+			offset_y = -6
+
+		slime
+			offset_y = -15
+
 	suit
 		name = "suit"
 		type_filters = list(/obj/item/clothing/suit)
@@ -118,6 +134,16 @@
 
 		intercom
 			after_setup(var/datum/hud/hud)
-				equip(new /obj/item/device/radio/intercom(holder))
-				if (item)
-					hud.add_object(item, HUD_LAYER+1, screenObj.screen_loc)
+				var/obj/item/device/radio/intercom/O = new(holder)
+				equip(O)
+				// it's a built in radio, they can't take it off.
+				O.cant_self_remove = TRUE
+				O.cant_other_remove = TRUE
+
+			syndicate
+				after_setup(var/datum/hud/hud)
+					var/obj/item/device/radio/intercom/syndicate/S = new(holder)
+					equip(S)
+					// it's a built in radio, they can't take it off.
+					S.cant_self_remove = TRUE
+					S.cant_other_remove = TRUE

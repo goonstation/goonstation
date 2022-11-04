@@ -6,7 +6,7 @@
 	//try to find the closest working camera in the same area, switch to it
 
 	var/area/A = get_area(src)
-	if (A && A.type == /area) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
+	if (A && area_space_nopower(A)) return //lol @ dumping you at the mining magnet every fucking time. (or interrupting a track, wow rude)
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/anAI = usr
 		if(anAI.tracker.tracking)
@@ -22,14 +22,13 @@
 			continue	//	different viewing plane
 		if(!C.camera_status)
 			continue	//	ignore disabled cameras
-		var/dist = get_dist(src, C)
+		var/dist = GET_DIST(src, C)
 		if(dist < best_dist)
 			best_dist = dist
 			best_cam = C
 
 	if(!best_cam)
 		return
-	//usr:cameraFollow = null
 	if(istype(usr, /mob/living/silicon/ai))
 		var/mob/living/silicon/ai/anAI = usr
 		anAI.tracker.cease_track()
@@ -45,8 +44,6 @@
 
 	attack_ai(get_message_mob())
 
-#define SORT "* Sort alphabetically..."
-
 /mob/living/silicon/ai/proc/ai_camera_track()
 	set category = "AI Commands"
 	set name = "Track With Camera"
@@ -54,25 +51,9 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/creatures = get_mobs_trackable_by_AI()
+	var/list/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 
-	var/target_name = input(usr, "Which creature should you track?") as null|anything in creatures
-
-	//sort alphabetically if user so chooses
-	if (target_name == SORT)
-		creatures.Remove(SORT)
-
-		creatures = sortList(creatures)
-
-		/* lol bubblesort FU
-		for(var/i = 1; i <= creatures.len; i++)
-			for(var/j = i+1; j <= creatures.len; j++)
-				if(sorttext(creatures[i], creatures[j]) == -1)
-					creatures.Swap(i, j)
-		*/
-
-		//redisplay sorted list
-		target_name = input(usr, "Which creature should you track?") as null|anything in creatures
+	var/target_name = tgui_input_list(usr, "Which creature should you track?", "Track", creatures)
 
 	if (!target_name)
 		//usr:cameraFollow = null
@@ -89,8 +70,7 @@
 		boutput(usr, "You can't track with camera because you are dead!")
 		return
 
-	var/list/mob/creatures = get_mobs_trackable_by_AI()
-	creatures.Remove(SORT)
+	var/list/mob/creatures = sortList(get_mobs_trackable_by_AI(), /proc/cmp_text_asc)
 	var/list/candidates = list()
 
 	for(var/C in creatures)
@@ -102,18 +82,16 @@
 	var/target_name = null
 	var/mob/target = null
 
-	if(candidates.len > 0)
-		if(candidates.len == 1)
+	if(length(candidates))
+		if(length(candidates) == 1)
 			target = candidates[candidates[1]]
 			ai_actual_track(target)
 		else
-			target_name = input(usr, "Which creature should you track?") as null|anything in candidates
+			target_name = tgui_input_list(usr, "Which creature should you track?", "Track", candidates)
 			target = candidates[target_name]
 			ai_actual_track(target)
 	else
 		boutput(usr, "Not able to locate a creature by the name of \"[heard_name]\" on camera.")
-
-#undef SORT
 
 /mob/living/silicon/proc/ai_actual_track(mob/target as mob)
 	if (isnull(target) || !ismob(target) || !isAIControlled(src))
@@ -129,7 +107,7 @@
 	src.tracker.begin_track(target)
 
 /proc/camera_sort(var/list/L, var/start=1, var/end=-1)
-	if(!L || !L.len) return //Fucka you
+	if(!L || !length(L)) return //Fucka you
 	if(end == -1) end = L.len	//Called without start / end parameters
 	if( start < end)
 		var/obj/machinery/camera/C
@@ -169,17 +147,14 @@
 	if (isdead(src) || !src.classic_move)
 		return
 
-	user.machine = src
-
 	var/list/L = list()
-	for (var/obj/machinery/camera/C in cameras)
+	for_by_tcl(C, /obj/machinery/camera)
 		L.Add(C)
 
 	L = camera_sort(L)
 
 	var/list/D = list()
 	var/counter = 1
-	D["Cancel"] = "Cancel"
 	for (var/obj/machinery/camera/C in L)
 		if (C.network == src.network)
 			var/T = text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))
@@ -189,10 +164,9 @@
 				D[T] = C
 				counter = 1
 
-	var/t = input(user, "Which camera should you change to?") as null|anything in D
+	var/t = tgui_input_list(user, "Which camera should you change to?", "View Camera", D)
 
-	if (!t || t == "Cancel")
-		//src.cameraFollow = null
+	if (!t)
 		src.tracker.cease_track()
 		src.switchCamera(null)
 		return 0
@@ -215,6 +189,7 @@
 	var/fail_delay = 50		// Same but in case we failed
 
 	New(var/mob/living/silicon/ai/A)
+		..()
 		owner = A
 		global.tracking_list += src
 
@@ -222,14 +197,13 @@
 		owner = null
 		tracking = null
 		global.tracking_list -= src
+		..()
 
 	proc/begin_track(mob/target as mob)
 		if(!owner || !target)
 			return
 
 		tracking = target
-		if(!owner.machine)
-			owner.machine = owner
 
 		if (!owner.deployed_to_eyecam)
 			if (!owner.deployed_to_eyecam)
@@ -239,13 +213,13 @@
 		process() //Process now!!!
 
 	proc/cease_track()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 		tracking = null
 		delay = success_delay
 		owner.hud.update_tracking()
 
 	proc/cease_track_temporary()
-		owner.eyecam.set_loc(get_turf(owner.eyecam))
+		owner.eyecam.stopObserving()
 
 	proc/process()
 		if(!tracking || !owner || ( ( (last_track + delay) > world.timeofday ) && (world.timeofday > last_track) ) )
@@ -256,20 +230,13 @@
 		if (!can_track(tracking))
 			failedToTrack = 1
 
+		#ifndef UPSCALED_MAP
 		if(!failedToTrack) //We don't have a premature failure
 			failedToTrack = 1 //Assume failure
 			var/turf/T = get_turf(tracking)
-			if (T.cameras && T.cameras.len)
+			if (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
 				failedToTrack = 0
-			//for(var/obj/machinery/camera/C in range(7, tracking))
-			//	if(C.network == owner.network && C.camera_status) //The goodest camera
-			//		failedToTrack = 0
-			//		owner.switchCamera(C)
-			//		break
-		/*
-		else
-			sleep(rand(0,1)) //Hey it went real fast this time! Bet it's a syndie
-		*/
+		#endif
 
 		if (failedToTrack)
 			cease_track_temporary()
@@ -277,7 +244,7 @@
 			delay = fail_delay
 		else
 			delay = success_delay
-			owner.eyecam.set_loc(tracking)
+			owner.eyecam.observeMob(tracking)
 
 		owner.hud.update_tracking()
 		owner.eyecam.update_statics()
@@ -291,10 +258,10 @@
 		//Target is inside a dummy
 		//Target is not at a turf
 		//Target is not on station level
-		return (target.loc.z == 1) \
+		return (target.loc?.z == 1) \
 				&& ((issilicon(target) && istype(target.loc, /turf) ) \
-				|| (iscritter(target) && istype(target.loc, /turf) ) \
+				|| (ismobcritter(target) && istype(target.loc, /turf) ) \
 				|| !((ishuman(target) \
 				&& istype(target:wear_id, /obj/item/card/id/syndicate)) \
-				|| (target:wear_id && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
+				|| (hasvar(target, "wear_id") && istype(target:wear_id, /obj/item/device/pda2) && target:wear_id:ID_card && istype(target:wear_id:ID_card, /obj/item/card/id/syndicate)) \
 				||  !istype(target.loc, /turf)))

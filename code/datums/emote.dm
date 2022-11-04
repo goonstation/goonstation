@@ -35,7 +35,7 @@
 
 	var/hc = hascall( src, "emote_[emoot]" )
 	if( !hc && !src.vars["emote_[emoot]"] )
-		M.show_message( "Unknown emote [emoot], try using *list for a basic list of emotes.", "red" )
+		M.show_message( "<span class='alert'>Unknown emote [emoot], try using *list for a basic list of emotes.</span>")
 		return
 
 	var/on = lowertext(argstr)
@@ -62,7 +62,7 @@
 /datum/emoot/carbon
 
 /datum/emoot/carbon/proc/emote_slap(var/mob/M, var/argstr, var/mob/T)
-	if(T && get_dist(M,T) <= 1)
+	if(T && BOUNDS_DIST(M, T) == 0)
 		//random_brute_damage( M, 3 )
 		return "slaps [T]! Rude!"
 	else

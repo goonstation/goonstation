@@ -5,7 +5,7 @@
 	else if (O.special_data["lastloc"] != O.loc)
 		update = 1
 	if (update)
-		var/ocl = O.crossing.len
+		var/ocl = length(O.crossing)
 		if (!ocl)
 			return
 		if ("1" in O.special_data)
@@ -49,7 +49,7 @@
 	on_end(var/obj/projectile/O)
 		proj_tracer_on_end(O)
 
-	projectile_speed = 18
+	projectile_speed = 24
 	power = 30
 	dissipation_delay = 8
 	dissipation_rate = 5
@@ -94,7 +94,7 @@
 
 	anchored = 1
 	density = 1
-	icon = 'icons/obj/aibots.dmi'
+	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "secbot1"
 
 	var/datum/action/bar/bullethell/healthbar //Hack.
@@ -191,7 +191,7 @@
 				overlay_status = 0
 
 	proc/test()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (!broken)
 				process()
 				sleep(test_sleep_time)
@@ -264,11 +264,12 @@
 		if (health <= 0)
 			die()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		var/damtype = DT_NORMAL
-		if (W.damtype == "burn" || W.damtype == "fire")
+
+		if (W.hit_type == DAMAGE_BURN)
 			damtype = DT_BURN
-		else if (W.hit_type == DAMAGE_CUT)
+		else if (W.hit_type == DAMAGE_CUT || W.hit_type == DAMAGE_STAB)
 			damtype = DT_PIERCE
 		take_damage(W.force, damtype)
 		..()

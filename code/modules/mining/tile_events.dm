@@ -7,6 +7,7 @@
 	var/scan_decal = null
 	var/prevent_excavation = 0
 	var/restrict_to_turf_type = null
+	var/weight = 100
 
 	set_up(var/datum/ore/event/parent_event)
 		..()
@@ -28,21 +29,36 @@
 			return 1
 		gem_type = pick(parent.gems)
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		var/obj/item/I = unpool(gem_type)
+		var/obj/item/I = new gem_type
 		I.set_loc(AST)
 		I.quality = AST.quality + rand(-50,50)
 		I.name = "[getGemQualityName(I.quality)] [I.name]"
+
+/datum/ore/event/gem/molitz_b
+	analysis_string = "Small unusual crystalline deposit detected."
+	excavation_string = "Something unusual tumbles out of the collapsing rock!"
+
+	set_up(var/datum/ore/parent)
+		if (..())
+			return
+		gem_type = /obj/item/raw_material/molitz_beta
+
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
+		var/quantity = rand(2,3)
+		for(var/i in 1 to quantity)
+			..()
+
 
 /datum/ore/event/rock_worm
 	analysis_string = "Caution! Life signs detected!"
 	excavation_string = "A rock worm jumps out of the collapsing rock!"
 	scan_decal = "scan-object"
-	restrict_to_turf_type = /turf/simulated/wall/asteroid
+	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		new /obj/critter/rockworm(AST)
@@ -51,8 +67,9 @@
 	analysis_string = "Caution! Large object embedded in rock!"
 	excavation_string = "An abandoned crate was unearthed!"
 	scan_decal = "scan-object"
+	weight = 10
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		new /obj/storage/crate/loot(AST)
@@ -62,7 +79,7 @@
 	excavation_string = "An artifact was unearthed!"
 	scan_decal = "scan-object"
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		Artifact_Spawn(AST)
@@ -75,7 +92,7 @@
 	nearby_tile_distribution_max = 12
 	scan_decal = "scan-soft"
 
-	onGenerate(var/turf/simulated/wall/asteroid/AST)
+	onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		AST.hardness += hardness_mod
@@ -88,7 +105,7 @@
 	nearby_tile_distribution_max = 12
 	scan_decal = "scan-hard"
 
-	onGenerate(var/turf/simulated/wall/asteroid/AST)
+	onGenerate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		AST.hardness += hardness_mod
@@ -98,19 +115,19 @@
 	analysis_string = "Caution! Volatile compounds detected!"
 	scan_decal = "scan-danger"
 	prevent_excavation = 1
-	restrict_to_turf_type = /turf/simulated/wall/asteroid
+	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
 	var/image/warning_overlay = null
 
 	New()
 		..()
-		warning_overlay = image('icons/turf/asteroid.dmi', "unstable")
+		warning_overlay = image('icons/turf/walls_asteroid.dmi', "unstable")
 
-	onHit(var/turf/simulated/wall/asteroid/AST)
+	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		AST.overlays += warning_overlay
 		var/timer = rand(3,6) * 10
-		SPAWN_DBG(timer)
+		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
 				AST.invincible = 0
 				explosion(AST, AST, 1, 2, 3, 4, 1)
@@ -120,16 +137,16 @@
 	nearby_tile_distribution_min = 4
 	nearby_tile_distribution_max = 8
 	scan_decal = "scan-danger"
-	restrict_to_turf_type = /turf/simulated/wall/asteroid
+	restrict_to_turf_type = /turf/simulated/wall/auto/asteroid
 
-	onHit(var/turf/simulated/wall/asteroid/AST)
+	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 50, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
-	onExcavate(var/turf/simulated/wall/asteroid/AST)
+	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 100, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)

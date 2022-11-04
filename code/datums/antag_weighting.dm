@@ -7,7 +7,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 /datum/antagWeighter
 	var/debug = 0 //print a shit load of debug messages or not
-	var/variance = 10 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
+	var/variance = 100 //percentage probability *per choice* to ignore weighting for a single antag role (instead picking some random dude)
 	var/minPlayed = 5 //minimum amount of rounds participated in required for the antag weighter to consider a person a valid choice
 
 
@@ -15,15 +15,11 @@ var/global/datum/antagWeighter/antagWeighter
 		..()
 		src.debug = debugMode ? debugMode : 0
 
-		//All picks during ass day are random
-		if (it_is_ass_day)
-			src.variance = 100
-
 
 	proc/debugLog(msg)
 		out(world, msg)
-		//logTheThing("debug", null, null, "<b>AntagWeighter</b> [msg]")
-	
+		//logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> [msg]")
+
 
 	/**
 	 * Queries the goonhub API for hisorical antag rounds for a single target
@@ -48,33 +44,33 @@ var/global/datum/antagWeighter/antagWeighter
 
 		return response["history"]
 
-	/** 
-	* Get the entire antag selection history for a player (all roles, all modes) 
-	* 
-	* @param string ckey Ckey of the person we're looking up 
-	* @return list List of history details 
-	*/ 
-	proc/completeHistory(ckey = "") 
-		if (!ckey) 
-			throw EXCEPTION("No ckey given") 
+	/**
+	* Get the entire antag selection history for a player (all roles, all modes)
+	*
+	* @param string ckey Ckey of the person we're looking up
+	* @return list List of history details
+	*/
+	proc/completeHistory(ckey = "")
+		if (!ckey)
+			throw EXCEPTION("No ckey given")
 		if (!config.goonhub_api_token)
 			throw EXCEPTION("You must have the goonhub API token to use this command!")
 
 		var/list/response
 		try
-			response = apiHandler.queryAPI("antags/completeHistory", list( 
-				"player" = ckey, 
+			response = apiHandler.queryAPI("antags/completeHistory", list(
+				"player" = ckey,
 			), 1)
 		catch ()
 			throw EXCEPTION("API is currently having issues, try again later")
 
-		if (response["error"]) 
+		if (response["error"])
 			throw EXCEPTION(response["error"])
 
 		if (length(response["history"]) < 1)
 			throw EXCEPTION("No history for that player")
 
-		return response["history"] 
+		return response["history"]
 
 	/**
 	 * Simulates a history response from the API, so local development doesn't fuck up
@@ -112,7 +108,7 @@ var/global/datum/antagWeighter/antagWeighter
 		if (!history.len)
 			throw EXCEPTION("Empty history given")
 
-		var/poolSize = history.len
+		var/poolSize = length(history)
 		var/targetPlayRate = config.play_antag_rates[role]
 		var/list/weightings = list()
 
@@ -143,7 +139,7 @@ var/global/datum/antagWeighter/antagWeighter
 				weight = (targetPlayRate * poolSize) / percentSelected
 
 				if (src.debug)
-					src.debugLog("(Weighting Calc) [ckey] has [selected] selections and [seen] participations. Calculated weight as [weight] (poolSize: [poolSize]).")				
+					src.debugLog("(Weighting Calc) [ckey] has [selected] selections and [seen] participations. Calculated weight as [weight] (poolSize: [poolSize]).")
 
 			//insert the weighted entry in the right place
 			var/inserted = 0
@@ -154,7 +150,7 @@ var/global/datum/antagWeighter/antagWeighter
 					weightings[ckey] = list("weight" = weight, "seen" = seen)
 					inserted = 1
 					break
-			
+
 			//couldn't find a place for this entry, shove it on the end
 			if (!inserted)
 				weightings.Insert(0, ckey)
@@ -174,8 +170,16 @@ var/global/datum/antagWeighter/antagWeighter
 	 * @return list List of minds chosen
 	 */
 	proc/choose(list/pool = list(), role = "", amount = 0, recordChosen = 0)
-		if (!pool.len || !role || !amount)
-			throw EXCEPTION("Incorrect parameters given")
+		. = list()
+		if (!length(pool))
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Pool is empty.")
+			return
+		if (!role)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): No rank provided.")
+			return
+		if (!amount)
+			stack_trace("Incorrect parameters given to antagWeighter.choose(): Requested antag amount is 0.")
+			return
 
 		if (src.debug)
 			src.debugLog("---------- Starting antagWeighter.choose with role: [role] and amount: [amount] ----------")
@@ -196,6 +200,8 @@ var/global/datum/antagWeighter/antagWeighter
 
 		if (!ckeyMinds.len)
 			throw EXCEPTION("No minds with valid ckeys were given")
+
+		logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selecting [amount] out of [ckeyMinds.len] candidates for [role].")
 
 		if (src.debug)
 			src.debugLog("Sending payload: [json_encode(apiPayload)]")
@@ -225,8 +231,7 @@ var/global/datum/antagWeighter/antagWeighter
 
 		//Set up segmented list for variance
 		var/list/historyLookup = list()
-		if (history.len > amount)
-			historyLookup = history.Copy(amount + 1)
+		historyLookup = history.Copy()
 
 		//Build our final list of chosen people, to the max of "amount"
 		var/cCount = 0
@@ -267,7 +272,14 @@ var/global/datum/antagWeighter/antagWeighter
 			var/list/record = list()
 			for (var/datum/mind/M in chosen)
 				record[M.ckey] = role
-				logTheThing("debug", null, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Selected [M.ckey] for [role]. (Weight: [chosen[M]["weight"]], Seen: [chosen[M]["seen"]])")
+			for (var/datum/mind/M in pool)
+				if(!M.ckey)
+					continue
+				if(M in chosen)
+					continue
+				logTheThing(LOG_DEBUG, null, "<b>AntagWeighter</b> Did <b>not</b> select [M.ckey] for [role]. (Weight: [history[M.ckey]["weight"]], Seen: [history[M.ckey]["seen"]])")
+
 
 			src.recordMultiple(players = record)
 
@@ -281,7 +293,7 @@ var/global/datum/antagWeighter/antagWeighter
 	 * @param string ckey Ckey of the player
 	 * @param boolean latejoin Whether this record is a latejoin antag selection
 	 * @return null
-	 */	
+	 */
 	proc/record(role = "", ckey = "", latejoin = 0)
 		if (!role || !ckey)
 			throw EXCEPTION("Incorrect parameters given")
@@ -306,7 +318,7 @@ var/global/datum/antagWeighter/antagWeighter
 	 *			"ckeyforadude2" = "wraith"
 	 * 		)
 	 * @return null
-	 */		
+	 */
 	proc/recordMultiple(list/players = list())
 		if (!players.len)
 			throw EXCEPTION("Incorrect parameters given")
@@ -321,10 +333,6 @@ var/global/datum/antagWeighter/antagWeighter
 			apiPlayers["players\[[count]]\[role]"] = players[ckey]
 			apiPlayers["players\[[count]]\[ckey]"] = ckey
 			count++
-
-		//Selections during ass day don't count for weighting (but we still want to record that sweet sweet data yo)
-		if (it_is_ass_day)
-			apiPlayers["assday"] = 1
 
 		if (src.debug)
 			src.debugLog("Players list sending to API: [json_encode(apiPlayers)]")

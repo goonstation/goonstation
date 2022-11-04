@@ -11,7 +11,7 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 1
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_ANY
 	atkcarbon = 1
 	atksilicon = 1
 	atcritter = 0
@@ -25,7 +25,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(2 SECONDS)
+		SPAWN(2 SECONDS)
 			if (!activated)
 				src.icon_state = sleeping_icon_state
 
@@ -44,7 +44,7 @@
 		else
 			return ..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!activated)
 			return
 
@@ -88,7 +88,7 @@ var/sound/helldrone_wakeup_sound = null
 			grump_guard.wakeup()
 
 	if (helldrone_awake != 2)
-		logTheThing("debug", null, null, "<b>Halloween Event Error</b>: Unable to locate helldrone areas.")
+		logTheThing(LOG_DEBUG, null, "<b>Halloween Event Error</b>: Unable to locate helldrone areas.")
 		return
 
 	return

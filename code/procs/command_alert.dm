@@ -1,32 +1,24 @@
-/proc/command_alert(var/text, var/title = "", var/sound_to_play = "", var/do_sanitize = 1, var/override_big_title=null)
-	var/big_title = override_big_title ? override_big_title : "[command_name()] Update"
+/proc/command_alert(var/text, var/title = "", var/sound_to_play = "", var/do_sanitize = 1, var/alert_origin=null)
+	var/big_title = alert_origin ? alert_origin : "[ALERT_GENERAL]"
 	boutput(world, "<h1 class='alert'>[big_title]</h1>")
-
-	if(do_sanitize)
-		title = sanitize(title)
-		text = sanitize(text)
 
 	if (title && length(title) > 0)
 		boutput(world, "<h2 class='alert'>[title]</h2>")
 
-	boutput(world, "<span class='alert'>[text]</span>")
+	boutput(world, "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
-/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
+/proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
-
-	if(do_sanitize)
-		title = sanitize(title)
-		text = sanitize(text)
 
 	boutput(world, "<h2 class='alert'>[title]</h2>")
 
-	boutput(world, "<span class='alert'>[text]</span>")
+	boutput(world, "<span class='[css_class]'>[text]</span>")
 	boutput(world, "<br>")
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
 /proc/advanced_command_alert(var/text, var/title="", var/sound_to_play = "")
 	if(!text) return 0
@@ -44,12 +36,12 @@
 
 	//for(var/mob/M in mob_list)
 	for (var/client/C in clients)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if(C.mob)//M.client)
 				var/mob/M = C.mob
 				var/client/rand_client_mult = pick(clients)
 				var/mob/rand_mob_mult
-				if (rand_client_mult && rand_client_mult.mob) //ZeWaka: Fix for null.mob
+				if (rand_client_mult?.mob) //ZeWaka: Fix for null.mob
 					rand_mob_mult = rand_client_mult.mob //A randomly selected player that's different to each viewer
 
 
@@ -66,8 +58,6 @@
 					title = replacetext(title, "%mrand_name%", rand_mob_mult.name)
 					title = replacetext(title, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
-					title = sanitize(title)
-
 				text = replacetext(text, "%name%", M.real_name)
 				text = replacetext(text, "%key%", M.key)
 				text = replacetext(text, "%job%", M.job ? M.job : "space hobo")
@@ -77,14 +67,12 @@
 				text = replacetext(text, "%mrand_name%", rand_mob_mult.name)
 				text = replacetext(text, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
-				text = sanitize(text)
-
-				boutput(M, "<h1 class='alert'>[command_name()] Update</h1>")
+				boutput(M, "<h1 class='alert'>[ALERT_GENERAL]</h1>")
 				if(title != "") boutput(M, "<h2 class='alert'>[title]</h2>")
 				boutput(M, "<span class='alert'>[text]</span><br>")
 
 	if (sound_to_play && length(sound_to_play) > 0)
-		world << csound(sound_to_play)
+		playsound_global(world, sound_to_play, 100)
 
 	return 1
 

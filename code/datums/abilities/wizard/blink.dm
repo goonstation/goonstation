@@ -6,25 +6,27 @@
 	cooldown = 100
 	requires_robes = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/BlinkGrim.ogg"
-	voice_fem = "sound/voice/wizard/BlinkFem.ogg"
-	voice_other = "sound/voice/wizard/BlinkLoud.ogg"
+	voice_grim = 'sound/voice/wizard/BlinkGrim.ogg'
+	voice_fem = 'sound/voice/wizard/BlinkFem.ogg'
+	voice_other = 'sound/voice/wizard/BlinkLoud.ogg'
+	maptext_colors = list("#24639a", "#24bdc6", "#55eec2", "#24bdc6")
 
 	cast()
 		if(!holder)
 			return
 
-		holder.owner.say("SYCAR TYN")
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("SYCAR TYN", FALSE, maptext_style, maptext_colors)
 		..()
 
 		var/accuracy = 3
-		if(holder.owner.wizard_spellpower())
+		if(holder.owner.wizard_spellpower(src))
 			accuracy = 1
 		else
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
+			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 
 		if(holder.owner.getStatusDuration("burning"))
-			boutput(holder.owner, "<span style=\"color:blue\">The flames sputter out as you blink away.</span>")
+			boutput(holder.owner, "<span class='notice'>The flames sputter out as you blink away.</span>")
 			holder.owner.delStatus("burning")
 
 		var/targetx = holder.owner.x
@@ -45,7 +47,7 @@
 
 		var/turf/targetturf = locate(targetx, targety, holder.owner.z)
 
-		playsound(holder.owner.loc, "sound/effects/mag_teleport.ogg", 25, 1, -1)
+		playsound(holder.owner.loc, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
 
 		var/list/turfs = new/list()
 		for(var/turf/T in orange(accuracy,targetturf))
@@ -60,7 +62,7 @@
 		var/turf/picked = null
 		if (turfs.len) picked = pick(turfs)
 		if(!isturf(picked))
-			boutput(holder.owner, "<span style=\"color:red\">It's too dangerous to blink there!</span>")
+			boutput(holder.owner, "<span class='alert'>It's too dangerous to blink there!</span>")
 			return
 		animate_blink(holder.owner)
 		holder.owner.set_loc(picked)

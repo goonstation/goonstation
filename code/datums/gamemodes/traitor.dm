@@ -2,12 +2,20 @@
 	name = "traitor"
 	config_tag = "traitor"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list("traitor")
+	latejoin_antag_roles = list(ROLE_TRAITOR)
+	antag_token_support = TRUE
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
 
 	var/const/traitors_possible = 5
+
+#ifdef RP_MODE
+	var/const/pop_divisor = 10
+#else
+	var/const/pop_divisor = 6
+#endif
+
 
 /datum/game_mode/traitor/announce()
 	boutput(world, "<B>The current game mode is - Traitor!</B>")
@@ -16,8 +24,12 @@
 /datum/game_mode/traitor/pre_setup()
 
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
+
+		if(player.ready)
+			num_players++
 
 	var/randomizer = rand(12)
 	var/num_traitors = 1
@@ -25,14 +37,13 @@
 	var/token_wraith = 0
 
 	if(traitor_scaling)
-		num_traitors = max(1, min(round((num_players + randomizer) / 6), traitors_possible)) // adjust the randomizer as needed
+		num_traitors = clamp(round((num_players + randomizer) / pop_divisor), 1, traitors_possible) // adjust the randomizer as needed
 
 	if(num_traitors > 2 && prob(10))
-		num_traitors -= 2
+		num_traitors -= 1
 		num_wraiths = 1
 
-
-	var/list/possible_traitors = get_possible_traitors(num_traitors)
+	var/list/possible_traitors = get_possible_enemies(ROLE_TRAITOR, num_traitors)
 
 	if (!possible_traitors.len)
 		return 0
@@ -42,108 +53,35 @@
 		if (!token_players.len)
 			break
 		if (num_wraiths && !(token_wraith))
-			token_wraith = 1 // only allow 1 wraith to spawn
-			var/datum/mind/twraith = pick(token_players) //Randomly pick from the token list so the first person to ready up doesn't always get it.
-			traitors += twraith
-			token_players.Remove(twraith)
-			twraith.special_role = "wraith"
+			add_token_wraith()
 		else
 			traitors += tplayer
 			token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*num_traitors--
 		num_traitors = max(num_traitors, 0)*/
 
-	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = "traitor", amount = num_traitors, recordChosen = 1)
+	var/list/chosen_traitors = antagWeighter.choose(pool = possible_traitors, role = ROLE_TRAITOR, amount = num_traitors, recordChosen = 1)
 	traitors |= chosen_traitors
 	for (var/datum/mind/traitor in traitors)
-		traitor.special_role = "traitor"
+		// although this is assigned by the antagonist datum, we need to do it early in gamemode setup to let the job picker catch it
+		traitor.special_role = ROLE_TRAITOR
 		possible_traitors.Remove(traitor)
 
 	if(num_wraiths)
-		var/list/possible_wraiths = get_possible_wraiths(num_wraiths)
-		var/list/chosen_wraiths = antagWeighter.choose(pool = possible_wraiths, role = "wraith", amount = num_wraiths, recordChosen = 1)
-		for (var/datum/mind/wraith in chosen_wraiths)
-			traitors += wraith
-			wraith.special_role = "wraith"
-			possible_wraiths.Remove(wraith)
+		add_wraith()
 
 	return 1
 
 /datum/game_mode/traitor/post_setup()
-	var/objective_set_path = null
 	for(var/datum/mind/traitor in traitors)
-		objective_set_path = null // Gotta reset this.
-
-		switch(traitor.special_role)
-			if("traitor")
-			#ifdef RP_MODE
-				objective_set_path = pick(typesof(/datum/objective_set/traitor/rp_friendly))
-			#else
-				objective_set_path = pick(typesof(/datum/objective_set/traitor))
-			#endif
-
-				new objective_set_path(traitor)
-				equip_traitor(traitor.current)
-
-				var/obj_count = 1
-				for(var/datum/objective/objective in traitor.objectives)
-					boutput(traitor.current, "<B>Objective #[obj_count]</B>: [objective.explanation_text]")
-					obj_count++
-			if ("wraith")
-				generate_wraith_objectives(traitor)
-
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+		if (traitor.special_role == ROLE_WRAITH) // agony.
+			generate_wraith_objectives(traitor)
+		else
+			traitor.add_antagonist(ROLE_TRAITOR)
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/traitor/proc/get_possible_traitors(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_traitor)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_traitor set to yes were ready. We need [minimum_traitors] traitors so including players who don't want to be traitors in the pool.")
-		for(var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
-
-/datum/game_mode/traitor/proc/get_possible_wraiths(minimum_traitors=1)
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_wraith)
-				candidates += player.mind
-
-	if(candidates.len < minimum_traitors)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wraith set to yes were ready. We need [minimum_traitors] wraiths so including players who don't want to be wraiths in the pool.")
-		for(var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_traitors > 1) && (candidates.len >= minimum_traitors))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/traitor/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
@@ -162,7 +100,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -172,7 +110,7 @@
 			comm.messagetext.Add(intercepttext)
 */
 
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
@@ -184,21 +122,27 @@
 /datum/game_mode/traitor/proc/add_law_zero(mob/living/silicon/ai/killer)
 	var/law = "Accomplish your objectives at all costs."
 	boutput(killer, "<b>Your laws have been changed!</b>")
-	killer:set_zeroth_law(law)
-	boutput(killer, "New law: 0. [law]")
+	killer.law_rack_connection?.SetLawCustom("Objective Law Module",law,1,true,true)
+	killer.law_rack_connection?.UpdateLaws()
 
 /datum/game_mode/traitor/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
 	return mobs
 
 /datum/game_mode/traitor/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
+
 	if(!names.len)
 		return null
 	return pick(names)

@@ -16,10 +16,14 @@
 		else if (numkills > 0)
 			. = "Like the last jerk that pressed it."
 
-	attack_hand(mob/user as mob)
-		var/dca = deathConfettiActive //Save the current state of death confetti
+	ex_act()
+		return
+
+	attack_hand(mob/user)
 		if (!user.stat)
-			deathConfettiActive = 1	//Yaaaaaaaaaaaaaaaay!!
+			//Yaaaaaaaaaaaaaaaay!!
+			user.AddComponent(/datum/component/death_confetti)
+
 			user.death()
 			if(!user || isdead(user)) //User gibbed or actually dead.
 				numkills++
@@ -27,21 +31,38 @@
 					name = "blue ribbon [src.name]"
 					src.overlays += new /image {icon = 'icons/misc/stickers.dmi'; icon_state = "1st_place"; pixel_x = 3; pixel_y = -2} ()
 
-			deathConfettiActive = dca	//Restore it.
+			var/datum/component/C = user.GetComponent(/datum/component/death_confetti)
+			C?.RemoveComponent()
 		return
 
-/obj/racist_button
-	name = "button that will make you racist if you press it"
-	desc = "A button.  One that makes you racist (if you press it)."
+
+// ctrl-c, ctrl-v ...
+// "jfc what am I doing with my life"
+/obj/death_button/buttoff
+	name = "buttoff"
+	desc = "A button. One that takes your butt off (if you press it)."
 	icon = 'icons/obj/stationobjs.dmi'
-	icon_state = "doorctrl0"
-	layer = EFFECTS_LAYER_UNDER_1
-	anchored = 1
 
-	attack_hand(mob/user as mob)
+	get_desc()
+		if (numkills > 1)
+			. = " Much like the last [get_english_num(numkills)] people who pressed it."
+		else if (numkills > 0)
+			. = " Like the last jerk that pressed it."
+
+	attack_hand(mob/user)
+		if (!user || !ishuman(user))
+			return
+
 		var/mob/living/carbon/human/H = user
-		if (istype(H))
 
-			if(H.bioHolder)
-				H.visible_message("<span style='color:red'><B>[H.name] is too racist!</B></span>", "<span style='color:red'><B>That's too racist!</B></span>")
-				H.owlgib()
+		if (H.get_organ("butt"))
+			H.drop_organ("butt")
+
+			H.visible_message("[H]'s butt falls off.", "<span class='alert'>You butt fall off!</span>")
+			H.emote("scream")
+
+			numkills++
+			if (numkills == 100)
+				name = "blue ribbon [src.name]"
+				src.overlays += new /image {icon = 'icons/misc/stickers.dmi'; icon_state = "1st_place"; pixel_x = 3; pixel_y = -2} ()
+

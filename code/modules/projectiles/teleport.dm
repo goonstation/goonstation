@@ -11,7 +11,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "teleport blast"
 //file location for the sound you want it to play
@@ -24,6 +24,10 @@
 	hit_ground_chance = 10
 	//Can we pass windows
 	window_pass = 0
+
+	color_red = 0.2
+	color_green = 0.2
+	color_blue = 1
 
 	var/obj/item/target = null
 	var/failchance = 5
@@ -40,7 +44,7 @@
 			if(!target || prob(failchance)) //Just like portals!
 				do_teleport(hit, locate(rand(5, world.maxx - 5), rand(5, world.maxy -5), 3), 0)
 			else
-				var/turf/destination = find_loc(src.target) // Beacons and tracking implant might have been moved.
+				var/turf/destination = get_turf(src.target) // Beacons and tracking implant might have been moved.
 				if (destination)
 					do_teleport(hit, destination, 1) ///You will appear adjacent to the beacon
 				else

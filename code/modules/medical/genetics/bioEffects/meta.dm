@@ -15,11 +15,6 @@
 	lockedTries = 10
 	curable_by_mutadone = 0
 
-	New(var/for_global_list = 0)
-		..()
-		if (!for_global_list)
-			name = "Booster Gene"
-
 	OnAdd()
 		var/mob/living/L = owner
 		var/datum/bioHolder/B = L.bioHolder
@@ -46,11 +41,6 @@
 	lockedTries = 10
 	curable_by_mutadone = 0
 
-	New(var/for_global_list = 0)
-		..()
-		if (!for_global_list)
-			name = "Booster Gene"
-
 	OnAdd()
 		var/mob/living/L = owner
 		var/datum/bioHolder/B = L.bioHolder
@@ -76,11 +66,6 @@
 	lockedTries = 10
 	curable_by_mutadone = 0
 
-	New(var/for_global_list = 0)
-		..()
-		if (!for_global_list)
-			name = "Booster Gene"
-
 	OnAdd()
 		var/mob/living/L = owner
 		var/datum/bioHolder/B = L.bioHolder
@@ -94,7 +79,7 @@
 	desc = "No effect on subject. Unlocks new research possibilities and can be used as a wildcard in combinations."
 	id = "early_secret_access"
 	secret = 1
-	effectType = effectTypePower
+	effectType = EFFECT_TYPE_POWER
 	mob_exclusive = /mob/living/carbon/human/
 	can_research = 0
 	blockCount = 1

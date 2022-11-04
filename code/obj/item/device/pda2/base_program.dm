@@ -17,11 +17,30 @@
 		extension = "PSCAN"
 
 	New(obj/holding as obj)
+		..()
 		if(holding)
 			src.holder = holding
 
 			if(istype(src.holder.loc,/obj/item/device/pda2))
 				src.master = src.holder.loc
+
+	proc/on_activated(obj/item/device/pda2/pda)
+		return
+
+	proc/on_deactivated(obj/item/device/pda2/pda)
+		return
+
+	proc/on_set_host(obj/item/device/pda2/pda)
+		return
+
+	proc/on_unset_host(obj/item/device/pda2/pda)
+		return
+
+	proc/on_set_scan(obj/item/device/pda2/pda)
+		return
+
+	proc/on_unset_scan(obj/item/device/pda2/pda)
+		return
 
 	proc
 		return_text()
@@ -34,7 +53,7 @@
 			if(!(holder in src.master.contents))
 				//boutput(world, "Holder [holder] not in [master] of prg:[src]")
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			return 0
@@ -60,7 +79,7 @@
 
 			if(!(holder in src.master.contents))
 				if(master.active_program == src)
-					master.active_program = null
+					master.set_active_program(null)
 				return 1
 
 			if(!src.holder.root)
@@ -86,15 +105,11 @@
 			if(!src.master || !src.holder)
 				return
 
-			. = " | <a href='byond://?src=\ref[src];quit=1'>Main Menu</a>"
-			. += " | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
+			. = "<a href='byond://?src=\ref[src];quit=1'>Main Menu</a> | <a href='byond://?src=\ref[src.master];refresh=1'>Refresh</a>"
 
 
 		post_signal(datum/signal/signal, newfreq)
-			if(master)
-				master.post_signal(signal, newfreq)
-			//else
-				//qdel(signal)
+			master?.post_signal(signal, newfreq)
 
 		transfer_holder(obj/item/disk/data/newholder,datum/computer/folder/newfolder)
 
@@ -124,29 +139,28 @@
 			src.holder = newholder
 			return 1
 
-
-		receive_signal(datum/signal/signal, rx_method, rx_freq)
-			if((!src.holder) || (!src.master))
-				return 1
-
-			if((!istype(holder)) || (!istype(master)))
-				return 1
-
-			if(!(holder in src.master.contents))
-				if(master.active_program == src)
-					master.active_program = null
-				return 1
-
-			return 0
-
 		// called when a program is run
 		init()
 			return
 
-		// to allow promiscuous mode
-		network_hook()
-			return
+		/// Sends a message to the owner's PDA about... something, usually a confirmation that it did something
+		self_text(var/message)
+			if(!message)
+				message = "Confirmed."
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["sender"] = "00000000"
+			signal.data["command"] = "text_message"
+			signal.data["sender_name"] = "BOT-CMD"
+			signal.data["address_1"] = src.master.net_id
+			signal.data["message"] = message
+			radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
+		/// generates a passkey out of a bunch of words and shit
+		GenerateFilesharePasskey(var/how_many = 3)
+			for(var/i in 1 to how_many)
+				. += pick_string("agent_callsigns.txt", "[pick("nato", "melee_weapons", "colors", "birds", "mammals", "moons")]")
+			. = ckey(.)
 
 	Topic(href, href_list)
 		if((!src.holder) || (!src.master))
@@ -155,18 +169,20 @@
 			return 1
 		if((src.master.active_program != src) && !(href_list["input"] && href_list["input"] == "message")) // Disgusting but works
 			return 1
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf) || !isAI(usr))) && (!issilicon(usr) && !isAI(usr)))
 			return 1
-		if(usr.stat || usr.restrained())
+		if(isghostdrone(usr))
+			return 1
+		if(!can_act(usr))
 			return 1
 		if(!(holder in src.master.contents))
 			if(master.active_program == src)
-				master.active_program = null
+				master.set_active_program(null)
 			return 1
-		usr.machine = src.master
+		src.master.add_dialog(usr)
 
 		if (href_list["close"])
-			usr.machine = null
+			src.master.remove_dialog(usr)
 			usr.Browse(null, "window=pda2_\ref[src]")
 			return 0
 		if (href_list["quit"])

@@ -10,7 +10,7 @@
 	var/list/m_ints = null
 	var/list/darkMask = null
 
-	var/h_type = /obj/screen
+	var/h_type = /atom/movable/screen
 
 obj/hud/New(var/type = 0)
 	src.instantiate(type)
@@ -18,8 +18,8 @@ obj/hud/New(var/type = 0)
 	return
 
 /obj/hud/var/show_otherinventory = 1
-/obj/hud/var/obj/screen/action_intent
-/obj/hud/var/obj/screen/move_intent
+/obj/hud/var/atom/movable/screen/action_intent
+/obj/hud/var/atom/movable/screen/move_intent
 
 /obj/hud/proc/instantiate(var/type = 0)
 
@@ -30,6 +30,5 @@ obj/hud/New(var/type = 0)
 		src.hivebot_hud()
 		return
 
-	if (istype(mymob, /mob/living/object))
+	if (islivingobject(mymob))
 		src.object_hud()
-		return

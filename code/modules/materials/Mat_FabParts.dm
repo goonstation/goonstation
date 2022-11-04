@@ -1,5 +1,5 @@
 /datum/matfab_part/variable
-	var/required_value = 50
+	var/required_value = 5
 	var/greater_than = 1
 	var/required_property = "hard"
 	var/proper_name = "hardness"
@@ -23,7 +23,7 @@
 
 /datum/matfab_part/optionalmat_mining
 	name = "Optional Mod"
-	optional = 1
+	optional = TRUE
 	checkMatch(var/obj/item/I)
 		if(!istype(I, /obj/item/mining_mod)) return 0
 		return ..()
@@ -40,7 +40,15 @@
 	checkMatch(var/obj/item/I)
 		if(!I.material) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(I.material.getProperty("radioactive") < 10) return 0
+		if(I.material.getProperty("radioactive") < 1 && I.material.getProperty("n_radioactive") < 1) return 0
+		return ..()
+
+/datum/matfab_part/conductive
+	name = "Conductive Material"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(I.material.getProperty("electrical") < 5) return 0
 		return ..()
 
 /datum/matfab_part/charge
@@ -113,6 +121,14 @@
 		if(!(I.material.material_flags & MATERIAL_CRYSTAL || I.material.material_flags & MATERIAL_METAL)) return 0
 		return ..()
 
+/datum/matfab_part/metalorcrystalororganic
+	name = "Metal or Crystal or Organic"
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		if(!(I.material.material_flags & MATERIAL_CRYSTAL || I.material.material_flags & MATERIAL_METAL||I.material.material_flags & MATERIAL_ORGANIC)) return 0
+		return ..()
+
 /datum/matfab_part/clothororganic
 	name = "Cloth or Organic"
 	checkMatch(var/obj/item/I)
@@ -144,12 +160,20 @@
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
 		return ..()
 
+/datum/matfab_part/optionalanymat
+	name = "Optional Materials"
+	optional = TRUE
+	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
+		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
+		return ..()
+
 /datum/matfab_part/anymat_canmix
 	name = "Unprocessed Material"
 	checkMatch(var/obj/item/I)
+		if(!I.material) return 0
 		if(!I.material.canMix) return 0
 		if(!istype(I, /obj/item/material_piece) && !istype(I, /obj/item/raw_material)) return 0
-		if(!I.material) return 0
 		return ..()
 
 /datum/matfab_part/lens
@@ -159,17 +183,11 @@
 		if(!istype(I, /obj/item/lens) ||  !I.material) return 0
 		return ..()
 
-/datum/matfab_part/arrowhead
-	name = "Arrowhead"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		if(!I.material || !istype(I, /obj/item/arrowhead)) return 0
-		return ..()
 
 /datum/matfab_part/chemical
 	name = "Chemical"
 	checkMatch(var/obj/item/I)
-		if(!I.reagents || !I.reagents.total_volume || !I.reagents.reagent_list.len) return 0
+		if(!I.reagents || !I.reagents.total_volume || !length(I.reagents.reagent_list)) return 0
 		return ..()
 
 /datum/matfab_part/starstone
@@ -178,28 +196,29 @@
 		if(!I.material || (I.material.mat_id != "starstone")) return 0
 		return ..()
 
-/datum/matfab_part/fissile
-	name = "Fissile"
-	checkMatch(var/obj/item/I)
-		if(!I.material) return 0
-		//if(I.material.getProperty("fissile") < 30) return 0
-		//if(!I.material.nuke_compat) return 0
-		return ..()
 //////////////////////////////////////////////BASE CLASS BELOW
 
+/// Base material fabrication part
 /datum/matfab_part
-	var/name = "" //Name of the material or component required.
-	var/part_name = "" //Name of the part that this will be used for. Set in the recipes New proc.
-	var/required_amount = 1 //How much we need of this. also set in the recipe.
-	var/obj/item/assigned = null //What is currently assigned to this slot.
-	var/optional = 0 //If 1, slot does not have to be filled.
+	/// Name of the material or component required.
+	var/name = ""
+	/// Name of the part that this will be used for. Set in the [recipes][/datum/matfab_recipe] New proc.
+	var/part_name = ""
+	/// How much we need of this. also set in the [recipe][/datum/matfab_recipe].
+	var/required_amount = 1
+	/// What is currently assigned to this slot.
+	var/obj/item/assigned = null
+	/// If TRUE, slot does not have to be filled.
+	var/optional = FALSE
 
-	proc/checkMatch(var/obj/item/I) //Does the object match our conditions?
+	/// Does the object match our conditions?
+	proc/checkMatch(var/obj/item/I)
 		if(I.material && I.material.mixOnly) return 0
 		if(I.amount >= required_amount)
 			return 1
 		return -1 //Return -1 if theres not enough of the material. This will show up differently on the fab.
 
-	proc/clear() //Clear all assigned items etc. Used to reset the recipe.
+	/// Clear all assigned items etc. Used to reset the recipe.
+	proc/clear()
 		assigned = null
 		return

@@ -1,123 +1,379 @@
+#define SECREC_MAIN_MENU 1
+#define SECREC_LIST_RECORDS 2
+#define SECREC_MANAGE_RECORDS 3
+#define SECREC_VIEW_RECORD 4
+
+
 /obj/machinery/computer/secure_data
 	name = "Security Records"
 	icon_state = "datasec"
 	req_access = list(access_security)
+	circuit_type = /obj/item/circuitboard/secure_data
 	var/obj/item/card/id/scan = null
 	var/authenticated = null
 	var/rank = null
 	var/screen = null
-	var/datum/data/record/active1 = null
-	var/datum/data/record/active2 = null
-	var/a_id = null
+	var/datum/db_record/active_record_general = null
+	var/datum/db_record/active_record_security = null
+	// var/a_id = null
 	var/temp = null
 	var/printing = null
-	var/can_change_id = 0
+	// var/can_change_id = 0
 	var/require_login = 1
 	desc = "A computer that allows an authorized user to set warrants, view fingerprints, and add notes to various crewmembers."
+	var/ai_access
 
-	lr = 1
-	lg = 0.7
-	lb = 0.74
+	light_r =1
+	light_g = 0.7
+	light_b = 0.74
 
 /obj/machinery/computer/secure_data/detective_computer
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "messyfiles"
 	req_access = list(access_forensics_lockers)
 
-/obj/machinery/computer/secure_data/attackby(obj/item/I as obj, user as mob)
-	if (isscrewingtool(I))
-		playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-		if(do_after(user, 20))
-			if (src.status & BROKEN)
-				boutput(user, "<span style=\"color:blue\">The broken glass falls out.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
-				G.set_loc(src.loc)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 3
-				A.icon_state = "3"
-				A.anchored = 1
-				qdel(src)
-			else
-				boutput(user, "<span style=\"color:blue\">You disconnect the monitor.</span>")
-				var/obj/computerframe/A = new /obj/computerframe( src.loc )
-				if(src.material) A.setMaterial(src.material)
-				var/obj/item/circuitboard/secure_data/M = new /obj/item/circuitboard/secure_data( A )
-				for (var/obj/C in src)
-					C.set_loc(src.loc)
-				A.circuit = M
-				A.state = 4
-				A.icon_state = "4"
-				A.anchored = 1
-				qdel(src)
-	else
-		src.attack_hand(user)
-	return
-
-/obj/machinery/computer/secure_data/attack_ai(mob/user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/secure_data/attack_hand(mob/user as mob)
-	if(..())
+/obj/machinery/computer/secure_data/attack_hand(mob/user)
+	if (!ai_access && ..())
 		return
 	var/dat
+
 	if (src.temp)
-		dat = text("<TT>[]</TT><BR><BR><A href='?src=\ref[];temp=1'>Clear Screen</A>", src.temp, src)
+		dat = {"
+			[src.temp]
+			<br>
+			<br><a href="javascript:goBYOND('action=temp');">Return</a>
+			"}
 	else
-		dat = text("Confirm Identity: <A href='?src=\ref[];scan=1'>[]</A><HR>", src, (src.scan ? text("[]", src.scan.name) : "----------"))
+		dat = {"
+			Confirm Identity: <a href="javascript:goBYOND('action=scan');">[src.scan ? src.scan.name : "----------"]</a>
+			[src.authenticated ? "&mdash; <a href=\"javascript:goBYOND('action=logout');\">Log Out</a>" : ""]<hr>
+			"}
+
 		if (src.authenticated)
+			src.validate_records()
+
 			switch(src.screen)
-				if(1.0)
-					dat += text("<A href='?src=\ref[];search=1'>Search Records</A><BR><br><A href='?src=\ref[];list=1'>List Records</A><BR><br><A href='?src=\ref[];search_f=1'>Search Fingerprints</A><BR><br><A href='?src=\ref[];new_r=1'>New Record</A><BR><br><BR><br><A href='?src=\ref[];rec_m=1'>Record Maintenance</A><BR><br><A href='?src=\ref[];logout=1'>{Log Out}</A><BR><br>", src, src, src, src, src, src)
-				if(2.0)
-					dat += "<B>Record List</B>:<HR>"
-					for(var/datum/data/record/R in data_core.general)
-						dat += text("<A href='?src=\ref[];d_rec=\ref[]'>[]: []<BR>", src, R, R.fields["id"], R.fields["name"])
-						//Foreach goto(136)
-					dat += text("<HR><A href='?src=\ref[];main=1'>Back</A>", src)
-				if(3.0)
-					dat += text("<B>Records Maintenance</B><HR><br><A href='?src=\ref[];back=1'>Backup To Disk</A><BR><br><A href='?src=\ref[];u_load=1'>Upload From disk</A><BR><br><A href='?src=\ref[];del_all=1'>Delete All Records</A><BR><br><BR><br><A href='?src=\ref[];main=1'>Back</A>", src, src, src, src)
-				if(4.0)
-					dat += "<CENTER><B>Security Record</B></CENTER><BR>"
-					if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
-						dat += text("Name: <A href='?src=\ref[];field=name'>[]</A> ID: <A href='?src=\ref[];field=id'>[]</A><BR><br>Sex: <A href='?src=\ref[];field=sex'>[]</A><BR><br>Age: <A href='?src=\ref[];field=age'>[]</A><BR><br>Rank: <A href='?src=\ref[];field=rank'>[]</A><BR><br>Fingerprint: <A href='?src=\ref[];field=fingerprint'>[]</A><br><br>DNA: []<BR><br>Physical Status: []<BR><br>Mental Status: []<BR>", src, src.active1.fields["name"], src, src.active1.fields["id"], src, src.active1.fields["sex"], src, src.active1.fields["age"], src, src.active1.fields["rank"], src, src.active1.fields["fingerprint"], src.active1.fields["dna"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
+				if (SECREC_MAIN_MENU)
+					dat += {"
+					<h3>Security Records</h3>
+					<a href="javascript:goBYOND('action=list');">List Records</a>
+					<br><a href="javascript:goBYOND('action=search');">Search Records</a>
+					<br><a href="javascript:goBYOND('action=search_fingerprint');">Search Fingerprints</a>
+					<hr>
+					<a href="javascript:goBYOND('action=record_maintenance');">Record Maintenance</a>
+					"}
+
+				if (SECREC_LIST_RECORDS)
+					dat += "<h3>Security Record List</h3><hr>"
+					for (var/datum/db_record/R as anything in data_core.general.records)
+						dat += {"
+							<a href="javascript:goBYOND('action=view_record;rec=\ref[R]');">[R["id"]]: [R["name"]]
+							<br>
+							"}
+
+					dat += {"
+						<hr><a href="javascript:goBYOND('action=main');">Back</a>
+						"}
+
+				if (SECREC_MANAGE_RECORDS)
+					dat += {"
+					<h3>Security Record Maintenance</h3>
+					<hr>
+					<a href="javascript:goBYOND('action=new_general_record');">Create New Record</a>
+					<br>
+					<br><a href="javascript:doPopup('del_all_records', 'Really delete ALL security records?');">Delete All Records</a>
+					<br>
+					<br><a href="javascript:goBYOND('action=main');">Back</a>
+					"}
+
+				if (SECREC_VIEW_RECORD)
+					dat += {"
+					<h3>Security Record</h3>
+<table>
+	<tbody>
+		<tr><th colspan='3'>General Record</th></tr>
+					"}
+					if (src.active_record_general)
+						var/photo_filename = null
+						try
+							var/datum/computer/file/image/img_record = src.active_record_general["file_photo"]
+							var/icon/photo = img_record.ourIcon
+							if (!photo)
+								photo = wanted_poster_unknown
+							photo_filename = copytext("\ref[src.active_record_general]", 4, -1)
+							if (photo)
+								usr << browse_rsc(photo, "[photo_filename].png")
+						catch
+							photo_filename = null
+
+						dat += {"
+		<tr>
+			<th>Name</th>
+			<td><a href="javascript:goBYOND('action=field;field=name');">[src.active_record_general["name"]]</a></td>
+			<td rowspan="9" style="text-align: center; vertical-align: middle;">[photo_filename ? {"<img style="-ms-interpolation-mode:nearest-neighbor;" height="64" width="64" src="[photo_filename].png">"} : "No photo<br>available"]
+			<br>File Photo</td>
+		</tr>
+		<tr>
+			<th>ID No.</th>
+			<td><a href="javascript:goBYOND('action=field;field=id');">[src.active_record_general["id"]]</a></td>
+		</tr>
+		<tr>
+			<th>Gender</th>
+			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general["sex"]]</a></td>
+		</tr>
+		<tr>
+			<th>Age</th>
+			<td><a href="javascript:goBYOND('action=field;field=age');">[src.active_record_general["age"]]</a></td>
+		</tr>
+		<tr>
+			<th>Job</th>
+			<td><a href="javascript:goBYOND('action=field;field=rank');">[src.active_record_general["rank"]]</a></td>
+		</tr>
+		<tr>
+			<th>Fingerprint</th>
+			<td><a href="javascript:goBYOND('action=field;field=fingerprint');">[src.active_record_general["fingerprint"]]</a></td>
+		</tr>
+		<tr>
+			<th>DNA</th>
+			<td>[src.active_record_general["dna"]]</td>
+		</tr>
+		<tr>
+			<th>Physical Status</th>
+			<td>[src.active_record_general["p_stat"]]</td>
+		</tr>
+		<tr>
+			<th>Mental Status</th>
+			<td>[src.active_record_general["m_stat"]]</td>
+		</tr>
+			"}
 					else
-						dat += "<B>General Record Lost!</B><BR>"
-					if ((istype(src.active2, /datum/data/record) && data_core.security.Find(src.active2)))
-						dat += text("<BR><br><CENTER><B>Security Data</B></CENTER><BR><br>Criminal Status: <A href='?src=\ref[];field=criminal'>[]</A><BR><br><BR><br>Minor Crimes: <A href='?src=\ref[];field=mi_crim'>[]</A><BR><br>Details: <A href='?src=\ref[];field=mi_crim_d'>[]</A><BR><br><BR><br>Major Crimes: <A href='?src=\ref[];field=ma_crim'>[]</A><BR><br>Details: <A href='?src=\ref[];field=ma_crim_d'>[]</A><BR><br><BR><br>Important Notes:<BR><br>&emsp;<A href='?src=\ref[];field=notes'>[]</A><BR><br><BR><br><CENTER><B>Comments/Log</B></CENTER><BR>", src, src.active2.fields["criminal"], src, src.active2.fields["mi_crim"], src, src.active2.fields["mi_crim_d"], src, src.active2.fields["ma_crim"], src, src.active2.fields["ma_crim_d"], src, src.active2.fields["notes"])
-						var/counter = 1
-						while(src.active2.fields[text("com_[]", counter)])
-							dat += text("[]<BR><A href='?src=\ref[];del_c=[]'>Delete Entry</A><BR><BR>", src.active2.fields[text("com_[]", counter)], src, counter)
-							counter++
-						dat += text("<A href='?src=\ref[];add_c=1'>Add Entry</A><BR><BR>", src)
-						dat += text("<A href='?src=\ref[];del_r=1'>Delete Record (Security Only)</A><BR><BR>", src)
+						dat += {"
+		<tr><td colspan='3' style='text-align: center;'>General record missing.</td></tr>
+						"}
+
+					dat += {"
+		<tr><th colspan='3'>Security Record</th></tr>
+
+					"}
+
+					if (src.active_record_security)
+
+						var/list/record_to_display = list(
+							"none" = "None",
+							"arrest" = "*Arrest*",
+							"incarcerated" = "Incarcerated",
+							"parolled" = "Parolled",
+							"released" = "Released"
+							)
+
+						var/list/arrest_status = list()
+
+						for (var/n in record_to_display)
+							arrest_status += {"<a href="javascript:goBYOND('action=criminal;criminal=[n]');" class="[n] [record_to_display[n] == src.active_record_security["criminal"] ? "active" : ""]">[record_to_display[n]]</a>"}
+
+						dat += {"
+		<tr>
+			<th>Criminal Status</th>
+			<td colspan='2'><div class="crimer">[arrest_status.Join(" ")]</div></td>
+		</tr>
+		<tr>
+			<th>Major Crimes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=major_crimes');">[src.active_record_security["ma_crim"]]</a>
+			<br>
+			<br><strong>Details:</strong> (<a href="javascript:goBYOND('action=field;field=major_crime_details');">&#9998; Edit</a>)<br><div class='monospace'>[src.active_record_security["ma_crim_d"]]</div></td>
+		</tr>
+		<tr>
+			<th>Minor Crimes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=minor_crimes');">[src.active_record_security["mi_crim"]]</a>
+			<br>
+			<br><strong>Details:</strong> (<a href="javascript:goBYOND('action=field;field=minor_crime_details');">&#9998; Edit</a>)<br><div class='monospace'>[src.active_record_security["mi_crim_d"]]</div></td>
+		</tr>
+		<tr>
+			<th>Notes</th>
+			<td colspan='2'><a href="javascript:goBYOND('action=field;field=notes');">&#9998; Edit</a>
+			<br><div class='monospace'>[src.active_record_security["notes"]]</div></td>
+		</tr>
+		<tr>
+			<th colspan="3">Comments / Log</th>
+		</tr>
+						"}
+
+						if (src.active_record_security["log"])
+							var/list/log_list = active_record_security["log"]
+							for (var/comment_num in 1 to log_list.len)
+								var/list/comment = log_list[comment_num]
+								dat += {"
+			<tr>
+				<th colspan="2" style="font-weight: normal; text-align: left;">
+					[comment["time"]] - <strong>[comment["author"]]</strong>
+				</th>
+				<th>[comment["author"] != "Deleted" ? "<a href=\"javascript:doPopup('del_comment;comment=[comment_num]', 'Delete this entry?');\">Delete</a>" : "&mdash;"]</th>
+			</tr>
+			<tr><td colspan="3" class="monospace">[comment["text"]]</td></tr>
+			"}
+
+						dat += {"
+		<tr>
+			<th colspan="3"><a href="javascript:goBYOND('action=add_comment');">Add Entry</a></th>
+		</tr>
+	</tbody>
+</table>
+<br><a href="javascript:doPopup('del_security_record', 'Delete security record?');">Delete Security Record</a>
+							"}
 					else
-						dat += "<B>Security Record Lost!</B><BR>"
-						dat += text("<A href='?src=\ref[];new=1'>New Record</A><BR><BR>", src)
-					dat += text("<br><A href='?src=\ref[];dela_r=1'>Delete Record (ALL)</A><BR><BR><br><A href='?src=\ref[];print_p=1'>Print Record</A><BR><br><A href='?src=\ref[];list=1'>Back</A><BR>", src, src, src)
-				else
+						dat += {"
+		<tr><td colspan='3' style='text-align: center;'>
+			Security record missing.
+			<br><br><a href="javascript:goBYOND('action=new_security_record');">Create new record</a>
+		</td></tr>
+	</tbody>
+</table>
+							"}
+					dat += {"
+<br><a href="javascript:doPopup('del_full_record', 'Delete full record?');">Delete Full Record</a>
+<br><a href="javascript:goBYOND('action=print_record');">Print Record</a>
+<br>
+<br><a href="javascript:goBYOND('action=list');">Back</a>
+						"}
+
 		else
-			dat += text("<A href='?src=\ref[];login=1'>{Log In}</A>", src)
-	user.Browse(text("<HEAD><TITLE>Security Records</TITLE></HEAD><TT>[]</TT>", dat), "window=secure_rec")
+			dat += {"
+					<a href="javascript:goBYOND('action=login');">Log In</a>
+					"}
+
+	user.Browse({"
+	<title>Security Records</title>
+	<style>
+		.monospace { white-space: pre-wrap; }
+		#popup-container {
+			position: fixed;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: rgba(128, 128, 128, 0.5);
+		}
+
+		#popup {
+			margin: 1em;
+			padding: 1em;
+			border: 1px solid black;
+			background: white;
+			color: black;
+			text-align: center;
+		}
+
+		#popup a {
+			margin: 0 1.5em;
+			padding: 0.25em 1em;
+			background: #aaf;
+			color: #008;
+		}
+
+		.crimer a {
+			display: inline-block;
+			vertical-align: middle;
+			border: 3px double #666;
+			background: #eee;
+			font-weight: bold;
+			padding: 0.1em 0.3em;
+			border-radius: 3px;
+			text-decoration: none;
+		}
+
+		.none         {}
+		.arrest       { color: #ff0000; background: #ffeeee; }
+		.incarcerated { color: #888800; background: #ffffbb; }
+		.parolled     { color: #339966; background: #bbffdd; }
+		.released     { color: #3366ff; background: #bbddff; }
+		.crimer .active { border: 3px solid black; }
+		.none.active,         .none:hover         { background: #ffffff; color: black; }
+		.arrest.active,       .arrest:hover       { background: #ff0000; color: white; }
+		.incarcerated.active, .incarcerated:hover { background: #ffff33; color: black; }
+		.parolled.active,     .parolled:hover     { background: #33cc66; color: black; }
+		.released.active,     .released:hover     { background: #3399ff; color: black; }
+
+	/* borrowed from char prefs */
+	table {
+		border-collapse: collapse;
+		font-size: 100%;
+		width: 100%;
+	}
+	td, th {
+		border: 1px solid #888;
+		padding: 0.1em 0.3em;
+	}
+	th {
+		background: rgba(125, 125, 125, 0.4);
+		white-space: nowrap;
+	}
+
+	th\[colspan="3"] {
+		background: rgba(125, 125, 125, 0.6);
+		padding: 0.5em;
+	}
+	</style>
+	<script>
+		function goBYOND(url) {
+			// copy-pasted from the geneticsMachines version
+			// mostly to reduce the sheer number of src text injections everywhere
+			var surrogate = document.getElementById("surrogate");
+			surrogate.src = "?src=\ref[src];" + url;
+		}
+
+		function doPopup(link, text) {
+			var popupC = document.getElementById("popup-container");
+			var popup = document.getElementById("popup");
+			popup.innerHTML = text + "<br><br><a href=\\"javascript:goBYOND('action="+ link +";answer=yes');\\">Yes</a> <a href=\\"javascript:goBYOND('action="+ link +";answer=no');\\">No</a>";
+			popupC.style.display = "";
+		}
+	</script>
+</head>
+<body>
+	<iframe src="about:blank" style="display: none;" id="surrogate"></iframe>
+	<div id="popup-container" style="display: none;">
+		<div id="popup"></div>
+	</div>
+
+
+	[dat]
+</body></html>"}, "window=secure_rec;size=600x700")
 	onclose(user, "secure_rec")
 	return
 
+/obj/machinery/computer/secure_data/proc/validate_records()
+	// Most of these checks were done inline; moved here for ease-of-use
+	if (src.active_record_general && (!istype(src.active_record_general, /datum/db_record) || !data_core.general.has_record(src.active_record_general)))
+		src.active_record_general = null
+	if (src.active_record_security && (!istype(src.active_record_security, /datum/db_record) || !data_core.security.has_record(src.active_record_security)))
+		src.active_record_security = null
+
+/obj/machinery/computer/secure_data/proc/validate_can_still_use(var/datum/db_record/general_record, var/datum/db_record/security_record, mob/user as mob)
+	// Check if we can still use it (after the input() calls)
+	if ((general_record && general_record != src.active_record_general) || (security_record && security_record != src.active_record_security))
+		return 1
+	if (user && (user.lying || user.stat))
+		return 1
+	if (!in_interact_range(src, user) || !istype(src.loc, /turf))
+		return 1
+
+
+
 /obj/machinery/computer/secure_data/Topic(href, href_list)
-	if(..())
+	if (..())
 		return
-	if (!( data_core.general.Find(src.active1) ))
-		src.active1 = null
-	if (!( data_core.security.Find(src.active2) ))
-		src.active2 = null
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr) || isAI(usr)))
-		usr.machine = src
-		if (href_list["temp"])
+
+	src.validate_records()
+
+	src.add_dialog(usr)
+	if (href_list["temp"])
+		src.temp = null
+
+	switch (href_list["action"])
+		if ("temp")
 			src.temp = null
-		if (href_list["scan"])
+
+		if ("scan")
 			if (src.scan)
 				src.scan.set_loc(src.loc)
 				src.scan = null
@@ -126,6 +382,7 @@
 				if (istype(I, /obj/item/card/id))
 					usr.drop_item()
 					I.set_loc(src)
+
 					src.scan = I
 				else if (istype(I, /obj/item/magtractor))
 					var/obj/item/magtractor/mag = I
@@ -134,352 +391,439 @@
 						mag.dropItem(0)
 						I.set_loc(src)
 						src.scan = I
-		else
-			if (href_list["logout"] && require_login)
-				src.authenticated = null
-				src.screen = null
-				src.active1 = null
-				src.active2 = null
-			else
-				if (href_list["login"])
-					if (!require_login || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr)))
-						src.active1 = null
-						src.active2 = null
-						src.authenticated = 1
-						src.rank = "AI"
-						src.screen = 1
-					if (istype(src.scan, /obj/item/card/id))
-						src.active1 = null
-						src.active2 = null
-						if(check_access(src.scan))
-							src.authenticated = src.scan.registered
-							src.rank = src.scan.assignment
-							src.screen = 1
-		if (src.authenticated)
-			var/usr_is_robot = issilicon(usr) || isAIeye(usr)
-			if (href_list["list"])
-				src.screen = 2
-				src.active1 = null
-				src.active2 = null
-			else
-				if (href_list["rec_m"])
-					src.screen = 3
-					src.active1 = null
-					src.active2 = null
+
+		if ("logout") // && require_login)
+			src.authenticated = null
+			src.screen = null
+			src.active_record_general = null
+			src.active_record_security = null
+
+		if ("login")
+			if (!require_login || ((issilicon(usr) || isAI(usr)) && !isghostdrone(usr)))
+				src.active_record_general = null
+				src.active_record_security = null
+				src.authenticated = 1
+				src.rank = "AI"
+				src.screen = SECREC_MAIN_MENU
+			if (istype(src.scan, /obj/item/card/id))
+				src.active_record_general = null
+				src.active_record_security = null
+				if (check_access(src.scan))
+					src.authenticated = src.scan.registered
+					src.rank = src.scan.assignment
+					src.screen = SECREC_MAIN_MENU
+
+	if (src.authenticated)
+
+		switch (href_list["action"])
+			if ("list")
+				src.screen = SECREC_LIST_RECORDS
+				src.active_record_general = null
+				src.active_record_security = null
+
+			if ("record_maintenance")
+				src.screen = SECREC_MANAGE_RECORDS
+				src.active_record_general = null
+				src.active_record_security = null
+
+			if ("del_all_records")
+				if (href_list["answer"] == "yes")
+					for (var/datum/db_record/R as anything in data_core.security.records)
+						qdel(R)
+					src.temp = "All records deleted."
 				else
-					if (href_list["del_all"])
-						src.temp = text("Are you sure you wish to delete all records?<br><br>&emsp;<A href='?src=\ref[];temp=1;del_all2=1'>Yes</A><br><br>&emsp;<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
-					else
-						if (href_list["del_all2"])
-							for(var/datum/data/record/R in data_core.security)
-								//R = null
-								data_core.security -= R
-								qdel(R)
-								//Foreach goto(497)
-							src.temp = "All records deleted."
-						else
-							if (href_list["main"])
-								src.screen = 1
-								src.active1 = null
-								src.active2 = null
+					src.temp = null
+
+			if ("main")
+				src.screen = SECREC_MAIN_MENU
+				src.active_record_general = null
+				src.active_record_security = null
+
+			if ("field")
+				var/datum/db_record/current_general = src.active_record_general
+				var/datum/db_record/current_security = src.active_record_security
+
+				switch(href_list["field"])
+					if ("name") //todo: sanitize these fucking inputs jesus christ
+						if (istype(src.active_record_general, /datum/db_record))
+							var/t1 = input("Please input name:", "Security Records", src.active_record_general["name"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["name"] = t1
+					if ("id")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Please input id:", "Security Records", src.active_record_general["id"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["id"] = t1
+					if ("fingerprint")
+						if (istype(src.active_record_general, /datum/db_record))
+							var/t1 = input("Please input fingerprint hash:", "Security Records", src.active_record_general["fingerprint"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["fingerprint"] = t1
+					if ("sex")
+						if (istype(src.active_record_general, /datum/db_record))
+							if (src.active_record_general["sex"] == "Male")
+								src.active_record_general["sex"] = "Female"
 							else
-								if (href_list["field"])
-									var/a1 = src.active1
-									var/a2 = src.active2
-									switch(href_list["field"])
-										if("name") //todo: sanitize these fucking inputs jesus christ
-											if (istype(src.active1, /datum/data/record))
-												var/t1 = input("Please input name:", "Secure. records", src.active1.fields["name"], null)  as text
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot))) || src.active1 != a1)
-													return
-												src.active1.fields["name"] = t1
-										if("id")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please input id:", "Secure. records", src.active1.fields["id"], null)  as text
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active1 != a1))
-													return
-												src.active1.fields["id"] = t1
-										if("fingerprint")
-											if (istype(src.active1, /datum/data/record))
-												var/t1 = input("Please input fingerprint hash:", "Secure. records", src.active1.fields["fingerprint"], null)  as text
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active1 != a1))
-													return
-												src.active1.fields["fingerprint"] = t1
-										if("sex")
-											if (istype(src.active1, /datum/data/record))
-												if (src.active1.fields["sex"] == "Male")
-													src.active1.fields["sex"] = "Female"
-												else
-													src.active1.fields["sex"] = "Male"
-										if("age")
-											if (istype(src.active1, /datum/data/record))
-												var/t1 = input("Please input age:", "Secure. records", src.active1.fields["age"], null)  as num
-												t1 = max(1, min(t1, 99))
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active1 != a1))
-													return
-												src.active1.fields["age"] = t1
-										if("mi_crim")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please input minor disabilities list:", "Secure. records", src.active2.fields["mi_crim"], null)  as text
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-													return
-												src.active2.fields["mi_crim"] = t1
-										if("mi_crim_d")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please summarize minor dis.:", "Secure. records", src.active2.fields["mi_crim_d"], null)  as message
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-													return
-												src.active2.fields["mi_crim_d"] = t1
-										if("ma_crim")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please input major diabilities list:", "Secure. records", src.active2.fields["ma_crim"], null)  as text
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-													return
-												src.active2.fields["ma_crim"] = t1
-										if("ma_crim_d")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please summarize major dis.:", "Secure. records", src.active2.fields["ma_crim_d"], null)  as message
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-													return
-												src.active2.fields["ma_crim_d"] = t1
-										if("notes")
-											if (istype(src.active2, /datum/data/record))
-												var/t1 = input("Please summarize notes:", "Secure. records", src.active2.fields["notes"], null)  as message
-												t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-												if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-													return
-												src.active2.fields["notes"] = t1
-										if("criminal")
-											if (istype(src.active2, /datum/data/record))
-												src.temp = text("<B>Criminal Status:</B><BR><br>&emsp;<A href='?src=\ref[];temp=1;criminal2=none'>None</A><BR><br>&emsp;<A href='?src=\ref[];temp=1;criminal2=arrest'>*Arrest*</A><BR><br>&emsp;<A href='?src=\ref[];temp=1;criminal2=incarcerated'>Incarcerated</A><BR><br>&emsp;<A href='?src=\ref[];temp=1;criminal2=parolled'>Parolled</A><BR><br>&emsp;<A href='?src=\ref[];temp=1;criminal2=released'>Released</A><BR>", src, src, src, src, src)
-										if("rank")
-											var/list/L = list( "Head of Personnel", "Captain", "AI" )
-											if ((istype(src.active1, /datum/data/record) && L.Find(src.rank)))
-												src.temp = text("<B>Rank:</B><BR><br><B>Assistants:</B><BR><br><A href='?src=\ref[];temp=1;rank=res_assist'>Assistant</A><BR><br><B>Technicians:</B><BR><br><A href='?src=\ref[];temp=1;rank=foren_tech'>Detective</A><BR><br><A href='?src=\ref[];temp=1;rank=atmo_tech'>Atmospheric Technician</A><BR><br><A href='?src=\ref[];temp=1;rank=engineer'>Station Engineer</A><BR><br><B>Researchers:</B><BR><br><A href='?src=\ref[];temp=1;rank=med_res'>Geneticist</A><BR><br><A href='?src=\ref[];temp=1;rank=tox_res'>Scientist</A><BR><br><B>Officers:</B><BR><br><A href='?src=\ref[];temp=1;rank=med_doc'>Medical Doctor</A><BR><br><A href='?src=\ref[];temp=1;rank=secure_off'>Security Officer</A><BR><br><B>Higher Officers:</B><BR><br><A href='?src=\ref[];temp=1;rank=hoperson'>Head of Security</A><BR><br><A href='?src=\ref[];temp=1;rank=hosecurity'>Head of Personnel</A><BR><br><A href='?src=\ref[];temp=1;rank=captain'>Captain</A><BR>", src, src, src, src, src, src, src, src, src, src, src)
-											else
-												alert(usr, "You do not have the required rank to do this!")
-										else
-								else
-									if (href_list["rank"])
-										if (src.active1)
-											switch(href_list["rank"])
-												if("res_assist")
-													src.active1.fields["rank"] = "Assistant"
-												if("foren_tech")
-													src.active1.fields["rank"] = "Detective"
-												if("atmo_tech")
-													src.active1.fields["rank"] = "Atmospheric Technician"
-												if("engineer")
-													src.active1.fields["rank"] = "Station Engineer"
-												if("med_res")
-													src.active1.fields["rank"] = "Geneticist"
-												if("tox_res")
-													src.active1.fields["rank"] = "Scientist"
-												if("med_doc")
-													src.active1.fields["rank"] = "Medical Doctor"
-												if("secure_off")
-													src.active1.fields["rank"] = "Security Officer"
-												if("hoperson")
-													src.active1.fields["rank"] = "Head of Security"
-												if("hosecurity")
-													src.active1.fields["rank"] = "Head of Personnel"
-												if("captain")
-													src.active1.fields["rank"] = "Captain"
-												if("barman")
-													src.active1.fields["rank"] = "Barman"
-												if("chemist")
-													src.active1.fields["rank"] = "Chemist"
-												if("janitor")
-													src.active1.fields["rank"] = "Janitor"
-												if("clown")
-													src.active1.fields["rank"] = "Clown"
+								src.active_record_general["sex"] = "Male"
+					if ("age")
+						if (istype(src.active_record_general, /datum/db_record))
+							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
+							t1 = clamp(t1, 1, 99)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["age"] = t1
+					if ("minor_crimes")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Minor crimes:", "Security Records", src.active_record_security["mi_crim"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_security["mi_crim"] = t1
+					if ("minor_crime_details")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Minor crime details:", "Security Records", src.active_record_security["mi_crim_d"], null) as message
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_security["mi_crim_d"] = t1
+					if ("major_crimes")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Major crimes:", "Security Records", src.active_record_security["ma_crim"], null) as text
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_security["ma_crim"] = t1
+					if ("major_crime_details")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Major crime details:", "Security Records", src.active_record_security["ma_crim_d"], null) as message
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_security["ma_crim_d"] = t1
+					if ("notes")
+						if (istype(src.active_record_security, /datum/db_record))
+							var/t1 = input("Notes:", "Security Records", src.active_record_security["notes"], null) as message
+							t1 = adminscrub(t1)
+							if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_security["notes"] = t1
+					if ("rank")
+						var/list/L = list( "Head of Personnel", "Captain", "AI" )
+						if ((istype(src.active_record_general, /datum/db_record) && L.Find(src.rank)))
 
-									else
-										if (href_list["criminal2"])
-											if (src.active2)
-												switch(href_list["criminal2"])
-													if("none")
-														src.active2.fields["criminal"] = "None"
-													if("arrest")
-														src.active2.fields["criminal"] = "*Arrest*"
-														if (usr && src.active1.fields["name"])
-															logTheThing("station", usr, null, "[src.active1.fields["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
-													if("incarcerated")
-														src.active2.fields["criminal"] = "Incarcerated"
-													if("parolled")
-														src.active2.fields["criminal"] = "Parolled"
-													if("released")
-														src.active2.fields["criminal"] = "Released"
+							if (istype(src.active_record_security, /datum/db_record))
+								var/t1 = input("Job/Rank:", "Security Records", src.active_record_security["rank"], null) as text
+								t1 = adminscrub(t1)
+								if (!t1 || src.validate_can_still_use(current_general, current_security, usr))
+									return
+								src.active_record_security["rank"] = t1
 
-										else
-											if (href_list["del_r"])
-												if (src.active2)
-													src.temp = text("Are you sure you wish to delete the record (Security Portion Only)?<br><br>&emsp;<A href='?src=\ref[];temp=1;del_r2=1'>Yes</A><br><br>&emsp;<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
-											else
-												if (href_list["del_r2"])
-													if (src.active2)
-														//src.active2 = null
-														data_core.security -= src.active2
-														qdel(src.active2)
-												else
-													if (href_list["dela_r"])
-														if (src.active1)
-															src.temp = text("Are you sure you wish to delete the record (ALL)?<br><br>&emsp;<A href='?src=\ref[];temp=1;dela_r2=1'>Yes</A><br><br>&emsp;<A href='?src=\ref[];temp=1'>No</A><br>", src, src)
-													else
-														if (href_list["dela_r2"])
-															for(var/datum/data/record/R in data_core.medical)
-																if ((R.fields["name"] == src.active1.fields["name"] || R.fields["id"] == src.active1.fields["id"]))
-																	//R = null
-																	data_core.medical -= R
-																	qdel(R)
-																else
-															if (src.active2)
-																//src.active2 = null
-																data_core.security -= src.active2
-																qdel(src.active2)
-															if (src.active1)
-																//src.active1 = null
-																data_core.general -= src.active1
-																qdel(src.active1)
-														else
-															if (href_list["d_rec"])
-																var/datum/data/record/R = locate(href_list["d_rec"])
-																var/S = locate(href_list["d_rec"])
-																if (!( data_core.general.Find(R) ))
-																	src.temp = "Record Not Found!"
-																	return
-																for(var/datum/data/record/E in data_core.security)
-																	if ((E.fields["name"] == R.fields["name"] || E.fields["id"] == R.fields["id"]))
-																		S = E
-																	else
-																		//Foreach continue //goto(2614)
-																src.active1 = R
-																src.active2 = S
-																src.screen = 4
-															else
-																if (href_list["new_r"])
-																	var/datum/data/record/G = new /datum/data/record(  )
-																	G.fields["name"] = "New Record"
-																	G.fields["id"] = text("[]", add_zero(num2hex(rand(1, 1.6777215E7)), 6))
-																	G.fields["rank"] = "Unassigned"
-																	G.fields["sex"] = "Male"
-																	G.fields["age"] = "Unknown"
-																	G.fields["fingerprint"] = "Unknown"
-																	G.fields["p_stat"] = "Active"
-																	G.fields["m_stat"] = "Stable"
-																	data_core.general += G
-																	src.active1 = G
-																	src.active2 = null
-																else
-																	if (href_list["new"])
-																		if ((istype(src.active1, /datum/data/record) && !( istype(src.active2, /datum/data/record) )))
-																			var/datum/data/record/R = new /datum/data/record(  )
-																			R.fields["name"] = src.active1.fields["name"]
-																			R.fields["id"] = src.active1.fields["id"]
-																			R.name = text("Security Record #[]", R.fields["id"])
-																			R.fields["criminal"] = "None"
-																			R.fields["mi_crim"] = "None"
-																			R.fields["mi_crim_d"] = "No minor crime convictions."
-																			R.fields["ma_crim"] = "None"
-																			R.fields["ma_crim_d"] = "No major crime convictions."
-																			R.fields["notes"] = "No notes."
-																			data_core.security += R
-																			src.active2 = R
-																			src.screen = 4
-																	else
-																		if (href_list["add_c"])
-																			if (!( istype(src.active2, /datum/data/record) ))
-																				return
-																			var/a2 = src.active2
-																			var/t1 = input("Add Comment:", "Secure. records", null, null)  as message
-																			t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-																			if ((!( t1 ) || !( src.authenticated ) || usr.stat || usr.restrained() || (!in_range(src, usr) && (!usr_is_robot)) || src.active2 != a2))
-																				return
-																			var/counter = 1
-																			while(src.active2.fields[text("com_[]", counter)])
-																				counter++
-																			src.active2.fields[text("com_[]", counter)] = text("Made by [] ([]) on [], [CURRENT_SPACE_YEAR]<BR>[]", src.authenticated, src.rank, time2text(world.realtime, "DDD MMM DD hh:mm:ss"), t1)
-																		else
-																			if (href_list["del_c"])
-																				if ((istype(src.active2, /datum/data/record) && src.active2.fields[text("com_[]", href_list["del_c"])]))
-																					src.active2.fields[text("com_[]", href_list["del_c"])] = "<B>Deleted</B>"
-																			else
-																				if (href_list["search_f"])
-																					var/t1 = input("Search String: (Fingerprint)", "Secure. records", null, null)  as text
-																					t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-																					if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || (!in_range(src, usr)) && (!usr_is_robot)))
-																						return
-																					src.active1 = null
-																					src.active2 = null
-																					t1 = lowertext(t1)
-																					for(var/datum/data/record/R in data_core.general)
-																						if (lowertext(R.fields["fingerprint"]) == t1)
-																							src.active1 = R
-																						else
-																							//Foreach continue //goto(3414)
-																					if (!( src.active1 ))
-																						src.temp = text("Could not locate record [].", t1)
-																					else
-																						for(var/datum/data/record/E in data_core.security)
-																							if ((E.fields["name"] == src.active1.fields["name"] || E.fields["id"] == src.active1.fields["id"]))
-																								src.active2 = E
-																							else
-																								//Foreach continue //goto(3502)
-																						src.screen = 4
-																				else
-																					if (href_list["search"])
-																						var/t1 = input("Search String: (Name, DNA, or ID)", "Secure. records", null, null)  as text
-																						t1 = copytext(adminscrub(t1), 1, MAX_MESSAGE_LEN)
-																						if ((!( t1 ) || usr.stat || !( src.authenticated ) || usr.restrained() || !in_range(src, usr)))
-																							return
-																						src.active1 = null
-																						src.active2 = null
-																						t1 = lowertext(t1)
-																						for(var/datum/data/record/R in data_core.general)
-																							if ((lowertext(R.fields["name"]) == t1 || t1 == lowertext(R.fields["dna"]) || t1 == lowertext(R.fields["id"])))
-																								src.active1 = R
-																							else
-																								//Foreach continue //goto(3708)
-																						if (!( src.active1 ))
-																							src.temp = text("Could not locate record [].", t1)
-																						else
-																							for(var/datum/data/record/E in data_core.security)
-																								if ((E.fields["name"] == src.active1.fields["name"] || E.fields["id"] == src.active1.fields["id"]))
-																									src.active2 = E
-																								else
-																									//Foreach continue //goto(3813)
-																							src.screen = 4
-																					else
-																						if (href_list["print_p"])
-																							if (!( src.printing ))
-																								src.printing = 1
-																								sleep(50)
-																								var/obj/item/paper/P = new /obj/item/paper( src.loc )
-																								P.info = "<CENTER><B>Security Record</B></CENTER><BR>"
-																								if ((istype(src.active1, /datum/data/record) && data_core.general.Find(src.active1)))
-																									P.info += text("Name: [] ID: []<BR><br>Sex: []<BR><br>Age: []<BR><br>Fingerprint: []<BR><br>Physical Status: []<BR><br>Mental Status: []<BR>", src.active1.fields["name"], src.active1.fields["id"], src.active1.fields["sex"], src.active1.fields["age"], src.active1.fields["fingerprint"], src.active1.fields["p_stat"], src.active1.fields["m_stat"])
-																								else
-																									P.info += "<B>General Record Lost!</B><BR>"
-																								if ((istype(src.active2, /datum/data/record) && data_core.security.Find(src.active2)))
-																									P.info += text("<BR><br><CENTER><B>Security Data</B></CENTER><BR><br>Criminal Status: []<BR><br><BR><br>Minor Crimes: []<BR><br>Details: []<BR><br><BR><br>Major Crimes: []<BR><br>Details: []<BR><br><BR><br>Important Notes:<BR><br>&emsp;[]<BR><br><BR><br><CENTER><B>Comments/Log</B></CENTER><BR>", src.active2.fields["criminal"], src.active2.fields["mi_crim"], src.active2.fields["mi_crim_d"], src.active2.fields["ma_crim"], src.active2.fields["ma_crim_d"], src.active2.fields["notes"])
-																									var/counter = 1
-																									while(src.active2.fields[text("com_[]", counter)])
-																										P.info += text("[]<BR>", src.active2.fields[text("com_[]", counter)])
-																										counter++
-																								else
-																									P.info += "<B>Security Record Lost!</B><BR>"
-																								P.info += "</TT>"
-																								P.name = "paper- 'Security Record'"
-																								src.printing = null
+						// 	src.temp = {"
+						// <b>Rank:</b>
+						// <br>
+						// <br><b>Assistants:</b>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=res_assist');">Assistant</a>
+						// <br>
+						// <br><b>Technicians:</b>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=foren_tech');">Detective</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=atmo_tech');">Atmospheric Technician</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=engineer');">Station Engineer</a>
+						// <br>
+						// <br><b>Researchers:</b>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=med_res');">Geneticist</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=tox_res');">Scientist</a>
+						// <br>
+						// <br><b>Officers:</b>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=med_doc');">Medical Doctor</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=secure_off');">Security Officer</a>
+						// <br>
+						// <br><b>Higher Officers:</b>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=hoperson');">Head of Security</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=hosecurity');">Head of Personnel</a>
+						// <br>
+						// <br><a href="javascript:goBYOND('action=rank;rank=captain');">Captain</a>
+						// <br>
+						// "}
+						else
+							tgui_alert(usr, "You do not have the required rank to do this!", "Rank not high enough")
+
+			// if ("rank")
+			// 	if (src.active_record_general)
+			// 		switch(href_list["rank"])
+			// 			if ("res_assist")
+			// 				src.active_record_general["rank"] = "Assistant"
+			// 			if ("foren_tech")
+			// 				src.active_record_general["rank"] = "Detective"
+			// 			if ("atmo_tech")
+			// 				src.active_record_general["rank"] = "Atmospheric Technician"
+			// 			if ("engineer")
+			// 				src.active_record_general["rank"] = "Station Engineer"
+			// 			if ("med_res")
+			// 				src.active_record_general["rank"] = "Geneticist"
+			// 			if ("tox_res")
+			// 				src.active_record_general["rank"] = "Scientist"
+			// 			if ("med_doc")
+			// 				src.active_record_general["rank"] = "Medical Doctor"
+			// 			if ("secure_off")
+			// 				src.active_record_general["rank"] = "Security Officer"
+			// 			if ("hoperson")
+			// 				src.active_record_general["rank"] = "Head of Security"
+			// 			if ("hosecurity")
+			// 				src.active_record_general["rank"] = "Head of Personnel"
+			// 			if ("captain")
+			// 				src.active_record_general["rank"] = "Captain"
+			// 			if ("bartender")
+			// 				src.active_record_general["rank"] = "Bartender"
+			// 			if ("chemist")
+			// 				src.active_record_general["rank"] = "Chemist"
+			// 			if ("janitor")
+			// 				src.active_record_general["rank"] = "Janitor"
+			// 			if ("clown")
+			// 				src.active_record_general["rank"] = "Clown"
+			// 		src.temp = null
+
+
+			if ("criminal")
+				if (src.active_record_security)
+					switch(href_list["criminal"])
+						if ("none")
+							src.active_record_security["criminal"] = "None"
+						if ("arrest")
+							src.active_record_security["criminal"] = "*Arrest*"
+							if (usr && src.active_record_general["name"])
+								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+						if ("incarcerated")
+							src.active_record_security["criminal"] = "Incarcerated"
+						if ("parolled")
+							src.active_record_security["criminal"] = "Parolled"
+						if ("released")
+							src.active_record_security["criminal"] = "Released"
+					src.temp = null
+
+			if ("del_security_record")
+				if (href_list["answer"] == "yes" && src.active_record_security)
+					qdel(src.active_record_security)
+					src.active_record_security = null
+					src.temp = "Security record deleted."
+				else
+					src.temp = null
+
+			if ("del_full_record")
+				if (href_list["answer"] == "yes")
+					for (var/datum/db_record/R as anything in data_core.medical.records)
+						if ((R["name"] == src.active_record_general["name"] || R["id"] == src.active_record_general["id"]))
+							qdel(R)
+					if (src.active_record_security)
+						qdel(src.active_record_security)
+					if (src.active_record_general)
+						qdel(src.active_record_general)
+
+					src.active_record_general = null
+					src.active_record_security = null
+					src.screen = SECREC_LIST_RECORDS
+					src.temp = "Record deleted."
+
+				else
+					src.temp = null
+
+			if ("view_record")
+				var/datum/db_record/R = locate(href_list["rec"])
+				var/S = locate(href_list["rec"])
+				if (!data_core.general.has_record(R))
+					src.temp = "Record Not Found!"
+					return
+				for (var/datum/db_record/E as anything in data_core.security.records)
+					if ((E["name"] == R["name"] || E["id"] == R["id"]))
+						S = E
+				src.active_record_general = R
+				src.active_record_security = S
+				src.screen = SECREC_VIEW_RECORD
+
+			if ("new_general_record")
+				var/datum/db_record/G = new /datum/db_record()
+				G["name"] = "New Record"
+				G["id"] = num2hex(rand(1, 1.6777215E7), 6)
+				G["rank"] = "Unassigned"
+				G["sex"] = "Unknown"
+				G["age"] = "Unknown"
+				G["fingerprint"] = "Unknown"
+				G["p_stat"] = "Active"
+				G["m_stat"] = "Stable"
+				data_core.general.add_record(G)
+				src.active_record_general = G
+				src.active_record_security = null
+				src.screen = SECREC_VIEW_RECORD
+
+			if ("new_security_record")
+				if ((istype(src.active_record_general, /datum/db_record) && !( istype(src.active_record_security, /datum/db_record) )))
+					var/datum/db_record/R = new /datum/db_record(  )
+					R["name"] = src.active_record_general["name"]
+					R["id"] = src.active_record_general["id"]
+					R["criminal"] = "None"
+					R["mi_crim"] = "None"
+					R["mi_crim_d"] = "No minor crime convictions."
+					R["ma_crim"] = "None"
+					R["ma_crim_d"] = "No major crime convictions."
+					R["notes"] = "No notes."
+					data_core.security.add_record(R)
+					src.active_record_security = R
+					src.screen = SECREC_VIEW_RECORD
+
+			if ("add_comment")
+				if (!src.active_record_security)
+					return
+				var/current_security = src.active_record_security
+				var/t1 = input("Add Comment:", "Security Records", null, null) as message
+				t1 = adminscrub(t1)
+				if (!t1 || src.validate_can_still_use(null, current_security, usr))
+					return
+				// var/counter = 1
+				// while (src.active_record_security"com_[counter]"])
+				// 	counter++
+
+				var/list/new_comment = list(
+					"author" = "[src.authenticated] ([src.rank])",
+					"time" = "[time2text(world.realtime, "hh:mm:ss")]",
+					"text" = t1
+					)
+
+				if (!src.active_record_security["log"])
+					src.active_record_security["log"] = list()
+
+				// this looks dumb as fuck, but: byond
+				src.active_record_security["log"] += list( new_comment )
+
+			if ("del_comment")
+				var/comment_num = text2num_safe(href_list["comment"])
+				if (src.active_record_security && src.active_record_security["log"] && src.active_record_security["log"][comment_num])
+					src.active_record_security["log"][comment_num]["author"] = "Deleted"
+					src.active_record_security["log"][comment_num]["text"] = "<div style='text-align: center;'>Deleted at [time2text(world.realtime, "hh:mm:ss")]</div>"
+
+
+			if ("search_fingerprint")
+				var/t1 = input("Search String: (Fingerprint)", "Security Records", null, null) as text
+				t1 = adminscrub(t1)
+				if (!t1 || src.validate_can_still_use(null, null, usr))
+					return
+				src.active_record_general = null
+				src.active_record_security = null
+				t1 = lowertext(t1)
+				for (var/datum/db_record/R as anything in data_core.general.records)
+					if (lowertext(R["fingerprint"]) == t1)
+						src.active_record_general = R
+				if (!src.active_record_general)
+					src.temp = "Could not locate record matching '[t1]''."
+				else
+					for (var/datum/db_record/E as anything in data_core.security.records)
+						if ((E["name"] == src.active_record_general["name"] || E["id"] == src.active_record_general["id"]))
+							src.active_record_security = E
+					src.screen = SECREC_VIEW_RECORD
+
+			if ("search")
+				var/t1 = input("Search String: (Name, DNA, or ID)", "Security Records", null, null) as text
+				t1 = adminscrub(t1)
+				if (!t1 || src.validate_can_still_use(null, null, usr))
+					return
+				src.active_record_general = null
+				src.active_record_security = null
+				t1 = lowertext(t1)
+				for (var/datum/db_record/R as anything in data_core.general.records)
+					if ((lowertext(R["name"]) == t1 || t1 == lowertext(R["dna"]) || t1 == lowertext(R["id"])))
+						src.active_record_general = R
+				if (!src.active_record_general)
+					src.temp = "Could not locate record [t1]."
+				else
+					for (var/datum/db_record/E as anything in data_core.security.records)
+						if ((E["name"] == src.active_record_general["name"] || E["id"] == src.active_record_general["id"]))
+							src.active_record_security = E
+					src.screen = SECREC_VIEW_RECORD
+
+			if ("print_record")
+				if (!( src.printing ))
+					src.printing = 1
+					playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 0)
+					sleep(3 SECONDS)
+					var/obj/item/paper/P = new /obj/item/paper( src.loc )
+					P.info = "<center><b>Security Record</b></center><br>"
+					src.validate_records()
+					if (src.active_record_general)
+						P.info += {"
+						Name: [src.active_record_general["name"]] ID: [src.active_record_general["id"]]
+						<br>
+						<br>Sex: [src.active_record_general["sex"]]
+						<br>
+						<br>Age: [src.active_record_general["age"]]
+						<br>
+						<br>Fingerprint: [src.active_record_general["fingerprint"]]
+						<br>
+						<br>Physical Status: [src.active_record_general["p_stat"]]
+						<br>
+						<br>Mental Status: [src.active_record_general["m_stat"]]
+						<br>
+						"}
+					else
+						P.info += "<b>General Record Lost!</b><br>"
+					if (src.active_record_security)
+						P.info += {"
+						<br>
+						<br><center><b>Security Data</b></center>
+						<br>
+						<br>Criminal Status: [src.active_record_security["criminal"]]
+						<br>
+						<br>
+						<br>
+						<br>Minor Crimes: [src.active_record_security["mi_crim"]]
+						<br>
+						<br>Details: [src.active_record_security["mi_crim_d"]]
+						<br>
+						<br>
+						<br>
+						<br>Major Crimes: [src.active_record_security["ma_crim"]]
+						<br>
+						<br>Details: [src.active_record_security["ma_crim_d"]]
+						<br>
+						<br>
+						<br>
+						<br>Important Notes:
+						<br>
+						<br>&emsp;[src.active_record_security["notes"]]
+						<br>
+						<br>
+						<br>
+						<br><center><b>Comments/Log</b></center>
+						<br>
+						"}
+						var/counter = 1
+						while (src.active_record_security["com_[counter]"])
+							P.info += {"[src.active_record_security["com_[counter]"]]<br>"}
+							counter++
+					else
+						P.info += "<b>Security Record Lost!</b><br>"
+					P.info += "</TT>"
+					P.name = "paper- 'Security Record'"
+					src.printing = null
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 
 	return
 
+#undef SECREC_MAIN_MENU
+#undef SECREC_LIST_RECORDS
+#undef SECREC_MANAGE_RECORDS
+#undef SECREC_VIEW_RECORD

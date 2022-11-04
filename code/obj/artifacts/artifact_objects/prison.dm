@@ -4,19 +4,25 @@
 
 /datum/artifact/prison
 	associated_object = /obj/artifact/prison
-	rarity_class = 2
+	type_name = "Prison"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 350
 	min_triggers = 2
 	max_triggers = 2
 	validtypes = list("ancient","martian","wizard","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	react_xray = list(15,90,90,11,"HOLLOW")
 	touch_descriptors = list("You seem to have a little difficulty taking your hand off its surface.")
 	var/mob/living/prisoner = null
+	var/living = FALSE
 	var/imprison_time = 0
 
 	New()
 		..()
-		imprison_time = rand(50,1200)
+		imprison_time = rand(5 SECONDS, 2 MINUTES)
+		if (prob(10))
+			living = TRUE
 
 	effect_touch(var/obj/O,var/mob/living/user)
 		if (..())
@@ -26,18 +32,43 @@
 		if (prisoner)
 			return
 		if (isliving(user))
-			O.visible_message("<span style=\"color:red\"><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
-			user.set_loc(O)
+			if (length(user.grabbed_by) > 0)
+				for (var/obj/item/grab/grab in user.grabbed_by)
+					grab.assailant.u_equip(grab)
+			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside and slams shut!</span>")
+			if (src.living)
+				new /mob/living/object/artifact(O.loc, O, user)
+			else
+				user.set_loc(O)
+			O.ArtifactFaultUsed(user)
 			prisoner = user
-			SPAWN_DBG(imprison_time)
-				if (O) //ZeWaka: Fix for null.contents
-					for(var/obj/I in O.contents)
-						I.set_loc(get_turf(O))
-					if (prisoner.loc == O)
-						prisoner.set_loc(get_turf(O))
-						O.visible_message("<span style=\"color:red\"><b>[O]</b> releases [user.name] and shuts down!</span>")
-					else
-						O.visible_message("<span style=\"color:red\"><b>[O]</b> shuts down strangely!</span>")
-					prisoner = null
+			SPAWN(imprison_time)
+				if (!O.disposed) //ZeWaka: Fix for null.contents
 					O.ArtifactDeactivated()
+
+	effect_deactivate(obj/O)
+		if (..())
 			return
+		if (living && istype(O.loc, /mob/living/object))
+			var/mob/living/object/mob = O.loc
+			mob.visible_message("<span class='alert'>[prisoner.name] is ejected from [mob] and regains control of their body.</span>")
+			mob.death(FALSE)
+		if (prisoner?.loc == O)
+			prisoner.set_loc(get_turf(O))
+			O.visible_message("<span class='alert'><b>[O]</b> releases [prisoner.name] and shuts down!</span>")
+		else
+			O.visible_message("<span class='alert'><b>[O]</b> shuts down strangely!</span>")
+		for(var/atom/movable/I in (O.contents-O.vis_contents))
+			I.set_loc(get_turf(O))
+		prisoner = null
+
+/mob/living/object/artifact
+
+	New()
+		..()
+		qdel(src.hud) // no escape!!!
+
+	click(atom/target, params)
+		if (target == src) // no recursive living objects ty
+			return
+		..()

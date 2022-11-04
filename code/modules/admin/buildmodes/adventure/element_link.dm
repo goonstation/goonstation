@@ -15,29 +15,22 @@
 		if(triggerable)
 			triggerable_id = triggerable
 			triggerable = null
-		SPAWN_DBG(1 DECI SECOND)
-			src.link_elements()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(0.1 SECONDS)
+				src.initialize()
+
+	initialize()
+		src.link_elements()
+		..()
+		qdel(src)
 
 	proc/link_elements()
 
-		for(var/obj/adventurepuzzle/A)
+		if(length(adventure_elements_by_id[src.triggerer_id]))
+			src.triggerer = adventure_elements_by_id[src.triggerer_id][1]
 
-			if(A.id == src.triggerer_id)
-				src.triggerer = A
-
-			if(A.id == src.triggerable_id)
-				src.triggerable = A
-
-
-		for(var/obj/item/adventurepuzzle/A)
-
-			if(A.id == src.triggerer_id)
-				src.triggerer = A
-
-			if(A.id == src.triggerable_id)
-				src.triggerable = A
+		if(length(adventure_elements_by_id[src.triggerable_id]))
+			src.triggerable = adventure_elements_by_id[src.triggerable_id][1]
 
 		if(src.triggerer && src.triggerable)
 

@@ -14,7 +14,8 @@ var/list/ban_stacking_into_fluid = list( //ban these from producing fluid from a
 	"carbon",\
 	"ash",\
 	"blackpowder",\
-	"reliquary_blood",\
+	"leaves",\
+	"poo",\
 )
 
 ///////////////////
@@ -25,16 +26,18 @@ var/global/waterflow_enabled = 1
 
 var/list/depth_levels = list(2,50,100,200)
 
+var/mutable_appearance/fluid_ma
+
 /obj/fluid
 	name = "fluid"
 	desc = "It's a free-flowing liquid state of matter!"
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "15"
-	anchored = 1
+	anchored = 2
 	mouse_opacity = 1
 	layer = FLUID_LAYER
 
-	event_handler_flags = USE_HASENTERED | IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH
 
 	var/finalcolor = "#ffffff"
 	color = "#ffffff"
@@ -72,7 +75,7 @@ var/list/depth_levels = list(2,50,100,200)
 	var/touched_channel = 0
 
 	var/list/wall_overlay_images = 0 //overlay bits onto a wall to make the water look deep. This is a cache of those overlays.
-	//var/list/floated_atoms = 0 //list of atoms we triggered a float anim on (cleanup later on pool())
+	//var/list/floated_atoms = 0 //list of atoms we triggered a float anim on (cleanup later on qdel())
 
 	var/is_setup = 0
 	var/blocked_dirs = 0 //amount of cardinal directions that i was blocked by in last update(). Cache this to skip updates on 'inner' fluid tiles of a group
@@ -95,52 +98,61 @@ var/list/depth_levels = list(2,50,100,200)
 				src.removed()
 				return
 
-		flags |= OPENCONTAINER
+		flags |= OPENCONTAINER | UNCRUSHABLE
 
 		//src.floated_atoms = list()
 
 		for (var/dir in cardinal)
 			blocked_perspective_objects["[dir]"] = 0
 
+		if (!fluid_ma)
+			fluid_ma = new(src)
+
 
 	proc/set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
-		if(istype( src.loc, /turf ) )
-			src.loc:active_liquid = 0
 		if (!newloc) return
+
 		is_setup = 1
-		if(!istype( newloc, /turf ) || !waterflow_enabled)
+		if(!isturf(newloc) || !waterflow_enabled)
 			src.removed()
 			return
 
 		set_loc(newloc)
 		src.loc = newloc
-		loc:active_liquid = src//the dreaded :
+		src.loc:active_liquid = src//the dreaded :
 
 	proc/done_init()
 		.=0
 		//maybe slow, it was broke in the first place so lets just comment it out
 		//for(var/mob/M in src.loc)
-		//	if (src.pooled) return
+		//	if (src.disposed) return
 		//	src.HasEntered(M,M.loc)
 		//	LAGCHECK(LAG_MED)
 
 		/*
 		for(var/obj/O in src.loc)
 			LAGCHECK(LAG_MED)
-			if (src.pooled) return
+			if (src.disposed) return
 			if (O.submerged_images)
 				src.HasEntered(O,O.loc)
 		*/
 
+	proc/trigger_fluid_enter()
+		for(var/atom/A in src.loc)
+			if (src.group && !src.group.disposed && A.event_handler_flags & USE_FLUID_ENTER)
+				A.EnteredFluid(src, src.loc)
+		if(src.group && !src.group.disposed)
+			src.loc?.EnteredFluid(src, src.loc)
+
+	proc/turf_remove_cleanup(turf/the_turf)
+		the_turf.active_liquid = null
 
 	disposing()
-		src.pooled = 1
-
-		if (src.group)
+		if (src.group && !src.group.disposed && src.group.members)
 			src.group.members -= src
 
-		src.group = 0
+		src.group = null
 
 		/*for (var/atom/A in src.floated_atoms) // ehh i dont like doing this, but I think we need it.
 			if (!A) continue
@@ -149,19 +161,22 @@ var/list/depth_levels = list(2,50,100,200)
 		src.floated_atoms.len = 0*/
 
 		if (isturf(src.loc))
-			src.loc:active_liquid = 0
+			src.turf_remove_cleanup(src.loc)
 
 		name = "fluid"
-		icon_state = "15"
+		fluid_ma.icon_state = "15"
+		fluid_ma.alpha = 255
+		fluid_ma.color = "#ffffff"
+		fluid_ma.overlays = null
+		src.appearance = fluid_ma
+		src.overlay_refs = null // setting appearance removes our overlays!
 
 		finalcolor = "#ffffff"
 		finalalpha = 100
-		alpha = 255
-		color = "#ffffff"
 		amt = 0
 		avg_viscosity = initial(avg_viscosity)
 		movement_speed_mod = 0
-		group = 0
+		group = null
 		touched_other_group = 0
 		//float_anim = 0
 		step_sound = 0
@@ -171,22 +186,7 @@ var/list/depth_levels = list(2,50,100,200)
 		is_setup = 0
 		blocked_dirs = 0
 		blocked_perspective_objects["[dir]"] = 0
-		src.loc = null
 		my_depth_level = 0
-
-		..()
-
-	unpooled()
-
-		src.pooled = 0
-		is_setup = 0
-		group = 0
-		touched_other_group = 0
-		src.step_sound = "sound/misc/splash_1.ogg"
-
-		if (isturf(src.loc))
-			var/turf/T = src.loc
-			T.active_liquid = 0
 		..()
 
 	get_desc(dist, mob/user)
@@ -194,7 +194,7 @@ var/list/depth_levels = list(2,50,100,200)
 			return
 		if (!src.group || !src.group.reagents)
 			return
-		. = "<br><span style=\"color:blue\">[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
+		. = "<br><span class='notice'>[src.group.reagents.get_description(user,(RC_VISIBLE | RC_SPECTRO))]</span>"
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -202,17 +202,17 @@ var/list/depth_levels = list(2,50,100,200)
 			return
 
 		//floor overrides some construction clicks
-		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || istype(W,/obj/item/crowbar) || istype(W,/obj/item/pen))
+		if (istype(W,/obj/item/rcd) || istype(W,/obj/item/tile) || istype(W,/obj/item/sheet) || ispryingtool(W))
 			var/turf/T = get_turf(src)
-			T.attackby(W,user)
-			W.afterattack(T,user)
+			T.Attackby(W,user)
+			W.AfterAttack(T,user)
 			return
 
 		.= ..()
 
 	attack_hand(mob/user)
 		var/turf/T = src.loc
-		T.attack_hand(user)
+		T.Attackhand(user)
 
 	proc/add_reagents(var/datum/reagents/R, var/volume) //should be called right after new() on inital group creation
 		if (!src.group) return
@@ -223,9 +223,9 @@ var/list/depth_levels = list(2,50,100,200)
 		src.group.reagents.add_reagent(reagent_name,volume)
 
 	//incorporate touch_modifier?
-	HasEntered(atom/A, atom/oldloc)
+	Crossed(atom/movable/A)
 		..()
-		if (!src.group || !src.group.reagents || src.pooled || istype(A,/obj/fluid))
+		if (!src.group || !src.group.reagents || src.disposed || istype(A,/obj/fluid)  || src.group.disposed || istype(src, /obj/fluid/airborne))
 			return
 
 		my_depth_level = last_depth_level
@@ -238,20 +238,20 @@ var/list/depth_levels = list(2,50,100,200)
 					src.floated_atoms += AM*/
 
 		if (A.event_handler_flags & USE_FLUID_ENTER)
-			A.EnteredFluid(src,oldloc)
+			A.EnteredFluid(src, A.last_turf)
 
-	proc/force_mob_to_ingest(var/mob/M)//called when mob is drowning
+	proc/force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning
 		if (!M) return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt / 2) : (src.amt)
-		react_volume = min(react_volume,20)
+		react_volume = min(react_volume,20) * mult
 		if (M.reagents)
 			react_volume = min(react_volume, abs(M.reagents.maximum_volume - M.reagents.total_volume)) //don't push out other reagents if we are full
 		src.group.reagents.reaction(M, INGEST, react_volume,1,src.group.members.len)
 		src.group.reagents.trans_to(M, react_volume)
 
-	HasExited(atom/movable/AM, atom/newloc)
+	Uncrossed(atom/movable/AM)
 
 		/*var/cancel_float = 0
 		if (AM.loc == newloc)
@@ -273,12 +273,11 @@ var/list/depth_levels = list(2,50,100,200)
 				AM.pixel_y = initial(AM.pixel_y)
 				floated_atoms -= AM*/
 
-		if (AM.event_handler_flags & USE_FLUID_ENTER)
-			AM.ExitedFluid(src,newloc)
+		if ((AM.event_handler_flags & USE_FLUID_ENTER) && !istype(src, /obj/fluid/airborne))
+			AM.ExitedFluid(src)
 
 
 	proc/add_tracked_blood(atom/movable/AM as mob|obj)
-		LAGCHECK(LAG_MED)
 		AM.tracked_blood = list("bDNA" = src.blood_DNA, "btype" = src.blood_type, "color" = src.color, "count" = rand(2,6))
 		if (ismob(AM))
 			var/mob/M = AM
@@ -287,43 +286,44 @@ var/list/depth_levels = list(2,50,100,200)
 
 	temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 		..()
-		if (!src.group || !src.group.reagents || !src.group.members.len) return
+		if (!src.group || !src.group.reagents || !length(src.group.members)) return
 		src.group.last_temp_change = world.time
 		//reduce exposed temperature by amt of members in the group
-		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, (70 - (35 / (src.group.members.len))), 15)
+		src.group.reagents.temperature_reagents(exposed_temperature, exposed_volume, 100, 15, 1)
 
 	ex_act()
 		src.removed()
 
 	proc/removed(var/sfx = 0)
-		if (src.pooled) return
+		if (src.disposed) return
 
 		if (sfx)
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 		if (src.group)
 			if (!src.group.remove(src))
-				pool(src)
+				qdel(src)
 		else
-			pool(src)
+			qdel(src)
 
-		for(var/A in src.loc)
-			var/atom/atom = A
-			if (atom && atom & FLUID_SUBMERGE)
+		for(var/atom/A as anything in src.loc)
+			if (A && A.flags & FLUID_SUBMERGE)
 				var/mob/living/M = A
 				var/obj/O = A
 				if (istype(M))
-					src.HasExited(M,M.loc)
+					src.Uncrossed(M)
 					M.show_submerged_image(0)
 				else if (istype(O))
 					if (O.submerged_images)
-						src.HasExited(O,O.loc)
-						if ((O.submerged_images && O.submerged_images.len) && (O.is_submerged != 0))
+						src.Uncrossed(O)
+						if ((O.submerged_images && length(O.submerged_images)) && (O.is_submerged != 0))
 							O.show_submerged_image(0)
 
 	var/spawned_any = 0
 	proc/update() //returns list of created fluid tiles
-		if (!src.group) return
+		if (!src.group || src.group.disposed) //uh oh
+			src.removed()
+			return
 		.= list()
 		last_spread_was_blocked = 1
 		src.touched_channel = 0
@@ -333,10 +333,6 @@ var/list/depth_levels = list(2,50,100,200)
 		var/turf/t
 		if(!waterflow_enabled) return
 		for( var/dir in cardinal )
-			LAGCHECK(LAG_MED)
-			if (!src.group)
-				src.removed()
-				return
 			blocked_perspective_objects["[dir]"] = 0
 			t = get_step( src, dir )
 			if (!t) //the fuck? how
@@ -346,7 +342,7 @@ var/list/depth_levels = list(2,50,100,200)
 				if (IS_PERSPECTIVE_WALL(t))
 					blocked_perspective_objects["[dir]"] = 1
 				continue
-			if (t.active_liquid && !t.active_liquid.pooled)
+			if (t.active_liquid && !t.active_liquid.disposed)
 				blocked_dirs++
 				if (t.active_liquid.group && t.active_liquid.group != src.group)
 					touched_other_group = t.active_liquid.group
@@ -356,26 +352,18 @@ var/list/depth_levels = list(2,50,100,200)
 			if(! t.density )
 				var/suc = 1
 				var/push_thing = 0
-				for(var/obj/thing in t.contents) //HEY maybe do item pushing here since you're looping thru turf contents anyway??
-					LAGCHECK(LAG_HIGH)
+				for(var/obj/thing in t.contents)
 					var/found = 0
 					if (IS_SOLID_TO_FLUID(thing))
 						found = 1
 					else if (!push_thing && !thing.anchored)
 						push_thing = thing
-					/*
-					for(var/type_string in solid_to_fluid)
-						if (istype(thing,text2path(type_string)))
-							found = 1
-							break
-					*/
+
 					if (found)
-						if( thing.density )
+						if( thing.density || (thing.flags & FLUID_DENSE) )
 							suc=0
 							blocked_dirs++
 							if (IS_PERSPECTIVE_BLOCK(thing))
-							//for(var/type_string in perspective_blocks)
-							//	if (istype(thing,text2path(type_string)))
 								blocked_perspective_objects["[dir]"] = 1
 							break
 
@@ -384,13 +372,12 @@ var/list/depth_levels = list(2,50,100,200)
 							suc=0
 							break
 
-				if(suc && src.group) //group went missing? ok im doin a check here lol
-					LAGCHECK(LAG_HIGH)
+				if(suc && src.group && !src.group.disposed) //group went missing? ok im doin a check here lol
 					spawned_any = 1
 					src.icon_state = "15"
-					var/obj/fluid/F = unpool(/obj/fluid)
+					var/obj/fluid/F = new /obj/fluid
 					F.set_up(t,0)
-					if (!F || !src.group) continue //set_up may decide to remove F
+					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
 					F.name = src.name
@@ -400,16 +387,18 @@ var/list/depth_levels = list(2,50,100,200)
 					F.finalalpha = src.finalalpha
 					F.avg_viscosity = src.avg_viscosity
 					F.last_depth_level = src.last_depth_level
+					F.my_depth_level = src.last_depth_level
 					F.step_sound = src.step_sound
 					F.movement_speed_mod = src.movement_speed_mod
 
 					if (src.group)
+						src.group.add(F, src.group.amt_per_tile)
 						F.group = src.group
-						. += F
 					else
 						var/datum/fluid_group/FG = new
 						FG.add(F, src.group.amt_per_tile)
 						F.group = FG
+					. += F
 
 					F.done_init()
 
@@ -423,6 +412,8 @@ var/list/depth_levels = list(2,50,100,200)
 									step_away(I,src)
 						else
 							step_away(push_thing,src)
+
+					F.trigger_fluid_enter()
 
 		if (spawned_any && prob(40))
 			playsound( src.loc, 'sound/misc/waterflow.ogg', 30,0.7,7)
@@ -443,19 +434,15 @@ var/list/depth_levels = list(2,50,100,200)
 		var/obj/fluid/current_fluid = 0
 		var/visited_changed = 0
 		while(queue.len)
-			LAGCHECK(LAG_HIGH)
 			current_fluid = queue[1]
 			queue.Cut(1, 2)
 
 			for( var/dir in cardinal )
-				LAGCHECK(LAG_HIGH)
 				t = get_step( current_fluid, dir )
 				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
 				if (!t.active_liquid.group)
 					t.active_liquid.removed()
 					continue
-
-				LAGCHECK(LAG_HIGH)
 
 				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
 				//if(t.active_liquid in visited) continue
@@ -463,7 +450,7 @@ var/list/depth_levels = list(2,50,100,200)
 
 				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
 				//Probably slower for small groups and much faster for large groups.
-				visited_changed = visited.len
+				visited_changed = length(visited)
 				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
 				visited_changed = (visited.len != visited_changed)
 
@@ -477,20 +464,57 @@ var/list/depth_levels = list(2,50,100,200)
 							if (adjacent_match_quit <= 0)
 								return 0 //bud nippin
 
-			LAGCHECK(LAG_HIGH)
+	//sorry for copy paste, this ones a bit diff. return turfs of members nearby, stop at a number
+	proc/get_connected_fluid_members(var/stop_at = 0)
+		.= list()
+		if (!src.group) return list(src)
+
+		var/list/queue = list(src)
+		var/list/visited = list()
+		var/turf/t
+
+		var/obj/fluid/current_fluid = 0
+		var/visited_changed = 0
+		while(queue.len)
+			current_fluid = queue[1]
+			queue.Cut(1, 2)
+
+			for( var/dir in cardinal )
+				t = get_step( current_fluid, dir )
+				if (!VALID_FLUID_CONNECTION(current_fluid, t)) continue
+				if (t.active_liquid.group != src.group)
+					continue
+
+				//Old method : search through 'visited' for 't.active_liquid'. Probably slow when you have big groups!!
+				//if(t.active_liquid in visited) continue
+				//visited += t.active_liquid
+
+				//New method : Add the liquid at a specific index. To check whether the node has already been visited, just compare the len of the visited group from before + after the index has been set.
+				//Probably slower for small groups and much faster for large groups.
+				visited_changed = length(visited)
+				visited["[t.active_liquid.x]_[t.active_liquid.y]_[t.active_liquid.z]"] = t.active_liquid
+				visited_changed = (visited.len != visited_changed)
+
+				if (visited_changed)
+					queue += t.active_liquid
+					.+= t
+
+					if (stop_at > 0 && length(.) >= stop_at)
+						return .
+
 
 	proc/try_connect_to_adjacent()
 		var/turf/t
 		for( var/dir in cardinal )
 			t = get_step( src, dir )
 			if( !t ) continue
-			if (!t.active_liquid || t.active_liquid.pooled) continue
+			if (!t.active_liquid || t.active_liquid.disposed) continue
 			if (t.active_liquid && t.active_liquid.group && src.group != t.active_liquid.group)
 				t.active_liquid.group.join(src.group)
 			LAGCHECK(LAG_HIGH)
 
 	//hey this isn't being called at all right now. Moved its blood spread shit up into spread() so we don't call this function that basically does nothing
-	proc/flow_towards(var/list/obj/Flist, var/push_stuff = 1)
+	/*proc/flow_towards(var/list/obj/Flist, var/push_stuff = 1)
 		if (!length(Flist)) return
 		if (!src.group || !src.group.reagents) return
 
@@ -528,9 +552,9 @@ var/list/depth_levels = list(2,50,100,200)
 					for (var/mob/living/M in src.loc)
 						step_towards(M,F.loc)
 						break
+	*/
+	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
 
-	proc/update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
-		LAGCHECK(LAG_HIGH)
 		if (!src.group || !src.group.reagents) return
 
 		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
@@ -543,8 +567,6 @@ var/list/depth_levels = list(2,50,100,200)
 			color_changed = 1
 		animate( src, color = finalcolor, alpha = finalalpha, time = 5 )
 
-		LAGCHECK(LAG_MED)
-
 		if (neighbor_was_removed)
 			last_spread_was_blocked = 0
 			src.clear_overlay()
@@ -556,18 +578,15 @@ var/list/depth_levels = list(2,50,100,200)
 		else
 			var/dirs = 0
 			for (var/dir in cardinal)
-				LAGCHECK(LAG_MED)
 				var/turf/simulated/T = get_step(src, dir)
 				if (T && T.active_liquid && T.active_liquid.group == src.group)
 					dirs |= dir
 			icon_state = num2text(dirs)
 
-			if (src.overlay_refs && src.overlay_refs.len)
-				LAGCHECK(LAG_MED)
+			if (src.overlay_refs && length(src.overlay_refs))
 				src.clear_overlay()
 
 		if ((color_changed || last_icon != icon_state) && last_spread_was_blocked)
-			LAGCHECK(LAG_MED)
 			src.update_perspective_overlays()
 
 	proc/update_perspective_overlays() // fancy perspective overlaying
@@ -589,7 +608,7 @@ var/list/depth_levels = list(2,50,100,200)
 		if (!blocked) //Nothing adjacent!
 			clear_overlay()
 
-		if (src.overlay_refs && src.overlay_refs.len)
+		if (src.overlay_refs && length(src.overlay_refs))
 			if (src.overlay_refs["1"] && src.overlay_refs["8"]) //north, east
 				display_overlay("9",-32,32) //northeast
 			else
@@ -634,7 +653,7 @@ var/list/depth_levels = list(2,50,100,200)
 			F = C[i]
 			F.finalcolor = c
 			animate( F, color = F.finalcolor, alpha = finalalpha, time = 5 )
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 
 
@@ -655,19 +674,19 @@ var/list/depth_levels = list(2,50,100,200)
 		for (var/image/I in src.submerged_images)
 			I.color = F.finalcolor
 			I.alpha = F.finalalpha
-		if ((src.submerged_images && src.submerged_images.len))
+		if ((src.submerged_images && length(src.submerged_images)))
 			src.show_submerged_image(F.my_depth_level)
 
 	..()
 
-/obj/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/obj/ExitedFluid(obj/fluid/F as obj)
 	if (src.submerged_images && src.is_submerged != 0)
-		if (F.pooled)
+		if (F.disposed)
 			src.show_submerged_image(0)
 			return
 
-		if (isturf(newloc))
-			var/turf/T = newloc
+		if (isturf(src.loc))
+			var/turf/T = src.loc
 			if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 				src.show_submerged_image(0)
 				return
@@ -675,8 +694,6 @@ var/list/depth_levels = list(2,50,100,200)
 			src.show_submerged_image(0)
 			return
 	..()
-
-/mob/living/event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
 
 /mob/living/EnteredFluid(obj/fluid/F as obj, atom/oldloc)
 	//SUBMERGED OVERLAYS
@@ -687,14 +704,14 @@ var/list/depth_levels = list(2,50,100,200)
 		src.show_submerged_image(F.my_depth_level)
 	..()
 
-/mob/living/ExitedFluid(obj/fluid/F as obj, atom/newloc)
+/mob/living/ExitedFluid(obj/fluid/F as obj)
 	if (src.is_submerged == 0) return
 
-	if (F.pooled)
+	if (F.disposed)
 		src.show_submerged_image(0)
 		return
-	else if (isturf(newloc))
-		var/turf/T = newloc
+	else if (isturf(src.loc))
+		var/turf/T = src.loc
 		if (!T.active_liquid || (T.active_liquid && T.active_liquid.amt < depth_levels[1]))
 			src.show_submerged_image(0)
 			return
@@ -708,14 +725,14 @@ var/list/depth_levels = list(2,50,100,200)
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	if (entered_group && (src.loc != oldloc))
 		if (F.amt > 0 && F.amt <= F.max_slip_volume && F.avg_viscosity <= F.max_slip_viscosity)
-			if (src.can_slip())
-				var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
-				if (master_block_slippy == 0)
+			var/master_block_slippy = F.group.reagents.get_master_reagent_slippy(F.group)
+			switch(master_block_slippy)
+				if(0)
 					var/slippery =  (1 - (F.avg_viscosity/F.max_slip_viscosity)) * 50
 					var/checks = 10
 					for (var/thing in oldloc)
@@ -723,36 +740,30 @@ var/list/depth_levels = list(2,50,100,200)
 							slippery = 0
 						checks--
 						if (checks <= 0) break
-					if (prob(slippery))
-						src.pulling = null
-						src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-						"<span style='color:red'>You slip on [F]!</span>")
-						src.changeStatus("stunned", 2 SECONDS)
-						src.changeStatus("weakened", 2 SECONDS)
-						src.force_laydown_standup()
-						playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
-				//space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
-				else if (master_block_slippy == -1) //spacelube
-					src.pulling = null
-					src.throwing = 1
-					SPAWN_DBG(0)
-						step(src, src.dir)
-						for (var/i = 4, i>0, i--)
-							if (!isturf(src.loc) || !step(src, src.dir) || i == 1)
-								src.throwing = 0
-								break
-
-					random_brute_damage(src, 4)
-					src.visible_message("<span style='color:red'><b>[src]</b> slips on [F]!</span>",\
-					"<span style='color:red'>You slip on [F]!</span>")
-					src.changeStatus("weakened", 7 SECONDS)
-					playsound(F.loc, "sound/misc/slip.ogg", 50, 1, -3)
+					if (prob(slippery) && src.slip())
+						src.visible_message("<span class='alert'><b>[src]</b> slips on [F]!</span>",\
+						"<span class='alert'>You slip on [F]!</span>")
+				if(-1) //space lube. this code bit is shit but i'm too lazy to make it Real right now. the proper implementation should also make exceptions for ice and stuff.
+					src.remove_pulling()
+					src.changeStatus("weakened", 3.5 SECONDS)
+					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
+					var/atom/target = get_edge_target_turf(src, src.dir)
+					src.throw_at(target, 12, 1, throw_type = THROW_SLIP)
+				if(-2) //superlibe
+					src.remove_pulling()
+					src.changeStatus("weakened", 6 SECONDS)
+					playsound(T, 'sound/misc/slip.ogg', 50, 1, -3)
+					boutput(src, "<span class='notice'>You slipped on [F]!</span>")
+					var/atom/target = get_edge_target_turf(src, src.dir)
+					src.throw_at(target, 30, 1, throw_type = THROW_SLIP)
+					random_brute_damage(src, 10)
 
 
 
 	//Possibility to consume reagents. (Each reagent should return 0 in its reaction_[type]() proc if reagents should be removed from fluid)
-	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list)
-		F.group.last_reacted = src
+	if (do_reagent_reaction && F.group.reagents && F.group.reagents.reagent_list && F.amt > CHEM_EPSILON)
+		F.group.last_reacted = F
 		var/react_volume = F.amt > 10 ? (F.amt / 2) : (F.amt)
 		react_volume = min(react_volume,100) //capping the react amt
 		var/list/reacted_ids = F.group.reagents.reaction(src, TOUCH, react_volume,1,F.group.members.len, entered_group)
@@ -760,12 +771,12 @@ var/list/depth_levels = list(2,50,100,200)
 
 		for(var/current_id in reacted_ids)
 			if (!src.group) return
-			var/datum/reagent/current_reagent = F.group.reagents.reagent_list[current_id]
+			var/datum/reagent/current_reagent = F?.group.reagents.reagent_list[current_id]
 			if (!current_reagent) continue
 			F.group.reagents.remove_reagent(current_id, current_reagent.volume * volume_fraction)
 		/*
-		if (reacted_ids && reacted_ids.len)
-			src.update_icon()
+		if (length(reacted_ids))
+			src.UpdateIcon()
 		*/
 
 	..()
@@ -775,12 +786,12 @@ var/list/depth_levels = list(2,50,100,200)
 	//SLIPPING
 	//only slip if edge tile
 	var/turf/T = get_turf(oldloc)
-	if (T && T.active_liquid)
+	if (T?.active_liquid)
 		entered_group = 0
 
 	//BLOODSTAINS
-	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc" || F.group.master_reagent_id == "reliquary_blood")
-		if (F.group.master_reagent_id == "blood" || F.group.master_reagent_id == "reliquary_blood")
+	if (F.group.master_reagent_id =="blood" || F.group.master_reagent_id == "bloodc")
+		if (F.group.master_reagent_id == "blood")
 			//if (ishuman(M))
 			if (src.lying)
 				if (src.wear_suit)
@@ -798,24 +809,13 @@ var/list/depth_levels = list(2,50,100,200)
 			//	M.add_blood(F)
 			//	if (!M.anchored)
 			//		F.add_tracked_blood(M)
-
-
 	var/do_reagent_reaction = 1
 
-	if (F.my_depth_level == 1 && src.shoes)
-		do_reagent_reaction = 0
-	if (F.my_depth_level == 2 || F.my_depth_level == 3)
-		if (src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01)
-			do_reagent_reaction = 0
-	if (F.my_depth_level == 4)
-		if ((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair))
+	if (F.my_depth_level == 1)
+		if(!src.lying && src.shoes && src.shoes.hasProperty ("chemprot") && (src.shoes.getProperty("chemprot") >= 5)) //sandals do not help
 			do_reagent_reaction = 0
 
-	if (src.lying)
-		if (!((src.wear_suit && src.wear_suit.permeability_coefficient <= 0.01) && (src.head && src.head.seal_hair)))
-			do_reagent_reaction = 1
-
-	if (do_reagent_reaction && entered_group) //if entered_group == 1, it may not have been set yet
+	if (entered_group) //if entered_group == 1, it may not have been set yet
 		if (isturf(oldloc))
 			if (T.active_liquid)
 				entered_group = 0

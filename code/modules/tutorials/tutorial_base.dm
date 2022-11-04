@@ -1,4 +1,4 @@
-/datum/tutorial
+/datum/tutorial_base
 	var/name = "Tutorial"
 	var/mob/owner = null
 	var/list/steps = list()
@@ -16,12 +16,12 @@
 
 		ShowStep()
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span style=\"color:red\"><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
 				qdel(src)
 				return
 			var/datum/tutorialStep/T = steps[current_step]
-			boutput(owner, "<span style=\"color:blue\"><b>Tutorial step #[current_step]: [T.name]</b></span>")
-			boutput(owner, "<span style=\"color:blue\">[T.instructions]</span>")
+			boutput(owner, "<span class='notice'><b>Tutorial step #[current_step]: [T.name]</b></span>")
+			boutput(owner, "<span class='notice'>[T.instructions]</span>")
 
 		Start()
 			if (!owner)
@@ -54,7 +54,7 @@
 			if (current_step <= steps.len)
 				var/datum/tutorialStep/T = steps[current_step]
 				T.TearDown()
-			boutput(owner, "<span style=\"color:blue\"><b>The tutorial is finished!</b></span>")
+			boutput(owner, "<span class='notice'><b>The tutorial is finished!</b></span>")
 			return 1
 
 		CheckAdvance()
@@ -67,27 +67,27 @@
 
 		PerformAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span style=\"color:red\"><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else
 				ShowStep()
-				boutput(owner, "<span style=\"color:red\"><b>You cannot do that currently.</b></span>")
+				boutput(owner, "<span class='alert'><b>You cannot do that currently.</b></span>")
 				return 0
 
 		PerformSilentAction(var/action, var/context)
 			if (!current_step || current_step > steps.len)
-				boutput(owner, "<span style=\"color:red\"><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
+				boutput(owner, "<span class='alert'><b>Invalid tutorial state, please notify `An Admin`.</b></span>")
 				qdel(src)
 				return 1
 			var/datum/tutorialStep/T = steps[current_step]
 			if (T.PerformSilentAction(action, context))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					CheckAdvance()
 				return 1
 			else
@@ -96,7 +96,7 @@
 /datum/tutorialStep
 	var/name = "Tutorial Step"
 	var/instructions = "Do something"
-	var/datum/tutorial/tutorial = null
+	var/datum/tutorial_base/tutorial = null
 
 	proc
 		SetUp()

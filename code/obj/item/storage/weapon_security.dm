@@ -18,12 +18,17 @@
 	icon_state = "evidence"
 	desc = "A box for collecting forensics evidence."
 
-/* Phased out with the forensic scanner overhaul. Was useless anyway (Convair880).
-/obj/item/storage/box/fcard_kit
-	name = "fingerprint card box"
-	icon_state = "id"
-	spawn_contents = list(/obj/item/f_card = 7)
-*/
+/obj/item/storage/box/morphineinjectors
+	name = "morphine autoinjector box"
+	icon_state = "box"
+	desc = "Contains six morphine autoinjectors, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/emergency_injector/morphine = 6)
+
+/obj/item/storage/lunchbox/robustdonuts
+	name = "robust donuts lunchbox"
+	icon_state = "lunchbox"
+	desc = "Contains a robust donut and a robusted donut, for security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
@@ -39,7 +44,7 @@
 
 /obj/item/storage/box/revolver
 	name = "revolver box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a syndicate revolver and ammo."
 	// cogwerks - i think the ammo boxes are dumb, giving the starting box more ammo
 	spawn_contents = list(/obj/item/gun/kinetic/revolver,\
@@ -48,39 +53,39 @@
 
 /obj/item/storage/box/detectivegun
 	name = ".38 revolver box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a .38 caliber revolver and ammunition."
 	// Reduced the amount of ammo. The detective had four lethal and five stun speedloaders total in his closet, perhaps a bit too much (Convair880).
 	spawn_contents = list(/obj/item/gun/kinetic/detectiverevolver,\
 	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
-/obj/item/storage/box/ak47 // cogwerks, terrorism update
-	name = "rifle box"
-	icon_state = "revolver"
-	desc = "A box containing a syndicate rifle and some ammo."
+/obj/item/storage/box/akm // cogwerks, terrorism update
+	name = "AKM box"
+	icon_state = "hard_case"
+	desc = "A box containing a surplus AKM and 3 magazines."
 	// this might be a terrible idea giving them so much ammo, but whatevs
-	spawn_contents = list(/obj/item/gun/kinetic/ak47,\
-	/obj/item/ammo/bullets/ak47 = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/akm,\
+	/obj/item/ammo/bullets/akm = 2)
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a sneaky pistol and some ammo."
 	// this might be a terrible idea giving them so much ammo, but whatevs
 	spawn_contents = list(/obj/item/gun/kinetic/silenced_22,\
-	/obj/item/ammo/bullets/bullet_22 = 3)
+	/obj/item/ammo/bullets/bullet_22HP = 3)
 
 /obj/item/storage/box/derringer
 	name = "derringer box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a derringer and some ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/derringer,\
 	/obj/item/ammo/bullets/derringer = 4)
 
 /obj/item/storage/box/shotgun
 	name = "shotgun box"
-	icon_state = "revolver"
+	icon_state = "hard_case"
 	desc = "A box containing a high-powered shotgun and some ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/spes,\
 	/obj/item/ammo/bullets/a12 = 4)
@@ -139,7 +144,7 @@
 	/obj/item/old_grenade/smoke = 1,\
 	/obj/item/old_grenade/stinger/frag,\
 	/obj/item/chem_grenade/flashbang,\
-	/obj/item/old_grenade/gravaton)
+	/obj/item/old_grenade/graviton)
 
 /obj/item/storage/box/f_grenade_kit
 	name = "cleaner grenade box"
@@ -169,7 +174,7 @@
 /obj/item/storage/box/banana_grenade_kit
 	name = "banana grenade box"
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 // Detective luminol grenades
 /obj/item/storage/box/luminol_grenade_kit
@@ -203,7 +208,19 @@
 	name = "experimental biological grenade box"
 	desc = "A box of experimental biological grenades."
 	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/banana/wasp = 5)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
+
+/obj/item/storage/box/crowdgrenades
+	name = "crowd dispersal grenades"
+	desc = "A box of crowd dispersal grenades"
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/chem_grenade/pepper = 4)
+
+/obj/item/storage/box/stun_landmines
+	name = "non-lethal landmine box"
+	desc = "A box of non-lethal stunning landmines, perfect for locking down areas."
+	icon_state = "flashbang"
+	spawn_contents = list(/obj/item/mine/stun/nanotrasen = 5)
 
 /* -------------------- Traitor Gear -------------------- */
 
@@ -211,17 +228,25 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	max_wclass = 3 // The bowling ball won't fit into the bowling bag!
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
+		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
-	/obj/item/bowling_ball = 4)
+		/obj/item/bowling_ball = 4)
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_BOOK)
 
 /obj/item/storage/football
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	max_wclass = 3
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
-	/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
+		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football = 2)
 
 	New()
 		if (prob(50))
@@ -236,8 +261,8 @@
 	sneaky = 1
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
-	w_class = 2
-	max_wclass = 3
+	w_class = W_CLASS_SMALL
+	max_wclass = W_CLASS_NORMAL
 
 	New()
 		..()
@@ -246,7 +271,7 @@
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if(src.cloaked == 1)
 			..()
 		else
@@ -261,7 +286,7 @@
 			src.icon_state = W.icon_state
 			src.item_state = W.item_state
 			src.inhand_image = W.inhand_image
-			boutput(user, "<span style=\"color:blue\">The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
+			boutput(user, "<span class='notice'>The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
 			src.cloaked = 1
 			return
 
@@ -277,7 +302,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)
-			boutput(usr, "<span style=\"color:red\">You reset the [src.name].</span>")
+			boutput(usr, "<span class='alert'>You reset the [src.name].</span>")
 			src.cloaked = 0
 			src.add_fingerprint(usr)
 
@@ -304,7 +329,7 @@
 	New()
 		..()
 		var/gender = prob(50) ? 0 : 1
-		var/name = gender ? pick(first_names_female) : pick(first_names_male)
+		var/name = gender ? pick_string_autokey("names/first_female.txt") : pick_string_autokey("names/first_male.txt")
 
 		src.info = {"<TT>Hey, you.<BR>
 		Look, we got this thing cheap from some Russkie. So let me write this down for you clearly:<BR><B><font color=red size=4>IT. AIN'T. SAFE.</font></B><BR>
@@ -312,15 +337,40 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick(first_names_male):pick(first_names_female)]</I>
+		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/boomerang,
+	/obj/item/clothing/under,
+	/obj/item/ammo/bullets/tranq_darts)
+
 	spawn_contents = list(/obj/item/clothing/head/safari,\
 	/obj/item/clothing/under/gimmick/safari,\
 	/obj/item/boomerang,\
 	/obj/item/ammo/bullets/tranq_darts/syndicate = 4)
+
+/obj/item/storage/box/poison
+	name = "ordinary box"
+	desc = "Just a regular ordinary box. It smells like almonds a little bit. Probably some chef kept their cooking supplies there."
+	icon_state = "box"
+	spawn_contents = list(/obj/item/reagent_containers/glass/bottle/poison = 7)
+
+
+/obj/item/storage/box/blowgun
+	name = "instrument case"
+	desc = "A hardshell case for musical instruments."
+	icon_state = "briefcase_black"
+	spawn_contents = list(/obj/item/gun/kinetic/blowgun,\
+	/obj/item/storage/pouch/poison_dart = 2)
+
+/obj/item/storage/box/chameleonbomb
+	name = "chameleon bomb case"
+	desc = "A case that contains 2 syndicate chameleon bombs"
+	icon_state = "hard_case"
+	spawn_contents = list(/obj/item/device/chameleon/bomb = 2)
 
 // Starter kit used in the conspiracy/spy game mode.
 /obj/item/storage/box/spykit

@@ -1,0 +1,32 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/table/auto,
+/obj/item/razor_blade,
+/obj/item/scissors,
+/obj/item/storage/pill_bottle/hairgrownium,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+"I" = (
+/obj/stool/chair/comfy/barber_chair,
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/plating,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+a
+a
+"}
+(2,1,1) = {"
+a
+I
+a
+"}
+(3,1,1) = {"
+a
+a
+a
+"}

@@ -8,8 +8,7 @@
 	var/mail_tag = null
 	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
-	var/frequency = 1475
-	var/datum/radio_frequency/radio_connection
+	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
 	var/autoname = 0
 
@@ -17,133 +16,59 @@
 	var/mailgroup = null
 	var/mailgroup2 = null
 	var/net_id = null
-	var/pdafrequency = 1149
-	var/datum/radio_frequency/pda_connection
+	var/pdafrequency = FREQ_PDA
 
 	New()
 		..()
 		if (src.autoname == 1 && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
-		SPAWN_DBG(10 SECONDS)
-			if (src)
-				if (radio_controller)
-					radio_connection = radio_controller.add_object(src, "[frequency]")
-					pda_connection = radio_controller.add_object(src, "[pdafrequency]")
-					src.post_radio_status()
-				if (!src.net_id)
-					src.net_id = generate_net_id(src)
+		if (!src.net_id)
+			src.net_id = generate_net_id(src)
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("main", frequency)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", pdafrequency)
+		SPAWN(10 SECONDS)
+			src.post_radio_status()
 
-		return
+	ui_data(mob/user)
+		. = ..()
+		. += list(
+			"destinations" = src.destinations,
+			"destinationTag" = src.destination_tag,
+		)
 
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		radio_controller.remove_object(src, "[pdafrequency]")
-		..()
-
-	// user interaction
-	interact(mob/user, var/ai=0)
-		src.add_fingerprint(user)
-		if(status & BROKEN)
-			user.machine = null
-			return
-
-		var/dat = "<head><title>Mail Transport Unit</title></head><body><TT><B>Mail Transport Unit: [src.mail_tag ? (capitalize(src.mail_tag)) : "GENERIC"]</B><HR>"
-
-		if(flush)
-			dat += "Shipping handle: <A href='?src=\ref[src];handle=0'>Disengage</A> <B>Engaged</B>"
-		else
-			dat += "Shipping handle: <B>Disengaged</B> <A href='?src=\ref[src];handle=1'>Engage</A>"
-
-		dat += "<BR><HR><A href='?src=\ref[src];eject=1'>Eject contents</A><HR>"
-
-		dat += "<br>Destination: <A href='?src=\ref[src];set_dest=1'>[src.destination_tag ? src.destination_tag : "NONE"]</a>"
-		dat += "<br><a href='?src=\ref[src];rescan=1'>Rescan</a><hr>"
-
-		if(mode == 0)
-			dat += "Pump: <B>Off</B> <A href='?src=\ref[src];pump=1'>On</A><BR>"
-		else if(mode == 1)
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (pressurizing)<BR>"
-		else
-			dat += "Pump: <A href='?src=\ref[src];pump=0'>Off</A> <B>On</B> (idle)<BR>"
-
-		var/per = 100* air_contents.return_pressure() / (2*ONE_ATMOSPHERE)
-
-		dat += "Pressure: [round(per, 1)]%<BR></body>"
-
-
-		user.machine = src
-		user.Browse(dat, "window=mailchute;size=360x270")
-		onclose(user, "mailchute")
-
-	Topic(href, href_list)
-		if(..())
-			return
-		src.add_fingerprint(usr)
-		if(status & BROKEN)
-			return
-		if(usr.stat || usr.restrained() || src.flushing)
-			return
-
-		if (in_range(src, usr) && istype(src.loc, /turf))
-			usr.machine = src
-
-			if(href_list["close"])
-				usr.machine = null
-				usr.Browse(null, "window=mailchute")
-				return
-
-			if(href_list["pump"])
-				if(text2num(href_list["pump"]))
-					mode = 1
-				else
-					mode = 0
-				update()
-
-			if(href_list["set_dest"])
-				if(destinations)
-					var/dest = input("Select Parcel Destination", "Delivery Target Selection", src.destination_tag) as null|anything in destinations
-					if(dest && in_range(src, usr))
-						src.destination_tag = dest
-						update()
-
-			if(href_list["rescan"])
-				if(last_inquire && world.time < (last_inquire + 10))
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return .
+		switch (action)
+			if ("select-destination")
+				if (src.destinations)
+					var/destination = params["destination"]
+					src.destination_tag = destination
+					update()
+					. = TRUE
+			if ("rescanDest")
+				if (last_inquire && world.time < (last_inquire + 10))
 					return
 				destinations = null
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
-				signal.transmission_method = TRANSMISSION_RADIO
 				signal.data["command"] = "mail_inquire"
 
-				SPAWN_DBG(0.4 SECONDS)
-					if (radio_connection) radio_connection.post_signal(src, signal)
-
-			if(href_list["handle"])
-				flush = text2num(href_list["handle"])
-				update()
-
-			if(href_list["eject"])
-				eject()
-		else
-			usr.Browse(null, "window=mailchute")
-			usr.machine = null
-			return
-		return
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "main")
 
 	proc/post_radio_status()
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["command"] = "mail_reply"
 		signal.data["data"] = src.mail_tag
 
-		radio_connection.post_signal(src, signal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "main")
 		return
 
 	receive_signal(datum/signal/signal)
-
 		if (signal.data["command"] == "mail_reply")
 			if (!src.destinations)
 				src.destinations = new()
@@ -154,14 +79,10 @@
 
 			if (!(destination in src.destinations))
 				src.destinations += destination
-				src.destinations = sortList(src.destinations)
+				sortList(src.destinations, /proc/cmp_text_asc)
 
 		else if (signal.data["command"] == "mail_inquire")
-			SPAWN_DBG (4)
-				if (src) src.post_radio_status()
-			return
-
-		return
+			src.post_radio_status()
 
 	flush()
 
@@ -172,7 +93,7 @@
 		if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
 		else flick("disposal-flush", src)
 
-		var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
+		var/obj/disposalholder/H = new /obj/disposalholder	// virtual holder object which actually
 																// travels through the pipes.
 
 		H.init(src)	// copy the contents of disposer to holder
@@ -180,9 +101,9 @@
 
 		air_contents.zero()		// new empty gas resv.
 
-		sleep(10)
+		sleep(1 SECOND)
 		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-		sleep(5) // wait for animation to finish
+		sleep(0.5 SECONDS) // wait for animation to finish
 
 
 		H.start(src) // start the holder processing movement
@@ -201,65 +122,27 @@
 			var/myarea = get_area(src)
 			message = "Mail delivery alert in [myarea]."
 
+			if (message && (mailgroup || mailgroup2))
+				var/groups = list()
+				if (mailgroup)
+					groups += mailgroup
+				if (mailgroup2)
+					groups += mailgroup2
+				groups += MGA_MAIL
 
-			if (message && mailgroup && pda_connection)
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
 				newsignal.data["command"] = "text_message"
 				newsignal.data["sender_name"] = "CHUTE-MAILBOT"
 				newsignal.data["message"] = "[message]"
-
 				newsignal.data["address_1"] = "00000000"
-				newsignal.data["group"] = mailgroup
+				newsignal.data["group"] = groups
 				newsignal.data["sender"] = src.net_id
 
-				pda_connection.post_signal(src, newsignal)
-
-			if (message && mailgroup2 && pda_connection)
-				var/datum/signal/newsignal = get_free_signal()
-				newsignal.source = src
-				newsignal.transmission_method = TRANSMISSION_RADIO
-				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "CHUTE-MAILBOT"
-				newsignal.data["message"] = "[message]"
-
-				newsignal.data["address_1"] = "00000000"
-				newsignal.data["group"] = mailgroup2
-				newsignal.data["sender"] = src.net_id
-
-				pda_connection.post_signal(src, newsignal)
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 		..()
 		return
-
-	colosseum
-		flush()
-			flushing = 1
-			if (istype(src, /obj/machinery/disposal/mail)) flick("mailchute-flush", src)
-			else flick("disposal-flush", src)
-
-			var/obj/disposalholder/H = unpool(/obj/disposalholder)	// virtual holder object which actually
-																	// travels through the pipes.
-
-			H.init(src)	// copy the contents of disposer to holder
-
-			sleep(10)
-			playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
-			sleep(5) // wait for animation to finish
-
-
-			H.start(src) // start the holder processing movement
-			flushing = 0
-			// now reset disposal state
-			flush = 0
-			if(mode == 2)	// if was ready,
-				mode = 1	// switch to charging
-			update()
-			return
-
-		ex_act(severity)
-			return
 
 /obj/machinery/disposal/mail/autoname
 	autoname = 1
@@ -273,17 +156,17 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		brig
@@ -299,32 +182,32 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		refinery
@@ -334,7 +217,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		telescience
@@ -350,19 +233,19 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 		pathology
 			name = "Pathology"
@@ -376,8 +259,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals
@@ -476,7 +359,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = "kitchen"
+		mailgroup = MGD_KITCHEN
 		message = 1
 
 		north
@@ -492,7 +375,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = "botany"
+		mailgroup = MGD_BOTANY
 		message = 1
 
 		north
@@ -508,7 +391,7 @@
 	security
 		name = "Security"
 		mail_tag = "security"
-		mailgroup = "security"
+		mailgroup = MGD_SECURITY
 		message = 1
 
 		north
@@ -552,7 +435,7 @@
 	bridge
 		name = "Bridge"
 		mail_tag = "bridge"
-		mailgroup = "command"
+		mailgroup = MGD_COMMAND
 		message = 1
 
 		north
@@ -568,7 +451,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = "chaplain"
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 
 		north
@@ -584,7 +467,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = "engineer"
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -600,7 +483,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = "mechanic"
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -616,7 +499,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = "mining"
+		mailgroup = MGD_MINING
 		message = 1
 
 		north
@@ -632,7 +515,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = "cargo"
+		mailgroup = MGD_CARGO
 		message = 1
 
 		north
@@ -662,7 +545,7 @@
 	research
 		name = "Research"
 		mail_tag = "research"
-		mailgroup = "science"
+		mailgroup = MGD_SCIENCE
 		message = 1
 
 		north
@@ -720,8 +603,8 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = "medbay"
-		mailgroup2 = "medresearch"
+		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		north
@@ -737,7 +620,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -753,7 +636,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = "medresearch"
+			mailgroup = MGD_MEDRESEACH
 			mailgroup2 = null
 
 			north
@@ -810,8 +693,8 @@
 
 	checkpoint
 		name = "Don't spawn me"
-		mailgroup = "security"
-		mailgroup2 = "command"
+		mailgroup = MGD_SECURITY
+		mailgroup2 = MGD_COMMAND
 		message = 1
 
 		arrivals

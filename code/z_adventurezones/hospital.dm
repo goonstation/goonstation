@@ -1,84 +1,34 @@
 
 #define SAMOSTREL_LIVE 1	//On broadway!!
 
-var/list/hospital_fx_sounds = list('sound/ambience/spooky/Hospital_Chords.ogg', 'sound/ambience/spooky/Hospital_Haunted1.ogg', 'sound/ambience/spooky/Hospital_Haunted2.ogg',
-	'sound/ambience/spooky/Hospital_Drone3.ogg', 'sound/ambience/spooky/Hospital_Haunted3.ogg', 'sound/ambience/spooky/Hospital_Feedback.ogg', 'sound/ambience/spooky/Hospital_Drone2.ogg', 'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
-
-var/list/samostrel_warps = list()
-
 /area/hospital
 	name = "Ainley Staff Retreat Center"
 	icon_state = "purple"
 	ambient_light = rgb(0.5 * 255, 0.5 * 255, 0.5 * 255)
-
-	var/sound/ambientSound = 'sound/ambience/spooky/Hospital_Drone1.ogg'
-	var/list/fxlist = null
-	var/list/soundSubscribers = null
 	sound_group = "ainley"
+	sound_loop = 'sound/ambience/spooky/Hospital_Drone1.ogg'
 
-	New()
-		..()
-		fxlist = hospital_fx_sounds
-		if (ambientSound)
+/area/hospital/New()
+	. = ..()
+	START_TRACKING_CAT(TR_CAT_AREA_PROCESS)
 
-			SPAWN_DBG (60)
-				var/sound/S = new/sound()
-				S.file = ambientSound
-				S.repeat = 0
-				S.wait = 0
-				S.channel = 123
-				S.volume = 60
-				S.priority = 255
-				S.status = SOUND_UPDATE
-				ambientSound = S
+/area/hospital/disposing()
+	STOP_TRACKING_CAT(TR_CAT_AREA_PROCESS)
+	. = ..()
 
-				soundSubscribers = list()
-				process()
+/area/hospital/area_process()
+	if(prob(20))
+		src.sound_fx_2 = pick('sound/ambience/spooky/Hospital_Chords.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted1.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted2.ogg',
+		'sound/ambience/spooky/Hospital_Drone3.ogg',\
+		'sound/ambience/spooky/Hospital_Haunted3.ogg',\
+		'sound/ambience/spooky/Hospital_Feedback.ogg',\
+		'sound/ambience/spooky/Hospital_Drone2.ogg',\
+		'sound/ambience/spooky/Hospital_ScaryChimes.ogg')
 
-	Entered(atom/movable/Obj,atom/OldLoc)
-		..()
-		if(ambientSound && ismob(Obj))
-			if (!soundSubscribers:Find(Obj))
-				soundSubscribers += Obj
-
-		return
-
-	proc/process()
-		if (!soundSubscribers)
-			return
-
-		var/sound/S = null
-		var/sound_delay = 0
-
-
-		while(current_state < GAME_STATE_FINISHED)
-			sleep(60)
-
-			if(prob(10) && fxlist)
-				S = sound(file=pick(fxlist), volume=50)
-				sound_delay = rand(0, 50)
-			else
-				S = null
-				continue
-
-			for(var/mob/living/H in soundSubscribers)
-				var/area/mobArea = get_area(H)
-				if (!istype(mobArea) || mobArea.type != src.type)
-					soundSubscribers -= H
-					if (H.client)
-						ambientSound.status = SOUND_PAUSED | SOUND_UPDATE
-						ambientSound.volume = 0
-						H << ambientSound
-					continue
-
-				if(H.client)
-					ambientSound.status = SOUND_UPDATE
-					ambientSound.volume = 60
-					H << ambientSound
-					if(S)
-						SPAWN_DBG(sound_delay)
-							H << S
-
+		for(var/mob/living/carbon/human/H in src)
+			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 /area/hospital/underground
 	name = "utility tunnels"
@@ -97,7 +47,7 @@ var/list/samostrel_warps = list()
 	sound_group = "samostrel"
 
 /area/adventure/channel
-	name = "The Channel"
+	name = "Channel"
 	desc = "Better not try and change it!"
 	icon_state = "purple"
 	requires_power = 0
@@ -105,6 +55,8 @@ var/list/samostrel_warps = list()
 	force_fullbright = 1
 
 	flingy
+		name = "Unstable Channel"
+
 		Entered(atom/movable/Obj,atom/OldLoc)
 			..()
 
@@ -114,6 +66,8 @@ var/list/samostrel_warps = list()
 			return
 
 	teleport
+		name = "Extremely Unstable Channel"
+
 		Entered(atom/movable/Obj, atom/OldLoc)
 			..()
 
@@ -121,10 +75,10 @@ var/list/samostrel_warps = list()
 				var/turf/T = locate(Obj.x, 4, 1)
 				Obj.set_loc(T)
 				playsound(T, pick('sound/effects/elec_bigzap.ogg', 'sound/effects/elec_bzzz.ogg', 'sound/effects/electric_shock.ogg'), 50, 0)
-				var/obj/somesparks = unpool(/obj/effects/sparks)
+				var/obj/somesparks = new /obj/effects/sparks
 				somesparks.set_loc(T)
-				SPAWN_DBG(2 SECONDS)
-					if (somesparks) pool(somesparks)
+				SPAWN(2 SECONDS)
+					if (somesparks) qdel(somesparks)
 
 				Obj.throw_at(get_edge_target_turf(T, NORTH), 200, 1)
 
@@ -167,20 +121,19 @@ var/list/samostrel_warps = list()
 	name = "malevolent thing trigger"
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
-	var/obj/chaser/master/master = null
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(!maniac_active)
 			if(isliving(AM))
 				if(AM:client)
 					if(prob(75))
 						maniac_active |= 2
-						SPAWN_DBG(1 MINUTE) maniac_active &= ~2
-						SPAWN_DBG(rand(10,30))
+						SPAWN(1 MINUTE) maniac_active &= ~2
+						SPAWN(rand(10,30))
 							var/obj/chaser/hospital/C = new /obj/chaser/hospital(src.loc)
 							C.target = AM
 
@@ -192,27 +145,25 @@ var/list/samostrel_warps = list()
 	desc = "&#9617;????&#9617;&#9617;&#9617;&#9617;"
 	density = 1
 	anchored = 1
-	var/sound/aaah = sound('sound/ambience/loop/Static_Horror_Loop.ogg',channel=7)
 	var/targeting = 0
 
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			process()
 
 	proximity_act()
 		..()
 		if(prob(40))
-			src.visible_message("<span style=\"color:red\"><B>[src] passes its arm through [target]!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] passes its arm through [target]!</B></span>")
 			//playsound(src.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 			target.change_eye_blurry(10)
 			boutput(target, "<span><B>no no no no no no no no no no no no non&#9617;NO&#9617;NNnNNO</B></span>")
-			if (samostrel_warps && samostrel_warps.len)
-
+			if (LANDMARK_SAMOSTREL_WARP in landmarks)
 				var/target_original_loc = target.loc
-				target.setStatus("paralysis", max(target.getStatusDuration("paralysis"), 100))
-				do_teleport(target, pick(samostrel_warps), 0)
+				target.setStatusMin("paralysis", 10 SECONDS)
+				do_teleport(target, pick_landmark(LANDMARK_SAMOSTREL_WARP), 0, 0)
 
 				if (ishuman(target))
 					var/atom/movable/overlay/animation = new(target_original_loc)
@@ -237,13 +188,12 @@ var/list/samostrel_warps = list()
 		if(!targeting)
 			targeting = 1
 			//target<< 'sound/misc/chefsong_start.ogg'
-			SPAWN_DBG(8 SECONDS)
-				aaah.repeat = 1
-				target << aaah
-				SPAWN_DBG(rand(100,400))
-					if(target)
-						target << sound('sound/ambience/loop/Static_Horror_Loop_End.ogg',channel=7)
-					qdel(src)
+			SPAWN(8 SECONDS)
+				playsound(target, 'sound/ambience/loop/Static_Horror_Loop.ogg', 100)
+				sleep(rand(100,400))
+				if(target)
+					playsound(target, 'sound/ambience/loop/Static_Horror_Loop_End.ogg', 100)
+				qdel(src)
 			walk_towards(src, src.target, 3)
 
 		..()
@@ -251,13 +201,13 @@ var/list/samostrel_warps = list()
 /obj/gurney_trap
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 	density = 0
 	var/ready = 1
-	event_handler_flags = USE_HASENTERED
 
-	HasEntered(atom/movable/AM as mob|obj)
+	Crossed(atom/movable/AM as mob|obj)
+		..()
 		if(ready && ismob(AM) && isliving(AM))
 			if(AM:client)
 				ready = 0
@@ -281,16 +231,14 @@ var/list/samostrel_warps = list()
 /obj/item/reagent_containers/food/drinks/bottle/hospital
 	name = "Ham Brandy"
 	desc = "Uh.   Uhh"
-	//icon = 'icons/obj/foodNdrink/drinks.dmi'
-	icon_state = "whiskey"
-	bottle_style = "whiskey"
-	fluid_style = "whiskey"
+	//icon = 'icons/obj/foodNdrink/bottle.dmi'
+	icon_state = "bottle-spicedrum"
+	bottle_style = "bottle-spicedrum"
+	fluid_style = "spicedrum"
 	label = "spicedrum"//"brandy"
 	heal_amt = 1
 	g_amt = 60
 	initial_volume = 250
-	module_research = list("vice" = 10)
-	initial_reagents = list("porktonium"=30,"ethanol"=30)
 
 /*	New()
 		..()
@@ -423,7 +371,7 @@ var/list/samostrel_warps = list()
 /obj/storage/crate/freezer/hospital
 	var/keySpawned = 0
 
-	open()
+	open(entanglelogic, mob/user)
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
@@ -485,16 +433,16 @@ var/list/samostrel_warps = list()
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440
-	control_freq = 1917
+	control_freq = FREQ_AINLEY_BUDDY
 
 	New()
 		..()
 #ifndef SAMOSTREL_LIVE
 		del(src)
 #endif
-		SPAWN_DBG (10)
+		SPAWN(1 SECOND)
 			if (src.botcard)
-				src.botcard.access += 1917
+				src.botcard.access += FREQ_AINLEY_BUDDY
 
 	speak(var/message)
 		return ..("<font face=Consolas>[russify( uppertext(message) )]</font>")
@@ -523,46 +471,6 @@ var/list/samostrel_warps = list()
 			src.warm_boot = 1
 		src.wakeup()
 
-	interact(mob/user as mob)
-		var/dat = "<tt><B>&#x411;&#x420;-86 &#x411;&#x44b;&#x442;&#x43e;&#x432;&#x43e;&#x439; &#x420;&#x43e&#x431;&#x43e;&#x442; &#x432;6</B></tt><br><br>"
-
-		var/power_readout = null
-		var/readout_color = "#000000"
-		if(!src.cell)
-			power_readout = "???????"
-		else
-			var/charge_percentage = round((cell.charge/cell.maxcharge)*100)
-			power_readout = "[charge_percentage]%"
-			switch(charge_percentage)
-				if(0 to 10)
-					readout_color = "#F80000"
-				if(11 to 25)
-					readout_color = "#FFCC00"
-				if(26 to 50)
-					readout_color = "#CCFF00"
-				if(51 to 75)
-					readout_color = "#33CC00"
-				if(76 to 100)
-					readout_color = "#33FF00"
-
-
-		dat += {"&#x437;&#x430;&#x440;&#x44f;&#x434;: <table border='1' style='background-color:[readout_color]'>
-				<tr><td><font color=white>[power_readout]</font></td></tr></table><br>"}
-
-		if(src.locked)
-
-			dat += "&#x41f;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x435;: [src.on ? "&#x412;&#x43A;&#x43B;" : "&#x412;&#x44b;&#x43A;&#x43B;"]<br>"
-
-		else
-
-			dat += "&#x41f;&#x438;&#x442;&#x430;&#x43D;&#x438;&#x435;: <a href='?src=\ref[src];power=1'>[src.on ? "&#x412;&#x43A;&#x43B;" : "&#x412;&#x44b;&#x43A;&#x43B;"]</a><br>"
-
-		dat += "<br>&#x418;&#x414;: <b>\[[uppertext(src.net_id)]]</b><br>"
-
-		user.Browse("<head><title>Strange robuddy controls</title></head>[dat]", "window=guardbot")
-		onclose(user, "guardbot")
-		return
-
 	explode()
 		if(src.exploding) return
 		src.exploding = 1
@@ -575,7 +483,7 @@ var/list/samostrel_warps = list()
 			src.mover.master = null
 			qdel(src.mover)
 
-		src.invisibility = 100
+		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
 		Ov.anchored = 1
 		Ov.name = "Explosion"
@@ -599,9 +507,9 @@ var/list/samostrel_warps = list()
 			var/edge = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(edge, 100, 4)
 
-		SPAWN_DBG(0) //Delete the overlay when finished with it.
+		SPAWN(0) //Delete the overlay when finished with it.
 			src.on = 0
-			sleep(15)
+			sleep(1.5 SECONDS)
 			qdel(Ov)
 			qdel(src)
 
@@ -709,9 +617,9 @@ var/list/samostrel_warps = list()
 	proc/find_nearest_beacon()
 		nearest_beacon = null
 		new_destination = "__nearest__"
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon("patrol")
 		awaiting_beacon = 5
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			if(!master || !master.on || master.stunned || master.idle)
 				return
 			if(master.task != src)
@@ -726,7 +634,7 @@ var/list/samostrel_warps = list()
 
 	proc/set_destination(var/new_dest)
 		new_destination = new_dest
-		master.post_status("!BEACON!", "findbeacon", "patrol")
+		master.post_find_beacon(new_dest || "patrol")
 		awaiting_beacon = 5
 
 	receive_signal(datum/signal/signal)
@@ -748,11 +656,11 @@ var/list/samostrel_warps = list()
 
 		// if looking for nearest beacon
 		else if(new_destination == "__nearest__")
-			var/dist = get_dist(master,signal.source.loc)
+			var/dist = GET_DIST(master,signal.source.loc)
 			if(nearest_beacon)
 
 				// note we ignore the beacon we are located at
-				if(dist>1 && dist<get_dist(master,nearest_beacon_loc))
+				if(dist>1 && dist<GET_DIST(master,nearest_beacon_loc))
 					nearest_beacon = recv
 					nearest_beacon_loc = signal.source.loc
 					next_destination = signal.data["next_patrol"]

@@ -11,17 +11,17 @@
 	icon_state = "ghostcatcher0"
 	mats = 0
 	//var/id = "ghostdrone"
-	event_handler_flags = USE_HASENTERED | USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER
 
 	New()
 		. = ..()
 		START_TRACKING
-	
+
 	disposing()
 		. = ..()
 		STOP_TRACKING
 
-	HasEntered(atom/movable/O)
+	Crossed(atom/movable/O)
 		if (!istype(O, /mob/dead/observer))
 			return ..()
 		var/mob/dead/observer/G = O
@@ -31,33 +31,38 @@
 			return ..()
 
 		if (!assess_ghostdrone_eligibility(M))
-			out(G, "<span style='color: red; font-weight: bold;'>You are ineligible for ghostdrones!</span>")
+			out(G, "<span class='bold alert'>You are ineligible for ghostdrones!</span>")
 			return ..()
 
 		var/position = find_ghostdrone_position(M)
 		if (position)
-			out(G, "<span style='color: red; font-weight: bold;'>You are already #[position] in the ghostdrone queue!</span>")
+			out(G, "<span class='bold alert'>You are already #[position] in the ghostdrone queue!</span>")
 			return ..()
 
-		if (alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", "Yes", "No") == "No")
-			return ..()
+		. = ..()
+		SPAWN(0)
+			if (tgui_alert(G, "Add yourself to the ghostdrone queue?", "Confirmation", list("Yes", "No")) != "Yes")
+				return
 
-		ghostdrone_candidates += M
-		position = ghostdrone_candidates.len
-		out(G, "<span style='color: blue; font-weight: bold;font-size: 120%;'>You have been added to the ghostdrone queue. Now position #[position].</span>")
+			ghostdrone_candidates += M
+			position = length(ghostdrone_candidates)
+			out(G, "<span class='bold notice'>You have been added to the ghostdrone queue. Now position #[position].</span>")
 
 	process()
 		..()
-		if (available_ghostdrones.len && ghostdrone_candidates.len)
+		if (available_ghostdrones.len && length(ghostdrone_candidates))
 			src.icon_state = "ghostcatcher1"
 
-			var/datum/mind/M = dequeue_next_ghostdrone_candidate()
-			if(istype(M))
-				var/mob/dead/D = M.current
-				if(istype(D))
-					D.visible_message("[src] scoops up [D]!",\
-					"You feel yourself being torn away from the afterlife and into [src]!")
-					droneize(D, 1)
+			SPAWN(0)
+				var/datum/mind/M = dequeue_next_ghostdrone_candidate()
+				if(istype(M))
+					var/mob/dead/D = M.current
+					if(istype(D))
+						D.visible_message("[src] scoops up [D]!",\
+						"You feel yourself being torn away from the afterlife and into [src]!")
+						if(!droneize(D, TRUE))
+							D.visible_message("There are no ghost drones available! Your soul is added back to the queue.")
+							ghostdrone_candidates += M
 
 		else
 			src.icon_state = "ghostcatcher0"
@@ -75,26 +80,38 @@
 				ghostdrone_candidates.Cut(i, (i--) + 1) //This looks like bullshit (and it is). It removes whatever is at position i in the list and subtracts 1 from i.
 				if(istype(M))
 					//Notify M that they've been punted due to ineligibility
-					out(M.current, "<span style='color: red; font-weight: bold;font-size: 120%;'>You were removed from the ghostdrone queue due to ineligibility!</span>")
+					out(M.current, "<span class='bold alert'>You were removed from the ghostdrone queue due to ineligibility!</span>")
 			else if(!.) //We have not yet selected a candidate, pick this one and dequeue
 				. = M
 				ghostdrone_candidates.Cut(i, (i--) + 1)
 			else
 				//Let them know that the queue has moved
-				out(M.current, "<span style='color: blue; font-weight: bold;'>You are now position #[i] in the ghostdrone queue.</span>")
+				out(M.current, "<span class='bold notice'>You are now position #[i] in the ghostdrone queue.</span>")
 
 /proc/assess_ghostdrone_eligibility(var/datum/mind/M)
 	if(!istype(M))
-		return 0
+		return FALSE
 
 	var/mob/dead/G = M.current
 	if (!istype(G))
-		return 0
+		return FALSE
+
 	if (!G.client)
-		return 0
+		return FALSE
+
 	if (jobban_isbanned(G, "Ghostdrone"))
-		return 0
-	return 1
+		return FALSE
+
+	if (G.client.player)
+		var/round_num = G.client.player.get_rounds_participated()
+		if (!isnull(round_num) && round_num < 20)
+			boutput(G, "<span class='alert'>You only have [round_num] rounds played. You need 20 rounds to play this role.")
+			return FALSE
+
+	if (!G.can_respawn_as_ghost_critter())
+		return FALSE
+
+	return TRUE
 
 #define GHOSTDRONE_BUILD_INTERVAL 1000
 
@@ -115,8 +132,8 @@ var/global/list/ghostdrone_candidates = list()
 	var/factory_section = 1 // can be 1 to 3
 	var/id = "ghostdrone" // the belts through the factory should be set to the same as the factory pieces so they can control them
 	var/obj/item/ghostdrone_assembly/current_assembly = null
-	var/list/conveyors = list()
-	var/list/factory_rechargers = list()
+	var/list/obj/machinery/conveyor/conveyors = list()
+	var/list/obj/machinery/drone_recharger/factory/factory_rechargers = list()
 	var/working = 0 // are we currently doing something to a drone piece?
 	var/work_time = 20 // how long do_work()'s animation and sound effect loop runs
 	var/worked_time = 0 // how long the current work cycle has run
@@ -125,16 +142,16 @@ var/global/list/ghostdrone_candidates = list()
 	New()
 		..()
 		src.icon_state = "factory[src.factory_section][src.working]"
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 
 	proc/update_conveyors()
 		if (src.conveyors.len)
-			for (var/obj/machinery/conveyor/C in src.conveyors)
+			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id)
 				if (C in src.conveyors)
 					continue
@@ -142,7 +159,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_rechargers()
 		if (src.factory_rechargers.len)
-			for (var/obj/machinery/drone_recharger/factory/C in src.factory_rechargers)
+			for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 				if (C.id != src.id)
 					src.conveyors -= C
 		for (var/obj/machinery/drone_recharger/factory/C in machine_registry[MACHINES_DRONERECHARGERS])
@@ -154,7 +171,7 @@ var/global/list/ghostdrone_candidates = list()
 	disposing()
 		..()
 		if (src.current_assembly)
-			pool(src.current_assembly)
+			qdel(src.current_assembly)
 		if (src.conveyors.len)
 			src.conveyors.len = 0
 
@@ -183,8 +200,9 @@ var/global/list/ghostdrone_candidates = list()
 				return
 
 			if (prob(40))
-				src.shake(rand(4,6))
-				playsound(get_turf(src), pick("sound/impact_sounds/Wood_Hit_1.ogg", "sound/impact_sounds/Metal_Hit_Heavy_1.ogg"), 30, 1, -3)
+				SPAWN(0)
+					src.shake(rand(4,6))
+				playsound(src, pick('sound/impact_sounds/Wood_Hit_1.ogg', 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'), 30, 1, -3)
 			if (prob(40))
 				var/list/sound_list = pick(ghostly_sounds, sounds_engine, sounds_enginegrump, sounds_sparks)
 				if (!sound_list.len)
@@ -192,7 +210,7 @@ var/global/list/ghostdrone_candidates = list()
 				var/chosen_sound = pick(sound_list)
 				if (!chosen_sound)
 					return
-				playsound(get_turf(src), chosen_sound, rand(20,40), 1)
+				playsound(src, chosen_sound, rand(20,40), 1)
 
 		else if (!ghostdrone_factory_working)
 			if (src.factory_section == 1 || src.single_system)
@@ -211,7 +229,7 @@ var/global/list/ghostdrone_candidates = list()
 			if (!src.factory_rechargers.len)
 				return
 		var/emptySpot = 0
-		for (var/obj/machinery/drone_recharger/factory/C in src.factory_rechargers)
+		for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 			if (!C.occupant)
 				emptySpot = 1
 				break
@@ -226,7 +244,7 @@ var/global/list/ghostdrone_candidates = list()
 			src.icon_state = "factory[src.factory_section]1"
 
 		else if ((src.factory_section == 1 || src.single_system) && !ghostdrone_factory_working && !src.current_assembly)
-			src.current_assembly = unpool(/obj/item/ghostdrone_assembly)
+			src.current_assembly = new /obj/item/ghostdrone_assembly
 			if (!src.current_assembly)
 				src.current_assembly = new(src)
 			src.current_assembly.set_loc(src)
@@ -240,7 +258,10 @@ var/global/list/ghostdrone_candidates = list()
 			src.icon_state = "factory[src.factory_section]0"
 			return
 
-		for (var/obj/machinery/conveyor/C in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 0
 			C.setdir()
 
@@ -253,11 +274,14 @@ var/global/list/ghostdrone_candidates = list()
 			src.current_assembly.stage = src.single_system ? 3 : src.factory_section
 			src.current_assembly.icon_state = "drone-stage[src.current_assembly.stage]"
 			src.current_assembly.set_loc(get_turf(src))
-			playsound(get_turf(src), "sound/machines/warning-buzzer.ogg", 50, 1)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 1)
 			src.visible_message("[src] ejects [src.current_assembly]!")
 			src.current_assembly = null
 
-		for (var/obj/machinery/conveyor/C in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = 1
 			C.setdir()
 
@@ -267,13 +291,13 @@ var/global/list/ghostdrone_candidates = list()
 		for (amt, amt>0, amt--)
 			src.pixel_x = rand(-2,2)
 			src.pixel_y = rand(-2,2)
-			sleep(1)
+			sleep(0.1 SECONDS)
 		src.pixel_x = orig_x
 		src.pixel_y = orig_y
 		return 1
 
 	proc/force_new_drone()
-		var/obj/item/ghostdrone_assembly/G = unpool(/obj/item/ghostdrone_assembly)
+		var/obj/item/ghostdrone_assembly/G = new /obj/item/ghostdrone_assembly
 		ghostdrone_factory_working = G
 		src.start_work(G)
 
@@ -293,15 +317,14 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/stage = 1
 
-	pooled()
-		..()
-		if (ghostdrone_factory_working == src)
-			ghostdrone_factory_working = null
-		stage = 1
-
-	unpooled()
+	New()
 		..()
 		src.icon_state = "drone-stage[src.stage]"
+
+	disposing()
+		if (ghostdrone_factory_working == src)
+			ghostdrone_factory_working = null
+		..()
 
 /obj/machinery/ghostdrone_conveyor_sensor
 	name = "conveyor sensor"
@@ -313,22 +336,22 @@ var/global/list/ghostdrone_candidates = list()
 	mats = 0
 	var/id_belt = "ghostdrone_lower"
 	var/id_recharger = "ghostdrone"
-	var/list/conveyors = list()
-	var/list/factory_rechargers = list()
+	var/list/obj/machinery/conveyor/conveyors = list()
+	var/list/obj/machinery/drone_recharger/factory/factory_rechargers = list()
 	var/conveyors_active = 0
 
 	New()
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.update_conveyors()
 			src.update_rechargers()
 
 	proc/update_conveyors()
 		if (src.conveyors.len)
-			for (var/obj/machinery/conveyor/C in src.conveyors)
+			for (var/obj/machinery/conveyor/C as anything in src.conveyors)
 				if (C.id != src.id_belt)
 					src.conveyors -= C
-		for (var/obj/machinery/conveyor/C in machine_registry[MACHINES_CONVEYORS])
+		for (var/obj/machinery/conveyor/C as anything in machine_registry[MACHINES_CONVEYORS])
 			if (C.id == src.id_belt)
 				if (C in src.conveyors)
 					continue
@@ -336,7 +359,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/update_rechargers()
 		if (src.factory_rechargers.len)
-			for (var/obj/machinery/drone_recharger/factory/C in src.factory_rechargers)
+			for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 				if (C.id != src.id_recharger)
 					src.conveyors -= C
 		for (var/obj/machinery/drone_recharger/factory/C in machine_registry[MACHINES_DRONERECHARGERS])
@@ -358,7 +381,7 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/check_rechargers()
 		var/emptySpot = 0
-		for (var/obj/machinery/drone_recharger/factory/C in src.factory_rechargers)
+		for (var/obj/machinery/drone_recharger/factory/C as anything in src.factory_rechargers)
 			if (!C.occupant)
 				emptySpot = 1
 				break
@@ -366,7 +389,10 @@ var/global/list/ghostdrone_candidates = list()
 
 	proc/set_conveyors(var/set_active = 0)
 		src.conveyors_active = set_active
-		for (var/obj/machinery/conveyor/C in src.conveyors)
+		for (var/obj/machinery/conveyor/C as anything in src.conveyors)
+			if(C.disposed)
+				src.conveyors -= C
+				continue
 			C.operating = set_active
 			C.setdir()
 

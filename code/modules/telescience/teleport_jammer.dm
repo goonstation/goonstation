@@ -27,7 +27,7 @@
 		src.display_battery = image('icons/obj/meteor_shield.dmi', "")
 		src.display_panel = image('icons/obj/meteor_shield.dmi', "")
 
-		teleport_jammers += src
+		START_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
 	disposing()
@@ -41,20 +41,20 @@
 		sound_off = null
 		sound_battwarning = null
 
-		teleport_jammers -= src
+		STOP_TRACKING_CAT(TR_CAT_TELEPORT_JAMMERS)
 		..()
 
-	examine()
-		..()
-		if(usr.client)
+	get_desc(dist, mob/user)
+		. = ..()
+		if(user.client)
 			var/charge_percentage = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
-				boutput(usr, "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left.")
-				boutput(usr, "The jammer's range is [src.range] units of distance.")
-				boutput(usr, "The unit will consume [5 * src.range] power a second.")
+				. += "It has [PCEL.charge]/[PCEL.maxcharge] ([charge_percentage]%) battery power left."
+				. += "The jammer's range is [src.range] units of distance."
+				. += "The unit will consume [5 * src.range] power a second."
 			else
-				boutput(usr, "It seems to be missing a usable battery.")
+				. += "It seems to be missing a usable battery."
 
 	process()
 		if (src.active)
@@ -65,7 +65,7 @@
 
 			var/charge_percentage = 0
 			var/current_battery_level = 0
-			if (PCEL && PCEL.charge > 0 && PCEL.maxcharge > 0)
+			if (PCEL?.charge > 0 && PCEL.maxcharge > 0)
 				charge_percentage = round((PCEL.charge/PCEL.maxcharge)*100)
 				switch(charge_percentage)
 					if (75 to 100)
@@ -80,14 +80,14 @@
 				src.build_icon()
 				if (src.battery_level == 1)
 					playsound(src.loc, src.sound_battwarning, 50, 1)
-					src.visible_message("<span style=\"color:red\"><b>[src] emits a low battery alarm!</b></span>")
+					src.visible_message("<span class='alert'><b>[src] emits a low battery alarm!</b></span>")
 
 			if (PCEL.charge < 0)
 				src.visible_message("<b>[src]</b> runs out of power and shuts down.")
 				src.turn_off()
 				return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.coveropen && src.PCEL)
 			src.PCEL.set_loc(src.loc)
 			src.PCEL = null
@@ -107,7 +107,7 @@
 					boutput(user, "Nothing happens.")
 		build_icon()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
 			src.coveropen = !src.coveropen
 			src.visible_message("<b>[user.name]</b> [src.coveropen ? "opens" : "closes"] [src]'s cell cover.")
@@ -170,6 +170,11 @@
 		src.active = 0
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
 
 	active
 		New()

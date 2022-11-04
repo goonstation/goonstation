@@ -1,5 +1,6 @@
 
-datum/controller/process/mob_ui
+/// Controls mob UI, like stamina and abilityholders
+/datum/controller/process/mob_ui
 	setup()
 		name = "Mob UI"
 		schedule_interval = 1 SECOND
@@ -10,7 +11,7 @@ datum/controller/process/mob_ui
 
 			if (!M.client) continue
 
-			if (M.abilityHolder && !M.abilityHolder.composite_owner)
+			if (M.abilityHolder)
 				if (world.time >= M.abilityHolder.next_update) //after a failure to update (no abbilities!!) wait 10 seconds instead of checking again next process
 					if (M.abilityHolder.updateCounters() > 0)
 						M.abilityHolder.next_update = 1 SECOND

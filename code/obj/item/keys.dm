@@ -1,16 +1,20 @@
 // why were most of these in gimmick.dm??????  that's a file for clothing.  what??????????????????????????
-
+ABSTRACT_TYPE(/obj/item/device/key)
 /obj/item/device/key
-	name = "skeleton key"
-	desc = "It unlocks or locks doors."
+	name = "abstract key"
+	desc = "This shouldn't be spawned!"
 	icon = 'icons/misc/aprilfools.dmi'
 	icon_state = "key"
 	item_state = "pen"
 	force = null
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	burn_possible = 0 // too important to burn!
 	var/id = null
 	var/dodgy = 0 //Woe be upon the poor fool who tries to give a dodgy key to the automaton
+
+/obj/item/device/key/generic
+	name = "key"
+	desc = "It unlocks or locks doors."
 
 /obj/item/device/key/cheget
 	name = "old fancy key"
@@ -22,36 +26,21 @@
 	desc = "Unlocks places you'd otherwise need a bone to pick. Proof that you are an awful human being."
 	icon_state = "bloodyskull"
 
+/obj/item/device/key/literal_skeleton
+	name = "literal skeleton key"
+	desc = "It's a key made of bone.  Grody."
+	icon_state = "key_bone"
+
 // The key that unlocks walls.  (please refer to turf.dm)
 /obj/item/device/key/haunted
 	name = "iron key"
 	desc = "An old key of iron."
 	var/last_use = 0
 
-var/list/rkey_adjectives = list("burning", "searing","alien","old", "ancient","ethereal", "shining", "secret", "hidden", "dull", "prismatic", "crystaline", "eldritch", "strange", "odd", "buzzing", "mysterious", "great", "rusted", "broken", "glowing", "floating", "mystical", "magic")
-var/list/rkey_nouns = list("dragon", "master", "wizard's", "yendor's", "solarium", "automaton's", "bee's", "shitty bill's", "captain's", "jones'", "void", "ghost", "skeleton")
-var/list/rkey_materials = list("bronze","crystal", "metal", "iron", "mauxite", "pharosium", "char", "molitz", "cobryl", "cytine", "uqill", "bohrum", "claretine", "erebite", "cerenkite", "plasmastone", "syreline", "gold", "silver", "copper", "titanium", "unobtanium")
-var/list/rkey_keynames = list("key","passkey", "latchkey", "opener", "rune-key")
-var/list/rkey_ofwhat = list("of unlocking", "of the yellow king", "of magic", "of kings", "of a thousand locks", "of doom", "of evil", "of the forge", "of the sun", "of fire")
-
-var/list/rkey_descfluff = list(\
-"You are not sure what this Key could be used for.",\
-"The key feels slightly warm.",\
-"The key feels cold.",\
-"The key feels strange.",\
-"Its very light.",\
-"It somehow frightens you.",\
-"It almost seems alive.",\
-"There is a small red fish engraved on it.",\
-"There is a small sun engraved on it.",\
-"It has an engraving of a man wearing a strange mask.",\
-"There is a tiny robot symbol on it.",\
-"It menaces with spikes of bread.",\
-"The key feels very smooth.",\
-"It glows faintly.",\
-"There are small red blotches on it. It almost looks like blood.",\
-"You notice light warping around the key.",\
-)
+/obj/item/device/key/generic/chompskey
+	name = "chomps key"
+	desc = "It's gnot what you were expecting..."
+	icon_state = "chompskey"
 
 /obj/item/device/key/random
 	name = ""
@@ -72,23 +61,23 @@ var/list/rkey_descfluff = list(\
 
 		switch (pick(prob(100);1, prob(40);2, prob(15);3))
 			if (1) //adjective only
-				part1 = pick(rkey_adjectives)
+				part1 = pick_string("random_key.txt", "adjectives")
 			if (2) //noun only
-				part1 = pick(rkey_nouns)
+				part1 = pick_string("random_key.txt", "nouns")
 			if (3) //adjective and noun
-				part1 = "[pick(rkey_adjectives)] [pick(rkey_nouns)]"
+				part1 = "[pick_string("random_key.txt", "adjectives")] [pick_string("random_key.txt", "nouns")]"
 
 		if (prob(50)) //add material?
-			part2 = "[pick(rkey_materials)] "
+			part2 = "[pick_string("random_key.txt", "materials")] "
 
-		part3 = pick(rkey_keynames) //pick name for key
+		part3 = pick_string("random_key.txt", "keynames") //pick name for key
 
 		if (prob(5)) //add more fluff?
-			part4 = " [pick(rkey_ofwhat)]"
+			part4 = " [pick_string("random_key.txt", "ofwhat")]"
 
 		name = "[part1] [part2][part3][part4]"
 
-		desc = "\A [part1] key. [length(part2) ? "It is made of [part2]. ":""][prob(5) ? pick(rkey_descfluff):""]"
+		desc = "\A [part1] key. [length(part2) ? "It is made of [part2]. ":""][prob(5) ? pick_string("random_key.txt", "descfluff"):""]"
 
 		color = rgb(rand(0, 255), rand(0, 255), rand(0, 255))
 
@@ -114,12 +103,16 @@ var/list/rkey_descfluff = list(\
 
 /obj/item/device/key/iridium
 	name = "iridium key"
-	desc = "A key made of a fancy, silvery material."
+	desc = "An artifact made of a fancy, silvery material. Arcs of energy repeatedly crawl up the twin shanks of the device."
+
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "iridium"
+
 
 	virtual
 		desc = "A key made of a fancy, silvery set of pixels."
 		Move()
-			..()
+			. = ..()
 			var/area/A = get_area(src)
 			if (A && !A.virtual)
 				qdel(src)
@@ -139,7 +132,7 @@ var/list/rkey_descfluff = list(\
 	New()
 		..()
 		. = rand(5, 20)
-		SPAWN_DBG(rand(1,10))
+		SPAWN(rand(1,10))
 			animate(src, pixel_y = 32, transform = matrix(., MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 			animate(pixel_y = 0, transform = matrix(. * (-1), MATRIX_ROTATE), time = 20, loop = -1, easing = SINE_EASING)
 
@@ -147,9 +140,11 @@ var/list/rkey_descfluff = list(\
 	name = "lead key"
 
 /obj/item/device/key/onyx
-	desc = "What does this go to?"
+	desc = "A menacing onyx-like scepter with angular hand guards. Shaped a bit like the teeth of a big key, weird."
 	icon_state = "key_onyx"
 	name = "onyx key"
+	icon = 'icons/obj/artifacts/keys.dmi'
+	icon_state = "onyx"
 
 /obj/item/device/key/silver
 	desc = "What does this go to?"
@@ -159,11 +154,13 @@ var/list/rkey_descfluff = list(\
 	desc = "What does this go to?"
 	name = "hot iron key"
 
+/obj/item/device/key/generic/coldsteel
+	desc = "What does this go to?"
+	name = "cold steel key"
+
 /obj/item/device/key/hospital
 	desc = "What does this go to?"
 	name = "niobium key"
-	item_state = ""
-	icon = null
 
 //Something for the solarium nerds to obsess over for a month
 /obj/item/device/key/filing_cabinet

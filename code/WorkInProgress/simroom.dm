@@ -17,7 +17,7 @@
 
 /*
 /obj/machinery/sim/transmitter/New()
-	SPAWN_DBG(1 SECOND)
+	SPAWN(1 SECOND)
 		Connect()
 	..()
 */
@@ -64,13 +64,13 @@
 
 
 /obj/machinery/sim/transmitter/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
+	if ( (BOUNDS_DIST(src, user) > 0 ) || (status & (BROKEN|NOPOWER)) )
 		if (!issilicon(user))
 			user.machine = null
 			user.Browse(null, "window=mm")
 			return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
 
@@ -110,8 +110,8 @@
 /obj/machinery/sim/transmitter/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
 		if (href_list["setup"])
 			if(active)
 				boutput(usr, "System already set up.")
@@ -140,14 +140,14 @@
 	if (!ticker)
 		boutput(user, "You can't buckle anyone in before the game starts.")
 		return
-	if ((!( iscarbon(M) ) || get_dist(src, user) > 1 || M.loc != src.loc || user.restrained() || usr.stat))
+	if ((!( iscarbon(M) ) || BOUNDS_DIST(src, user) > 0 || M.loc != src.loc || user.restrained() || user.stat))
 		return
 	if (M.buckled)	return
 
-	if (M == usr)
-		user.visible_message("<span style=\"color:blue\">[user] buckles in!</span>")
+	if (M == user)
+		user.visible_message("<span class='notice'>[user] buckles in!</span>")
 	else
-		M.visible_message("<span style=\"color:blue\">[M] is buckled in by [user]!</span>")
+		M.visible_message("<span class='notice'>[M] is buckled in by [user]!</span>")
 
 	M.anchored = 1
 	M.buckled = src
@@ -159,13 +159,13 @@
 	src.add_fingerprint(user)
 	return
 
-/obj/machinery/sim/chair/attack_hand(mob/user as mob)
+/obj/machinery/sim/chair/attack_hand(mob/user)
 	if (src.con_user)
 		var/mob/living/M = src.con_user
 		if (M != user)
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckled by [user].</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckled by [user].</span>")
 		else
-			M.visible_message("<span style=\"color:blue\">[M] is unbuckles.</span>")
+			M.visible_message("<span class='notice'>[M] is unbuckles.</span>")
 
 		M.anchored = 0
 		M.buckled = null
@@ -193,31 +193,36 @@
 	var/mob/living/con_user = null
 	var/mob/occupant = null
 	var/image/image_lid = null
-	var/time = 30.0
-	var/timing = 0.0
+	var/time = 30
+	var/timing = 0
 	var/last_tick = 0
 	//var/emagged = 0
 
 /obj/machinery/sim/vr_bed/New()
 	..()
-	src.update_icon()
+	src.UpdateIcon()
 
-/obj/machinery/sim/vr_bed/proc/update_icon()
+/obj/machinery/sim/vr_bed/disposing()
+	go_out()
+	. = ..()
+
+
+/obj/machinery/sim/vr_bed/update_icon()
 	ENSURE_IMAGE(src.image_lid, src.icon, "lid[!isnull(occupant)]")
 	src.UpdateOverlays(src.image_lid, "lid")
 
-/obj/machinery/sim/vr_bed/attackby(obj/item/O as obj, mob/user as mob)
+/obj/machinery/sim/vr_bed/attackby(obj/item/O, mob/user)
 	if(istype(O,/obj/item/grab))
 		var/obj/item/grab/G = O
 		if (!ismob(G.affecting))
 			return
 		if (src.occupant)
-			boutput(user, "<span style=\"color:blue\"><B>The VR pod is already occupied!</B></span>")
+			boutput(user, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
 			return
 		if(..())
 			return
 		var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"
-		user.machine = src
+		src.add_dialog(user)
 		var/d2
 		if (src.timing)
 			d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
@@ -240,14 +245,14 @@
 	if (src.occupant && !isobserver(M))
 		if(M == src.occupant)
 			return src.go_out()
-		boutput(M, "<span style=\"color:blue\"><B>The VR pod is already occupied!</B></span>")
+		boutput(M, "<span class='notice'><B>The VR pod is already occupied!</B></span>")
 		return
 
 	if (!iscarbon(M) && !isobserver(M))
-		boutput(M, "<span style=\"color:blue\"><B>You cannot possibly fit into that!</B></span>")
+		boutput(M, "<span class='notice'><B>You cannot possibly fit into that!</B></span>")
 		return
 
-	if (!isobserver(M))
+	if (!isobserver(M) || isAIeye(M))
 		M.set_loc(src)
 		M.network_device = src
 		//M.verbs += /mob/proc/jack_in
@@ -258,7 +263,7 @@
 	if(src.emagged)
 		boutput(M, "You feel a terrible pain in your head, and everything goes black...")
 		M.paralysis += 5
-		sleep(5)
+		sleep(0.5 SECONDS)
 		M.set_loc(pick(mazewarp))
 		return
 	*/
@@ -266,12 +271,12 @@
 	Station_VNet.Enter_Vspace(M, src, src.network)
 	for(var/obj/O in src)
 		O.set_loc(src.loc)
-	src.update_icon()
+	src.UpdateIcon()
 	return
 
 /obj/machinery/sim/vr_bed/Click(location,control,params)
 	var/lpm = params2list(params)
-	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"])
+	if(isobserver(usr) && !lpm["ctrl"] && !lpm["shift"] && !lpm["alt"] && alert("Are you sure you want to enter VR?","Are you sure?","Yes","No") == "Yes")
 		src.move_inside()
 	else return ..()
 
@@ -284,7 +289,7 @@
 	//	Station_VNet.Enter_Vspace(usr, src, src:network)
 	//	return
 
-	if ((usr.stat || usr.getStatusDuration("stunned") || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis")) && !isobserver(usr))
+	if (is_incapacitated(usr) && !isobserver(usr))
 		return
 	src.log_in(usr)
 	src.add_fingerprint(usr)
@@ -310,11 +315,11 @@
 /obj/machinery/sim/vr_bed/remove_air(amount)
 	return src.loc.remove_air(amount)
 
-/obj/machinery/sim/vr_bed/attack_hand(var/mob/user as mob)
+/obj/machinery/sim/vr_bed/attack_hand(var/mob/user)
 	if(..())
 		return
 	var/dat = "<HTML><BODY><TT><B>VR pod timer</B>"
-	user.machine = src
+	src.add_dialog(user)
 	var/d2
 	if (src.timing)
 		d2 = text("<A href='?src=\ref[];time=0'>Stop Timed</A><br>", src)
@@ -330,19 +335,22 @@
 	return
 
 /obj/machinery/sim/vr_bed/proc/go_out()
-	if (!src.occupant)
-		return
 	for(var/obj/O in src)
-		O.set_loc(src.loc)
+		O.set_loc(get_turf(src.loc))
 //	src.verbs -= /mob/proc/jack_in
-	src.occupant.set_loc(src.loc)
-	src.occupant.changeStatus("weakened", 2 SECONDS)
-	src.occupant.network_device = null
+	src.occupant?.set_loc(get_turf(src.loc))
+	src.occupant?.changeStatus("weakened", 2 SECONDS)
+	src.occupant?.network_device = null
 	src.occupant = null
 	src.active = 0
 	src.con_user = null
-	src.update_icon()
+	src.UpdateIcon()
 	return
+
+/obj/machinery/sim/vr_bed/Exited(atom/movable/thing, newloc)
+	. = ..()
+	if(thing == src.occupant && (!isobserver(thing) || isAIeye(thing)))
+		src.go_out()
 
 /obj/machinery/sim/vr_bed/process()
 	..()
@@ -356,7 +364,6 @@
 			src.time = 0
 			src.timing = 0
 			last_tick = 0
-		src.updateDialog()
 		last_tick = world.time
 	else
 		last_tick = 0
@@ -376,24 +383,19 @@
 /obj/machinery/sim/vr_bed/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
 		if (href_list["time"])
 			if(src.allowed(usr))
-				src.timing = text2num(href_list["time"])
+				src.timing = text2num_safe(href_list["time"])
 		else
 			if (href_list["tp"])
 				if(src.allowed(usr))
-					var/tp = text2num(href_list["tp"])
+					var/tp = text2num_safe(href_list["tp"])
 					src.time += tp
-					src.time = min(max(round(src.time), 0), 300)
+					src.time = clamp(round(src.time), 0, 300)
 		src.updateUsrDialog()
 	return
-
-/obj/machinery/sim/vr_bed/CanPass(atom/movable/O as mob|obj, target as turf, height=0, air_group=0)
-	if (air_group || (height==0))
-		return 1
-	..()
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -409,14 +411,13 @@
 	var/list/programs = list()		//loaded programs
 
 
-/obj/machinery/sim/programcomp/proc/interact(mob/user)
-	if ( (get_dist(src, user) > 1 ) || (status & (BROKEN|NOPOWER)) )
-		if (!issilicon(user))
-			user.machine = null
-			user.Browse(null, "window=mm")
-			return
+/obj/machinery/sim/programcomp/proc/interacted(mob/user)
+	if ( (!in_interact_range(src,user)) || (status & (BROKEN|NOPOWER)) )
+		src.remove_dialog(user)
+		user.Browse(null, "window=mm")
+		return
 
-	user.machine = src
+	src.add_dialog(user)
 	var/dat = "<HEAD><TITLE>V-space Computer</TITLE><META HTTP-EQUIV='Refresh' CONTENT='10'></HEAD><BODY><br>"
 	dat += "<A HREF='?action=mach_close&window=mm'>Close</A><br><br>"
 
@@ -445,8 +446,8 @@
 /obj/machinery/sim/programcomp/Topic(href, href_list)
 	if(..())
 		return
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
 		switch(href_list["set"])
 			if("grass")
 				Setup_Vspace("grass",network)
@@ -462,7 +463,7 @@
 			var/mob/living/carbon/human/virtual/V = usr
 
 			if(src.network == "prison")
-				boutput(V, "<span style=\"color:red\">Leaving this network from the inside has been disabled!</span>")
+				boutput(V, "<span class='alert'>Leaving this network from the inside has been disabled!</span>")
 				return
 			Station_VNet.Leave_Vspace(V)
 
@@ -474,14 +475,14 @@
 //	add_fingerprint(user)
 //	if(status & (BROKEN|NOPOWER))
 //		return
-//	interact(user)
+//	interacted(user)
 
 
 /obj/machinery/sim/programcomp/attack_hand(mob/user)
 	add_fingerprint(user)
 	if(status & (BROKEN|NOPOWER))
 		return
-	interact(user)
+	interacted(user)
 
 
 
@@ -500,17 +501,11 @@
 /obj/machinery/sim/programcomp/proc/Run_Program(var/program = "zombies", var/vspace = 0)
 	if(vspace == 0)	return
 
-	for (var/obj/landmark/A in landmarks)//world)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "[network]_critter_spawn")//ex (area1_critter_spawn)
-			switch(program)
-				if("zombies")
-					new/obj/critter/zombie(A.loc)
-
-//				if("aliens")
-//					new/obj/critter/zombie(A.loc)
-
-				else
-					break
+	for(var/turf/T in landmarks["[network]_critter_spawn"])
+		switch(program)
+			if("zombies")
+				new/obj/critter/zombie(T)
+			else
+				break
 
 	return

@@ -7,9 +7,9 @@
 		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				return
 			if (T)
@@ -19,10 +19,10 @@
 				door.door_type = door_type
 				door.act_needed = act_needed
 				if (door_type == "glass" || door_type == "runes")
-					door.opacity = 0
-				SPAWN_DBG(1 SECOND)
+					door.set_opacity(0)
+				SPAWN(1 SECOND)
 					door.color = color_rgb
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (istype(object, /obj/adventurepuzzle/triggerable/door))
 				object:toggle()
 
@@ -32,7 +32,7 @@
 	var/allow_negative = 0
 	var/static/list/triggeracts_multi = list("Close" = "close", "Decrease activation count" = "dec", "Do nothing" = "nop", "Increase activation count" = "inc", "Lock open" = "secopen", "Open" = "open", "Toggle" = "toggle")
 
-	attackby(C as obj, mob/user as mob)
+	attackby(C, mob/user)
 		return
 
 	trigger_actions()

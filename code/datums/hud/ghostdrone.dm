@@ -1,5 +1,6 @@
+// If you're looking for ghostdrone code itself, check mob\living\silicon\ghostdrone.dm. This is hud.
 /datum/hud/ghostdrone
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		mod1
 		charge
 		pulling
@@ -21,8 +22,8 @@
 	var/list/screen_tools = list()
 	var/list/screen_tools_bg = list()
 
-	var/list/obj/screen/hud/upgrade_bg = list()
-	var/list/obj/screen/hud/upgrade_slots = list()
+	var/list/atom/movable/screen/hud/upgrade_bg = list()
+	var/list/atom/movable/screen/hud/upgrade_slots = list()
 	var/show_upgrades = 1
 
 	var/items_screen = 1
@@ -32,9 +33,9 @@
 	var/mob/living/silicon/ghostdrone/master
 	var/icon/icon_hud = 'icons/mob/hud_drone.dmi'
 
-	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(obj/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
+	var/list/statusUiElements = list() //Assoc. List  STATUS EFFECT INSTANCE : UI ELEMENT add_screen(atom/movable/screen/S). Used to hold the ui elements since they shouldnt be on the status effects themselves.
 
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 
 
 	clear_master()
@@ -108,8 +109,8 @@
 				if (i > master.tools.len)
 					break
 				var/obj/item/I = master.tools[i]
-				var/obj/screen/hud/S = screen_tools[sid]
-				var/obj/screen/hud/BG = screen_tools_bg[sid]
+				var/atom/movable/screen/hud/S = screen_tools[sid]
+				var/atom/movable/screen/hud/BG = screen_tools_bg[sid]
 				S.name = I.name
 				BG.name = I.name
 				S.icon = I.icon
@@ -135,19 +136,20 @@
 				return
 			var/content_id = items_screen + i - 1
 			if (content_id > master.tools.len || content_id < 1)
-				boutput(usr, "<span style=\"color:red\">An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)</span>")
+				boutput(usr, "<span class='alert'>An error occurred. Please notify Marquesas immediately. (Content ID: [content_id].)</span>")
 
 			if (master.active_tool && istype(master.active_tool, /obj/item/magtractor) && master.active_tool:holding)
 				actions.stopId("magpickerhold", master)
 			var/obj/item/O = master.tools[content_id]
 			master.active_tool = O
-			O.loc = master
+			O.set_loc(master)
 			O.pickup(master) // Handle light datums and the like.
 			set_active_tool(1)
 			update_equipment()
 			update_tools()
 
 	New(M)
+		..()
 		master = M
 		src.boxes = create_screen("boxes", "Storage", 'icons/mob/screen1.dmi', "blank", "1, 10 to 1, 1")
 		remove_screen(boxes)
@@ -197,14 +199,14 @@
 		update_equipment()
 
 
-	scrolled(id, dx, dy, loc, parms, obj/screen/hud/scr)
-		if(!master) return
+	scrolled(id, dx, dy, user, parms, atom/movable/screen/hud/scr)
+		if(!master || user != master) return
 
 		if(scr.item)
 			if(dy < 0) items_screen++
 			else items_screen--
 			update_equipment()
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 		switch (id)
@@ -247,14 +249,14 @@
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
-				master.pulling = null
+				master.remove_pulling()
 				update_pulling()
 			if ("face")
 				master.setFaceDialog()
 			if ("charge")
-				out(master, "<span style='color: blue;'>Your charge is: [master.cell.charge]/[master.cell.maxcharge]</span>")
+				out(master, "<span class='notice'>Your charge is: [master.cell.charge]/[master.cell.maxcharge]</span>")
 			if ("health")
-				out(master, "<span style='color: blue;'>Your health is: [master.health / master.max_health * 100]%</span>")
+				out(master, "<span class='notice'>Your health is: [master.health / master.max_health * 100]%</span>")
 			if ("oxy", "temp")
 				out(master, scan_atmospheric(get_turf(master)))
 			else
@@ -325,9 +327,9 @@
 			var/turf/T = get_turf(master)
 			if (T)
 				var/datum/gas_mixture/environment = T.return_air()
-				var/total = environment.total_moles()
+				var/total = TOTAL_MOLES(environment)
 				if (total > 0) // prevent a division by zero
-					oxy.icon_state = "oxy[environment.oxygen/total*environment.return_pressure() < 17]"
+					oxy.icon_state = "oxy[environment.oxygen/total*MIXTURE_PRESSURE(environment) < 17]"
 				else
 					oxy.icon_state = "oxy1"
 				var/maptextc = "#ffffff"
@@ -353,9 +355,9 @@
 			if(isdead(master))
 				return
 
-			for(var/obj/screen/ability/topBar/genetics/G in master.client.screen)
+			for(var/atom/movable/screen/ability/topBar/genetics/G in master.client.screen)
 				master.client.screen -= G
-			for(var/obj/screen/pseudo_overlay/PO in master.client.screen)
+			for(var/atom/movable/screen/pseudo_overlay/PO in master.client.screen)
 				master.client.screen -= PO
 			for(var/obj/ability_button/B in master.client.screen)
 				master.client.screen -= B
@@ -381,12 +383,12 @@
 						pos_y++
 
 		update_status_effects()
-			for(var/obj/screen/statusEffect/G in src.objects)
+			for(var/atom/movable/screen/statusEffect/G in src.objects)
 				remove_screen(G)
 
-			for(var/datum/statusEffect/S in src.statusUiElements) //Remove stray effects.
-				if(!master.statusEffects || !(S in master.statusEffects) || !S.visible)
-					pool(statusUiElements[S])
+			for(var/datum/statusEffect/S as anything in src.statusUiElements) //Remove stray effects.
+				if(!master.statusEffects || !(S in master.statusEffects))
+					qdel(statusUiElements[S])
 					src.statusUiElements.Remove(S)
 					qdel(S)
 
@@ -394,10 +396,10 @@
 			var/pos_x = spacing - 0.2 - 1
 
 			if(master.statusEffects)
-				for(var/datum/statusEffect/S in master.statusEffects) //Add new ones, update old ones.
+				for(var/datum/statusEffect/S as anything in master.statusEffects) //Add new ones, update old ones.
 					if(!S.visible) continue
 					if((S in statusUiElements) && statusUiElements[S])
-						var/obj/screen/statusEffect/U = statusUiElements[S]
+						var/atom/movable/screen/statusEffect/U = statusUiElements[S]
 						U.icon = icon_hud
 						U.screen_loc = "EAST[pos_x < 0 ? "":"+"][pos_x],NORTH+0.3"
 						U.update_value()
@@ -405,7 +407,7 @@
 						pos_x -= spacing
 					else
 						if(S.visible)
-							var/obj/screen/statusEffect/U = unpool(/obj/screen/statusEffect)
+							var/atom/movable/screen/statusEffect/U = new /atom/movable/screen/statusEffect
 							U.init(master,S)
 							U.icon = icon_hud
 							statusUiElements.Add(S)

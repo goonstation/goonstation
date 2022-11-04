@@ -1,6 +1,6 @@
-#include "..\cogmap.dmm"
-#include "..\z2.dmm"
-#include "..\z3.dmm"
+INCLUDE_MAP("../cogmap.dmm")
+INCLUDE_MAP("../z2.dmm")
+INCLUDE_MAP("../z3.dmm")
 #include "z4.dm"
-#include "..\z5.dmm"
+INCLUDE_MAP("../z5.dmm")
 #define MAP_MODE "standard"

@@ -1,19 +1,21 @@
+#define KUDZU_TO_SPREAD_INITIAL 40
 /obj/item/kudzuseed//TODO: Move all this to respective files everything works right.
 	name = "kudzu seed"
 	desc = "So this is where Kudzu went. Plant on a floor to grow.<br/>The disclaimer seems faded out, though."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
-	icon_state = "seeds"
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
+	icon_state = "seeds-kudzu"
+	var/to_spread = KUDZU_TO_SPREAD_INITIAL
 
 	attack(mob/M, mob/user)
 		if(ishuman( M ))
 			if( user == M )
-				boutput( user, "You feed yourself the [src]. <span style='color:red'>Oh god!</span>" )
-				logTheThing( "combat", user, null, "fed themself a [src]." )
+				boutput(user, "You feed yourself the [src]. <span class='alert'>Oh god!</span>")
+				logTheThing(LOG_COMBAT, user, "fed themself a [src].")
 			else
-				boutput( user, "You feed [M] the [src]. <span style='color:red'>Oh god!</span>" )
-				logTheThing( "combat", user, M, "fed %target% a [src]." )
-			animate( M, color = "#0F0", time = 300 )//TODO: See below.
-			qdel( src )
+				boutput(user, "You feed [M] the [src]. <span class='alert'>Oh god!</span>")
+				logTheThing(LOG_COMBAT, user, "fed [constructTarget(M,"combat")] a [src].")
+			animate(M, color = "#0F0", time = 300)//TODO: See below.
+			qdel(src)
 			return
 
 	afterattack(var/atom/A as mob|turf, var/mob/user as mob, reach, params)
@@ -21,30 +23,23 @@
 			//var/obj/spacevine/kudzu = new( A )
 			//kudzu.Life()
 			if (prob(1))
-				new /obj/spacevine/alien/living(A)
+				new /obj/spacevine/alien/living(A, src.to_spread)
 			else
-				new /obj/spacevine/living(A)
-			boutput( user, "You plant the [src] on the [A]." )
-			logTheThing( "combat", user, null, "plants [src] (kudzu) at [log_loc(src)]." )
+				new /obj/spacevine/living(A, src.to_spread)
+			boutput(user, "You plant the [src] on the [A].")
+			logTheThing(LOG_COMBAT, user, "plants [src] (kudzu) at [log_loc(src)].")
 			message_admins("[key_name(user)] planted kudzu at [log_loc(src)].")
 			user.u_equip(src)
-			qdel( src )
+			qdel(src)
 
 		else
 			return ..()
-
-/datum/syndicate_buylist/traitor/kudzuseed
-	name = "Kudzu Seed"
-	item = /obj/item/kudzuseed
-	cost = 4
-	desc = "Syndikudzu. Interesting. Plant on the floor to grow."
-	job = list("Botanist", "Staff Assistant")
-	blockedmode = list(/datum/game_mode/spy, /datum/game_mode/revolution)
 
 /datum/random_event/major/kudzu
 	name = "Kudzu Outbreak"
 	centcom_headline = "Plant Outbreak"
 	centcom_message = "Rapidly expanding plant organism detected aboard the station. All personnel must contain the outbreak."
+	centcom_origin = ALERT_STATION
 	message_delay = 2 MINUTES
 	wont_occur_past_this_time = 40 MINUTES
 	customization_available = 1
@@ -52,15 +47,15 @@
 
 	event_effect(var/source, var/aggressive, var/startturf)
 		..()
-		if ((!islist(kudzustart) || !kudzustart.len) && !isturf(startturf))
+		if (!landmarks[LANDMARK_KUDZUSTART] && !isturf(startturf))
 			message_admins("Error starting event, no kudzu start landmarks. Process aborted.")
 			return
-		var/kudzloc = isturf(startturf) ? startturf : pick(kudzustart)
+		var/kudzloc = isturf(startturf) ? startturf : pick_landmark(LANDMARK_KUDZUSTART)
 		if (prob(1) || aggressive)
-			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc)
+			var/obj/spacevine/alien/living/L = new /obj/spacevine/alien/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 		else
-			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc)
+			var/obj/spacevine/living/L = new /obj/spacevine/living(kudzloc, KUDZU_TO_SPREAD_INITIAL)
 			L.set_loc(kudzloc)
 
 	admin_call(var/source)
@@ -101,7 +96,8 @@
 	icon_state = "vine-light1"
 	anchored = 1
 	density = 0
-	event_handler_flags = USE_FLUID_ENTER | USE_CANPASS
+	event_handler_flags = USE_FLUID_ENTER
+	var/static/ideal_temp = 310		//same as blob, why not? I have no other reference point.
 	var/growth = 0
 	var/waittime = 40
 	var/run_life = 0 // I think we have some that spawns on the map so don't just default to growy stuff
@@ -109,19 +105,31 @@
 	var/vinepath = /obj/spacevine/living
 	var/current_stage = 0
 	var/aggressive = 0
+	var/to_spread = 10				//bascially the radius of child kudzu plants that any given kudzu object can create.
+	var/stunted = FALSE
 
-	CanPass(atom/A, turf/T)
+
+	get_desc()
+		var/flavor
+		switch (to_spread)
+			if (-INFINITY to 0)	flavor = "dormant"
+			if (1 to 10) 		flavor = "lethargic"
+			if (11 to 20)		flavor = "lively"
+			if (21 to INFINITY) flavor = "vivacious"
+		return "[..()] It looks [flavor]."
+
+	Cross(atom/A)
 		//kudzumen can pass through dense kudzu
 		if (current_stage == 3)
 			if (ishuman(A) &&  istype(A:mutantrace, /datum/mutantrace/kudzu))
 				animate_door_squeeze(A)
 				return 1
 			return 0
-		if (ismob(A)) return 1
-		else return 0
+		return 1
 
-	New(turf/location)
-		var/turf/T = get_turf(location)
+	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+		src.to_spread = to_spread
+		var/turf/T = get_turf(loc)
 		if (istype(T, /turf/space))
 			qdel(src)
 			return 1
@@ -140,11 +148,15 @@
 			qdel(src)
 			return 1
 		..()
+		//Add kudzu flag to new turf.
+		var/turf/T2 = get_turf(newloc)
+		if (T2)
+			T2.temp_flags |= HAS_KUDZU
 
 	Move()
 		var/turf/T = get_turf(src)
 		T.temp_flags &= ~HAS_KUDZU
-		..()
+		. = ..()
 
 	disposing()
 		var/turf/T = get_turf(src)
@@ -157,7 +169,7 @@
 			D.locked = 0
 		..()
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W) return
 		if (!user) return
 		var/dmg = 1
@@ -165,13 +177,14 @@
 			dmg = 3
 		else if (W.hit_type == DAMAGE_STAB)
 			dmg = 2
+		else if (W.hit_type == DAMAGE_BLUNT && istype(W, /obj/item/kudzu/kudzumen_vine))
+			return
+
 		dmg *= isnum(W.force) ? min((W.force / 2), 5) : 1
 		DEBUG_MESSAGE("[user] damaging [src] with [W] [log_loc(src)]: dmg is [dmg]")
-		src.growth -= dmg
-		if (src.growth < 1)
-			qdel (src)
-		else
-			src.update_self()
+
+		src.take_damage(dmg, "brute", user)
+
 		user.lastattacked  = src
 		..()
 
@@ -203,7 +216,7 @@
 			src.set_density(1)
 
 /obj/spacevine/proc/Life()
-	if (!src)
+	if (!src || to_spread <= 0)
 		return
 	if (!ispath(src.vinepath))
 		var/datum/controller/process/kudzu/K = get_master_kudzu_controller()
@@ -216,7 +229,7 @@
 	else
 		Vspread = locate(src.x,src.y + rand(-1, 1),src.z)
 	var/dogrowth = 1
-	if (!istype(Vspread, /turf/simulated/floor))
+	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
 		dogrowth = 0
 	for (var/obj/O in Vspread)
 
@@ -225,9 +238,13 @@
 			return
 
 		if (istype(O, /obj/machinery/door))
+			var/obj/machinery/door/door = O
+			if(!door.density)
+				dogrowth = 1
+				continue
 			if (door_open_prob())
 				//force open doors too and keep it open
-				var/obj/machinery/door/door = O
+				door.interrupt_autoclose = 1
 				// var/temp_op = door.operating
 				// door.operating = 1
 				// door.locked = 0
@@ -240,9 +257,9 @@
 				dogrowth = 0
 
 	if (dogrowth == 1)
-		var/obj/V = new src.vinepath(Vspread)
+		var/obj/V = new src.vinepath(loc=Vspread, to_spread=to_spread-1)
 		V.set_loc(Vspread)
-	if (src.growth < 20)
+	if (src.growth < 20 && !stunted)
 		src.growth++
 		src.update_self()
 	if (!src.aggressive && src.growth >= 20)
@@ -278,22 +295,58 @@
 
 /obj/spacevine/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			if (prob(66))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if (prob(33))
 				qdel(src)
 				return
 		else
 	return
 
-/obj/spacevine/temperature_expose(null, temp, volume)
-	qdel(src)
+/obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
+	if (!isnum(amount) || amount <= 0)
+		return
+
+	src.growth -= amount
+	if (src.growth < 1)
+		qdel (src)
+	else
+		src.update_self()
+
+
+/obj/spacevine/temperature_expose(datum/gas_mixture/air, temperature, volume)
+	var/temp_diff = temperature - src.ideal_temp
+
+	if (temp_diff >= 300)
+		var/power = max(round(temp_diff /300), 5)
+
+		src.take_damage(power*10, 1, "burn")
+
+/obj/spacevine/proc/herbicide(datum/reagent/R)
+	if(!src.stunted)
+		if((src.current_stage < 2) || prob(33))
+			src.stunted = TRUE
+
+			//Swap green to red to turn brown, desaturate and soften slightly
+			var/new_color = list(0.20,	0.70,  0.10,  0.00,\
+								 0.70,  0.10,  0.10,  0.50,\
+								 0.07,  0.10,  0.50,  0.00,\
+								 0.00,  0.00,  0.00,  0.70,\
+								 0.00,  0.00,  0.00,  0.00)
+			//Add damage texture to create dark banding
+			setTexture()
+			animate(src,time=2 SECONDS,color=new_color)
+			src.growth -= 10
+			src.to_spread = round(log(max(src.to_spread,1))*2)
+			src.update_self()
+		// Delay update to allow fluid controllers to manage
+		R.holder?.remove_reagent(R.id, src.current_stage, update_total=FALSE, reagents_change=FALSE)
 
 /obj/spacevine/living // these ones grow
 	run_life = 1
@@ -304,13 +357,17 @@
 	base_state = "avine"
 	vinepath = /obj/spacevine/alien/living
 	aggressive = 1
-	New()
-		if (..())
+
+	New(turf/loc, var/to_spread = KUDZU_TO_SPREAD_INITIAL)
+		if (..(loc, to_spread))
 			return 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			if (prob(20) && !locate(/obj/spacevine/alien/flower) in get_turf(src))
 				var/obj/spacevine/alien/flower/F = new /obj/spacevine/alien/flower()
 				F.set_loc(src.loc)
+
+	herbicide()
+		return
 
 /obj/spacevine/alien/living
 	run_life = 1
@@ -318,13 +375,13 @@
 /obj/spacevine/alien/flower
 	name = "strange alien flower"
 	desc = "Is it going to eat you if you get too close?"
-	icon = 'icons/obj/decals.dmi'
+	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 
 	New()
 		if (..())
 			return 1
-		src.dir = pick(alldirs)
+		src.set_dir(pick(alldirs))
 		src.pixel_y += rand(-8,8)
 		src.pixel_x += rand(-8,8)
 
@@ -354,15 +411,23 @@
 	New(loc, mob/M as mob)
 		..()
 		if (ishuman(M))
-			SPAWN_DBG(bulb_time)
+			SPAWN(bulb_time)
 				if (src)
 					name = "huge bulb"
 					desc = "A huge botanical bulb. It looks like there's something inside it..."
 					icon_state = "bulb-closed"
 
 				sleep(bulb_complete)
-				
-				if (!destroyed && ishuman(M))
+
+				if(!isalive(M) && M.ghost?.mind?.dnr)
+					src.visible_message("<span class='alert'>The [src] opens, having drained all the nutrients from [M]!</span>")
+					M.gib()
+					flick("bulb-open-animation", src)
+					new/obj/decal/opened_kudzu_bulb(get_turf(src))
+					SPAWN(1 SECOND)
+						qdel(src)
+
+				else if (!destroyed && ishuman(M))
 					var/mob/living/carbon/human/H = M
 					flick("bulb-open-animation", src)
 					new/obj/decal/opened_kudzu_bulb(get_turf(src.loc))
@@ -371,10 +436,15 @@
 					if (!H.ckey && H.last_client && !H.last_client.mob.mind.dnr)
 						if ((!istype(H.last_client.mob,/mob/living) && !istype(H.last_client.mob,/mob/wraith)) || inafterlifebar(H.last_client.mob))
 							H.ckey = H.last_client.ckey
-
+					if (istype(H.abilityHolder, /datum/abilityHolder/composite))
+						var/datum/abilityHolder/composite/Comp = H.abilityHolder
+						Comp.removeHolder(/datum/abilityHolder/kudzu)
+					else if (H.abilityHolder)
+						H.abilityHolder.dispose()
+						H.abilityHolder = null
 					H.set_mutantrace(/datum/mutantrace/kudzu)
 					natural_opening = 1
-					SHOW_KUDZU_TIPS(H)
+					H.show_antag_popup("kudzu")
 					qdel(src)
 		else
 			qdel(src)
@@ -382,7 +452,7 @@
 	disposing()
 		destroyed = 1
 		if (natural_opening)
-			src.visible_message("<span style=\"color:red\">[src] puffs and it opens wide revealing what's inside!</span>")
+			src.visible_message("<span class='alert'>[src] puffs and it opens wide revealing what's inside!</span>")
 		else
 			for (var/mob/M in contents)
 				M.take_toxin_damage(60)
@@ -400,11 +470,12 @@
 	pixel_x = -16
 	layer = MOB_LAYER - 1
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
-			src.visible_message("<span style=\"color:red\">[user] cuts [src] to bits!</span>")
+			src.visible_message("<span class='alert'>[user] cuts [src] to bits!</span>")
 			qdel(src)
 		..()
 	//destroy if attacked by wirecutters or something
 
 
+#undef KUDZU_TO_SPREAD_INITIAL

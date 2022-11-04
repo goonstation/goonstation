@@ -91,7 +91,7 @@
 		var/list/subcommands = list()
 		var/list/piped_list = command2list(text, "^", scriptvars, subcommands)//scripting ? scriptvars : null)
 		piped_list.len = min(piped_list.len, setup_max_piped_commands)
-		piping = piped_list.len
+		piping = length(piped_list)
 		pipetemp = ""
 		var/script_counter = 0
 		//script_iteration = 0//reset stack each time someone types stuff
@@ -106,7 +106,7 @@
 
 			while (subPlace)
 
-				var/subIndex = text2num( copytext( text, subPlace+4, subPlace+5) )
+				var/subIndex = text2num_safe( copytext( text, subPlace+4, subPlace+5) )
 
 				if (isnum(subIndex) && subIndex > 0 && subIndex <= subcommands.len)
 
@@ -125,14 +125,15 @@
 					else
 						suppress_out = 0
 						return 1
-
+				else
+					return 1
 				subPlace = findtext(text, "_sub")
 
 			//var/list/command_list = parse_string(text, (script_iteration ? src.scriptvars : null))
 			var/list/command_list = parse_string(text, src.scriptvars)
 			var/command = lowertext(command_list[1])
 			command_list.Cut(1,2) //Remove the command that we are now processing.
-			while (!command && command_list.len)
+			while (!command && length(command_list))
 				command = command_list[1]
 				command_list.Cut(1,2)
 
@@ -221,13 +222,18 @@
 						if (pipetemp)
 							echo_text = pipetemp
 
+						var/add_newline = TRUE
+						if (command_list[1] == "-n")
+							add_newline = FALSE
+							command_list.Cut(1,2)
+
 						if(istype(command_list) && (command_list.len > 0))
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
 							pipetemp = echo_text
 						else
-							if (echo_text && !dd_hassuffix(echo_text, "|n"))
+							if (echo_text && add_newline && !dd_hassuffix(echo_text, "|n"))
 								echo_text += "|n"
 							message_user(echo_text, "multiline")
 
@@ -345,7 +351,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(elsePosition)
-									piping = piped_list.len
+									piping = length(piped_list)
 								continue //Continue processing any piped commands following this.
 							if (0)
 								scriptstat &= ~SCRIPT_IF_TRUE
@@ -353,7 +359,7 @@
 								var/elsePosition = piped_list.Find("else")
 								if (elsePosition)
 									piped_list.Cut(1,elsePosition+1)
-									piping = piped_list.len
+									piping = length(piped_list)
 									pipetemp = null
 									continue
 
@@ -389,11 +395,20 @@
 						if (!command_list.len)
 							continue
 
-						. = text2num(command_list[1])
+						. = text2num_safe(command_list[1])
 						if (!isnum(.) || . < 0)
 							continue
 
-						sleep ( max(0, min(., 30)) )
+						sleep(clamp(., 0, 30) SECONDS)
+						continue
+
+					if ("unset")
+						if (!length(command_list))
+							scriptvars = list()
+							continue
+						for (var/V in command_list)
+							if (lowertext(ckeyEx(V)) in scriptvars)
+								scriptvars -= lowertext(ckeyEx(V))
 						continue
 
 					if ("help", "man")
@@ -498,7 +513,7 @@
 					. += "[. ? " " : null][command_list[i]]"
 
 				scriptvarsToPass["*"] = .
-				scriptvarsToPass["argc"] = command_list.len
+				scriptvarsToPass["argc"] = length(command_list)
 
 				var/list/childScript = script_format( exec.fields.Copy() )
 				//boutput(world, "bloop script loaded, pip")
@@ -539,7 +554,7 @@
 				scriptline++
 
 			scriptline = (shscript.len) ? scriptline : 0
-				//sleep(10)
+				//sleep(1 SECOND)
 			if (!shscript.len && !scriptprocess)
 
 //				if (scriptprocess)
@@ -573,12 +588,12 @@
 
 		//Something something immersion something something 32-bit signed someting fixed point something.
 		script_clampvalue(var/clampnum)
-			//return round( min( max(text2num(clampnum), -2147483647), 2147483648) )
-			return round( min( max(clampnum, -2147483647), 2147483600), 0.01 ) // 2147483648
+			//return round( min( max(text2num_safe(clampnum), -2147483647), 2147483648) ) // good riddance
+			return round( clamp(clampnum, -2147483647, 2147483600), 0.01 ) // 2147483648
 
 		script_isNumResult(var/current, var/result)
 
-			if (isnum(text2num(current)) && isnum(text2num(result)))
+			if (isnum(text2num_safe(current)) && isnum(text2num_safe(result)))
 				return 1
 
 			return 0
@@ -586,26 +601,27 @@
 		script_evaluate2(var/list/command_stream, return_bool)
 
 			stack.len = 0
-			while (command_stream && command_stream.len)
+			while (length(command_stream))
 				var/current_command = command_stream[1]
 				//boutput(world, "current_command = \[[current_command]]")
 				command_stream.Cut(1,2)
 
-				if (text2num(current_command) != null)
+				if (text2num_safe(current_command) != null)
 					if (stack.len > MAX_STACK_DEPTH)
 						return ERR_STACK_OVER
 
-					stack += script_clampvalue( text2num(current_command) )
+					stack += script_clampvalue( text2num_safe(current_command) )
 					continue
 
 				var/result = null
+
 				switch ( lowertext(current_command) )
 					if ("+") //(1X 2X -- (1X + 2X))
 						if (stack.len < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
-							result = stack[stack.len] + stack[stack.len-1]
+							result = text2num_safe(stack[stack.len]) + text2num_safe(stack[stack.len-1])
 							stack[--stack.len] = script_clampvalue( result )
 
 						else
@@ -661,9 +677,6 @@
 							var/list/explodedString = splittext("[stack[stack.len-1]]", "[stack[stack.len]]")
 							if (explodedString.len + stack.len > MAX_STACK_DEPTH)
 								return ERR_STACK_OVER
-
-							// reverselist is getting removed because it didnt actually do anything other than copy the list, if this line actually intended to reverse it, use reverse_list
-							//explodedString = reverselist(explodedString)
 
 							stack.len -= 2
 							stack += explodedString
@@ -835,7 +848,7 @@
 							stack.len++
 							stack[stack.len] = stack[stack.len-1]
 
-					if ("&#39;")
+					if ("&#39;","'") // bodge alert, "'" added because this command doesnt seem to work at all
 						var/newString
 						while (command_stream.len)
 							if (command_stream[1] == "\'" || command_stream[1] == "&#39;")
@@ -895,6 +908,15 @@
 						//todo
 						continue
 
+					if ("#") // gets how many information turdnuggets you have stored up
+						stack.len++
+						stack[stack.len]="[stack.len-1]"
+
+					if ("del") //  removes the topmost item from the stack (most recently added)
+						if (!stack.len)
+							return ERR_STACK_UNDER
+						stack.len--
+
 					if ("value", "to") //Define/Set a variable value.
 						if (!stack.len)
 							return ERR_STACK_UNDER
@@ -908,6 +930,20 @@
 
 						scriptvars["[valueName]"] = stack[stack.len]
 						stack.len--
+
+					if (".s") // print the whole goddamn stack! stolen from forth, doesnt consume the stack.
+						message_user("<[stack.len]>") // does not check if its in a script or not
+						if(stack.len<1) 			  // piping "eval" to some other program and doing . or .s could be handy
+							continue
+						for(var/i = 1 to stack.len)
+							message_user("[stack[i]]")
+						message_user(" ") //honk.
+
+					if (".") // print JUST the most recent stack item. also stolen from forth
+						if(stack.len<1) // same as above, no script check "eval 3 2 . 4 | echo" -> "2" output
+							return ERR_STACK_UNDER
+						message_user("[stack[stack.len]]")
+						stack.len-- //consume it, because thats what forth does
 
 					else
 						//boutput(world, "\[[lowertext(ckeyEx(current_command))]] in script vars?")

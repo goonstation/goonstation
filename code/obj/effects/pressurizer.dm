@@ -1,12 +1,12 @@
 //It pressurizes areas. - from halloween.dm
 /obj/effects/pressurizer
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 
 	New()
 		..()
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			src.do_pressurize()
-			sleep(10)
+			sleep(1 SECOND)
 			qdel(src)
 
 	proc/do_pressurize()

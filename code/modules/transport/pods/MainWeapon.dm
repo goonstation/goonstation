@@ -3,14 +3,14 @@
 	desc = "A simple phaser designed for scout vehicles."
 	var/r_gunner = 0
 	var/mob/gunner = null
-	var/datum/projectile/current_projectile = new/datum/projectile/laser/light
+	var/datum/projectile/current_projectile = new/datum/projectile/laser/light/pod
 	var/firerate = 8
-	var/isfiring = 0
 	var/weapon_score = 0.1
 	var/appearanceString
 
 	var/uses_ammunition = 0
 	var/remaining_ammunition = 0
+	var/muzzle_flash = null
 
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
@@ -20,7 +20,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>[src] Console</B><BR><HR><BR>"
 		if(src.active)
@@ -41,7 +41,7 @@
 			return
 
 		if (usr.loc == ship)
-			usr.machine = src
+			src.add_dialog(usr)
 
 			if (href_list["gunner"])
 				MakeGunner(usr)
@@ -49,7 +49,7 @@
 
 			src.add_fingerprint(usr)
 			for(var/mob/M in ship)
-				if ((M.client && M.machine == src))
+				if (M.using_dialog_of(src))
 					src.opencomputer(M)
 		else
 			usr.Browse(null, "window=ship_main_weapon")
@@ -58,12 +58,11 @@
 
 
 /obj/item/shipcomponent/mainweapon/proc/Fire(var/mob/user,var/shot_dir_override = -1)
-	if(isfiring) return
-	isfiring = 1
+	if(ON_COOLDOWN(src, "fire", firerate))
+		return
 	if(uses_ammunition)
 		if (remaining_ammunition < ship.AmmoPerShot())
-			boutput(usr, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
-			isfiring  = 0
+			boutput(user, "[ship.ship_message("You need [ship.AmmoPerShot()] to fire the weapon. You currently have [remaining_ammunition] loaded.")]")
 			return
 
 	var/rdir = ship.dir
@@ -72,11 +71,9 @@
 	//if (!istype(ship,/obj/machinery/vehicle/tank)) //Tanks are allowed to shoot diagonally!
 	//	if ((rdir - 1) & rdir)
 	//		rdir &= 12
-	logTheThing("combat", usr, null, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
+	logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] (<b>Dir:</b> <i>[dir2text(rdir)]</i>, <b>Projectile:</b> <i>[src.current_projectile]</i>) at [log_loc(ship)].") // Similar to handguns, but without target coordinates (Convair880).
 	ship.ShootProjectiles(user, current_projectile, rdir)
 	remaining_ammunition -= ship.AmmoPerShot()
-	SPAWN_DBG (firerate)
-		isfiring = 0
 
 /obj/item/shipcomponent/mainweapon/proc/MakeGunner(mob/M as mob)
 	if(!gunner)
@@ -87,6 +84,7 @@
 	desc = "A phaser designed for scout vehicles. Features a more focused energy discharge, leading to an increased range."
 	current_projectile = new/datum/projectile/laser/light/longrange
 	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
 
 /obj/item/shipcomponent/mainweapon/mining
 	name = "Plasma Cutter System"
@@ -116,14 +114,25 @@
 	current_projectile = new/datum/projectile/energy_bolt
 	firerate = 10
 	icon_state = "combat-taser"
+	muzzle_flash = "muzzle_flash_elec"
 
 /obj/item/shipcomponent/mainweapon/phaser
 	name = "Mk 1.5 Light Phaser"
 	desc = "A basic, light weight phaser designed for scout vehicles."
 	weapon_score = 0.3
 	appearanceString = "pod_weapon_ltlaser"
+	current_projectile = new/datum/projectile/laser/light/pod
+	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
+
+/obj/item/shipcomponent/mainweapon/phaser/short
+	name = "Mk 1.45 Light Phaser"
+	desc = "A basic, light weight phaser designed for close quarters space fights..."
+	weapon_score = 0.2
+	appearanceString = "pod_weapon_ltlaser"
 	current_projectile = new/datum/projectile/laser/light
 	icon_state = "class-a"
+	muzzle_flash = "muzzle_flash_phaser"
 
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
@@ -131,8 +140,20 @@
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
+	current_projectile = new/datum/projectile/laser/pod
+	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
+
+/obj/item/shipcomponent/mainweapon/laser/short
+	name = "Mk.2 CQ Laser"
+	desc = "A downgraded variant of the upgraded MK 2.0 laser. Doesn't shoot quite as far, but doesn't use quite as much energy either."
+	weapon_score = 0.35
+	appearanceString = "pod_weapon_laser"
+	power_used = 75
 	current_projectile = new/datum/projectile/laser
 	icon_state = "mk-2-scout"
+	muzzle_flash = "muzzle_flash_laser"
+
 
 /obj/item/shipcomponent/mainweapon/russian
 	name = "Svet-Oruzhiye Mk.4"
@@ -140,6 +161,7 @@
 	current_projectile = new/datum/projectile/laser/glitter
 	firerate = 5
 	icon_state = "strelka"
+	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"
@@ -147,6 +169,7 @@
 	weapon_score = 0.6
 	current_projectile = new/datum/projectile/disruptor
 	icon_state = "disruptor-l"
+	muzzle_flash = "muzzle_flash_plaser"
 
 /obj/item/shipcomponent/mainweapon/precursor
 	name = "IRIDIUM Spheroid Projector"
@@ -157,13 +180,14 @@
 	firerate = 25
 
 /obj/item/shipcomponent/mainweapon/gun
-	name = "SPK-12 Ballistic System"
+	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
-	current_projectile = new/datum/projectile/bullet/a12
+	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
 	icon_state = "spes"
+	muzzle_flash = "muzzle_flash"
 
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
@@ -173,15 +197,16 @@
 	appearanceString = "pod_weapon_emitter"
 	current_projectile = new/datum/projectile/laser/asslaser
 	icon_state = "assult-laser"
+	muzzle_flash = "muzzle_flash_laser"
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
 	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
 	power_used = 100
-	weapon_score = 1.0
+	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
-	firerate = 5
+	firerate = 10
 	icon_state = "rock-drill"
 
 /obj/item/shipcomponent/mainweapon/disruptor
@@ -206,6 +231,7 @@
 	appearanceString = "pod_weapon_bfg"
 	firerate = 100
 	icon_state = "grenade-launcher"
+	muzzle_flash = "muzzle_flash_launch"
 
 /obj/item/shipcomponent/mainweapon/UFO
 	name = "UFO Blaster"
@@ -222,7 +248,7 @@
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -244,8 +270,8 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+			src.add_dialog(usr)
 
 		if (href_list["heat"])
 			current_projectile = ufo
@@ -273,44 +299,41 @@
 	Fire(var/mob/user,var/shot_dir_override = -1)
 		switch(mode)
 			if(0)
-				if(isfiring) return
-				isfiring = 1
+				if(ON_COOLDOWN(src, "fire", firerate))
+					return
 				var/obj/decal/D = new/obj/decal(ship.loc)
-				D.dir = ship.dir
+				D.set_dir(ship.dir)
 				if (shot_dir_override > 1)
-					D.dir = shot_dir_override
+					D.set_dir(shot_dir_override)
 
 				D.name = "metal foam spray"
 				D.icon = 'icons/obj/chemical.dmi'
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 				// Necessary, as the foamer doesn't use the global fire proc (Convair880).
-				logTheThing("combat", usr, null, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
+				logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name], creating metal foam at [log_loc(ship)].")
 
-				SPAWN_DBG(0)
+				SPAWN(0)
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span style=\"color:red\">[ship] spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
 					s.start()
-					sleep(3)
+					sleep(0.3 SECONDS)
 					D.dispose()
-
-				SPAWN_DBG(firerate)
-					isfiring = 0
 			if(1)
 				..()
 
 	opencomputer(mob/user as mob)
 		if(user.loc != src.ship)
 			return
-		user.machine = src
+		src.add_dialog(user)
 
 		var/dat = "<TT><B>Weapon Console</B><BR><HR>"
 		if(src.active)
@@ -332,8 +355,8 @@
 		if(..())
 			return
 
-		if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-			usr.machine = src
+		if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+			src.add_dialog(usr)
 
 		if (href_list["foam"])
 			mode = 0
@@ -345,3 +368,140 @@
 
 		opencomputer(usr)
 		return
+
+/obj/item/shipcomponent/mainweapon/syndicate_purge_system
+	name = "Syndicate Purge System"
+	desc = "An unfinished pod weapon, the blueprints for which have been plundered from a raid on a now-destroyed Syndicate base. Requires a unique power source to function."
+	current_projectile = new/datum/projectile/laser/drill/cutter
+	firerate = 100
+	var/increment
+	var/pod_is_large = false
+	var/core_inserted = false
+	icon = 'icons/misc/retribution/SWORD_loot.dmi'
+	icon_state= "SPS_empty"
+
+	Fire(var/mob/user,var/shot_dir_override = -1)
+		if(ON_COOLDOWN(src, "fire", firerate))
+			return
+		if(!core_inserted)
+			boutput(ship.pilot, "<span class='alert'><B>The weapon requires a unique power source to function!</B></span>")
+			return
+		playsound(src.loc, 'sound/weapons/heavyioncharge.ogg', 75, 1)
+		logTheThing(LOG_COMBAT, user, "driving [ship.name] fires [src.name] from [log_loc(ship)].")
+		var/obj/overlay/purge = new/obj/overlay{mouse_opacity=FALSE; icon='icons/misc/retribution/320x320.dmi'; plane=PLANE_SELFILLUM; appearance_flags=RESET_TRANSFORM}
+		purge.dir = ship.facing
+		if(!is_cardinal(purge.dir))
+			if(prob(50))
+				purge.dir &= NORTH | SOUTH
+			else
+				purge.dir &= EAST | WEST
+		ship.vis_contents += purge
+		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
+			pod_is_large = true
+			flick("SPS_o_large", purge)
+			purge.pixel_x -= 128
+			purge.pixel_y -= 128
+		else
+			pod_is_large = false
+			flick("SPS_o_small", purge)
+			purge.pixel_x -= 144
+			purge.pixel_y -= 144
+
+		SPAWN(1.2 SECONDS)
+			var/destruction_point_x
+			var/destruction_point_y
+			ship.vis_contents -= purge
+			playsound(ship.loc, 'sound/weapons/laserultra.ogg', 100, 1)
+			switch (purge.dir)
+				if (NORTH)
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x
+						destruction_point_y = ship.loc.y + increment
+						if(pod_is_large)
+							destruction_point_y++
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_x = ship.loc.x + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (EAST)
+					for(increment in 1 to 4)
+						destruction_point_x = ship.loc.x + increment
+						destruction_point_y = ship.loc.y
+						if(pod_is_large)
+							destruction_point_x++
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_y = ship.loc.y + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (SOUTH)
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x
+						destruction_point_y = ship.loc.y - increment
+						if(pod_is_large)
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_x = ship.loc.x + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+
+				if (WEST)
+					for (increment in 1 to 4)
+						destruction_point_x = ship.loc.x - increment
+						destruction_point_y = ship.loc.y
+						if(pod_is_large)
+							purge_sps(destruction_point_x, destruction_point_y)
+							destruction_point_y = ship.loc.y + 1
+						purge_sps(destruction_point_x, destruction_point_y)
+			return
+		return
+
+	attackby(obj/item/W, mob/user)
+		if (isscrewingtool(W) && core_inserted)
+			core_inserted = false
+			set_icon_state("SPS_empty")
+			user.put_in_hand_or_drop(new /obj/item/sword_core)
+			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Purge System!</span>", 1)
+			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is missing."
+			tooltip_rebuild = 1
+			return
+		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
+			core_inserted = true
+			qdel(W)
+			set_icon_state("SPS")
+			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Purge System!</span>", 1)
+			desc = "After a delay, fires a destructive beam capable of penetrating walls. The core is installed."
+			tooltip_rebuild = 1
+			return
+
+	proc/purge_sps(var/point_x, var/point_y)
+		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
+			random_burn_damage(M, 60)
+			M.changeStatus("weakened", 2 SECOND)
+			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
+		if(T && prob(100 - (10 * increment)))
+			T.ex_act(1)
+		for (var/obj/S in locate(point_x,point_y,ship.loc.z))
+			if(prob(50 - (10 * increment)))
+				S.ex_act(1)
+		return
+
+/datum/projectile/laser/pod
+	dissipation_rate = 2
+	dissipation_delay = 16
+	projectile_speed = 42
+
+/datum/projectile/laser/light/pod
+	impact_range = 2
+	dissipation_rate = 1
+	dissipation_delay = 14
+	projectile_speed = 42
+
+/datum/projectile/disruptor
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 42
+
+/datum/projectile/disruptor/high
+	impact_range = 4
+	dissipation_delay = 16
+	projectile_speed = 42

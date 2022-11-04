@@ -18,11 +18,11 @@
 
 /obj/item/storage/box/clothing/hos
 	name = "\improper Head of Security's clothing"
-	spawn_contents = list(/obj/item/clothing/under/rank/head_of_securityold,
-	/obj/item/clothing/under/rank/head_of_securityold/dress,
+	spawn_contents = list(/obj/item/clothing/under/rank/head_of_security,
+	/obj/item/clothing/under/rank/head_of_security/dress,
 	/obj/item/clothing/under/suit/hos,
 	/obj/item/clothing/under/suit/hos/dress,
-	/obj/item/clothing/under/rank/head_of_securityold/fancy,
+	/obj/item/clothing/under/rank/head_of_security/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
 
 /obj/item/storage/box/clothing/hop
@@ -48,7 +48,7 @@
 	name = "\improper Medical Director's clothing"
 	spawn_contents = list(/obj/item/clothing/under/rank/medical_director,
 	/obj/item/clothing/under/rank/medical_director/dress,
-	/obj/item/clothing/suit/labcoat,
+	/obj/item/clothing/suit/labcoat/medical_director,
 	/obj/item/clothing/head/fancy/rank,
 	/obj/item/clothing/under/rank/medical_director/fancy,
 	/obj/item/clothing/suit/wintercoat/command)
@@ -75,7 +75,16 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/hydroponics,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/botanist)
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
+
+/obj/item/storage/box/clothing/rancher
+	name = "\improper Rancher's equipment"
+	spawn_contents = list(/obj/item/clothing/under/rank/rancher,\
+	/obj/item/clothing/shoes/westboot/brown/rancher,\
+	/obj/item/device/radio/headset/civilian,\
+	/obj/item/device/pda2/botanist,\
+	/obj/item/clothing/gloves/black)
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
@@ -88,19 +97,19 @@
 
 /obj/item/storage/box/clothing/souschef
 	name = "\improper Sous-Chef's equipment"
-	spawn_contents = list(/obj/item/clothing/under/rank/chef,\
+	spawn_contents = list(/obj/item/clothing/under/misc/souschef,\
 	/obj/item/clothing/shoes/chef,\
 	/obj/item/clothing/head/souschefhat,\
-	/obj/item/clothing/suit/chef,\
+	/obj/item/clothing/suit/apron,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/chef)
 
-/obj/item/storage/box/clothing/barman
-	name = "\improper Barman's equipment"
+/obj/item/storage/box/clothing/bartender
+	name = "\improper Bartender's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/bartender,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/waiter
 	name = "\improper Waiter's equipment"
@@ -108,7 +117,7 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/wcoat,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/barman)
+	/obj/item/device/pda2/bartender)
 
 /obj/item/storage/box/clothing/chaplain
 	name = "\improper Chaplain's equipment"
@@ -122,7 +131,7 @@
 /obj/item/storage/box/clothing/security
 	name = "\improper Security Officer's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/security,\
-	/obj/item/clothing/shoes/brown,\
+	/obj/item/clothing/shoes/swat,\
 	/obj/item/device/radio/headset/security,\
 	/obj/item/device/pda2/security)
 
@@ -151,6 +160,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/geneticist,\
 	/obj/item/clothing/shoes/white,\
 	/obj/item/clothing/suit/labcoat/genetics,\
+	/obj/item/clothing/suit/wintercoat/genetics,\
 	/obj/item/device/radio/headset/medical,\
 	/obj/item/device/pda2/genetics)
 
@@ -160,7 +170,8 @@
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/labcoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
-	/obj/item/device/pda2/medical/robotics)
+	/obj/item/device/pda2/medical/robotics,\
+	/obj/item/clothing/gloves/latex)
 
 // Research Equipment
 
@@ -178,22 +189,22 @@
 	name = "\improper Mechanic's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/mechanic,\
 	/obj/item/clothing/shoes/black,\
-	/obj/item/device/radio/headset/engineer,\
-	/obj/item/device/pda2/mechanic)
+	/obj/item/clothing/under/rank/orangeoveralls/yellow)
 
 /obj/item/storage/box/clothing/engineer
 	name = "\improper Engineer's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/engineer,\
 	/obj/item/clothing/shoes/orange,\
 	/obj/item/device/radio/headset/engineer,\
-	/obj/item/device/pda2/engine)
+	/obj/item/device/pda2/engine,\
+	/obj/item/clothing/under/rank/orangeoveralls)
 
 /obj/item/storage/box/clothing/miner
 	name = "\improper Miner's equipment"
 	spawn_contents = list(/obj/item/clothing/under/rank/overalls,\
 	/obj/item/clothing/shoes/orange,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/miner,\
 	/obj/item/device/pda2/mining)
 
 /obj/item/storage/box/clothing/qm
@@ -201,7 +212,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/cargo,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/gloves/black,\
-	/obj/item/device/radio/headset/engineer,\
+	/obj/item/device/radio/headset/shipping,\
 	/obj/item/device/pda2/quartermaster)
 
 /obj/item/storage/box/clothing/wedding_dress
@@ -218,12 +229,21 @@
 	/obj/item/clothing/under/rank/bartender/tuxedo,
 	/obj/item/clothing/shoes/dress_shoes)
 
+/obj/item/storage/box/clothing/witchfinder
+	name = "\improper Witchfinder's equipment"
+	spawn_contents = list(/obj/item/clothing/under/gimmick/witchfinder,\
+	/obj/item/clothing/suit/witchfinder,\
+	/obj/item/clothing/head/witchfinder,\
+	/obj/item/clothing/shoes/witchfinder)
+
 /* ============================== */
 /* ---------- Costumes ---------- */
 /* ============================== */
 
 /obj/item/storage/box/costume
 	icon_state = "costume"
+	in_list_or_max = TRUE
+	can_hold = list(/obj/item/clothing/under)
 
 /obj/item/storage/box/costume/clown
 	name = "clown costume"
@@ -235,6 +255,52 @@
 	/obj/item/storage/fanny/funny,
 	/obj/item/card/id/clown,
 	/obj/item/device/pda2/clown)
+
+/obj/item/storage/box/costume/clown/recycled
+	name = "recycled clown costume"
+	desc = "A box that contains a clown costume. One clumsy former owner."
+	spawn_contents = list(
+		/obj/item/clothing/mask/clown_hat,
+		/obj/item/clothing/under/misc/clown,
+		/obj/item/clothing/shoes/clown_shoes,
+		/obj/item/storage/fanny/funny/mini,
+		/obj/item/card/id/clown,
+		/obj/item/device/pda2/clown,
+	)
+
+/obj/item/storage/box/costume/mime
+	name = "mime costume"
+	icon_state = "mime"
+	item_state = "box-mime"
+	desc = "There's a mime trapped in this box! Wait... no it's just a bunch of mime clothes."
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_bowler,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime/alt,
+		/obj/item/clothing/suit/scarf,
+		/obj/item/clothing/shoes/black,
+	)
+
+/obj/item/storage/box/costume/mime/alt //people can have either the normal clothes or the other clothes
+	spawn_contents = list(
+		/obj/item/clothing/head/mime_beret,
+		/obj/item/clothing/mask/mime,
+		/obj/item/clothing/gloves/latex,
+		/obj/item/clothing/under/misc/mime,
+		/obj/item/clothing/suit/suspenders,
+		/obj/item/clothing/shoes/black,
+	)
+
+/obj/item/storage/box/costume/jester
+	name = "jester costume"
+	desc = "A box that contains a jester's outfit"
+	spawn_contents = list(
+		/obj/item/clothing/head/jester,
+		/obj/item/clothing/mask/jester,
+		/obj/item/clothing/under/gimmick/jester,
+		/obj/item/clothing/shoes/jester,
+	)
 
 /obj/item/storage/box/costume/robuddy
 	name = "guardbuddy costume"
@@ -278,7 +344,7 @@
 
 /obj/item/storage/box/costume/crap/wonka
 	name = "victorian confectionery factory owner costume"
-	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy)
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/candy/chocolate)
 
 	make_my_stuff()
 		..()
@@ -325,6 +391,12 @@
 		var/obj/item/clothing/head/H = new /obj/item/clothing/head/werewolf/odd(src)
 		H.color = my_color
 
+/obj/item/storage/box/costume/vampire
+	name = "vampire costume set"
+	desc = "Blah blah blah."
+	spawn_contents = list(/obj/item/clothing/under/gimmick/vampire,
+	/obj/item/clothing/suit/gimmick/vampire)
+
 /obj/item/storage/box/costume/abomination
 	name = "abomination costume set"
 	spawn_contents = list(/obj/item/clothing/suit/gimmick/abomination,
@@ -354,4 +426,20 @@
 	/obj/item/clothing/head/fthat,
 	/obj/item/clothing/gloves/handcomp,
 	/obj/item/clothing/glasses/ftscanplate)
+
+/obj/item/storage/box/costume/purpwitch
+	name = "purple witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_purple,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_purple,
+	/obj/item/device/light/glowstick/purple)
+
+/obj/item/storage/box/costume/mintwitch
+	name = "mint witch costume set"
+	desc = "They won't give you any real magic, but you always have the magic of Imagination."
+	spawn_contents = list(/obj/item/clothing/head/witchhat_mint,
+	/obj/item/clothing/shoes/witchboots,
+	/obj/item/clothing/suit/witchcape_mint,
+	/obj/item/device/light/glowstick/cyan)
 

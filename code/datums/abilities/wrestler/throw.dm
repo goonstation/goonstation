@@ -7,7 +7,7 @@
 	target_nodamage_check = 0
 	target_selection_check = 0
 	max_range = 0
-	cooldown = 300
+	cooldown = 200
 	start_on_cooldown = 1
 	pointCost = 0
 	when_stunned = 0
@@ -30,105 +30,107 @@
 
 		var/mob/living/HH = G.affecting
 		if(check_target_immunity( HH ))
-			M.visible_message("<span style='color:red'>You seem to attack [HH]!</span>")
+			M.visible_message("<span class='alert'>You seem to attack [HH]!</span>")
 			return 1
 		HH.set_loc(M.loc)
-		HH.dir = get_dir(HH, M)
+		HH.set_dir(get_dir(HH, M))
 
-		if (M.invisibility > 0)
-			for (var/obj/item/cloaking_device/I in M)
-				if (I.active)
-					I.deactivate(M)
-					M.visible_message("<span style=\"color:blue\"><b>[M]'s cloak is disrupted!</b></span>")
+		SEND_SIGNAL(M, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
 		HH.changeStatus("stunned", 4 SECONDS)
-		M.visible_message("<span style=\"color:red\"><B>[M] starts spinning around with [HH]!</B></span>")
+		M.visible_message("<span class='alert'><B>[M] starts spinning around with [HH]!</B></span>")
 		M.emote("scream")
-
-		for (var/i = 0, i < 20, i++)
+		var/i = 0
+		var/spin_start = TIME
+		while (TIME < spin_start + 2.5 SECONDS)
 			var/delay = 5
 			switch (i)
 				if (17 to INFINITY)
-					delay = 0.25
+					delay = 0.1
 				if (14 to 16)
-					delay = 0.5
+					delay = 0.25
 				if (9 to 13)
-					delay = 1
+					delay = 0.5
 				if (5 to 8)
-					delay = 2
+					delay = 1
 				if (0 to 4)
-					delay = 3
+					delay = 2
 
 			if (M && HH)
 				// These are necessary because of the sleep call.
-				if (!G || !istype(G) || G.state < 1)
-					boutput(M, __red("You can't throw the target without a firm grab!"))
+				if (!G || !istype(G) || G.state == GRAB_PASSIVE)
+					boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 					return 0
 
 				if (src.castcheck() != 1)
 					qdel(G)
 					return 0
 
-				if (get_dist(M, HH) > 1)
-					boutput(M, __red("[HH] is too far away!"))
-					qdel(G)
-					return 0
-
 				if (!isturf(M.loc) || !isturf(HH.loc))
-					boutput(M, __red("You can't throw [HH] from here!"))
+					boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 					qdel(G)
 					return 0
 
-				M.dir = turn(M.dir, 90)
-				var/turf/T = get_step(M, M.dir)
+				M.set_dir(turn(M.dir, 90))
+				var/turf/T = get_step(M, cardinal[(i % 4) + 1])
 				var/turf/S = HH.loc
 				if ((S && isturf(S) && S.Exit(HH)) && (T && isturf(T) && T.Enter(HH)))
 					HH.set_loc(T)
-					HH.dir = get_dir(HH, M)
+					HH.set_dir(get_dir(HH, M))
+					if(TIME > spin_start + 1 SECOND)
+						for(var/mob/living/L in T)
+							if (L == HH || isintangible(L))
+								continue
+							L.throw_at(get_edge_target_turf(L, turn(get_dir(M, T), 90)), 5, 2)
+							random_brute_damage(L, 10, 1)
+							random_brute_damage(HH, 5, 1)
 			else
 				return 0
 
 			sleep (delay)
+			i++
 
+		sleep(0.1 SECONDS) //let the thrower set their dir maybe
 		if (M && HH)
 			// These are necessary because of the sleep call.
-			if (!G || !istype(G) || G.state < 1)
-				boutput(M, __red("You can't throw the target without a firm grab!"))
+			if (!G || !istype(G) || G.state == GRAB_PASSIVE)
+				boutput(M, "<span class='alert'>You can't throw the target without a firm grab!</span>")
 				return 0
 
 			if (src.castcheck() != 1)
 				qdel(G)
 				return 0
 
-			if (get_dist(M, HH) > 1)
-				boutput(M, __red("[HH] is too far away!"))
-				qdel(G)
-				return 0
-
 			if (!isturf(M.loc) || !isturf(HH.loc))
-				boutput(M, __red("You can't throw [HH] from here!"))
+				boutput(M, "<span class='alert'>You can't throw [HH] from here!</span>")
 				qdel(G)
 				return 0
 
 			HH.set_loc(M.loc) // Maybe this will help with the wallthrowing bug.
 			qdel(G)
 
-			M.visible_message("<span style=\"color:red\"><B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] [pick_string("wrestling_belt.txt", "throw")] [HH]!</B></span>")
 			playsound(M.loc, "swing_hit", 50, 1)
 
 			var/turf/T = get_edge_target_turf(M, M.dir)
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					if (!isdead(HH))
-						HH.emote("scream")
-					HH.throw_at(T, 10, 4)
-					HH.changeStatus("weakened", 2 SECONDS)
+				if (!fake)
+					HH.set_loc(get_turf(M))
+					HH.throw_at(T, 10, 4, bonus_throwforce = 33) // y e e t
+					HH.changeStatus("weakened", 3 SECONDS)
 					HH.force_laydown_standup()
-					HH.change_misstep_chance(33)
+					HH.change_misstep_chance(50)
+					HH.changeStatus("slowed", 8 SECONDS, 2)
+				else
+					HH.throw_at(T, 3, 1)
 
-			logTheThing("combat", M, HH, "uses the throw wrestling move on %target% at [log_loc(M)].")
+
+			logTheThing(LOG_COMBAT, M, "uses the [fake ? "fake " : ""]throw wrestling move on [constructTarget(HH,"combat")] at [log_loc(M)].")
 
 		if (G && istype(G)) // Target was gibbed before we could throw them, who knows.
 			qdel(G)
 
 		return 0
+
+/datum/targetable/wrestler/throw/fake
+	fake = 1

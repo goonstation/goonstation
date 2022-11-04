@@ -4,10 +4,10 @@
 	icon_state = "enshield0"
 	flags = FPRINT | TABLEPASS| CONDUCT  | ONBELT
 	item_state = "electronic"
-	throwforce = 5.0
+	throwforce = 5
 	throw_speed = 1
 	throw_range = 5
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	mats = 10
 	var/active = 0
 	var/protection = 25
@@ -15,6 +15,7 @@
 	var/image/shield_overlay = null
 
 	New()
+		..()
 		work()
 
 	dropped(mob/user as mob)
@@ -24,15 +25,12 @@
 	pickup(mob/user)
 		return
 
-	equipped(var/mob/user, var/slot)
-		return
-
 	attack_self()
 		if(!active)
-			boutput(usr, "<span style=\"color:blue\">You activate the shield.</span>")
+			boutput(usr, "<span class='notice'>You activate the shield.</span>")
 			turn_on(usr)
 		else
-			boutput(usr, "<span style=\"color:blue\">You deactivate the shield.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the shield.</span>")
 			turn_off()
 		return
 
@@ -42,10 +40,10 @@
 			if(!active)
 				return 0
 			else
-				boutput(user, "<span style=\"color:red\">The impact temporarily weakens the shield.</span>")
+				boutput(user, "<span class='alert'>The impact temporarily weakens the shield.</span>")
 				var/pre_protect = protection
 				protection -= 5
-				SPAWN_DBG(30 SECONDS) protection += 5
+				SPAWN(30 SECONDS) protection += 5
 				return max(pre_protect,0)
 
 		turn_off()
@@ -60,7 +58,7 @@
 		turn_on(var/mob/user2)
 
 			if(user2.energy_shield)
-				boutput(user2, "<span style=\"color:red\">Cannot activate more than one shield.</span>")
+				boutput(user2, "<span class='alert'>Cannot activate more than one shield.</span>")
 				return
 
 			user = user2
@@ -77,7 +75,10 @@
 			if(!can_use())
 				turn_off()
 				return
-			SPAWN_DBG(1 SECOND) work()
+			SPAWN(1 SECOND) work()
 
 		can_use()
-			if(!user || !ismob(loc) || user != loc) return 0
+			if(!user || !ismob(loc) || user != loc)
+				return 0
+			else
+				return 1

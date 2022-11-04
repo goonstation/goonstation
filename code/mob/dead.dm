@@ -1,14 +1,20 @@
 /mob/dead
 	stat = 2
-	event_handler_flags = USE_CANPASS | IMMUNE_MANTA_PUSH
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	///Our corpse, if one exists
+	var/mob/living/corpse
 
 // dead
+/mob/dead/New()
+	..()
+	src.flags |= UNCRUSHABLE
+	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 
 // No log entries for unaffected mobs (Convair880).
 /mob/dead/ex_act(severity)
 	return
 
-/mob/dead/CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+/mob/dead/Cross(atom/movable/mover)
 	return 1
 
 /mob/dead/say_understands()
@@ -22,14 +28,14 @@
 	if (targeting_ability)
 		..()
 	else
-		if (get_dist(src, target) > 0)
-			dir = get_dir(src, target)
-		target.examine()
+		if (GET_DIST(src, target) > 0)
+			src.set_dir(get_dir(src, target))
+		src.examine_verb(target)
 
 /mob/dead/process_move(keys)
-	if (!istype(src.loc,/turf)) //Pop observers and Follow-Thingers out!!
+	if(keys && src.move_dir && !src.use_movement_controller && !istype(src.loc, /turf)) //Pop observers and Follow-Thingers out!!
 		var/mob/dead/O = src
-		O.loc = get_turf(src)
+		O.set_loc(get_turf(src))
 	. = ..()
 
 /mob/dead/projCanHit(datum/projectile/P)
@@ -44,12 +50,16 @@
 	if (dd_hasprefix(message, "*"))
 		return src.emote(copytext(message, 2),1)
 
-	logTheThing("diary", src, null, "(GHOST): [message]", "say")
+	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
 		boutput(src, "You are currently muted and may not speak.")
 		return
 
+	if(src?.client?.preferences.auto_capitalization)
+		message = capitalize(message)
+
+	phrase_log.log_phrase("deadsay", message)
 	. = src.say_dead(message)
 
 	for (var/mob/M in hearers(null, null))
@@ -80,7 +90,7 @@
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
 				for (var/obj/item/storage/bible/B in src.loc)
-					playsound(get_turf(src), 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
@@ -93,10 +103,13 @@
 				if (!fart_on_other)
 					message = "<B>[src]</B> lets out \an [fluff] fart!"
 #ifdef HALLOWEEN
-				if (fart_on_other)
-					if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
-						var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
-						GH.change_points(20)
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (fart_on_other)
+						GH.change_points(15)
+					else if (GH.spooking)
+						animate_surroundings("fart")
+
 #endif
 
 		if ("scream")
@@ -125,14 +138,26 @@
 							continue
 						responseParrot.dance_response()
 						break
+#ifdef HALLOWEEN
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (GH.spooking)
+						animate_surroundings("dance")
+#endif
 
 		if ("flip")
 			if (src.emote_check(voluntary, 100, 1, 0))
 				message = "<B>[src]</B> does \an [pick("spooky", "eerie", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")] flip!"
 				animate(src) // stop the animation
 				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
+#ifdef HALLOWEEN
+				if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
+					var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
+					if (GH.spooking)
+						animate_surroundings("flip")
+#endif
 
 		if ("wave","salute","nod")
 			if (src.emote_check(voluntary, 10, 1, 0))
@@ -149,17 +174,46 @@
 			GH.change_points(5)
 
 #endif
-		logTheThing("say", src, null, "EMOTE: [html_encode(message)]")
-		/*for (var/mob/dead/O in viewers(src, null))
-			O.show_*/src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
+		logTheThing(LOG_SAY, src, "EMOTE: [html_encode(message)]")
+		src.visible_message("<span class='game deadsay'><span class='prefix'>DEAD:</span> <span class='message'>[message]</span></span>",group = "[src]_[lowertext(act)]")
 		return 1
 	return 0
 
+/mob/dead/visible_message(var/message, var/self_message, var/blind_message, var/group = "")
+	for (var/mob/M in viewers(src))
+		if (!M.client)
+			continue
+		var/msg = message
+		if (self_message && M == src)
+			M.show_message(self_message, 1, self_message, 2, group)
+		else
+			M.show_message(msg, 1, blind_message, 2, group)
 
+#ifdef HALLOWEEN
+/mob/dead/proc/animate_surroundings(var/type="fart", var/range = 2)
+	var/count = 0
+	for (var/obj/item/I in range(src, 2))
+		if (count > 5)
+			return
+		var/success = 0
+		switch (type)
+			if ("fart")
+				animate_levitate(I, 1, 8)
+				success = 1
+			if ("dance")
+				eat_twitch(I)
+				success = 1
+			if ("flip")
+				animate_spin(src, prob(50) ? "R" : "L", 1, 0)
+				success = 1
+		count ++
+		if (success)
+			sleep(rand(1,4))
+#endif
 // nothing in the game currently forces dead mobs to vomit. this will probably change or end up exposed via someone fucking up (likely me) in future. - cirr
 /mob/dead/vomit(var/nutrition=0, var/specialType=null)
 	..(0, /obj/item/reagent_containers/food/snacks/ectoplasm)
-	playsound(src.loc, "sound/effects/ghost2.ogg", 50, 1)
-	src.visible_message("<span style='color: red;'>Ectoplasm splats onto the ground from nowhere!</span>",
-		"<span style='color: red;>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
-		"<span style='color: red;'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")
+	playsound(src.loc, 'sound/effects/ghost2.ogg', 50, 1)
+	src.visible_message("<span class='alert'>Ectoplasm splats onto the ground from nowhere!</span>",
+		"<span class='alert'>Even dead, you're nauseated enough to vomit![pick("", "Oh god!")]</span>",
+		"<span class='alert'>You hear something strangely insubstantial land on the floor with a wet splat!</span>")

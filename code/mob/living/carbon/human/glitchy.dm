@@ -4,19 +4,17 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
-			src.rename_self()
-			sound_burp = pick(glitchy_noises)
-			sound_scream = pick(glitchy_noises)
-			//sound_femalescream = pick(glitchy_noises)
-			sound_fart = pick(glitchy_noises)
-			sound_snap = pick(glitchy_noises)
-			sound_fingersnap = pick(glitchy_noises)
-			src.reagents.add_reagent("stimulants", 200)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
-			sleep(10)
-			bioHolder.mobAppearance.UpdateMob()
+		src.rename_self()
+		sound_burp = pick(glitchy_noises)
+		sound_scream = pick(glitchy_noises)
+		//sound_femalescream = pick(glitchy_noises)
+		sound_fart = pick(glitchy_noises)
+		sound_snap = pick(glitchy_noises)
+		sound_fingersnap = pick(glitchy_noises)
+		src.changeStatus("stimulants", 15 MINUTES)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, slot_w_uniform)
+		bioHolder.mobAppearance.update_colorful_parts()
 
 	Life(datum/controller/process/mobs/parent)
 		if (..(parent))
@@ -33,7 +31,7 @@
 			var/turf/T = get_turf(src)
 			src.glitch_up(T)
 
-	Bump(atom/movable/AM, yes)
+	bump(atom/movable/AM)
 		..()
 		src.glitch_up(AM)
 
@@ -42,7 +40,7 @@
 		return 1.0 + 0.5*(30 - rand(1,120))/80
 
 	proc/rename_self()
-		var/assembled_name = pick(first_names_male) + " " + pick(last_names)
+		var/assembled_name = pick_string_autokey("names/first_male.txt") + " " + pick_string_autokey("names/last.txt")
 		assembled_name = corruptText(assembled_name,75)
 		src.real_name = assembled_name
 
@@ -53,7 +51,7 @@
 		A.name = corruptText(A.name,10)
 		A.alpha = rand(100,255)
 		A.color = rgb(rand(0,255),rand(0,255),rand(0,255))
-		playsound(get_turf(src), pick(glitchy_noises), 80, 0, 0, src.get_age_pitch())
+		playsound(src, pick(glitchy_noises), 80, 0, 0, src.get_age_pitch())
 
 		switch(rand(1,5))
 			if(1)

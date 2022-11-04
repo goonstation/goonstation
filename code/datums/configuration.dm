@@ -1,4 +1,7 @@
 /datum/configuration
+	var/server_key = null				// unique numeric identifier (e.g. 1, 2, 3) used by some backend services. NOT REQUIRED.
+										//	if set, the global serverKey will be set to this, if not, it will be based on the world.port number
+
 	var/server_id = "local"				// unique server identifier (e.g. main, rp, dev) used primarily by backend services
 	var/server_name = null				// server name (for world name / status)
 	var/server_suffix = 0				// generate numeric suffix based on server port
@@ -26,6 +29,7 @@
 	var/log_telepathy = 0				// log telepathy events
 	var/log_debug = 0					// log debug events
 	var/log_vehicles = 0					//I feel like this is a better place for listing who entered what, than the admin log.
+	var/log_gamemode = 0				// log gamemode events
 
 	var/allow_admin_jump = 1			// allows admin jumping
 	var/allow_admin_sounds = 1			// allows admin sound playing
@@ -53,7 +57,7 @@
 	var/sql_database = null
 
 	// Player notes
-	var/player_notes_baseurl = "http://playernotes.goonhub.com"
+	var/player_notes_baseurl = "https://playernotes.goonhub.com"
 	var/player_notes_auth = null
 
 	// Server list for cross-bans and other stuff
@@ -65,6 +69,8 @@
 	var/irclog_url = null
 	var/ircbot_api = null
 	var/ircbot_ip = null
+	var/spacebee_api_url = "https://spacebee.goonhub.com"
+	var/spacebee_api_key = null
 
 	//External server configuration (for central bans etc)
 	var/goonhub_api_version = 0
@@ -97,8 +103,13 @@
 
 	//Are we limiting connected players to certain ckeys?
 	var/whitelistEnabled = 0
+	var/whitelist_path = "config/whitelist.txt"
+
+	//Which server can ghosts join by clicking on an on-screen link
+	var/server_buddy_id = null
 
 /datum/configuration/New()
+	..()
 	var/list/L = childrentypesof(/datum/game_mode)
 	for (var/T in L)
 		// I wish I didn't have to instance the game modes in order to look up
@@ -107,7 +118,7 @@
 
 		if (M.config_tag)
 			if(!(M.config_tag in modes))		// ensure each mode is added only once
-				diary << "Adding game mode [M.name] ([M.config_tag]) to configuration."
+				logDiary("Adding game mode [M.name] ([M.config_tag]) to configuration.")
 				src.modes += M.config_tag
 				src.mode_names[M.config_tag] = M.name
 				src.probabilities[M.config_tag] = M.probability
@@ -119,11 +130,11 @@
 	var/text = file2text(filename)
 
 	if (!text)
-		diary << "No '[filename]' file found, setting defaults"
+		logDiary("No '[filename]' file found, setting defaults")
 		src = new /datum/configuration()
 		return
 
-	diary << "Reading configuration file '[filename]'"
+	logDiary("Reading configuration file '[filename]'")
 
 	var/list/CL = splittext(text, "\n")
 
@@ -166,7 +177,6 @@
 			if ("log_game")
 				config.log_game = 1
 
-
 			if ("log_whisper")
 				config.log_whisper = 1
 
@@ -191,6 +201,9 @@
 			if ("log_vehicles")
 				config.log_vehicles = 1
 
+			if ("log_gamemode")
+				config.log_gamemode = 1
+
 			if ("allow_admin_jump")
 				config.allow_admin_jump = 1
 
@@ -208,6 +221,9 @@
 
 			if ("norespawn")
 				config.respawn = 0
+
+			if ("serverkey")
+				config.server_key = text2num(value)
 
 			if ("serverid")
 				config.server_id = trim(value)
@@ -238,9 +254,9 @@
 					if (prob_name in config.modes)
 						config.probabilities[prob_name] = text2num(prob_value)
 					else
-						diary << "Unknown game mode probability configuration definition: [prob_name]."
+						logDiary("Unknown game mode probability configuration definition: [prob_name].")
 				else
-					diary << "Incorrect probability configuration definition: [prob_name]  [prob_value]."
+					logDiary("Incorrect probability configuration definition: [prob_name]  [prob_value].")
 
 			if ("play_antag")
 				var/rate_pos = findtext(value, " ")
@@ -252,7 +268,7 @@
 					antag_rate = copytext(value, rate_pos + 1)
 					config.play_antag_rates[antag_name] = text2num(antag_rate)
 				else
-					diary << "Incorrect antag rate configuration definition: [antag_name]  [antag_rate]."
+					logDiary("Incorrect antag rate configuration definition: [antag_name]  [antag_rate].")
 
 			if ("use_mysql")
 				config.sql_enabled = 1
@@ -292,6 +308,11 @@
 				config.ircbot_api = trim(value)
 			if ("ircbot_ip")
 				config.ircbot_ip = trim(value)
+
+			if ("spacebee_api_url")
+				config.spacebee_api_url = trim(value)
+			if ("spacebee_api_key")
+				config.spacebee_api_key = trim(value)
 
 			if ("goonhub_parser_url")
 				config.goonhub_parser_url = trim(value)
@@ -353,8 +374,14 @@
 			if ("player_notes_auth")
 				config.player_notes_auth = trim(value)
 
+			if ("whitelist_path")
+				config.whitelist_path = trim(value)
+
+			if ("server_buddy_id")
+				config.server_buddy_id = trim(value)
+
 			else
-				diary << "Unknown setting in configuration: '[name]'"
+				logDiary("Unknown setting in configuration: '[name]'")
 
 	if (config.env == "dev")
 		config.cdn = ""
@@ -374,16 +401,19 @@
 /datum/configuration/proc/pick_random_mode()
 	var/total = 0
 	var/list/accum = list()
+	var/list/avail_modes = list()
 
 	for(var/M in src.modes)
-		total += src.probabilities[M]
-		accum[M] = total
+		if (src.probabilities[M] && getSpecialModeCase(M))
+			total += src.probabilities[M]
+			avail_modes += M
+			accum[M] = total
 
 	var/r = total - (rand() * total)
 
 	var/mode_name = null
-	for (var/M in modes)
-		if (src.probabilities[M] > 0 && accum[M] >= r && getSpecialModeCase(M))
+	for (var/M in avail_modes)
+		if (accum[M] >= r)
 			mode_name = M
 			break
 
@@ -397,18 +427,18 @@
 	return src.pick_mode(mode_name)
 
 /datum/configuration/proc/get_used_mode_names()
-	var/list/names = list()
-
+	. = list()
 	for (var/M in src.modes)
 		if (src.probabilities[M] > 0)
-			names += src.mode_names[M]
-
-	return names
+			. += src.mode_names[M]
 
 //return 0 to block the mode from being chosen for whatever reason
 /datum/configuration/proc/getSpecialModeCase(mode)
 	switch (mode)
 		if ("blob")
+			if (map_setting == "NADIR")
+				return 0
+
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)

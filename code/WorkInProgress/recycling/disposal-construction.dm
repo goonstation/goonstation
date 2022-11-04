@@ -69,38 +69,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = (intact && level==1) ? 101: 0	// hide if floor is intact
-		update()
-
-
-	// flip and rotate verbs
-	verb/rotate()
-		set name = "Rotate Pipe"
-		set src in view(1)
-		set category = "Local"
-
-		if(usr.stat)
-			return
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before rotating it.")
-		dir = turn(dir, -90)
-		update()
-
-	verb/flip()
-		set name = "Flip Pipe"
-		set src in view(1)
-		set category = "Local"
-		if(usr.stat)
-			return
-
-		if(anchored)
-			boutput(usr, "You must unfasten the pipe before flipping it.")
-
-		dir = turn(dir, 180)
-		if(ptype == 2)
-			ptype = 3
-		else if(ptype == 3)
-			ptype = 2
+		invisibility = (intact && level==1) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -124,13 +93,31 @@
 				return /obj/disposalpipe/mechanics_sensor
 		return
 
-
+	// click the junction with empty hand to change direction
+	attack_hand(mob/user)
+		if(!anchored)
+			if(ptype == 2)
+				ptype = 3
+				set_dir(turn(dir, 180))
+				boutput(user, "You change the pipe junction's direction.")
+			else if (ptype == 3)
+				ptype = 2
+				set_dir(turn(dir, 180))
+				boutput(user, "You change the pipe junction's direction.")
+			update()
 
 	// attackby item
+	// crowbar: rotate
+	// screwdriver: disassemble
 	// wrench: (un)anchor
 	// weldingtool: convert to real pipe
 
 	attackby(var/obj/item/I, var/mob/user)
+		if(ispryingtool(I) && !anchored)
+			set_dir(turn(dir, -90))
+			update()
+			return
+
 		if(isscrewingtool(I))
 			boutput(user, "You take the pipe segment apart.")
 			// var/obj/item/sheet/A = new /obj/item/sheet(get_turf(src))
@@ -143,7 +130,7 @@
 			return
 
 		var/turf/T = src.loc
-		if(T.intact)
+		if(T.intact && (iswrenchingtool(I) || isweldingtool(I))) //to stop it from screaming about it when rotating the pipe with crowbar
 			boutput(user, "You can only attach the pipe if the floor plating is removed.")
 			return
 
@@ -153,7 +140,7 @@
 			var/pdir = CP.dpdir
 			if(istype(CP, /obj/disposalpipe/broken))
 				pdir = CP.dir
-			if(pdir & dpdir)
+			if((pdir & dpdir) && (iswrenchingtool(I) || isweldingtool(I))) //see the comment above
 				boutput(user, "There is already a pipe at that location.")
 				return
 
@@ -168,23 +155,22 @@
 				level = 1
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
-			playsound(src.loc, "sound/items/Ratchet.ogg", 100, 1)
+			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
 
-		else if(istype(I, /obj/item/weldingtool))
-			var/obj/item/weldingtool/W = I
-			if(W.try_weld(user, 2, noisy = 2))
+		else if(isweldingtool(I))
+			if(I:try_weld(user, 2, noisy = 2))
 				// check if anything changed over 2 seconds
 				var/turf/uloc = user.loc
-				var/atom/wloc = W.loc
+				var/atom/wloc = I.loc
 				var/turf/ploc = loc
 				boutput(user, "You begin welding [src] in place.")
-				sleep(1)
-				if(user.loc == uloc && wloc == W.loc)
+				sleep(0.1 SECONDS)
+				if(user.loc == uloc && wloc == I.loc)
 					// REALLY? YOU DON'T FUCKING CARE ABOUT THE LOCATION OF THE PIPE? GET FUCKED <CODER>
 					if (ploc != loc)
-						boutput(user, "<span style='color:red'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
+						boutput(user, "<span class='alert'>As you try to weld the pipe to a completely different floor than it was originally placed on it breaks!</span>")
 						ploc = loc
-						SPAWN_DBG(0)
+						SPAWN(0)
 							robogibs(ploc)
 							//if (isrestrictedz(ploc.z))
 								//explosion_new(src, ploc, 3) // okay yes we don't need to explode people for this
@@ -194,11 +180,12 @@
 					var/pipetype = dpipetype()
 					var/obj/disposalpipe/P = new pipetype(src.loc)
 					P.base_icon_state = base_state
-					P.dir = dir
+					P.set_dir(dir)
 					P.dpdir = dpdir
 					P.mail_tag = mail_tag
-					P.updateicon()
+					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
+					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")
 
 					qdel(src)
 				else

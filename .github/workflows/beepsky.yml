@@ -1,0 +1,162 @@
+# Beepsky, Goonstation's replacement for a CI service like Travis, utilizing GitHub Actions
+# Based on Turdis by Yogstation
+
+name: Beepsky
+
+on:
+  pull_request:
+    branches: master
+  push:
+
+jobs:
+  lint:
+    name: Run Linters
+    runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache SpacemanDMM
+        uses: actions/cache@v2
+        with:
+          path: $HOME/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm
+
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v1.3.3
+
+      - name: Install Dependencies
+        run: |
+          pip3 install setuptools
+          tools/ci/install_build_tools.sh
+          tools/ci/install_spaceman_dmm.sh dreamchecker
+          tools/bootstrap/python -c ''
+          touch +secret/__secret.dme
+
+      - name: Misc Checks
+        run: |
+          tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
+          tools/ci/check_grep.sh
+          tools/bootstrap/python -m dmi.test
+          tools/bootstrap/python -m mapmerge2.dmm_test
+
+      - name: Run Linter
+        id: linter
+        run: |
+          ~/dreamchecker
+
+  compile:
+    name: Compile
+    runs-on: ubuntu-20.04
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install Dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
+
+      - name: Cache BYOND
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
+
+      - name: Setup BYOND
+        run: |
+          tools/ci/install_byond.sh
+          cd $GITHUB_WORKSPACE
+          printenv
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
+          touch +secret/__secret.dme
+
+      - name: Compile
+        run: |
+          tools/ci/dm.sh -DCIBUILD goonstation.dme
+
+      # - name: Prepare Artifacts
+      #   run: |
+      #     mkdir artifacts
+      #     cp goonstation.dmb artifacts
+      #     cp goonstation.rsc artifacts
+
+      # - name: Upload Artifacts
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: DMB + RSC
+      #     path: ${{github.workspace}}/artifacts
+
+  compile_full:
+    name: "Compile and Lint with Secret Submodule"
+    runs-on: ubuntu-20.04
+    if: |
+      ((github.event_name == 'push' && github.repository == 'goonstation/goonstation') || (github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == 'goonstation/goonstation')) && !contains(github.event.head_commit.message, 'skip ci')
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+          token: '${{ secrets.ROBUDDYBOT_PAT }}'
+
+      - name: Install Dependencies
+        run: |
+          sudo dpkg --add-architecture i386
+          sudo sed -i 's/azure\.//' /etc/apt/sources.list
+          sudo apt-get update
+          sudo apt install -o Acquire::Retries=3 libstdc++6:i386
+
+      - name: Cache BYOND
+        uses: actions/cache@v2
+        with:
+          path: $HOME/BYOND
+          key: ${{ runner.os }}-byond
+
+      - name: Setup BYOND
+        run: |
+          tools/ci/install_byond.sh
+          cd $GITHUB_WORKSPACE
+          printenv
+          echo "BYOND_SYSTEM=/home/runner/BYOND/byond" >> $GITHUB_ENV
+          echo "/home/runner/BYOND/byond/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=/home/runner/BYOND/byond/bin:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          echo "MANPATH=/home/runner/BYOND/byond/man:$MANPATH" >> $GITHUB_ENV
+
+      - name: Cache SpacemanDMM
+        uses: actions/cache@v2
+        with:
+          path: $HOME/SpacemanDMM
+          key: ${{ runner.os }}-spacemandmm
+
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@v1.3.3
+
+      - name: Install Dependencies
+        run: |
+          pip3 install setuptools
+          tools/ci/install_build_tools.sh
+          tools/ci/install_spaceman_dmm.sh dreamchecker
+          tools/bootstrap/python -c ''
+          touch +secret/__secret.dme
+
+      - name: Misc Checks
+        run: |
+          tools/ci/check_filedirs.sh goonstation.dme
+          tools/ci/build_tgui.sh
+          tools/ci/check_grep.sh
+          tools/bootstrap/python -m dmi.test
+          tools/bootstrap/python -m mapmerge2.dmm_test
+
+      - name: Run Linter
+        id: linter
+        run: |
+          ~/dreamchecker
+
+      - name: Compile
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DTRAVIS_SUB goonstation.dme

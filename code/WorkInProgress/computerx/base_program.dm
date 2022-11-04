@@ -43,8 +43,7 @@
 			src.metadata += params2list(meta_params)
 
 	disposing()
-		if(master)
-			master.processing_programs.Remove(src)
+		master?.processing_programs.Remove(src)
 		..()
 
 	Topic(href, href_list)
@@ -57,13 +56,13 @@
 		if(master.status & (NOPOWER|BROKEN))
 			return 1
 
-		if ((!usr.contents.Find(src.master) && (!in_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
+		if ((!usr.contents.Find(src.master) && (!in_interact_range(src.master, usr) || !istype(src.master.loc, /turf))) && (!issilicon(usr)))
 			return 1
 
 		if(!(holder in src.master.contents) && !(holder.loc in src.master.contents))
 			return 1
 
-		usr.machine = src.master
+		src.add_dialog(usr).master
 
 		return 0
 
@@ -81,8 +80,7 @@
 			return 0
 
 		quit()
-			if(src.master)
-				src.master.unload_program(src)
+			src.master?.unload_program(src)
 			return
 
 		input_text(var/text, source=0)
@@ -232,7 +230,7 @@
 		usr.Topic("[action_tag]=[action_arg];gid=[src.icon_id]", list("[action_tag]"="[action_arg]","gid"=src.icon_id), src.owner)	// Topic redirection time!
 		return
 
-	MouseDrop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
+	mouse_drop(obj/O, null, var/src_location, var/control_orig, var/control_new, var/params)
 		if(!istype(owner) || !usr || src.no_drag)
 			return
 

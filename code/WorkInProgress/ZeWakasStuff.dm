@@ -1,13 +1,20 @@
 
 /*
- * 90 101 87 97 107 97 39 115  83 116 117 102 102
+ * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 2: electric bargaloo
+//foo 45: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
 
-//everything here is wip, this can also be ascertained by the location of this file
 
-/////////////////////// Greek Adventurezone Thingy
+/* 514 checklist
+	?[] experimentation perhaps
+	make some lib animate stuff better with spaces? (better rainbow anyone?)
+	particle abuse
+*/
+
+// playsound\(([^,]*), "(sound/[^\[]+)"
+// playsound($1, '$2'
+// Greek Adventurezone Thingy
 
 /turf/unsimulated/greek/
 	name = "Greek Adventurezone Sprites"
@@ -21,7 +28,7 @@
 	skip_sims = 1
 	sims_score = 30
 
-///////////////////////////////////// Beach Stuff
+// Beach zone Stuff
 
 /area/greek/beach
 	name = "Strange Beach"
@@ -60,7 +67,7 @@
 	desc = "Splish splash, it's water."
 	icon_state = "water"
 
-///////////////////////////////////// Cave Stuff
+// Cave Stuff
 
 /area/greek/caves
 	name = "Strange Caves"
@@ -166,10 +173,10 @@
 		src.attacking = 1
 		src.visible_message("<span class='combat'><B>[src]</B> bites [src.target] viciously!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			src.attacking = 0
 
-////////////////////////////// Underworld Stuff
+// Underworld Stuff
 
 /area/greek/underworld
 	name = "Strange Depths"
@@ -207,13 +214,13 @@
 		if (isobserver(A))
 			return ..()
 
-		if (greekfall.len)
-			var/turf/T = pick(greekfall)
+		var/turf/T = pick_landmark(LANDMARK_FALL_GREEK)
+		if(T)
 			fall_to(T, A)
 			return
 		else ..()
 
-/////////////////////////////////// Misc Stuff
+// Misc Stuff
 
 /obj/decal/lightshaft/rainbow
 	name = "rainbow"

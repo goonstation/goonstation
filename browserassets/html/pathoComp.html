@@ -10,169 +10,27 @@
 		<script src="{{resource("js/pathoui-script.js")}}" type="text/javascript"></script>
 		<link href="{{resource("css/pathoui.css")}}" rel="stylesheet" type="text/css"></link>
 	</head>
-	
-	<body>
+
+	<body onselectstart="return false;">
 		<div class="mainContent">
 			<!--Displays information about the currently loaded pathogen-->
 			<div id="loadedPathogen">
 				<div class="noborder">
-					<span class="label">DNA Load Status: </span>
-					<div class="annunciator a-green" id="annDNALoad">
-						LOAD
-					</div>
-					<div class="annunciator a-red" id="annDNANoLoad">
-						NO LOAD
-					</div>
-					<div class="annunciator a-yellow" id="annDNASplice">
-						SPLICE
-					</div>
-					<span class="label">Pathogen: </span>
+					<span class="lb-med">Current Pathogen: </span>
 					<div class="text-field tf-med" id="txtPName">G68P68</div>
 					<div class="text-field tf-med" id="txtPType">(fungus)</div>
-					
 				</div>
 				<div class="noborder">
-					<span class="label">Slot: </span>
-					<div class="text-field tf-narrow" id="txtExpSlot">1</div>
-					<div class="annunciator a-yellow" id="annSlotExp">EXPOSED</div>
-					<div class="annunciator a-green" id="annSlotSample">SAMPLE</div>
-					<div class="button btn-small" id="btnCloseSlot">Close</div>
-					<div class="button btn-small" id="btnEjectSample">Eject</div>
-				</div>
-				<div class="noborder">
-					<span class="label">DNA Seq: </span><br>
 					<div class="text-field tf-long" id="txtPSeq">
 					</div>
 				</div>
 			</div>
 			<!--Displays the currently selected page-->
 			<div class="dataDisplay">
-				<div class="dataPage" id="dpManip">
-					<h1>DNA Manipulator</h1>
-					<div id="manipHolder">
-						<div class="narrow-border extrapad">
-							<span class="label lb-long">Status:</span>
-							<div class="annunciator a-green" id="aMutRdy">READY</div>
-							<div class="annunciator a-yellow"  id="aMutIrr">RAD</div>
-							<div class="annunciator a-green" id="aMutAck">PASS</div>
-							<span class="label lb-long"></span>
-							<div class="annunciator a-red" id="aMutOpen">EXPOSED</div>
-							<div class="annunciator a-red" id="aMutSample">SAMPLE</div>
-							<div class="annunciator a-red" id="aMutNack">FAIL</div>
-						</div>
-						
-						<table>
-							<tr>
-								<td><span class="label lb-long">Mutativeness:</span></td>
-								<td><div class="button btn-tiny" data-tsk="mut=-1">-</div></td>
-								<td><div class="text-field tf-narrow" id="txtMut"></div></td>
-								<td><div class="button btn-tiny" data-tsk="mut=1">+</div></td>
-							</tr>
-							<tr>
-								<td><span class="label lb-long">Mutation Speed:</span></td>
-								<td><div class="button btn-tiny" data-tsk="mts=-1">-</div></td>
-								<td><div class="text-field tf-narrow"  id="txtMts"></div></td>
-								<td><div class="button btn-tiny" data-tsk="mts=1">+</div></td>
-							</tr>
-							<tr>
-								<td><span class="label lb-long">Advance Speed:</span></td>
-								<td><div class="button btn-tiny" data-tsk="adv=-1">-</div></td>
-								<td><div class="text-field tf-narrow"  id="txtAdv"></div></td>
-								<td><div class="button btn-tiny" data-tsk="adv=1">+</div></td>
-							</tr>
-							<tr>
-								<td><span class="label lb-long">Maliciousness:</span></td>
-								<td><div class="button btn-tiny" data-tsk="mal=-1">-</div></td>
-								<td><div class="text-field tf-narrow"  id="txtMal"></div></td>
-								<td><div class="button btn-tiny" data-tsk="mal=1">+</div></td>
-							</tr>
-							<tr>
-								<td><span class="label lb-long">Suppression Threshold:</span></td>
-								<td><div class="button btn-tiny" data-tsk="sth=-1">-</div></td>
-								<td><div class="text-field tf-narrow"  id="txtSth"></div></td>
-								<td><div class="button btn-tiny" data-tsk="sth=1">+</div></td>
-							</tr>
-							
-						</table>
-					</div>
-				</div>
-				
-				<div class="dataPage" id="dpSplice1">
-					<h1>Select splice target</h1>
-					<span class='label lb-slong'>The loaded DNA will be modified during this session.</span>
-					<div class='noborder splice-selection'>
-						<div class='noborder slot-holder' id='spliceSlots'>
-							
-						</div>
-						<div class='narrow-border button-holder' id='spliceButtons'>
-							<div class='annunciator a-red' id='annSpliceStatExp'>EXPOSED</div>
-							<div class='annunciator a-green' id="annSpliceStatSource">SOURCE</div>
-							<div class='annunciator a-green' id="annSpliceStatTarget">TARGET</div>
-							<hr>
-							<div class='button' id='btnSpliceBegin'>Begin<BR>Splice</div>
-							<div class='button' id='btnSpliceCancel'>Cancel<BR>Splice</div>
-						</div>
-					</div>
-				</div>
-				
-				<div class="dataPage" id="dpSplice2">
-					<h1>Splicing Session</h1>
-					<div class="noborder splice-selection">
-						<!--DATA HOLDER-->
-						<div class="noborder" id="spliceData">
-							<div class="extrapad button-holder prediction-holder">
-								<span class="label lb-long">Predictive Effectiveness:</span>
-								<div class="text-field tf-med txtPredEffect"></div>
-								<div class="button btn-med display-known">Sequences</div>
-							</div>
-							<div class='extrapad splice-sequence' id='spliceTargetField'>
-								<span class="label lb-long">Target sequence:</span>
-								<div class='text-field tf-long' id='txtSpliceTarget'></div>
-								<div class='button btn-small btn-seq-off' dir=-1>-</div>
-								<div class='button btn-small btn-seq-off' dir=1>+</div>
-								<span class="label">Status:</span>
-								<div class="annunciator a-red" id='annSpliceTargetEmpty'>EMPTY</div>
-							</div>
-							<div class='button-holder extrapad splice-controls' id='spliceActions'>
-								<span class="label lb-elong">Splice actions:</span>
-								<div class="button btn-small" dir=-1>Before</div>
-								<div class="button btn-small" dir=1>After</div>
-								<div class="button btn-small" dir=0>Remove</div>
-								
-							</div>
-							<div class='extrapad splice-sequence' id='spliceSourceField'>
-								<span class="label lb-long">Source sequence:</span>
-								<div class='text-field tf-long' id='txtSpliceSource'></div>
-								<div class='button btn-small btn-seq-off' dir=-1>-</div>
-								<div class='button btn-small btn-seq-off' dir=1>+</div>
-								<span class='label'>Status:</span>
-								<div class="annunciator a-red" id='annSpliceSourceEmpty'>EMPTY</div>
-							</div>
-						</div>
-						<!--FINALIZING BUTTONS-->
-						<div class="button-holder extrapad" id="spliceFinalButtons">
-							<span class="label lb-med">Splice status:</span>
-							<div class='annunciator a-green' id='annSpliceSuccess'>SUCCESS</div>
-							<div class='annunciator a-red' id='annSpliceFail'>FAIL</div>
-							<span class="label">Prediction:</span>
-							<div class='annunciator a-green' id='annPredSuccess'>SUCCESS</div>
-							<div class='annunciator a-yellow' id='annPredUnk'>UNKNOWN</div>
-							<div class='annunciator a-red' id='annPredFail'>FAIL</div>
-							<hr>
-							<div class="button" id='btnSpliceFinish'>Finish Splicing</div>
-						</div>
-					</div>
-				</div>
-				
+
 				<div class="dataPage" id="dpTester">
 					<h1>DNA Stability Analyzer</h1>
 					<div class= "noborder" id="analyzerHolder">
-						<!--SHOWING PREDICTIVE EFFECTIVENESS-->
-						<div class="narrow-border extrapad button-holder" id="predictionHolder">
-							<span class="label lb-long">Predictive Effectiveness:</span>
-							<div class="text-field tf-med txtPredEffect"></div>
-							<div class="button btn-med display-known">Sequences</div>
-						</div>
 						<!--HOLDING BOTH ANALYSIS BUFFERS (current / previous) -->
 						<div class="noborder extramargin">
 							<div class="narrow-border analysis-buffer extrapad" id="currAnalysis">
@@ -182,7 +40,7 @@
 								<div class="text-field tf-enarrow" id="currAnalysis2"></div>
 								<div class="text-field tf-enarrow" id="currAnalysis3"></div>
 								<div class="text-field tf-enarrow" id="currAnalysis4"></div>
-								<div class="button btn-tinyish" id="btnClrAnalysisCurr">CLR</div>
+								<div class="button btn-tinyish helpTextItem" id="btnClrAnalysisCurr">CLR</div>
 							</div>
 							<div class="narrow-border analysis-buffer extrapad" id="prevAnalysis">
 								<span class="label lb-long block">Previous analysis:</span>
@@ -193,70 +51,152 @@
 								<div class="text-field tf-enarrow" id="prevAnalysis4"></div>
 							</div>
 						</div>
-						
+
 						<div class="noborder extramargin">
-						
-							<div class="extrapad button-holder" id="analyzeComponents">
+
+							<div class="extrapad button-holder helpTextItem" id="analyzeComponents">
 							</div>
-							
+
 							<div class="narrow-border extrapad" id="analyzeResults">
-								<span class="label">Stable:</span>
-								<div class="annunciator a-green" id="annStableYes">YES</div>
-								<div class="annunciator a-red" id="annStableNo">NO</div>
-								<div class="text-field tf-med-long" id="stableType"></div>
-								<span class="label">Transient:</span>
-								<div class="annunciator a-green" id="annTransYes">YES</div>
-								<div class="annunciator a-red" id="annTransNo">NO</div>
-								<div class="text-field tf-med-narrow" id="transTypesGood"></div>
-								<div class="text-field tf-med-narrow" id="transTypesBad"></div>
+								<span class="label helpTextItem" id="annStableLb">Stable:</span>
+								<div class="annunciator a-green helpTextItem" id="annStableYes">YES</div>
+								<div class="annunciator a-red helpTextItem" id="annStableNo">NO</div>
 								<hr>
-								<span class="label">Error:</span>
-								<div class="annunciator a-red" id="annErrBuffer">BUFFER</div>
-								<div class="annunciator a-red" id="annErrNack">NACK</div>
-								<span class="label"></span>
-								<div class="annunciator a-yellow" id="annErrSample">SAMPLE</div>
-								<div class="annunciator a-yellow" id="annErrData">T. DATA</div>
+								<span class="label helpTextItem" id="annTransLb">Transient:</span>
+								<div class="annunciator a-green helpTextItem" id="annTransYes">YES</div>
+								<div class="annunciator a-red helpTextItem" id="annTransNo">NO</div>
+								<hr>
+								<span class="label helpTextItem">Types:</span>
+								<div class="text-field tf-med-narrow helpTextItem" id="transTypesGood"></div>
+								<div class="text-field tf-med-narrow helpTextItem" id="transTypesBad"></div>
+								<div class="text-field tf-med-long helpTextItem" id="stableType"></div>
 							</div>
 						</div>
-						
-						<div class="button btn-long" id="btnAnalysisLoad">Load Sample &amp; Clear Buffer</div>
-						<div class="button btn-long" id="btnAnalysisDoTest">Test DNA</div>
+						<div id="analyzerHelp">Hover over elemements to receive helpful information about their behaviour.</div>
+						<div id="analyzerButtons" class="noborder">
+							<div class="button btn-med helpTextItem" id="btnAnalysisLoad">Split DNA</div>
+							<div class="button btn-med helpTextItem" id="btnAnalysisDoTest">Test DNA</div>
+							<br/>
+							<div class="button btn-med btn-xlong display-known helpTextItem" id="knownAnalyzer">Known Sequences</div>
+						</div>
 					</div>
 				</div>
-				
+				<div class="dataPage" id="dpManip">
+					<h1>DNA Manipulator</h1>
+					<div id="manipMain" class="noborder">
+						<div id="manipHolder">
+							<table>
+								<tr id="helpAdvSpeed" class="helpTextItem">
+									<td><span class="label lb-long bigfont">Advance Speed</span></td>
+									<td><div class="button btn-tiny" data-tsk="adv=-1">-</div></td>
+									<td><div class="text-field tf-narrow"  id="txtAdv"></div></td>
+									<td><div class="button btn-tiny" data-tsk="adv=1">+</div></td>
+								</tr>
+								<tr id="helpSupThreshold" class="helpTextItem">
+									<td><span class="label lb-long bigfont">Suppression Threshold</span></td>
+									<td><div class="button btn-tiny" data-tsk="sth=-1">-</div></td>
+									<td><div class="text-field tf-narrow"  id="txtSth"></div></td>
+									<td><div class="button btn-tiny" data-tsk="sth=1">+</div></td>
+								</tr>
+								<tr id="helpSpread" class="helpTextItem">
+									<td><span class="label lb-long bigfont">Spread</span></td>
+									<td><div class="button btn-tiny" data-tsk="spr=-1">-</div></td>
+									<td><div class="text-field tf-narrow"  id="txtSpr"></div></td>
+									<td><div class="button btn-tiny" data-tsk="spr=1">+</div></td>
+								</tr>
+							</table>
+						</div>
+						<div id="manipStats">
+							<table>
+								<tr id="helpStages" class="helpTextItem">
+									<td><span class="label lb-medl bigfont">Stages</span></td>
+									<td><div class="text-field tf-narrow" id="txtStag"></div></td>
+								</tr>
+								<tr id="helpSymptomaticity" class="helpTextItem">
+									<td><span class="label lb-medl bigfont">Symptomaticity</span></td>
+									<td><div class="text-field tf-narrow"  id="txtSymp"></div></td>
+								</tr>
+								<tr id="helpSupCode" class="helpTextItem">
+									<td><span class="label lb-medl bigfont">Suppressant Code</span></td>
+									<td><div class="text-field tf-narrow"  id="txtSupCode"></div></td>
+								</tr>
+								<tr id="helpCapacity" class="helpTextItem">
+									<td><span class="label lb-medl bigfont">Active Capacity</span></td>
+									<td><div class="text-field tf-narrow"  id="txtCap"></div></td>
+								</tr>
+								<tr id="helpMaxStats" class="helpTextItem">
+									<td><span class="label lb-medl bigfont">Passive Capacity</span></td>
+									<td><div class="text-field tf-narrow"  id="txtMaxStats"></div></td>
+								</tr>
+							</table>
+						</div>
+					</div>
+					<div id="manipHelp">
+						<span>
+							Hello, I am helpful text intended to explain the different fucking stupid pathology stats. </br></br>
+							Just mouse over them and I will tell you dumb shit.
+						</span>
+					</div>
+				</div>
+
+
+				<div class="dataPage" id="dpSplice2">
+					<h1>Splicing Session</h1>
+					<div class="noborder splice-selection">
+						<!--DATA HOLDER-->
+						<div class="noborder" id="spliceData">
+							<div class='extrapad splice-sequence' id='spliceTargetField'>
+								<span class="label lb-long">Target sequence:</span>
+								<div class='text-field tf-long' id='txtSpliceTarget'></div>
+								<div class='button btn-small btn-seq-off' dir=-1>-</div>
+								<div class='button btn-small btn-seq-off' dir=1>+</div>
+							</div>
+							<div class='button-holder extrapad splice-controls' id='spliceActions'>
+								<span class="label lb-elong">Splice actions:</span>
+								<div class="button btn-small" dir=-1>Before</div>
+								<div class="button btn-small" dir=1>After</div>
+								<div class="button btn-small" dir=0>Remove</div>
+
+							</div>
+							<div class='extrapad splice-sequence' id='spliceSourceField'>
+								<span class="label lb-long">Source sequence:</span>
+								<div class='text-field tf-long' id='txtSpliceSource'></div>
+								<div class='button btn-small btn-seq-off' dir=-1>-</div>
+								<div class='button btn-small btn-seq-off' dir=1>+</div>
+							</div>
+						</div>
+						<div class="button btn-med btn-long" id='btnSpliceFinish'>Finish Splice</div>
+						<div class="button btn-med btn-long display-known">Known Sequences</div>
+					</div>
+				</div>
+
 				<div class="dataPage" id="dpLoadSave">
-					<h1>Load / Save DNA</h1>
+					<h1>Samples</h1>
 					<div class="noborder slot-holder" id="dnaSlotHolder">
-						
 					</div>
 				</div>
-				
+
 				<div class="dataPage" id="dpWelcome">
 					<h1>Welcome to the Path-o-matic 2000</h1>
-					<span>The leading market solution for pathology research.</span>
-					<span>This device is capable of the following:</span>
-					<ul>
-						<li>DNA Sequence Verification</li>
-						<li>DNA Sequence Splicing</li>
-						<li>DNA Trait Segment Manipulation</li>
-						<li>Predictive Stability Analysis</li>
-						<li>Pathogen Sample Identification</li>
+					<span class="bigfont">The leading market solution for pathology research.</br>
+					This device is capable of the following:</span>
+					<ul class="bigfont">
+						<li><b>Manipulate</b><br/> Adjust the stats of the current pathogen</li>
+						<li><b>Analyze</b><br/> Analyze sequences of DNA segments to discover symptoms of a higher tier</li>
+						<li><b>Samples</b><br/> Change which pathogen sample is currently selected or eject your samples.<br/>You can also splice new segments onto a pathogen or remove them to add or remove symptoms.</li>
 					</ul>
 				</div>
-				
+
 			</div>
-			
+
 			<!--The main menu, used for scrolling through the pages-->
 			<div id="mainMenu">
 				<div class="button" id="btnRetMain">Main Screen</div>
 				<div class="button" id="btnManip">Manipulate</div>
-				<div class="button" id="btnSplice">Splice</div>
-				<div class="button" id="btnTester">DNA Analyzer</div>
-				<div class="button" id="btnLoadSave">Load / Save DNA</div>
-				
-				<div class="annunciator a-yellow" id="annSynch">SYNCH</div>
+				<div class="button" id="btnTester">Analyze</div>
+				<div class="button" id="btnLoadSave">Samples</div>
 			</div>
-		
+
 		</div>
 	</body>
 </html>

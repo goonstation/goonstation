@@ -12,7 +12,7 @@
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
 //Kill/Stun ratio
-	ks_ratio = 0.0
+	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "shrink beam"
 //file location for the sound you want it to play
@@ -25,7 +25,7 @@
 	hit_ground_chance = 10
 	//Can we pass windows
 	window_pass = 0
-	projectile_speed = 15
+	projectile_speed = 20
 
 	var/turf/target = null
 	var/failchance = 5
@@ -34,8 +34,11 @@
 	var/shrunk_min = -4
 	var/shrunk_change = 1
 
+	var/mobs_only = 1
+
 	on_hit(atom/hit)
-		if (istype(hit, /atom/movable))
+		// if it's a mob, or we're not mobs-only and it's /atom/movable, ...
+		if (ismob(hit) || (!mobs_only && istype(hit, /atom/movable)))
 			// if it results in no change it's arleady at the limit so just skip it
 			if (clamp(hit.shrunk + shrunk_change, shrunk_min, shrunk_max) == hit.shrunk)
 				return
@@ -48,7 +51,13 @@
 			hit.Scale(0.75 ** hit.shrunk, 0.75 ** hit.shrunk)
 		return
 
+	unsafe
+		mobs_only = 0
+
 /datum/projectile/shrink_beam/grow
 	name = "time-space disruption"
 	sname = "grow beam"
 	shrunk_change = -1
+
+	unsafe
+		mobs_only = 0

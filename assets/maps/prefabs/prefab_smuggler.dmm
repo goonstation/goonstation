@@ -1,77 +1,819 @@
-"aa" = (/turf/space,/area)
-"ab" = (/turf/variableTurf/clear,/area/noGenerate)
-"ac" = (/obj/grille/steel,/turf/simulated/floor/plating/airless,/area/station/storage)
-"ad" = (/turf/variableTurf/wall,/area/noGenerate)
-"ae" = (/turf/variableTurf/floor,/area/noGenerate)
-"af" = (/obj/machinery/communications_dish,/obj/cable{icon_state = "0-2"},/obj/machinery/power/data_terminal,/turf/simulated/floor/plating/airless,/area/station/storage)
-"ag" = (/turf/simulated/floor/plating/airless,/area/station/storage)
-"ah" = (/turf/simulated/wall/auto/supernorn,/area/station/storage)
-"ai" = (/obj/cable{icon_state = "1-2"},/turf/simulated/wall/auto/supernorn,/area/station/storage)
-"aj" = (/obj/machinery/light/small,/turf/simulated/floor/plating/airless,/area/station/storage)
-"ak" = (/obj/stool/chair/couch{icon_state = "chair_couch-brown"; dir = 8},/obj/decal/poster/wallsign/poster_human{desc = "Looks like a propaganda poster, but the guy in the image has a mustache drawn on him, and the caption's been scribbled over with the message 'CENTCOM NARCS SUCK'. Huh."; name = "scuffed propaganda poster"; pixel_x = 3; pixel_y = 32},/turf/simulated/floor/grime,/area/station/storage)
-"al" = (/obj/stool/chair/couch{icon_state = "chair_couch-brown"; dir = 4},/obj/machinery/light/small{dir = 1; pixel_y = 21},/obj/cable{icon_state = "1-2"},/turf/simulated/floor/grime,/area/station/storage)
-"am" = (/obj/machinery/vending/snack,/turf/simulated/floor/grime,/area/station/storage)
-"an" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/grime,/area/station/storage)
-"ao" = (/obj/table/wood/round/auto,/obj/item/game_kit,/obj/item/decoration/ashtray{butts = 5; icon_state = "ashtray"; name = "grubby old ashtray"},/obj/machinery/light_switch/west{icon_state = "light0"; on = 0},/turf/simulated/floor/grime,/area/station/storage)
-"ap" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor/grime,/area/station/storage)
-"aq" = (/turf/simulated/floor/grime,/area/station/storage)
-"ar" = (/obj/machinery/manufacturer/general{mats = 10},/obj/machinery/light/small{dir = 1; pixel_y = 21},/obj/machinery/camera{c_tag = "autotag"; dir = 6; icon_state = "camera"; name = "autoname - SS13"; pixel_y = 20; tag = ""},/turf/simulated/floor/plating,/area/station/storage)
-"as" = (/obj/cable{icon_state = "0-2"},/obj/machinery/power/data_terminal,/obj/table/auto,/obj/machinery/computer3/generic/personal{desc = "This workstation appears to be outfitted with non-standard equipment."; name = "modified computer"; setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications; setup_starting_program = null},/turf/simulated/floor/plating,/area/station/storage)
-"at" = (/obj/rack,/obj/item/clothing/suit/space/emerg,/obj/item/clothing/head/emerg,/obj/machinery/light/small{dir = 8; pixel_x = -12},/obj/item/tank/air,/turf/simulated/floor/grime,/area/station/storage)
-"au" = (/obj/submachine/cargopad{active = 0; desc = "The bottom of the pad has a bunch of wire coil and electrical insulation sticking out the sides haphazardly - cutting-edge signature masking tech."; name = "Auxiliary Cargo Pad"},/obj/machinery/camera{c_tag = "autotag"; dir = 6; icon_state = "camera"; name = "autoname - SS13"; pixel_y = 20; tag = ""},/turf/simulated/floor/grime,/area/station/storage)
-"av" = (/obj/machinery/light/small{dir = 8; pixel_x = -12},/obj/stool/chair/comfy{dir = 1},/turf/simulated/floor/grime,/area/station/storage)
-"aw" = (/obj/cable{icon_state = "2-4"},/obj/cable{d1 = 1; d2 = 4; icon_state = "1-4"},/turf/simulated/floor/grime,/area/station/storage)
-"ax" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/grime,/area/station/storage)
-"ay" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/turf/simulated/floor/grime,/area/station/storage)
-"az" = (/obj/cable{icon_state = "4-8"; d1 = 4; d2 = 8},/obj/cable{icon_state = "2-8"; d1 = 2; d2 = 8},/turf/simulated/floor/plating,/area/station/storage)
-"aA" = (/obj/cable{icon_state = "2-8"; d1 = 2; d2 = 8},/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/stool/chair/office/purple{dir = 8},/obj/machinery/light/small{dir = 4; pixel_x = 12},/turf/simulated/floor/plating,/area/station/storage)
-"aB" = (/obj/machinery/portable_atmospherics/canister/air,/turf/simulated/floor/grime,/area/station/storage)
-"aC" = (/obj/machinery/door/airlock/pyro/classic{dir = 4},/turf/simulated/floor/grime,/area/station/storage)
-"aD" = (/obj/machinery/light/small{dir = 4; pixel_x = 12},/obj/table/wood/round/auto,/obj/item/paper_bin,/obj/item/pen,/turf/simulated/floor/grime,/area/station/storage)
-"aE" = (/obj/cable{icon_state = "1-2"},/turf/simulated/floor/plating,/area/station/storage)
-"aF" = (/obj/cable{icon_state = "1-2"},/obj/item/storage/secure/ssafe/loot{pixel_x = 28},/turf/simulated/floor/plating,/area/station/storage)
-"aG" = (/obj/machinery/light/small,/obj/reagent_dispensers/fueltank,/turf/simulated/floor/grime,/area/station/storage)
-"aH" = (/obj/storage/crate,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,/turf/simulated/floor/grime,/area/station/storage)
-"aI" = (/obj/cable{d2 = 8; icon_state = "0-4"; pixel_y = 0},/obj/machinery/power/apc/autoname_west/nopoweralert{req_access = null; start_charge = 0},/turf/simulated/floor/grime,/area/station/storage)
-"aJ" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 4},/obj/cable{d1 = 1; d2 = 8; icon_state = "1-8"},/obj/machinery/camera{c_tag = "autotag"; dir = 8; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 10; tag = ""},/turf/simulated/floor/grime,/area/station/storage)
-"aK" = (/obj/table/wood/round/auto,/obj/item/reagent_containers/food/drinks/bottle/tequila,/obj/item/instrument/harmonica,/obj/machinery/camera{c_tag = "autotag"; dir = 8; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 10; tag = ""},/turf/simulated/floor/grime,/area/station/storage)
-"aL" = (/obj/machinery/power/furnace,/obj/cable,/obj/machinery/light/small{dir = 8; pixel_x = -12},/turf/simulated/floor/plating,/area/station/storage)
-"aM" = (/obj/machinery/power/furnace,/obj/cable,/turf/simulated/floor/plating,/area/station/storage)
-"aN" = (/obj/item/device/light/flashlight{pixel_x = 4; pixel_y = -8},/obj/item/casing/small,/turf/variableTurf/floor,/area/noGenerate)
-"aO" = (/obj/table/wood/round/auto,/obj/machinery/light/small,/obj/machinery/recharger,/turf/simulated/floor/grime,/area/station/storage)
-"aP" = (/obj/table/wood/round/auto,/obj/machinery/cell_charger,/obj/item/device/light/zippo{pixel_x = 6; pixel_y = 10},/turf/simulated/floor/grime,/area/station/storage)
-"aQ" = (/obj/item/crowbar,/obj/decal/cleanable/blood,/obj/item/seed/cannabis,/turf/variableTurf/floor,/area/noGenerate)
-"aR" = (/obj/reagent_dispensers/watertank,/turf/simulated/floor/plating,/area/station/storage)
-"aS" = (/turf/simulated/floor/plating,/area/station/storage)
-"aT" = (/obj/critter/fermid,/turf/variableTurf/floor,/area/noGenerate)
-"aU" = (/obj/machinery/plantpot,/obj/machinery/light/small{dir = 8; pixel_x = -12},/turf/simulated/floor/plating,/area/station/storage)
-"aV" = (/obj/storage/closet/emergency,/obj/machinery/light/small{dir = 4; pixel_x = 12},/turf/simulated/floor/plating,/area/station/storage)
-"aW" = (/obj/reagent_dispensers/still,/turf/simulated/floor/plating,/area/station/storage)
-"aX" = (/obj/stool/chair/office/green,/turf/simulated/floor/plating,/area/station/storage)
-"aY" = (/obj/storage/crate,/obj/item/reagent_containers/glass/bottle/ammonia/large,/obj/item/reagent_containers/glass/wateringcan{pixel_y = 5},/obj/item/plantanalyzer,/obj/item/satchel/hydro,/obj/machinery/camera{c_tag = "autotag"; dir = 8; icon_state = "camera"; name = "autoname - SS13"; pixel_x = 10; tag = ""},/turf/simulated/floor/plating,/area/station/storage)
-"aZ" = (/obj/storage/crate/loot,/turf/variableTurf/floor,/area/noGenerate)
-"ba" = (/obj/table/auto,/obj/random_item_spawner/tools,/obj/item/wrench,/obj/item/storage/toolbox/artistic,/turf/simulated/floor/plating,/area/station/storage)
-"bb" = (/obj/table/auto,/obj/item/storage/box/beakerbox,/obj/item/device/reagentscanner,/turf/simulated/floor/plating,/area/station/storage)
-"bc" = (/obj/machinery/light/small,/obj/submachine/chem_extractor,/turf/simulated/floor/plating,/area/station/storage)
-"bd" = (/obj/machinery/chem_master,/turf/simulated/floor/plating,/area/station/storage)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ac" = (
+/obj/grille/steel,
+/turf/simulated/floor/plating/airless,
+/area/prefab/smuggler_den)
+"ad" = (
+/turf/variableTurf/wall,
+/area/noGenerate)
+"ae" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"af" = (
+/obj/machinery/communications_dish,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/plating/airless,
+/area/prefab/smuggler_den)
+"ag" = (
+/turf/simulated/floor/plating/airless,
+/area/prefab/smuggler_den)
+"ah" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/smuggler_den)
+"ai" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/smuggler_den)
+"aj" = (
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/airless,
+/area/prefab/smuggler_den)
+"ak" = (
+/obj/stool/chair/couch{
+	dir = 8;
+	icon_state = "chair_couch-brown"
+	},
+/obj/decal/poster/wallsign/poster_human{
+	desc = "Looks like a propaganda poster, but the guy in the image has a mustache drawn on him, and the caption's been scribbled over with the message 'CENTCOM NARCS SUCK'. Huh.";
+	name = "scuffed propaganda poster";
+	pixel_x = 3;
+	pixel_y = 32
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"al" = (
+/obj/stool/chair/couch{
+	dir = 4;
+	icon_state = "chair_couch-brown"
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"am" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"an" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"ao" = (
+/obj/table/wood/round/auto,
+/obj/item/game_kit,
+/obj/item/decoration/ashtray{
+	butts = 5;
+	icon_state = "ashtray";
+	name = "grubby old ashtray"
+	},
+/obj/machinery/light_switch/west{
+	icon_state = "light0";
+	on = 0
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"ap" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aq" = (
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"ar" = (
+/obj/machinery/manufacturer/general{
+	mats = 10
+	},
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/fakeobjects{
+	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
+	dir = 6;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camera";
+	name = "security camera";
+	pixel_y = 20
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"as" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/power/data_terminal,
+/obj/table/auto,
+/obj/machinery/computer3/generic/personal{
+	desc = "This workstation appears to be outfitted with non-standard equipment.";
+	name = "modified computer";
+	setup_starting_peripheral2 = /datum/computer/file/terminal_program/communications;
+	setup_starting_program = null
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"at" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/item/tank/air,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"au" = (
+/obj/submachine/cargopad{
+	active = 0;
+	desc = "The bottom of the pad has a bunch of wire coil and electrical insulation sticking out the sides haphazardly - cutting-edge signature masking tech.";
+	name = "Auxiliary Cargo Pad"
+	},
+/obj/decal/fakeobjects{
+	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
+	dir = 6;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camera";
+	name = "security camera";
+	pixel_y = 20
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"av" = (
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/obj/stool/chair/comfy{
+	dir = 1
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aw" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 4;
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"ax" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"ay" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"az" = (
+/obj/cable{
+	d1 = 4;
+	d2 = 8;
+	icon_state = "4-8"
+	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aA" = (
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aB" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aC" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aD" = (
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/obj/table/wood/round/auto,
+/obj/item/paper_bin,
+/obj/item/pen,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aE" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aF" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = 28
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aG" = (
+/obj/machinery/light/small,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aH" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aI" = (
+/obj/cable{
+	d2 = 8;
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/machinery/power/apc/autoname_west/nopoweralert{
+	req_access = null;
+	start_charge = 0
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aJ" = (
+/obj/stool/chair/comfy{
+	dir = 4;
+	icon_state = "chair_comfy"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aK" = (
+/obj/table/wood/round/auto,
+/obj/item/reagent_containers/food/drinks/bottle/tequila,
+/obj/item/instrument/harmonica,
+/obj/decal/fakeobjects{
+	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
+	dir = 8;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camera";
+	name = "security camera";
+	pixel_x = 10
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aL" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aM" = (
+/obj/machinery/power/furnace,
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aN" = (
+/obj/item/device/light/flashlight{
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/item/casing/small,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aO" = (
+/obj/table/wood/round/auto,
+/obj/machinery/light/small,
+/obj/machinery/recharger,
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aP" = (
+/obj/table/wood/round/auto,
+/obj/machinery/cell_charger,
+/obj/item/device/light/zippo{
+	pixel_x = 6;
+	pixel_y = 10
+	},
+/turf/simulated/floor/grime,
+/area/prefab/smuggler_den)
+"aQ" = (
+/obj/item/crowbar,
+/obj/decal/cleanable/blood,
+/obj/item/seed/cannabis,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aR" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aS" = (
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aT" = (
+/obj/critter/fermid,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"aU" = (
+/obj/machinery/plantpot,
+/obj/machinery/light/small{
+	dir = 8;
+	pixel_x = -12
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aV" = (
+/obj/storage/closet/emergency,
+/obj/machinery/light/small{
+	dir = 4;
+	pixel_x = 12
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aW" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aX" = (
+/obj/stool/chair/office/green,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aY" = (
+/obj/storage/crate,
+/obj/item/reagent_containers/glass/bottle/ammonia/large,
+/obj/item/reagent_containers/glass/wateringcan{
+	pixel_y = 5
+	},
+/obj/item/plantanalyzer,
+/obj/item/satchel/hydro,
+/obj/decal/fakeobjects{
+	desc = "A small, high quality camera with thermal, light-amplification, and diffused laser imaging to see through walls. It is tied into a computer system, allowing those with access to watch what occurs around it.";
+	dir = 8;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camera";
+	name = "security camera";
+	pixel_x = 10
+	},
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"aZ" = (
+/obj/storage/crate/loot,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"ba" = (
+/obj/table/auto,
+/obj/random_item_spawner/tools,
+/obj/item/wrench,
+/obj/item/storage/toolbox/artistic,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"bb" = (
+/obj/table/auto,
+/obj/item/storage/box/beakerbox,
+/obj/item/device/reagentscanner,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"bc" = (
+/obj/machinery/light/small,
+/obj/submachine/chem_extractor,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
+"bd" = (
+/obj/machinery/chem_master,
+/turf/simulated/floor/plating,
+/area/prefab/smuggler_den)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaababacababaaaaaaaa
-aaaaaaaaadadadadadadababacababaaaaaaaa
-aaaaadadadaeaeaeaeadadadacababaaaaaaaa
-aaadadaeaeaeaeaeaeaeadacacacadadaaaaaa
-aaadaeaeaeaeaeaeaeaeadacafacadadadadaa
-adadaeaeaeadaeaeaeagahahaiahahadadadad
-adadaeaeadadaeagajagahakalamahahahahad
-adaeaeaeadadahahahanahaoapaqaharasahad
-aeaeaeaeadadahatauaqahavawaxayazaAahad
-aeaeaeadadadahaBaqaqaCaqapaDahaEaFahad
-adadaeaeaeadahahaGaHahaIaJaKahaLaMahad
-adadadadaeaeaNahahahahaqaOaPahahahahad
-adadadadadadaQahaRaSahanahahahadadadad
-aaadaTaeadaeaeahaUaSaSaSaVahadadadadaa
-aaadadaeaeaeadahaWaSaXaSaYahadadadadaa
-aaaaadadadaZadahbabbbcbdahahadadadaaaa
-aaaaaaadadadadahahahahahahadadadaaaaaa
-aaaaaaaaaaaaadadadadadadadadaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+ad
+ad
+ad
+ae
+ae
+ad
+ad
+ad
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+ad
+ad
+ad
+ad
+ae
+ae
+ae
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+ad
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ae
+ad
+ad
+aT
+ad
+ad
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+ad
+ae
+ae
+ae
+ae
+ae
+ae
+ad
+ae
+ad
+ad
+ae
+ae
+ad
+ad
+aa
+"}
+(5,1,1) = {"
+aa
+ad
+ad
+ae
+ae
+ae
+ad
+ad
+ad
+ad
+ae
+ae
+ad
+ad
+ae
+ad
+ad
+aa
+"}
+(6,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ad
+ad
+ad
+ad
+ad
+ad
+ae
+ad
+ae
+ae
+aZ
+ad
+aa
+"}
+(7,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ae
+ae
+ah
+ah
+ah
+ah
+aN
+aQ
+ae
+ad
+ad
+ad
+ad
+"}
+(8,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ae
+ag
+ah
+at
+aB
+ah
+ah
+ah
+ah
+ah
+ah
+ah
+ad
+"}
+(9,1,1) = {"
+aa
+ad
+ae
+ae
+ae
+ae
+aj
+ah
+au
+aq
+aG
+ah
+aR
+aU
+aW
+ba
+ah
+ad
+"}
+(10,1,1) = {"
+aa
+ad
+ad
+ae
+ae
+ag
+ag
+an
+aq
+aq
+aH
+ah
+aS
+aS
+aS
+bb
+ah
+ad
+"}
+(11,1,1) = {"
+ab
+ab
+ad
+ad
+ad
+ah
+ah
+ah
+ah
+aC
+ah
+ah
+ah
+aS
+aX
+bc
+ah
+ad
+"}
+(12,1,1) = {"
+ab
+ab
+ad
+ac
+ac
+ah
+ak
+ao
+av
+aq
+aI
+aq
+an
+aS
+aS
+bd
+ah
+ad
+"}
+(13,1,1) = {"
+ac
+ac
+ac
+ac
+af
+ai
+al
+ap
+aw
+ap
+aJ
+aO
+ah
+aV
+aY
+ah
+ah
+ad
+"}
+(14,1,1) = {"
+ab
+ab
+ab
+ac
+ac
+ah
+am
+aq
+ax
+aD
+aK
+aP
+ah
+ah
+ah
+ah
+ad
+ad
+"}
+(15,1,1) = {"
+ab
+ab
+ab
+ad
+ad
+ah
+ah
+ah
+ay
+ah
+ah
+ah
+ah
+ad
+ad
+ad
+ad
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+ad
+ad
+ad
+ah
+ar
+az
+aE
+aL
+ah
+ad
+ad
+ad
+ad
+ad
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+ad
+ah
+as
+aA
+aF
+aM
+ah
+ad
+ad
+ad
+ad
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+aa
+aa
+ad
+ad
+ah
+ah
+ah
+ah
+ah
+ah
+ad
+ad
+ad
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+ad
+aa
+aa
+aa
+aa
+aa
 "}

@@ -5,77 +5,61 @@
 	targeted = 0
 	cooldown = 200
 	requires_robes = 1
+	requires_being_on_turf = TRUE
 	offensive = 1
-	voice_grim = "sound/voice/wizard/MagicMissileGrim.ogg"
-	voice_fem = "sound/voice/wizard/MagicMissileFem.ogg"
-	voice_other = "sound/voice/wizard/MagicMissileLoud.ogg"
+	voice_grim = 'sound/voice/wizard/MagicMissileGrim.ogg'
+	voice_fem = 'sound/voice/wizard/MagicMissileFem.ogg'
+	voice_other = 'sound/voice/wizard/MagicMissileLoud.ogg'
+	var/base_shots = 6
+	var/datum/projectile/big_missile = new/datum/projectile/special/homing/magicmissile
+	var/datum/projectile/lil_missile = new/datum/projectile/special/homing/magicmissile/weak
+	var/datum/projectile/the_missile
+	maptext_colors = list("#f57382", "#f8aaaa", "#f7e0e3", "#f8aaaa")
 
 	cast()
 		if(!holder)
 			return
-		var/mob_count = 0, mob_count2 = 0
-		var/mob_limit = 6
 
-		for(var/mob/living/M as mob in oview())
+		var/list/missile_targets = list()
+
+		for(var/mob/living/M in oview(7, holder.owner))
 			if(isdead(M)) continue
-			mob_count++
-		if(!mob_count)
-			boutput(holder.owner, "Noone is in range!")
-			return 1 // cast failed
-
-		holder.owner.say("ICEE BEEYEM")
-		..()
-
-		if(!holder.owner.wizard_spellpower())
-			boutput(holder.owner, "<span style=\"color:red\">Your spell is weak without a staff to focus it!</span>")
-
-		for (var/mob/living/M as mob in oview())
-			if (isdead(M)) continue
 			if (ishuman(M))
 				if (M.traitHolder.hasTrait("training_chaplain"))
-					boutput(holder.owner, "<span style=\"color:red\">[M] has divine protection! The spell refuses to target \him!</span>")
+					boutput(holder.owner, "<span class='alert'>You feel your spell wince at [M]'s divinity! It outright refuses to target [him_or_her(M)]!</span>")
+					JOB_XP(M, "Chaplain", 2)
 					continue
 			if (iswizard(M))
-				boutput(holder.owner, "<span style=\"color:red\">[M] has arcane protection! The spell refuses to target \him!</span>")
+				boutput(holder.owner, "<span class='alert'>You feel your spell ignore [M], a fellow magical practitioner!</span>")
 				continue
+			missile_targets += M
 
-			playsound(holder.owner.loc, "sound/effects/mag_magmislaunch.ogg", 25, 1, -1)
-			if ((!holder.owner.wizard_spellpower() && mob_count2 >= 1) || (mob_count2 >= mob_limit)) break
-			mob_count2++
-			SPAWN_DBG(0)
-				var/obj/overlay/A = new /obj/overlay(holder.owner.loc)
-				A.icon_state = "magicm"
-				A.icon = 'icons/obj/wizard.dmi'
-				A.name = "a magic missile"
-				A.anchored = 0
-				A.set_density(0)
-				A.layer = EFFECTS_LAYER_1
-				A.flags |= TABLEPASS
-				//A.sd_SetLuminosity(3)
-				//A.sd_SetColor(0.7, 0, 0.7)
-				var/i
-				for(i=0, i<20, i++)
-					var/obj/overlay/B = new /obj/overlay(A.loc)
-					B.icon_state = "magicmd"
-					B.icon = 'icons/obj/wizard.dmi'
-					B.name = "trail"
-					B.anchored = 1
-					B.set_density(0)
-					B.layer = EFFECTS_LAYER_BASE
-					SPAWN_DBG(0.5 SECONDS)
-						qdel(B)
-					step_to(A,M,0)
-					if (get_dist(A,M) == 0)
-						M.changeStatus("weakened", (5 - (min(mob_count2,4)))*10)
-						M.force_laydown_standup()
-						boutput(M, text("<span style=\"color:blue\">The magic missile SLAMS into you!</span>"))
-						M.visible_message("<span style=\"color:red\">[M] is struck by a magic missile!</span>")
-						playsound(M.loc, "sound/effects/mag_magmisimpact.ogg", 25, 1, -1)
-						M.TakeDamage("chest", 0, 10, 0, DAMAGE_BURN)
-						random_brute_damage(M, 5)
-						M.lastattacker = holder.owner
-						M.lastattackertime = world.time
-						qdel(A)
-						return
-					sleep(6)
-				qdel(A)
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("ICEE BEEYEM", FALSE, maptext_style, maptext_colors) // EHM-EYEARRVEE
+		..()
+
+		var/num_shots = src.base_shots
+		if(!holder.owner.wizard_spellpower(src))
+			boutput(holder.owner, "<span class='alert'>Without a staff, your spell has trouble manifesting its full potential, leaving its effect withered and weak!</span>")
+			num_shots *= 0.5
+			src.the_missile = src.lil_missile
+		else
+			src.the_missile = src.big_missile
+
+		for (var/i in 1 to num_shots)
+			if(length(missile_targets))
+				var/mob/living/L = pick(missile_targets)
+				var/turf/target = get_turf(L)
+				var/obj/projectile/P = shoot_projectile_ST(holder.owner, src.the_missile, target)
+				if (P)
+					P.targets = list(L)
+					P.mob_shooter = holder.owner
+					P.shooter = holder.owner
+				missile_targets -= L
+			else // we got ammo left, lets just shoot them somewhere or something
+				var/obj/projectile/P = shoot_projectile_XY(holder.owner, src.the_missile, cos(rand(0,360)), sin(rand(0,360)))
+				if (P)
+					P.mob_shooter = holder.owner
+					P.shooter = holder.owner
+
+		playsound(holder.owner.loc, 'sound/effects/mag_magmislaunch.ogg', 25, 1, -1)

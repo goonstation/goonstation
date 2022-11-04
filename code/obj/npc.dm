@@ -27,9 +27,9 @@
 //Handles what happens when the npc becomes aggresive
 /obj/npc/proc/anger()
 	for(var/mob/M in AIviewers(src))
-		boutput(M, "<span style=\"color:red\"><B>[src.name]</B> becomes angry!</span>")
+		boutput(M, "<span class='alert'><B>[src.name]</B> becomes angry!</span>")
 	src.desc = "[src] looks angry"
-	SPAWN_DBG(rand(1000,3000))
+	SPAWN(rand(1000,3000))
 		src.visible_message("<b>[src.name] calms down.</b>")
 		src.desc = "[src] looks a bit annoyed."
 		src.angry = 0
@@ -48,33 +48,33 @@
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
 		gib.icon_state = "gibup1"
-	gib.streak(list(NORTH, NORTHEAST, NORTHWEST))
+	gib.streak_cleanable(NORTH)
 
 	// SOUTH
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
 	if (prob(30))
 		gib.icon_state = "gibdown1"
-	gib.streak(list(SOUTH, SOUTHEAST, SOUTHWEST))
+	gib.streak_cleanable(SOUTH)
 
 	// WEST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib.streak(list(WEST, NORTHWEST, SOUTHWEST))
+	gib.streak_cleanable(WEST)
 
 	// EAST
 	gib = make_cleanable( /obj/decal/cleanable/blood/gibs,location)
-	gib.streak(list(EAST, NORTHEAST, SOUTHEAST))
+	gib.streak_cleanable(EAST)
 
 /obj/npc/ex_act(severity)
 	// Called when an object is in an explosion
 	// Higher "severity" means the object was further from the centre of the explosion
 	switch(severity)
-		if(1.0)
+		if(1)
 			gib(src.loc)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			health = health -50
-		if(3.0)
+		if(3)
 			health = health -25
 		else
 	if(health <=0)
@@ -114,7 +114,7 @@
 	if(health <=0)
 		src.death()
 
-/obj/npc/attackby(obj/item/W as obj, mob/living/user as mob)
+/obj/npc/attackby(obj/item/W, mob/living/user)
 /*	if (!src.alive)
 		..()
 		return
@@ -131,7 +131,7 @@
 
 	else
 		for(var/mob/M in AIviewers(src))
-			boutput(M, "<span style=\"color:red\"><B>[user]</B> pokes [src] with [W.name]!</span>")
+			boutput(M, "<span class='alert'><B>[user]</B> pokes [src] with [W.name]!</span>")
 
 		if(angry!=2)
 			if(prob(25))
@@ -139,5 +139,5 @@
 				src.anger()
 				activatesecurity()
 		*/
-	src.visible_message("<span style=\"color:red\"><B>[user]</B> pokes [src] with [W.name].</span>")
+	src.visible_message("<span class='alert'><B>[user]</B> pokes [src] with [W.name].</span>")
 	return

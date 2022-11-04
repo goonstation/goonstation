@@ -21,15 +21,22 @@ var
 									/obj/item/paper = 300,
 									/obj/decal/cleanable = 800,
 									/obj/overlay/tile_effect/lighting = 1000) //fine ok its smaller now! //edit : ok actually maybe this matters lets make it biger
-/datum/proc/pooled(var/pooltype)
+/datum/proc/pooled_deprecated(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	dispose()
+	if(istype(src, /atom/movable))
+		var/atom/movable/AM = src
+		AM.set_loc(null)
+		AM.transform = null
+		animate(AM)
 	// If this thing went through the delete queue and was rescued by the pool mechanism, we should reset the qdeled flag.
 	qdeled = 0
-	pooled = 1
+	// pooled = 1
 
-/datum/proc/unpooled(var/pooltype)
+/datum/proc/unpooled_deprecated(var/pooltype)
+	SHOULD_CALL_PARENT(TRUE)
 	disposed = 0
-	pooled = 0
+	// pooled = 0
 
 #ifdef DETAILED_POOL_STATS
 var/global/list/pool_stats = list()
@@ -51,7 +58,7 @@ proc/increment_pool_stats(var/type, var/index)
 proc/get_pool_size_limit(var/type)
 	return pool_limit_overrides[type] || DEFAULT_POOL_SIZE
 
-proc/unpool(var/type=null)
+proc/unpool_deprecated(var/type=null)
 	if(!type)
 		return null //Uh, here's your unpooled null. You weirdo.
 
@@ -70,7 +77,7 @@ proc/unpool(var/type=null)
 		return new type
 
 	var/datum/thing = l[l.len]
-	if (!thing) //This should not happen, but I guess it did.
+	if (!thing)// || !thing.pooled) //This should not happen, but I guess it did.
 		l.len-- // = 0
 		#ifdef DETAILED_POOL_STATS
 		increment_pool_stats(type, POOL_MISS_COUNT)
@@ -82,7 +89,7 @@ proc/unpool(var/type=null)
 		#ifdef DETAILED_POOL_STATS
 		increment_pool_stats(type, POOL_HIT_COUNT)
 		#endif
-		thing.unpooled(type)
+		thing.unpooled_deprecated(type)
 	return thing
 
 proc/createPool(var/type)
@@ -90,7 +97,7 @@ proc/createPool(var/type)
 		object_pools[type] = list()
 	return object_pools[type]
 
-proc/pool(var/datum/to_pool)
+proc/pool_deprecated(var/datum/to_pool)
 	if (to_pool)
 
 		var/list/type_pool = object_pools[to_pool.type]
@@ -103,7 +110,7 @@ proc/pool(var/datum/to_pool)
 			increment_pool_stats(to_pool.type, POOLINGS)
 			#endif
 			type_pool += to_pool
-			to_pool.pooled(to_pool.type)
+			to_pool.pooled_deprecated(to_pool.type)
 		else
 			#ifdef DETAILED_POOL_STATS
 			increment_pool_stats(to_pool.type, EVICTIONS)
@@ -118,7 +125,7 @@ proc/getPoolingJson()
 	for(var/type in pool_stats)
 		var/count = 0
 		var/list/L = object_pools[type]
-		if(L) count = L.len
+		if(L) count = length(L)
 		L = pool_stats[type]
 
 		json += ",{path:'[type]',count:[count],hits:[L[POOL_HIT_COUNT]],misses:[L[POOL_MISS_COUNT]],poolings:[L[POOLINGS]],unpoolings:[L[UNPOOLINGS]],evictions:[L[EVICTIONS]]}"

@@ -21,10 +21,10 @@ obj/machinery/atmospherics
 
 	// override default subscribes to be in a different process loop. that's why they don't call parent ( ..() )
 	SubscribeToProcess()
-		atmos_machines.Add(src)
+		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 
 	UnsubscribeProcess()
-		atmos_machines.Remove(src)
+		STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 
 	proc
 		network_disposing(datum/pipe_network/reference)
@@ -60,6 +60,3 @@ obj/machinery/atmospherics
 			// Is permitted to return null
 
 		disconnect(obj/machinery/atmospherics/reference)
-
-		update_icon()
-			return null

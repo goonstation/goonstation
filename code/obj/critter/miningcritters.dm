@@ -9,14 +9,16 @@
 	aggressive = 1
 	defensive = 0
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 0
 	atksilicon = 0
 	firevuln = 0.1
 	brutevuln = 1
 	angertext = "hisses at"
+	death_text = null //has custom death message logic
 	butcherable = 1
 	var/eaten = 0
+	var/const/rocks_per_gem = 10
 
 	seek_target()
 		src.anchored = 0
@@ -29,7 +31,7 @@
 			if (src.attack)
 				src.target = C
 				src.oldtarget_name = C.name
-				src.visible_message("<span style=\"color:red\"><b>[src]</b> sees [C.name]!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> sees [C.name]!</span>")
 				src.task = "chasing"
 				break
 			else
@@ -39,10 +41,11 @@
 		src.attacking = 1
 
 		if(istype(M, /obj/item/raw_material/))
-			src.visible_message("<span style=\"color:red\"><b>[src]</b> hungrily eats [src.target]!</span>")
-			playsound(src.loc, "sound/items/eatfood.ogg", 30, 1, -2)
-			pool(src.target)
-			src.eaten++
+			var/obj/item/raw_material/material = M
+			src.visible_message("<span class='alert'><b>[src]</b> hungrily eats [src.target]!</span>")
+			playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+			src.eaten += material.amount
+			qdel(src.target)
 			src.target = null
 			src.task = "thinking"
 
@@ -51,29 +54,24 @@
 
 	CritterDeath()
 		if (!alive) return
-		src.alive = 0
+		..()
 		src.target = null
 		src.task = "dead"
-		set_density(0)
-		src.icon_state = "rockworm-dead"
-		walk_to(src,0)
-		if (eaten >= 10)
+
+		if (src.eaten >= rocks_per_gem)
 			src.visible_message("<b>[src]</b> vomits something up and dies!")
 		else
 			src.visible_message("<b>[src]</b> dies!")
-		var/countstones = 0
-		while (src.eaten)
-			countstones++
-			if (countstones == 10)
-				var/pickgem = rand(1,3)
-				var/obj/item/created = 0
-				switch(pickgem)
-					if(1) unpool(/obj/item/raw_material/gemstone)
-					if(2) unpool(/obj/item/raw_material/uqill)
-					if(3) unpool(/obj/item/raw_material/fibrilith)
-				created.set_loc(src.loc)
-				countstones = 0
-			src.eaten--
+
+		while (src.eaten >= rocks_per_gem)
+			var/pickgem = rand(1,3)
+			var/obj/item/created = null
+			switch(pickgem)
+				if(1) created = new /obj/item/raw_material/gemstone
+				if(2) created = new /obj/item/raw_material/uqill
+				if(3) created = new /obj/item/raw_material/fibrilith
+			created.set_loc(src.loc)
+			src.eaten -= rocks_per_gem
 
 /obj/critter/rockworm/gary
 	name = "Gary the rockworm"
@@ -87,7 +85,7 @@
 	aggressive = 1
 	defensive = 1
 	wanderer = 1
-	opensdoors = 0
+	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atkcarbon = 1
 	atksilicon = 1
 	firevuln = 0.1
@@ -113,8 +111,8 @@
 	ChaseAttack(mob/M)
 		if (prob(20))
 			..()
-			playsound(src.loc, pick("sound/impact_sounds/Generic_Shove_1.ogg"), 50, 0)
+			playsound(src.loc, pick('sound/impact_sounds/Generic_Shove_1.ogg'), 50, 0)
 			M.changeStatus("weakened", 3 SECONDS)
 			M.changeStatus("stunned", 2 SECONDS)
 			random_brute_damage(M, rand(2,5),1)
-		else src.visible_message("<span style=\"color:red\"><B>[src]</B> dives at [M], but misses!</span>")
+		else src.visible_message("<span class='alert'><B>[src]</B> dives at [M], but misses!</span>")

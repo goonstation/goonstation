@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/mob/living/critter)
 /mob/living/critter
 	name = "critter"
 	desc = "A beastie!"
@@ -23,17 +24,24 @@
 	var/base_move_delay = 2
 	var/base_walk_delay = 3
 	var/stepsound = null
+	///area where the mob ai is registered when hibernating
+	var/area/registered_area = null
+	///time when mob last awoke from hibernation
+	var/last_hibernation_wake_tick = 0
+	var/is_hibernating = TRUE
 
 	var/can_burn = 1
 	var/can_throw = 0
 	var/can_choke = 0
 	var/in_throw_mode = 0
+	var/health_brute = null
+	var/health_burn = null
+	var/health_brute_vuln = null
+	var/health_burn_vuln = null
 
 	var/can_help = 0
 	var/can_grab = 0
 	var/can_disarm = 0
-
-	var/metabolizes = 1
 
 	var/reagent_capacity = 50
 	max_health = 0
@@ -54,6 +62,9 @@
 
 	// moved up from critter/small_animal
 	var/butcherable = 0
+	var/butcher_time = 1.2 SECONDS
+	/// The mob who is butchering this critter
+	var/mob/butcherer = null
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 0
 	var/skinresult = /obj/item/material_piece/cloth/leather //YEP
@@ -72,16 +83,14 @@
 
 	var/yeet_chance = 1 //yeet
 
+	var/last_life_process = 0
+	var/use_stunned_icon = 1
+
+	var/pull_w_class = W_CLASS_SMALL
+
+	blood_id = "blood"
+
 	New()
-		src.abilityHolder = new /datum/abilityHolder/critter(src)
-		if (islist(src.add_abilities) && src.add_abilities.len)
-			for (var/abil in src.add_abilities)
-				if (ispath(abil))
-					abilityHolder.addAbility(abil)
-//		if (ispath(default_task))
-//			default_task = new default_task
-//		if (ispath(current_task))
-//			current_task = new current_task
 
 		setup_hands()
 		post_setup_hands()
@@ -89,23 +98,19 @@
 		setup_reagents()
 		setup_healths()
 		if (!healthlist.len)
-			message_coders("ALERT: Critter [type] ([name]) does not have health holders.")
+			stack_trace("Critter [type] ([name]) \[\ref[src]\] does not have health holders.")
 		count_healths()
 
-		hud = new custom_hud_type(src)
-		src.attach_hud(hud)
-		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
-		SPAWN_DBG(0)
-			src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
-			src.attach_hud(zone_sel)
+		SPAWN(0)
+			if(!src.disposed)
+				src.zone_sel.change_hud_style('icons/mob/hud_human.dmi')
+				src.attach_hud(zone_sel)
 
 		for (var/datum/equipmentHolder/EE in equipment)
 			EE.after_setup(hud)
 
 		burning_image.icon = 'icons/misc/critter.dmi'
 		burning_image.icon_state = null
-
-		updatehealth()
 
 		src.old_canmove = src.canmove
 
@@ -115,9 +120,79 @@
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 		..()
 
-		SPAWN_DBG(0.5 SECONDS) //mbc what the fuck. i dont know why but if i don't spawn, no abilities even show up
+		hud = new custom_hud_type(src)
+		src.attach_hud(hud)
+		src.zone_sel = new(src, "CENTER[hud.next_right()], SOUTH")
+
+		if (src.stamina_bar)
+			hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
+
+
+		health_update_queue |= src
+
+		src.abilityHolder = new /datum/abilityHolder/critter(src)
+		if (islist(src.add_abilities) && length(src.add_abilities))
+			for (var/abil in src.add_abilities)
+				if (ispath(abil))
+					abilityHolder.addAbility(abil)
+
+		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
 			if (abilityHolder)
 				abilityHolder.updateButtons()
+
+		#ifdef NO_CRITTERS
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
+	disposing()
+		if(organHolder)
+			organHolder.dispose()
+			organHolder = null
+
+		if(hud)
+			if(src.stamina_bar)
+				hud.remove_object(stamina_bar)
+
+			hud.dispose()
+			hud = null
+
+		for(var/datum/handHolder/hh in hands)
+			hh.dispose()
+		hands.len = 0
+		hands = null
+
+		for(var/datum/equipmentHolder/eh in equipment)
+			eh.dispose()
+		equipment.len = 0
+		equipment = null
+
+		for(var/obj/item/I in implants)
+			I.dispose()
+		implants.len = 0
+		implants = null
+
+		for(var/damage_type in healthlist)
+			var/datum/healthHolder/hh = healthlist[damage_type]
+			hh.dispose()
+		healthlist.len = 0
+		healthlist = null
+
+		if (src.is_npc)
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
+		if (ai)
+			qdel(ai)
+			ai = null
+		..()
+
+	///enables mob ai that was disabled by a hibernation task
+	proc/wake_from_hibernation()
+		if(src.is_npc)
+			src.ai?.enable()
+			src.last_hibernation_wake_tick = TIME
+			src.registered_area?.registered_mob_critters -= src
+			src.registered_area = null
+			src.is_hibernating = FALSE
 
 	proc/setup_healths()
 		// add_health_holder(/datum/healthHolder/flesh)
@@ -159,44 +234,36 @@
 				health += HH.maximum_value
 
 	// begin convenience procs
-	proc/add_hh_flesh(var/min, var/max, var/mult)
+	proc/add_hh_flesh(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/flesh)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_flesh_burn(var/min, var/max, var/mult)
+	proc/add_hh_flesh_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/flesh_burn)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
-	proc/add_hh_robot(var/min, var/max, var/mult)
+	proc/add_hh_robot(var/max, var/mult)
 		var/datum/healthHolder/Brute = add_health_holder(/datum/healthHolder/structure)
 		Brute.maximum_value = max
 		Brute.value = max
 		Brute.last_value = max
 		Brute.damage_multiplier = mult
-		Brute.depletion_threshold = min
-		Brute.minimum_value = min
 		return Brute
 
-	proc/add_hh_robot_burn(var/min, var/max, var/mult)
+	proc/add_hh_robot_burn(var/max, var/mult)
 		var/datum/healthHolder/Burn = add_health_holder(/datum/healthHolder/wiring)
 		Burn.maximum_value = max
 		Burn.value = max
 		Burn.last_value = max
 		Burn.damage_multiplier = mult
-		Burn.depletion_threshold = min
-		Burn.minimum_value = min
 		return Burn
 
 	// end convenience procs
@@ -212,18 +279,18 @@
 		var/obj/item/I = equipped()
 		var/obj/item/W = EH.item
 		if (I && W)
-			W.attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
+			W.Attackby(I, src) // fix runtime for null.find_type_in_hand - cirr
 		else if (I)
 			if (EH.can_equip(I))
 				u_equip(I)
 				EH.equip(I)
 				hud.add_object(I, HUD_LAYER+2, EH.screenObj.screen_loc)
 			else
-				boutput(src, "<span style='color:red'>You cannot equip [I] in that slot!</span>")
+				boutput(src, "<span class='alert'>You cannot equip [I] in that slot!</span>")
 			update_clothing()
 		else if (W)
 			if (!EH.remove())
-				boutput(src, "<span style='color:red'>You cannot remove [W] from that slot!</span>")
+				boutput(src, "<span class='alert'>You cannot remove [W] from that slot!</span>")
 			update_clothing()
 
 	proc/handcheck()
@@ -238,15 +305,15 @@
 	attackby(var/obj/item/I, var/mob/M)
 		if (isdead(src)) 	//Just copied from pets_small_animals.dm with only small modifications. yep!
 			if (src.skinresult && max_skins)
-				if (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters))
+				if (issawingtool(I) || iscuttingtool(I))
 					for (var/i, i<rand(1, max_skins), i++)
-						var/obj/item/S = unpool(src.skinresult)
+						var/obj/item/S = new src.skinresult
 						S.set_loc(src.loc)
 					src.skinresult = null
-					M.visible_message("<span style='color:red'>[M] skins [src].</span>","You skin [src].")
+					M.visible_message("<span class='alert'>[M] skins [src].</span>","You skin [src].")
 					return
-			if (src.butcherable && (istype(I, /obj/item/circular_saw) || istype(I, /obj/item/kitchen/utensil/knife) || istype(I, /obj/item/scalpel) || istype(I, /obj/item/raw_material/shard) || istype(I, /obj/item/sword) || istype(I, /obj/item/saw) || istype(I, /obj/item/wirecutters)))
-				actions.start(new/datum/action/bar/icon/butcher_living_critter(src), M)
+			if (issawingtool(I) || iscuttingtool(I))
+				actions.start(new/datum/action/bar/icon/butcher_living_critter(src,src.butcher_time), M)
 				return
 
 		var/rv = 1
@@ -258,24 +325,23 @@
 		else
 			..()
 
-	proc/butcher(var/mob/M)
+	proc/butcher(var/mob/M, drop_brain = TRUE)
 		var/i = rand(2,4)
-		var/transfer = src.reagents.total_volume / i
+		var/transfer = src.reagents ? src.reagents.total_volume / i : 0
 
 		while (i-- > 0)
 			var/obj/item/reagent_containers/food/newmeat = new meat_type
 			newmeat.set_loc(src.loc)
-			src.reagents.trans_to(newmeat, transfer)
+			src.reagents?.trans_to(newmeat, transfer)
 			if (name_the_meat)
 				newmeat.name = "[src.name] meat"
 				newmeat.real_name = newmeat.name
 
-		if (src.organHolder)
+		if (src.organHolder && drop_brain)
 			src.organHolder.drop_organ("brain",src.loc)
 
 		src.ghostize()
 		qdel (src)
-		return
 
 	// The throw code is a direct copy-paste from humans
 	// pending better solution.
@@ -297,63 +363,74 @@
 		src.update_cursor()
 		hud.update_throwing()
 
-	proc/throw_item(atom/target, list/params)
+	throw_item(atom/target, list/params)
+		..()
+		if (HAS_ATOM_PROPERTY(src, PROP_MOB_CANTTHROW))
+			return
 		if (!can_throw)
 			return
 		src.throw_mode_off()
 		if (usr.stat)
 			return
 
-		var/atom/movable/item = src.equipped()
+		var/obj/item/I = src.equipped()
+		var/turf/thrown_from = get_turf(src)
 
-		if (isitem(item) && item:cant_self_remove)
+		if (!I || !isitem(I) || I.cant_drop)
 			return
 
-		if (!item) return
+		if (istype(I, /obj/item/grab))
+			var/obj/item/grab/G = I
+			I = G.handle_throw(src,target)
+			if (G && !G.qdeled) //make sure it gets qdeled because our u_equip function sucks and doesnt properly call dropped()
+				qdel(G)
+			if (!I) return
 
-		u_equip(item)
+		I.set_loc(src.loc)
 
-		if (istype(item, /obj/item/grab))
-			var/obj/item/grab/grab = item
-			var/mob/M = grab.affecting
-			if (grab.state < 1 && !(M.getStatusDuration("paralysis") || M.getStatusDuration("weakened") || M.stat))
-				src.visible_message("<span style='color:red'>[M] stumbles a little!</span>")
-				qdel(grab)
-				return
-			M.lastattacker = src
-			M.lastattackertime = world.time
-			item = M
-			qdel(grab)
+		u_equip(I)
 
-		item.set_loc(src.loc)
-
-		if (isitem(item))
-			item:dropped(src) // let it know it's been dropped
+		if (isitem(I))
+			I.dropped(src) // let it know it's been dropped
 
 		//actually throw it!
-		if (item)
-			item.layer = initial(item.layer)
+		if (I)
+			I.layer = initial(I.layer)
+			var/throw_dir = get_dir(src, target)
 			if(prob(yeet_chance))
-				src.visible_message("<span style=\"color:red\">[src] yeets [item].</span>")
+				src.visible_message("<span class='alert'>[src] yeets [I].</span>")
 			else
-				src.visible_message("<span style=\"color:red\">[src] throws [item].</span>")
-			if (iscarbon(item))
-				var/mob/living/carbon/C = item
-				logTheThing("combat", src, C, "throws %target% at [log_loc(src)].")
+				src.visible_message("<span class='alert'>[src] throws [I].</span>")
+			if (iscarbon(I))
+				var/mob/living/carbon/C = I
+				logTheThing(LOG_COMBAT, src, "throws [constructTarget(C,"combat")] [dir2text(throw_dir)] at [log_loc(src)].")
 				if ( ishuman(C) )
 					C.changeStatus("weakened", 1 SECOND)
 			else
 				// Added log_reagents() call for drinking glasses. Also the location (Convair880).
-				logTheThing("combat", src, null, "throws [item] [item.is_open_container() ? "[log_reagents(item)]" : ""] at [log_loc(src)].")
+				logTheThing(LOG_COMBAT, src, "throws [I] [I.is_open_container() ? "[log_reagents(I)]" : ""] [dir2text(throw_dir)] at [log_loc(src)].")
 			if (istype(src.loc, /turf/space)) //they're in space, move em one space in the opposite direction
-				src.inertia_dir = get_dir(target, src)
+				src.inertia_dir = throw_dir
 				step(src, inertia_dir)
-			if (istype(item.loc, /turf/space) && ismob(item))
-				var/mob/M = item
-				M.inertia_dir = get_dir(src,target)
-			item.throw_at(target, item.throw_range, item.throw_speed, params)
+			if (istype(I.loc, /turf/space) && ismob(I))
+				var/mob/M = I
+				M.inertia_dir = throw_dir
+			I.throw_at(target, I.throw_range, I.throw_speed, params, thrown_from, src)
 
 			playsound(src.loc, 'sound/effects/throw.ogg', 50, 1, 0.1)
+
+	proc/can_pull(atom/A)
+		if (!src.ghost_spawned) //if its an admin or wizard made critter, just let them pull everythang
+			return 1
+		if (ismob(A))
+			return (src.pull_w_class >= W_CLASS_NORMAL)
+		else if (isobj(A))
+			if (istype(A,/obj/item))
+				var/obj/item/I = A
+				return (pull_w_class >= I.w_class)
+			else
+				return (src.pull_w_class >= W_CLASS_BULKY)
+		return 0
 
 	click(atom/target, list/params)
 		if (((src.client && src.client.check_key(KEY_THROW)) || src.in_throw_mode) && src.can_throw)
@@ -367,11 +444,15 @@
 			return
 		return ..()
 
-	movement_delay()
+	//just adjust by whatever the critter var says the movedelay should be
+	special_movedelay_mod(delay,space_movement,aquatic_movement)
+		.= delay
 		if (src.m_intent == "walk")
-			return src.base_walk_delay + movement_delay_modifier
+			. += src.base_walk_delay - (BASE_SPEED + WALK_DELAY_ADD)
 		else
-			return src.base_move_delay + movement_delay_modifier
+			. += src.base_move_delay - (BASE_SPEED)
+		if (src.lying)
+			. += 14
 
 	Move(var/turf/NewLoc, direct)
 		if (!src.lying && isturf(NewLoc) && NewLoc.turf_flags & MOB_STEP)
@@ -401,7 +482,7 @@
 						playsound(NewLoc, src.stepsound, 50, 1)
 				else
 					playsound(NewLoc, src.stepsound, 20, 1)
-		..()
+		. = ..()
 
 	update_clothing()
 		equipment_image.overlays.len = 0
@@ -454,15 +535,22 @@
 		if (new_hand == active_hand)
 			return 1
 		if (new_hand > 0 && new_hand <= hands.len)
+			var/obj/item/old = src.equipped()
 			active_hand = new_hand
 			hand = active_hand
 			hud.update_hands()
+			if(old != src.equipped())
+				if(old)
+					SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+				if(src.equipped())
+					SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 			return 1
 		return 0
 
 	swap_hand()
 		if (!handcheck())
 			return
+		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
 			active_hand++
 			hand = active_hand
@@ -470,6 +558,11 @@
 			active_hand = 1
 			hand = active_hand
 		hud.update_hands()
+		if(old != src.equipped())
+			if(old)
+				SEND_SIGNAL(old, COMSIG_ITEM_SWAP_AWAY, src)
+			if(src.equipped())
+				SEND_SIGNAL(src.equipped(), COMSIG_ITEM_SWAP_TO, src)
 
 	hand_range_attack(atom/target, params)
 		.= 0
@@ -479,6 +572,13 @@
 			ch.set_cooldown_overlay()
 			.= 1
 			src.lastattacked = src
+
+	weapon_attack(atom/target, obj/item/W, reach, params)
+		if (isobj(target))
+			var/obj/O = target
+			if(issmallanimal(src) && src.ghost_spawned && HAS_FLAG(O.object_flags, NO_GHOSTCRITTER))
+				return
+		. = ..()
 
 	hand_attack(atom/target, params)
 		if (src.fits_under_table && (istype(target, /obj/machinery/optable) || istype(target, /obj/table) || istype(target, /obj/stool/bed)))
@@ -521,16 +621,7 @@
 				L.attack_hand(target, src)
 				HH.set_cooldown_overlay()
 		else
-			boutput(src, "<span style='color:red'>You cannot attack with your [HH.name]!</span>")
-
-	proc/melee_attack_human(var/mob/living/carbon/human/M, var/extra_damage) // non-special limb attack
-		if (check_target_immunity(src, 0, M))
-			visible_message("<b><span style='color:red'>[src]'s attack bounces uselessly off [M]!</span></b>")
-			playsound_local(M, "punch", 50, 0)
-			return
-		src.visible_message("<b><span style='color:red'>[src] punches [M]!</span></b>")
-		playsound_local(M, "punch", 50, 0)
-		M.TakeDamageAccountArmor(zone_sel.selecting, rand(3,6), 0, 0, DAMAGE_BLUNT)
+			boutput(src, "<span class='alert'>You cannot attack with your [HH.name]!</span>")
 
 	can_strip(mob/M, showInv = 0)
 		var/datum/handHolder/HH = get_active_hand()
@@ -541,42 +632,15 @@
 		if (HH.can_hold_items)
 			return 1
 		else
-			boutput(src, "<span style='color:red'>You cannot strip other people with your [HH.name].</span>")
-
-	attack_hand(var/mob/living/M)
-		M.lastattacked = src
-		attack_particle(M,src)
-		switch (M.a_intent)
-			if (INTENT_HELP)
-				src.on_pet(M)
-			if (INTENT_DISARM)
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				if (src.hands.len)
-					M.disarm(src)
-			if (INTENT_HARM)
-				if(check_target_immunity(src, 0, M))
-					visible_message("<b><span style='color:red'>[M]'s attack bounces off [src] uselessly!</span></b>")
-					return
-				actions.interrupt(src, INTERRUPT_ATTACKED)
-				src.TakeDamageAccountArmor(M.zone_sel.selecting, rand(1,3), 0)
-				playsound(src.loc, "punch", 50, 1)
-				visible_message("<b><span style='color:red'>[M] punches [src]!</span></b>")
-			if (INTENT_GRAB)
-				if (M == src)
-					M.grab_self()
-					return
-				var/datum/limb/L = M.equipped_limb()
-				if (!L)
-					return
-				L.grab(src, M)
-				message_admin_on_attack(M, "grabs")
+			boutput(src, "<span class='alert'>You cannot strip other people with your [HH.name].</span>")
 
 	proc/on_pet(mob/user)
 		if (!user)
 			return 1 // so things can do if (..())
 		var/pmsg = islist(src.pet_text) ? pick(src.pet_text) : src.pet_text
-		src.visible_message("<span style='color:blue'><b>[user] [pmsg] [src]!</b></span>",\
-		"<span style='color:blue'><b>[user] [pmsg] you!</b></span>")
+		src.visible_message("<span class='notice'><b>[user] [pmsg] [src]!</b></span>",\
+		"<span class='notice'><b>[user] [pmsg] you!</b></span>")
+		user.add_karma(0.5)
 		return
 
 	proc/get_active_hand()
@@ -610,8 +674,9 @@
 		reagents = R
 
 	equipped()
+		RETURN_TYPE(/obj/item)
 		if (active_hand)
-			if (hands.len >= active_hand)
+			if (length(src.hands) >= active_hand)
 				var/datum/handHolder/HH = hands[active_hand]
 				return HH.item
 		return null
@@ -628,11 +693,17 @@
 			update_inhands()
 		for (var/datum/equipmentHolder/EH in equipment)
 			if (EH.item == I)
+				EH.on_unequip()
 				EH.item = null
 				hud.remove_object(I)
 				clothing = 1
 		if (clothing)
 			update_clothing()
+		if(isitem(I))
+			I.dropped(src)
+
+	has_any_hands()
+		. = length(hands)
 
 	put_in_hand(obj/item/I, t_hand)
 		if (!hands.len)
@@ -643,7 +714,12 @@
 			var/datum/handHolder/HH = hands[t_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
+					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
@@ -652,111 +728,19 @@
 			var/datum/handHolder/HH = hands[active_hand]
 			if (HH.item || !HH.can_hold_items)
 				return 0
+			if(istype(HH.limb, /datum/limb/small_critter))
+				var/datum/limb/small_critter/L = HH.limb
+				if(I.w_class > L.max_wclass && !istype(I,/obj/item/grab)) //shitty grab check
+					return 0
 			HH.item = I
+			I.set_loc(src)
 			hud.add_object(I, HUD_LAYER+2, HH.screenObj.screen_loc)
 			update_inhands()
 			I.pickup(src) // attempted fix for flashlights not working - cirr
 			return 1
 		return 0
 
-	Life(datum/controller/process/mobs/parent)
-		if (..(parent))
-			return 1
-
-		if (getStatusDuration("burning"))
-			if (isturf(src.loc))
-				var/turf/location = src.loc
-				location.hotspot_expose(T0C + 400, 400)
-			var/damage = 1
-			if (getStatusDuration("burning") > 400)
-				damage = 3
-			else if (getStatusDuration("burning") > 200)
-				damage = 2
-			TakeDamage("All", 0, damage)
-			update_burning(-2)
-
-		if (isdead(src))
-			return 0
-
-		src.handle_digestion()
-
-		if (src.get_eye_blurry())
-			src.change_eye_blurry(-1)
-
-		if (src.drowsyness)
-			src.drowsyness = max(0, src.drowsyness - 1)
-			if (src.drowsyness >= tranquilizer_resistance)
-				src.change_eye_blurry(2)
-				if (prob(5 + src.drowsyness - tranquilizer_resistance))
-					src.sleeping = 2
-					src.setStatus("paralysis", 70)
-
-		handle_hud_overlays()
-		src.antagonist_overlay_refresh(0, 0)
-
-		if (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened") || getStatusDuration("dormant"))
-			canmove = 0
-		else
-			canmove = 1
-
-		update_stunned_icon(canmove)
-
-		if (sleeping)
-			sleeping = max(0, sleeping - 1)
-			setStatus("paralysis", 2 SECONDS)
-			if (!sleeping)
-				src.on_wake()
-
-		var/may_deliver_recovery_warning = (getStatusDuration("paralysis") || getStatusDuration("stunned") || getStatusDuration("weakened"))
-
-		if (may_deliver_recovery_warning)
-			empty_hands()
-			actions.interrupt(src, INTERRUPT_STUNNED)
-
-		if (getStatusDuration("paralysis"))
-			if (isalive(src))
-				setunconscious(src)
-		else if (isunconscious(src))
-			setalive(src)
-
-		if (stuttering)
-			stuttering = max(0, stuttering-2)
-
-		if (misstep_chance > 0)
-			change_misstep_chance(-1)
-
-		if (reagents && metabolizes)
-			reagents.metabolize(src)
-
-		for (var/T in healthlist)
-			var/datum/healthHolder/HH = healthlist[T]
-			HH.Life()
-
-		for (var/obj/item/grab/G in src.equipped_list(check_for_magtractor = 0))
-			G.process()
-
-		if (stat)
-			return 0
-
-//		if (!client && istype(current_task))
-
-	proc/handle_hud_overlays()
-		var/color_mod_r = 255
-		var/color_mod_g = 255
-		var/color_mod_b = 255
-		if (src.druggy)
-			vision.animate_color_mod(rgb(rand(0, 255), rand(0, 255), rand(0, 255)), 15)
-		else
-			vision.set_color_mod(rgb(color_mod_r, color_mod_g, color_mod_b))
-
-		if (isunconscious(src) || (!src.sight_check(1) && !isdead(src)))
-			src.addOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		else
-			src.removeOverlayComposition(/datum/overlayComposition/blinded) //ov1
-		vision.animate_dither_alpha(src.get_eye_blurry() / 10 * 255, 15)
-		return 1
-
-	death(var/gibbed)
+	death(var/gibbed, var/do_drop_equipment = 1)
 		if (src.organHolder)
 			// believe me i hate this as much as you do
 			// There is some sort of behavior on living critters that ejects all of their contents at the moment of death. We want to avoid that - brain should stay inside. HOWEVER I can't find where the ejection happens for the life of me!
@@ -764,8 +748,7 @@
 			var/obj/item/organ/O = src.organHolder.get_organ("brain")
 			if (O)
 				O.set_loc(src)
-		if(src.mind)
-			src.mind.register_death() // it'd be nice if critters get a time of death too tbh
+		src.mind?.register_death() // it'd be nice if critters get a time of death too tbh
 		set_density(0)
 		if (src.can_implant)
 			for (var/obj/item/implant/H in src.implants)
@@ -775,20 +758,33 @@
 			if (src.death_text)
 				src.tokenized_message(src.death_text, null, "red")
 			else
-				src.visible_message("<span style='color:red'><b>[src]</b> dies!</span>")
+				src.visible_message("<span class='alert'><b>[src]</b> dies!</span>")
 			setdead(src)
 			icon_state = icon_state_dead ? icon_state_dead : "[icon_state]-dead"
 		empty_hands()
-		drop_equipment()
-		hud.update_health()
+		if (do_drop_equipment)
+			drop_equipment()
+		hud?.update_health()
+		update_stunned_icon(canmove=1)//force it to go away
+		return ..(gibbed)
 
 	proc/get_health_holder(var/assoc)
 		if (assoc in healthlist)
 			return healthlist[assoc]
 		return null
 
-	TakeDamage(zone, brute, burn)
-		hit_twitch(src)
+	hitby(atom/movable/AM, datum/thrown_thing/thr)
+		. = ..()
+		src.visible_message("<span class='alert'>[src] has been hit by [AM].</span>")
+		random_brute_damage(src, AM.throwforce, TRUE)
+		if (src.client)
+			logTheThing(LOG_COMBAT, src, "is struck by [AM] [AM.is_open_container() ? "[log_reagents(AM)]" : ""] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"]).")
+		if(thr?.user)
+			src.was_harmed(thr.user, AM)
+
+	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
+		if (brute > 0 || burn > 0 || tox > 0)
+			hit_twitch(src)
 		if (nodamage)
 			return
 		var/datum/healthHolder/Br = get_health_holder("brute")
@@ -797,7 +793,7 @@
 		var/datum/healthHolder/Bu = get_health_holder("burn")
 		if (Bu && (burn < 0 || !is_heat_resistant()))
 			Bu.TakeDamage(burn)
-		updatehealth()
+		take_toxin_damage(tox)
 
 	take_brain_damage(var/amount)
 		if (..())
@@ -875,8 +871,8 @@
 
 	HealDamage(zone, brute, burn, tox)
 		..()
-		TakeDamage(zone, -brute, -burn)
-		updatehealth()
+		TakeDamage(zone, -brute, -burn, -tox)
+
 
 	updatehealth()
 		if (src.nodamage)
@@ -923,23 +919,23 @@
 		if(hand_to_empty > 0 && hand_to_empty <= hands.len)
 			var/datum/handHolder/HH = hands[hand_to_empty]
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					return
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
 
-	proc/empty_hands()
+	empty_hands()
 		for (var/datum/handHolder/HH in hands)
 			if (HH.item)
-				if (istype(HH.item, /obj/item/grab))
+				if (!HH.item.qdeled && !HH.item.disposed && istype(HH.item, /obj/item/grab))
 					qdel(HH.item)
 					continue
 				var/obj/item/I = HH.item
-				I.loc = src.loc
+				I.set_loc(src.loc)
 				I.master = null
 				I.layer = initial(I.layer)
 				u_equip(I)
@@ -1026,40 +1022,40 @@
 					if (src.emote_check(voluntary, 50) && !src.shrunk)
 						if (istype(src.loc,/obj/))
 							var/obj/container = src.loc
-							boutput(src, "<span style='color:red'>You leap and slam your head against the inside of [container]! Ouch!</span>")
-							src.changeStatus("paralysis", 30)
+							boutput(src, "<span class='alert'>You leap and slam your head against the inside of [container]! Ouch!</span>")
+							src.changeStatus("paralysis", 3 SECONDS)
 							src.changeStatus("weakened", 4 SECONDS)
-							container.visible_message("<span style='color:red'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
-							playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+							container.visible_message("<span class='alert'><b>[container]</b> emits a loud thump and rattles a bit.</span>")
+							playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 							var/wiggle = 6
 							while(wiggle > 0)
 								wiggle--
 								container.pixel_x = rand(-3,3)
 								container.pixel_y = rand(-3,3)
-								sleep(1)
+								sleep(0.1 SECONDS)
 							container.pixel_x = 0
 							container.pixel_y = 0
 							if (prob(33))
 								if (istype(container, /obj/storage))
 									var/obj/storage/C = container
 									if (C.can_flip_bust == 1)
-										boutput(src, "<span style='color:red'>[C] [pick("cracks","bends","shakes","groans")].</span>")
+										boutput(src, "<span class='alert'>[C] [pick("cracks","bends","shakes","groans")].</span>")
 										C.bust_out()
 						else
 							message = "<b>[src]</B> does a flip!"
 							animate_spin(src, pick("L", "R"), 1, 0)
 		if (message)
-			logTheThing("say", src, null, "EMOTE: [message]")
+			logTheThing(LOG_SAY, src, "EMOTE: [message]")
 			if (m_type & 1)
 				for (var/mob/O in viewers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else if (m_type & 2)
 				for (var/mob/O in hearers(src, null))
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 			else if (!isturf(src.loc))
 				var/atom/A = src.loc
 				for (var/mob/O in A.contents)
-					O.show_message("<span style='color:#605b59'>[message]</span>", m_type)
+					O.show_message("<span class='emote'>[message]</span>", m_type)
 
 
 	talk_into_equipment(var/mode, var/message, var/param)
@@ -1099,16 +1095,21 @@
 			burning_image.icon_state = "fire3_[burning_suffix]"
 		UpdateOverlays(burning_image, "burning")
 
+	force_laydown_standup()
+		..()
+		update_stunned_icon(canmove)
+
 	proc/update_stunned_icon(var/canmove)
-		if(canmove != src.old_canmove)
-			src.old_canmove = canmove
-			if (canmove)
-				src.UpdateOverlays(null, "dizzy")
-				return
-			else
-				var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
-				if (dizzyStars)
-					src.UpdateOverlays(dizzyStars, "dizzy")
+		if (use_stunned_icon)
+			if(canmove != src.old_canmove)
+				src.old_canmove = canmove
+				if (canmove || isdead(src))
+					src.UpdateOverlays(null, "dizzy")
+					return
+				else
+					var/image/dizzyStars = src.SafeGetOverlayImage("dizzy", src.icon, "dizzy", MOB_OVERLAY_BASE+20) // why such a big boost? because the critter could have a bunch of overlays, that's why
+					if (dizzyStars)
+						src.UpdateOverlays(dizzyStars, "dizzy")
 
 	proc/get_head_armor_modifier()
 		var/armor_mod = 0
@@ -1126,17 +1127,25 @@
 				armor_mod = max(C.getProperty("meleeprot"), armor_mod)
 		return armor_mod
 
-	get_melee_protection(zone)//critters and stuff, I suppose
+	get_melee_protection(zone, damage_type)//critters and stuff, I suppose
+		var/add = 0
+		var/obj/item/grab/block/G = src.check_block()
+		if (G)
+			add += 1
+			if (G != src.equipped())
+				add += G.can_block(damage_type)
+
 		if(zone=="head")
-			return get_head_armor_modifier()
+			return get_head_armor_modifier() + add
 		else
-			return get_chest_armor_modifier()
+			return get_chest_armor_modifier() + add
 
 	full_heal()
 		..()
 		icon_state = icon_state_alive ? icon_state_alive : initial(icon_state)
 		density = initial(density)
 		src.can_implant = initial(src.can_implant)
+		blood_volume = initial(blood_volume)
 
 	does_it_metabolize()
 		return metabolizes
@@ -1146,28 +1155,21 @@
 			return 1
 		return 0
 
-	get_explosion_resistance()
-		var/ret = explosion_resistance
-		for (var/datum/equipmentHolder/EH in equipment)
-			if (EH.armor_coverage & TORSO)
-				var/obj/item/clothing/suit/S = EH.item
-				if (istype(S))
-					ret += S.getProperty("exploprot")
-		return ret
-
 	ex_act(var/severity)
 		..() // Logs.
 		var/ex_res = get_explosion_resistance()
-		if (ex_res >= 15 && prob(ex_res * 3.5))
+		if (ex_res >= 0.35 && prob(ex_res * 100))
 			severity++
-		if (ex_res >= 30 && prob(ex_res * 1.5))
+		if (ex_res >= 0.8 && prob(ex_res * 75))
 			severity++
 		switch(severity)
 			if (1)
-				gib()
+				SPAWN(0)
+					gib()
 			if (2)
 				if (health < max_health * 0.35 && prob(50))
-					gib()
+					SPAWN(0)
+						gib()
 				else
 					TakeDamage("All", rand(10, 30), rand(10, 30))
 			if (3)
@@ -1189,11 +1191,6 @@
 		if (!O)
 			return null
 
-		if (src.bioHolder) //Not necessary for ghost appearance, but this will be useful if the ghost decides to respawn as critter
-			var/datum/bioHolder/newbio = new/datum/bioHolder(O)
-			newbio.CopyOther(src.bioHolder)
-			O.bioHolder = newbio
-
 		O.icon = ghost_icon
 		O.icon_state = ghost_icon_state
 
@@ -1207,25 +1204,84 @@
 		return O
 
 	drop_item()
-		..()
+		. = ..()
 		src.update_inhands()
+
+	proc/on_sleep()
+		return
 
 	proc/on_wake()
 		return
 
+	//the following procs are used to make transitioning from /obj/critter to /mob/living/critter easier. If you don't have to use them, you probably shouldn't.
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and attacked. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_target(var/range = 5)
+		. = list()
+		//default behaviour, return all alive, tangible, not-our-type mobs in range
+		for (var/mob/living/C in hearers(range, src))
+			if (isintangible(C)) continue
+			if (isdead(C)) continue
+			if (istype(C, src.type)) continue
+			. += C
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_scavenge_target(var/range = 5)
+		. = list()
+		for (var/mob/living/carbon/human/H in view(range, src))
+			if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				. += H
+
+	/// Used for generic critter mobAI - targets returned from this proc will be chased and eaten. Return a list of potential targets, one will be picked based on distance.
+	proc/seek_food_target(var/range = 5)
+		. = list()
+		for (var/obj/item/reagent_containers/food/snacks/S in view(range, src))
+			. += S
+
+	/// Used for generic critter mobAI - override if your critter needs special attack behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_attack(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - override if your critter needs special scavenge behaviour. If you need super special attack behaviour, you'll want to create your own attack aiTask
+	proc/critter_scavenge(var/mob/target)
+		src.set_a_intent(INTENT_HARM)
+		src.hand_attack(target)
+		return TRUE
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to attack. For handling cooldowns, or other attack blocking conditions.
+	proc/can_critter_attack()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to scavenge. For handling cooldowns, or other scavenge blocking conditions.
+	proc/can_critter_scavenge()
+		return can_act(src,TRUE)
+
+	/// Used for generic critter mobAI - returns TRUE when the mob is able to eat. For handling cooldowns, or other eat blocking conditions.
+	proc/can_critter_eat()
+		return can_act(src,TRUE)
+
+/mob/living/critter/bump(atom/A)
+	var/atom/movable/AM = A
+	if(issmallanimal(src) && src.ghost_spawned && istype(AM) && !AM.anchored)
+		return
+	. = ..()
+
+
 /mob/living/critter/hotkey(name)
 	switch (name)
 		if ("help")
-			src.a_intent = INTENT_HELP
+			src.set_a_intent(INTENT_HELP)
 			hud.update_intent()
 		if ("disarm")
-			src.a_intent = INTENT_DISARM
+			src.set_a_intent(INTENT_DISARM)
 			hud.update_intent()
 		if ("grab")
-			src.a_intent = INTENT_GRAB
+			src.set_a_intent(INTENT_GRAB)
 			hud.update_intent()
 		if ("harm")
-			src.a_intent = INTENT_HARM
+			src.set_a_intent(INTENT_HARM )
 			hud.update_intent()
 		if ("drop")
 			src.drop_item()
@@ -1237,20 +1293,36 @@
 				src.click(W, list())
 		if ("togglethrow")
 			src.toggle_throw_mode()
+		if ("walk")
+			if (src.m_intent == "run")
+				src.m_intent = "walk"
+			else
+				src.m_intent = "run"
+			out(src, "You are now [src.m_intent == "walk" ? "walking" : "running"].")
+			hud.update_mintent()
 		else
 			return ..()
 
-/mob/living/critter/build_keymap(client/C)
-	var/datum/keymap/keymap = ..()
-	keymap.merge(client.get_keymap("human"))
-	return keymap
+/mob/living/critter/build_keybind_styles(client/C)
+	..()
+	C.apply_keybind("human")
+
+	if (!C.preferences.use_wasd)
+		C.apply_keybind("human_arrow")
+
+	if (C.preferences.use_azerty)
+		C.apply_keybind("human_azerty")
+	if (C.tg_controls)
+		C.apply_keybind("human_tg")
+		if (C.preferences.use_azerty)
+			C.apply_keybind("human_tg_azerty")
 
 /mob/living/critter/proc/tokenized_message(var/message, var/target, var/mcolor)
 	if (!message || !length(message))
 		return
 	var/msg = replacetext(message, "%src%", "<b>[src]</b>")
 	if (target)
-		msg = replacetext(msg, "%target%", "[target]")
+		msg = replacetext(msg, "[constructTarget(target,"combat")]", "[target]")
 	if (mcolor)
 		msg = "<span style='color:[mcolor]'>" + msg + "</span>"
 	src.visible_message(msg)
@@ -1262,7 +1334,7 @@
 		..(message)
 		return
 
-	if (src.robot_talk_understand && !src.stat)
+	if (src.robot_talk_understand && !src.stat && !ghost_spawned)
 		if (length(message) >= 2)
 			if (copytext(lowertext(message), 1, 3) == ":s")
 				message = copytext(message, 3)
@@ -1271,7 +1343,7 @@
 	..()
 
 /mob/living/critter/blob_act(var/power)
-	logTheThing("combat", src, null, "is hit by a blob")
+	logTheThing(LOG_COMBAT, src, "is hit by a blob")
 
 	if (isdead(src) || src.nodamage)
 		return
@@ -1290,22 +1362,64 @@
 		damage /= 4
 		//src.paralysis += 1
 
-	src.show_message("<span style=\"color:red\">The blob attacks you!</span>")
+	src.show_message("<span class='alert'>The blob attacks you!</span>")
 
 	if (src.spellshield)
-		boutput(src, "<span style=\"color:red\"><b>Your Spell Shield absorbs some damage!</b></span>")
+		boutput(src, "<span class='alert'><b>Your Spell Shield absorbs some damage!</b></span>")
 
 	if (damage > 4.9)
 		if (prob(50))
 			changeStatus("weakened", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
-				O.show_message("<span style=\"color:red\"><B>The blob has knocked down [src]!</B></span>", 1, "<span style=\"color:red\">You hear someone fall.</span>", 2)
+				O.show_message("<span class='alert'><B>The blob has knocked down [src]!</B></span>", 1, "<span class='alert'>You hear someone fall.</span>", 2)
 		else
-			src.changeStatus("stunned", 50)
+			src.changeStatus("stunned", 5 SECONDS)
 			for (var/mob/O in viewers(src, null))
-				if (O.client)	O.show_message("<span style=\"color:red\"><B>The blob has stunned [src]!</B></span>", 1)
+				if (O.client)	O.show_message("<span class='alert'><B>The blob has stunned [src]!</B></span>", 1)
 		if (isalive(src))
 			src.lastgasp() // calling lastgasp() here because we just got knocked out
 
 	src.TakeDamage("All", damage, 0)
 	return
+
+/mob/living/critter/Logout()
+	..()
+	if (src.ai && !src.ai.enabled && src.is_npc)
+		ai.enable()
+
+/mob/living/critter/Login()
+	..()
+	if (src.ai?.enabled && src.is_npc)
+		ai.disable()
+		var/datum/targetable/A = src.abilityHolder?.getAbility(/datum/targetable/ai_toggle)
+		A?.updateObject()
+
+
+
+ABSTRACT_TYPE(/mob/living/critter/robotic)
+/// Parent for robotic critters. Handles some traits that robots should have- damaged by EMPs, immune to fire and rads
+/mob/living/critter/robotic
+	name = "a fucked up robot"
+	can_bleed = FALSE
+	metabolizes = FALSE
+	var/emp_vuln = 1
+	blood_id = null
+
+	New()
+		..()
+		src.reagents = null
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_HEATPROT, src, 100)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_COLDPROT, src, 100)
+
+	/// EMP does 10 brute and 10 burn by default, can be adjusted linearly with emp_vuln
+	emp_act()
+		src.emag_act() // heh
+		src.TakeDamage(10 * emp_vuln, 10 * emp_vuln)
+
+	vomit()
+		return
+
+	isBlindImmune()
+		return TRUE

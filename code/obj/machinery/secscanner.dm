@@ -9,12 +9,13 @@
 	layer = 2
 	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	appearance_flags = TILE_BOUND
+	appearance_flags = TILE_BOUND | PIXEL_SCALE
 	var/timeBetweenUses = 20//I can see this being fun
-	var/success_sound = "sound/machines/chime.ogg"
+	var/success_sound = 'sound/machines/chime.ogg'
 	var/fail_sound = 'sound/machines/alarm_a.ogg'
 
 	var/weapon_access = access_carrypermit
+	var/contraband_access = access_contrabandpermit
 	var/report_scans = 1
 	var/check_records = 1
 
@@ -23,12 +24,19 @@
 	//var/area/area = 0
 	var/emagged = 0
 
-	Crossed( atom/movable/O )
-		if(isliving(O))
-			do_scan(O)
-		if (istype(O,/obj/item) && (!emagged))
-			do_scan_item(O)
+	New()
+		..()
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+	Crossed(atom/movable/AM)
+		if(isliving(AM) && !isintangible(AM))
+			src.do_scan(AM)
+		else if (isobserver(AM) && prob(1))
+			src.do_scan(AM)
+		else if (istype(AM, /obj/item) && (!src.emagged))
+			src.do_scan_item(AM)
 		return ..()
+
 	process()
 		.=..()
 		if (status & NOPOWER)
@@ -36,11 +44,7 @@
 		else
 			icon_state = "scanner_on"
 
-	disposing()
-		radio_controller.remove_object(src, "1149")
-		..()
-
-	attackby(obj/item/W as obj, mob/user as mob) //If we get emagged...
+	attackby(obj/item/W, mob/user) //If we get emagged...
 		if (istype(W, /obj/item/card/emag) && (!emagged))
 			src.add_fingerprint(user)
 			emagged++
@@ -51,7 +55,7 @@
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
-		var/contraband = I.contraband
+		var/contraband = I.get_contraband()
 
 		if (contraband >= 2)
 
@@ -63,17 +67,14 @@
 			if (src.report_scans && (I.name != last_perp || contraband != last_contraband))
 				var/scan_location = get_area(src)
 
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 				last_perp = I.name
 				last_contraband = contraband
 
-			SPAWN_DBG(timeBetweenUses)
+			SPAWN(timeBetweenUses)
 				icon_state = "scanner_on"
 
 
@@ -110,12 +111,9 @@
 							perpname = H.wear_id:registered
 
 						if (perpname != last_perp || contraband != last_contraband)
-							var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 							var/datum/signal/pdaSignal = get_free_signal()
-							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
-							pdaSignal.transmission_method = TRANSMISSION_RADIO
-							if(transmit_connection != null)
-								transmit_connection.post_signal(src, pdaSignal)
+							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
+							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 						last_perp = perpname
 						last_contraband = contraband
@@ -129,7 +127,7 @@
 				playsound(src.loc, success_sound, 10, 1)
 				icon_state = "scanner_green"
 
-			SPAWN_DBG(timeBetweenUses)
+			SPAWN(timeBetweenUses)
 				icon_state = "scanner_on"
 
 			return //no, we're a vibe checker not a security device. our work is done
@@ -150,16 +148,11 @@
 				if (ishuman(target))
 					var/mob/living/carbon/human/H = target
 					var/perpname = H.name
-					if (H:wear_id && H:wear_id:registered)
-						perpname = H.wear_id:registered
 
 					if (perpname != last_perp || contraband != last_contraband)
-						var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"="security", "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
-						pdaSignal.transmission_method = TRANSMISSION_RADIO
-						if(transmit_connection != null)
-							transmit_connection.post_signal(src, pdaSignal)
+						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT",  "group"=list(MGD_SECURITY, MGA_CHECKPOINT), "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 					last_perp = perpname
 					last_contraband = contraband
@@ -168,7 +161,7 @@
 			playsound(src.loc, success_sound, 10, 1)
 			icon_state = "scanner_green"
 
-		SPAWN_DBG(timeBetweenUses)
+		SPAWN(timeBetweenUses)
 			icon_state = "scanner_on"
 
 	//lol, sort of copied from secbot.dm
@@ -182,7 +175,7 @@
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
 			for( var/obj/item/item in target.contents )
-				threatcount += item.contraband
+				threatcount += item.get_contraband()
 			return threatcount
 
 		var/mob/living/carbon/human/perp = target
@@ -196,56 +189,110 @@
 				threatcount += 4
 			else if (istype(perp.mutantrace, /datum/mutantrace/cat))
 				threatcount += 3
-			else
-				threatcount += 2
+
+		if(perp.traitHolder.hasTrait("immigrant") && perp.traitHolder.hasTrait("jailbird"))
+			if(isnull(data_core.security.find_record("name", perp.name)))
+				threatcount += 5
 
 		//if((isnull(perp:wear_id)) || (istype(perp:wear_id, /obj/item/card/id/syndicate)))
 		var/obj/item/card/id/perp_id = perp.equipped()
 		if (!istype(perp_id))
 			perp_id = perp.wear_id
 
-		if(perp_id && (weapon_access in perp_id.access)) //Corrupt cops cannot exist, beep boop
-			return 0
+		var/has_carry_permit = 0
+		var/has_contraband_permit = 0
+
+		if (!has_contraband_permit)
+			threatcount += GET_ATOM_PROPERTY(perp, PROP_MOVABLE_CONTRABAND_OVERRIDE)
+
+		if(perp_id) //Checking for permits
+			if(weapon_access in perp_id.access)
+				has_carry_permit = 1
+			if(contraband_access in perp_id.access)
+				has_contraband_permit = 1
 
 		if (istype(perp.l_hand))
-			threatcount += perp.l_hand.contraband
+			if (istype(perp.l_hand, /obj/item/gun/))  // perp is carrying a gun
+				if(!has_carry_permit)
+					threatcount += perp.l_hand.get_contraband()
+			else // not carrying a gun
+				if(!has_contraband_permit)
+					threatcount += perp.l_hand.get_contraband()
 
 		if (istype(perp.r_hand))
-			threatcount += perp.r_hand.contraband
+			if (istype(perp.r_hand, /obj/item/gun/)) // perp is carrying a gun
+				if(!has_carry_permit)
+					threatcount += perp.r_hand.get_contraband()
+			else // not carrying a gun, but potential contraband?
+				if(!has_contraband_permit)
+					threatcount += perp.r_hand.get_contraband()
 
 		if (istype(perp.wear_suit))
-			threatcount += perp.wear_suit.contraband
+			if (!has_contraband_permit)
+				threatcount += perp.wear_suit.get_contraband()
 
 		if (istype(perp.belt))
-			threatcount += perp.belt.contraband * 0.5
-			for( var/obj/item/item in perp.belt.contents )
-				threatcount += item.contraband * 0.5
+			if (istype(perp.belt, /obj/item/gun/))
+				if (!has_carry_permit)
+					threatcount += perp.belt.get_contraband() * 0.5
+			else
+				if (!has_contraband_permit)
+					threatcount += perp.belt.get_contraband() * 0.5
+				for( var/obj/item/item in perp.belt.contents )
+					if (istype(item, /obj/item/gun/))
+						if (!has_carry_permit)
+							threatcount += item.get_contraband() * 0.5
+					else
+						if (!has_contraband_permit)
+							threatcount += item.get_contraband() * 0.5
 
 		if (istype(perp.l_store))
-			threatcount += perp.l_store.contraband * 0.5
+			if (istype(perp.l_store, /obj/item/gun/))
+				if (!has_carry_permit)
+					threatcount += perp.l_store.get_contraband() * 0.5
+			else
+				if (!has_contraband_permit)
+					threatcount += perp.l_store.get_contraband() * 0.5
 
 		if (istype(perp.r_store))
-			threatcount += perp.r_store.contraband * 0.5
+			if (istype(perp.r_store, /obj/item/gun/))
+				if (!has_carry_permit)
+					threatcount += perp.r_store.get_contraband() * 0.5
+			else
+				if (!has_contraband_permit)
+					threatcount += perp.r_store.get_contraband() * 0.5
 
 		if (istype(perp.back))
-			for( var/obj/item/item in perp.back.contents )
-				threatcount += item.contraband * 0.5
+			if (istype(perp.back, /obj/item/gun/)) // some weapons can be put on backs
+				if (!has_carry_permit)
+					threatcount += perp.back.get_contraband() * 0.5
+			else // at moment of doing this we don't have other contraband back items, but maybe that'll change
+				if (!has_contraband_permit)
+					threatcount += perp.back.get_contraband() * 0.5
+			if (istype(perp.back, /obj/item/storage/))
+				for( var/obj/item/item in perp.back.contents )
+					if (istype(item, /obj/item/gun/))
+						if (!has_carry_permit)
+							threatcount += item.get_contraband() * 0.5
+					else
+						if (!has_contraband_permit)
+							threatcount += item.get_contraband() * 0.5
 
-//Agent cards lower threatlevel when normal idchecking is off.
+		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
 			threatcount -= 2
 
+		// we have grounds to make an arrest, don't bother with further analysis
+		if(threatcount >= 4)
+			return threatcount
+
 		if (src.check_records)
-			for (var/datum/data/record/E in data_core.general)
-				var/perpname = perp.name
-				if (perp?.wear_id?:registered)
-					perpname = perp.wear_id:registered
-				if (E.fields["name"] == perpname)
-					for (var/datum/data/record/R in data_core.security)
-						if ((R.fields["id"] == E.fields["id"]) && (R.fields["criminal"] == "*Arrest*"))
-							threatcount = max(4,threatcount)
-							break
-				LAGCHECK(LAG_REALTIME)
+			var/perpname = perp.face_visible() ? perp.real_name : perp.name
+
+			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
+				if(R["criminal"] == "*Arrest*")
+					threatcount = max(4,threatcount)
+					break
 
 		return threatcount
 
@@ -265,7 +312,7 @@
 			return
 
 		for (var/mob/O in hearers(src, null))
-			O.show_message("<span style='color:#888888'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
+			O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[message]\"</span></span>", 2)
 
 
 /obj/machinery/fakesecscanner

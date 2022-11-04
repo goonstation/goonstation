@@ -19,9 +19,9 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 			luminosity = input("New luminosity", "New luminosity", luminosity) as num
 		else
 			var/colorstr = input("New color", "New color", rgb(color_r * 255, color_g * 255, color_b * 255)) as color
-			color_r = hex2num(copytext(colorstr, 2, 4)) / 255.0
-			color_g = hex2num(copytext(colorstr, 4, 6)) / 255.0
-			color_b = hex2num(copytext(colorstr, 6, 8)) / 255.0
+			color_r = hex2num(copytext(colorstr, 2, 4)) / 255
+			color_g = hex2num(copytext(colorstr, 4, 6)) / 255
+			color_b = hex2num(copytext(colorstr, 6, 8)) / 255
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (ctrl)
@@ -32,7 +32,7 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 				object:brightness = 0
 			blink(get_turf(object))
 
-			boutput(usr, "<span style=\"color:blue\">Set [object]'s luminosity to 0.</span>")
+			boutput(usr, "<span class='notice'>Set [object]'s luminosity to 0.</span>")
 		else
 			object.sd_SetColor(color_r, color_g, color_b, 1)
 
@@ -45,7 +45,7 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 				object.sd_SetLuminosity(0)
 			blink(get_turf(object))
 
-			boutput(usr, "<span style=\"color:blue\">Set [object] to ([object.sd_ColorRed], [object.sd_ColorGreen], [object.sd_ColorBlue]):[luminosity].</span>")
+			boutput(usr, "<span class='notice'>Set [object] to ([object.sd_ColorRed], [object.sd_ColorGreen], [object.sd_ColorBlue]):[luminosity].</span>")
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (ctrl)
@@ -55,7 +55,7 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 			if (istype(object, /obj/machinery/light))
 				object:brightness = initial(object:brightness)
 
-			boutput(usr, "<span style=\"color:blue\">Reset [object] to ([object.sd_ColorRed], [object.sd_ColorGreen], [object.sd_ColorBlue]):[object.luminosity].</span>")
+			boutput(usr, "<span class='notice'>Reset [object] to ([object.sd_ColorRed], [object.sd_ColorGreen], [object.sd_ColorBlue]):[object.luminosity].</span>")
 
 		else
 			color_r = object.sd_ColorRed
@@ -63,4 +63,4 @@ Ctrl + RMB                             = Reset object luminosity and color to de
 			color_b = object.sd_ColorBlue
 			luminosity = object.luminosity
 
-			boutput(usr, "<span style=\"color:blue\">Copied ([color_r], [color_g], [color_b]):[luminosity] from [object].</span>")
+			boutput(usr, "<span class='notice'>Copied ([color_r], [color_g], [color_b]):[luminosity] from [object].</span>")

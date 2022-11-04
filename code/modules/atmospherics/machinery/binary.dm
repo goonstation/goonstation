@@ -22,8 +22,8 @@ obj/machinery/atmospherics/binary
 				initialize_directions = EAST|WEST
 			if(WEST)
 				initialize_directions = EAST|WEST
-		air1 = unpool(/datum/gas_mixture)
-		air2 = unpool(/datum/gas_mixture)
+		air1 = new /datum/gas_mixture
+		air2 = new /datum/gas_mixture
 
 		air1.volume = 200
 		air2.volume = 200
@@ -42,7 +42,7 @@ obj/machinery/atmospherics/binary
 		else if(reference == node2)
 			network2 = new_network
 
-		if(new_network.normal_members.Find(src))
+		if(src in new_network.normal_members)
 			return 0
 
 		new_network.normal_members += src
@@ -50,14 +50,13 @@ obj/machinery/atmospherics/binary
 		return null
 
 	disposing()
-		loc = null
 
 		// Signal air disposing...
 		if (network1)
 			network1.air_disposing_hook(air1,air2)
 		if (network2)
 			network2.air_disposing_hook(air1,air2)
-		
+
 		if(node1)
 			node1.disconnect(src)
 			if (network1)
@@ -65,19 +64,19 @@ obj/machinery/atmospherics/binary
 		if(node2)
 			node2.disconnect(src)
 			if (network2)
-				network2.dispose()				
+				network2.dispose()
 
 		node1 = null
 		node2 = null
 		network1 = null
 		network2 = null
-		
+
 		if(air1)
-			pool(air1)
-		
+			qdel(air1)
+
 		if(air2)
-			pool(air2)
-		
+			qdel(air2)
+
 		air1 = null
 		air2 = null
 
@@ -99,7 +98,7 @@ obj/machinery/atmospherics/binary
 				node2 = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network1 && node1)

@@ -1,110 +1,806 @@
-"aa" = (/turf/simulated/wall/auto/reinforced/gannets,/area/sea_sketch)
-"ab" = (/turf/variableTurf/clear,/area)
-"ac" = (/obj/item/kitchen/utensil/knife/pizza_cutter,/turf/simulated/floor/scorched,/area/sea_sketch)
-"ad" = (/obj/decal/cleanable/greenpuke,/obj/marker/supplymarker,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"ae" = (/obj/item/material_piece/mauxite,/obj/item/storage/toilet,/turf/simulated/floor/grime,/area/sea_sketch)
-"af" = (/obj/decal/cleanable/cobweb2,/obj/item/storage/toilet,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"ag" = (/obj/npc/trader/robot{desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."; greeting = "I got what you need."; illegal = 1; name = "Sketchy D-5"; picture = "loungebuddy.png"; productset = 1; trader_area = "/area/sea_sketch"},/turf/simulated/floor/grime,/area/sea_sketch)
-"ah" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/grime,/area/sea_sketch)
-"ai" = (/obj/item/reagent_containers/glass/bucket,/turf/simulated/floor/scorched,/area/sea_sketch)
-"aj" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/grime,/area/sea_sketch)
-"ak" = (/obj/securearea{desc = "A poster that reads 'CLEAN HANDS SAVE LIVES'."; icon_state = "chsl"; name = "CLEAN HANDS SAVE LIVES"; pixel_x = 32; pixel_y = 0},/obj/item/storage/pill_bottle/cyberpunk,/turf/simulated/floor/scorched,/area/sea_sketch)
-"al" = (/obj/decal/cleanable/dirt,/obj/item/kitchen/utensil/fork,/turf/simulated/floor/grime,/area/sea_sketch)
-"am" = (/obj/decal/cleanable/dirt,/obj/item/storage/pill_bottle/cyberpunk,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"an" = (/obj/item/storage/pill_bottle/cyberpunk,/obj/item/sponge,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"ap" = (/obj/wingrille_spawn/auto,/turf/simulated/floor/plating,/area/sea_sketch)
-"aq" = (/turf/simulated/floor/grime,/area/sea_sketch)
-"ar" = (/turf/simulated/floor/plating,/area/sea_sketch)
-"as" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"at" = (/obj/machinery/door/airlock/pyro/external,/turf/simulated/floor/scorched,/area/sea_sketch)
-"au" = (/obj/stool/chair/couch/blue{icon_state = "chair_couch-blue"; dir = 8},/turf/simulated/floor/grime,/area/sea_sketch)
-"av" = (/obj/stool/chair/couch/blue{icon_state = "chair_couch-blue"; dir = 4},/turf/simulated/floor/grime,/area/sea_sketch)
-"aw" = (/turf/simulated/floor/scorched,/area/sea_sketch)
-"ax" = (/turf/simulated/floor/scorched2,/area/sea_sketch)
-"ay" = (/obj/item/implant/tracking,/obj/item/scalpel,/obj/decal/cleanable/blood{icon_state = "drip5"},/turf/simulated/floor/scorched2,/area/sea_sketch)
-"az" = (/obj/table/wood/round/auto,/obj/machinery/computer/security/wooden_tv{desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"; name = "Television"; network = "Zeta"; pixel_y = 4},/turf/simulated/floor/grime,/area/sea_sketch)
-"aA" = (/obj/machinery/light/small/floor/warm/very,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"aB" = (/obj/decal/cleanable/gangtag,/turf/simulated/wall/auto/reinforced/gannets,/area/sea_sketch)
-"aC" = (/obj/table/wood/round/auto,/obj/item/tvdinner,/obj/item/tvdinner,/obj/item/tvdinner,/obj/item/reagent_containers/food/snacks/tvdinner,/obj/item/kitchen/utensil/spoon,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"aD" = (/obj/machinery/door/airlock/pyro/classic,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"aE" = (/turf/simulated/floor/damaged2,/area/sea_sketch)
-"aF" = (/turf/simulated/floor/plating/damaged1,/area/sea_sketch)
-"aG" = (/obj/item/furniture_parts/comfy_chair,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"aH" = (/obj/item/plant/herb/cannabis/spawnable,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"aI" = (/obj/machinery/plantpot,/obj/item/reagent_containers/glass/bottle/powerplant,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"aJ" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/grime,/area/sea_sketch)
-"aK" = (/obj/stool/chair/comfy/wheelchair,/turf/simulated/floor/plating,/area/sea_sketch)
-"aL" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/plating,/area/sea_sketch)
-"aM" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"aO" = (/obj/table/wood/round/auto,/obj/item/device/light/candle/small,/turf/simulated/floor/plating,/area/sea_sketch)
-"aP" = (/obj/table/wood/round/auto,/obj/item/device/light/candle/small,/obj/item/matchbook,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"aQ" = (/turf/simulated/floor/plating/random,/area/sea_sketch)
-"aR" = (/obj/stool/chair/comfy,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"aS" = (/obj/item/device/camera_viewer,/turf/simulated/floor/plating,/area/sea_sketch)
-"aT" = (/obj/item/furniture_parts/comfy_chair,/turf/simulated/floor/grime,/area/sea_sketch)
-"aU" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag16"; pixel_y = -28},/turf/simulated/floor/plating,/area/sea_sketch)
-"aV" = (/obj/decal/cleanable/fungus,/obj/machinery/light/small/floor/warm,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"aW" = (/obj/table/wood/auto,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"aY" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 8},/turf/simulated/floor/scorched2,/area/sea_sketch)
-"aZ" = (/turf/space/fluid,/turf/simulated/floor/plating/damaged2,/area/sea_sketch)
-"ba" = (/obj/stool/chair/comfy{dir = 4},/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bb" = (/obj/table/wood/auto,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"bc" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag22"; pixel_x = 28},/turf/simulated/floor/grime,/area/sea_sketch)
-"bd" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 1},/turf/simulated/floor/plating/random,/area/sea_sketch)
-"be" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag16"; pixel_y = -28},/obj/item/medical/ointment,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bf" = (/obj/stool/chair/couch/purple{icon_state = "chair_couch-purple"; dir = 9},/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bg" = (/obj/stool/chair/couch/purple{icon_state = "chair_couch-purple"; dir = 5},/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bh" = (/obj/artifact_spawner,/turf/simulated/floor/plating,/area/sea_sketch)
-"bi" = (/obj/artifact_spawner,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bj" = (/obj/table/wood/auto,/obj/item/gun/energy/phaser_gun,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bk" = (/obj/item/gun/implanter,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bl" = (/obj/item/storage/pill_bottle/catdrugs,/turf/simulated/floor/grime,/area/sea_sketch)
-"bm" = (/obj/item/seed/cannabis,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"bn" = (/obj/item/reagent_containers/glass/wateringcan,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bo" = (/obj/item/reagent_containers/patch/LSD,/turf/simulated/floor/plating/damaged1,/area/sea_sketch)
-"bp" = (/obj/decal/cleanable/gangtag{icon_state = "gangtag17"; pixel_x = 28},/obj/landmark/artifact/cannabis_seed,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bq" = (/obj/reagent_dispensers/watertank,/turf/simulated/floor/plating,/area/sea_sketch)
-"br" = (/obj/machinery/chem_dispenser/alcohol,/turf/simulated/floor/grime,/area/sea_sketch)
-"bs" = (/obj/item/storage/box/glassbox,/turf/simulated/floor/grime,/area/sea_sketch)
-"bt" = (/obj/item/reagent_containers/syringe/krokodil,/turf/simulated/floor/plating,/area/sea_sketch)
-"bu" = (/obj/item/reagent_containers/patch/LSD,/turf/simulated/floor/grime,/area/sea_sketch)
-"bv" = (/obj/item/storage/box/glassbox,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bw" = (/obj/reagent_dispensers/fueltank,/turf/simulated/floor/plating,/area/sea_sketch)
-"bx" = (/obj/item/reagent_containers/glass/bottle/aspirin,/turf/simulated/floor/grime,/area/sea_sketch)
-"by" = (/obj/item/storage/pill_bottle/cyberpunk,/turf/simulated/floor/grime,/area/sea_sketch)
-"bz" = (/obj/item/reagent_containers/syringe,/obj/item/reagent_containers/syringe,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bA" = (/obj/artifact_spawner,/obj/item/reagent_containers/glass/bottle/weedkiller,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"bB" = (/obj/reagent_dispensers/fueltank,/obj/item/reagent_containers/glass/bottle/acetone/janitors,/turf/simulated/floor/plating,/area/sea_sketch)
-"bC" = (/obj/item/device/gps{identifier = "SKCH"},/turf/simulated/floor/grime,/area/sea_sketch)
-"bD" = (/obj/stool/chair/comfy/red,/obj/item/reagent_containers/glass/bottle/morphine,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"bF" = (/obj/item/reagent_containers/glass/bottle/acid,/turf/simulated/floor/plating,/area/sea_sketch)
-"bH" = (/obj/item/storage/pill_bottle/bathsalts,/obj/item/storage/firstaid/old,/obj/item/storage/firstaid/old,/turf/simulated/floor/plating,/area/sea_sketch)
-"bI" = (/obj/item/reagent_containers/glass/bottle/ethanol,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bJ" = (/obj/machinery/light/small/floor/warm,/turf/simulated/floor/scorched2,/area/sea_sketch)
-"bK" = (/obj/item/implant/robotalk,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bL" = (/obj/item/implant/health,/turf/simulated/floor/plating/scorched,/area/sea_sketch)
-"bN" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/plating,/area/sea_sketch)
-"bO" = (/obj/decal/cleanable/fungus,/turf/simulated/floor/plating/random,/area/sea_sketch)
-"bP" = (/obj/table/wood/auto,/obj/item/playing_cards/suit,/turf/simulated/floor/damaged2,/area/sea_sketch)
-"bQ" = (/obj/machinery/door/airlock/pyro/classic{dir = 4; req_access_txt = "12"},/turf/simulated/floor/plating,/area/sea_sketch)
-"bR" = (/obj/item/reagent_containers/syringe/krokodil,/obj/item/reagent_containers/iv_drip/blood,/turf/simulated/floor/plating,/area/sea_sketch)
-"bS" = (/obj/item/medical/bruise_pack,/turf/simulated/floor/grime,/area/sea_sketch)
-"bT" = (/obj/item/medical/bruise_pack,/turf/simulated/floor/plating,/area/sea_sketch)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/prefab/sea_sketch)
+"ab" = (
+/turf/variableTurf/clear,
+/area/space)
+"ac" = (
+/obj/item/kitchen/utensil/knife/pizza_cutter,
+/turf/simulated/floor/scorched,
+/area/prefab/sea_sketch)
+"ad" = (
+/obj/decal/cleanable/greenpuke,
+/obj/marker/supplymarker,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"ae" = (
+/obj/item/material_piece/mauxite,
+/obj/item/storage/toilet,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"af" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/storage/toilet,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"ag" = (
+/obj/npc/trader/robot{
+	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon.";
+	greeting = "I got what you need.";
+	illegal = 1;
+	name = "Sketchy D-5";
+	picture = "loungebuddy.png";
+	productset = 1;
+	trader_area = "/area/prefab/sea_sketch"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"ah" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"ai" = (
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/scorched,
+/area/prefab/sea_sketch)
+"aj" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"ak" = (
+/obj/securearea{
+	desc = "A poster that reads 'CLEAN HANDS SAVE LIVES'.";
+	icon_state = "chsl";
+	name = "CLEAN HANDS SAVE LIVES";
+	pixel_x = 32;
+	pixel_y = 0
+	},
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/scorched,
+/area/prefab/sea_sketch)
+"al" = (
+/obj/decal/cleanable/dirt,
+/obj/item/kitchen/utensil/fork,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"am" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"an" = (
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/sponge,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"ap" = (
+/obj/wingrille_spawn/auto,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aq" = (
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"ar" = (
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"as" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"at" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/scorched,
+/area/prefab/sea_sketch)
+"au" = (
+/obj/stool/chair/couch/blue{
+	icon_state = "chair_couch-blue";
+	dir = 8
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"av" = (
+/obj/stool/chair/couch/blue{
+	icon_state = "chair_couch-blue";
+	dir = 4
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"aw" = (
+/turf/simulated/floor/scorched,
+/area/prefab/sea_sketch)
+"ax" = (
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"ay" = (
+/obj/item/implant/tracking,
+/obj/item/scalpel,
+/obj/decal/cleanable/blood{
+	icon_state = "drip5"
+	},
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"az" = (
+/obj/table/wood/round/auto,
+/obj/machinery/computer/security/wooden_tv{
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?";
+	name = "Television";
+	network = "Zeta";
+	pixel_y = 4
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"aA" = (
+/obj/machinery/light/small/floor/warm/very,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"aB" = (
+/obj/decal/cleanable/gangtag,
+/turf/simulated/wall/auto/reinforced/gannets,
+/area/prefab/sea_sketch)
+"aC" = (
+/obj/table/wood/round/auto,
+/obj/item/tvdinner,
+/obj/item/tvdinner,
+/obj/item/tvdinner,
+/obj/item/reagent_containers/food/snacks/tvdinner,
+/obj/item/kitchen/utensil/spoon,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"aD" = (
+/obj/machinery/door/airlock/pyro/classic,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"aE" = (
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"aF" = (
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/sea_sketch)
+"aG" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"aH" = (
+/obj/item/plant/herb/cannabis/spawnable,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"aI" = (
+/obj/machinery/plantpot,
+/obj/item/reagent_containers/glass/bottle/powerplant,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"aJ" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"aK" = (
+/obj/stool/chair/comfy/wheelchair,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aL" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aM" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"aO" = (
+/obj/table/wood/round/auto,
+/obj/item/device/light/candle/small,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aP" = (
+/obj/table/wood/round/auto,
+/obj/item/device/light/candle/small,
+/obj/item/matchbook,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"aQ" = (
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"aR" = (
+/obj/stool/chair/comfy,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"aS" = (
+/obj/item/device/camera_viewer,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aT" = (
+/obj/item/furniture_parts/comfy_chair,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"aU" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag16";
+	pixel_y = -28
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"aV" = (
+/obj/decal/cleanable/fungus,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"aW" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"aY" = (
+/obj/stool/chair/comfy{
+	icon_state = "chair_comfy";
+	dir = 8
+	},
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"aZ" = (
+/turf/simulated/floor/plating/damaged2,
+/area/prefab/sea_sketch)
+"ba" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bb" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"bc" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag22";
+	pixel_x = 28
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bd" = (
+/obj/stool/chair/comfy{
+	icon_state = "chair_comfy";
+	dir = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"be" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag16";
+	pixel_y = -28
+	},
+/obj/item/medical/ointment,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bf" = (
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch-purple";
+	dir = 9
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bg" = (
+/obj/stool/chair/couch/purple{
+	icon_state = "chair_couch-purple";
+	dir = 5
+	},
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bh" = (
+/obj/artifact_spawner,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bi" = (
+/obj/artifact_spawner,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bj" = (
+/obj/table/wood/auto,
+/obj/item/gun/energy/phaser_gun,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bk" = (
+/obj/item/gun/implanter,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bl" = (
+/obj/item/storage/pill_bottle/catdrugs,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bm" = (
+/obj/item/seed/cannabis,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"bn" = (
+/obj/item/reagent_containers/glass/wateringcan,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bo" = (
+/obj/item/reagent_containers/patch/LSD,
+/turf/simulated/floor/plating/damaged1,
+/area/prefab/sea_sketch)
+"bp" = (
+/obj/decal/cleanable/gangtag{
+	icon_state = "gangtag17";
+	pixel_x = 28
+	},
+/obj/item/seed/cannabis,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bq" = (
+/obj/reagent_dispensers/watertank,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"br" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bs" = (
+/obj/item/storage/box/glassbox,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bt" = (
+/obj/item/reagent_containers/syringe/krokodil,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bu" = (
+/obj/item/reagent_containers/patch/LSD,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bv" = (
+/obj/item/storage/box/glassbox,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bw" = (
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bx" = (
+/obj/item/reagent_containers/glass/bottle/aspirin,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"by" = (
+/obj/item/storage/pill_bottle/cyberpunk,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bz" = (
+/obj/item/reagent_containers/syringe,
+/obj/item/reagent_containers/syringe,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bA" = (
+/obj/artifact_spawner,
+/obj/item/reagent_containers/glass/bottle/weedkiller,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"bB" = (
+/obj/reagent_dispensers/fueltank,
+/obj/item/reagent_containers/glass/bottle/acetone/janitors,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bC" = (
+/obj/item/device/gps{
+	identifier = "SKCH"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bD" = (
+/obj/stool/chair/comfy/red,
+/obj/item/reagent_containers/glass/bottle/morphine,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"bF" = (
+/obj/item/reagent_containers/glass/bottle/acid,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bH" = (
+/obj/item/storage/pill_bottle/bathsalts,
+/obj/item/storage/firstaid/old,
+/obj/item/storage/firstaid/old,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bI" = (
+/obj/item/reagent_containers/glass/bottle/ethanol,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bJ" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/scorched2,
+/area/prefab/sea_sketch)
+"bK" = (
+/obj/item/implant/robotalk,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bL" = (
+/obj/item/implant/health,
+/turf/simulated/floor/plating/scorched,
+/area/prefab/sea_sketch)
+"bN" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bO" = (
+/obj/decal/cleanable/fungus,
+/turf/simulated/floor/plating/random,
+/area/prefab/sea_sketch)
+"bP" = (
+/obj/table/wood/auto,
+/obj/item/card_group/plain,
+/turf/simulated/floor/damaged2,
+/area/prefab/sea_sketch)
+"bQ" = (
+/obj/machinery/door/airlock/pyro/classic{
+	dir = 4;
+	req_access_txt = "12"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bR" = (
+/obj/item/reagent_containers/syringe/krokodil,
+/obj/item/reagent_containers/iv_drip/blood,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
+"bS" = (
+/obj/item/medical/bruise_pack,
+/turf/simulated/floor/grime,
+/area/prefab/sea_sketch)
+"bT" = (
+/obj/item/medical/bruise_pack,
+/turf/simulated/floor/plating,
+/area/prefab/sea_sketch)
 
 (1,1,1) = {"
-ababababababababababababababababababababab
-abababababababababababaaahahaaabababababab
-ababaaaaaaaaaaaaabababaaaqaraaabababababab
-ababaaacadaeafaaaaapapaaasataaaaaaabababab
-ababaaagaJajakaaaaauavaiawaMaHaIaaabababab
-ababaaaEalamanaaaaazblaqaxaAbmbnaaaaaaaaab
-ababaaaaaDaaaaaaaBaCaEboaxaxaGbpaabqbwapab
-ababaabxaqbCbrbsbSaqaJbyaqaxbAayaabhbBapab
-ababaabNaKarbTaLaraFaraMbDaxbKbzbQbFbtapab
-ababaaaraOaPaQaQaRaSaxaxaxaTaJbiaabRbHapab
-ababaaaUaQaVaQaQbPbjaYbJbuaqbkbLaaaaaaaaab
-ababaaaaaaaQaZbaaWbbaxbIbcaaaaaaaaabababab
-ababababaabvbOaQaxbdbebfbgaaababababababab
-ababababaaaaapapapapaaapapaaababababababab
-ababababababababababababababababababababab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(2,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+"}
+(3,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+"}
+(4,1,1) = {"
+ab
+ab
+aa
+ac
+ag
+aE
+aa
+bx
+bN
+ar
+aU
+aa
+ab
+ab
+ab
+"}
+(5,1,1) = {"
+ab
+ab
+aa
+ad
+aJ
+al
+aD
+aq
+aK
+aO
+aQ
+aa
+aa
+aa
+ab
+"}
+(6,1,1) = {"
+ab
+ab
+aa
+ae
+aj
+am
+aa
+bC
+ar
+aP
+aV
+aQ
+bv
+aa
+ab
+"}
+(7,1,1) = {"
+ab
+ab
+aa
+af
+ak
+an
+aa
+br
+bT
+aQ
+aQ
+aZ
+bO
+ap
+ab
+"}
+(8,1,1) = {"
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+bs
+aL
+aQ
+aQ
+ba
+aQ
+ap
+ab
+"}
+(9,1,1) = {"
+ab
+ab
+ab
+aa
+aa
+aa
+aB
+bS
+ar
+aR
+bP
+aW
+ax
+ap
+ab
+"}
+(10,1,1) = {"
+ab
+ab
+ab
+ap
+au
+az
+aC
+aq
+aF
+aS
+bj
+bb
+bd
+ap
+ab
+"}
+(11,1,1) = {"
+ab
+ab
+ab
+ap
+av
+bl
+aE
+aJ
+ar
+ax
+aY
+ax
+be
+aa
+ab
+"}
+(12,1,1) = {"
+ab
+aa
+aa
+aa
+ai
+aq
+bo
+by
+aM
+ax
+bJ
+bI
+bf
+ap
+ab
+"}
+(13,1,1) = {"
+ab
+ah
+aq
+as
+aw
+ax
+ax
+aq
+bD
+ax
+bu
+bc
+bg
+ap
+ab
+"}
+(14,1,1) = {"
+ab
+ah
+ar
+at
+aM
+aA
+ax
+ax
+ax
+aT
+aq
+aa
+aa
+aa
+ab
+"}
+(15,1,1) = {"
+ab
+aa
+aa
+aa
+aH
+bm
+aG
+bA
+bK
+aJ
+bk
+aa
+ab
+ab
+ab
+"}
+(16,1,1) = {"
+ab
+ab
+ab
+aa
+aI
+bn
+bp
+ay
+bz
+bi
+bL
+aa
+ab
+ab
+ab
+"}
+(17,1,1) = {"
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
+bQ
+aa
+aa
+aa
+ab
+ab
+ab
+"}
+(18,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+aa
+bq
+bh
+bF
+bR
+aa
+ab
+ab
+ab
+ab
+"}
+(19,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+aa
+bw
+bB
+bt
+bH
+aa
+ab
+ab
+ab
+ab
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+aa
+ap
+ap
+ap
+ap
+aa
+ab
+ab
+ab
+ab
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
 "}

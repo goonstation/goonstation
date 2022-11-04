@@ -5,7 +5,7 @@ Left Mouse Button                      = Paste object<br>
 Right Mouse Button                     = Select object to copy<br>
 ***********************************************************"}
 	icon_state = "buildmode11"
-	var/atom/cloned = null
+	var/tmp/atom/cloned = null
 
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!cloned)
@@ -15,7 +15,7 @@ Right Mouse Button                     = Select object to copy<br>
 			var/obj/O = cloned:clone()
 			O.set_loc(T)
 			O.appearance = cloned.appearance
-			O.dir = cloned.dir
+			O.set_dir(cloned.dir)
 		else if (isturf(cloned))
 			var/turf/t = new cloned.type(T)
 			t.appearance = cloned.appearance
@@ -24,9 +24,9 @@ Right Mouse Button                     = Select object to copy<br>
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		if (isturf(object))
 			cloned = object
-			boutput(usr, "<span style=\"color:blue\">Selected [object] for copying by reference.</span>")
+			boutput(usr, "<span class='notice'>Selected [object] for copying by reference.</span>")
 			update_button_text("Copying [object] by reference.")
 		else if (isobj(object))
 			cloned = object:clone()
-			boutput(usr, "<span style=\"color:blue\">Selected [object] for copying.</span>")
+			boutput(usr, "<span class='notice'>Selected [object] for copying.</span>")
 			update_button_text("Copying [object].")

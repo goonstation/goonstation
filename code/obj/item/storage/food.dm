@@ -30,7 +30,8 @@
 	name = "\improper Donk-Pockets box"
 	desc = "Remember to fully heat prior to serving.  Product will cool if not eaten within seven minutes."
 	icon_state = "donk_kit"
-	item_state = "box_red"
+	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
+	item_state = "box-red"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket = 7)
 
 /obj/item/storage/box/bacon_kit
@@ -53,6 +54,12 @@
 
 /obj/item/storage/box/cookie_tin/sugar
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/cookie = 7)
+
+/obj/item/storage/box/stroopwafel_tin
+	name = "stroopwafel bag"
+	desc = "Full of fresh Dutch stroopwafels, picked ripe from the Dutch stroopwafel trees in Space Holland. There apears to be a lable on the back saying something about microwaves, the rest is in Dutch."
+	icon_state = "cookie_tin"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/stroopwafel = 7)
 
 /obj/item/storage/box/beer
 	name = "beer in a box"
@@ -102,15 +109,13 @@
 
 	make_my_stuff()
 		..()
-		for (var/i=6,i>0,i--)
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
-		if (prob(10))
-			new /obj/item/sponge/cheese(src)
-		else
-			new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
-
-		shuffle(src.contents)
+		var/made_sponge = FALSE
+		for (var/i = 1 to 7)
+			if(prob(5) && !made_sponge)
+				new /obj/item/sponge/cheese(src)
+				made_sponge = TRUE
+			else
+				new /obj/item/reagent_containers/food/snacks/ingredient/cheese(src)
 
 /obj/item/storage/goodybag
 	name = "goodybag"
@@ -119,7 +124,7 @@
 
 	make_my_stuff()
 		..()
-		var/list/candytypes = typesof(/obj/item/reagent_containers/food/snacks/candy)
+		var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
 		for (var/i=6, i>0, i--)
 			var/newcandy_path = pick(candytypes)
 			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path(src)

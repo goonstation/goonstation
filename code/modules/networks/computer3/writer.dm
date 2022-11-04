@@ -96,9 +96,9 @@
 						if ("2")
 							src.mode = -1
 							message_server("command=print&args=index")
-							sleep(8)
+							sleep(0.8 SECONDS)
 							var/dat = "Known Printers:"
-							if (!src.known_printers || !src.known_printers.len)
+							if (!src.known_printers || !length(src.known_printers))
 								dat += "<br> \[__] No printers known."
 
 							else
@@ -116,7 +116,7 @@
 					if (lowertext(command) == "a")
 						src.selected_printer = "!all!"
 					else
-						var/printerNumber = round(text2num(command))
+						var/printerNumber = round(text2num_safe(command))
 						if (printerNumber == 0)
 							src.mode = MODE_CONFIG
 							src.master.temp = null
@@ -250,7 +250,7 @@
 					return
 
 				else
-					var/line_num = round( text2num( copytext(command, 2) ) )
+					var/line_num = round( text2num_safe( copytext(command, 2) ) )
 					if(isnull(line_num))
 						src.print_text("Unknown command.")
 						return
@@ -335,7 +335,7 @@
 						return
 
 					var/list/commandList = splittext(data["command"], "|n")
-					if (!commandList || !commandList.len)
+					if (!commandList || !length(commandList))
 						return
 
 					switch (commandList[1])
@@ -400,7 +400,7 @@
 
 			src.peripheral_command("transmit", signal, "\ref[netCard]")
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return 0
 
 			return 0
@@ -426,7 +426,7 @@
 			src.peripheral_command("ping", null, "\ref[netCard]")
 
 			if (delayCaller)
-				sleep(8)
+				sleep(0.8 SECONDS)
 				return (potential_server_netid == null)
 
 			return 0
@@ -447,7 +447,7 @@
 			return 0
 
 		network_print(var/print_title = "Printout")
-			if (!connected || !netCard || !selected_printer || !server_netid || !src.notelist || !src.notelist.len)
+			if (!connected || !netCard || !selected_printer || !server_netid || !src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/computer/file/record/printRecord = new
@@ -464,7 +464,12 @@
 
 		local_print(var/print_title = "Printout")
 			var/obj/item/peripheral/printcard = find_peripheral("LAR_PRINTER")
-			if(!printcard || !src.notelist || !src.notelist.len)
+			if(!printcard)
+				printcard = find_peripheral("NET_ADAPTER") // terminal card
+				if (!istype(printcard, /obj/item/peripheral/network/powernet_card/terminal))
+					return 1
+
+			if(!src.notelist || !length(src.notelist))
 				return 1
 
 			var/datum/signal/signal = get_free_signal()

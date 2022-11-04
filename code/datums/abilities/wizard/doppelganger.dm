@@ -6,9 +6,9 @@
 	cooldown = 300
 	requires_robes = 1
 	restricted_area_check = 1
-	voice_grim = "sound/voice/wizard/DopplegangerGrim.ogg"
-	voice_fem = "sound/voice/wizard/DopplegangerFem.ogg"
-	voice_other = "sound/voice/wizard/DopplegangerLoud.ogg"
+	voice_grim = 'sound/voice/wizard/DopplegangerGrim.ogg'
+	voice_fem = 'sound/voice/wizard/DopplegangerFem.ogg'
+	voice_other = 'sound/voice/wizard/DopplegangerLoud.ogg'
 
 	cast()
 		if(!holder)
@@ -34,23 +34,24 @@
 			var/image/I = X
 			P.overlays += I
 
-		holder.owner.say("GIN EMUS") // ^-- No speech bubble.
+		if(!istype(get_area(holder.owner), /area/sim/gunsim))
+			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
 		..()
 
 		var/turf/curr_turf = get_turf(holder.owner)
 
-		P.dir = the_dir
+		P.set_dir(the_dir)
 		P.set_loc(curr_turf)
 		D.set_loc(curr_turf)
 		holder.owner.set_loc(D)
 
 		if(!ground)
-			SPAWN_DBG(0)
+			SPAWN(0)
 				while(P)
 					step(P, the_dir)
-					sleep(2)
+					sleep(0.2 SECONDS)
 
-		SPAWN_DBG(10 SECONDS)
+		SPAWN(10 SECONDS)
 			holder.owner.set_loc(D.loc)
 			qdel(D)
 			qdel(P)
@@ -59,7 +60,7 @@
 	name = ""
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "nothing"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	var/can_move = 1
 	mouse_opacity = 0
 	density = 0
@@ -94,4 +95,4 @@
 			src.x--
 
 	src.can_move = 0
-	SPAWN_DBG(0.2 SECONDS) src.can_move = 1
+	SPAWN(0.2 SECONDS) src.can_move = 1

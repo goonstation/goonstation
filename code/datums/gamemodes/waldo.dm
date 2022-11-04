@@ -11,10 +11,10 @@
 
 /datum/game_mode/waldo/announce()
 	boutput(world, "<B>The current game mode is - Waldo!</B>")
-	boutput(world, "<B><span style=\"color:red\">A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
+	boutput(world, "<B><span class='alert'>A man named Waldo</span> is likely to be somewhere on the station. You must find him (And beware of any of his compatriots!)</B>")
 
 /datum/game_mode/waldo/pre_setup()
-	var/list/possible_waldos = get_possible_waldos()
+	var/list/possible_waldos = get_possible_enemies(ROLE_MISC, 1)
 
 	if(possible_waldos.len < 1)
 		return 0
@@ -23,7 +23,7 @@
 	for(var/mob/new_player/player in mobs)
 		if (player.client && player.ready) num_players++
 
-	var/num_waldos = max(1, min(round(num_players / 6), waldos_possible))
+	var/num_waldos = clamp(round(num_players / 6), 1, waldos_possible)
 
 	var/list/chosen_waldos = antagWeighter.choose(pool = possible_waldos, role = "waldo", amount = num_waldos, recordChosen = 1)
 	for (var/datum/mind/waldo in chosen_waldos)
@@ -34,15 +34,10 @@
 	return 1
 
 /datum/game_mode/waldo/post_setup()
-	var/num_waldos = waldos.len
-	for (var/obj/landmark/A in landmarks)
-		LAGCHECK(LAG_LOW)
-		if (A.name == "Teleport-Scroll")
-			var/scrollcount
-			for (scrollcount = num_waldos, scrollcount > 0, scrollcount--)
-				new /obj/item/teleportation_scroll(A.loc)
-			A.dispose()
-			continue
+	var/num_waldos = length(waldos)
+	for(var/turf/T in landmarks[LANDMARK_TELEPORT_SCROLL])
+		for(var/scrollcount in 1 to num_waldos)
+			new /obj/item/teleportation_scroll(T)
 	var/k = 1
 	for(var/datum/mind/waldo in waldos)
 		if(!waldo || !istype(waldo))
@@ -55,14 +50,13 @@
 				if(2)
 					waldo.special_role = "odlaw"
 				if(3)
-					waldo.special_role = "wizard"
+					waldo.special_role = ROLE_WIZARD
 			waldo.current.resistances += list(/datum/ailment/disease/dnaspread, /datum/ailment/disease/clowning_around, /datum/ailment/disease/cluwneing_around, /datum/ailment/disease/enobola, /datum/ailment/disease/robotic_transformation)
-			if(wizardstart.len == 0)
-				boutput(waldo.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+			if(!job_start_locations["wizard"])
+				boutput(waldo.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				waldo.current.set_loc(starting_loc)
-			if(waldo.special_role in list("odlaw", "wizard"))
+				waldo.current.set_loc(pick(job_start_locations["wizard"]))
+			if(waldo.special_role in list("odlaw", ROLE_WIZARD))
 				switch(rand(1,100))
 					if(1 to 30)
 						var/datum/objective/assassinate/kill_objective = new
@@ -111,13 +105,13 @@
 				waldo.objectives += escape_objective
 			switch(waldo.special_role)
 				if("waldo")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Waldo!</span></B>")
+					boutput(waldo.current, "<B><span class='alert'>You are Waldo!</span></B>")
 					waldo.current.real_name = "Waldo"
 				if("odlaw")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Odlaw!</span></B>")
+					boutput(waldo.current, "<B><span class='alert'>You are Odlaw!</span></B>")
 					waldo.current.real_name = "Odlaw"
-				if("wizard")
-					boutput(waldo.current, "<B><span style=\"color:red\">You are Wizard Whitebeard!</span></B>")
+				if(ROLE_WIZARD)
+					boutput(waldo.current, "<B><span class='alert'>You are Wizard Whitebeard!</span></B>")
 					waldo.current.real_name = "Wizard Whitebeard"
 			equip_waldo(waldo.current)
 			boutput(waldo.current, "<B>You have come to [station_name()] to carry out the following tasks:</B>")
@@ -128,33 +122,15 @@
 				obj_count++
 
 			if(waldo.special_role == "waldo")
-				boutput(waldo.current, "<span style=\"color:red\"><B><font size=3>WARNING: Being away from the station (ie. in space) will decrement your stealth points! Stay alive on the station!</font></B></span>")
+				boutput(waldo.current, "<span class='alert'><B><font size=3>WARNING: Being away from the station (ie. in space) will decrement your stealth points! Stay alive on the station!</font></B></span>")
 			k++
 //			var/I = image(antag_wizard, loc = waldo.current)
 //			waldo.current.client.images += I
 //			waldo.current << browse('waldo.jpg',"window=some;titlebar=1;size=550x400;can_minimize=0;can_resize=0")
 
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/waldo/proc/get_possible_waldos()
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if((player.client) &&  (player.ready))
-			if(player.client.preferences.be_syndicate)
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		for(var/mob/new_player/player in mobs)
-			if((player.client) && (player.ready))
-				candidates += player.mind
-
-	if(candidates.len < 1)
-		return null
-	else
-		return candidates
 
 /datum/game_mode/waldo/proc/equip_waldo(mob/living/carbon/human/waldo_mob)
 	if (!istype(waldo_mob))
@@ -185,7 +161,7 @@
 				waldo_mob.head.cant_other_remove = 1
 				equip_traitor(waldo_mob)
 
-			if("wizard")
+			if(ROLE_WIZARD)
 				waldo_mob.verbs += /client/proc/invisibility
 				waldo_mob.verbs += /client/proc/mass_teleport
 
@@ -204,7 +180,7 @@
 				waldo_mob.equip_if_possible(new /obj/item/clothing/under/color/white(waldo_mob), waldo_mob.slot_w_uniform)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe(waldo_mob), waldo_mob.slot_wear_suit)
 				waldo_mob.equip_if_possible(new /obj/item/clothing/head/wizard(waldo_mob), waldo_mob.slot_head)
-				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal(waldo_mob), waldo_mob.slot_shoes)
+				waldo_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard(waldo_mob), waldo_mob.slot_shoes)
 				waldo_mob.equip_if_possible(new /obj/item/staff(waldo_mob), waldo_mob.slot_r_hand)
 				waldo_mob.equip_if_possible(new /obj/item/device/pda2/syndicate(waldo_mob), waldo_mob.slot_belt)
 
@@ -261,7 +237,7 @@
 						R:uplink = T
 						T.lock_code = pda_pass
 						T.hostpda = R
-						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ringtone select to unlock its hidden features.")
+						boutput(waldo_mob, "The Space Waldos Federation have cunningly enchanted a spellbook into your PDA [loc_text]. Simply enter the code \"[pda_pass]\" into the ring message select to unlock its hidden features.")
 						waldo_mob.mind.store_memory("<B>Uplink Passcode:</B> [pda_pass] ([R.name] [loc_text]).")
 		waldo_mob.equip_if_possible(new /obj/item/device/radio/headset/syndicate(waldo_mob), waldo_mob.slot_ears)
 		waldo_mob.equip_if_possible(new /obj/item/card/id/syndicate(waldo_mob), waldo_mob.slot_wear_id)
@@ -290,7 +266,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(waldos))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -299,7 +275,7 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		if(! (C.status & (BROKEN|NOPOWER) ) )
 			C.messagetitle.Add("Cent. Com. Status Summary")
 			C.messagetext.Add(intercepttext)
@@ -313,10 +289,10 @@
 		wizcount++
 		if(!W.current || isdead(W.current)) wizdeathcount++
 	if (wizcount == wizdeathcount)
-		if (wizcount >= 2) boutput(world, "<span style=\"color:red\"><FONT size=3><B>Waldo and friends have been killed by the crew!</B></FONT></span>")
-		else boutput(world, "<span style=\"color:red\"><FONT size=3><B>Waldo has been killed by the crew!</B></FONT></span>")
+		if (wizcount >= 2) boutput(world, "<span class='alert'><FONT size=3><B>Waldo and friends have been killed by the crew!</B></FONT></span>")
+		else boutput(world, "<span class='alert'><FONT size=3><B>Waldo has been killed by the crew!</B></FONT></span>")
 	else
-		boutput(world, "<span style=\"color:red\"><font size=3><b>Waldo and friends have survived their stay at [station_name()]!</b></font></span>")
+		boutput(world, "<span class='alert'><font size=3><b>Waldo and friends have survived their stay at [station_name()]!</b></font></span>")
 
 	var/waldo_name
 #ifdef DATALOGGER
@@ -333,9 +309,9 @@
 
 		for(var/datum/objective/objective in W.objectives)
 			if(objective.check_completion())
-				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:green\"><B>Success</B></span>")
+				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='success'><B>Success</B></span>")
 			else
-				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span style=\"color:red\">Failed</span>")
+				boutput(world, "<B>Objective #[count]</B>: [objective.explanation_text] <span class='alert'>Failed</span>")
 #ifdef DATALOGGER
 				waldowin = 0
 #endif

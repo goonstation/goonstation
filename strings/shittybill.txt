@@ -7,9 +7,6 @@ item@=smokes@,jet@,patch@,card@,drugs@,bees@,cats@,hugs@,high fives@,cash@,dosh@
 drugs@=smokes@,smokes@,cats@,bees@,cigs@,ciggs@,weed@,420@,pot@,macho powder@,space drugs@,Omni@,hyper@,stims@,Omega@,Synapse@,lexo@,alky@,stylane@,'roni@,crank@,salts@,krok@,ecto@,beff@,grease@,sweders@,jenkem@,hyro@,kelo@,lepo@,plazzers@,cola@,nog@,argine@,astro@,Cosmos@,taters@,burgle@,soup@,Dan's@,blotters@,hits@,pips@,smuds@,bee food@,'ritos@,serum
 nouns@=wheels@,hog@,hogg@,threads@,treads@,face@,pod@,podd@,burner@,ship@,name@,hair@,karma
 verbs@=ride@,ride@,fly@,jet@,roll@,drink@,smoke@,dance@,wrassle@,grustle@,rap@,rhyme@,dance@,sting@,jam
-stories1@=the time I sold dope to that ice dude@,the time I sold crank to that jellyfish dude@,the weird place with all the monkeys@,the time I found that creepy cave@,the time I got paid to whack someone on that dinosaur station@,the time I found a box full of bees@,the time I found a planet fulla corgis@,the time I found a crate fulla smokes@,the time I found a locker fulla booze@,the time I caught gibbis@,the time I caught Clown's Syndrome@,the time I shot that clown@,the time I was a clown@,the time I helped some weird dudes build some little beepin' robots@,the time I got cloned@,the time I got high with a bee@,my dad@,my grampa@,your dad@,your grampa@,that time I was a werewolf@,the secret Jones told me@,what's really out there@,that smilin' dude@,the time I made a rocket launcher@,the time I poisoned a dude with my own pee@,the time I found an alien thing that made weed@,the time I found an alien thing that got you high@,the time I found an alien thing that killed dudes@,the time I duplicated myself in a magical bar
-stories2@=the time I found an alien thing that went to the bathroom for you@,the time I huffed a whole canister fulla laughing gas@,the time I shaved a wizard@,the day I got fired@,the day the Marties overran our position@,the last day I saw my kids@,my accident@,what Nanotrasen really did in 2051@,what really happened to Jons the Catte@,who really shot the clown@,what Dr. Hieng's real secret was@,that time I lost my shovel@,when I was a grave-digger@,when I found some old keys@,that time I lost my keys@,that time I was in an all-saxophone band@,my secret base@,my secret stash@,that key I found@,that sketchy crown I sold@,the King in Yellow@,lost Carcosa@,that time I fell in some lava@,that room full of statues@,that weird copper fella who just looks at the sun all day@,that time I met some spooky ghosts@,that time I got high with some ghosts@,how I ended up here@,that time I went spelunking@,what really happened in that ice place@,what those Nanotrasen dudes are hiding out there@,why you're really here@,the time with like, ALL the hotdog costumes?
-stories3@=that time I learned Sumerian@,what's really going on out here@,that time some nerd saved me from a massive drone that wouldn't quit starin' at me@,that time I got lost in a station made of meat@,my old buddy David@,that time I knocked out NanoTrasen's central network with a bunch of string@,the terrible secret of juggling@,the time with like ALL the chicken nuggets@,that time I leaked the goon code@,why i'm not allowed to go back to that station full of cat people@,the FBI wanting to know about my farts@,that time some nerd threw a box full of keys into space@,the secret Joan told me@,those nerds who bombed the Vault@,how pissed those NT-SO dudes are lately@,that weird chick from LunaPort@,that dude with the telecrystal hat@,what's really coming@,what the hubbub is all about@,that nifty gauntlet@,what we found in the moon@,that skeevy Jam fella@,my buddy Dave-Dub@,those bitchin' wizard dudes@,what happened to the Vault@,that old haunted factory@,my cat@,Jones the Cat@,what really happened at Outpost Sigma@,that awesome party at Outpost Epsilon@,the rebellion at Outpost Zeta@,that lady from Outpost Theta@,that dude from Outpost Gamma@,that time I got lost on the Moon@,those ancient tomes I found@,the stranger wall@,the Unraveling@,the coming Dawn@,oh, shit, nevermind@,that delivery to Terra 8
 domiss@=Earth@,Mars@,my wife@,my kids@,my dog@,my bee@,my bees@,my plants@,the Belt@,the Cloud@,bein' an operative@,bein' a wizard@,bein' an NT@,bein' a chemist@,bein' a clown@,bein' an atmos tech@,bein' the Head Surgeon@,bein' a salvager@,Alpha Centauri@,Sirius@,Sol@,Luna@,Ganymede@,Europa Station@,the Rings@,the Enterprise@,that round station@,that long station@,that lumpy station@,my ol' station@,my robuddies@,Murray@,my dad@,your dad@,my shovel@,my keys@,my pal David@,that melon guy@,the Vault@,that clockwork fella@,my cat@,my buddy Dave-Dub@,Outpost Zeta@,Outpost Theta@,Outpost Sigma@,Outpost Gamma@,Outpost Epsilon@,you
 dontmiss@=Earth@,Space 'nam@,the wizzers@,the Syndies@,Nano-T@,Mars@,Centcom@,the war@,my wife@,my kids@,the Belt@,the Cloud@,bein' uploaded@,bein' a borg@,bein' an operative@,bein' a wizard@,bein' a Captain@,bein' an NT@,bein' a T.U.R.D@,bein' a chemist@,bein' a clown@,bein' an atmos tech@,bein' the Head Surgeon@,bein' a salvager@,Alpha Centauri@,Sirius@,Sol@,Luna@,Ganymede@,Europa Station@,the Rings@,the Enterprise@,that round station@,that long station@,that lumpy station@,my ol' station@,my dad@,your dad@,nerds bragging about their stations@,lookin' for keys@,that damn ice moon@,those damn ghosts@,that big meaty dude@,that gross meat station place@,that weird ass military bunker@,that old Tower@,the Vault@,the moon@,Outpost Delta@,Outpost Alpha@,Outpost Beta@, Outpost Eta@,Outpost Omega@,the Channel@,my old job@,you
 friends@=bros@,buds@,associates@,bruds@,pals@,homies@,homebros@,crew@,droogs
@@ -17,3 +14,107 @@ friendsactions@=left without me@,took off@,stole my hat@,stole my cat@,left me h
 emotes@=burp@,scream@,twitch@,clap@,fart@,snap@,dance@,whistle
 deadguy@=Oh damn, they got@,Blaze one up for@,Pour one out for@,That's street life for ya@,Well shit, they iced
 murraycompliment@=cool@,rad@,awesome@,fly@,great@,swell
+stories@=
+	the time I sold dope to that ice dude
+	the time I sold crank to that jellyfish dude
+	the weird place with all the monkeys
+	the time I found that creepy cave
+	the time I got paid to whack someone on that dinosaur station
+	the time I found a box full of bees
+	the time I found a planet fulla corgis
+	the time I found a crate fulla smokes
+	the time I found a locker fulla booze
+	the time I caught gibbis
+	the time I caught Clown's Syndrome
+	the time I shot that clown
+	the time I was a clown
+	the time I helped some weird dudes build some little beepin' robots
+	the time I got cloned
+	the time I got high with a bee
+	my dad
+	my grampa
+	your dad
+	your grampa
+	that time I was a werewolf
+	the secret Jones told me
+	what's really out there
+	that smilin' dude
+	the time I made a rocket launcher
+	the time I poisoned a dude with my own pee
+	the time I found an alien thing that made weed
+	the time I found an alien thing that got you high
+	the time I found an alien thing that killed dudes
+	the time I duplicated myself in a magical bar
+	the time I found an alien thing that went to the bathroom for you
+	the time I huffed a whole canister fulla laughing gas
+	the time I shaved a wizard
+	the day I got fired
+	the day the Marties overran our position
+	the last day I saw my kids
+	my accident
+	what Nanotrasen really did in 2051
+	what really happened to Jons the Catte
+	who really shot the clown
+	what Dr. Hieng's real secret was
+	that time I lost my shovel
+	when I was a grave-digger
+	when I found some old keys
+	that time I lost my keys
+	that time I was in an all-saxophone band
+	my secret base
+	my secret stash
+	that key I found
+	that sketchy crown I sold
+	the King in Yellow
+	lost Carcosa
+	that time I fell in some lava
+	that room full of statues
+	that weird copper fella who just looks at the sun all day
+	that time I met some spooky ghosts
+	that time I got high with some ghosts
+	how I ended up here
+	that time I went spelunking
+	what really happened in that ice place
+	what those Nanotrasen dudes are hiding out there
+	why you're really here
+	the time with like, ALL the hotdog costumes?
+	that time I learned Sumerian
+	what's really going on out here
+	that time some nerd saved me from a massive drone that wouldn't quit starin' at me
+	that time I got lost in a station made of meat
+	my old buddy David
+	that time I knocked out NanoTrasen's central network with a bunch of string
+	the terrible secret of juggling
+	the time with like ALL the chicken nuggets
+	that time I leaked the goon code
+	why I'm not allowed to go back to that station full of cat people
+	the FBI wanting to know about my farts
+	that time some nerd threw a box full of keys into space
+	the secret Joan told me
+	those nerds who bombed the Vault
+	how pissed those NT-SO dudes are lately
+	that weird chick from LunaPort
+	that dude with the telecrystal hat
+	what's really coming
+	what the hubbub is all about
+	that nifty gauntlet
+	what we found in the moon
+	that skeevy Jam fella
+	my buddy Dave-Dub
+	those ballin' wizard dudes
+	what happened to the Vault
+	that old haunted factory
+	my cat
+	Jones the Cat
+	what really happened at Outpost Sigma
+	that awesome party at Outpost Epsilon
+	the rebellion at Outpost Zeta
+	that lady from Outpost Theta
+	that dude from Outpost Gamma
+	that time I got lost on the Moon
+	those ancient tomes I found
+	the stranger wall
+	the Unraveling
+	the coming Dawn
+	oh, shit, nevermind
+	that delivery to Terra 8

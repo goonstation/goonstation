@@ -1,12 +1,4 @@
 // Controls the emergency shuttle
-#define SHUTTLE_TRANSIT 1
-
-// these define the time taken for the shuttle to get to SS13
-// and the time before it leaves again
-#define SHUTTLEARRIVETIME 360		// 6 minutes = 360 seconds
-#define SHUTTLELEAVETIME 120		// 2 minutes = 120 seconds
-#define SHUTTLETRANSITTIME 120		// 2 minutes = 120 seconds
-
 var/global/datum/shuttle_controller/emergency_shuttle/emergency_shuttle
 
 datum/shuttle_controller
@@ -21,13 +13,20 @@ datum/shuttle_controller
 	var/list/airbridges = list()
 	var/map_turf = /turf/space //Set in New() by map settings
 	var/transit_turf = /turf/space/no_replace //Not currently modified
-	var/centcom_turf = /turf/unsimulated/outdoors/grass //Not currently modified
+	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //Not currently modified
 
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
 	// otherwise if outgoing, switch to incoming
 	proc/incall()
+		if (emergency_shuttle.disabled == SHUTTLE_CALL_FULLY_DISABLED)
+			message_admins("The shuttle would have been called now, but it has been fully disabled!")
+			return FALSE
+
+		if (!online || direction != 1)
+			playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
+
 		if (online)
 			if(direction == -1)
 				setdirection(1)
@@ -35,10 +34,13 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		ircbot.event("shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+
+		return TRUE
 
 	proc/recall()
 		if (online && direction == 1)
+			playsound_global(world, 'sound/misc/shuttle_recalled.ogg', 100)
 			setdirection(-1)
 			ircbot.event("shuttlerecall", src.timeleft())
 
@@ -76,7 +78,7 @@ datum/shuttle_controller
 
 		New()
 			..()
-			for (var/obj/machinery/computer/airbr/S in airbridgeComputers)
+			for_by_tcl(S, /obj/machinery/computer/airbr)
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf
@@ -97,7 +99,7 @@ datum/shuttle_controller
 
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
-						if (ticker && ticker.mode)
+						if (ticker?.mode)
 							if (ticker.mode.shuttle_available == 0)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
@@ -125,12 +127,8 @@ datum/shuttle_controller
 						var/eastBound = 1
 
 						for (var/atom/A as obj|mob in end_location)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								A.ex_act(1)
-
-						for (var/turf/P in start_location)
-							if (istype(P, centcom_turf))
-								new map_turf(P)
 
 						end_location.color = null //Remove the colored shuttle!
 
@@ -142,7 +140,7 @@ datum/shuttle_controller
 							if (T.x > eastBound) eastBound = T.x
 
 						// hey you, get out of the way!
-						var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
+						var/shuttle_dir = map_settings ? map_settings.escape_dir : SOUTH
 						for (var/turf/T in dstturfs)
 							// find the turf to move things to
 							var/turf/D = locate(shuttle_dir == EAST ? eastBound + 1 : T.x, // X
@@ -151,24 +149,28 @@ datum/shuttle_controller
 							for (var/atom/movable/AM as mob|obj in T)
 								if (isobserver(AM))
 									continue // skip ghosties
+								if (istype(AM, /obj/overlay/tile_effect))
+									continue
+								if (istype(AM, /obj/effects/precipitation))
+									continue
 								AM.set_loc(D)
 								// NOTE: Commenting this out to avoid recreating mass driver glitch
 								/*
-								SPAWN_DBG(0)
+								SPAWN(0)
 									AM.throw_at(E, 1, 1)
 									return
 								*/
 
-							if (istype(T, /turf/simulated))
-								T.ReplaceWithSpace()
+						var/filler_turf = text2path(start_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
+						start_location.move_contents_to(end_location, filler_turf, turf_to_skip=/turf/unsimulated/floor/shuttlebay)
+						for (var/turf/P in end_location)
+							if (istype(P, filler_turf))
+								P.ReplaceWith(map_turf, keep_old_material = 0, force=1)
 
-						start_location.move_contents_to(end_location, centcom_turf)
+
 						settimeleft(SHUTTLELEAVETIME)
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
 
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
@@ -176,7 +178,7 @@ datum/shuttle_controller
 
 						boutput(world, "<B>The Emergency Shuttle has docked with the station! You have [timeleft()/60] minutes to board the Emergency Shuttle.</B>")
 						ircbot.event("shuttledock")
-						world << csound("sound/misc/shuttle_arrive1.ogg")
+						playsound_global(world, 'sound/misc/shuttle_arrive1.ogg', 100)
 
 						processScheduler.enableProcess("Fluid_Turfs")
 
@@ -223,7 +225,7 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(1)
 								D.locked = 1
-								D.update_icon()
+								D.UpdateIcon()
 
 						for (var/atom/A in start_location)
 							if(istype( A, /obj/stool ))
@@ -231,22 +233,21 @@ datum/shuttle_controller
 								if( !O.anchored )
 									var/atom/target = get_edge_target_turf(O, pick(alldirs))
 									if( O.buckled_guy )
-										boutput( O.buckled_guy, "<span style='color:red'>The [O] shoots off due to being unsecured!</span>" )
+										boutput( O.buckled_guy, "<span class='alert'>The [O] shoots off due to being unsecured!</span>" )
 										O.unbuckle()
 									if( target )
-										SPAWN_DBG(0)
-											O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
+										O.throw_at( target, 25, 1 )//dear god I am sorry in advance for doing this
 							else if(istype( A, /mob ))
 								var/mob/M = A
-								shake_camera(M, 32, 4)
+								shake_camera(M, 32, 32)
 								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
-								SPAWN_DBG(1 DECI SECOND)
+								SPAWN(1 DECI SECOND)
 									var/bonus_stun = 0
 									if (ishuman(M))
 										var/mob/living/carbon/human/H = M
-										bonus_stun = (H && H.buckled && H.on_chair)
+										bonus_stun = (H?.buckled && H.on_chair)
 										//DEBUG_MESSAGE("[M] is human and bonus_stun is [bonus_stun]")
 									if (!M.buckled || bonus_stun)
 										M.changeStatus("stunned", 2 SECONDS)
@@ -254,45 +255,34 @@ datum/shuttle_controller
 
 										if (prob(50) || bonus_stun)
 											var/atom/target = get_edge_target_turf(M, pick(alldirs))
-											SPAWN_DBG(0)
-												if (target)
-													if (M.buckled) M.buckled.unbuckle()
-													M.throw_at(target, 25, 1)
-													if (bonus_stun)
-														M.changeStatus("paralysis", 60)
-														M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-														M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
+											if (target)
+												if (M.buckled) M.buckled.unbuckle()
+												M.throw_at(target, 25, 1)
+												if (bonus_stun)
+													M.changeStatus("paralysis", 6 SECONDS)
+													M.playsound_local(target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+													M.show_text("You are thrown off the chair! [prob(50) ? "Standing on that during takeoff was a terrible idea!" : null]", "red")
 
 										if (!bonus_stun)
 											M.show_text("You are thrown about as the shuttle launches due to not being securely buckled in!", "red")
-
-						for (var/turf/O in start_location)
-							if (istype(O, map_turf))
-								new transit_turf(O)
 
 						var/area/shuttle_particle_spawn/particle_spawn = locate(/area/shuttle_particle_spawn) in world
 						if (particle_spawn)
 							particle_spawn.start_particles()
 
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
+						DEBUG_MESSAGE("Now moving shuttle!")
+						start_location.move_contents_to(end_location, map_turf, turf_to_skip=list(/turf/simulated/floor/plating, src.map_turf))
 
-						SPAWN_DBG(0)
-							var/shuttle_dir = map_settings ? map_settings.escape_dir : EAST // default to cog2 direction because EH
-							for (var/obj/landmark/L in escape_pod_success)
-								if (L.dir != shuttle_dir)
-									escape_pod_success -= L //leave behind only landmarks that match our dir
+						if(station_repair.station_generator)
+							var/list/turf/turfs_to_fix = get_area_turfs(start_location)
+							if(length(turfs_to_fix))
+								station_repair.repair_turfs(turfs_to_fix)
 
-
-							DEBUG_MESSAGE("Now moving shuttle!")
-							start_location.move_contents_to(end_location, map_turf)
-							DEBUG_MESSAGE("Done moving shuttle!")
-							settimeleft(SHUTTLETRANSITTIME)
-							boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
-							world << csound("sound/misc/shuttle_enroute.ogg")
-							//online = 0
+						DEBUG_MESSAGE("Done moving shuttle!")
+						settimeleft(SHUTTLETRANSITTIME)
+						boutput(world, "<B>The Emergency Shuttle has left for CentCom! It will arrive in [timeleft()/60] minute[s_es(timeleft()/60)]!</B>")
+						playsound_global(world, 'sound/misc/shuttle_enroute.ogg', 100)
+						//online = 0
 
 						return 1
 
@@ -312,22 +302,19 @@ datum/shuttle_controller
 							if (istype(D, door_type))
 								D.set_density(0)
 								D.locked = 0
-								D.update_icon()
+								D.UpdateIcon()
 
-						for (var/turf/G in start_location)
+						var/filler_turf = text2path(end_location.filler_turf)
+						if (!filler_turf)
+							filler_turf = centcom_turf
+						start_location.move_contents_to(end_location, transit_turf, turf_to_skip=/turf/space)
+						for (var/turf/G in end_location)
 							if (istype(G, transit_turf))
-								new centcom_turf(G)
-
-						start_location.move_contents_to(end_location, transit_turf)
-						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
-						world << csound("sound/misc/shuttle_centcom.ogg")
-						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
+								G.ReplaceWith(filler_turf, keep_old_material = 0, force=1)
+						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
+						playsound_global(world, 'sound/misc/shuttle_centcom.ogg', 100)
+						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
 
 						location = SHUTTLE_LOC_RETURNED
 						return 1
@@ -343,22 +330,14 @@ datum/shuttle_controller
 						var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
 						var/area/end_location = locate(map_settings ? map_settings.escape_centcom : /area/shuttle/escape/centcom)
 
-						for (var/turf/O in start_location)
-							if (istype(O, transit_turf))
-								new centcom_turf(O)
-
 						start_location.move_contents_to(end_location, map_turf)
-						boutput(world, "<B>The Emergency Shuttle has arrived at CentCom!")
-						logTheThing("station", null, null, "The emergency shuttle has arrived at Centcom.")
+						for (var/turf/O in end_location)
+							if (istype(O, transit_turf))
+								O.ReplaceWith(centcom_turf, keep_old_material = 0, force=1)
+						boutput(world, "<BR><B>The Emergency Shuttle has arrived at CentCom!")
+						logTheThing(LOG_STATION, null, "The emergency shuttle has arrived at Centcom.")
 						online = 0
-
-						#ifdef UNDERWATER_MAP
-						end_location.force_fullbright = 1
-						end_location.update_fullbright()
-						#endif
-
 						return 1
-
 				else
 					return 1
 #endif

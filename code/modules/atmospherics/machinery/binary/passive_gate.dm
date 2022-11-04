@@ -34,8 +34,8 @@ obj/machinery/atmospherics/binary/passive_gate
 		if(!on)
 			return 0
 
-		var/output_starting_pressure = air2.return_pressure()
-		var/input_starting_pressure = air1.return_pressure()
+		var/output_starting_pressure = MIXTURE_PRESSURE(air2)
+		var/input_starting_pressure = MIXTURE_PRESSURE(air1)
 
 		if(output_starting_pressure >= min(target_pressure,input_starting_pressure-10))
 			//No need to pump gas if target is already reached or input pressure is too low
@@ -43,7 +43,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			return 1
 
 		//Calculate necessary moles to transfer using PV = nRT
-		if((air1.total_moles() > 0) && (air1.temperature>0))
+		if((TOTAL_MOLES(air1) > 0) && (air1.temperature>0))
 			var/pressure_delta = min(target_pressure - output_starting_pressure, (input_starting_pressure - output_starting_pressure)/2)
 			//Can not have a pressure delta that would cause output_pressure > input_pressure
 
@@ -53,8 +53,7 @@ obj/machinery/atmospherics/binary/passive_gate
 			var/datum/gas_mixture/removed = air1.remove(transfer_moles)
 			air2.merge(removed)
 
-			if(network1)
-				network1.update = 1
+			network1?.update = 1
 
 			if(network2)
 				network2.update = 1
@@ -82,7 +81,7 @@ datum/pump_ui/passive_gate_ui/set_value(val)
 
 datum/pump_ui/passive_gate_ui/toggle_power()
 	our_gate.on = !our_gate.on
-	our_gate.update_icon()
+	our_gate.UpdateIcon()
 
 datum/pump_ui/passive_gate_ui/is_on()
 	return our_gate.on

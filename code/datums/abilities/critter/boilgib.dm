@@ -13,7 +13,7 @@
 			return 1
 		var/mob/ow = holder.owner
 
-		if(alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?",,"Yes","No") == "No")
+		if(tgui_alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?", "Blood boil", list("Yes","No")) != "Yes")
 			return
 
 		for (var/turf/splat in view(2,ow.loc))
@@ -21,7 +21,7 @@
 				var/obj/decal/cleanable/blood/B = make_cleanable(/obj/decal/cleanable/blood,splat)
 				B.sample_reagent = "bloodc"
 
-		ow.visible_message(text("<span style=\"color:red\"><B>[holder.owner] boils and bursts open violently!</B></span>"))
+		ow.visible_message(text("<span class='alert'><B>[holder.owner] boils and bursts open violently!</B></span>"))
 
 		var/dmg = 20
 		//Increase the power of the boilgib if we have collected DNA!
@@ -32,11 +32,11 @@
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if(istype(H.wear_suit, /obj/item/clothing/suit/bio_suit) && istype(H.head, /obj/item/clothing/head/bio_hood))
-						boutput(M, "<span style=\"color:blue\">You are sprayed with blood, but your biosuit protects you!</span>")
+						boutput(M, "<span class='notice'>You are sprayed with blood, but your biosuit protects you!</span>")
 						continue
 				M.emote("scream")
 				M.TakeDamage("chest", 0, dmg, 0, DAMAGE_BURN)
 				if (M.reagents)
 					M.reagents.add_reagent("bloodc", dmg, null, T0C)
-				boutput(M, "<span style=\"color:red\">You are sprayed with sizzling hot blood!</span>")
+				boutput(M, "<span class='alert'>You are sprayed with sizzling hot blood!</span>")
 		ow.gib()

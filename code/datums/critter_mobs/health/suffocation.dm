@@ -17,7 +17,7 @@
 	var/fart_smell_min = 1
 	var/fart_vomit_min = 10
 	var/fart_choke_min = 15
-	
+
 
 	var/o2_damage = 0
 	var/co2_damage = 0
@@ -26,7 +26,6 @@
 	count_in_total = 1
 	maximum_value = 0
 	value = 0
-	minimum_value = -200
 	depletion_threshold = -200
 
 	var/prime_breathing = "o"
@@ -37,14 +36,16 @@
 	proc/gain_breath(var/amt)
 		lose_breath(-amt)
 
+
+	//possibly not needed with new lifeprocess - didnt test tho lol
 	on_life()
 		var/atom/loc = holder.loc
 		var/datum/gas_mixture/environment = loc.return_air()
 		var/datum/gas_mixture/breath = null
 		if (istype(loc, /turf))
-			breath = loc.remove_air(environment.total_moles() * BREATH_PERCENTAGE)
+			breath = loc.remove_air(TOTAL_MOLES(environment) * BREATH_PERCENTAGE)
 		if (holder.does_it_metabolize())
-			if (holder.reagents.has_reagent("lexorin"))
+			if (holder.reagents.has_reagent("lexorin") || HAS_ATOM_PROPERTY(holder, PROP_MOB_REBREATHING))
 				gain_breath(2)
 				return
 		if (istype(loc, /obj/))
@@ -52,11 +53,11 @@
 			location_as_object.handle_internal_lifeform(src, breath ? 0 : volume)
 		var/breathing = 0
 		if (isnull(breath)) return //ZeWaka: fix for null.total_moles
-		var/breath_pressure = (breath.total_moles() * R_IDEAL_GAS_EQUATION * breath.temperature) / volume
-		if (breath && breath.total_moles() > 0)
-			var/o2_pp = (breath.oxygen / breath.total_moles()) * breath_pressure
-			var/toxins_pp = (breath.toxins / breath.total_moles()) * breath_pressure
-			var/co2_pp = (breath.carbon_dioxide / breath.total_moles()) * breath_pressure
+		var/breath_pressure = (TOTAL_MOLES(breath) * R_IDEAL_GAS_EQUATION * breath.temperature) / volume
+		if (breath && TOTAL_MOLES(breath) > 0)
+			var/o2_pp = (breath.oxygen / TOTAL_MOLES(breath)) * breath_pressure
+			var/toxins_pp = (breath.toxins / TOTAL_MOLES(breath)) * breath_pressure
+			var/co2_pp = (breath.carbon_dioxide / TOTAL_MOLES(breath)) * breath_pressure
 			if (((oxygen_min > 0 && oxygen_min <= o2_pp) || oxygen_min <= 0) && ((oxygen_max > 0 && oxygen_max >= o2_pp) || oxygen_max <= 0))
 				if (prime_breathing == "o")
 					breathing = 1
@@ -100,44 +101,43 @@
 				else
 					TakeDamage(3 + toxin_damage)
 
-			if (breath.trace_gases && breath.trace_gases.len)	// If there's some other shit in the air lets deal with it here.
-				for (var/datum/gas/sleeping_agent/SA in breath.trace_gases)
-					var/SA_pp = (SA.moles/breath.total_moles())*breath_pressure
+			if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
+				var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
+				if(SA)
+					var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
 					if (SA_pp > sa_para_min) // Enough to make us paralysed for a bit
-						holder.changeStatus("paralysis", 30)
+						holder.changeStatus("paralysis", 3 SECONDS)
 						if (SA_pp > sa_sleep_min) // Enough to make us sleep as well
 							holder.sleeping = max(holder.sleeping, 2)
 					else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 						if (prob(20))
 							holder.emote(pick("giggle", "laugh"))
-				for (var/datum/gas/rad_particles/RV in breath.trace_gases)
-					holder.changeStatus("radiation", RV.moles,  2)
-				for (var/datum/gas/farts/FARD in breath.trace_gases)
-					var/FARD_pp = (FARD.moles/breath.total_moles())*breath_pressure
-					if (prob(10) && (FARD_pp > fart_smell_min))
-						boutput(holder, "<span style=\"color:red\">Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
-						if ((FARD_pp > fart_vomit_min) && prob(50))
-							holder.visible_message("<span style=\"color:blue\">[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-							holder.vomit()
-					if (FARD_pp > fart_choke_min)
-						TakeDamage(3 + o2_damage)
-						o2_damage++
-						if (prob(20))
-							holder.emote("cough")
+
+			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
+			if (prob(10) && (FARD_pp > fart_smell_min))
+				boutput(holder, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
+				if ((FARD_pp > fart_vomit_min) && prob(50))
+					holder.visible_message("<span class='notice'>[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>")
+					holder.vomit()
+			if (FARD_pp > fart_choke_min)
+				TakeDamage(3 + o2_damage)
+				o2_damage++
+				if (prob(20))
+					holder.emote("cough")
 
 
 
 
 			if (breath.temperature > heat_tolerance && !holder.is_heat_resistant())
 				if (prob(20))
-					boutput(holder, "<span style=\"color:red\">You feel a searing heat in the air!</span>")
+					boutput(holder, "<span class='alert'>You feel a searing heat in the air!</span>")
 				holder.TakeDamage("chest", 0, min((breath.temperature - heat_tolerance) / 3, 10) + 6)
 				// this part is shit and probably should be purged, but generalizing hud might be unwanted
 				var/mob/living/critter/C = holder
 				if (istype(C))
 					C.hud.set_breathing_fire(1)
 				if (prob(4))
-					boutput(holder, "<span style=\"color:red\">Your lungs hurt like hell! This can't be good!</span>")
+					boutput(holder, "<span class='alert'>Your lungs hurt like hell! This can't be good!</span>")
 			else
 				var/mob/living/critter/C = holder
 				if (istype(C))

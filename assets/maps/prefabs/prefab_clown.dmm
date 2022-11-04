@@ -1,18 +1,83 @@
-"a" = (/turf/simulated/wall/asteroid{icon_state = "ast1"},/area/noGenerate)
-"b" = (/obj/decal/cleanable/cobweb,/obj/item/material_piece/cloth/spidersilk,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"c" = (/obj/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"d" = (/obj/critter/spider/clown,/obj/decal/cleanable/cobweb2,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"e" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"f" = (/obj/critter/spider/clownqueen,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"g" = (/obj/item/material_piece/cloth/spidersilk,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"h" = (/obj/critter/spider/clown,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"i" = (/obj/decal/cleanable/vomit/spiders,/obj/item/reagent_containers/food/snacks/plant/banana,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"j" = (/obj/decal/cleanable/dirt,/obj/item/bananapeel,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall/auto/asteroid{
+	icon_state = "ast1"
+	},
+/area/noGenerate)
+"b" = (
+/obj/decal/cleanable/cobweb,
+/obj/item/material_piece/cloth/spidersilk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"c" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/clown,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"d" = (
+/mob/living/critter/spider/clown,
+/obj/decal/cleanable/cobweb2,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"e" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"f" = (
+/mob/living/critter/spider/clownqueen,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"g" = (
+/obj/item/material_piece/cloth/spidersilk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"h" = (
+/mob/living/critter/spider/clown,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"i" = (
+/obj/decal/cleanable/vomit/spiders,
+/obj/item/reagent_containers/food/snacks/plant/banana,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"j" = (
+/obj/decal/cleanable/dirt,
+/obj/item/bananapeel,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaa
-abcda
-aefga
-ahcia
-aajaa
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+b
+e
+h
+a
+"}
+(3,1,1) = {"
+a
+c
+f
+c
+j
+"}
+(4,1,1) = {"
+a
+d
+g
+i
+a
+"}
+(5,1,1) = {"
+a
+a
+a
+a
+a
 "}

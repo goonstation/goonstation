@@ -31,7 +31,7 @@
 				var/obj/machinery/disposal/mail/mail_chute = D
 
 				mail_chute.Topic("?rescan=1", params2list("rescan=1"))
-				SPAWN_DBG(2 SECONDS)
+				SPAWN(2 SECONDS)
 					for(var/dest in mail_chute.destinations)
 						var/obj/item/disposal_test_dummy/mail_test/MD = new /obj/item/disposal_test_dummy/mail_test(mail_chute, sleep_time)
 						MD.source_disposal = mail_chute
@@ -47,7 +47,7 @@
 			TD.expected_y = expected_y
 			dummy_list.Add(TD)
 			TD.source_disposal = D
-			SPAWN_DBG(0)
+			SPAWN(0)
 				D.flush()
 
 	message_coders("test_disposal_system() sleeping [sleep_time] and spawned [dummy_list.len] dummies")
@@ -74,7 +74,7 @@
 	New(var/atom/loc, var/TTL=0)
 		..(loc)
 		if(TTL)
-			SPAWN_DBG(TTL)
+			SPAWN(TTL)
 				die()
 
 	proc/report_fail()
@@ -97,7 +97,7 @@
 	destination_disposal = locate(/obj/machinery/disposal/mail) in src.loc
 	if(destination_disposal && destination_disposal.mail_tag == destination_tag)
 		success = 1
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		die()
 	..()
 
@@ -122,8 +122,8 @@
 	if (!wagesystem)
 		return
 	wagesystem.clones_for_cash = !(wagesystem.clones_for_cash)
-	logTheThing("admin", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
-	logTheThing("diary", usr, null, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
+	logTheThing(LOG_ADMIN, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].")
+	logTheThing(LOG_DIARY, usr, "toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"].", "admin")
 	message_admins("[key_name(usr)] toggled monetized cloning [wagesystem.clones_for_cash ? "on" : "off"]")
 	boutput(world, "<b>Cloning now [wagesystem.clones_for_cash ? "requires" : "does not require"] money.</b>")
 
@@ -161,10 +161,9 @@
 			src.reagents.add_reagent(src.initial_reagent, 5)
 
 	equipped(var/mob/user, var/slot)
-		if (slot == "mask" && istype(user))
+		if (slot == SLOT_WEAR_MASK && istype(user))
 			src.chewer = user
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if (src.reagents && !src.reagents.total_volume)
 				user.show_text("Looks like [src] has lost its flavor, darn.")
 		return ..()
@@ -183,8 +182,8 @@
 				src.spam_flag = src.spam_timer
 				if (src.reagents && src.reagents.total_volume)
 					src.reagents.reaction(src.chewer, INGEST, chew_size)
-					SPAWN_DBG (0)
-						if (src && src.reagents && src.chewer && src.chewer.reagents)
+					SPAWN(0)
+						if (src?.reagents && src.chewer?.reagents)
 							src.reagents.trans_to(src.chewer, min(reagents.total_volume, chew_size))
 			else if (src.spam_flag)
 				src.spam_flag--
@@ -205,12 +204,19 @@
 	name = "feather"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "feather"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	p_class = 1
 	burn_point = 220
 	burn_output = 300
 	burn_possible = 1
 	rand_pos = 1
+
+	attack(mob/M, mob/user)
+		src.add_fingerprint(user)
+		if (user.zone_sel.selecting == "head")
+			M.emote("sneeze")
+		else
+			M.emote(pick("giggle", "laugh"))
 
 var/list/parrot_species = list("eclectus" = /datum/species_info/parrot/eclectus,
 	"eclectusf" = /datum/species_info/parrot/eclectus/female,
@@ -466,12 +472,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /datum/projectile/special/paintball
 	name = "red paintball"
 	icon_state = "paintball-r"
-	icon_turf_hit = "paint-r"
+	impact_image_state = "paint-r"
 	power = 1
 	cost = 1
 	dissipation_rate = 1
 	dissipation_delay = 0
-	ks_ratio = 1.0
+	ks_ratio = 1
 	sname = "red"
 	shot_sound = 'sound/impact_sounds/Generic_Stab_1.ogg'
 	shot_number = 1
@@ -483,8 +489,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	sname = "paintball"
 	name = "paintball jug"
 	icon_state = "357-2"
-	amount_left = 4.0
-	max_amount = 4.0
+	amount_left = 4
+	max_amount = 4
 	ammo_type = new/datum/projectile/special/paintball
 	caliber = 42069
 	icon_dynamic = 1
@@ -520,11 +526,11 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/pip_color = "#FFFFFF" // only set to other colors by white 50c chips atm but may as well make it a var because ~variety~
 	var/image/image_pip = null
 	var/value = 1
-	force = 2.0
-	throwforce = 2.0
+	force = 2
+	throwforce = 2
 	throw_speed = 1
 	throw_range = 8
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	amount = 1
 	max_stack = 20
 
@@ -548,31 +554,31 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		src.UpdateOverlays(src.image_pip, "pip")
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style='color:blue'>[user] is stacking [src.real_name]s!</span>")
+		user.visible_message("<span class='notice'>[user] is stacking [src.real_name]s!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:blue'>You finish stacking [src.real_name]s.</span>")
+		boutput(user, "<span class='notice'>You finish stacking [src.real_name]s.</span>")
 
 	failed_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style='color:red'>You need another stack!</span>")
+		boutput(user, "<span class='alert'>You need another stack!</span>")
 
-	attackby(var/obj/item/I as obj, mob/user as mob)
+	attackby(var/obj/item/I, mob/user)
 		if (istype(I, /obj/item/dice/coin/poker_chip) && src.amount < src.max_stack)
-			user.visible_message("<span style='color:blue'>[user] stacks some [src.real_name]s.</span>")
+			user.visible_message("<span class='notice'>[user] stacks some [src.real_name]s.</span>")
 			src.stack_item(I)
 		else
 			..(I, user)
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if ((user.l_hand == src || user.r_hand == src) && user.equipped() != src)
 			var/amt = src.amount == 2 ? 1 : round(input("How many [src.real_name]s do you want to take from the stack?") as null|num)
 			if (amt && src.loc == user && !user.equipped())
 				if (amt > src.amount || amt < 1)
-					boutput(user, "<span style='color:red'>You wish!</span>")
+					boutput(user, "<span class='alert'>You wish!</span>")
 					return
 				src.change_stack_amount(0 - amt)
 				var/obj/item/dice/coin/poker_chip/P = new src.type(user.loc)
-				P.attack_hand(user)
+				P.Attackhand(user)
 		else
 			..(user)
 
@@ -831,7 +837,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.hand_dealer -= Card
 		src.cards = shuffle(src.cards)
 
-	proc/update_icon()
+	update_icon()
 		if (!src.overlay_light)
 			src.overlay_light = image('icons/obj/objects.dmi', "BJ-light")
 		src.overlays -= src.overlay_light
@@ -860,7 +866,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			randomize_look(src)
 			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
 			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, slot_w_uniform)
@@ -874,7 +880,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/my_mutation = pick("accent_elvis", "stutter", "accent_chav", "accent_swedish", "accent_tommy", "unintelligable", "slurring")
 			src.bioHolder.AddEffect(my_mutation)
 
-	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0)
+	was_harmed(var/mob/M as mob, var/obj/item/weapon = 0, var/special = 0, var/intent = null)
+		. = ..()
 		src.protect_from(M, null, weapon)
 
 	proc/protect_from(var/mob/M as mob, var/mob/customer as mob, var/obj/item/weapon as obj)
@@ -902,7 +909,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			if (!customer || customer == src) // they're doing shit to us
 				src.im_mad += 50 // we're double mad
 
-		SPAWN_DBG(rand(10, 30))
+		SPAWN(rand(10, 30))
 			src.yell_at(M, customer)
 
 	proc/yell_at(var/mob/M as mob, var/mob/customer as mob) // blatantly stolen from NPC assistants and then hacked up
@@ -928,7 +935,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			"I hope you don't like how your face looks, [target_name], cause it's about to get rearranged!",\
 			"I told you to [pick("stop that shit", "cut that shit out")], and you [pick("ain't", "didn't", "didn't listen")]! [pick("So now", "It's time", "And now", "Ypu best not be suprised that")] you're gunna [pick("reap what you sewed", "get it", "get what's yours", "get what's comin' to you")]!")
 			src.target = M
-			src.ai_state = 2
+			src.ai_state = AI_ATTACKING
 			src.ai_threatened = world.timeofday
 			src.ai_target = M
 			src.im_mad = 0
@@ -980,7 +987,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			walk_towards(src,null)
 			return 1
 
-		else if (get_dist(src, M) >= 5)
+		else if (GET_DIST(src, M) >= 5)
 			var/insult = pick("fucker", "fuckhead", "shithead", "shitface", "shitass", "asshole")
 			var/targ = pick("", ", [target_name]", ", [insult]", ", you [insult]")
 
@@ -1000,7 +1007,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	ai_action()
 		src.ai_check_grabs()
-		if (src.ai_state == 2 && src.done_with_you(src.ai_target))
+		if (src.ai_state == AI_ATTACKING && src.done_with_you(src.ai_target))
 			return
 		else
 			return ..()
@@ -1010,22 +1017,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			var/obj/item/grab/G = H.find_type_in_hand(/obj/item/grab)
 			if (!G)
 				return 0
-/*
-			if (G.affecting in npc_protected_mobs)
-				if (G.state == 1)
-					src.im_mad += 5
-				else if (G.state == 2)
-					src.im_mad += 20
-				else if (G.state == 3)
-					src.im_mad += 50
-				return 1
-*/
+
 			if (G.affecting == src) // we won't put up with shit being done to us nearly as much as we'll put up with it for others
-				if (G.state == 1)
+				if (G.state == GRAB_STRONG)
 					src.im_mad += 20
-				else if (G.state == 2)
+				else if (G.state == GRAB_AGGRESSIVE)
 					src.im_mad += 60
-				else if (G.state == 3)
+				else if (G.state == GRAB_CHOKE)
 					src.im_mad += 100
 				return 1
 
@@ -1087,8 +1085,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	item_state = "sailormoon"
 
 /obj/item/clothing/head/sailormoon
-	name = "hair clips"
-	desc = "Shiny red hair clips to keep your hair in a very specific style and are about useless for anything else."
+	name = "red hairclips"
+	desc = "Shiny red hairclips to keep your hair in a very specific style and are about useless for anything else."
 	icon_state = "sailormoon"
 
 /obj/item/clothing/glasses/sailormoon
@@ -1100,6 +1098,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	throw_speed = 1
 	throw_return = 1
 	throw_spin = 0
+	wear_layer = MOB_GLASSES_LAYER2
 
 	throw_begin(atom/target) // all stolen from the boomerang heh
 		icon_state = "sailormoon1"
@@ -1108,7 +1107,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usr.say("MOON TIARA ACTION!")
 		return ..(target)
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "sailormoon"
 		if (hit_atom == usr)
 			if (ishuman(usr))
@@ -1116,7 +1115,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				if (!usagi.equip_if_possible(src, usagi.slot_glasses))
 					usagi.put_in_hand_or_drop(src)
 			else
-				src.attack_hand(usr)
+				src.Attackhand(usr)
 			return
 		return ..(hit_atom)
 
@@ -1135,7 +1134,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little golden brooch that makes you feel compelled to yell silly things."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "moonbrooch"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/activated = 0
 
 	verb/moon_prism_power()
@@ -1150,8 +1149,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			usagi.say("MOON PRISM POWER, MAKE UP!")
 			src.activated = 1
 			for (var/i = 0, i < 4, i++)
-				usagi.dir = turn(usagi.dir, -90)
-				sleep(2)
+				usagi.set_dir(turn(usagi.dir, -90))
+				sleep(0.2 SECONDS)
 			usagi.sailormoon_reshape()
 			var/obj/critter/cat/luna = new /obj/critter/cat (usagi.loc)
 			luna.name = "Luna"
@@ -1170,12 +1169,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	item_state = "moonstick"
 	flags = FPRINT | TABLEPASS | ONBELT
-	force = 2.0
-	w_class = 2.0
-	throwforce = 2.0
+	force = 2
+	w_class = W_CLASS_SMALL
+	throwforce = 2
 	throw_speed = 3
 	throw_range = 5
-	stamina_damage = 3
+	stamina_damage = 15
 	stamina_cost = 3
 	stamina_crit_chance = 15
 	abilities = list(/obj/ability_button/sailormoon_heal)
@@ -1187,16 +1186,16 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	ability_allowed()
 		if (!the_mob || the_mob.stat || the_mob.getStatusDuration("paralysis"))
-			boutput(the_mob, "<span style='color:red'>You are incapacitated.</span>")
+			boutput(the_mob, "<span class='alert'>You are incapacitated.</span>")
 			return 0
 
 		if (ishuman(the_mob))
 			var/mob/living/carbon/human/usagi = the_mob
 			if (!(istype(usagi.w_uniform, /obj/item/clothing/under/gimmick/sailormoon)))
-				boutput(the_mob, "<span style='color:red'>Your clothes don't feel magical enough to use this.</span>")
+				boutput(the_mob, "<span class='alert'>Your clothes don't feel magical enough to use this.</span>")
 				return 0
 			if (!usagi.find_in_hand(the_item))
-				boutput(the_mob, "<span style='color:red'>You have to be holding [the_item] to use this.</span>")
+				boutput(the_mob, "<span class='alert'>You have to be holding [the_item] to use this.</span>")
 				return 0
 
 		if (!..())
@@ -1208,7 +1207,6 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		the_mob.say("MOON HEALING ESCALATION!")
 		for (var/mob/living/L in range(4, the_mob))
 			L.HealDamage("All", 50, 50)
-			L.updatehealth()
 			blink(get_turf(L))
 		icon_state = "shieldceoff"
 		return 1
@@ -1220,7 +1218,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 /mob/living/carbon/human/proc/sailormoon_reshape() // stolen from Spy's tommyize stuff
 	var/datum/appearanceHolder/AH = new
 	AH.gender = "female"
-	AH.customization_first = "Sailor Moon"
+	AH.customization_first = new /datum/customization_style/hair/gimmick/sailor_moon
 	AH.customization_first_color = "#FFD700"
 	AH.owner = src
 	AH.parentHolder = src.bioHolder
@@ -1244,8 +1242,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
-	SPAWN_DBG(1 SECOND)
-		src.bioHolder.mobAppearance.UpdateMob()
+		src.update_colorful_parts()
 
 /* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
 /*-=-=-=-=-=-=-=-=-=-=-=-=-+MISCSTUFF+-=-=-=-=-=-=-=-=-=-=-=-=-*/
@@ -1262,39 +1259,42 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
-	force = 3.0
-	w_class = 1.0
-	throwforce = 5.0
+	force = 3
+	w_class = W_CLASS_TINY
+	throwforce = 5
 	throw_speed = 3
 	throw_range = 5
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 35
 
-	attack(mob/living/carbon/M as mob, mob/user as mob)
-		if (!ismob(M) || !M.contents.len)
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_KNIFE)
+
+	attack(mob/living/carbon/M, mob/user)
+		if (!ismob(M) || !length(M.contents))
 			return ..()
 		var/atom/movable/AM = pick(M.contents)
 		if (!AM)
 			return ..()
-		user.visible_message("<span style='color:red'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
-		playsound(get_turf(M), src.hitsound, 50, 1)
+		user.visible_message("<span class='alert'><b>[user] somehow cuts [AM] out of [M] with [src]!</b></span>")
+		playsound(M, src.hitsound, 50, 1)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing("combat", user, M, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		user.visible_message("<span style='color:red'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
+		user.visible_message("<span class='alert'><b>[user] slashes [his_or_her(user)] own throat with [src]!</b></span>")
 		blood_slash(user, 25)
 		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
-		user.updatehealth()
-		SPAWN_DBG(50 SECONDS)
+		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
 		return 1
@@ -1306,6 +1306,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	mat_changename = 0
 	mat_changedesc = 0
 	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	muzzle_flash = "muzzle_flash_launch"
 	var/last_shot = 0
 	var/shot_delay = 15
 	var/cash_amt = 1000
@@ -1323,14 +1324,20 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
+			boutput(user, "<span class='success'>\The [src] beeps, \"You're a big shot, this end needs to point in the direction of poor people!\"</span>")
 			return
 
 		if ((last_shot + shot_delay) <= world.time)
 			if (cash_amt <= 0)
-				boutput(user, "<span style='color:green'>\The [src] beeps, \"I ain't got enough cash for that!\"</span>")
+				boutput(user, "<span class='success'>\The [src] beeps, \"I ain't got enough cash for that!\"</span>")
 				return
 
 			last_shot = world.time
+
+			if (src.muzzle_flash)
+				if (isturf(user.loc))
+					var/turf/origin = user.loc
+					muzzle_flash_attack_particle(user, origin, target, src.muzzle_flash)
 
 			var/turf/T = get_turf(src)
 			var/chosen_bling// = pick(60;/obj/item/spacecash,20;/obj/item/coin,10;/obj/item/raw_material/gemstone,10;/obj/item/raw_material/gold)
@@ -1342,27 +1349,30 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 				chosen_bling = pick(src.possible_bling_common)
 			else
 				chosen_bling = /obj/item/spacecash
-			var/obj/item/bling = unpool(chosen_bling)
+			var/obj/item/bling = new chosen_bling
 			bling.set_loc(T)
 			bling.throwforce = 8
 			src.cash_amt = max(src.cash_amt-src.shot_cost, 0)
-			SPAWN_DBG(1.5 SECONDS)
+			SPAWN(1.5 SECONDS)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
-			playsound(T, "sound/effects/bamf.ogg", 40, 1)
-			user.visible_message("<span style='color:green'><b>[user]</b> blasts some bling at [target]!</span>")
+			playsound(T, 'sound/effects/bamf.ogg', 40, 1)
+			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
-	attackby(var/obj/item/spacecash/C as obj, mob/user as mob)
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		shoot(get_turf(target), get_turf(user), user, 0, 0)
+
+	attackby(var/obj/item/spacecash/C, mob/user)
 		if (!istype(C))
 			return ..()
 		if (C.amount <= 0) // how??
-			boutput(user, "<span style='color:green'>\The [src] beeps, \"Your cash is trash! It ain't worth jack, mack!\"<br>[C] promptly vanishes in a puff of logic.</span>")
+			boutput(user, "<span class='success'>\The [src] beeps, \"Your cash is trash! It ain't worth jack, mack!\"<br>[C] promptly vanishes in a puff of logic.</span>")
 			user.u_equip(C)
-			pool(C)
+			qdel(C)
 			return
 		if (src.cash_amt >= src.cash_max)
-			boutput(user, "<span style='color:green'>\The [src] beeps, \"I ain't need no more money, honey!\"</span>")
+			boutput(user, "<span class='success'>\The [src] beeps, \"I ain't need no more money, honey!\"</span>")
 			return
 		var/max_accept = (src.cash_max - src.cash_amt)
 		if (C.amount > max_accept)
@@ -1372,8 +1382,8 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			src.cash_amt += C.amount
 			user.u_equip(C)
-			pool(C)
-		boutput(user, "<span style='color:green'>\The [src] beeps, \"That's the good stuff!\"</span>")
+			qdel(C)
+		boutput(user, "<span class='success'>\The [src] beeps, \"That's the good stuff!\"</span>")
 
 /obj/item/gun/bling_blaster/cheapo
 	name = "bling blaster"
@@ -1386,7 +1396,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon_state = "spacelipstick0"
 	color = null
 	font_color = "#FF0000"
-	font = "Dancing Script, cursive"
+	font = "'Dancing Script', cursive"
 	webfont = "Dancing Script"
 	uses_handwriting = 1
 	var/open = 0
@@ -1404,9 +1414,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			src.font_color = HSVtoRGB(hsv(AngleToHue(rand(310,360)), rand(180,255), rand(180,255)))
 		src.color_name = hex2color_name(src.font_color)
 		src.name = "[src.color_name] lipstick"
-		src.update_icon()
+		src.UpdateIcon()
 
-	proc/update_icon()
+	update_icon()
 		src.icon_state = "spacelipstick[src.open]"
 		if (src.open)
 			ENSURE_IMAGE(src.image_stick, src.icon, "spacelipstick")
@@ -1417,9 +1427,9 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	attack_self(var/mob/user)
 		src.open = !src.open
-		src.update_icon()
+		src.UpdateIcon()
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
 			if (H.makeup == 2) // it's messed up
@@ -1447,7 +1457,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onUpdate()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1457,7 +1467,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	onStart()
 		..()
-		if (get_dist(owner, target) > 1 || target == null || owner == null || makeup == null)
+		if (BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || makeup == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/ownerMob = owner
@@ -1475,12 +1485,12 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			target.makeup_color = makeup.font_color
 			target.update_body()
 			for (var/mob/O in AIviewers(owner))
-				O.show_message("<span style='color:red'>[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!</span>", 1)
+				O.show_message("<span class='alert'>[owner] messes up [owner == target ? "[his_or_her(owner)]" : "[target]'s"] makeup!</span>", 1)
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && get_dist(owner, target) <= 1)
+		if (owner && ownerMob && target && makeup && makeup == ownerMob.equipped() && BOUNDS_DIST(owner, target) == 0)
 			target.makeup = 1
 			target.makeup_color = makeup.font_color
 			target.update_body()
@@ -1494,7 +1504,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 
 	New()
 		..()
-		src.dir = pick(cardinal)
+		src.set_dir(pick(cardinal))
 
 //wrongend's bang! gun
 /obj/item/bang_gun
@@ -1505,7 +1515,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	var/bangfired = 0 // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
 	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 
 	pixelaction(atom/target, params, mob/user, reach)
@@ -1513,23 +1523,28 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			..()
 		else
 			src.bangfired = 1
-			if(user)
-				user.visible_message("<span style=\"color:red\"><span style='color:red'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(get_turf(user), "sound/musical_instruments/Trombone_Failiure.ogg", 50, 1)
+			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
 			icon_state = "bangflag[icon_state]"
 			return
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
+	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "ak47"
+	item_state = "ak47"
 	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
 	description = "A bang flag unfurls out of the barrel!"
+	two_handed = 1
 
 /obj/item/bang_gun/hunting_rifle
 	name = "Old Hunting Rifle"
-	icon_state = "hunting_rifle"
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "ohr"
+	item_state = "ohr"
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"
 	description = "A bang flag unfurls out of the barrel!"
+	two_handed = 1
 
 /*
 /obj/item // if I accidentally commit this uncommented PLEASE KILL ME tia <3
@@ -1572,7 +1587,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "How can you tell it's blessed? Well, just look at it! It's so obvious!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "ballbearing"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	force = 7
 	throwforce = 5
 	stamina_damage = 25
@@ -1580,7 +1595,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	stamina_crit_chance = 5
 	rand_pos = 1
 
-	attack(mob/M as mob, mob/user as mob) // big ol hackery here
+	attack(mob/M, mob/user) // big ol hackery here
 		if (M && isvampire(M))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1592,7 +1607,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 		else
 			return ..()
 
-	throw_impact(atom/hit_atom)
+	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (hit_atom && isvampire(hit_atom))
 			src.force = (src.force * 2)
 			src.stamina_damage = (src.stamina_damage * 2)
@@ -1610,13 +1625,13 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "thing"
 	flags = FPRINT | CONDUCT | TABLEPASS
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	force = 10
 	throwforce = 7
 	mats = 50
 	contraband = 1
 	stamina_damage = 40
-	stamina_cost = 30
+	stamina_cost = 23
 	stamina_crit_chance = 10
 
 /obj/item/destiny_model
@@ -1624,7 +1639,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 	desc = "A little model of the NSS Destiny. How spiffy!"
 	icon = 'icons/misc/HaineSpriteDump.dmi'
 	icon_state = "destiny"
-	w_class = 1
+	w_class = W_CLASS_TINY
 
 /obj/test_knife_switch_switch
 	name = "knife switch switch"
@@ -1646,7 +1661,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[switch_select]-throw"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1670,7 +1685,7 @@ var/list/special_parrot_species = list("ikea" = /datum/species_info/parrot/kea/i
 			return
 		src.icon_state = "[board_select]"
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		src.change_icon()
 		return
 
@@ -1705,7 +1720,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	desc = "kali ma motherfuckers"
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
-	wear_image_icon = 'icons/mob/jumpsuits/worn_js_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	icon_state = "bedsheet"
 	item_state = "bedsheet"
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1723,7 +1738,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	set name = "Throw (c)"
 	set desc = "Spin a grabbed opponent around and throw them."
 
-	boutput(usr, "<span style=\"color:red\">Kali Ma is appeased for the moment!</span>")
+	boutput(usr, "<span class='alert'>Kali Ma is appeased for the moment!</span>")
 	return
 
 /mob/proc/kali_ma(var/mob/living/M in grabbing())
@@ -1731,7 +1746,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 	set name = "Throw"
 	set desc = "Spin a grabbed opponent around and throw them."
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 
 		if(!src.stat && !src.transforming && M)
 			if(src.getStatusDuration("paralysis") || src.getStatusDuration("weakened") || src.stunned > 0)
@@ -1752,7 +1767,7 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 						src.verbs += /mob/proc/kali_ma_placeholder
 						src.verbs -= /mob/proc/kali_ma
 						src.say("Bali Mangthi Kali Ma.")
-						sleep(10)
+						sleep(1 SECOND)
 						var/mob/living/H = G.affecting
 						if(H.lying)
 							H.lying = 0
@@ -1761,9 +1776,9 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 							H.set_clothing_icon_dirty()
 						H.transforming = 1
 						src.transforming = 1
-						src.dir = get_dir(src, H)
-						H.dir = get_dir(H, src)
-						src.visible_message("<span style=\"color:red\"><B>[src] menacingly grabs [H] by the neck!</B></span>")
+						src.set_dir(get_dir(src, H))
+						H.set_dir(get_dir(H, src))
+						src.visible_message("<span class='alert'><B>[src] menacingly grabs [H] by the neck!</B></span>")
 						src.say("Shakthi Degi Kali Ma.")
 						var/dir_offset = get_dir(src, H)
 						switch(dir_offset)
@@ -1781,46 +1796,46 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 								H.layer = src.layer - 1
 						for(var/i = 0, i < 5, i++)
 							H.pixel_y += 2
-							sleep(3)
+							sleep(0.3 SECONDS)
 						src.say("Kali Ma...")
-						sleep(20)
+						sleep(2 SECONDS)
 						src.say("Kali Ma...")
-						sleep(20)
+						sleep(2 SECONDS)
 						if (ishuman(H))
 							var/mob/living/carbon/human/HU = H
-							src.visible_message("<span style=\"color:red\"><B>[src] shoves \his hand into [H]'s chest!</B></span>")
+							src.visible_message("<span class='alert'><B>[src] shoves \his hand into [H]'s chest!</B></span>")
 							src.say("Kali ma, shakthi deh!")
 							if(HU.heart_op_stage <= 3.0)
-								HU:heart_op_stage = 4.0
+								HU:heart_op_stage = 4
 								HU.contract_disease(/datum/ailment/disease/noheart,null,null,1)
 								var/obj/item/organ/heart/heart = new /obj/item/organ/heart(src.loc)
 								heart.donor = HU
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
-								sleep(20)
+								sleep(2 SECONDS)
 								src.say("Ab, uski jan meri mutti me hai! AB, USKI JAN MERI MUTTI ME HAI!")
 							else
-								playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 75)
+								playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 75)
 								HU.emote("scream")
-								src.visible_message("<span style=\"color:red\"><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
-								sleep(20)
+								src.visible_message("<span class='alert'><B>[src] finds no heart in [H]'s chest! [src] looks kinda [pick(</span>"embarassed", "miffed", "annoyed", "confused", "baffled")]!</B>")
+								sleep(2 SECONDS)
 							HU.stunned += 10
 							HU.weakened += 12
 							var/turf/target = get_edge_target_turf(src, src.dir)
-							SPAWN_DBG(0)
+							SPAWN(0)
 								playsound(src.loc, "swing_hit", 40, 1)
-								src.visible_message("<span style=\"color:red\"><B>[src] casually tosses [H] away!</B></span>")
+								src.visible_message("<span class='alert'><B>[src] casually tosses [H] away!</B></span>")
 								HU.throw_at(target, 10, 2)
 							HU.pixel_x = 0
 							HU.pixel_y = 0
 							HU.transforming = 0
 
 						var/cooldown = max(100,(300-src.jitteriness))
-						SPAWN_DBG(cooldown)
+						SPAWN(cooldown)
 							src.verbs -= /mob/proc/kali_ma_placeholder
 							if (istype(src:w_uniform, /obj/item/clothing/under/mola_ram))
 								src.verbs += /mob/proc/kali_ma
-								boutput(src, "<span style=\"color:red\">Kali Ma desires more!</span>")
+								boutput(src, "<span class='alert'>Kali Ma desires more!</span>")
 
 						return
 */
@@ -1914,19 +1929,20 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 // <bubs> baking soda, dropper, cocaine in oven makes crack
 
 	on_add()
-		if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"add_stam_mod_regen"))
-			holder.my_atom:add_stam_mod_regen("consumable_good", 200)
-		if(hascall(holder.my_atom,"addOverlayComposition"))
-			holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine", 200)
+			M.addOverlayComposition(/datum/overlayComposition/cocaine)
 		return
+
 	on_remove()
-		if(remove_buff)
-			if(istype(holder) && istype(holder.my_atom) && hascall(holder.my_atom,"remove_stam_mod_regen"))
-				holder.my_atom:remove_stam_mod_regen("consumable_good")
-		if(hascall(holder.my_atom,"removeOverlayComposition"))
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
-			holder.my_atom:removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
+		if(ismob(holder?.my_atom))
+			var/mob/M = holder.my_atom
+			if (remove_buff)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "r_cocaine")
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
+			M.removeOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 		return
 
 // grabbing shit from meth, crank and bathsalts for now, cause they do some stuff close to what I want
@@ -1940,15 +1956,14 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 		if(M.sleeping) M.sleeping = 0
 		if(prob(15)) M.emote(pick("grin", "smirk", "blink", "blink_r", "nod", "twitch", "twitch_v", "laugh", "chuckle", "stare", "leer", "scream"))
 		if(prob(10))
-			boutput(M, pick("<span style=\"color:red\"><b>You [pick(</span>"feel", "are")] [pick("", "totally ", "utterly ", "completely ", "absolutely ")]fucking [pick("awesome", "rad", "great")]!</b>", "<span style=\"color:red\"><b>[pick(</span>"Fuck", "Fucking", "Hell")] [pick("yeah", "yes")]!</b>", "<span style=\"color:red\"><b>[pick(</span>"Yes", "YES")]!</b>", "<span style=\"color:red\"><b>You've got this shit in the BAG!</b></span>", "<span style=\"color:red\"><b>I said god DAMN!!!</b></span>"))
+			boutput(M, pick("<span class='alert'><b>You [pick(</span>"feel", "are")] [pick("", "totally ", "utterly ", "completely ", "absolutely ")]fucking [pick("awesome", "rad", "great")]!</b>", "<span class='alert'><b>[pick(</span>"Fuck", "Fucking", "Hell")] [pick("yeah", "yes")]!</b>", "<span class='alert'><b>[pick(</span>"Yes", "YES")]!</b>", "<span class='alert'><b>You've got this shit in the BAG!</b></span>", "<span class='alert'><b>I said god DAMN!!!</b></span>"))
 			M.emote(pick("grin", "smirk", "nod", "laugh", "chuckle", "scream"))
 /*		if(prob(6))
-			boutput(M, "<span style=\"color:red\"><b>You feel warm.</b></span>")
+			boutput(M, "<span class='alert'><b>You feel warm.</b></span>")
 			M.bodytemperature += rand(1,10)
 		if(prob(4))
-			boutput(M, "<span style=\"color:red\"><b>You feel kinda awful!</b></span>")
+			boutput(M, "<span class='alert'><b>You feel kinda awful!</b></span>")
 			M.take_toxin_damage(1)
-			M.updatehealth()
 			M.make_jittery(30)
 			M.emote(pick("groan", "moan")) */
 		..(M)
@@ -1963,16 +1978,15 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			if(hascall(holder.my_atom,"addOverlayComposition"))
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_minor_od)
 			if (effect <= 2)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> looks confused!</span>", "<span style=\"color:red\"><b>Fuck, what was that?!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> looks confused!</span>", "<span class='alert'><b>Fuck, what was that?!</b></span>")
 				M.change_misstep_chance(33)
 				M.make_jittery(20)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
 			else if (effect <= 4)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> is all sweaty!</span>", "<span style=\"color:red\"><b>Did it get way fucking hotter in here?</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> is all sweaty!</span>", "<span class='alert'><b>Did it get way fucking hotter in here?</b></span>")
 				M.bodytemperature += rand(10,30)
 				M.brainloss++
 				M.take_toxin_damage(1)
-				M.updatehealth()
 			else if (effect <= 7)
 				M.make_jittery(30)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))
@@ -1983,22 +1997,20 @@ Now, his life is in my fist! NOW, HIS LIFE IS IN MY FIST!
 			if(hascall(holder.my_atom,"addOverlayComposition"))
 				holder.my_atom:addOverlayComposition(/datum/overlayComposition/cocaine_major_od)
 			if (effect <= 2)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> is sweating like a pig!</span>", "<span style=\"color:red\"><b>Fuck, someone turn on the AC!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> is sweating like a pig!</span>", "<span class='alert'><b>Fuck, someone turn on the AC!</b></span>")
 				M.bodytemperature += rand(20,100)
 				M.take_toxin_damage(5)
-				M.updatehealth()
 			else if (effect <= 4)
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> starts freaking the fuck out!</span>", "<span style=\"color:red\"><b>Holy shit, what the fuck was that?!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> starts freaking the fuck out!</span>", "<span class='alert'><b>Holy shit, what the fuck was that?!</b></span>")
 				M.make_jittery(100)
 				M.take_toxin_damage(2)
 				M.brainloss += 8
-				M.updatehealth()
 				M.weakened += 3
 				M.change_misstep_chance(40)
 				M.emote("scream")
 			else if (effect <= 7)
 				M.emote("scream")
-				M.visible_message("<span style=\"color:red\"><b>[M.name]</b> nervously scratches at their skin!</span>", "<span style=\"color:red\"><b>Fuck, so goddamn itchy!</b></span>")
+				M.visible_message("<span class='alert'><b>[M.name]</b> nervously scratches at their skin!</span>", "<span class='alert'><b>Fuck, so goddamn itchy!</b></span>")
 				M.make_jittery(10)
 				random_brute_damage(M, 5)
 				M.emote(pick("blink", "blink_r", "twitch", "twitch_v", "stare", "leer"))

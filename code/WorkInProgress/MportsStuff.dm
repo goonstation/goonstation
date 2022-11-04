@@ -5,14 +5,13 @@
 	var/info = "There is nothing here."
 	infra_luminosity = 4
 	anchored = 1
-	invisibility = 1
+	invisibility = INVIS_INFRA
 
-/obj/infared_icon/examine()
-	set src in view()
-	if(usr.see_infrared)
-		usr << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
-		onclose(usr, "[src.name]")
-	return
+/obj/infared_icon/examine(mob/user)
+	if(user.see_infrared)
+		user << browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", src.name, src.info), text("window=[]", src.name))
+		onclose(user, "[src.name]")
+	return list()
 
 /obj/infared_icon/attack_ai(var/mob/living/silicon/user as mob)
 //I still need a way for the AI to actually make these
@@ -36,7 +35,7 @@
 			src.info = ""
 
 		if("Remove")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 			qdel(src)
 
 		if("Change Icon")
@@ -59,7 +58,7 @@
 				onclose(usr, "[src.name]")
 	return
 
-/obj/infared_icon/attackby(obj/item/P as obj, mob/user as mob)
+/obj/infared_icon/attackby(obj/item/P, mob/user)
 
 	if (istype(P, /obj/item/pen/infared))
 
@@ -67,7 +66,7 @@
 		switch(select)
 			if("Add")
 				var/t = input(user, "What text do you wish to add?", text("[]", src.name), null)  as message
-				if ((!in_range(src, usr) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
+				if ((!in_interact_range(src, user) && src.loc != user && !( istype(src.loc, /obj/item/clipboard) ) && src.loc.loc != user && user.equipped() != P))
 					return
 				t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 				t = replacetext(t, "\n", "<BR>")
@@ -85,7 +84,5 @@
 				src.info = ""
 
 			if("Remove")
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 				qdel(src)
-
-

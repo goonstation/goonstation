@@ -9,8 +9,8 @@
 	var/maximum_value = 100						// the maximum amount of health this holder has
 	var/value = 100								// the current amount of health this holder has
 	var/last_value = 100						// value at the last call of Life() - maintained automatically
-	var/minimum_value = -200					// the lowest amount of health this holder can represent
-	var/depletion_threshold = -200				// if the value reaches this threshold, on_deplete() is called
+	var/minimum_value = -INFINITY					// the lowest amount of health this holder can represent
+	var/depletion_threshold = -INFINITY				// if the value reaches this threshold, on_deplete() is called
 	var/current_overlay = 0						// currently displayed level of overlay, helps to check if update is needed
 	var/assume_blood_color = 0					// if true, damage overlay will be blood colored
 	var/damage_multiplier = 1
@@ -23,14 +23,18 @@
 		holder = M
 		value = maximum_value
 
+	disposing()
+		holder = null
+		..()
+
 	proc/TakeDamage(var/amt, var/bypass_multiplier = 0)
-		if (!bypass_multiplier)
+		if (!bypass_multiplier && amt > 0)
 			amt *= damage_multiplier
 		if (minimum_value < maximum_value)
-			value = max(minimum_value, min(value - amt, maximum_value))
+			value = clamp(value - amt, minimum_value, maximum_value)
 		else
 			value = min(value - amt, maximum_value)
-		holder.updatehealth()
+		health_update_queue |= holder
 
 	proc/HealDamage(var/amt)
 		TakeDamage(-amt)
@@ -42,7 +46,7 @@
 		return value < maximum_value
 
 	proc/on_deplete()
-		holder.death(0)
+		holder.death(FALSE)
 
 	proc/Life()
 		if (value != last_value)
@@ -53,7 +57,7 @@
 	proc/on_life()
 
 	proc/update_overlay()
-		if (!overlay_icon || !threshold_icon_states.len || !threshold_values.len)
+		if (!overlay_icon || !threshold_icon_states.len || !length(threshold_values))
 			return
 		var/next_overlay = 0
 		while (next_overlay < threshold_values.len && value < threshold_values[next_overlay + 1])

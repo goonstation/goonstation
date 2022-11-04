@@ -4,11 +4,14 @@
 
 /datum/artifact/injector
 	associated_object = /obj/artifact/injector
-	rarity_class = 2
+	type_name = "Injector"
+	type_size = ARTIFACT_SIZE_LARGE
+	rarity_weight = 350
 	validtypes = list("ancient","martian","eldritch","precursor")
 	validtriggers = list(/datum/artifact_trigger/force,/datum/artifact_trigger/electric,/datum/artifact_trigger/heat,
 	/datum/artifact_trigger/radiation,/datum/artifact_trigger/carbon_touch,/datum/artifact_trigger/silicon_touch,
 	/datum/artifact_trigger/cold)
+	fault_blacklist = list(ITEM_ONLY_FAULTS)
 	activ_text = "opens up, revealing an array of strange needles!"
 	deact_text = "closes itself up."
 	react_xray = list(8,60,75,11,"SEGMENTED")
@@ -16,8 +19,9 @@
 	var/injection_amount = 10
 
 	post_setup()
+		. = ..()
 		var/list/potential_reagents = list()
-		switch(artitype)
+		switch(artitype.name)
 			if ("ancient")
 				// industrial heavy machinery kinda stuff
 				potential_reagents = list("nanites","liquid plasma","mercury","lithium","plasma","radium","uranium","cryostylane")
@@ -54,3 +58,4 @@
 			for (var/X in injection_reagents)
 				ArtifactLogs(user, null, O, "touched by [user.real_name]", "injecting [X]", 0) // Added (Convair880).
 				user.reagents.add_reagent(X,injection_amount)
+		O.ArtifactFaultUsed(user)

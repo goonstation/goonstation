@@ -8,6 +8,8 @@
 	proc/build_click(var/mob/user, var/datum/buildmode_holder/holder, pa, var/atom/object)
 		return
 
+var/global/list/adventure_elements_by_id = list()
+
 /obj/adventurepuzzle
 	icon = 'icons/obj/randompuzzles.dmi'
 	name = "You shouldn't see this"
@@ -16,8 +18,12 @@
 
 	New()
 		if (src.opacity)
-			src.opacity = 0
+			src.set_opacity(0)
 			RL_SetOpacity(1)
+		if(!(src.id in adventure_elements_by_id))
+			adventure_elements_by_id[src.id] = list(src)
+		else
+			adventure_elements_by_id[src.id] += src
 		..()
 
 	ex_act()
@@ -32,6 +38,10 @@
 	meteorhit()
 		return
 
+	disposing()
+		adventure_elements_by_id[src.id] -= src
+		..()
+
 /obj/adventurepuzzle/marker
 	icon_state = "select_generic"
 	name = "Selection Marker"
@@ -40,13 +50,8 @@
 	opacity = 0
 	anchored = 1
 
-	unpooled()
-		icon_state = "select_generic"
-		..()
-
 	disposing()
 		icon_state = null
-		loc = null
 		..()
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -81,6 +86,14 @@
 	setTarget(var/atom/A)
 		src.target = A
 
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 // Hello, goonstation coder reading this piece of code below.
 // I'd like to ask you to stop judging me. Yes, I can hear the thoughts formulating in your brain right now.
 // "what the fuck marquesas. why. why do you do this. why. why is this here. why."
@@ -94,12 +107,20 @@
 // DO SOMETHING.
 // LEAVE ME ALONE.
 /obj/adventurepuzzle/triggerable/triggerer
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
+
 	var/list/triggered = list()
 
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -120,7 +141,7 @@
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -158,7 +179,7 @@
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -179,7 +200,7 @@
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -217,6 +238,17 @@
 	desc = "AND YOU DAMN WELL SHOULDN'T EXAMINE IT"
 	var/id = null
 
+	New()
+		if(!(src.id in adventure_elements_by_id))
+			adventure_elements_by_id[src.id] = list(src)
+		else
+			adventure_elements_by_id[src.id] += src
+		..()
+
+	disposing()
+		adventure_elements_by_id[src.id] -= src
+		..()
+
 // WOULDN'T IT BE NICE TO HAVE TRAITS???
 /obj/item/adventurepuzzle/triggerer
 	var/list/triggered = list()
@@ -224,7 +256,7 @@
 	proc/post_trigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered)
 			var/act = src.triggered[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	proc/special_triggers_required()
@@ -245,7 +277,7 @@
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered.COUNT"] << triggered.len
+		F["[path].triggered.COUNT"] << length(triggered)
 		for(var/i = 1, i <= triggered.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered[i]
 			var/act = triggered[target]
@@ -285,7 +317,7 @@
 	proc/post_untrigger()
 		for (var/obj/adventurepuzzle/triggerable/T in src.triggered_unpress)
 			var/act = src.triggered_unpress[T]
-			SPAWN_DBG(0)
+			SPAWN(0)
 				T.trigger(act)
 
 	special_triggers_required()
@@ -321,7 +353,7 @@
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
 
-		F["[path].triggered_unpress.COUNT"] << triggered_unpress.len
+		F["[path].triggered_unpress.COUNT"] << length(triggered_unpress)
 		for(var/i = 1, i <= triggered_unpress.len, i++)
 			var/obj/adventurepuzzle/triggerable/target = triggered_unpress[i]
 			var/act = triggered_unpress[target]
@@ -355,7 +387,7 @@
 
 /obj/adventurepuzzle/invisible
 	name = "target marker"
-	invisibility = 100
+	invisibility = INVIS_ALWAYS_ISH
 	density = 0
 	opacity = 0
 	anchored = 1

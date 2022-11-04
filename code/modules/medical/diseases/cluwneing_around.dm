@@ -19,8 +19,17 @@
 		name += "[pick("AreoU","UroO","ArU","AoOro","AhRu")][pick("ndE","Ned","nhd")]"
 	cluwne
 		laugh_rate = 18
+		cure = "Incurable"
 
-/datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/on_infection(var/mob/living/affected_mob,var/datum/ailment_data/D)
+	..()
+	if (D)
+		src.oldname = affected_mob.real_name
+		src.oldjob = affected_mob.job
+	if (istype(affected_mob.wear_mask, /obj/item/clothing/mask/cursedclown_hat))
+		D.cure = "Incurable"
+
+/datum/ailment/disease/cluwneing_around/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
 		return
 
@@ -31,33 +40,36 @@
 		return
 	if (prob(laugh_rate)) affected_mob.emote("laugh")
 	switch(D.stage)
-		if(1 || 2)
+		if(1, 2)
 
-			if(prob(8))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 50, 1)
-				affected_mob.show_message(text("<span style=\"color:red\">[] makes a VERY strange honking sound!</span>", affected_mob), 1)
-			if(prob(8))
-				boutput(affected_mob, "<span style=\"color:red\">You feel your feet crying out!</span>")
-			if(prob(8))
-				boutput(affected_mob, "<span style=\"color:red\">Your head throbs with pain.</span>")
-			if(prob(8))
-				affected_mob.say("HUNKE!")
-			if(prob(8))
-				affected_mob.say("HUNKE HUNKE!")
-			if(prob(8))
-				affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
+			if(probmult(8))
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
+				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
+			if(probmult(8))
+				boutput(affected_mob, "<span class='alert'>You feel your feet crying out!</span>")
+			if(probmult(8))
+				boutput(affected_mob, "<span class='alert'>Your head throbs with pain.</span>")
+			if(probmult(8))
+				if(!istype(get_area(affected_mob), /area/sim/gunsim))
+					affected_mob.say("HUNKE!")
+			if(probmult(8))
+				if(!istype(get_area(affected_mob), /area/sim/gunsim))
+					affected_mob.say("HUNKE HUNKE!")
+			if(probmult(8))
+				if(!istype(get_area(affected_mob), /area/sim/gunsim))
+					affected_mob.say("THE RINGMASTER DOESN'T RUN THE CIRCUS... HUNKE!")
 
 		if(3)
-			// NPCs should always be cluwnable, I guess (Convair880)?
-			if (affected_mob.mind && (affected_mob.mind.assigned_role != "Cluwne") || (!affected_mob.mind || !affected_mob.client))
-				//src.oldname = affected_mob.real_name
-				affected_mob.real_name = "cluwne"
-				affected_mob.stuttering = 120
-				//src.oldjob = affected_mob.job
-				if (affected_mob.mind)
-					affected_mob.mind.assigned_role = "Cluwne"
+			if(D.cure != "Incurable")
+				D.cure = "Incurable"
 
-			if(prob(10) && isturf(affected_mob.loc))
+			if (affected_mob.job != "Cluwne")
+				affected_mob.real_name = "cluwne"
+				affected_mob.stuttering = 120 * mult
+				affected_mob.job = "Cluwne"
+				affected_mob.UpdateName()
+
+			if(probmult(10) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
 				if (T && isturf(T))
 					var/DS = 0
@@ -82,11 +94,11 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span style=\"color:red\">You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
-			if(prob(10))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 50, 1)
-			if(prob(10))
+			if(probmult(10))
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
+			if(probmult(10))
 
 				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/cursedclown_hat)))
 					var/c = affected_mob:wear_mask
@@ -101,10 +113,10 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask) //Hope you like your new mask sucka!!!!!
-					SPAWN_DBG (25) // Don't remove.
+					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 		if(4)
-			if(prob(10))
+			if(probmult(10))
 				if(!affected_mob:wear_mask || ((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/cursedclown_hat)))
 					var/c = affected_mob:wear_mask
 					if((affected_mob:wear_mask != null) && !istype(affected_mob:wear_mask, /obj/item/clothing/mask/cursedclown_hat))
@@ -118,10 +130,10 @@
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
 					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask)
-					SPAWN_DBG (25) // Don't remove.
+					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
-			if(prob(10))
+			if(probmult(10))
 				if(!affected_mob:w_uniform || ((affected_mob:w_uniform != null) && !istype(affected_mob:w_uniform, /obj/item/clothing/under/gimmick/cursedclown)))
 					var/c = affected_mob:w_uniform
 
@@ -135,7 +147,7 @@
 					var/obj/item/clothing/under/gimmick/cursedclown/clownsuit = new /obj/item/clothing/under/gimmick/cursedclown(affected_mob)
 					affected_mob:equip_if_possible(clownsuit, affected_mob:slot_w_uniform)
 
-			if(prob(10))
+			if(probmult(10))
 				if(!affected_mob:shoes || ((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/cursedclown_shoes)))
 					var/c = affected_mob:shoes
 					if((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/cursedclown_shoes))
@@ -148,7 +160,7 @@
 					var/obj/item/clothing/shoes/cursedclown_shoes/clownshoes = new /obj/item/clothing/shoes/cursedclown_shoes(affected_mob)
 					affected_mob:equip_if_possible( clownshoes, affected_mob:slot_shoes)
 
-			if(prob(10))
+			if(probmult(10))
 				if(!affected_mob:gloves || ((affected_mob:gloves != null) && !istype(affected_mob:gloves, /obj/item/clothing/gloves/cursedclown_gloves)))
 					var/c = affected_mob:gloves
 					if((affected_mob:gloves != null) && !istype(affected_mob:gloves, /obj/item/clothing/gloves/cursedclown_gloves))
@@ -161,11 +173,11 @@
 					var/obj/item/clothing/gloves/cursedclown_gloves/clowngloves = new /obj/item/clothing/gloves/cursedclown_gloves(affected_mob)
 					affected_mob:equip_if_possible( clowngloves, affected_mob:slot_gloves)
 
-			if(prob(8))
-				playsound(affected_mob.loc, "sound/musical_instruments/Boathorn_1.ogg", 50, 1)
-				affected_mob.show_message(text("<span style=\"color:red\">[] makes a VERY strange honking sound!</span>", affected_mob), 1)
+			if(probmult(8))
+				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)
+				affected_mob.show_message(text("<span class='alert'>[] makes a VERY strange honking sound!</span>", affected_mob), 1)
 
-			if(prob(4) && isturf(affected_mob.loc))
+			if(probmult(4) && isturf(affected_mob.loc))
 				var/turf/T = affected_mob.loc
 				if (T && isturf(T))
 					var/DS = 0
@@ -190,23 +202,26 @@
 								affected_mob.set_loc(T2)
 								affected_mob.changeStatus("stunned", 2 SECONDS)
 								affected_mob.changeStatus("weakened", 2 SECONDS)
-								boutput(affected_mob, "<span style=\"color:red\">You feel clumsy and suddenly slip!</span>")
+								boutput(affected_mob, "<span class='alert'>You feel clumsy and suddenly slip!</span>")
 
 
-/datum/ailment/disease/cluwneing_around/cluwne/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
+/datum/ailment/disease/cluwneing_around/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
 	if (affected_mob)
-		if (src.oldname && src.oldjob)
+		if (src.oldname)
 			affected_mob.real_name = src.oldname
+		if (src.oldjob)
 			affected_mob.job = src.oldjob
-		if( affected_mob.mind?.assigned_role == "Cluwne" )
-			affected_mob.mind?.assigned_role = "Cleansed Cluwne"
-		boutput(affected_mob, "<span style=\"color:blue\">You feel like yourself again.</span>")
+		if(affected_mob.job == "Cluwne" )
+			affected_mob.job = "Cleansed Cluwne"
+		boutput(affected_mob, "<span class='notice'>You feel like yourself again.</span>")
+		affected_mob.UpdateName()
 		for(var/obj/item/clothing/W in affected_mob)
-			if (W.cant_self_remove && W.cant_other_remove)//this might not be a great way to do this.
+			if(findtext("[W.name]","cursed") && W.cant_self_remove && W.cant_other_remove)
 				affected_mob.u_equip(W)
 				if (W)
 					W.set_loc(affected_mob.loc)
 					W.dropped(affected_mob)
 					W.layer = initial(W.layer)
+		affected_mob.change_misstep_chance(-INFINITY)
 		affected_mob = null
 	..()

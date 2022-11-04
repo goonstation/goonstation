@@ -11,22 +11,20 @@
 	New()
 		..()
 		initialize_directions = dir
-		air_contents = unpool(/datum/gas_mixture)
+		air_contents = new /datum/gas_mixture
 
 		air_contents.volume = 200
-	
-	disposing()
-		loc = null
 
+	disposing()
 		if(node)
 			node.disconnect(src)
 			if (network)
 				network.dispose()
 
 		if(air_contents)
-			pool(air_contents)
+			qdel(air_contents)
 			air_contents = null
-			
+
 		node = null
 		network = null
 		..()
@@ -35,7 +33,7 @@
 	network_disposing(datum/pipe_network/reference)
 		if (network == reference)
 			network = null
-			
+
 	network_expand(datum/pipe_network/new_network, obj/machinery/atmospherics/pipe/reference)
 		if(reference == node)
 			network = new_network
@@ -57,7 +55,7 @@
 				node = target
 				break
 
-		update_icon()
+		UpdateIcon()
 
 	build_network()
 		if(!network && node)

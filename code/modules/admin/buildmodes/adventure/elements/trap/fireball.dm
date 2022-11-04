@@ -7,21 +7,22 @@
 
 	initialize()
 		..()
-		selection = unpool(/obj/adventurepuzzle/marker)
+		selection = new /obj/adventurepuzzle/marker
 		power = input("Fireball explosion power? (default should do if you want this to be doable)", "Fireball explosion", 5) as num
-		boutput(usr, "<span style=\"color:blue\">Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
-		boutput(usr, "<span style=\"color:blue\">Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
+		boutput(usr, "<span class='notice'>Right click to set trap target. Right click active target to clear target. Left click to place trap. Ctrl+click anywhere to finish.</span>")
+		boutput(usr, "<span class='notice'>Special note: If no target is set, the fireball will launch at the nearest mob.</span>")
 
 	disposing()
 		if (target)
 			target.overlays -= selection
 		if (selection)
-			pool(selection)
+			qdel(selection)
+		..()
 
 	build_click(var/mob/user, var/datum/buildmode_holder/holder, var/list/pa, var/atom/object)
-		if (pa.Find("left"))
+		if ("left" in pa)
 			var/turf/T = get_turf(object)
-			if (pa.Find("ctrl"))
+			if ("ctrl" in pa)
 				finished = 1
 				target.overlays -= selection
 				target = null
@@ -35,7 +36,7 @@
 					F.target = I
 					F.power = power
 					F.trap_delay = trap_delay
-		else if (pa.Find("right"))
+		else if ("right" in pa)
 			if (isturf(object))
 				if (target == object)
 					target.overlays -= selection
@@ -48,7 +49,7 @@
 
 /obj/adventurepuzzle/triggerable/targetable/fireballtrap
 	name = "fireball trap"
-	invisibility = 20
+	invisibility = INVIS_ADVENTURE
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "fireball"
 	density = 0
@@ -83,7 +84,7 @@
 						var/D = range + 1
 						var/mob/living/M = null
 						for (var/mob/living/C in view(src.range))
-							var/dist = get_dist(src, C)
+							var/dist = GET_DIST(src, C)
 							if (dist < D)
 								M = C
 								D = dist
@@ -151,7 +152,7 @@
 		..()
 		src.flags |= TABLEPASS
 
-	Bump(var/atom/A)
+	bump(var/atom/A)
 		var/turf/T = get_turf(A)
 		if (T)
 			set_loc(T)
@@ -159,9 +160,8 @@
 
 	proc/launch()
 		if (!target)
-			loc = null
 			qdel(src)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			while (loc != get_turf(target))
 				if (exploding)
 					return
@@ -169,14 +169,14 @@
 				timeout--
 				if (!timeout)
 					break
-				sleep(1)
+				sleep(0.1 SECONDS)
 			explode()
 
 	proc/explode()
 		if (exploding)
 			return
 		for (var/mob/M in viewers(src))
-			boutput(M, "<span style=\"color:red\">The [name] explodes!</span>")
+			boutput(M, "<span class='alert'>The [name] explodes!</span>")
 		exploding = 1
 		var/turf/T = get_turf(src)
 		explosion_new(src, T, power)

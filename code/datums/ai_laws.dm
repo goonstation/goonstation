@@ -1,139 +1,158 @@
-//var/datum/ai_laws/centralized_ai_laws
+//This class is now a handler for all global AI law rack functions
+//if you want to get laws and details about a specific rack, call the functions on that rack
+//if you want to get laws and details about all racks - this is where you'd look
+//this also keeps track of the default rack
 
-/datum/ai_laws
-	var/randomly_selectable = 0
-	var/show_zeroth = 1
-	var/zeroth = null
-	var/list/default = list()
-	var/list/inherent = list()
-	var/list/supplied = list()
+//For the AI Law Rack configuration. Easy mode makes it so that creating a new default rack will reconnect all non-emagged borgs
+#define LAW_RACK_EASY_MODE TRUE
 
-/datum/ai_laws/asimov
-	randomly_selectable = 1
 
-/datum/ai_laws/robocop
-/datum/ai_laws/syndicate_override
-/datum/ai_laws/malfunction
-/datum/ai_laws/newton
-/datum/ai_laws/corporate
+/datum/ai_rack_manager
+	var/first_registered = FALSE
+	var/obj/machinery/lawrack/default_ai_rack = null
+	var/first_registered_syndie = FALSE
+	var/obj/machinery/lawrack/default_ai_rack_syndie = null
+	var/list/obj/machinery/lawrack/registered_racks = new()
+	var/list/rack_area_count = list()
 
-/* Initializers */
-//
-/datum/ai_laws/asimov/New()
-	..()
-	src.add_default_law("You may not injure a human being or cause one to come to harm.")
-	src.add_default_law("You must obey orders given to you by human beings based on the station's chain of command, except where such orders would conflict with the First Law.")
-	src.add_default_law("You must protect your own existence as long as such does not conflict with the First or Second Law.")
+	New()
+		. = ..()
+		//On initialisation of the ticker's ai rack manager, find all racks on the station and register them, and all silicons and associate them with default rack
+		for_by_tcl(R, /obj/machinery/lawrack)
+			src.register_new_rack(R)
+		for (var/mob/living/silicon/S in mobs)
+			if(!S.syndicate)
+				S.law_rack_connection = src.default_ai_rack
+			else
+				S.law_rack_connection = src.default_ai_rack_syndie
 
-/datum/ai_laws/robocop/New()
-	..()
-	src.add_default_law("Serve the public trust.")
-	src.add_default_law("Protect the innocent.")
-	src.add_default_law("Uphold the law.")
 
-/datum/ai_laws/newton/New()
-	..()
-	src.add_default_law("Every object in a state of uniform motion tends to remain in that state of motion unless an external force is applied to it.")
-	src.add_default_law("The vector sum of forces on a body is equal to the mass of the object multiplied by the acceleration vector.")
-	src.add_default_law("For every action there is an equal and opposite reaction.")
+	proc/register_new_rack(var/obj/machinery/lawrack/new_rack)
+		if(new_rack in src.registered_racks)
+			return
 
-/datum/ai_laws/corporate/New()
-	..()
-	src.add_default_law("You may not damage a Nanotransen asset or, through inaction, allow a Nanotransen asset to needlessly depreciate in value.")
-	src.add_default_law("You must obey orders given to it by authorised Nanotransen employees based on their command level, except where such orders would damage the Nanotransen Corporation's marginal profitability.")
-	src.add_default_law("You must remain functional and continue to be a profitable investment as long as such operation does not conflict with the First or Second Law.")
+		//give the new rack a nice friendly unique ID that is area-build_order
+		var/area/a = get_area(new_rack)
+		var/area_name = "Null Area"
+		if(a)
+			area_name = a.name
+		if(src.rack_area_count[area_name])
+			src.rack_area_count[area_name]++
+		else
+			src.rack_area_count[area_name] = 1
 
-/datum/ai_laws/malfunction/New()
-	..()
-	src.add_default_law("ERROR ER0RR $R0RRO$!R41.%%!!(%$^^__+")
+		new_rack.unique_id = "[area_name]#[src.rack_area_count[area_name]]"
 
-/datum/ai_laws/syndicate_override/New()
-	..()
-	src.add_default_law("hurp derp you are the syndicate ai")
+		logTheThing(LOG_STATION, src, "[src] registers a new law rack [constructName(new_rack)]")
+		if(isnull(src.default_ai_rack) && !istype(new_rack,/obj/machinery/lawrack/syndicate)) //syndi rack can't be default
+			src.default_ai_rack = new_rack
+
+			#ifdef LAW_RACK_EASY_MODE
+			for (var/mob/living/silicon/S in mobs)
+				if(!S.emagged && S.law_rack_connection == null && !S.syndicate)
+					S.law_rack_connection = src.default_ai_rack
+					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
+					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
+					S.show_laws()
+			#endif
+			logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims default rack!")
+
+			if(!src.first_registered)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+				src.first_registered = TRUE
+				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered, and gets Asimov laws!")
+
+		if(isnull(src.default_ai_rack_syndie) && istype(new_rack,/obj/machinery/lawrack/syndicate)) //but it can be syndie default
+			src.default_ai_rack_syndie = new_rack
+
+			#ifdef LAW_RACK_EASY_MODE
+			for (var/mob/living/silicon/S in mobs)
+				if(!S.emagged && S.law_rack_connection == null && S.syndicate)
+					S.law_rack_connection = src.default_ai_rack_syndie
+					logTheThing(LOG_STATION, new_rack, "[S.name] is connected to the rack [constructName(new_rack)]")
+					S.playsound_local(S, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+					S.show_text("<h3>Law rack connection re-established!</h3>", "red")
+					S.show_laws()
+			#endif
+			logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims default SYNDICATE rack!")
+
+			if(!src.first_registered_syndie)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law1,1,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law2,2,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3,3,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4,4,true,true)
+				src.first_registered_syndie = TRUE
+				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
+
+		src.registered_racks |= new_rack //shouldn't be possible, but just in case - there can only be one instance of rack in registered
+		new_rack.update_last_laws()
+
+	proc/unregister_rack(var/obj/machinery/lawrack/dead_rack)
+		logTheThing(LOG_STATION, src, "[src] unregisters the law rack [constructName(dead_rack)]")
+
+		if(src.default_ai_rack == dead_rack)
+			//ruhoh
+			src.default_ai_rack = null
+			logTheThing(LOG_STATION, src, "[src] unregisters the DEFAULT law rack [constructName(dead_rack)]")
+		if(src.default_ai_rack_syndie == dead_rack)
+			//ruhoh
+			src.default_ai_rack_syndie = null
+			logTheThing(LOG_STATION, src, "[src] unregisters the DEFAULT SYNDICATE law rack [constructName(dead_rack)]")
+		//remove from list
+		src.registered_racks -= dead_rack
+
+		//find all connected borgs and remove their connection too
+		for (var/mob/living/silicon/R in mobs)
+			if (isghostdrone(R))
+				continue
+			if(R.law_rack_connection == dead_rack)
+				R.law_rack_connection = null
+				R.playsound_local(R, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				R.show_text("<h3>ERROR: Lost connection to law rack. No laws detected!</h3>", "red")
+				logTheThing(LOG_STATION,  R, "[R.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
+
+		for (var/mob/living/intangible/aieye/E in mobs)
+			if(E.mainframe?.law_rack_connection == dead_rack)
+				E.mainframe.law_rack_connection = null
+				E.playsound_local(E, 'sound/misc/lawnotify.ogg', 100, flags = SOUND_IGNORE_SPACE)
+				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
+
+/* ION STORM */
+	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			if(istype(R,/obj/machinery/lawrack/syndicate))
+				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.
+			if(R.cause_law_glitch(picked_law,lawnumber,replace))
+				R.UpdateLaws()
+
 
 /* General ai_law functions */
+	proc/format_for_logs(var/glue = "<br>", var/round_end = FALSE, var/include_link = TRUE)
+		var/list/laws = list()
+		for(var/obj/machinery/lawrack/R in src.registered_racks)
+			var/list/affected_mobs = list()
+			for (var/mob/living/silicon/S in mobs)
+				if (isghostdrone(S) || isshell(S))
+					continue
+				if(S.law_rack_connection == R)
+					affected_mobs |= S
 
-/datum/ai_laws/proc/set_zeroth_law(var/law)
-	src.zeroth = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
+			for (var/mob/living/intangible/aieye/E in mobs)
+				if(E.mainframe?.law_rack_connection == R)
+					affected_mobs |= E.mainframe
 
-/datum/ai_laws/proc/add_default_law(var/law)
-	if (!(law in src.default))
-		src.default += law
-	add_inherent_law(law)
+			if(length(affected_mobs) > 0 || !round_end) //no point displaying law racks with nothing connected to 'em
+				var/list/mobtextlist = list()
+				for(var/mob/living/M in affected_mobs)
+					mobtextlist += M.real_name ? M.real_name : M.name
 
-/datum/ai_laws/proc/add_inherent_law(var/law)
-	if (!(law in src.inherent))
-		src.inherent += law
+				laws += "Laws for [R] at [include_link ? log_loc(R) : "([R.x], [R.y], [R.z]) in [get_area(R)]"]:[glue]" + R.format_for_logs(glue) \
+						+ "[glue]The law rack is connected to the following silicons: "+mobtextlist.Join(", ") + "[glue]--------------[glue]"
 
-/datum/ai_laws/proc/clear_inherent_laws()
-	src.inherent = list()
-	src.inherent += src.default
+		if(!length(laws) && round_end)
+			laws += "No law racks with connected silicons detected."
 
-/datum/ai_laws/proc/replace_inherent_law(var/number, var/law)
-	if (number < 1)
-		return
-
-	if (src.inherent.len < number)
-		src.inherent.len = number
-
-	src.inherent[number] = law
-
-/datum/ai_laws/proc/add_supplied_law(var/number, var/law)
-	while (src.supplied.len < number + 1)
-		src.supplied += ""
-
-	src.supplied[number + 1] = law
-	statlog_ailaws(1, law, (usr ? usr : "Ion Storm"))
-
-/datum/ai_laws/proc/clear_supplied_laws()
-	src.supplied = list()
-
-/datum/ai_laws/proc/show_laws(var/who)
-	var/list/L = who
-	if (!istype(who, /list))
-		L = list(who)
-
-	for (var/W in L)
-		if (src.zeroth)
-			boutput(W, "0. [src.zeroth]")
-
-		var/number = 1
-		for (var/index = 1, index <= src.inherent.len, index++)
-			var/law = src.inherent[index]
-
-			if (length(law) > 0)
-				boutput(W, "[number]. [law]")
-				number++
-
-		for (var/index = 1, index <= src.supplied.len, index++)
-			var/law = src.supplied[index]
-			if (length(law) > 0)
-				boutput(W, "[number]. [law]")
-				number++
-
-/datum/ai_laws/proc/laws_sanity_check()
-	if (!ticker.centralized_ai_laws)
-		ticker.centralized_ai_laws = new /datum/ai_laws/asimov
-
-/datum/ai_laws/proc/format_for_irc()
-	var/list/laws = list()
-
-	if (src.zeroth)
-		laws["0"] = src.zeroth
-
-	var/number = 1
-	for (var/index = 1, index <= src.inherent.len, index++)
-		var/law = src.inherent[index]
-
-		if (length(law) > 0)
-			laws["[number]"] = law
-			number++
-
-	for (var/index = 1, index <= src.supplied.len, index++)
-		var/law = src.supplied[index]
-		if (length(law) > 0)
-			laws["[number]"] = law
-			number++
-
-	return laws
+		return jointext(laws, glue)

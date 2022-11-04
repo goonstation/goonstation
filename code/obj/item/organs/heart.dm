@@ -2,40 +2,73 @@
 /*----------Heart----------*/
 /*=========================*/
 
+#define HEART_REAGENT_CAP 100
+#define HEART_WRING_AMOUNT src.reagents.maximum_volume * 0.25
 /obj/item/organ/heart
 	name = "heart"
 	organ_name = "heart"
 	desc = "Offal, just offal."
+	organ_holder_name = "heart"
+	organ_holder_location = "chest"
+	organ_holder_required_op_stage = 9
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
-	module_research = list("medicine" = 1, "efficiency" = 5)
-	module_research_type = /obj/item/organ/heart
 	var/list/diseases = null
 	var/body_image = null // don't have time to completely refactor this, but, what name does the heart icon have in human.dmi?
 	var/transplant_XP = 5
+	var/blood_id = "blood"
+	var/squeeze_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
+
+	New(loc, datum/organHolder/nholder)
+		. = ..()
+		reagents = new/datum/reagents(HEART_REAGENT_CAP)
+
+#undef HEART_REAGENT_CAP
 
 	disposing()
 		if (holder)
 			holder.heart = null
 		..()
 
+	attack_self(mob/user)
+		..()
+		if (!src.reagents)
+			return
+		if (!src.reagents.total_volume)
+			boutput(user, "<span class='alert'>There's nothing in \the [src] to wring out!</span>")
+			return
+
+		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
+			playsound(user, squeeze_sound, 30, 1)
+			logTheThing(LOG_COMBAT, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
+			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
+			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
+
+#undef HEART_WRING_AMOUNT
+
 	on_transplant(var/mob/M as mob)
 		..()
+		if (src.donor.reagents && src.reagents)
+			src.reagents.trans_to(src.donor, src.reagents.total_volume)
+
 		if (src.robotic)
 			if (src.emagged)
-				src.donor.add_stam_mod_regen("heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 15)
 				src.donor.add_stam_mod_max("heart", 90)
-				src.donor.add_stun_resist_mod("heart", 30)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart", 30)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart", 30)
 			else
-				src.donor.add_stam_mod_regen("heart", 5)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart", 5)
 				src.donor.add_stam_mod_max("heart", 40)
-				src.donor.add_stun_resist_mod("heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart", 15)
+				APPLY_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart", 15)
 
 		if (src.donor)
 			for (var/datum/ailment_data/disease in src.donor.ailments)
 				if (disease.cure == "Heart Transplant")
 					src.donor.cure_disease(disease)
+			src.donor.blood_id = (ischangeling(src.donor) && src.blood_id == "blood") ? "bloodc" : src.blood_id
 		if (ishuman(M) && islist(src.diseases))
 			var/mob/living/carbon/human/H = M
 			for (var/datum/ailment_data/AD in src.diseases)
@@ -44,12 +77,22 @@
 			return
 
 	on_removal()
-		..()
 		if (donor)
+			if (src.donor.reagents && src.reagents)
+				src.donor.reagents.trans_to(src, src.reagents.maximum_volume - src.reagents.total_volume)
+
+			if (!ischangeling(donor) && !donor.nodamage)
+				donor.changeStatus("weakened", 8 SECONDS)
+				donor.losebreath += 20
+				donor.take_oxygen_deprivation(20)
+
+			src.blood_id = src.donor.blood_id //keep our owner's blood (for mutantraces etc)
+
 			if (src.robotic)
-				src.donor.remove_stam_mod_regen("heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STAMINA_REGEN_BONUS, "heart")
 				src.donor.remove_stam_mod_max("heart")
-				src.donor.remove_stun_resist_mod("heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST, "heart")
+				REMOVE_ATOM_PROPERTY(src.donor, PROP_MOB_STUN_RESIST_MAX, "heart")
 
 			var/datum/ailment_data/malady/HD = donor.find_ailment_by_type(/datum/ailment/malady/heartdisease)
 			if (HD)
@@ -59,48 +102,32 @@
 				donor.ailments.Remove(HD)
 				HD.affected_mob = null
 				src.diseases.Add(HD)
+		..()
 		return
 
-	attack(var/mob/living/carbon/M as mob, var/mob/user as mob)
-		if (!ismob(M))
-			return
-
-		src.add_fingerprint(user)
-
-		if (user.zone_sel.selecting != "chest")
-			return ..()
-		if (!surgeryCheck(M, user))
-			return ..()
-
+	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+		/* Overrides parent function to handle special case for attaching heads. */
 		var/mob/living/carbon/human/H = M
-		if (!H.organHolder)
-			return ..()
+		if (!src.can_attach_organ(H, user))
+			return 0
 
-		if (!H.organHolder.heart && H.organHolder.chest.op_stage == 9.0)
+		var/success = ..(H, user)
 
-			var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
-
-			H.tri_message("<span style=\"color:red\"><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] chest!</span>",\
-			user, "<span style=\"color:red\">You [fluff] [src] into [user == H ? "your" : "[H]'s"] chest!</span>",\
-			H, "<span style=\"color:red\">[H == user ? "You" : "<b>[user]</b>"] [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into your chest!</span>")
-
-			user.u_equip(src)
-			H.organHolder.receive_organ(src, "heart", 3.0)
-			H.update_body()
+		if (success)
 			if (!isdead(H))
-				JOB_XP(user, "Medical Doctor", H.health > 0 ? transplant_XP*2 : transplant_XP)
-
+				JOB_XP(user, "Medical Doctor", src.health > 0 ? transplant_XP*2 : transplant_XP)
+			return 1
 		else
-			..()
-		return
+			return 0
 
 /obj/item/organ/heart/synth
 	name = "synthheart"
-	desc = "A synthetic heart, made out of some odd, meaty plant thing."
+	desc = "I guess you could call this a... hearti-choke"
 	synthetic = 1
 	item_state = "plant"
-	made_from = "pharosium"
 	transplant_XP = 6
+	squeeze_sound = 'sound/items/rubberduck.ogg'
+
 	New()
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
@@ -113,14 +140,16 @@
 	//created_decal = /obj/decal/cleanable/oil
 	edible = 0
 	robotic = 1
+	created_decal = /obj/decal/cleanable/oil
 	mats = 8
 	made_from = "pharosium"
 	transplant_XP = 7
+	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'
 
 	emp_act()
 		..()
 		if (src.broken)
-			boutput(donor, "<span style=\"color:red\"><B>Your cyberheart malfunctions and shuts down!</B></span>")
+			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
 /obj/item/organ/heart/flock
@@ -134,6 +163,8 @@
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450
+	squeeze_sound = 'sound/misc/flockmind/flockdrone_grump2.ogg'
+	blood_id = "flockdrone_fluid"
 
 	on_transplant(var/mob/M as mob)
 		..()
@@ -160,3 +191,11 @@
 				var/converted_amt = min(flockjuice, min_blood_amount - H.blood_volume)
 				R.remove_reagent("flockdrone_fluid", converted_amt)
 				H.blood_volume += converted_amt
+
+/obj/item/organ/heart/flock/special_desc(dist, mob/user)
+	if (!isflockmob(user))
+		return
+	return {"<span class='flocksay'><span class='bold'>###=-</span> Ident confirmed, data packet received.
+		<br><span class='bold'>ID:</span> Resource repository
+		<br><span class='bold'>Resources:</span> [src.resources]
+		<br><span class='bold'>###=-</span></span>"}

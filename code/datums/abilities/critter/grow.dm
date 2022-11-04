@@ -24,10 +24,11 @@
 			cli.mob = nw
 			nw.mind = new /datum/mind()
 			ticker.minds += nw.mind
+			nw.mind.ckey = cli.ckey
 			nw.mind.key = cli.key
 			nw.mind.current = nw
-		boutput(nw, __blue("You grow into <b>[nw]</b>!"))
+		boutput(nw, "<span class='notice'>You grow into <b>[nw]</b>!</span>")
 		qdel(ow)
 
-//	spiderbaby	
+//	spiderbaby
 //		newtype = /mob/living/critter/spider

@@ -4,7 +4,7 @@
 //////////////////////////////////////////// Setup //////////////////////////////////////////////////
 
 /mob/proc/make_grinch()
-	if (ishuman(src) || iscritter(src))
+	if (ishuman(src) || ismobcritter(src))
 		if (ishuman(src))
 			var/datum/abilityHolder/grinch/A = src.get_ability_holder(/datum/abilityHolder/grinch)
 			if (A && istype(A))
@@ -16,10 +16,10 @@
 			G.addAbility(/datum/targetable/grinch/instakill)
 			G.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-			SPAWN_DBG (25) // Don't remove.
+			SPAWN(2.5 SECONDS) // Don't remove.
 				if (src) src.assign_gimmick_skull()
 
-		else if (iscritter(src))
+		else if (ismobcritter(src))
 			var/mob/living/critter/C = src
 
 			if (isnull(C.abilityHolder)) // They do have a critter AH by default...or should.
@@ -32,14 +32,14 @@
 			C.abilityHolder.addAbility(/datum/targetable/grinch/instakill)
 			C.abilityHolder.addAbility(/datum/targetable/grinch/grinch_cloak)
 
-		if (src.mind && src.mind.special_role != "omnitraitor")
-			SHOW_GRINCH_TIPS(src)
+		if (src.mind && src.mind.special_role != ROLE_OMNITRAITOR)
+			src.show_antag_popup("grinch")
 
 	else return
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/obj/screen/ability/topBar/grinch
+/atom/movable/screen/ability/topBar/grinch
 	clicked(params)
 		var/datum/targetable/grinch/spell = owner
 		if (!istype(spell))
@@ -47,7 +47,7 @@
 		if (!spell.holder)
 			return
 		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span style=\"color:red\">You can't use this ability here.</span>")
+			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
 			return
 		if (spell.targeted && usr.targeting_ability == owner)
 			usr.targeting_ability = null
@@ -59,7 +59,7 @@
 			owner.holder.owner.targeting_ability = owner
 			owner.holder.owner.update_cursor()
 		else
-			SPAWN_DBG(0)
+			SPAWN(0)
 				spell.handleCast()
 		return
 
@@ -67,13 +67,13 @@
 	usesPoints = 0
 	regenRate = 0
 	tabName = "Grinch"
-	notEnoughPointsMessage = "<span style=\"color:red\">You aren't strong enough to use this ability.</span>"
+	notEnoughPointsMessage = "<span class='alert'>You aren't strong enough to use this ability.</span>"
 
 /////////////////////////////////////////////// Grinch spell parent ////////////////////////////
 
 /datum/targetable/grinch
-	icon = 'icons/mob/critter_ui.dmi'
-	icon_state = "template"  // No custom sprites yet.
+	icon = 'icons/mob/grinch_ui.dmi'
+	icon_state = "grinchtemplate"
 	cooldown = 0
 	last_cast = 0
 	pointCost = 0
@@ -82,7 +82,7 @@
 	var/not_when_handcuffed = 0
 
 	New()
-		var/obj/screen/ability/topBar/grinch/B = new /obj/screen/ability/topBar/grinch(null)
+		var/atom/movable/screen/ability/topBar/grinch/B = new /atom/movable/screen/ability/topBar/grinch(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -94,7 +94,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/grinch()
+			src.object = new /atom/movable/screen/ability/topBar/grinch()
 			object.icon = src.icon
 			object.owner = src
 		if (src.last_cast > world.time)
@@ -142,20 +142,20 @@
 		if (!M)
 			return 0
 
-		if (!(ishuman(M) || iscritter(M)))
-			boutput(M, __red("You cannot use any powers in your current form."))
+		if (!(ishuman(M) || ismobcritter(M)))
+			boutput(M, "<span class='alert'>You cannot use any powers in your current form.</span>")
 			return 0
 
 		if (M.transforming)
-			boutput(M, __red("You can't use any powers right now."))
+			boutput(M, "<span class='alert'>You can't use any powers right now.</span>")
 			return 0
 
 		if (incapacitation_check(src.when_stunned) != 1)
-			boutput(M, __red("You can't use this ability while incapacitated!"))
+			boutput(M, "<span class='alert'>You can't use this ability while incapacitated!</span>")
 			return 0
 
 		if (src.not_when_handcuffed == 1 && M.restrained())
-			boutput(M, __red("You can't use this ability when restrained!"))
+			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
 
 		return 1

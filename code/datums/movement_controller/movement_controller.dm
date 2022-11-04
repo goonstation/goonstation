@@ -8,11 +8,8 @@
 
 		hotkey(mob/user, name)
 
-		modify_keymap(datum/keymap/keymap, client/C)
+		modify_keymap(client/C)
+			SHOULD_CALL_PARENT(TRUE)
 			// stub
 
-		update_owner_dir(var/atom/movable/owner)
-
-
-	disposing()
-		..()
+		update_owner_dir()

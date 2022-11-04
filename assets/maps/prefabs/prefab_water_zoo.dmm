@@ -1,51 +1,558 @@
-"a" = (/turf/variableTurf/wall,/area)
-"b" = (/turf/variableTurf/clear,/area)
-"c" = (/turf/simulated/wall/auto/reinforced/supernorn,/area/zoo)
-"d" = (/obj/critter/zombie,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"e" = (/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"f" = (/obj/critter/microman,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"g" = (/obj/critter/wendigo,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"h" = (/obj/critter/maneater,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"i" = (/obj/item/raw_material/gold,/obj/item/clothing/glasses/macho{pixel_x = 4; pixel_y = -4},/obj/item/raw_material/gold{pixel_x = -3; pixel_y = 4},/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"j" = (/obj/item/boomerang,/obj/item/raw_material/scrap_metal,/obj/item/clothing/head/safari,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"k" = (/obj/wingrille_spawn/auto/crystal,/turf/simulated/floor/plating/random,/area/zoo)
-"l" = (/turf/simulated/floor/black/grime,/area/zoo)
-"m" = (/obj/machinery/light/incandescent/greenish,/turf/simulated/floor/black/grime,/area/zoo)
-"n" = (/obj/critter/martian/soldier/dead,/turf/simulated/floor/plating,/area/zoo)
-"o" = (/obj/storage/crate/loot,/turf/simulated/floor/plating,/area/zoo)
-"p" = (/turf/variableTurf/clear,/area/noGenerate)
-"q" = (/turf/simulated/floor/plating,/area/zoo)
-"r" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/simulated/floor/plating,/area/zoo)
-"s" = (/obj/machinery/door/airlock/pyro{dir = 4},/turf/simulated/floor/black/grime,/area/zoo)
-"t" = (/turf/variableTurf/clear,/area/zoo)
-"u" = (/obj/machinery/drainage/big,/turf/simulated/floor/plating,/area/zoo)
-"v" = (/obj/machinery/door/airlock/pyro/external{dir = 4},/turf/simulated/floor/plating,/area/zoo)
-"w" = (/obj/table/wood/auto,/obj/machinery/light/lamp{icon_state = "lamp-burned"},/turf/simulated/floor/plating,/area/zoo)
-"x" = (/obj/table/wood/auto,/obj/item/paper/book/zoo_diary,/obj/decal/cleanable/molten_item,/turf/simulated/floor/plating,/area/zoo)
-"y" = (/obj/stool/chair/comfy{icon_state = "chair_comfy"; dir = 8},/turf/simulated/floor/plating,/area/zoo)
-"z" = (/obj/decal/skeleton,/obj/item/clothing/shoes/clown_shoes/blue,/obj/item/clothing/under/misc/clown/blue,/obj/item/clothing/mask/clown_hat/blue,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"A" = (/obj/item/raw_material/erebite,/obj/item/raw_material/plasmastone{pixel_y = 4},/obj/item/raw_material/gemstone{pixel_x = -6; pixel_y = 5},/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"B" = (/obj/critter/lion,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"C" = (/obj/critter/killertomato,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"D" = (/obj/critter/fermid,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
-"E" = (/obj/critter/bear,/turf/simulated/floor/grass{name = "astroturf"},/area/zoo)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/wall,
+/area/space)
+"b" = (
+/turf/variableTurf/clear,
+/area/space)
+"c" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/zoo)
+"d" = (
+/obj/critter/zombie,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"e" = (
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"f" = (
+/obj/critter/microman,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"h" = (
+/obj/critter/maneater,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"i" = (
+/obj/item/raw_material/gold,
+/obj/item/clothing/glasses/macho{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/raw_material/gold{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"j" = (
+/obj/item/boomerang,
+/obj/item/raw_material/scrap_metal,
+/obj/item/clothing/head/safari,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"k" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating/random,
+/area/prefab/zoo)
+"l" = (
+/turf/simulated/floor/black/grime,
+/area/prefab/zoo)
+"m" = (
+/obj/machinery/light/incandescent/greenish,
+/turf/simulated/floor/black/grime,
+/area/prefab/zoo)
+"n" = (
+/obj/critter/martian/soldier/dead,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"o" = (
+/obj/storage/crate/loot,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"p" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"q" = (
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"r" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"s" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/prefab/zoo)
+"t" = (
+/turf/variableTurf/clear,
+/area/prefab/zoo)
+"u" = (
+/obj/machinery/drainage/big,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"v" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"w" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/black{
+	icon_state = "lamp-burned"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"x" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/zoo_diary,
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"y" = (
+/obj/stool/chair/comfy{
+	icon_state = "chair_comfy";
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/zoo)
+"A" = (
+/obj/item/raw_material/erebite,
+/obj/item/raw_material/plasmastone{
+	pixel_y = 4
+	},
+/obj/item/raw_material/gemstone{
+	pixel_x = -6;
+	pixel_y = 5
+	},
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"B" = (
+/obj/critter/lion,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"C" = (
+/obj/critter/killertomato,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"D" = (
+/obj/critter/fermid,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"E" = (
+/obj/critter/bear,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"J" = (
+/obj/critter/brullbar,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
+"X" = (
+/obj/decal/fakeobjects/skeleton,
+/obj/item/clothing/shoes/clown_shoes/blue,
+/obj/item/clothing/under/misc/clown/blue,
+/obj/item/clothing/mask/clown_hat/blue,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/prefab/zoo)
 
 (1,1,1) = {"
-bbbbbbbbbbbbbbbbbbbb
-bbbbcccccccccccccbbb
-bbbacdecfecegcehcbbb
-baaaceeceiceecjecabb
-baabckkckkckkckkcaab
-bccccllmlllllmllcaab
-bcnoclllllllllllcccp
-bcqrslllkkkkklllcqcp
-bccccmllktttklllsuvp
-bcwqslllkkkkklllcqcp
-bcxyclllllllllllcccp
-bccccllmlllllmllcaab
-baaackkckkckkckkcabb
-baaacezceecAeceecabb
-baaacBecCeceDceEcbbb
-bbbacccccccccccccbbb
-bbbbbbbbbbbbbbbbbbbb
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+b
+"}
+(2,1,1) = {"
+b
+b
+b
+a
+a
+c
+c
+c
+c
+c
+c
+c
+a
+a
+a
+b
+b
+"}
+(3,1,1) = {"
+b
+b
+b
+a
+a
+c
+n
+q
+c
+w
+x
+c
+a
+a
+a
+b
+b
+"}
+(4,1,1) = {"
+b
+b
+a
+a
+b
+c
+o
+r
+c
+q
+y
+c
+a
+a
+a
+a
+b
+"}
+(5,1,1) = {"
+b
+c
+c
+c
+c
+c
+c
+s
+c
+s
+c
+c
+c
+c
+c
+c
+b
+"}
+(6,1,1) = {"
+b
+c
+d
+e
+k
+l
+l
+l
+m
+l
+l
+l
+k
+e
+B
+c
+b
+"}
+(7,1,1) = {"
+b
+c
+e
+e
+k
+l
+l
+l
+l
+l
+l
+l
+k
+X
+e
+c
+b
+"}
+(8,1,1) = {"
+b
+c
+c
+c
+c
+m
+l
+l
+l
+l
+l
+m
+c
+c
+c
+c
+b
+"}
+(9,1,1) = {"
+b
+c
+f
+e
+k
+l
+l
+k
+k
+k
+l
+l
+k
+e
+C
+c
+b
+"}
+(10,1,1) = {"
+b
+c
+e
+i
+k
+l
+l
+k
+t
+k
+l
+l
+k
+e
+e
+c
+b
+"}
+(11,1,1) = {"
+b
+c
+c
+c
+c
+l
+l
+k
+t
+k
+l
+l
+c
+c
+c
+c
+b
+"}
+(12,1,1) = {"
+b
+c
+e
+e
+k
+l
+l
+k
+t
+k
+l
+l
+k
+A
+e
+c
+b
+"}
+(13,1,1) = {"
+b
+c
+J
+e
+k
+l
+l
+k
+k
+k
+l
+l
+k
+e
+D
+c
+b
+"}
+(14,1,1) = {"
+b
+c
+c
+c
+c
+m
+l
+l
+l
+l
+l
+m
+c
+c
+c
+c
+b
+"}
+(15,1,1) = {"
+b
+c
+e
+j
+k
+l
+l
+l
+l
+l
+l
+l
+k
+e
+e
+c
+b
+"}
+(16,1,1) = {"
+b
+c
+h
+e
+k
+l
+l
+l
+l
+l
+l
+l
+k
+e
+E
+c
+b
+"}
+(17,1,1) = {"
+b
+c
+c
+c
+c
+c
+c
+c
+s
+c
+c
+c
+c
+c
+c
+c
+b
+"}
+(18,1,1) = {"
+b
+b
+b
+a
+a
+a
+c
+q
+u
+q
+c
+a
+a
+a
+b
+b
+b
+"}
+(19,1,1) = {"
+b
+b
+b
+b
+a
+a
+c
+c
+v
+c
+c
+a
+b
+b
+b
+b
+b
+"}
+(20,1,1) = {"
+b
+b
+b
+b
+b
+b
+p
+p
+p
+p
+p
+b
+b
+b
+b
+b
+b
 "}

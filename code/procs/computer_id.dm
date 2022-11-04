@@ -44,9 +44,9 @@ proc/check_compid_list(var/client/C)
 		if(CI.compid == C.computer_id) //Seen this computer ID before
 			append_CID = 0
 			/* This will never happen what the fuck is wrong with me?
-			if (CI.last_ckey <> C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
+			if (CI.last_ckey != C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
 				message_admins("[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
-				logTheThing("admin", C, null, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
+				logTheThing(LOG_ADMIN, C, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				CI.last_ckey = C.ckey
 			*/
 			CI.last_seen = world.realtime
@@ -78,7 +78,7 @@ proc/check_compid_list(var/client/C)
 			if(hits)
 				var/ircmsg[] = new()
 				ircmsg["key"] =  C.key
-				ircmsg["name"] = C.mob.real_name
+				ircmsg["name"] = stripTextMacros(C.mob.real_name)
 				var/msg = "'s compID changed [hits] time[hits>1 ? "s" : null] within the last 180 minutes - [C.compid_info_list.len + 1] IDs on file."
 				if(hits >= 2) //This person used 3 computers within as many hours
 					if(!cid_test) cid_test = list()
@@ -87,17 +87,19 @@ proc/check_compid_list(var/client/C)
 						cid_test[C.ckey] = C.computer_id
 						cid_tested += C.ckey
 						msg += " Executing automatic test."
-						SPAWN_DBG(1 SECOND)
+						SPAWN(1 SECOND)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
-					logTheThing("admin", C, null, msg)
+					logTheThing(LOG_ADMIN, C, msg)
+					logTheThing(LOG_DIARY, C, msg, "admin")
 
 				else
 					message_admins("[key_name(C)][msg]")
-					logTheThing("admin", C, null, "[key_name(C)][msg]")
+					logTheThing(LOG_ADMIN, C, "[key_name(C)][msg]")
+					logTheThing(LOG_DIARY, C, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
-				ircbot.export("admin", ircmsg)
+				ircbot.export_async("admin", ircmsg)
 
 
 		//Done with the analysis
@@ -106,7 +108,7 @@ proc/check_compid_list(var/client/C)
 	/* Pointless alert
 	if(C.compid_info_list.len > 10) //Holy evasion, Batman!
 		message_admins("[key_name(C)] (ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
-		logTheThing("admin", C, null, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
+		logTheThing(LOG_ADMIN, C, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
 	*/
 
 	save_compids(C.ckey, C.compid_info_list)
@@ -124,11 +126,12 @@ proc/do_computerid_test(var/client/C)
 
 	var/ircmsg[] = new()
 	ircmsg["key"] =  C.key
-	ircmsg["name"] = C.mob.real_name
+	ircmsg["name"] = stripTextMacros(C.mob.real_name)
 	ircmsg["msg"] = " [msg]"
-	ircbot.export("admin", ircmsg)
+	ircbot.export_async("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
-	logTheThing("admin", C, null, msg)
+	logTheThing(LOG_ADMIN, C, msg)
+	logTheThing(LOG_DIARY, C, msg, "admin")
 	if(is_fucker)
 		//message_admins("[key_name(C)] was automatically banned for using the CID DLL.")
 		var/banData[] = new()
@@ -158,7 +161,7 @@ proc/view_client_compid_list(mob/user, var/C)
 			user.show_text("Could not find the ckey [C]!", "red")
 			return
 	else
-		message_coders("[key_name(usr)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
+		message_coders("[key_name(user)] gave the compid thing [C]; that's neither text nor a client. What a jerk.")
 		return
 
 	var/dat = {"<html>

@@ -42,6 +42,7 @@ var/global/list/smart_string_pickers = list()
 	var/list/definitions = list()
 
 	New(input_file)
+		..()
 		if(!isfile(input_file))
 			input_file = file(input_file)
 		var/list/sections_text = splittext(replacetext(file2text(input_file), "\\\n", "\\n"), section_splitter)
@@ -90,7 +91,13 @@ var/global/list/smart_string_pickers = list()
 				else if(isnum(thing))
 					thing = "[thing]"
 				else
-					thing = call(thing)(arglist(params))
+					try
+						thing = call(thing)(arglist(params))
+					catch(var/exception/e)
+						if(e.name != "bad proc")
+							throw e
+						else
+							CRASH("invalid embedded value in smart string picker [thing]")
 				return thing
 			else if(thing in src.definitions)
 				return src.generate(thing, additional_defs)

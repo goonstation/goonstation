@@ -18,7 +18,7 @@
 
 		if (reverse_mode) message = reverse_text(message)
 
-		logTheThing("diary", src, null, ": [message]", "say")
+		logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	#ifdef DATALOGGER
 		// Jewel's attempted fix for: null.ScanText()
@@ -84,20 +84,22 @@
 		if(!emote)
 			var/list/messages = process_language(message)
 			for (var/obj/O in (all_view(message_range, T)) | src.container.contents)
-				SPAWN_DBG (0)
+				SPAWN(0)
 					if (O)
 						O.hear_talk(src, messages, src.get_heard_name())
 
-			for (var/mob/M in mobs)
-				if (istype(M, /mob/new_player))
+			for (var/client/C)
+				if (!C.mob) continue
+				if (istype(C.mob, /mob/new_player))
 					continue
-				if (M.client && (istype(M, /mob/dead/observer) || (iswraith(M) && !M.density) || (istype(M, /mob/living/intangible/brainmob)) && (get_turf(M) in hearers(src))) || ((!isturf(src.loc) && src.loc == M.loc) && !(M in listening) && !istype(M, /mob/dead/target_observer)))
+				var/mob/M = C.mob
+				if ((istype(M, /mob/dead/observer) || (iswraith(M) && !M.density) || (istype(M, /mob/living/intangible/brainmob)) && (get_turf(M) in hearers(src))) || ((!isturf(src.loc) && src.loc == M.loc) && !(M in listening) && !istype(M, /mob/dead/target_observer)))
 					var/thisR = rendered
 					if ((istype(M, /mob/dead/observer)||M.client.holder) && src.mind)
 						thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 
 					if (isobserver(M) && M.client) //if a ghooooost (dead) (and online)
-						if (M.client.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
+						if (M.client.preferences.local_deadchat || iswraith(M)) //only listening locally (or a wraith)? w/e man dont bold dat
 							if (M in range(M.client.view, src))
 								M.show_message(thisR, 2)
 						else
@@ -113,9 +115,9 @@
 
 	ghostize()
 		var/mob/dead/observer/O = ..()
-
-		O.icon = 'icons/obj/surgery.dmi'
-		O.icon_state = "cool_brain"
-		O.alpha = 155
+		if(O)
+			O.icon = 'icons/obj/surgery.dmi'
+			O.icon_state = "cool_brain"
+			O.alpha = 155
 
 		return O

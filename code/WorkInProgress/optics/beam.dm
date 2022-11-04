@@ -25,10 +25,10 @@
 		//boutput(world, "creating beam at ([newloc.x],[newloc.y]) with [dirn] [lambda] [omega] [half]")
 
 		icon_state = "[omega]-[half ? "half" : "full"]"
-		dir = dirn
+		set_dir(dirn)
 		set_wavelength(lambda)
 		..(newloc)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.propagate()
 		src.verbs -= /atom/movable/verb/pull
 
@@ -42,13 +42,12 @@
 				next.prev = src
 				next.master = src.master
 			else
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					propagate()
 
 
 	proc/remove()
-		if(next)
-			next.remove()
+		next?.remove()
 		qdel(src)
 
 
@@ -65,39 +64,39 @@
 	for(var/obj/obstacle in mover.loc)
 		if((obstacle.flags & ~ON_BORDER) && (mover != obstacle) && (forget != obstacle))
 			if(!obstacle.CheckExit(mover, src))
-				mover.Bump(obstacle, 1)
+				mover.bump(obstacle, 1)
 				return 0
 
 	//Now, check objects to block exit that are on the border
 	for(var/obj/border_obstacle in mover.loc)
 		if((border_obstacle.flags & ON_BORDER) && (mover != border_obstacle) && (forget != border_obstacle))
 			if(!border_obstacle.CheckExit(mover, src))
-				mover.Bump(border_obstacle, 1)
+				mover.bump(border_obstacle, 1)
 				return 0
 
 	//Next, check objects to block entry that are on the border
 	for(var/obj/border_obstacle in src)
 		if(border_obstacle.flags & ON_BORDER)
-			if(!border_obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != border_obstacle))
-				mover.Bump(border_obstacle, 1)
+			if(!border_obstacle.Cross(mover, mover.loc, 1, 0) && (forget != border_obstacle))
+				mover.bump(border_obstacle, 1)
 				return 0
 
 	//Then, check the turf itself
-	if (!src.CanPass(mover, src))
-		mover.Bump(src, 1)
+	if (!src.Cross(mover, src))
+		mover.bump(src, 1)
 		return 0
 
 	//Finally, check objects/mobs to block entry that are not on the border
 	for(var/atom/movable/obstacle in src)
 		if(obstacle.flags & ~ON_BORDER)
-			if(!obstacle.CanPass(mover, mover.loc, 1, 0) && (forget != obstacle))
-				mover.Bump(obstacle, 1)
+			if(!obstacle.Cross(mover, mover.loc, 1, 0) && (forget != obstacle))
+				mover.bump(obstacle, 1)
 				return 0
 	return 1 //Nothing found to block so return success!
 */
 
 
-	HasEntered(var/atom/movable/AM)
+	Crossed(atom/movable/AM)
 		if(istype(AM, /obj/beam))
 			return
 		if(blocked(AM))
@@ -163,7 +162,7 @@
 
 		// remap alpha by intensity gamma
 		if(alpha != 0)
-			alpha = alpha**0.80
+			alpha = alpha**0.8
 
 		var/icon/I = icon('beam.dmi')
 		I.MapColors(red,0,0,0, 0,green,0,0, 0,0,blue,0, 0,0,0,alpha, 0,0,0,0)

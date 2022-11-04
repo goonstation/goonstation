@@ -7,16 +7,16 @@ var/linenums = 0
 /obj/machinery/pipeline/New()
 	..()
 
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 	gasflowlist += src
 
 /obj/machinery/pipeline/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 // find the pipeline that contains the /obj/machine (including pipe)
@@ -57,26 +57,24 @@ var/linenums = 0
 	P = nodes[nodes.len]						// last node in list
 	vnode2 = P.node2							// n2 points to last machine
 
-	if(vnode1)
-		vnode1.buildnodes()
-	if(vnode2)
-		vnode2.buildnodes()
+	vnode1?.buildnodes()
+	vnode2?.buildnodes()
 
 	return
 
 /*
 /obj/machinery/pipeline/get_gas_moles(from)
-	return gas.total_moles()/capmult
+	return TOTAL_MOLES(gas)/capmult
 */
 /obj/machinery/pipeline/get_gas(from)
 	return gas
 
 /obj/machinery/pipeline/gas_flow()
-	//if(suffix == "d" && Debug) world.log << "PLF1  [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(suffix == "d" && Debug) world.log << "PLF1  TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	gas.copy_from(ngas)
 
-	//if(suffix == "d" && Debug) world.log << "PLF2  [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(suffix == "d" && Debug) world.log << "PLF2  TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 /obj/machinery/pipeline/process()
 	/*
@@ -88,13 +86,13 @@ var/linenums = 0
 
 //	var/dbg = (suffix == "d") && Debug
 
-	//if(dbg) world.log << "PLP1 [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg) world.log << "PLP1 TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	if(!numnodes)
 		return		//dividing by zero is bad okay?
 
 	var/gtemp = ngas.temperature					// cached temperature for heat exch calc
-	var/tot_node = ngas.total_moles() / numnodes		// fraction of gas in this node
+	var/tot_node = TOTAL_MOLES(ngas) / numnodes		// fraction of gas in this node
 
 	//if(dbg) world.log << "PLHE: [gtemp] [tot_node]"
 
@@ -105,7 +103,7 @@ var/linenums = 0
 				P.rupture()
 				//Commenting this out because it spams on endlessly
 				//for (var/mob/M in viewers(P))
-					//M.show_message("<span style=\"color:red\">The pipe has ruptured!</span>", 3)
+					//M.show_message("<span class='alert'>The pipe has ruptured!</span>", 3)
 				//so this is changed to pipe rupturing instead of explosions
 			//i.e. it ruptures if the pressure over 15000%
 			//and temperature over 8000K
@@ -113,25 +111,25 @@ var/linenums = 0
 	// now do standard gas flow proc
 
 
-	//if(dbg) world.log << "PLP2 [ngas.total_moles()]"
+	//if(dbg) world.log << "PLP2 TOTAL_MOLES([ngas)]"
 
 	var/delta_gt
 
 	if(vnode1 && !(vnode1.status & BROKEN))
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode1, delta_gt)//, dbg)
 
-		//if(dbg) world.log << "PLT1 [delta_gt] >> [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg) world.log << "PLT1 [delta_gt] >> TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 		flow = delta_gt
 	else
 		leak_to_turf(1)
 
 	if(vnode2 && !(vnode2.status & BROKEN))
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode2, delta_gt)//, dbg)
 
-		//if(dbg) world.log << "PLT2 [delta_gt] >> [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg) world.log << "PLT2 [delta_gt] >> TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 		flow -= delta_gt
 	else
@@ -176,7 +174,7 @@ var/linenums = 0
 // build the pipelines (THIS HAPPENS ONCE!)
 /proc/makepipelines()
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// look for a pipe
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for a pipe
 
 		if(!P.plnum)							// if not already part of a line
 			P.buildnodes(++linenums)			// add it, and spread to all connected pipes
@@ -191,7 +189,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// look for pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// look for pipes
 
 		if(P.termination)						// true if pipe is terminated (ends in blank or a machine)
 			var/obj/machinery/pipeline/PL = plines[P.plnum]		// get the pipeline from the pipe's pl-number
@@ -204,7 +202,7 @@ var/linenums = 0
 
 
 
-	for(var/obj/machinery/pipes/P in machine_registry[MACHINES_PIPES])		// all pipes
+	for(var/obj/machinery/pipes/P as anything in machine_registry[MACHINES_PIPES])		// all pipes
 		P.setline()								// 	set the pipeline object for this pipe
 
 		if(P.tag == "dbg")		//add debug tag to line containing debug pipe
@@ -241,7 +239,7 @@ var/linenums = 0
 		newnode = node.next(prev)
 		prev = node
 
-		if(newnode && newnode.ispipe())
+		if(newnode?.ispipe())
 			node = newnode
 		else
 			break
@@ -262,9 +260,9 @@ var/linenums = 0
 /obj/machinery/pipes/next(var/obj/machinery/from)
 
 	if(from == null)		// if from null, then return the next actual pipe
-		if(node1 && node1.ispipe() )
+		if(node1?.ispipe() )
 			return node1
-		if(node2 && node2.ispipe() )
+		if(node2?.ispipe() )
 			return node2
 		return null			// else return null if no real pipe connected
 
@@ -346,11 +344,11 @@ var/linenums = 0
 		is += "-b"
 
 	if ((src.level == 1 && isturf(src.loc) && T.intact))
-		src.invisibility = 101
+		src.invisibility = INVIS_ALWAYS
 		is += "-f"
 
 	else
-		src.invisibility = 0
+		src.invisibility = INVIS_NONE
 
 	src.icon_state = is
 
@@ -392,33 +390,31 @@ var/linenums = 0
 	..()
 
 
-/obj/machinery/pipes/attackby(obj/item/weapon/W as obj, mob/user as mob)
+/obj/machinery/pipes/attackby(obj/item/W, mob/user)
 
-	if (istype(W, /obj/item/weapon/weldingtool) && W:welding)
+	if (isweldingtool(W))
 		if(!(status & BROKEN))
 			return
-		if (W:weldfuel < 2)
-			boutput(user, "<span style=\"color:blue\">You need more welding fuel to complete this task.</span>")
+		if(!W:try_weld(user,2))
 			return
-		W:weldfuel -= 2
 		status &= ~BROKEN
 		update()
 		for (var/mob/M in viewers(src))
-			M.show_message("<span style=\"color:red\">The pipe has been mended by [user.name] with the weldingtool.</span>", 3, "<span style=\"color:red\">You hear welding.</span>", 2)
+			M.show_message("<span class='alert'>The pipe has been mended by [user.name] with [W].</span>", 3, "<span class='alert'>You hear welding.</span>", 2)
 		return
 
 /obj/machinery/pipes/ex_act(severity)
 	switch(severity)
-		if(1.0)
+		if(1)
 			qdel(src)
 			return
-		if(2.0)
+		if(2)
 			status |= BROKEN
 			update()
 			if (prob(50))
 				qdel(src)
 				return
-		if(3.0)
+		if(3)
 			if(prob(75))
 				status |= BROKEN
 				update()
@@ -481,7 +477,6 @@ var/linenums = 0
 				makepowernets()
 
 		//src.master = null
-		//SN src = null
 		qdel(src)
 		return
 
@@ -532,8 +527,6 @@ var/linenums = 0
 	//src.master = null
 	defer_powernet_rebuild = 0
 	makepowernets()
-
-	//SN src = null
 	qdel(src)
 	return
 */
@@ -573,13 +566,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -616,13 +609,13 @@ var/linenums = 0
 
 	termination = 0
 
-	if(node1 && node1.ispipe() )
+	if(node1?.ispipe() )
 
 		node1.buildnodes(linenum)
 	else
 		termination++
 
-	if(node2 && node2.ispipe() )
+	if(node2?.ispipe() )
 		node2.buildnodes(linenum)
 	else
 		termination++
@@ -645,12 +638,12 @@ var/linenums = 0
 			gas.temperature += delta_T	/ numnodes			// heat the pipe due to turf temperature
 
 			/*
-			if(abs(delta_T*tot_node/T.total_moles()) > 1)
+			if(abs(delta_T*tot_node/TOTAL_MOLES(T)) > 1)
 				world.log << "Turf [T] at [T.x],[T.y]: gt=[temp] tt=[T.temp]"
-				world.log << "dT = [delta_T] tn=[tot_node] ttg=[T.total_moles()] tt-=[delta_T*tot_node/T.total_moles()]"
+				world.log << "dT = [delta_T] tn=[tot_node] TOTAL_MOLES(ttg=[T)] tt-=[delta_T*tot_node/TOTAL_MOLES(T)]"
 
 			*/
-			var/tot_turf = max(1, T.total_moles())
+			var/tot_turf = max(1, TOTAL_MOLES(T))
 			T.temp -= delta_T*min(10,tot_node/tot_turf)			// also heat the turf due to pipe temp
 							// clamp max temp change to prevent thermal runaway
 							// if low amount of gas in turf
@@ -693,27 +686,27 @@ var/linenums = 0
 
 /obj/machinery/circulator/New()
 	..()
-	gas1 = unpool(/datum/gas_mixture)
-	gas2 = unpool(/datum/gas_mixture)
+	gas1 = new /datum/gas_mixture
+	gas2 = new /datum/gas_mixture
 
-	ngas1 = unpool(/datum/gas_mixture)
-	ngas2 = unpool(/datum/gas_mixture)
+	ngas1 = new /datum/gas_mixture
+	ngas2 = new /datum/gas_mixture
 
 	gasflowlist += src
 
 	//gas.co2 = capacity
 
-	updateicon()
+	UpdateIcon()
 
 /obj/machinery/circulator/disposing()
 	if(gas1)
-		pool(gas1)
+		qdel(gas1)
 	if(gas2)
-		pool(gas2)
+		qdel(gas2)
 	if(ngas1)
-		pool(ngas1)
+		qdel(ngas1)
 	if(ngas2)
-		pool(ngas2)
+		qdel(ngas2)
 	..()
 
 /obj/machinery/circulator/buildnodes()
@@ -745,14 +738,14 @@ var/linenums = 0
 
 	if(circ_status == 1)
 		circ_status = 2
-		SPAWN_DBG(3 SECONDS)				// 3 second delay for slow-off
+		SPAWN(3 SECONDS)				// 3 second delay for slow-off
 			if(circ_status == 2)
 				circ_status = 0
-				updateicon()
+				UpdateIcon()
 	else if(circ_status == 0)
 		circ_status =1
 
-	updateicon()
+	UpdateIcon()
 
 
 
@@ -768,10 +761,10 @@ var/linenums = 0
 	if(circ_status == 1)
 		if(!on)
 			circ_status = 2
-			SPAWN_DBG(3 SECONDS)
+			SPAWN(3 SECONDS)
 				if(circ_status == 2)
 					circ_status = 0
-					updateicon()
+					UpdateIcon()
 	else if(circ_status == 0)
 		if(on)
 			circ_status = 1
@@ -779,10 +772,10 @@ var/linenums = 0
 		if(on)
 			circ_status = 1
 
-	updateicon()
+	UpdateIcon()
 
 
-/obj/machinery/circulator/proc/updateicon()
+/obj/machinery/circulator/UpdateIcon()
 
 	if(status & NOPOWER)
 		icon_state = "circ[side]-p"
@@ -803,7 +796,7 @@ var/linenums = 0
 
 /obj/machinery/circulator/power_change()
 	..()
-	updateicon()
+	UpdateIcon()
 
 /*
 /obj/machinery/circulator/receive_gas(var/obj/substance/gas/t_gas as obj, from as obj, amount)
@@ -841,13 +834,13 @@ var/linenums = 0
 	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas1.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas1) / capmult)
 		calc_delta( src, gas1, ngas1, vnode1, delta_gt)
 	else
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas2) / capmult)
 		calc_delta( src, gas2, ngas2, vnode2, delta_gt)
 	else
 		leak_to_turf(2)*/ //TODO FIX
@@ -880,9 +873,9 @@ var/linenums = 0
 /*
 /obj/machinery/circulator/get_gas_moles(from)
 	if(from == vnode1)
-		return gas1.total_moles()/capmult
+		return TOTAL_MOLES(gas1)/capmult
 	else
-		return gas2.total_moles()/capmult
+		return TOTAL_MOLES(gas2)/capmult
 */ //TODO: FIX
 /obj/machinery/circulator/get_gas(from)
 	if(from == vnode1)
@@ -899,7 +892,7 @@ var/linenums = 0
 	//agas = new/obj/substance/gas()
 
 	gasflowlist += src
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		var/obj/machinery/atmoalter/A = locate(/obj/machinery/atmoalter, src.loc)
 
 		if(A && A.c_status != 0)
@@ -937,7 +930,7 @@ var/linenums = 0
 
 
 /obj/machinery/connector/get_gas_val(from)
-	return gas.total_moles()/capmult
+	return TOTAL_MOLES(gas)/capmult
 
 /obj/machinery/connector/get_gas(from)
 	return gas
@@ -946,13 +939,13 @@ var/linenums = 0
 /obj/machinery/connector/gas_flow()
 
 //	var/dbg = (suffix == "d") && Debug
-	//if(dbg) world.log << "CF0: ngas=[ngas.total_moles()]"
+	//if(dbg) world.log << "CF0: TOTAL_MOLES(ngas=[ngas)]"
 
 	//ngas.transfer_from(agas, -1)
 
-	//if(dbg)	world.log << "CF1: ngas=[gas.total_moles()]"
+	//if(dbg)	world.log << "CF1: TOTAL_MOLES(ngas=[gas)]"
 	gas.copy_from(ngas)
-	//if(dbg)	world.log << "CF2: gas=[gas.total_moles()]"
+	//if(dbg)	world.log << "CF2: TOTAL_MOLES(gas=[gas)]"
 	flag = 0
 
 /obj/machinery/connector/process()
@@ -963,19 +956,19 @@ var/linenums = 0
 	var/delta_gt
 //	var/dbg = (suffix == "d") && Debug
 
-	//if(dbg) world.log << "C[tag]P: [gas.total_moles()] ~ [ngas.total_moles()]"
-	//if(dbg && connected) world.log << "C[tag]PC: [connected.gas.total_moles()]"
+	//if(dbg) world.log << "C[tag]P: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
+	//if(dbg && connected) world.log << "C[tag]PC: TOTAL_MOLES([connected.gas)]"
 
 	if(vnode)
 
-		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		//if(dbg) world.log << "C[tag]P0: [delta_gt]"
 
 		//var/obj/substance/gas/vgas = vnode.get_gas(src)
 
-		//if(dbg) world.log << "C[tag]P1: [gas.total_moles()], [ngas.total_moles()] -> [vgas.total_moles()]"
+		//if(dbg) world.log << "C[tag]P1: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] -> TOTAL_MOLES([vgas)]"
 		calc_delta( src, gas, ngas, vnode, delta_gt)//, dbg)
-		//if(dbg) world.log << "C[tag]P2: [gas.total_moles()], [ngas.total_moles()] -> [vgas.total_moles()]"
+		//if(dbg) world.log << "C[tag]P2: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] -> TOTAL_MOLES([vgas)]"
 
 	else
 		leak_to_turf()
@@ -984,18 +977,18 @@ var/linenums = 0
 		var/amount
 		if(connected.c_status == 1)				// canister set to release
 
-			//if(dbg) world.log << "C[tag]PC1: [gas.total_moles()], [ngas.total_moles()] <- [connected.gas.total_moles()]"
-			amount = min(connected.c_per, capacity - gas.total_moles() )	// limit to space in connector
-			amount = max(0, min(amount, connected.gas.total_moles() ) )		// limit to amount in canister, or 0
+			//if(dbg) world.log << "C[tag]PC1: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] <- TOTAL_MOLES([connected.gas)]"
+			amount = min(connected.c_per, capacity - TOTAL_MOLES(gas) )	// limit to space in connector
+			amount = clamp(amount, 0, TOTAL_MOLES(connected.gas) )		// limit to amount in canister, or 0
 			//if(dbg) world.log << "C[tag]PC2: a=[amount]"
-			//var/ng = ngas.total_moles()
+			//var/ng = TOTAL_MOLES(ngas)
 			ngas.transfer_from( connected.gas, amount)
-			//if(dbg) world.log <<"[ngas.total_moles()-ng] from siph to connector"
-			//if(dbg) world.log << "C[tag]PC3: [gas.total_moles()], [ngas.total_moles()] <- [connected.gas.total_moles()]"
+			//if(dbg) world.log TOTAL_MOLES(<<"[ngas)-ng] from siph to connector"
+			//if(dbg) world.log << "C[tag]PC3: TOTAL_MOLES([gas)], TOTAL_MOLES([ngas)] <- TOTAL_MOLES([connected.gas)]"
 		else if(connected.c_status == 2)		// canister set to accept
 
-			amount = min(connected.c_per, connected.gas.maximum - connected.gas.total_moles())	//limit to space in canister
-			amount = max(0, min(amount, gas.total_moles() ) )				// limit to amount in connector, or 0
+			amount = min(connected.c_per, connected.gas.maximum - TOTAL_MOLES(connected.gas))	//limit to space in canister
+			amount = clamp(amount, 0, TOTAL_MOLES(gas) )				// limit to amount in connector, or 0
 
 			connected.gas.transfer_from( ngas, amount)
 
@@ -1075,7 +1068,7 @@ var/linenums = 0
 	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode1, delta_gt) //, dbg)
 
 	//	if(dbg)	world.log << "J[dbg]T1: [delta_gt] >> [gas.tostring()] ~ [ngas.tostring()]"
@@ -1083,7 +1076,7 @@ var/linenums = 0
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 		calc_delta( src, gas, ngas, vnode2, delta_gt) //, dbg)
 
 	//	if(dbg)	world.log << "J[dbg]T2: [delta_gt] >> [gas.tostring()] ~ [ngas.tostring()]"
@@ -1092,7 +1085,7 @@ var/linenums = 0
 */ //TODO: FIX
 
 /obj/machinery/junction/get_gas_val(from)
-	return gas.total_moles()/capmult
+	return TOTAL_MOLES(gas)/capmult
 
 /obj/machinery/junction/get_gas(from)
 	return gas
@@ -1120,15 +1113,15 @@ var/linenums = 0
 
 	..()
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/vent/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/vent/buildnodes()
@@ -1147,7 +1140,7 @@ var/linenums = 0
 
 
 /obj/machinery/vent/get_gas_val(from)
-	return gas.total_moles()/2
+	return TOTAL_MOLES(gas)/2
 
 /obj/machinery/vent/get_gas(from)
 	return gas
@@ -1156,15 +1149,15 @@ var/linenums = 0
 /obj/machinery/vent/gas_flow()
 
 //	var/dbg = (suffix=="d") && Debug
-	//if(dbg) world.log << "V[tag]F1: [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg) world.log << "V[tag]F1: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 	gas.copy_from(ngas)
-	//if(dbg) world.log << "V[tag]F2: [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg) world.log << "V[tag]F2: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 /obj/machinery/vent/process()
 	/*
 
 //	var/dbg = (suffix=="d") && Debug
-	//if(dbg)	world.log << "V[tag]T1: [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg)	world.log << "V[tag]T1: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	//if(suffix=="dbgp")
 	//	world.log << "VP"
@@ -1174,22 +1167,22 @@ var/linenums = 0
 
 	var/turf/T = src.loc
 
-	delta_gt = FLOWFRAC * (gas.total_moles() / capmult)
-	//var/ng = ngas.total_moles()
+	delta_gt = FLOWFRAC * (TOTAL_MOLES(gas) / capmult)
+	//var/ng = TOTAL_MOLES(ngas)
 	ngas.turf_add(T, delta_gt)
 
-	//if(dbg) world.log << "[num2text(ng-ngas.total_moles(),10)] from vent to turf"
-	//if(dbg)	world.log << "V[tag]T2: [gas.total_moles()] ~ [ngas.total_moles()]"
+	//if(dbg) world.log << "[num2text(ng-TOTAL_MOLES(ngas),10)] from vent to turf"
+	//if(dbg)	world.log << "V[tag]T2: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	if(vnode)
 
-		//if(dbg)	world.log << "V[tag]N1: [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg)	world.log << "V[tag]N1: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
-		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 
 		calc_delta( src, gas, ngas, vnode, delta_gt)//, dbg)
 
-		//if(dbg)	world.log << "V[tag]N2: [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg)	world.log << "V[tag]N2: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	else
 		leak_to_turf()
@@ -1212,15 +1205,15 @@ var/linenums = 0
 	..()
 
 	p_dir = dir
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 	gasflowlist += src
 
 /obj/machinery/inlet/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/buildnodes()
@@ -1239,7 +1232,7 @@ var/linenums = 0
 
 
 /obj/machinery/inlet/get_gas_val(from)
-	return gas.total_moles()/2
+	return TOTAL_MOLES(gas)/2
 
 /obj/machinery/inlet/get_gas(from)
 	return gas
@@ -1264,17 +1257,17 @@ var/linenums = 0
 	if(T && !T.density)
 		flow_to_turf(gas, ngas, T, dbg)		// act as gas leak
 
-	if(dbg)	world.log << "I[tag]T2: [gas.total_moles()] ~ [ngas.total_moles()]"
+	if(dbg)	world.log << "I[tag]T2: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	if(vnode)
 
-		//if(dbg)	world.log << "V[tag]N1: [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg)	world.log << "V[tag]N1: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
-		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - gas.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode.get_gas_val(src) - TOTAL_MOLES(gas) / capmult)
 
 		calc_delta( src, gas, ngas, vnode, delta_gt)//, dbg)
 
-		//if(dbg)	world.log << "V[tag]N2: [gas.total_moles()] ~ [ngas.total_moles()]"
+		//if(dbg)	world.log << "V[tag]N2: TOTAL_MOLES([gas)] ~ TOTAL_MOLES([ngas)]"
 
 	else
 		leak_to_turf()
@@ -1302,9 +1295,9 @@ var/linenums = 0
 
 
 
-	var/t_tot = T.total_moles() * 0.2		// partial pressure of turf gas at pipe, for the moment
+	var/t_tot = TOTAL_MOLES(T) * 0.2		// partial pressure of turf gas at pipe, for the moment
 
-	var/delta_gt = FLOWFRAC * ( t_tot - sgas.total_moles() / capmult )
+	var/delta_gt = FLOWFRAC * ( t_tot - TOTAL_MOLES(sgas) / capmult )
 
 	if(dbg) world.log << "FTT: dgt=[delta_gt]"
 
@@ -1354,10 +1347,7 @@ var/linenums = 0
 	icon_state = "valve[open]"
 
 /obj/machinery/valve/mvalve/examine()
-	set src in oview(1)
-	set category = "Local"
-
-	boutput(usr, "[desc] It is [ open? "open" : "closed"].")
+	return list("[desc] It is [ open? "open" : "closed"].")
 
 
 
@@ -1383,14 +1373,14 @@ var/linenums = 0
 /*	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas1.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas1) / capmult)
 		calc_delta( src, gas1, ngas1, vnode1, delta_gt)
 
 	else
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas2) / capmult)
 		calc_delta( src, gas2, ngas2, vnode2, delta_gt)
 
 	else
@@ -1399,7 +1389,7 @@ var/linenums = 0
 
 	if(open)		// valve operating, so transfer btwen resv1 & 2
 
-		delta_gt = FLOWFRAC * (gas1.total_moles() / capmult - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * (TOTAL_MOLES(gas1) / capmult - TOTAL_MOLES(gas2) / capmult)
 
 		var/datum/gas_mixture//ndelta = new()
 
@@ -1420,9 +1410,9 @@ var/linenums = 0
 
 /obj/machinery/valve/mvalve/get_gas_val(from)
 	if(from == vnode2)
-		return gas2.total_moles()/capmult
+		return TOTAL_MOLES(gas2)/capmult
 	else
-		return gas1.total_moles()/capmult
+		return TOTAL_MOLES(gas1)/capmult
 
 /obj/machinery/valve/mvalve/get_gas(from)
 	if(from == vnode2)
@@ -1451,7 +1441,7 @@ var/linenums = 0
 		flow_to_turf(gas2, ngas2, T)
 
 /obj/machinery/valve/mvalve/attack_ai(mob/user)
-	boutput(user, "<span style=\"color:red\">You are unable to use this as it is physically operated.</span>")
+	boutput(user, "<span class='alert'>You are unable to use this as it is physically operated.</span>")
 	return
 
 /obj/machinery/valve/mvalve/attack_hand(mob/user)
@@ -1463,11 +1453,11 @@ var/linenums = 0
 	if(!open)		// now opening
 		flick("valve01", src)
 		icon_state = "valve1"
-		sleep(10)
+		sleep(1 SECOND)
 	else			// now closing
 		flick("valve10", src)
 		icon_state = "valve0"
-		sleep(10)
+		sleep(1 SECOND)
 	open = !open
 
 // Digital Valve
@@ -1489,13 +1479,9 @@ var/linenums = 0
 	icon_state = "dvalve[open]"
 
 /obj/machinery/valve/dvalve/examine()
-	set src in oview(1)
-	set category = "Local"
 	if(NOPOWER)
-		boutput(usr, "[desc] It is unpowered! It is [ open? "open" : "closed"].")
-		return
-	boutput(usr, "[desc] It is [ open? "open" : "closed"].")
-
+		return list("[desc] It is unpowered! It is [ open? "open" : "closed"].")
+	return list("[desc] It is [ open? "open" : "closed"].")
 
 
 /obj/machinery/valve/dvalve/buildnodes()
@@ -1528,14 +1514,14 @@ var/linenums = 0
 	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas1.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas1) / capmult)
 		calc_delta( src, gas1, ngas1, vnode1, delta_gt)
 
 	else
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas2) / capmult)
 		calc_delta( src, gas2, ngas2, vnode2, delta_gt)
 
 	else
@@ -1544,7 +1530,7 @@ var/linenums = 0
 
 	if(open)		// valve operating, so transfer btwen resv1 & 2
 
-		delta_gt = FLOWFRAC * (gas1.total_moles() / capmult - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * (TOTAL_MOLES(gas1) / capmult - TOTAL_MOLES(gas2) / capmult)
 
 		var/datum/gas_mixture/ndelta = new()
 
@@ -1565,9 +1551,9 @@ var/linenums = 0
 
 /obj/machinery/valve/dvalve/get_gas_val(from)
 	if(from == vnode2)
-		return gas2.total_moles()/capmult
+		return TOTAL_MOLES(gas2)/capmult
 	else
-		return gas1.total_moles()/capmult
+		return TOTAL_MOLES(gas1)/capmult
 
 /obj/machinery/valve/dvalve/get_gas(from)
 	if(from == vnode2)
@@ -1596,7 +1582,7 @@ var/linenums = 0
 		flow_to_turf(gas2, ngas2, T)
 
 /obj/machinery/valve/dvalve/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+	return src.Attackhand(user)
 
 /obj/machinery/valve/dvalve/attack_hand(mob/user)
 	..()
@@ -1607,11 +1593,11 @@ var/linenums = 0
 	if(!open)		// now opening
 		flick("dvalve01", src)
 		icon_state = "dvalve1"
-		sleep(10)
+		sleep(1 SECOND)
 	else			// now closing
 		flick("dvalve10", src)
 		icon_state = "dvalve0"
-		sleep(10)
+		sleep(1 SECOND)
 	open = !open
 
 // one way pipe
@@ -1646,21 +1632,21 @@ var/linenums = 0
 	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas1.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas1) / capmult)
 		calc_delta( src, gas1, ngas1, vnode1, delta_gt)
 
 	else
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas2) / capmult)
 		calc_delta( src, gas2, ngas2, vnode2, delta_gt)
 
 	else
 		leak_to_turf(2)
 
 
-	delta_gt = FLOWFRAC * (gas1.total_moles() / capmult - gas2.total_moles() / capmult)
+	delta_gt = FLOWFRAC * (TOTAL_MOLES(gas1) / capmult - TOTAL_MOLES(gas2) / capmult)
 	var/datum/gas_mixture/ndelta = new()
 
 	if(delta_gt < 0)		// then flowing from R2 to R1
@@ -1670,9 +1656,9 @@ var/linenums = 0
 
 /obj/machinery/oneway/get_gas_val(from)
 	if(from == vnode2)
-		return gas2.total_moles()/capmult
+		return TOTAL_MOLES(gas2)/capmult
 	else
-		return gas1.total_moles()/capmult
+		return TOTAL_MOLES(gas1)/capmult
 
 /obj/machinery/oneway/get_gas(from)
 	if(from == vnode2)
@@ -1709,21 +1695,21 @@ var/linenums = 0
 	var/delta_gt
 
 	if(vnode1)
-		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - gas1.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode1.get_gas_val(src) - TOTAL_MOLES(gas1) / capmult)
 		calc_delta( src, gas1, ngas1, vnode1, delta_gt)
 
 	else
 		leak_to_turf(1)
 
 	if(vnode2)
-		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - gas2.total_moles() / capmult)
+		delta_gt = FLOWFRAC * ( vnode2.get_gas_val(src) - TOTAL_MOLES(gas2) / capmult)
 		calc_delta( src, gas2, ngas2, vnode2, delta_gt)
 
 	else
 		leak_to_turf(2)
 	*/ //TODO: FIX
 
-/obj/machinery/oneway/pipepump/proc/updateicon()
+/obj/machinery/oneway/pipepump/UpdateIcon()
 	icon_state = "pipepump-[(status & NOPOWER) ? "stop" : "run"]"
 
 /obj/machinery/oneway/pipepump/power_change()
@@ -1732,8 +1718,8 @@ var/linenums = 0
 	else
 
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))	// So they don't all turn off at the same time
-		updateicon()
+	SPAWN(rand(1,15))	// So they don't all turn off at the same time
+		UpdateIcon()
 
 // Filter inlet
 // works with filter_control
@@ -1743,14 +1729,14 @@ var/linenums = 0
 
 /obj/machinery/inlet/filter/New()
 	..()
-	gas = unpool(/datum/gas_mixture)
-	ngas = unpool(/datum/gas_mixture)
+	gas = new /datum/gas_mixture
+	ngas = new /datum/gas_mixture
 
 /obj/machinery/inlet/filter/disposing()
 	if(gas)
-		pool(gas)
+		qdel(gas)
 	if(ngas)
-		pool(ngas)
+		qdel(ngas)
 	..()
 
 /obj/machinery/inlet/filter/buildnodes()
@@ -1766,7 +1752,7 @@ var/linenums = 0
 	return
 
 /obj/machinery/inlet/filter/get_gas_val(from)
-	return gas.total_moles()/2
+	return TOTAL_MOLES(gas)/2
 
 /obj/machinery/inlet/filter/get_gas(from)
 	return gas
@@ -1775,7 +1761,7 @@ var/linenums = 0
 	gas.copy_from(ngas)
 
 /obj/machinery/inlet/filter/process()
-	src.updateicon()
+	src.UpdateIcon()
 	if(!(status & NOPOWER))
 	/*	var/turf/T = src.loc
 		if(!T || T.density)	return
@@ -1791,7 +1777,7 @@ var/linenums = 0
 		var/obj/substance/gas/interior = gas
 		var/obj/substance/gas/flowing = new()
 
-		var/flow_rate = (exterior.total_moles()-interior.total_moles())*FLOWFRAC
+		var/flow_rate = (TOTAL_MOLES(exterior)-TOTAL_MOLES(interior))*FLOWFRAC
 		if(flow_rate <= 0)
 			return
 		flowing.set_frac(exterior,flow_rate)
@@ -1819,22 +1805,22 @@ var/linenums = 0
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
-		updateicon()
+	SPAWN(rand(1,15))
+		UpdateIcon()
 	return
 
-/obj/machinery/inlet/filter/proc/updateicon()
+/obj/machinery/inlet/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "inlet_filter-0"
 		return
-	if(src.gas.total_moles() > src.gas.maximum/2)
+	if(TOTAL_MOLES(src.gas) > src.gas.maximum/2)
 		icon_state = "inlet_filter-4"
-	else if(src.gas.total_moles() > src.gas.maximum/3)
+	else if(TOTAL_MOLES(src.gas) > src.gas.maximum/3)
 		icon_state = "inlet_filter-3"
-	else if(src.gas.total_moles() > src.gas.maximum/4)
+	else if(TOTAL_MOLES(src.gas) > src.gas.maximum/4)
 		icon_state = "inlet_filter-2"
-	else if(src.gas.total_moles() >= 1 || src.f_mask >= 1)
+	else if(TOTAL_MOLES(src.gas) >= 1 || src.f_mask >= 1)
 		icon_state = "inlet_filter-1"
 	else
 		icon_state = "inlet_filter-0"
@@ -1849,22 +1835,22 @@ var/linenums = 0
 		status &= ~NOPOWER
 	else
 		status |= NOPOWER
-	SPAWN_DBG(rand(1,15))
-		updateicon()
+	SPAWN(rand(1,15))
+		UpdateIcon()
 	return
 
-/obj/machinery/vent/filter/proc/updateicon()
+/obj/machinery/vent/filter/UpdateIcon()
 	/*
 	if(status & NOPOWER)
 		icon_state = "vent_filter-0"
 		return
-	if(src.gas.total_moles() > src.gas.maximum/2)
+	if(TOTAL_MOLES(src.gas) > src.gas.maximum/2)
 		icon_state = "vent_filter-4"
-	else if(src.gas.total_moles() > src.gas.maximum/3)
+	else if(TOTAL_MOLES(src.gas) > src.gas.maximum/3)
 		icon_state = "vent_filter-3"
-	else if(src.gas.total_moles() > src.gas.maximum/4)
+	else if(TOTAL_MOLES(src.gas) > src.gas.maximum/4)
 		icon_state = "vent_filter-2"
-	else if(src.gas.total_moles() >= 1 || src.f_mask >= 1)
+	else if(TOTAL_MOLES(src.gas) >= 1 || src.f_mask >= 1)
 		icon_state = "vent_filter-1"
 	else
 		icon_state = "vent_filter-0"

@@ -17,9 +17,9 @@
 		var/list/affected_turfs = getline(holder.owner, T)
 		var/range = 1
 
-		holder.owner.visible_message("<span style=\"color:red\"><b>[holder.owner] pukes!</b></span>")
-		logTheThing("combat", holder.owner, target, "power-pukes [log_reagents(holder.owner)] at [log_loc(holder.owner)].")
-		playsound(holder.owner.loc, "sound/misc/meat_plop.ogg", 50, 0)
+		holder.owner.visible_message("<span class='alert'><b>[holder.owner] pukes!</b></span>")
+		logTheThing(LOG_COMBAT, holder.owner, "power-pukes [log_reagents(holder.owner)] at [log_loc(holder.owner)].")
+		playsound(holder.owner.loc, 'sound/misc/meat_plop.ogg', 50, 0)
 		holder.owner.reagents.add_reagent("vomit",20)
 		var/turf/currentturf
 		var/turf/previousturf
@@ -32,7 +32,7 @@
 				break
 			if (F == get_turf(holder.owner))
 				continue
-			if (get_dist(holder.owner,F) > range)
+			if (GET_DIST(holder.owner,F) > range)
 				continue
 			holder.owner.reagents.reaction(F,TOUCH)
 			for(var/mob/living/L in F.contents)

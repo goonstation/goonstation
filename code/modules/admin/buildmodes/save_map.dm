@@ -12,11 +12,11 @@ Right Mouse Button                     = Cancel the first corner<br>
 Right Mouse Button on the mode         = Cycle saving modes<br>
 ***********************************************************"}
 	icon_state = "buildmode5"
-	var/turf/A = null
-	var/saving = 0
-	var/dmm_suite/dmm_suite
+	var/tmp/turf/A = null
+	var/tmp/saving = 0
+	var/tmp/dmm_suite/dmm_suite
 	var/mode_number = 0
-	var/list/mode_names = list("default", "don't save space", "save as prefab", "save as unsimulated prefab", "don't save turfs")
+	var/static/list/mode_names = list("default", "don't save space", "save as prefab", "save as unsimulated prefab", "don't save turfs")
 
 	deselected()
 		..()
@@ -25,11 +25,11 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 	selected()
 		. = ..()
 		update_mode()
-	
+
 	click_mode_right(var/ctrl, var/alt, var/shift)
-		mode_number = (mode_number + 1) % mode_names.len
+		mode_number = (mode_number + 1) % length(mode_names)
 		update_mode()
-	
+
 	proc/update_mode()
 		if(mode_number == SAVE_MODE_PREFAB)
 			src.dmm_suite = new/dmm_suite/prefab_saving
@@ -41,8 +41,8 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 
 	proc/mark_corner(atom/object)
 		A = get_turf(object)
-		boutput(usr, "<span style=\"color:blue\">Corner set!</span>")
-	
+		boutput(usr, "<span class='notice'>Corner set!</span>")
+
 	click_left(atom/object, var/ctrl, var/alt, var/shift)
 		if (!A)
 			mark_corner(object)
@@ -51,13 +51,13 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 			var/turf/B = get_turf(object)
 			blink(B)
 			if (!B || A.z != B.z)
-				boutput(usr, "<span style=\"color:red\">Corners must be on the same Z-level!</span>")
+				boutput(usr, "<span class='alert'>Corners must be on the same Z-level!</span>")
 				return
 			if(saving)
-				boutput(usr, "<span style=\"color:red\">Already saving a map!</span>")
+				boutput(usr, "<span class='alert'>Already saving a map!</span>")
 				return
-			if(alert("Are you sure you want to save an area of size [abs(A.x - B.x)]x[abs(A.y - B.y)]?",,"Yes","No") != "Yes")
-				boutput(usr, "<span style=\"color:red\">Saving cancelled!</span>")
+			if(alert("Are you sure you want to save an area of size [abs(A.x - B.x) + 1]x[abs(A.y - B.y) + 1]?",,"Yes","No") != "Yes")
+				boutput(usr, "<span class='alert'>Saving cancelled!</span>")
 				A = null
 				return
 			saving = 1
@@ -65,7 +65,7 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 			if (fexists(fname))
 				fdel(fname)
 			var/target = file(fname)
-			boutput(usr, "<span style=\"color:blue\">Saving started.</span>")
+			boutput(usr, "<span class='notice'>Saving started.</span>")
 			var/flags = DMM_IGNORE_MOBS | DMM_IGNORE_OVERLAYS
 			if(mode_number == SAVE_MODE_NO_SPACE)
 				flags |= DMM_IGNORE_SPACE
@@ -75,14 +75,14 @@ Right Mouse Button on the mode         = Cycle saving modes<br>
 				flags |= DMM_IGNORE_AREAS
 			var/text = dmm_suite.write_map(A, B, flags)
 			target << text
-			boutput(usr, "<span style=\"color:blue\">Saving finished.</span>")
+			boutput(usr, "<span class='notice'>Saving finished.</span>")
 			usr << ftp(target)
 			saving = 0
 			A = null
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
 		A = null
-		boutput(usr, "<span style=\"color:blue\">Corner cancelled!</span>")
+		boutput(usr, "<span class='notice'>Corner cancelled!</span>")
 
 #undef SAVE_MODE_DEFAULT
 #undef SAVE_MODE_NO_SPACE

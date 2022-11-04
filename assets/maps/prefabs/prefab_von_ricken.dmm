@@ -1,0 +1,3361 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aP" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/carpet/green/standard/edge,
+/area/prefab/von_ricken)
+"aY" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"bl" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/nw,
+/area/prefab/von_ricken)
+"bq" = (
+/obj/decal/poster/wallsign/stencil/left/r,
+/obj/decal/poster/wallsign/stencil/right/i,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"bu" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/canned_laughter/crushed{
+	pixel_x = -10;
+	pixel_y = -3
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"bE" = (
+/obj/critter/mechmonstrositycrawler,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"bO" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"cc" = (
+/obj/surgery_tray,
+/obj/item/roboupgrade/teleport,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"cl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"co" = (
+/obj/table/round/auto,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"cX" = (
+/obj/item/clothing/suit/bedsheet/green,
+/obj/stool/bed,
+/obj/decal/fakeobjects/skeleton{
+	desc = "The remains of a human. At least whoever it was died while snuggled into a warm and fuzzy bed.";
+	name = "Cozy skeleton";
+	pixel_x = 4;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"db" = (
+/obj/machinery/light/incandescent/netural,
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"di" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"dp" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/stool/chair/couch/green{
+	dir = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"dI" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"dQ" = (
+/obj/table/round/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"ea" = (
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 9
+	},
+/area/prefab/von_ricken)
+"ei" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"es" = (
+/obj/table/auto,
+/obj/machinery/cell_charger{
+	pixel_x = -1;
+	pixel_y = -3
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 11
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = 7;
+	pixel_y = 6
+	},
+/obj/item/cell/supercell/charged{
+	pixel_x = -6;
+	pixel_y = 13
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"ex" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/gibs{
+	dir = 4;
+	icon_state = "gib4"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"eE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"eF" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"eW" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fy" = (
+/obj/storage/crate/robotparts,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"fA" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fC" = (
+/obj/machinery/portable_atmospherics/canister/air,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"fJ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"fO" = (
+/obj/table/wood/auto,
+/obj/item/kitchen/food_box/lollipop{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/obj/item/device/light/lava_lamp/activated{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"gN" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"gQ" = (
+/obj/decal/poster/wallsign/poster_borg,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"gX" = (
+/turf/simulated/wall/auto/jen,
+/area/prefab/von_ricken)
+"hI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"iC" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"iD" = (
+/obj/machinery/recharge_station,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"iK" = (
+/obj/storage/closet/emergency,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"iM" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"jm" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"jI" = (
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/reagent_dispensers/fueltank,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"kk" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/roboupgrade/speed,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"kq" = (
+/obj/item/scissors/surgical_scissors/bloody{
+	pixel_x = -15;
+	pixel_y = -5
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"kr" = (
+/obj/decal/cleanable/machine_debris,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"kY" = (
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"lj" = (
+/obj/decal/cleanable/dirt/dirt5,
+/obj/rack,
+/obj/random_item_spawner/tools/some,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"lm" = (
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 6
+	},
+/area/prefab/von_ricken)
+"lI" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"lS" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"mA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"mF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 5
+	},
+/area/prefab/von_ricken)
+"mK" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/obj/item/kitchen/utensil/fork/chopsticks{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"mV" = (
+/turf/simulated/floor/shuttlebay,
+/area/prefab/von_ricken)
+"mX" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/vomit,
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = -9;
+	pixel_y = -8
+	},
+/obj/item/reagent_containers/pill/cyberpunk{
+	pixel_x = 7;
+	pixel_y = 8
+	},
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 1
+	},
+/area/prefab/von_ricken)
+"na" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"nk" = (
+/obj/stool/chair/comfy/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/ne,
+/area/prefab/von_ricken)
+"np" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"or" = (
+/turf/simulated/floor/carpet/green/standard/edge{
+	dir = 10
+	},
+/area/prefab/von_ricken)
+"oP" = (
+/obj/machinery/r_door_control{
+	id = "Von Ricken"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"oR" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/roboupgrade/physshield,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"oX" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"pd" = (
+/obj/machinery/vehicle/pod_smooth/light{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/von_ricken)
+"ph" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/recharge_station,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"pA" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 9;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"pB" = (
+/obj/item/wrench{
+	pixel_x = 5;
+	pixel_y = -7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"pQ" = (
+/obj/machinery/power/apc/autoname_east/nopoweralert,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-10"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"qf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"qm" = (
+/obj/critter/gunbot/heavy,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"qA" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/canned_laughter/crushed{
+	pixel_x = -7;
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"qJ" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"qK" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"rd" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"rN" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"sa" = (
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"sQ" = (
+/obj/lattice,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"th" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"to" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"tK" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"tP" = (
+/obj/table/wood/auto,
+/obj/machinery/light/lamp/green{
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"uc" = (
+/obj/machinery/fluid_canister,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"uv" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"uK" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio{
+	pixel_x = -4;
+	pixel_y = 10
+	},
+/obj/item/ammo/power_cell/self_charging/slowcharge{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"uZ" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"vj" = (
+/obj/decal/poster/wallsign/stencil/left/n,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"vs" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/organ/stomach/cyber{
+	pixel_y = 2
+	},
+/obj/item/clothing/head/butt/cyberbutt{
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"wl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"wp" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2
+	},
+/obj/item/device/multitool{
+	pixel_x = 5;
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"wA" = (
+/obj/table/auto,
+/obj/item/circular_saw{
+	pixel_y = -5
+	},
+/obj/item/scalpel{
+	pixel_x = -1;
+	pixel_y = 4
+	},
+/obj/item/suture{
+	pixel_y = 8
+	},
+/obj/item/hemostat{
+	pixel_x = -1;
+	pixel_y = 3
+	},
+/obj/item/staple_gun{
+	pixel_x = 6;
+	pixel_y = 12
+	},
+/obj/item/surgical_spoon{
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"wC" = (
+/obj/critter/gunbot/heavy,
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"wN" = (
+/obj/storage/closet/dresser/random,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"xA" = (
+/obj/table/round/auto,
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"xE" = (
+/obj/machinery/computer/robot_module_rewriter,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"yb" = (
+/obj/machinery/light/small/sticky,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"ye" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	id = "Von Ricken"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/prefab/von_ricken)
+"yj" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"yw" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"yD" = (
+/obj/random_item_spawner/med_kit/one,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"yJ" = (
+/obj/decal/poster/wallsign/stencil/left/v,
+/obj/decal/poster/wallsign/stencil/right/o,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"yL" = (
+/obj/table/reinforced/industrial/auto,
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"yU" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"zm" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"zn" = (
+/obj/stool/chair/couch/green{
+	dir = 8
+	},
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"zv" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"zy" = (
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Ah" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Aj" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"An" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"Aq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Ar" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/comfy,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"AH" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"AI" = (
+/obj/rack,
+/obj/item/storage/toolbox/emergency{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/obj/item/weldingtool{
+	pixel_x = 6;
+	pixel_y = -2
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"AO" = (
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4;
+	icon_state = "maint_locked";
+	locked = 1
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/mule/dropoff,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"AX" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/burger/brainburger{
+	pixel_x = -2;
+	pixel_y = 8
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Bf" = (
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Bl" = (
+/obj/decal/cleanable/ripped_poster,
+/turf/simulated/wall/auto/jen,
+/area/prefab/von_ricken)
+"Br" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Bx" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"By" = (
+/obj/machinery/light/incandescent/warm/very{
+	dir = 8
+	},
+/obj/storage/crate/robotics_supplies,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"BF" = (
+/obj/storage/crate/robotics_supplies_borg,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"BU" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Cy" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"CA" = (
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"CI" = (
+/obj/decal/cleanable/blood/gibs,
+/turf/simulated/floor/carpet/red/fancy/narrow/sw,
+/area/prefab/von_ricken)
+"CP" = (
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"CU" = (
+/obj/table/wood/auto,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Dk" = (
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"DB" = (
+/obj/machinery/light/emergencyflashing,
+/obj/item/storage/firstaid/regular/empty{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"DD" = (
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"DI" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/vending/cola/red,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Ee" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Eo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Et" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Fk" = (
+/obj/stool/chair/blue{
+	dir = 4
+	},
+/obj/item/robot_module/brobocop{
+	pixel_x = 5;
+	pixel_y = 2
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Ft" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"FH" = (
+/obj/machinery/light/incandescent/warm{
+	dir = 4;
+	nostick = 1
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Gp" = (
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Gz" = (
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/obj/decal/cleanable/rust/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"GG" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"GP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks{
+	pixel_y = 5
+	},
+/obj/machinery/door/unpowered/wood/pyro{
+	desc = "Plenty of scratches and dried blood coat the atmosphere this wooden relic of room-seperator emits!";
+	dir = 1;
+	name = "grody door"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"GR" = (
+/obj/machinery/bot/medbot/terrifying,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"GX" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/table/wood/auto,
+/obj/deskclutter{
+	pixel_x = 4;
+	pixel_y = 7
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Hn" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"Hq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Hv" = (
+/obj/decal/cleanable/dirt/dirt2,
+/obj/random_pod_spawner/random_putt_spawner,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/von_ricken)
+"HI" = (
+/obj/machinery/manufacturer/robotics,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"HP" = (
+/obj/shrub{
+	dir = 1;
+	icon = 'icons/obj/stationobjs.dmi';
+	icon_state = "plant"
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"HS" = (
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Il" = (
+/obj/machinery/bot/buttbot/cyber,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Iy" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"IR" = (
+/obj/decal/poster/wallsign/stencil/left/e,
+/obj/decal/poster/wallsign/stencil/right/n,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"Ja" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/maintenance{
+	dir = 4
+	},
+/obj/decal/mule/dropoff,
+/obj/access_spawn/maint,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Jh" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"JA" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"JN" = (
+/obj/rack,
+/obj/item/tank/air,
+/obj/item/crowbar{
+	pixel_x = 4;
+	pixel_y = -2
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 4;
+	pixel_y = -4
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 1;
+	pixel_y = 10
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"JO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/external,
+/obj/decal/mule/dropoff,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"JX" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 1;
+	locked = 1;
+	name = "locked door"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"KA" = (
+/obj/decal/poster/wallsign/stencil/left/c,
+/obj/decal/poster/wallsign/stencil/right/k,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"KC" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"KJ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"KX" = (
+/obj/machinery/vending/medical,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Lf" = (
+/obj/machinery/light/emergencyflashing,
+/obj/decal/cleanable/rust/jen,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/obj/machinery/portable_atmospherics/canister/sleeping_agent,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"LB" = (
+/obj/storage/secure/closet/medical/anesthetic,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"LI" = (
+/obj/item/storage/secure/ssafe/vonrickenstorage,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/prefab/von_ricken)
+"LL" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"Ms" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Mz" = (
+/obj/table/wood/auto,
+/obj/item/canned_laughter{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/canned_laughter{
+	pixel_x = 6;
+	pixel_y = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"MC" = (
+/turf/simulated/floor/carpet/red/fancy/narrow/se,
+/area/prefab/von_ricken)
+"NE" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/storage/secure/closet/fridge{
+	req_access_txt = "29"
+	},
+/obj/random_item_spawner/organs/bloody/one_to_three,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"NF" = (
+/obj/machinery/light/incandescent/warm/very{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Od" = (
+/obj/item/device/multitool{
+	pixel_x = 6;
+	pixel_y = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Ok" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Oy" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"OH" = (
+/obj/machinery/light/incandescent/netural,
+/obj/machinery/vending/snack,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"OO" = (
+/obj/machinery/optable,
+/obj/decal/mule/beacon/no_auto_dropoff_spawn,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"OU" = (
+/obj/decal/cleanable/molten_item,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Pl" = (
+/obj/critter/gunbot/heavy,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Pt" = (
+/obj/rack,
+/obj/random_item_spawner/tools/some,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Pz" = (
+/obj/machinery/computer/operating{
+	dir = 4
+	},
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"PG" = (
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"PI" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Qp" = (
+/obj/item/canned_laughter/crushed{
+	pixel_x = 2;
+	pixel_y = 13
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Qv" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Qy" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"QE" = (
+/obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/burger/mysteryburger{
+	pixel_x = 4;
+	pixel_y = 8
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy{
+	pixel_x = -6;
+	pixel_y = 3
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"QW" = (
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Rf" = (
+/obj/rack,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = -2;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/glass/oilcan{
+	pixel_x = 4;
+	pixel_y = -1
+	},
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"Rr" = (
+/obj/machinery/computer/security/wooden_tv,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Rw" = (
+/obj/table/round/auto,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Ry" = (
+/obj/table/wood/auto,
+/obj/machinery/light/incandescent/netural,
+/obj/item/clothing/suit/gimmick/light_borg{
+	pixel_y = 5
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Rz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"RE" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"RF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable,
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"RH" = (
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8;
+	name = "Cyborg Storage"
+	},
+/obj/access_spawn/robotics,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"RL" = (
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"RO" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"RP" = (
+/obj/table/wood/auto,
+/obj/item/canned_laughter{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/obj/item/canned_laughter/crushed{
+	pixel_x = 6;
+	pixel_y = 11
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"Sq" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/oil/streak,
+/obj/machinery/door/airlock/pyro/medical/alt{
+	name = "Operating Room"
+	},
+/obj/access_spawn/robotics,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"SC" = (
+/obj/item/storage/secure/ssafe/vonricken,
+/turf/simulated/wall/auto/jen,
+/area/prefab/von_ricken)
+"SJ" = (
+/obj/storage/closet/fire,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"SZ" = (
+/obj/decal/cleanable/dirt,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Tr" = (
+/obj/item/canned_laughter/crushed{
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/obj/item/canned_laughter/crushed{
+	pixel_x = -2
+	},
+/obj/item/reagent_containers/food/snacks/takeout{
+	pixel_x = -7;
+	pixel_y = 11
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/west,
+/area/prefab/von_ricken)
+"Tu" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -3;
+	pixel_y = -2
+	},
+/obj/item/canned_laughter{
+	pixel_x = 9;
+	pixel_y = 12
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Tz" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"TT" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/shuttlebay,
+/area/prefab/von_ricken)
+"Uf" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Uq" = (
+/obj/storage/cart/trash,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"US" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"UU" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 5;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"UZ" = (
+/obj/table/wood/auto,
+/obj/item/storage/firstaid/old{
+	pixel_x = -4;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/burger/mysteryburger{
+	pixel_x = 11;
+	pixel_y = 3
+	},
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"VA" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"VD" = (
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+"VE" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/airless/plating,
+/area/prefab/von_ricken)
+"VG" = (
+/obj/cable,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"VP" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/random_item_spawner/junk/one_or_zero,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"VQ" = (
+/obj/item/clothing/under/trash_bag{
+	pixel_x = -3;
+	pixel_y = 4
+	},
+/obj/item/reagent_containers/food/snacks/pickle/trash{
+	pixel_x = 2
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"WG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"WW" = (
+/obj/item/clothing/suit/bedsheet/yellow,
+/obj/stool/bed,
+/turf/simulated/floor/wood,
+/area/prefab/von_ricken)
+"WZ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Xd" = (
+/obj/cable{
+	icon_state = "2-5"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Xl" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"Xm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks{
+	pixel_y = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/narrow/east,
+/area/prefab/von_ricken)
+"XI" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"Yg" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/light/small/sticky{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"Yl" = (
+/obj/lattice{
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay5,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"YI" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/specialroom/medbay,
+/area/prefab/von_ricken)
+"Zh" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/von_ricken)
+"ZE" = (
+/obj/machinery/manufacturer/hangar,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"ZO" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/cleanable/oil/streak,
+/turf/simulated/floor/airless/neutral,
+/area/prefab/von_ricken)
+"ZU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/medical/alt{
+	dir = 8;
+	name = "Operating Room"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = 4
+	},
+/obj/access_spawn/robotics,
+/turf/simulated/floor/black,
+/area/prefab/von_ricken)
+
+(1,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(2,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(3,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(4,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(5,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(6,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+jm
+jm
+jm
+fy
+By
+wA
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(7,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+fA
+yJ
+xE
+Fk
+VD
+PI
+bE
+VD
+LB
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(8,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+to
+vj
+iD
+GR
+kq
+OO
+Od
+Ee
+Lf
+jm
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(9,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+Yl
+eW
+sQ
+bq
+KX
+yD
+Bf
+Pz
+ex
+qf
+qf
+Sq
+qf
+AH
+jm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(10,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+iC
+KA
+NE
+Ee
+Bf
+VD
+VD
+GR
+DB
+jm
+jm
+qK
+jm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(11,1,1) = {"
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+IR
+Rf
+VD
+cc
+NF
+VD
+es
+HI
+jm
+uK
+Ok
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+zm
+zm
+zm
+An
+An
+An
+"}
+(12,1,1) = {"
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+ZU
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+"}
+(13,1,1) = {"
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+RO
+WZ
+Ms
+mA
+np
+np
+Br
+np
+KJ
+np
+bO
+BU
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+"}
+(14,1,1) = {"
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+QW
+VA
+di
+jm
+jm
+jm
+Yg
+HS
+Eo
+lj
+jm
+jm
+jm
+dI
+Aq
+Tz
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+"}
+(15,1,1) = {"
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+SZ
+jm
+jm
+jm
+zm
+jm
+VQ
+Gp
+Qy
+fC
+jm
+zm
+jm
+jm
+jm
+ei
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+"}
+(16,1,1) = {"
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+Zh
+jm
+zm
+zm
+zm
+jm
+VE
+VE
+VE
+VE
+jm
+zm
+zm
+zm
+jm
+AO
+jm
+gX
+gX
+gX
+gX
+gX
+zm
+zm
+zm
+zm
+An
+"}
+(17,1,1) = {"
+An
+An
+An
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+jm
+yb
+jm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+jm
+YI
+Cy
+gX
+Tr
+mK
+HP
+gX
+gX
+zm
+zm
+zm
+zm
+"}
+(18,1,1) = {"
+An
+An
+zm
+zm
+zm
+zm
+zm
+jm
+SJ
+Xl
+PG
+AI
+jm
+Qy
+jm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+jm
+hI
+WG
+GP
+Xm
+yU
+Pl
+RP
+gX
+zm
+zm
+zm
+zm
+"}
+(19,1,1) = {"
+An
+zm
+zm
+zm
+zm
+US
+jm
+jm
+iK
+GG
+PG
+jI
+jm
+iM
+jm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+zm
+yj
+zm
+zm
+zm
+jm
+YI
+Qp
+gX
+fO
+bu
+Dk
+Ry
+gX
+zm
+zm
+zm
+zm
+"}
+(20,1,1) = {"
+An
+zm
+zm
+Yl
+eW
+uZ
+oP
+lI
+Ft
+lI
+UU
+jm
+jm
+oX
+jm
+zm
+zm
+VE
+VE
+VE
+VE
+VE
+VE
+VE
+VE
+zm
+zm
+gQ
+YI
+CP
+gX
+gX
+bl
+CI
+Mz
+gX
+zm
+zm
+zm
+zm
+"}
+(21,1,1) = {"
+An
+zm
+zm
+zm
+zm
+zm
+ye
+mV
+mV
+Hv
+Oy
+jm
+aY
+CP
+jm
+jm
+VE
+VE
+CP
+lS
+CP
+CP
+lS
+CP
+VE
+VE
+jm
+jm
+YI
+CP
+db
+gX
+nk
+MC
+WW
+gX
+zm
+zm
+zm
+An
+"}
+(22,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+zm
+ye
+mV
+TT
+mV
+Iy
+jm
+JA
+CP
+CP
+wC
+Jh
+CP
+CP
+kr
+Rw
+DD
+CP
+CP
+CP
+CP
+co
+CP
+YI
+CP
+AX
+gX
+Rr
+Dk
+wN
+gX
+zm
+zm
+zm
+An
+"}
+(23,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+zm
+ye
+mV
+mV
+mV
+Hn
+JO
+Hq
+Et
+CP
+Ah
+CP
+lS
+CP
+RE
+Hq
+pB
+Hq
+Hq
+rN
+Hq
+dQ
+Hq
+RF
+CP
+QE
+gX
+gX
+gX
+gX
+gX
+zm
+zm
+zm
+An
+"}
+(24,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+zm
+ye
+mV
+pd
+mV
+Iy
+jm
+zn
+YI
+CP
+CP
+OU
+CP
+CP
+zy
+co
+co
+CP
+Jh
+CP
+CP
+xA
+CP
+YI
+Jh
+DI
+gX
+wN
+ea
+or
+gX
+zm
+zm
+zm
+An
+"}
+(25,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+zm
+ye
+mV
+TT
+TT
+ZO
+jm
+dp
+KC
+jm
+jm
+VE
+VE
+CP
+lS
+CP
+CP
+lS
+Jh
+VE
+VE
+jm
+jm
+YI
+CP
+OH
+Bl
+cX
+mX
+aP
+gX
+zm
+zm
+An
+An
+"}
+(26,1,1) = {"
+zm
+zm
+zm
+Yl
+eW
+gN
+jm
+XI
+LL
+XI
+pA
+jm
+jm
+AO
+jm
+zm
+zm
+VE
+VE
+VE
+VE
+VE
+VE
+VE
+VE
+zm
+zm
+jm
+YI
+CP
+gX
+SC
+Dk
+mF
+lm
+gX
+zm
+zm
+An
+An
+"}
+(27,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+qJ
+jm
+jm
+JN
+GG
+PG
+CA
+jm
+wl
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+YI
+CP
+gX
+na
+Dk
+fJ
+UZ
+gX
+zm
+zm
+An
+An
+"}
+(28,1,1) = {"
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+ZE
+PG
+PG
+uc
+jm
+Rz
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+hI
+Hq
+JX
+VP
+Ar
+GX
+CU
+gX
+zm
+zm
+zm
+An
+"}
+(29,1,1) = {"
+An
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+jm
+Uf
+jm
+zm
+zm
+zm
+zm
+jm
+VE
+yw
+yw
+jm
+jm
+zm
+zm
+jm
+YI
+CP
+gX
+Dk
+Dk
+tP
+gX
+gX
+zm
+zm
+zm
+An
+"}
+(30,1,1) = {"
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+cl
+jm
+zm
+zm
+jm
+jm
+jm
+Gz
+sa
+qA
+Tu
+jm
+zm
+zm
+jm
+Ja
+jm
+gX
+gX
+gX
+gX
+gX
+zm
+zm
+zm
+An
+An
+"}
+(31,1,1) = {"
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+Rz
+jm
+jm
+jm
+jm
+Pt
+Gp
+iM
+Gp
+Gp
+yL
+jm
+jm
+jm
+jm
+Rz
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+"}
+(32,1,1) = {"
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+eF
+np
+VG
+iM
+jm
+Uq
+Xd
+Bx
+RL
+Gp
+jm
+jm
+sa
+zv
+qm
+rd
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+"}
+(33,1,1) = {"
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+eF
+KJ
+np
+pQ
+uv
+Gp
+Aj
+kY
+np
+np
+np
+tK
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+"}
+(34,1,1) = {"
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+RH
+jm
+jm
+jm
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+"}
+(35,1,1) = {"
+An
+An
+An
+An
+An
+zm
+zm
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+vs
+th
+VD
+eE
+Ee
+ph
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+"}
+(36,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+gQ
+kk
+VD
+Il
+Qv
+VD
+iD
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+"}
+(37,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+wp
+oR
+LI
+FH
+BF
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+zm
+zm
+An
+An
+An
+An
+An
+"}
+(38,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+jm
+jm
+jm
+jm
+jm
+jm
+jm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(39,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(40,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(41,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+zm
+An
+An
+zm
+zm
+zm
+zm
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}
+(42,1,1) = {"
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+zm
+zm
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+An
+"}

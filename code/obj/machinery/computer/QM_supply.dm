@@ -1,3 +1,10 @@
+/datum/rockbox_globals
+	var/const/rockbox_standard_fee = 5
+	var/rockbox_client_fee_min = 1
+	var/rockbox_client_fee_pct = 10
+	var/rockbox_premium_purchased = 0
+
+var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
 /proc/build_qm_categories()
 	QM_CategoryList.Cut()
@@ -55,50 +62,53 @@
 
 	proc/receive_pathogen_samples(obj/storage/crate/biohazard/cdc/sell_crate)
 		for (var/R in sell_crate)
-			if (istype(R, /obj/item/reagent_containers) || ishuman(R)) //heh
+			var/list/patho = null
+			if (istype(R, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/RC = R
-				var/list/patho = RC.reagents.aggregate_pathogens()
-				for (var/uid in patho)
-					if (!(uid in src.analysis_by_uid))
-						var/datum/pathogen/P = patho[uid]
-						var/datum/cdc_contact_analysis/D = new
-						D.uid = uid
-						var/sym_count = max(min(length(P.effects), 7), 2)
-						D.time_factor = sym_count * rand(10, 15) // 200, 600
-						D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
-						D.name = P.name
-						var/rating = max(P.advance_speed, P.mutation_speed, P.mutativeness, P.suppression_threshold, P.maliciousness)
-						var/ds = "weak"
-						switch (P.stages)
-							if (4)
-								ds = "potent"
-							if (5)
-								ds = "deadly"
-						var/df = "a relatively one-sided"
-						switch (sym_count)
-							if (3 to 4)
-								df = "a somewhat colorful"
-							if (5 to 6)
-								df = "a rather diverse"
-							if (7)
-								df = "an incredibly symptomatic"
-						D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
-						var/datum/pathogen/copy = unpool(/datum/pathogen)
-						copy.setup(0, P, 0, null)
-						D.assoc_pathogen = copy
-						src.analysis_by_uid[uid] = D
-						src.ready_to_analyze += D
-				if (ishuman(RC))
-					var/mob/living/carbon/human/H = RC
-					H.ghostize()
+				patho = RC.reagents.aggregate_pathogens()
 				qdel(RC)
+			else if (ishuman(R)) // heh
+				var/mob/living/carbon/human/H = R
+				patho = H.reagents.aggregate_pathogens()
+				H.ghostize()
+				qdel(H)
+			else
+				qdel(R)
+				continue
+			for (var/uid in patho)
+				if (!(uid in src.analysis_by_uid))
+					var/datum/pathogen/P = patho[uid]
+					var/datum/cdc_contact_analysis/D = new
+					D.uid = uid
+					var/sym_count = clamp(length(P.effects), 2, 7)
+					D.time_factor = sym_count * rand(10, 15) // 200, 600
+					D.cure_cost = sym_count * rand(25, 40) // 2100, 4300
+					D.name = P.name
+					var/rating = max(P.advance_speed, P.suppression_threshold, P.spread)
+					var/ds = "weak"
+					switch (P.stages)
+						if (4)
+							ds = "potent"
+						if (5)
+							ds = "deadly"
+					var/df = "a relatively one-sided"
+					switch (sym_count)
+						if (3 to 4)
+							df = "a somewhat colorful"
+						if (5 to 6)
+							df = "a rather diverse"
+						if (7)
+							df = "an incredibly symptomatic"
+					D.desc = "It is [df] pathogen with a hazard rating of [rating]. We identify it to be a [ds] organism made up of [P.body_type.plural]. [P.suppressant.desc]"
+					var/datum/pathogen/copy = new /datum/pathogen
+					copy.setup(0, P, 0, null)
+					D.assoc_pathogen = copy
+					src.analysis_by_uid[uid] = D
+					src.ready_to_analyze += D
 			qdel(sell_crate)
-		var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
-		pdaSignal.transmission_method = TRANSMISSION_RADIO
-		if(transmit_connection != null)
-			transmit_connection.post_signal(null, pdaSignal)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: Pathogen sample crate delivered to the CDC.")
+		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 var/global/datum/cdc_contact_controller/QM_CDC = new()
 
@@ -106,14 +116,16 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	name = "Quartermaster's Console"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "QMcom"
-	req_access = list(access_cargo)
-	object_flags = CAN_REPROGRAM_ACCESS
+	req_access = list(access_supply_console)
+	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
+	circuit_type = /obj/item/circuitboard/qmsupply
 	var/temp = null
 	var/last_cdc_message = null
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
+	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
@@ -121,24 +133,19 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/last_market_update = -INFINITY
 	var/price_list = null
 
-	lr = 1
-	lg = 0.7
-	lb = 0.03
+	light_r =1
+	light_g = 0.7
+	light_b = 0.03
 
-	disposing()
-		radio_controller.remove_object(src, "1435")
+	New()
 		..()
-
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	return src.attack_hand(user)
-
-/obj/machinery/computer/supplycomp/attack_ai(var/mob/user as mob)
-	return src.attack_hand(user)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
 		if(user)
-			boutput(user, "<span style=\"color:blue\">Special supplies unlocked.</span>")
+			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
+		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
 		return 1
 	return 0
@@ -147,27 +154,26 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	if(!hacked)
 		return 0
 	if(user)
-		boutput(user, "<span style=\"color:blue\">Treacherous supplies removed.</span>")
+		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
 	src.hacked = 0
 	return 1
 
-/obj/machinery/computer/supplycomp/attackby(I as obj, user as mob)
-	if(istype(I,/obj/item/card/emag))
+/obj/machinery/computer/supplycomp/attackby(I, mob/user)
+	if(!istype(I,/obj/item/card/emag))
 		//I guess you'll wanna put the emag away now instead of getting a massive popup
-	else
-		return src.attack_hand(user)
+		..()
 
-/obj/machinery/computer/supplycomp/attack_hand(var/mob/user as mob)
+/obj/machinery/computer/supplycomp/attack_hand(var/mob/user)
 	if(!src.allowed(user))
-		boutput(user, "<span style=\"color:red\">Access Denied.</span>")
+		boutput(user, "<span class='alert'>Access Denied.</span>")
 		return
 
 	if(..())
 		return
 
 	var/timer = shippingmarket.get_market_timeleft()
-	user.machine = src
-	post_signal("supply")
+	src.add_dialog(user)
+	// post_signal("supply") // I'm pretty sure this doesn't do anything except create lag every time someone clicks it
 	var/HTML
 
 	var/header_thing_chui_toggle = (user.client && !user.client.use_chui) ? {"
@@ -366,6 +372,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<br>
 			Contact CDC &middot;
 			Traders
+			Requisitions
+			RockBox Controls
 		</div>
 	</div>
 	<div id="topBar">
@@ -380,7 +388,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			<a href='[topicLink("viewmarket")]'>Shipping Market</a>
 			<br>
 			<a href='[topicLink("contact_cdc")]'>Contact CDC</a> &bull;
-			<a href='[topicLink("trader_list")]'>Traders</a>
+			<a href='[topicLink("trader_list")]'>Traders</a> &bull;
+			<a href='[topicLink("requis_list")]'>Requisitions</a> &bull;
+			<a href='[topicLink("rockbox_controls")]'>Rockbox Controls</a>
 		</div>
 	</div>
 
@@ -422,9 +432,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.temp += "We have no unanalyzed pathogen samples from your station.<br>"
 	else
 		src.temp += "We're currently analyzing the pathogen sample [QM_CDC.current_analysis.name]. We can <A href='[topicLink("cdc_analyze")]'>analyze something different</A>, if you want."
-		if (QM_CDC.current_analysis.description_available > ticker.round_elapsed_ticks)
+		if (QM_CDC.current_analysis.description_available <= ticker.round_elapsed_ticks)
 			src.temp += "Here's what we have so far: <br>[QM_CDC.current_analysis.desc]<br>"
-			if (QM_CDC.current_analysis.cure_available > ticker.round_elapsed_ticks)
+			if (QM_CDC.current_analysis.cure_available <= ticker.round_elapsed_ticks)
 				src.temp += "We've also discovered a method to synthesize a cure for this pathogen.<br>"
 				QM_CDC.completed_analysis += QM_CDC.current_analysis
 				QM_CDC.current_analysis = null
@@ -446,7 +456,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/one_cost = analysis.cure_cost
 			var/five_cost = analysis.cure_cost * 4
 			var/ten_cost = analysis.cure_cost * 7
-			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=1'>1 batch for [one_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=5'>5 batches for [five_cost] credits</a></td>td><a href='?src=\ref[src];batch_cure=\ref[analysis];count=10'>10 batches for [ten_cost] credits</a></td></tr>"
+			src.temp += "<tr><td><b>[analysis.assoc_pathogen.name]</b><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "1"))]'>1 batch for [one_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "5"))]'>5 batches for [five_cost] credits</a></td><td><a href='[topicLink("batch_cure", "\ref[analysis]", list(count = "10"))]'>10 batches for [ten_cost] credits</a></td></tr>"
 			src.temp += "<tr><td colspan='4' style='font-style:italic'>[analysis.desc]</td></tr>"
 			src.temp += "<tr><td colspan='4'>&nbsp;</td></tr>"
 		src.temp += "</table><br>"
@@ -523,10 +533,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+						var/default_comment = ""
+						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
-						logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+						if(O.comment && O.comment != default_comment)
+							phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 						shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
@@ -536,7 +549,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 					var/datum/supply_order/O = new/datum/supply_order ()
 					var/datum/supply_packs/P = locate(href_list["what"])
-					if(P)
+					if(istype(P))
 
 						// The order computer has no emagged / other ability to display hidden or syndicate packs.
 						// It follows that someone's being clever if trying to order either of these items
@@ -552,10 +565,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment","")), 1, MAX_MESSAGE_LEN)
+							var/default_comment = ""
+							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
-							logTheThing("station", usr, null, "ordered a [P.name] at [log_loc(src)].")
+							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
+							if(O.comment && O.comment != default_comment)
+								phrase_log.log_phrase("order-comment", O.comment, no_duplicates=TRUE)
 							shippingmarket.supply_history += "[O.object.name] ordered by [O.orderedby] for [P.cost] credits. Comment: [O.comment]<br>"
 							. = {"<strong>Thanks for your order.</strong>"}
 						else
@@ -578,7 +594,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if (null, "list")
 				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
 				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
 				. += {"</ul>"}
 				return .
@@ -596,13 +612,52 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		return .
 
+	rockbox_controls(subaction, href_list)
+		switch (subaction)
+			if (null, "list")
+				. = {"<h2>Rockbox™ Ore Cloud Storage Service Settings:</h2><ul><br>
+					<B>Rockbox™ Fees:</B> [!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0][CREDIT_SIGN] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>[rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]</A><BR>
+					</ul>"}
+
+				return
+
+			if ("premium_service")
+				var/response = ""
+				response = tgui_alert(usr, "Would you like to purchase the Rockbox™ Premium Service for 10000 Credits?", "Rockbox™ Premium Service", list("Yes", "No"))
+				if(response == "Yes")
+					if(wagesystem.shipping_budget >= 10000)
+						wagesystem.shipping_budget -= 10000
+						rockbox_globals.rockbox_premium_purchased = 1
+						. = {"Congratulations on your purchase of RockBox™ Premium!"}
+					else
+						. = {"Not enough money in the budget!"}
+
+
+			if ("fee_pct")
+				var/fee_pct = null
+				fee_pct = input(usr,"What fee percent would you like to set? (Min 0)","Fee Percent per Transaction:",null) as num
+				fee_pct = max(0,fee_pct)
+				rockbox_globals.rockbox_client_fee_pct = fee_pct
+				. = {"Fee Percent per Transaction is now [rockbox_globals.rockbox_client_fee_pct]%"}
+
+			if ("fee_min")
+				var/fee_min = null
+				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
+				fee_min = max(0,fee_min)
+				rockbox_globals.rockbox_client_fee_min = fee_min
+				. = {"Minimum Fee per Transaction is now [rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]"}
+
+		return
+
 
 /obj/machinery/computer/supplycomp/Topic(href, href_list)
 	if(..())
 		return
 
-	if ((usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		usr.machine = src
+	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
+		src.add_dialog(usr)
 
 	var/subaction = (href_list["subaction"] ? href_list["subaction"] : null)
 
@@ -616,6 +671,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		if ("requests")
 			src.temp = requests(subaction, href_list)
 
+		if("rockbox_controls")
+			src.temp = rockbox_controls(subaction,href_list)
 
 		if ("viewmarket")
 			if(shippingmarket.last_market_update != last_market_update) //Okay, the market has updated and we need a new price list
@@ -645,17 +702,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("contact_cdc")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			set_cdc()
 			last_cdc_message = null
 
 		if ("req_biohazard_crate")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (ticker.round_elapsed_ticks < QM_CDC.next_crate)
-				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [(QM_CDC.next_crate - ticker.round_elapsed_ticks)] seconds!</span>"
+				last_cdc_message = "<span style=\"color:red; font-style: italic\">We are fresh out of crates right now to send you. Check back in [ceil((QM_CDC.next_crate - ticker.round_elapsed_ticks) / (1 SECOND))] seconds!</span>"
 			else
 				if (wagesystem.shipping_budget < 5)
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">You're completely broke. You cannot even afford a crate.</span>"
@@ -668,7 +725,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			src.temp = "<B>Center for Disease Control communication line</B><HR>"
 			src.temp += "<i>These are the unanalyzed samples we have from you, [station_name].</i><br><br>"
@@ -681,14 +738,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("cdc_analyze_me")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
 			if (QM_CDC.last_switch > ticker.round_elapsed_ticks - 300)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">We just switched projects. Hold on for a bit.</span>"
 			else if (wagesystem.shipping_budget < 100)
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">You cannot afford to start a new analysis.</span>"
 			else
-				var/datum/cdc_contact_analysis/C = locate(href_list["cdc_analyze_me"])
+				var/datum/cdc_contact_analysis/C = locate(subaction)
 				if (!(C in QM_CDC.ready_to_analyze))
 					last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to analyze right now.</span>"
 				else
@@ -697,11 +754,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					if (QM_CDC.current_analysis)
 						var/datum/cdc_contact_analysis/A = QM_CDC.current_analysis
 						A.time_done += ticker.round_elapsed_ticks - A.begun_at
-						if (A.cure_available >= ticker.round_elapsed_ticks)
+						if (A.cure_available <= ticker.round_elapsed_ticks)
 							QM_CDC.completed_analysis += A
 						else
 							QM_CDC.ready_to_analyze += A
 					QM_CDC.current_analysis = C
+					QM_CDC.ready_to_analyze -= C
 					C.begun_at = ticker.round_elapsed_ticks
 					C.description_available = C.begun_at + C.time_factor - C.time_done
 					C.cure_available = C.description_available + C.time_factor
@@ -711,12 +769,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("batch_cure")
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with the CDC.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with the CDC.</span>")
 				return
-			var/datum/cdc_contact_analysis/C = locate(href_list["batch_cure"])
+			var/datum/cdc_contact_analysis/C = locate(subaction)
 			if (!(C in QM_CDC.completed_analysis))
 				last_cdc_message = "<span style=\"color:red; font-style: italic\">That's not ready to be cured yet.</span>"
-			var/count = text2num(href_list["count"])
+			var/count = text2num_safe(href_list["count"])
 			var/cost = 0
 			switch (count)
 				if (1)
@@ -741,10 +799,10 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 		if ("trader_list")
 			if (!shippingmarket.active_traders.len)
-				boutput(usr, "<span style=\"color:red\">No traders detected in communications range.</span>")
+				boutput(usr, "<span class='alert'>No traders detected in communications range.</span>")
 				return
 			if (signal_loss >= 75)
-				boutput(usr, "<span style=\"color:red\">Severe signal interference is preventing contact with trader vessels.</span>")
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing contact with trader vessels.</span>")
 				return
 
 			src.temp = "<h2>Available Traders</h2><br><div style='text-align: center;'>"
@@ -794,19 +852,19 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				src.updateUsrDialog()
 				return
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 			var/total_stuff_in_cart = 0
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			for(var/datum/commodity/cartcom in T.shopping_cart)
 				total_stuff_in_cart += cartcom.amount
 
 			if (total_stuff_in_cart >= buy_cap)
-				boutput(usr, "<span style=\"color:red\">You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit.</span>")
+				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. You have already reached that limit.</span>")
 				return
 
 			src.in_dialogue_box = 1
@@ -818,7 +876,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				howmany = C.amount
 
 			if (howmany + total_stuff_in_cart > buy_cap)
-				boutput(usr, "<span style=\"color:red\">You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
+				boutput(usr, "<span class='alert'>You may only have a maximum of [buy_cap] items in your shopping cart. This order would exceed that limit.</span>")
 				src.in_dialogue_box = 0
 				return
 
@@ -854,7 +912,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new lower price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span style=\"color:red\">That doesn't even make any sense!</span>")
+				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,1)
@@ -884,7 +942,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			var/haggling = input("Suggest a new higher price.", "Haggle", null, null)  as null|num
 			if (haggling < 1)
 				// yeah sure let's reduce the barter into negative numbers, herp derp
-				boutput(usr, "<span style=\"color:red\">That doesn't even make any sense!</span>")
+				boutput(usr, "<span class='alert'>That doesn't even make any sense!</span>")
 				src.in_dialogue_box = 0
 				return
 			T.haggle(C,haggling,0)
@@ -924,7 +982,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return
 
 			if (!T.shopping_cart.len)
-				boutput(usr, "<span style=\"color:red\">There's nothing in the shopping cart to buy!</span>")
+				boutput(usr, "<span class='alert'>There's nothing in the shopping cart to buy!</span>")
 				return
 
 			var/cart_cost = 0
@@ -933,15 +991,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				cart_cost += C.price * C.amount
 				total_cart_amount += C.amount
 
-			var/buy_cap = 20
+			var/buy_cap = 99
 
 			if (shippingmarket && istype(shippingmarket,/datum/shipping_market))
 				buy_cap = shippingmarket.max_buy_items_at_once
 			else
-				logTheThing("debug", null, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
+				logTheThing(LOG_DEBUG, null, "<b>ISN/Trader:</b> Shippingmarket buy cap improperly configured")
 
 			if (total_cart_amount > buy_cap)
-				boutput(usr, "<span style=\"color:red\">There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
+				boutput(usr, "<span class='alert'>There are too many items in the cart. You may only order [buy_cap] items at a time.</span>")
 			else
 				if (wagesystem.shipping_budget < cart_cost)
 					T.current_message = pick(T.dialogue_cant_afford_that)
@@ -958,6 +1016,30 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			T.wipe_cart()
 			src.trader_dialogue_update("cart",T)
 
+		if ("pin_contract")
+			var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+			if(RC)
+				if(RC.pinned)
+					RC.pinned = FALSE
+					shippingmarket.has_pinned_contract = FALSE
+				else if(!shippingmarket.has_pinned_contract)
+					RC.pinned = TRUE
+					shippingmarket.has_pinned_contract = TRUE
+			src.requisitions_update()
+
+		if ("requis_list")
+			if (!shippingmarket.req_contracts.len)
+				boutput(usr, "<span class='alert'>No requisitions are currently on offer.</span>")
+				return
+			if (signal_loss >= 75)
+				boutput(usr, "<span class='alert'>Severe signal interference is preventing a connection to requisition hub.</span>")
+				return
+			src.requisitions_update()
+
+		if ("print_req")
+			if(!src.printing)
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_requisition(RC)
 
 		if ("mainmenu")
 			src.temp = null
@@ -965,6 +1047,57 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.add_fingerprint(usr)
 	src.updateUsrDialog()
 	return
+
+
+/obj/machinery/computer/supplycomp/proc/requisitions_update()
+	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
+	src.temp += "To fulfill these contracts, please send full requested<br>"
+	src.temp += "complement of items with the contract's Requisitions tag.<br>"
+	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
+	src.temp += "One contract at a time may be pinned, which reserves it<br>"
+	src.temp += "for your use, even through market shifts.<br><br>"
+	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
+	src.temp += "send the included requisition sheet; please be aware<br>"
+	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
+	src.temp += "and your shipment may not be returned if insufficient."
+	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
+		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
+		src.temp += "Contract Reward:"
+		if(length(RC.item_rewarders) && !RC.hide_item_payouts)
+			src.temp += "<br>"
+			if(RC.payout > 0) src.temp += "[RC.payout] Credits<br>"
+			for(var/datum/rc_itemreward/RI in RC.item_rewarders)
+				if(RI.count) src.temp += "[RI.count]x [RI.name]<br>"
+				else src.temp += "[RI.name]<br>"
+			src.temp += "<br>"
+		else
+			src.temp += " [RC.payout] Credits<br>"
+		src.temp += "Requisition Code: [RC.req_code]<br><br>"
+		if(RC.flavor_desc) src.temp += "[RC.flavor_desc]<br><br>"
+		src.temp += "[RC.requis_desc]"
+		if(RC.req_class == AID_CONTRACT && !RC.pinned) // Cannot ordinarily be pinned. Unpin support included for contract testing.
+			var/datum/req_contract/aid/RCAID = RC
+			src.temp += "URGENT - Cannot Be Reserved<br>"
+			if(RCAID.cycles_remaining)
+				var/formatted_cycles_remaining = RCAID.cycles_remaining + 1
+				src.temp += "Contract leaves market in [formatted_cycles_remaining] cycles<br>"
+			else
+				src.temp += "Contract leaves market with next cycle<br>"
+		else
+			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
+		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
+
+/obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
+	src.printing = 1
+	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
+	SPAWN(2 SECONDS)
+		var/obj/item/paper/thermal/P = new(src.loc)
+		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
+		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
+		P.info += uppertext(contract.requis_desc)
+		P.info += "</center></font>"
+		P.name = "Requisition: [contract.name]"
+		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
@@ -981,7 +1114,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/topMenu = {"
 		<h2>Trader Communications</h2>
-		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ($[cart_price])</a></div>
+		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ([cart_price][CREDIT_SIGN])</a></div>
 		[T.goods_sell.len ? "<a href='[topicLink("trader_selling", "\ref[T]")]'>Selling ([T.goods_sell.len])</a>" : ""]
 		[T.goods_sell.len && T.goods_buy.len ? " &bull; " : ""]
 		[T.goods_buy.len ? "<a href='[topicLink("trader_buying", "\ref[T]")]'>Buying ([T.goods_buy.len])</a>" : ""]
@@ -1129,22 +1262,18 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 /obj/machinery/computer/supplycomp/proc/commodity_sanity_check(var/datum/commodity/C)
 	if (!C)
-		boutput(usr, "<span style=\"color:red\">Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
 		return 0
 	if (!istype(C,/datum/commodity/))
-		boutput(usr, "<span style=\"color:red\">Something has gone wrong trying to access this commodity! Report this please!</span>")
+		boutput(usr, "<span class='alert'>Something has gone wrong trying to access this commodity! Report this please!</span>")
 		return 0
 	return 1
 
 /obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-
-	var/datum/radio_frequency/frequency = radio_controller.return_frequency("1435")
-
-	if(!frequency) return
-
 	var/datum/signal/status_signal = get_free_signal()
 	status_signal.source = src
 	status_signal.transmission_method = 1
 	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
-	frequency.post_signal(src, status_signal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)

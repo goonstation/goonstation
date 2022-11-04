@@ -3,10 +3,18 @@ var/global/datum/datalogger/game_stats
 /datum/datalogger
 	var/list/stats = list()
 	New()
+		..()
 		stats["date"] = time2text(world.realtime, "MM/DD/YY hh:mm:ss")
 		stats["adminhelps"] = 0
+		stats["mentorhelps"] = 0
+		stats["prayers"] = 0
 		stats["deaths"] = 0
+		stats["playerdeaths"] = 0
+		stats["firstdeath"] = null	// players only
+		stats["lastdeath"] = null		// players only
+		stats["alldeaths"] = list()		// all player deaths
 		stats["monkeydeaths"] = 0
+		stats["clones"] = 0
 		stats["sleeper"] = 0
 		stats["traitorloss"] = 0
 		stats["traitorwin"] = 0
@@ -28,6 +36,8 @@ var/global/datum/datalogger/game_stats
 		stats["players"] = 0
 		stats["admins"] = 0
 		stats["gunfire"] = 0
+		stats["grass_touched"] = 0
+		stats["slips"] = 0
 	proc
 		Increment(var/p)
 			if(!(p in stats))
@@ -93,6 +103,28 @@ var/global/datum/datalogger/game_stats
 			if(!(index in stats))
 				return null
 			return stats[index]
+
+		AddDeath(var/mobName, var/mobCkey, var/where, var/health)
+			// Stores player deaths.
+
+			var/turf/whereT = get_turf(where)
+			var/list/death = list(
+				"name" = mobName,
+				"ckey" = mobCkey,
+				"health" = health,
+				"where" = whereT,
+				"whereText" = "[whereT.loc] ([whereT.x], [whereT.y], [whereT.z])",
+				)
+
+			if (!stats["firstdeath"])
+				stats["firstdeath"] = death
+			stats["lastdeath"] = death
+			stats["alldeaths"] += list(death)
+			stats["playerdeaths"]++
+
+			return 1
+
+
 //	Disabled for the sake of what I wanted to do with this, left write to file code commented.
 //		WriteToFile(var/filetxt)
 //			var/stats_file = null

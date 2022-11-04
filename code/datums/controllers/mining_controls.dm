@@ -1,7 +1,6 @@
 var/datum/mining_controller/mining_controls
 
 var/list/asteroid_blocked_turfs = list()
-var/turf_spawn_edge_limit = 5
 
 /datum/mining_controller
 	var/mining_z = 4
@@ -11,6 +10,7 @@ var/turf_spawn_edge_limit = 5
 	var/list/ore_types_uncommon = list()
 	var/list/ore_types_rare = list()
 	var/list/events = list()
+	var/list/weighted_events = list()
 	// magnet vars
 	var/turf/magnetic_center = null
 	var/area/mining/magnet/magnet_area = null
@@ -44,7 +44,9 @@ var/turf_spawn_edge_limit = 5
 				continue
 
 			if (istype(O, /datum/ore/event/))
-				events += O
+				var/datum/ore/event/E = O
+				events += E
+				weighted_events[E] = initial(E.weight)
 				ore_types_common -= O
 			if (O.rarity_tier == 2)
 				ore_types_uncommon += O
@@ -73,19 +75,17 @@ var/turf_spawn_edge_limit = 5
 				qdel(MC)
 
 	proc/setup_mining_landmarks()
-		for (var/obj/landmark/magnet_center/MC in landmarks)//world)
-			magnetic_center = get_turf(MC)
-			magnet_area = get_area(MC)
-			MC.dispose()
+		for(var/turf/T in landmarks[LANDMARK_MAGNET_CENTER])
+			magnetic_center = T
+			magnet_area = get_area(T)
 			break
 
-		for (var/obj/landmark/magnet_shield/MS in landmarks)//world)
-			var/obj/forcefield/mining/S = new /obj/forcefield/mining(get_turf(MS))
+		for(var/turf/T in landmarks[LANDMARK_MAGNET_SHIELD])
+			var/obj/forcefield/mining/S = new /obj/forcefield/mining(T)
 			magnet_shields += S
-			MS.dispose()
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			var/the_mining_z = zlev ? zlev : src.mining_z
 			var/turf/T
 			var/spawn_amount = amt ? amt : src.mining_z_asteroids_max
@@ -169,13 +169,7 @@ var/turf_spawn_edge_limit = 5
 	force_fullbright = 1
 	requires_power = 0
 	luminosity = 1
-
-	proc/check_for_unacceptable_content()
-		for (var/mob/living/L in src.contents)
-			return 1
-		for (var/obj/machinery/vehicle in src.contents)
-			return 1
-		return 0
+	expandable = 0
 
 /obj/forcefield/mining
 	name = "magnetic forcefield"
@@ -186,7 +180,7 @@ var/turf_spawn_edge_limit = 5
 	alpha = 175
 	opacity = 0
 	density = 0
-	invisibility = 101
+	invisibility = INVIS_ALWAYS
 	anchored = 1
 
 /// *** MISC *** ///

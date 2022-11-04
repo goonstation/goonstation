@@ -2,15 +2,19 @@
 * text=auto
 
 # BYOND code and other detritus
-*.dm	text
-*.dme	text
+*.dm	text eol=lf
+*.dme	text eol=lf
 *.dms	text
 *.dmf	text
+*.dmm text eol=lf
 
-# BYOND Images, bytecode, maps
+# BYOND Images & bytecode
 *.dmi	binary
 *.dmb	binary
-*.dmm	binary
+
+# merger hooks, run tools/hooks/install.bat or install.sh to set up
+*.dmm merge=dmm
+*.dmi merge=dmi
 
 # Other text stuff
 *.txt	text
@@ -19,17 +23,19 @@
 *.css	text
 *.scss	text
 *.js	text
+*.cjs	text
 *.json	text
 *.ini	text
 *.conf	text
 *.ps1	text
-*.sh	text
+*.sh	text eol=lf
 *.bat	text
 *.rb	text
 *.py	text
 *.lua	text
 *.cpp	text
 *.h	text
+*.ps1 text
 
 # Other binary stuff
 *.png	binary
@@ -48,8 +54,11 @@
 *.svg	binary
 *.pdn	binary
 
+## Force tab indents on dm files
+*.dm whitespace=indent-with-non-tab
+
 # Not everything actually needs to be here but it doesn't break stuff to
 # make git recognize that yes, some of these dumb byond things really are text
 # ...or binary
 # plus the browserassets maps weren't treated that way so oops(?)
-# By Zamujasa
+# By Zamujasa & /tg/station

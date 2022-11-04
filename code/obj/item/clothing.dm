@@ -1,9 +1,14 @@
 /obj/item/clothing
 	name = "clothing"
 	//var/obj/item/clothing/master = null
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 
 	var/see_face = 1
+	///Makes it so the item doesn't show up upon examining, currently only applied for gloves
+	var/nodescripition = FALSE
+
+	//for clothing that covers other clothing from examines
+	var/hides_from_examine = 0
 
 	var/body_parts_covered = 0 //see setup.dm for appropriate bit flags
 	//var/c_flags = null // these don't need to be in the general flags when they only apply to clothes  :I
@@ -14,20 +19,18 @@
 	var/color_b = 1
 
 	var/protective_temperature = 0
-	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/magical = 0 // for wizard item spell power check
 	var/chemicalprotection = 0 //chemsuit and chemhood in combination grant this
 
-	var/list/compatible_species = list("human") // allow monkeys/mutantraces to wear certain garments
+	/// allow mutantraces to wear certain garments, see [/datum/mutantrace/var/uses_human_clothes]
+	var/list/compatible_species = list("human", "cow")
 
 	var/fallen_offset_x = 1
 	var/fallen_offset_z = -6
 	/// we want to use Z rather than Y incase anything gets rotated, it would look all jank
-	var/monkey_clothes = 0
-	// it's clothes specifically for monkeys please don't plaster it to their chest with an offset
 
-	stamina_damage = 1
-	stamina_cost = 1
+	stamina_damage = 0
+	stamina_cost = 0
 	stamina_crit_chance = 0
 
 	flags = FPRINT | TABLEPASS
@@ -53,13 +56,6 @@
 		..()
 
 
-	onMaterialChanged()
-		..()
-		if(istype(src.material))
-			protective_temperature = (material.getProperty("flammable") - 50) * (-1)
-			setProperty("meleeprot", material.hasProperty("hard") ? round(min(max((material.getProperty("hard") - 50) / 15.25, 0), 3)) : getProperty("meleeprot"))
-		return
-
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
 
@@ -68,15 +64,35 @@
 			return
 		if (!islist(src.stains))
 			src.stains = list()
-		else if (src.stains.Find(stn))
+		else if (stn in src.stains)
 			return
 		src.stains += stn
 		src.UpdateName()
 
 	proc/get_stains()
-		if (src.can_stain && islist(src.stains) && src.stains.len)
+		if (src.can_stain && islist(src.stains) && length(src.stains))
 			for (var/i in src.stains)
 				. += i + " "
+
+	proc/clean_stains()
+		if (islist(src.stains) && length(src.stains))
+			src.stains = list()
+			src.UpdateName()
+
+	// here for consistency; not all clothing can be ripped up
+	proc/try_rip_up(mob/user)
+		boutput(user, "You begin ripping up [src].")
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_rip_up, list(user), null, null, "You rip up [src].", null)
+		return TRUE
+
+	proc/finish_rip_up(mob/user)
+		for (var/i in 1 to 3)
+			var/obj/item/material_piece/cloth/cottonfabric/CF = new /obj/item/material_piece/cloth/cottonfabric
+			CF.pixel_x = rand(-4,4)
+			CF.pixel_y = rand(-4,4)
+			CF.set_loc(get_turf(src))
+		user.u_equip(src)
+		qdel(src)
 
 /obj/item/clothing/under
 	equipped(var/mob/user, var/slot)
@@ -86,15 +102,13 @@
 /*
 /obj/item/clothing/fire_burn(obj/fire/raging_fire, datum/air_group/environment)
 	if(raging_fire.internal_temperature > src.s_fire)
-		SPAWN_DBG( 0 )
+		SPAWN( 0 )
 			var/t = src.icon_state
 			src.icon_state = ""
 			src.icon = 'b_items.dmi'
 			flick(text("[]", t), src)
-			SPAWN_DBG(1.4 SECONDS)
-				qdel(src)
-				return
-			return
+			sleep(1.4 SECONDS)
+			qdel(src)
 		return 0
 	return 1
 */ //TODO FIX

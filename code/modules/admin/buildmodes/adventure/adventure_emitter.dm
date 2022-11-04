@@ -17,7 +17,7 @@
 		L.light.set_color(r,g,b)
 		L.light.set_brightness(l)
 		L.on()
-		L.dir = holder.dir
+		L.set_dir(holder.dir)
 		L.onVarChanged("dir", SOUTH, L.dir)
 		blink(L.loc)
 		L.setup_light()
@@ -29,11 +29,11 @@
 
 	selected()
 		var/kind = input(usr, "What color of light?", "Light color", "#ffffff") as color
-		r = hex2num(copytext(kind, 2, 4)) / 255.0
-		g = hex2num(copytext(kind, 4, 6)) / 255.0
-		b = hex2num(copytext(kind, 6, 8)) / 255.0
+		r = hex2num(copytext(kind, 2, 4)) / 255
+		g = hex2num(copytext(kind, 4, 6)) / 255
+		b = hex2num(copytext(kind, 6, 8)) / 255
 		l = input(usr, "Luminosity?", "Luminosity", 1) as num
-		boutput(usr, "<span style=\"color:blue\">Now placing light emitters ([r],[g],[b]:[l]) in single spawn mode. Ctrl+click to toggle light on/off state.</span>")
+		boutput(usr, "<span class='notice'>Now placing light emitters ([r],[g],[b]:[l]) in single spawn mode. Ctrl+click to toggle light on/off state.</span>")
 
 	settings(var/ctrl, var/alt, var/shift)
 		selected()

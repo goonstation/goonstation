@@ -12,22 +12,23 @@
 	var/desc_sound = list("strange", "odd", "bizarre", "weird", "offputting", "unusual")
 	var/desc_music = list("song", "ditty", "sound", "noise")
 
-	New(var/loc, var/forceartitype)
+	New(var/loc, var/forceartiorigin)
 		..()
-		SPAWN_DBG(1 SECOND)
+		SPAWN(1 SECOND)
 			var/datum/artifact/A = src.artifact
-			if(A && A.artitype)
+			if(A?.artitype)
 				sounds_instrument = A.artitype.instrument_sounds
 
 	// okay, i wanted to inherit from artifact, alright, not instrument
 	// christ, if we only had components
 	proc/play(mob/user as mob)
 		if (!spam_flag)
+			src.ArtifactFaultUsed(user)
 			spam_flag = 1
 			src.add_fingerprint(user)
 			show_play_message(user)
-			playsound(get_turf(src), islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN_DBG(src.spam_timer)
+			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
+			SPAWN(src.spam_timer)
 				spam_flag = 0
 		return
 
@@ -40,7 +41,9 @@
 
 /datum/artifact/instrument
 	associated_object = /obj/item/artifact/instrument
+	type_name = "Instrument"
+	type_size = ARTIFACT_SIZE_MEDIUM
 	automatic_activation = 1
-	rarity_class = 1
+	rarity_weight = 450
 	validtypes = list("wizard","eldritch","precursor","martian","ancient")
 	react_xray = list(10,65,95,9,"TUBULAR")

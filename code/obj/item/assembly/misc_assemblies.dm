@@ -11,6 +11,7 @@ Contains:
 - Remote signaller/proximity
 - Beaker Assembly
 - Pipebomb Assembly
+- Craftable shotgun shells
 
 */
 
@@ -21,11 +22,12 @@ Contains:
 	icon = 'icons/obj/items/assemblies.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "assembly"
-	var/status = 0.0
+	var/status = 0
 	throwforce = 10
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	throw_speed = 4
 	throw_range = 10
+	force = 2
 	stamina_damage = 10
 	stamina_cost = 10
 	var/force_dud = 0
@@ -50,7 +52,7 @@ Contains:
 
 /obj/item/assembly/time_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -78,6 +80,8 @@ Contains:
 	return
 
 /obj/item/assembly/time_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -86,18 +90,16 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
+		SPAWN(3 SECONDS)
 			src.part5.do_explode()
 			qdel(src)
 	return
 
-/obj/item/assembly/time_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/time_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (src.part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -160,8 +162,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -174,17 +176,17 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing("bombing", user, null, "made Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The timer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The timer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The timer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 		return
@@ -223,11 +225,11 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span style=\"color:blue\">You remove the timer/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
@@ -248,14 +250,14 @@ Contains:
 
 /obj/item/assembly/prox_ignite/HasProximity(atom/movable/AM as mob|obj)
 
-	if (istype(AM, /obj/projectile))
+	if (isobserver(AM) || iswraith(AM) || isintangible(AM) || istype(AM, /obj/projectile))
 		return
 	if (AM.move_speed < 12 && src.part1)
 		src.part1.sense()
 	return
 
 /obj/item/assembly/prox_ignite/dropped()
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		if (src.part1)
 			src.part1.sense()
 		return
@@ -263,7 +265,7 @@ Contains:
 
 /obj/item/assembly/prox_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -309,13 +311,11 @@ Contains:
 		src.name = "Proximity/Igniter/Beaker Assembly"
 	return
 
-/obj/item/assembly/prox_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/prox_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -342,8 +342,6 @@ Contains:
 			src.part5.set_loc(T)
 			src.part5.master = null
 			src.part5 = null
-
-		//SN src = null
 		user.u_equip(src)
 		qdel(src)
 		return
@@ -383,8 +381,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
+			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -397,8 +395,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state(0)
 			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
+			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -406,9 +404,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.add_fingerprint(user)
 
@@ -421,6 +419,8 @@ Contains:
 	return
 
 /obj/item/assembly/prox_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	src.part2.ignite()
@@ -429,8 +429,8 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+		SPAWN(3 SECONDS)
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -444,11 +444,11 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state(src.part1.timing)
-		boutput(usr, "<span style=\"color:blue\">You remove the Proximity/Igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 /////////////////////////////////////// Remote signaller/igniter //////////////////////////////////////
 
@@ -467,7 +467,7 @@ Contains:
 
 /obj/item/assembly/rad_ignite/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -488,13 +488,11 @@ Contains:
 	part5 = null
 	..()
 
-/obj/item/assembly/rad_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		if (part1)
 			src.part1.set_loc(T)
 			src.part1.master = null
@@ -561,8 +559,8 @@ Contains:
 			src.part5.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 		return
@@ -575,8 +573,8 @@ Contains:
 			W.set_loc(src)
 			src.c_state()
 			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing("bombing", user, null, "made Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [showCoords(src.x, src.y, src.z)].")
+			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
 		else
 			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
@@ -584,9 +582,9 @@ Contains:
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The radio is now secured! The igniter now works!</span>", 1)
+		user.show_message("<span class='notice'>The radio is now secured! The igniter now works!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The radio is now unsecured! The igniter will not work.</span>", 1)
+		user.show_message("<span class='notice'>The radio is now unsecured! The igniter will not work.</span>", 1)
 	src.part2.status = src.status
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
@@ -599,6 +597,8 @@ Contains:
 	return
 
 /obj/item/assembly/rad_ignite/receive_signal()
+	if(!src.status)
+		return
 	for(var/mob/O in hearers(1, src.loc))
 		O.show_message("[bicon(src)] *beep* *beep*", 3, "*beep* *beep*", 2)
 	if (src.part2)
@@ -608,8 +608,8 @@ Contains:
 		src.part3.reagents.temperature_reagents(4000, 400)
 	if(src.part5)
 		playsound(src.loc, sound_pipebomb, 50, 0)
-		SPAWN_DBG(3 SECONDS)
-			src.part5.do_explode()
+		SPAWN(3 SECONDS)
+			src.part5?.do_explode()
 			qdel(src)
 	return
 
@@ -623,11 +623,11 @@ Contains:
 
 	if(src.part3)
 		src.part3.master = null
-		src.part3.attack_hand(usr)
+		src.part3.Attackhand(usr)
 		src.part3 = null
 		src.c_state()
-		boutput(usr, "<span style=\"color:blue\">You remove the radio/igniter assembly from the beaker.</span>")
-	else boutput(usr, "<span style=\"color:red\">That doesn't have a beaker attached to it!</span>")
+		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")
+	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 /obj/item/assembly/rad_ignite/c_state()
 	if(!src.part3 && !src.part5)
@@ -658,7 +658,7 @@ Contains:
 /obj/item/assembly/anal_ignite //lol
 	name = "Health-Analyzer/Igniter Assembly"
 	desc = "A health-analyzer igniter assembly."
-	icon_state = "timer-igniter0"
+	icon_state = "health-igniter"
 	var/obj/item/device/analyzer/healthanalyzer/part1 = null
 	var/obj/item/device/igniter/part2 = null
 	status = null
@@ -667,7 +667,7 @@ Contains:
 
 /obj/item/assembly/anal_ignite/New()
 	..()
-	SPAWN_DBG (5)
+	SPAWN(0.5 SECONDS)
 		if (src && !src.part1)
 			src.part1 = new /obj/item/device/analyzer/healthanalyzer(src)
 			src.part1.master = src
@@ -676,13 +676,11 @@ Contains:
 			src.part2.master = src
 	return
 
-/obj/item/assembly/anal_ignite/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/anal_ignite/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -696,9 +694,9 @@ Contains:
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
-			user.show_message("<span style=\"color:blue\">The analyzer is now secured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now secured!</span>", 1)
 		else
-			user.show_message("<span style=\"color:blue\">The analyzer is now unsecured!</span>", 1)
+			user.show_message("<span class='notice'>The analyzer is now unsecured!</span>", 1)
 		src.part2.status = src.status
 		src.add_fingerprint(user)
 	return
@@ -711,12 +709,12 @@ Contains:
 	icon_state = "radio-horn"
 	var/obj/item/device/radio/signaler/part1 = null
 	var/obj/item/instrument/bikehorn/part2 = null
-	status = 0.0
+	status = 0
 	flags = FPRINT | TABLEPASS | CONDUCT
 
 /obj/item/assembly/radio_horn/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
 			part1.master = src
@@ -734,17 +732,12 @@ Contains:
 	return
 
 obj/item/assembly/radio_horn/attack_self(mob/user as mob)
-
 	src.part1.attack_self(user)
 	src.add_fingerprint(user)
 	return
 
 obj/item/assembly/radio_horn/receive_signal()
-	if (part2.spam_flag == 0)
-		part2.spam_flag = 1
-		playsound(src.loc, islist(part2.sounds_instrument) ? pick(part2.sounds_instrument) : part2.sounds_instrument, part2.volume, part2.randomized_pitch)
-		SPAWN_DBG(part2.spam_timer)
-			part2.spam_flag = 0
+	part2.play_note(rand(1,part2.sounds_instrument.len), user = null)
 	return
 
 /////////////////////////////////////////////////////// Remote signaller/timer /////////////////////////////////////
@@ -766,13 +759,11 @@ obj/item/assembly/radio_horn/receive_signal()
 	..()
 	return
 
-/obj/item/assembly/rad_time/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_time/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -786,9 +777,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The signaler is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The signaler is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The signaler is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -837,13 +828,11 @@ obj/item/assembly/radio_horn/receive_signal()
 		src.part2.sense()
 	return
 
-/obj/item/assembly/rad_prox/attackby(obj/item/W as obj, mob/user as mob)
+/obj/item/assembly/rad_prox/attackby(obj/item/W, mob/user)
 	if (!W)
 		return
 	if (iswrenchingtool(W) && !(src.status))
-		var/turf/T = src.loc
-		if (ismob(T))
-			T = T.loc
+		var/turf/T = get_turf(src)
 		src.part1.set_loc(T)
 		src.part2.set_loc(T)
 		src.part1.master = null
@@ -857,9 +846,9 @@ obj/item/assembly/radio_horn/receive_signal()
 		return
 	src.status = !(src.status)
 	if (src.status)
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now secured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now secured!</span>", 1)
 	else
-		user.show_message("<span style=\"color:blue\">The proximity sensor is now unsecured!</span>", 1)
+		user.show_message("<span class='notice'>The proximity sensor is now unsecured!</span>", 1)
 	src.part1.b_stat = !( src.status )
 	src.add_fingerprint(user)
 	return
@@ -877,12 +866,80 @@ obj/item/assembly/radio_horn/receive_signal()
 	return
 
 /obj/item/assembly/rad_prox/Move()
-	..()
+	. = ..()
 	src.part2.sense()
 	return
 
 /obj/item/assembly/rad_prox/dropped()
-	SPAWN_DBG( 0 )
+	SPAWN( 0 )
 		src.part2.sense()
 		return
 	return
+
+
+//////////////////////////////////handmade shotgun shells//////////////////////////////////
+/datum/pipeshotrecipe
+	var/thingsneeded = null
+	var/obj/item/ammo/bullets/result = null
+	var/obj/item/accepteditem = null
+	var/craftname = null
+	var/success = FALSE
+
+	proc/craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+
+		if (istype(craftingitem, accepteditem))
+			//the checks for if an item is actually allowed are local to the recipie, since they can vary
+			var/consumed = min(src.thingsneeded, craftingitem.amount)
+			thingsneeded -= consumed //ideally we'd do this later but for sake of working with zeros it's up here
+
+			if (thingsneeded > 0)//craft successful, but they'll need more
+				boutput(user, "<span class='notice'>You add [consumed] items to the [frame]. You feel like you'll need [thingsneeded] more [craftname]s to fill all the shells. </span>")
+
+			if (thingsneeded <= 0) //check completion and produce shells as needed
+				var/obj/item/ammo/bullets/shot = new src.result(get_turf(frame))
+				user.put_in_hand_or_drop(shot)
+				qdel(frame)
+
+				//consume material- proc handles deleting
+			craftingitem.change_stack_amount(-consumed)
+/datum/pipeshotrecipe/plasglass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/plasglass
+	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+	var/matid = "plasmaglass"
+
+	craftwith(obj/item/craftingitem, obj/item/frame, mob/user)
+		if(matid == craftingitem.material.mat_id)
+			..() //call parent, have them run the typecheck
+
+/datum/pipeshotrecipe/scrap
+	thingsneeded = 1
+	result = /obj/item/ammo/bullets/pipeshot/scrap/
+	accepteditem = /obj/item/raw_material/scrap_metal
+	craftname = "scrap chunk"
+/datum/pipeshotrecipe/glass
+	thingsneeded = 2
+	result = /obj/item/ammo/bullets/pipeshot/glass/
+	accepteditem = /obj/item/raw_material/shard
+	craftname = "shard"
+/obj/item/assembly/pipehulls
+	name = "filled pipe hulls"
+	desc = "Four open pipe shells, with propellant in them. You wonder what you could stuff into them."
+	icon_state = "Pipeshotrow"
+
+	var/datum/pipeshotrecipe/recipe = null
+
+	attackby(obj/item/W, mob/user)
+		if (!recipe) //no recipie? assign one
+			if (istype(W, /obj/item/raw_material/shard))
+				if(W.material.mat_id == "plasmaglass")
+					recipe = new/datum/pipeshotrecipe/plasglass
+				else
+					recipe = new/datum/pipeshotrecipe/glass
+			if (istype(W, /obj/item/raw_material/scrap_metal))
+				recipe = new/datum/pipeshotrecipe/scrap
+		if(recipe) //probably a better way, but it works well enough
+			recipe.craftwith(W, src, user)
+		..()
+

@@ -102,14 +102,14 @@
 
 		var/list/randomMails = get_random_email_list()
 		var/typeCount = rand(4,6)
-		while (typeCount-- > 0 && randomMails && randomMails.len)
+		while (typeCount-- > 0 && length(randomMails))
 			var/mailName = pick(randomMails)
 			var/datum/computer/file/record/mailfile = new /datum/computer/file/record/random_email(mailName)
 			subfolder.add_file(mailfile)
 			randomMails -= mailName
 /*		var/list/randomMailTypes = childrentypesof(/datum/computer/file/record/random_email)
 		var/typeCount = 5
-		while (typeCount-- > 0 && randomMailTypes.len)
+		while (typeCount-- > 0 && length(randomMailTypes))
 			var/mailType = pick(randomMailTypes)
 			var/datum/computer/file/record/mailfile = new mailType
 			subfolder.add_file( mailfile )
@@ -148,6 +148,7 @@
 		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard(src) )
 		src.root.add_file( new /datum/computer/file/guardbot_task/security/area_guard(src) )
 		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard/heckle(src) )
+		src.root.add_file( new /datum/computer/file/guardbot_task/bodyguard/cheer_up(src) )
 		src.root.add_file( new /datum/computer/file/mainframe_program/guardbot_interface(src))
 		src.root.add_file( new /datum/computer/file/record/pr6_readme(src))
 		src.root.add_file( new /datum/computer/file/record/patrol_script(src))
@@ -254,6 +255,15 @@
 	New()
 		..()
 		src.root.add_file( new /datum/computer/file/mainframe_program/test_interface(src)  )
+		src.root.add_file( new /datum/computer/file/record/artlab_activate(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_deactivate(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_read(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_info(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_xray(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_heater(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_elecbox(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_pitcher(src))
+		src.root.add_file( new /datum/computer/file/record/artlab_impactpad(src))
 		//src.root.add_file( new /datum/computer/file/mainframe_program/artifact_research(src) )
 		for (var/datum/computer/file/F in src.root.contents)
 			F.metadata["permission"] = COMP_ROWNER|COMP_RGROUP|COMP_ROTHER

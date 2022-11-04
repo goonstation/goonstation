@@ -12,7 +12,7 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "shipalert0"
 	desc = ""
-	anchored = 1.0
+	anchored = 1
 	mats = 5
 	var/usageState = 0 // 0 = glass cover, hammer. 1 = glass cover, no hammer. 2 = cover smashed
 	var/working = 0 //processing loops
@@ -23,8 +23,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		..()
 		UnsubscribeProcess()
 
-/obj/machinery/shipalert/attack_hand(mob/user as mob)
-	if (user.stat || isghostdrone(user) || !isliving(user))
+/obj/machinery/shipalert/attack_hand(mob/user)
+	if (user.stat || isghostdrone(user) || !isliving(user) || isintangible(user))
 		return
 
 	src.add_fingerprint(user)
@@ -40,14 +40,14 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			user.visible_message("[user] picks up \the [hammer]", "You pick up \the [hammer]")
 		if (1)
 			//no effect punch
-			out(user, "<span style='color: red'>The glass casing is too strong for your puny hands!</span>")
+			out(user, "<span class='alert'>The glass casing is too strong for your puny hands!</span>")
 		if (2)
 			//activate
 			if (src.working) return
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 			src.toggleActivate(user)
 
-/obj/machinery/shipalert/attackby(obj/item/W as obj, mob/user as mob)
+/obj/machinery/shipalert/attackby(obj/item/W, mob/user)
 	if (user.stat)
 		return
 
@@ -55,17 +55,17 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 		if (istype(W, /obj/item/tinyhammer))
 			//break glass
 			var/area/T = get_turf(src)
-			T.visible_message("<span style=\"color:red\">[src]'s glass housing shatters!</span>")
-			playsound(T, pick("sound/impact_sounds/Glass_Shatter_1.ogg","sound/impact_sounds/Glass_Shatter_2.ogg","sound/impact_sounds/Glass_Shatter_3.ogg"), 100, 1)
-			var/obj/item/raw_material/shard/glass/G = unpool(/obj/item/raw_material/shard/glass)
+			T.visible_message("<span class='alert'>[src]'s glass housing shatters!</span>")
+			playsound(T, pick('sound/impact_sounds/Glass_Shatter_1.ogg','sound/impact_sounds/Glass_Shatter_2.ogg','sound/impact_sounds/Glass_Shatter_3.ogg'), 100, 1)
+			var/obj/item/raw_material/shard/glass/G = new /obj/item/raw_material/shard/glass
 			G.set_loc(get_turf(user))
 			src.usageState = 2
 			src.icon_state = "shipalert2"
 		else
 			//no effect
-			out(user, "<span style='color: red'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing</span>")
+			out(user, "<span class='alert'>\The [W] is far too weak to break the patented Nanotrasen<sup>TM</sup> Safety Glass housing.</span>")
 
-/obj/machinery/shipalert/proc/toggleActivate(mob/user as mob)
+/obj/machinery/shipalert/proc/toggleActivate(mob/user)
 	if (!user)
 		return
 
@@ -96,9 +96,12 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 			return
 
 		//alert and siren
+#ifdef MAP_OVERRIDE_MANTA
+		command_alert("This is not a drill. This is not a drill. General Quarters, General Quarters. All hands man your battle stations. Crew without military training shelter in place. Set material condition '[rand(1, 100)]-[pick_string("station_name.txt", "militaryLetters")]' throughout the ship. The route of travel is forward and up to starboard, down and aft to port. Prepare for hostile contact.", "NSS Manta - General Quarters")
+#else
+		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red", alert_origin = ALERT_STATION)
+#endif
 		world << soundGeneralQuarters
-		command_alert("All personnel, this is not a test. There is a confirmed, hostile threat on-board and/or near the station. Report to your stations. Prepare for the worst.", "Alert - Condition Red")
-
 		//toggle on
 		shipAlertState = SHIP_ALERT_BAD
 
@@ -113,8 +116,8 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	var/alertWord = "green"
 	if (shipAlertState == SHIP_ALERT_BAD) alertWord = "red"
 
-	logTheThing("station", user, null, "toggled the ship alert to \"[alertWord]\"")
-	logTheThing("diary", user, null, "toggled the ship alert to \"[alertWord]\"", "station")
+	logTheThing(LOG_STATION, user, "toggled the ship alert to \"[alertWord]\"")
+	logTheThing(LOG_DIARY, user, "toggled the ship alert to \"[alertWord]\"", "station")
 	src.working = 0
 
 /obj/item/tinyhammer
@@ -124,12 +127,12 @@ var/global/soundGeneralQuarters = sound('sound/machines/siren_generalquarters_qu
 	item_state = "tinyhammer"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT
-	force = 5.0
+	object_flags = NO_GHOSTCRITTER
+	force = 5
 	throwforce = 5
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	m_amt = 50
 	desc = "Like a normal hammer, but teeny."
 	stamina_damage = 33
-	stamina_cost = 25
+	stamina_cost = 18
 	stamina_crit_chance = 10
-	module_research = list("tools" = 4, "metals" = 2)

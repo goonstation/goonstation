@@ -53,7 +53,7 @@
 /obj/martianBiotech/proc/gib(atom/location)
   if(!location)
     location = src.loc
-  visible_message("<span class='text-red'>The [src.name] bursts into gooey sludge!</span>")
+  visible_message("<span class='alert'>The [src.name] bursts into gooey sludge!</span>")
   playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 80, 1)
   martiangibs(location)
   qdel(src)
@@ -73,7 +73,7 @@
   checkhealth() // die if necessary
 
 /obj/martianBiotech/proc/martianInteract(var/mob/user)
-  boutput(user, "<span class='text-red'>It doesn't have an obvious function.</span>")
+  boutput(user, "<span class='alert'>It doesn't have an obvious function.</span>")
 
 /obj/martianBiotech/attack_hand(var/mob/user)
   if(ismartian(user))
@@ -95,13 +95,18 @@
     if(INTENT_HARM)
       action = pick("smacks", "punches", "kicks", "attacks", "jabs")
       response = pick("angry", "hostile", "throbbing", "jerky", "wriggly", "vengeful")
-  src.visible_message("<span style=\"color:red\"><b>[user]</b> [futility] [action] [src]! It seems vaguely [response].</span>")
+  src.visible_message("<span class='alert'><b>[user]</b> [futility] [action] [src]! It seems vaguely [response].</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 80, 1)
 
-/obj/martianBiotech/attackby(obj/item/W as obj, mob/user as mob)
-  src.visible_message("<span class='text-red'><b>[user]</b> attacks [src] with [W]!</span>")
+/obj/martianBiotech/attackby(obj/item/W, mob/user)
+  src.visible_message("<span class='alert'><b>[user]</b> attacks [src] with [W]!</span>")
   playsound(src.loc, 'sound/impact_sounds/Slimy_Hit_2.ogg', 80, 1)
-  takeDamage(W.damtype, W.force)
+
+  var/damtype = "brute"
+  if (W.hit_type == DAMAGE_BURN)
+    damtype = "fire"
+
+  takeDamage(damtype, W.force)
 
 // shamelessly stolen from blob
 /obj/martianBiotech/ex_act(severity)
@@ -153,24 +158,24 @@
   var/damage = rand(modifier, 12 + 8 * modifier)
 
   takeDamage("mixed", damage)
-  src.visible_message("<span style=\"color:red\">[src] is hit by the blob!/span>")
+  src.visible_message("<span class='alert'>[src] is hit by the blob!/span>")
 
 
 /obj/martianBiotech/proc/describeCondition()
   var/healthPercent = (health/maxHealth) * 100
   switch(healthPercent)
     if(-INFINITY to 10)
-      return "<span class='text-red bold'>It's about to burst!</span>"
+      return "<span class='alert bold'>It's about to burst!</span>"
     if(11 to 25)
-      return "<span class='text-red bold'>It's splitting and looks smashed to a pulp!</span>"
+      return "<span class='alert bold'>It's splitting and looks smashed to a pulp!</span>"
     if(26 to 50)
-      return "<span class='text-red'>It's sputtering ichor and convulsing.</span>"
+      return "<span class='alert'>It's sputtering ichor and convulsing.</span>"
     if(51 to 75)
-      return "<span class='text-red'>It looks roughed up and gently swaying.</span>"
+      return "<span class='alert'>It looks roughed up and gently swaying.</span>"
     if(76 to 95)
-      return "<span class='text-blue'>It looks a little bruised.</span>"
+      return "<span class='notice'>It looks a little bruised.</span>"
     if(96 to INFINITY)
-      return "<span class='text-blue'>It's in perfect health.</span>"
+      return "<span class='notice'>It's in perfect health.</span>"
 
 /obj/martianBiotech/special_desc(dist, mob/user)
   if(ismartian(user))

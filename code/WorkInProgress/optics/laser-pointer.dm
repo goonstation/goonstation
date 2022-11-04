@@ -14,7 +14,7 @@
 	var/peak_output = 0.005	// max output 5 mW
 	layer = OBJ_LAYER + 0.1
 
-	w_class = 4
+	w_class = W_CLASS_BULKY
 	m_amt = 500
 	g_amt = 100
 	w_amt = 200
@@ -22,6 +22,12 @@
 	var/obj/beam/laser/beam 	// the created beam
 
 	flags = FPRINT | CONDUCT | TABLEPASS
+
+	attackby(obj/item/W, mob/user)
+		if(ispryingtool(W))
+			turn_off()
+			set_dir(turn(dir, -90))
+			if(on) turn_on()
 
 	attack_ai()
 		return
@@ -33,13 +39,7 @@
 		else
 			turn_off()
 
-		updateicon()
-
-	verb/rotate()
-		set src in view(1)
-		turn_off()
-		dir = turn(dir, -90)
-		if(on) turn_on()
+		UpdateIcon()
 
 	Move(var/atom/newloc,var/newdir)
 		. = ..(newloc,newdir)
@@ -63,5 +63,5 @@
 		turn_off()
 		turn_on()
 
-	proc/updateicon()
+	UpdateIcon()
 		icon_state = "pointer[on]"

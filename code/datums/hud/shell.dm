@@ -1,17 +1,19 @@
 /datum/hud/shell
-	var/obj/screen/hud
+	var/atom/movable/screen/hud
 		tool1
 		tool2
 		tool3
 		charge
+		eyecam
 
 	var/list/last_tools = list()
-	var/list/obj/screen/hud/tool_selector_bg = list()
+	var/list/atom/movable/screen/hud/tool_selector_bg = list()
 	var/list/obj/item/tool_selector_tools = list()
 	var/show_tool_selector = 0
 	var/mob/living/silicon/hivebot/master
 
 	New(M)
+		..()
 		master = M
 
 		create_screen("", "", 'icons/mob/hud_common.dmi', "hotbar_bg", "CENTER-3:16, SOUTH to CENTER+2:16, SOUTH", HUD_LAYER)
@@ -28,6 +30,9 @@
 		create_screen("store", "Store", 'icons/mob/hud_robot.dmi', "store", "CENTER+1:16, SOUTH", HUD_LAYER+1)
 		create_screen("tools", "Tools", 'icons/mob/hud_robot.dmi', "tools", "CENTER+2:16, SOUTH", HUD_LAYER+1)
 
+		eyecam = create_screen("eyecam", "Eject to eyecam", 'icons/mob/screen1.dmi', "x", "SOUTH,EAST", HUD_LAYER)
+		eyecam.underlays += "block"
+
 		update_active_tool()
 		update_tools()
 		update_tool_selector()
@@ -36,7 +41,7 @@
 		master = null
 		..()
 
-	clicked(id)
+	relay_click(id)
 		if (!master)
 			return
 
@@ -51,6 +56,8 @@
 				master.uneq_active()
 			if ("tools")
 				set_show_tool_selector(!show_tool_selector)
+			if ("eyecam")
+				master.become_eye()
 
 	proc
 		update_charge()
@@ -81,16 +88,20 @@
 
 		update_tools()
 			for (var/obj/item/I in last_tools)
+				I.set_loc(master.module) //All the set_loc calls in this proc are because some items (or really just the flashlight) need a location change to update component stuff correctly
 				remove_object(I)
 			var/obj/item/tool1 = master.module_states[1]
 			var/obj/item/tool2 = master.module_states[2]
 			var/obj/item/tool3 = master.module_states[3]
 			if (tool1)
 				add_object(tool1, HUD_LAYER+2, "CENTER-2:16, SOUTH")
+				tool1.set_loc(master)
 			if (tool2)
 				add_object(tool2, HUD_LAYER+2, "CENTER-1:16, SOUTH")
+				tool2.set_loc(master)
 			if (tool3)
 				add_object(tool3, HUD_LAYER+2, "CENTER:16, SOUTH")
+				tool3.set_loc(master)
 			last_tools = master.module_states.Copy()
 
 		update_tool_selector()
@@ -102,13 +113,13 @@
 
 			tool_selector_tools.len = 0
 			var/i = 0
-			for (var/obj/item/tool in master.module.modules)
+			for (var/obj/item/tool in master.module.tools)
 				if (!(tool in master.module_states))
 					tool_selector_tools += tool
 					tool.screen_loc = "CENTER+2:16, SOUTH+[1+i]"
 					i += 1
 
-			for (var/obj/screen/hud/H in tool_selector_bg)
+			for (var/atom/movable/screen/hud/H in tool_selector_bg)
 				remove_screen(H)
 
 
@@ -119,7 +130,7 @@
 				tool_selector_bg += create_screen("", "", 'icons/mob/hud_robot.dmi', "tools-mid", "CENTER+2:16, SOUTH+1 to CENTER+2:16, SOUTH+[tool_selector_tools.len-1]", HUD_LAYER+1)
 
 			if (!show_tool_selector)
-				for (var/obj/screen/hud/H in tool_selector_bg) // this is dumb
+				for (var/atom/movable/screen/hud/H in tool_selector_bg) // this is dumb
 					remove_screen(H)
 			else
 				for (var/obj/item/tool in tool_selector_tools)
@@ -130,12 +141,12 @@
 				return
 			show_tool_selector = show
 			if (show)
-				for (var/obj/screen/hud/H in tool_selector_bg)
+				for (var/atom/movable/screen/hud/H in tool_selector_bg)
 					add_screen(H)
 				for (var/obj/item/tool in tool_selector_tools)
 					add_object(tool, HUD_LAYER+2)
 			else
-				for (var/obj/screen/hud/H in tool_selector_bg)
+				for (var/atom/movable/screen/hud/H in tool_selector_bg)
 					remove_screen(H)
 				for (var/obj/item/tool in tool_selector_tools)
 					remove_object(tool)

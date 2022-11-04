@@ -9,23 +9,19 @@
 	item_state = "sparkler-off"
 	var/item_on = "sparkler-on"
 	var/item_off = "sparkler-off"
-	w_class = 1
+	w_class = W_CLASS_TINY
 	density = 0
 	anchored = 0
 	opacity = 0
 	col_r = 0.7
 	col_g = 0.3
 	col_b = 0.3
-	var/datum/effects/system/spark_spread/spark_system
 	var/sparks = 7
 	var/burnt = 0
 
 
 	New()
 		..()
-		src.spark_system = unpool(/datum/effects/system/spark_spread)
-		spark_system.set_up(5, 0, src)
-		spark_system.attach(src)
 
 	attack_self(mob/user as mob)
 		if (src.on)
@@ -34,25 +30,25 @@
 			"You [fluff] out [src].")
 			src.put_out(user)
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!src.on && sparks)
-			if (istype(W, /obj/item/weldingtool) && W:welding)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
+			if (isweldingtool(W) && W:try_weld(user,0,-1,0,0))
+				src.light(user, "<span class='alert'><b>[user]</b> casually lights [src] with [W], what a badass.</span>")
 
 			else if (istype(W, /obj/item/clothing/head/cakehat) && W:on)
-				src.light(user, "<span style=\"color:red\">Did [user] just light \his [src] with [W]? Holy Shit.</span>")
+				src.light(user, "<span class='alert'>Did [user] just light [his_or_her(user)] [src] with [W]? Holy Shit.</span>")
 
 			else if (istype(W, /obj/item/device/igniter))
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> fumbles around with [W]; sparks erupt from [src].</span>")
 
 			else if (istype(W, /obj/item/device/light/zippo) && W:on)
-				src.light(user, "<span style=\"color:red\">With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				src.light(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
 
 			else if ((istype(W, /obj/item/match) || istype(W, /obj/item/device/light/candle)) && W:on)
-				src.light(user, "<span style=\"color:red\"><b>[user] lights [src] with [W].</span>")
+				src.light(user, "<span class='alert'><b>[user] lights [src] with [W].</span>")
 
 			else if (W.burning)
-				src.light(user, "<span style=\"color:red\"><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
+				src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [W]. Goddamn.</span>")
 		else
 			return ..()
 
@@ -77,8 +73,7 @@
 
 	proc/gen_sparks()
 		src.sparks--
-		spark_system.set_up(1, 0, src)
-		src.spark_system.start()
+		elecflash(src)
 		if(!sparks)
 			src.put_out()
 			src.burnt = 1
@@ -94,15 +89,14 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
-			src.damtype = "fire"
+			src.hit_type = DAMAGE_BURN
 			src.force = 3
 			src.icon_state = src.icon_on
 			src.item_state = src.item_on
 			light.enable()
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 			if(user)
 				user.update_inhands()
 		return
@@ -111,13 +105,12 @@
 		if (!src) return
 		if (src.on)
 			src.on = 0
-			src.damtype = "brute"
+			src.hit_type = DAMAGE_BLUNT
 			src.force = 0
 			src.icon_state = src.icon_off
 			src.item_state = src.item_off
 			light.disable()
-			if (src in processing_items)
-				processing_items.Remove(src)
+			processing_items -= src
 			if(user)
 				user.update_inhands()
 		return
@@ -127,20 +120,20 @@
 	desc = "Have fun!"
 	icon = 'icons/obj/items/sparklers.dmi'
 	icon_state = "sparkler_box-close"
-	max_wclass = 1
+	max_wclass = W_CLASS_TINY
 	slots = 5
 	spawn_contents = list(/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler,/obj/item/device/light/sparkler)
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
 			else
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
-				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-				boutput(usr, "<span style='color:blue'>You snap open the child-protective safety tape on [src].</span>")
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
+				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
 
@@ -150,12 +143,12 @@
 		else
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
-			boutput(usr, "<span style='color:blue'>You snap open the child-protective safety tape on [src].</span>")
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
+			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
-	MouseDrop(atom/over_object, src_location, over_location)
+	mouse_drop(atom/over_object, src_location, over_location)
 		if(!src.open)
-			if (over_object == usr && in_range(src, usr) && isliving(usr) && !usr.stat)
+			if (over_object == usr && in_interact_range(src, usr) && isliving(usr) && !usr.stat)
 				return
 			if (usr.is_in_hands(src))
 				return

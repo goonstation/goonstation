@@ -17,7 +17,7 @@
 	var/obj/item/bloodslide/process_source
 	var/counter = 15
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		var/output_text = "<B>Centrifuge</B><BR><BR>"
 		if (src.on)
 			output_text = "The centrifuge is currently working.<br><a href='?src=\ref[src];shutdown=1'>Emergency shutdown</a>"
@@ -33,7 +33,7 @@
 						output_text += "The [src.source] contains no viable sample.<BR><BR>"
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
-						if (B.volume && B.pathogens.len)
+						if (B.volume && length(B.pathogens))
 							if (B.pathogens.len > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
@@ -48,7 +48,6 @@
 								output_text += "The centrifuge will isolate the single sample of [P].<br><br>"
 						else
 							output_text += "The [src.source] contains no viable sample.<BR><BR>"
-					// TODO: not only blood slides can be used
 			else
 				output_text += "There is no isolation source inserted into the centrifuge.<br><br>"
 			if (src.target)
@@ -56,13 +55,7 @@
 			else
 				output_text += "There is no petri dish inserted into the machine.<br><br>"
 			output_text += "<a href='?src=\ref[src];begin=1'>Begin isolation process</a>"
-				/*if (src.target)
-					output_text += "The petri dish already contains a pathogen sample.<br><br>"
-				else
-					output_text += "The petri dish is empty and is ready to receive a pathogen sample.<br><br>"
 
-
-		*/
 		user.Browse("<HEAD><TITLE>Centrifuge</TITLE></HEAD><BODY>[output_text]</BODY>", "window=centrifuge")
 		onclose(user, "centrifuge")
 		return
@@ -73,7 +66,7 @@
 		if (href_list["ejectsrc"])
 			if (src.source && !src.on)
 				src.source.master = null
-				src.source.loc = src.loc
+				src.source.set_loc(src.loc)
 				src.contents -= src.target
 				src.source.layer = initial(src.source.layer)
 				src.source = null
@@ -81,7 +74,7 @@
 		else if (href_list["ejectdish"])
 			if (src.target && !src.on)
 				src.target.master = null
-				src.target.loc = src.loc
+				src.target.set_loc(src.loc)
 				src.contents -= src.target
 				src.target.layer = initial(src.target.layer)
 				src.target = null
@@ -89,7 +82,7 @@
 			if (src.on && alert("Are you sure you want to shut down the process?",,"Yes","No") == "Yes")
 				src.on = 0
 				src.icon_state = "centrifuge0"
-				src.visible_message("<span style=\"color:red\">The centrifuge grinds to a sudden halt. The blood slide flies off the supports and shatters somewhere inside the machine.</span>", "<span style=\"color:red\">You hear a grinding noise, followed by something shattering.</span>")
+				src.visible_message("<span class='alert'>The centrifuge grinds to a sudden halt. The blood slide flies off the supports and shatters somewhere inside the machine.</span>", "<span class='alert'>You hear a grinding noise, followed by something shattering.</span>")
 				qdel(src.source)
 				src.source = null
 				src.isolated = null
@@ -105,21 +98,21 @@
 			var/maybegin = 1
 			if (!src.on)
 				if (!src.source)
-					boutput(usr, "<span style=\"color:red\">You cannot begin isolation without a source container.</span>")
+					boutput(usr, "<span class='alert'>You cannot begin isolation without a source container.</span>")
 					maybegin = 0
 				else if (!src.source.reagents.has_reagent("blood"))
-					boutput(usr, "<span style=\"color:red\">You cannot begin isolation without a source blood sample.</span>")
+					boutput(usr, "<span class='alert'>You cannot begin isolation without a source blood sample.</span>")
 					maybegin = 0
 				else
 					var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 					if (!B.pathogens.len)
-						boutput(usr, "<span style=\"color:red\">The inserted blood sample is clean, there is nothing to isolate.</span>")
+						boutput(usr, "<span class='alert'>The inserted blood sample is clean, there is nothing to isolate.</span>")
 						maybegin = 0
 					else if (!src.target)
-						boutput(usr, "<span style=\"color:red\">You cannot begin isolation without a target receptacle.</span>")
+						boutput(usr, "<span class='alert'>You cannot begin isolation without a target receptacle.</span>")
 						maybegin = 0
 				if (maybegin)
-					src.visible_message("<span style=\"color:blue\">The centrifuge powers up and begins the isolation process.</span>", "<span style=\"color:blue\">You hear a machine powering up.</span>")
+					src.visible_message("<span class='notice'>The centrifuge powers up and begins the isolation process.</span>", "<span class='notice'>You hear a machine powering up.</span>")
 					src.on = 1
 					src.icon_state = "centrifuge1"
 					var/obj/item/bloodslide/S = src.source
@@ -130,21 +123,20 @@
 					else
 						P.pathogens = B.pathogens.Copy()
 					P.volume = 5
-					if (!(src in processing_items))
-						processing_items.Add(src)
+					processing_items |= src
 					src.process_pathogen = P
 					src.process_source = S
 					counter = 25
-		src.attack_hand(usr)
+		src.Attackhand(usr)
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/bloodslide))
 			if (src.source)
-				boutput(user, "<span style=\"color:red\">There is already a blood slide in the machine.</span>")
+				boutput(user, "<span class='alert'>There is already a blood slide in the machine.</span>")
 				return
 			else
 				src.source = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -159,11 +151,11 @@
 					src.isolated = null
 		else if (istype(O, /obj/item/reagent_containers/glass/petridish))
 			if (src.target)
-				boutput(user, "<span style=\"color:red\">There is already a petri dish in the machine.</span>")
+				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")
 				return
 			else
 				src.target = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -179,7 +171,7 @@
 		if (counter <= 0)
 			processing_items.Remove(src)
 			var/datum/reagent/blood/pathogen/P = src.process_pathogen
-			src.visible_message("<span style=\"color:blue\">The centrifuge beeps and discards the disfigured bloodslide.</span>", "<span style=\"color:blue\">You hear a machine powering down.</span>")
+			src.visible_message("<span class='notice'>The centrifuge beeps and discards the disfigured bloodslide.</span>", "<span class='notice'>You hear a machine powering down.</span>")
 			if (src.target.reagents.has_reagent("pathogen"))
 				var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
 				for (var/uid in P.pathogens)
@@ -224,20 +216,20 @@
 		else
 			return null
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (src.target)
 			var/action = input("What would you like to do with the microscope?", "Microscope", "View [target]") in list("View [target]", "[src.zoom ? "Zoom Out" : "Zoom In"]", "Remove [target]", "Cancel")
-			if (get_dist(user.loc, src.loc) <= 1)
+			if (BOUNDS_DIST(user.loc, src.loc) == 0)
 				if (action == "View [target]")
 					if (zoom)
-						user.show_message("<span style=\"color:blue\">You look at the [target] through the microscope.</span>")
+						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
 						if (istype(src.target, /obj/item/reagent_containers/glass/petridish))
 							var/obj/item/reagent_containers/glass/petridish/PD = target
 							if (PD.dirty)
-								user.show_message("<span style=\"color:blue\">The petri dish cannot be used for cultivating pathogens, due to: </span>")
+								user.show_message("<span class='notice'>The petri dish cannot be used for cultivating pathogens, due to: </span>")
 								user.show_message(PD.dirty_reason)
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						var/pcount = path_list.len
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P
@@ -257,18 +249,20 @@
 							else
 								uid = path_list[1]
 								P = path_list[uid]
-							user.show_message("<span style=\"color:blue\">Apparent features of the pathogen:</span>")
+							user.show_message("<span class='notice'>Apparent features of the pathogen:</span>")
 							var/lines = 1
+							var/DNA = ""
 							user.show_message(P.suppressant.may_react_to())
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/res = E.may_react_to()
 								if (res)
 									lines++
-									user.show_message("[res]")
+									DNA = pathogen_controller.symptom_to_UID[E.type]
+									user.show_message("([DNA]) [res]")
 							if (!lines)
 								user.show_message("You cannot see anything out of the ordinary.")
 							if (src.symptom_action_in.len)
-								user.show_message("<span style=\"color:blue\">You can observe in the [target]:</span>")
+								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
 								for (var/act in src.symptom_action_in)
 									var/list/actl = message_parts(act)
 									if (actl[1] == P.name)
@@ -279,8 +273,8 @@
 							user.show_message("The [target] is empty.")
 					else
 						var/list/path_list = src.target.reagents.aggregate_pathogens()
-						user.show_message("<span style=\"color:blue\">You look at the [target] through the microscope.</span>")
-						var/pcount = path_list.len
+						user.show_message("<span class='notice'>You look at the [target] through the microscope.</span>")
+						var/pcount = length(path_list)
 						if (pcount > 0)
 							var/uid
 							var/datum/pathogen/P
@@ -300,10 +294,10 @@
 							else
 								uid = path_list[1]
 								P = path_list[uid]
-							user.show_message("<span style=\"color:blue\">The pathogen appears to be consistent with the strain [P.name_base]</span>")
+							user.show_message("<span class='notice'>The pathogen appears to be consistent with the strain [P.name_base]</span>")
 							user.show_message("The pathogen appears to be composed of [P.desc].")
 							if (src.symptom_action_out.len)
-								user.show_message("<span style=\"color:blue\">You can observe in the [target]:</span>")
+								user.show_message("<span class='notice'>You can observe in the [target]:</span>")
 								for (var/act in src.symptom_action_out)
 									var/list/actl = message_parts(act)
 									if (actl[1] == P.name)
@@ -321,22 +315,22 @@
 					icon_state = "microscope3"
 					user.show_message("The microscope is now zoomed in.")
 				else if (action == "Remove [target]")
-					user.show_message("<span style=\"color:blue\">You remove the [target] from the microscope.</span>")
-					src.target.loc = src.loc
+					user.show_message("<span class='notice'>You remove the [target] from the microscope.</span>")
+					src.target.set_loc(src.loc)
 					src.target.layer = initial(src.target.layer)
 					src.target.master = null
 					icon_state = zoom ? "microscope2" : "microscope0"
 					src.contents -= src.target
 					src.target = null
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass/petridish) || istype(O, /obj/item/bloodslide))
 			if (src.target)
-				boutput(user, "<span style=\"color:red\">There is already a [target] on the microscope.</span>")
+				boutput(user, "<span class='alert'>There is already a [target] on the microscope.</span>")
 				return
 			else
 				src.target = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				O.layer = src.layer
 				src.contents += O
@@ -363,18 +357,18 @@
 								if (P.curable_by_suppression)
 									act += "<br>The culture appears to be severely damaged by the suppressing agent."
 								src.supp_action[P.name] = act
-								SPAWN_DBG(10 SECONDS) // 100
+								SPAWN(10 SECONDS) // 100
 									src.supp_action -= P.name
 							for (var/datum/pathogeneffects/E in P.effects)
 								var/a_in = "[P.name]: " + E.react_to(R.id, 1)
 								var/a_out = "[P.name]: " + E.react_to(R.id, 0)
 								if (a_in && !(a_in in src.symptom_action_in))
 									src.symptom_action_in += a_in
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_in -= a_in
 								if (a_out && !(a_out in src.symptom_action_out))
 									src.symptom_action_out += a_out
-									SPAWN_DBG(10 SECONDS) // 100
+									SPAWN(10 SECONDS) // 100
 										src.symptom_action_out -= a_out
 
 #define PATHOGEN_MANIPULATOR_STATE_MAIN 0
@@ -408,13 +402,12 @@
 	var/datum/pathobank/db = new
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
-	var/manip_cooldown = 4 DECI SECONDS // was 20
 	var/manipulating = false //are we currently irradiating the pathogen?
 	New()
 		..()
-		gui = new("html/pathoComp.html", "pathology", "size=900x800", src)
+		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
 		gui.validate_user = 1
-		SPAWN_DBG(5 SECONDS)
+		SPAWN(5 SECONDS)
 			rescan()
 
 	proc/rescan()
@@ -423,7 +416,9 @@
 			P.comp = src
 			break
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
@@ -451,7 +446,14 @@
 		if(!PDNA)
 			return "null"
 		var/splicing = (PDNA == src.manip.loaded && (!PDNA.valid || src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION))
-		return {"{"seq":"[PDNA.seqnumeric + PDNA.seqsplice]","pathogenName":"[PDNA.reference.name]","pathogenType":"[PDNA.reference.body_type.singular]","isSplicing":[splicing]}"}
+		return {"{"seq":"[PDNA.seqnumeric + PDNA.seqsplice]",
+		"pathogenName":"[PDNA.reference.name]",
+		"pathogenStages":"[PDNA.reference.stages]",
+		"pathogenSymptomaticity":"[PDNA.reference.symptomatic]",
+		"pathogenSupCode":"[pathogen_controller.suppressant_to_UID[PDNA.reference.suppressant.type]]",
+		"pathogenCap":"[PDNA.reference.body_type.seqMax]",
+		"pathogenMaxStats":"[PDNA.reference.body_type.maxStats]",
+		"pathogenType":"[PDNA.reference.body_type.singular]","isSplicing":[splicing]}"}
 
 	proc/slots2json()
 		if(!src.manip) return "\[null,null,null]"
@@ -484,8 +486,8 @@
 				var/sourceEnd = length(P.explode())
 				src.manip.sel_source_lptr = sourceEnd
 				src.manip.sel_source_rptr = sourceEnd
-		tOut = lentext(tOut) > 0 ? "\"[tOut]\"" : "null"
-		sOut = lentext(sOut) > 0 ? "\"[sOut]\"" : "null"
+		tOut = length(tOut) > 0 ? "\"[tOut]\"" : "null"
+		sOut = length(sOut) > 0 ? "\"[sOut]\"" : "null"
 
 		gui.sendToSubscribers({"{"splice":{"source":[sOut],"target":[tOut],"pred":[predictive_data],"selSource":{"lptr_index":[src.manip.sel_source_lptr], "rptr_index":[src.manip.sel_source_rptr]},"selTarget":{"lptr_index":[src.manip.sel_target_lptr], "rptr_index":[src.manip.sel_target_rptr]},"selected":[src.manip.splicesource]}}"}, "setUIState")
 
@@ -542,7 +544,7 @@
 			//html = '<table><th><a href="#" onclick="sortAndDisplay('seq'); return false;">Sequence</a></th><th><a href="#" onclick="sortAndDisplay('stable'); return false;">Stable</a></th><th><a href="#" onclick="sortAndDisplay('trans'); return false;">Transient</a></th>' + html + '</table>';
 			usr.Browse(op, "window=pathology_ks;size=300x500")
 		if (href_list["setstate"])
-			var/state  = text2num(href_list["newstate"])
+			var/state  = text2num_safe(href_list["newstate"])
 			if(state != null && state >= 0 && state <= 5 && state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				//Received valid input, it's within bounds and it's not moving to or from a protected state (splicing in progress)
 				src.manip.machine_state = state
@@ -558,19 +560,21 @@
 				for (var/bit in bits)
 					if (bit != "|")
 						src.manip.analysis_list += bit
+				src.manip.analysis_list -= src.manip.analysis_list[1]
+				sortList(src.manip.analysis_list, /proc/cmp_text_asc)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
-				visible_message("<span style=\"color:blue\">The manipulator ejects the empty vial.</span>")
+				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
 				new /obj/item/reagent_containers/glass/vial(get_turf(src.manip))
 
 				SEND_SLOT_LOAD_INFO
 				sendAnalysisData()
 
 		if (href_list["analysisappend"])
-			if (lentext(src.manip.analysis) >= 15)
+			if (length(src.manip.analysis) >= 15)
 				return
 
-			var/id = text2num(href_list["analysisappend"])
+			var/id = text2num_safe(href_list["analysisappend"])
 			if(id != null && id >= 0)
 				id++ //JS sent a zero-based ID
 				if (id > 0 && src.manip.analysis_list.len >= id) //We want the index to be in bounds now.
@@ -585,7 +589,7 @@
 		if (href_list["analysisdo"])
 			if (!src.manip.analysis)
 				return
-			var/tlen = lentext(src.manip.analysis)
+			var/tlen = length(src.manip.analysis)
 			if (tlen < 3)
 				return
 			var/analyzed = src.manip.analysis
@@ -614,11 +618,11 @@
 			for (var/i = 1, i <= bits, i++)
 				var/curr = copytext(analyzed, (i - 1) * 3 + 1, i * 3 + 1)
 				acc += curr
-				var/acc_len = lentext(acc)
+				var/acc_len = length(acc)
 				var/total = 0
 				var/match = 0
 				for (var/dna in pathogen_controller.UID_to_symptom)
-					var/dnalen = lentext(dna)
+					var/dnalen = length(dna)
 					if (dnalen >= acc_len)
 						total++
 						if (dnalen == acc_len)
@@ -626,8 +630,8 @@
 								match++
 								if (i == bits)
 									// get symptom from dna, so we can check if it is good or bad
-									var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
-									if(istype(sym, /datum/pathogeneffects/benevolent))
+									var/datum/pathogeneffects/S = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
+									if(S.beneficial)
 										stableType = "Good"
 									else
 										stableType = "Bad"
@@ -638,8 +642,8 @@
 								match++
 								if (i == bits)
 									// get symptom from dna, so we can check if it is good or bad
-									var/sym = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
-									if(istype(sym, /datum/pathogeneffects/benevolent))
+									var/datum/pathogeneffects/S = pathogen_controller.path_to_symptom[pathogen_controller.UID_to_symptom[dna]]
+									if(S.beneficial)
 										transGood++
 									else
 										transBad++
@@ -687,7 +691,7 @@
 		if (href_list["exchange"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
 				var/swap = src.manip.loaded
-				var/slotid = text2num(href_list["exchange"])
+				var/slotid = text2num_safe(href_list["exchange"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -696,7 +700,7 @@
 
 		if (href_list["load"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["load"])
+				var/slotid = text2num_safe(href_list["load"])
 				src.manip.loaded = src.manip.slots[slotid]
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
@@ -708,7 +712,7 @@
 			gui.sendToSubscribers({"{"splice":{"source":[src.manip.splicesource]}}"}, "setUIState")
 		if (href_list["expose"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["expose"])
+				var/slotid = text2num_safe(href_list["expose"])
 				src.manip.exposed = slotid
 				if (src.manip.slots[src.manip.exposed])
 					src.manip.icon_state = "manipulatore"
@@ -716,13 +720,13 @@
 					src.manip.icon_state = "manipulator"
 				gui.sendToSubscribers({"{"exposed":[src.manip.exposed]}"}, "setUIState")
 		if (href_list["splice"])
-			var/slotid = CLAMP(text2num(href_list["splice"]), 1, src.manip.slots.len)
+			var/slotid = clamp(text2num_safe(href_list["splice"]), 1, src.manip.slots.len)
 			src.manip.splicesource = slotid
 			gui.sendToSubscribers({"{"splice":{"selected":[src.manip.splicesource]}}"}, "setUIState")
 
 		if (href_list["remove"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["remove"])
+				var/slotid = text2num_safe(href_list["remove"])
 				if (src.manip.splicesource == slotid)
 					src.manip.splicesource = 0
 				src.manip.slots[slotid] = null
@@ -730,46 +734,46 @@
 
 		if (href_list["save"])
 			if (src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_MANIPULATE)
-				var/slotid = text2num(href_list["save"])
+				var/slotid = text2num_safe(href_list["save"])
 				src.manip.slots[slotid] = src.manip.loaded
 				src.manip.loaded = null
 				SEND_SLOT_LOAD_INFO
 
 		if(href_list["manip"])
+			if(!src.manip.loaded) // Why are you clicking this, there is no pathogen loaded in!
+				return
+			// the buttons should be disabled if the stats are maxed out, so these checks are just in case someone does nerd stuff
+			var/points = 0
+			var/totalPoints = src.manip.loaded.reference.spread + src.manip.loaded.reference.advance_speed + src.manip.loaded.reference.suppression_threshold
 			var/mut_type
 			switch(href_list["manip"])
-				if("mut")
-					mut_type = "mutativeness"
-				if("mts")
-					mut_type = "mutation_speed"
 				if("adv")
 					mut_type = "advance_speed"
-				if("mal")
-					mut_type = "maliciousness"
+					points = src.manip.loaded.reference.advance_speed
 				if("sth")
 					mut_type = "suppression_threshold"
+					points = src.manip.loaded.reference.suppression_threshold
+				if("spr")
+					mut_type = "spread"
+					points = src.manip.loaded.reference.spread
 				else
 					return
-			var/dir = text2num(href_list["dir"])
-			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(manipulating))
-				manipulating = true
-				SPAWN_DBG(manip_cooldown)
-					var/act = src.manip.loaded.manipulate(mut_type, dir)
-					var/out
-					if (act == 0)
-						src.manip.visible_message("<span style=\"color:red\">The DNA is destabilized and destroyed by the radiation.</span>")
-						out= {"{"success":0}"}
-					else if (act == -1)
-						src.manip.visible_message("<span style=\"color:red\">The structure of the DNA appears to fundamentally change.</span>")
-					if(!out) out = {"{"newseq":"[src.manip.loaded.seqnumeric + src.manip.loaded.seqsplice]","success":1}"}
-					gui.sendToSubscribers(out, "handleManipCallback")
-					manipulating = false
+
+			var/dir = text2num_safe(href_list["dir"])
+			if(mut_type && dir && (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_MANIPULATE) && !(dir > 0 && totalPoints >= src.manip.loaded.reference.body_type.maxStats) && !(dir > 0 && points >= 50) && !(dir < 0 && points <= 0))
+				var/act = src.manip.loaded.manipulate(mut_type, dir)
+				var/out
+				if (act == 0)
+					src.manip.visible_message("<span class='alert'>The DNA is destabilized and destroyed by the radiation.</span>")
+					out= {"{"success":0}"}
+				if(!out) out = {"{"newseq":"[src.manip.loaded.seqnumeric + src.manip.loaded.seqsplice]","success":1}"}
+				gui.sendToSubscribers(out, "handleManipCallback")
 
 		if (href_list["eject"])
 			if (src.manip.exposed && src.manip.slots[src.manip.exposed] && src.manip.machine_state != PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
 				var/datum/reagent/blood/pathogen/P = new
 				var/datum/pathogendna/D = src.manip.slots[src.manip.exposed]
-				var/datum/pathogen/PT = unpool(/datum/pathogen)
+				var/datum/pathogen/PT = new /datum/pathogen
 				PT.setup(0, D.reference)
 				PT.dnasample = D
 				P.pathogens += PT.pathogen_uid
@@ -778,7 +782,7 @@
 				var/obj/item/reagent_containers/glass/vial/vial = new
 				vial.reagents.reagent_list[P.id] = P
 				vial.reagents.total_volume = 2
-				vial.loc = src.manip.loc
+				vial.set_loc(src.manip.loc)
 				usr.put_in_hand_or_eject(vial) // try to eject it into the users hand, if we can
 				vial.icon_state = "vial1"
 				src.manip.slots[src.manip.exposed] = null
@@ -787,7 +791,7 @@
 		/*Uses splicemod to insert
 		if (href_list["insert"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["insert"])
+				var/offset = text2num_safe(href_list["insert"])
 				var/seq = src.manip.cache_source[src.manip.sel_source]
 				for (var/i = src.manip.sel_source, i < src.manip.cache_source.len, i++)
 					src.manip.cache_source[i] = src.manip.cache_source[i+1]
@@ -803,36 +807,36 @@
 				predictive_analysis()
 		*/
 		if(href_list["splicesel"])
-			var/lptr_index = text2num(href_list["lptr_index"])
-			var/rptr_index = text2num(href_list["rptr_index"])
-			var/t = text2num(href_list["target"])
+			var/lptr_index = text2num_safe(href_list["lptr_index"])
+			var/rptr_index = text2num_safe(href_list["rptr_index"])
+			var/t = text2num_safe(href_list["target"])
 			if(t)
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_target.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_target.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_target.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_target.len)
 				src.manip.sel_target_lptr = lptr_index
 				src.manip.sel_target_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selTarget":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 			else
-				lptr_index = CLAMP(lptr_index+1, 1, src.manip.cache_source.len)
-				rptr_index = CLAMP(rptr_index+1, 1, src.manip.cache_source.len)
+				lptr_index = clamp(lptr_index+1, 1, src.manip.cache_source.len)
+				rptr_index = clamp(rptr_index+1, 1, src.manip.cache_source.len)
 				src.manip.sel_source_lptr = lptr_index
 				src.manip.sel_source_rptr = rptr_index
 				gui.sendToSubscribers({"{"splice":{"selSource":{"lptr_index":[lptr_index], "rptr_index":[rptr_index]}}}"}, "setUIState")
 
 		if(href_list["splicemod"])
-			var/direction = text2num(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
-			var/s_index = text2num(href_list["s_index"]) //The source index
-			var/s_len = text2num(href_list["s_len"]) //How much from the source we want to add
-			var/t_index = text2num(href_list["t_index"]) //The target index
-			var/t_len = text2num(href_list["t_len"]) //How much we want to remove from the target (if any)
+			var/direction = text2num_safe(href_list["direction"]) //The operation to perform, 0 = remove, -1 = insert before, 1 = insert after
+			var/s_index = text2num_safe(href_list["s_index"]) //The source index
+			var/s_len = text2num_safe(href_list["s_len"]) //How much from the source we want to add
+			var/t_index = text2num_safe(href_list["t_index"]) //The target index
+			var/t_len = text2num_safe(href_list["t_len"]) //How much we want to remove from the target (if any)
 
 			if(direction == null || t_index == null || (direction != 0 && (s_index == null || s_len == null)) || (direction == 0 && t_len == null))
 				return
 
-			direction = CLAMP(direction, -1, 1)
+			direction = clamp(direction, -1, 1)
 			//Increase the positions by one since they are 0-indexed JS.
-			s_index = CLAMP(s_index+1, 1, src.manip.cache_source.len)
-			t_index = CLAMP(t_index+1, 1, src.manip.cache_target.len)
+			s_index = clamp(s_index+1, 1, src.manip.cache_source.len)
+			t_index = clamp(t_index+1, 1, src.manip.cache_target.len)
 
 			if(direction == 0) //Remove
 				if(src.manip.cache_target.len)
@@ -843,7 +847,7 @@
 			else	//Insert
 				direction = max(direction,0) //In case we're inserting before we don't want to subtract from the target index
 				if(src.manip.cache_source.len)
-					var/newpos = CLAMP(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
+					var/newpos = clamp(t_index + direction, 1, src.manip.cache_target.len+1) 	//Set the position to insert at
 					var/newseq = src.manip.cache_source.Copy(s_index, s_index + s_len) //Copy the elements from source we want to insert
 					src.manip.cache_target.Insert(newpos, newseq)	//Do the insertion
 					src.manip.cache_source.Cut(s_index, s_index + s_len) //Remove the DNA sequence from the source
@@ -858,7 +862,7 @@
 			sendSpliceInfo(1)
 
 		if (href_list["beginsplice"])
-			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICE && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
+			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_LOADER && src.manip.loaded && src.manip.splicesource && src.manip.slots[src.manip.splicesource])
 				src.manip.cache_target = src.manip.loaded.explode()
 				var/datum/pathogendna/P = src.manip.slots[src.manip.splicesource]
 				src.manip.cache_source = P.explode()
@@ -871,7 +875,7 @@
 		/*
 		if (href_list["target"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["target"])
+				var/offset = text2num_safe(href_list["target"])
 				if (offset > 0)
 					if (src.manip.sel_target < src.manip.cache_target.len)
 						src.manip.sel_target++
@@ -881,7 +885,7 @@
 
 		if (href_list["source"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				var/offset = text2num(href_list["source"])
+				var/offset = text2num_safe(href_list["source"])
 				if (offset > 0)
 					if (src.manip.sel_source < src.manip.cache_source.len)
 						src.manip.sel_source++
@@ -891,11 +895,11 @@
 
 		if (href_list["jumpt"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_target = text2num(href_list["jumpt"])
+				src.manip.sel_target = text2num_safe(href_list["jumpt"])
 
 		if (href_list["jumps"])
 			if (src.manip.machine_state == PATHOGEN_MANIPULATOR_STATE_SPLICING_SESSION)
-				src.manip.sel_source = text2num(href_list["jumps"])
+				src.manip.sel_source = text2num_safe(href_list["jumps"])
 		*/
 		/* Uses splicemod
 		if (href_list["seqremove"])
@@ -915,7 +919,8 @@
 				var/success = 0
 
 				L.implode(src.manip.cache_target)
-				if (L.reevaluate())
+				var/result = L.reevaluate()
+				if (result == 1)
 					var/list/seqs = L.get_sequences()
 					for (var/s in seqs)
 						if (s in db.known_sequences)
@@ -926,32 +931,49 @@
 						if(!(s in db.transient_sequences))
 							db.transient_sequences[s] = "UNK"
 
-					boutput(usr, "<span style=\"color:blue\">The DNA sequence is assembled by the manipulator.</span>")
+					boutput(usr, "<span class='notice'>The DNA sequence is assembled by the manipulator.</span>")
 					src.manip.loaded = L
 					//don't reactivate this unless the pathologists are being thundering buttheads
 					/*if (prob(10))
 						if (prob(75))
-							boutput(usr, "<span style=\"color:red\">The splicing session is completed imperfectly. The DNA sequence mutates.</span>")
+							boutput(usr, "<span class='alert'>The splicing session is completed imperfectly. The DNA sequence mutates.</span>")
 							src.manip.loaded.reference.mutate()
 							src.manip.loaded.recalculate()
 							src.manip.loaded.reverse_engineer()
 							success=1
 						else
-							boutput(usr, "<span style=\"color:red\">The splicing session is completed imperfectly. The DNA sequence is lost.</span>")
+							boutput(usr, "<span class='alert'>The splicing session is completed imperfectly. The DNA sequence is lost.</span>")
 							qdel(src.manip.loaded)
 							new /obj/item/reagent_containers/glass/vial(get_turf(src.manip)) //Quit eating vials you fuck -Spy
 					else
 					*/
-					boutput(usr, "<span style=\"color:blue\">The splicing session is concluded perfectly. The DNA sequence remains intact.</span>")
+					boutput(usr, "<span class='notice'>The splicing session is concluded perfectly. The DNA sequence remains intact.</span>")
 					success=1
 					src.manip.loaded.move_mutation()
 					if (src.manip.loaded && !src.manip.loaded.disposed)
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
-					boutput(usr, "<span style=\"color:red\">The DNA sequence is assembled by the manipulator, but it collapses!</span>")
+					// how about some more feedback for what went wrong? :)
+					var/reason = ""
+					switch(result)
+						if(2)
+							reason = ", because the suppressant code was invalid"
+						if(3)
+							reason = ", because there was no separator after the suppressant code"
+						if(4)
+							reason = ", because the carrier code was invalid"
+						if(5)
+							reason = ", because there was no separator after the carrier code"
+						if(6)
+							reason = ", due to an invalid symptom code"
+						if(7)
+							reason = ", because there was no symptom code between two separators"
+						if(8)
+							reason = ", because the microbody could not sustain the amount of symptoms"
+					boutput(usr, "<span class='alert'>The DNA sequence is assembled by the manipulator, but it collapses[reason]!</span>")
 					src.manip.loaded = null
 					new /obj/item/reagent_containers/glass/vial(get_turf(src.manip)) //Quit eating vials you fuck -Spy
 
@@ -959,7 +981,7 @@
 				src.manip.slots[src.manip.splicesource] = null
 				src.manip.splicesource = 0
 				src.manip.machine_state = PATHOGEN_MANIPULATOR_STATE_MAIN
-				visible_message("<span style=\"color:blue\">The manipulator ejects the empty vial.</span>")
+				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
 				new /obj/item/reagent_containers/glass/vial(get_turf(src.manip))
 				var/datum/pathogendna/PDNA = src.manip.loaded
 				if(success && PDNA)
@@ -1045,47 +1067,58 @@
 		..()
 		flags |= NOSPLASH
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
-		if (!exposed)
-			user.show_message("<span style=\"color:red\">The manipulator has no exposed slots.</span>")
-			return
-		if (slots[exposed])
-			user.show_message("<span style=\"color:red\">The currently exposed slot on the manipulator is occupied.</span>")
+	attackby(var/obj/item/O, var/mob/user)
+		var/firstFreeSlot = -1 // -1 means no free slot, -2 means the active slot is free
+		if(!loaded)
+			firstFreeSlot = -2
+		else
+			for(var/i in 1 to length(slots))
+				if(isnull(slots[i]))
+					firstFreeSlot = i
+					break
+		if (firstFreeSlot == -1)
+			user.show_message("<span class='alert'>The manipulator has no free slots.</span>")
 			return
 		if (!istype(O, /obj/item/reagent_containers/glass/vial))
-			user.show_message("<span style=\"color:red\">The slots on the manipulator are designed so that only vials will fit.</span>")
+			user.show_message("<span class='alert'>The slots on the manipulator are designed so that only vials will fit.</span>")
 			return
 		if (!O.reagents.has_reagent("pathogen"))
-			user.show_message("<span style=\"color:red\">The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
+			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
 		if (O.reagents.reagent_list.len > 1)
-			user.show_message("<span style=\"color:red\">The machine rejects the sample, as it contains foreign chemical samples.</span>")
+			user.show_message("<span class='alert'>The machine rejects the sample, as it contains foreign chemical samples.</span>")
 			return
 		var/datum/reagent/blood/pathogen/P = O.reagents.reagent_list["pathogen"]
 		if (P.pathogens.len > 1)
-			user.show_message("<span style=\"color:red\">The vial contains multiple pathogen samples, and is rejected by the machine.</span>")
+			user.show_message("<span class='alert'>The vial contains multiple pathogen samples, and is rejected by the machine.</span>")
 			return
 		if (P.pathogens.len == 0)
-			user.show_message("<span style=\"color:red\">The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
+			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
 		if (P.volume < 2)
-			user.show_message("<span style=\"color:red\">Too small sample size. At least 2 units of pathogen required.</span>")
+			user.show_message("<span class='alert'>Too small sample size. At least 2 units of pathogen required.</span>")
 			return
 		var/uid = P.pathogens[1]
 		var/datum/pathogen/PT = P.pathogens[uid]
 		//boutput(user, "Valid. Contains pathogen ([P.volume] units with pathogen [PT.name]. Slot is [exposed]. DNA: [PT.dnasample]")
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
-			logTheThing("pathology", usr, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
-		slots[exposed] = PT.dnasample.clone()
+			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+		if(firstFreeSlot == -2)
+			loaded = PT.dnasample.clone()
+		else
+			slots[firstFreeSlot] = PT.dnasample.clone()
 		O.reagents.del_reagent("pathogen")
 		user.u_equip(O)
 		qdel(O)
-		user.show_message("<span style=\"color:blue\">You insert the vial into the machine.</span>")
+		user.show_message("<span class='notice'>You insert the vial into the machine.</span>")
 		icon_state = "manipulatore"
 
 		if (comp)
 			comp.gui.sendToSubscribers({"{"dnaDetails":[src.comp.slots2json()]}"}, "setUIState")
+			comp.sendAnalysisData()
+
 
 
 #undef PATHOGEN_MANIPULATOR_STATE_MAIN
@@ -1181,8 +1214,8 @@
 		src.reagents = new(100)
 		src.reagents.my_atom = src
 		flags |= NOSPLASH
-		if (!pathogen_controller || !pathogen_controller.cure_bases || !pathogen_controller.cure_bases.len)
-			SPAWN_DBG(2 SECONDS)
+		if (!pathogen_controller || !pathogen_controller.cure_bases || !length(pathogen_controller.cure_bases))
+			SPAWN(2 SECONDS)
 				for (var/C in pathogen_controller.cure_bases)
 					src.reagents.add_reagent(C, 1)
 		else
@@ -1208,17 +1241,19 @@
 		src.add_module(new /obj/item/synthmodule/radiation())
 
 
-	attack_hand(var/mob/user as mob)
+	attack_hand(var/mob/user)
+		if(status & (BROKEN|NOPOWER))
+			return
 		..()
 		show_interface(user)
 
 	proc/add_module(var/obj/item/synthmodule/M)
 		if (has_module(M))
-			boutput(usr, "<span style=\"color:red\">The [name] already has that kind of module.</span>")
+			boutput(usr, "<span class='alert'>The [name] already has that kind of module.</span>")
 			return 0
 		else
 			modules[M.id] = M
-			M.loc = src
+			M.set_loc(src)
 			M.received(src)
 			return 1
 
@@ -1227,7 +1262,10 @@
 			return 1
 		return 0
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
+		if(status & (BROKEN|NOPOWER))
+			boutput(user,  "<span class='alert'>You can't insert things while the machine is out of power!</span>")
+			return
 		if (istype(O, /obj/item/reagent_containers/glass/vial))
 			var/done = 0
 			for (var/i = 1, i <= 5, i++)
@@ -1235,76 +1273,76 @@
 					done = 1
 					vials[i] = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
 					break
 			if (!done)
-				boutput(usr, "<span style=\"color:red\">The machine cannot hold any more vials.</span>")
+				boutput(user, "<span class='alert'>The machine cannot hold any more vials.</span>")
 			else
-				boutput(usr, "<span style=\"color:blue\">You insert the vial into the machine.</span>")
+				boutput(user, "<span class='notice'>You insert the vial into the machine.</span>")
 				show_interface(user)
 			return
 		if (istype(O, /obj/item/reagent_containers/glass/beaker))
 			var/action = input("Which slot?", "Synth-O-Matic", "Cancel") in list("Anti-Agent", "Suppressant", "Cancel")
 			if (action == "Anti-Agent")
-				if (!(usr in range(1)))
-					boutput(usr, "<span style=\"color:red\">You must be near the machine to do that.</span>")
+				if (!(user in range(1)))
+					boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
 					return
-				if (usr.equipped() != O)
+				if (user.equipped() != O)
 					return
 				if (!antiagent)
 					antiagent = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
-					boutput(usr, "<span style=\"color:blue\">You insert the beaker into the machine.</span>")
+					boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
 					show_interface(user)
 				else
-					boutput(usr, "<span style=\"color:red\">That slot is already occupied!</span>")
+					boutput(user, "<span class='alert'>That slot is already occupied!</span>")
 			else if (action == "Suppressant")
-				if (!(usr in range(1)))
-					boutput(usr, "<span style=\"color:red\">You must be near the machine to do that.</span>")
+				if (!(user in range(1)))
+					boutput(user, "<span class='alert'>You must be near the machine to do that.</span>")
 					return
-				if (usr.equipped() != O)
+				if (user.equipped() != O)
 					return
 				if (!suppressant)
 					suppressant = O
 					user.u_equip(O)
-					O.loc = src
+					O.set_loc(src)
 					O.master = src
 					user.client.screen -= O
-					boutput(usr, "<span style=\"color:blue\">You insert the beaker into the machine.</span>")
+					boutput(user, "<span class='notice'>You insert the beaker into the machine.</span>")
 					show_interface(user)
 				else
-					boutput(usr, "<span style=\"color:red\">That slot is already occupied!</span>")
+					boutput(user, "<span class='alert'>That slot is already occupied!</span>")
 			return
 		if (isscrewingtool(O))
 			if (machine_state)
-				boutput(usr, "<span style=\"color:red\">You cannot do that while the machine is working.</span>")
+				boutput(user, "<span class='alert'>You cannot do that while the machine is working.</span>")
 				return
 			if (!maintenance)
-				boutput(usr, "<span style=\"color:blue\">You open the maintenance panel on the Synth-O-Matic.</span>")
+				boutput(user, "<span class='notice'>You open the maintenance panel on the Synth-O-Matic.</span>")
 				icon_state = "synthp"
 				maintenance = 1
 			else
-				boutput(usr, "<span style=\"color:blue\">You close the maintenance panel on the Synth-O-Matic.</span>")
+				boutput(user, "<span class='notice'>You close the maintenance panel on the Synth-O-Matic.</span>")
 				icon_state = "synth1"
 				maintenance = 0
 			return
 		if (istype(O, /obj/item/synthmodule))
 			if (maintenance)
 				if (add_module(O))
-					boutput(user, "<span style=\"color:blue\">You insert the [O] into the machine.</span>")
+					boutput(user, "<span class='notice'>You insert the [O] into the machine.</span>")
 					O.master = src
 					user.client.screen -= O
 					user.u_equip(O)
 					show_interface(user)
 				else
-					boutput(usr, "<span style=\"color:red\">The machine already has the [O].</span>")
+					boutput(user, "<span class='alert'>The machine already has the [O].</span>")
 			else
-				boutput(usr, "<span style=\"color:red\">You must open the maintenance panel first.</span>")
+				boutput(user, "<span class='alert'>You must open the maintenance panel first.</span>")
 			return
 		..(O, user)
 
@@ -1353,7 +1391,7 @@
 									first = 0
 								else
 									output_text += ", "
-								output_text += supp
+								output_text += reagent_id_to_name(supp)
 							output_text += "<br><br>"
 						else
 							output_text += "<br>"
@@ -1362,7 +1400,10 @@
 			else
 				output_text += "None<br><br>"
 			output_text += "<b>Research Budget:</b> [wagesystem.research_budget] Credits<br>"
-			output_text += "<a href='?src=\ref[src];buymats=1'>Synthesize a new pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=virus'>Synthesize a new virus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=parasite'>Synthesize a new parasite pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=bacterium'>Synthesize a new bacterium pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
+			output_text += "<a href='?src=\ref[src];buymats=1;microbody=fungus'>Synthesize a new fungus pathogen sample for [synthesize_pathogen_cost] credits</a><br>"
 			output_text += "<br>"
 			output_text += "<b>Inserted vials:</b><br>"
 			for (var/i = 1, i <= 5, i++)
@@ -1424,9 +1465,9 @@
 
 
 			if (sane)
-				if (!antiagent || !antiagent.reagents.reagent_list.len)
+				if (!antiagent || !length(antiagent.reagents.reagent_list))
 					output_text += "<i><b>NOTICE:</b> Serums manufactured without the appropriate antiagent may lead to an epidemic.</i><br>"
-				if (!suppressant || !suppressant.reagents.reagent_list.len)
+				if (!suppressant || !length(suppressant.reagents.reagent_list))
 					if (has_module("vaccine"))
 						output_text += "<i><b>NOTICE:</b> Serums and vaccines manufactured without the appropriate suppression agent may lead to an epidemic.</i><br>"
 					else
@@ -1462,33 +1503,33 @@
 				if (modules[href_list["remove"]])
 					var/obj/item/synthmodule/M = modules[href_list["remove"]]
 					modules -= href_list["remove"]
-					M.loc = src.loc
+					M.set_loc(src.loc)
 					M.master = null
 		else
 			if (href_list["eject"])
-				var/index = text2num(href_list["eject"])
+				var/index = text2num_safe(href_list["eject"])
 				//Arrays start at 0 -Byand
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
 						var/obj/item/reagent_containers/glass/vial/V = vials[index]
 						vials[index] = null
-						V.loc = src.loc
+						V.set_loc(src.loc)
 						usr.put_in_hand_or_eject(V) // try to eject it into the users hand, if we can
 						V.master = null
 						if (sel_vial == index)
 							sel_vial = 0
 			else if (href_list["ejectanti"])
 				if (antiagent)
-					antiagent.loc = src.loc
+					antiagent.set_loc(src.loc)
 					antiagent.master = null
 					antiagent = null
 			else if (href_list["ejectsupp"])
 				if (suppressant)
-					suppressant.loc = src.loc
+					suppressant.set_loc(src.loc)
 					suppressant.master = null
 					suppressant = null
 			else if (href_list["vial"])
-				var/index = text2num(href_list["vial"])
+				var/index = text2num_safe(href_list["vial"])
 				if(index > 0 && index <= vials.len)
 					if (vials[index])
 						sel_vial = index
@@ -1496,25 +1537,25 @@
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 1)
 			else if (href_list["serumrad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 1)
 			else if (href_list["vaccine"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG(2 SECONDS) // 80
+				SPAWN(2 SECONDS) // 80
 					finish_creation(1, 0)
 			else if (href_list["vaccinerad"])
 				machine_state = 1
 				icon_state = "synth2"
 				src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-				SPAWN_DBG (2 SECONDS) // 120
+				SPAWN(2 SECONDS) // 120
 					finish_creation(0, 0)
 			else if (href_list["antiagent"])
 				var/new_antiagent = href_list["antiagent"]
@@ -1528,24 +1569,40 @@
 						return
 				var/added = min(10, src.antiagent.reagents.maximum_volume - src.antiagent.reagents.total_volume)
 				src.antiagent.reagents.add_reagent(new_antiagent, added)
-				boutput(usr, "<span style=\"color:blue\">[added] units of anti-agent added to the beaker.</span>")
+				boutput(usr, "<span class='notice'>[added] units of anti-agent added to the beaker.</span>")
 			else if (href_list["buymats"])
-				var/confirm = alert("Are you sure you want to spend [synthesize_pathogen_cost] credits to manufacture a new pathogen culture? This will take about five seconds.", "Confirm Purchase", "Yes", "No")
-				if (confirm == "Yes" && machine_state == 0 && (usr in range(1)))
-					if (synthesize_pathogen_cost > wagesystem.research_budget)
-						boutput(usr, "<span style=\"color:red\">Insufficient research budget to make that transaction.</span>")
+				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
+				var/confirm = alert("How many pathogen samples do you wish to synthesize? ([synthesize_pathogen_cost] credits per sample)", "Confirm Purchase", "1", "5", "Cancel")
+				if (confirm != "Cancel" && machine_state == 0 && (usr in range(1)))
+					var/count = text2num_safe(confirm)
+					if (synthesize_pathogen_cost*count > wagesystem.research_budget)
+						boutput(usr, "<span class='alert'>Insufficient research budget to make that transaction.</span>")
 					else
-						boutput(usr, "<span style=\"color:blue\">Transaction successful.</span>")
-						wagesystem.research_budget -= synthesize_pathogen_cost
+						boutput(usr, "<span class='notice'>Transaction successful.</span>")
+						wagesystem.research_budget -= synthesize_pathogen_cost*count
 						machine_state = 1
 						icon_state = "synth2"
 						src.visible_message("The [src.name] bubbles and begins synthesis.", "You hear a bubbling noise.")
-						SPAWN_DBG (5 SECONDS)
+						SPAWN(0 SECONDS)
+							while(count > 0)
+								count--
+								sleep(5 SECONDS)
+								for (var/mob/C in viewers(src))
+									C.show_message("The [src.name] ejects a new pathogen sample.", 3)
+								switch(href_list["microbody"])
+									if("virus")
+										new /obj/item/reagent_containers/glass/vial/prepared/virus(src.loc)
+									if("parasite")
+										new /obj/item/reagent_containers/glass/vial/prepared/parasite(src.loc)
+									if("bacterium")
+										new /obj/item/reagent_containers/glass/vial/prepared/bacterium(src.loc)
+									if("fungus")
+										new /obj/item/reagent_containers/glass/vial/prepared/fungus(src.loc)
 							machine_state = 0
 							icon_state = "synth1"
-							for (var/mob/C in viewers(src))
-								C.show_message("The [src.name] shuts down and ejects a new pathogen sample.", 3)
-							new/obj/item/reagent_containers/glass/vial/prepared(src.loc)
+				#else
+				boutput(usr, "<span class='alert'>[src] unable to complete task. Please contact your network administrator.</span>")
+				#endif
 		show_interface(usr)
 
 	proc/finish_creation(var/use_suppressant, var/use_antiagent)
@@ -1566,11 +1623,11 @@
 		var/datum/pathogen/P = R.pathogens[uid]
 		var/is_cure = 0
 		if ((src.antiagent || !use_antiagent) && (src.suppressant || !use_suppressant))
-			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, min(max(P.suppression_threshold, 5), 50)))
+			if (!use_antiagent || src.antiagent.reagents.has_reagent(P.body_type.cure_base, clamp(P.suppression_threshold, 5, 50)))
 				var/found = 0
 				if (use_suppressant)
 					for (var/id in P.suppressant.cure_synthesis)
-						if (src.suppressant.reagents.has_reagent(id, min(max(P.suppression_threshold, 5), 50)))
+						if (src.suppressant.reagents.has_reagent(id, clamp(P.suppression_threshold, 5, 50)))
 							found = 1
 							break
 					if (found)
@@ -1597,20 +1654,20 @@
 	var/machine_state = 0
 	var/santime = 3 // 15
 
-	attackby(var/obj/item/O as obj, var/mob/user as mob)
+	attackby(var/obj/item/O, var/mob/user)
 		if (istype(O, /obj/item/reagent_containers/glass))
 			if (!sanitizing)
-				boutput(usr, "<span style=\"color:blue\">You place the [O] inside the machine.</span>")
+				boutput(user, "<span class='notice'>You place the [O] inside the machine.</span>")
 				sanitizing = O
-				O.loc = src
+				O.set_loc(src)
 				O.master = src
 				user.u_equip(O)
 				user.client.screen -= O
 				icon_state = "autoclaveb"
 			else
-				boutput(usr, "<span style=\"color:red\">The machine already has an item loaded.</span>")
+				boutput(user, "<span class='alert'>The machine already has an item loaded.</span>")
 		else
-			boutput(usr, "<span style=\"color:red\">The machine cannot clean that!</span>")
+			boutput(user, "<span class='alert'>The machine cannot clean that!</span>")
 
 	process()
 		if (machine_state)
@@ -1618,7 +1675,7 @@
 			if (santime < 0)
 				machine_state = 0
 				for (var/mob/M in range(7))
-					boutput(M, "<span style=\"color:blue\">The machine finishes cleaning and shuts down.</span>")
+					boutput(M, "<span class='notice'>The machine finishes cleaning and shuts down.</span>")
 				sanitizing.reagents.clear_reagents()
 				if (istype(sanitizing, /obj/item/reagent_containers/glass/petridish))
 					var/obj/item/reagent_containers/glass/petridish/P = sanitizing
@@ -1631,20 +1688,20 @@
 						P.nutrition -= N
 					P.dirty_reason = ""
 					P.dirty = 0
-				sanitizing.loc = src.loc
+				sanitizing.set_loc(src.loc)
 				sanitizing.master = null
 				sanitizing = null
 				icon_state = "autoclave"
 
-	attack_hand(var/mob/user as mob)
-		if (machine_state)
+	attack_hand(var/mob/user)
+		if (machine_state || (status & (BROKEN|NOPOWER)))
 			return
 		if (sanitizing)
 			santime = initial(santime)
 			icon_state = "autoclave1"
 			machine_state = 1
 			for (var/mob/M in range(7))
-				boutput(M, "<span style=\"color:blue\">The machine steams up and begins cleaning.</span>")
+				boutput(M, "<span class='notice'>The machine steams up and begins cleaning.</span>")
 
 /obj/machinery/vending/pathology
 	name = "Path-o-Matic"
@@ -1672,3 +1729,73 @@
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/biocides, 20)
 		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/glass/beaker/inhibitor, 20)
 		product_list += new/datum/data/vending_product(/obj/item/device/analyzer/healthanalyzer, 4)
+
+/obj/machinery/incubator
+	name = "Incubator"
+	icon = 'icons/obj/pathology.dmi'
+	icon_state = "incubator"
+	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
+	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
+	anchored = 1
+	density = 1
+	var/obj/item/reagent_containers/glass/petridish/target = null
+	var/medium = null
+
+	New()
+		..()
+		flags |= NOSPLASH
+
+	update_icon()
+		if (src.target)
+			icon_state = "incubator_on"
+		else
+			icon_state = "incubator"
+
+	attack_hand(mob/user)
+		if(isnull(user.equipped()))
+			if (src.target)
+				src.target.set_loc(src.loc)
+				user.put_in_hand_or_eject(src.target)
+				src.target = null
+				src.UpdateIcon()
+		return
+
+	attackby(var/obj/item/O, var/mob/user)
+		if (istype(O, /obj/item/reagent_containers/glass/petridish))
+			if (src.target)
+				boutput(user, "<span class='alert'>There is already a petri dish in the machine.</span>")
+				return
+			else
+				src.target = O
+				user.drop_item()
+				O.set_loc(src)
+				if (src.target.reagents.has_reagent("pathogen"))
+					var/datum/reagent/blood/pathogen/Q = src.target.reagents.reagent_list["pathogen"]
+					var/datum/pathogen/PT = Q.pathogens[pick(Q.pathogens)] 	// more than one pathogen in a petri dish won't grow properly anyway
+					medium = PT.body_type.growth_medium
+				boutput(user, "You insert the [O] into the machine.")
+				src.UpdateIcon()
+		else if(istype(O, /obj/item/reagent_containers/glass/vial))
+			var/obj/item/reagent_containers/glass/vial/V = O
+			if(V.reagents.total_volume)
+				boutput(user, "The [V] already has reagents inside it!")
+			else if(src.target.reagents.total_volume <= 2)
+				boutput(user, "The [src] does not have enough pathogen to dispense a sample.")
+			else
+				boutput(user, "The [src] dispenses some pathogen into the [V].")
+				src.target.reagents.trans_to(V, 2)
+
+	process()
+		if(!src.target)
+			return
+		var/lowNutrients = isnull(src.target.nutrition)?1:0
+		for(var/N in src.target.nutrition)
+			if(src.target.nutrition[N] < 5 && N != "dna_mutagen") // noone ever gets a great mutatis anyway
+				lowNutrients = 1
+		if(lowNutrients)
+			src.target.reagents.add_reagent(medium, 5)
+
+	get_desc()
+		if(src.target)
+			if (src.target.reagents.has_reagent("pathogen"))
+				. += "<br>The petri dish inside contains [src.target.reagents.reagent_list["pathogen"].volume] units of pathogen."

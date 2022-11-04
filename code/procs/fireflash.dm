@@ -13,7 +13,7 @@
 		for(var/obj/kudzu_marker/M in T) qdel(M)
 //		for(var/obj/alien/weeds/V in T) qdel(V)
 
-		var/obj/hotspot/h = unpool(/obj/hotspot)
+		var/obj/hotspot/h = new /obj/hotspot
 		h.temperature = temp
 		h.volume = 400
 		h.set_real_color()
@@ -22,51 +22,51 @@
 		hotspots += h
 
 		T.hotspot_expose(h.temperature, h.volume)
-		//SPAWN_DBG(1.5 SECONDS) T.hotspot_expose(2000, 400)
+/*// experimental thing to let temporary hotspots affect atmos
+		h.perform_exposure()
+*/
+		//SPAWN(1.5 SECONDS) T.hotspot_expose(2000, 400)
 
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for(var/mob/living/L in T)
 				L.set_burning(33-radius)
 				L.bodytemperature = max(temp/3, L.bodytemperature)
 				LAGCHECK(LAG_REALTIME)
 			for(var/obj/critter/C in T)
-				if(istype(C, "/obj/critter/zombie")) C.health -= 15
+				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
-				SPAWN_DBG(0.5 SECONDS)
+				SPAWN(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
-					sleep(5)
+					sleep(0.5 SECONDS)
 					if(C)
 						C.health -= (2 * C.firevuln)
 						C.check_health()
 				LAGCHECK(LAG_REALTIME)
 
-		LAGCHECK(LAG_REALTIME)
-
-	SPAWN_DBG(3 SECONDS)
-		for(var/atom in hotspots)
-			var/obj/hotspot/A = atom
-			if (!A.pooled)
-				pool(A)
+	SPAWN(3 SECONDS)
+		for (var/obj/hotspot/A as anything in hotspots)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
@@ -102,7 +102,7 @@
 		var/need_expose = 0
 		var/expose_temp = 0
 		if (!existing_hotspot)
-			var/obj/hotspot/h = unpool(/obj/hotspot)
+			var/obj/hotspot/h = new /obj/hotspot
 			need_expose = 1
 			h.temperature = temp - dist * falloff
 			expose_temp = h.temperature
@@ -121,14 +121,17 @@
 		affected[T] = existing_hotspot.temperature
 		if (need_expose && expose_temp)
 			T.hotspot_expose(expose_temp, existing_hotspot.volume)
-			if (T == ff_debug_turf && ff_debugger)
-				boutput(ff_debugger, "<span style='color:#ff8800'>Fireflash affecting tile at [showCoords(T.x, T.y, T.z)], exposing to temperature [expose_temp], central tile is at [showCoords(Ce.x, Ce.y, Ce.z)], previous temperature: [prev_temp]</span>")
+/* // experimental thing to let temporary hotspots affect atmos
+			existing_hotspot.perform_exposure()
+*/
 		if(istype(T, /turf/simulated/floor)) T:burn_tile()
 		for (var/mob/living/L in T)
-			L.update_burning(min(55, max(0, expose_temp - 100 / 550)))
+			L.update_burning(clamp(expose_temp - 100 / 550, 0, 55))
 			L.bodytemperature = (2 * L.bodytemperature + temp) / 3
-		SPAWN_DBG(0)
+		SPAWN(0)
 			for (var/obj/critter/C in T)
+				if(C.z != T.z)
+					continue
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				LAGCHECK(LAG_REALTIME)
@@ -157,14 +160,14 @@
 
 		LAGCHECK(LAG_REALTIME)
 
-	SPAWN_DBG(1 DECI SECOND) // dumb lighting hotfix
+	SPAWN(1 DECI SECOND) // dumb lighting hotfix
 		for(var/obj/hotspot/A in hotspots)
 			A.set_real_color() // enable light
 
-	SPAWN_DBG(3 SECONDS)
+	SPAWN(3 SECONDS)
 		for(var/obj/hotspot/A in hotspots)
-			if (!A.pooled)
-				pool(A)
+			if (!A.disposed)
+				qdel(A)
 			//LAGCHECK(LAG_REALTIME)  //MBC : maybe caused lighting bug?
 		hotspots.len = 0
 
@@ -177,15 +180,16 @@
 		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
 			var/melt = 1643.15 // default steel melting point
-			if (T.material && T.material.hasProperty("flammable") && ((T.material.material_flags & MATERIAL_METAL) || (T.material.material_flags & MATERIAL_CRYSTAL) || (T.material.material_flags & MATERIAL_RUBBER)))
-				melt = melt + (((T.material.getProperty("flammable") - 50) * 15)*(-1)) //+- 750° ?
+			if (T.material && T.material.getProperty("flammable") > 3) //wood walls?
+				melt = 505.93 / 2 //451F (divided by 2 b/c it's multiplied by 2 below)
+				bypass_RNG = 1
 			var/divisor = melt
 			if (mytemp >= melt * 2)
 				var/chance = mytemp / divisor
 				if (capped)
 					chance = min(chance, T:default_melt_cap)
 				if (prob(chance) || bypass_RNG) // The bypass is for thermite (Convair880).
-					//T.visible_message("<span style=\"color:red\">[T] melts!</span>")
+					//T.visible_message("<span class='alert'>[T] melts!</span>")
 					T.burn_down()
 		LAGCHECK(LAG_REALTIME)
 

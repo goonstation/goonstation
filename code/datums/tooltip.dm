@@ -12,7 +12,7 @@ Configuration:
 
 Usage:
 - Define mouse event procs on your (probably HUD) object and simply call the show and hide procs respectively:
-	/obj/screen/hud
+	/atom/movable/screen/hud
 		MouseEntered(location, control, params)
 			usr.client.tooltipHolder.showHover(src, list(
 				"params" = params,
@@ -84,6 +84,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C)
+		..()
 		if (!C) return 0
 		src.owner = C
 
@@ -96,7 +97,6 @@ var/global/list/atomTooltips = new()
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -167,7 +167,8 @@ var/global/list/atomTooltips = new()
 
 		//Some stuff relies on currently-viewed-machine being set
 		if (src.owner.mob)
-			src.owner.mob.machine = thing
+			if (isobj(thing))
+				thing:add_dialog(src.owner.mob)
 
 		if (clickTip.visible)
 			//Clicktip is currently showing, just update it
@@ -209,6 +210,7 @@ var/global/list/atomTooltips = new()
 
 
 	New(client/C, datum/tooltipHolder/tipHolder, clone = 1, stuck = 1, atom/thing = null)
+		..()
 		if (!C) return 0
 		src.owner = C
 		src.holder = tipHolder
@@ -352,6 +354,8 @@ var/global/list/atomTooltips = new()
 				extra += "left"
 			if (options["flags"] & TOOLTIP_CENTER)
 				extra += "center"
+			if (options["flags"] & TOOLTIP_TOP2)
+				extra += "top2"
 
 			params["flags"] = extra
 			//src.specialFlags = extra
@@ -401,10 +405,11 @@ var/global/list/atomTooltips = new()
 		tooltipDebugOut(src.owner, "hide() called. force: [force]. fromJS: [fromJS]. src.visible: [src.visible]. src.created: [src.created]. src.isStuck: [src.isStuck]")
 		#endif
 
-		if (!fromJS)
+		if (!fromJS && src.owner)
 			src.owner << output(1, "[src.window].browser:tooltip.setInterrupt")
 
-		winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
+		if(src.owner)
+			winset(src.owner, src.window, "alpha=0;size=1x1;pos=0,0")
 
 		if (src.hasCloseHandler)
 			src.closeHandler()
@@ -423,11 +428,8 @@ var/global/list/atomTooltips = new()
 
 	proc/detachMachine()
 		if (src.owner && src.owner.mob)
-			if (src.owner.mob.machine && istype(src.owner.mob.machine, /obj/machinery))
-				src.owner.mob.machine.current_user = null
-
-			src.owner.mob.machine = null
-
+			if (src.A && isobj(src.A))
+				src.A:remove_dialog(src.owner.mob)
 
 	proc/closeHandler()
 		if (!src.hasCloseHandler) return 0
@@ -449,9 +451,9 @@ var/global/list/atomTooltips = new()
 /client/proc/cmd_tooltip_debug()
 	set name = "Debug Tooltips"
 	set desc = "Returns the amount of tooltips in existence everywhere"
-	set category = "Debug"
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	admin_only
+	ADMIN_ONLY
 
 	var/holderCount = 0
 	var/tooltipCount = 0
@@ -520,7 +522,7 @@ var/global/list/atomTooltips = new()
 
 
 //Hides click-toggle tooltips on player movement
-/mob/OnMove()
+/mob/OnMove(source = null)
 	..()
 
 	if (usr && src.client && src.client.tooltipHolder)
@@ -547,8 +549,8 @@ var/global/list/atomTooltips = new()
 			qdel(t)
 
 		atomTooltips.Remove(src)
-
-	..()
+	ClearAllOverlays()
+	. = ..()
 
 
 // DEBUG

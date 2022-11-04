@@ -17,8 +17,9 @@
 	contraband = 2
 
 	New()
+		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
-		SPAWN_DBG(0)
+		SPAWN(0)
 			remote.my_gen = src
 
 	disposing()
@@ -29,10 +30,10 @@
 		return
 
 	attack_self()
-		boutput(usr, "<span style=\"color:red\">I need to place it on the ground to use it.</span>")
+		boutput(usr, "<span class='alert'>I need to place it on the ground to use it.</span>")
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!W || !istype(W, /obj/item/remote/cloak_gen/))
 			..()
 			return
@@ -42,7 +43,7 @@
 				user.show_text("Connection to [src.name] established", "blue")
 				R.my_gen = src
 			else
-				var/choice = alert("Remote is already linked to a generator. Reset and establish new connection?", "Connection override", "Yes", "No")
+				var/choice = tgui_alert(user, "Remote is already linked to a generator. Reset and establish new connection?", "Connection override", list("Yes", "No"))
 				if (choice == "Yes")
 					R.my_gen = src
 					user.show_text("Connection to [src.name] established", "blue")
@@ -62,14 +63,14 @@
 
 		if (!isturf(loc))
 			if (usr && ismob(usr))
-				boutput(usr, "<span style=\"color:red\">The field generator must be on the floor to be activated.</span>")
+				boutput(usr, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
 			return
 
 		active = 1
 		anchored = 1
 
 		if (usr && ismob(usr))
-			boutput(usr, "<span style=\"color:blue\">You activate the cloak field generator.</span>")
+			boutput(usr, "<span class='notice'>You activate the cloak field generator.</span>")
 
 		for(var/turf/T in range(range,src))
 			if(!isturf(T)) continue
@@ -80,6 +81,7 @@
 			O.anchored = 1
 			O.set_density(0)
 			O.name = T.name
+			O.mouse_opacity = FALSE // let people click through the field
 
 	proc/turn_off()
 		if (!active) return
@@ -87,7 +89,7 @@
 		active = 0
 		anchored = 0
 		if (usr && ismob(usr))
-			boutput(usr, "<span style=\"color:blue\">You deactivate the cloak field generator.</span>")
+			boutput(usr, "<span class='notice'>You deactivate the cloak field generator.</span>")
 		for(var/A in fields)
 			qdel(A)
 
@@ -98,7 +100,7 @@
 	icon_state = "remote"
 	item_state = "electronic"
 	is_syndicate = 1
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
 	contraband = 2
@@ -116,7 +118,7 @@
 					src.anti_spam = world.time
 					my_gen.turn_on()
 			else
-				boutput(usr, "<span style=\"color:red\">No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
+				boutput(usr, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
 		return
 
 	verb/set_pattern()
@@ -139,53 +141,53 @@
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the pattern to '[input]'.</span>")
+		boutput(usr, "<span class='notice'>You set the pattern to '[input]'.</span>")
 
 	verb/set_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Range 0-[my_gen.maxrange]:","Set range",my_gen.range) as num
-		if(input > my_gen.maxrange || input < 0)
-			boutput(usr, "<span style=\"color:red\">Invalid setting.</span>")
+		if(input > my_gen.maxrange || input < 0 || !isnum_safe(input))
+			boutput(usr, "<span class='alert'>Invalid setting.</span>")
 			return
 		my_gen.range = input
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/increase_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range + 1 > my_gen.maxrange)
-			boutput(usr, "<span style=\"color:red\">Maximum range reached ([my_gen.maxrange]).</span>")
+			boutput(usr, "<span class='alert'>Maximum range reached ([my_gen.maxrange]).</span>")
 			return
 		my_gen.range++
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/decrease_range()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		if (my_gen.range - 1 < 0)
-			boutput(usr, "<span style=\"color:red\">Minimum range reached (0).</span>")
+			boutput(usr, "<span class='alert'>Minimum range reached (0).</span>")
 			return
 		my_gen.range--
 		if(my_gen.active)
 			my_gen.turn_off()
 			my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You set the range to [my_gen.range].</span>")
+		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/turn_on()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || my_gen.active) return
 		my_gen.turn_on()
-		boutput(usr, "<span style=\"color:blue\">You turn the cloaking field generator on.</span>")
+		boutput(usr, "<span class='notice'>You turn the cloaking field generator on.</span>")
 
 	verb/turn_off()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || !my_gen.active) return
 		my_gen.turn_off()
-		boutput(usr, "<span style=\"color:blue\">You turn the cloaking field generator off.</span>")
+		boutput(usr, "<span class='notice'>You turn the cloaking field generator off.</span>")

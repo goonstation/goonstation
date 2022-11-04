@@ -10,7 +10,7 @@
 
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.open)
 			src.open = 0
 			src.color = rgb(255,0,0)
@@ -21,7 +21,11 @@
 			boutput(user, "You open the fluid pipe valve.")
 
 	New()
-		atmos_machines.Add(src)
+		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	proc/process()
@@ -48,7 +52,7 @@
 
 	var/open = 0
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(src.open)
 			src.open = 0
 			src.color = rgb(255,0,0)
@@ -59,7 +63,11 @@
 			boutput(user, "You open the fluid pipe valve.")
 
 	New()
-		atmos_machines.Add(src)
+		START_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
+		..()
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_ATMOS_MACHINES)
 		..()
 
 	proc/process()

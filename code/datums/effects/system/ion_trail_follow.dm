@@ -1,8 +1,7 @@
 /datum/effects/system/ion_trail_follow
 	var/atom/holder
 	var/turf/oldposition
-	var/processing = 1
-	var/on = 1
+	var/on = 0
 	var/xoffset = 0
 	var/yoffset = 0
 	var/istate = "ion_fade"
@@ -16,37 +15,31 @@
 	if (state)
 		istate = state
 
+/datum/effects/system/ion_trail_follow/proc/on_vehicle_move(atom/movable/vehicle, atom/previous_loc, direction)
+	var/turf/T = get_turf(vehicle)
+	if(T != src.oldposition)
+		if(istype(oldposition, /turf) && istype(T, /turf/space) || (istype(vehicle, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
+			if (istext(istate) && istate != "blank")
+				if(src.oldposition)
+					var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
+					src.oldposition.vis_contents += I
+					flick(istate, I)
+					I.icon_state = "blank"
+					I.pixel_x = xoffset
+					I.pixel_y = yoffset
+					I.set_dir(direction)
+					SPAWN(2 SECONDS)
+						if (I && !I.disposed)
+							var/turf/vis_loc = I.vis_locs[1]
+							vis_loc.vis_contents -= I
+							qdel(I)
+				src.oldposition = T
+
 /datum/effects/system/ion_trail_follow/proc/start() //todo : process loop. no spawn loop, ew
 	if(!src.on)
 		src.on = 1
-		src.processing = 1
-	if(src.processing)
-		src.processing = 0
-		SPAWN_DBG(0)
-			var/turf/T = get_turf(src.holder)
-			if(T != src.oldposition)
-				if(istype(T, /turf/space) || (istype(holder, /obj/machinery/vehicle) && (istype(T, /turf/simulated) && T:allows_vehicles)) )
-					if (istext(istate) && istate != "blank")
-						var/obj/effects/ion_trails/I = unpool(/obj/effects/ion_trails)
-						I.set_loc(src.oldposition)
-						src.oldposition = T
-						I.dir = src.holder.dir
-						flick(istate, I)
-						I.icon_state = "blank"
-						I.pixel_x = xoffset
-						I.pixel_y = yoffset
-						SPAWN_DBG( 20 )
-							if (I && !I.disposed) pool(I)
-				SPAWN_DBG(0.2 SECONDS)
-					if(src.on)
-						src.processing = 1
-						src.start()
-			else
-				SPAWN_DBG(0.2 SECONDS)
-					if(src.on)
-						src.processing = 1
-						src.start()
+		RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/on_vehicle_move)
 
 /datum/effects/system/ion_trail_follow/proc/stop()
-	src.processing = 0
 	src.on = 0
+	UnregisterSignal(holder, COMSIG_MOVABLE_MOVED)

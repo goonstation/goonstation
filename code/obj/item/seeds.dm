@@ -2,20 +2,18 @@
 /obj/item/seed/
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
-	icon = 'icons/obj/hydroponics/hydromisc.dmi'
+	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "seeds"
 	var/seedcolor = "#000000"
-	w_class = 1.0
+	w_class = W_CLASS_TINY
 	var/auxillary_datum = null
 	var/datum/plant/planttype = null
 	var/datum/plantgenes/plantgenes = null
 	var/seeddamage = 0 // This is used mostly for infusions. How likely a seed is to be destroyed.
 	var/isstrange = 0  // Seeds cannot be gene scanned if they're strange seeds.
 	var/generation = 0 // Keeps track of how many times a plant has been bred from the initial seed.
-	stamina_damage = 1
-	stamina_cost = 1
-	module_research = list("hydroponics" = 1, "efficiency" = 1)
-	module_research_type = /obj/item/seed
+	stamina_damage = 0
+	stamina_cost = 0
 	rand_pos = 1
 
 	New(var/loc,var/do_color = 1)
@@ -32,31 +30,27 @@
 		// Colors in the seed packet, if we want to do that. Any seed that doesn't use the
 		// standard seed packet sprite shouldn't do this or it'll end up looking stupid.
 
+		if (src.planttype)
+			src.name = "[src.planttype.name] seed"
+
+	//kudzumen can analyze seeds via ezamine when close.
+	get_desc(dist, mob/user)
+		if (dist >= 2)
+			return
+
+		if (iskudzuman(user))
+			. = scan_plant(src, user, visible = 0) // Replaced with global proc (Convair880).
+
 	proc/docolor() //bleh, used when unpooling
 		src.plant_seed_color(src.seedcolor)
 
 	proc/removecolor()
 		src.overlays = 0
 
-	unpooled()
+	disposing()
+		planttype = null
+		plantgenes = null
 		..()
-		src.plantgenes = new /datum/plantgenes(src)
-
-		if (src.auxillary_datum && !src.planttype)
-			src.planttype = new src.auxillary_datum(src)
-
-		if (src.planttype)
-			src.name = "[src.planttype.name] seed"
-
-	pooled()
-		..()
-		seeddamage = 0
-		generation = 0
-		planttype = 0
-		plantgenes = 0
-		seedcolor = "#000000"
-
-
 
 	proc/generic_seed_setup(var/datum/plant/P)
 		// This proc is pretty much entirely for regular seeds you find from the vendor
@@ -90,7 +84,7 @@
 		// it to color in the seed packet so you can recognise the packets at a glance.
 		if (!colorRef) return
 		if (!src.artifact)
-			var/icon/I = new /icon('icons/obj/hydroponics/hydromisc.dmi',"seeds-ovl")
+			var/icon/I = new /icon('icons/obj/hydroponics/items_hydroponics.dmi',"seeds-ovl")
 			I.Blend(colorRef, ICON_ADD)
 			src.overlays += I
 
@@ -126,16 +120,17 @@
 /obj/item/seed/grass/
 	name = "grass seed"
 	seedcolor = "#CCFF99"
-	auxillary_datum = /datum/plant/grass
+	auxillary_datum = /datum/plant/herb/grass
 
 /obj/item/seed/maneater/
 	name = "strange seed"
+	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
 /obj/item/seed/creeper/
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
-	auxillary_datum = /datum/plant/creeper
+	auxillary_datum = /datum/plant/weed/creeper
 
 /obj/item/seed/crystal/
 	name = "crystal seed"
@@ -145,19 +140,24 @@
 /obj/item/seed/cannabis/
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
-	auxillary_datum = /datum/plant/cannabis
+	auxillary_datum = /datum/plant/herb/cannabis
+
+	New()
+		. = ..()
+		START_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+
+	disposing()
+		STOP_TRACKING_CAT(TR_CAT_CANNABIS_OBJ_ITEMS)
+		. = ..()
 
 // weird alien plants
 
 /obj/item/seed/alien
 	name = "strange seed"
+	icon_state = "seeds-alien"
 	isstrange = 1
 
 	New()
-		..()
-		gen_plant_type()
-
-	unpooled()
 		..()
 		gen_plant_type()
 

@@ -1,0 +1,2485 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aM" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/item/caution/target_sheet,
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"aP" = (
+/mob/living/critter/spider/baby,
+/obj/decal/cleanable/cobweb,
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"bc" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"bp" = (
+/obj/drink_rack/mug{
+	pixel_x = 32
+	},
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/prefab/secbot_academy)
+"bw" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "The handwriting on this thing is so bad you can't even make out a single word.";
+	icon_state = "rddiploma";
+	name = "A framed award";
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/secbot_academy)
+"bN" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"bU" = (
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"cq" = (
+/obj/machinery/shower/puzzle,
+/obj/machinery/drainage,
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"cN" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/lamp/green,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"cR" = (
+/obj/decal/poster/wallsign/poster_eyetest{
+	pixel_x = 32
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"cY" = (
+/obj/machinery/shower/puzzle{
+	dir = 1
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"du" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"dv" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"dx" = (
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"dN" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "batcave";
+	name = "Bunker door"
+	},
+/turf/simulated/floor/red,
+/area/prefab/secbot_academy)
+"dW" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"dY" = (
+/obj/rack,
+/obj/item/clothing/suit/armor/batman{
+	pixel_y = -3
+	},
+/obj/item/clothing/head/helmet/batman{
+	pixel_x = -2;
+	pixel_y = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/prefab/secbot_academy)
+"ed" = (
+/turf/simulated/floor/blueblack{
+	dir = 1
+	},
+/area/prefab/secbot_academy)
+"ev" = (
+/obj/item/caution/target_sheet,
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"gi" = (
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"gj" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"gn" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/old_grenade/smoke{
+	pixel_x = 5
+	},
+/obj/item/old_grenade/smoke{
+	pixel_x = -9
+	},
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/prefab/secbot_academy)
+"gv" = (
+/mob/living/critter/small_animal/bird/goose/swan,
+/turf/simulated/floor/grass/leafy,
+/area/prefab/secbot_academy)
+"gx" = (
+/turf/simulated/floor/redwhite,
+/area/prefab/secbot_academy)
+"gB" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/redwhite{
+	dir = 10
+	},
+/area/prefab/secbot_academy)
+"gL" = (
+/obj/table/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = -19
+	},
+/turf/simulated/floor/redwhite{
+	dir = 9
+	},
+/area/prefab/secbot_academy)
+"gZ" = (
+/turf/simulated/floor/redwhite/corner,
+/area/prefab/secbot_academy)
+"hs" = (
+/obj/table/auto,
+/obj/item/clothing/head/nursehat{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/nursedress{
+	pixel_x = -7;
+	pixel_y = -8
+	},
+/obj/item/item_box/medical_patches/mini_styptic{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"hF" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "It's a paper with some boring stuff about how this place got founded.";
+	icon_state = "rddiploma";
+	name = "A framed award";
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/secbot_academy)
+"hG" = (
+/obj/item/storage/toilet,
+/obj/decoration/toiletholder{
+	dir = 8
+	},
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"hW" = (
+/obj/storage/secure/crate,
+/obj/item/gun/kinetic/foamdartgun,
+/obj/item/gun/kinetic/foamdartgun,
+/obj/item/gun/kinetic/foamdartrevolver,
+/obj/item/gun/kinetic/foamdartrevolver,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/prefab/secbot_academy)
+"ib" = (
+/obj/submachine/chef_sink{
+	dir = 4;
+	name = "sink"
+	},
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"il" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/black,
+/area/prefab/secbot_academy)
+"iy" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "It's a very fancy looking paper that appears to be declaring... Officer Beepsky the best student in this part of the universe, huh.";
+	icon_state = "rddiploma";
+	name = "A framed award";
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/secbot_academy)
+"iE" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/machinery/bot/secbot{
+	control_freq = 0
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"iR" = (
+/obj/decal/fakeobjects/bookcase{
+	pixel_y = 18
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
+/area/prefab/secbot_academy)
+"iY" = (
+/obj/machinery/light/incandescent/cool{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/prefab/secbot_academy)
+"iZ" = (
+/turf/simulated/floor/blue,
+/area/prefab/secbot_academy)
+"jg" = (
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"jC" = (
+/obj/decal/poster/wallsign/biohazard{
+	desc = "An award for the best school mascot.";
+	icon_state = "rddiploma";
+	name = "A framed award";
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/secbot_academy)
+"jH" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/light/small/floor/purpleish,
+/obj/machinery/light/small/floor,
+/obj/item/paper_bin,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"ka" = (
+/obj/decal/poster/wallsign/chsl,
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/secbot_academy)
+"kW" = (
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"lu" = (
+/obj/machinery/light/small/floor,
+/obj/grille/catwalk/cross{
+	dir = 10
+	},
+/turf/space,
+/area/noGenerate)
+"lA" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/table/reinforced/auto,
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"lN" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/blue,
+/area/prefab/secbot_academy)
+"lO" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/prefab/secbot_academy)
+"lV" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"mr" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"my" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_y = 32
+	},
+/turf/simulated/floor/blueblack{
+	dir = 9
+	},
+/area/prefab/secbot_academy)
+"mY" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"nG" = (
+/obj/deployable_turret/riot{
+	active = 1;
+	anchored = 1;
+	desc = "A Nanotrasen Automatic Riot Control System repurposed for home security.";
+	dir = 4
+	},
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"nI" = (
+/obj/decal/poster/wallsign/cdnp{
+	pixel_y = 32
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"nJ" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"om" = (
+/obj/table/wood/auto/desk,
+/obj/item/paper{
+	pixel_x = 4;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/paper{
+	pixel_x = -9;
+	pixel_y = -3
+	},
+/obj/item/paper{
+	pixel_x = 7;
+	pixel_y = -5
+	},
+/obj/item/paper{
+	pixel_x = -2;
+	pixel_y = -8
+	},
+/obj/item/pen/fancy,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"op" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"oM" = (
+/obj/decal/poster/wallsign/poster_nt{
+	pixel_x = -32
+	},
+/turf/simulated/floor/black,
+/area/prefab/secbot_academy)
+"pi" = (
+/obj/table/reinforced/bar/auto,
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer0";
+	name = "Old Printer";
+	true_name = "printer";
+	pixel_y = 3
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"pY" = (
+/obj/grille/catwalk{
+	dir = 8
+	},
+/turf/space,
+/area/noGenerate)
+"ql" = (
+/obj/critter/bat/buff,
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/secbot_academy)
+"qm" = (
+/obj/decal/tile_edge/stripe{
+	dir = 9;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"qL" = (
+/obj/table/reinforced/bar/auto,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"qN" = (
+/obj/table/auto,
+/obj/item/medical/medicaldiagnosis/stethoscope{
+	pixel_x = 5
+	},
+/obj/item/device/light/flashlight/penlight{
+	pixel_x = -6
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"ru" = (
+/obj/mic_stand,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"ss" = (
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/prefab/secbot_academy)
+"sK" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"te" = (
+/obj/submachine/chef_sink/chem_sink{
+	dir = 1
+	},
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"tC" = (
+/obj/machinery/recharger,
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redblack,
+/area/prefab/secbot_academy)
+"tW" = (
+/obj/rack,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/head/NTberet,
+/obj/item/clothing/head/NTberet,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"ub" = (
+/obj/item/storage/wall/red{
+	desc = "It's basically a big box attached to the wall. There's a label at the bottom of it saying \"Beepsky Jr\"";
+	name = "Personal wall locker";
+	spawn_contents = null
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"uY" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/south,
+/area/prefab/secbot_academy)
+"vb" = (
+/obj/decal/poster/wallsign/poster_nt{
+	desc = "It seems to be advertising a book about a securitron who became THE LAW, huh.";
+	pixel_y = 32
+	},
+/turf/space,
+/area/noGenerate)
+"vF" = (
+/obj/machinery/photocopier,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"vG" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/red,
+/area/prefab/secbot_academy)
+"vQ" = (
+/obj/decal/fakeobjects/bookcase{
+	pixel_y = 18
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/prefab/secbot_academy)
+"wc" = (
+/obj/decal/tile_edge/stripe{
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"wd" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"ws" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"wS" = (
+/obj/potted_plant/potted_plant5,
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"xl" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/grass/leafy,
+/area/prefab/secbot_academy)
+"xq" = (
+/obj/decal/poster/wallsign/poster_y4nt{
+	pixel_y = 32
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"xx" = (
+/turf/simulated/floor/blueblack{
+	dir = 4
+	},
+/area/prefab/secbot_academy)
+"xP" = (
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
+/turf/simulated/floor/grass/leafy,
+/area/prefab/secbot_academy)
+"yi" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/biohazard{
+	desc = "A list with all of the students that graduated from this place.";
+	icon_state = "rddiploma";
+	name = "A framed award";
+	pixel_y = 27
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/north,
+/area/prefab/secbot_academy)
+"yQ" = (
+/obj/storage/closet/janitor{
+	spawn_contents = list(/obj/item/storage/box/biohazard_bags,/obj/item/storage/box/trash_bags=2,/obj/item/clothing/under/rank/janitor=2,/obj/item/clothing/shoes/black=2,/obj/item/device/light/flashlight,/obj/item/clothing/shoes/galoshes/torn,/obj/item/reagent_containers/glass/bottle/cleaner,/obj/item/storage/box/body_bag,/obj/item/caution=6,/obj/item/clothing/gloves/long,/obj/item/handheld_vacuum)
+	},
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/sponge,
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"zo" = (
+/turf/simulated/floor/grass/leafy,
+/area/prefab/secbot_academy)
+"zU" = (
+/obj/cabinet/taffy,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"Ai" = (
+/obj/item/wrestlingbell{
+	desc = "A bell used to signal the start and end of classes, wait a minute this is just a stolen wrestling bell!";
+	name = "School bell"
+	},
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/secbot_academy)
+"Ar" = (
+/obj/machinery/door/unpowered/wood/stall,
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"AJ" = (
+/turf/space,
+/area/allowGenerate)
+"Bc" = (
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"Bd" = (
+/obj/decal/tile_edge/stripe{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"Bj" = (
+/obj/decal/stage_edge,
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"Bn" = (
+/obj/decal/tile_edge/stripe{
+	dir = 10;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"Cq" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"CV" = (
+/obj/stool/chair/wooden{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"DO" = (
+/obj/machinery/light/incandescent/small{
+	dir = 4
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"DV" = (
+/obj/stool/chair/red{
+	dir = 8
+	},
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"Eb" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Ek" = (
+/turf/simulated/wall/auto/supernorn,
+/area/prefab/secbot_academy)
+"Ex" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/prefab/secbot_academy)
+"EP" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"EZ" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/prefab/secbot_academy)
+"Fv" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"FQ" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"FY" = (
+/obj/cabinet/psychiatry,
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"Gf" = (
+/obj/machinery/light/small/floor,
+/obj/decoration/decorativeplant/plant7,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/prefab/secbot_academy)
+"Go" = (
+/obj/table/reinforced/bar/auto,
+/obj/machinery/door_control{
+	id = "batcave";
+	pixel_x = -11
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_y = 9
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"Gr" = (
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/prefab/secbot_academy)
+"GF" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/blueblack,
+/area/prefab/secbot_academy)
+"Hd" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/red,
+/area/prefab/secbot_academy)
+"Hf" = (
+/obj/table/wood/auto,
+/obj/item/paper,
+/obj/item/pen,
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"HL" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/prefab/secbot_academy)
+"HY" = (
+/turf/simulated/floor/blueblack{
+	dir = 10
+	},
+/area/prefab/secbot_academy)
+"IM" = (
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"IT" = (
+/obj/potted_plant/potted_plant5,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Jm" = (
+/obj/item/device/radio/beacon,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Jp" = (
+/obj/machinery/light/runway_light,
+/turf/space,
+/area/noGenerate)
+"JG" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"JN" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robust{
+	pixel_x = 3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robusted{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/reagent_containers/food/snacks/donut/custom/robusted{
+	pixel_x = -3;
+	pixel_y = -4
+	},
+/turf/simulated/floor/redwhite{
+	dir = 5
+	},
+/area/prefab/secbot_academy)
+"JR" = (
+/obj/stool/chair/red{
+	dir = 1
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"JX" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"JZ" = (
+/obj/storage/secure/crate,
+/obj/item/ammo/bullets/foamdarts,
+/obj/item/ammo/bullets/foamdarts,
+/obj/item/ammo/bullets/foamdarts,
+/obj/item/ammo/bullets/foamdarts,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/secbot_academy)
+"Ka" = (
+/obj/table/round/auto,
+/obj/machinery/coffeemaker/security,
+/turf/simulated/floor/redwhite{
+	dir = 6
+	},
+/area/prefab/secbot_academy)
+"Kg" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Kv" = (
+/obj/table/round/auto,
+/obj/item/kitchen/food_box/donut_box{
+	pixel_y = -2
+	},
+/turf/simulated/floor/redwhite{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"KJ" = (
+/obj/machinery/light/small/floor/warm,
+/obj/rack,
+/obj/item_dispenser/latex_gloves{
+	desc = "A storage container that easily dispenses latex gloves which help in combat...somehow.";
+	name = "combat glove dispenser"
+	},
+/obj/item/batarang,
+/obj/item/batarang,
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/prefab/secbot_academy)
+"Lj" = (
+/obj/stool/chair/office/red,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"Lq" = (
+/obj/potted_plant/potted_plant3,
+/turf/simulated/floor/black,
+/area/prefab/secbot_academy)
+"Lu" = (
+/obj/table/wood/auto/desk,
+/obj/item/luggable_computer,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"LF" = (
+/turf/simulated/floor/blueblack{
+	dir = 6
+	},
+/area/prefab/secbot_academy)
+"LJ" = (
+/obj/mopbucket,
+/obj/decal/cleanable/cobwebFloor,
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"Mb" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/pen/pencil{
+	pixel_x = 8
+	},
+/obj/item/pen/fancy{
+	pixel_x = 4
+	},
+/obj/item/pen{
+	pixel_x = -2
+	},
+/obj/item/pen/red{
+	pixel_x = -7
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"Na" = (
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"Nh" = (
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/prefab/secbot_academy)
+"Nl" = (
+/obj/machinery/light/incandescent/small,
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"NY" = (
+/obj/wingrille_spawn/auto/tuff,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Oc" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon1_start,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Oe" = (
+/obj/shrub,
+/turf/simulated/floor/grass/leafy,
+/area/prefab/secbot_academy)
+"Oh" = (
+/obj/stool/chair{
+	dir = 8
+	},
+/obj/machinery/bot/secbot{
+	control_freq = 0
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"Pg" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/prefab/secbot_academy)
+"Pq" = (
+/obj/stool/chair/wooden{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"Qe" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/redblack{
+	dir = 6
+	},
+/area/prefab/secbot_academy)
+"Qv" = (
+/obj/table/wood/auto,
+/obj/item/paper,
+/obj/item/pen,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"QK" = (
+/obj/machinery/door/airlock/pyro,
+/turf/simulated/floor,
+/area/prefab/secbot_academy)
+"QQ" = (
+/obj/machinery/door/airlock/pyro{
+	dir = 4
+	},
+/turf/simulated/floor/white,
+/area/prefab/secbot_academy)
+"QU" = (
+/turf/simulated/floor/redwhite{
+	dir = 4
+	},
+/area/prefab/secbot_academy)
+"QW" = (
+/obj/table/wood/auto/desk,
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"Rm" = (
+/turf/simulated/floor/blueblack{
+	dir = 5
+	},
+/area/prefab/secbot_academy)
+"RM" = (
+/obj/machinery/light/small/floor/warm,
+/obj/rack,
+/obj/item/clothing/glasses/sunglasses/tanning,
+/turf/simulated/floor/redblack{
+	dir = 5
+	},
+/area/prefab/secbot_academy)
+"RN" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"RR" = (
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"RT" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"Sc" = (
+/obj/table/wood/auto/desk,
+/obj/item/sticker/gold_star,
+/obj/item/sticker/gold_star{
+	pixel_x = -2;
+	pixel_y = -5
+	},
+/obj/item/sticker/gold_star{
+	pixel_x = -4
+	},
+/obj/decoration/clock{
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"SF" = (
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"SZ" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"Ti" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/obj/machinery/bot/secbot{
+	desc = "A little security robot.  He seems to be filling out paperwork... somehow.";
+	name = "Principal Boop";
+	control_freq = 0
+	},
+/turf/simulated/floor/carpet/purple/fancy,
+/area/prefab/secbot_academy)
+"Tl" = (
+/obj/table/round/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/random,
+/turf/simulated/floor/redwhite{
+	dir = 1
+	},
+/area/prefab/secbot_academy)
+"TW" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"TY" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"Uk" = (
+/turf/space,
+/area/noGenerate)
+"Up" = (
+/turf/simulated/floor/blueblack{
+	dir = 8
+	},
+/area/prefab/secbot_academy)
+"UF" = (
+/obj/decal/tile_edge/stripe{
+	dir = 5;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"UO" = (
+/turf/simulated/floor/stairs/wood,
+/area/prefab/secbot_academy)
+"Vf" = (
+/obj/item/storage/wall/red{
+	name = "Personal wall locker";
+	spawn_contents = null
+	},
+/turf/simulated/floor/darkblue/checker,
+/area/prefab/secbot_academy)
+"Vg" = (
+/obj/health_scanner/floor,
+/obj/item_dispenser/bandage,
+/turf/simulated/floor/sanitary,
+/area/prefab/secbot_academy)
+"Vj" = (
+/obj/rack,
+/obj/item/clothing/head/graduation_cap,
+/obj/item/clothing/head/graduation_cap,
+/obj/item/clothing/head/graduation_cap,
+/obj/item/clothing/head/graduation_cap,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"Vp" = (
+/obj/item/storage/wall/red{
+	name = "Personal wall locker";
+	spawn_contents = null
+	},
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"VO" = (
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"Wc" = (
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"Ws" = (
+/obj/rack,
+/obj/item/coin{
+	desc = "A small gold coin with an NT logo on one side and a scale of justice on the other.";
+	pixel_x = -2
+	},
+/obj/item/coin{
+	desc = "A small gold coin with an NT logo on one side and a scale of justice on the other.";
+	pixel_x = 4
+	},
+/obj/item/coin{
+	desc = "A small gold coin with an NT logo on one side and a scale of justice on the other.";
+	pixel_x = 10
+	},
+/obj/item/coin{
+	desc = "A small gold coin with an NT logo on one side and a scale of justice on the other.";
+	pixel_x = -8
+	},
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"Xb" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/wood,
+/area/prefab/secbot_academy)
+"Xp" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"XC" = (
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"XO" = (
+/obj/fitness/speedbag/clown,
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"XQ" = (
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/prefab/secbot_academy)
+"XZ" = (
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"YS" = (
+/obj/loudspeaker,
+/turf/simulated/floor/wood/two,
+/area/prefab/secbot_academy)
+"Za" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/noGenerate)
+"Zm" = (
+/obj/table/reinforced/auto,
+/obj/decal/tile_edge/stripe{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/secbot_academy)
+"ZO" = (
+/turf/simulated/floor/black,
+/area/prefab/secbot_academy)
+"ZR" = (
+/obj/window/auto,
+/turf/simulated/floor/darkblue,
+/area/prefab/secbot_academy)
+"ZX" = (
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/prefab/secbot_academy)
+"ZY" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/flash,
+/turf/simulated/floor/redblack{
+	dir = 10
+	},
+/area/prefab/secbot_academy)
+
+(1,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(2,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(3,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+gL
+Kv
+JR
+kW
+gB
+Ek
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(4,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Ek
+KJ
+RR
+RR
+nG
+ZY
+Ek
+EZ
+DV
+gZ
+bp
+Ka
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+"}
+(5,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Ek
+dY
+ZO
+ZO
+ZO
+tC
+Ek
+Tl
+bU
+gx
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Uk
+Uk
+Uk
+Uk
+AJ
+"}
+(6,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Ek
+RM
+ql
+Gr
+Gr
+gn
+Ek
+JN
+QU
+ss
+vG
+SF
+Wc
+SF
+Xp
+Wc
+Wc
+Ek
+vb
+Uk
+Uk
+Uk
+Uk
+"}
+(7,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+dN
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Wc
+SZ
+Wc
+ZR
+Kg
+Wc
+gj
+lu
+Uk
+Uk
+Uk
+Uk
+"}
+(8,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Ek
+vQ
+iY
+Pg
+iY
+Ex
+Ek
+Sc
+iE
+IM
+IM
+Ek
+xq
+Wc
+SF
+Oc
+Wc
+Wc
+Ek
+pY
+Uk
+Uk
+Uk
+Uk
+"}
+(9,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+bw
+cN
+Ti
+Go
+uY
+Ek
+RT
+QW
+QW
+op
+Ek
+Wc
+SF
+Eb
+Ek
+Ek
+Ek
+Ek
+pY
+Uk
+Uk
+Uk
+Uk
+"}
+(10,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+hF
+Mb
+jH
+pi
+uY
+Ek
+IM
+IM
+IM
+IM
+dW
+SF
+Jm
+wS
+Ek
+sK
+sK
+Uk
+pY
+Uk
+Uk
+Uk
+Uk
+"}
+(11,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+yi
+qL
+qL
+qL
+lO
+Ek
+Hf
+IM
+Hf
+IM
+Ai
+Wc
+SF
+Wc
+FQ
+sK
+qm
+XZ
+EP
+XZ
+Bn
+Uk
+Uk
+"}
+(12,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Ek
+FY
+hs
+qN
+Ek
+iy
+Pq
+Pq
+Pq
+uY
+Ek
+Oh
+IM
+Oh
+IM
+Ek
+ub
+Wc
+dv
+NY
+Uk
+ws
+Za
+VO
+Za
+wc
+Uk
+Uk
+"}
+(13,1,1) = {"
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+zU
+dx
+wd
+Ek
+jC
+Na
+Na
+Na
+uY
+Ek
+Qv
+IM
+Hf
+op
+Ek
+Vp
+SF
+Wc
+FQ
+Uk
+Bd
+VO
+VO
+VO
+du
+Uk
+Uk
+"}
+(14,1,1) = {"
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+Vg
+cR
+dx
+Ek
+iR
+Gf
+XQ
+Gf
+HL
+Ek
+Oh
+IM
+Oh
+IM
+Ek
+Vf
+Wc
+SF
+NY
+Uk
+ws
+Za
+EP
+Za
+wc
+Uk
+Uk
+"}
+(15,1,1) = {"
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+JX
+Ek
+Ek
+Ek
+bN
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Vp
+SF
+Eb
+FQ
+sK
+Bd
+VO
+EP
+VO
+du
+Uk
+Uk
+"}
+(16,1,1) = {"
+Uk
+Uk
+Ek
+YS
+XC
+XC
+UO
+jg
+IM
+IM
+Ek
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+oM
+Wc
+Lq
+Ek
+SF
+Wc
+SF
+NY
+sK
+ws
+Za
+VO
+Za
+wc
+Uk
+Uk
+"}
+(17,1,1) = {"
+Uk
+Uk
+Ek
+lV
+XC
+XC
+Bj
+CV
+CV
+IM
+dW
+Wc
+ZO
+lN
+ZO
+lN
+ZO
+lN
+ZO
+lN
+ZO
+lN
+ZO
+iZ
+il
+Wc
+SZ
+IT
+Ek
+sK
+Bd
+VO
+VO
+VO
+du
+Uk
+Uk
+"}
+(18,1,1) = {"
+Uk
+Uk
+Ek
+XC
+XC
+XC
+Bj
+CV
+CV
+IM
+Ek
+ZO
+lN
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+ZO
+Wc
+Lq
+Ek
+SF
+Wc
+dv
+Ek
+Uk
+UF
+RN
+EP
+RN
+mY
+Uk
+Uk
+"}
+(19,1,1) = {"
+Uk
+Uk
+Ek
+XC
+XC
+ru
+Bj
+CV
+CV
+op
+Ek
+nI
+ZO
+Wc
+Ek
+xl
+xl
+xl
+Ek
+my
+Up
+HY
+Ek
+Ek
+Ek
+Ek
+Hd
+Ek
+Ek
+Uk
+Uk
+Jp
+Uk
+Jp
+Uk
+Uk
+Uk
+"}
+(20,1,1) = {"
+Uk
+Uk
+Ek
+lV
+XC
+XC
+Bj
+CV
+CV
+IM
+Ek
+ZO
+lN
+ZO
+xl
+zo
+gv
+Oe
+xl
+ed
+iZ
+GF
+Ek
+hW
+RR
+RR
+RR
+Nh
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(21,1,1) = {"
+Uk
+Uk
+Ek
+YS
+XC
+XC
+Bj
+Xb
+IM
+IM
+Ek
+Wc
+ZO
+Wc
+xl
+zo
+xP
+zo
+xl
+Rm
+xx
+LF
+Ek
+JZ
+Gr
+Gr
+Gr
+Qe
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(22,1,1) = {"
+Uk
+Uk
+Ek
+Ek
+nJ
+Ek
+Ek
+Ek
+Ek
+nJ
+Ek
+ZO
+lN
+ZO
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+QQ
+ka
+Ek
+Zm
+Zm
+Zm
+lA
+TY
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(23,1,1) = {"
+Uk
+Uk
+Ek
+Vj
+XC
+Ek
+Lj
+Lu
+om
+XC
+Ek
+Wc
+ZO
+Wc
+Ek
+aP
+ib
+Ek
+hG
+Ar
+bU
+te
+Ek
+Bc
+Bc
+Bc
+Bc
+Bc
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(24,1,1) = {"
+Uk
+Uk
+Ek
+tW
+XC
+Ek
+XC
+TW
+TW
+XC
+mr
+ZO
+lN
+ZO
+QK
+gi
+Nl
+Ek
+Ek
+Ek
+bU
+Fv
+Ek
+Bc
+Bc
+ev
+Bc
+Bc
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(25,1,1) = {"
+Uk
+Uk
+Ek
+Ws
+DO
+mr
+XC
+XC
+Cq
+vF
+Ek
+Wc
+ZX
+Wc
+Ek
+yQ
+LJ
+Ek
+hG
+Ar
+bU
+te
+Ek
+ev
+Bc
+Bc
+Bc
+ev
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+"}
+(26,1,1) = {"
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+QQ
+Ek
+Ek
+Bc
+aM
+Bc
+XO
+Bc
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+Uk
+Uk
+"}
+(27,1,1) = {"
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+cY
+bc
+bU
+cq
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+Uk
+"}
+(28,1,1) = {"
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Ek
+bU
+bU
+bU
+bU
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+Uk
+"}
+(29,1,1) = {"
+AJ
+Uk
+Uk
+AJ
+AJ
+Uk
+AJ
+AJ
+Uk
+Uk
+Uk
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Ek
+cY
+JG
+bU
+cq
+Ek
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+"}
+(30,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+AJ
+AJ
+Uk
+Uk
+Uk
+Ek
+Ek
+Ek
+Ek
+Ek
+Ek
+Uk
+Uk
+Uk
+AJ
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(31,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(32,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+Uk
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(33,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}
+(34,1,1) = {"
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+Uk
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+AJ
+"}

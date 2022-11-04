@@ -11,7 +11,7 @@
 		if (T)
 			for (var/mob/living/carbon/human/M in view(src, 2))
 				if (istype(M.wear_suit, /obj/item/clothing/suit/armor))
-					boutput(M, "<span style=\"color:red\">Your armor blocks the shrapnel!</span>")
+					boutput(M, "<span class='alert'>Your armor blocks the shrapnel!</span>")
 					M.TakeDamage("chest", 5, 0)
 				else
 					M.TakeDamage("chest", 15, 0)
@@ -19,7 +19,7 @@
 					implanted.owner = M
 					M.implant += implanted
 					implanted.implanted(M, null, 2)
-					boutput(M, "<span style=\"color:red\">You are struck by shrapnel!</span>")
+					boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
 					if (!M.stat)
 						M.emote("scream")
 		qdel(src)
@@ -30,7 +30,7 @@
 	icon_state_on_tray = "torped_hiexp_tray"
 	icon_state_off_tray = "torped_hiexp_notray"
 	icon_state_fired = "torped_hiexp_fired"
-	numPierce = 6 //Max amount of steps that can pierce before it blows up instantly.
+	numPierce = 0 //Max amount of steps that can pierce before it blows up instantly.
 	stepsAfterPierce = 12 //Will blow up this many steps after first pierce at most.
 	sleepPerStep = 2 //How long to sleep between steps.
 
@@ -64,7 +64,7 @@
 		R.add_reagent("sarin", 50)
 		smoke_reaction(R, 7, get_turf(src))
 		qdel(src)
-		SPAWN_DBG(30 SECONDS) qdel(R)
+		SPAWN(30 SECONDS) qdel(R)
 		return
 
 /obj/machinery/torpedo_tube/syndicate
@@ -106,11 +106,11 @@
 /obj/machinery/torpedo_console
 	desc = ""
 	name = "torpedo console"
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "periscope"
-	anchored = 1.0
+	anchored = 1
 	appearance_flags = TILE_BOUND
-	density = 1.0
+	density = 1
 	var/datum/movement_controller/torpedo_control/movement_controller
 	var/id = "torp1"
 	var/obj/machinery/torpedo_tube/tube = null
@@ -118,7 +118,7 @@
 	var/turf/target = null
 	var/obj/torpedo_targeter/targeter = null
 	var/list/validTrg = list()
-	var/inUse = 0
+	var/inUse = FALSE
 
 	New()
 		movement_controller = new(src)
@@ -128,8 +128,8 @@
 	get_movement_controller()
 		return movement_controller
 
-	attack_hand(mob/user as mob)
-		if(src.controller && !src.controller.loc == src)
+	attack_hand(mob/user)
+		if(src.controller && src.controller.loc != src)
 			src.exit(0)
 
 		if(inUse) return
@@ -144,17 +144,22 @@
 			resetTargeter()
 
 		if(tube)
-			inUse = 1
+			inUse = TRUE
 			user.set_loc(src)
 			user.pixel_y = -8
-			boutput(user, "<span style=\"color:blue\"><b>Press Q or E to exit targeting.</b></span>")
+			boutput(user, "<span class='hint'><b>Press Q or E to exit targeting.</b></span>")
 			vis_contents += user
 			controller = user
-			user.update_keymap()
+			user.reset_keymap()
 			if(user.client && targeter)
 				user.client.images += targeter.trgImage
 				user.client.eye = targeter
 		return
+
+	Exited(atom/movable/AM, atom/newloc)
+		..()
+		if (inUse)
+			src.exit(0)
 
 	proc/resetTargeter()
 		if(tube && targeter)
@@ -182,17 +187,16 @@
 			if(set_location)
 				controller.set_loc(get_step(src, SOUTH))
 			vis_contents.Cut()
-			controller.update_keymap()
+			controller.reset_keymap()
 			if(controller.client && targeter)
 				controller.client.images -= targeter.trgImage
 				controller.client.eye = controller
 			controller = null
-			inUse = 0
+			inUse = FALSE
 		return
 
 	proc/fire()
-		if(tube)
-			tube.launch()
+		tube?.launch()
 		return
 
 /obj/machinery/torpedo_switch
@@ -200,7 +204,7 @@
 	name = "torpedo button"
 	icon = 'icons/obj/power.dmi'
 	icon_state = "light1"
-	anchored = 1.0
+	anchored = 1
 	var/id = "torp1"
 	var/list/cachedTubes = list()
 
@@ -218,7 +222,7 @@
 /obj/machinery/torpedo_tube
 	name = "torpedo tube"
 	desc = ""
-	icon = 'icons/obj/32x96.dmi'
+	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "base"
 	density = 1
 	anchored = 1
@@ -243,22 +247,22 @@
 
 	New()
 		. =..()
-		light = image('icons/obj/32x96.dmi')
+		light = image('icons/obj/large/32x96.dmi')
 
-		tray = image('icons/obj/32x96.dmi')
+		tray = image('icons/obj/large/32x96.dmi')
 		tray.pixel_y = -16
 
-		tube = image('icons/obj/32x96.dmi',icon_state_tube)
+		tube = image('icons/obj/large/32x96.dmi',icon_state_tube)
 		tube.pixel_y = 16
 		underlays.Add(tube)
 
-		SPAWN_DBG(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
-			dir = NORTH
+		SPAWN(1 SECOND) //You might wonder what is going on here. IF I DON'T SPAWN THIS THE DIRECTION IS NOT SET IS WHAT'S GOING ON HERE.
+			set_dir(NORTH)
 
 		rebuildOverlays()
 		return .
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(tray_obj) close()
 		else open()
 		return
@@ -285,12 +289,12 @@
 
 	proc/open()
 		if(is_blocked_turf(get_step(src, SOUTH)))
-			boutput(usr, "<span style=\"color:red\"><b>You can't open the tube, something is blocking the way.</b></span>")
+			boutput(usr, "<span class='alert'><b>You can't open the tube, something is blocking the way.</b></span>")
 			return
 		tray_obj = new/obj/torpedo_tube_tray(get_step(src, SOUTH))
 		tray_obj.parent = src
 		if(loaded)
-			loaded.loc = tray_obj.loc
+			loaded.set_loc(tray_obj.loc)
 			loaded = null
 		rebuildOverlays()
 		return
@@ -311,37 +315,35 @@
 		if(tray_obj) return
 		if(loaded != null)
 
-			logTheThing("combat", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]")
-			logTheThing("diary", usr, null, " launches \a [src.loaded] from the torpedo tube at [showCoords(src.x, src.y, src.z)]", "combat")
+			logTheThing(LOG_COMBAT, usr, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]")
+			logTheThing(LOG_DIARY, usr, " launches \a [src.loaded] from the torpedo tube at [log_loc(src)]", "combat")
 			var/turf/start = getLaunchTurf()
 			var/atom/target
 			if(targetTurf)
 				target = targetTurf
 			else
-				target = get_edge_target_turf(src, src.dir)
+				target = get_steps(start, src.dir, 3)
 
 			if(ismob(loaded))
 				var/mob/M = loaded
 				M.set_loc(start)
-				M.dir = src.dir
-				SPAWN_DBG(0)
-					M.throw_at(target, 600, 2)
+				M.set_dir(src.dir)
+				M.throw_at(target, 600, 2)
 
 
 			else if(istype(loaded, /obj/storage/closet))
 				var/obj/storage/closet/C = loaded
 				C.set_loc(start)
-				C.dir = src.dir
-				SPAWN_DBG(0)
-					C.throw_at(target, 600, 2)
+				C.set_dir(src.dir)
+				C.throw_at(target, 600, 2)
 
 			else if(istype(loaded, /obj/torpedo))
 				var/obj/torpedo/T = loaded
 				T.set_loc(start)
-				T.dir = src.dir
+				T.set_dir(src.dir)
 				T.lockdir = src.dir
 				T.fired = 1
-				SPAWN_DBG(0)
+				SPAWN(0)
 					T.launch(target)
 
 			loaded = null
@@ -355,7 +357,7 @@
 /obj/torpedo_tube_tray
 	name = "torpedo tube tray"
 	desc = ""
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "tray"
 	dir = NORTH
 	density = 1
@@ -364,31 +366,30 @@
 	layer = 2.1
 	var/obj/machinery/torpedo_tube/parent = null
 
-	attack_hand(mob/living/carbon/human/M as mob)
-		if(parent)
-			parent.close()
+	attack_hand(mob/living/carbon/human/M)
+		parent?.close()
 		return
 
 	MouseDrop_T(atom/target, mob/user)
-		if(ismob(target) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
-			if (istype(target, /obj/storage/closet) && get_dist(src,target) <= 1 && can_act(usr) && can_reach(usr, src) && can_reach(usr, target))
+		if(ismob(target) && BOUNDS_DIST(src,target) == 0 && can_act(user) && can_reach(user, src) && can_reach(user, target))
+			if (istype(target, /obj/storage/closet) && BOUNDS_DIST(src,target) == 0 && can_act(user) && can_reach(user, src) && can_reach(user, target))
 				var/obj/storage/closet/O = target
 				O.set_loc(src.loc)
-				logTheThing("combat", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, null, " loads \a [O] into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				logTheThing(LOG_COMBAT, user, " loads \a [O] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads \a [O] into \the [src] at [log_loc(src)]", "combat")
 			var/mob/M = target
 			if (ishuman(M))
 				M.setStatus("resting", INFINITE_STATUS)
 				M.force_laydown_standup()
 				M.set_loc(src.loc)
-				logTheThing("combat", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]")
-				logTheThing("diary", user, target, " laods %target% onto \the [src] at [showCoords(user.x, user.y, user.z)]", "combat")
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [target.name] onto [src]!</b></span>")
+				logTheThing(LOG_COMBAT, user, " laods [constructTarget(target,"combat")] onto \the [src] at [log_loc(user)]")
+				logTheThing(LOG_DIARY, user, " laods [constructTarget(target,"diary")] onto \the [src] at [log_loc(user)]", "combat")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto [src]!</b></span>")
 			else
 				M.set_loc(src.loc)
-				logTheThing("combat", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, target, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
+				logTheThing(LOG_COMBAT, user, " loads [constructTarget(target,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads [constructTarget(target,"diary")] into \the [src] at [log_loc(src)]", "combat")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [target.name] onto \the [src]!</b></span>")
 				return
 
 	attackby(var/obj/item/I, var/mob/user)
@@ -399,17 +400,31 @@
 				GM.set_loc(src.loc)
 				GM.setStatus("resting", INFINITE_STATUS)
 				GM.force_laydown_standup()
-				user.visible_message("<span style=\"color:red\"><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
-				logTheThing("combat", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]")
-				logTheThing("diary", usr, GM, " loads %target% into \the [src] at [showCoords(src.x, src.y, src.z)]", "combat")
+				user.visible_message("<span class='alert'><b>[user.name] shoves [GM.name] onto [src]!</b></span>")
+				logTheThing(LOG_COMBAT, user, " loads [constructTarget(GM,"combat")] into \the [src] at [log_loc(src)]")
+				logTheThing(LOG_DIARY, user, " loads [constructTarget(GM,"diary")] into \the [src] at [log_loc(src)]", "combat")
 				qdel(G)
 		else
 			return ..(I,user)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			M.visible_message("<span class='alert'><b>[thrown_person] [thrown_person.throwing & THROW_SLIP ? "slips" : "falls"] onto [src]! [src] slams closed!</b></span>")
+			logTheThing(LOG_COMBAT, thrown_person, " falls into \the [src] at [log_loc(src)] (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+			thrown_person.set_loc(src.loc)
+			parent?.close()
+			if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				SPAWN(0.5 SECONDS)
+					JOB_XP(thrown_person, "Clown", 5)
+					src.parent?.launch()
+		else
+			..()
+
 /obj/torpedo_tray
 	name = "torpedo tray"
 	desc = "A tray for wheeling around torpedos."
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 	density = 1
 	pixel_y = 0
@@ -423,12 +438,12 @@
 	var/lastdir = null
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		..()
 
-	Bump(atom/O)
+	bump(atom/O)
 		. = ..()
 		changeIcon(1)
 		return .
@@ -458,45 +473,47 @@
 		if(..(NewLoc, Dir, step_x, step_y))
 			if(dir != lastdir)
 				if(dir == NORTHEAST || dir == SOUTHWEST || dir == SOUTHEAST || dir == NORTHWEST)
-					dir = lastdir
+					set_dir(lastdir)
 					changeIcon()
 				else
 					lastdir = dir
 					changeIcon()
+			return TRUE
 
 	set_loc(var/newloc as turf|mob|obj in world)
 		..(newloc)
 		changeIcon()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
-		if(loaded) return loaded.attackby(I, user)
+	attackby(var/obj/item/I, var/mob/user)
+		if(loaded) return loaded.Attackby(I, user)
 		else return ..()
 
 	proc/add(var/obj/torpedo/T)
 		if(loaded) return
 		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, T)) return
-		T.loc = src
+		T.set_loc(src)
 		src.loaded = T
 		changeIcon()
 		return
 
-	proc/remove(var/turf/target, var/direction = null)
+	proc/remove(var/turf/target, var/direction = null, var/force = FALSE)
 		if(loaded == null) return
-		if(!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)) return
+		if(!force && (!can_act(usr) || !can_reach(usr, src) || !can_reach(usr, target)))
+			return
 		var/obj/torpedo/T = loaded
 		loaded = null
-		T.dir = (direction ? direction : src.dir)
+		T.set_dir((direction ? direction : src.dir))
 		T.set_loc(target)
 		changeIcon()
 		return
 
 	MouseDrop_T(target, mob/user)
-		if(istype(target, /obj/torpedo) && loaded == null && get_dist(src,target) <= 1)
+		if(istype(target, /obj/torpedo) && loaded == null && BOUNDS_DIST(src,target) == 0)
 			add(target)
 		return
 
-	MouseDrop(atom/over_object,src_location,over_location,src_control,over_control,params)
-		if(loaded && get_dist(src,over_object) <= 1)
+	mouse_drop(atom/over_object,src_location,over_location,src_control,over_control,params)
+		if(loaded && BOUNDS_DIST(src,over_object) == 0)
 			var/turf/T = get_turf(over_object)
 			if(T.density) return
 			var/atom/trg = over_object
@@ -505,8 +522,20 @@
 			else if(istype(trg, /obj/torpedo_tube_tray))
 				remove(get_turf(over_object), trg.dir)
 
+	hitby(var/atom/movable/M, var/datum/thrown_thing/thr)
+		if (src.loaded && ishuman(M) && M.throwing)
+			var/mob/living/carbon/human/thrown_person = M
+			if (thrown_person.throwing & THROW_CHAIRFLIP)
+				logTheThing(LOG_COMBAT, thrown_person, " flips into \the [src] at [log_loc(src)], setting it off.")
+				loaded.breakLaunch()
+			else if (prob(25) || thrown_person.bioHolder.HasEffect("clumsy"))
+				logTheThing(LOG_COMBAT, thrown_person, " is thrown into \the [src] at [log_loc(src)], setting it off. (likely thrown by [thr?.user ? constructName(thr.user) : "a non-mob"])")
+				loaded.breakLaunch()
+				JOB_XP(thrown_person, "Clown", 5)
+		..()
+
 /obj/torpedo_tray/explosive_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -518,7 +547,7 @@
 		return
 
 /obj/torpedo_tray/hiexp_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -530,7 +559,7 @@
 		return
 
 /obj/torpedo_tray/incendiary_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -542,7 +571,7 @@
 		return
 
 /obj/torpedo_tray/toxic_loaded
-	icon = 'icons/obj/32x64.dmi'
+	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "emptymissiletray"
 
 	New()
@@ -553,6 +582,15 @@
 		changeIcon()
 		return
 
+/obj/torpedo_tray/random_loaded
+	icon = 'icons/obj/large/32x64.dmi'
+	icon_state = "emptymissiletray"
+	New()
+		..()
+		var/obj/torpedo/T = pick(new/obj/torpedo/toxic,new/obj/torpedo/incendiary,new/obj/torpedo/hiexplosive,new/obj/torpedo/explosive)
+		src.loaded = T
+		T.set_loc(src)
+		changeIcon()
 
 
 /obj/torpedo
@@ -584,20 +622,20 @@
 	var/sleepPerStep = 2 //How long to sleep between steps.
 
 	New()
-		northsouth = icon('icons/obj/32x64.dmi')
-		eastwest = icon('icons/obj/64x32.dmi')
+		northsouth = icon('icons/obj/large/32x64.dmi')
+		eastwest = icon('icons/obj/large/64x32.dmi')
 		changeIcon()
 		dmg_threshold = rand(20,60)
 		..()
 
-	attackby(var/obj/item/I as obj, var/mob/user as mob)
+	attackby(var/obj/item/I, var/mob/user)
 		..()
-		logTheThing("combat", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]")
-		logTheThing("diary", user, null, " hits [src] with [I] at [showCoords(user.x, user.y, user.z)]", "combat")
+		logTheThing(LOG_COMBAT, user, " hits [src] with [I] at [log_loc(user)]")
+		logTheThing(LOG_DIARY, user, " hits [src] with [I] at [log_loc(user)]", "combat")
 		dmg += I.force
 		if(dmg >= dmg_threshold)
-			logTheThing("combat", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]")
-			logTheThing("diary", user, null, " caused [src] to detonate at [showCoords(user.x, user.y, user.z)]", "combat")
+			logTheThing(LOG_COMBAT, user, " caused [src] to detonate at [log_loc(user)]")
+			logTheThing(LOG_DIARY, user, " caused [src] to detonate at [log_loc(user)]", "combat")
 			breakLaunch()
 		return
 
@@ -624,7 +662,7 @@
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(get_turf(src), "sound/effects/torpedolaunch.ogg", 100, 1)
+		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, 1)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0
@@ -664,18 +702,19 @@
 		else
 			for(var/atom/movable/M in T)
 				if(M == src) continue
-				if(!M.CanPass(src, T)) return 1
+				if(istype(M, /obj/machinery/the_singularity)) numPierce = 0 //detonate instantly on the singularity
+				if(!M.Cross(src)) return 1
 				if(M.density) return 1
 		return 0
 
 	proc/breakLaunch()
 		var/obj/torpedo_tray/T = src.loc
 		if(istype(T))
-			T.remove(get_turf(src))
+			T.remove(get_turf(src), force = TRUE)
 		var/atom/target = get_edge_target_turf(src, src.dir)
 		src.lockdir = src.dir
 		src.fired = 1
-		SPAWN_DBG(0)
+		SPAWN(0)
 			src.launch(target)
 		return
 

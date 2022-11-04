@@ -1,0 +1,74 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"d" = (
+/obj/decal/cleanable/dirt,
+/obj/burning_barrel,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/decal/cleanable/dirt,
+/obj/storage/closet/dresser,
+/obj/item/clothing/shoes/swat,
+/obj/item/clothing/head/danberet,
+/obj/item/clothing/suit/gimmick/guncoat/dirty{
+	name = "Old And Diry Coats"
+	},
+/obj/item/reagent_containers/food/drinks/bottle/vintage,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/moveable,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/bed,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/vomit,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/oil,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+"X" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/cobweb2,
+/obj/decal/cleanable/dirt,
+/obj/storage/crate/bloody,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/vodka,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/obj/item/reagent_containers/food/drinks/bottle/wine,
+/turf/simulated/floor/plating/damaged1,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+d
+o
+f
+"}
+(2,1,1) = {"
+g
+N
+a
+"}
+(3,1,1) = {"
+X
+o
+n
+"}

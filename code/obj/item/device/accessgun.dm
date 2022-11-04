@@ -1,10 +1,10 @@
 /obj/item/device/accessgun
-	name = "access-pro"
+	name = "Access Pro"
 	desc = "This device can reprogram electronic access requirements. It will copy the permissions of any inserted ID. Activate it in-hand while empty to change between AND/OR modes"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "accessgun"
 	item_state = "accessgun"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	rand_pos = 0
 	flags = FPRINT | TABLEPASS | ONBELT
 	mats = 14
@@ -33,7 +33,7 @@
 		ID.set_loc(src)
 
 		switch(ID.icon_state)
-			if ("id" || "id_civ")
+			if ("id", "id_civ")
 				icon_state = "accessgun-civ"
 			if ("id_sec")
 				icon_state = "accessgun-sec"
@@ -61,68 +61,72 @@
 	attack_self(mob/user as mob)
 		..()
 		if (src.ID_card)
-			boutput(user, "<span style=\"color:blue\">You eject [ID_card] from [src].</span>")
+			boutput(user, "<span class='notice'>You eject [ID_card] from [src].</span>")
 		else
 			if (mode == 0)
-				boutput(user, "<span style=\"color:blue\">[src] set to OR mode. The doors you reprogram will allow anyone with any of the accesses on the inserted ID.</span>")
+				boutput(user, "<span class='notice'>[src] set to OR mode. The doors you reprogram will allow anyone with any of the accesses on the inserted ID.</span>")
 				mode = 1
 			else
-				boutput(user, "<span style=\"color:blue\">[src] set to AND mode. The doors you reprogram will only allow those who meet every access listed on the inserted ID.</span>")
+				boutput(user, "<span class='notice'>[src] set to AND mode. The doors you reprogram will only allow those who meet every access listed on the inserted ID.</span>")
 				mode = 0
 
 
 		src.eject_id_card(user)
 
-	attackby(obj/item/C as obj, mob/user as mob)
+	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/card/id))
 			var/obj/item/card/id/ID = C
 			if (src.ID_card)
-				boutput(user, "<span style=\"color:blue\">You swap [ID] and [src.ID_card].</span>")
+				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
 				return
 			else if (!src.ID_card)
 				src.insert_id_card(ID, user)
-				boutput(user, "<span style=\"color:blue\">You insert [ID] into [src].</span>")
+				boutput(user, "<span class='notice'>You insert [ID] into [src].</span>")
 		else
 			..()
 
 	afterattack(atom/target, mob/user, reach, params)
 		..()
 		if (!src.ID_card)
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] refuses to turn on without an ID inserted.</span>")
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] refuses to turn on without an ID inserted.</span>")
 			return
 		if (!isobj(target))
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
 		if (!allowed(user))
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">Your worn ID fails [src]'s check!</span>")
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>Your worn ID fails [src]'s check!</span>")
 			return
 
 		var/obj/O = target
 
 		if (access_maxsec in O.req_access)
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
 			return
 
-		if (O.object_flags & CAN_REPROGRAM_ACCESS)
-			if (istype(target,/obj/machinery/door))
-				var/obj/machinery/door/D = target
-				if (D.cant_emag || isrestrictedz(D.z))
-					playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-					boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
-					return
+		if (is_restricted(O, user))
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] can't reprogram this.</span>")
+			return
 
-			actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
-		else
-			playsound(get_turf(src), 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
-			boutput(user, "<span style=\"color:blue\">[src] can't reprogram this.</span>")
+		actions.start(new/datum/action/bar/icon/access_reprog(O,src), user)
 
+
+	proc/is_restricted(obj/O)
+		. = FALSE
+		if (!(O.object_flags & CAN_REPROGRAM_ACCESS))
+			. = TRUE
+			return
+		if (istype(O,/obj/machinery/door))
+			var/obj/machinery/door/D = O
+			if (D.cant_emag || isrestrictedz(D.z))
+				. = TRUE
 
 
 	proc/reprogram(var/obj/O,var/mob/user)
@@ -130,7 +134,7 @@
 			O.set_access_list(list(ID_card.access))
 		else
 			O.set_access_list(ID_card.access)
-		playsound(get_turf(src), "sound/machines/reprog.ogg", 70, 1)
+		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
 
 
 /datum/action/bar/icon/access_reprog
@@ -148,19 +152,19 @@
 
 	onUpdate()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
 		..()
-		if(get_dist(owner, O) > 1 || O == null || owner == null || A == null)
+		if(BOUNDS_DIST(owner, O) > 0 || O == null || owner == null || A == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (ismob(owner))
@@ -172,5 +176,57 @@
 
 	onInterrupt()
 		if (O && owner)
-			boutput(owner, "<span style=\"color:red\">Access change of [O] interrupted!</span>")
+			boutput(owner, "<span class='alert'>Access change of [O] interrupted!</span>")
 		..()
+
+/obj/item/device/accessgun/lite
+	name = "Access Lite"
+	desc = "A device that sets the access requirments of newly constructed airlocks to ones scanned from an existing airlock."
+	req_access = null
+	ID_card = 1
+	var/list/scanned_access = null
+
+	New()
+		scanned_access = list()
+		req_access = list()
+		. = ..()
+
+	afterattack(obj/target, mob/user, reach, params)
+		var/obj/machinery/door/airlock/door_reqs = target
+		if (!istype(door_reqs))
+			. = ..()
+			return
+		if(target.deconstruct_flags & DECON_BUILT)
+			if (isnull(scanned_access))
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+				boutput(user, "<span class='notice'>[src] has no access requirements loaded.</span>")
+				return
+			if (length(door_reqs.req_access))
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+				boutput(user, "<span class='notice'>[src] cannot reprogram [door_reqs.name], access requirements already set.</span>")
+				return
+			. = ..()
+			return
+		if(is_restricted(door_reqs))
+			playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 2)
+			boutput(user, "<span class='notice'>[src] can't scan [door_reqs.name]</span>")
+			return
+		scanned_access = door_reqs.req_access
+		icon_state = "accessgun-x"
+		boutput(user, "<span class='notice'>[src] scans the access requirements of [door_reqs.name].</span>")
+
+
+	reprogram(obj/O,mob/user)
+		if (!isnull(scanned_access))
+			O.set_access_list(scanned_access)
+		playsound(src, 'sound/machines/reprog.ogg', 70, 1)
+
+	attackby(obj/item/C, mob/user)
+		if (istype(C, /obj/item/card/id))
+			return
+		. = ..()
+
+	attack_self(mob/user as mob)
+		boutput(user, "<span class='notice'>You clear the access requirements loaded in the [src]</span>")
+		scanned_access = null
+		icon_state = initial(icon_state)

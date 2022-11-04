@@ -1,4 +1,4 @@
-/obj/screen/ability/topBar/cruiser
+/atom/movable/screen/ability/topBar/cruiser
 	clicked(params)
 		var/datum/targetable/cruiser/spell = owner
 		var/datum/abilityHolder/holder = owner.holder
@@ -9,7 +9,7 @@
 				holder.cancel_action_binding()
 			else
 				owner.waiting_for_hotkey = 1
-				boutput(usr, "<span style=\"color:blue\">Please press a number to bind this ability to...</span>")
+				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
 		else if(params["left"])
 			if (!istype(spell))
 				return
@@ -25,7 +25,7 @@
 				usr.targeting_ability = owner
 				usr.update_cursor()
 			else
-				SPAWN_DBG(0)
+				SPAWN(0)
 					spell.handleCast()
 			return
 
@@ -54,7 +54,7 @@
 	ignore_sticky_cooldown = 1
 
 	New()
-		var/obj/screen/ability/topBar/cruiser/B = new /obj/screen/ability/topBar/cruiser(null)
+		var/atom/movable/screen/ability/topBar/cruiser/B = new /atom/movable/screen/ability/topBar/cruiser(null)
 		B.icon = src.icon
 		B.icon_state = src.icon_state
 		B.owner = src
@@ -65,7 +65,7 @@
 	updateObject()
 		..()
 		if (!src.object)
-			src.object = new /obj/screen/ability/topBar/cruiser()
+			src.object = new /atom/movable/screen/ability/topBar/cruiser()
 			object.icon = src.icon
 			object.owner = src
 		if (disabled)
@@ -87,14 +87,14 @@
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
-		return M.restrained() || M.stat || M.getStatusDuration("paralysis") || M.getStatusDuration("stunned") || M.getStatusDuration("weakened")
+		return M.restrained() || is_incapacitated(M)
 
 	castcheck()
 		if (incapacitationCheck())
-			boutput(holder.owner, __red("Not while incapacitated."))
+			boutput(holder.owner, "<span class='alert'>Not while incapacitated.</span>")
 			return 0
 		if (disabled)
-			boutput(holder.owner, __red("You cannot use that ability at this time."))
+			boutput(holder.owner, "<span class='alert'>You cannot use that ability at this time.</span>")
 			return 0
 		return 1
 
@@ -103,7 +103,7 @@
 			return
 		last_cast = world.time + cooldown
 		holder.updateButtons()
-		SPAWN_DBG(cooldown + 5)
+		SPAWN(cooldown + 5)
 			holder.updateButtons()
 
 	cast(atom/target)

@@ -1,0 +1,82 @@
+# Determines if we search the title (optional). Defaults to true.
+matchTitle: false
+
+# Determines if we search the body (optional). Defaults to true.
+matchBody: true
+
+# Determines if label matching is case sensitive (optional). Defaults to true.
+caseSensitive: false
+
+# Explicit keyword mappings to labels. Form of match:label. Required.
+labelMappings:
+    "[BUG - CRITICAL]": p-critical
+    "[CRITICAL]": p-critical
+    "[BUG - MAJOR]": p-major
+    "[MAJOR]": p-major
+    "[BUG - MINOR]": p-minor
+    "[MINOR]": p-minor
+    "[BUG - TRIVIAL]": p-trivial
+    "[TRIVIAL]": p-trivial
+    "[BUG]": c-bug
+    "[FIX]": c-bug
+    "[BUGFIX]": c-bug
+    "fixes #": c-bug
+    "[RUNTIME]": c-runtime
+    "[INPUT WANTED]": e-input-wanted
+    "[INPUT]": e-input-wanted
+    "[FEEDBACK]": e-input-wanted
+    "[ENHANCEMENT]": c-feature
+    "[FEATURE]": c-feature
+    "[FEAT]": c-feature
+    "[BALANCE]": c-balance
+    "[CLEANLINESS]": c-code-quality
+    "[CODE QUALITY]": c-code-quality
+    "[CLEAN]": c-code-quality
+    "[CHORE]": c-code-quality
+    "[EXPERIMENTAL]": c-experimental
+    "[PERFORMANCE]": c-performance
+    "[PERF]": c-performance
+    "[QOL]": c-QoL
+    "[REMOVAL]": c-removal
+    "[REVERT]": c-revert
+    "[REWORK]": c-rework
+    "[SECRET]": a-secret
+    "[TGUI]": a-ui
+    "[UI]": a-ui
+    "[TOOLS]": a-tooling
+    "[TOOLING]": a-tooling
+    "[EASY]": e-good-first-issue
+    "[GFI]": e-good-first-issue
+    "[GOOD FIRST ISSUE]": e-good-first-issue
+    "[MEDAL]": a-medal
+    "[WIKI]": e-add-to-wiki
+    "[ADD TO WIKI]": e-add-to-wiki
+    "[CONTEST]": e-contest
+    "[ADMIN]": a-admin
+    "[AI]": a-ai
+    "[ATMOS]": a-atmospherics
+    "[ATMOSPHERICS]": a-atmospherics
+    "[CATERING]": a-catering
+    "[CHEM]": a-chemistry
+    "[CHEMISTRY]": a-chemistry
+    "[CLOTHING]": a-clothing
+    "[GAME OBJECTS]": a-game-objects
+    "[OBJECTS]": a-game-objects
+    "[GAMEMODES]": a-gamemodes
+    "[GAME MODES]": a-gamemodes
+    "[MODES]": a-gamemodes
+    "[INTERNAL]": a-internal
+    "[MAPPING]": a-mapping
+    "[MATERIALS]": a-materials
+    "[MATSCI]": a-materials
+    "[MEDICAL]": a-medical
+    "[MUTANTRACE]": a-mutantraces
+    "[SPECIES]": a-mutantraces
+    "[PLAYER ACTIONS]": a-player-actions
+    "[ACTIONS]": a-player-actions
+    "[SCIENCE]": a-science
+    "[SILICONS]": a-silicons
+    "[BORGS]": a-silicons
+    "[STATION SYSTEMS]": a-station-systems
+    "[STATUS EFFECTS]": a-status-effects
+    "[EVENTS]": a-events

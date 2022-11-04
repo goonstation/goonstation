@@ -13,12 +13,13 @@ TILES
 	icon = 'icons/obj/metal.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "tile"
-	w_class = 3.0
+	health = 2
+	w_class = W_CLASS_NORMAL
 	m_amt = 937.5
 	throw_speed = 5
 	throw_range = 20
-	force = 6.0
-	throwforce = 7.0
+	force = 6
+	throwforce = 7
 	max_stack = 80
 	stamina_damage = 25
 	stamina_cost = 25
@@ -31,13 +32,10 @@ TILES
 		return
 
 	examine()
-		set src in view(1)
+		. = ..()
+		. += "There are [src.amount] tile\s left on the stack."
 
-		..()
-		boutput(usr, text("There are [] tile\s left on the stack.", src.amount))
-		return
-
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 
 		if ((user.r_hand == src || user.l_hand == src))
 			src.add_fingerprint(user)
@@ -46,7 +44,6 @@ TILES
 			src.amount--
 			user.put_in_hand_or_drop(F)
 			if (src.amount < 1)
-				//SN src = null
 				qdel(src)
 				return
 		else
@@ -55,11 +52,11 @@ TILES
 
 	attack_self(mob/user as mob)
 
-		if (usr.stat)
+		if (user.stat)
 			return
 		var/T = user.loc
 		if (!( istype(T, /turf) ))
-			boutput(user, "<span style=\"color:blue\">You must be on the ground!</span>")
+			boutput(user, "<span class='notice'>You must be on the ground!</span>")
 			return
 		else
 			var/S = T
@@ -71,13 +68,12 @@ TILES
 				src.amount--
 		if (src.amount < 1)
 			user.u_equip(src)
-			//SN src = null
 			qdel(src)
 			return
 		src.add_fingerprint(user)
 		return
 
-	attackby(obj/item/tile/W as obj, mob/user as mob)
+	attackby(obj/item/tile/W, mob/user)
 
 		if (!( istype(W, /obj/item/tile) ))
 			return
@@ -89,16 +85,15 @@ TILES
 			W.amount = src.max_stack
 		else
 			W.amount += src.amount
-			//SN src = null
 			qdel(src)
 			return
 		return
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
-		user.visible_message("<span style=\"color:blue\">[user] begins stacking floor tiles!</span>")
+		user.visible_message("<span class='notice'>[user] begins stacking floor tiles!</span>")
 
 	after_stack(atom/movable/O as obj, mob/user as mob, var/added)
-		boutput(user, "<span style=\"color:blue\">You finish stacking tiles.</span>")
+		boutput(user, "<span class='notice'>You finish stacking tiles.</span>")
 
 	proc/build(turf/S as turf)
 		var/turf/simulated/floor/W = S.ReplaceWithFloor()

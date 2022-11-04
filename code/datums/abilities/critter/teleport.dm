@@ -18,10 +18,7 @@
 			return 1
 		var/turf/T = target
 		holder.owner.set_loc(T)
-		SPAWN_DBG(0)
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, holder.owner)
-			s.start()
-		playsound(T, "sound/effects/ghost2.ogg", 100, 1)
+		elecflash(T)
+		playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
 		holder.owner.say("TELEPORT!", 1)
 		return 0

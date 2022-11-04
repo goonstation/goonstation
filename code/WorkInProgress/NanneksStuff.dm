@@ -32,14 +32,6 @@
 				src.setup_lists(P)
 				break
 
-/*
-	proc/build_composite_icon(var/atom/C)
-		var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-		for(var/O in C.overlays)
-			var/image/I = O
-			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
-		return composite
-*/
 	proc/make_icon_with_turf(var/turf/the_turf as turf)
 
 		var/icon/I = icon('icons/misc/old_or_unused.dmi',"blank")
@@ -127,7 +119,7 @@
 
 						B.icon = make_icon_with_turf(T)
 
-			sleep(5)
+			sleep(0.5 SECONDS)
 
 
 
@@ -157,8 +149,7 @@ This works
 
 	proc/build_composite_icon(var/atom/C)
 		var/icon/composite = icon(C.icon, C.icon_state, C.dir, 1)
-		for(var/O in C.overlays)
-			var/image/I = O
+		for(var/image/I as anything in C.overlays)
 			composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 		return composite
 
@@ -194,11 +185,11 @@ This works
 
 			src.icon = make_icon_with_turf(the_turf)
 
-			SPAWN_DBG(0.5 SECONDS) src.Life()
+			SPAWN(0.5 SECONDS) src.Life()
 
 		else
-			logTheThing("admin", null, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]")
-			logTheThing("diary", null, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]", "admin")
+			logTheThing(LOG_ADMIN, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]")
+			logTheThing(LOG_DIARY, null, "[src]/(%coords([src.x], [src.y], [src.z])%) not defined properly with ID = [src.id] and PTP = [src.pointer]", "admin")
 
 
 /obj/point_to_projection

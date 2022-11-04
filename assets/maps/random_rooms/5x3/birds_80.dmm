@@ -1,0 +1,52 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/shrub{
+	dir = 6
+	},
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+"i" = (
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/shrub{
+	dir = 10
+	},
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/shrub{
+	dir = 8
+	},
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/critter/parrot/random,
+/turf/simulated/floor/grass/leafy,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+U
+i
+i
+"}
+(2,1,1) = {"
+s
+i
+L
+"}
+(3,1,1) = {"
+i
+U
+i
+"}
+(4,1,1) = {"
+a
+i
+i
+"}
+(5,1,1) = {"
+i
+i
+U
+"}

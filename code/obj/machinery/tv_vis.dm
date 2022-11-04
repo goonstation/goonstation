@@ -1,5 +1,5 @@
 /obj/landmark/boxing_ring
-	name = "boxing ring"
+	name = LANDMARK_BOXING_RING
 
 
 	//disabling this for now bcause somepotato says its costly on client fps stuff
@@ -11,7 +11,7 @@
 	name = "Security Monitor"
 	icon = 'icons/obj/sec_tv.dmi'
 	icon_state = "wall-monitor"
-	anchored = 1.0
+	anchored = 1
 	pixel_y = 30
 	layer = OBJ_LAYER+1
 	appearance_flags = KEEP_TOGETHER
@@ -26,11 +26,11 @@
 
 	New()
 		..()
-		SPAWN_DBG(0)
+		SPAWN(0)
 			video_screen = new(src.loc, owner = src)
 			video_screen.fov = fov
 
-	Del()
+	disposing()
 		// if (current_camera)
 		// 	current_camera.connected_monitor = null
 		current_camera = null
@@ -52,9 +52,10 @@
 		// 	turn_off()
 		// 	return
 
+		use_power(power_usage)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if (!active)
 			detect_cameras()
 			current_camera = cameras["HUD1"]
@@ -80,7 +81,7 @@
 	//loops through world looking for appropriate cameras. currently using sunglasses/camera, should make upgradable HUD but I don't have access to that
 	proc/detect_cameras()
 		var/count = 1
-		for (var/obj/landmark/boxing_ring/BR in landmarks)
+		for(var/turf/BR in landmarks[LANDMARK_BOXING_RING])
 			cameras["HUD[count]"] = BR
 			count++
 			break
@@ -90,7 +91,7 @@
 	appearance_flags = KEEP_TOGETHER
 	mouse_opacity = 0
 	// layer = MOB_LAYER+1
-	plane = PLANE_LIGHTING + 1
+	plane = PLANE_ABOVE_LIGHTING
 	var/fov = 2
 	var/obj/machinery/security_monitor/owner
 	var/image/blank
@@ -106,6 +107,7 @@
 
 	disposing()
 		blank = null
+		..()
 
 	proc/activate()
 		get_picture()

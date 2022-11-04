@@ -1,978 +1,1218 @@
-/* ._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._. */
-/*-=-=-=-=-=-=-=-=-=-=-=-=-=-+CARDS+-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
-/* '~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~'-._.-'~' */
+//defines for the number of each card in the dmi of the following StG categories
+#define NUMBER_F 4 //female
+#define NUMBER_M 4 //male
+#define NUMBER_N 2 //nonbinary
+#define NUMBER_GENERAL 8
+#define NUMBER_BORG 2
+#define NUMBER_AI 2
 
-/* ----- TO DO -----
- - throwing a hand/stack/deck scatters the cards
- - throwing a card has a chance of being a good throw and doing a little damage
- - cheaty stuff
- - uno?
- - add cards to hats (fedoras?) (lol)
-	 ----------------- */
+//General Card Stuffs
+//-----------------//
+/obj/item/playing_card
+	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "plain-1-1"
+	dir = NORTH
+	w_class = W_CLASS_TINY
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
+	///what style of card sprite are we using?
+	var/card_style
+	///number of cards in a full deck (used for reference when updating stack size)
+	var/total_cards
+	///the overall name of a given card type : used to communicate with card groups (i.e. playing, tarot, hanafuda)
+	var/card_name
+	var/facedown = FALSE
+	var/foiled = FALSE
+	var/tapped = FALSE
+	var/reversed = FALSE
+	///when solitaire stacking, how far down is the newest card pixel shifted?
+	var/solitaire_offset = 5
+	///vital card information that is referenced when a card flips over
+	var/list/stored_info
+	contextLayout = new /datum/contextLayout/instrumental(16)
+	var/list/datum/contextAction/cardActions
 
-/datum/playing_card
-	var/card_name = "playing card"
-	var/card_desc = "A card, for playing some kinda game with."
-	var/card_face = "blank"
-	var/card_back = "suit"
-	var/card_foil = 0
-	var/card_data = null
-	var/card_reversible = 0 // can the card be drawn reversed? ie for tarot
-	var/card_reversed = 0 // IS it reversed?
-	var/card_tappable = 1 // tap 2 islands for mana
-	var/card_tapped = 0 // summon Fog Bank, laugh
-	var/card_spooky = 0
+	attack_hand(mob/user)
+		..()
+		set_dir(NORTH) //makes sure cards are always upright in the inventory (unless tapped or reversed - see later)
 
-	New(cardname, carddesc, cardback, cardface, cardfoil, carddata, cardreversible, cardreversed, cardtappable, cardtapped, cardspooky)
-		if (cardname) src.card_name = cardname
-		if (carddesc) src.card_desc = carddesc
-		if (cardback) src.card_back = cardback
-		if (cardface) src.card_face = cardface
-		if (cardfoil) src.card_foil = cardfoil
-		if (carddata) src.card_data = carddata
-		if (cardreversible) src.card_reversible = cardreversible
-		if (cardreversed) src.card_reversed = cardreversed
-		if (cardtappable) src.card_tappable = cardtappable
-		if (cardtapped) src.card_tapped = cardtapped
-		if (cardspooky) src.card_spooky = cardspooky
 
-	proc/examine_data()
-		return card_data
+	attack_self(mob/user as mob)
+		flip() //uno reverse O.O
 
-/obj/item/playing_cards
+	attackby(obj/item/W, mob/user)
+		if(istype(W,/obj/item/playing_card)) //if a card is hit by a card, open the context menu for the player to decide what happens.
+			if(loc != user)
+				update_card_actions(TRUE)
+			else
+				update_card_actions()
+			user.showContextActions(cardActions, src)
+		else if(istype(W,/obj/item/card_group)) //when a card is hit by a card group, if it's a hand, vacuum up the card, otherwise it's a deck and the card gets sat on.
+			var/obj/item/card_group/group = W
+			if(group.card_style != card_style)
+				user.show_text("These card types don't match, silly!", "red")
+				return
+			if(src.loc == user)
+				user.u_equip(src)
+				group.add_to_group(src)
+				if(group.is_hand)
+					user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
+				else
+					user.visible_message("<b>[user.name]</b> plops the [group.name] on top of a card.")
+			else
+				if(group.is_hand)
+					group.add_to_group(src)
+					user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [group.name].")
+				else
+					user.u_equip(group)
+					group.set_loc(get_turf(src))
+					group.add_to_group(src)
+					user.visible_message("<b>[user.name]</b> plops the [group.name] on top of the [src.name].")
+			group.update_group_sprite()
+		else
+			..()
+
+	afterattack(var/atom/A as turf, var/mob/user as mob, reach, params) //handling the ability to place cards on the floor
+		if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
+			user.u_equip(src)
+			src.set_loc(A)
+			if(islist(params) && params["icon-y"] && params["icon-x"])
+				src.pixel_x = text2num(params["icon-x"]) - 16
+				src.pixel_y = text2num(params["icon-y"]) - 16
+			set_dir(user.dir)
+		else
+			..()
+
+	mouse_drop(var/atom/target as obj|mob) //r o t a t e
+		if(!istype(target,/obj/item/card_group))
+			tap_or_reverse(usr)
+		else
+			..()
+
+
+	set_dir(var/new_dir) //handing the modification of direction based on if a card is tapped or reversed
+		..()
+		if(tapped)
+			if(loc == usr)
+				dir = EAST
+			else
+				switch(dir)
+					if(NORTH)
+						dir = EAST
+					if(SOUTH)
+						dir = WEST
+					if(EAST)
+						dir = SOUTH
+					if(WEST)
+						dir = NORTH
+		else if(reversed)
+			if(loc == usr)
+				dir = SOUTH
+			else
+				switch(dir)
+					if(NORTH)
+						dir = SOUTH
+					if(SOUTH)
+						dir = NORTH
+					if(EAST)
+						dir = WEST
+					if(WEST)
+						dir = EAST
+		else if(loc == usr)
+			dir = NORTH
+
+	proc/update_stored_info() //builds the stored_info list
+		stored_info = list(name,desc,icon_state)
+
+	proc/flip()
+		tooltip_rebuild = 1 //makes sure the card tooltips get updated everytime
+		if(!facedown)
+			name = "playing card"
+			desc = "A face-down card."
+			icon_state = "[card_style]-back"
+			facedown = TRUE
+		else
+			name = stored_info[1]
+			desc = stored_info[2]
+			icon_state = stored_info[3]
+			facedown = FALSE
+			if(tapped)
+				tapped = FALSE
+			if(reversed)
+				reversed = FALSE
+			dir = NORTH
+
+	proc/tap_or_reverse(var/mob/user) //this is called to handle tapping and reversing of cards
+		if(card_style == "tarot")
+			if(!reversed)
+				reversed = TRUE
+				name += " Reversed"
+			else
+				reversed = FALSE
+				name = stored_info[1]
+		else
+			if(!tapped)
+				tapped = TRUE
+				name = "tapped [name]"
+			else
+				tapped = FALSE
+				name = stored_info[1]
+		set_dir(user.dir)
+
+	proc/update_card_actions(var/card_outside) //builds the context actions list when called
+		cardActions = list()
+		if(card_outside)
+			cardActions += new /datum/contextAction/card/solitaire
+			cardActions += new /datum/contextAction/card/fan
+			cardActions += new /datum/contextAction/card/stack
+			cardActions += new /datum/contextAction/card/close
+
+	proc/deck_or_hand(var/mob/user,var/is_hand) //used by context actions to handle creating a hand or deck of cards
+		if(!istype(user.equipped(),/obj/item/playing_card))
+			return
+		var/obj/item/playing_card/card = user.equipped()
+		if(card.card_style != card_style)
+			user.show_text("These card types don't match, silly!", "red")
+			return
+		var/obj/item/card_group/group = new /obj/item/card_group
+		if(is_hand)
+			group.update_group_information(group,src,TRUE)
+		else
+			group.update_group_information(group,src,FALSE)
+		user.u_equip(card)
+		group.add_to_group(card)
+		if(is_hand)
+			group.is_hand = TRUE
+			user.visible_message("<b>[user.name]</b> creates a hand of cards.")
+		else
+			user.visible_message("<b>[user.name]</b> creates a deck of cards.")
+		if(loc == user)
+			user.u_equip(src)
+			group.add_to_group(src,1)
+			user.put_in_hand_or_drop(group)
+		else
+			group.set_loc(get_turf(src.loc))
+			group.add_to_group(src,1)
+		group.update_group_sprite()
+		qdel(src)
+
+	proc/solitaire(var/mob/user) //handles solitaire stacking
+		if(!istype(user.equipped(),/obj/item/playing_card))
+			return
+		var/obj/item/playing_card/card = user.equipped()
+		if(card.card_style != card_style)
+			user.show_text("These card types don't match, silly!", "red")
+			return
+		user.u_equip(card)
+		card.set_loc(src.loc)
+		card.pixel_x = src.pixel_x
+		card.pixel_y = (src.pixel_y - card.solitaire_offset)
+
+	//procs that convert the card into the given StG card type
+	proc/stg_mob(var/list/possible_card_types,var/list/humans,var/list/borgos,var/list/ai)
+		var/path = pick(possible_card_types)
+		var/datum/playing_card/griffening/creature/mob/chosen_card_type = new path
+		var/mob/living/chosen_mob
+
+		var/icon_state_num
+
+		if(istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/cyborg))
+			if(length(borgos))
+				chosen_mob = pick(borgos) //DEV - condense if possible
+			if(chosen_mob)
+				name = chosen_mob.name
+			else
+				name = "Cyborg [pick("Alpha", "Beta", "Gamma", "Delta", "Xi", "Pi", "Theta")]-[rand(10,99)]"
+			icon_state_num = rand(1,NUMBER_BORG)
+			icon_state = "stg-borg-[icon_state_num]"
+		else if (istype(chosen_card_type,/datum/playing_card/griffening/creature/mob/ai))
+			if(length(ai))
+				chosen_mob = pick(ai)
+			if(chosen_mob)
+				name = chosen_mob.name
+			else
+				name = pick("SHODAN", "GLADOS", "HAL-9000")
+			name += " the AI"
+			icon_state_num = rand(1,NUMBER_AI)
+			icon_state = "stg-ai-[icon_state_num]"
+		else
+			if(length(humans))
+				chosen_mob = pick(humans)
+			if(chosen_mob)
+				name = "[chosen_card_type.card_name] [chosen_mob.real_name]"
+				switch(his_or_her(chosen_mob))
+					if("her")
+						icon_state_num = rand(1,NUMBER_F)
+						icon_state = "stg-f-[icon_state_num]"
+					if("his")
+						icon_state_num = rand(1,NUMBER_M)
+						icon_state = "stg-m-[icon_state_num]"
+					if("their")
+						icon_state_num = rand(1,NUMBER_N)
+						icon_state = "stg-N-[icon_state_num]"
+			else
+				name = chosen_card_type.card_name
+				var/gender = rand(1,3)
+				switch(gender)
+					if(1)
+						icon_state_num = rand(1,NUMBER_F)
+						icon_state = "stg-f-[icon_state_num]"
+					if(2)
+						icon_state_num = rand(1,NUMBER_M)
+						icon_state = "stg-m-[icon_state_num]"
+					if(3)
+						icon_state_num = rand(1,NUMBER_N)
+						icon_state = "stg-N-[icon_state_num]"
+		if(chosen_card_type.LVL)
+			name = "LVL [chosen_card_type.LVL] [name]"
+		var/atk
+		var/def
+		if(chosen_card_type.randomized_stats)
+			atk = rand(0, 10)
+			def = rand(0, 10)
+			if(chosen_card_type.LVL)
+				atk *= chosen_card_type.LVL
+				def *= chosen_card_type.LVL
+		else
+			atk = chosen_card_type.ATK
+			def = chosen_card_type.DEF
+
+		name += " [atk]/[def]"
+		desc = chosen_card_type.card_data
+		desc += " ATK [atk] | DEF [def]"
+
+	proc/stg_friend(var/list/possible_card_types)
+		var/path = pick(possible_card_types)
+		var/datum/playing_card/griffening/creature/friend/chosen_card_type = new path
+		if(chosen_card_type.LVL)
+			name = "LVL [chosen_card_type.LVL] [chosen_card_type.card_name]"
+		else
+			name = chosen_card_type.card_name
+		var/atk
+		var/def
+		if(chosen_card_type.randomized_stats)
+			atk = rand(0, 10)
+			def = rand(0, 10)
+			if(chosen_card_type.LVL)
+				atk *= chosen_card_type.LVL
+				def *= chosen_card_type.LVL
+		else
+			atk = chosen_card_type.ATK
+			def = chosen_card_type.DEF
+		name += " [atk]/[def]"
+		desc = chosen_card_type.card_data
+		desc += " ATK [atk] | DEF [def]"
+		icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
+
+	proc/stg_effect(var/list/possible_card_types)
+		var/path = pick(possible_card_types)
+		var/datum/playing_card/griffening/effect/chosen_card_type = new path
+
+		name = chosen_card_type.card_name
+		desc = chosen_card_type.card_data
+		icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
+
+	proc/stg_area(var/list/possible_card_types)
+		var/path = pick(possible_card_types)
+		var/datum/playing_card/griffening/area/chosen_card_type = new path
+
+		name = chosen_card_type.card_name
+		desc = chosen_card_type.card_data
+		icon_state = "stg-general-[rand(1,NUMBER_GENERAL)]"
+
+	proc/add_foil() //makes the card shiiiiiny
+		UpdateOverlays(image(icon,"stg-foil"),"foil")
+		foiled = TRUE
+		name = "Foil [name]"
+
+/obj/item/playing_card/expensive //(¬‿¬)
+	desc = "Tap this card and sacrifice one of yourselves to win the game."
+	icon_state = "stg-general-0"
+	var/list/prefix1 = list("Incredibly", "Strange", "Mysterious", "Suspicious", "Scary")
+	var/list/prefix2 = list("Rare", "Black", "Dark", "Shadowy", "Expensive", "Fun", "Gamer")
+	var/list/names = list("Flower", "Blossom", "Tulip", "Daisy")
+	card_style = "stg"
+
+	New()
+		..()
+		name = "[pick(prefix1)] [pick(prefix2)] [pick(names)]"
+		update_stored_info()
+
+	mouse_drop(var/atom/target as obj|mob)
+		..()
+		if(tapped)
+			var/mob/user = usr
+			user.deathConfetti()
+			playsound(user.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50)
+			user.visible_message("<span class='combat'><b>[uppertext(user.name)] WINS THE GAME!</b></span>")
+			if(!foiled)
+				user.take_brain_damage(1000)
+			else
+				logTheThing(LOG_COMBAT, user, "was partygibbed by [src] at [log_loc(src)].")
+				user.partygib(1)
+
+/obj/item/card_group //since "playing_card"s are singular cards, card_groups handling groups of playing_cards in the form of either a deck or hand
 	name = "deck of cards"
-	desc = "Some cards, all in a neat stack, for playing some kinda game with."
 	icon = 'icons/obj/items/playing_card.dmi'
-	icon_state = "deck-suit"
-	w_class = 1.0
-	force = 0
-	throwforce = 0
-	burn_point = 750
-	burn_output = 500
-	burn_possible = 1
+	dir = NORTH
+	w_class = W_CLASS_TINY
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
 	health = 10
-	var/list/cards = list()
-	var/face_up = 0
-	var/card_name = "blank card"
-	var/card_desc = "A playing card."
-	var/card_face = "blank"
-	var/card_back = "suit"
-	var/card_foil = 0
-	var/card_data = null
-	var/last_shown_off = null
-	var/spooky = 0
-	var/card_reversible = 0 // can it be drawn reversed?
-	var/card_reversed = 0 // IS it reversed?
-	var/card_tappable = 1 // tap dat shit
-	var/card_tapped = 0
+	inventory_counter_enabled = 1
+	/// same function as playing_card card name
+	var/card_name
+	///the type of card back used for this group (references icon_state names in the dmi)
+	var/card_style = "plain"
+	///how many cards are in a fully built deck of this type? (54 for plain decks, 78 for tarot, etc.) : used for reference on stack heights
+	var/total_cards
+	var/is_hand = FALSE
+	///the number of cards you can have in a hand before it automatically becomes a deck
+	var/max_hand_size = 18
+	contextLayout = new /datum/contextLayout/instrumental(16)
+	var/list/datum/contextAction/cardActions
+	var/list/stored_cards = list()
 
-	New()
-		..()
-		src.pixel_x = rand(-12, 12)
-		src.pixel_y = rand(-12, 12)
+	attack_hand(mob/user)
+		if(!is_hand && (isturf(src.loc) || src.loc == user)) //handling the player interacting with a deck of cards with an empty hand
+			update_card_actions(user, "empty")
+			user.showContextActions(cardActions, src)
+		else
+			..()
 
-	proc/update_cards()
-		if (!src.cards.len)
-			qdel(src)
+	attack_self(mob/user as mob)
+		if(is_hand) //attack_self with hand to pull up the menu
+			update_card_actions(user, "handself")
+			user.showContextActions(cardActions, src)
+		else //attack_self with deck to shuffle
+			if (length(stored_cards) < 11)
+				shuffle_list(stored_cards)
+			else
+				riffle_shuffle(stored_cards)
+			user.visible_message("<b>[user.name]</b> shuffles the [src.name].")
+
+	attackby(obj/item/W, mob/user)
+		if(istype(W, /obj/item/playing_card)) //adding a card to a hand will automatically place it in the hand, while adding a card to a deck will allow the player to decide where it goes
+			if(is_hand)
+				var/obj/item/playing_card/card = W
+				if(card.card_style != card_style)
+					user.show_text("These card types don't match, silly!", "red")
+					return
+				user.u_equip(card)
+				add_to_group(card)
+				user.visible_message("<b>[user.name]</b> adds a card to [his_or_her(user)] [src.name]")
+			else
+				update_card_actions(user, "card")
+				user.showContextActions(cardActions, src)
+			update_group_sprite()
+		else if(istype(W,/obj/item/card_group)) //adding a hand to a deck is similar to adding a card to a deck, whereas adding a deck plops it on top
+			var/obj/item/card_group/group = W
+			if(group.is_hand && !is_hand)
+				update_card_actions(user, "group")
+				user.showContextActions(cardActions, src)
+			else
+				top_or_bottom(user,group,"top",1)
+		else
+			..()
+
+	afterattack(var/atom/A as turf, var/mob/user as mob, reach, params)
+		if(istype(A,/turf/simulated/floor) || istype(A,/turf/unsimulated/floor))
+			user.u_equip(src)
+			src.set_loc(A)
+			if(islist(params) && params["icon-y"] && params["icon-x"])
+				src.pixel_x = text2num(params["icon-x"]) - 16
+				src.pixel_y = text2num(params["icon-y"]) - 16
+		else
+			..()
+
+	special_desc(dist, mob/user) //handles the special chat output for examining hands and decks!
+		if(is_hand && in_interact_range(src,user))
+			hand_examine(user,"self")
+		else
+			..()
+			user.show_text ("<b>Contains [length(stored_cards)] cards.</b>" )
+
+	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob) //handles piling cards into a deck or hand
+		if(istype(O,/obj/item/playing_card))
+			user.visible_message("[user.name] starts scooping cards into the [src.name]...")
+			SPAWN(0.2 SECONDS)
+				for(var/obj/item/playing_card/card in range(1, user))
+					if(card.card_style != card_style)
+						continue
+					if(card.loc == user)
+						user.u_equip(card)
+					add_to_group(card,1)
+					update_group_sprite()
+					sleep(0.2 SECONDS)
+
+	proc/hand_examine(var/mob/user, var/target) //builds the examine text players see when a hand is revealed or examined
+		var/message = ""
+		for(var/obj/item/playing_card/card in stored_cards)
+			message += "<b>[card.name]:</b><br>"
+			if(card.desc)
+				message += "[card.desc]<br>"
+			else
+				message += "<i>no description</i><br>"
+			message += "-----<br>"
+		if(target == "self")
+			user.show_text(message)
+		else if(target == "all")
+			user.visible_message("<b>[user.name]</b> reveals their hand: <br><br>[message]")
+
+	proc/draw_card(var/mob/user,var/obj/item/playing_card/card) //handles drawing single cards : used in search and draw
+		user.put_in_hand_or_drop(card)
+		if(card.card_style == "tarot")
+			if(prob(50))
+				card.tap_or_reverse(user)
+
+	proc/handle_draw_last_card(var/mob/user) //when a player draws the second to last card of a group, the group is replaced by the last card in the group for consistency
+		var/obj/item/playing_card/card = stored_cards[1]
+		if(card.facedown == FALSE)
+			card.flip()
+		if(loc == user)
+			user.u_equip(src)
+			user.put_in_hand_or_drop(stored_cards[1])
+		else
+			card.set_loc(get_turf(src.loc))
+		qdel(src)
+
+	proc/add_to_group(var/obj/item/playing_card/card,var/insert) //handles adding cards to card_groups and where they are added
+		card.set_loc(src)
+		if(card.facedown)
+			card.flip()
+		if(card.tapped)
+			card.tapped = FALSE
+			card.name = card.stored_info[1]
+		if(card.reversed)
+			card.reversed = FALSE
+			card.name = card.stored_info[1]
+		card.dir = NORTH
+		if(insert)
+			stored_cards.Insert(insert,card)
+		else
+			stored_cards += card
+		if(is_hand)
+			if(length(stored_cards) > max_hand_size)
+				is_hand = FALSE
+
+	proc/update_group_sprite() //updates the deck/hand sprite to match how many cards are inside
+		var/cards = length(stored_cards)
+		if(!is_hand)
+			if(cards >= ((total_cards/4 + total_cards/2)))
+				icon_state = "[card_style]-deck-4"
+			else if(cards >= total_cards/2)
+				icon_state = "[card_style]-deck-3"
+			else if(cards > total_cards/4)
+				icon_state = "[card_style]-deck-2"
+			else if(cards <= total_cards/4)
+				icon_state = "[card_style]-deck-1"
+			name = "deck of [card_name] cards"
+		else
+			if(cards > 5)
+				icon_state = "[card_style]-hand-5"
+			else
+				icon_state = "[card_style]-hand-[cards]"
+			name = "hand of [card_name] cards"
+		inventory_counter.update_number(length(stored_cards))
+
+	proc/update_card_information(var/obj/item/playing_card/card) //communicates information between card groups and playing_cards during deck creation to keep them in sync
+		card.total_cards = total_cards
+		card.card_style = card_style
+		card.card_name = card_name
+
+	proc/update_group_information(var/obj/item/card_group/group,var/obj/item/from,var/hand) //the inverse of update_card_information for creating card groups from cards
+		if(hand == TRUE)
+			group.is_hand = TRUE
+		else
+			group.is_hand = FALSE
+		if(istype(from,/obj/item/playing_card))
+			var/obj/item/playing_card/FA = from
+			group.total_cards = FA.total_cards
+			group.card_style = FA.card_style
+			group.card_name = FA.card_name
+		else if(istype(from,/obj/item/card_group))
+			var/obj/item/card_group/FB = from
+			group.total_cards = FB.total_cards
+			group.card_style = FB.card_style
+			group.card_name = FB.card_name
+
+	proc/update_card_actions(mob/user, var/hitby) //generates card actions based on which interaction is causing the list to be updated
+		cardActions = list()
+
+		//card to deck
+		if(hitby == "card")
+			cardActions += new /datum/contextAction/card/topdeck
+			cardActions += new /datum/contextAction/card/bottomdeck
+			cardActions += new /datum/contextAction/card/close
+		//empty to deck
+		else if(hitby == "empty") //reordered this a bit to prevent overdrawing and have the correct actions avaliable
+			cardActions += new /datum/contextAction/card/pickup
+			if(!(user.find_in_hand(/obj/item/card_group)) || length(user.contents.Find(/obj/item/card_group)) < max_hand_size)
+				cardActions += new /datum/contextAction/card/draw
+				cardActions += new /datum/contextAction/card/draw_facedown
+				cardActions += new /datum/contextAction/card/draw_multiple
+				cardActions += new /datum/contextAction/card/search
+			if(length(stored_cards) <= max_hand_size)
+				cardActions += new /datum/contextAction/card/fan
+			cardActions += new /datum/contextAction/card/close
+		//hand to self
+		else if(hitby == "handself")
+			cardActions += new /datum/contextAction/card/search
+			cardActions += new /datum/contextAction/card/reveal
+			cardActions += new /datum/contextAction/card/stack
+			cardActions += new /datum/contextAction/card/close
+		//hand to deck
+		else if(hitby == "group")
+			cardActions += new /datum/contextAction/card/topdeck
+			cardActions += new /datum/contextAction/card/bottomdeck
+			cardActions += new /datum/contextAction/card/close
+
+	proc/draw(var/mob/user,var/facedown) //the context action proc that handles players drawing a card
+		var/obj/item/playing_card/card = stored_cards[1]
+		if(facedown)
+			card.flip()
+		draw_card(user,card)
+		stored_cards -= card
+		if(length(stored_cards) == 1)
+			handle_draw_last_card(user)
+		else
+			update_group_sprite()
+		user.visible_message("<b>[user.name]</b> draws a card from the [src.name].")
+
+	proc/draw_multiple(var/mob/user) //the context action proc that handles players drawing multiple cards
+		if(is_hand)
 			return
-
-		src.overlays = null
-		switch (src.cards.len)
-			if (-INFINITY to 0)
+		var/card_number = round(input(user, "How many cards would you like to draw?", "[name]")  as null|num)
+		if(!card_number || !isnum_safe(card_number))
+			return
+		if(card_number == 1)
+			draw(user)
+			return
+		if(card_number > length(stored_cards))
+			card_number = length(stored_cards)
+		if(in_interact_range(src, user))
+			var/obj/item/card_group/hand = new /obj/item/card_group
+			update_group_information(hand,src,TRUE)
+			for(var/i in 1 to card_number)
+				hand.add_to_group(stored_cards[1])
+				stored_cards -= stored_cards[1]
+			hand.update_group_sprite()
+			user.put_in_hand_or_drop(hand)
+			user.visible_message("<b>[user.name]</b> draws [card_number] cards from the [src.name].")
+			if(length(stored_cards) == 1)
+				handle_draw_last_card(user)
+			else if(!length(stored_cards))
 				qdel(src)
-				return
-			if (1)
-				for (var/datum/playing_card/Card in src.cards)
-					src.card_name = Card.card_name
-					src.card_desc = Card.card_desc
-					src.card_face = Card.card_face
-					src.card_back = Card.card_back
-					src.card_foil = Card.card_foil
-					src.card_data = Card.examine_data()
-					src.card_reversible = Card.card_reversible
-					src.card_reversed = Card.card_reversed
-					src.spooky = Card.card_spooky
-				if (src.face_up)
-					if (src.card_reversible && src.card_reversed)
-						src.name = "reversed [src.card_name]"
-						src.dir = NORTH
-					else if (src.card_tappable && src.card_tapped)
-						src.name = "tapped [src.card_name]"
-						if (src.card_tapped == EAST)
-							src.dir = EAST
-						else if (src.card_tapped == WEST)
-							src.dir = WEST
-						else
-							src.dir = pick(EAST, WEST)
-							src.card_tapped = src.dir
-					else
-						src.name = src.card_name
-						src.dir = SOUTH
-					src.desc = "[src.card_desc] It's \an [src.name]."
-					src.icon_state = "card-[src.card_face]"
-					if (src.card_foil)
-						src.overlays += "card-foil"
-				else
-					src.desc = src.card_desc
-					src.icon_state = "back-[src.card_back]"
-					if (src.card_tappable && src.card_tapped)
-						src.name = "tapped playing card"
-						if (src.card_tapped == EAST)
-							src.dir = EAST
-						else if (src.card_tapped == WEST)
-							src.dir = WEST
-						else
-							src.dir = pick(EAST, WEST)
-							src.card_tapped = src.dir
-					else
-						src.name = "playing card"
-						src.dir = SOUTH
-			if (2 to 4)
-				src.name = "hand of cards"
-				src.desc = "Some cards, for playing some kinda game with."
-				src.icon_state = "hand-[src.card_back][src.cards.len]"
-				if (src.face_up)
-					src.face_up = 0
-			if (5 to 10)
-				src.name = "hand of cards"
-				src.desc = "Some cards, for playing some kinda game with."
-				src.icon_state = "hand-[src.card_back]5"
-				if (src.face_up)
-					src.face_up = 0
-			if (11 to 19)
-				src.name = "stack of cards"
-				src.desc = "Some cards, all in a neat stack, for playing some kinda game with."
-				src.icon_state = "stack-[src.card_back]"
-				if (src.face_up)
-					src.face_up = 0
-			if (20 to INFINITY)
-				src.name = "deck of cards"
-				src.desc = "Some cards, all in a neat stack, for playing some kinda game with."
-				src.icon_state = "deck-[src.card_back]"
-				if (src.face_up)
-					src.face_up = 0
-
-	proc/draw_card(var/obj/item/playing_cards/CardStack, var/atom/target as turf|obj|mob, var/draw_face_up = 0, var/datum/playing_card/Card)
-		if (!src.cards.len)
-			qdel(src)
-			return null
-
-		if (!CardStack || !istype(CardStack, /obj/item/playing_cards))
-			CardStack = new /obj/item/playing_cards(src.loc)
-			CardStack.face_up = draw_face_up
-			if (target)
-				if (ismob(target))
-					target:put_in_hand_or_drop(CardStack)
-				else
-					CardStack.set_loc(target.loc)
-		if (!Card || !istype(Card, /datum/playing_card))
-			Card = src.cards[1]
-		CardStack.cards += Card
-		src.cards -= Card
-		CardStack.update_cards()
-		src.update_cards()
-		return CardStack
-
-	proc/add_cards(var/obj/item/playing_cards/CardStack)
-		if (!CardStack)
-			return
-		if (!CardStack.cards.len)
-			qdel(CardStack)
-			return
-
-		for (var/datum/playing_card/Card in CardStack.cards)
-			Card = CardStack.cards[1]
-			src.cards += Card
-			CardStack.cards -= Card
-			CardStack.update_cards()
-			src.update_cards()
-
-	get_desc(dist)
-		src.update_cards()
-		if (dist <= 0 && src.cards.len == 1 && !src.face_up)
-			. += "It's \an [src.card_name]."
-		if (src.cards.len == 1 && src.face_up)
-			var/datum/playing_card/Card = src.cards[1]
-			. += Card.examine_data()
-		if (dist <= 0 && src.cards.len >= 2 && src.cards.len <= 10)
-			var/seen_hand = ""
-			for (var/datum/playing_card/Card in src.cards)
-				seen_hand += "\an [Card.card_name], "
-			var/final_seen_hand = copytext(seen_hand, 1, -2)
-			. += "It has [src.cards.len] cards: [final_seen_hand]."
-		if (dist <= 0 && src.cards.len >= 11)
-			. += "There's [src.cards.len] cards in the [src.cards.len <= 19 ? "stack" : "deck"]."
-
-	MouseDrop(var/atom/target as obj|mob)
-		if (!src.cards.len)
-			qdel(src)
-			return
-		if (!target)
-			return
-		if (isdead(usr) && !src.spooky)
-			boutput(usr, "<span style=\"color:red\">Ghosts dealing cards? That's too spooky!</span>")
-			return
-		if (get_dist(usr, src) > 1)
-			boutput(usr, "<span style=\"color:red\">You're too far from [src] to draw a card!</span>")
-			return
-		if (get_dist(usr, target) > 1)
-			if (istype(target, /obj/screen/hud))
-				var/obj/screen/hud/hud = target
-				if (istype(hud.master, /datum/hud/human))
-					var/datum/hud/human/h_hud = hud.master // all this just to see if you're trying to deal to someone's hand, ffs
-					if (h_hud.master && h_hud.master == usr) // or their face, I guess.  it'll apply to any attempts to deal to your hud
-						target = usr
-					else
-						boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
-						return
-				else
-					boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
-					return
 			else
-				boutput(usr, "<span style=\"color:red\">You're too far away from [target] to deal a card!</span>")
-				return
+				update_group_sprite("user.name")
 
-		var/deal_face_up = 0
-		var/datum/playing_card/Card = src.cards[1]
-		if (usr.a_intent != INTENT_HELP)
-			deal_face_up = 1
-		if (usr.a_intent == INTENT_GRAB && src.cards.len > 1)
-			usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> looks through [src].</span>",\
-			"<span style=\"color:blue\">You look through [src].</span>")
-			deal_face_up = 0
-			var/list/availableCards = list()
-			for (var/datum/playing_card/listCard in src.cards)
-				availableCards += "[listCard.card_name]"
-			boutput(usr, "<span style=\"color:blue\">What card would you like to deal from [src]?</span>")
-			availableCards = sortList(availableCards)
-			var/chosenCard = input("Select a card to deal.", "Choose Card") as null|anything in availableCards
-			if (!chosenCard)
-				return
-			for (var/datum/playing_card/findCard in src.cards)
-				if (findCard.card_name == chosenCard)
-					Card = findCard
-					break
-
-		var/stupid_var = "[deal_face_up ? "\an [Card.card_name]" : "[src]"]"
-		var/other_stupid_var = "[deal_face_up ? " \an [Card.card_name]." : "a card"]"
-
-		if (src.cards.len == 1)
-			if (target == src && src.card_tappable)
-				if (src.card_tapped)
-					usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> untaps [src].</span>",\
-					"<span style=\"color:blue\">You untap [src].</span>")
-					src.card_tapped = null
-					src.update_cards()
-				else
-					usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> taps [src].</span>",\
-					"<span style=\"color:blue\">You tap [src].</span>")
-					src.card_tapped = pick(EAST, WEST)
-					src.update_cards()
-			else if (ismob(target))
-				usr.tri_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var][usr == target ? "." : " and deals it to [target]."]</span>",\
-				usr, "<span style=\"color:blue\">You take [stupid_var][usr == target ? "." : " and deal it to [target]."]</span>", \
-				target, "<span style=\"color:blue\">[target == usr ? "You take" : "<b>[usr]</b> takes"] [stupid_var][target == usr ? "." : " and deals it to you."]</span>")
-				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/table))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var] and places it on [target].</span>",\
-				"<span style=\"color:blue\">You take [stupid_var] and place it on [target].</span>")
-				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/item/playing_cards))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> takes [stupid_var] and adds it to [target].</span>",\
-				"<span style=\"color:blue\">You take [stupid_var] and add it to [target].</span>")
-				src.draw_card(target, null, deal_face_up, Card)
+	proc/search(var/mob/user) //the context action proc that handles players search a group for a specific card
+		user.visible_message("<b>[user.name]</b> begins to search through the [src.name]...")
+		var/card = input(user, "Which card would you like to draw?", "[name]")  as null|anything in stored_cards
+		if(!card)
+			user.visible_message("<b>[user.name]</b> doesn't find what they're looking for.")
+			return
+		if(in_interact_range(src, user))
+			draw_card(user,card)
+			stored_cards -= card
+			if(length(stored_cards) == 1)
+				handle_draw_last_card(user)
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by giving [target] a card? [target] can't use it!</span>")
-				return
+				update_group_sprite()
+			user.visible_message("<b>[user.name]</b> slides a card out of the [src.name].")
 
+	proc/reveal(var/mob/user) //the context action proc that handles revealing a hand
+		hand_examine(user,"all")
+
+	proc/fan(var/mob/user) //the context action proc that handles creating a hand from a deck
+		if(is_hand)
+			return
+		if(length(stored_cards) < max_hand_size)
+			is_hand = TRUE
+			update_group_sprite()
+			user.visible_message("<b>[user.name]</b> spreads [his_or_her(user)] cards into a neat fan.")
+
+	proc/stack(var/mob/user) //the opposite of a fan
+		if(!is_hand)
+			return
+		is_hand = FALSE
+		update_group_sprite()
+		user.visible_message("<b>[user.name]</b> gathers [his_or_her(user)] cards into a deck.")
+
+	proc/top_or_bottom(var/mob/user,var/W,var/position,var/no_message) //the context action proc that handles adding cards to the top or bottom of a group
+		var/successful
+		if(istype(W,/obj/item/card_group))
+			var/obj/item/card_group/group = W
+			if(group.card_style == card_style)
+				if(position == "top")
+					var/card_pos = length(group.stored_cards)
+					for(var/i in 1 to length(group.stored_cards))
+						var/obj/item/card = group.stored_cards[card_pos]
+						add_to_group(card,1)
+						card_pos--
+					successful = "top"
+				else
+					for(var/obj/item/card in group.stored_cards)
+						add_to_group(card)
+					successful = "the bottom"
+				user.u_equip(group)
+				qdel(group)
+				if(is_hand && (length(stored_cards) > max_hand_size))
+					is_hand = FALSE
+				update_group_sprite()
+				successful = TRUE
+		else if(istype(W,/obj/item/playing_card))
+			var/obj/item/playing_card/card = W
+			if(card.card_style == card_style)
+				user.u_equip(card)
+				if(position == "top")
+					add_to_group(card,1)
+					successful = "top"
+				else
+					add_to_group(card)
+					successful = "the bottom"
+				update_group_sprite()
+		if(successful)
+			if(!no_message)
+				user.visible_message("<b>[user.name]</b> places the [W] on [successful] of the [src.name].")
 		else
-			if (ismob(target))
-				usr.tri_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src][usr == target ? "." : " and deals it to [target]."]</span>",\
-				usr, "<span style=\"color:blue\">You draw [other_stupid_var] from [src][usr == target ? "." : " and deal it to [target]."]</span>", \
-				target, "<span style=\"color:blue\">[target == usr ? "You draw" : "<b>[usr]</b> draws"] a card from [src][target == usr ? "." : " and deals it to you."]</span>")
-				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/table))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src] and places it on [target].</span>",\
-				"<span style=\"color:blue\">You draw [other_stupid_var] from [src] and place it on [target].[other_stupid_var]</span>")
-				src.draw_card(null, target, deal_face_up, Card)
-			else if (istype(target, /obj/item/playing_cards))
-				usr.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [other_stupid_var] from [src] and adds it to [target].</span>",\
-				"<span style=\"color:blue\">You draw [other_stupid_var] from [src] and add it to [target].</span>")
-				src.draw_card(target, null, deal_face_up, Card)
+			user.show_text("These card types don't match, silly!", "red")
+
+	proc/build_stg(var/deck) //proc that handles generating either an stg preconstructed deck or stg booster pack
+		var/list/possible_humans = list()
+		for(var/mob/living/carbon/human/H in mobs)
+			if(isnpcmonkey(H))
+				continue
+			if(iswizard(H))
+				continue
+			if(isnukeop(H))
+				continue
+			if(!H.mind)
+				continue
+			possible_humans += H
+		var/list/possible_borgos = list()
+		for(var/mob/living/silicon/robot/R in mobs)
+			possible_borgos += R
+		var/list/possible_ai = list()
+		for(var/mob/living/silicon/ai/A in mobs)
+			possible_ai += A
+
+		var/list/possible_mobs = childrentypesof(/datum/playing_card/griffening/creature/mob)
+		var/list/possible_friends = childrentypesof(/datum/playing_card/griffening/creature/friend)
+		var/list/possible_effects = childrentypesof(/datum/playing_card/griffening/effect)
+		var/list/possible_areas = childrentypesof(/datum/playing_card/griffening/area)
+
+
+		var/modified_card_amount
+		if(deck)
+			modified_card_amount = prob(2)?39:40
+		else
+			modified_card_amount = prob(1)?9:10
+
+		for(var/i in 1 to modified_card_amount)
+			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+			stored_cards += card
+			if(deck)
+				var/card_type = rand(1,4)
+				switch(card_type)
+					if(1)
+						card.stg_mob(possible_mobs,possible_humans,possible_borgos,possible_ai)
+					if(2)
+						card.stg_friend(possible_friends)
+					if(3)
+						card.stg_effect(possible_effects)
+					if(4)
+						card.stg_area(possible_areas)
+				if(prob(10))
+					card.add_foil()
 			else
-				boutput(usr, "<span style=\"color:red\">What exactly are you trying to accomplish by dealing [target] a card? [target] can't use it!</span>")
-				return
+				switch(i)
+					if(1,2,3)
+						card.stg_mob(possible_mobs,possible_humans,possible_borgos,possible_ai)
+					if(4,5,6)
+						card.stg_friend(possible_friends)
+					if(7,8,9)
+						card.stg_effect(possible_effects)
+					if(10)
+						card.stg_area(possible_areas)
+			update_card_information(card)
+			card.update_stored_info()
 
-	attack_hand(mob/user as mob)
-		if (get_dist(user, src) <= 0 && src.cards.len)
-			if (user.l_hand == src || user.r_hand == src)
-				var/draw_face_up = 0
-				if (user.a_intent != INTENT_HELP)
-					draw_face_up = 1
-				if (user.a_intent == INTENT_GRAB && src.cards.len > 1)
-					user.visible_message("<span style=\"color:blue\"><b>[user]</b> looks through [src].</span>",\
-					"<span style=\"color:blue\">You look through [src].</span>")
-					var/list/availableCards = list()
-					for (var/datum/playing_card/Card in src.cards)
-						availableCards += "[Card.card_name]"
-					boutput(user, "<span style=\"color:blue\">What card would you like to draw from [src]?</span>")
-					var/chosenCard = input("Select a card to draw.", "Choose Card") as null|anything in availableCards
-					if (!chosenCard)
-						return
-					var/datum/playing_card/cardToGive
-					for (var/datum/playing_card/Card in src.cards) // this is so shitty and janky but idgaf right now -barf-
-						if (Card.card_name == chosenCard)
-							cardToGive = Card
-							break
-					if (!cardToGive)
-						return
-					user.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws a card from [src].</span>",\
-					"<span style=\"color:blue\">You draw \an [chosenCard] from [src].</span>")
-					src.draw_card(null, user, draw_face_up, cardToGive)
-				else
-					var/datum/playing_card/Card = src.cards[1]
-					user.visible_message("<span style=\"color:blue\"><b>[usr]</b> draws [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>",\
-					"<span style=\"color:blue\">You draw [draw_face_up ? "\an [Card.card_name]" : "a card"] from [src].</span>")
-					src.draw_card(null, user, draw_face_up)
-			else return ..(user)
-		else return ..(user)
+		if((modified_card_amount == 39) || (modified_card_amount == 9))
+			var/obj/item/playing_card/expensive/e = new /obj/item/playing_card/expensive
+			switch(modified_card_amount)
+				if(39)
+					add_to_group(e,rand(1,39))
+					if(prob(10))
+						e.add_foil()
+				if(9)
+					add_to_group(e)
 
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/playing_cards))
-			var/obj/item/playing_cards/C = W
-			src.add_cards(C)
-			user.visible_message("<span style=\"color:blue\"><b>[user]</b> adds [C] to the bottom of [src].</span>",\
-			"<span style=\"color:blue\">You add [C] to the bottom of [src].</span>")
-		else return ..()
+		if(!deck)
+			shuffle_list(stored_cards)
+			var/obj/item/playing_card/card = pick(stored_cards)
+			card.add_foil()
 
-	attack_self(mob/user as mob)
-		if (!src.cards.len)
-			qdel(src)
-			return
-		if ((src.last_shown_off + 10) > world.time)
-			return
-		switch (src.cards.len)
-			if (1)
-				src.face_up = !(src.face_up)
-				src.update_cards()
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> flips the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>",\
-				"<span style=\"color:blue\">You flip the card [src.face_up ? "face up. It's \an [src.name]." : "face down."]</span>")
-				src.last_shown_off = world.time
-			if (2 to 10)
-				var/shown_hand = ""
-				for (var/datum/playing_card/Card in src.cards)
-					shown_hand += "\an [Card.card_name], "
-				var/final_shown_hand = copytext(shown_hand, 1, -2)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> shows their hand: [final_shown_hand].</span>",\
-				"<span style=\"color:blue\">You show your hand: [final_shown_hand].</span>")
-				src.last_shown_off = world.time
-			if (11 to INFINITY)
-				riffle_shuffle(src.cards)
-				for (var/datum/playing_card/Card in src.cards)
-					if (Card.card_reversible)
-						Card.card_reversed = rand(0, 1)
-				user.visible_message("<span style=\"color:blue\"><b>[user]</b> shuffles [src].</span>",\
-				"<span style=\"color:blue\">You shuffle [src].</span>")
-				src.last_shown_off = world.time
+		update_group_sprite()
 
-/obj/item/playing_cards/suit
-	desc = "Some playing cards, all in a neat stack. Each belongs to one of four suits and has a number. Collect all 52!"
-	icon_state = "deck-suit"
-	card_back = "suit"
-	var/list/card_suits = list("hearts", "diamonds", "clubs", "spades")
-	var/list/card_numbers = list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "jack", "queen", "king")
+//Plain playing cards
+//-----------------//
+/obj/item/card_group/plain
+	card_style = "plain"
+	total_cards = 54
+	card_name = "playing"
 
 	New()
 		..()
-		var/datum/playing_card/Card
-		for (var/suit in src.card_suits)
-			for (var/num in src.card_numbers)
-				Card = new()
-				Card.card_name = "[num] of [suit]"
-				Card.card_desc = "A classic playing card."
-				Card.card_back = "suit"
-				if (suit == "hearts" || suit == "diamonds")
-					if (num == "jack" || num == "queen" || num == "king")
-						Card.card_face = "R-face"
-					else
-						Card.card_face = "R-[num]"
+		var/suit_num = 1
+		var/card_num = 1
+		var/plain_suit
+		var/suit_name
+		for(var/i in 1 to total_cards)
+			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+			stored_cards += card
+			switch(suit_num)
+				if(1)
+					plain_suit = TRUE
+					suit_name = "Hearts"
+				if(2)
+					plain_suit = TRUE
+					suit_name = "Diamonds"
+				if(3)
+					plain_suit = TRUE
+					suit_name = "Spades"
+				if(4)
+					plain_suit = TRUE
+					suit_name = "Clubs"
+				if(5)
+					plain_suit = FALSE
+			if(plain_suit)
+				if(card_num == 1)
+					card.name = "Ace of [suit_name]"
+				else if(card_num < 11)
+					card.name = "[capitalize(num2text(card_num))] of [suit_name]"
 				else
-					if (num == "jack" || num == "queen" || num == "king")
-						Card.card_face = "B-face"
-					else
-						Card.card_face = "B-[num]"
-				src.cards += Card
-		src.update_cards()
+					switch(card_num)
+						if(11)
+							card.name = "Jack of [suit_name]"
+						if(12)
+							card.name = "Queen of [suit_name]"
+						if(13)
+							card.name = "King of [suit_name]"
+			else
+				if(card_num == 1)
+					card.name = "Red Joker"
+				else
+					card.name = "Black Joker"
 
-/obj/item/playing_cards/tarot
-	desc = "Some tarot cards, all in a neat stack. What will the cards tell you?"
-	icon_state = "deck-tarot"
-	card_back = "tarot"
-	var/list/card_major_arcana = list("The Fool - O", "The Magician - I", "The High Priestess - II", "The Empress - III", "The Emperor - IV", "The Hierophant - V",\
-	"The Lovers - VI", "The Chariot - VII", "Justice - VIII", "The Hermit - IX", "Wheel of Fortune - X", "Strength - XI", "The Hanged Man - XII", "Death - XIII", "Temperance - XIV",\
-	"The Devil - XV", "The Tower - XVI", "The Star - XVII", "The Moon - XVIII", "The Sun - XIX", "Judgement - XX", "The World - XXI")
-	var/list/card_minor_arcana_suits = list("wands", "coins", "cups", "swords")
-	var/list/card_minor_arcana_numbers = list("ace", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "page", "knight", "queen", "king")
+			card.icon_state = "[card_style]-[suit_num]-[card_num]"
+			update_card_information(card)
+			card.update_stored_info()
+
+			if(plain_suit)
+				if(card_num < 13)
+					card_num++
+				else
+					card_num = 1
+					suit_num++
+			else if(card_num < 2)
+				card_num++
+		update_group_sprite()
+
+//Tarot cards
+//---------//
+/obj/item/card_group/tarot
+	desc = {"A type of card that originates back in the 15th century, but became popular for divination in the 18th century. There are 14 cards of each
+	of the four suit types and 22 cards without suits that are called the Major Arcana."}
+	card_style = "tarot"
+	total_cards = 78
+	card_name = "tarot"
 
 	New()
 		..()
-		var/datum/playing_card/Card
-		for (var/major in src.card_major_arcana)
-			Card = new()
-			Card.card_name = "[major]"
-			Card.card_desc = "A tarot card."
-			Card.card_back = "tarot"
-			Card.card_face = "tarot[rand(1, 10)]"
-			Card.card_reversible = 1
-			if (src.spooky) Card.card_spooky = 1
-			src.cards += Card
+		var/suit_num = 1
+		var/card_num = 1
+		var/minor
+		var/suit_name
+		var/list/major = list("The Fool - O", "The Magician - I", "The High Priestess - II", "The Empress - III", "The Emperor - IV", "The Hierophant - V",\
+		"The Lovers - VI", "The Chariot - VII", "Justice - VIII", "The Hermit - IX", "Wheel of Fortune - X", "Strength - XI", "The Hanged Man - XII", "Death - XIII", "Temperance - XIV",\
+		"The Devil - XV", "The Tower - XVI", "The Star - XVII", "The Moon - XVIII", "The Sun - XIX", "Judgement - XX", "The World - XXI")
+		for(var/i in 1 to total_cards)
+			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+			stored_cards += card
+			switch(suit_num)
+				if(1)
+					minor = TRUE
+					suit_name = "Cups"
+				if(2)
+					minor = TRUE
+					suit_name = "Pentacles"
+				if(3)
+					minor = TRUE
+					suit_name = "Swords"
+				if(4)
+					minor = TRUE
+					suit_name = "Wands"
+				if(5)
+					minor = FALSE
 
-		for (var/minor in src.card_minor_arcana_suits)
-			for (var/num in src.card_minor_arcana_numbers)
-				Card = new()
-				Card.card_name = "[num] of [minor]"
-				Card.card_desc = "A tarot card."
-				Card.card_back = "tarot"
-				Card.card_reversible = 1
-				if (src.spooky) Card.card_spooky = 1
-				if (minor == "cups" || minor == "coins")
-					if (num == "page" || num == "knight" || num == "queen" || num == "king")
-						Card.card_face = "R-face"
-					else
-						Card.card_face = "R-[num]"
+			if(minor)
+				if(card_num == 1)
+					card.name = "Ace of [suit_name]"
+				else if(card_num < 11)
+					card.name = "[capitalize(num2text(card_num))] of [suit_name]"
 				else
-					if (num == "page" || num == "knight" || num == "queen" || num == "king")
-						Card.card_face = "B-face"
-					else
-						Card.card_face = "B-[num]"
-				src.cards += Card
+					switch(card_num)
+						if(11)
+							card.name = "Page of [suit_name]"
+						if(12)
+							card.name = "Knight of [suit_name]"
+						if(13)
+							card.name = "Queen of [suit_name]"
+						if(14)
+							card.name = "King of [suit_name]"
+			else
+				card.name = major[card_num]
 
-/obj/item/playing_cards/tarot/spooky
-	spooky = 1
+			card.icon_state = "[card_style]-[suit_num]-[card_num]"
+			update_card_information(card)
+			card.update_stored_info()
 
-// Traitor Trading Triumvirate?
+			if(minor)
+				if(card_num < 14)
+					card_num++
+				else
+					card_num = 1
+					suit_num++
+			else if(card_num < 22)
+				card_num++
+		update_group_sprite()
 
-/obj/item/playing_cards/trading
-	name = "\improper Spacemen the Grifening deck"
-	desc = "Some trading cards, all in a neat stack. Buy a booster brick today!"
-	icon_state = "deck-trade"
-	card_back = "trade"
-	var/cards_to_generate = 40
-	var/list/card_human = list()
-	var/list/card_cyborg = list()
-	var/list/card_ai = list()
-	var/list/card_type_mob = list()
-	var/list/card_type_friend = list()
-	var/list/card_type_effect = list()
-	var/list/card_type_area = list()
-	/*var/list/card_nonhuman = list("Changeling", "Wraith")
-	var/list/card_antag = list("Traitor", "Nuclear Operative", "Vampire", "Wizard", "Spy", "Revolutionary")
-	var/list/card_friend = list("Hooty McJudgementowl", "Heisenbee", "THE OVERBEE", "Dr. Acula", "Jones", "boogiebot",	"George", "automaton",\
-	"Murray", "Marty", "Remy", "Mr. Muggles", "Mrs. Muggles", "Mr. Rathen", "????", "Klaus", "Ol' Harner", "Officer Beepsky", "Tanhony",\
-	"Krimpus", "Albert", "fat and sassy space bee", "Bombini")
-	var/list/card_weapon = list("cyalume saber", "Russian revolver", "emergency toolbox", "mechanical toolbox", "electrical toolbox", "artistic toolbox",\
-	"His Grace", "wrestling belt", "sleepy pen", "energy gun", "riot shotgun", "welding tool", "staple gun", "scalpel", "circular saw", "wrench",\
-	"red chainsaw", "chainsaw", "stun baton", "phaser gun", "mini rad-poison-crossbow", "suppressed .22 pistol", "fire extinguisher", "crowbar",\
-	"laser gun", "screwdriver", "riot launcher", "grenade", "rolling pin", "beaker full of hellchems", "canister bomb", "tank transfer valve bomb",\
-	"broken bottle", "glass shard", "metal rods", "axe", "butcher's knife")
-	var/list/card_armor = list("bio suit", "bio hood", "armored bio suit", "paramedic suit", "armored paramedic suit", "firesuit", "gas mask",\
-	"emergency gas mask", "hard hat", "emergency suit", "emergency hood", "space suit", "labcoat", "armor vest", "Head of Security's beret",\
-	"Head of Security's hat", "captain's armor", "captain's hat", "captain's space suit", "red space suit", "helmet", "bomb disposal suit",\
-	"sunglasses", "prescription glasses", "ProDoc Healthgoggles", "Spectroscopic Scanner Goggles", "Optical Meson Scanner", "Optical Thermal Scanner",\
-	"latex gloves", "insulated gloves", "bedsheet", "bedsheet cape")*/
-
-	booster
-		name = "\improper Spacemen the Grifening booster pack"
-		desc = "10 trading cards, in a neat little pack. Collect them all today!"
-		icon_state = "pack-trade"
-		cards_to_generate = 10
+//Hanafuda
+//------//
+/obj/item/card_group/hanafuda
+	desc = "A deck of Japanese hanafuda."
+	card_style = "hanafuda"
+	total_cards = 48
+	card_name = "hanafuda"
 
 	New()
 		..()
-		src.generate_lists() // generate lists to make cards out of
-		for (var/i=0, i < src.cards_to_generate, i++) // try to make cards
-			switch(rand(1,10))
-				if (1 to 4)
-					generate_mob_card()
-				if (5 to 7)
-					generate_effect_card()
-				if (8 to 9)
-					generate_friend_card()
-				if (10)
-					generate_area_card()
-		src.update_cards() // update the appearance of the deck
+		var/target_month = 1 //card suit
+		var/card_num = 1 //number within the card's suit
+		for(var/i in 1 to total_cards)
+			var/special_second
+			var/special_third
+			var/special_fourth
 
-	proc/generate_lists()
-		src.card_human = list()
-		src.card_cyborg = list()
-		src.card_ai = list()
-		for (var/mob/living/carbon/human/H in mobs)
-			if (ismonkey(H))
-				continue
-			if (iswizard(H))
-				continue
-			if (isnukeop(H))
-				continue
-			src.card_human += H
-		for (var/mob/living/silicon/robot/R in mobs)
-			src.card_cyborg += R
-		for (var/mob/living/silicon/ai/A in AIs)
-			src.card_ai += A
-		card_type_mob = childrentypesof(/datum/playing_card/griffening/creature/mob)
-		card_type_friend = childrentypesof(/datum/playing_card/griffening/creature/friend)
-		card_type_effect = childrentypesof(/datum/playing_card/griffening/effect)
-		card_type_area = childrentypesof(/datum/playing_card/griffening/area)
+			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+			stored_cards += card
+			switch(target_month)
+				if(1)
+					card.name = "January : "
+					special_third = "Poetry Slip"
+					special_fourth = "Bright : Crane"
+				if(2)
+					card.name = "February : "
+					special_third = "Poetry Slip"
+					special_fourth = "Animal : Bush Warbler"
+				if(3)
+					card.name = "March : "
+					special_third = "Poetry Slip"
+					special_fourth = "Bright : Curtain"
+				if(4)
+					card.name = "April : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Cuckoo"
+				if(5)
+					card.name = "May : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal : Butterfly"
+				if(6)
+					card.name = "June : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Eight-Plank Bridge"
+				if(7)
+					card.name = "July : "
+					special_third = "Red Ribbon"
+					special_fourth = "Animal : Boar"
+				if(8)
+					card.name = "August : "
+					special_third = "Animal : Geese"
+					special_fourth = "Bright : Moon"
+				if(9)
+					card.name = "September : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal/Plain : Sake Cup"
+				if(10)
+					card.name = "October : "
+					special_third = "Blue Ribbon"
+					special_fourth = "Animal : Deer"
+				if(11)
+					card.name = "November : "
+					special_second = "Red Ribbon"
+					special_third = "Animal : Swallow"
+					special_fourth = "Bright : Rain Man"
+				if(12)
+					card.name = "December : "
+					special_fourth = "Bright : Phoenix"
 
-	proc/generate_mob_card()
-		if (!src.card_human.len || !src.card_ai.len || !src.card_cyborg.len)
-			src.generate_lists()
-			if (!src.card_human.len)
-				return 0
+			switch(card_num)
+				if(1)
+					card.name += "Plain"
+				if(2)
+					card.name += (special_second ? special_second : "Plain")
+				if(3)
+					card.name += (special_third ? special_third : "Plain")
+				if(4)
+					card.name += (special_fourth ? special_fourth : "Plain")
 
-		var/card_type = null
-		if (prob(20))
-			card_type = /datum/playing_card/griffening/creature/mob/assistant
-		else
-			card_type = pick(card_type_mob)
-			card_type_mob -= card_type
+			card.icon_state = "hanafuda-[target_month]-[card_num]"
+			update_card_information(card)
+			card.update_stored_info()
 
-		var/datum/playing_card/griffening/creature/mob/Card = new card_type()
-		Card.card_back = "trade"
-		if (prob(10))
-			Card.card_foil = 1
-		if (istype(Card, /datum/playing_card/griffening/creature/mob/ai))
-			Card.card_face = "trade-ai[rand(1, 2)]"
-			var/mob/living/silicon/ai/A
-			if (card_ai.len)
-				A = pick(card_ai)
-			var/ai_name
-			if (!A)
-				ai_name = pick("SHODAN", "GLADOS", "HAL-9000")
+			if(card_num <= 3)
+				card_num++
 			else
-				card_ai -= A
-				ai_name = A.name
-			Card.card_name = "[Card.card_foil ? "foil " : null]AI [ai_name]"
-		else if (istype(Card, /datum/playing_card/griffening/creature/mob/cyborg))
-			Card.card_face = "trade-borg[rand(1,2)]"
-			var/mob/living/silicon/robot/A
-			if (card_cyborg.len)
-				A = pick(card_cyborg)
-			var/robot_name
-			if (!A)
-				robot_name = "Cyborg [pick("Alpha", "Beta", "Gamma", "Delta", "Xi", "Pi", "Theta")]-[rand(10,99)]"
-			else
-				card_cyborg -= A
-				robot_name = A.name
-			if (copytext(robot_name, 1, 8) == "Cyborg ")
-				robot_name = copytext(robot_name, 8)
-			Card.card_name = "[Card.card_foil ? "foil " : null]Cyborg [robot_name]"
-		else
-			Card.card_face = "trade-person[rand(1, 10)]"
-			var/mob/living/carbon/human/A
-			if (card_human.len)
-				A = pick(card_human)
-			var/human_name
-			if (!A)
-				human_name = "[pick("Pubbie", "Robust", "Shitty", "Father", "Mother", "Handsome")] [pick("Joe", "Jack", "Bill", "Robert", "Luis", "Damian", "Mike", "Jason", "Jane", "Janet", "Oprah", "Angelina", "Megan", "Jennifer", "Anna")]"
-			else
-				card_human -= A
-				human_name = A.name
-			Card.card_name = "[Card.card_foil ? "foil " : null][Card.card_name] [human_name]"
+				card_num = 1
+				if(target_month <= 12)
+					target_month++
+		update_group_sprite()
 
-		if (Card.randomized_stats)
-			// TODO: This will be unbalanced.
-			Card.LVL = rand(0, 10)
-			Card.ATK = rand(0, 10) * Card.LVL
-			Card.DEF = rand(0, 10) * Card.LVL
+//StG
+//-//
+/obj/item/card_group/stg
+	desc = "A bunch of Spacemen the Griffening cards."
+	card_style = "stg"
+	total_cards = 40
+	card_name = "Spacemen the Griffening"
 
-		src.cards += Card
+	New()
+		..()
+		build_stg(1)
 
-		// I'm temporarily disabling a lot of this until I get everything set up. - Marq
-		/*
-
-		var/datum/playing_card/griffening/mob/Card = new()
-		Card.card_desc = "A trading card."
-		Card.card_back = "trade"
-		Card.card_face = "trade-person[rand(1, 10)]"
-		var/LVL = rand(0, 10)
-		var/ATK = rand(0, 10) * max(LVL, 1) // if the level's 0 we want the stats to not all be 0
-		var/DEF = rand(0, 10) * max(LVL, 1)
-		Card.LVL = LVL
-		Card.ATK = ATK
-		Card.DEF = DEF
-		Card.attributes = ATTRIBUTE_DEFAULT
-		Card.card_data += "ATK [ATK] | DEF [DEF]"
-		if (prob(10))
-			Card.card_foil = 1
-
-		var/mob/living/carbon/human/H = pick(src.card_human)
-
-		var/job_name
-		var/is_human = 1
-
-		if (prob(5))
-			var/nonhuman_chance = 100 * (card_nonhuman.len / (card_nonhuman.len + card_antag.len))
-			if (prob(nonhuman_chance))
-				job_name = pick(src.card_nonhuman)
-				is_human = 0
-			else
-				job_name = pick(src.card_antag)
-		else
-			var/datum/job/J
-			if (prob(10))
-				J = pick(job_controls.special_jobs)
-			else
-				J = pick(job_controls.staple_jobs)
-			job_name = J.name
-
-		if (is_human)
-			Card.template = generate_human_image(H)
-		else
-			Card.template = generate_special_mob_image(H, job_name)
-			Card.human = 0
-
-		Card.card_name = "[Card.card_foil ? "foil " : ""]LVL [LVL] [job_name] [H.real_name]"
-
-		src.cards += Card
-		src.card_human -= H*/
-		return 1
-
-	proc/generate_human_image(var/mob/living/carbon/human/H)
-		// Human images are obnoxious.
-		var/image/ret = image('icons/mob/human.dmi', "blank", MOB_LIMB_LAYER)
-		var/image/human_image = H.human_image
-		var/skin_tone = H.bioHolder.mobAppearance.s_tone
-		human_image.color = skin_tone
-		var/gender_t = H.gender == FEMALE ? "f" : "m"
-		human_image.icon_state = "chest_[gender_t]"
-		ret.overlays += human_image
-		human_image.icon_state = "groin_[gender_t]"
-		ret.overlays += human_image
-		human_image.icon_state = "head"
-		ret.overlays += human_image
-		human_image.icon_state = "l_arm"
-		ret.overlays += human_image
-		human_image.icon_state = "r_arm"
-		ret.overlays += human_image
-		human_image.icon_state = "l_leg"
-		ret.overlays += human_image
-		human_image.icon_state = "r_leg"
-		ret.overlays += human_image
-		human_image.icon_state = "hand_right"
-		ret.overlays += human_image
-		human_image.icon_state = "hand_left"
-		ret.overlays += human_image
-		human_image.icon_state = "foot_left"
-		ret.overlays += human_image
-		human_image.icon_state = "foot_right"
-		ret.overlays += human_image
-		var/image/he_image = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-		var/image/bd_image = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
-		he_image.icon_state = "eyes"
-		he_image.color = H.bioHolder.mobAppearance.e_color
-		ret.overlays += he_image
-		he_image.layer = MOB_HAIR_LAYER2
-		he_image.icon_state = "[H.cust_one_state]"
-		he_image.color = H.bioHolder.mobAppearance.customization_first_color
-		ret.overlays += he_image
-		bd_image.icon_state = "[H.cust_two_state]"
-		bd_image.color = H.bioHolder.mobAppearance.customization_second_color
-		ret.overlays += bd_image
-		bd_image.layer = MOB_HAIR_LAYER2
-		bd_image.icon_state = "[H.cust_three_state]"
-		bd_image.color = H.bioHolder.mobAppearance.customization_third_color
-		ret.overlays += bd_image
-		return ret
-
-	proc/generate_special_mob_image(var/mob/living/carbon/human/H, var/job_name)
-		switch (job_name)
-			if ("Wraith")
-				return image('icons/mob/mob.dmi', "wraith")
-			if ("Changeling")
-				return generate_human_image(H)
-
-	/*proc/generate_cyborg_card()
-		if (!src.card_cyborg.len)
-			return 0
-
-		var/datum/playing_card/griffening/mob/Card = new()
-		Card.card_desc = "A trading card."
-		Card.card_back = "trade"
-		Card.card_face = "trade-borg[rand(1, 2)]"
-		var/LVL = rand(0, 10)
-		var/ATK = rand(0, 10) * max(LVL, 1)
-		var/DEF = rand(0, 10) * max(LVL, 1)
-		Card.card_data += "ATK [ATK] | DEF [DEF]"
-		if (prob(10))
-			Card.card_foil = 1
-
-		var/mob/living/silicon/robot/R = pick(src.card_cyborg)
-		if (prob(5))
-			Card.card_name = "[Card.card_foil ? "foil " : ""]LVL [LVL] Emagged Cyborg [R.name]"
-		else
-			Card.card_name = "[Card.card_foil ? "foil " : ""]LVL [LVL] Cyborg [R.name]"
-
-		src.cards += Card
-		src.card_cyborg -= R
-		return 1
-
-	proc/generate_ai_card()
-		if (!src.card_ai.len)
-			return 0
-
-		var/datum/playing_card/Card = new()
-		Card.card_desc = "A trading card."
-		Card.card_back = "trade"
-		Card.card_face = "trade-ai[rand(1, 2)]"
-		var/LVL = rand(0, 10)
-		var/ATK = rand(0, 10) * max(LVL, 1)
-		var/DEF = rand(0, 10) * max(LVL, 1)
-		Card.card_data += "ATK [ATK] | DEF [DEF]"
-		if (prob(10))
-			Card.card_foil = 1
-
-		var/mob/living/silicon/ai/A = pick(src.card_ai)
-		if (prob(5))
-			Card.card_name = "[Card.card_foil ? "foil " : ""]LVL [LVL] Subverted AI [A.name]"
-		else
-			Card.card_name = "[Card.card_foil ? "foil " : ""]LVL [LVL] AI [A.name]"
-
-		src.cards += Card
-		src.card_ai -= A
-		return 1*/
-
-	proc/generate_friend_card()
-		if (!src.card_type_friend.len)
-			return 0
-
-		var/card_type = pick(card_type_friend)
-		var/datum/playing_card/griffening/creature/friend/Card = new card_type()
-		Card.card_back = "trade"
-		Card.card_face = "trade-general[rand(1, 8)]"
-		Card.LVL = rand(0, 10)
-		Card.ATK = rand(0, 10) * max(Card.LVL, 1)
-		Card.DEF = rand(0, 10) * max(Card.LVL, 1)
-		if (prob(10))
-			Card.card_foil = 1
-
-		Card.card_name = "[Card.card_foil ? "foil " : ""][Card.card_name]"
-
-		src.cards += Card
-		src.card_type_friend -= card_type
-		return 1
-
-	proc/generate_area_card()
-		if (!src.card_type_area.len)
-			return 0
-
-		var/card_type = pick(card_type_area)
-		var/datum/playing_card/griffening/area/Card = new card_type()
-		Card.card_back = "trade"
-		Card.card_face = "trade-general[rand(1, 8)]"
-		if (prob(10))
-			Card.card_foil = 1
-
-		Card.card_name = "[Card.card_foil ? "foil " : ""][Card.card_name]"
-
-		src.cards += Card
-		return 1
-
-	proc/generate_effect_card()
-		if (!src.card_type_effect.len)
-			return 0
-
-		var/card_type = pick(card_type_effect)
-		var/datum/playing_card/griffening/effect/Card = new card_type()
-		Card.card_back = "trade"
-		Card.card_face = "trade-general[rand(1, 8)]"
-		if (prob(10))
-			Card.card_foil = 1
-
-		Card.card_name = "[Card.card_foil ? "foil " : ""][Card.card_name]"
-
-		src.cards += Card
-		return 1
-
-/obj/item/playing_cards/clow
+//Clow
+//--//
+/obj/item/card_group/clow
 	desc = "A good set if you want to play 52 pickup."
-	icon_state = "deck-clow"
-	card_back = "clow"
+	card_style = "clow"
+	total_cards = 52
+	card_name = "Clow"
 
 	New()
 		..()
-		var/datum/playing_card/Card
-		for (var/i = 1, i <= 52, i++)
-			Card = new()
-			Card.card_name = "\improper Clow card #[i]"
-			Card.card_desc = "Are these supposed to be blank?"
-			Card.card_back = "clow"
-			Card.card_face = "clow1"
-			src.cards += Card
+		for(var/i in 1 to total_cards)
+			var/obj/item/playing_card/card = new /obj/item/playing_card(src)
+			stored_cards += card
+			card.icon_state = "clow-1-1"
+			card.name = "Clow Card #[i]"
+			update_card_information(card)
+			card.update_stored_info()
+		update_group_sprite()
 
-/obj/item/card_box
-	name = "deck box"
-	desc = "A little cardboard box for keeping card decks in. Woah! We're truly in the future with technology like this."
+//Deck Boxes
+//--------//
+
+/obj/item/card_box //three state opening : box,open,empty
+	name = "deckbox"
+	desc = "a box for holding cards."
 	icon = 'icons/obj/items/playing_card.dmi'
-	icon_state = "box"
-	force = 1
-	throwforce = 1
-	w_class = 2
-	var/obj/item/playing_cards/Cards
-	var/open = 0
-	var/icon_closed = "box"
-	var/icon_open = "box-open"
-	var/icon_empty = "box-empty"
-	var/reusable = 1
+	icon_state = "white-box"
+	w_class = W_CLASS_TINY
+	burn_point = 220
+	burn_output = 900
+	burn_possible = 2
+	health = 10
+	var/obj/item/card_group/stored_deck
+	var/box_style = "white"
 
-	suit
-		name = "box of playing cards"
-		desc = "A little cardboard box with a standard 52-card deck in it."
-		icon_state = "box-suit"
-		icon_closed = "box-suit"
-		icon_open = "box-suit-open"
-		icon_empty = "box-suit-empty"
-
-		New()
-			..()
-			src.Cards = new /obj/item/playing_cards/suit(src)
-
-	tarot
-		name = "box of tarot cards"
-		desc = "A little cardboard box with a 78-card tarot deck in it."
-		icon_state = "box-tarot"
-		icon_closed = "box-tarot"
-		icon_open = "box-tarot-open"
-		icon_empty = "box-tarot-empty"
-
-		New()
-			..()
-			src.Cards = new /obj/item/playing_cards/tarot(src)
-
-	trading
-		name = "\improper Spacemen the Grifening deck box"
-		desc = "A little cardboard box with an StG deck in it! Wow!"
-		icon_state = "box-trade"
-		icon_closed = "box-trade"
-		icon_open = "box-trade-open"
-		icon_empty = "box-trade-empty"
-
-		New()
-			..()
-			src.Cards = new /obj/item/playing_cards/trading(src)
-
-	booster
-		name = "\improper Spacemen the Grifening booster pack"
-		desc = "A little pack that has more cards to perfect your StG decks with!"
-		icon_state = "pack-trade"
-		icon_closed = "pack-trade"
-		icon_open = "pack-trade-open"
-		icon_empty = "pack-trade-empty"
-		reusable = 0
-		New()
-			..()
-			src.Cards = new /obj/item/playing_cards/trading/booster(src)
-
-	clow
-		name = "\improper Clow Book"
-		desc = "Contents guaranteed to not go flying off in all directions upon opening! Hopefully."
-		icon_state = "box-clow"
-		icon_closed = "box-clow"
-		icon_open = "box-clow-open"
-		icon_empty = "box-clow-empty"
-
-		New()
-			..()
-			src.Cards = new /obj/item/playing_cards/clow(src)
-
+	New()
+		..()
+		icon_state = "[box_style]-box"
 
 	attack_self(mob/user as mob)
-		if (src.reusable)
-			src.open = !src.open
-		else if (!src.open)
-			src.open = 1
+		if(icon_state == "[box_style]-box")
+			if(stored_deck)
+				icon_state = "[box_style]-box-open"
+			else
+				icon_state = "[box_style]-box-empty"
 		else
-			boutput(user, "<span style=\"color:red\">[src] is already open!</span>")
-		src.update_icon()
-		return
+			icon_state = "[box_style]-box"
 
-	attackby(obj/item/W as obj, mob/living/user as mob)
-		if (src.reusable)
-			if (istype(W, /obj/item/playing_cards))
-				var/obj/item/playing_cards/C = W
-				if (!src.open)
-					boutput(user, "<span style=\"color:red\">[src] isn't open, you goof!</span>")
-					return
-
-				if (src.Cards)
-					if (src.Cards.cards.len + C.cards.len > 120)
-						boutput(user, "<span style=\"color:red\">You try your best to stuff more cards into [src], but there's just not enough room!</span>")
-						return
-					else
-						boutput(user, "<span style=\"color:blue\">You add [C] to the cards in [src].</span>")
-						src.Cards.add_cards(C)
-						return
-
-				if (C.cards.len > 60)
-					boutput(user, "<span style=\"color:red\">You try your best to stuff the cards into [src], but there's just not enough room for all of them!</span>")
-					return
-
-				user.u_equip(W)
-				W.layer = initial(W.layer)
-				src.Cards = W
-				W.set_loc(src)
-				src.update_icon()
-				boutput(user, "You stuff [W] into [src].")
+	attack_hand(mob/user)
+		if((loc == user) && (icon_state == "[box_style]-box-open"))
+			user.put_in_hand_or_drop(stored_deck)
+			icon_state = "[box_style]-box-empty"
+			stored_deck = null
 		else
-			return ..()
+			..()
 
-	attack_hand(mob/user as mob)
-		if (src.loc == user && src.Cards && src.open)
-			user.put_in_hand_or_drop(src.Cards)
-			boutput(user, "You take [src.Cards] out of [src].")
-			src.Cards = null
-			src.add_fingerprint(user)
-			src.update_icon()
-			return
-		return ..()
-
-	proc/update_icon()
-		if (src.open && !src.Cards)
-			src.icon_state = src.icon_empty
-		else if (src.open && src.Cards)
-			src.icon_state = src.icon_open
+	attackby(obj/item/W, mob/user)
+		if(!stored_deck && istype(W,/obj/item/card_group))
+			user.u_equip(W)
+			W.set_loc(src)
+			stored_deck = W
+			icon_state = "[box_style]-box-open"
 		else
-			src.icon_state = src.icon_closed
+			..()
 
-/obj/item/paper/card_manual
-	name = "paper - 'Playing Card Tips & Tricks'"
-	info = {"<ul>
-	<li>Click on a card in-hand to flip it over.</li>
-	<li>Click on a hand in-hand to show it.</li>
-	<li>Click on a deck in-hand to shuffle the cards.</li>
-	<li>Click-drag a card, hand or deck onto yourself or someone else to deal a card.</li>
-	<li>Click-drag a card, hand or deck onto another set of cards to combine them.</li>
-	<li>To draw or deal a card face-up, use any intent other than help.</li>
-	<li>To draw or deal a specific card, use grab intent.</li>
-	<li>To tap or untap a card, click-drag the card onto itself.</li>
-	</ul>"}
+/obj/item/card_box/red
+	name = "red deckbox"
+	box_style = "red"
 
+/obj/item/card_box/plain
+	box_style = "plain"
+	name = "box of cards"
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group/plain
+
+/obj/item/card_box/tarot
+	name = "ornate tarot box"
+	box_style = "tarot"
+	w_class = W_CLASS_SMALL
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group/tarot
+
+/obj/item/card_box/hanafuda
+	name = "hanafuda box"
+	box_style = "hanafuda"
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group/hanafuda
+
+/obj/item/card_box/clow
+	name = "\improper Clow Book"
+	desc = "Contents guaranteed to not go flying off in all directions upon opening! Hopefully."
+	box_style = "clow"
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group/clow
+
+/obj/item/stg_box
+	name = "StG Preconstructed Deck Box"
+	desc = "a pick up and play deck of StG cards!"
+	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "stg-box"
+	w_class = W_CLASS_SMALL
+	var/obj/item/card_group/stored_deck
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group/stg(src)
+		update_showcase()
+
+	proc/update_showcase()
+		if(stored_deck)
+			var/obj/item/playing_card/chosen_card = pick(stored_deck.stored_cards)
+			UpdateOverlays(image(icon,chosen_card.icon_state,-1,chosen_card.dir),"card")
+			if(chosen_card.foiled)
+				UpdateOverlays(image(icon,"stg-foil",-1,chosen_card.dir),"foil")
+
+	attack_self(mob/user as mob) //must cut open packaging before getting cards out
+		if(icon_state == "stg-box")
+			user.show_text("You try to tear the packaging, but it's too strong! You'll need something to cut it...","red")
+
+	attackby(obj/item/W, mob/user)
+		if((icon_state == "stg-box") && (istool(W,TOOL_CUTTING) || istool(W,TOOL_SNIPPING)))
+			if(loc != user)
+				user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
+				return
+			else //dropping cards here means the user doesnt have to go through the entire action to get them
+				actions.start(new /datum/action/bar/private/stg_tear(user,src),user)
+				ClearAllOverlays() //is all good now :D
+		else
+			..()
+
+/datum/action/bar/private/stg_tear
+	duration = 10 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	var/mob/user
+	var/obj/item/card_box/card_box
+	var/list/messages = list("brutally hacks at the package's exterior with a sharp object!",
+	"desperately slashes a sharp object against the exterior of the StG Preconstructed Deck Box!",
+	"becomes a blinding blur of motion as they send bits of cardboard packaging into the air like grotesque confetti!",
+	"impales the StG Preconstructed Deck Box, gripping their sharp implement with both hands, forcing the blade down the package as if disembowling it!")
+
+	New(User, Box)
+		user = User
+		card_box = Box
+		..()
+
+	onStart()
+		..()
+		user.visible_message("<span class='alert'><b>[user.name]</b> [pick(messages)]</span>")
+
+	onUpdate()
+		..()
+		if(card_box.loc != user)
+			user.show_text("You need to hold the box if you want enough leverage to rip it to pieces!","red")
+			interrupt(INTERRUPT_ALWAYS)
+		if(!istool(user.equipped(),TOOL_CUTTING) && !istool(user.equipped(),TOOL_SNIPPING))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onEnd()
+		..()
+		if(card_box.icon_state == "stg-box")
+			user.visible_message("<span class='green'><b>[user.name]</b> has thoroughly mutilated the StG Preconstructed Deck Box and retrieves the cards from inside.</span>")
+			card_box.icon_state = "stg-box-torn"
+			user.put_in_hand_or_drop(card_box.stored_deck)
+			var/obj/decal/cleanable/generic/decal = make_cleanable(/obj/decal/cleanable/generic,get_turf(user.loc))
+			decal.color = pick("#000000","#6f0a0a","#a0621b")
+			card_box.stored_deck = null
+			card_box.ClearAllOverlays()
+
+/obj/item/stg_booster
+	name = "StG Booster Pack"
+	icon = 'icons/obj/items/playing_card.dmi'
+	icon_state = "stg-booster"
+	var/obj/item/card_group/stored_deck
+
+	New()
+		..()
+		stored_deck = new /obj/item/card_group(src)
+		stored_deck.desc = "A bunch of Spacemen the Griffening cards."
+		stored_deck.total_cards = 40
+		stored_deck.card_style = "stg"
+		stored_deck.card_name = "Spacemen the Griffening"
+		stored_deck.build_stg()
+
+	attack_self(mob/user as mob)
+		if(icon_state == "stg-booster")
+			icon_state = "stg-booster-open"
+
+	attack_hand(mob/user)
+		if(icon_state == "stg-booster-open")
+			icon_state = "stg-booster-empty"
+			user.put_in_hand_or_drop(stored_deck)
+			stored_deck = null
+		else
+			..()
 
 /* Realistic Shuffling Ahoy! */
 
 // The chance to pull another card from the same stack as opposed to switching,
 // so the "stickyness" of the cards.
-#define CARD_STICK_FACTOR 0.3
+#define CARD_STICK_FACTOR 0.5
 
 // Simulates a riffle shuffle using a markovian model.
 // Why? Fuck it, I have no idea.
 proc/riffle_shuffle(list/deck)
 	// Determines a location near the center of the deck to split from.
-	var/splitLoc = (deck.len / 2) + rand(-deck.len / 5, deck.len / 5)
+
+	var/splitLoc = (deck.len / 2) + rand(-(deck.len) / 5, deck.len / 5)
 
 	// Makes two lists, one for each half of the deck, then clears the original deck.
 	var/list/D1 = deck.Copy(1, splitLoc)
 	var/list/D2 = deck.Copy(splitLoc)
-	deck.len = 0 // Will this work?
+	deck.len = 0
 
 	// Markovian model of the shuffle
 	var/currentStack = rand() > 0.5

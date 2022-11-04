@@ -8,7 +8,7 @@
 	soundproofing = 15
 	p_class = 1
 	plane = PLANE_DEFAULT
-	event_handler_flags = USE_CANPASS
+
 
 	close()
 		var/turf/T = get_turf(src)
@@ -23,7 +23,7 @@
 		..()
 		return
 
-	open()
+	open(entanglelogic, mob/user)
 		if (src.welded)
 			return
 		src.icon = 'icons/obj/large_storage.dmi'
@@ -34,7 +34,7 @@
 	recalcPClass()
 		p_class = initial(p_class)
 
-	CanPass(atom/movable/mover, turf/target, height=0, air_group=0)
+	Cross(atom/movable/mover)
 		return 1
 
 /obj/storage/closet/syndi/hidden

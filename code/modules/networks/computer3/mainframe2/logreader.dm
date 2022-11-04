@@ -35,7 +35,7 @@
 
 	New()
 		..()
-		SPAWN_DBG(0.5 SECONDS)
+		SPAWN(0.5 SECONDS)
 			src.net_id = generate_net_id(src)
 
 			if(!src.link)
@@ -49,9 +49,9 @@
 		if(..() || (status & (NOPOWER|BROKEN)))
 			return
 
-		user.machine = src
+		src.add_dialog(user)
 
-		var/dat = {"<html><head><title>Access Log Reader</title><style>
+		var/list/dat = list({"<html><head><title>Access Log Reader</title><style>
 .conn-box {
 	float: right;
 	width: 12px;
@@ -73,7 +73,7 @@
 	background-color: #888888;
 }
 
-</style></head><body>"}
+</style></head><body>"})
 
 
 		var/readout_class = "conn-error"
@@ -139,7 +139,7 @@
 		else if (refreshing)
 			dat += "<i>Refreshing data, please wait...</i>"
 
-		user.Browse(dat,"window=net_logreader;size=545x302")
+		user.Browse(dat.Join(),"window=net_logreader;size=545x302")
 		onclose(user,"net_logreader")
 		return
 
@@ -150,7 +150,7 @@
 		if (!(usr in range(1)))
 			return
 
-		usr.machine = src
+		src.add_dialog(usr)
 		src.add_fingerprint(usr)
 
 		if (href_list["reset"])
@@ -162,14 +162,14 @@
 			src.host_id = null
 			src.old_host_id = null
 			src.post_status(rem_host, "command","term_disconnect")
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				src.post_status(rem_host, "command","term_connect","device",src.device_tag)
 
 			src.updateUsrDialog()
 			return
 
 		if (href_list["screen"])
-			machine_screen = text2num(href_list["screen"])
+			machine_screen = text2num_safe(href_list["screen"])
 
 		if (href_list["card_name"])
 			filter_name = input("Partial name of card holder", "Card holder name", filter_name) as text|null
@@ -259,7 +259,7 @@
 				arguments += " -- [bash_sanitize(filter_name)]"
 			var/data = list2params(list("command"="record_query","query"="[arguments]"))
 			src.post_status(src.host_id, "command", "term_message", "data", data, "netid", "[net_id]", "device", device_tag)
-			SPAWN_DBG (300)
+			SPAWN(30 SECONDS)
 				if (refresh_id == my_refresh_id && refreshing)
 					timed_out = 1
 					refreshing = 0
@@ -306,7 +306,7 @@
 		//We care very deeply about address_1.
 		if(lowertext(signal.data["address_1"]) != lowertext(src.net_id))
 			if((signal.data["address_1"] == "ping") && ((signal.data["net"] == null) || ("[signal.data["net"]]" == "[src.net_number]")))
-				SPAWN_DBG(0.5 SECONDS) //Send a reply for those curious jerks
+				SPAWN(0.5 SECONDS) //Send a reply for those curious jerks
 					if (signal.transmission_method == TRANSMISSION_WIRE)
 						src.post_status(target, "command", "ping_reply", "device", src.device_tag, "netid", src.net_id, "net", "[net_number]")
 					// else ????
@@ -323,7 +323,7 @@
 				if(target == src.host_id)
 					src.host_id = null
 					src.updateUsrDialog()
-					SPAWN_DBG(0.3 SECONDS)
+					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
 
@@ -337,7 +337,7 @@
 				if(signal.data["data"] != "noreply")
 					src.post_status(target, "command","term_connect","data","noreply","device",src.device_tag)
 				src.updateUsrDialog()
-				SPAWN_DBG(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
+				SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 					src.post_status(target,"command","term_message","data","command=register")
 				return
 
@@ -375,7 +375,7 @@
 
 				src.post_status(target,"command","term_message","data","command=status&status=success")
 				for (var/mob/M in range(1))
-					if (M.machine == src)
+					if (M.using_dialog_of(src))
 						attack_hand(M)
 				return
 
@@ -462,7 +462,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			ret["door_name"] = "[door.name] (ALERT: network indicates this may not be door)"
 		else
 			ret["door_name"] = "Unknown device (0x[door_id])"
-		var/time_n = istext(timestamp) ? text2num(timestamp) : timestamp
+		var/time_n = istext(timestamp) ? text2num_safe(timestamp) : timestamp
 		ret["timestamp"] = time_n
 		var/min = round(time_n / 600)
 		var/sec = round(time_n / 10) - min * 60
@@ -522,7 +522,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 			return
 
 		if (opts["a"])
-			if (opts["s"] && opts["t"] && opts["m"] && params.len)
+			if (opts["s"] && opts["t"] && opts["m"] && length(params))
 				if (!(opts["m"] in list("open","close","lock","unlock","reject")))
 					message_user("")
 				var/mylog = nextlog
@@ -569,8 +569,8 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 					message_user("Invalid timestamp filter format [time_filter], usage: TIMESTAMP_BEGIN:TIMESTAMP_END.")
 					mainframe_prog_exit
 					return
-				time_begin = text2num(tf_list[1])
-				time_end = text2num(tf_list[2])
+				time_begin = text2num_safe(tf_list[1])
+				time_end = text2num_safe(tf_list[2])
 				if (!isnum(time_begin) || !isnum(time_end))
 					message_user("Invalid timestamp filter [time_filter].")
 					mainframe_prog_exit
@@ -584,7 +584,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 				message_user("Error: cannot access logs directory. Please check your permissions and try again.")
 				mainframe_prog_exit
 				return
-			var/count = text2num(opts["l"])
+			var/count = text2num_safe(opts["l"])
 			if (!count)
 				message_user("Invalid count: [opts["l"]]")
 				mainframe_prog_exit
@@ -619,7 +619,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 						records -= Q
 						continue
 					if (!isnum(TS))
-						TS = text2num(TS)
+						TS = text2num_safe(TS)
 						R.fields["timestamp"] = TS
 					if (TS < 0)
 						records -= Q
@@ -642,12 +642,12 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 							continue
 
 				var/list/printing = list()
-				while (printed < count && records.len)
+				while (printed < count && length(records))
 					max = -1
 					for (var/datum/computer/file/record/R in records)
 						var/TS = R.fields["timestamp"]
 						if (!isnum(TS))
-							TS = text2num(TS)
+							TS = text2num_safe(TS)
 							R.fields["timestamp"] = TS
 						if (R.fields["timestamp"] > max && R.fields["timestamp"] < now - 300)
 							max = R.fields["timestamp"]
@@ -709,7 +709,7 @@ proc/accesslog_digest(var/datum/computer/file/record/R, formatted = 0)
 
 
 		var/list/dataList = params2list(data)
-		if (!dataList || !dataList.len)
+		if (!dataList || !length(dataList))
 			return 1
 
 

@@ -3,13 +3,15 @@
 *.rsc
 *.int
 *.lk
+*.mdme
 
-# runtime generated files
-/data/*
+# Runtime generated files
+/data/**/*
+/adventure/**/*
 *.log
-/adventure
+cfg/admin.txt
 
-# ignore build files
+# Build files
 /_stdlib/__build.dm
 z_build_opts.dm
 
@@ -20,11 +22,54 @@ node_modules
 Build System.dm
 
 # Editor Files
-*.sublime-project
-*.sublime-workspace
-*.vscode
-*.idea
+*.sublime-project/*
+*.sublime-workspace/*
+*.vscode/*
+!/.vscode/extensions.json
+*.idea/*
 
-#Misc
+### https://raw.github.com/github/gitignore/cc542de017c606138a87ee4880e5f06b3a306def/Python.gitignore
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore compiled linux libs in the root folder, e.g. librust_g.so
+/*.so
+
+# Ignore the tracy profiler .dll
+prof.dll
+
+# Build tools cache
+/tools/**/.cache
+
+# Local map backups
+/maps/**/backup/
+*.dmm.backup
+
+# Assets build files
+/browserassets/build/
+
+# Local tgui dev server files
+/browserassets/tgui/.tmp/**/*
+/browserassets/tgui/**/*.map
+/browserassets/tgui/**/*.hot-update.*
+
+# Windows image file caches
 Thumbs.db
-/unversioned/*
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Windows shortcuts
+*.lnk
+
+# OSX Junk
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Dedicated unversioned folder
+/unversioned/**/*

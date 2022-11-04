@@ -11,29 +11,29 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	flags = FPRINT | TABLEPASS | OPENCONTAINER
 	rc_flags = 0
+	initial_volume = 40
 	var/list/available_colors = list("white","black","red","rheart","green","blue","orange","pink","pheart","yellow","purple","bee","clown")
 	var/list/rare_colors = list("cluwne","bclown")
 	var/balloon_color = "white"
 	var/last_reag_total = 0
+	var/tied = FALSE
 
 	New()
 		..()
-		var/datum/reagents/R = new/datum/reagents(40)
-		reagents = R
-		R.my_atom = src
-		if (prob(1) && islist(rare_colors) && rare_colors.len)
+		if (prob(1) && islist(rare_colors) && length(rare_colors))
 			balloon_color = pick(rare_colors)
-			update_icon()
-		else if (islist(available_colors) && available_colors.len)
+			UpdateIcon()
+		else if (islist(available_colors) && length(available_colors))
 			balloon_color = pick(available_colors)
-			update_icon()
+			UpdateIcon()
 
 	on_reagent_change()
-		src.update_icon()
+		..()
+		src.UpdateIcon()
 		src.last_reag_total = src.reagents.total_volume
 		src.burst_chance()
 
-	proc/update_icon()
+	update_icon()
 		if (src.reagents)
 			if (src.reagents.total_volume)
 				src.icon_state = "balloon_[src.balloon_color]_[src.reagents.has_reagent("helium") || src.reagents.has_reagent("hydrogen") ? "inflated" : "full"]"
@@ -54,39 +54,55 @@
 			return
 		if (!user && usr)
 			user = usr
-		else if (!user && !usr && ismob(src.loc))
+		else if (!user && !user && ismob(src.loc))
 			user = src.loc
 		if (!ohshit)
 			ohshit = (src.reagents.total_volume /  (src.reagents.maximum_volume - 10)) * 33
 		if (prob(ohshit))
 			smash()
 			if (user)
-				user.visible_message("<span style='color:red'>[src] bursts in [user]'s hands!</span>", \
-				"<span style='color:red'>[src] bursts in your hands! <b>[curse]!</b></span>")
+				user.visible_message("<span class='alert'>[src] bursts in [user]'s hands!</span>", \
+				"<span class='alert'>[src] bursts in your hands! <b>[curse]!</b></span>")
 				user.update_inhands()
 			else
 				var/turf/T = get_turf(src)
 				if (T)
-					T.visible_message("<span style='color:red'>[src] bursts!</span>")
+					T.visible_message("<span class='alert'>[src] bursts!</span>")
 			return
 /*		if (src.reagents.total_volume > 30)
 			if (prob(50))
-				user.visible_message("<span style='color:red'>[src] is overfilled and bursts! <b>[curse]</b></span>")
+				user.visible_message("<span class='alert'>[src] is overfilled and bursts! <b>[curse]</b></span>")
 				smash()
 				return
 */
+	is_open_container()
+		return !src.tied
+
+	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
+		. = ..()
+		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
+		if (!src.reagents)
+			return
+		if (!tied)
+			if(isliving(thrown_by))
+				thrown_by.visible_message("<span class='alert'>[src] spills all over [thrown_by]!</span>", \
+				"<span class='alert'>You forgot to tie off [src] and it spills all over you! <b>[curse]!</b></span>")
+			src.reagents.reaction(get_turf(src))
+			src.reagents.clear_reagents()
+
 	attack_self(var/mob/user as mob)
 		if (!ishuman(user))
-			boutput(user, "<span style='color:blue'>You don't know what to do with the balloon.</span>")
+			boutput(user, "<span class='notice'>You don't know what to do with the balloon.</span>")
 			return
 		var/mob/living/carbon/human/H = user
 
 		var/list/actions = list()
 		if (user.mind && user.mind.assigned_role == "Clown")
 			actions += "Make balloon animal"
-		if (src.reagents.total_volume > 0)
+		if (src.reagents.total_volume > 0 && !src.tied)
 			actions += "Inhale"
-		if (H.urine >= 2)
+			actions += "Tie off"
+		if (H.urine >= 2 && !src.tied)
 			actions += "Pee in it"
 		if (!actions.len)
 			user.show_text("You can't think of anything to do with [src].", "red")
@@ -98,12 +114,12 @@
 			if ("Make balloon animal")
 				if (src.reagents.total_volume > 0)
 					user.visible_message("<b>[user]</b> fumbles with [src]!", \
-					"<span style='color:red'>You fumble with [src]!</span>")
+					"<span class='alert'>You fumble with [src]!</span>")
 					src.burst_chance(user, 100)
 //					user.update_inhands()
 				else
 					if (user.losebreath)
-						boutput(user, "<span style='color:red'>You need to catch your breath first!</span>")
+						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
 						return
 					var/list/animal_types = list("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
 					if (!animal_types || animal_types.len <= 0)
@@ -144,23 +160,28 @@
 						if ("bee")
 							A.color = "#FFDD00"
 					H.losebreath ++
-					//SPAWN_DBG(4 SECONDS)
+					//SPAWN(4 SECONDS)
 						//H.losebreath --
 					qdel(src)
 
 			if ("Inhale")
-				H.visible_message("<span style='color:red'><B>[H] inhales the contents of [src]!</B></span>",\
-				"<span style='color:red'><b>You inhale the contents of [src]!</b></span>")
+				H.visible_message("<span class='alert'><B>[H] inhales the contents of [src]!</B></span>",\
+				"<span class='alert'><b>You inhale the contents of [src]!</b></span>")
 				src.reagents.trans_to(H, 40)
 				return
 
 			if ("Pee in it")
-				H.visible_message("<span style='color:red'><B>[H] pees in [src]!</B></span>",\
-				"<span style='color:red'><b>You pee in [src]!</b></span>")
+				H.visible_message("<span class='alert'><B>[H] pees in [src]!</B></span>",\
+				"<span class='alert'><b>You pee in [src]!</b></span>")
 				playsound(H.loc, 'sound/misc/pourdrink.ogg', 50, 1)
 				H.urine -= 2
-				src.reagents.add_reagent("urine", 20)
+				src.reagents.add_reagent("urine", 8)
 				return
+
+			if ("Tie off")
+				H.visible_message("<span class='alert'><B>[H] ties off [src]!</B></span>",\
+				"<span class='alert'><b>You tie off the opening of [src]!</b></span>")
+				src.tied = TRUE
 
 	afterattack(obj/target, mob/user)
 		if (istype(target, /obj/reagent_dispensers) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
@@ -190,7 +211,7 @@
 		if (ismob(T))
 			T = get_turf(T)
 		if (T)
-			T.visible_message("<span style='color:red'>[src] bursts!</span>")
+			T.visible_message("<span class='alert'>[src] bursts!</span>")
 		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,T)
 		decal.icon_state = "balloon_[src.balloon_color]_pop"
@@ -202,7 +223,8 @@
 
 		qdel(src)
 
-	throw_impact(var/turf/T)
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		var/turf/T = get_turf(A)
 		..()
 		src.smash(T)
 
@@ -213,7 +235,7 @@
 	icon_state = "animal-bee"
 	inhand_image_icon = 'icons/mob/inhand/hand_balloon.dmi'
 	item_state = "balloon"
-	w_class = 2
+	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
 	New()
@@ -223,3 +245,6 @@
 		src.desc = "A little [animal], made out of a balloon! How spiffy!"
 		src.icon_state = "animal-[animal]"
 		src.color = random_saturated_hex_color()
+
+/obj/item/reagent_containers/balloon/naturally_grown
+	desc = "Water balloon fights are a classic way to have fun in the summer. I don't know that chlorine trifluoride balloon fights hold the same appeal for most people. These balloons appear to have been grown naturally."

@@ -23,7 +23,7 @@
 	stock = "i"
 
 	on_bought(var/mob/living/carbon/human/user)
-		boutput(user, "<span style=\"color:red\"><b>Your wounds fade away, but at a cost...</b></span>")
+		boutput(user, "<span class='alert'><b>Your wounds fade away, but at a cost...</b></span>")
 		user.full_heal()
 		return 1
 
@@ -66,15 +66,9 @@
 	cost = 1
 	stock = 10
 
-/datum/zoldorfitem/card_manual
-	name = "Playing Card Tips"
-	path = /obj/item/paper/card_manual
-	cost = 1
-	stock = 5
-
 /datum/zoldorfitem/tarot
 	name = "Deck of Tarot Cards"
-	path = /obj/item/playing_cards/tarot
+	path = /obj/item/card_box/tarot
 	cost = 25
 	stock = 5
 

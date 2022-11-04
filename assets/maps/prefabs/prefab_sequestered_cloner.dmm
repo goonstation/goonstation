@@ -1,0 +1,1410 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ay" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"aG" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"bm" = (
+/obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"co" = (
+/obj/machinery/power/generatorTemp{
+	desc = "A high efficiency thermoelectric generator. How the heck did this get here?"
+	},
+/obj/cable{
+	icon_state = "0-10"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"cQ" = (
+/obj/item/wrench,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"dm" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"do" = (
+/mob/living/critter/fermid,
+/obj/decal/cleanable/eggsplat,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"dD" = (
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"dH" = (
+/turf/simulated/floor/purple/side,
+/area/prefab/sequestered_cloner)
+"er" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A security camera that is not on but, instead, off.";
+	dir = 4;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camerax";
+	name = "security camera"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"eL" = (
+/obj/iv_stand,
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"ff" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/iv_drip{
+	pixel_x = 7;
+	pixel_y = -4
+	},
+/obj/item/reagent_containers/iv_drip,
+/obj/item/reagent_containers/iv_drip{
+	pixel_x = -5;
+	pixel_y = 4
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"ge" = (
+/obj/cable{
+	icon_state = "1-10"
+	},
+/obj/cable{
+	icon_state = "1-6"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/prefab/sequestered_cloner)
+"ht" = (
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor/purple/side,
+/area/prefab/sequestered_cloner)
+"hw" = (
+/obj/decal/fakeobjects/skeleton,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"hB" = (
+/turf/variableTurf/clear,
+/area/space)
+"jk" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"jJ" = (
+/obj/machinery/atmospherics/portables_connector/east,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"mm" = (
+/obj/storage/closet/emergency{
+	pixel_x = -8
+	},
+/obj/storage/closet/fire{
+	pixel_x = 8
+	},
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"mY" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 10
+	},
+/turf/simulated/floor/caution/south,
+/area/prefab/sequestered_cloner)
+"nO" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 4;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"nS" = (
+/obj/securearea{
+	desc = "Careless use of experimental teleportation technology may be hazardous to your health.";
+	name = "Molecular Integrity Hazard";
+	pixel_y = -4
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/sequestered_cloner)
+"ob" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"oh" = (
+/obj/decal/cleanable/blood/gibs/core,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"oO" = (
+/obj/cable{
+	icon_state = "9-10"
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/scorched2,
+/area/prefab/sequestered_cloner)
+"oU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large video server. Garish branding reads Subliminal Mission Implanter Mk.2! Now with fewer seizures!";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive-p";
+	name = "video bank";
+	pixel_x = -7;
+	pixel_y = -1
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"pc" = (
+/obj/item/rods/steel{
+	pixel_x = -6;
+	pixel_y = -9
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"pM" = (
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta{
+	setup_os_string = "Seq_Cloner"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "0-10"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/sequestered_cloner)
+"pR" = (
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/yellow/corner,
+/area/prefab/sequestered_cloner)
+"pT" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"qa" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = -6;
+	pixel_y = 2
+	},
+/obj/item/storage/firstaid/toxin{
+	pixel_x = 7;
+	pixel_y = 2
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A security camera that is not on but, instead, off.";
+	dir = 8;
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camerax";
+	name = "security camera"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 5
+	},
+/area/prefab/sequestered_cloner)
+"qk" = (
+/obj/table/auto,
+/obj/item/storage/box/butter{
+	pixel_x = 8;
+	pixel_y = -2
+	},
+/obj/item/storage/box/butter{
+	pixel_x = 8;
+	pixel_y = 11
+	},
+/obj/item/storage/box/diskbox{
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/sequestered_cloner)
+"rk" = (
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"rL" = (
+/obj/item/cable_coil,
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"rW" = (
+/obj/storage/secure/closet/command/chief_engineer/puzzle{
+	locked = 0;
+	pixel_x = -8
+	},
+/obj/item_dispenser/idcarddispenser{
+	pixel_x = 7
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 1
+	},
+/area/prefab/sequestered_cloner)
+"sb" = (
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"tv" = (
+/obj/decal/cleanable/cobweb,
+/obj/machinery/networked/storage/tape_drive{
+	bank_id = "Main";
+	locked = 0;
+	read_only = 1;
+	setup_drive_type = /obj/item/disk/data/tape/seq_cloner_logs
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-6"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/prefab/sequestered_cloner)
+"tI" = (
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/sequestered_cloner)
+"tJ" = (
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"tK" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"tW" = (
+/obj/wingrille_spawn/auto/crystal,
+/obj/window_blinds/cog2{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"ul" = (
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = 3;
+	pixel_y = -7
+	},
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = 12;
+	pixel_y = 6
+	},
+/obj/cable{
+	icon_state = "2-10"
+	},
+/obj/cable{
+	icon_state = "4-10"
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/purple/corner{
+	dir = 8
+	},
+/area/prefab/sequestered_cloner)
+"uy" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"vg" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "1-5"
+	},
+/obj/cable{
+	icon_state = "1-2";
+	pixel_x = -15
+	},
+/turf/simulated/floor/purple/side,
+/area/prefab/sequestered_cloner)
+"xn" = (
+/obj/machinery/atmospherics/portables_connector/west,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"xv" = (
+/obj/stool/chair/comfy/barber_chair{
+	desc = "A chair with auto-release restraint straps. It's in a state of disrepair.";
+	dir = 1;
+	name = "strapped chair"
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"xI" = (
+/obj/cable,
+/obj/machinery/power/apc/puzzle_apc/nopoweralert{
+	autoname_on_spawn = 0;
+	desc = "A note is attached: To leave, power this APC and press the neighboring button. The APC can be a little slow.";
+	name = "Engine Test APC";
+	pixel_x = -24;
+	pixel_y = -2;
+	start_charge = 0
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/yellow,
+/area/prefab/sequestered_cloner/puzzle)
+"xQ" = (
+/obj/machinery/door_control{
+	id = "seq_cloner_exit";
+	name = "proceed";
+	pixel_x = -8;
+	pixel_y = -22
+	},
+/obj/machinery/drainage,
+/obj/item/sponge{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/obj/machinery/shower{
+	dir = 4
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 6
+	},
+/area/prefab/sequestered_cloner)
+"xY" = (
+/obj/item/rods/steel{
+	pixel_x = -5;
+	pixel_y = -4
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"ym" = (
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/prefab/sequestered_cloner)
+"yt" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 10
+	},
+/obj/item/rods/steel{
+	pixel_x = 7;
+	pixel_y = -8
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"yE" = (
+/obj/table/wood/auto,
+/obj/item/paper_bin{
+	pixel_x = 6;
+	pixel_y = 6
+	},
+/obj/item/pen{
+	pixel_x = 3;
+	pixel_y = -3
+	},
+/obj/item/clipboard{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"zd" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/poddoor/pyro{
+	desc = "An arrow points to the neighboring APC and button.";
+	dir = 4;
+	id = "TEG_test_exit";
+	name = "test exit gate"
+	},
+/turf/simulated/floor/yellow/corner,
+/area/prefab/sequestered_cloner)
+"zf" = (
+/obj/decal/fakeobjects/creepytv{
+	desc = "It's a looping video. Instructions on how to set up a T.E.G. and iconography of the Syndicate are interlaced with happy sounds. Then it turns to cruel images interlaced with NT logos...";
+	name = "educational television"
+	},
+/obj/machinery/light{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"zn" = (
+/obj/machinery/door_control{
+	id = "TEG_test_exit";
+	pixel_x = 7;
+	pixel_y = 9
+	},
+/turf/unsimulated/wall/setpieces/hospital/window,
+/area/prefab/sequestered_cloner/puzzle)
+"zr" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/table/wood/auto{
+	pixel_x = -3;
+	pixel_y = 2
+	},
+/obj/item/device/light/zippo/gold{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/paper/new_agent_note{
+	pixel_x = -7;
+	pixel_y = 6
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 5
+	},
+/area/prefab/sequestered_cloner)
+"Bk" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Bv" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Bz" = (
+/obj/decal/fakeobjects/tallsmes,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 10
+	},
+/area/prefab/sequestered_cloner)
+"BJ" = (
+/obj/machinery/door/poddoor/pyro{
+	density = 0;
+	dir = 4;
+	icon_state = "pdoor0";
+	id = "seq_privacy";
+	name = "lockdown gate";
+	opacity = 0
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/purple/checker,
+/area/prefab/sequestered_cloner)
+"Cw" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A large rack of server modules.  It doesn't seem to be in service.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server0";
+	name = "downed server"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/prefab/sequestered_cloner)
+"Dg" = (
+/obj/cable{
+	icon_state = "6-8"
+	},
+/obj/item/rods/steel{
+	pixel_y = -2
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"El" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 8;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Em" = (
+/obj/item/rods/steel{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/machinery/atmospherics/pipe/manifold/overfloor/north,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"EE" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Fe" = (
+/obj/machinery/door_control{
+	id = "seq_education_exit";
+	name = "proceed";
+	pixel_x = -8;
+	pixel_y = -22
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 6
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"FE" = (
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Gc" = (
+/obj/machinery/computer/cloning{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/prefab/sequestered_cloner)
+"Gg" = (
+/obj/machinery/sleeper{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Gw" = (
+/obj/storage/secure/closet/command{
+	locked = 0;
+	open = 1;
+	pixel_x = -8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/prefab/sequestered_cloner)
+"GF" = (
+/obj/cable{
+	icon_state = "4-9"
+	},
+/obj/cable{
+	icon_state = "2-9"
+	},
+/obj/decal/cleanable/oil,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/prefab/sequestered_cloner)
+"GG" = (
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"GO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 6
+	},
+/obj/item/rods/steel{
+	pixel_x = -6;
+	pixel_y = 6
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"HQ" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "seq_release";
+	name = "exit gate"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Jo" = (
+/obj/cable{
+	icon_state = "6-10"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Km" = (
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"KO" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Lf" = (
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = 9;
+	pixel_y = 7
+	},
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = -1
+	},
+/obj/cable{
+	icon_state = "0-9"
+	},
+/obj/cable{
+	icon_state = "0-5"
+	},
+/obj/cable{
+	icon_state = "0-10"
+	},
+/obj/cable{
+	icon_state = "0-6"
+	},
+/obj/cable,
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Lh" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 5
+	},
+/turf/simulated/floor/bluewhite{
+	dir = 10
+	},
+/area/prefab/sequestered_cloner)
+"Lr" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/device/light/flashlight,
+/turf/simulated/floor/damaged2,
+/area/prefab/sequestered_cloner)
+"LF" = (
+/obj/machinery/atmospherics/binary/circulatorTemp,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"LS" = (
+/obj/cable{
+	icon_state = "5-9"
+	},
+/turf/unsimulated/wall/auto/reinforced/supernorn,
+/area/prefab/sequestered_cloner)
+"Me" = (
+/obj/decal/cleanable/blood/tracks,
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	id = "seq_cloner_exit";
+	name = "reinforced airlock"
+	},
+/turf/simulated/floor/red/redblackchecker,
+/area/prefab/sequestered_cloner)
+"NM" = (
+/obj/machinery/vending/coffee,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"NY" = (
+/obj/machinery/door_control{
+	id = "seq_cloner_containment";
+	name = "cloner containment toggle";
+	pixel_x = 8;
+	pixel_y = -23
+	},
+/obj/blind_switch/area/south{
+	pixel_y = -22
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/purple/side{
+	dir = 6
+	},
+/area/prefab/sequestered_cloner)
+"Ob" = (
+/obj/machinery/door_control{
+	id = "seq_release";
+	pixel_x = 24;
+	pixel_y = 9
+	},
+/obj/storage/secure/closet/fridge{
+	locked = 0
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = 9;
+	pixel_y = -6
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = 9;
+	pixel_y = -1
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = 9;
+	pixel_y = 4
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = 9;
+	pixel_y = 9
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_y = -6
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_y = -1
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_y = 4
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_y = 9
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -9;
+	pixel_y = -6
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -9;
+	pixel_y = -1
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -9;
+	pixel_y = 4
+	},
+/obj/item/plant/herb/cannabis/white/spawnable{
+	pixel_x = -9;
+	pixel_y = 9
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 6
+	},
+/area/prefab/sequestered_cloner)
+"OE" = (
+/obj/cable{
+	icon_state = "5-6"
+	},
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/damaged2,
+/area/prefab/sequestered_cloner)
+"OY" = (
+/obj/cable{
+	icon_state = "5-6"
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/prefab/sequestered_cloner)
+"Pt" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 9
+	},
+/obj/item/rods/steel{
+	pixel_x = -6;
+	pixel_y = -6
+	},
+/obj/cable{
+	icon_state = "5-10"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"PD" = (
+/obj/machinery/atmospherics/unary/furnace_connector{
+	dir = 1
+	},
+/obj/machinery/power/furnace/thermo,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Qy" = (
+/obj/machinery/clonepod,
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/prefab/sequestered_cloner)
+"QR" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
+	id = "seq_education_exit";
+	name = "reinforced airlock"
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"Rp" = (
+/obj/item/rods/steel{
+	pixel_x = -4;
+	pixel_y = 11
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Rz" = (
+/obj/machinery/door_control{
+	id = "seq_privacy";
+	name = "privacy door toggle";
+	pixel_x = -24;
+	pixel_y = -10
+	},
+/turf/simulated/floor/purple/side{
+	dir = 8
+	},
+/area/prefab/sequestered_cloner)
+"RZ" = (
+/obj/machinery/atmospherics/binary/circulatorTemp/right{
+	pixel_x = -1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Sf" = (
+/obj/machinery/light/incandescent/netural,
+/obj/cable{
+	icon_state = "5-8"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"SK" = (
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = 4;
+	pixel_y = -8
+	},
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = -7;
+	pixel_y = 4
+	},
+/obj/cable{
+	icon_state = "2-10"
+	},
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"SX" = (
+/obj/machinery/door/poddoor/pyro{
+	dir = 4;
+	id = "seq_cloner_containment";
+	name = "cloner containment gate"
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 4
+	},
+/turf/simulated/floor/blue/checker,
+/area/prefab/sequestered_cloner)
+"Uf" = (
+/obj/machinery/vending/monkey{
+	icon_state = "monkey-broken";
+	status = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"Ur" = (
+/obj/cable{
+	icon_state = "2-9"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Uu" = (
+/obj/item/rods/steel{
+	pixel_y = 2
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Ux" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/meter,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"Vt" = (
+/obj/storage/secure/closet/command{
+	locked = 0;
+	open = 1;
+	pixel_x = -8
+	},
+/obj/storage/secure/closet/command{
+	locked = 0;
+	open = 1;
+	pixel_x = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 9
+	},
+/area/prefab/sequestered_cloner)
+"VE" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 1
+	},
+/obj/machinery/meter,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"VK" = (
+/obj/decal/fakeobjects/teleport_pad,
+/obj/machinery/door/window{
+	dir = 1
+	},
+/obj/storage/secure/closet/fridge/kitchen{
+	locked = 0
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/simulated/floor/caution/misc,
+/area/prefab/sequestered_cloner)
+"WE" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"WK" = (
+/obj/machinery/power/data_terminal,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/machinery/networked/mainframe/seq_cloner{
+	pixel_x = 5;
+	pixel_y = -2;
+	tag = "Seq_Cloner"
+	},
+/obj/submachine/slot_machine{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/turf/simulated/floor/yellow,
+/area/prefab/sequestered_cloner)
+"WS" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor/south,
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"WX" = (
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/prefab/sequestered_cloner)
+"XK" = (
+/obj/item/rods/steel{
+	pixel_x = -8;
+	pixel_y = -7
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"XO" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 1
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"XS" = (
+/obj/stool/chair/yellow{
+	dir = 1
+	},
+/obj/item/disk/data/floppy/read_only{
+	desc = "A discarded disk. A serial number was lazily written on, now faded.";
+	name = "discarded floppy";
+	pixel_x = -3;
+	pixel_y = 9
+	},
+/turf/simulated/floor,
+/area/prefab/sequestered_cloner)
+"Yg" = (
+/obj/item/rods/steel{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/simulated/floor/plating,
+/area/prefab/sequestered_cloner)
+"ZR" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/simulated/floor/engine,
+/area/prefab/sequestered_cloner)
+"ZS" = (
+/obj/machinery/clonegrinder,
+/turf/simulated/floor/purple/side{
+	dir = 5
+	},
+/area/prefab/sequestered_cloner)
+
+(1,1,1) = {"
+hB
+hB
+hB
+hB
+tI
+tI
+tI
+tI
+tI
+tI
+tI
+hB
+hB
+hB
+hB
+"}
+(2,1,1) = {"
+hB
+hB
+hB
+tI
+tI
+Vt
+Gw
+Gw
+OY
+Bz
+tI
+tI
+hB
+hB
+hB
+"}
+(3,1,1) = {"
+hB
+hB
+hB
+tI
+tI
+rW
+Km
+pR
+WX
+GF
+xI
+tI
+tI
+hB
+hB
+"}
+(4,1,1) = {"
+hB
+hB
+hB
+tI
+WK
+zr
+ge
+Ob
+tI
+zd
+zn
+tI
+tI
+tI
+hB
+"}
+(5,1,1) = {"
+hB
+hB
+tI
+tI
+tI
+tI
+HQ
+LS
+tI
+Dg
+tJ
+rk
+ay
+tI
+tI
+"}
+(6,1,1) = {"
+EE
+hw
+bm
+mm
+bm
+Km
+OE
+Km
+tI
+tJ
+Ur
+XK
+dD
+GG
+tI
+"}
+(7,1,1) = {"
+EE
+EE
+Bv
+FE
+Bv
+Jo
+rL
+jk
+tI
+rk
+GO
+Ux
+tK
+Yg
+tI
+"}
+(8,1,1) = {"
+EE
+do
+bm
+Lr
+bm
+Km
+oO
+KO
+tI
+ZR
+Em
+PD
+El
+Sf
+tI
+"}
+(9,1,1) = {"
+hB
+hB
+tI
+tI
+tI
+tI
+BJ
+tI
+tI
+rk
+aG
+LF
+Pt
+tJ
+tI
+"}
+(10,1,1) = {"
+hB
+hB
+hB
+tI
+tv
+Rz
+ym
+Gg
+tI
+Uu
+xn
+co
+jJ
+tJ
+tI
+"}
+(11,1,1) = {"
+hB
+hB
+hB
+tI
+Cw
+Lf
+dH
+Bk
+tI
+rk
+pT
+RZ
+WS
+tJ
+tI
+"}
+(12,1,1) = {"
+hB
+hB
+hB
+tI
+pM
+XS
+ht
+NM
+tI
+pc
+aG
+XO
+nO
+Rp
+tI
+"}
+(13,1,1) = {"
+hB
+hB
+hB
+tI
+qk
+SK
+vg
+nS
+tI
+rk
+yt
+VE
+dm
+tJ
+tI
+"}
+(14,1,1) = {"
+hB
+hB
+hB
+tI
+ZS
+ul
+mY
+VK
+tI
+ob
+cQ
+oh
+xY
+rk
+tI
+"}
+(15,1,1) = {"
+hB
+hB
+hB
+tI
+tI
+Gc
+NY
+nS
+tI
+rk
+uy
+WE
+Uf
+tI
+tI
+"}
+(16,1,1) = {"
+hB
+hB
+hB
+hB
+tI
+tW
+SX
+tI
+tI
+tI
+QR
+tI
+tI
+tI
+hB
+"}
+(17,1,1) = {"
+hB
+hB
+hB
+hB
+tI
+Qy
+Lh
+Me
+er
+sb
+Fe
+tI
+tI
+hB
+hB
+"}
+(18,1,1) = {"
+hB
+hB
+hB
+hB
+tI
+qa
+xQ
+tI
+zf
+xv
+eL
+tI
+hB
+hB
+hB
+"}
+(19,1,1) = {"
+hB
+hB
+hB
+hB
+tI
+tI
+tI
+tI
+oU
+yE
+ff
+tI
+hB
+hB
+hB
+"}
+(20,1,1) = {"
+hB
+hB
+hB
+hB
+hB
+hB
+hB
+tI
+tI
+tI
+tI
+tI
+hB
+hB
+hB
+"}

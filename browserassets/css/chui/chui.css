@@ -2,7 +2,13 @@
 * STRUCTURE
 **************************/
 
-html, body {margin: 0; padding: 0; height: 100%; position: relative;}
+html,
+body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+	position: relative;
+}
 body {
 	background-color: #ff00e4;
 	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -206,44 +212,44 @@ table {
 
 /* CUSTOM SCROLLBARS START */
 .nano > .nano-content {
-  position      : absolute;
-  overflow-y	: scroll;
-  top           : 0;
-  right         : 0;
-  bottom        : 0;
-  left          : 0;
+	position: absolute;
+	overflow-y: scroll;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
 }
 .nano > .nano-content:focus {
-  outline: thin dotted;
+	outline: thin dotted;
 }
 .nano > .nano-content::-webkit-scrollbar {
-  display: none;
+	display: none;
 }
 .has-scrollbar > .nano-content::-webkit-scrollbar {
-  display: block;
+	display: block;
 }
 .nano > .nano-pane {
-  background : #21272c;
-  position   : absolute;
-  width      : 10px;
-  right      : 0;
-  top        : 0;
-  bottom     : 17px; /* #resizeArea height + padding */
-  visibility : hidden\9; /* Target only IE7 and IE8 with this hack */
-  opacity    : 0.75;
-  -webkit-transition    : .2s;
-  -moz-transition       : .2s;
-  -o-transition         : .2s;
-  transition            : .2s;
+	background: #21272c;
+	position: absolute;
+	width: 10px;
+	right: 0;
+	top: 0;
+	bottom: 17px; /* #resizeArea height + padding */
+	visibility: hidden\9; /* Target only IE7 and IE8 with this hack */
+	opacity: 0.75;
+	-webkit-transition: .2s;
+	-moz-transition: .2s;
+	-o-transition: .2s;
+	transition: .2s;
 }
 .nano > .nano-pane > .nano-slider {
-  background: #58B4DC;
-  position              : relative;
-  margin                : 0;
+	background: #58B4DC;
+	position: relative;
+	margin: 0;
 }
 .nano:hover > .nano-pane, .nano-pane.active, .nano-pane.flashed {
-  visibility : visible\9; /* Target only IE7 and IE8 with this hack */
-  opacity    : 1;
+	visibility: visible\9; /* Target only IE7 and IE8 with this hack */
+	opacity: 1;
 }
 /* CUSTOM SCROLLBARS END */
 
@@ -303,9 +309,7 @@ table {
 	top: -8px; /* height of .button .top + .button border-top width */
 	background: #4f555c;
 }
-.button:after {
-
-}
+.button:after {}
 /* Left vertical shadow (active only) */
 .button:active:after {
 	content: " ";
@@ -408,7 +412,6 @@ table {
 	bottom: -4px;
 	background-image: url('btn-contrast-active-br.gif');
 }
-
 
 /* Alt button styles */
 

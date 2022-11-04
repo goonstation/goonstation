@@ -1,0 +1,32 @@
+@use '../colors.scss';
+@use '../components/Button.scss';
+
+$categories: (
+  'sidearm': colors.$teal,
+  'loadout': colors.$yellow,
+  'utility': colors.$blue,
+  'ammo': colors.$orange,
+  'assistant': colors.$grey,
+);
+
+.WeaponVendor {
+  @each $category, $color in $categories {
+    .Button--color--#{$category} {
+      @include Button.button-color($color);
+    }
+  }
+}
+
+@each $category, $color in $categories {
+  .WeaponVendor__Credits {
+    @at-root &--#{$category} {
+      color: $color;
+    }
+  }
+}
+
+.WeaponVendor__Row {
+  &:not(:last-child) {
+    border-bottom: 2px solid colors.bg(colors.$primary);
+  }
+}

@@ -1,24 +1,92 @@
+var/list/ai_move_scheduled = list()
+
 /datum/aiHolder
-	var/mob/living/critter/owner = null
+	var/mob/living/owner = null
+	var/mob/living/carbon/human/ownhuman = null // for use when you would normally cast holder.owner as human for a proc.
 	var/atom/target = null // the simplest blackboard ever
-	var/datum/aiTask/current_task = null  // what the critter is currently doing
+	///What the critter is currently doing. Do not set directly, use switch_to
+	var/datum/aiTask/current_task = null
 	var/datum/aiTask/default_task = null  // what behavior the critter will fall back on
 	var/list/task_cache = list()
+	/// The default prioritizer will consume tasks from this list in order before it picks any others
+	var/list/datum/aiTask/priority_tasks = list()
+	var/move_target = null
+
+	var/move_dist = 0
+	var/move_reverse = 0
+	var/move_side = 0 //merge with reverse later ok messy
+	var/list/move_path = null
 
 	var/enabled = 1
 
+	var/exclude_from_mobs_list = 0
+
+	New(var/mob/M)
+		..()
+		owner = M
+		if(istype(M, /mob/living/carbon/human))
+			ownhuman = M
+		if (exclude_from_mobs_list)
+			mobs.Remove(M)
+			M.mob_flags |= LIGHTWEIGHT_AI_MOB
+
+		var/turf/T = get_turf(M)
+		var/area/AR = get_area(M)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+			ai_mobs.Add(M)
+		else
+			M.skipped_mobs_list |= SKIPPED_AI_MOBS_LIST
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, M)
+
+		if(owner?.abilityHolder)
+			if(!owner.abilityHolder.getAbility(/datum/targetable/ai_toggle))
+				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
+
+	disposing()
+		..()
+		stop_move()
+		if (owner)
+			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)
+				owner.mob_flags &= ~LIGHTWEIGHT_AI_MOB
+				mobs.Add(owner)
+			ai_mobs.Remove(owner)
+			owner = null
+			ownhuman = null
+
+		target = null
+		current_task?.dispose()
+		current_task = null
+		default_task?.dispose()
+		default_task = null
+		if(task_cache)
+			for(var/key in task_cache)
+				var/datum/aiTask/task = task_cache[key]
+				task?.dispose()
+			task_cache.len = 0
+			task_cache = null
+		..()
+
+	proc/switch_to(var/datum/aiTask/task)
+		current_task = task
+		if(task?.ai_turbo)
+			owner.mob_flags |= HEAVYWEIGHT_AI_MOB
+		task?.switched_to()
+
 	proc/tick()
-		if(!enabled) 
-			walk(owner, 0)
+		if(isdead(owner) && enabled)
+			src.disable()
+		if(!enabled)
 			return
 		if (!current_task)
-			current_task = default_task
+			switch_to(default_task)
 		if (current_task)
 			current_task.tick()
 
 			var/datum/aiTask/T = current_task.next_task()
 			if (T)
-				current_task = T
+				if(current_task.ai_turbo)
+					owner.mob_flags &= ~HEAVYWEIGHT_AI_MOB
+				switch_to(T)
 				T.reset()
 
 	proc/get_instance(taskType, list/nparams)
@@ -32,20 +100,113 @@
 		// switch into the wait task NOW, and add our current task as the task to return to
 		var/datum/aiTask/timed/wait/waitTask = src.get_instance(/datum/aiTask/timed/wait, list(src))
 		waitTask.transition_task = current_task
-		current_task = waitTask
+		switch_to(waitTask)
 
 	proc/interrupt()
 		if(src.enabled)
-			current_task = default_task
+			current_task?.reset()
+			switch_to(default_task)
+			stop_move()
+			tick()
 
 	proc/die()
-		src.enabled = 0
-		walk(owner, 0)
-		current_task = null
+		src.disable()
+
+	//store a path and move to it with speed - useful for going fast but using smarter pathfinding
+	proc/move_to_with_path(var/A, var/list/path = null, var/dist = 1)
+		if(!length(path))
+			CRASH("Tried to do AI pathing on an empty path. Don't do that.")
+		if (!move_target)
+			ai_move_scheduled += src
+		move_path = path
+		move_target = A
+		move_dist = dist
+		move_reverse = 0
+		move_side = 0
+
+	proc/move_to(var/A, var/dist = 1)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = 0
+		move_side = 0
+
+	proc/move_away(var/A, var/dist = 6)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = 1
+		move_side = 0
+
+	proc/move_circ(var/A, var/dist = 1)
+		if (!move_target)
+			ai_move_scheduled += src
+		move_target = A
+		move_dist = dist
+		move_reverse = prob(50)?0:1
+		move_side = 1
+
+	proc/stop_move()
+		move_target = null
+		move_path = null
+		ai_move_scheduled -= src
+		owner.move_dir = 0
+		walk(owner,0)
+
+	proc/move_step()
+		if (src.move_side)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
+				var/turn = src.move_reverse?90:-90
+				src.owner.move_dir = turn( get_dir(src.owner,get_turf(src.move_target)),turn )
+				src.owner.process_move()
+		else if (src.move_reverse)
+			if (GET_DIST(src.owner,get_turf(src.move_target)) < src.move_dist)
+				var/turn = 180
+				if (prob(50)) //fudge walk away behavior
+					if (prob(50))
+						turn -= 45
+					else
+						turn += 45
+				src.owner.move_dir = turn(get_dir(src.owner,get_turf(src.move_target)),turn)
+				src.owner.process_move()
+		else if (length(src.move_path))
+			var/turf/next
+			if(src.move_path[1] == src.owner.loc) //check you've completed a step before removing it from the path
+				src.move_path.Cut(1, 2)
+
+			if(length(src.move_path))
+				next = src.move_path[1]
+			else
+				next = src.move_target
+
+			if (GET_DIST(src.owner,get_turf(next)) > src.move_dist)
+				src.owner.move_dir = get_dir(src.owner,get_turf(next))
+				src.owner.process_move()
+		else
+			if (GET_DIST(src.owner,get_turf(src.move_target)) > src.move_dist)
+				src.owner.move_dir = get_dir(src.owner,get_turf(src.move_target))
+				src.owner.process_move()
+
+
+	proc/was_harmed(obj/item/W, mob/M)
+		.=0
+
+	proc/disable()
+		src.enabled = FALSE
+		src.stop_move()
+
+	proc/enable()
+		src.enabled = TRUE
+		src.interrupt()
 
 /datum/aiTask
 	var/name = "task"
 	var/datum/aiHolder/holder = null
+	var/atom/target = null
+	/// if this is set, temporarily give this mob the HEAVYWEIGHT_AI mob flag for the duration of this task
+	var/ai_turbo = FALSE
 
 	New(parentHolder)
 		..()
@@ -53,12 +214,20 @@
 
 		reset()
 
-	proc/on_tick()	
+	disposing()
+		holder = null
+		..()
+
+	///Called when the task is switched to by the holder
+	proc/switched_to()
+
+	proc/on_tick()
 
 	proc/next_task()
 		return null
 
 	proc/on_reset()
+		holder.target = null
 
 	proc/evaluate() // evaluate the current environment and assign priority to switching to this task
 		return 0
@@ -71,7 +240,7 @@
 		on_tick()
 
 	proc/reset()
-		on_reset()		
+		on_reset()
 
 // an AI task that evaluates all tasks within its list of transition tasks
 // immediately transitions to task with highest evaluation score after first tick
@@ -82,6 +251,10 @@
 		transition_tasks[transTask] = 0
 
 	next_task()
+		if (length(holder.priority_tasks)) //consume priority tasks first
+			var/datum/aiTask/chosen_one = holder.priority_tasks[1]
+			holder.priority_tasks -= chosen_one
+			return chosen_one
 		var/mp = -100
 		var/mT = null
 		for (var/T in transition_tasks)
@@ -168,7 +341,7 @@
 		if(!action_instance)
 			// create and start the action
 			if(!action_params) // a list of length 0 is perfectly acceptable (no params), but a null list means this wasn't set up
-				set_action_params(collect_action_params())				
+				set_action_params(collect_action_params())
 			action_instance = actions.start(new action_path(arglist(action_params)), holder.owner)
 
 	reset()
@@ -227,7 +400,7 @@
 
 	reset()
 		..()
-		if(subtasks && subtasks.len >= 1)
+		if(length(subtasks))
 			current_subtask = subtasks[1]
 			current_subtask.reset()
 		subtask_index = 1
@@ -242,6 +415,7 @@
 
 	// next task is not defined here, handled by sequence
 	proc/failed()
+		fails++
 		return fails >= max_fails
 
 	proc/succeeded()

@@ -16,7 +16,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/see_secret = 0
 	var/emitter_radiation = 75
 	var/equipment_cooldown_multiplier = 1
-	var/list/currentResearch = new/list()
+	var/list/datum/geneticsResearchEntry/currentResearch = new/list()
 	var/list/researchTree = new/list()
 	var/list/researchTreeTiered = new/list()
 	var/list/combinationrecipes = new/list()
@@ -46,17 +46,17 @@ var/datum/geneticsResearchManager/genResearch = new()
 		//I could just change this quietly, but this.
 		//THIS FUCKING ABOMINATION stays here as a memory of someone's shame.
 		//researchTreeTiered = bubblesort(researchTreeTiered)
-		researchTreeTiered = sortList(researchTreeTiered)
+		sortList(researchTreeTiered, /proc/cmp_text_asc)
 		return
 
 	proc/isResearched(var/type)
+		. = FALSE
 		if(src.debug_mode)
-			return 1
-		if(researchTree.Find(type))
+			return TRUE
+		if(type in researchTree)
 			var/datum/geneticsResearchEntry/E = researchTree[type]
 			if(E.isResearched == 1)
-				return 1
-		return 0
+				. = TRUE
 
 	proc/progress()
 		//var/tickDiff = 0
@@ -68,7 +68,7 @@ var/datum/geneticsResearchManager/genResearch = new()
 			 //This is only temporary to regenerate points while this isnt finished yet.
 			researchMaterial += checkMaterialGenerationRate()
 
-		for(var/datum/geneticsResearchEntry/entry in currentResearch)
+		for(var/datum/geneticsResearchEntry/entry as anything in currentResearch)
 			entry.onTick()
 			if(entry.finishTime <= lastTick)
 				entry.isResearched = 1
@@ -95,7 +95,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 			M.name = "Mutation Research"
 			M.desc = "Analysis of a potential mutation."
 
-			var/research_time = src.mut_research_time
+			M.researchTime = src.mut_research_time
+			var/research_time = M.researchTime
 			if (genResearch.time_discount)
 				research_time *= (1 - genResearch.time_discount)
 			if (src.debug_mode)
@@ -135,11 +136,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 
 	proc/checkClonepodBonus()
-		var/nominal_clonepods = 0
-		for(var/obj/machinery/clonepod/CP in src.clonepods)
-			if(CP.operating_nominally()) nominal_clonepods++
-
-		return nominal_clonepods
+		. = 0
+		for(var/obj/machinery/clonepod/CP as anything in src.clonepods)
+			if(CP.operating_nominally())
+				.++
 
 	proc/checkMaterialGenerationRate()
 		. = 1 + min(checkClonepodBonus(), 2)
@@ -163,12 +163,12 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/hidden = 0 // Is this one accessible by players?
 	var/htmlIcon = null
 
+	// Note: Parent should be called LAST to ensure any updates are forwarded as static data where applicable
 	proc/onFinish()
-		for (var/obj/machinery/computer/genetics/C in genetics_computers)
-			if (C.tracked_research == src)
-				C.tracked_research = null
-				break
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		for_by_tcl(computer, /obj/machinery/computer/genetics)
+			for (var/datum/tgui/ui as anything in tgui_process.get_uis(computer))
+				computer.update_static_data(null, ui)
 
 	proc/onBegin()
 		return
@@ -186,16 +186,16 @@ var/datum/geneticsResearchManager/genResearch = new()
 		if(src.hidden)
 			return 0
 
-		for(var/X in src.requiredResearch) // Have we got the prerequisite researches?
+		for(var/X as anything in src.requiredResearch) // Have we got the prerequisite researches?
 			if(!genResearch.isResearched(X))
 				return 0
 
 		var/datum/bioEffect/BE
-		for (var/X in src.requiredMutRes)
+		for (var/X as anything in src.requiredMutRes)
 			BE = GetBioeffectFromGlobalListByID(X)
 			if (!BE)
 				return 0
-			if (BE.research_level < 2)
+			if (BE.research_level < EFFECT_RESEARCH_DONE)
 				return 0
 
 		if (genResearch.mutations_researched < src.requiredTotalMutRes)
@@ -211,15 +211,14 @@ var/datum/geneticsResearchManager/genResearch = new()
 	onBegin()
 		global_instance = GetBioeffectFromGlobalListByID(mutation_id)
 		global_instance.research_finish_time = world.time + researchTime
-		global_instance.research_level = max(global_instance.research_level,1)
+		global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_IN_PROGRESS)
 		return
 
 	onFinish()
-		..()
-		if (global_instance.research_level < 2)
-			global_instance.research_level = max(global_instance.research_level,2)
+		if (global_instance.research_level < EFFECT_RESEARCH_DONE)
+			global_instance.research_level = max(global_instance.research_level, EFFECT_RESEARCH_DONE)
 			genResearch.mutations_researched++
-		return
+		..()
 
 // TIER ONE
 // researchTime = 600 is one minute, keep that in mind
@@ -249,10 +248,10 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 1
 
 	onFinish()
-		..()
 		genResearch.mut_research_cost = 10
 		genResearch.mut_research_time = 450
 		genResearch.see_secret = 1
+		..()
 
 /datum/geneticsResearchEntry/improvedcooldowns
 	name = "Biotic Cooling Mechanisms"
@@ -263,8 +262,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	tier = 1
 
 	onFinish()
-		..()
 		genResearch.equipment_cooldown_multiplier -= 0.5
+		..()
 
 /datum/geneticsResearchEntry/genebooth
 	name = "Gene Booth"
@@ -284,9 +283,9 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.cost_discount += 0.15
 		genResearch.time_discount += 0.15
+		..()
 
 /datum/geneticsResearchEntry/complex_saver
 	name = "Complex DNA Mutation Storage"
@@ -297,8 +296,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 5
+		..()
 
 /datum/geneticsResearchEntry/complex_max_materials
 	name = "Complex Material Storage"
@@ -309,8 +308,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredMutRes = list("early_secret_access")
 
 	onFinish()
-		..()
 		genResearch.max_material += 50
+		..()
 
 // TIER TWO
 
@@ -340,8 +339,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
 
 	onFinish()
-		..()
 		genResearch.emitter_radiation -= 45
+		..()
 
 /datum/geneticsResearchEntry/rad_coolant
 	name = "Emitter Coolant System"
@@ -362,8 +361,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/reclaimer)
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 3
+		..()
 
 /datum/geneticsResearchEntry/rad_precision
 	name = "Precision Radiation Emitters"
@@ -383,21 +382,21 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/reclaimer)
 
 	onFinish()
-		..()
 		genResearch.max_material += 50
+		..()
 
 /datum/geneticsResearchEntry/bio_rad_dampers
 	name = "Biotic Radiation Dampeners"
-	desc = "Applies genetic research to completley eliminate all harmful radiation from the emitters."
+	desc = "Applies genetic research to completely eliminate all harmful radiation from the emitters."
 	researchTime = 2500
 	researchCost = 100
 	tier = 3
 	requiredResearch = list(/datum/geneticsResearchEntry/rad_dampers)
-	requiredMutRes = list("food_rad_resist","radioactive")
+	requiredMutRes = list("rad_resist","radioactive")
 
 	onFinish()
-		..()
 		genResearch.emitter_radiation -= 30
+		..()
 
 // TIER FOUR
 
@@ -410,8 +409,8 @@ var/datum/geneticsResearchManager/genResearch = new()
 	requiredResearch = list(/datum/geneticsResearchEntry/saver)
 
 	onFinish()
-		..()
 		genResearch.max_save_slots += 2
+		..()
 
 ///////////////////////////////////
 // Things related to DNA samples //
@@ -426,11 +425,24 @@ var/datum/geneticsResearchManager/genResearch = new()
 	var/datum/computer/file/genetics_scan/scan = new /datum/computer/file/genetics_scan()
 	scan.subject_name = C.real_name
 	scan.subject_uID = C.bioHolder.Uid
+	scan.subject_stability = C.bioHolder.genetic_stability
+	scan.scanned_at = TIME
 
-	for(var/ID in C.bioHolder.effectPool)
-		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(ID)
-		var/datum/bioEffect/MUT = new BE.type(scan)
-		MUT.dnaBlocks = BE.dnaBlocks
-		scan.dna_pool += MUT
+	scan.dna_active = list()
+	scan.dna_pool = list()
+
+	for (var/bioEffectId in C.bioHolder.effects)
+		var/datum/bioEffect/BE = C.bioHolder.GetEffect(bioEffectId)
+		var/datum/bioEffect/scannedBE = new BE.type(scan)
+		// copy necessary information
+		// currently only name, for chromosome presence
+		scannedBE.name = BE.name
+		scan.dna_active += scannedBE
+	for (var/bioEffectId in C.bioHolder.effectPool)
+		var/datum/bioEffect/BE = C.bioHolder.GetEffectFromPool(bioEffectId)
+		var/datum/bioEffect/scannedBE = new BE.type(scan)
+		scannedBE.dnaBlocks.blockList = BE.dnaBlocks.blockList
+		scannedBE.dnaBlocks.blockListCurr = BE.dnaBlocks.blockListCurr
+		scan.dna_pool += scannedBE
 
 	return scan

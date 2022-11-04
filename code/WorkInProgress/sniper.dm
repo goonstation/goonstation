@@ -23,7 +23,7 @@
 /proc/start_hallucinating(var/mob/M)
 	for(var/turf/T in world)
 		if(prob(4) && istype(T))
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				explosion(src, T, 3, 1)
 */
 
@@ -33,7 +33,7 @@
 	var/tmp = ""
 	for(var/i = 1, i <= length(t), i++)
 		if(prob(p))
-			tmp += pick("{", "|", "}", "~", "€", "ƒ", "†", "‡", "‰", "¡", "¢", "£", "¤", "¥", "¦", "§", "©", "«", "¬", "®", "°", "±", "²", "³", "¶", "¿", "ø", "ÿ", "þ")
+			tmp += pick("{", "|", "}", "~", "â‚¬", "Æ’", "â€ ", "â€¡", "â€°", "Â¡", "Â¢", "Â£", "Â¤", "Â¥", "Â¦", "Â§", "Â©", "Â«", "Â¬", "Â®", "Â°", "Â±", "Â²", "Â³", "Â¶", "Â¿", "Ã¸", "Ã¿", "Ã¾")
 		else
 			tmp += copytext(t, i, i+1)
 	return tmp
@@ -46,7 +46,7 @@
 	return tmp
 
 /mob/proc/addicted_to_reagent(var/datum/reagent/reagent)
-	if(!src.ailments || !src.ailments.len)
+	if(!src.ailments || !length(src.ailments))
 		return 0
 	for(var/datum/ailment_data/addiction/A in src.ailments)
 		if(istype(A) && reagent && (A.associated_reagent == reagent.name)) //ZeWaka: Fix for null.name

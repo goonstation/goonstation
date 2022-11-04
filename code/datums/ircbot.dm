@@ -7,15 +7,15 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 /datum/ircbot
 	var/interface = null
-	var/apikey = null
 	var/loaded = 0
 	var/loadTries = 0
 	var/list/queue = list()
 	var/debugging = 0
 
 	New()
+		..()
 		if (!src.load())
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				if (!src.loaded)
 					src.load()
 
@@ -24,7 +24,6 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 		load()
 			if (config)
 				src.interface = config.irclog_url
-				src.apikey = config.ircbot_api
 				src.loaded = 1
 
 				if (src.queue && src.queue.len > 0)
@@ -38,23 +37,36 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			else
 				loadTries++
 				if (loadTries >= 5)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing("diary", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
 				return 0
 
 
 		//Shortcut proc for event-type exports
 		event(type, data)
+			set waitfor = FALSE // events async by default because who cares about the result really, we are just notifying the bot about something
 			if (!type) return 0
 			var/list/eventArgs = list("type" = type)
 			if (data) eventArgs |= data
 			return src.export("event", eventArgs)
 
+		apikey_scrub(text)
+			if(config.ircbot_api)
+				return replacetext(text, config.ircbot_api, "***")
+			else
+				return text
+
+		text_args(list/arguments)
+			return src.apikey_scrub(list2params(arguments))
+
+		export_async(iface, args)
+			set waitfor = FALSE
+			export(iface, args)
 
 		//Send a message to an irc bot! Yay!
 		export(iface, args)
 			if (src.debugging)
-				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [list2params(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
+				src.logDebug("Export called with <b>iface:</b> [iface]. <b>args:</b> [text_args(args)]. <b>src.interface:</b> [src.interface]. <b>src.loaded:</b> [src.loaded]")
 
 			if (!config || !src.loaded)
 				src.queue += list(list("iface" = iface, "args" = args))
@@ -62,27 +74,37 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				if (src.debugging)
 					src.logDebug("Export, message queued due to unloaded config")
 
-				SPAWN_DBG(1 SECOND)
+				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
 				return "queued"
 			else
-				if (config.env == "dev") return 0
+				if (config.env == "dev" || !config.ircbot_api) // If we have no API key, why even bother
+					return 0
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
 				args["server"] = serverKey
-				args["api_key"] = (src.apikey ? src.apikey : null)
+				args["api_key"] = (config.ircbot_api ? config.ircbot_api : null)
 
 				if (src.debugging)
-					src.logDebug("Export, final args: [list2params(args)]. Final route: [src.interface]/[iface]?[list2params(args)]")
+					src.logDebug("Export, final args: [text_args(args)]. Final route: [src.interface]/[iface]?[text_args(args)]")
 
-				var/http[] = world.Export("[src.interface]/[iface]?[list2params(args)]")
-				if (!http || !http["CONTENT"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>iface:</b> [iface]. <b>args</b> [list2params(args)]")
-					return 0
+				var/n_tries = 3
+				var/datum/http_response/response = null
+				while(--n_tries > 0 && (isnull(response) || response.errored))
+					// Via rust-g HTTP
+					var/datum/http_request/request = new()
+					request.prepare(RUSTG_HTTP_METHOD_GET, "[src.interface]/[iface]?[list2params(args)]", "", "")
+					request.begin_async()
+					UNTIL(request.is_complete())
+					response = request.into_response()
 
-				var/content = file2text(http["CONTENT"])
+				if (response.errored || !response.body)
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
+					return
+
+				var/content = response.body
 
 				if (src.debugging)
 					src.logDebug("Export, returned data: [content]")
@@ -90,35 +112,33 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				//Handle the response
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [list2params(contentJson)]")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
 					return 0
 				if (contentJson["status"] == "error")
 					var/log = ""
 					if (contentJson["errormsg"])
 						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
 					else
-						log = "An unknown error was returned from export: [list2params(contentJson)]"
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
+						log = "An unknown error was returned from export: [json_encode(contentJson)]"
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> [log]")
 				return 1
 
 
 		//Format the response to an irc request juuuuust right
 		response(args)
 			if (src.debugging)
-				src.logDebug("Response called with args: [list2params(args)]")
+				src.logDebug("Response called with args: [text_args(args)]")
 
 			args = (args == null ? list() : args)
-			//args["api_key"] = (src.apikey ? src.apikey : null)
-			//WHY WAS THAT A THING?
 
-			if (config && config.server_name)
+			if (config?.server_name)
 				args["server_name"] = replacetext(config.server_name, "#", "")
 				args["server"] = replacetext(config.server_name, "#", "") //TEMP FOR BACKWARD COMPAT WITH SHITFORMANT
 
 			if (src.debugging)
-				src.logDebug("Response, final args: [list2params(args)]")
+				src.logDebug("Response, final args: [text_args(args)]")
 
-			return list2params(args)
+			return text_args(args)
 
 
 		toggleDebug(client/C)
@@ -142,16 +162,16 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		logDebug(log)
 			if (!log) return 0
-			logTheThing("debug", null, null, "<b>IRCBOT DEBUGGING:</b> [log]")
+			logTheThing(LOG_DEBUG, null, "<b>IRCBOT DEBUGGING:</b> [log]")
 			return 1
 
 
 /client/proc/toggleIrcbotDebug()
 	set name = "Toggle IRCBot Debug"
 	set desc = "Enables in-depth logging of all IRC Bot exports and returns"
-	set category = "Toggles"
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER_TOGGLES)
 
-	admin_only
+	ADMIN_ONLY
 
 	ircbot.toggleDebug(src)
 	return 1
@@ -159,12 +179,15 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 /client/verb/linkDiscord(discordCode as text)
 	set name = "Link Discord"
-	set category = "Special Verbs"
-	set desc = "Links your Byond key with your Discord account. Enter the code Spacebee gave you when you ran !link."
+	set category = "Commands"
+	set desc = "Links your Byond key with your Discord account. Enter the code Medical Assistant gave you when you ran ]link."
 	set popup_menu = 0
 
 	if (!discordCode)
-		discordCode = input(src, "Please enter your Discord access code. You can get this by running !link in Discord.", "Link Discord") as null|text
+		discordCode = input(src, "Please enter your Discord access code. You can get this by running ]link in Discord. Or leave the field empty if you want to receive the Discord invite.", "Link Discord") as null|text
+
+	if (!discordCode)
+		usr << link("https://discord.gg/zd8t6pY")
 
 	if (ircbot.debugging)
 		ircbot.logDebug("linkDiscord verb called. <b>src.ckey:</b> [src.ckey]. <b>discordCode:</b> [discordCode]")
@@ -174,12 +197,12 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	var/ircmsg[] = new()
 	ircmsg["key"] = src.key
 	ircmsg["ckey"] = src.ckey
-	ircmsg["nick"] = discordCode
+	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 
 	if (res)
-		alert(src, "Please return to Discord and look for any spacebee PMs.")
+		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
 	else
-		alert(src, "An unknown internal error occurred. Please report this.")
+		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0

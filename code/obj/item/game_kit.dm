@@ -12,18 +12,20 @@ THAT STUPID GAME KIT
 	var/data = ""
 	//var/base_url = "http://svn.slurm.us/public/spacestation13/misc/game_kit"
 	item_state = "sheet-metal"
-	w_class = 5.0
+	w_class = W_CLASS_HUGE
 	desc = "Play chess or checkers. Or don't. Probably don't."
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 5
 
 /obj/item/game_kit/New()
+	..()
 	src.board_stat = "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
 	src.selected = "CR"
+	BLOCK_SETUP(BLOCK_BOOK)
 
-/obj/item/game_kit/MouseDrop(mob/user as mob)
-	if (user == usr && !usr.restrained() && !usr.stat && (usr.contents.Find(src) || in_range(src, usr)))
+/obj/item/game_kit/mouse_drop(mob/user as mob)
+	if (user == usr && !user.restrained() && !user.stat && (user.contents.Find(src) || in_interact_range(src, user)))
 		if (!user.put_in_hand(src))
 			return ..()
 
@@ -59,8 +61,8 @@ THAT STUPID GAME KIT
 		dat += "<a href='?src=\ref[src];s_piece=[piece]'><img src='[resource("images/chess/board_[piece].png")]' width=32 height=32 border=0></a>"
 	src.data = jointext(dat, "")
 
-/obj/item/game_kit/attack_hand(mob/user as mob)
-	user.machine = src
+/obj/item/game_kit/attack_hand(mob/user)
+	src.add_dialog(user)
 
 	if (!( src.data ))
 		update()
@@ -73,7 +75,7 @@ THAT STUPID GAME KIT
 	if ((usr.stat || usr.restrained()))
 		return
 
-	if (usr.contents.Find(src) || (in_range(src, usr) && istype(src.loc, /turf)))
+	if (usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf)))
 		if (href_list["s_piece"])
 			src.selected = href_list["s_piece"]
 		else if (href_list["mode"])
@@ -85,11 +87,11 @@ THAT STUPID GAME KIT
 			if (!( src.selected ))
 				src.selected = href_list["s_board"]
 			else
-				var/tx = text2num(copytext(href_list["s_board"], 1, 2))
-				var/ty = text2num(copytext(href_list["s_board"], 3, 4))
+				var/tx = text2num_safe(copytext(href_list["s_board"], 1, 2))
+				var/ty = text2num_safe(copytext(href_list["s_board"], 3, 4))
 				if ((copytext(src.selected, 2, 3) == " " && length(src.selected) == 3))
-					var/sx = text2num(copytext(src.selected, 1, 2))
-					var/sy = text2num(copytext(src.selected, 3, 4))
+					var/sx = text2num_safe(copytext(src.selected, 1, 2))
+					var/sy = text2num_safe(copytext(src.selected, 3, 4))
 					var/place = ((sy - 1) * 8 + sx) * 2 - 1
 					src.selected = copytext(src.board_stat, place, place + 2)
 					if (place == 1)
@@ -134,6 +136,4 @@ THAT STUPID GAME KIT
 										src.board_stat = text("[][][]", copytext(src.board_stat, 1, place), src.selected, copytext(src.board_stat, place + 2, 129))
 		src.add_fingerprint(usr)
 		update()
-		for(var/mob/M in viewers(1, src))
-			if ((M.client && M.machine == src))
-				src.attack_hand(M)
+		src.updateDialog()

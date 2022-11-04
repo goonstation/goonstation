@@ -26,7 +26,7 @@ datum/updateQueueWorker/proc/init(var/list/objects, var/procName, var/list/argum
 
 datum/updateQueueWorker/proc/doWork()
 	// If there's nothing left to execute or we were killed, mark finished and return.
-	if (!objects || !objects.len) return finished()
+	if (!objects || !length(objects)) return finished()
 
 	lastStart = world.timeofday // Absolute number of ticks since the world started up
 
@@ -44,7 +44,7 @@ datum/updateQueueWorker/proc/doWork()
 
 	// If there's nothing left to execute
 	// or we were killed while running the above code, mark finished and return.
-	if (!objects || !objects.len) return finished()
+	if (!objects || !length(objects)) return finished()
 
 	if (world.cpu > cpuThreshold + cpuDeferCount * 10)
 		// We don't want to force a tick into overtime!
@@ -56,10 +56,10 @@ datum/updateQueueWorker/proc/doWork()
 
 		uq_dbg("tick went into overtime with world.cpu = [world.cpu], deferred next update to next tick [1+(world.time / world.tick_lag)]")
 
-		SPAWN_DBG(1 DECI SECOND)
+		SPAWN(1 DECI SECOND)
 			doWork()
 	else
-		SPAWN_DBG(0) // Execute anonymous function immediately as if we were in a while loop...
+		SPAWN(0) // Execute anonymous function immediately as if we were in a while loop...
 			doWork()
 
 datum/updateQueueWorker/proc/finished()
@@ -86,12 +86,12 @@ datum/updateQueueWorker/proc/kill()
 	 * we'll forcibly delete it, causing the anonymous function it was
 	 * running to be terminated. Hasta la vista, baby.
 	 */
-	SPAWN_DBG(30 SECONDS)
+	SPAWN(30 SECONDS)
 		del(src)
 
 datum/updateQueueWorker/proc/start()
 	uq_dbg("updateQueueWorker started.")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		doWork()
 
 

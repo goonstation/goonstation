@@ -1,7 +1,8 @@
 /obj/machinery/atmospherics/unary/outlet_injector
 	icon = 'icons/obj/atmospherics/outlet_injector.dmi'
 	icon_state = "off"
-	plane = PLANE_FLOOR //They're supposed to be embedded in the floor.
+	layer = PIPE_MACHINE_LAYER
+	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
 
 	name = "Air Injector"
 	desc = "Has a valve and pump attached to it"
@@ -13,9 +14,12 @@
 //
 	var/frequency = 0
 	var/id = null
-	var/datum/radio_frequency/radio_connection
 
 	level = 1
+
+	New()
+		..()
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
 	update_icon()
 		if(node)
@@ -37,7 +41,7 @@
 			return 0
 
 		if(air_contents.temperature > 0)
-			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -55,7 +59,7 @@
 		injecting = 1
 
 		if(air_contents.temperature > 0)
-			var/transfer_moles = (air_contents.return_pressure())*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
 
 			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
 
@@ -66,38 +70,19 @@
 
 		flick("inject", src)
 
-	proc
-		set_frequency(new_frequency)
-			radio_controller.remove_object(src, "[frequency]")
-			frequency = new_frequency
-			if(frequency)
-				radio_connection = radio_controller.add_object(src, "[frequency]")
+	proc/broadcast_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.transmission_method = 1 //radio signal
+		signal.source = src
 
-		broadcast_status()
-			if(!radio_connection)
-				return 0
+		signal.data["tag"] = id
+		signal.data["device"] = "AO"
+		signal.data["power"] = on
+		signal.data["volume_rate"] = volume_rate
 
-			var/datum/signal/signal = get_free_signal()
-			signal.transmission_method = 1 //radio signal
-			signal.source = src
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-			signal.data["tag"] = id
-			signal.data["device"] = "AO"
-			signal.data["power"] = on
-			signal.data["volume_rate"] = volume_rate
-
-			radio_connection.post_signal(src, signal)
-
-			return 1
-
-	initialize()
-		..()
-
-		set_frequency(frequency)
-
-	disposing()
-		radio_controller.remove_object(src, "[frequency]")
-		..()
+		return 1
 
 	receive_signal(datum/signal/signal)
 		if(signal.data["tag"] && (signal.data["tag"] != id))
@@ -114,17 +99,17 @@
 				on = !on
 
 			if("inject")
-				SPAWN_DBG(0) inject()
+				SPAWN(0) inject()
 
 			if("set_volume_rate")
-				var/number = text2num(signal.data["parameter"])
-				number = min(max(number, 0), air_contents.volume)
+				var/number = text2num_safe(signal.data["parameter"])
+				number = clamp(number, 0, air_contents.volume)
 
 				volume_rate = number
 
 		if(signal.data["tag"])
-			SPAWN_DBG(0.5 SECONDS) broadcast_status()
-		update_icon()
+			SPAWN(0.5 SECONDS) broadcast_status()
+		UpdateIcon()
 
 	hide(var/i) //to make the little pipe section invisible, the icon changes.
 		if(node)

@@ -33,7 +33,7 @@
 	var/mob/living/critter/aquatic/king_crab/K = holder.owner
 	if(K.kill_them)
 		K.emote("dance")
-	else if(K.water_need)
+	else if(K.aquabreath_process.water_need)
 		K.emote("scream")
 	else
 		step_rand(K, 0)
@@ -50,6 +50,7 @@
 	var/sleeping = 0
 	var/waking = 0
 	var/datum/sea_hotspot/my_hotspot = null
+	exclude_from_mobs_list = 1
 
 /datum/aiHolder/aquatic/fish/New()
 	..()
@@ -59,8 +60,7 @@
 
 /datum/aiHolder/aquatic/fish/tick()
 	if(isdead(owner))
-		enabled = 0
-		walk(owner,0)
+		src.disable()
 	if (!enabled)
 		return
 	if(sleeping > 0)
@@ -74,11 +74,11 @@
 			if(M.client)
 				stay_awake = 1
 				waking = 15
-				enabled = 1
+				src.enable()
 				break
 		if(!stay_awake)
 			sleeping = 15
-			enabled = 0
+			src.disable()
 	if(!istype(owner.loc, /turf/space/fluid) || owner.z != 1) // fuck finding hotspots when we're in an aquarium or some other zlevel
 		step_rand(owner, 0)
 		return
@@ -99,13 +99,13 @@
 
 /datum/aiTask/succeedable/evaluate_hotspot/failed()
 	var/datum/aiHolder/aquatic/fish/F = holder
-	if (!F.my_hotspot || (get_dist(get_turf(holder.owner), F.my_hotspot.center.turf())) > 15)
-		return 1
+	if (!F.my_hotspot || (GET_DIST(get_turf(holder.owner), F.my_hotspot.center.turf())) > 15)
+		. = 1
 
 /datum/aiTask/succeedable/evaluate_hotspot/succeeded()
 	var/datum/aiHolder/aquatic/fish/F = holder
-	if (F.my_hotspot && (get_dist(get_turf(holder.owner), F.my_hotspot.center.turf())) <= 15)
-		return 1
+	if (F.my_hotspot && (GET_DIST(get_turf(holder.owner), F.my_hotspot.center.turf())) <= 15)
+		. = 1
 
 /datum/aiTask/succeedable/evaluate_hotspot/on_tick()
 	step_rand(holder.owner, 0)
@@ -119,16 +119,16 @@
 /datum/aiTask/succeedable/follow_hotspot/failed()
 	if(distance > 1)
 		fails++
-	return (fails >= max_fails)
+	. = (fails >= max_fails)
 
 /datum/aiTask/succeedable/follow_hotspot/succeeded()
 	if (distance <= 1)
-		return 1
+		. = 1
 
 /datum/aiTask/succeedable/follow_hotspot/on_tick()
 	var/datum/aiHolder/aquatic/fish/F = holder
 	center_turf = F.my_hotspot.center.turf()
-	distance = get_dist(get_turf(holder.owner), center_turf)
+	distance = GET_DIST(get_turf(holder.owner), center_turf)
 	step_to(holder.owner, center_turf, distance - 1)
 
 /datum/aiTask/succeedable/loaf_around
@@ -138,15 +138,15 @@
 
 /datum/aiTask/succeedable/loaf_around/failed()
 	fails++
-	return (fails >= max_fails)
+	. = (fails >= max_fails)
 
 /datum/aiTask/succeedable/loaf_around/succeeded()
-	return 0
+	. = 0
 
 /datum/aiTask/succeedable/loaf_around/on_tick()
 	dir++
 	if(prob(20))
-		var/huh = rand(1,3)
+		var/huh = rand(1,4)
 		switch(huh)
 			if(1)
 				holder.owner.visible_message("<b>[holder.owner]</b> glubs.")
@@ -183,10 +183,10 @@
 	var/datum/aiHolder/aquatic/fish/F = holder
 	var/current_distance = 15
 	for (var/datum/sea_hotspot/SH in hotspot_controller.hotspot_groups)
-		var/anticipated_distance = get_dist(get_turf(holder.owner), SH.center.turf())
+		var/anticipated_distance = GET_DIST(get_turf(holder.owner), SH.center.turf())
 		if (anticipated_distance < current_distance)
 			F.my_hotspot = SH
 			current_distance = anticipated_distance
 
 /datum/aiTask/find_hotspot/next_task()
-	return holder.task_cache[/datum/aiTask/sequence/hotspot_routine]
+	. = holder.task_cache[/datum/aiTask/sequence/hotspot_routine]

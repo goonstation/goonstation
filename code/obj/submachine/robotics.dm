@@ -1,113 +1,9 @@
 // Robotics Stuff
-
-/obj/submachine/robomoduler
-	name = "Module Rewriter"
-	desc = "A device used to rewrite robotic and cybernetic software modules."
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "moduler-off"
-	anchored = 1
-	density = 1
-	mats = 15
-	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
-	var/working = 0
-	var/modules = 0
-
-	attack_ai(mob/user as mob)
-		return src.attack_hand(user)
-
-	attack_hand(var/mob/user as mob)
-		user.machine = src
-		if (!src.working)
-			var/dat = {"<B>Module Rewriter</B><BR>
-			<HR><BR>
-			<B>Modules Available:</B> [modules]<BR>
-			<HR><BR>
-			<A href='?src=\ref[src];module=civilian'>Write Civilian Module<BR>
-			<A href='?src=\ref[src];module=engineering'>Write Engineering Module<BR>
-			<A href='?src=\ref[src];module=mining'>Write Mining Module<BR>
-			<A href='?src=\ref[src];module=medical'>Write Medical Module<BR>
-			<A href='?src=\ref[src];module=chemistry'>Write Chemistry Module<BR>
-			<A href='?src=\ref[src];module=brobocop'>Write Brobocop Module<BR>"}
-			if (ticker && ticker.mode)
-				if (istype(ticker.mode, /datum/game_mode/construction))
-					dat += "<A href='?src=\ref[src];module=construction'>Write Construction Worker Module</A><BR>"
-			user.Browse(dat, "window=mwriter;size=400x500")
-			onclose(user, "mwriter")
-		else
-			var/dat = {"<B>Module Rewriter</B><BR>
-			<HR><BR>
-			<B>Modules Available:</B> [modules]<BR>
-			<HR><BR>
-			The Rewriter is currently busy!"}
-			user.Browse(dat, "window=mwriter;size=400x500")
-			onclose(user, "mwriter")
-
-		return
-
-	Topic(href, href_list)
-		if ((get_dist(src, usr) > 1 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
-			return
-		if (usr.getStatusDuration("stunned") > 0 || usr.getStatusDuration("weakened") || usr.getStatusDuration("paralysis") > 0 || !isalive(usr) || usr.restrained())
-			return
-		if (src.working)
-			usr.show_text("[src] is currently busy.", "red")
-			return
-
-		if (href_list["module"])
-			if (src.modules < 1)
-				for (var/mob/O in hearers(src, null))
-					O.show_message(text("<b>[]</b> states, 'No modules available for write.'", src), 1)
-				return
-
-			src.working = 1
-			var/output = null
-
-			switch (href_list["module"])
-				if ("civilian") output = /obj/item/robot_module/civilian
-				if ("medical") output = /obj/item/robot_module/medical
-				if ("engineering") output = /obj/item/robot_module/engineering
-				if ("mining") output = /obj/item/robot_module/mining
-				if ("chemistry") output = /obj/item/robot_module/chemistry
-				if ("brobocop") output = /obj/item/robot_module/brobocop
-				if ("construction")
-					if (ticker && ticker.mode)
-						if (istype(ticker.mode, /datum/game_mode/construction))
-							output = /obj/item/robot_module/construction_worker
-						else
-							output = /obj/item/robot_module/engineering
-					else
-						output = /obj/item/robot_module/engineering
-
-			src.icon_state = "moduler-on"
-			src.updateUsrDialog()
-			playsound(src.loc, 'sound/machines/pc_process.ogg', 50, 1)
-			SPAWN_DBG (50)
-				if (src)
-					src.working = 0
-					src.icon_state = "moduler-off"
-					new output(src.loc)
-					if (src.modules > 0)
-						src.modules = max(0, src.modules - 1)
-					for (var/mob/O in hearers(src, null))
-						O.show_message(text("<b>[]</b> states, 'Work complete.'", src), 1)
-					src.updateUsrDialog()
-
-		return
-
-	attackby(obj/item/W as obj, mob/user as mob)
-		if (istype(W, /obj/item/robot_module/) && !issilicon(user))
-			boutput(user, "You insert the module.")
-			user.u_equip(W)
-			W.set_loc(src)
-			src.modules = max(0, src.modules + 1)
-			qdel(W)
-
-		else ..()
-		return
+// TODO: move to /modules/robotics
 
 /obj/item/robojumper
-	name = "Cell Cables"
-	desc = "Used by Engineering Cyborgs for emergency recharging of APCs."
+	name = "cell cables"
+	desc = "Used by cyborgs for emergency recharging of APCs."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "robojumper-plus"
 	var/positive = 1 //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
@@ -115,50 +11,221 @@
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
-		boutput(user, "<span style=\"color:red\">The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
+		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 /obj/item/atmosporter
-	name = "Atmospherics Transporter"
-	desc = "Used by Atmospherics Cyborgs for convenient transport of siphons and tanks."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "bedbin"
+	name = "atmospherics transporter"
+	desc = "Used for convenient transport of siphons and tanks."
+	icon = 'icons/obj/items/device.dmi'
+	icon_state = "atmosporter"
 	var/capacity = 2
 
 	attack_self(var/mob/user as mob)
-		if (src.contents.len == 0) boutput(user, "<span style=\"color:red\">You have nothing stored!</span>")
+		if (src.contents.len == 0) boutput(user, "<span class='alert'>You have nothing stored!</span>")
 		else
-			var/selection = input("What do you want to drop?", "Atmos Transporter", null, null) as null|anything in src.contents
+			if (user.loc != get_turf(user.loc))
+				boutput(user, "<span class='alert'>You're in too small a space to drop anything!</span>")
+				return
+			var/selection = tgui_input_list(user, "What do you want to drop?", "Atmospherics Transporter", src.contents)
 			if(!selection) return
-			selection:set_loc(user.loc)
-			selection:contained = 0
-			var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-			s.set_up(5, 1, user)
-			s.start()
+			if (istype(selection, /obj/machinery/fluid_canister))
+				var/obj/machinery/fluid_canister/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else if (istype(selection, /obj/machinery/portable_atmospherics))
+				var/obj/machinery/portable_atmospherics/S = selection
+				S.set_loc(get_turf(user.loc))
+				S.contained = 0
+			else return //no sparks for unintended items
+			elecflash(user)
+
+
+
+/obj/item/lamp_manufacturer
+	name = "miniaturized lamp manufacturer"
+	desc = "A small manufacturing unit to produce and (re)place lamps in existing fittings."
+	icon = 'icons/obj/items/tools/lampman.dmi'
+	icon_state = "borg-white"
+	var/prefix = "borg"
+	var/metal_ammo = 0
+	var/max_ammo = 20
+	var/load_interval = 5
+
+	//These costs are in terms of borg cell charge. For crew every action takes 1 sheet (except a fitting gets its lamp immediately replaced making it 2 in total)
+	var/cost_broken = 50 //For broken/burned lamps (the old lamp gets recycled in the tool)
+	var/cost_empty = 75
+	var/cost_fitting = 200 //Putting a new fitting on a turf
+	var/cost_removal = 400 //Eating a fitting
+	var/removing_toggled = FALSE
+	var/setting = "white"
+	var/dispensing_tube = /obj/item/light/tube
+	var/dispensing_bulb = /obj/item/light/bulb
+	//can be obj/machinery/light for wall tubes, obj/machinery/light/small for wall bulbs. Either mode does floor fittings because there's only one type of those
+	var/dispensing_fitting = /obj/machinery/light
+	var/list/setting_context_actions
+	contextLayout = new /datum/contextLayout/experimentalcircle
+
+	New()
+		..()
+		setting_context_actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/lamp_manufacturer)) //see context_actions.dm for those
+			var/datum/contextAction/lamp_manufacturer/action = new actionType(src)
+			setting_context_actions += action
+
+	attack_self(var/mob/user as mob)
+		user.showContextActions(setting_context_actions, src, contextLayout)
+
+	get_desc()
+
+		. = {"It is currently set to [removing_toggled == TRUE ? "remove fittings" : "dispense [setting] lamps"].<br>
+		It will build new [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"] fittings."}
+
+	afterattack(atom/A, mob/user as mob, reach, params)
+		if (removing_toggled)
+			if (!istype(A, /obj/machinery/light))
+				return
+			if (!check_ammo(user, cost_removal))
+				return
+			var/obj/machinery/light/lamp = A
+			if (lamp.removable_bulb == 0)
+				boutput(user, "This fitting isn't user-serviceable.")
+				return
+			boutput(user, "<span class='notice'>Removing fitting...</span>")
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
+
+
+		if (!istype(A, /turf/simulated) && !istype(A, /obj/window) || !check_ammo(user, cost_fitting))
+			..()
+			return
+
+		if (istype(A, /turf/simulated/floor))
+			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
+
+
+		else if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+			if (!(islist(params) && params["icon-y"] && params["icon-x"]))
+				return
+			var/atom/B = get_adjacent_floor(A, user, text2num(params["icon-x"]), text2num(params["icon-y"]))
+			if (!istype(B, /turf/simulated/floor) && !istype(B, /turf/space))
+				return
+			if (locate(/obj/window) in B)
+				return
+			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
+			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
+
+
+/obj/item/lamp_manufacturer/attackby(obj/item/W, mob/user)
+	if (issilicon(user))
+		boutput(user,"You don't have to load this, you're a robot! It uses power instead.")
+	else
+		if (istype(W, /obj/item/sheet))
+			var/obj/item/sheet/S = W
+			if (S.material.material_flags & MATERIAL_METAL)
+				if (src.metal_ammo == src.max_ammo)
+					boutput(user, "The lamp manufacturer is full.")
+				else
+					var/loadAmount = 0
+					if (S.amount < src.load_interval)
+						loadAmount = S.amount
+					else
+						loadAmount = src.load_interval
+					if ((src.metal_ammo + loadAmount) > src.max_ammo)
+						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
+					src.metal_ammo += loadAmount
+					S.change_stack_amount(-loadAmount)
+					playsound(src, 'sound/machines/click.ogg', 25, 1)
+					src.inventory_counter.update_number(src.metal_ammo)
+					boutput(user, "You load the metal sheet into the lamp manufacturer.")
+			else
+				boutput(user, "You can't load that! You need metal sheets.")
+		else
+			..()
+
+/// Procs for the action bars
+/obj/item/lamp_manufacturer/proc/add_wall_light(atom/A, turf/B, mob/user)
+	var/obj/machinery/light/newfitting = new dispensing_fitting(B)
+	newfitting.nostick = 0 //regular tube lights don't do autoposition for some reason.
+	newfitting.autoposition(get_dir(B,A))
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/add_floor_light(turf/A, mob/user)
+	var/obj/machinery/light/newfitting = new /obj/machinery/light/small/floor(A)
+	newfitting.Attackby(src, user) //plop in an appropriate colour lamp
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_fitting)
+
+/obj/item/lamp_manufacturer/proc/remove_light(obj/machinery/light/A, mob/user)
+	qdel(A) //RIP
+	if (!isghostdrone(user))
+		elecflash(user)
+	take_ammo(user, cost_removal)
+	return
+
+/obj/item/lamp_manufacturer/proc/check_ammo(mob/user, cost)
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			if (S.cell.charge >= cost)
+				return 1
+			else
+				boutput(user, "Not enough cell charge.")
+			return 0
+	else
+		if (cost == cost_fitting) //hacky but placing fixtures is the only thing that takes 2 in total
+			if (metal_ammo > 1)
+				return 1
+		else
+			if (metal_ammo > 0)
+				return 1
+		boutput(user, "You need to load up more metal sheets.")
+		return 0
+
+/obj/item/lamp_manufacturer/proc/take_ammo(mob/user, cost) //Cost is in cell charge, everything costs 1 sheet
+	if (issilicon(user))
+		var/mob/living/silicon/S = user
+		if (S.cell)
+			S.cell.charge -= cost
+	else
+		if (metal_ammo > 0) //shouldn't be possible to fail
+			metal_ammo--
+			inventory_counter.update_number(metal_ammo)
+
+
 
 /obj/item/robot_chemaster
-	name = "Mini-ChemMaster"
+	name = "mini-CheMaster"
 	desc = "A cybernetic tool designed for chemistry cyborgs to do their work with. Use a beaker on it to begin."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "minichem"
 	flags = NOSPLASH
 	var/working = 0
 
-	attackby(obj/item/W as obj, mob/user as mob)
+	attackby(obj/item/W, mob/user)
 		if (!istype(W,/obj/item/reagent_containers/glass/)) return
 		var/obj/item/reagent_containers/glass/B = W
 
 		if(!B.reagents.reagent_list.len || B.reagents.total_volume < 1)
-			boutput(user, "<span style=\"color:red\">That beaker is empty! There are no reagents for the [src.name] to process!</span>")
+			boutput(user, "<span class='alert'>That beaker is empty! There are no reagents for the [src.name] to process!</span>")
 			return
 		if (working)
-			boutput(user, "<span style=\"color:red\">Chemmaster is working, be patient</span>")
+			boutput(user, "<span class='alert'>CheMaster is working, be patient</span>")
 			return
 
 		working = 1
-		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-ChemMaster",null,null) in B.reagents.reagent_list
-		if (!the_reagent) return
-		var/action = input("What do you want to do with the [the_reagent]?","Mini-ChemMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Do Nothing")
-		if (!action || action == "Do Nothing")
+		var/holder = src.loc
+		var/the_reagent = input("Which reagent do you want to manipulate?","Mini-CheMaster",null,null) in B.reagents.reagent_list
+		if (src.loc != holder || !the_reagent)
+			return
+		var/action = input("What do you want to do with the [the_reagent]?","Mini-CheMaster",null,null) in list("Isolate","Purge","Remove One Unit","Remove Five Units","Create Pill","Create Pill Bottle","Create Bottle","Create Patch","Create Ampoule","Do Nothing")
+		if (src.loc != holder || !action || action == "Do Nothing")
 			working = 0
 			return
 
@@ -169,37 +236,83 @@
 			if("Remove Five Units") B.reagents.remove_reagent(the_reagent, 5)
 			if("Create Pill")
 				var/obj/item/reagent_containers/pill/P = new/obj/item/reagent_containers/pill(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your pill!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your pill!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("pill", name, no_duplicates=TRUE)
 				P.name = "[name] pill"
 				B.reagents.trans_to(P,B.reagents.total_volume)
 			if("Create Pill Bottle")
 				// copied from chem_master because fuck fixing everything at once jeez
-				var/pillname = copytext( html_encode( input( usr, "Name:", "Name the pill!", B.reagents.get_master_reagent_name() ) ), 1, 32)
+				var/default = B.reagents.get_master_reagent_name()
+				var/pillname = copytext( html_encode( input( user, "Name:", "Name the pill!", default ) ), 1, 32)
 				if(!pillname || pillname == " ")
-					pillname = B.reagents.get_master_reagent_name()
+					pillname = default
+				if(pillname && pillname != default)
+					phrase_log.log_phrase("pill", pillname, no_duplicates=TRUE)
 
-				var/pillvol = input( usr, "Volume:", "Volume of chemical per pill!", "5" ) as num
+				var/pillvol = input( user, "Volume:", "Volume of chemical per pill!", "5" ) as num
 				if( !pillvol || !isnum(pillvol) || pillvol < 5 )
 					pillvol = 5
 
 				var/pillcount = round( B.reagents.total_volume / pillvol ) // round with a single parameter is actually floor because byond
 				if(!pillcount)
-					boutput(usr, "[src] makes a weird grinding noise. That can't be good.")
+					boutput(user, "[src] makes a weird grinding noise. That can't be good.")
 				else
 					var/obj/item/chem_pill_bottle/pillbottle = new /obj/item/chem_pill_bottle(user.loc)
 					pillbottle.create_from_reagents(B.reagents, pillname, pillvol, pillcount)
 			if("Create Bottle")
 				var/obj/item/reagent_containers/glass/bottle/P = new/obj/item/reagent_containers/glass/bottle(user.loc)
-				var/name = copytext(html_encode(input(usr,"Name:","Name your bottle!",B.reagents.get_master_reagent_name())), 1, 32)
-				if(!name || name == " ") name = B.reagents.get_master_reagent_name()
+				var/default = B.reagents.get_master_reagent_name()
+				var/name = copytext(html_encode(input(user,"Name:","Name your bottle!",default)), 1, 32)
+				if(!name || name == " ") name = default
+				if(name && name != default)
+					phrase_log.log_phrase("bottle", name, no_duplicates=TRUE)
 				P.name = "[name] bottle"
 				B.reagents.trans_to(P,30)
+			if("Create Patch")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the patch:", "Name", R.get_master_reagent_name()) as null|text
+				var/patchname = copytext(html_encode(input_name), 1, 32)
+				if (isnull(patchname) || !length(patchname) || patchname == " ")
+					working = 0
+					return
+				var/all_safe = 1
+				for (var/reagent_id in R.reagent_list)
+					if (!global.chem_whitelist.Find(reagent_id))
+						all_safe = 0
+				var/obj/item/reagent_containers/patch/P
+				if (R.total_volume <= 15)
+					P = new /obj/item/reagent_containers/patch/mini(user.loc)
+					P.name = "[patchname] mini-patch"
+					R.trans_to(P, P.initial_volume)
+				else
+					P = new /obj/item/reagent_containers/patch(user.loc)
+					P.name = "[patchname] patch"
+					R.trans_to(P, P.initial_volume)
+				P.medical = all_safe
+				P.on_reagent_change()
+				logTheThing(LOG_COMBAT, user, "created a [patchname] patch containing [log_reagents(P)].")
+			if("Create Ampoule")
+				var/datum/reagents/R = B.reagents
+				var/input_name = input(user, "Name the ampoule:", "Name", R.get_master_reagent_name()) as null|text
+				var/ampoulename = copytext(html_encode(input_name), 1, 32)
+				if(!ampoulename)
+					working = 0
+					return
+				if(ampoulename == " ")
+					ampoulename = R.get_master_reagent_name()
+				var/obj/item/reagent_containers/ampoule/A
+				A = new /obj/item/reagent_containers/ampoule(user.loc)
+				A.name = "ampoule ([ampoulename])"
+				R.trans_to(A, 5)
+				logTheThing(LOG_COMBAT, user, "created a [ampoulename] ampoule containing [log_reagents(A)].")
 
 		working = 0
 
 /obj/item/robot_foodsynthesizer
-	name = "Food Synthesizer"
+	name = "food synthesizer"
 	desc = "A portable food synthesizer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "synthesizer"
@@ -208,7 +321,10 @@
 
 	attack_self(var/mob/user as mob)
 		if (!vend_this)
-			var/pickme = input("Please make your selection!", "Item selection", src.vend_this) in list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Milk")
+			var/holder = src.loc
+			var/pickme = tgui_input_list(user, "Please make your selection!", "Item selection", list("Burger", "Cheeseburger", "Meat sandwich", "Cheese sandwich", "Snack", "Cola", "Water"))
+			if (!pickme || src.loc != holder)
+				return
 			src.vend_this = pickme
 			user.show_text("[pickme] selected. Click with the synthesizer on yourself to pick a different item.", "blue")
 			return
@@ -245,23 +361,23 @@
 							new /obj/item/reagent_containers/food/snacks/moon_pie/jaffa(get_turf(src))
 				if ("Cola")
 					new /obj/item/reagent_containers/food/drinks/cola(get_turf(src))
-				if ("Milk")
-					new /obj/item/reagent_containers/food/drinks/milk(get_turf(src))
+				if ("Water")
+					new /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater(get_turf(src))
 				else
 					user.show_text("<b>ERROR</b> - Invalid item! Resetting...", "red")
-					logTheThing("debug", user, null, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
+					logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: [user]'s food synthesizer was set to an invalid value.")
 					src.vend_this = null
 					return
 
 			if (isrobot(user)) // Carbon mobs might end up using the synthesizer somehow, I guess?
 				var/mob/living/silicon/robot/R = user
 				if (R.cell) R.cell.charge -= 100
-			playsound(src.loc, "sound/machines/click.ogg", 50, 1)
-			user.visible_message("<span style=\"color:blue\">[user] dispenses a [src.vend_this]!</span>", "<span style=\"color:blue\">You dispense a [src.vend_this]!</span>")
+			playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
+			user.visible_message("<span class='notice'>[user] dispenses a [src.vend_this]!</span>", "<span class='notice'>You dispense a [src.vend_this]!</span>")
 			src.last_use = world.time
 			return
 
-	attack(mob/M as mob, mob/user as mob, def_zone)
+	attack(mob/M, mob/user, def_zone)
 		src.vend_this = null
 		user.show_text("Selection cleared.", "red")
 		return
@@ -273,14 +389,13 @@
 	icon_state = "oilcan"
 	amount_per_transfer_from_this = 15
 	splash_all_contents = 0
-	w_class = 3.0
+	w_class = W_CLASS_NORMAL
 	rc_flags = RC_FULLNESS
+	initial_volume = 120
 
 	New()
-		var/datum/reagents/R = new/datum/reagents(120)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("oil", 60)
+		..()
+		reagents.add_reagent("oil", 60)
 
 /*
 Jucier container.
@@ -296,9 +411,11 @@ ported and crapped up by: haine
 	icon_state = "juicer"
 	amount_per_transfer_from_this = 10
 	initial_volume = 200
+	tooltip_flags = REBUILD_DIST
+	can_chug = 0
 
 	afterattack(obj/target, mob/user)
-		if (get_dist(user, src) > 1 || get_dist(user, target) > 1)
+		if (BOUNDS_DIST(user, src) > 0 || BOUNDS_DIST(user, target) > 0)
 			user.show_text("You're too far away!", "red")
 
 		if (istype(target, /obj/machinery) || ismob(target) || isturf(target)) // Do nothing if the user is trying to put it in a machine or feeding a mob.
@@ -325,14 +442,14 @@ ported and crapped up by: haine
 				var/transamnt = src.reagents.maximum_volume - src.reagents.total_volume
 				target.reagents.trans_to(src, transamnt)
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [transamnt] units, the rest is wasted.")
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1) // Play a sound effect.
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1) // Play a sound effect.
 				qdel(target) // delete the fruit, it got juiced!
 				return
 
 			else
 				user.show_text("[src] makes a slicing sound as it destroys [target].<br>[src] juiced [target.reagents.total_volume] units.")
 				target.reagents.trans_to(src, target.reagents.total_volume) // Transfer it all!
-				playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 				qdel(target)
 				return
 		else
@@ -341,7 +458,7 @@ ported and crapped up by: haine
 
 	get_desc(dist)
 		if (dist <= 0)
-			if (src.reagents && src.reagents.reagent_list.len)
+			if (src.reagents && length(src.reagents.reagent_list))
 				. += "<br>It contains:"
 				for (var/datum/reagent/R in src.reagents.reagent_list)
 					. += "[R.volume] units of [R.name]"
@@ -369,6 +486,7 @@ ported and crapped up by: haine
 	var/list/hydro_reagent_names = list() // the tank creation proc adds the names of the above reagents to this list
 	var/list/tanks = list() // what tanks we have
 	var/obj/item/reagent_containers/borghose_tank/active_tank = null // what tank is active
+	tooltip_flags = REBUILD_DIST //if anyone implements this, add some rebuilds
 
 	New() // So this goes through and adds all the reagents to the hose on creation. Pretty good for expandability.
 		..()
@@ -390,13 +508,13 @@ ported and crapped up by: haine
 		src.tanks += new_tank
 		src.hydro_reagent_names += new_tank.label_name // the name list is so we don't have to call reagent_id_to_name() each time we wanna know the names of our reagents
 
-	attack(mob/M as mob, mob/user as mob)
+	attack(mob/M, mob/user)
 		return // Don't attack people with the hoses, god you people!
 
 	proc/regenerate_reagents()
 		if (isrobot(src.loc))
 			var/mob/living/silicon/robot/R = src.loc // I'm not sure why it's src.loc and not src. (src is the hose, src.loc is where the hose is)
-			if (R && R.cell) // If the robot's alive and there's power.
+			if (R?.cell) // If the robot's alive and there's power.
 				var/full_tanks = 0 // to keep track of when we're good to remove ourselves from processing_items
 				for (var/obj/item/reagent_containers/borghose_tank/tank in src.tanks) // Regenerate all formulas at once.
 					var/tank_max = tank.reagents.maximum_volume // easier than writing tank.reagents.total_volume/etc over and over
@@ -425,7 +543,7 @@ ported and crapped up by: haine
 			if (tank.label_name == switch_tank)
 				src.active_tank = tank
 				user.show_text("[src] is now dispensing [switch_tank].")
-				playsound(loc, "sound/effects/pop.ogg", 50, 0) // Play a sound effect.
+				playsound(loc, 'sound/effects/pop.ogg', 50, 0) // Play a sound effect.
 				return
 
 	afterattack(obj/target, mob/user)
@@ -444,9 +562,8 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 50, 0) // Play a sound effect.
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0) // Play a sound effect.
+			processing_items |= src
 		else
 			return ..() // call your parents!!
 

@@ -3,11 +3,6 @@
 	By Firebarrage
 */
 
-
-
-var/global/list/obj/fluid_pipe/all_fluid_pipes = list()
-var/global/list/datum/flow_network/all_fluid_networks = list()
-
 /obj/fluid_pipe
 	name = "fluid pipe"
 	desc = "A pipe. For fluids."
@@ -23,7 +18,11 @@ var/global/list/datum/flow_network/all_fluid_networks = list()
 	var/datum/flow_network/network = null // Which network is mine?
 
 	New()
-		all_fluid_pipes.Add(src)
+		START_TRACKING
+		..()
+
+	disposing()
+		STOP_TRACKING
 		..()
 
 	// NOTE: Don't call this during construction. The other pipes might not be there yet.
@@ -168,7 +167,7 @@ proc/make_fluid_networks()
 
 	// Populate all edges
 	// TODO in future: We dont need to do this every time we remake the fluid networks, only update the moved pipes.
-	for(var/obj/fluid_pipe/node in all_fluid_pipes)
+	for_by_tcl(node, /obj/fluid_pipe)
 		node.populate_edges()
 
 	var/obj/fluid_pipe/root = find_unvisited_node()
@@ -177,15 +176,14 @@ proc/make_fluid_networks()
 		return
 	do
 		DEBUG_MESSAGE("Creating fluid network. Root node is at [log_loc(root)].")
-		var/datum/flow_network/network = new /datum/flow_network(root)
-		all_fluid_networks.Add(network)
+		new /datum/flow_network(root)
 		root = find_unvisited_node()
 	while(root)
 
 proc/find_unvisited_node()
-	for(var/i = 1, i <= all_fluid_pipes.len, i++)
-		if(!all_fluid_pipes[i].network)
-			return all_fluid_pipes[i]
+	for_by_tcl(pipe, /obj/fluid_pipe)
+		if(!pipe.network)
+			return pipe
 	return 0
 
 // Represents a single connected set of fluid pipes
@@ -201,6 +199,7 @@ proc/find_unvisited_node()
 	New(var/obj/fluid_pipe/root)
 		..()
 		pipe_cont.net = src
+		START_TRACKING
 		DEBUG_MESSAGE("Constructing fluid pipe network")
 		nodes = DFS(root)
 		for(var/obj/fluid_pipe/N in nodes)
@@ -221,6 +220,10 @@ proc/find_unvisited_node()
 			edges += "\]"
 			DEBUG_MESSAGE(edges)
 
+	disposing()
+		STOP_TRACKING
+		..()
+
 	proc/clear_DFS_flags()
 		for(var/obj/fluid_pipe/FN in nodes)
 			FN.visited = 0
@@ -236,7 +239,7 @@ proc/ford_fulkerson(var/datum/flow_network/FN)
 	FN.clear_DFS_flags()
 	path = find_augmenting_path(FN)
 	DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")
-	while(path && path.len > 0)
+	while(length(path))
 		flow_through(path, DEFAULT_FLUID_CAPACITY / FN.sources.len)
 		path = find_augmenting_path(FN)
 		DEBUG_MESSAGE("Augmenting path: [print_pipe_list(path)]")
@@ -284,7 +287,7 @@ proc/flow_through(var/list/obj/fluid_pipe/path, max_allowed_flow)
 	for(var/obj/fluid_pipe/pipe in path)
 		if(pipe.capacity - pipe.used_capacity < min_capacity)
 			min_capacity = pipe.capacity - pipe.used_capacity
-	min_capacity = CLAMP(min_capacity,0,max_allowed_flow)
+	min_capacity = clamp(min_capacity,0,max_allowed_flow)
 	DEBUG_MESSAGE("Pushing [min_capacity] through this path.")
 	for(var/obj/fluid_pipe/pipe in path)
 		pipe.used_capacity += min_capacity

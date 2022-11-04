@@ -18,13 +18,15 @@
 //Ticket writer
 //Cargo request
 //Station Namer
+//Revhead tracker
+//Head tracker
 
 //Banking
 /datum/computer/file/pda_program/banking
 	name = "BankBuddy"
 	size = 8
 
-	var/tmp/datum/data/record/bank_record = null
+	var/tmp/datum/db_record/bank_record = null
 
 	return_text()
 		if (..())
@@ -40,8 +42,8 @@
 		if (!src.master || !src.master.owner)
 			return 0
 
-		for(var/datum/data/record/B in data_core.bank)
-			if(lowertext(B.fields["name"]) == lowertext(src.master.owner))
+		for(var/datum/db_record/B as anything in data_core.bank.records)
+			if(lowertext(B["name"]) == lowertext(src.master.owner))
 				src.bank_record = B
 				return 1
 		return 0
@@ -59,9 +61,7 @@
 
 		dat += "<h4>Crew Manifest</h4>"
 		dat += "Entries cannot be modified from this terminal.<br><br>"
-
-		for (var/datum/data/record/t in data_core.general)
-			dat += "[t.fields["name"]] - [t.fields["rank"]]<br>"
+		dat += get_manifest()
 		dat += "<br>"
 
 		return dat
@@ -108,7 +108,7 @@
 					post_status("alert", href_list["alert"])
 
 				if("setmsg1")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -119,7 +119,7 @@
 					src.master.updateSelfDialog()
 
 				if("setmsg2")
-					if (!src.master || !in_range(src.master, usr) && src.master.loc != usr)
+					if (!src.master?.is_user_in_interact_range(usr))
 						return
 
 					if(!(src.holder in src.master))
@@ -143,6 +143,7 @@
 		status_signal.source = src.master
 		status_signal.transmission_method = 1
 		status_signal.data["command"] = command
+		status_signal.data["address_tag"] = "STATDISPLAY"
 
 		switch(command)
 			if("message")
@@ -151,13 +152,27 @@
 			if("alert")
 				status_signal.data["picture_state"] = data1
 
-		src.post_signal(status_signal,"1435")
+		src.post_signal(status_signal, "status_display")
+
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"status_display",\
+			FREQ_STATUS_DISPLAY, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "status_display"))
 
 //Signaler
 /datum/computer/file/pda_program/signaler
 	name = "Signalix 5"
 	size = 8
-	var/send_freq = 1457 //Frequency signal is sent at, should be kept within normal radio ranges.
+	var/send_freq = FREQ_SIGNALER //Frequency signal is sent at, should be kept within normal radio ranges.
 	var/send_code = 30
 	var/last_transmission = 0 //No signal spamming etc
 
@@ -195,8 +210,8 @@ Code:
 			if(last_transmission && world.time < (last_transmission + 5))
 				return
 			last_transmission = world.time
-			SPAWN_DBG( 0 )
-				logTheThing("signalers", usr, null, "used [src.master] @ location ([showCoords(src.master.loc.x, src.master.loc.y, src.master.loc.z)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
+			SPAWN( 0 )
+				logTheThing(LOG_SIGNALERS, usr, "used [src.master] @ location ([log_loc(src.master.loc)]) <B>:</B> [format_frequency(send_freq)]/[send_code]")
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
@@ -204,14 +219,15 @@ Code:
 				signal.data["message"] = "ACTIVATE"
 				signal.data["code"] = send_code
 
-				src.post_signal(signal,"[send_freq]")
+				src.post_signal(signal, "signaller")
 				return
 
 		else if (href_list["adj_freq"])
-			src.send_freq = sanitize_frequency(src.send_freq + text2num(href_list["adj_freq"]))
+			src.send_freq = sanitize_frequency(src.send_freq + text2num_safe(href_list["adj_freq"]))
+			get_radio_connection_by_id(master, "signaller").update_frequency(src.send_freq)
 
 		else if (href_list["adj_code"])
-			src.send_code += text2num(href_list["adj_code"])
+			src.send_code += text2num_safe(href_list["adj_code"])
 			src.send_code = round(src.send_code)
 			src.send_code = min(100, src.send_code)
 			src.send_code = max(1, src.send_code)
@@ -220,10 +236,24 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"signaller",\
+			send_freq, \
+			pda.net_id, \
+			null, \
+			TRUE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "signaller"))
+
 //Supply record monitor
 /datum/computer/file/pda_program/qm_records
 	name = "Supply Records"
-	size = 8
+	size = 6
 
 	return_text()
 		if(..())
@@ -274,7 +304,7 @@ Code:
 			return
 
 		if (href_list["adj_volume"])
-			var/adjust_num = text2num(href_list["adj_volume"])
+			var/adjust_num = text2num_safe(href_list["adj_volume"])
 			src.honk_volume += adjust_num
 			if(src.honk_volume < 1)
 				src.honk_volume = 1
@@ -293,7 +323,7 @@ Code:
 			return
 		if (last_honk && world.time < last_honk + 20)
 			return
-		playsound(src.master.loc, "sound/musical_instruments/Bikehorn_1.ogg", (src.honk_volume * 25), 1)
+		playsound(src.master.loc, 'sound/musical_instruments/Bikehorn_1.ogg', (src.honk_volume * 25), 1)
 		src.last_honk = world.time
 
 		return
@@ -317,8 +347,7 @@ Code:
 			dat += "<h4>Located Mops:</h4>"
 
 			var/ldat
-			for (var/X in by_type[/obj/item/mop])
-				var/obj/item/mop/M = X
+			for_by_tcl(M, /obj/item/mop)
 				var/turf/ml = get_turf(M)
 
 				if(!ml || !istype(ml))
@@ -337,8 +366,7 @@ Code:
 			dat += "<h4>Located Mop Buckets:</h4>"
 
 			ldat = null
-			for (var/X in by_type[/obj/mopbucket])
-				var/obj/mopbucket/B = X
+			for_by_tcl(B, /obj/mopbucket)
 				var/turf/bl = get_turf(B)
 
 				if(!bl || !istype(bl))
@@ -347,7 +375,7 @@ Code:
 				if (bl.z != cl.z)
 					continue
 
-				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/50<br>"
+				ldat += "Bucket - <b>\[[bl.x],[bl.y] ([get_area(bl)])\]</b> - Water level: [B.reagents.total_volume]/[B.reagents.maximum_volume]<br>"
 
 			if (!ldat)
 				dat += "None"
@@ -382,7 +410,7 @@ Code:
 /datum/computer/file/pda_program/door_control
 	name = "DoorMaster"
 	size = 8
-	var/id = 1.0
+	var/id = 1
 	var/last_toggle = 0
 
 	syndicate
@@ -396,7 +424,7 @@ Code:
 
 		dat += "<h4>DoorMaster 5.1.9 Pod-Door Control System</h4>"
 		dat += "<a href='?src=\ref[src];toggle=1'>Toggle Doors</a><br><br>"
-		dat += "<font size=1><i>Like this program? Send $9.95 to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
+		dat += "<font size=1><i>Like this program? Send 9.95[CREDIT_SIGN] to SPACETREND MICROSYSTEMS in Neo Toronto, Ontario for more bargain software!</i></font>"
 
 		return dat
 
@@ -409,10 +437,10 @@ Code:
 				if (M.id != src.id)
 					continue
 				if (M.density)
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.open()
 				else
-					SPAWN_DBG(0)
+					SPAWN(0)
 						M.close()
 
 		src.master.add_fingerprint(usr)
@@ -469,6 +497,36 @@ Code:
 
 		return dat
 
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"report",\
+			FREQ_PDA, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "report"))
+		UnregisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET)
+
+	proc/receive_signal(obj/item/device/pda2/pda, datum/signal/signal, transmission_method, range, connection_id)
+		if(!src.temp || connection_id != "report" || signal.encryption)
+			return
+
+		if(signal.data["command"] == "reply_alerts")
+			src.temp = null
+
+			if(signal.data["severe_list"])
+				src.severe_alerts = splittext(signal.data["severe_list"], ";")
+			if(signal.data["minor_list"])
+				src.minor_alerts = splittext(signal.data["minor_list"], ";")
+
+			src.master.updateSelfDialog()
+
 	Topic(href, href_list)
 		if(..())
 			return
@@ -488,80 +546,115 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	receive_signal(datum/signal/signal)
-		if(..() || !src.temp)
-			return
-
-		if(signal.data["command"] == "reply_alerts")
-			src.temp = null
-
-			if(signal.data["severe_list"])
-				src.severe_alerts = splittext(signal.data["severe_list"], ";")
-			if(signal.data["minor_list"])
-				src.minor_alerts = splittext(signal.data["minor_list"], ";")
-
-			src.master.updateSelfDialog()
-
-		return
-
 
 //PDA program for displaying engine data and laser output. By FishDance
 //Note: Could display weird results if there is more than one engine or PTL around.
 /datum/computer/file/pda_program/power_checker
-	name = "Power Checker 0.14"
+	name = "Power Checker 0.15"
 	size = 4
 
 	var/obj/machinery/atmospherics/binary/circulatorTemp/circ1
 	var/obj/machinery/atmospherics/binary/circulatorTemp/right/circ2
 	var/obj/machinery/power/pt_laser/laser
 	var/obj/machinery/power/generatorTemp/generator
+	var/obj/machinery/carouselpower/carousel
+
+	proc/find_machinery(obj/ref, type)
+		if(!ref || ref.disposed)
+			ref = locate(type) in machine_registry[MACHINES_POWER]
+			if(ref?.z != 1) ref = null
+		. = ref
 
 	return_text()
 		if(..())
 			return
-		if (!laser)
-			laser = locate() in machine_registry[MACHINES_POWER]
-		if (!generator)
-			generator = locate() in machine_registry[MACHINES_POWER]
-		if (!generator || !circ1)
+
+		var/engine_found = FALSE
+
+		//TEG
+		generator = find_machinery(generator, /obj/machinery/power/generatorTemp)
+		if (generator && (!circ1 || circ1.disposed))
 			circ1 = generator.circ1
-		if (!generator || !circ2)
+		if (generator && (!circ2 || circ2.disposed ))
 			circ2 = generator.circ2
 
+		//PTL
+		laser = find_machinery(laser, /obj/machinery/power/pt_laser)
 
-		var/stuff = src.return_text_header()
+		. = src.return_text_header()
 
 		if (generator)
-			stuff += "<BR><B>Thermo-Electric Generator Status</B><BR>"
-			stuff += "Output : [engineering_notation(generator.lastgen)]W<BR>"
-			stuff += "<BR>"
+			engine_found = TRUE
+			. += "<BR><h4>Thermo-Electric Generator Status</h4>"
+			. += "Output : [engineering_notation(generator.lastgen)]W<BR>"
+			. += "<BR>"
 
-			stuff += "<B>Hot Loop</B><BR>"
-			stuff += "Temperature Inlet: [round(circ1.air1.temperature, 0.1)] K  Outlet: [round(circ1.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ1.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ1.air2.return_pressure(), 0.1)] kPa<BR>"
-			stuff += "<BR>"
+			if(circ1)
+				. += "<B>Hot Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ1.air1?.temperature, 0.1)] K  Outlet: [round(circ1.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ1?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ1?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
 
-			stuff += "<B>Cold Loop</B><BR>"
-			stuff += "Temperature Inlet: [round(circ2.air1.temperature, 0.1)] K  Outlet: [round(circ2.air2.temperature, 0.1)] K<BR>"
-			stuff += "Pressure Inlet: [round(circ2.air1.return_pressure(), 0.1)] kPa  Outlet: [round(circ2.air2.return_pressure(), 0.1)] kPa<BR>"
-			stuff += "<BR>"
+			if(circ2)
+				. += "<B>Cold Loop</B><BR>"
+				. += "Temperature Inlet: [round(circ2.air1?.temperature, 0.1)] K  Outlet: [round(circ2.air2?.temperature, 0.1)] K<BR>"
+				. += "Pressure Inlet: [round(MIXTURE_PRESSURE(circ2?.air1), 0.1)] kPa  Outlet: [round(MIXTURE_PRESSURE(circ2?.air2), 0.1)] kPa<BR>"
+				. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/collector_control]))
+			var/controler_index = 1
+			var/collector_index = 1
+			for_by_tcl(C, /obj/machinery/power/collector_control)
+				collector_index = 1
+				if(C?.active && C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Radiation Collector [controler_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.lastpower)]W<BR>"
+					if(C.CA1?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P1 ? round(MIXTURE_PRESSURE(C.P1.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA2?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P2 ? round(MIXTURE_PRESSURE(C.P2.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA3?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P3 ? round(MIXTURE_PRESSURE(C.P3.air_contents), 0.1) : "ERR"] kPa<BR>"
+					if(C.CA4?.active) . += "Collector [collector_index++]: Tank Pressure: [C.P4 ? round(MIXTURE_PRESSURE(C.P4.air_contents), 0.1) : "ERR"] kPa<BR>"
+					. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/catalytic_generator]))
+			var/generator_index = 1
+			for_by_tcl(C, /obj/machinery/power/catalytic_generator)
+				if(C.z == 1)
+					engine_found = TRUE
+					. += "<BR><h4>Catalytic Generator [generator_index++] Status</h4>"
+					. += "Output: [engineering_notation(C.gen_rate)]W<BR>"
+					if(C.anode_unit?.contained_rod)
+						. += "Anode Rod Condition: [round(C.anode_unit.contained_rod.condition)]%<BR>"
+						. += "Anode Rod Efficacy: [round(C.anode_unit.contained_rod.anode_efficacy)]% Base - [C.anode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Anode Rod Installed<BR>"
+					if(C.cathode_unit?.contained_rod)
+						. += "Cathode Rod Condition: [round(C.cathode_unit.contained_rod.condition)]%<BR>"
+						. += "Cathode Rod Efficacy: [round(C.cathode_unit.contained_rod.cathode_efficacy)]% Base - [C.cathode_unit.report_efficacy()]% Current<BR>"
+					else
+						. += "No Cathode Rod Installed<BR>"
+					. += "<BR>"
+
+		if(length(by_type[/obj/machinery/power/vent_capture]))
+			. += "<BR><h4>Vent Capture Unit Status</h4>"
+			for_by_tcl(V, /obj/machinery/power/vent_capture)
+				if(V.z == 1 && (locate(/obj/machinery/computer/power_monitor/smes) in V.powernet?.nodes) )
+					engine_found = TRUE
+					. += "Output : [engineering_notation(V.last_gen)]W<BR>"
+			. += "<BR>"
+
+		if(!engine_found)
+			. += "<BR><B>Error!</B> No power source detected!<BR><BR>"
+
+		. += "<HR>"
+		if(laser)
+			. += "<BR><B>Power Transmition Laser Status</B><BR>"
+			. += "Currently Active: [laser.firing ? "Yes" : "No"]<BR>"
+			. += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
+			. += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
+			. += "Power Output: [engineering_notation(laser.output)]W<BR>"
 		else
-			stuff += "Error! No engine detected!<BR><BR>"
-		if (laser)
-			stuff += "<B>Power Transmition Laser Status</B><BR>"
-			stuff += "Currently Active: "
-
-			if(laser.firing)
-				stuff += "Yes<BR>"
-			else
-				stuff += "No<BR>"
-
-			stuff += "Power Stored: [engineering_notation(laser.charge)]J ([round(100.0*laser.charge/laser.capacity, 0.1)]%)<BR>"
-			stuff += "Power Input: [engineering_notation(laser.chargelevel)]W<BR>"
-			stuff += "Power Output: [engineering_notation(laser.output)]W<BR>"
-		else
-			stuff += "Error! No PTL detected!"
-		return stuff
+			. += "<B>Error!</B> No PTL detected!"
 
 //Hydroponics plant monitor.
 /datum/computer/file/pda_program/hydro_monitor
@@ -570,7 +663,7 @@ Code:
 
 	var/temp = null
 	var/last_scan = 0
-	var/report_freq = 1447
+	var/report_freq = FREQ_HYDRO
 	var/list/status_reports = list()
 
 	proc/post_status(var/key, var/value, var/key2, var/value2, var/key3, var/value3)
@@ -590,9 +683,19 @@ Code:
 
 		src.post_signal(signal, report_freq)
 
-	init()
-		//boutput(world, "<h5>Adding [master]@[master.loc]:[report_freq]")
-		radio_controller.add_object(master, "[report_freq]")
+	on_activated(obj/item/device/pda2/pda)
+		pda.AddComponent(/datum/component/packet_connected/radio, \
+			"hydro_report",\
+			report_freq, \
+			pda.net_id, \
+			null, \
+			FALSE, \
+			null, \
+			FALSE \
+		)
+
+	on_deactivated(obj/item/device/pda2/pda)
+		qdel(get_radio_connection_by_id(pda, "hydro_report"))
 
 	return_text()
 		if(..())
@@ -656,10 +759,13 @@ Code:
 				dat += "Alert Sent -- Please wait for a response.<br>Additional alerts will be available shortly."
 
 			else
-				dat += "<center>Please select alert type:<br>"
-				dat += "<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>"
-				dat += "<a href='?src=\ref[src];alert=3'>Security Alert</a>"
+				dat += {"
+				<center>Please select alert type:<br>
+				<a href='?src=\ref[src];alert=1'>Medical Alert</a><br>
+				<a href='?src=\ref[src];alert=2'>Engineering Alert</a><br>
+				<a href='?src=\ref[src];alert=3'>Security Alert</a><br>
+				<a href='?src=\ref[src];alert=4'>Janitor Alert</a>
+				"}
 
 		else
 			dat += "<center><b>Please confirm: <a href='?src=\ref[src];confirm=y'>Y</a> / <a href='?src=\ref[src];confirm=n'>N</a></b></center>"
@@ -671,7 +777,7 @@ Code:
 			return
 
 		if (href_list["alert"])
-			confirm_menu = text2num(href_list["alert"])
+			confirm_menu = text2num_safe(href_list["alert"])
 
 		else if (href_list["confirm"])
 			if (href_list["confirm"] == "y")
@@ -683,7 +789,7 @@ Code:
 		src.master.updateSelfDialog()
 		return
 
-	proc/send_alert(var/mailgroupNum=0)
+	proc/send_alert(var/mailgroupNum=0, var/remote = FALSE)
 		if(!src.master || !isnum(mailgroupNum) || (last_transmission && (last_transmission + 3000 > ticker.round_elapsed_ticks)))
 			return
 
@@ -691,33 +797,44 @@ Code:
 		var/mailgroup
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = "medbay"
+				mailgroup = MGD_MEDBAY
 			if (2)
-				mailgroup = "engineer"
-			if (3 to INFINITY)
-				mailgroup = "security"
+				mailgroup = MGO_ENGINEER
+			if (3)
+				mailgroup = MGD_SECURITY
+			if (4 to INFINITY)
+				mailgroup = MGO_JANITOR
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
-		signal.transmission_method = TRANSMISSION_RADIO
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
-		signal.data["group"] = mailgroup
+		signal.data["group"] = list(mailgroup, MGA_CRISIS)
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
 			var/turf/eye_loc = get_turf(usr)
-			if (!(eye_loc.cameras && eye_loc.cameras.len))
+			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span style=\"color:red\">***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 
+		if(isliving(usr) && !remote)
+			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			var/map_text = null
+			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			for (var/mob/O in hearers(usr))
+				O.show_message(assoc_maptext = map_text)
+			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
+			"<span class='notice'>You press the \"Alert\" button on the side of your [src.master].</span>",
+			"<span class='alert'>You see [usr] press a button on the side of their [src.master].</span>")
+
 //Whoever runs this gets to explode.
 /datum/computer/file/pda_program/bomb
-	name = "BOMB"
+	name = "SELF-DESTRUCT"
 	size = 8
 	var/detonating = 0
 
@@ -732,7 +849,7 @@ Code:
 
 		if(!detonating)
 			src.detonating = 1
-			SPAWN_DBG(1 SECOND)
+			SPAWN(1 SECOND)
 				src.master.explode()
 
 		return dat
@@ -743,6 +860,7 @@ Code:
 	size = 8
 	var/tmp/charges = 0 //Don't let jerks copy the program to have extra charges.
 	var/list/pdas = list()
+	dont_copy = 1 // srsly dont let jerks whatsit the whatever
 
 	return_text()
 		if(..())
@@ -820,15 +938,15 @@ Using electronic "Detomatix" MISSILE program is simple!<br>
 <li>now run MISSILE.PPROG and select IMPORT PDA LIST</li>
 <li>select up to four (4) PDAs you want EXPLODED from DISTANCE!</li>
 </ul><br>
-Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
+Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 <ul>
-<li>Copy BOMB.PPROG to main drive, as cart programs cannot be edited!</li>"
-<li>Simply rename new BOMB.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
+<li>Copy SELF-DESTRUCT.PPROG to main drive, as cart programs cannot be edited!</li>"
+<li>Simply rename new SELF-DESTRUCT.PPROG to unassuming, safe name such as <i>"PRETTY PLANTS.PPROG"</i></li>
 <li>Now, COPY renamed file and open MESSENGER.  Select your target and SEND THEM the file!</li>
 <li>Finally, they run file expecting some attractive plants, but instead get EXPLODED PDA!</li>
 </ul>
 <br>
-<b>Caution: </b>Do not run BOMB.PPROG on your own system!  It will explode!
+<b>Caution: </b>Do not run SELF-DESTRUCT.PPROG on your own system!  It will explode!
 "}
 
 //Security ticket writer - not really a small prog any more but oh well
@@ -860,8 +978,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					// this is also bad
 					var/list/people_with_tickets = list()
 					for (var/datum/ticket/T in data_core.tickets)
-						if(!(T.target in people_with_tickets))
-							people_with_tickets += T.target
+						people_with_tickets |= T.target
 
 					for(var/N in people_with_tickets)
 						dat += "<b>[N]</b><br><br>"
@@ -873,11 +990,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 					var/can_approve = 0
 
 					var/PDAowner = src.master.owner
-					var/PDAownerjob = "Unknown Job"
-					for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-						if(G.fields["name"] == PDAowner)
-							PDAownerjob = G.fields["rank"]
-							break
+					var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 					if(PDAownerjob in list("Head of Security","Head of Personnel","Captain")) can_approve = 1
 
@@ -920,11 +1033,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		if(href_list["ticket"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Ticket recipient:",src.name) as text
 			if(!ticket_target) return
@@ -942,41 +1051,34 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			T.issuer_job = PDAownerjob
 			T.text = ticket_text
 			T.target_byond_key = get_byond_key(T.target)
-			T.issuer_byond_key = get_byond_key(T.issuer)
+			T.issuer_byond_key = usr.key
 			data_core.tickets += T
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+			logTheThing(LOG_ADMIN, usr, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
+			SPAWN(3 SECONDS)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Caution - [ticket_target]"
 				p.info = ticket_text
 				p.icon_state = "paper_caution"
 
 
-/*			for(var/datum/data/record/S in data_core.security) //there is probably a better way of doing this too
-				if(S.fields["name"] == ticket_target)
-					if(S.fields["notes"] == "No notes.")
-						S.fields["notes"] = ticket_text
-					else S.fields["notes"] += ticket_text
+/*			for(var/datum/db_record/S as anything in data_core.security.records) //there is probably a better way of doing this too
+				if(S["name"] == ticket_target)
+					if(S["notes"] == "No notes.")
+						S["notes"] = ticket_text
+					else S["notes"] += ticket_text
 					break*/
 
 		else if(href_list["fine"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/ticket_target = input(usr, "Fine recipient:",src.name) as text
 			if(!ticket_target) return
 			ticket_target = copytext(strip_html(ticket_target),	 1, MAX_MESSAGE_LEN)
-			var/has_bank_record = 0
-			for(var/datum/data/record/B in data_core.bank) //this too
-				if(B.fields["name"] == ticket_target)
-					has_bank_record = 1
-					break
+			var/has_bank_record = !!data_core.bank.find_record("name", ticket_target)
 			if(!has_bank_record)
 				message = "Error: No bank records found for [ticket_target]."
 				src.master.updateSelfDialog()
@@ -985,7 +1087,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if(!ticket_reason) return
 			ticket_reason = copytext(strip_html(ticket_reason), 1, MAX_MESSAGE_LEN)
 			var/fine_amount = input(usr, "Fine amount (1-1000):",src.name, 0) as num
-			if(!fine_amount) return
+			if(!isnum_safe(fine_amount)) return
 			fine_amount = min(fine_amount,1000)
 			fine_amount = max(fine_amount,1)
 
@@ -996,15 +1098,16 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			F.issuer = PDAowner
 			F.issuer_job = PDAownerjob
 			F.target_byond_key = get_byond_key(F.target)
-			F.issuer_byond_key = get_byond_key(F.issuer)
+			F.issuer_byond_key = usr.key
 			data_core.fines += F
 
+			logTheThing(LOG_ADMIN, usr, "fines <b>[ticket_target]</b> with the reason: [ticket_reason].")
 			if(PDAownerjob in list("Head of Security","Head of Personnel","Captain"))
 				var/ticket_text = "[ticket_target] has been fined [fine_amount] credits by Nanotrasen Corporate Security for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued and approved by: [PDAowner] - [PDAownerjob]<br>"
-				playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-				SPAWN_DBG(3 SECONDS)
+				playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
+				SPAWN(3 SECONDS)
 					F.approve(PDAowner,PDAownerjob)
-					var/obj/item/paper/p = unpool(/obj/item/paper)
+					var/obj/item/paper/p = new /obj/item/paper
 					p.set_loc(get_turf(src.master))
 					p.name = "Official Fine Notification - [ticket_target]"
 					p.info = ticket_text
@@ -1014,19 +1117,15 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 
 		else if(href_list["approve"])
 			var/PDAowner = src.master.owner
-			var/PDAownerjob = "Unknown Job"
-			for(var/datum/data/record/G in data_core.general) //there is probably a better way of doing this
-				if(G.fields["name"] == PDAowner)
-					PDAownerjob = G.fields["rank"]
-					break
+			var/PDAownerjob = data_core.general.find_record("name", PDAowner)?["rank"] || "Unknown Job"
 
 			var/datum/fine/F = locate(href_list["approve"])
 
-			playsound(get_turf(src.master), "sound/machines/printer_thermal.ogg", 50, 1)
-			SPAWN_DBG(3 SECONDS)
+			playsound(src.master, 'sound/machines/printer_thermal.ogg', 50, 1)
+			SPAWN(3 SECONDS)
 				F.approve(PDAowner,PDAownerjob)
 				var/ticket_text = "[F.target] has been fined [F.amount] credits by Nanotrasen Corporate Security for [F.reason] on [time2text(world.realtime, "DD/MM/53")].<br>Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [PDAowner] - [PDAownerjob]<br>"
-				var/obj/item/paper/p = unpool(/obj/item/paper)
+				var/obj/item/paper/p = new /obj/item/paper
 				p.set_loc(get_turf(src.master))
 				p.name = "Official Fine Notification - [F.target]"
 				p.info = ticket_text
@@ -1091,7 +1190,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 		if (href_list["order"])
 			src.temp = {"<B>Shipping Budget:</B> [wagesystem.shipping_budget] Credits<BR><HR>
 			<B>Please select the Supply Package you would like to request:</B><BR><BR>"}
-			for(var/S in childrentypesof(/datum/supply_packs) )
+			for(var/S in concrete_typesof(/datum/supply_packs) )
 				var/datum/supply_packs/N = new S()
 				if(N.hidden || N.syndicate) continue
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
@@ -1122,12 +1221,10 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			// pda alert ////////
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
-				var/datum/radio_frequency/transmit_connection = radio_controller.return_frequency("1149")
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"="cargo", "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
-				pdaSignal.transmission_method = TRANSMISSION_RADIO
-				if(transmit_connection != null)
-					transmit_connection.post_signal(src, pdaSignal)
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+
 			//////////////////
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"
 
@@ -1185,7 +1282,7 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 			if (station_name_changing)
 				var/nextName = lastStationNameChange + stationNameChangeDelay
 				if (nextName > world.timeofday)
-					alert("You must wait for the station naming coils to recharge! Did space school teach you nothing?!")
+					tgui_alert(usr, "You must wait for the station naming coils to recharge! Did space school teach you nothing?!", "Naming coils recharging")
 					usr.Browse(null, "window=stationnamechanger")
 					src.master.updateSelfDialog()
 					return
@@ -1194,10 +1291,180 @@ Using electronic "Detomatix" BOMB program is perhaps less simple!<br>
 				var/newName = href_list["newName"]
 
 				if (set_station_name(usr, newName))
-					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm")
+					command_alert("The new station name is [station_name]", "Station Naming Ceremony Completion Detection Algorithm", alert_origin = ALERT_STATION)
 
 			usr.Browse(null, "window=stationnamechanger")
 			src.master.updateSelfDialog()
 
 		src.master.add_fingerprint(usr)
+		return
+
+/datum/computer/file/pda_program/gps
+	name = "Space GPS"
+	size = 2
+	var/x = -1
+	var/y = -1
+	var/z = -1
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+		dat += "<h4>Space GPS: Pocket Edition</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];getloc=1'>Get Coordinates</a>"
+		if (x >= 0)
+
+			var/landmark = "Unknown"
+			switch (src.z)
+				if (1)
+					landmark = capitalize(station_or_ship())
+				if (2)
+					landmark = "Restricted"
+				if (3)
+					landmark = "Debris Field"
+				if (5)
+					#ifdef UNDERWATER_MAP
+					landmark = "Trench"
+					#else
+					landmark = "Asteroid Field"
+					#endif
+
+			dat += "<BR>X = [src.x], Y = [src.y], Landmark: [landmark]"
+
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["getloc"])
+			var/turf/T = get_turf(usr)
+			src.x = T.x
+			src.y = T.y
+			src.z = T.z
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/revheadtracker
+	name = "Revolutionary Leader Locater"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Watchful Eye infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Watchful Eye Revolutionary Leader Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest revolutionary leader</a>"
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive revolutionary leaders located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.head_revolutionaries
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
+
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
+		return
+
+/datum/computer/file/pda_program/headtracker
+	name = "Nanotrasen Command Tracker"
+	size = 0
+	var/turf/nearest_head_location = null
+	var/direction
+	var/distance
+	var/pressed
+
+	return_text()
+		if(..())
+			return
+
+		var/dat = src.return_text_header()
+
+		if (!istype(ticker.mode, /datum/game_mode/revolution))
+			dat += "<h4>Egeria Providence Array infrared tracking not available at this time</h4>"
+			return dat
+
+		dat += "<h4>Egeria Providence Array Command Tracker</h4>"
+
+		dat += "<a href='byond://?src=\ref[src];gethead=1'>Track nearest head</a>"
+
+		if(nearest_head_location == null && pressed) // Makes it so it doesnt show up by default
+			dat += "<BR>No alive command members located in this station's sector."
+		if(nearest_head_location != null)
+			dat += "<BR>Direction = [src.direction], Distance = [src.distance]"
+		return dat
+
+	Topic(href, href_list)
+		if(..())
+			return
+
+		if (href_list["gethead"])
+			pressed = 1
+			if (istype(ticker.mode, /datum/game_mode/revolution))
+				var/datum/game_mode/revolution/R = ticker.mode
+				var/list/datum/mind/heads = R.get_all_heads()
+				var/turf/Turf = get_turf(usr)
+				nearest_head_location = null
+
+				for (var/datum/mind/Mind in heads)
+					if(!Mind.current)
+						continue
+					if(!istype(Mind.current, /mob/living/carbon/human))
+						continue
+					var/MindMob = Mind.current
+					var/turf/MindTurf = get_turf(MindMob)
+					if(!isalive(Mind.current) || MindTurf.z != 1)
+						continue
+					if(GET_DIST(Turf, MindTurf) <= GET_DIST(Turf, nearest_head_location))
+						nearest_head_location = MindTurf
+
+				if(nearest_head_location != null)
+					direction = dir2text(get_dir(Turf, nearest_head_location))
+					distance = GET_DIST(Turf, nearest_head_location)
+
+		src.master.add_fingerprint(usr)
+		src.master.updateSelfDialog()
 		return

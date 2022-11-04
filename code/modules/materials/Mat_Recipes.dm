@@ -1,27 +1,30 @@
+/// material recipie definition
 /datum/material_recipe
 	var/name = ""
-	var/result_id = null //Id of the result material. used as fallback or when you do not want to use a result item.
-	var/result_item = null //Path of the resulting material item.
+	/// ID of the result material. used as fallback or when you do not want to use a result item.
+	var/result_id = null
+	/// Path of the resulting material item.
+	var/result_item = null
 
-	//This checks if the recipe applies to the given result material.
-	//This is a proc so you can do practically anything for recipes.
-	//Want a recipe that only applies to wool + erebite composites and only if they have a high temperature resistance? You can.
-	//Try to keep these cheap if you can.
+	/**
+		* This checks if the recipe applies to the given result material.
+		*
+		* This is a proc so you can do practically anything for recipes.
+		*
+		* Want a recipe that only applies to wool + erebite composites and only if they have a high temperature resistance? You can.
+		*
+		* Try to keep these cheap if you can.
+		*/
 	proc/validate(var/datum/material/M)
 		return null
 
-	//If no result id or result items are defined, this proc will be executed on the material. Do this if you want a recipe to just modifiy a material.
+	/// If no result id or result items are defined, this proc will be executed on the material. Do this if you want a recipe to just modifiy a material.
 	proc/apply_to(var/datum/material/M)
 		return M
 
-/datum/material_recipe/spacelag
-	name = "spacelag"
-	result_id = "spacelag"
-	result_item = /obj/item/material_piece/spacelag
-
-	validate(var/datum/material/M)
-		if(M.hasProperty("stability") && M.getProperty("stability") <= 1) return 1
-		else return 0
+	/// called with the resultant item from the recipe as argument. Use this if you want to say, print a message when a recipe is made.
+	proc/apply_to_obj(var/obj/O)
+		return
 
 /datum/material_recipe/dyneema
 	name = "dyneema"
@@ -135,6 +138,38 @@
 		for(var/datum/material/CM in M.parent_materials)
 			if(CM.mat_id == "plasmastone") one = 1
 			if(CM.mat_id == "glass") two = 1
+
+		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/synthleather
+	name = "synthleather"
+	result_id = "synthleather"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "latex") one = 1
+			if(CM.mat_id == "cotton") two = 1
+
+		if(one && two) return 1
+		else return 0
+
+/datum/material_recipe/synthblubber
+	name = "synthblubber"
+	result_id = "synthblubber"
+
+	validate(var/datum/material/M)
+		var/one = 0
+		var/two = 0
+
+		var/regex/R = regex("rubber")
+
+		for(var/datum/material/CM in M.parent_materials)
+			if(CM.mat_id == "coral") one = 1
+			if(R.Find(CM.mat_id)) two = 1
 
 		if(one && two) return 1
 		else return 0

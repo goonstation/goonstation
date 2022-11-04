@@ -18,14 +18,12 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		zoldorf_items_raw += list(zoldorf_items[pathname].raw_list)
 
 /obj/machinery/playerzoldorf/proc/uisetup() //general proc for sending resources to the client and loading the zoldorf ui
-	usr << browse_rsc(file("browserassets/css/zoldorf.css"))
-	usr << browse_rsc(file("browserassets/js/zoldorf.js"))
 	usr << browse(replacetext(replacetext(replacetext(grabResource("html/zoldorf.htm"), "!!ITEMS!!", json_encode(zoldorf_items_raw)), "!!CREDITS!!", src.credits), "!!SRC_REF!!", "\ref[src]"), "window=Zoldorf;size=700x600;can_resize=1;can_minimize=1;")
 
 /obj/machinery/playerzoldorf/proc/updateui(var/mob/exclude,var/item_path) //opening a zoldorf ui adds a player to a list (they are removed on close). this proc references
 	var/wasnull = 0														  //a list of all players currently viewing the interface and dynamically updates everyone for full syncing
 	// TODO: this should use updateUsrDialog instead
-	var/staticiterations = src.openwindows.len
+	var/staticiterations = length(src.openwindows)
 	for(var/i=1,i<=staticiterations,i++)
 		if((src.openwindows[i] == exclude) || (src.openwindows[i] == null) || !(src.openwindows[i] in range(1,src)))
 			if(src.openwindows[i]==null) //checking for nulls
@@ -43,7 +41,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				staticiterations--
 				i--
 	if(wasnull == 1) //if any nulls were found, declog the list
-		staticiterations = src.openwindows.len
+		staticiterations = length(src.openwindows)
 		for(var/i=1,i<=staticiterations,i++)
 			if(src.openwindows[i] == null)
 				src.openwindows -= src.openwindows[i]
@@ -126,7 +124,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 
 	proc/booth(var/mob/user,var/zoldorfturf = user.loc,var/contract = null,var/succession = 0,var/ready = 0) //sorry about the clutter on this proc. its called in about three different ways
 		if(!istype(user,/mob/living/carbon/human))															 //and rather than overloading it and writing the same proc three times,
-			boutput(user,"<span style=\"color:red\"><b>Only humans may take zoldorf's place!</b></span>")    //i added a lot of data parameters
+			boutput(user,"<span class='alert'><b>Only humans may take zoldorf's place!</b></span>")    //i added a lot of data parameters
 			return
 
 		var/image/holderim
@@ -136,26 +134,26 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			if(world.time >= src.usurpgrace)
 				if(!src.usurper) //if no one is currently in queue to usurp the current zoldorf, queues the contract holder and sends the prompt to the zoldorf
 					qdel(contract)
-					boutput(user,"<span style=\"color:green\"><b>You have been queued for succession!</b></span>")
+					boutput(user,"<span class='success'><b>You have been queued for succession!</b></span>")
 					src.usurper = user
 					if(z.client)
-						SPAWN_DBG(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
+						SPAWN(300) //starting the afk timer, in case the zoldorf is afk or theyre deliberately not answering the prompt
 							if(!src.usurper) //after the wait, making sure the usurper still exists
 								return
 							if(!src.usurper.client || isdead(src.usurper)) //making sure the usurper is still in the game and not dead
-								boutput("<span style=\"color:green\"><b>Your usurper has either disconnected or died.</b></span>")
+								boutput(src, "<span class='success'><b>Your usurper has either disconnected or died.</b></span>")
 								src.usurper = null
 								return
 							else if(!istype(src.usurper,/mob/living/carbon/human)) //afterward making sure theyre human
-								boutput("<span style=\"color:green\"><b>Your usurper is no longer human and is unable to take your place.</b></span>")
+								boutput(src, "<span class='success'><b>Your usurper is no longer human and is unable to take your place.</b></span>")
 								return
 							if(!src.YN) //if the prompt was not answered, the proc runs itself with modified parameters to move on to the second half of boothing without having to go through the other types of zoldorfing
 								booth(user,zoldorfturf,null,1,1)
 								return //returns after the beta version of the proc completes so the alpha version doesnt run all the way through
-						if(alert(z,"A player has signed over their soul to take your place as the mighty Zoldorf. Do you wish to relinquish control now?", "Relinquish Control", "Yes", "No") == "No") //the prompt
+						if(tgui_alert(z, "A player has signed over their soul to take your place as the mighty Zoldorf. Do you wish to relinquish control now?", "Relinquish Control", list("Yes", "No")) != "Yes") //the prompt
 							if(z.free) //if a zoldorf is free that means they are no longer bound to the booth and therefore either suicided or were freed in another way, either way theyre no longer zoldorf
 								return
-							boutput(z,"<span style=\"color:green\"><b>You will have three minutes to tie up loose ends!</b></span>") //this will happen if they select the option not to relinquish control now
+							boutput(z,"<span class='success'><b>You will have three minutes to tie up loose ends!</b></span>") //this will happen if they select the option not to relinquish control now
 							src.YN = 1
 							sleep(1800)
 							booth(user,zoldorfturf,null,1,1) //same as before
@@ -174,13 +172,13 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 						return
 
 				else if(user == src.usurper) //if the user is already the usurper, they are prompted to wait
-					boutput(user, "<span style=\"color:green\"><b>The current zoldorf is tying up loose ends. Your soul will be consumed shortly!</b></span>")
+					boutput(user, "<span class='success'><b>The current zoldorf is tying up loose ends. Your soul will be consumed shortly!</b></span>")
 					return
 				else
-					boutput(user, "<span style=\"color:red\"><b>Another player is already queued for succession!</b></span>")
+					boutput(user, "<span class='alert'><b>Another player is already queued for succession!</b></span>")
 					return
 			else //this happens if the current zoldorf is still in their grace period in which they cant be usurped (usurpgrace)
-				boutput(user,"<span style=\"color:red\"><b>The power of the new soul is too potent at this time. Please try again later.</b></span>")
+				boutput(user,"<span class='alert'><b>The power of the new soul is too potent at this time. Please try again later.</b></span>")
 				return
 
 		if(the_zoldorf.len && ready == 1) //this is called during the recursion to souldorfify the zoldorf in preparation for the newcomer
@@ -195,8 +193,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(istype(H))
 			holderim = image(H.flat_icon)
 		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
-		holderim.overlays += image('icons/mob/overcoats/worn_suit.dmi', icon_state="wizard")
-		holderim.overlays += image('icons/mob/head.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
+		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
 
 		//overlay player
@@ -227,7 +225,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			qdel(contract)
 
 		//zoldorfify the player
-		user.visible_message("<span style=\"color:red\"><b>[user.name] evaporates! OH GOD!</b></span>")
+		user.visible_message("<span class='alert'><b>[user.name] evaporates! OH GOD!</b></span>")
 		user.unequip_all()
 
 		if(user in src.brandlist) //making sure there isnt an unnecessary null reference to the player's old body after it's destroyed (if branded)
@@ -244,7 +242,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		src.souldorfs.Add(Z)
 		src.occupied = 1
 		the_zoldorf.Add(Z)
-		Z << browse(grabResource("html/traitorTips/zoldorfTips.htm"),"window=antagTips;titlebar=1;size=600x400;can_minimize=0;can_resize=0")
+		Z.show_antag_popup("zoldorf")
 		src.usurpgrace = world.time + 3000
 		src.YN = null
 		src.usurper = null
@@ -252,22 +250,22 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		src.updatejar()
 
 		if(Z.client && Z.client.holder && !Z.client.player_mode)
-			boutput(Z,"<span style=\"color:red\"><b>WARNING:</b> As an admin, you will be able to hear deadchat in booth without activation of Medium (based on your deadchat-hearing settings) while a non-admin player would normally not be able to.</span>")
+			boutput(Z,"<span class='alert'><b>WARNING:</b> As an admin, you will be able to hear deadchat in booth without activation of Medium (based on your deadchat-hearing settings) while a non-admin player would normally not be able to.</span>")
 
 	proc/lightfade(var/initialbright = 0.8) //lighting animation (i have no idea how intense this will be on the server) //fade out
 		var/loops = (initialbright*10)
 		for(var/i=1,i<=loops,i++)
 			initialbright -= 0.1
 			src.add_simple_light("zoldorf", list(0.25 * 255, 0.51 * 255, 0.43 * 255, initialbright))
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 	proc/lightrfade(var/targetbright = 0.8) //fade in
-		var/initialbright = 0.0
+		var/initialbright = 0
 		var/loops = targetbright*10
 		for(var/i=1,i<=loops,i++)
 			initialbright += 0.1
 			src.add_simple_light("zoldorf", list(0.25 * 255, 0.51 * 255, 0.43 * 255, initialbright))
-			sleep(1)
+			sleep(0.1 SECONDS)
 
 	proc/omen(var/mob/zoldorf/z) //this proc is 100% animations and stuff for the omen ability. its bound to the booth to stop weird things from happening if something happens to the mob mid-animation
 		if(!src.omen)
@@ -276,37 +274,37 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			o1.layer = 6
 			src.vis_contents += o1
 			o1.icon_state = "crystalfade"
-			sleep(11)
+			sleep(1.1 SECONDS)
 
-			src.visible_message("<span style=\"color:green\"><b>The crystal ball emits a chilling ghost light!</b></span>")
+			src.visible_message("<span class='success'><b>The crystal ball emits a chilling ghost light!</b></span>")
 			src.lightrfade()
 
 			o2.layer = 5
 			src.vis_contents += o2
 
 			setdead(z)
-			boutput(z, "<span style=\"color:blue\"><b>You begin to hear the whisperings of the dead...</b></span>")
+			boutput(z, "<span class='notice'><b>You begin to hear the whisperings of the dead...</b></span>")
 
 			for(var/i=1,i<=6,i++)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
 				o2.icon_state = "rcolorfade"
-				sleep(25)
+				sleep(2.5 SECONDS)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
 				icon_state = "colorfade"
-				sleep(25)
+				sleep(2.5 SECONDS)
 
 			if(src)
 				if(z.loc == src)
 					z.stat = 0
-					boutput(z, "<span style=\"color:blue\"><b>The whispers and wails of those parted fade into nothingness...</b></span>")
+					boutput(z, "<span class='notice'><b>The whispers and wails of those parted fade into nothingness...</b></span>")
 				src.lightfade()
 				src.remove_simple_light("zoldorf")
 				if(src.usurping)
 					return
 				o1.icon_state = "rcrystalfade"
-				sleep(11)
+				sleep(1.1 SECONDS)
 				if(src.usurping)
 					return
 				src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"crystalball"),"crystalball")
@@ -322,11 +320,11 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					return 0
 			if(inuse)
 				if(omencolor == "none")
-					src.visible_message("<span style=\"color:blue\"><b>The smoke clears and the orb returns to its inert state.</b></span>")
+					src.visible_message("<span class='notice'><b>The smoke clears and the orb returns to its inert state.</b></span>")
 					if(src.usurping)
 						return
 					o1.icon_state = "rcrystalfade"
-					sleep(11)
+					sleep(1.1 SECONDS)
 					if(src.usurping)
 						return
 					src.UpdateOverlays(image('icons/obj/zoldorf.dmi',"crystalball"),"crystalball")
@@ -338,14 +336,14 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					src.omen = 0
 					return
 				else
-					src.visible_message("<span style=\"color:blue\"><b>The color of the smoke within the crystal ball begins to shift and change color!</b></span>")
+					src.visible_message("<span class='notice'><b>The color of the smoke within the crystal ball begins to shift and change color!</b></span>")
 					src.messagethrottle = 1
 					if(src.usurping)
 						return
 					o2.icon = 'icons/obj/zoldorf.dmi'
 					o2.icon_state = "colorfade"
 					o2.color = src.smokecolor
-					sleep(25)
+					sleep(2.5 SECONDS)
 					if(src.usurping)
 						return
 					o2.icon = null
@@ -363,7 +361,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				src.vis_contents += o1
 				o1.icon_state = "crystalfade"
 				src.inuse = 1
-				sleep(11)
+				sleep(1.1 SECONDS)
 				if(src.usurping)
 					return
 
@@ -376,7 +374,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					src.smokecolor = src.colorinputbuffer
 
 			if(!src.messagethrottle)
-				src.visible_message("<span style=\"color:blue\"><b>The crystal ball begins to rapidly fill with colored smoke!</b></span>")
+				src.visible_message("<span class='notice'><b>The crystal ball begins to rapidly fill with colored smoke!</b></span>")
 
 			if(src.usurping)
 				return
@@ -388,26 +386,26 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			src.messagethrottle = 0
 			return 1
 
-	attackby(obj/item/weapon as obj, mob/user as mob)
+	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/spacecash)) //adding money to the vending machine
 			src.credits += weapon.amount
 			if(winget(user,"Zoldorf","is-visible") == "true")
 				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
 			updateui(user)
 			weapon.amount = 0
-			usr.visible_message("<span style=\"color:blue\"><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span style=\"color:blue\"><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
-			usr.u_equip(weapon)
-			weapon.dropped()
+			user.visible_message("<span class='notice'><b>[src.name] magically vacuums up [user.name]'s credits!</b></span>","<span class='notice'><b>Poof! The great [src.name] has made your credits disappear! Just kidding they're in the booth.</b></span>")
+			user.u_equip(weapon)
+			weapon.dropped(user)
 			qdel(weapon)
 
 		else if(istype(weapon, /obj/item/zolscroll)) //handling handing of contracts to begin the usurping process
 			var/obj/item/zolscroll/scroll = weapon
 			var/mob/living/carbon/human/h = user
 			if(h.unkillable)
-				boutput(h,"<span style=\"color:red\"><b>Your soul is shielded and cannot be sold!</b></span>")
+				boutput(h,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 				return
 			if(scroll.icon_state != "signed")
-				boutput(h, "<span style=\"color:red\">It doesn't seem to be signed yet.</span>")
+				boutput(h, "<span class='alert'>It doesn't seem to be signed yet.</span>")
 				return
 			if(scroll.signer == h.real_name)
 				var/zoldorfturf = get_turf(src)
@@ -415,16 +413,16 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					if(the_zoldorf[1].homebooth == src)
 						src.booth(user,zoldorfturf,scroll,1)
 					else
-						boutput(h, "<span style=\"color:red\"><b>There can only be one!</b></span>")
+						boutput(h, "<span class='alert'><b>There can only be one!</b></span>")
 				else
 					src.booth(user,zoldorfturf,scroll)
 			else
-				user.visible_message("<span style=\"color:red\"><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span style=\"color:red\"><b>You can only sell your own soul!</b></span>")
+				user.visible_message("<span class='alert'><b>[h.name] tries to sell [scroll.signer]'s soul to [src]! How dare they...</b></span>","<span class='alert'><b>You can only sell your own soul!</b></span>")
 		else
 			..()
 
 
-	attack_hand(mob/user as mob) //interface stuff
+	attack_hand(mob/user) //interface stuff
 		if(!(user in src.openwindows))
 			src.openwindows.Add(user)
 		uisetup()
@@ -460,22 +458,22 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 					var/mob/living/carbon/human/user = usr
 					if(user.mind && user.mind.soul)
 						if(user.mind.soul < item.soul_cost())
-							boutput(user, "<span style=\"color:red\"><b>You don't have enough of a soul to sell!</b></span>")
+							boutput(user, "<span class='alert'><b>You don't have enough of a soul to sell!</b></span>")
 							return
 					else
 						return
 				else
-					boutput(usr,"<span style=\"color:red\"><b>You don't have a soul, silly :P</b></span>")
+					boutput(usr,"<span class='alert'><b>You don't have a soul, silly.</b></span>")
 					return
 			if(item.stock != "i")
 				if(item.stock == 0)
-					boutput(usr,"<span style=\"color:red\"><b>Item out of stock!</b></span>")
+					boutput(usr,"<span class='alert'><b>Item out of stock!</b></span>")
 					return
 				else
 					item.stock--
 					item.raw_list["stock"]--
 		else
-			if((text2num(href_list["credits"]) <= src.credits) && (text2num(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
+			if((text2num_safe(href_list["credits"]) <= src.credits) && (text2num_safe(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
 				usr << output("return","Zoldorf.browser:serverconfirm")
 				var/obj/item/moneyreturn = new /obj/item/spacecash(get_turf(src),src.credits)
 				src.credits = 0
@@ -491,15 +489,15 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 							credits -= item.cost
 							usr.put_in_hand_or_drop(new item.path(src))
 						else
-							boutput(usr, "<span style=\"color:red\">[src.name] stares blankly into your soul...begging you for more credits...</span>")
+							boutput(usr, "<span class='alert'>[src.name] stares blankly into your soul...begging you for more credits...</span>")
 				if("soulspawn") //spawning items at the cost of a portion of the soul
 					var/cost = item.soul_cost()
 					if(istype(usr, /mob/living/carbon/human))
 						var/mob/living/carbon/human/user = usr
 						if(user.unkillable) //*giggles in scientist language*
-							boutput(user,"<span style=\"color:red\"><b>Your soul is shielded and cannot be sold!</b></span>")
+							boutput(user,"<span class='alert'><b>Your soul is shielded and cannot be sold!</b></span>")
 							return
-					var/confirm = alert("Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", "Yes", "No")
+					var/confirm = tgui_alert(usr, "Are you sure you want to sell [item.cost] of your soul?", "Confirm Transaction", list("Yes", "No"))
 					if(confirm == "Yes")
 						if(usr in range(1,src))
 							usr << output(list2params(list("spawn", item.cost)),"Zoldorf.browser:serverconfirm")

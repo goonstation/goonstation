@@ -22,11 +22,11 @@
 // And for all:
 // RARITY_ABSTRACT: Used strictly for categorization. ABSTRACT symptoms will never appear.
 //                  ie. if lingual is a symptom category with multiple subsymptoms (for easy mutex), it should be abstract.
-#define RARITY_VERY_COMMON 10
-#define RARITY_COMMON 5
+#define RARITY_VERY_COMMON 1
+#define RARITY_COMMON 2
 #define RARITY_UNCOMMON 3
-#define RARITY_RARE 2
-#define RARITY_VERY_RARE 1
+#define RARITY_RARE 4
+#define RARITY_VERY_RARE 5
 #define RARITY_ABSTRACT 0
 
 datum/pathogen_cdc
@@ -40,6 +40,7 @@ datum/pathogen_cdc
 	var/list/mutations = list()
 
 	New(var/pathogen_uid)
+		..()
 		creation_time = world.time / 600
 		src.uid = pathogen_uid
 
@@ -106,7 +107,7 @@ datum/controller/pathogen
 			CDC.patient_zero_kname = "[H]"
 		if (!(P.name in CDC.mutations))
 			CDC.mutations += P.name
-			var/datum/pathogen/template = unpool(/datum/pathogen)
+			var/datum/pathogen/template = new /datum/pathogen
 			template.setup(0, P, 0)
 			CDC.mutations[P.name] = template
 		if (!(H in CDC.infections))
@@ -119,18 +120,19 @@ datum/controller/pathogen
 			return
 		if (H in CDC.infections)
 			CDC.infections -= H
+		P.oncured()
 
 	proc/patient_zero(var/datum/pathogen_cdc/CDC, var/topic_holder)
 		if (CDC.patient_zero)
 			return replacetext(CDC.patient_zero_kname, "%holder%", "\ref[topic_holder]")
 
 	Topic(href, href_list)
-		usr_admin_only
+		USR_ADMIN_ONLY
 		var/key = usr.ckey
 		var/th = locate(href_list["topic_holder"])
 		switch(href_list["action"])
 			if ("setstate")
-				cdc_state[key] = text2num(href_list["state"])
+				cdc_state[key] = text2num_safe(href_list["state"])
 			if ("strain_cure")
 				var/strain = href_list["strain"]
 				var/datum/pathogen_cdc/CDC = pathogen_trees[strain]
@@ -157,16 +159,11 @@ datum/controller/pathogen
 							types[MB.name] = MB
 						var/chosen = input("Which microbody?", "Microbody", types[1]) in types
 						P.body_type = types[chosen]
-						P.maliciousness = rand(-2, 6)
-						P.mutation_speed = rand(-2, 10)
-						P.suppression_threshold = rand(1,3) * P.maliciousness
-						P.suppression_threshold += rand(-5, 10)
-						P.advance_speed = rand(-2, 7)
-						P.mutativeness = P.body_type.mutativeness
+						P.advance_speed = 25
+						P.suppression_threshold = 25
+						P.spread = 25
 						P.symptomatic = 1
 						P.generation = 1
-						P.maliciousness *= P.body_type.maliciousness_multiplier
-						P.mutation_speed *= P.body_type.mutation_speed_multiplier
 						P.stages = P.body_type.stages
 
 					if ("suppressant")
@@ -175,7 +172,7 @@ datum/controller/pathogen
 							var/datum/suppressant/S = src.path_to_suppressant[spath]
 							types += S.name
 							types[S.name] = S
-						var/chosen = input("Which suppresant?", "Suppressant", types[1]) in types
+						var/chosen = input("Which suppressant?", "Suppressant", types[1]) in types
 						P.suppressant = types[chosen]
 						P.desc = "[P.suppressant.color] dodecahedrical [P.body_type.plural]"
 
@@ -197,25 +194,21 @@ datum/controller/pathogen
 							P.effects -= EF
 
 					if ("advance_speed")
-						P.advance_speed = input("New advance speed?", "Advance speed", P.advance_speed) as num
-					if ("mutation_speed")
-						P.mutation_speed = input("New mutation speed?", "mutation speed", P.mutation_speed) as num
-					if ("maliciousness")
-						P.maliciousness = input("New maliciousness?", "Maliciousness", P.maliciousness) as num
-					if ("mutativeness")
-						P.mutativeness = input("New mutativeness?", "Mutativeness", P.mutativeness) as num
+						P.advance_speed = text2num_safe(input("New advance speed?", "Advance speed", P.advance_speed) as num) || P.advance_speed
 					if ("suppression_threshold")
-						P.suppression_threshold = input("New suppression threshold?", "Suppression threshold", P.suppression_threshold) as num
+						P.suppression_threshold = text2num_safe(input("New suppression threshold?", "Suppression threshold", P.suppression_threshold) as num) || P.suppression_threshold
+					if ("spread")
+						P.spread = text2num_safe(input("New spread?", "Spread", P.spread) as num) || P.spread
 					if ("symptomatic")
 						P.symptomatic = !P.symptomatic
 					if ("stages")
 						var/value = P.stages
-						var/newval = input("New stages (3-5)?", "Stages", value) as num
+						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
 						if (newval >= 3 && newval <= 5)
 							P.stages = newval
 					if ("create")
 						P.dnasample = new/datum/pathogendna(P)
-						P.pathogen_uid = "[next_uid]"
+						P.pathogen_uid = "p[next_uid]"
 						next_uid++
 
 						pathogen_trees += P.name_base
@@ -236,7 +229,7 @@ datum/controller/pathogen
 				switch (href_list["data"])
 					if ("advance_speed")
 						var/value = reference.advance_speed
-						var/newval = input("New advance speed?", "Advance speed", value) as num
+						var/newval = text2num_safe(input("New advance speed?", "Advance speed", value) as num) || value
 						for (var/mob/living/carbon/human/H in CDC.infections)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/target = H.pathogens[CDC.uid]
@@ -244,39 +237,9 @@ datum/controller/pathogen
 									target.advance_speed = newval
 						reference.advance_speed = newval
 						message_admins("[key_name(usr)] set the advance speed on pathogen strain mutation [name] to [newval].")
-					if ("mutation_speed")
-						var/value = reference.mutation_speed
-						var/newval = input("New mutation speed?", "Mutation speed", value) as num
-						for (var/mob/living/carbon/human/H in CDC.infections)
-							if (CDC.uid in H.pathogens)
-								var/datum/pathogen/target = H.pathogens[CDC.uid]
-								if (target.name == name)
-									target.mutation_speed = newval
-						reference.mutation_speed = newval
-						message_admins("[key_name(usr)] set the mutation speed on pathogen strain mutation [name] to [newval].")
-					if ("maliciousness")
-						var/value = reference.maliciousness
-						var/newval = input("New maliciousness?", "Maliciousness", value) as num
-						for (var/mob/living/carbon/human/H in CDC.infections)
-							if (CDC.uid in H.pathogens)
-								var/datum/pathogen/target = H.pathogens[CDC.uid]
-								if (target.name == name)
-									target.maliciousness = newval
-						reference.maliciousness = newval
-						message_admins("[key_name(usr)] set the maliciousness on pathogen strain mutation [name] to [newval].")
-					if ("mutativeness")
-						var/value = reference.mutativeness
-						var/newval = input("New mutativeness?", "Mutativeness", value) as num
-						for (var/mob/living/carbon/human/H in CDC.infections)
-							if (CDC.uid in H.pathogens)
-								var/datum/pathogen/target = H.pathogens[CDC.uid]
-								if (target.name == name)
-									target.mutativeness = newval
-						reference.mutativeness = newval
-						message_admins("[key_name(usr)] set the mutativeness on pathogen strain mutation [name] to [newval].")
 					if ("suppression_threshold")
 						var/value = reference.suppression_threshold
-						var/newval = input("New suppression threshold?", "Suppression threshold", value) as num
+						var/newval = text2num_safe(input("New suppression threshold?", "Suppression threshold", value) as num) || value
 						for (var/mob/living/carbon/human/H in CDC.infections)
 							if (CDC.uid in H.pathogens)
 								var/datum/pathogen/target = H.pathogens[CDC.uid]
@@ -284,6 +247,16 @@ datum/controller/pathogen
 									target.suppression_threshold = newval
 						reference.suppression_threshold = newval
 						message_admins("[key_name(usr)] set the suppression threshold on pathogen strain mutation [name] to [newval].")
+					if ("spread")
+						var/value = reference.spread
+						var/newval = text2num_safe(input("New spread?", "Spread", value) as num) || value
+						for (var/mob/living/carbon/human/H in CDC.infections)
+							if (CDC.uid in H.pathogens)
+								var/datum/pathogen/target = H.pathogens[CDC.uid]
+								if (target.name == name)
+									target.spread = newval
+						reference.spread = newval
+						message_admins("[key_name(usr)] set the spread on pathogen strain mutation [name] to [newval].")
 					if ("symptomatic")
 						var/value = reference.symptomatic
 						var/newval = !value
@@ -296,7 +269,7 @@ datum/controller/pathogen
 						message_admins("[key_name(usr)] set the symptomaticity for pathogen strain mutation [name] to [newval ? "Yes" : "No"].")
 					if ("stages")
 						var/value = reference.stages
-						var/newval = input("New stages (3-5)?", "Stages", value) as num
+						var/newval = text2num_safe(input("New stages (3-5)?", "Stages", value) as num) || value
 						if (newval >= 3 && newval <= 5)
 							for (var/mob/living/carbon/human/H in CDC.infections)
 								if (CDC.uid in H.pathogens)
@@ -318,7 +291,7 @@ datum/controller/pathogen
 					if ("infect")
 						var/mob/living/carbon/human/target = input("Who would you like to infect with this mutation?", "Infect") as mob in mobs//world
 						if (!istype(target))
-							boutput(usr, "<span style=\"color:red\">Cannot infect that. Must be human.</span>")
+							boutput(usr, "<span class='alert'>Cannot infect that. Must be human.</span>")
 						else
 							target.infected(reference)
 							message_admins("[key_name(usr)] infected [target] with [name].")
@@ -336,7 +309,7 @@ datum/controller/pathogen
 				var/datum/microbody/MB = locate(href_list["which"])
 				switch (href_list["data"])
 					if ("stages")
-						var/new_stages = input("Stage cap for [MB] microbodies? (3-5)", "Stage cap", MB.stages) as num
+						var/new_stages = text2num_safe(input("Stage cap for [MB] microbodies? (3-5)", "Stage cap", MB.stages) as num) || MB.stages
 						if (new_stages >= 3 && new_stages <= 5)
 							MB.stages = new_stages
 							message_admins("[key_name(usr)] set the initial stage cap for pathogen microbody [MB.plural] to [new_stages].")
@@ -344,37 +317,11 @@ datum/controller/pathogen
 						MB.vaccination = !MB.vaccination
 						message_admins("[key_name(usr)] set the vaccinability for pathogen microbody [MB.plural] to [MB.vaccination ? "On" : "Off"].")
 					if ("activity")
-						var/stage = text2num(href_list["stage"])
-						var/new_act = input("New activity percentage for stage [stage] of [MB] (0-100)?", "Activity", MB.activity[stage]) as num
+						var/stage = text2num_safe(href_list["stage"])
+						var/new_act = text2num_safe(input("New activity percentage for stage [stage] of [MB] (0-100)?", "Activity", MB.activity[stage]) as num) || MB.activity[stage]
 						if (new_act >= 0 && new_act <= 100)
 							MB.activity[stage] = new_act
 							message_admins("[key_name(usr)] set the activity for pathogen microbody [MB.plural] on stage [stage] to [new_act].")
-					if ("mutativeness")
-						MB.mutativeness = input("New base mutativeness for [MB]? The higher, the more likely it is to mutate on transmission.", "Base mutativeness", MB.mutativeness) as num
-						message_admins("[key_name(usr)] set the initial mutativeness for pathogen microbody [MB.plural] to [MB.mutativeness].")
-			if ("mutation_data")
-				var/datum/pathogen_mutation/MUT = locate(href_list["which"])
-				switch (href_list["data"])
-					if ("info")
-						alert(usr, MUT.desc)
-					if ("session_maximum")
-						MUT.session_maximum = input("New session maximum for [MUT]? The higher, the more times this mutation can occur during one mutation proc call.", "Session maximum", MUT.session_maximum) as num
-						message_admins("[key_name(usr)] set the session maximum for pathogen mutation [MUT] to [MUT.session_maximum].")
-					if ("chance_base")
-						var/new_chn = input("New base chance of [MUT] occurrence (0-100)?", "Activity", MUT.chance_base) as num
-						if (new_chn >= 0 && new_chn <= 100)
-							MUT.chance_base = new_chn
-							message_admins("[key_name(usr)] set the base chance for pathogen mutation [MUT] to [new_chn].")
-					if ("disable")
-						src.path_to_mutation -= MUT.type
-						src.disabled_mutations += MUT.type
-						src.disabled_mutations[MUT.type] = MUT
-						message_admins("[key_name(usr)] disabled pathogen mutation [MUT].")
-					if ("enable")
-						src.disabled_mutations -= MUT.type
-						src.path_to_mutation += MUT.type
-						src.path_to_mutation[MUT.type] = MUT
-						message_admins("[key_name(usr)] enabled pathogen mutation [MUT].")
 			if ("symptom_data")
 				var/datum/pathogeneffects/EF = locate(href_list["which"])
 				switch (href_list["data"])
@@ -398,10 +345,10 @@ datum/controller/pathogen
 		if (!usr || !usr.client)
 			return
 		if (!usr.client.holder)
-			boutput(usr, "<span style=\"color:red\">Visitors of the CDC are not allowed to interact with the equipment!</span>")
+			boutput(usr, "<span class='alert'>Visitors of the CDC are not allowed to interact with the equipment!</span>")
 			return
-		if (usr.client.holder.level < LEVEL_PA)
-			boutput(usr, "<span style=\"color:red\">I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
+		if (usr.client.holder.level < LEVEL_SA)
+			boutput(usr, "<span class='alert'>I'm sorry, you require a security clearance of Primary Researcher to go in there. Protocol and all. You know.</span>")
 			return
 		var/state = 1
 		if (usr.ckey in cdc_state)
@@ -446,10 +393,8 @@ datum/controller/pathogen
 
 					output += "<td>"
 					output += "Advance speed: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><BR>"
-					output += "Maliciousness: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=maliciousness;topic_holder=\ref[topic_holder]'>[P.maliciousness]</a><BR>"
-					output += "Mutation speed: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=mutation_speed;topic_holder=\ref[topic_holder]'>[P.mutation_speed]</a><BR>"
-					output += "Mutativeness: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=mutativeness;topic_holder=\ref[topic_holder]'>[P.mutativeness]</a><BR>"
 					output += "Suppression: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><BR>"
+					output += "Spread: <a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><BR>"
 					output += "</td>"
 
 					output += "<td><a href='?src=\ref[src];action=strain_data;which=\ref[CDC];name=[name];data=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a></td>"
@@ -501,8 +446,8 @@ datum/controller/pathogen
 						output += "</tr>"
 					output += "</tbody></table>"
 				if ("microbodies")
-					output += "<h3>Changes to stage cap and base mutativeness only affects future pathogens.</h3>"
-					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Medium</tħ><th>Nutrition</th><th>Stages</th><th>Vaccinable</th><th>Activity</th><th>Base mutativeness</th></thead><tbody>"
+					output += "<h3>Changes to stage cap only affects future pathogens.</h3>"
+					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Medium</tħ><th>Nutrition</th><th>Stages</th><th>Vaccinable</th><th>Activity</th></thead><tbody>"
 					for (var/microbody_path in src.path_to_microbody)
 						output += "<tr>"
 						var/datum/microbody/MB = src.path_to_microbody[microbody_path]
@@ -525,33 +470,6 @@ datum/controller/pathogen
 								output += "<br>"
 							output += "<a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=activity;stage=[stage];topic_holder=\ref[topic_holder]'>[MB.activity[stage]]%</a>"
 						output += "</td>"
-						output += "<td><a href='?src=\ref[src];action=microbody_data;which=\ref[MB];data=mutativeness;topic_holder=\ref[topic_holder]'>[MB.mutativeness]</a></td>"
-						output += "</tr>"
-					output += "</tbody></table>"
-				if ("mutations")
-					output += "<h3>Enabled mutations</h3>"
-					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Info</th><th>Session maximum</th><th>Base occurrence chance</th><th>Disable</th></thead><tbody>"
-					for (var/mutation_path in src.path_to_mutation)
-						output += "<tr>"
-						var/datum/pathogen_mutation/MUT = src.path_to_mutation[mutation_path]
-						output += "<td class='name'>[MUT]</td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=session_maximum;topic_holder=\ref[topic_holder]'>[MUT.session_maximum]</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=chance_base;topic_holder=\ref[topic_holder]'>[MUT.chance_base]%</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=disable;topic_holder=\ref[topic_holder]'>Disable</a></td>"
-						output += "</tr>"
-					output += "</tbody></table><br>"
-
-					output += "<h3>Disabled mutations</h3>"
-					output += "<table class='pathology-table'><thead><tr><th>Name</th><th>Info</th><th>Session maximum</th><th>Base occurrence chance</th><th>Enable</th></thead><tbody>"
-					for (var/mutation_path in src.disabled_mutations)
-						output += "<tr>"
-						var/datum/pathogen_mutation/MUT = src.disabled_mutations[mutation_path]
-						output += "<td class='name'>[MUT]</td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=info;topic_holder=\ref[topic_holder]'>Show information</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=session_maximum;topic_holder=\ref[topic_holder]'>[MUT.session_maximum]</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=chance_base;topic_holder=\ref[topic_holder]'>[MUT.chance_base]%</a></td>"
-						output += "<td><a href='?src=\ref[src];action=mutation_data;which=\ref[MUT];data=enable;topic_holder=\ref[topic_holder]'>Enable</a></td>"
 						output += "</tr>"
 					output += "</tbody></table>"
 				if ("symptoms")
@@ -612,11 +530,9 @@ datum/controller/pathogen
 						output += "<b>Microbody:</b> [P.body_type]<br>"
 						output += "<b>Stages:</b> <a href='?src=\ref[src];action=pathogen_creator;do=stages;topic_holder=\ref[topic_holder]'>[P.stages]</a><br>"
 						output += "<b>Advance speed:</b> <a href='?src=\ref[src];action=pathogen_creator;do=advance_speed;topic_holder=\ref[topic_holder]'>[P.advance_speed]</a><br>"
-						output += "<b>Maliciousness:</b> <a href='?src=\ref[src];action=pathogen_creator;do=maliciousness;topic_holder=\ref[topic_holder]'>[P.maliciousness]</a><br>"
-						output += "<b>Mutation speed:</b> <a href='?src=\ref[src];action=pathogen_creator;do=mutation_speed;topic_holder=\ref[topic_holder]'>[P.mutation_speed]</a><br>"
-						output += "<b>Mutativeness:</b> <a href='?src=\ref[src];action=pathogen_creator;do=mutativeness;topic_holder=\ref[topic_holder]'>[P.mutativeness]</a><br>"
 						output += "<b>Symptomatic:</b> <a href='?src=\ref[src];action=pathogen_creator;do=symptomatic;topic_holder=\ref[topic_holder]'>[P.symptomatic ? "Yes" : "No"]</a><br>"
 						output += "<b>Suppression threshold:</b> <a href='?src=\ref[src];action=pathogen_creator;do=suppression_threshold;topic_holder=\ref[topic_holder]'>[P.suppression_threshold]</a><br>"
+						output += "<b>Spread:</b> <a href='?src=\ref[src];action=pathogen_creator;do=spread;topic_holder=\ref[topic_holder]'>[P.spread]</a><br>"
 						if (!P.suppressant)
 							output += "<a href='?src=\ref[src];action=pathogen_creator;do=suppressant;topic_holder=\ref[topic_holder]'>Assign suppressant</a><br>"
 						else
@@ -629,7 +545,7 @@ datum/controller/pathogen
 								output += " -- None -- <br>"
 							output += "<a href='?src=\ref[src];action=pathogen_creator;do=add;topic_holder=\ref[topic_holder]'>Add effect</a><br><br>"
 					output += "<a href='?src=\ref[src];action=pathogen_creator;do=reset;topic_holder=\ref[topic_holder]'>Reset pathogen</a>"
-					if (P.body_type && P.suppressant && P.effects.len)
+					if (P.body_type && P.suppressant && length(P.effects))
 						output += " -- <a href='?src=\ref[src];action=pathogen_creator;do=create;topic_holder=\ref[topic_holder]'>Create pathogen</a>"
 				else
 					output += "<h1>NOTHING TO SEE HERE YET</h1>"
@@ -639,17 +555,18 @@ datum/controller/pathogen
 	proc/gen_empty(var/key)
 		if (!(key in src.cdc_creator))
 			src.cdc_creator += key
-		var/datum/pathogen/P = unpool(/datum/pathogen)
+		var/datum/pathogen/P = new /datum/pathogen
 		P.mutation = pick(lnums)
 		do
 			P.name_base = pick(lalph) + pick(lnums) + pick(lalph)
 		while (P.name_base in pathogen_trees)
 		P.name = P.name_base + P.mutation
-		P.mutation = text2num(P.mutation)
+		P.mutation = text2num_safe(P.mutation)
 		P.base_mutation = 0
 		src.cdc_creator[key] = P
 
 	New()
+		..()
 		UID_to_symptom = list()
 		symptom_to_UID = list()
 		UID_to_suppressant = list()
@@ -677,10 +594,6 @@ datum/controller/pathogen
 			choicemax += B.commonness
 			C.max = choicemax
 			microbody_choices += C
-
-		var/list/available_mutations = childrentypesof(/datum/pathogen_mutation)
-		for (var/mutation in available_mutations)
-			path_to_mutation[mutation] += new mutation()
 
 		var/list/eff = typesof(/datum/pathogeneffects)
 		l_vc = list()
@@ -871,19 +784,15 @@ datum/pathogen
 	var/list/carriers = list()						// A list of carriers to this pathogen. Currently unused.
 	var/list/effects = list()						// A list of symptoms exhibited by those infected with this pathogen.
 	var/stage										// The current stage of the pathogen.
-	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N% chance to advance each tick.
-	var/mutativeness								// The speed at which this pathogen mutates. A mutativeness of N means that it has a flat N% chance to mutate upon infection.
-	var/maliciousness								// The maliciousness of mutations. The higher this value, the more likely it is that the pathogen will mutate in a malevolent way.
-	var/mutation_speed								// The rate at which the pathogen mutates. This value defines how many different mutations will occur during a single mutation session.
-													// Mutation Speed is on a log3 scale of mutations.
-													// This means that to achieve the next mutation count (as in, mutate one more time compared to the current state), one needs to tripe
-													// the mutation speed of the pathogen. 1 mutation will occur for a speed of 0 to 8, 2 for 9 to 26, 3 for 27 to 80, etc. No mutation will
-													// occur if this value is less than 0.
+	var/advance_speed								// The speed at which this pathogen advances stages. An advance speed of N means a flat N/100% chance to advance each tick.
 	var/base_mutation								// Currently unused.
-	var/datum/microbody/body_type					// The body type of the pathogen, which determines the base mutativeness and the method of synthesizing a cure.
+	var/datum/microbody/body_type					// The body type of the pathogen, which determines the capacity, maximum stat points, activity, and
 	var/mob/infected								// The mob that is infected with this pathogen.
 	var/cooldown = 3								// An internal 'cooldown' so that the pathogen doesn't instantly advance to stage 5.
 	var/suppression_threshold						// The pathogen's resistance to suppression. The higher this value, the more extreme conditions are required to suppress the pathogen.
+	var/spread								// This determines how easily the pathogen spreads. How this affects spreading symptoms is up to each symptom to determine.
+														// For instance, a symptom that makes pathogen smoke might make more smoke
+														// while a pathogen that infects when hugging might have a higher chance to infect on each hug
 
 	var/list/mutex = list()							// These symptoms are explicitly disallowed by a mutex.
 	var/symptomatic = 1 							// If 0, the pathogen is mostly dormant on the mob. Symptoms may still decide to ignore this.
@@ -917,21 +826,20 @@ datum/pathogen
 
 	var/in_remission = 0							// Pathogens in remission are being cured by the body. Set by the curing reagent.
 	var/forced_microbody = null						// If not null, this pathogen will be generated with a specific microbody.
-	var/curable_by_suppression = 0 					// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
-	var/rads = 0 									// The pathogen may mutate inside someone according to rads.
-	var/rad_mutate_cooldown = 0 					// The amount of ticks to wait before we can mutate again due to radiation.
+	var/curable_by_suppression = 10	// If not 0, represents a probability of becoming regressive through suppression. If negative, randomly generated.
 	var/ticked = 0
 
 	var/list/symptom_data = list()					// Symptom data container.
 
 	disposing()
 		clear()
+		..()
 
 	proc/clear()
 		name = ""
 		name_base = ""
-		pathogen_uid = 0
-		mutation = 0
+		pathogen_uid = null
+		mutation = null
 		desc = ""
 		stages = 1
 		carriers = list()
@@ -940,10 +848,8 @@ datum/pathogen
 		generation = 1
 		symptomatic = 1
 		advance_speed = 0
-		mutativeness = 0
-		maliciousness = 0
-		mutation_speed = 0
-		base_mutation = 0
+		spread = 0
+		base_mutation = null
 		body_type = null
 		infected = null
 		cooldown = 3
@@ -953,8 +859,6 @@ datum/pathogen
 		suppressant = null
 		suppressed = 0
 		in_remission = 0
-		rads = 0
-		rad_mutate_cooldown = 0
 		ticked = 0
 		symptom_data = list()
 
@@ -962,7 +866,7 @@ datum/pathogen
 		curable_by_suppression = initial(curable_by_suppression)
 
 	proc/clone()
-		var/datum/pathogen/P = unpool(/datum/pathogen)
+		var/datum/pathogen/P = new /datum/pathogen
 		P.setup(0, src, 0)
 		return P
 
@@ -973,14 +877,13 @@ datum/pathogen
 		generate_attributes(strength)
 
 	New()
-		setup(0, null, 0)
-
-	unpooled()
-		clear()
+		..()
 		setup(0, null, 0)
 
 	proc/create_weak()
 		randomize(0)
+		if (!dnasample)
+			dnasample = new/datum/pathogendna(src)
 
 	proc/cdc_announce(var/mob/M)
 		var/datum/pathogen_cdc/CDC = null
@@ -1001,10 +904,10 @@ datum/pathogen
 			src.name_base = pick(pathogen_controller.lalph) + pick(pathogen_controller.lnums) + pick(pathogen_controller.lalph)
 		while (src.name_base in pathogen_controller.pathogen_trees)
 		src.name = name_base + mutation
-		src.mutation = text2num(mutation)
+		src.mutation = text2num_safe(mutation)
 		src.base_mutation = 0
 
-		src.pathogen_uid = "[pathogen_controller.next_uid]"
+		src.pathogen_uid = "p[pathogen_controller.next_uid]"
 		pathogen_controller.next_uid++
 
 		pathogen_controller.pathogen_trees += src.name_base
@@ -1045,23 +948,17 @@ datum/pathogen
 
 	proc/generate_attributes(var/strength)
 		var/adj_strength = strength - 8
-		src.maliciousness = rand(-2, 6) + rand(adj_strength - 8, adj_strength + 8)
-		src.mutation_speed = rand(-2, 10) + rand(adj_strength - 8, adj_strength + 8)
 
-		src.suppression_threshold += rand(1,3) * maliciousness + rand(-5, 10) + rand(adj_strength - 8, adj_strength + 8)
-		src.advance_speed = rand(-2, 7) + rand(adj_strength - 8, adj_strength + 8)
-
-		src.mutativeness = src.body_type.mutativeness
-
-		src.maliciousness *= src.body_type.maliciousness_multiplier
-		src.mutation_speed *= src.body_type.mutation_speed_multiplier
+		src.suppression_threshold = 25 + rand(adj_strength - 8, adj_strength + 8)
+		src.advance_speed = 25 + rand(adj_strength - 8, adj_strength + 8)
+		src.spread = 25 + rand(adj_strength - 8, adj_strength + 8)
 
 		if (src.curable_by_suppression < 0 && strength < 10)
 			src.curable_by_suppression = rand(-10 + strength, 10 - strength)
 			if (src.curable_by_suppression < 0)
 				src.curable_by_suppression = 0
 		else
-			src.curable_by_suppression = 0
+			src.curable_by_suppression = 10
 
 		src.stages = src.body_type.stages
 
@@ -1080,7 +977,7 @@ datum/pathogen
 		generate_components(cdc, strength)
 		generate_attributes(strength)
 
-		logTheThing("pathology", null, null, "Pathogen [name] created by randomization.")
+		logTheThing(LOG_PATHOLOGY, null, "Pathogen [name] created by randomization.")
 
 	proc/setup(status, var/datum/pathogen/origin, may_mutate, var/datum/pathogendna/sample = null)
 		if (status == 0 && !origin)
@@ -1103,24 +1000,13 @@ datum/pathogen
 			src.generation = origin.generation
 			src.symptomatic = origin.symptomatic
 			src.advance_speed = origin.advance_speed
-			src.mutativeness = origin.mutativeness
-			src.mutation_speed = origin.mutation_speed
+			src.spread = origin.spread
 			src.body_type = origin.body_type
-			src.maliciousness = origin.maliciousness
 			src.suppression_threshold = origin.suppression_threshold
-			if (src.mutativeness && may_mutate)
-				if (prob(src.mutativeness))
-					mutate()
-				else
-					if (sample)
-						src.dnasample = sample
-					else
-						src.dnasample = origin.dnasample
+			if (sample)
+				src.dnasample = sample
 			else
-				if (sample)
-					src.dnasample = sample
-				else
-					src.dnasample = origin.dnasample
+				src.dnasample = origin.dnasample
 			src.curable_by_suppression = origin.curable_by_suppression
 		else if (status == 1)
 			src.randomize(8)
@@ -1172,78 +1058,37 @@ datum/pathogen
 			if (94 to 100) // 7%
 				return src.add_new_symptom(pathogen_controller.l_vr)
 
-	// Invoked when the pathogen mutates. This will change the active instance of the pathogen accordingly.
-	// Does not occur randomly, only upon infection.
-	// In the future, applying radiation to infected people may mutate the pathogen.
-	proc/mutate()
-		base_mutation = mutation
-		mutation = pathogen_controller.next_mutation[src.pathogen_uid]
-		pathogen_controller.next_mutation[src.pathogen_uid] += 1
-		name = name_base + "[mutation]"
-		mutativeness = round(mutativeness / 1.66)
-		logTheThing("pathology", null, null, "Pathogen strain [name_base] mutated creating [name].")
-		var/count = mutation_speed
-		if (count < 0)
-			return
-		if (count > 0 && count < 2)
-			count = 1
-		if (count > 3)
-			count = round(log(3, count))
-		var/list/used_mutations = list()
-		var/retries = 10
-		for (var/i = 1, i <= count, i++)
-			var/T = pick(pathogen_controller.path_to_mutation)
-			var/datum/pathogen_mutation/mut = pathogen_controller.path_to_mutation[T]
-			if (T in used_mutations)
-				if (used_mutations[T] >= mut.session_maximum)
-					continue
-				else
-					used_mutations[T]++
-			else
-				used_mutations[T] = 1
-			if (mut.may_occur(src))
-				mut.mutate(src)
-				logTheThing("pathology", null, null, "[mut] occurred on [name].")
-			else
-				if (retries)
-					i--
-					retries--
-				else
-					logTheThing("pathology", null, null, "[mut] could not occur on [name].")
-		dnasample = new(src)
-
 	proc/process()
-		// disease_act()    // this is handled in the life loop instead
-		/*					// I think the radiation mutation stuff might not be quite finished, seeing as the cooldown isn't actually checked afaics
-		if (rads)			// so I'll just hold off on enabling it for now
-			if (rads < 1)
-				rads = 0
-			else
-				rads /= 2
-		if (infected)
-			var/mob/living/carbon/human/M = infected
-			if (istype(M))
-				var/rad = M.getStatusDuration("radiation")
-				rads += rad
-				if (M.reagents)
-					var/datum/reagent/R = M.reagents.get_reagent("mutagen")
-					if (istype(R))
-						rads += R.volume
-		if (rads && suppressed <= 0)
-			if (prob(rads))
-				logTheThing("pathology", infected, null, "'s infection of [name] mutated due to radiation levels of [rads].")
-				mutate()
-				rad_mutate_cooldown = 26
-		*/
 		if (ticked)
 			ticked = 0
 			suppressed = 0
-		/*
-		if (rad_mutate_cooldown > 0)
-			rad_mutate_cooldown--
-		else if (rad_mutate_cooldown < 0) //??
-			rad_mutate_cooldown = 0
-		*/
+
+	// handles pathogen advancing or receding in stage and also being cured
+	proc/progress_pathogen()
+		if (!cooldown)
+			if (in_remission)
+				if (prob(advance_speed/10))
+					if (stage == 1)
+						infected.cured(src)
+					else
+						reduce()
+				return
+			if (suppressed != -1)
+				var/result = suppressant.suppress_act(src)
+				if (suppressed == 0)
+					suppressed = result
+			if (advance_speed)
+				if (prob(advance_speed/10))
+					if (suppressed < 1)
+						advance()
+					else if (stage > 3)
+						reduce()
+			if (suppressed > 0)
+				if (curable_by_suppression && prob(curable_by_suppression))
+					in_remission = 1
+			ticked = 1
+		else
+			cooldown--
 
 	// This is the real thing, wrapped by process().
 	proc/disease_act()
@@ -1264,37 +1109,7 @@ datum/pathogen
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
 					effect:disease_act(infected, src)
-		if (!cooldown)
-			if (in_remission)
-				if (prob(abs(advance_speed)))
-					if (stage == 1)
-						infected.cured(src)
-					else
-						reduce()
-				return
-			if (suppressed != -1)
-				var/result = suppressant.suppress_act(src)
-				if (suppressed == 0)
-					suppressed = result
-			if (advance_speed > 0)
-				if (prob(min(advance_speed, 4)))
-					if (suppressed < 1)	
-						advance()
-					else if (stage > 3)
-						reduce()
-			else if (advance_speed < 0)
-				if (suppressed == -1)
-					if (prob(4))
-						advance()
-				else
-					if (prob(-advance_speed))
-						reduce()
-			if (suppressed > 0)
-				if (curable_by_suppression && prob(curable_by_suppression))
-					in_remission = 1
-			ticked = 1
-		else
-			cooldown--
+		progress_pathogen()
 
 	// it's like disease_act, but for dead people!
 	proc/disease_act_dead()
@@ -1315,7 +1130,7 @@ datum/pathogen
 				acted += effect.type
 				if (prob(body_type.activity[stage]))
 					effect:disease_act_dead(infected, src)
-		// let's not bother doing all the suppression and curing type stuff for dead people, most symptoms won't do anything anyway
+		progress_pathogen()
 
 	// A safe method for advancing the pathogen's stage.
 	proc/advance()
@@ -1421,16 +1236,23 @@ datum/pathogen
 		return message
 
 	// Act on emoting. Vetoing available by returning 0.
-	proc/onemote(act)
-		suppressant.onemote(infected, act, src)
+	proc/onemote(act, voluntary, param)
+		suppressant.onemote(infected, act, voluntary, param, src)
 		for (var/effect in src.effects)
-			. *= effect:onemote(infected, act, src)
+			. *= effect:onemote(infected, act, voluntary, param, src)
 
 	// Act when dying. Returns nothing.
 	proc/ondeath()
 		for (var/effect in src.effects)
 			effect:ondeath(infected, src)
 		suppressant.ondeath(src)
+		return
+
+	// Act when pathogen is cured. Returns nothing.
+	proc/oncured()
+		for (var/effect in src.effects)
+			effect:oncured(infected, src)
+		suppressant.oncured(src)
 		return
 
 	proc/add_new_symptom(var/list/allowed, var/allow_duplicates = 0)
@@ -1472,6 +1294,12 @@ datum/pathogen
 				for (var/T in typesof(mutex))
 					if (!(T in mutex))
 						mutex += T
+
+	proc/getHighestTier()
+		. = 0
+		for(var/datum/pathogeneffects/E in src.effects)
+			. = max(., E.rarity)
+
 
 proc/dig2hex(num)
 	switch (num)
@@ -1534,10 +1362,10 @@ proc/num2hexoc(num, pad)
 			else
 				var/digit = num
 				if (digit > 7)
-					logTheThing("pathology", null, null, "Num2hexoc error: overflow on [num].")
+					logTheThing(LOG_PATHOLOGY, null, "Num2hexoc error: overflow on [num].")
 				if (neg)
 					digit += 8
-				return "[dig2hex(digit)][ret]"
+				return "[num2hex(digit,0)][ret]"
 		while (digs <= pad)
 			if (neg)
 				ret = "F[ret]"
@@ -1548,7 +1376,7 @@ proc/num2hexoc(num, pad)
 
 // One's complement reverse engineering of a hexadecimal one's complement representation to a base 10 signed number
 proc/hex2numoc(var/num)
-	var/len = lentext(num)
+	var/len = length(num)
 	var/max = 7
 	for (var/i = len - 1, i > 0, i--)
 		max = max * 16 + 15

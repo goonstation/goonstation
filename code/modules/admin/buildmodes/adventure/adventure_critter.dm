@@ -18,7 +18,7 @@
 		var/kind = input(usr, "What kind of critter?", "Critter type", "Skeleton") in src.critters
 		critter_vars = list()
 		crittertype = src.critters[kind]
-		boutput(usr, "<span style=\"color:blue\">Now placing [kind] critters in single spawn mode.</span>")
+		boutput(usr, "<span class='notice'>Now placing [kind] critters in single spawn mode.</span>")
 
 	settings(var/ctrl, var/alt, var/shift)
 		var/target = input(usr, "Which default setting to modify?", "Default setting", "aggressive") in list("aggressive", "atkcarbon", "atksilicon", "health", "opensdoors", "wanderer")
@@ -27,8 +27,6 @@
 		critter_vars[target] = input(usr, "Value for [target]", "Value", 0) as num
 
 	var/static/list/critters = list(
-		"Alien" = /obj/critter/alien,
-		"Alien larva" = /obj/critter/alien/larva,
 		"Angry Bat" = /obj/critter/bat/buff,
 		"Bear" = /obj/critter/bear,
 		"Bee" = /obj/critter/domestic_bee,
@@ -42,9 +40,9 @@
 		"Fermid" = /obj/critter/fermid,
 		"Floating Thing" = /obj/critter/floateye,
 		"Floor (chompy)" = /obj/critter/monster_door/floor,
-		"Ice Spider" = /obj/critter/spider/ice,
-		"Ice Spider (baby)" = /obj/critter/spider/ice/baby,
-		"Ice Spider (queen)" = /obj/critter/spider/ice/queen,
+		"Ice Spider" = /mob/living/critter/spider/ice,
+		"Ice Spider (baby)" = /mob/living/critter/spider/ice/baby,
+		"Ice Spider (queen)" = /mob/living/critter/spider/ice/queen,
 		"Killer Tomato" = /obj/critter/killertomato,
 		"Martian Psychic" = /obj/critter/martian/psychic,
 		"Martian Sapper" = /obj/critter/martian/sapper,
@@ -56,15 +54,15 @@
 		"Mimic" = /obj/critter/mimic,
 		"Plasma Spore" = /obj/critter/spore,
 		"Skeleton" = /obj/critter/magiczombie,
-		"Space Wasp" = /obj/critter/spacebee,
-		"Spider" = /obj/critter/spider/spacerachnid,
+		"Space Wasp" = /obj/critter/wasp,
+		"Spider" = /mob/living/critter/spider/spacerachnid,
 		"Spirit" = /obj/critter/spirit,
 		"Town Guard" = /obj/critter/townguard,
 		"Transposed Particle Field" = /obj/critter/aberration,
 		"Transposed Scientist" = /obj/critter/crunched,
 		"Weird Thing" = /obj/critter/ancient_thing,
-		"Wendigo" = /obj/critter/wendigo,
-		"Wendigo (king)" = /obj/critter/wendigo/king,
+		"Brullbar" = /obj/critter/brullbar,
+		"Brullbar (king)" = /obj/critter/brullbar/king,
 		"Zapping Robot" = /obj/critter/ancient_repairbot/security,
 		"Zombie" = /obj/critter/zombie,
 		"Zombie (science)"  = /obj/critter/zombie/scientist,

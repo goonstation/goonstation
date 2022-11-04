@@ -5,6 +5,7 @@
 //	-etc
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
+ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic
 	name = "aquatic mobcritter"
 	real_name = "aquatic mobcritter"
@@ -17,22 +18,41 @@
 	butcherable = 1
 
 	is_npc = 1
-	var/datum/aiHolder/aquatic/ai = null
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
 
-	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
-	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
-	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
+	var/is_pet = null // null for automatic detection
+
+	var/datum/lifeprocess/aquatic_breathing/aquabreath_process = null
+
+/mob/living/critter/aquatic/New(loc)
+	if(isnull(src.is_pet))
+		src.is_pet = (copytext(src.name, 1, 2) in uppercase_letters)
+	if(in_centcom(loc) || current_state >= GAME_STATE_PLAYING)
+		src.is_pet = 0
+	if(src.is_pet)
+		START_TRACKING_CAT(TR_CAT_PETS)
+	..()
+	aquabreath_process = add_lifeprocess(/datum/lifeprocess/aquatic_breathing,src.in_water_buff,src.out_of_water_debuff)
+	remove_lifeprocess(/datum/lifeprocess/blood) // caused lag, not sure why exactly
+
+/mob/living/critter/aquatic/disposing()
+	ai?.dispose()
+	ai = null
+	if(src.is_pet)
+		STOP_TRACKING_CAT(TR_CAT_PETS)
+	remove_lifeprocess(/datum/lifeprocess/aquatic_breathing)
+	..()
+
 /mob/living/critter/aquatic/setup_healths()
-	add_hh_flesh(-(src.health_brute), src.health_brute, src.health_brute_vuln)
-	add_hh_flesh_burn(-(src.health_burn), src.health_burn, src.health_burn_vuln)
+	add_hh_flesh(src.health_brute, src.health_brute_vuln)
+	add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
 
 /mob/living/critter/aquatic/Login()
 	..()
@@ -44,58 +64,13 @@
 		return
 	if (..())
 		return 1
-	if(src.water_need)
-		if(prob(10 * src.water_need) && !src.nodamage) // question: this gets rid of like one proc call; worth it?
-			var/datum/healthHolder/Br = get_health_holder("brute")
-			if(Br)
-				Br.TakeDamage(water_need * out_of_water_debuff)
-			var/datum/healthHolder/Bu = get_health_holder("burn")
-			if(Bu && !is_heat_resistant())
-				Bu.TakeDamage(water_need * out_of_water_debuff)
-			hit_twitch(src)
-			updatehealth()
-	else if(src.max_health > src.health && prob(10 * src.in_water_buff))
-		var/datum/healthHolder/Br = get_health_holder("brute")
-		if (Br && Br.maximum_value > Br.value)
-			Br.TakeDamage(-in_water_buff)
-		var/datum/healthHolder/Bu = get_health_holder("burn")
-		if (Bu && Bu.maximum_value > Bu.value && !is_heat_resistant())
-			Bu.TakeDamage(-in_water_buff)
-		updatehealth()
 
-/mob/living/critter/aquatic/Move(NewLoc, direct)
-	. = ..()
-	if(istype(src.loc, /turf/space/fluid)) // question: is this logic viable? too messy?
-		if(src.water_need)
-			src.water_need = 0
-			src.out_of_water_to_in_water = 1
-	else if(isturf(src.loc))
-		var/turf/T = src.loc
-		if (T.active_liquid)
-			if(T.active_liquid.last_depth_level > 3)
-				if(src.water_need)
-					src.water_need = 0
-					src.out_of_water_to_in_water = 1
-			else
-				if(src.water_need != 1)
-					if(!src.water_need)
-						src.in_water_to_out_of_water = 1
-					src.water_need = 1
-		else
-			if(src.water_need != 2)
-				if(!src.water_need)
-					src.in_water_to_out_of_water = 1
-				src.water_need = 2
-	else // so, like, in a vehicle or something; this does not work for being inside large storages
-		if(src.water_need != 2)
-			if(!src.water_need)
-				src.in_water_to_out_of_water = 1
-			src.water_need = 2
-
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/* This bit seems to be duplicated in update_water_status? Scream at me if this breaks something
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(prob(10 * src.in_water_buff) && !src.water_need)
 		src.HealDamage("All", in_water_buff, in_water_buff)
+*/
 
 /mob/living/critter/aquatic/proc/harmed_by(var/mob/M) // copying cirr for this stuff
 	if(isdead(src))
@@ -115,6 +90,78 @@
 	..()
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
+
+/datum/lifeprocess/aquatic_breathing
+	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
+	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
+	var/out_of_water_debuff = 1 // debuff amount for being out of water
+	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
+	var/in_water_buff = 1 // buff amount for being in water
+
+	New(new_owner,arguments)
+		..()
+		if(length(arguments) >= 2)
+			in_water_buff = arguments[1]
+			out_of_water_debuff = arguments[2]
+
+	process()
+		src.update_water_status()
+		if (HAS_ATOM_PROPERTY(src.critter_owner, PROP_MOB_BREATHLESS)) return
+		if(src.critter_owner)
+			if(src.water_need)
+				if(prob(50 * src.water_need) && !critter_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+					var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
+					Br?.TakeDamage(src.water_need * src.out_of_water_debuff)
+					var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
+					if(Bu && !critter_owner.is_heat_resistant())
+						Bu.TakeDamage(src.water_need * src.out_of_water_debuff)
+					hit_twitch(critter_owner)
+			else if(critter_owner.max_health > critter_owner.health && prob(10 * src.in_water_buff))
+				var/datum/healthHolder/Br = critter_owner.get_health_holder("brute")
+				if (Br && Br.maximum_value > Br.value)
+					Br.TakeDamage(-src.in_water_buff)
+				var/datum/healthHolder/Bu = critter_owner.get_health_holder("burn")
+				if (Bu && Bu.maximum_value > Bu.value && !critter_owner.is_heat_resistant())
+					Bu.TakeDamage(-src.in_water_buff)
+		else if(src.human_owner)
+			if(src.water_need)
+				if(prob(50 * src.water_need) && !human_owner.nodamage) // question: this gets rid of like one proc call; worth it?
+					human_owner.take_oxygen_deprivation(10*src.water_need)
+					hit_twitch(critter_owner)
+			else if(human_owner.max_health > human_owner.health && prob(10 * src.in_water_buff))
+				human_owner.HealDamage("All", src.in_water_buff, src.in_water_buff,0)
+				human_owner.take_oxygen_deprivation(-10)
+
+
+	proc/update_water_status(loc = null)
+		if(isnull(loc))
+			loc = owner.loc
+		if(istype(loc, /turf/space/fluid)) // question: is this logic viable? too messy?
+			if(src.water_need)
+				src.water_need = 0
+				src.out_of_water_to_in_water = 1
+		else if(isturf(loc))
+			var/turf/T = loc
+			if (T.active_liquid)
+				if(T.active_liquid.last_depth_level > 3)
+					if(src.water_need)
+						src.water_need = 0
+						src.out_of_water_to_in_water = 1
+				else
+					if(src.water_need != 1)
+						if(!src.water_need)
+							src.in_water_to_out_of_water = 1
+						src.water_need = 1
+			else
+				if(src.water_need != 2)
+					if(!src.water_need)
+						src.in_water_to_out_of_water = 1
+					src.water_need = 2
+		else // so, like, in a vehicle or something; this does not work for being inside large storages
+			if(src.water_need != 2)
+				if(!src.water_need)
+					src.in_water_to_out_of_water = 1
+				src.water_need = 2
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //fish
@@ -150,45 +197,41 @@
 
 /mob/living/critter/aquatic/fish/New()
 	..()
+	src.ai = new /datum/aiHolder/aquatic/fish(src)
 	animate_bumble(src)
 
-	src.ai = new /datum/aiHolder/aquatic/fish()
-	src.ai.owner = src
-	mobs.Remove(src)
-
-	/*SPAWN_DBG(0)
+	/*SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else // i mean, i can't imagine many scenarios where a player controlled fish also needs AI that doesn't even run
-			src.ai = new /datum/aiHolder/aquatic/fish()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
 			mobs.Remove(src)*/
 
 /mob/living/critter/aquatic/fish/Move(NewLoc, direct)
 	. = ..()
-	if(src.out_of_water_to_in_water)
+	if(src.aquabreath_process.out_of_water_to_in_water)
 		animate_bumble(src)
-		out_of_water_to_in_water = 0
-	else if(src.in_water_to_out_of_water)
+		src.aquabreath_process.out_of_water_to_in_water = 0
+	else if(src.aquabreath_process.in_water_to_out_of_water)
 		animate(src)
-		in_water_to_out_of_water = 0
-	else if(src.water_need && prob(2 * src.water_need))
+		src.aquabreath_process.in_water_to_out_of_water = 0
+	else if(src.aquabreath_process.water_need && prob(20 * src.aquabreath_process.water_need))
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("flops around desperately","gasps","shudders")].")
 
-/mob/living/critter/aquatic/TakeDamage(zone, brute, burn)
+/mob/living/critter/aquatic/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 	..()
 	if(!isdead(src))
 		animate_bumble(src)
 
-/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom)
+/mob/living/critter/aquatic/fish/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
-	if(!water_need && !isdead(src))
+	if(!src.aquabreath_process.water_need && !isdead(src))
 		animate_bumble(src)
 
 /mob/living/critter/aquatic/fish/harmed_by(var/mob/M)
 	..()
-	if(src.is_npc && !isdead(src) && !water_need && !swimming_away) // todo: add this to AI to make things cleaner?
+	if(src.is_npc && !isdead(src) && !src.aquabreath_process.water_need && !swimming_away) // todo: add this to AI to make things cleaner?
 		walk_away(src,M,6,4)
 		swimming_away = 1
 		if(src)
@@ -200,27 +243,27 @@
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
 		if ("flip")
-			if (src.emote_check(voluntary, 50) && !src.water_need)
-				SPAWN_DBG(1 SECOND)
+			if (src.emote_check(voluntary, 50) && !src.aquabreath_process.water_need)
+				SPAWN(1 SECOND)
 					animate_bumble(src)
 				return null
 		if ("dance")
 			if (src.emote_check(voluntary, 100))
-				SPAWN_DBG(0)
+				SPAWN(0)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x+= 2
-						src.dir = turn(src.dir, 90)
-						sleep(2)
+						src.set_dir(turn(src.dir, 90))
+						sleep(0.2 SECONDS)
 					for (var/i = 0, i < 4, i++)
 						src.pixel_x-= 2
-						src.dir = turn(src.dir, 90)
-						sleep(2)
-					if(!src.water_need)
+						src.set_dir(turn(src.dir, 90))
+						sleep(0.2 SECONDS)
+					if(!src.aquabreath_process.water_need)
 						animate_bumble(src)
 				return "<b>[src]</b> dances!"
 	return null
@@ -332,7 +375,7 @@
 	name = "king crab"
 	real_name = "king crab"
 	desc = "This doesn't look tasty at all. It probably has spectacular levels of mercury and lead and who knows what else."
-	icon = 'icons/obj/64x96.dmi'
+	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "king_crab"
 	base_move_delay = 1
 	density = 1
@@ -381,28 +424,27 @@
 
 /mob/living/critter/aquatic/king_crab/New()
 	..()
-	SPAWN_DBG(0)
+	SPAWN(0)
 		if(src.client)
 			src.is_npc = 0
 		else
-			src.ai = new /datum/aiHolder/aquatic/king_crab()
-			src.ai.owner = src
+			src.ai = new /datum/aiHolder/aquatic/king_crab(src)
 
 /mob/living/critter/aquatic/king_crab/Move(NewLoc, direct)
 	. = ..()
-	if(src.out_of_water_to_in_water)
+	if(src.aquabreath_process.out_of_water_to_in_water)
 		base_move_delay = 1
-		out_of_water_to_in_water = 0
-	else if(src.in_water_to_out_of_water)
+		src.aquabreath_process.out_of_water_to_in_water = 0
+	else if(src.aquabreath_process.in_water_to_out_of_water)
 		animate_shake(src)
 		src.emote("scream")
 		base_move_delay = 2
-		in_water_to_out_of_water = 0
-	else if(src.water_need && prob(src.water_need))
+		src.aquabreath_process.in_water_to_out_of_water = 0
+	else if(src.aquabreath_process.water_need && prob(src.aquabreath_process.water_need))
 		hit_twitch(src)
 		src.visible_message("<b>[src]</b> [pick("shudders","clinks heavily","gasps","looks dazed")].")
 
-/mob/living/critter/aquatic/king_crab/Bump(atom/movable/AM)
+/mob/living/critter/aquatic/king_crab/bump(atom/movable/AM)
 	..()
 	if(isobj(AM))
 		if(istype(AM, /obj/window))
@@ -417,7 +459,7 @@
 		else if(istype(AM, /obj/foamedmetal))
 			AM.dispose()
 		playsound(src.loc, 'sound/effects/exlow.ogg', 70,1)
-		src.visible_message("<span style=\"color:red\"><B>[src]</B> smashes into \the [AM]!</span>")
+		src.visible_message("<span class='alert'><B>[src]</B> smashes into \the [AM]!</span>")
 
 /mob/living/critter/aquatic/king_crab/harmed_by(var/mob/living/M)
 	..()
@@ -428,51 +470,101 @@
 	switch (act)
 		if ("scream")
 			if (src.emote_check(voluntary, 300))
-				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7)
+				playsound(src.loc, 'sound/voice/animal/crab_chirp.ogg', 80, 0, 7, channel=VOLUME_CHANNEL_EMOTE)
 				for (var/mob/living/M in oview(src, 7))
 					M.apply_sonic_stun(0, 5, 3, 12, 40, rand(0,3))
-				return "<span style='color:red'><b>[src]</b> lets out an eerie wail.</span>"
+				return "<span class='alert'><b>[src]</b> lets out an eerie wail.</span>"
 		if ("dance")
 			if (src.emote_check(voluntary, 300))
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x+= 2
-					src.dir = turn(src.dir, 90)
-					sleep(2)
+					src.set_dir(turn(src.dir, 90))
+					sleep(0.2 SECONDS)
 				for (var/i = 0, i < 4, i++)
 					src.pixel_x-= 2
-					src.dir = turn(src.dir, 90)
-					sleep(2)
-				SPAWN_DBG(5 SECONDS)
+					src.set_dir(turn(src.dir, 90))
+					sleep(0.2 SECONDS)
+				SPAWN(5 SECONDS)
 				for (var/mob/living/M in oview(src, 7))
 					M.reagents.add_reagent(pick("cyanide","neurotoxin","venom","histamine","jenkem","lsd"), 5)
-				return "<span style='color:red'><b>[src]</b> does a sinister dance.</span>"
+				return "<span class='alert'><b>[src]</b> does a sinister dance.</span>"
 		if ("snap")
 			if (src.emote_check(voluntary, 300))
-				src.changeStatus("paralysis", -300)
-				src.changeStatus("stunned", -300)
-				src.changeStatus("weakened", -300)
-				return "<span style='color:red'><b>[src]</b> clacks menacingly.</span>"
+				src.changeStatus("paralysis", -30 SECONDS)
+				src.changeStatus("stunned", -30 SECONDS)
+				src.changeStatus("weakened", -30 SECONDS)
+				return "<span class='alert'><b>[src]</b> clacks menacingly.</span>"
 		if ("flex")
 			if (src.emote_check(voluntary, 300))
 				src.health_brute_vuln = 0.1
 				src.health_burn_vuln = 0.5
-				SPAWN_DBG(10 SECONDS)
+				SPAWN(10 SECONDS)
 					if (src)
 						src.health_brute_vuln = 0.5
 						src.health_burn_vuln = 3
-				return "<span style='color:red'><b>[src]'s</b> chitin gleams.</span>"
+				return "<span class='alert'><b>[src]'s</b> chitin gleams.</span>"
 	return null
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//jellyfish
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/living/critter/aquatic/fish/jellyfish
+	name = "jellyfish"
+	real_name = "jellyfish"
+	desc = "Squishy"
+	icon = 'icons/misc/sea_critter.dmi'
+	icon_state = "jellyfish"
+	base_move_delay = 2
+	hand_count = 2
+	pet_text = "pokes"
+	speechverb_say = "quibbles"
+	speechverb_exclaim = "shudders"
+	death_text = "%src% collapses in a heap on the ground!"
+	meat_type = /obj/item/device/light/glowstick/green_on //Until I think of something else. Also it's kinda funny
+	add_abilities = list(/datum/targetable/critter/sting)
+
+/mob/living/critter/aquatic/fish/jellyfish/New()
+	..()
+	src.color = random_saturated_hex_color()
+	var/list/color_list = rgb2num(src.color)
+	src.add_medium_light("jellyglow", color_list + list(100))
+	SPAWN(0)
+		if(src.client)
+			src.is_npc = 0
+		else
+			src.ai = new /datum/aiHolder/aquatic/fish(src)
+
+/mob/living/critter/aquatic/fish/jellyfish/setup_hands()
+	..()
+	var/datum/handHolder/HH = hands[1]
+	HH.limb = new /datum/limb/mouth/fish/jellyfish
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "mouth"
+	HH.name = "mouth"
+	HH.limb_name = "mouth"
+
+	HH = hands[2]
+	HH.limb = new /datum/limb/small_critter
+	HH.icon = 'icons/mob/critter_ui.dmi'
+	HH.icon_state = "handn"
+	HH.name = "tendrils"
+	HH.limb_name = "tendrils"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // aquatic mobcritter limbs
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/mouth/fish
-	sound_attack = "sound/impact_sounds/Glub_2.ogg"
+	sound_attack = 'sound/impact_sounds/Glub_2.ogg'
 	dam_low = 0
 	dam_high = 1
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
 	stam_damage_mult = 0.2
+
+	jellyfish
+		dam_low = 3
+		dam_high = 8
 
 /datum/limb/king_crab // modified claw limb
 
@@ -481,26 +573,26 @@
 		return
 
 	if (!istype(user))
-		target.attack_hand(user, params, location, control)
+		target.Attackhand(user, params, location, control)
 		return
 
 	if (isobj(target))
-		switch (user.smash_through(target, list("window", "grille", "table")))
+		switch (user.smash_through(target, list("window", "grille", "table", "blob"))) //crab vs blob when
 			if (0)
 				if (isitem(target))
 					if (prob(33))
-						boutput(user, "<span style=\"color:red\">[target] slips through your pincers!</span>")
+						boutput(user, "<span class='alert'>[target] slips through your pincers!</span>")
 						return
 					return ..()
 				if (istype(target,/obj/sea_plant))
-					user.visible_message("<span style='color:red'><b>[user] smashes [target] into sea foam!</b></span>", "<span style=\"color:red\"><b>You smash [target] into sea foam!</b></span>")
+					user.visible_message("<span class='alert'><b>[user] smashes [target] into sea foam!</b></span>", "<span class='alert'><b>You smash [target] into sea foam!</b></span>")
 					animate_melt_pixel(target)
 					qdel(target)
 				if (istype(target,/obj/machinery/power/apc))
 					var/obj/machinery/power/apc/APC = target
 					for (var/i=1,i<=4,i++)
 						APC.cut(i)
-					user.visible_message("<span style='color:red'><b>[user]'s pincers slither inside [target] and slash the wires!</b></span>", "<span style=\"color:red\"><b>Your pincers slither inside [target] and slash the wires!</b></span>")
+					user.visible_message("<span class='alert'><b>[user]'s pincers slither inside [target] and slash the wires!</b></span>", "<span class='alert'><b>Your pincers slither inside [target] and slash the wires!</b></span>")
 					return
 				if (istype(target,/obj/cable))
 					var/obj/cable/C = target
@@ -516,8 +608,8 @@
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes %target% with pincers at [log_loc(user)].")
-		user.visible_message("<span style='color:red'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span style=\"color:red\"><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
+		logTheThing(LOG_COMBAT, user, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
 	return 0
@@ -539,13 +631,13 @@
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes %target% with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
 	user.attack_effects(target, affecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
-	msgs.base_attack_message = "<b><span style='color:red'>[user] [action] [target] with their [src.holder]!</span></b>"
-	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
+	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
+	msgs.played_sound = 'sound/impact_sounds/Glub_1.ogg'
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)
 

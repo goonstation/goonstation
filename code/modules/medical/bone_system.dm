@@ -85,14 +85,14 @@
 			if (BONE_CRACKED)
 				BONE_DEBUG("[donor]'s [parent_organ]'s bones fractured")
 				src.damage_status = BONE_FRACTURED
-				src.donor.visible_message("<span style='color:red'>[src.donor]'s [src.parent_organ] emits a [pick("", "disturbing ", "unsettling ", "worrying ")][pick("crack", "crunch", "snap")]!</span>",\
-				"<span style='color:red'><b>You feel something in your [src.parent_organ] break!</b></span>")
+				src.donor.visible_message("<span class='alert'>[src.donor]'s [src.parent_organ] emits a [pick("", "disturbing ", "unsettling ", "worrying ")][pick("crack", "crunch", "snap")]!</span>",\
+				"<span class='alert'><b>You feel something in your [src.parent_organ] break!</b></span>")
 
 			if (BONE_FRACTURED)
 				BONE_DEBUG("[donor]'s [parent_organ]'s bones shattered")
 				src.damage_status = BONE_SHATTERED
-				src.donor.visible_message("<span style='color:red'>[src.donor]'s [src.parent_organ] emits a [pick("", "disturbing ", "unsettling ", "worrying ")][pick("crack", "crunch", "snap")]!</span>",\
-				"<span style='color:red'><b>You feel something in your [src.parent_organ] shatter!</b></span>")
+				src.donor.visible_message("<span class='alert'>[src.donor]'s [src.parent_organ] emits a [pick("", "disturbing ", "unsettling ", "worrying ")][pick("crack", "crunch", "snap")]!</span>",\
+				"<span class='alert'><b>You feel something in your [src.parent_organ] shatter!</b></span>")
 
 	proc/repair_damage(var/amt)
 		if (!amt)

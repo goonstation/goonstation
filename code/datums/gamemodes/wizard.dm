@@ -2,9 +2,10 @@
 	name = "wizard"
 	config_tag = "wizard"
 	shuttle_available = 2
+	antag_token_support = TRUE
 	latejoin_antag_compatible = 1
 	latejoin_only_if_all_antags_dead = 1
-	latejoin_antag_roles = list("changeling", "vampire")
+	latejoin_antag_roles = list(ROLE_CHANGELING, ROLE_VAMPIRE)
 
 	var/const/wizards_possible = 5
 	var/finished = 0
@@ -14,17 +15,21 @@
 
 /datum/game_mode/wizard/announce()
 	boutput(world, "<B>The current game mode is - Wizard!</B>")
-	boutput(world, "<B>There is a <span style=\"color:red\">SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
+	boutput(world, "<B>There is a <span class='alert'>SPACE WIZARD</span> on the [station_or_ship()]. You can't let him achieve his objective!</B>")
 
 /datum/game_mode/wizard/pre_setup()
 
 	var/num_players = 0
-	for(var/mob/new_player/player in mobs)
-		if(player.client && player.ready) num_players++
+	for(var/client/C)
+		var/mob/new_player/player = C.mob
+		if (!istype(player)) continue
 
-	var/num_wizards = max(1, min(round(num_players / 12), wizards_possible))
+		if(player.ready)
+			num_players++
 
-	var/list/possible_wizards = get_possible_wizards(num_wizards)
+	var/num_wizards = clamp(round(num_players / 12), 1, wizards_possible)
+
+	var/list/possible_wizards = get_possible_enemies(ROLE_WIZARD, num_wizards)
 
 	if (!possible_wizards.len)
 		return 0
@@ -35,16 +40,16 @@
 			break
 		src.traitors += tplayer
 		token_players.Remove(tplayer)
-		logTheThing("admin", tplayer.current, null, "successfully redeemed an antag token.")
+		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
 		/*--num_wizards
 		num_wizards = max(num_wizards, 0)*/
 
-	var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = "wizard", amount = num_wizards, recordChosen = 1)
+	var/list/chosen_wizards = antagWeighter.choose(pool = possible_wizards, role = ROLE_WIZARD, amount = num_wizards, recordChosen = 1)
 	traitors |= chosen_wizards
 	for (var/datum/mind/wizard in traitors)
 		wizard.assigned_role = "MODE"
-		wizard.special_role = "wizard"
+		wizard.special_role = ROLE_WIZARD
 		possible_wizards.Remove(wizard)
 
 	return 1
@@ -56,12 +61,11 @@
 			src.traitors.Remove(wizard)
 			continue
 		if(istype(wizard))
-			wizard.special_role = "wizard"
-			if(wizardstart.len == 0)
-				boutput(wizard.current, "<B><span style=\"color:red\">A starting location for you could not be found, please report this bug!</span></B>")
+			wizard.special_role = ROLE_WIZARD
+			if(!pick(job_start_locations["wizard"]))
+				boutput(wizard.current, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 			else
-				var/starting_loc = pick(wizardstart)
-				wizard.current.set_loc(starting_loc)
+				wizard.current.set_loc(pick(job_start_locations["wizard"]))
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
 			bestow_objective(wizard,/datum/objective/regular/assassinate)
@@ -69,7 +73,7 @@
 			wizard.current.antagonist_overlay_refresh(1, 0)
 
 			equip_wizard(wizard.current)
-			boutput(wizard.current, "<B><span style=\"color:red\">You are a Wizard!</span></B>")
+			boutput(wizard.current, "<B><span class='alert'>You are a Wizard!</span></B>")
 			boutput(wizard.current, "<B>The Space Wizards Federation has sent you to perform a ritual on the [station_or_ship()]:</B>")
 
 			var/obj_count = 1
@@ -80,11 +84,12 @@
 
 	for(var/datum/mind/wizard in src.traitors)
 		var/randomname
-		if (wizard.current.gender == "female") randomname = wiz_female.len ? pick(wiz_female) : "Witch"
-		else randomname = wiz_male.len ? pick(wiz_male) : "Wizard"
-		SPAWN_DBG(0)
+		if (wizard.current.gender == "female") randomname = pick_string_autokey("names/wizard_female.txt")
+		else randomname = pick_string_autokey("names/wizard_male.txt")
+		SPAWN(0)
 			var/newname = adminscrub(input(wizard.current,"You are a Wizard. Would you like to change your name to something else?", "Name change",randomname) as text)
-
+			if(newname && newname != randomname)
+				phrase_log.log_phrase("name-wizard", newname, no_duplicates=TRUE)
 			if (length(ckey(newname)) == 0)
 				newname = randomname
 
@@ -92,35 +97,10 @@
 				if (length(newname) >= 26) newname = copytext(newname, 1, 26)
 				newname = strip_html(newname)
 				wizard.current.real_name = newname
-				wizard.current.name = newname
+				wizard.current.UpdateName()
 
-	SPAWN_DBG (rand(waittime_l, waittime_h))
+	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
-
-/datum/game_mode/wizard/proc/get_possible_wizards(minimum_wizards=1)
-
-	var/list/candidates = list()
-
-	for(var/mob/new_player/player in mobs)
-		if (ishellbanned(player)) continue //No treason for you
-		if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-			if(player.client.preferences.be_wizard)
-				candidates += player.mind
-
-	if(candidates.len < minimum_wizards)
-		logTheThing("debug", null, null, "<b>Enemy Assignment</b>: Only [candidates.len] players with be_wizard set to yes. We need [minimum_wizards], so including players who don't want to be wizards in the pool.")
-		for(var/mob/new_player/player in mobs)
-			if (ishellbanned(player)) continue //No treason for you
-			if ((player.client) && (player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !candidates.Find(player.mind))
-				candidates += player.mind
-
-				if ((minimum_wizards > 1) && (candidates.len >= minimum_wizards))
-					break
-
-	if(candidates.len < 1)
-		return list()
-	else
-		return candidates
 
 /datum/game_mode/wizard/send_intercept()
 	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
@@ -139,7 +119,7 @@
 	for(var/A in possible_modes)
 		intercepttext += i_text.build(A, pick(src.traitors))
 /*
-	for (var/obj/machinery/computer/communications/comm in machine_registry[MACHINES_COMMSCONSOLES])
+	for (var/obj/machinery/computer/communications/comm as anything in machine_registry[MACHINES_COMMSCONSOLES])
 		if (!(comm.status & (BROKEN | NOPOWER)) && comm.prints_intercept)
 			var/obj/item/paper/intercept = new /obj/item/paper( comm.loc )
 			intercept.name = "paper- 'Cent. Com. Status Summary'"
@@ -148,22 +128,26 @@
 			comm.messagetitle.Add("Cent. Com. Status Summary")
 			comm.messagetext.Add(intercepttext)
 */
-	for (var/obj/machinery/communications_dish/C in comm_dishes)
+	for_by_tcl(C, /obj/machinery/communications_dish)
 		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
 
 	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
 
 /datum/game_mode/wizard/proc/get_mob_list()
 	var/list/mobs = list()
-	for(var/mob/living/player in mobs)
-		if (player.client)
-			mobs += player
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+		mobs += player
 	return mobs
 
 /datum/game_mode/wizard/proc/pick_human_name_except(excluded_name)
 	var/list/names = list()
-	for(var/mob/living/player in mobs)
-		if (player.client && (player.real_name != excluded_name))
+	for(var/client/C)
+		var/mob/living/player = C.mob
+		if (!istype(player)) continue
+
+		if (player.real_name != excluded_name)
 			names += player.real_name
 	if(!names.len)
 		return null

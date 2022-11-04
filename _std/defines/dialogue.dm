@@ -1,0 +1,2 @@
+#define DIALOGUE_CLOSE 1
+#define DIALOGUE_HOLD 2

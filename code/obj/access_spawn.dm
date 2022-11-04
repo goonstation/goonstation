@@ -11,7 +11,7 @@
 	New()
 		..()
 		if (current_state > GAME_STATE_WORLD_INIT)
-			SPAWN_DBG(5 DECI SECONDS)
+			SPAWN(5 DECI SECONDS)
 				src.setup()
 				qdel(src)
 
@@ -28,6 +28,7 @@
 				M.req_access += src.req_access
 			//todo : autoname doors	here too. var editing is illegal!
 
+#define SPECIAL "#ffa135"
 #define MEDICAL "#3daff7"
 #define SECURITY "#f73d3d"
 #define MORGUE_BLACK "#002135"
@@ -37,6 +38,22 @@
 #define CARGO "#f7e43d"
 #define MAINTENANCE "#e5ff32"
 #define COMMAND "#00783c"
+
+/obj/access_spawn/admin_override //special admin override access spawner
+	name = "admin override access spawn"
+	color = SPECIAL
+
+	setup()
+		for (var/obj/O in src.loc)
+			O.admin_access_override = TRUE
+
+/obj/access_spawn/public
+	name = "public access spawn"
+	color = SPECIAL
+
+	setup()
+		for (var/obj/O in src.loc)
+			O.req_access = null
 
 /obj/access_spawn/security
 	name = "security access spawn"
@@ -78,6 +95,21 @@
 	req_access = list(access_medlab)
 	color = MEDICAL
 
+/obj/access_spawn/pathology
+	name = "pathology spawn"
+	#ifdef CREATE_PATHOGENS
+	req_access = list(access_pathology)
+	#elif defined(SCIENCE_PATHO_MAP)
+	req_access = list(access_research)
+	#else
+	req_access = list(access_medical)
+	#endif
+	#ifdef SCIENCE_PATHO_MAP
+	color = RESEARCH
+	#else
+	color = MEDICAL
+	#endif
+
 /obj/access_spawn/research_director
 	name = "RD access spawn"
 	req_access = list(access_research_director)
@@ -97,6 +129,11 @@
 	name = "emergency storage access spawn"
 	req_access = list(access_emergency_storage)
 	color = MAINTENANCE
+
+/obj/access_spawn/centcom
+	name = "centcom access spawn"
+	req_access = list(access_centcom)
+	color = COMMAND
 
 /obj/access_spawn/ai_upload
 	name = "ai upload access spawn"
@@ -193,6 +230,11 @@
 	req_access = list(access_hydro)
 	color = MAINTENANCE
 
+/obj/access_spawn/rancher
+	name = "ranch access spawn"
+	req_access = list(access_ranch)
+	color = MAINTENANCE
+
 /obj/access_spawn/hos
 	name = "HOS access spawn"
 	req_access = list(access_maxsec)
@@ -277,6 +319,26 @@
 	name = "syndie_shuttle access spawn"
 	req_access = list(access_syndicate_shuttle)
 	color = SECURITY
+
+/obj/access_spawn/research_foyer
+	name = "research foyer access spawn"
+	req_access = list(access_researchfoyer)
+	color = RESEARCH
+
+/obj/access_spawn/artlab
+	name = "artlab access spawn"
+	req_access = list(access_artlab)
+	color = RESEARCH
+
+/obj/access_spawn/telesci
+	name = "telesci access spawn"
+	req_access = list(access_telesci)
+	color = RESEARCH
+
+/obj/access_spawn/robotdepot
+	name = "robot depot access spawn"
+	req_access = list(access_robotdepot)
+	color = RESEARCH
 
 //////////////////////owlzone access///////
 /obj/access_spawn/owlmaint

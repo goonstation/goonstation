@@ -1,451 +1,334 @@
 
-var/global/list/landmarks = list()
+var/global/list/list/turf/landmarks = list()
+
+proc/pick_landmark(name, default=null)
+	if(!(name in landmarks))
+		return default
+	return pick(landmarks[name])
 
 /obj/landmark
 	name = "landmark"
-	icon = 'icons/mob/screen1.dmi'
+	icon = 'icons/map-editing/landmarks.dmi'
 	icon_state = "x2"
-	anchored = 1.0
-	invisibility = 101
-	var/deleted_on_start = 0
+	anchored = 1
+	invisibility = INVIS_ALWAYS
+	var/deleted_on_start = TRUE
+	var/add_to_landmarks = TRUE
+	var/data = null // data to associatively save with the landmark
+	var/name_override = null
 
 	ex_act()
 		return
 
-/obj/landmark/cruiser_entrance
-
-/obj/landmark/alterations
-	name = "alterations"
-
-/obj/landmark/miniworld
-	name = "worldsetup"
-	var/id = 0
-
-/obj/landmark/escape_pod_succ
-	name = "escape_pod_success"
-	icon_state = "xp"
-
-/obj/landmark/miniworld/w1
-
-/obj/landmark/miniworld/w2
-
-/obj/landmark/miniworld/w3
-
-/obj/landmark/miniworld/w4
+/obj/landmark/proc/init(delay_qdel=FALSE)
+	if(src.add_to_landmarks)
+		if(!landmarks)
+			landmarks = list()
+		var/name = src.name_override ? src.name_override : src.name
+		if(!landmarks[name])
+			landmarks[name] = list()
+		landmarks[name][src.loc] = src.data
+	if(src.deleted_on_start)
+		if(delay_qdel)
+			SPAWN(0)
+				qdel(src)
+		else
+			qdel(src)
 
 /obj/landmark/New()
-	..()
-	src.tag = "landmark*[src.name]"
-	//src.invisibility = 101
-
-	switch(src.name)
-		if ("monkey")
-			monkeystart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("start")
-			newplayer_start += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("wizard")
-			wizardstart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("hunter")
-			predstart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("Syndicate-Spawn")
-			syndicatestart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("SR Syndicate-Spawn")
-			syndicatestart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("JoinLate")
-			latejoin += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("Observer-Start")
-			observer_start += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("shitty_bill")
-			SPAWN_DBG(3 SECONDS)
-				new /mob/living/carbon/human/biker(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("john_bill")
-			SPAWN_DBG(3 SECONDS)
-				new /mob/living/carbon/human/john(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("big_yank")
-			SPAWN_DBG(3 SECONDS)
-				new /mob/living/carbon/human/big_yank(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("shitty_bill_respawn")
-#ifdef TWITCH_BOT_ALLOWED
-			billspawn += src.loc
-#endif
-			deleted_on_start = 1
-			qdel(src)
-
-
-		if ("father_jack")
-			SPAWN_DBG(3 SECONDS)
-				new /mob/living/carbon/human/fatherjack(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("don_glab")
-			SPAWN_DBG(3 SECONDS)
-				new /mob/living/carbon/human/don_glab(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_normal")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_inside")
-			SPAWN_DBG(6 SECONDS)
-				var/obj/storage/S = locate() in src.loc
-				new /mob/living/carbon/human/npc/monkey(S)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_albert")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/albert(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_rathen")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/mr_rathen(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_mrmuggles")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/mr_muggles(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_mrsmuggles")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/mrs_muggles(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_syndicate")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/von_braun(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_horse")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/horse(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_krimpus")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/krimpus(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_tanhony")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/tanhony(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("monkeyspawn_stirstir")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/stirstir(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("seamonkeyspawn")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/sea(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("seamonkeyspawn_gang")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/sea/gang(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("seamonkeyspawn_gang_gun")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/sea/gang_gun(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("seamonkeyspawn_rich")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/sea/rich(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("seamonkeyspawn_lab")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/npc/monkey/sea/lab(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("waiter")
-			SPAWN_DBG(6 SECONDS)
-				new /mob/living/carbon/human/waiter(src.loc)
-				deleted_on_start = 1
-				qdel(src)
-
-		if ("Clown")
-			clownstart += src.loc
-			//dispose()
-
-		//prisoners
-		if ("prisonwarp")
-			prisonwarp += src.loc
-			deleted_on_start = 1
-			qdel(src)
-		//if ("mazewarp")
-		//	mazewarp += src.loc
-		if ("tdome1")
-			tdome1	+= src.loc
-		if ("tdome2")
-			tdome2 += src.loc
-		//not prisoners
-		if ("prisonsecuritywarp")
-			prisonsecuritywarp += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("blobstart")
-			blobstart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("kudzustart")
-			kudzustart += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("telesci")
-			telesci += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("icefall")
-			icefall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("polarisfall")
-			polarisfall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("deepfall")
-			deepfall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("ancientfall")
-			ancientfall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("greekfall")
-			greekfall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("iceelefall")
-			iceelefall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("bioelefall")
-			bioelefall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("moonfall_hemera")
-			moonfall_hemera += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("moonfall_museum")
-			moonfall_museum += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("samostrel")
-			samostrel_warps += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if ("seafall")
-			seafall += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-		if("escape_pod_success")
-			escape_pod_success += src
-
-		if("battle-royale-spawn")
-			battle_royale_spawn += src.loc
-			deleted_on_start = 1
-			qdel(src)
-
-	if (!deleted_on_start)
-		if (!islist(landmarks))
-			landmarks = list()
-		landmarks.Add(src)
-
-	return 1
-
-/obj/landmark/disposing()
-	..()
-	if (!deleted_on_start && islist(landmarks))
-		landmarks.Remove(src)
-
-/obj/landmark/disposing()
-	if (!deleted_on_start && islist(landmarks))
-		landmarks.Remove(src)
-	..()
+	if(current_state > GAME_STATE_MAP_LOAD)
+		src.init(delay_qdel=TRUE)
+		..()
+	else
+		src.init()
+		if(!src.disposed)
+			..()
 
 var/global/list/job_start_locations = list()
 
 /obj/landmark/start
 	name = "start"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
+	icon_state = "player-start"
+	add_to_landmarks = FALSE
+	var/static/list/aliases = list(
+		"Mechanic" = "Engineer"
+	)
 
 	New()
-		..()
-		src.tag = "start*[src.name]"
+		if(src.name in src.aliases)
+			src.name = src.aliases[src.name]
 		if (job_start_locations)
 			if (!islist(job_start_locations[src.name]))
-				job_start_locations[src.name] = list(src)
+				job_start_locations[src.name] = list(src.loc)
 			else
-				job_start_locations[src.name] += src
-		//src.invisibility = 101
-		return 1
+				job_start_locations[src.name] += src.loc
+		..()
+
+// actual landmarks follow
+// most of these are here just for backwards compatibility
 
 /obj/landmark/start/latejoin
-	name = "JoinLate"
+	icon_state = "latejoin"
+	name = LANDMARK_LATEJOIN
+	add_to_landmarks = TRUE
+
+/obj/landmark/cruiser_entrance
+	name = LANDMARK_CRUISER_ENTRANCE
+
+/obj/landmark/cruiser_center
+	name = LANDMARK_CRUISER_CENTER
+
+/obj/landmark/escape_pod_succ
+	name = LANDMARK_ESCAPE_POD_SUCCESS
+	icon_state = "xp"
+
+	New()
+		src.data = src.dir
+		..()
+
+	north
+		dir = NORTH
+
+	south
+		dir = SOUTH
+
+	east
+		dir = EAST
+
+	west
+		dir = WEST
 
 /obj/landmark/tutorial_start
-	name = "Tutorial Start Marker"
+	name = LANDMARK_TUTORIAL_START
+
+/obj/landmark/shuttle_transit
+	name= LANDMARK_SHUTTLE_TRANSIT
+
+/obj/landmark/halloween
+	name = LANDMARK_HALLOWEEN_SPAWN
 
 /obj/landmark/asteroid_spawn_blocker //Blocks the creation of an asteroid on this tile, as you would expect
 	name = "asteroid blocker"
 	icon_state = "x4"
+	deleted_on_start = FALSE
+	add_to_landmarks = FALSE
 
 /obj/landmark/magnet_center
-	name = "magnet center"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
+	name = LANDMARK_MAGNET_CENTER
+	icon_state = "magnet-center"
+	var/width = 15
+	var/height = 15
+	var/obj/machinery/mining_magnet/magnet
+
+	New()
+		var/turf/T = locate(src.x-round(width/2), src.y-round(height/2), src.z)
+		var/obj/magnet_target_marker/M = new /obj/magnet_target_marker(T)
+		M.width = src.width
+		M.height = src.height
+		..()
 
 /obj/landmark/magnet_shield
-	name = "magnet shield"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1.0
-
-/obj/landmark/block_waypoint
-	name = "anti-nullspace waypoint"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "x"
-	anchored = 1
-	shuttle
-		name = "shuttle anti-nullspace waypoint"
+	name = LANDMARK_MAGNET_SHIELD
+	icon_state = "magnet-shield"
 
 /obj/landmark/latejoin_missile
 	name = "missile latejoin spawn marker"
-	icon = 'icons/mob/screen1.dmi'
+	name_override = LANDMARK_LATEJOIN_MISSILE
 	icon_state = "x"
-	anchored = 1
 	dir = NORTH
 
 	New()
-		//FFFUCK the parent has no framework for a landmark that is both a latejoin and should not be deleted immediately
-		src.tag = "landmark*[src.name]"
-
-		latejoin += src.loc
-		deleted_on_start = 1
-
-		if (!islist(landmarks))
-			landmarks = list()
-		landmarks.Add(src)
-
-
+		src.data = src.dir // save dir
+		..()
 	north
 		name = "missile latejoin spawn marker (north)"
 		dir = NORTH
 
 /obj/landmark/ass_arena_spawn
-	name = "ass_arena_spawn"
-	icon = 'icons/mob/screen1.dmi'
+	name = LANDMARK_ASS_ARENA_SPAWN
 	icon_state = "x"
-	anchored = 1
 
-	New()
-		..()
-		ass_arena_spawn.Add(src)
-
-obj/landmark/interesting
+/obj/landmark/interesting
 	// Use this to place cryptic clues to be picked up by the T-ray, because trying to remember which floortile you varedited is shit. For objects and mobs, just varedit.
 	name = "Interesting turf spawner"
 	desc = "Sets the var/interesting of the target turf, then deletes itself"
 	interesting = ""
+	add_to_landmarks = FALSE
 
 	New() //use initialize() later and test ok
-		..()
-		SPAWN_DBG(1 DECI SECOND)
-			src.setup()
-			SPAWN_DBG(1 SECOND)
-				qdel(src)
-
-	proc/setup()
 		var/turf/T = src.loc
 		T.interesting = src.interesting
+		..()
 
-obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
-	name = "lrt landmark"
-	var/turf/held_turf = null //a reference to the turf its on
+/obj/landmark/artifact
+	name = LANDMARK_ARTIFACT_SPAWN
+	icon_state = "artifact-spawn"
+	var/spawnchance = 100 // prob chance out of 100 to spawn artifact at game start
+	New()
+		src.data = src.spawnchance
+		..()
+
+	random_room
+		name = LANDMARK_RANDOM_ROOM_ARTIFACT_SPAWN
+
+		New()
+			if (prob(src.spawnchance))
+				Artifact_Spawn(get_turf(src))
+			..()
+
+/obj/landmark/spawner
+	name = "spawner"
+	add_to_landmarks = FALSE
+	deleted_on_start = FALSE
+	var/type_to_spawn = null
+	var/spawnchance = 100
+	var/static/list/name_to_type = list(
+		"juicer_gene" = /mob/living/carbon/human/geneticist,
+		"shitty_bill" = /mob/living/carbon/human/biker,
+		"john_bill" = /mob/living/carbon/human/john,
+		"big_yank" = /mob/living/carbon/human/big_yank,
+		"father_jack" = /mob/living/carbon/human/fatherjack,
+		"don_glab" = /mob/living/carbon/human/don_glab,
+		"monkeyspawn_normal" = /mob/living/carbon/human/npc/monkey,
+		"monkeyspawn_albert" = /mob/living/carbon/human/npc/monkey/albert,
+		"monkeyspawn_rathen" = /mob/living/carbon/human/npc/monkey/mr_rathen,
+		"monkeyspawn_mrmuggles" = /mob/living/carbon/human/npc/monkey/mr_muggles,
+		"monkeyspawn_mrsmuggles" = /mob/living/carbon/human/npc/monkey/mrs_muggles,
+		"monkeyspawn_syndicate" = /mob/living/carbon/human/npc/monkey/oppenheimer,
+		"monkeyspawn_horse" = /mob/living/carbon/human/npc/monkey/horse,
+		"monkeyspawn_krimpus" = /mob/living/carbon/human/npc/monkey/krimpus,
+		"monkeyspawn_tanhony" = /mob/living/carbon/human/npc/monkey/tanhony,
+		"monkeyspawn_stirstir" = /mob/living/carbon/human/npc/monkey/stirstir,
+		"seamonkeyspawn" = /mob/living/carbon/human/npc/monkey/sea,
+		"seamonkeyspawn_gang" = /mob/living/carbon/human/npc/monkey/sea/gang,
+		"seamonkeyspawn_gang_gun" = /mob/living/carbon/human/npc/monkey/sea/gang_gun,
+		"seamonkeyspawn_rich" = /mob/living/carbon/human/npc/monkey/sea/rich,
+		"seamonkeyspawn_lab" = /mob/living/carbon/human/npc/monkey/sea/lab,
+		"waiter" = /mob/living/carbon/human/waiter,
+		"monkeyspawn_inside" = /mob/living/carbon/human/npc/monkey,
+		"dolly" = /mob/living/critter/small_animal/ranch_base/sheep/white/dolly/ai_controlled
+	)
 
 	New()
+		if(current_state >= GAME_STATE_WORLD_INIT && prob(spawnchance) && !src.disposed)
+			SPAWN(6 SECONDS) // bluh, replace with some `initialize` variant later when someone makes it (needs to work with dmm loader)
+				if(!src.disposed)
+					initialize()
 		..()
-		if (get_turf(src))
-			src.held_turf = get_turf(src)
+
+	initialize()
+		if(prob(spawnchance))
+			spawn_the_thing()
+		..()
+
+	proc/spawn_the_thing()
+		if(isnull(src.type_to_spawn))
+			src.type_to_spawn = name_to_type[src.name]
+		if(isnull(src.type_to_spawn))
+			CRASH("Spawner [src] at [src.x] [src.y] [src.z] had no type.")
+
+		#ifdef BAD_MONKEY_NO_BANANA
+		if (findtext("[src.type_to_spawn]", "monkey")) //ugly
+			qdel(src)
+			return
+		#endif
+
+		new type_to_spawn(src.loc)
+		qdel(src)
+
+/obj/landmark/spawner/inside
+	New()
+		var/obj/storage/S = locate() in src.loc
+		src.set_loc(S)
+		..()
+
+/obj/landmark/spawner/inside/monkey
+	name = "monkeyspawn_inside"
+
+/obj/landmark/spawner/loot
+	name = "Loot spawn"
+	type_to_spawn = /obj/storage/crate/loot
+	spawnchance = 10
+
+// LONG RANGE TELEPORTER
+// consider refactoring to be associative the other way around later
+
+/obj/landmark/lrt //for use with long range teleporter locations, please add new subtypes of this for new locations and use those
+	name = "lrt landmark"
+	name_override = LANDMARK_LRT
+
+	New()
+		src.data = src.name // store name
+		..()
 
 /obj/landmark/lrt/gemv
 	name = "Geminorum V"
 
 /obj/landmark/lrt/workshop
 	name = "Hidden Workshop"
+
+/obj/landmark/lrt/voiddiner
+	name = "Void Diner"
+
+/obj/landmark/character_preview_spawn
+	name = LANDMARK_CHARACTER_PREVIEW_SPAWN
+
+/obj/landmark/viscontents_spawn
+	name = "visual mirror spawn"
+	desc = "Links a pair of corresponding turfs in holy Viscontent Matrimony. You shouldnt be seeing this."
+	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "landmark"
+	color = "#FF0000"
+	/// target z-level to push it's contents to
+	var/targetZ = 1
+	/// x offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/xOffset = 0
+	/// /y offset relative to the landmark, will cause visual jump effect due to set_loc not gliding
+	var/yOffset = 0
+	add_to_landmarks = FALSE
+	/// modifier for restricting criteria of what gets warped by mirror
+	var/warptarget_modifier = LANDMARK_VM_WARP_ALL
+	var/novis = FALSE
+
+	New(var/loc, var/man_xOffset, var/man_yOffset, var/man_targetZ, var/man_warptarget_modifier)
+		if (man_xOffset) src.xOffset = man_xOffset
+		if (man_yOffset) src.yOffset = man_yOffset
+		if (man_targetZ) src.targetZ = man_targetZ
+		if (!isnull(man_warptarget_modifier)) src.warptarget_modifier = man_warptarget_modifier
+		var/turf/T = get_turf(src)
+		if (!T) return
+		if(novis)
+			var/turf/W = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			W.warptarget = T
+		else
+			T.appearance_flags |= KEEP_TOGETHER
+			T.vistarget = locate(src.x + xOffset, src.y + yOffset, src.targetZ)
+			if (T.vistarget)
+				if(warptarget_modifier)
+					T.vistarget.warptarget = T
+				T.updateVis()
+				T.vistarget.fullbright = TRUE
+				T.vistarget.RL_Init()
+		..()
+
+/obj/landmark/viscontents_spawn/no_vis
+	name = "instant hole spawn"
+	desc = "Point it at a turf. Stuff that goes there? goes here instead. Got it?"
+	novis = TRUE
+
+/obj/landmark/viscontents_spawn/no_warp
+	warptarget_modifier = LANDMARK_VM_WARP_NONE
+/// target turf for projecting its contents elsewhere
+/turf/var/turf/vistarget = null
+/// target turf for teleporting its contents elsewhere
+/turf/var/turf/warptarget = null
+/// control who gets warped to warptarget
+/turf/var/turf/warptarget_modifier = null
+
+/turf/proc/updateVis()
+	if(vistarget)
+		vistarget.overlays.Cut()
+		vistarget.vis_contents += src
+		var/obj/overlay/tile_effect/lighting/L = locate() in vistarget.vis_contents
+		if(L)
+			vistarget.vis_contents -= L

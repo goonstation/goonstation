@@ -1,34 +1,34 @@
 /obj/item/device/camera_viewer
-	name = "Camera monitor"
+	name = "camera monitor"
 	desc = "A portable video monitor connected to a security camera network."
 	icon_state = "monitor"
 	item_state = "electronic"
-	w_class = 2.0
+	w_class = W_CLASS_SMALL
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
 	mats = 6
 
 	attack_self(mob/user as mob)
-		user.machine = src
-		user.unlock_medal("Peeping Tom", 1)
+		src.add_dialog(user)
+		user.unlock_medal("I Spy", 1)
 
 		var/list/L = list()
-		for (var/obj/machinery/camera/C in cameras)
+		for_by_tcl(C, /obj/machinery/camera)
 			L.Add(C)
 			LAGCHECK(LAG_LOW)
 
 		L = camera_sort(L)
 
 		var/list/D = list()
-		D["Cancel"] = "Cancel"
+
 		for (var/obj/machinery/camera/C in L)
-			if (C.network == src.network)
+			if (C.network == src.network && !C.ai_only)
 				D[text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))] = C
 			LAGCHECK(LAG_LOW)
 
-		var/t = input(user, "Which camera should you change to?") as null|anything in D
+		var/t = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(D, /proc/cmp_text_asc))
 
-		if(!t || t == "Cancel")
+		if(!t)
 			user.set_eye(null)
 			return 0
 
@@ -40,5 +40,10 @@
 		else
 			user.set_eye(C)
 
-			SPAWN_DBG(0.5 SECONDS)
+			SPAWN(0.5 SECONDS)
 				attack_self(user)
+
+/obj/item/device/camera_viewer/ranch
+	network = "ranch"
+	name = "baby monitor"
+	color = "#AAFF99"

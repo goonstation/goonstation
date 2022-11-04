@@ -5,7 +5,7 @@
 	desc = "An electronic device designed to intercept network transmissions."
 	icon_state = "sniffer0"
 	item_state = "electronic"
-	w_class = 4.0
+	w_class = W_CLASS_BULKY
 	rand_pos = 0
 	var/mode = 0
 	var/obj/machinery/power/data_terminal/link = null
@@ -15,12 +15,14 @@
 	var/list/packet_data = list()
 	var/max_logs = 8
 
-	attack_ai()
+	attack_ai(mob/user as mob)
+		if(mode)
+			src.interacted(user)
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		if(mode)
-			src.interact(user)
+			src.interacted(user)
 			return
 
 		else
@@ -44,7 +46,7 @@
 
 					else
 
-						boutput(user, "<span style=\"color:red\">The [src] couldn't be attached here!</span>")
+						boutput(user, "<span class='alert'>The [src] couldn't be attached here!</span>")
 						return
 
 				else
@@ -55,17 +57,16 @@
 				mode = 0
 				user.visible_message("[user] detaches the [src] from the data terminal.","You detach the [src] from the data terminal.")
 				icon_state = "sniffer0"
-				if(src.link)
-					src.link.master = null
+				src.link?.master = null
 				src.link = null
 				return
 		else
 			..()
 
 	attack_self(mob/user as mob)
-		return interact(user)
+		return interacted(user)
 
-	proc/interact(mob/user as mob)
+	proc/interacted(mob/user as mob)
 
 		var/dat = "<html><head><title>Packet Sniffer</title></head><body>"
 
@@ -86,32 +87,33 @@
 	Topic(href, href_list)
 		..()
 
-		if (usr.contents.Find(src) || usr.contents.Find(src.master) || (istype(src.loc, /turf) && get_dist(src, usr) <= 1))
+		if (!issilicon(usr) && !isAIeye(usr))
+			if (!(src in usr.contents) && !(src.master in usr.contents) && !(istype(src.loc, /turf) && (BOUNDS_DIST(src, usr) == 0)))
+				return
 			if (usr.stat || usr.restrained())
 				return
 
 			src.add_fingerprint(usr)
-			usr.machine = src
+		src.add_dialog(usr)
 
-			if(href_list["filtid"])
-				var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
-				if (!t)
-					src.filter_id = null
-					src.updateIntDialog()
+		if(href_list["filtid"])
+			var/t = input(usr, "Please enter new filter net id", src.name, src.filter_id) as text
+			if (!t)
+				src.filter_id = null
+				src.updateIntDialog()
+				return
+
+			if (!issilicon(usr) && !isAIeye(usr))//Only check range for organics
+				if (!in_interact_range(src, usr) || usr.stat || usr.restrained())
 					return
 
-				if (!in_range(src, usr) || usr.stat || usr.restrained())
-					return
+			if(length(t) != 8 || !is_hex(t))
+				src.filter_id = null
+				src.updateIntDialog()
+				return
 
-				if(length(t) != 8 || !is_hex(t))
-					src.filter_id = null
-					src.updateIntDialog()
-					return
-
-				src.filter_id = t
-
+			src.filter_id = t
 			src.updateIntDialog()
-			return
 
 		return
 
@@ -131,7 +133,7 @@
 		if(signal.transmission_method != TRANSMISSION_WIRE) //No radio for us thanks
 			return
 
-		var/target = signal.data["address_1"]
+		var/target = signal.data["sender"]
 		if(src.filter_id && src.filter_id != target)
 			return
 
@@ -144,15 +146,15 @@
 			return
 
 		if(!src.last_intercept || src.last_intercept + 40 <= world.time)
-			playsound(src.loc, "sound/machines/twobeep.ogg", 25, 1)
+			playsound(src.loc, 'sound/machines/twobeep.ogg', 25, 1)
 		//src.packet_data = signal.data:Copy()
 		var/newdat = "<b>\[[time2text(world.timeofday,"mm:ss")]:[(world.timeofday%10)]\]:</b>"
 		for (var/i in signal.data)
-			newdat += "[i][isnull(signal.data[i]) ? "; " : "=[signal.data[i]]; "]"
+			newdat += "[strip_html(i)][isnull(signal.data[i]) ? "; " : "=[strip_html(signal.data[i])]; "]"
 
 		if (signal.data_file)
 			. = signal.data_file.asText()
-			newdat += "<br>Included file ([signal.data_file.name], [signal.data_file.extension]): [. ? . : "Not printable."]"
+			newdat += "<br>Included file ([strip_html(signal.data_file.name)], [strip_html(signal.data_file.extension)]): [. ? . : "Not printable."]"
 
 		src.packet_data += newdat
 		if (src.packet_data.len > src.max_logs)

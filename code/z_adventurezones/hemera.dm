@@ -316,19 +316,20 @@ Obsidian Crown
 	name = "obsidian crown"
 	desc = "A crown, apparently made of obsidian, and also apparently very bad news."
 	icon_state = "obcrown"
-
+	blocked_from_petasusaphilic = TRUE
 	magical = 1
 	var/processing = 0
 	var/armor_paired = 0
 	var/max_damage = 0
 
 	equipped(var/mob/user, var/slot)
+		..()
+		logTheThing(LOG_COMBAT, user, "equipped [src].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)
 			src.processing++
-			if (!(src in processing_items))
-				processing_items.Add(src)
+			processing_items |= src
 
 		if (istype(user.reagents)) //Protect them from poisions! (And coincidentally healing chems OH WELL)
 			user.reagents.maximum_volume = 0
@@ -345,6 +346,15 @@ Obsidian Crown
 			processing = 0
 			return
 
+		if(isrestrictedz(host.z) && prob(0.5))
+			hear_voidSpeak("...the sun...", "<small>", "</small>")
+		var/area/A = get_area(src)
+		if(A.type == /area/solarium && prob(3))
+			if(prob(10))
+				hear_voidSpeak("Let them touch the sun.")
+			else
+				hear_voidSpeak("THE SUN")
+
 		if (armor_paired)
 			if (armor_paired < 4 && prob(15))
 				switch (armor_paired++)
@@ -354,7 +364,6 @@ Obsidian Crown
 						hear_voidSpeak("How wonderous!  Our newest friend shares our appetite for adventure!  I dub thee \"Journeyman.\"")
 					if (3)
 						hear_voidSpeak("How lucky you are, Friend, how truly blessed!  Companions guarding your form entirely from the risks of the material!")
-
 
 		else if (ishuman(host) && istype(host:wear_suit, /obj/item/clothing/suit/armor/ancient))
 			armor_paired = 1
@@ -367,9 +376,7 @@ Obsidian Crown
 			if (that_jerk)
 				that_jerk.dropped(host)
 				that_jerk.layer = initial(that_jerk.layer)
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, host)
-				s.start()
+				elecflash(host,power = 3)
 				if (isrestrictedz(host.z))
 					return
 				var/list/randomturfs = new/list()
@@ -378,7 +385,7 @@ Obsidian Crown
 						continue
 					randomturfs.Add(T)
 				boutput(host, "<span class='combat'>[that_jerk] is warped away!</span>")
-				playsound(host.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
+				playsound(host.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
 				that_jerk.set_loc(pick(randomturfs))
 
 		if (host.get_damage() < 0)
@@ -399,24 +406,34 @@ Obsidian Crown
 					return
 
 				host.lastattacker = null
-				var/datum/effects/system/spark_spread/s = unpool(/datum/effects/system/spark_spread)
-				s.set_up(4, 1, M)
-				s.start()
+				elecflash(M,power = 4)
 				var/list/randomturfs = new/list()
 
-				. = isrestrictedz(host.z)
-				for(var/turf/T in orange(M, 25))
-					if(T.density)
-						continue
-					if (. && T.loc != get_area(M)) //If we're in a telesci area and this is a change in area.
-						continue
+				if(isrestrictedz(M.z))
+					for(var/turf/T in view(M, 4))
+						if (!istype(get_area(M), /area/solarium)) //If we're in a telesci area and this is a change in area.
+							continue
+						if(T.density)
+							continue
+						for(var/atom/AT in T)
+							if(AT.density)
+								continue
+						randomturfs.Add(T)
+				else
+					for(var/turf/T in orange(M, 25))
+						if(T.density)
+							continue
+						for(var/atom/AT in T)
+							if(AT.density)
+								continue
+						randomturfs.Add(T)
 
-					randomturfs.Add(T)
-
-				boutput(M, "<span style=\"color:blue\">You are caught in a magical warp field!</span>")
-				M.visible_message("<span class='combat'>[M] is warped away!</span>")
-				playsound(M.loc, "sound/effects/mag_warp.ogg", 25, 1, -1)
-				M.set_loc(pick(randomturfs))
+				if(length(randomturfs))
+					boutput(M, "<span class='notice'>You are caught in a magical warp field!</span>")
+					M.visible_message("<span class='combat'>[M] is warped away!</span>")
+					playsound(M.loc, 'sound/effects/mag_warp.ogg', 25, 1, -1)
+					M.set_loc(pick(randomturfs))
+					logTheThing(LOG_COMBAT, M, "is warped away by [constructTarget(host,"combat")]'s obsidian crown to [log_loc(M)].")
 
 		if (armor_paired != -1 && prob(50) && host.max_health > 10)
 			host.max_health--
@@ -427,13 +444,13 @@ Obsidian Crown
 		host.delStatus("weakened")
 		host.delStatus("paralysis")
 		host.dizziness = max(0,host.dizziness-10)
-		host.drowsyness = max(0,host.drowsyness-10)
+		host.changeStatus("drowsy", -20 SECONDS)
 		host.sleeping = 0
 
-		host.updatehealth()
+		health_update_queue |= host
 		return
 
-	proc/hear_voidSpeak(var/message)
+	proc/hear_voidSpeak(var/message, var/prefix, var/suffix)
 		if (!message)
 			return
 		var/mob/wearer = src.loc
@@ -441,7 +458,7 @@ Obsidian Crown
 			return
 		var/voidMessage = voidSpeak(message)
 		if (voidMessage)
-			boutput(wearer, "[voidMessage]")
+			boutput(wearer, "[prefix][voidMessage][suffix]")
 		return
 
 	proc/abandonHost()
@@ -467,6 +484,7 @@ Obsidian Crown
 			humHost.delStatus("stunned")
 			humHost.delStatus("weakened")
 			humHost.delStatus("radiation")
+			humHost.take_radiation_dose(-INFINITY)
 			humHost.take_eye_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY)
 			humHost.take_ear_damage(-INFINITY, 1)
@@ -478,9 +496,8 @@ Obsidian Crown
 
 			humHost.full_heal()
 
-			humHost.decomp_stage = 4
+			humHost.decomp_stage = DECOMP_STAGE_SKELETONIZED
 			humHost.bioHolder.RemoveEffect("eaten")
-			humHost.updatehealth()
 			humHost.set_body_icon_dirty()
 			humHost.set_face_icon_dirty()
 
@@ -495,10 +512,10 @@ Obsidian Crown
 		for(var/mob/N in viewers(host, null))
 			N.flash(3 SECONDS)
 			if(N.client)
-				shake_camera(N, 6, 4)
+				shake_camera(N, 6, 32)
 				N.show_message("<span class='combat'><b>A blinding light envelops [host]!</b></span>")
 
-		playsound(src.loc, "sound/weapons/flashbang.ogg", 50, 1)
+		playsound(src.loc, 'sound/weapons/flashbang.ogg', 50, 1)
 
 		src.set_loc(get_turf(host))
 		processing_items.Remove(src)

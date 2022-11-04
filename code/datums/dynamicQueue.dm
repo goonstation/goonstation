@@ -6,6 +6,7 @@
 	var/binSize
 
 	New(var/BinSize = QUEUE_BIN_SIZE)
+		..()
 		src.binSize = BinSize
 
 	proc
@@ -93,5 +94,5 @@
 			var/list/bin
 			for(var/i=1,i<=queue.len,i++)
 				bin = queue[i]
-				count += bin.len
+				count += length(bin)
 			return count

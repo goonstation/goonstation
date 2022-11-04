@@ -1,5 +1,20 @@
-# Goonstation Mapping Guidelines
+# Goonstation Mapping Guide
 
+Goonstation doesn't have any specific mapping guide for our version of the game,
+however there is another highly detailed pair of guides made by san7890 of /tg/station.
+
+*Some elements of these may not apply to Goonstation code or practices. They also might not explain things necessary for our code.*
+
+[The first](https://hackmd.io/@tgstation/SyVma0dS5) is a comprehensive quick-start guide for anyone wishing to get their toes started in mapping but have absolutely zero idea where to start.
+
+[The second](https://hackmd.io/@tgstation/ry4-gbKH5) is more of a reference for those who already know how to map.
+
+
+If you are creating a new map for Goonstation, we have the following mapping guidelines that must be adhered to:
+
+## Goonstation Mapping Guidelines
+
+{%hackmd @ZeWaka/dark-theme %}
 
 ## :heavy_exclamation_mark:Required:heavy_exclamation_mark: 
 
@@ -23,6 +38,7 @@ If these features do not work in the current codebase then your map PR will be *
 - A **Correctly placed** landmark for the Map at 1,1.
 - **Windows** should be placed using the `obj/wingrille_spawn` spawners.
     - Non-full-tile windows ('thindows') should not be used, as they are being phased out.
+- **Firedoors** should be placed using the `obj/firedoor_spawn` spawners.
 - **Drains** scattered around, the path is `/obj/machinery/drainage`.
 
 ## Recommended
@@ -36,3 +52,5 @@ If these features do not work in the current codebase then your map PR will be *
 - Arrivals should have more than one exit, to prevent people from being unable to join the game.
 - Cloning should follow the style of modern maps and be mostly public access.
 - Feel free to take inspiration from other maps, but please don't copy paste large parts of them.
+- If you use random item spawners, try using the types of them that create specific numbers of items. This way you don't risk accidentally overloading rooms with items because RNG decided it to be so.
+- Spacemas ornaments are now automatically generated as appropriate. You must only manually add the tree somewhere, specifically the ephemeral subtype.

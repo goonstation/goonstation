@@ -1,0 +1,22 @@
+adjectives@=burning@,searing@,alien@,old@,ancient@,ethereal@,shining@,secret@,hidden@,dull@,prismatic@,crystaline@,eldritch@,strange@,odd@,buzzing@,mysterious@,great@,rusted@,broken@,glowing@,floating@,mystical@,magic
+nouns@=dragon@,master@,wizard's@,yendor's@,solarium@,automaton's@,bee's@,shitty bill's@,captain's@,jones'@,void@,ghost@,skeleton
+materials@=bronze@,crystal@,metal@,iron@,mauxite@,pharosium@,char@,molitz@,cobryl@,cytine@,uqill@,bohrum@,claretine@,erebite@,cerenkite@,plasmastone@,syreline@,gold@,silver@,copper@,titanium@,unobtanium
+keynames@=key@,passkey@,latchkey@,opener@,rune-key
+ofwhat@=of unlocking@,of the yellow king@,of magic@,of kings@,of a thousand locks@,of doom@,of evil@,of the forge@,of the sun@,of fire
+descfluff@=
+	You are not sure what this Key could be used for.
+	The key feels slightly warm.
+	The key feels cold.
+	The key feels strange.
+	Its very light.
+	It somehow frightens you.
+	It almost seems alive.
+	There is a small red fish engraved on it.
+	There is a small sun engraved on it.
+	It has an engraving of a man wearing a strange mask.
+	There is a tiny robot symbol on it.
+	It menaces with spikes of bread.
+	The key feels very smooth.
+	It glows faintly.
+	There are small red blotches on it. It almost looks like blood.
+	You notice light warping

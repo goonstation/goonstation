@@ -15,12 +15,12 @@
 		if (isturf(target))
 			target = locate(/mob/living) in target
 			if (!target)
-				boutput(holder.owner, __red("Nothing to kick there."))
+				boutput(holder.owner, "<span class='alert'>Nothing to kick there.</span>")
 				return 1
 		if (target == holder.owner)
 			return 1
-		if (get_dist(holder.owner, target) > 1)
-			boutput(holder.owner, __red("That is too far away to kick."))
+		if (BOUNDS_DIST(holder.owner, target) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to kick.</span>")
 			return 1
 
 		var/mob/ow = holder.owner
@@ -28,13 +28,13 @@
 		if (isobj(target))
 			var/obj/O = target
 			for (var/mob/C in oviewers(ow))
-				shake_camera(C, 2, 1)
+				shake_camera(C, 2, 8)
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws", "flings", "launches")
 			var/kicktype = pick("kick", "roundhouse", "thrust")
-			ow.visible_message("<span style=\"color:red\"><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
+			ow.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
-			playsound(ow.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
 			ow.changeStatus("weakened", 1 SECOND)
@@ -56,26 +56,25 @@
 					else
 						var/turf/T = get_edge_target_turf(ow, get_dir(ow, get_step_away(O, ow)))
 						if (T && isturf(T) && !O.anchored)
-							SPAWN_DBG(0)
-								O.throw_at(T, 5, 2)
+							O.throw_at(T, 5, 2)
 				if (1)
 					return
 
-			logTheThing("combat", ow, target, "uses Power Kick on %target% at [log_loc(ow)].")
+			logTheThing(LOG_COMBAT, ow, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
 
 		else if (ismob(target))
 			var/mob/M = target
 
 			M.emote("scream")
 			M.emote("flip")
-			M.dir = turn(M.dir, 90)
+			M.set_dir(turn(M.dir, 90))
 
 			for (var/mob/C in oviewers(M))
-				shake_camera(C, 2, 1)
+				shake_camera(C, 2, 8)
 
 			var/kickverb = pick("socks", "slams", "kicks", "boots", "throws")
 			var/kicktype = pick("kick", "roundhouse", "thrust")
-			M.visible_message("<span style=\"color:red\"><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
+			M.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
 			random_brute_damage(target, 10,1)
 			playsound(M.loc, "swing_hit", 60, 1)
@@ -85,9 +84,8 @@
 
 			var/turf/T = get_edge_target_turf(M, get_dir(M, get_step_away(target, M)))
 			if (T && isturf(T))
-				SPAWN_DBG(0)
-					M.throw_at(T, 5, 2)
-					M.changeStatus("stunned", 1 SECOND)
+				M.throw_at(T, 5, 2)
+				M.changeStatus("stunned", 1 SECOND)
 
-			logTheThing("combat", M, target, "uses Power Kick on %target% at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

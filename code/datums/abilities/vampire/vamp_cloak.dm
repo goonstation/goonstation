@@ -21,12 +21,12 @@
 			return 1
 
 		if (!ishuman(M)) // Only humans use bioeffects at the moment.
-			boutput(M, __red("You can't use this ability in your current form."))
+			boutput(M, "<span class='alert'>You can't use this ability in your current form.</span>")
 			return 1
 
 		var/mob/living/carbon/human/MM = M
 		if (!MM.bioHolder)
-			boutput(MM, __red("You can't use this ability in your current form."))
+			boutput(MM, "<span class='alert'>You can't use this ability in your current form.</span>")
 			return 1
 
 		if (MM.bioHolder.HasEffect("cloak_of_darkness"))

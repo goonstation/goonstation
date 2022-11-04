@@ -6,22 +6,19 @@
 	icon_state = "wall"
 	flags = FPRINT | TABLEPASS
 	plane = PLANE_NOSHADOW_ABOVE
-	force = 8.0
-	w_class = 4.0
-	anchored = 1.0
+	force = 8
+	w_class = W_CLASS_BULKY
+	anchored = 1
 	density = 0
 	mats = 8
 	deconstruct_flags = DECON_SIMPLE
-	max_wclass = 4
+	burn_possible = FALSE
+	max_wclass = W_CLASS_BULKY
 	slots = 13 // these can't move so I guess we may as well let them store more stuff?
 	mechanics_type_override = /obj/item/storage/wall
 
-	attack_hand(mob/user as mob)
-		return MouseDrop(user)
-
-	New()
-		..()
-		lockers_and_crates.Add(src)
+	attack_hand(mob/user)
+		return mouse_drop(user)
 
 /obj/item/storage/wall/emergency
 	name = "emergency supplies"
@@ -45,7 +42,7 @@
 			new /obj/item/clothing/mask/gas/emergency(src)
 		for (var/i=rand(2,3), i>0, i--)
 			if (prob(40))
-				new /obj/item/tank/emergency_oxygen(src)
+				new /obj/item/tank/mini_oxygen(src)
 			if (prob(40))
 				new /obj/item/clothing/mask/breath(src)
 
@@ -58,6 +55,8 @@
 		..()
 		if (prob(80))
 			new /obj/item/extinguisher(src)
+		if (prob(50))
+			new /obj/item/clothing/head/helmet/firefighter(src)
 		if (prob(30))
 			new /obj/item/clothing/suit/fire(src)
 			new /obj/item/clothing/mask/gas/emergency(src)
@@ -86,11 +85,12 @@
 	pixel_y = 32
 	spawn_contents = list(/obj/item/paper_bin = 2,
 	/obj/item/hand_labeler,
-	/obj/item/postit_stack,
+	/obj/item/item_box/postit,
 	/obj/item/pen,
 	/obj/item/staple_gun/red,
 	/obj/item/scissors,
-	/obj/item/stamp)
+	/obj/item/stamp,
+	/obj/item/canvas)
 
 	make_my_stuff()
 		..()
@@ -108,6 +108,8 @@
 	spawn_contents = list(/obj/item/storage/box/stma_kit = 2,
 	/obj/item/storage/box/lglo_kit/random = 2,
 	/obj/item/storage/box/clothing/patient_gowns = 2)
+
+
 
 /obj/item/storage/wall/research_supplies
 	name = "research supplies"
@@ -199,67 +201,16 @@
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "clothingrack-empty"
 		else
 			src.icon_state = "clothingrack"
-
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
-
 
 /obj/item/storage/wall/clothingrack/dresses
 	spawn_contents = list(/obj/item/clothing/under/suit/red/dress = 1,
@@ -315,6 +266,15 @@
 	/obj/item/clothing/under/gimmick/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
+/obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
+	spawn_contents = list(/obj/item/clothing/under/gimmick/utena = 1,
+	/obj/item/clothing/suit/hoodie = 1,
+	/obj/item/clothing/suit/wintercoat = 1,
+	/obj/item/clothing/suit/labcoat/hitman = 1,
+	/obj/item/clothing/suit/johnny_coat = 1,
+	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
+
 obj/item/storage/wall/clothingrack/hatrack
 	name = "hat shelf"
 	desc = "It's a shelf designed for many hats."
@@ -327,11 +287,12 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 
 	update_icon()
+
 		var/list/my_contents = src.get_contents()
 		if (my_contents.len <= 0)
 			src.icon_state = "hatrack-empty"
@@ -351,22 +312,22 @@ obj/item/storage/wall/clothingrack/hatrack
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
 		/obj/item/clothing/head/beret/random_color = 1,
-		/obj/item/clothing/head/veil = 1,
+		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/serpico = 1,
-		/obj/item/clothing/head/sailormoon = 1)
+		/obj/item/clothing/head/cowboy = 1)
 
 	hatrack_3
 		spawn_contents = list(/obj/item/clothing/head/raccoon = 1,
 		/obj/item/clothing/head/mj_hat = 1,
+		/obj/item/clothing/head/veil = 1,
 		/obj/item/clothing/head/sunhat = 1,
 		/obj/item/clothing/head/sunhat/sunhatr = 1,
-		/obj/item/clothing/head/sunhat/sunhatg = 1,
 		/obj/item/clothing/head/aviator = 1,
-		/obj/item/clothing/head/cowboy = 1)
+		/obj/item/clothing/head/sailormoon = 1)
 
 /obj/item/storage/wall/toolshelf
 	name = "tool shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -377,8 +338,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()
@@ -387,59 +348,9 @@ obj/item/storage/wall/clothingrack/hatrack
 		else
 			src.icon_state = "toolshelf"
 
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return
-
 /obj/item/storage/wall/mineralshelf
 	name = "mineral shelf"
-	icon = 'icons/obj/64x64.dmi'
+	icon = 'icons/obj/large/64x64.dmi'
 	density = 0
 	slots = 7
 	anchored = 1
@@ -451,8 +362,8 @@ obj/item/storage/wall/clothingrack/hatrack
 	New()
 		hud = new(src)
 		..()
-		SPAWN_DBG(1 DECI SECOND)
-			update_icon()
+		SPAWN(1 DECI SECOND)
+			UpdateIcon()
 
 	update_icon()
 		var/list/my_contents = src.get_contents()
@@ -460,53 +371,3 @@ obj/item/storage/wall/clothingrack/hatrack
 			src.icon_state = "shelf"
 		else
 			src.icon_state = "mineralshelf"
-
-	attackby(obj/item/W as obj, mob/user as mob, params, obj/item/storage/T as obj) // T for transfer - transferring items from one storage obj to another
-		if (W.cant_drop)
-			return
-		if (islist(src.can_hold) && src.can_hold.len)
-			var/ok = 0
-			if (src.in_list_or_max && W.w_class <= src.max_wclass)
-				ok = 1
-			else
-				for (var/A in src.can_hold)
-					if (ispath(A) && istype(W, A))
-						ok = 1
-			if (!ok)
-				boutput(user, "<span style='color:red'>[src] cannot hold [W].</span>")
-				return
-
-		else if (W.w_class > src.max_wclass)
-			boutput(user, "<span style='color:red'>[W] won't fit into [src]!</span>")
-			return
-
-		var/list/my_contents = src.get_contents()
-		if (my_contents.len >= slots)
-			boutput(user, "<span style='color:red'>[src] is full!</span>")
-			return 0
-
-		var/atom/checkloc = src.loc // no infinite loops for you
-		while (checkloc && !isturf(src.loc))
-			if (checkloc == W) // nope
-				//Hi hello this used to gib the user and create an actual 5x5 explosion on their tile
-				//Turns out this condition can be met and reliably reproduced by players!
-				//Lets not give players the ability to fucking explode at will eh
-				return
-			checkloc = checkloc.loc
-
-		if (T && istype(T, /obj/item/storage))
-			src.add_contents(W)
-			T.hud.remove_item(W)
-			update_icon()
-		else
-			user.u_equip(W)
-			W.dropped(user)
-			src.add_contents(W)
-		hud.add_item(W)
-		update_icon()
-		add_fingerprint(user)
-		animate_storage_rustle(src)
-		if (!src.sneaky && !istype(W, /obj/item/gun/energy/crossbow))
-			user.visible_message("<span style='color:blue'>[user] has added [W] to [src]!</span>", "<span style='color:blue'>You have added [W] to [src].</span>")
-		playsound(src.loc, "rustle", 50, 1, -5)
-		return

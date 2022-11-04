@@ -1,191 +1,2299 @@
-"aa" = (/turf/space,/area)
-"ab" = (/turf/space,/area/noGenerate)
-"ac" = (/obj/structure/woodwall,/turf/space,/area/noGenerate)
-"ad" = (/turf/space,/obj/grille/catwalk,/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 9; layer = 2.5; anchored = 1},/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)
-"ae" = (/turf/simulated/floor/airless/solar,/area/noGenerate)
-"af" = (/turf/space,/turf/simulated/floor/airless/plating/catwalk{dir = 4; intact = 0},/area/noGenerate)
-"ag" = (/obj/lattice,/turf/space,/area/noGenerate)
-"ah" = (/turf/space,/obj/grille/catwalk,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)
-"ai" = (/turf/space,/obj/grille/catwalk,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 5; anchored = 1},/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)
-"aj" = (/turf/space,/obj/grille/catwalk,/obj/decal/fakeobjects{anchored = 1; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; name = "power conduit"},/obj/decal/fakeobjects{name = "power conduit"; desc = "Like conventional cables, but more burly."; icon = 'icons/obj/power_cond.dmi'; icon_state = "conduit"; dir = 9; layer = 2.5; anchored = 1},/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)
-"ak" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/turf/space,/area/noGenerate)
-"al" = (/obj/item/raw_material/shard/glass,/turf/space,/area/noGenerate)
-"am" = (/obj/lattice{icon_state = "lattice-dir"; dir = 4},/turf/space,/area/noGenerate)
-"an" = (/obj/lattice,/obj/cable{icon_state = "4-9"},/turf/space,/area/noGenerate)
-"ao" = (/obj/lattice{icon_state = "lattice-dir"; dir = 4},/obj/cable{icon_state = "4-8"},/turf/space,/area/noGenerate)
-"ap" = (/turf/simulated/wall/asteroid,/area/noGenerate)
-"aq" = (/obj/item/raw_material/shard/glass,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ar" = (/obj/machinery/communications_dish,/obj/lattice,/obj/cable{icon_state = "0-2"; d2 = 2},/turf/space,/area/noGenerate)
-"as" = (/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"at" = (/obj/decal/floatingtiles{icon_state = "floattiles3"; dir = 8},/turf/space,/area/noGenerate)
-"au" = (/obj/decal/floatingtiles{icon_state = "floattiles3"},/turf/space,/area/noGenerate)
-"av" = (/obj/lattice{icon_state = "lattice-dir"; dir = 2},/obj/cable{icon_state = "1-2"; d1 = 1; d2 = 2},/turf/space,/area/noGenerate)
-"aw" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ax" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It appears to be a part of a very old robotic arm."; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "neutinj"; name = "motor"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"ay" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/decal/fakeobjects{desc = "What was this thing even supposed to do?"; icon = 'icons/obj/machines/nuclear.dmi'; icon_state = "engineoff"; name = "broken machine"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"az" = (/turf/space,/obj/grille/catwalk,/obj/item/breaching_charge/NT,/turf/simulated/floor/airless/plating/catwalk,/area/noGenerate)
-"aA" = (/obj/lattice{icon_state = "lattice-dir"; dir = 5},/turf/space,/area/noGenerate)
-"aB" = (/turf/simulated/wall/r_wall,/area/noGenerate)
-"aC" = (/obj/structure/girder/reinforced,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aD" = (/obj/decal/cleanable/dirt,/obj/item/casing/rifle,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aE" = (/obj/grille/steel,/obj/window/reinforced/east,/obj/window/reinforced/south,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aF" = (/obj/lattice,/obj/item/raw_material/shard/glass,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"aG" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 10},/turf/space,/area/noGenerate)
-"aH" = (/obj/item/raw_material/scrap_metal,/turf/space,/area/noGenerate)
-"aI" = (/obj/decal/cleanable/blood/tracks{dir = 9},/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"aJ" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "broken airlock"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/oil/streak,/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 8},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"aK" = (/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 8},/obj/item/cigbutt,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 9},/area/noGenerate)
-"aL" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 5},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aM" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibmid3"},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aN" = (/obj/decal/cleanable/dirt,/obj/table/auto,/obj/shrub/dead{dir = 1; name = "Dead plant"; pixel_y = 15},/obj/item/cigbutt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"aO" = (/obj/table/auto,/obj/decal/fakeobjects{name = "broken computer"; desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN."; icon = 'icons/obj/computer.dmi'; icon_state = "oldb"; anchored = 1},/turf/simulated/floor/airless/damaged5,/area/noGenerate)
-"aP" = (/turf/simulated/wall,/area/noGenerate)
-"aQ" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/obj/decal/cleanable/blood/gibs{icon_state = "gibarm"},/obj/decal/cleanable/blood{icon_state = "u_madman_l"},/obj/item/casing/rifle,/obj/decal/cleanable/paper,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"aR" = (/obj/decal/cleanable/dirt,/obj/item/storage/toilet,/obj/landmark/artifact/cannabis_seed,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"aS" = (/obj/lattice{icon_state = "lattice-dir-b"; dir = 6},/turf/simulated/wall/asteroid,/area/noGenerate)
-"aT" = (/obj/lattice,/turf/simulated/wall/asteroid,/area/noGenerate)
-"aU" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/decal/fakeobjects/pipe{dir = 4; name = "grimy pipe"; pixel_y = -6},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"aV" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/decal/fakeobjects/pipe{dir = 4; name = "grimy pipe"; pixel_y = -6},/turf/simulated/wall/asteroid,/area/noGenerate)
-"aW" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "The goods inside the machine probably expired before you were even cloned."; icon = 'icons/obj/vending.dmi'; icon_state = "snack-broken"; name = "broken vending machine"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 9},/area/noGenerate)
-"aX" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 5},/area/noGenerate)
-"aY" = (/obj/storage/secure/closet/fridge{desc = "I'm sure the food in this is still good."; icon_state = "fridge"; locked = 0; name = "gross ugly and not good refrigerator"},/obj/item/reagent_containers/food/snacks/burger/moldy,/obj/item/reagent_containers/food/snacks/ingredient/gcheese,/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibmid2"; name = "gross organs"},/obj/item/reagent_containers/food/snacks/meatloaf,/turf/simulated/floor/airless/damaged3,/area/noGenerate)
-"aZ" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 10},/turf/simulated/floor/airless/carpet,/area/noGenerate)
-"ba" = (/obj/item/cigbutt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bb" = (/obj/decal/cleanable/dirt,/obj/item/coin,/obj/item/tile/steel,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bc" = (/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 4},/obj/item/casing/rifle,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 4},/area/noGenerate)
-"bd" = (/obj/decal/fakeobjects/firelock_broken{desc = "Rust has rendered this airlock useless."; icon = 'icons/misc/hstation.dmi'; icon_state = "bloodydoor"; name = "rusted airlock"},/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 4},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"be" = (/obj/decal/cleanable/blood/tracks{icon_state = "tracks"; dir = 4},/obj/decal/cleanable/blood{icon_state = "floor5"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"bf" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/gibs{icon_state = "gib4"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"bg" = (/obj/decal/cleanable/dirt,/obj/machinery/shower{icon_state = "showerhead"; dir = 4},/obj/machinery/drainage,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bh" = (/obj/rack,/obj/item/device/radio{desc = "A portable radio used to report local emergencies."; frequency = 1449; icon = 'icons/misc/worlds.dmi'; icon_state = "radio"; name = "emergency radio"},/turf/simulated/floor/airless/damaged3,/area/noGenerate)
-"bi" = (/obj/decal/cleanable/dirt,/obj/landmark/artifact,/turf/simulated/floor/airless,/area/noGenerate)
-"bj" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood{icon_state = "gibdown1"},/obj/machinery/portable_atmospherics/canister/oxygen,/turf/simulated/floor/airless,/area/noGenerate)
-"bk" = (/obj/rack,/turf/simulated/floor/airless/damaged3,/area/noGenerate)
-"bl" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "The goods inside the machine are spattered with blood."; icon = 'icons/obj/vending.dmi'; icon_state = "robust-broken"; name = "broken vending machine"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 8},/area/noGenerate)
-"bm" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/tracks,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 4},/area/noGenerate)
-"bn" = (/obj/decal/cleanable/dirt,/obj/table/auto,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "This microwave does not look well."; icon = 'icons/misc/hstation.dmi'; icon_state = "hmicro"; name = "broken microwave oven"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 10},/area/noGenerate)
-"bo" = (/obj/decal/cleanable/dirt,/obj/table/auto,/obj/item/chem_grenade/flashbang,/turf/simulated/floor/airless/carpet{icon_state = "fred2"},/area/noGenerate)
-"bp" = (/obj/decal/fakeobjects/lighttube_broken,/obj/item/extinguisher,/turf/simulated/floor/airless/damaged3,/area/noGenerate)
-"bq" = (/obj/item/casing/rifle,/obj/decal/woodclutter,/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"br" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood/gibs{icon_state = "gibmid2"},/obj/storage/crate/bin{desc = "A large bin, for trash."; name = "Trash bin"},/obj/landmark{name = "replacewith_records"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 6},/area/noGenerate)
-"bs" = (/obj/machinery/door/airlock/external,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bt" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 8},/obj/item/mousetrap/armed,/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"bu" = (/obj/machinery/door/airlock/external{icon_state = "door_locked"; locked = 1; name = "Damaged Hatch"; secondsElectrified = -1},/turf/simulated/floor/airless,/area/noGenerate)
-"bv" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/noGenerate)
-"bw" = (/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bx" = (/obj/decal/fakeobjects{anchored = 1; desc = "A vent. Cool air is gently flowing through it."; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "hvent"; name = "air vent"},/turf/simulated/floor/airless,/area/noGenerate)
-"by" = (/obj/decal/cleanable/paper,/turf/simulated/floor/airless,/area/noGenerate)
-"bz" = (/obj/decal/cleanable/dirt,/obj/machinery/door/airlock/external,/turf/simulated/floor/airless,/area/noGenerate)
-"bA" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless,/area/noGenerate)
-"bB" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/obj/decal/fakeobjects{anchored = 1; desc = "A vent. Cool air is gently flowing through it."; icon = 'icons/obj/atmospherics/pipe_vent.dmi'; icon_state = "hvent"; name = "air vent"},/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bC" = (/obj/decal/cleanable/dirt,/obj/machinery/door/airlock/external,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"bD" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"bE" = (/obj/decal/cleanable/blood/gibs{icon_state = "gibdown1"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 8},/area/noGenerate)
-"bF" = (/obj/decal/cleanable/vomit,/obj/decal/skeleton{desc = "Still has her monitor headset on..."; icon = 'icons/misc/hstation.dmi'; icon_state = "body1"; name = "decomposed corpse"; pixel_y = 12},/obj/decal/cleanable/blood,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 4},/area/noGenerate)
-"bG" = (/obj/decal/cleanable/blood{icon_state = "gib3"},/turf/simulated/wall,/area/noGenerate)
-"bH" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/obj/item/cable_coil,/obj/item/disk/data/floppy/computer3boot,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bI" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "Looks like this worked, once. Just once."; icon = 'icons/obj/vending.dmi'; icon_state = "med-off"; name = "broken equipment"},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bJ" = (/obj/decal/fakeobjects/lighttube_broken{dir = 4},/obj/decal/fakeobjects/tapedeck,/turf/simulated/floor/airless/scorched,/area/noGenerate)
-"bK" = (/obj/grille/steel,/obj/window/reinforced/north,/obj/window/reinforced/east,/obj/window/reinforced/west,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bL" = (/obj/lattice,/obj/item/raw_material/shard/glass,/turf/space,/area/noGenerate)
-"bM" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 8},/obj/decal/fakeobjects/lighttube_broken,/obj/critter/boogiebot,/turf/simulated/floor/airless/damaged3,/area/noGenerate)
-"bN" = (/obj/decal/poster/wallsign/space,/turf/simulated/wall/r_wall,/area/noGenerate)
-"bO" = (/obj/decal/fakeobjects/lighttube_broken{icon_state = "tube-broken"; dir = 8},/turf/simulated/floor/airless/engine,/area/noGenerate)
-"bP" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/engine,/area/noGenerate)
-"bQ" = (/obj/item/mine/incendiary/armed,/turf/simulated/floor/airless/engine,/area/noGenerate)
-"bR" = (/obj/decal/fakeobjects/lighttube_broken{dir = 4},/obj/item/raw_material/scrap_metal,/turf/simulated/floor/airless/engine,/area/noGenerate)
-"bS" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 8},/obj/decal/cleanable/dirt,/obj/rack,/obj/item/storage/firstaid/oxygen,/turf/simulated/floor/airless,/area/noGenerate)
-"bT" = (/obj/decal/tile_edge/stripe/extra_big{icon_state = "xtra_bigstripe-edge"; dir = 4},/obj/decal/fakeobjects/lighttube_broken,/obj/item/caution,/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"bU" = (/obj/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibhead"; name = "grody thing"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"bV" = (/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 8},/area/noGenerate)
-"bW" = (/obj/decal/cleanable/blood{icon_state = "gib4"},/obj/machinery/light/small{base_state = "radio"; brightness = 1.1; desc = "Are we live?"; dir = 2; icon_state = "radio0"; name = "sign"; pixel_x = 0; pixel_y = -6; removable_bulb = 0},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 4},/area/noGenerate)
-"bX" = (/obj/grille/steel,/obj/window/reinforced/west,/obj/window/reinforced/east,/obj/window/reinforced/north,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bY" = (/obj/stool/chair,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"bZ" = (/obj/lattice,/obj/item/cable_coil/cut,/obj/decal/fakeobjects{name = "power cable"; icon = 'icons/obj/power_cond.dmi'; icon_state = "4-8"},/turf/space,/area/noGenerate)
-"ca" = (/obj/lattice,/obj/decal/fakeobjects/lighttube_broken{dir = 1},/obj/decal/fakeobjects{name = "power cable"; icon = 'icons/obj/power_cond.dmi'; icon_state = "4-8"},/turf/space,/area/noGenerate)
-"cb" = (/obj/lattice{icon_state = "lattice-dir"; dir = 8},/obj/item/raw_material/shard/glass,/obj/decal/fakeobjects{name = "power cable"; icon = 'icons/obj/power_cond.dmi'; icon_state = "4-8"},/turf/space,/area/noGenerate)
-"cc" = (/obj/decal/cleanable/blood{icon_state = "u_ketchup_l"},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cd" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/paper,/turf/simulated/floor/airless/damaged1,/area/noGenerate)
-"ce" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects/vacuumtape,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cf" = (/obj/grille/steel,/obj/window/reinforced/south,/obj/window/reinforced/east,/obj/window/reinforced/west,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cg" = (/turf/simulated/floor/airless/engine,/area/noGenerate)
-"ch" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "The goods inside the machine probably expired before you were even born."; icon = 'icons/obj/vending.dmi'; icon_state = "coffee-broken"; name = "broken vending machine"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 8},/area/noGenerate)
-"ci" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 4},/area/noGenerate)
-"cj" = (/obj/grille/steel,/obj/window/reinforced/west,/obj/window/reinforced/east,/obj/decal/garland,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"ck" = (/obj/decal/cleanable/blood{icon_state = "floor6"},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cl" = (/obj/lattice{icon_state = "lattice-dir"; dir = 5},/obj/item/tile/steel,/turf/space,/area/noGenerate)
-"cm" = (/obj/lattice,/obj/item/cable_coil/cut{icon_state = "coil1"},/turf/space,/area/noGenerate)
-"cn" = (/obj/table/wood/auto,/obj/decal/fakeobjects{anchored = 1; desc = "This appears to be a control panel for that blast door.  It doesn't seem to work.  Maybe there is an override or something?"; icon = 'icons/obj/computer.dmi'; icon_state = "wallterm0"; name = "broken computer"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"co" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cp" = (/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cq" = (/obj/lattice,/obj/storage/closet,/obj/item/record/clown_collection/disco,/obj/item/record/clown_collection/eggshell,/obj/item/record/clown_collection/honk,/obj/item/record/clown_collection/poo,/obj/item/record/clown_collection/uguu,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cr" = (/obj/lattice{tag = "icon-lattice-dir-b (NORTHWEST)"; icon_state = "lattice-dir-b"; dir = 9},/turf/simulated/wall/asteroid,/area/noGenerate)
-"cs" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/raw_material/shard/glass,/turf/simulated/wall/asteroid,/area/noGenerate)
-"ct" = (/obj/machinery/portable_atmospherics/scrubber,/turf/simulated/floor/airless/engine,/area/noGenerate)
-"cu" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/raw_material/shard/glass,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cv" = (/obj/lattice,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cw" = (/obj/lattice{icon_state = "lattice-dir"; dir = 10},/obj/item/old_grenade/gravaton,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cx" = (/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "It's just sideways but apparently that's enough to stop it dead in its tracks."; icon = 'icons/obj/vending.dmi'; icon_state = "grife-fallen"; name = "broken vending machine"},/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 10},/area/noGenerate)
-"cy" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/carpet{icon_state = "fred2"; dir = 6},/area/noGenerate)
-"cz" = (/obj/grille/steel,/obj/window/reinforced/west,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cA" = (/obj/item/casing/shotgun_red,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cB" = (/obj/decal/cleanable/dirt,/obj/table/wood/auto,/obj/decal/cleanable/dirt,/obj/shrub/dead{dir = 8; name = "Dead plant"; pixel_y = 0},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cC" = (/obj/table/wood/auto,/obj/decal/fakeobjects{tag = "icon-offbroken (EAST)"; name = "broken computer"; desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so."; icon = 'icons/obj/computer.dmi'; icon_state = "offbroken"; dir = 4; density = 1; anchored = 1},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cD" = (/obj/stool/chair{icon_state = "chair"; dir = 8},/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cE" = (/obj/decal/skeleton{desc = "He hasn't got a leg to stand on."; dir = 4; icon = 'icons/misc/hstation.dmi'; icon_state = "body5"; name = "half corpse"; pixel_x = -10},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cF" = (/obj/decal/cleanable/dirt,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cG" = (/obj/lattice,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cH" = (/obj/decal/fakeobjects/firelock_broken{tag = "icon-bdoorbroken (EAST)"; name = "rusty blastdoor"; desc = "This blast door looks rusted over.  Junk."; icon = 'icons/obj/doors/blastdoor.dmi'; icon_state = "bdoorbroken"; dir = 4},/turf/simulated/floor/airless/engine,/area/noGenerate)
-"cI" = (/obj/decal/fakeobjects/firelock_broken{name = "rusty blastdoor"; desc = "This blast door looks rusted over.  Junk."; icon = 'icons/obj/doors/blastdoor.dmi'; icon_state = "bdoorbroken"; dir = 2},/turf/simulated/floor/airless/engine,/area/noGenerate)
-"cJ" = (/obj/decal/fakeobjects/firelock_broken{tag = "icon-bdoorbroken (SOUTHEAST)"; name = "rusty blastdoor"; desc = "This blast door looks rusted over.  Junk."; icon = 'icons/obj/doors/blastdoor.dmi'; icon_state = "bdoorbroken"; dir = 6},/turf/simulated/floor/airless/engine,/area/noGenerate)
-"cK" = (/obj/item/tile/steel,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cL" = (/obj/decal/cleanable/dirt,/obj/decal/cleanable/blood{icon_state = "u_guilty"},/obj/item/crowbar,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cM" = (/obj/decal/cleanable/blood{icon_state = "u_guilty"},/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{icon = 'icons/effects/blood.dmi'; icon_state = "gibtorso"; name = "meaty bit"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cN" = (/obj/decal/cleanable/dirt,/obj/decal/skeleton{desc = "50% of a rotten corpse."; dir = 8; icon = 'icons/misc/hstation.dmi'; icon_state = "body5"; name = "pair of legs"; pixel_x = 14},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cO" = (/obj/decal/cleanable/dirt,/obj/table/wood/auto,/obj/decal/cleanable/paper,/obj/item/paper{info = "To the management - KSOL Radio Limited <BR><BR> We hereby demand that you cease all broadcasts and relinquish control of your relay buoy. This is your final notice to vacate posted corporate space and decomission this unauthorized transmission. We eagerly await confirmation, without which we will be forced to undertake punitive measures.<BR> overn yourselves accordingly. <BR><BR> NanoTrasen Communications Oversight Committee"; name = "Paper-crumpled legal notice"},/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cP" = (/obj/decal/cleanable/dirt,/obj/table/wood/auto,/obj/decal/fakeobjects/lighttube_broken,/obj/item/cigpacket,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cQ" = (/obj/table/wood/auto,/obj/item/device/microphone,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cR" = (/obj/decal/cleanable/dirt,/obj/table/wood/auto,/obj/decal/cleanable/dirt,/obj/item/reagent_containers/food/snacks/slimjim,/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cS" = (/obj/decal/cleanable/dirt,/obj/decal/fakeobjects{anchored = 1; density = 1; desc = "Looks like this worked, once. Just once."; icon = 'icons/obj/vending.dmi'; icon_state = "med-off"; name = "broken equipment"},/turf/simulated/floor/airless/wood,/area/noGenerate)
-"cT" = (/obj/item/raw_material/scrap_metal,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cU" = (/obj/structure/girder/displaced,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cV" = (/obj/lattice,/obj/landmark{name = "replacewith_records"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"cW" = (/obj/grille/steel,/obj/window/reinforced/west,/obj/window/reinforced/north,/obj/window/reinforced/south,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cX" = (/obj/grille/steel,/obj/window/reinforced/south,/obj/item/raw_material/shard/glass,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cY" = (/obj/grille/steel,/obj/window/reinforced/north,/obj/window/reinforced/south,/obj/item/raw_material/shard/glass,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"cZ" = (/obj/grille/steel,/obj/window/reinforced/north,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"da" = (/obj/structure/girder/reinforced,/obj/window/reinforced/south,/turf/simulated/floor/airless/plating,/area/noGenerate)
-"db" = (/obj/lattice,/obj/decal/woodclutter,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"dc" = (/obj/lattice,/obj/item/raw_material/shard/glass,/obj/item/raw_material/shard/glass,/obj/item/clothing/head/helmet/NT{desc = "It looks pretty fancy."; name = "NT-S.O. Helmet"},/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"dd" = (/obj/item/tile/steel,/obj/decal/cleanable/dirt,/turf/simulated/floor/plating/airless/asteroid,/area/noGenerate)
-"de" = (/obj/decal/floatingtiles{icon_state = "floattiles4"; dir = 1},/turf/space,/area/noGenerate)
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aa" = (
+/turf/space,
+/area/space)
+"ab" = (
+/turf/space,
+/area/noGenerate)
+"ac" = (
+/obj/structure/woodwall,
+/turf/space,
+/area/noGenerate)
+"ad" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"ae" = (
+/turf/simulated/floor/airless/solar,
+/area/noGenerate)
+"af" = (
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 4;
+	intact = 0
+	},
+/area/noGenerate)
+"ag" = (
+/obj/lattice,
+/turf/space,
+/area/noGenerate)
+"ah" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"ai" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"aj" = (
+/obj/grille/catwalk,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"ak" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"al" = (
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/noGenerate)
+"am" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"an" = (
+/obj/lattice,
+/obj/cable{
+	icon_state = "4-9"
+	},
+/turf/space,
+/area/noGenerate)
+"ao" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/space,
+/area/noGenerate)
+"ap" = (
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"aq" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ar" = (
+/obj/machinery/communications_dish,
+/obj/lattice,
+/obj/cable{
+	d2 = 2;
+	icon_state = "0-2"
+	},
+/turf/space,
+/area/noGenerate)
+"as" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"at" = (
+/obj/decal/floatingtiles{
+	dir = 8;
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/noGenerate)
+"au" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles3"
+	},
+/turf/space,
+/area/noGenerate)
+"av" = (
+/obj/lattice{
+	dir = 2;
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	d1 = 1;
+	d2 = 2;
+	icon_state = "1-2"
+	},
+/turf/space,
+/area/noGenerate)
+"aw" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ax" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It appears to be a part of a very old robotic arm.";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "neutinj";
+	name = "motor"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"ay" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects{
+	desc = "What was this thing even supposed to do?";
+	icon = 'icons/obj/machines/nuclear.dmi';
+	icon_state = "engineoff";
+	name = "broken machine"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"az" = (
+/obj/grille/catwalk,
+/obj/item/breaching_charge/mining/hacked,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/noGenerate)
+"aA" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/noGenerate)
+"aB" = (
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"aC" = (
+/obj/structure/girder/reinforced,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aD" = (
+/obj/decal/cleanable/dirt,
+/obj/item/casing/rifle,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aE" = (
+/obj/grille/steel,
+/obj/window/reinforced/east,
+/obj/window/reinforced/south,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aF" = (
+/obj/lattice,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aG" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/noGenerate)
+"aH" = (
+/obj/item/raw_material/scrap_metal,
+/turf/space,
+/area/noGenerate)
+"aI" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 9
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"aJ" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/oil/streak,
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"aK" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	icon_state = "tracks"
+	},
+/obj/item/cigbutt,
+/turf/simulated/floor/airless/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"aL" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks{
+	dir = 5;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aM" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid3"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aN" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/shrub/dead{
+	dir = 1;
+	name = "Dead plant";
+	pixel_y = 15
+	},
+/obj/item/cigbutt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"aO" = (
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "An old computer that is obviously very broken.  It might actually not even be plugged in.  BROKEN.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "oldb";
+	name = "broken computer"
+	},
+/turf/simulated/floor/airless/damaged5,
+/area/noGenerate)
+"aP" = (
+/turf/simulated/wall,
+/area/noGenerate)
+"aQ" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibarm"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "u_madman_l"
+	},
+/obj/item/casing/rifle,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"aR" = (
+/obj/decal/cleanable/dirt,
+/obj/item/storage/toilet,
+/obj/item/seed/cannabis,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"aS" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"aT" = (
+/obj/lattice,
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"aU" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"aV" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4;
+	name = "grimy pipe";
+	pixel_y = -6
+	},
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"aW" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "The goods inside the machine probably expired before you were even cloned.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "snack-broken";
+	name = "broken vending machine"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 9;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"aX" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/carpet{
+	dir = 5;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"aY" = (
+/obj/storage/secure/closet/fridge{
+	desc = "I'm sure the food in this is still good.";
+	icon_state = "fridge";
+	locked = 0;
+	name = "gross ugly and not good refrigerator"
+	},
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/obj/item/reagent_containers/food/snacks/ingredient/gcheese,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibmid2";
+	name = "gross organs"
+	},
+/obj/item/reagent_containers/food/snacks/meatloaf,
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"aZ" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks{
+	dir = 10;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/carpet,
+/area/noGenerate)
+"ba" = (
+/obj/item/cigbutt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bb" = (
+/obj/decal/cleanable/dirt,
+/obj/item/coin,
+/obj/item/tile/steel,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bc" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4;
+	icon_state = "tracks"
+	},
+/obj/item/casing/rifle,
+/turf/simulated/floor/airless/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bd" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "rusted airlock"
+	},
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4;
+	icon_state = "tracks"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"be" = (
+/obj/decal/cleanable/blood/tracks{
+	dir = 4;
+	icon_state = "tracks"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "floor5"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"bf" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gib4"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"bg" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/shower{
+	dir = 4;
+	icon_state = "showerhead"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bh" = (
+/obj/rack,
+/obj/item/device/radio{
+	desc = "A portable radio used to report local emergencies.";
+	frequency = 1449;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "radio";
+	name = "emergency radio"
+	},
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"bi" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/artifact,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bj" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "gibdown1"
+	},
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bk" = (
+/obj/rack,
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"bl" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "The goods inside the machine are spattered with blood.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "robust-broken";
+	name = "broken vending machine"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bm" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/tracks,
+/turf/simulated/floor/airless/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bn" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This microwave does not look well.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "hmicro";
+	name = "broken microwave oven"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 10;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bo" = (
+/obj/decal/cleanable/dirt,
+/obj/table/auto,
+/turf/simulated/floor/airless/carpet{
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bp" = (
+/obj/decal/fakeobjects/lighttube_broken,
+/obj/item/extinguisher,
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"bq" = (
+/obj/item/casing/rifle,
+/obj/decal/woodclutter,
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"br" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibmid2"
+	},
+/obj/storage/crate/bin{
+	desc = "A large bin, for trash.";
+	name = "Trash bin"
+	},
+/obj/landmark{
+	name = "replacewith_records"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bs" = (
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/item/mousetrap/armed,
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"bu" = (
+/obj/machinery/door/airlock/external{
+	icon_state = "door_locked";
+	locked = 1;
+	name = "Damaged Hatch";
+	secondsElectrified = -1
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bv" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bw" = (
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bx" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"by" = (
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bz" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bB" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent"
+	},
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bC" = (
+/obj/decal/cleanable/dirt,
+/obj/machinery/door/airlock/external,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"bD" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"bE" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibdown1"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bF" = (
+/obj/decal/cleanable/vomit,
+/obj/decal/fakeobjects/skeleton{
+	desc = "Still has her monitor headset on...";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body1";
+	name = "decomposed corpse";
+	pixel_y = 12
+	},
+/obj/decal/cleanable/blood,
+/turf/simulated/floor/airless/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bG" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gib3"
+	},
+/turf/simulated/wall,
+/area/noGenerate)
+"bH" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/obj/item/cable_coil,
+/obj/item/disk/data/floppy/computer3boot,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bI" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Looks like this worked, once. Just once.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "med-off";
+	name = "broken equipment"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bJ" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/decal/fakeobjects/tapedeck,
+/turf/simulated/floor/airless/scorched,
+/area/noGenerate)
+"bK" = (
+/obj/grille/steel,
+/obj/window/reinforced/north,
+/obj/window/reinforced/east,
+/obj/window/reinforced/west,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bL" = (
+/obj/lattice,
+/obj/item/raw_material/shard/glass,
+/turf/space,
+/area/noGenerate)
+"bM" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/fakeobjects/lighttube_broken,
+/obj/critter/boogiebot,
+/turf/simulated/floor/airless/damaged3,
+/area/noGenerate)
+"bN" = (
+/obj/decal/poster/wallsign/space,
+/turf/simulated/wall/r_wall,
+/area/noGenerate)
+"bO" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 8;
+	icon_state = "tube-broken"
+	},
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"bP" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"bQ" = (
+/obj/item/mine/incendiary/armed,
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"bR" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"bS" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/cleanable/dirt,
+/obj/rack,
+/obj/item/storage/firstaid/oxygen,
+/turf/simulated/floor/airless,
+/area/noGenerate)
+"bT" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/obj/decal/fakeobjects/lighttube_broken,
+/obj/item/caution,
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"bU" = (
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibhead";
+	name = "grody thing"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"bV" = (
+/turf/simulated/floor/airless/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bW" = (
+/obj/decal/cleanable/blood{
+	icon_state = "gib4"
+	},
+/obj/machinery/light/small{
+	base_state = "radio";
+	brightness = 1.1;
+	desc = "Are we live?";
+	dir = 2;
+	icon_state = "radio0";
+	name = "sign";
+	pixel_x = 0;
+	pixel_y = -6;
+	removable_bulb = 0
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"bX" = (
+/obj/grille/steel,
+/obj/window/reinforced/west,
+/obj/window/reinforced/east,
+/obj/window/reinforced/north,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bY" = (
+/obj/stool/chair,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"bZ" = (
+/obj/lattice,
+/obj/item/cable_coil/cut,
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "4-8";
+	name = "power cable"
+	},
+/turf/space,
+/area/noGenerate)
+"ca" = (
+/obj/lattice,
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 1
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "4-8";
+	name = "power cable"
+	},
+/turf/space,
+/area/noGenerate)
+"cb" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/item/raw_material/shard/glass,
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "4-8";
+	name = "power cable"
+	},
+/turf/space,
+/area/noGenerate)
+"cc" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_ketchup_l"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cd" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/paper,
+/turf/simulated/floor/airless/damaged1,
+/area/noGenerate)
+"ce" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/vacuumtape,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cf" = (
+/obj/grille/steel,
+/obj/window/reinforced/south,
+/obj/window/reinforced/east,
+/obj/window/reinforced/west,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cg" = (
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"ch" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "The goods inside the machine probably expired before you were even born.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "coffee-broken";
+	name = "broken vending machine"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 8;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"ci" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/carpet{
+	dir = 4;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"cj" = (
+/obj/grille/steel,
+/obj/window/reinforced/west,
+/obj/window/reinforced/east,
+/obj/decal/garland,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"ck" = (
+/obj/decal/cleanable/blood{
+	icon_state = "floor6"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cl" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/item/tile/steel,
+/turf/space,
+/area/noGenerate)
+"cm" = (
+/obj/lattice,
+/obj/item/cable_coil/cut{
+	icon_state = "coil1"
+	},
+/turf/space,
+/area/noGenerate)
+"cn" = (
+/obj/table/wood/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "This appears to be a control panel for that blast door.  It doesn't seem to work.  Maybe there is an override or something?";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "wallterm0";
+	name = "broken computer"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"co" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cp" = (
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cq" = (
+/obj/lattice,
+/obj/storage/closet,
+/obj/item/record/clown_collection/disco,
+/obj/item/record/clown_collection/eggshell,
+/obj/item/record/clown_collection/honk,
+/obj/item/record/clown_collection/poo,
+/obj/item/record/clown_collection/uguu,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cr" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"cs" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/simulated/wall/auto/asteroid,
+/area/noGenerate)
+"ct" = (
+/obj/machinery/portable_atmospherics/scrubber,
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"cu" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/item/raw_material/shard/glass,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cv" = (
+/obj/lattice,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cw" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/item/old_grenade/graviton,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cx" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's just sideways but apparently that's enough to stop it dead in its tracks.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "grife-fallen";
+	name = "broken vending machine"
+	},
+/turf/simulated/floor/airless/carpet{
+	dir = 10;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"cy" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/carpet{
+	dir = 6;
+	icon_state = "fred2"
+	},
+/area/noGenerate)
+"cz" = (
+/obj/grille/steel,
+/obj/window/reinforced/west,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cA" = (
+/obj/item/casing/shotgun/red,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cB" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/decal/cleanable/dirt,
+/obj/shrub/dead{
+	dir = 8;
+	name = "Dead plant";
+	pixel_y = 0
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cC" = (
+/obj/table/wood/auto,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	dir = 4;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer";
+	tag = "icon-offbroken (EAST)"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cD" = (
+/obj/stool/chair{
+	dir = 8;
+	icon_state = "chair"
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cE" = (
+/obj/decal/fakeobjects/skeleton{
+	desc = "He hasn't got a leg to stand on.";
+	dir = 4;
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body5";
+	name = "half corpse";
+	pixel_x = -10
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cF" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cG" = (
+/obj/lattice,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cH" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This blast door looks rusted over.  Junk.";
+	dir = 4;
+	icon = 'icons/obj/doors/blastdoor.dmi';
+	icon_state = "bdoorbroken";
+	name = "rusty blastdoor";
+	tag = "icon-bdoorbroken (EAST)"
+	},
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"cI" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This blast door looks rusted over.  Junk.";
+	dir = 2;
+	icon = 'icons/obj/doors/blastdoor.dmi';
+	icon_state = "bdoorbroken";
+	name = "rusty blastdoor"
+	},
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"cJ" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This blast door looks rusted over.  Junk.";
+	dir = 6;
+	icon = 'icons/obj/doors/blastdoor.dmi';
+	icon_state = "bdoorbroken";
+	name = "rusty blastdoor";
+	tag = "icon-bdoorbroken (SOUTHEAST)"
+	},
+/turf/simulated/floor/airless/engine,
+/area/noGenerate)
+"cK" = (
+/obj/item/tile/steel,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cL" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/obj/item/crowbar,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cM" = (
+/obj/decal/cleanable/blood{
+	icon_state = "u_guilty"
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
+	icon = 'icons/effects/blood.dmi';
+	icon_state = "gibtorso";
+	name = "meaty bit"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cN" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects/skeleton{
+	desc = "50% of a rotten corpse.";
+	dir = 8;
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "body5";
+	name = "pair of legs";
+	pixel_x = 14
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cO" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/decal/cleanable/paper,
+/obj/item/paper{
+	info = "To the management - KSOL Radio Limited <BR><BR> We hereby demand that you cease all broadcasts and relinquish control of your relay buoy. This is your final notice to vacate posted corporate space and decomission this unauthorized transmission. We eagerly await confirmation, without which we will be forced to undertake punitive measures.<BR> overn yourselves accordingly. <BR><BR> NanoTrasen Communications Oversight Committee";
+	name = "Paper-crumpled legal notice"
+	},
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cP" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/decal/fakeobjects/lighttube_broken,
+/obj/item/cigpacket,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cQ" = (
+/obj/table/wood/auto,
+/obj/item/device/microphone,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cR" = (
+/obj/decal/cleanable/dirt,
+/obj/table/wood/auto,
+/obj/decal/cleanable/dirt,
+/obj/item/reagent_containers/food/snacks/slimjim,
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cS" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Looks like this worked, once. Just once.";
+	icon = 'icons/obj/vending.dmi';
+	icon_state = "med-off";
+	name = "broken equipment"
+	},
+/turf/simulated/floor/airless/wood,
+/area/noGenerate)
+"cT" = (
+/obj/item/raw_material/scrap_metal,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cU" = (
+/obj/structure/girder/displaced,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cV" = (
+/obj/lattice,
+/obj/landmark{
+	name = "replacewith_records"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"cW" = (
+/obj/grille/steel,
+/obj/window/reinforced/west,
+/obj/window/reinforced/north,
+/obj/window/reinforced/south,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cX" = (
+/obj/grille/steel,
+/obj/window/reinforced/south,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cY" = (
+/obj/grille/steel,
+/obj/window/reinforced/north,
+/obj/window/reinforced/south,
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"cZ" = (
+/obj/grille/steel,
+/obj/window/reinforced/north,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"da" = (
+/obj/structure/girder/reinforced,
+/obj/window/reinforced/south,
+/turf/simulated/floor/airless/plating,
+/area/noGenerate)
+"db" = (
+/obj/lattice,
+/obj/decal/woodclutter,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"dc" = (
+/obj/lattice,
+/obj/item/raw_material/shard/glass,
+/obj/item/raw_material/shard/glass,
+/obj/item/clothing/head/helmet/NT{
+	desc = "It looks pretty fancy.";
+	name = "NT-S.O. Helmet"
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"dd" = (
+/obj/item/tile/steel,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/noGenerate)
+"de" = (
+/obj/decal/floatingtiles{
+	dir = 1;
+	icon_state = "floattiles4"
+	},
+/turf/space,
+/area/noGenerate)
 
 (1,1,1) = {"
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaababababababababababababababababab
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababacadaeaeafafagababababab
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababahaeaeaeaeafacabababab
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababafafaeaeaeaiabababababababababab
-aaaaaaaaaaaaaaaaaaaaaaaaaaababababababacaeaeagaeajaeaeaeaeaeabababakab
-aaaaaaaaaaaaaaaaaaaaaaaaabababababababababalababahaeaeaeaeagababamanao
-aaaaaaaaaaaaaaaaaaaaabababababababababapafafaeaeaiabababababababababab
-aaaaaaaaaaaaaaaaaaabababababababababapapapaqaeaeahabababababarabababab
-aaaaaaaaaaaaaaaaababalabababababasasapapapapaqatahabababauabavabababab
-aaaaaaaaaaaaaaabababababababapapasapapapapawasaqahaxayazaAalakabababab
-aaaaaaaaapaaaaapabababababapasapaBaBaBaBaCaDaEaBaBaBaBaBapapababababab
-aaaaaaapapapaFapapagaGaHasasaqaBaBaIaJaKaLaMaNaOaPaQaRaBaBapapabapabab
-aaapapapaSaTaBaBaBaBaBaBaUaUaVaBaWaXaPaYaZbabbbcbdbebfbgaBapapapapabab
-aaaaapapaCaBaBbhbibjbkaBaBaBaBaBblbmaPbnbobpbqbraCaPaPaPaBapapapapapab
-aaapapapbsbtbubvbwbxbybzbAbBbCbDbEbFaPaPaCaPaCbGaCbHbIbJbKbLapapapabab
-aaapapapaBbMbNbObPbQbRbNbSbTaBbUbVbWbXbYbZcacbcccdbDcecFcfbLasapapabab
-aaapapapaCaBaBcgcgcgcgaBaBaBaBaBchcicjbDckclcmbqcncocpcqaBawapapapapab
-aaaaapapcrcsaCcgcgcgctaBcucvcwaBcxcyczcAcocBcCcDcEcpcFcGapapapapapasab
-aaaaaaapapapaBcHcIcIcJaBawcKasaBaBbDcLcMcNcOcPcQcRcScvapapapapapasabab
-aaaaaaagapapapapapawcTcUasasascVaBaBaBcWcXcYcZdaaBdbascKapapapapapabab
-aaaaaaapapapapapapaqcUasasasawapapapapapapapdcaFapddasasapapapapababab
-aaaaaaaaaaapasapapapapapascvapapapapapapapapapapapapapapapapapabababab
-aaaaaaaaaaaaaaasapapapapapapapapapapabasasasapapapapapapapapasabababaa
-aaaaaaaaaaaaaaaaaaaaapapapapapapababababapasasasapapapapabababababaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaapapaaaaaaaaaaapapapasasasasdeabababababaaaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaapapasabasababababababaaabaaaa
-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabababababababababaaaaaaaaaa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(2,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aa
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(3,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+ap
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(4,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ag
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(5,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+ap
+aS
+aC
+bs
+aB
+aC
+cr
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+aa
+"}
+(6,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ap
+aT
+aB
+bt
+bM
+aB
+cs
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+aa
+"}
+(7,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aF
+aB
+aB
+bu
+bN
+aB
+aC
+aB
+ap
+ap
+as
+aa
+aa
+aa
+aa
+aa
+"}
+(8,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ap
+ap
+aB
+bh
+bv
+bO
+cg
+cg
+cH
+ap
+ap
+ap
+as
+aa
+aa
+aa
+aa
+"}
+(9,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ap
+aB
+bi
+bw
+bP
+cg
+cg
+cI
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+aa
+"}
+(10,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ag
+aB
+bj
+bx
+bQ
+cg
+cg
+cI
+aw
+aq
+ap
+ap
+aa
+aa
+aa
+aa
+"}
+(11,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+al
+ab
+ab
+aG
+aB
+bk
+by
+bR
+cg
+ct
+cJ
+cT
+cU
+ap
+ap
+ap
+aa
+aa
+aa
+"}
+(12,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+aH
+aB
+aB
+bz
+bN
+aB
+aB
+aB
+cU
+as
+ap
+ap
+ap
+aa
+aa
+aa
+"}
+(13,1,1) = {"
+aa
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+as
+aU
+aB
+bA
+bS
+aB
+cu
+aw
+as
+as
+as
+ap
+ap
+ap
+aa
+aa
+"}
+(14,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+ap
+as
+aU
+aB
+bB
+bT
+aB
+cv
+cK
+as
+as
+cv
+ap
+ap
+ap
+aa
+aa
+"}
+(15,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ap
+as
+aq
+aV
+aB
+bC
+aB
+aB
+cw
+as
+as
+aw
+ap
+ap
+ap
+aa
+aa
+aa
+"}
+(16,1,1) = {"
+aa
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ap
+ap
+aB
+aB
+aB
+bD
+bU
+aB
+aB
+aB
+cV
+ap
+ap
+ap
+ap
+aa
+aa
+aa
+"}
+(17,1,1) = {"
+aa
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+as
+as
+aB
+aB
+aW
+bl
+bE
+bV
+ch
+cx
+aB
+aB
+ap
+ap
+ap
+ab
+aa
+aa
+aa
+"}
+(18,1,1) = {"
+aa
+aa
+ab
+ab
+ab
+ab
+ab
+ab
+as
+ap
+aB
+aI
+aX
+bm
+bF
+bW
+ci
+cy
+bD
+aB
+ap
+ap
+ap
+ab
+aa
+aa
+aa
+"}
+(19,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ap
+ap
+ap
+aB
+aJ
+aP
+aP
+aP
+bX
+cj
+cz
+cL
+aB
+ap
+ap
+ab
+ab
+aa
+aa
+aa
+"}
+(20,1,1) = {"
+ab
+ab
+ab
+af
+ac
+ab
+ap
+ap
+ap
+ap
+aB
+aK
+aY
+bn
+aP
+bY
+bD
+cA
+cM
+cW
+ap
+ap
+as
+ab
+ap
+aa
+aa
+"}
+(21,1,1) = {"
+ab
+ab
+ab
+af
+ae
+ab
+af
+ap
+ap
+ap
+aC
+aL
+aZ
+bo
+aC
+bZ
+ck
+co
+cN
+cX
+ap
+ap
+as
+ap
+ap
+ap
+aa
+"}
+(22,1,1) = {"
+ab
+ab
+ab
+ae
+ae
+al
+af
+aq
+ap
+aw
+aD
+aM
+ba
+bp
+aP
+ca
+cl
+cB
+cO
+cY
+ap
+ap
+as
+as
+ap
+ap
+ab
+"}
+(23,1,1) = {"
+ab
+ab
+ab
+ae
+ag
+ab
+ae
+ae
+aq
+as
+aE
+aN
+bb
+bq
+aC
+cb
+cm
+cC
+cP
+cZ
+dc
+ap
+ap
+as
+as
+as
+ab
+"}
+(24,1,1) = {"
+ab
+ac
+ab
+ae
+ae
+ab
+ae
+ae
+at
+aq
+aB
+aO
+bc
+br
+bG
+cc
+bq
+cD
+cQ
+da
+aF
+ap
+ap
+as
+as
+ab
+ab
+"}
+(25,1,1) = {"
+ab
+ad
+ah
+ai
+aj
+ah
+ai
+ah
+ah
+ah
+aB
+aP
+bd
+aC
+aC
+cd
+cn
+cE
+cR
+aB
+ap
+ap
+ap
+ap
+as
+as
+ab
+"}
+(26,1,1) = {"
+ab
+ae
+ae
+ab
+ae
+ae
+ab
+ab
+ab
+ax
+aB
+aQ
+be
+aP
+bH
+bD
+co
+cp
+cS
+db
+dd
+ap
+ap
+ap
+as
+ab
+ab
+"}
+(27,1,1) = {"
+ab
+ae
+ae
+ab
+ae
+ae
+ab
+ab
+ab
+ay
+aB
+aR
+bf
+aP
+bI
+ce
+cp
+cF
+cv
+as
+as
+ap
+ap
+ap
+de
+ab
+ab
+"}
+(28,1,1) = {"
+ab
+af
+ae
+ab
+ae
+ae
+ab
+ab
+ab
+az
+aB
+aB
+bg
+aP
+bJ
+cF
+cq
+cG
+ap
+cK
+as
+ap
+ap
+ap
+ab
+ab
+ab
+"}
+(29,1,1) = {"
+ab
+af
+ae
+ab
+ae
+ae
+ab
+ab
+au
+aA
+ap
+aB
+aB
+aB
+bK
+cf
+aB
+ap
+ap
+ap
+ap
+ap
+ap
+ab
+ab
+ab
+ab
+"}
+(30,1,1) = {"
+ab
+ag
+af
+ab
+ae
+ag
+ab
+ab
+ab
+al
+ap
+ap
+ap
+ap
+bL
+bL
+aw
+ap
+ap
+ap
+ap
+ap
+ap
+ab
+ab
+ab
+ab
+"}
+(31,1,1) = {"
+ab
+ab
+ac
+ab
+ab
+ab
+ab
+ar
+av
+ak
+ab
+ap
+ap
+ap
+ap
+as
+ap
+ap
+ap
+ap
+ap
+ap
+as
+ab
+ab
+ab
+aa
+"}
+(32,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+ab
+ab
+ab
+ab
+aa
+aa
+"}
+(33,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+am
+ab
+ab
+ab
+ab
+ab
+ap
+ap
+ap
+ap
+ap
+ap
+ap
+as
+ap
+ab
+ab
+ab
+ab
+aa
+ab
+aa
+"}
+(34,1,1) = {"
+ab
+ab
+ab
+ab
+ak
+an
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ap
+ab
+ab
+ap
+as
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+"}
+(35,1,1) = {"
+ab
+ab
+ab
+ab
+ab
+ao
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+ab
+aa
+aa
+aa
+aa
+aa
 "}

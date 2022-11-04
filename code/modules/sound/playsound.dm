@@ -1,4 +1,18 @@
-var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
+/// Approximate check of whether music is playing or not (radio / ad tapes / admin music all count as music here)
+/// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
+/// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
+proc/is_music_playing()
+	. = GET_COOLDOWN(global, "music")
+	if(!. && length(clients))
+		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
+		var/client/C = usr?.client || pick(clients)
+		var/list/sounds = C.SoundQuery()
+		for(var/sound/S in sounds)
+			if(S.channel == SOUNDCHANNEL_RADIO || S.channel >= SOUNDCHANNEL_ADMIN_LOW && S.channel <= SOUNDCHANNEL_ADMIN_HIGH)
+				// extend the cooldown by the length of this sound so we don't need to check SoundQuery next time
+				EXTEND_COOLDOWN(global, "music", S.len - S.offset)
+				. = TRUE
+				break
 
 /client/proc/play_sound_real(S as sound, var/vol as num, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -6,7 +20,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		return
 
 	var/admin_key = admin_key(src)
-	vol = max(min(vol, 100), 0)
+	vol = clamp(vol, 0, 100)
 
 	var/sound/uploaded_sound = new()
 	uploaded_sound.file = S
@@ -16,24 +30,25 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	uploaded_sound.priority = 254
 	uploaded_sound.channel = admin_sound_channel
 	uploaded_sound.frequency = freq
-
+	uploaded_sound.environment = -1
+	uploaded_sound.echo = -1
 	if (!vol)
 		return
 
-	logTheThing("admin", src, null, "played sound [S]")
-	logTheThing("diary", src, null, "played sound [S]", "admin")
+	logTheThing(LOG_ADMIN, src, "played sound [S]")
+	logTheThing(LOG_DIARY, src, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/client/C in clients)
 			C.sound_playing[ admin_sound_channel ][1] = vol
 			C.sound_playing[ admin_sound_channel ][2] = VOLUME_CHANNEL_ADMIN
-			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN )
+			uploaded_sound.volume = vol * C.getVolume( VOLUME_CHANNEL_ADMIN ) / 100
 			C << uploaded_sound
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [uploaded_sound.channel]")
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span style=\"color:blue\">[S]</span>")
-		move_admin_sound_channel()
+				boutput(C, "<span class=\"medal\"><b>[admin_key] played:</b></span> <span class='notice'>[S]</span>")
+		dj_panel.move_admin_sound_channel()
 
 /client/proc/play_music_real(S as sound, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -45,20 +60,22 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.wait = 0
 	music_sound.repeat = 0
 	music_sound.priority = 254
-	music_sound.channel = admin_sound_channel //having this set to 999 removed layering music functionality -ZeWaka
+	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
 		music_sound.frequency = freq
+	music_sound.environment = -1
+	music_sound.echo = -1
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		var/admin_key = admin_key(src)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
 			var/client_vol = C.getVolume(VOLUME_CHANNEL_ADMIN)
 
 			if (src.djmode || src.non_admin_dj)
-				boutput(C, "<span class=\"medal\"><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span style=\"color:blue\">[S]</span>")
+				boutput(C, "<span class=\"medal\"><b>[admin_key] played (your volume: [client_vol ? "[client_vol]" : "muted"]):</b></span> <span class='notice'>[S]</span>")
 
 			if (!client_vol)
 				continue
@@ -68,12 +85,18 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			music_sound.volume = client_vol
 			C << music_sound
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (src && !(src.stealth && !src.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
-		move_admin_sound_channel()
-	logTheThing("admin", src, null, "started loading music [S]")
-	logTheThing("diary", src, null, "started loading music [S]", "admin")
+		dj_panel.move_admin_sound_channel()
+	logTheThing(LOG_ADMIN, src, "started loading music [S]")
+	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -82,8 +105,9 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.repeat = 0
 	music_sound.priority = 254
 	music_sound.channel = 1013 // This probably works?
-
-	SPAWN_DBG(0)
+	music_sound.environment = -1
+	music_sound.echo = -1
+	SPAWN(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
 			C.verbs += /client/verb/stop_the_radio
@@ -100,9 +124,12 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			boutput(C, "Now playing radio tunes. <a href='byond://winset?command=Stop-the-Radio!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [client_vol]")
 
-	logTheThing("admin", src, null, "started loading music [soundPath], by the name of: [name]")
-	logTheThing("diary", src, null, "started loading music [soundPath], by the name of: [name]", "admin")
+	logTheThing(LOG_ADMIN, src, "started loading music [soundPath], by the name of: [name]")
+	logTheThing(LOG_DIARY, src, "started loading music [soundPath], by the name of: [name]", "admin")
 	message_admins("[key_name(src)] started loading music [soundPath], by the name of: [name]")
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /proc/play_music_remote(data)
@@ -115,7 +142,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		if (C.key == data["key"])
 			adminC = C
 
-	SPAWN_DBG(0)
+	SPAWN(0)
 		for (var/client/C in clients)
 			LAGCHECK(LAG_LOW)
 			C.verbs += /client/verb/stop_the_music
@@ -128,103 +155,45 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 				var/show_other_key = 0
 				if (adminC.stealth || adminC.alt_key)
 					show_other_key = 1
-				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span style=\"color:blue\">[data["title"]] ([data["duration"]])</span>")
+				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
 
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
 
 			C.chatOutput.playMusic(data["file"], vol)
-			boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
+			if (!adminC || !(adminC.stealth && !adminC.fakekey))
+				// Stealthed admins won't show the "now playing music" message,
+				// for added ability to be spooky.
+				boutput(C, "Now playing music. <a href='byond://winset?command=Stop-the-Music!'>Stop music</a>")
 
 
 	if (adminC)
-		logTheThing("admin", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
 		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	else
-		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(data["key"])] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		logTheThing(LOG_ADMIN, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
-/mob/verb/adminmusicvolume()
-	set name = "Alter Music Volume"
-	set desc = "Alter admin music volume, default is 50"
-	set hidden = 1
-
-	if (!usr.client) //How could this even happen?
-		return
-
-	var/vol = input("Goes from 0-100. Default is 50", "Admin Music Volume", usr.client.getRealVolume(VOLUME_CHANNEL_ADMIN) * 100) as num
-	vol = max(0,min(vol,100))
-	//usr.client.preferences.admin_music_volume = vol
-	usr.client.setVolume( VOLUME_CHANNEL_ADMIN, vol/100 )
-	boutput(usr, "<span style=\"color:blue\">You have changed Admin Music Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
-
-/mob/verb/radiomusicvolume()
-	set name = "Alter Radio Volume"
-	set desc = "Alter radio music volume, default is 50"
-	set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 50", "Radio Music Volume", usr.client.getRealVolume(VOLUME_CHANNEL_RADIO) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_RADIO, vol/100 )
-	boutput(usr, "<span style=\"color:blue\">You have changed Radio Music Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
-
-/mob/verb/gamevolume()
-	set name = "Alter Game Volume"
-	set desc = "Alter game volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Game Volume", usr.client.getRealVolume(VOLUME_CHANNEL_GAME) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_GAME, vol/100 )
-	boutput(usr, "<span style=\"color:blue\">You have changed Game Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
-
-/mob/verb/ambiencevolume()
-	set name = "Alter Ambience Volume"
-	set desc = "Alter ambience volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getRealVolume(VOLUME_CHANNEL_AMBIENT) * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_AMBIENT, vol/100 )
-	boutput(usr, "<span style=\"color:blue\">You have changed Ambience Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
-
-
-/mob/verb/mastervolume()
-	set name = "Alter Master Volume"
-	set desc = "Alter master volume, default is 100"
-	//set hidden = 1
-
-	if (!usr.client)
-		return
-
-	var/vol = input("Goes from 0-100. Default is 100", "Ambience Volume", usr.client.getMasterVolume() * 100) as num
-	vol = max(0,min(vol,100))
-	usr.client.setVolume( VOLUME_CHANNEL_MASTER, vol/100 )
-	boutput(usr, "<span style=\"color:blue\">You have changed Master Volume to [vol]. Note that this setting <b>WILL</b> save regardless of if you manually do so in Character Preferences.</span>")
-
-
-
-
+/client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
+	var/channel_id = audio_channel_name_to_id[channel_name]
+	if(isnull(channel_id))
+		alert(usr, "Invalid channel.")
+	var/vol = input("Goes from 0-100. Default is [getDefaultVolume(channel_id) * 100]\n[src.getVolumeChannelDescription(channel_id)]", \
+	 "[capitalize(channel_name)] Volume", src.getRealVolume(channel_id) * 100) as num
+	vol = clamp(vol, 0, 100)
+	src.setVolume(channel_id, vol/100 )
+	boutput(usr, "<span class='notice'>You have changed [channel_name] Volume to [vol].</span>")
 
 // for giving non-admins the ability to play music
 /client/proc/non_admin_dj(S as sound)
-	set category = "Special Verbs"
+	set category = "Commands"
 	set name = "Play Music"
 
 	if (src.play_music_real(S))
-		boutput(src, "<span style=\"color:blue\">Loading music [S]...</span>")
+		boutput(src, "<span class='notice'>Loading music [S]...</span>")
 
 /client/verb/stop_the_music()
 	set category = "Commands"
@@ -238,11 +207,9 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
 	for (var/i = 1 to 10)
-		//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 		stopsound.channel = mute_channel
 		src << 	stopsound
 		mute_channel ++
-	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 
 /client/verb/stop_the_radio()
 	set category = "Commands"
@@ -260,7 +227,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	stopsound.channel = mute_channel
 	src << 	stopsound
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.verbs += /client/verb/stop_the_radio
 
 /client/verb/stop_all_sounds()
@@ -279,32 +246,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 		src << s
 
 	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
-	SPAWN_DBG(5 SECONDS)
+	SPAWN(5 SECONDS)
 		src.verbs += /client/verb/stop_all_sounds
-
-/proc/move_admin_sound_channel(var/opposite = 0)
-	if (opposite)
-		if (admin_sound_channel > 1014)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel--
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1014, set it bring it up 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1024
-			admin_dj.SetVar("admin_channel", 1024)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-	else
-		if (admin_sound_channel < 1024)
-			//DEBUG_MESSAGE("Increasing admin_sound_channel from [admin_sound_channel] to [(admin_sound_channel+1)]")
-			admin_sound_channel++
-			admin_dj.SetVar("admin_channel", admin_sound_channel)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
-		else //At 1024, set it back down 10.
-			//DEBUG_MESSAGE("Resetting admin_sound_channel from [admin_sound_channel]")
-			admin_sound_channel = 1014
-			admin_dj.SetVar("admin_channel", 1014)
-			//DEBUG_MESSAGE("admin_sound_channel now [admin_sound_channel]")
 
 /client/proc/play_youtube_audio()
 	if (!config.youtube_audio_key)
@@ -315,29 +258,25 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!video)
 		return
 
-	var/url = "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]"
-	var/response[] = world.Export(url)
-	if (!response)
-		boutput(src, "<span class='bold' style=\"color:blue\">Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
+	// Fetch via HTTP from goonhub
+	var/datum/http_request/request = new()
+	request.prepare(RUSTG_HTTP_METHOD_GET, "http://yt.goonhub.com/index.php?server=[config.server_id]&key=[src.key]&video=[video]&auth=[config.youtube_audio_key]", "", "")
+	request.begin_async()
+	UNTIL(request.is_complete())
+	var/datum/http_response/response = request.into_response()
+
+	if (response.errored || !response.body)
+		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
+		logTheThing(LOG_DEBUG, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
+		logTheThing(LOG_DIARY, null, "Youtube Error: No response from server with video: [video]", "debug")
 		return
 
-	var/key
-	var/contentExists = 0
-	for (key in response)
-		if (key == "CONTENT")
-			contentExists = 1
-
-	if (!contentExists)
-		boutput(src, "<span class='bold' style=\"color:blue\">Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: Malformed response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: Malformed response from server with video: [video]", "debug")
-		return
-
-	var/data = json_decode(file2text(response["CONTENT"]))
+	var/data = json_decode(response.body)
 	if (data["error"])
-		boutput(src, "<span class='bold' style=\"color:blue\">Error returned from youtube server thing: [data["error"]].</span>")
+		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return
 
-	boutput(src, "<span class='bold' style=\"color:blue\">Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
+
+	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")

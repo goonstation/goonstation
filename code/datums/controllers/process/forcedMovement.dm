@@ -6,52 +6,38 @@ proc/BeginSpacePush(var/atom/movable/A)
 		A.temp_flags |= SPACE_PUSHING
 
 proc/EndSpacePush(var/atom/movable/A)
+	if(ismob(A))
+		var/mob/M = A
+		M.inertia_dir = 0
 	spacePushList -= A
 	A.temp_flags &= ~SPACE_PUSHING
 
-datum/controller/process/fMove
+/// Controls forced movements
+/datum/controller/process/fMove
 	var/list/debugPushList = null //Remove this on release.
-
-	// mbc : replaced with IMMUNE_MANTA_PUSH flag. faster.
-	/*
-	var/list/pushBlacklist = list(
-		/obj/fluid,
-		/obj/fluid_spawner,
-		/obj/effect,
-		/obj/overlay,
-		/obj/particle,
-		/obj/torpedo,
-		/obj/torpedo_targeter,
-		/obj/machinery/vehicle/tank/minisub,
-		/obj/machinery/nuclearbomb,
-		/mob/living/intangible,
-		/mob/dead,
-		/mob/wraith,
-	)*/
 
 	setup()
 		name = "Forced movement"
-		schedule_interval = 5
+		schedule_interval = 0.5 SECONDS
 
 	doWork()
 		//space first :)
-		for(var/A in spacePushList)
-			var/atom/movable/M = A
+		for (var/atom/movable/M as anything in spacePushList)
 			if(!M)
 				continue
 
-			var/turf/T = get_turf(M)
-			if (T && (!(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited) || T != M.loc)) //ZeWaka: Added T null check re: (forcedMovement.dm,44: Cannot read null.turf_flags)
+			var/turf/T = M.loc
+			if (!istype(T) || (!(T.turf_flags & CAN_BE_SPACE_SAMPLE || T.throw_unlimited) || T != M.loc) && !M.no_gravity)
 				EndSpacePush(M)
 				continue
 
 			if (ismob(M))
 				var/mob/tmob = M
-				if(tmob.client && tmob.client.flying)
+				if(tmob.client && tmob.client.flying || (ismob(tmob) && HAS_ATOM_PROPERTY(tmob, PROP_MOB_NOCLIP)))
 					EndSpacePush(M)
 					continue
 
-				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE)
+				if (T && T.turf_flags & CAN_BE_SPACE_SAMPLE || M.no_gravity)
 					var/prob_slip = 5
 
 					if (tmob.hasStatus("handcuffed"))
@@ -61,15 +47,15 @@ datum/controller/process/fMove
 						prob_slip = 100
 
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move)
+						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							if (!( tmob.l_hand ))
 								prob_slip -= 3
-							else if (tmob.l_hand.w_class <= 2)
+							else if (tmob.l_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							if (!( tmob.r_hand ))
 								prob_slip -= 2
-							else if (tmob.r_hand.w_class <= 2)
+							else if (tmob.r_hand.w_class <= W_CLASS_SMALL)
 								prob_slip -= 1
 
 							break
@@ -77,7 +63,7 @@ datum/controller/process/fMove
 					prob_slip = round(prob_slip)
 					if (prob_slip < 5) //next to something, but they might slip off
 						if (prob(prob_slip) )
-							boutput(tmob, "<span style=\"color:blue\"><B>You slipped!</B></span>")
+							boutput(tmob, "<span class='notice'><B>You slipped!</B></span>")
 							tmob.inertia_dir = tmob.last_move
 							step(tmob, tmob.inertia_dir)
 							continue
@@ -88,7 +74,7 @@ datum/controller/process/fMove
 				else
 					var/end = 0
 					for (var/atom/AA in oview(1,tmob))
-						if (AA.stops_space_move)
+						if (AA.stops_space_move && (!M.no_gravity || !isfloor(AA)))
 							end = 1
 							break
 					if (end)
@@ -97,7 +83,7 @@ datum/controller/process/fMove
 
 
 				if (M && !( M.anchored ) && !(M.flags & NODRIFT))
-					if (! (world.timeofday > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
+					if (! (TIME > (tmob.l_move_time + schedule_interval)) ) //we need to stand still for 5 realtime ticks before space starts pushing us!
 						continue
 
 					var/pre_inertia_loc = M.loc
@@ -109,7 +95,7 @@ datum/controller/process/fMove
 					if(tmob.inertia_dir) //they keep moving the same direction
 						var/original_dir = tmob.dir
 						step(tmob, tmob.inertia_dir)
-						tmob.dir = original_dir
+						tmob.set_dir(original_dir)
 					else
 						tmob.inertia_dir = tmob.last_move
 						step(tmob, tmob.inertia_dir)
@@ -134,6 +120,9 @@ datum/controller/process/fMove
 				EndSpacePush(M)
 				continue
 
+			if(M.loc == T) // we didn't move, probably hit something
+				EndSpacePush(M)
+				continue
 
 
 
@@ -145,9 +134,8 @@ datum/controller/process/fMove
 
 		//now manta!
 		debugPushList = mantaPushList
-		if(mantaMoving)
-			for(var/A in mantaPushList)
-				var/atom/movable/M = A
+		if(mantaMoving == 1)
+			for (var/atom/movable/M as anything in mantaPushList)
 				if(!M)
 					continue
 
@@ -161,12 +149,12 @@ datum/controller/process/fMove
 				if(M.throwing)
 					continue
 
-				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
+				if ((M.event_handler_flags & IMMUNE_MANTA_PUSH || M.anchored || M.throwing) && !istype(M,/obj/decal)) //mbc : decal is here for blood cleanables, consider somehow optimizing or adjusting later
 					continue
 
 				if(ismob(M))
 					var/mob/B = M
-					if(B.client && B.client.flying)
+					if(B.client && B.client.flying || (ismob(B) && HAS_ATOM_PROPERTY(B, PROP_MOB_NOCLIP)))
 						continue
 
 					if (ishuman(B))
@@ -177,7 +165,10 @@ datum/controller/process/fMove
 								if(J.allow_thrust(0.01, H))
 									continue
 
-					M.setStatus("slowed", 20, 20)
+					if (isghostdrone(B) && MagneticTether)
+						continue
+
+					M.setStatus("slowed", 2 SECONDS, 20)
 
 				if(!step(M, SOUTH))
 					var/dirMod = pick(1, -1)
@@ -186,4 +177,4 @@ datum/controller/process/fMove
 		return
 
 	tickDetail()
-		return "Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects."
+		boutput(usr, "<b>ForcedMovement:</b> Managing [mantaPushList.len] mantapush objects and [spacePushList.len] spacepush objects")

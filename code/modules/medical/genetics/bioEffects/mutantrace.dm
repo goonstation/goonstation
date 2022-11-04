@@ -3,7 +3,8 @@
 	desc = "Enables vestigal non-mammal traits in the subject's body."
 	id = "lizard"
 	mutantrace_option = "Lizard"
-	effectType = effectTypeMutantRace
+	effectType = EFFECT_TYPE_MUTANTRACE
+	effect_group = "mutantrace"
 	probability = 33
 	msgGain = "Your skin feels oddly dry."
 	msgLose = "Your scales fall off."
@@ -25,8 +26,8 @@
 				// clear away any existing mutantraces first
 				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/mutantrace) && ID != src.id)
 					H.bioHolder.RemoveEffect(ID)
-			H.set_mutantrace(src.mutantrace_path)
-		return
+			if (!istype(H.mutantrace, src.mutantrace_path))
+				H.set_mutantrace(src.mutantrace_path)
 
 	OnRemove()
 		..()
@@ -34,7 +35,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (istype(H.mutantrace,src.mutantrace_path))
 				H.set_mutantrace(null)
-		return
 
 	OnLife()
 		if(..()) return
@@ -42,7 +42,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (!istype(H.mutantrace, src.mutantrace_path))
 				holder.RemoveEffect(id)
-		return
 
 /datum/bioEffect/mutantrace/flashy
 	name = "Bioluminescent Overdrive"
@@ -54,16 +53,6 @@
 	msgLose = "Your flashy glow fades away."
 	icon_state  = "flashy"
 
-/datum/bioEffect/mutantrace/blank
-	name = "Melanin Eraser"
-	desc = "Shuts down all melanin production in subject's body, and eradicates all existing melanin."
-	id = "blankman"
-	mutantrace_option = "Blank"
-	mutantrace_path = /datum/mutantrace/blank
-	msgGain = "You feel oddly plain."
-	msgLose = "You don't feel boring anymore."
-	icon_state  = "blank"
-
 /datum/bioEffect/mutantrace/skeleton
 	name = "Ossification"
 	desc = "Compacts the subject's living tissues into their skeleton. This is somehow not fatal."
@@ -73,6 +62,7 @@
 	msgGain = "You feel kinda thin."
 	msgLose = "You've put on a bit more weight."
 	icon_state  = "skeleton"
+	isBad = 1
 
 /datum/bioEffect/mutantrace/ithillid
 	name = "Aquatic Genetics"
@@ -83,21 +73,6 @@
 	msgGain = "You feel wet and squishy."
 	msgLose = "You feel dry."
 	icon_state  = "squid"
-
-	OnAdd()
-		if (ishuman(owner))
-			overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "squidhead", layer = MOB_HAIR_LAYER2)
-		..()
-
-/datum/bioEffect/mutantrace/dwarf
-	name = "Dwarfism"
-	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
-	id = "dwarf"
-	mutantrace_option = "Dwarf"
-	mutantrace_path = /datum/mutantrace/dwarf
-	msgGain = "Did everything just get bigger?"
-	msgLose = "You feel tall!"
-	icon_state  = "dwarf"
 
 /datum/bioEffect/mutantrace/roach
 	name = "Blattodean Genetics"
@@ -115,7 +90,7 @@
 	id = "monkey"
 	mutantrace_option = "Monkey"
 	mutantrace_path = /datum/mutantrace/monkey
-	research_level = 3
+	research_level = EFFECT_RESEARCH_ACTIVATED
 	msgGain = "You go bananas!"
 	msgLose = "You do the evolution."
 	icon_state  = "monkey"
@@ -154,7 +129,7 @@
 	can_scramble = 0
 	curable_by_mutadone = 0
 	reclaim_fail = 100
-	stability_loss = 25
+	stability_loss = 50 //nya~~ *gurgle*
 	mutantrace_option = "Cat"
 	mutantrace_path = /datum/mutantrace/cat
 	msgGain = "You feel especially hairy."
@@ -171,3 +146,34 @@
 	msgGain = "You feel like you're ready for some Cow RP."
 	msgLose = "Your udders fall off!"
 	icon_state  = "cow"
+
+/datum/bioEffect/mutantrace/pug
+	name = "Canine Genetics"
+	desc = "The subject takes on the appearance of a fluffy pug."
+	id = "pug"
+	mutantrace_option = "Pug"
+	mutantrace_path = /datum/mutantrace/pug
+	occur_in_genepools = FALSE
+	scanner_visibility = FALSE
+	msgGain = "You feel like barking up the wrong tree."
+	msgLose = "Dog treats no longer look appealing."
+	icon_state  = "pug"
+
+/datum/bioEffect/mutantrace/chicken
+	name = "Experimental Strain Epsilon Gamma Gamma #5"
+	desc = "For exclusive use under the supervision of Dr. Cox MD. Unauthorized modification, replication, and distribution prohibited."
+	id = "chicken"
+	mutantrace_option = "Chicken"
+	mutantrace_path = /datum/mutantrace/chicken
+	msgGain = "bwah...bwah..bwah...BWAHCAWCK!"
+	msgLose = "Well that clucks."
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	reclaim_fail = 100

@@ -27,42 +27,35 @@
 //deathbutton to deathbutton.dm
 
 /*
- *	HALLOWEEN LANDMARK
- */
-/obj/landmark/halloween
-	name = "halloween spawn"
-
-	New()
-		..()
-		if(istype(src.loc, /turf))
-			halloweenspawn.Add(src.loc)
-		qdel(src)
-
-/*
  *	DEATH PLAQUE
  */
 
 /obj/joeq/spooky
 	name = "Memorial Plaque"
 
-	examine()
-		set src in view()
-		boutput(usr, "Here lies [usr:real_name]. Loved by all. R.I.P.")
-		return
+	examine(mob/user)
+		boutput(user, "Here lies [user.real_name]. Loved by all. R.I.P.")
 
 /*
  *	Spooky TOMBSTONE.  It is a tombstone.
  */
 
 /obj/tombstone
-	name = "Tombstone"
-	desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP."
+	name = "tombstone"
+	//desc = "Here lies Tango N. Vectif, killed by a circus bear.  RIP." // changing for spawnability
+	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
 	anchored = 1
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
+
+	memorial
+		name = "memorial marker"
+		desc = "Rest in peace."
+		icon = 'icons/misc/halloween.dmi'
+		icon_state = "memorial"
 
 /*
  *	Some sort of bizarre mind gizmo!
@@ -80,18 +73,18 @@
 	var/teleport_next_switch = 0 //Should we hop somewhere else next switch?
 
 	attack_ai(mob/user as mob)
-		if(get_dist(src, user) <= 1)
+		if(BOUNDS_DIST(src, user) == 0)
 			return attack_hand(user)
 		else
 			boutput(user, "This jukebox is too old to be controlled remotely.")
 		return
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		//This dude is no Fonz
 		if (user.a_intent == "harm")
 			user.visible_message("<span class='combat'><b>[user]</b> punches the [src]!</span>","You punch the [src].  Your hand hurts.")
-			playsound(src.loc, pick('sound/impact_sounds/Generic_Punch_2.ogg','sound/impact_sounds/Generic_Punch_3.ogg','sound/impact_sounds/Generic_Punch_4.ogg','sound/impact_sounds/Generic_Punch_5.ogg'), 100, 1)
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, rand(1, 4))
+			playsound(src.loc, pick(sounds_punch), 100, 1)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, rand(1, 4))
 			return
 		else
 			src.visible_message("<b>[user]</b> thumps the [src]!  Ayy!")
@@ -105,14 +98,14 @@
 		return
 
 	proc/mindswap()
-		src.visible_message("<span style=\"color:red\">The [src] activates!</span>")
-		playsound(src.loc,"sound/effects/ghost2.ogg", 100, 1)
+		src.visible_message("<span class='alert'>The [src] activates!</span>")
+		playsound(src.loc, 'sound/effects/ghost2.ogg', 100, 1)
 
 		var/list/transfer_targets = list()
 		for(var/mob/living/M in view(6))
 			if(M.loc == src) continue //Don't add the jerk trapped souls.
 			if(M.key) //Okay cool, we have a player to transfer.
-				var/mob/living/carbon/wall/holder = new
+				var/mob/living/holder = new
 				holder.set_loc(src)
 				if(M.mind)
 					M.mind.transfer_to(holder)
@@ -175,10 +168,10 @@
 		return
 
 	proc/telehop()
-		var/turf/T = pick(blobstart)
+		var/turf/T = pick_landmark(LANDMARK_BLOBSTART)
 		if(T)
-			src.visible_message("<span style=\"color:red\">[src] disappears!</span>")
-			playsound(src.loc,"sound/effects/singsuck.ogg", 100, 1)
+			src.visible_message("<span class='alert'>[src] disappears!</span>")
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 100, 1)
 			src.set_loc(T)
 		return
 
@@ -198,13 +191,11 @@
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "beaker0"
 	item_state = "beaker"
+	initial_volume = 50
 
 	New()
-		..() // CALL YOUR GODDAMN PARENTS GODDAMNIT JESUS FUCKING CHRIST
-		var/datum/reagents/R = new/datum/reagents(50)
-		reagents = R
-		R.my_atom = src
-		R.add_reagent("strange_reagent", 50)
+		..()
+		reagents.add_reagent("strange_reagent", 50)
 
 /obj/item/storage/secure/ssafe/hjam
 	name = "Gun Storage"
@@ -284,192 +275,40 @@
 		src.root.add_file( new /datum/computer/file/text/outpost_rlog_2(src))
 		//src.root.add_file( new /datum/computer/file/text/hjam_rlog_3(src))
 
-//Haunted camera. It's also broken.
-/*
-/obj/item/camera_test/haunted
+//Haunted camera. Steals people's souls.
+/obj/item/camera/haunted
 	name = "rusty camera"
-
-
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
-		if (!can_use || !pictures_left || ismob(target.loc)) return
-
-		var/turf/the_turf = get_turf(target)
-
-		var/icon/photo = icon('icons/obj/items/items.dmi',"photo")
-
-		var/icon/turficon = build_composite_icon(the_turf)
-		turficon.Scale(22,20)
-
-		photo.Blend(turficon,ICON_OVERLAY,6,8)
-
-		var/mob_title = null
-		var/mob_detail = null
-
-		var/item_title = null
-		var/item_detail = null
-
-		var/list/cursed_mobs = list()
-		var/list/ignore_statues = list()
-
-		var/itemnumber = 0
-		for(var/atom/A in the_turf)
-			if(A.invisibility || istype(A, /obj/overlay/tile_effect)) continue
-			if(A in ignore_statues) continue
-			if(ismob(A))
-				var/icon/X = build_composite_icon(A)
-				X.Scale(22,20)
-				photo.Blend(X,ICON_OVERLAY,6,8)
-				qdel(X)
-
-				if(!mob_title)
-					mob_title = "[A]"
-				else
-					mob_title += " and [A]"
-
-				var/mob/living/M = A
-				if(istype(M) && M.key) //This poor bozo is going into a photo.
-					var/mob/living/carbon/wall/halloween/holder = new
-					holder.set_loc(src)
-					holder.oldbody = M
-					if(M.mind)
-						M.mind.transfer_to(holder)
-					else
-						holder.key = M.key
-
-					holder.name = "Trapped Soul"
-					holder.real_name = holder.name
-					cursed_mobs += holder
-
-					blink(M)
-
-					//Some cockatrice action
-					var/obj/overlay/stoneman = new /obj/overlay(M.loc)
-					ignore_statues += stoneman
-					M.set_loc(stoneman)
-					stoneman.name = "statue of [M.name]"
-					stoneman.desc = "A really dumb looking statue. Very well carved, though."
-					stoneman.anchored = 0
-					stoneman.set_density(1)
-					stoneman.layer = MOB_LAYER
-
-					var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-					for(var/O in M.overlays)
-						var/image/I = O
-						composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
-					composite.ColorTone( rgb(188,188,188) )
-					stoneman.icon = composite
-
-				if(!mob_detail)
-
-					var/holding = null
-					if(iscarbon(A))
-						var/mob/living/carbon/temp = A
-						if(temp.l_hand || temp.r_hand)
-							if(temp.l_hand) holding = "They are holding \a [temp.l_hand]"
-							if(temp.r_hand)
-								if(holding)
-									holding += " and \a [temp.r_hand]."
-								else
-									holding = "They are holding \a [temp.r_hand]."
-
-					if(!mob_detail)
-						mob_detail = "You can see [A] on the photo - They seem to be screaming."
-					else
-						mob_detail += "You can also see [A] on the photo - They seem to be screaming"
-
-			else
-				if(itemnumber < 5)
-					var/icon/X = build_composite_icon(A)
-					X.Scale(22,20)
-					photo.Blend(X,ICON_OVERLAY,6,8)
-					qdel(X)
-					itemnumber++
-
-					if(!item_title)
-						item_title = " \a [A]"
-					else
-						item_title = " some objects"
-
-					if(!item_detail)
-						item_detail = "\a [A]"
-					else
-						item_detail += " and \a [A]"
-
-		var/finished_title = null
-		var/finished_detail = null
-
-		if(!item_title && !mob_title)
-			finished_title = "boring photo"
-			finished_detail = "This is a pretty boring photo of \a [the_turf]."
-		else
-			if(mob_title)
-				finished_title = "photo of [mob_title][item_title ? " and[item_title]":""]"
-				finished_detail = "[mob_detail][item_detail ? " Theres also [item_detail].":"."]"
-			else if(item_title)
-				finished_title = "photo of[item_title]"
-				finished_detail = "You can see [item_detail]"
-
-		var/obj/item/photo/haunted/P = new/obj/item/photo/haunted( get_turf(src) )
-
-		P.icon = photo
-		P.name = finished_title
-		P.desc = finished_detail
-		if(cursed_mobs.len)
-			for(var/mob/cursed in cursed_mobs)
-				cursed.set_loc(P)
-
-		playsound(src.loc, pick('sound/items/polaroid1.ogg','sound/items/polaroid2.ogg'), 75, 1, -3)
-
-		pictures_left--
-		if(pictures_left <= 0)
-			pictures_left = initial(src.pictures_left)
-		src.desc = "A one use - polaroid camera. [pictures_left] photos left."
-		boutput(user, "<span style=\"color:blue\">[pictures_left] photos left.</span>")
-		can_use = 0
-		SPAWN_DBG(5 SECONDS) can_use = 1
-*/
-
-/mob/living/carbon/wall/halloween
-	var/mob/oldbody = null
-
-/mob/living/carbon/wall/horror
-	say_quote(var/text)
-		if(src.emote_allowed)
-			if(!(src.client && src.client.holder))
-				src.emote_allowed = 0
-
-			if(src.gender == MALE) playsound(get_turf(src), "sound/voice/screams/male_scream.ogg", 100, 0, 0, 0.91)
-			else playsound(get_turf(src), "sound/voice/screams/female_scream.ogg", 100, 0, 0, 0.9)
-			SPAWN_DBG(5 SECONDS)
-				src.emote_allowed = 1
-			return "screams!"
-		else
-			return pick("gurgles.","shivers.","twitches.","shakes.","squirms.", "cries.")
+	pictures_left = -1 // halloween magic doesn't need photos
+	steals_souls = TRUE
 
 /obj/item/photo/haunted
+	var/list/mob/old_bodies = list()
+
 	attack_self(mob/user as mob)
 		user.visible_message("<span class='combat'>[user] tears the photo to shreds!</span>","<span class='combat'>You tear the photo to shreds!</span>")
 		qdel(src)
 		return
 
 	disposing()
-		for(var/mob/living/carbon/wall/halloween/W in src)
-			if(W.oldbody && !W.oldbody.key)
-				if(W.mind)
-					W.mind.transfer_to(W.oldbody)
+		for(var/mob/living/M in src)
+			if(M.mind && M.key)
+				if(old_bodies[M.key] && !(old_bodies[M.key].disposed) && !(old_bodies[M.key].key))
+					M.mind.transfer_to(old_bodies[M.key])
 				else
-					W.oldbody.key = W.key
+					M.ghostize()
+			qdel(M)
+		. = ..()
 
-				var/obj/overlay/shell = W.oldbody.loc
-				if(istype(shell))
-					W.oldbody.set_loc(get_turf(W.oldbody))
-					qdel(shell)
+	proc/add_soul(var/mob/victim)
+		if(!(victim.mind) || !(victim.key))
+			return
 
-
-			W.gib()
-
-		..()
-		return
+		old_bodies[victim.key] = victim
+		var/mob/living/holder = new
+		holder.set_loc(src)
+		victim.mind.transfer_to(holder)
+		holder.name = victim.name
+		holder.real_name = victim.real_name
 
 //Haunted television
 /obj/haunted_television
@@ -480,18 +319,17 @@
 	anchored = 1
 	density = 1
 
-	attack_hand(mob/user as mob)
+	attack_hand(mob/user)
 		boutput(user, "<span class='combat'>The knobs are fixed in place.  Might as well sit back and watch, I guess?</span>")
 
-	examine()
-		set src in oview()
-		if (ishuman(usr) && !usr.stat)
-			var/mob/living/carbon/human/M = usr
+	examine(mob/user)
+		. = list()
+		if (ishuman(user) && !user.stat)
+			var/mob/living/carbon/human/M = user
 
-			M.visible_message("<span class='combat'>[M] stares blankly into [src], \his eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
-			var/mob/living/carbon/wall/halloween/holder = new
+			M.visible_message("<span class='combat'>[M] stares blankly into [src], [his_or_her(M)] eyes growing duller and duller...</span>","<span class='combat'>You stare deeply into [src].  You...can't look away.  It's mesmerizing.  Sights, sounds, colors, shapes.  They blur together into a phantasm of beauty and wonder.</span>")
+			var/mob/living/carbon/holder = new
 			holder.set_loc(src)
-			holder.oldbody = M
 			if(M.mind)
 				M.mind.transfer_to(holder)
 			else
@@ -512,18 +350,16 @@
 			stoneman.layer = MOB_LAYER
 
 			var/icon/composite = icon(M.icon, M.icon_state, M.dir, 1)
-			for(var/O in M.overlays)
-				var/image/I = O
+			for (var/image/I as anything in M.overlays)
 				composite.Blend(icon(I.icon, I.icon_state, I.dir, 1), ICON_OVERLAY)
 			composite.ColorTone( rgb(188,188,188) )
 			stoneman.icon = composite
 
 			holder.set_loc(stoneman)
-			stoneman.dir = get_dir(stoneman, src)
+			stoneman.set_dir(get_dir(stoneman, src))
 
 		else
-			boutput(usr, desc)
-			return
+			. += desc
 
 /obj/item/toy/halloween2014spellbook
 	name = "Book of Spells"
@@ -545,7 +381,7 @@
 				for (var/atom/A in range(4,user))
 					if (isarea(A))
 						continue
-					if (istype(A,/obj/particle/) || istype(A,/obj/screen))
+					if (istype(A,/obj/particle/) || istype(A,/atom/movable/screen))
 						continue
 					if (ismob(A))
 						var/mob/M = A
@@ -559,7 +395,7 @@
 						user.show_text("You feel a spooky rumbling in your guts! Maybe you ate a ghoooooost?!","#8218A8")
 					if (C.bioHolder)
 						C.bioHolder.age += 125
-						SPAWN_DBG(1 MINUTE)
+						SPAWN(1 MINUTE)
 							C.bioHolder.age -= 125
 			if("NULL MOSS NOOK") // Anagram: SKULL MONSOON
 				particleMaster.SpawnSystem(new /datum/particleSystem/skull_rain(get_turf(user)))
@@ -567,12 +403,12 @@
 			if("ONION SLUG CANDY") // Anagram: ANNOYING CLOUDS
 				particleMaster.SpawnSystem(new /datum/particleSystem/spooky_mist(get_turf(user)))
 				user.show_text("A cold and spooky wind begins to blow!","#8218A8")
-				playsound(get_turf(user), 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
+				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
 			if("HOT SIGMA") // Anagram: IM A GHOST
 				user.blend_mode = 2
 				user.alpha = 150
 				user.show_text("You feel extra spooky!","#8218A8")
-				SPAWN_DBG(2 MINUTES)
+				SPAWN(2 MINUTES)
 					user.blend_mode = 0
 					user.alpha = 255
 			else
@@ -584,7 +420,7 @@
 			src.uses--
 			if (uses == 0)
 				boutput(user, "<span class='combat'>The book crumbles away into dust! How spooooooky!</span>")
-				src.dropped()
+				src.dropped(user)
 				qdel(src)
 
 		return
@@ -629,7 +465,7 @@
 		if (state != 2 && ..())
 			for(var/i, i < 125, i++)
 				SpawnParticle()
-				sleep(3)
+				sleep(0.3 SECONDS)
 			Die()
 
 /datum/particleType/spooky_mist
@@ -660,7 +496,7 @@
 	anchored = 1
 	density = 0
 	pixel_y = 7
-	var/trigger_sound = "sound/effects/ExtremelyScaryGhostNoise.ogg"
+	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
 	var/trigger_duration = 118 // should be about as long as the sound clip
 	var/spam_flag = 0
 	var/spam_timer = 150
@@ -671,24 +507,56 @@
 			src.spam_flag = 1
 			if (prob(66)) // our sensor isn't the best
 				src.scare_some_people()
-			SPAWN_DBG(src.spam_timer)
+			SPAWN(src.spam_timer)
 				if (src)
 					src.spam_flag = 0
 
 	proc/scare_some_people()
 		src.spooky_shake()
-		playsound(get_turf(src), src.trigger_sound, 100, 0)
-		src.visible_message("<span style='color:red'><b>\The [src] comes to life and starts making an unearthly, haunting wail!</b></span>")
+		playsound(src, src.trigger_sound, 40, 0)
+		src.visible_message("<span class='alert'><b>\The [src] comes to life and starts making an unearthly, haunting wail!</b></span>")
 		for (var/mob/M in viewers(src))
 			if (prob(66))
-				var/msg = pick("<span style='color:red'><b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
-				"<span style='color:red'><b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
+				var/msg = pick("<span class='alert'><b>You're [pick("hella","super","very","extremely","completely","totally")] [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
+				"<span class='alert'><b>You've never felt so [pick("scared","spooked","terrified")]![pick("","!","!!")]</b><span>",\
 				"Oh, it's just a decoration.[pick(""," You were kinda spooked for a moment there."," That's a relief!")]")
 				M.show_text(msg)
 
 	proc/spooky_shake()
 		set waitfor = 0
 		for (var/i=src.trigger_duration, i>0, i--)
-			src.dir = pick(cardinal)
+			src.set_dir(pick(cardinal))
 			src.pixel_x = rand(-3,3)
-			sleep(1)
+			sleep(0.1 SECONDS)
+
+/obj/cauldron
+	name = "cauldron"
+	desc = "An empty cast-iron cauldron."
+	icon = 'icons/misc/halloween.dmi'
+	icon_state = "cauldron"
+	anchored = 1
+	density = 1
+
+	candy
+		name = "candy-filled cauldron"
+		desc = "It's full of candy! Treats... or tricks?"
+		icon_state = "cauldron-candy"
+
+		attack_hand(mob/user)
+			var/list/candytypes = concrete_typesof(/obj/item/reagent_containers/food/snacks/candy)
+			var/newcandy_path = pick(candytypes)
+			var/obj/item/reagent_containers/food/snacks/candy/newcandy = new newcandy_path
+			user.put_in_hand_or_drop(newcandy)
+			if (prob(5))
+				newcandy.razor_blade = 1
+			boutput(user, "You grab [newcandy] from the cauldron!")
+
+	jellybean
+		name = "jellybean-filled cauldron"
+		desc = "It's full of jellybeans! Wonder what's in these..."
+		icon_state = "cauldron-jellybean"
+
+		attack_hand(mob/user)
+			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new
+			user.put_in_hand_or_drop(B)
+			boutput(user, "You grab [B] from the cauldron!")

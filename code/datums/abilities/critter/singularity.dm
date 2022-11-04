@@ -17,14 +17,14 @@
 
   var/turf/T = get_turf(holder.owner)
 
-  playsound(T, "sound/effects/elec_bzzz.ogg", 100, 1)
+  playsound(T, 'sound/effects/elec_bzzz.ogg', 100, 1)
   holder.owner.visible_message("<span class='combat'><b>[holder.owner] [pick("sparks", "flashes", "buzzes")] [pick("oddly", "worryingly", "powerfully", "loudly", "intensely")]!</b></span>", "<span class='combat'><b>You emit an electromagnetic pulse!</b></span>")
   var/obj/overlay/pulse = new/obj/overlay(T)
   pulse.icon = 'icons/effects/effects.dmi'
   pulse.icon_state = "emppulse"
   pulse.name = "emp pulse"
   pulse.anchored = 1
-  SPAWN_DBG (20)
+  SPAWN(2 SECONDS)
     if (pulse)
       qdel(pulse)
 
@@ -52,8 +52,8 @@
 
   var/turf/ST = get_turf(holder.owner) // sound turf
 
-  playsound(ST, "sound/effects/suck.ogg", 100, 1)
-  playsound(ST, "sound/machines/hiss.ogg", 100, 1)
+  playsound(ST, 'sound/effects/suck.ogg', 100, 1)
+  playsound(ST, 'sound/machines/hiss.ogg', 100, 1)
   holder.owner.visible_message("<span class='combat'><b>[holder.owner] [pick("sucks", "pulls", "jerks")] everything towards itself [pick("wildly", "forcefully", "powerfully", "loudly", "intensely")]!</b></span>", "<span class='combat'><b>You concentrate your gravitational pull to an intense extreme!</b></span>")
   // XTREEEEEEM SKATEBOARDS SUNGLASSES 90S WOOOO
 
@@ -108,12 +108,11 @@
 
   // no visible message for anyone else, but there is a sound clue
 	var/turf/T = get_turf(holder.owner)
-	playsound(T, "sound/weapons/ACgun2.ogg", 100, 1)
+	playsound(T, 'sound/weapons/ACgun2.ogg', 100, 1)
 	holder.owner.show_message("<span class='combat'><b>You emit a wave of radiation!</b></span>")
 
-	for(var/mob/living/L in orange(7, holder.owner))
-		L.changeStatus("radiation", 1 SECOND)
-		L.updatehealth()
+	for(var/mob/living/L in oviewers(7, holder.owner))
+		L.take_radiation_dose(0.1 SIEVERTS)
 		L.show_text("You feel odd.", "red")
 
 ////////////////////////////////////////////////////////////////////////////////////////
@@ -131,7 +130,7 @@
     return 1
 
   var/turf/T = get_turf(holder.owner)
-  playsound(T, "sound/effects/ghost.ogg", 100, 1)
+  playsound(T, 'sound/effects/ghost.ogg', 100, 1)
   holder.owner.show_message("<span class='combat'><b>You compel all to gaze upon your singular magnificence...</b></span>")
 
   for (var/mob/living/M in oviewers(8, holder.owner))
@@ -141,5 +140,5 @@
         M.show_text("You look directly into [holder.owner.name], good thing you had your protective eyewear on!", "green")
         return
     M.changeStatus("stunned", 3 SECONDS)
-    M.visible_message("<span style=\"color:red\"><B>[M] stares blankly at [holder.owner]!</B></span>",\
-    "<B>You look directly into [holder.owner]!<br><span style=\"color:red\">You feel weak!</span></B>")
+    M.visible_message("<span class='alert'><B>[M] stares blankly at [holder.owner]!</B></span>",\
+    "<B>You look directly into [holder.owner]!<br><span class='alert'>You feel weak!</span></B>")

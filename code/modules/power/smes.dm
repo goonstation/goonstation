@@ -13,11 +13,12 @@
 		..()
 
 /obj/machinery/power/smes
-	name = "power storage unit"
-	desc = "A high-capacity superconducting magnetic energy storage (SMES) unit."
+	name = "Dianmu power storage unit"
+	desc = "The XIANG|GIESEL model '電母' high-capacity superconducting magnetic energy storage (SMES) unit. Acts as a giant capacitor for facility power grids, soaking up extra power or dishing it out."
 	icon_state = "smes"
 	density = 1
 	anchored = 1
+	requires_power = FALSE
 	var/output = 30000
 	var/lastout = 0
 	var/loaddemand = 0
@@ -39,12 +40,12 @@
 	New(var/turf/iloc, var/idir = 2)
 		if (!isturf(iloc))
 			qdel(src)
-		dir = idir
+		set_dir(idir)
 		var/turf/Q = get_step(iloc, idir)
 		if (!Q)
 			qdel(src)
 			var/obj/machinery/power/terminal/term = new /obj/machinery/power/terminal(Q)
-			term.dir = get_dir(Q, iloc)
+			term.set_dir(get_dir(Q, iloc))
 		..()
 
 /obj/machinery/power/smes/emp_act()
@@ -55,7 +56,7 @@
 	src.charge -= 1e6
 	if (src.charge < 0)
 		src.charge = 0
-	SPAWN_DBG(10 SECONDS)
+	SPAWN(10 SECONDS)
 		src.output = initial(src.output)
 		src.charging = initial(src.charging)
 		src.online = initial(src.online)
@@ -64,12 +65,12 @@
 /obj/machinery/power/smes/New()
 	..()
 
-	SPAWN_DBG(0.5 SECONDS)
+	SPAWN(0.5 SECONDS)
 		dir_loop:
 			for(var/d in cardinal)
 				var/turf/T = get_step(src, d)
 				for(var/obj/machinery/power/terminal/term in T)
-					if (term && term.dir == turn(d, 180))
+					if (term?.dir == turn(d, 180))
 						terminal = term
 						break dir_loop
 
@@ -79,11 +80,10 @@
 
 		terminal.master = src
 
-		updateicon()
+		UpdateIcon()
 
 
-/obj/machinery/power/smes/proc/updateicon()
-
+/obj/machinery/power/smes/update_icon()
 	if (status & BROKEN)
 		ClearAllOverlays()
 		return
@@ -110,7 +110,7 @@
 /obj/machinery/power/smes/proc/chargedisplay()
 	return round(5.5*charge/capacity)
 
-/obj/machinery/power/smes/process()
+/obj/machinery/power/smes/process(mult)
 
 	if (status & BROKEN)
 		return
@@ -130,7 +130,10 @@
 
 				load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
 
-				charge += load	// increase the charge
+				// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
+				// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
+				// benefits to charged value so that minimal loss occurs.
+				charge += load * mult	// increase the charge
 				add_load(load)		// add the load to the terminal side network
 
 			else					// if not enough capcity
@@ -150,7 +153,7 @@
 
 	if (online)		// if outputting
 		if (prob(5))
-			SPAWN_DBG(1 DECI SECOND)
+			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_power), 60, 1)
 
 		lastout = min(charge, output)		//limit output to that stored
@@ -164,12 +167,9 @@
 
 	// only update icon if state changed
 	if (last_disp != chargedisplay() || last_chrg != charging || last_onln != online)
-		updateicon()
+		UpdateIcon()
 
-	for(var/mob/M in viewers(1, src))
-		if ((M.client && M.machine == src))
-			src.interact(M)
-	AutoUpdateAI(src)
+	src.updateDialog()
 
 // called after all power processes are finished
 // restores charge level to smes if there was excess this ptick
@@ -198,167 +198,89 @@
 	loaddemand = lastout - excess
 
 	if (clev != chargedisplay())
-		updateicon()
+		UpdateIcon()
 
 
 ///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal && terminal.powernet)
+//	if (terminal?.powernet)
 //		terminal.powernet.newavail += amount
 
 /obj/machinery/power/smes/add_load(var/amount)
-	if (terminal && terminal.powernet)
+	if (terminal?.powernet)
 		terminal.powernet.newload += amount
 
-/obj/machinery/power/smes/attack_ai(mob/user)
+/obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "Smes", src.name)
+		ui.open()
 
-	add_fingerprint(user)
+/obj/machinery/power/smes/ui_static_data(mob/user)
+	. = list(
+		"inputLevelMax" = SMESMAXCHARGELEVEL,
+		"outputLevelMax" = SMESMAXOUTPUT,
+	)
 
-	if (status & BROKEN) return
+/obj/machinery/power/smes/ui_data(mob/user)
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge,
 
-	interact(user)
+		"inputAttempt" = src.chargemode,
+		"inputting" = src.charging,
+		"inputLevel" = src.chargelevel,
+		"inputAvailable" = src.lastexcess,
 
-/obj/machinery/power/smes/attack_hand(mob/user)
+		"outputAttempt" = src.online,
+		"outputting" = src.loaddemand,
+		"outputLevel" = src.output,
+	)
 
-	add_fingerprint(user)
-
-	if (status & BROKEN) return
-
-	interact(user)
-
-
-
-/obj/machinery/power/smes/proc/interact(mob/user)
-
-	if ( (get_dist(src, user) > 1 ))
-		if (!isAI(user) && !issilicon(user))
-			user.machine = null
-			user.Browse(null, "window=smes")
-			return
-
-	user.machine = src
-
-	// @todo fix this later
-	var/t = {"
-<title>SMES Status [n_tag ? " - [n_tag]" : null]</title>
-<style type="text/css">
-	h3, h4 {
-		margin: 0;
-	}
-
-	#powerMenu > div {
-		box-sizing: border-box;
-	}
-
-	.bar {
-		height: 8px;
-		max-height: 8px;
-		background: #363;
-		border: 1px solid white;
-		padding: 1px;
-		position: relative;
-		margin: 0.25em 0;
-	}
-
-	.bar .inner {
-		height: 100%;
-		margin: 0;
-		padding: 0;
-		background: #4e4;
-	}
-
-	.bar .marker {
-		position: absolute;
-		top: 0px;
-		width: 1px;
-		margin-left: -1px;
-		height: 40%;
-		background: white;
-		border: 1px solid black;
-		border-top: none;
-	}
-
-	p {
-		margin: 0.25em 0;
-	}
-</style>
-<div id="#powerMenu">
-<h3 style="text-align: center;">SMES Power Storage Unit [n_tag ? "- [n_tag]" : null]</h3>
-<br>
-	<strong>Stored Charge: [round(100.0*charge/capacity, 0.1)]%</strong> <em>([charging ? "Charging" : ((chargecount > 0) ? "Preparing to charge..." : "Not Charging")])</em>
-	<div class='bar'><div class='inner' style="width: [round(100 * (charge / capacity), 0.01)]%;"></div></div>
-<br>
-	<strong>Charging:</strong> [chargemode ? "<b>Enabled</b> (<a href='?src=\ref[src];cmode=1'>Disable</a>)" : "<b>Disabled</b> (<a href='?src=\ref[src];cmode=1'>Enable</a>)"]
-	<br><strong>Input level:</strong> <a href='?src=\ref[src];input=set'>[chargelevel]</a> (<a href='?src=\ref[src];input=min'>Min</a> &middot; <a href='?src=\ref[src];input=max'>Max</a>)
-	<div class='bar-outer'><div class='bar'><div class='inner' style="width: [max(0, min(100, round(100 * (lastexcess / SMESMAXCHARGELEVEL), 0.01)))]%;"></div><div class='marker' style="left: [round(100 * (chargelevel / SMESMAXCHARGELEVEL), 0.01)]%;"></div></div>
-	<strong>Available:</strong> [round(lastexcess)] W
-<br>
-<br>
-	<strong>Output:</strong> [online ? "<b>Enabled</b> (<a href='?src=\ref[src];online=1'>Disable</a>)" : "<b>Disabled</b> (<a href='?src=\ref[src];online=1'>Enable</a>)"]
-	<br><strong>Output level:</strong> <a href='?src=\ref[src];output=set'>[output]</a> (<a href='?src=\ref[src];output=min'>Min</a> &middot; <a href='?src=\ref[src];output=max'>Max</a>)
-	<div class='bar'><div class='inner' style="width: [min(100, round(100 * (loaddemand / SMESMAXOUTPUT), 0.01))]%;"></div><div class='marker' style="left: [round(100 * (output / SMESMAXCHARGELEVEL), 0.01)]%;"></div></div>
-	<strong>Current load:</strong> [round(loaddemand)] W
-</div>
-"}
-
-	user.Browse(t, "window=smes;size=400x340")
-	onclose(user, "smes")
-	return
-
-/obj/machinery/power/smes/Topic(href, href_list)
-	..()
-
-	if (usr.stat || usr.restrained() )
+/obj/machinery/power/smes/ui_act(action, params)
+	. = ..()
+	if (.)
 		return
-
-	if (( usr.machine==src && ((get_dist(src, usr) <= 1) && istype(src.loc, /turf))) || (isAI(usr) || issilicon(usr)))
-		if (href_list["close"])
-			usr.Browse(null, "window=smes")
-			usr.machine = null
-			return
-
-		else if ( href_list["cmode"] )
-			chargemode = !chargemode
+	switch(action)
+		if("toggle-input")
+			src.chargemode = !src.chargemode
 			if (!chargemode)
 				charging = 0
-			updateicon()
-
-		else if ( href_list["online"] )
-			online = !online
-			updateicon()
-		else if (href_list["input"])
-			switch (href_list["input"])
-				if ("min")
-					chargelevel = 0
-				if ("max")
-					chargelevel = SMESMAXCHARGELEVEL
-				if ("set")
-					var/newnum = input(usr, "New target charge level? 0 to [SMESMAXCHARGELEVEL].", "SMES Config", chargelevel) as null|num
-					if (newnum)
-						chargelevel	= newnum
-
-			chargelevel = max(0, min(SMESMAXCHARGELEVEL, chargelevel))	// clamp to range
-
-		else if (href_list["output"])
-			switch (href_list["output"])
-				if ("min")
-					output = 0
-				if ("max")
-					output = SMESMAXOUTPUT
-				if ("set")
-					var/newnum = input(usr, "New output level? 0 to [SMESMAXOUTPUT].", "SMES Config", output) as null|num
-					if (newnum)
-						output = newnum
-
-			output = max(0, min(SMESMAXOUTPUT, output))	// clamp to range
-
-
-		src.updateUsrDialog()
-
-	else
-		usr.Browse(null, "window=smes")
-		usr.machine = null
-
-	return
+			src.UpdateIcon()
+			. = TRUE
+		if("toggle-output")
+			src.online = !src.online
+			src.UpdateIcon()
+			. = TRUE
+		if("set-input")
+			var/target = params["target"]
+			var/adjust = params["adjust"]
+			if(target == "min")
+				src.chargelevel = 0
+				. = TRUE
+			else if(target == "max")
+				src.chargelevel = SMESMAXCHARGELEVEL
+				. = TRUE
+			else if(adjust)
+				src.chargelevel = clamp((src.chargelevel + adjust), 0 , SMESMAXCHARGELEVEL)
+				. = TRUE
+			else if(text2num_safe(target) != null) //set by drag
+				src.chargelevel = clamp(text2num_safe(target), 0 , SMESMAXCHARGELEVEL)
+				. = TRUE
+		if("set-output")
+			var/target = params["target"]
+			var/adjust = params["adjust"]
+			if(target == "min")
+				src.output = 0
+				. = TRUE
+			else if(target == "max")
+				src.output = SMESMAXOUTPUT
+				. = TRUE
+			else if(adjust)
+				src.output = clamp((src.output + adjust), 0 , SMESMAXOUTPUT)
+				. = TRUE
+			else if(text2num_safe(target) != null) //set by drag
+				src.output = clamp(text2num_safe(target), 0 , SMESMAXOUTPUT)
+				. = TRUE
 
 /proc/rate_control(var/S, var/V, var/C, var/Min=1, var/Max=5, var/Limit=null)
 	var/href = "<A href='?src=\ref[S];rate control=1;[V]"

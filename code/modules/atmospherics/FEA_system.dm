@@ -1,4 +1,3 @@
-var/atmos_suspend = 0
 /*
 Overview:
 	The air_master global variable is the workhorse for the system.
@@ -17,7 +16,6 @@ Why is there a cycle check for calculating data as well?
 
 //
 
-
 Important variables:
 	air_master.groups_to_rebuild (list)
 		A list of air groups that have had their geometry occluded and thus may need to be split in half.
@@ -31,11 +29,11 @@ Important variables:
 		This stores all data for.
 		If you modify, make sure to update the archived_cycle to prevent race conditions and maintain symmetry
 
-	atom/CanPass(atom/movable/mover, turf/target, height, air_group)
+	atom/Cross(atom/movable/mover, turf/target, height, air_group)
 		returns 1 for allow pass and 0 for deny pass
 		Turfs automatically call this for all objects/mobs in its turf.
-		This is called both as source.CanPass(target, height, air_group)
-			and  target.CanPass(source, height, air_group)
+		This is called both as source.Cross(target, height, air_group)
+			and  target.Cross(source, height, air_group)
 
 		Cases for the parameters
 		1. This is called with args (mover, location, height>0, air_group=0) for normal objects.
@@ -54,347 +52,274 @@ Important Procedures
 
 */
 
-atom/proc/CanPass(atom/movable/mover, turf/target, height=1.5, air_group = 0)
-	return (!density || !height || air_group)
+/atom/Cross(atom/movable/mover)
+	return (!density)
 
-//turf/canpass()
-turf
-	CanPass(atom/movable/mover, turf/target, height=1.5,air_group=0)
-		if(!target) return 0
+/atom/proc/gas_cross(turf/target)
+	return !src.gas_impermeable
 
-		if(istype(mover)) // turf/Enter(...) will perform more advanced checks
-			return !density
-
-		else // Now, doing more detailed checks for air movement and air group formation
-			if(target.blocks_air||blocks_air)
-				return 0
-
-			if (src.checkingcanpass > 0)
-				for(var/atom in src)
-					var/obj/obstacle = atom
-					if(!obstacle.CanPass(mover, target, height, air_group))
-						return 0
-			if (target && target.checkingcanpass > 0)
-				for(var/atom in target)
-					var/obj/obstacle = atom
-					if(!obstacle.CanPass(mover, src, height, air_group))
-						return 0
-
-			return 1
-
+/turf/gas_cross(turf/target)
+	if(!target)
+		return 0
+	if(target?.gas_impermeable || src.gas_impermeable)
+		return 0
+	for(var/atom/A as anything in src)
+		if(!A.gas_cross(target))
+			return 0
+	for(var/atom/A as anything in target)
+		if(!A.gas_cross(src))
+			return 0
+	return 1
 
 var/global/datum/controller/air_system/air_master
 var/global/total_gas_mixtures = 0
 
-datum
-	controller
-		air_system
-			//Geoemetry lists
-			var/list/datum/air_group/air_groups = list()
-			var/list/turf/simulated/active_singletons = list()
+datum/controller/air_system
+	//Geoemetry lists
+	var/list/datum/air_group/air_groups = list()
+	var/list/turf/simulated/active_singletons = list()
 
-			//Special functions lists
-			var/list/turf/simulated/active_super_conductivity = list()
-			var/list/turf/simulated/high_pressure_delta = list()
+	//Special functions lists
+	var/list/turf/active_super_conductivity = list() //gets space in here somehow ZEWAKA/ATMOS
+	var/list/turf/simulated/high_pressure_delta = list()
 
-			//Geometry updates lists
-			var/list/turf/simulated/tiles_to_update = list()
-			var/list/turf/simulated/groups_to_rebuild = list()
+	//Geometry updates lists
+	var/list/turf/tiles_to_update = list()
+	var/list/datum/air_group/groups_to_rebuild = list()
+	var/list/turf/tiles_to_space = list()
 
-			var/current_cycle = 0
-			var/datum/controller/process/air_system/parent_controller = null
+	var/current_cycle = 0
+	var/is_busy = FALSE
+	var/datum/controller/process/air_system/parent_controller = null
 
-			var/turf/space/sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
+	var/turf/space/space_sample = 0 //instead of repeatedly using locate() to find space, we should just cache a space tile ok
 
-			proc
-				setup(datum/controller/process/air_system/controller)
-					//Call this at the start to setup air groups geometry
-					//Warning: Very processor intensive but only must be done once per round
+	proc/setup(datum/controller/process/air_system/controller)
+		update_space_sample()
+		//Call this at the start to setup air groups geometry
+		//Warning: Very processor intensive but only must be done once per round
 
-				assemble_group_turf(turf/simulated/base)
-					//Call this to try to construct a group starting from base and merging with neighboring unparented tiles
-					//Expands the group until all valid borders explored
+	proc/assemble_group_turf(turf/simulated/base)
+		//Call this to try to construct a group starting from base and merging with neighboring unparented tiles
+		//Expands the group until all valid borders explored
 
-//				assemble_group_object(obj/movable/floor/base)
+	proc/process()
+		//Call this to process air movements for a cycle
 
-				process()
-					//Call this to process air movements for a cycle
+	proc/process_groups()
+		//Used by process()
+		//Warning: Do not call this
 
-				process_groups()
-					//Used by process()
-					//Warning: Do not call this
+	proc/process_singletons()
+		//Used by process()
+		//Warning: Do not call this
 
-				process_singletons()
-					//Used by process()
-					//Warning: Do not call this
+	proc/process_high_pressure_delta()
+		//Used by process()
+		//Warning: Do not call this
 
-				process_high_pressure_delta()
-					//Used by process()
-					//Warning: Do not call this
+	proc/process_super_conductivity()
+		//Used by process()
+		//Warning: Do not call this
 
-				process_super_conductivity()
-					//Used by process()
-					//Warning: Do not call this
+	proc/process_tiles_to_space()
+		//Used by process()
+		//Warning: Do not call this
 
-				process_update_tiles()
-					//Used by process()
-					//Warning: Do not call this
+	proc/process_update_tiles()
+		//Used by process()
+		//Warning: Do not call this
 
+	proc/process_rebuild_select_groups()
+		//Used by process()
+		//Warning: Do not call this
+
+	proc/rebuild_group(datum/air_group)
+		//Used by process_rebuild_select_groups()
+		//Warning: Do not call this, add the group to air_master.groups_to_rebuild instead
+
+	proc/update_space_sample()
+		if (!space_sample || !(space_sample.turf_flags & CAN_BE_SPACE_SAMPLE))
+			space_sample = locate(/turf/space)
+		return space_sample
+
+	setup(datum/controller/process/air_system/controller)
+		parent_controller = controller
+
+		#if SKIP_FEA_SETUP == 1
+		return
+		#else
+
+		boutput(world, "<span class='alert'>Processing Geometry...</span>")
+
+		var/start_time = world.timeofday
+
+		for(var/turf/simulated/S in world)
+			if(!S.gas_impermeable && !S.parent)
+				assemble_group_turf(S)
+			S.update_air_properties()
+
+		boutput(world, "<span class='alert'>Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
+		#endif
+
+	assemble_group_turf(turf/simulated/base)
+		set waitfor = 0
+		var/list/turf/simulated/members = list(base) // Confirmed group members
+		var/list/turf/simulated/possible_members = list(base) // Possible places for group expansion
+		var/list/turf/simulated/possible_borders
+		var/list/turf/simulated/possible_space_borders
+		var/possible_space_length = 0
+
+		while(possible_members.len > 0) //Keep expanding, looking for new members
+			for(var/turf/simulated/test as anything in possible_members)
+				test.length_space_border = 0
+				for(var/direction in cardinal)
+					var/turf/T = get_step(test,direction)
+					if(T && !(T in members) && test.gas_cross(T))
+						if(istype(T,/turf/simulated))
+							if(!T:parent)
+								possible_members += T
+								members += T
+							else
+								LAZYLISTINIT(possible_borders)
+								possible_borders |= test
+						else if(istype(T, /turf/space) && !istype(T, /turf/space/fluid))
+							LAZYLISTINIT(possible_space_borders)
+							possible_space_borders |= test
+							test.length_space_border++
+
+				if(test.length_space_border > 0)
+					possible_space_length += test.length_space_border
+				possible_members -= test
+
+		if(members.len > 1)
+			var/datum/air_group/group = new
+			if(possible_borders && (possible_borders.len > 0))
+				group.borders = possible_borders
+			if(possible_space_borders && (possible_space_borders.len > 0))
+				group.space_borders = possible_space_borders
+				group.length_space_border = possible_space_length
+
+			for(var/turf/simulated/test as anything in members)
+				test.parent = group
+				test.processing = 0
+				active_singletons -= test
+
+				test.dist_to_space = null
+				var/dist
+				for(var/P in possible_space_borders)
+					var/turf/simulated/b = P
+					if (b == test)
+						test.dist_to_space = 1
+						break
+					dist = GET_DIST(b, test)
+					if ((test.dist_to_space == null) || (dist < test.dist_to_space))
+						test.dist_to_space = dist
+
+			// Allow groups to determine if group processing is applicable after FEA setup
+			if(current_cycle) group.group_processing = FALSE
+			group.members = members
+			air_groups += group
+
+			group.update_group_from_tiles() //Initialize air group variables
+			return group
+		else
+			base.processing = 0 //singletons at startup are technically unconnected anyway
+			base.parent = null
+
+			if(base.air && base.air.check_tile_graphic())
+				base.update_visuals(base.air)
+
+		return null
+
+	process()
+		current_cycle++
+
+		process_tiles_to_space()
+		is_busy = TRUE
+
+		if(!explosions.exploding)
+			if(groups_to_rebuild.len > 0)
 				process_rebuild_select_groups()
-					//Used by process()
-					//Warning: Do not call this
+			LAGCHECK(LAG_REALTIME)
 
-				rebuild_group(datum/air_group)
-					//Used by process_rebuild_select_groups()
-					//Warning: Do not call this, add the group to air_master.groups_to_rebuild instead
+			if(tiles_to_update.len > 0)
+				process_update_tiles()
+			LAGCHECK(LAG_REALTIME)
 
-				add_singleton(turf/simulated/T)
-					if(!active_singletons.Find(T))
-						active_singletons += T
+		process_groups()
+		LAGCHECK(LAG_REALTIME)
 
-				set_controller(datum/controller/process/air_system/controller)
-					parent_controller = controller
+		process_singletons()
+		LAGCHECK(LAG_REALTIME)
 
-				queue_update_tile(turf/simulated/T)
-					if (!(T in tiles_to_update))
-						tiles_to_update += T
+		process_super_conductivity()
+		LAGCHECK(LAG_REALTIME)
 
-				queue_update_group(datum/air_group)
-					if (!(air_group in groups_to_rebuild))
-						groups_to_rebuild += air_group
+		process_high_pressure_delta()
+		LAGCHECK(LAG_REALTIME)
 
-				get_space_sample()
-					if (!sample || !sample.turf_flags & CAN_BE_SPACE_SAMPLE)
-#ifdef UNDERWATER_MAP
-						sample = locate(/turf/space/fluid)
-#else
-						sample = locate(/turf/space)
-#endif
+		if(current_cycle % 7 == 0) //Check for groups of tiles to resume group processing every 7 cycles
+			for(var/datum/air_group/AG as anything in air_groups)
+				AG.check_regroup()
+				LAGCHECK(LAG_REALTIME)
 
+		is_busy = FALSE
+		return 1
 
+	process_tiles_to_space()
+		if(length(tiles_to_space))
+			for(var/turf/T as anything in tiles_to_space)
+				T.ReplaceWithSpaceForce() // If we made it this far, force is appropriate as we know it NEEDs to be updated
+			tiles_to_space.len = 0
 
-					.= sample
+	process_update_tiles()
+		for(var/turf/simulated/T in tiles_to_update) // ZEWAKA-ATMOS SPACE + SPACE FLUID LEAKAGE
+			T.update_air_properties()
+		tiles_to_update.len = 0
 
-			setup(datum/controller/process/air_system/controller)
-				set_controller(controller)
+	process_rebuild_select_groups()
+		var/list/turf/turf_list = list()
 
-				#if SKIP_FEA_SETUP == 1
-				return
-				#else
+		for(var/datum/air_group/turf_AG in groups_to_rebuild) // Deconstruct groups, gathering their old members
+			if(turf_AG.group_processing)	// Ensure correct air is used for reconstruction, otherwise parent is destroyed
+				turf_AG.suspend_group_processing()
+			for(var/turf/simulated/T as anything in turf_AG.members)
+				T.parent = null
+				turf_list += T
+			air_master.air_groups -= turf_AG
+			turf_AG.members.len = 0
+		LAGCHECK(LAG_REALTIME)
 
-				boutput(world, "<span style=\"color:red\">Processing Geometry...</span>")
+		for(var/turf/simulated/S as anything in turf_list) // Have old members try to form new groups
+			if(!S.parent)
+				assemble_group_turf(S)
+		LAGCHECK(LAG_REALTIME)
 
-				var/start_time = world.timeofday
+		for(var/turf/simulated/S as anything in turf_list)
+			S.update_air_properties()
+		LAGCHECK(LAG_REALTIME)
 
-				for(var/turf/simulated/S in world)
-					if(!S.blocks_air && !S.parent)
-						assemble_group_turf(S)
-				//for(var/turf/simulated/S in world) //Update all pathing and border information as well
-					S.update_air_properties()
-/*
-				for(var/obj/movable/floor/S in world)
-					if(!S.parent)
-						assemble_group_object(S)
-				for(var/obj/movable/floor/S in world) //Update all pathing and border information as well
-					S.update_air_properties()
-*/
-				boutput(world, "<span style=\"color:red\">Geometry processed in [(world.timeofday-start_time)/10] seconds!</span>")
-				#endif
+		groups_to_rebuild.len = 0
 
-			assemble_group_turf(turf/simulated/base)
-				set waitfor = 0
-				var/list/turf/simulated/members = list(base) //Confirmed group members
-				var/list/turf/simulated/possible_members = list(base) //Possible places for group expansion
-				var/list/turf/simulated/possible_borders
-				var/list/turf/simulated/possible_space_borders
-				var/possible_space_length = 0
+	process_groups()
+		for(var/datum/air_group/AG as anything in air_groups)
+			AG?.process_group(parent_controller)
+			LAGCHECK(LAG_REALTIME)
 
-				while(possible_members.len>0) //Keep expanding, looking for new members
-					for(var/turf/simulated/test in possible_members)
-						test.length_space_border = 0
-						for(var/direction in cardinal)
-							var/turf/T = get_step(test,direction)
-							if(T && !members.Find(T) && test.CanPass(null, T, null,1))
-								if(istype(T,/turf/simulated) && !T:parent)
-									possible_members += T
-									members += T
-								else if(istype(T,/turf/space))
-									if(!possible_space_borders)
-										possible_space_borders = list()
-									if(!possible_space_borders.Find(test))
-										possible_space_borders += test
-									test.length_space_border++
-								else
-									if(!possible_borders)
-										possible_borders = list()
-									if(!possible_borders.Find(test))
-										possible_borders += test
-						if(test.length_space_border > 0)
-							possible_space_length += test.length_space_border
-						possible_members -= test
+	process_singletons()
+		for(var/turf/simulated/loner as anything in active_singletons)
+			loner.process_cell()
+			LAGCHECK(LAG_REALTIME)
 
-				if(members.len > 1)
-					var/datum/air_group/group = new
-					if(possible_borders && possible_borders.len>0)
-						group.borders = possible_borders
-					if(possible_space_borders && possible_space_borders.len>0)
-						group.space_borders = possible_space_borders
-						group.length_space_border = possible_space_length
+	process_super_conductivity()
+		for(var/turf/simulated/hot_potato as anything in active_super_conductivity)
+			hot_potato.super_conduct()
+			LAGCHECK(LAG_REALTIME)
 
-					for(var/turf/simulated/test in members)
-						test.parent = group
-						test.processing = 0
-						active_singletons -= test
+	process_high_pressure_delta()
+		for(var/turf/simulated/pressurized as anything in high_pressure_delta)
+			pressurized.high_pressure_movements()
+			LAGCHECK(LAG_REALTIME)
 
-					group.members = members
-					air_groups += group
-
-					group.update_group_from_tiles() //Initialize air group variables
-					return group
-				else
-					base.processing = 0 //singletons at startup are technically unconnected anyway
-					base.parent = null
-
-					if(base.air && base.air.check_tile_graphic())
-						base.update_visuals(base.air)
-
-				return null
-/*
-			assemble_group_object(obj/movable/floor/base)
-
-				var/list/obj/movable/floor/members = list(base) //Confirmed group members
-				var/list/obj/movable/floor/possible_members = list(base) //Possible places for group expansion
-				var/list/obj/movable/floor/possible_borders = list()
-
-				while(possible_members.len>0) //Keep expanding, looking for new members
-					for(var/obj/movable/floor/test in possible_members)
-						for(var/direction in cardinal)
-							var/turf/T = get_step(test.loc,direction)
-							if(T && test.loc.CanPass(null, T, null, 1))
-								var/obj/movable/floor/O = locate(/obj/movable/floor) in T
-								if(istype(O) && !O.parent)
-									if(!members.Find(O))
-										possible_members += O
-										members += O
-								else
-									possible_borders -= test
-									possible_borders += test
-						possible_members -= test
-
-				if(members.len > 1)
-					var/datum/air_group/object/group = new
-					if(possible_borders.len>0)
-						group.borders = possible_borders
-
-					for(var/obj/movable/floor/test in members)
-						test.parent = group
-						test.processing = 0
-						active_singletons -= test
-
-					group.members = members
-					air_groups += group
-
-					group.update_group_from_tiles() //Initialize air group variables
-					return group
-				else
-					base.processing = 0 //singletons at startup are technically unconnected anyway
-					base.parent = null
-
-				return null
-*/
-			process()
-				current_cycle++
-				if(groups_to_rebuild.len > 0)
-					process_rebuild_select_groups()
-				LAGCHECK(LAG_HIGH)
-
-				if(tiles_to_update.len > 0)
-					process_update_tiles()
-				LAGCHECK(LAG_HIGH)
-
-				process_groups()
-				LAGCHECK(LAG_HIGH)
-
-				process_singletons()
-				LAGCHECK(LAG_HIGH)
-
-				process_super_conductivity()
-				LAGCHECK(LAG_HIGH)
-
-				process_high_pressure_delta()
-				LAGCHECK(LAG_HIGH)
-
-				if(current_cycle%10==5) //Check for groups of tiles to resume group processing every 10 cycles
-					for(var/datum/air_group/AG in air_groups)
-						AG.check_regroup()
-						LAGCHECK(LAG_HIGH)
-
-				return 1
-
-			process_update_tiles()
-				for(var/turf/simulated/T in tiles_to_update)
-					T.update_air_properties()
-/*
-				for(var/obj/movable/floor/O in tiles_to_update)
-					O.update_air_properties()
-*/
-				tiles_to_update.len = 0
-
-			process_rebuild_select_groups()
-				var/list/turf/turfs = list()
-
-				for(var/datum/air_group/turf_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-					for(var/turf/simulated/T in turf_AG.members)
-						T.parent = null
-						turfs += T
-					air_master.air_groups -= turf_AG
-					turf_AG.members.len = 0
-				LAGCHECK(LAG_HIGH)
-
-				for(var/turf/simulated/S in turfs) //Have old members try to form new groups
-					if(!S.parent)
-						assemble_group_turf(S)
-				LAGCHECK(LAG_HIGH)
-
-				for(var/turf/simulated/S in turfs)
-					S.update_air_properties()
-				LAGCHECK(LAG_HIGH)
-
-//				var/obj/movable/list/movable_objects = list()
-/*
-				for(var/datum/air_group/object/object_AG in groups_to_rebuild) //Deconstruct groups, gathering their old members
-
-					for(var/obj/movable/floor/OM in object_AG.members)
-						OM.parent = null
-						movable_objects += OM
-					qdel(object_AG)
-
-				for(var/obj/movable/floor/OM in movable_objects) //Have old members try to form new groups
-					if(!OM.parent)
-						assemble_group_object(OM)
-				for(var/obj/movable/floor/OM in movable_objects)
-					OM.update_air_properties()
-*/
-				groups_to_rebuild.len = 0
-
-			process_groups()
-				for(var/datum/air_group/AG in air_groups)
-					AG.process_group(parent_controller)
-					LAGCHECK(LAG_HIGH)
-
-			process_singletons()
-				for(var/item in active_singletons)
-					item:process_cell()
-					LAGCHECK(LAG_HIGH)
-
-			process_super_conductivity()
-				for(var/turf/simulated/hot_potato in active_super_conductivity)
-					hot_potato.super_conduct()
-					LAGCHECK(LAG_HIGH)
-
-			process_high_pressure_delta()
-				for(var/turf/pressurized in high_pressure_delta)
-					pressurized.high_pressure_movements()
-					LAGCHECK(LAG_HIGH)
-
-				high_pressure_delta.len = 0
+		high_pressure_delta.len = 0
