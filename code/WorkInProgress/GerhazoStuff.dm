@@ -257,7 +257,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
