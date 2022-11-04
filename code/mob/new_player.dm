@@ -9,6 +9,7 @@ mob/new_player
 	var/adminspawned = 0
 	var/is_respawned_player = 0
 	var/pregameBrowserLoaded = FALSE
+	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = 0

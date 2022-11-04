@@ -869,6 +869,9 @@
 			W.set_loc(T)
 
 			holder.owner.mind.transfer_to(W)
+			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
+			new_holder.regenRate = AH.regenRate - 2
+			new_holder.corpsecount = AH.corpsecount - 1
 			qdel(holder.owner)
 
 			return W

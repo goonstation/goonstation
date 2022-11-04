@@ -1,4 +1,32 @@
 
+(t)fri nov 04 22
+(u)Tarmunora
+(p)262
+(e)🔒⚖🔄|A-Secret, C-Balance, C-Rework
+(+)Changed misc gun balance
+(u)zjdtmkhzt
+(p)11668
+(e)🆕🗺🎨🔎📦💡|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Game-Objects, A-Station-Systems
+(+)Conveyors can now turn corners. Thanks to Arthur Holiday for helping me with the bendy conveyor sprites!
+(t)thu nov 03 22
+(u)Emily
+(+)Fally and Holly Dolly
+(u)tarmunora
+(+)If you have an antag-ineligible role as favourite, you will not roll captain/HoP/detective on antag rounds.
+(u)Bartimeus973
+(p)11723
+(e)🪲|C-Bug
+(+)Wraiths now inherit point regen rate and corpse counts when they evolve.
+(u)DrWolfy
+(p)11350
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Floorbots now have color based on the toolbox used and use only one floor tile to be created.
+(+)Players can now put floor tiles inside toolboxes, as long as the toolbox is not empty.
+(+)Floorbots in the first stage of construction can now be deconstructed with an empty hand. The floor tile will be lost.
+(u)RSG250
+(p)11653
+(e)⚖🌠|C-Balance, A-Events
+(*)Certain Major Random Events are now able to appear earlier in a round in Classic
 (t)wed nov 02 22
 (u)Bartimeus
 (p)11065
