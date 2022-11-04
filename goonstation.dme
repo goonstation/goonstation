@@ -1312,6 +1312,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\worldgen\prefab\random_rooms.dm"
 #include "code\modules\worldgen\prefab\shuttle.dm"
 #include "code\modules\worldgen\region_allocator\region_allocator.dm"
+#include "code\modules\writing\papers.dm"
 #include "code\obj\access_spawn.dm"
 #include "code\obj\airbridge.dm"
 #include "code\obj\blob.dm"
