@@ -14304,6 +14304,7 @@
 "fQs" = (
 /obj/decal/stage_edge,
 /obj/machinery/vending/port_a_nanomed,
+/obj/machinery/light/small/floor,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
