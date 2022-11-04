@@ -33,6 +33,15 @@
 		add_hh_flesh(health_brute, 1)
 		add_hh_flesh_burn(health_burn, 1)
 
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/slug_mouth
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "Mouth"
+		HH.limb_name = "Mouth"
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")

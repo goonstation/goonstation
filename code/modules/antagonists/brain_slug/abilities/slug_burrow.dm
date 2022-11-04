@@ -47,6 +47,7 @@
 			pipe_images[i] = cimg
 
 	proc/activate()
+		src.unequip_all()
 		active = TRUE
 		handle_move()
 

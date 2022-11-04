@@ -415,6 +415,66 @@
 	dam_low = 0
 	dam_high = 0
 
+/datum/limb/slug_mouth
+	var/sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	var/dam_low = 8
+	var/dam_high = 12
+	var/stam_damage_mult = 1.3
+
+	grab(mob/target, var/mob/living/user)
+		if (!holder)
+			return
+
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+
+		if(check_target_immunity(target))
+			return
+
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+
+		user.grab_other(target, 1)
+
+		var/obj/item/grab/GD = user.equipped()
+		if (GD && istype(GD) && (GD.affecting && GD.affecting == target))
+			GD.state = GRAB_STRONG
+			APPLY_ATOM_PROPERTY(target, PROP_MOB_CANTMOVE, GD)
+			target.update_canmove()
+			GD.UpdateIcon()
+			user.visible_message("<span class='alert'>[user] envelops [target]!</span>")
+
+		return
+
+	harm(mob/target, var/mob/user)
+		if (!holder)
+			return
+		if (!istype(user) || !ismob(target))
+			target.Attackhand(user)
+			return
+		if(check_target_immunity( target ))
+			return 0
+		if (target.melee_attack_test(user) != 1)
+			return
+		if (issilicon(target))
+			special_attack_silicon(target, user)
+			return
+		var/obj/item/affecting = target.get_affecting(user)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, stamina_damage_mult = stam_damage_mult, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, affecting)
+		msgs.base_attack_message = "<b><span class='combat'>[user] bites [target]!</span></b>"
+		msgs.played_sound = src.sound_attack
+		msgs.damage = rand(dam_low, dam_high)
+		msgs.damage_type = DAMAGE_CUT
+		msgs.flush(0)
+		user.HealDamage("All", 3, 0)
+		user.attack_effects(target, affecting)
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		return
+
 /datum/limb/item
 	can_pickup_item = FALSE
 	attack_hand(atom/target, var/mob/user, var/reach, params, location, control)
