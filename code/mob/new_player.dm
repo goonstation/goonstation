@@ -699,6 +699,10 @@ a.latejoin-card:hover {
 				else // this proc is potentially called on latejoining players before they have job equipment - we set the antag up afterwards if this is the case
 					traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN, late_setup = TRUE)
 				do_objectives = FALSE
+			if (ROLE_BRAINSLUG)
+				traitor.special_role = ROLE_BRAINSLUG
+				do_objectives = FALSE
+				traitormob.make_brainslug()
 
 			if (ROLE_ARCFIEND)
 				traitor.add_antagonist(type, source = ANTAGONIST_SOURCE_LATE_JOIN)

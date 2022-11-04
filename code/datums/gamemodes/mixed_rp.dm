@@ -6,8 +6,8 @@
 	 //Input needed here
 
 	antag_token_support = TRUE
-	latejoin_antag_roles = list(ROLE_TRAITOR = 2, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1,  ROLE_WRESTLER = 1, ROLE_ARCFIEND = 1)
-	traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_SPY_THIEF = 1, ROLE_ARCFIEND = 1, ROLE_TRAITOR = 1)
+	latejoin_antag_roles = list(ROLE_TRAITOR = 2, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1,  ROLE_WRESTLER = 1, ROLE_ARCFIEND = 1, ROLE_BRAINSLUG = 1)
+	traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_SPY_THIEF = 1, ROLE_ARCFIEND = 1, ROLE_TRAITOR = 1, ROLE_BRAINSLUG = 1)
 
 	has_wizards = 0
 	has_werewolves = 0

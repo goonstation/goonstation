@@ -98,6 +98,7 @@
 		F["[profileNum]_be_werewolf"] << src.be_werewolf
 		F["[profileNum]_be_vampire"] << src.be_vampire
 		F["[profileNum]_be_arcfiend"] << src.be_arcfiend
+		F["[profileNum]_be_brainslug"] << src.be_brainslug
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
 		F["[profileNum]_be_conspirator"] << src.be_conspirator
@@ -287,6 +288,7 @@
 		F["[profileNum]_be_werewolf"] >> src.be_werewolf
 		F["[profileNum]_be_vampire"] >> src.be_vampire
 		F["[profileNum]_be_arcfiend"] >> src.be_arcfiend
+		F["[profileNum]_be_brainslug"] >> src.be_brainslug
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
 		F["[profileNum]_be_conspirator"] >> src.be_conspirator

@@ -23,7 +23,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind", "Brainslug")
 		if (!type)
 			return
 		else
@@ -346,6 +346,14 @@
 						L.mind?.wipe_antagonists()
 						L.mind?.add_antagonist(ROLE_ARCFIEND)
 						role = ROLE_ARCFIEND
+					else
+						failed = 1
+				if ("Brainslug")
+					var/mob/living/R2 = M3.humanize()
+					if (R2 && istype(R2))
+						M3 = R2
+						R2.make_brainslug()
+						role = ROLE_BRAINSLUG
 					else
 						failed = 1
 				else

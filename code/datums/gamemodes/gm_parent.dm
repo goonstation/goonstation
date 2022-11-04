@@ -415,6 +415,10 @@
 			antag.add_antagonist(ROLE_ARCFIEND)
 			do_objectives = FALSE
 
+		if (ROLE_BRAINSLUG)
+			antag.current.make_brainslug()
+			do_objectives = FALSE
+
 	if (do_objectives)
 		if (!isnull(objective_set_path)) // Cannot create objects of type null. [wraiths use a special proc]
 			new objective_set_path(antag)

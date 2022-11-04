@@ -70,7 +70,7 @@
 	return TRUE
 
 ///Gives a brain slug host transfer and basic abilities as well as an ability holder for them.
-/mob/living/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
+/mob/proc/add_basic_slug_abilities(var/mob/living/critter/brain_slug/slug = null)
 	var/datum/abilityHolder/brain_slug/AH = null
 	//Check if they already have a brain slug holder
 	if (istype(src.abilityHolder, /datum/abilityHolder/brain_slug))
@@ -98,7 +98,7 @@
 	return AH
 
 ///Gives a brain slug host dangerous abilities. Used on humans.
-/mob/living/proc/add_advanced_slug_abilities(var/mob/living/critter/brain_slug/the_slug = null)
+/mob/proc/add_advanced_slug_abilities(var/mob/living/critter/brain_slug/the_slug = null)
 	var/datum/abilityHolder/AH = null
 	AH = src.add_basic_slug_abilities(the_slug)
 	if (AH)
@@ -177,3 +177,12 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		return TRUE
 
 	return FALSE
+
+/mob/proc/make_brainslug()
+	if (ishuman(src))
+		var/mob/living/carbon/human/H = src
+		var/mob/living/critter/brain_slug/the_slug = new /mob/living/critter/brain_slug(src)
+		H.slug = the_slug
+		src.add_advanced_slug_abilities(the_slug)
+		src.show_antag_popup("brainslug")
+	else return

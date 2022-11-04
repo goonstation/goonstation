@@ -2,7 +2,7 @@
 	name = "mixed (action)"
 	config_tag = "mixed"
 	latejoin_antag_compatible = 1
-	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	latejoin_antag_roles = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1, ROLE_WRESTLER = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1, ROLE_BRAINSLUG = 1)
 	antag_token_support = TRUE
 
 	var/const/traitors_possible = 8 // cogwerks - lowered from 10
@@ -11,7 +11,7 @@
 	var/has_wizards = TRUE
 	var/has_werewolves = TRUE
 
-	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1, ROLE_BRAINSLUG = 1)
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
@@ -57,6 +57,7 @@
 	var/num_werewolves = 0
 	var/num_arcfiends = 0
 	var/num_flockminds = 0
+	var/num_brainslug = 0
 #if defined(XMAS) && !defined(RP_MODE)
 	src.traitor_types[ROLE_GRINCH] = 1;
 	src.latejoin_antag_roles[ROLE_GRINCH] = 1;
@@ -87,6 +88,7 @@
 				if(ROLE_SPY_THIEF) num_spy_thiefs++
 				if(ROLE_WEREWOLF) num_werewolves++
 				if(ROLE_ARCFIEND) num_arcfiends++
+				if(ROLE_BRAINSLUG) num_brainslug++
 
 	token_players = antag_token_list()
 	for(var/datum/mind/tplayer in token_players)
@@ -136,6 +138,10 @@
 				traitors += tplayer
 				token_players.Remove(tplayer)
 				tplayer.special_role = ROLE_ARCFIEND
+			if(ROLE_BRAINSLUG)
+				traitors += tplayer
+				token_players.Remove(tplayer)
+				tplayer.special_role = ROLE_BRAINSLUG
 
 		logTheThing(LOG_ADMIN, tplayer.current, "successfully redeemed an antag token.")
 		message_admins("[key_name(tplayer.current)] successfully redeemed an antag token.")
@@ -228,6 +234,14 @@
 			traitors += arcfiend
 			arcfiend.special_role = ROLE_ARCFIEND
 			possible_arcfiends.Remove(arcfiend)
+
+	if(num_brainslug)
+		var/list/possible_brainslug = get_possible_enemies(ROLE_BRAINSLUG,num_brainslug)
+		var/list/chosen_brainslug = antagWeighter.choose(pool = possible_brainslug, role = ROLE_BRAINSLUG, amount = num_brainslug, recordChosen = 1)
+		for (var/datum/mind/brainslug in chosen_brainslug)
+			traitors += brainslug
+			brainslug.special_role = ROLE_BRAINSLUG
+			possible_brainslug.Remove(brainslug)
 
 	if(!traitors) return 0
 

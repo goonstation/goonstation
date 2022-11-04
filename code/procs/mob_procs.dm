@@ -912,6 +912,11 @@
 					if (see_everything)
 						var/I = image(antag_arcfiend, loc = M.current)
 						can_see.Add(I)
+				if (ROLE_BRAINSLUG)
+					if (see_everything)
+						//Todo add an image for slugs
+						var/I = image(antag_generic, loc = M.current)
+						can_see.Add(I)
 				if (ROLE_ZOMBIE)
 					if (see_everything || see_zombies)
 						var/I = image(antag_generic, loc = M.current)

@@ -283,6 +283,9 @@
 			if ("zombie")
 				window_title = "Zombie Basics"
 				filename = "html/traitorTips/zombieTips.html"
+			if ("brainslug")
+				window_title = "Brainslug"
+				filename = "html/traitorTips/brainslug.html"
 
 			// ghost roles
 			if ("ghostdrone")

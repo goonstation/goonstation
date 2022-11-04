@@ -2212,7 +2212,7 @@ var/global/noir = 0
 						/*	else
 								SPAWN(0) tgui_alert(usr,"An error occurred, please try again.")*/
 					else
-						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND)
+						var/list/traitor_types = list(ROLE_TRAITOR, ROLE_WIZARD, ROLE_CHANGELING, ROLE_VAMPIRE, ROLE_WEREWOLF, ROLE_HUNTER, ROLE_WRESTLER, ROLE_GRINCH, ROLE_OMNITRAITOR, ROLE_SPY_THIEF, ROLE_ARCFIEND, ROLE_BRAINSLUG)
 						if(ticker?.mode && istype(ticker.mode, /datum/game_mode/gang))
 							traitor_types += ROLE_GANG_LEADER
 						var/selection = input(usr, "Select traitor type.", "Traitorize", ROLE_TRAITOR) as null|anything in traitor_types
@@ -2756,7 +2756,7 @@ var/global/noir = 0
 								tgui_alert(usr,"The game hasn't started yet!")
 								return
 
-							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ARCFIEND,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
+							var/which_traitor = input("What kind of traitor?","Everyone's a Traitor") as null|anything in list(ROLE_TRAITOR,ROLE_WIZARD,ROLE_CHANGELING,ROLE_WEREWOLF,ROLE_VAMPIRE,ROLE_ARCFIEND,ROLE_BRAINSLUG,ROLE_HUNTER,ROLE_WRESTLER,ROLE_GRINCH,ROLE_OMNITRAITOR)
 							if(!which_traitor)
 								return
 							var/hardmode = null
@@ -4724,6 +4724,10 @@ var/global/noir = 0
 			if(ROLE_ARCFIEND)
 				M.show_text("<h2><font color=red><B>You feel starved for power!</B></font></h2>", "red")
 				M.mind.add_antagonist(ROLE_ARCFIEND)
+			if(ROLE_BRAINSLUG)
+				M.mind.special_role = ROLE_BRAINSLUG
+				M.make_brainslug()
+				M.show_text("<h2><font color=red><B>You have become infested with a brain slug!</B></font></h2>", "red")
 			if(ROLE_GANG_LEADER)
 				// hi so this tried in the past to make someone a gang leader without, uh, giving them a gang
 				// seeing as gang leaders are only allowed during the gang gamemode, this should work
