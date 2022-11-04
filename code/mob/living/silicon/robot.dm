@@ -890,9 +890,6 @@
 				dmgmult = 0.6
 			if(D_ENERGY)
 				dmgtype = 1
-				if(P.proj_data && P.proj_data.ks_ratio == 0) //guess who's throwing a fucking bandaid on this code? This replicates how they were before against borgs. This is fine.
-					src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = 20, stunned = 20, disorient = min(P.power, 80), remove_stamina_below_zero = 0, stack_stuns = 0)
-					src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 			if(D_BURNING)
 				dmgtype = 1
 				dmgmult = 0.75

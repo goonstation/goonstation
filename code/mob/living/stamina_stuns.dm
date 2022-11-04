@@ -237,7 +237,7 @@
 		return
 
 	var/disorient_mult = 1 - (protection/100)
-	var/stamdmg_mult = erp(disorient_mult, 1, 0.25) // apply 3/4 the reduction effect to the stamina damage
+	var/stamdmg_mult = lerp(disorient_mult, 1, 0.25) // apply 3/4 the reduction effect to the stamina damage
 
 	disorient *= disorient_mult
 	stamina_damage *= stamdmg_mult
