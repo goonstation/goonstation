@@ -25,9 +25,8 @@ obj/item/ammo/bullets/flechette_mag
 	name = "flechette"
 	shot_sound = 'sound/weapons/fleshot.ogg'
 	shot_volume = 70
-	power = 30
+	damage = 30
 	cost = 2
-	ks_ratio = 1
 	hit_ground_chance = 100
 	damage_type = D_PIERCING
 	armor_ignored = 0.66
@@ -78,8 +77,7 @@ obj/item/ammo/bullets/flechette_mag
 	name = "barrikada slug"
 	icon_state = "trace"
 	shot_sound = 'sound/weapons/kuvalda.ogg'
-	power = 110
-	ks_ratio = 1
+	damage = 110
 	dissipation_delay = 2
 	dissipation_rate = 5
 	damage_type = D_KINETIC
@@ -108,12 +106,11 @@ obj/item/ammo/bullets/flechette_mag
 
 			..()
 
-/datum/projectile/bullet/kulvada/shrapnel
+/datum/projectile/bullet/kuvalda/shrapnel
 	name = "shrapnel buckshot"
 	sname = "shrapnel buckshot"
 	icon_state = "trace"
-	power = 12
-	ks_ratio = 1
+	damage = 12
 	dissipation_rate = 2
 	dissipation_delay = 5
 	damage_type = D_KINETIC
@@ -136,12 +133,12 @@ obj/item/ammo/bullets/flechette_mag
 				M.sever_limb(pick("l_arm","r_arm","l_leg","r_leg"))
 			..()
 
-/datum/projectile/special/spreader/buckshot_burst/kulvada
+/datum/projectile/special/spreader/buckshot_burst/kuvalda
 	name = "shrapnel buckshot"
 	sname = "shrapnel buckshot"
 	cost = 1
 	pellets_to_fire = 8
-	spread_projectile_type = /datum/projectile/bullet/kulvada/shrapnel
+	spread_projectile_type = /datum/projectile/bullet/kuvalda/shrapnel
 	casing = /obj/item/casing/shotgun/gray
 	shot_sound = 'sound/weapons/kuvalda.ogg'
 	speed_max = 50
@@ -167,7 +164,7 @@ obj/item/ammo/bullets/flechette_mag
 	sname = "Shrapnel Buckshot"
 	name = "23mm shrapnel buckshot"
 	desc = "Enormous 23mm shotgun shells, loaded with a spread of lethal buckshot."
-	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/kulvada
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/kuvalda
 	icon_state = "shrapnel"
 	amount_left = 4
 	max_amount = 4
@@ -208,7 +205,7 @@ obj/item/ammo/bullets/flechette_mag
 
 	New()
 		ammo = new default_magazine
-		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/kulvada)
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/kuvalda)
 		..()
 
 	update_icon()

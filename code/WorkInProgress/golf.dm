@@ -161,10 +161,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "golf_ball"
 	shot_sound = null
-	power = 0
+	stun = 0
 	cost = 1
-	power = 10
-	ks_ratio = 0
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
 	dissipation_delay = 0
