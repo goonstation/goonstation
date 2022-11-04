@@ -16,6 +16,8 @@
 		src.AddStep(new /datum/tutorialStep/flock/release_drone)
 		src.AddStep(new /datum/tutorialStep/flock/kill)
 		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
+		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
 		src.AddStep(new /datum/tutorialStep/flock/relay)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
@@ -31,6 +33,7 @@
 		if (!.)
 			return FALSE
 		fowner.reset()
+		fowner.flock.perish(FALSE)
 		fowner.tutorial = null
 
 	proc/make_maptext(var/atom/target, var/msg)
@@ -39,6 +42,17 @@
 		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
 		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
 		text.show_to(actual_mob.client)
+
+	proc/portal_in(var/turf/location, var/type)
+		var/obj/portal/portal = new(location)
+		sleep(1 SECOND)
+		animate_portal_tele(portal)
+		playsound(portal.loc, "warp", 50, 1, 0.2, 1.2)
+		var/mob/jerk = new type(get_turf(portal))
+		step(jerk, SOUTH)
+		sleep(1 SECOND)
+		qdel(portal)
+		return jerk
 
 /datum/tutorialStep/flock
 	name = "Flock tutorial step"
@@ -174,14 +188,8 @@
 
 	SetUp()
 		..()
-		var/obj/portal/portal = new(locate(src.ftutorial.center.x, src.ftutorial.center.y + 3, src.ftutorial.center.z))
-		sleep(1 SECOND)
-		animate_portal_tele(portal)
-		playsound(portal.loc, "warp", 50, 1, 0.2, 1.2)
-		var/mob/living/carbon/human/normal/jerk = new(get_turf(portal))
-		step(jerk, SOUTH)
-		sleep(0.5 SECONDS)
-		qdel(portal)
+		var/turf/T = locate(src.ftutorial.center.x, src.ftutorial.center.y + 3, src.ftutorial.center.z)
+		src.ftutorial.portal_in(T, /mob/living/carbon/human/normal/assistant)
 
 	PerformAction(action, context)
 		if (action == "designate enemy" || action == "start conversion")
@@ -201,17 +209,46 @@
 			return TRUE
 		if (action == "building complete")
 			src.finished = TRUE
+			src.location.UpdateOverlays(null, "marker")
 			return TRUE
 
 /datum/tutorialStep/flock/build_thing/sentinel
 	name = "Construct Sentinel"
+	//TODO: add instruction about using click controls to order deposit after #11654 is merged
 	instructions = "There may be more humans around, build a Sentinel for protection. Move over the marked turf and use your \"place tealprint\" ability to place one, then let your drones construct it. Sentinels are powerful electric stun turrets, effective at making any humans who come into your lair go horizontal."
 	structure_type = /obj/flock_structure/sentinel
 
 	SetUp()
 		..()
 		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
+		src.location.UpdateOverlays(marker, "marker")
+
+/datum/tutorialStep/flock/build_thing/interceptor
+	name = "Construct Interceptor"
+	instructions = "As you can see, humans often carry guns that can be very harmful to our drones. Construct an Interceptor to destroy their bullets in mid air."
+	structure_type = /obj/flock_structure/interceptor
+
+	SetUp()
+		..()
+		src.ftutorial.fowner.flock.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
+		src.ftutorial.portal_in(get_turf(src.ftutorial.center), /mob/living/carbon/human/normal/chef/shoot_gun_person/)
+		src.location = locate(src.ftutorial.center.x - 1, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
+
+/datum/tutorialStep/flock/turret_demo
+	name = "Intercept"
+	instructions = "Watch the Interceptor destroy a bullet."
+	SetUp()
+		..()
+		var/turf/T = locate(src.ftutorial.center.x, src.ftutorial.center.y - 5, src.ftutorial.center.z)
+		var/obj/deployable_turret/riot/turret = new(T)
+		turret.set_angle(0)
+		turret.set_projectile()
+		sleep(1 SECOND)
+		muzzle_flash_any(turret, 0, "muzzle_flash")
+		shoot_projectile_ST_pixel_spread(turret, turret.current_projectile, src.ftutorial.center, 0, 0 , turret.spread)
+		SPAWN(10 SECONDS)
+			src.ftutorial.Advance()
 
 /datum/tutorialStep/flock/relay
 	name = "The Relay"
@@ -222,6 +259,9 @@
 	SetUp()
 		..()
 		var/turf/T = get_turf(src.ftutorial.center)
+		for (var/obj/flock_structure/cage/cage in range(3, T))
+			qdel(cage.occupant)
+			qdel(cage)
 		var/obj/flock_structure/ghost/tealprint = new(T, src.ftutorial.fowner.flock, /obj/flock_structure/relay)
 		tealprint.fake = TRUE
 		SPAWN(15 SECONDS)
@@ -252,11 +292,14 @@
 		var/obj/item/gun/kinetic/zipgun/gun = new(src)
 		gun.failure_chance = 0
 		src.put_in_hand(gun)
-		while(!is_incapacitated(src))
-			for (var/dir in modulo_angle_to_dir)
-				src.set_dir(dir)
-				sleep(1.5 SECONDS)
-				gun.ammo.amount_left = 2
-				var/turf/target = get_step(src, dir)
-				gun.shoot(target, src.loc, src)
+		SPAWN(0)
+			while(TRUE)
+				for (var/dir in modulo_angle_to_dir)
+					if (is_incapacitated(src))
+						return
+					src.set_dir(dir)
+					gun.ammo.amount_left = 2
+					var/turf/target = get_step(src, dir)
+					gun.shoot(target, src.loc, src)
+					sleep(1.5 SECONDS)
 
