@@ -4,7 +4,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rat_den"
 	desc = "A pile of sticky goo, restraining movement."
-	anchored = 1
+	anchored = 0
 	density = 0
 	_health = 30
 	var/mob/linked_mob = null
@@ -13,9 +13,14 @@
 
 	New(var/turf/T, var/mob/mob_to_link = null)
 		..()
-		linked_mob = mob_to_link
-		APPLY_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
-		linked_mob.anchored = TRUE
+		if (mob_to_link)
+			linked_mob = mob_to_link
+			APPLY_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
+			linked_mob.anchored = TRUE
+			var/datum/component/gluecomp = src.GetComponent(/datum/component/glued)
+			gluecomp?.RemoveComponent()
+			var/atom/movable/our_atom = src
+			our_atom.AddComponent(/datum/component/glued, linked_mob, -1, -1, FALSE)
 
 	disposing()
 		. = ..()

@@ -14,8 +14,9 @@ TYPEINFO(/datum/component/glued)
 	var/original_anchored
 	var/atom/glued_to
 	var/set_loc_rippoff_in_progress = FALSE
+	var/outline = TRUE
 
-/datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null)
+/datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null, visible_outline=TRUE)
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.glued_to = target
@@ -23,7 +24,9 @@ TYPEINFO(/datum/component/glued)
 	src.dries_up_timestamp = glue_duration ? TIME + glue_duration : null
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
-	parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
+	src.outline = visible_outline
+	if (src.outline)
+		parent.add_filter("glued_outline", 0, outline_filter(size=1, color="#e6e63c7f"))
 	delayed_dry_up(glue_duration)
 	if(ismovable(glued_to))
 		var/atom/movable/glued_to = src.glued_to
@@ -120,7 +123,8 @@ TYPEINFO(/datum/component/glued)
 	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
 		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ))
 	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
-	parent.remove_filter("glued_outline")
+	if (src.outline)
+		parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement
 	if(parent.anchored == MAGIC_GLUE_ANCHORED)
 		parent.anchored = src.original_anchored
