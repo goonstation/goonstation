@@ -170,7 +170,7 @@ To remove:
 
 #define PROP_UPDATE_TELEBLOCK_CAT(target, prop, old_val) do { \
 	var/is_teleblocking = GET_ATOM_PROPERTY_RAW(target, prop); \
-	if (isnull(old_val) || !isnull(is_teleblocking)) { \
+	if (isnull(old_val) && !isnull(is_teleblocking)) { \
 		OTHER_START_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
 	} else if (!isnull(old_val) && isnull(is_teleblocking)) { \
 		OTHER_STOP_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
