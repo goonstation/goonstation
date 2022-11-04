@@ -236,6 +236,7 @@ dmm_suite
 			else
 				if(ispath(atomPath, /turf))
 					//instance = new atomPath(location)
+					UNTIL(!location.delay_space_conversion())
 					instance = location.ReplaceWith(atomPath, keep_old_material = 0, handle_air = 0, handle_dir = 0, force = 1)
 					instance.set_dir(initial(instance.dir))
 				else
