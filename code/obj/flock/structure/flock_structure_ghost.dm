@@ -5,6 +5,7 @@
 	var/goal = 0 //mats needed to make the thing actually build
 	var/obj/flock_structure/building = null //thing thats being built
 	var/currentmats = 0 //mats currently in the thing.
+	var/fake = FALSE
 	flock_id = "Construction Tealprint"
 	density = FALSE
 
@@ -65,7 +66,7 @@
 /obj/flock_structure/ghost/Click(location, control, params)
 	if (("alt" in params2list(params)) || !istype(usr, /mob/living/intangible/flock/flockmind))
 		return ..()
-	if (tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
+	if (!src.fake && tgui_alert(usr, "Cancel tealprint construction?", "Tealprint", list("Yes", "No")) == "Yes")
 		cancelBuild()
 
 /obj/flock_structure/ghost/deconstruct()
@@ -83,6 +84,8 @@
 	alpha = lerp(104, 255, currentmats / goal)
 
 /obj/flock_structure/ghost/proc/add_mats(mats)
+	if (src.fake)
+		return
 	src.currentmats += mats
 
 	if(currentmats > goal)

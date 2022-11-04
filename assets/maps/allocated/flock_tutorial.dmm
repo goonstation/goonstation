@@ -2,6 +2,12 @@
 "a" = (
 /turf/space,
 /area/space)
+"d" = (
+/obj/machinery/computer/robotics{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
 "e" = (
 /obj/machinery/vending/computer3,
 /turf/simulated/floor,
@@ -34,11 +40,19 @@
 "l" = (
 /turf/simulated/wall/auto/supernorn,
 /area/space)
+"m" = (
+/obj/storage/secure/closet/security/forensics,
+/turf/simulated/floor,
+/area/space)
 "n" = (
 /obj/machinery/vending/book{
 	dir = 8;
 	pixel_x = 9
 	},
+/turf/simulated/floor,
+/area/space)
+"p" = (
+/obj/storage/secure/closet/fridge/kitchen,
 /turf/simulated/floor,
 /area/space)
 "q" = (
@@ -58,11 +72,27 @@
 /obj/machinery/junk_spawner,
 /turf/simulated/floor,
 /area/space)
+"s" = (
+/obj/machinery/computer/card{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
+"u" = (
+/obj/reagent_dispensers/foamtank,
+/turf/simulated/floor,
+/area/space)
 "C" = (
 /turf/simulated/floor,
 /area/space)
 "D" = (
 /obj/wingrille_spawn/auto/crystal,
+/turf/simulated/floor,
+/area/space)
+"E" = (
+/obj/machinery/computer3/generic/secure_data{
+	dir = 4
+	},
 /turf/simulated/floor,
 /area/space)
 "H" = (
@@ -114,6 +144,12 @@
 	credit = 12;
 	dir = 4;
 	pixel_x = -9
+	},
+/turf/simulated/floor,
+/area/space)
+"Y" = (
+/obj/machinery/computer3/terminal{
+	dir = 4
 	},
 /turf/simulated/floor,
 /area/space)
@@ -534,11 +570,11 @@ V
 C
 C
 T
-T
+E
 C
 C
 C
-T
+Y
 T
 C
 C
@@ -596,7 +632,7 @@ a
 a
 R
 l
-C
+m
 C
 C
 C
@@ -662,7 +698,7 @@ a
 a
 R
 l
-C
+p
 C
 C
 C
@@ -732,11 +768,11 @@ V
 C
 C
 T
-T
+s
 C
 C
 C
-T
+d
 T
 C
 C
@@ -772,7 +808,7 @@ C
 C
 C
 C
-C
+u
 l
 l
 R

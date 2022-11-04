@@ -16,6 +16,7 @@
 		src.AddStep(new /datum/tutorialStep/flock/release_drone)
 		src.AddStep(new /datum/tutorialStep/flock/kill)
 		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/relay)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
 			if(src.region.turf_in_region(T))
@@ -32,6 +33,12 @@
 		fowner.reset()
 		fowner.tutorial = null
 
+	proc/make_maptext(var/atom/target, var/msg)
+		msg = "<span class=\"ol vga c\" style=\"font-size:9pt\">[msg]</span>"
+		var/obj/dummy = new(get_turf(target))
+		var/image/chat_maptext/text = make_chat_maptext(dummy, msg, force = TRUE, time = INFINITY)
+		var/mob/actual_mob = src.fowner.abilityHolder.get_controlling_mob() //hunt for the client
+		text.show_to(actual_mob.client)
 
 /datum/tutorialStep/flock
 	name = "Flock tutorial step"
@@ -146,11 +153,20 @@
 			var/mob/living/critter/flock/bit/flockdrone = new(locate(src.ftutorial.center.x + rand(-3,3), src.ftutorial.center.y + rand(-3,3), src.ftutorial.center.z), ftutorial.fowner.flock)
 			spawn_animation1(flockdrone)
 			sleep(0.2 SECONDS)
+		var/msg = "Human resource containers convert into Flock resource Fabricators."
+		src.ftutorial.make_maptext(locate(/obj/machinery/vending) in range(10, src.ftutorial.center), msg)
+
+		msg = "Human computers convert into Flock compute nodes. Each provides 60 compute."
+		src.ftutorial.make_maptext(locate(/obj/machinery/computer) in range(10, src.ftutorial.center), msg)
 
 	PerformAction(action, context)
 		if (action == "release drone")
 			finished = TRUE
 			return TRUE
+
+/atom/proc/maptext_test()
+	var/image/chat_maptext/text = make_chat_maptext(src, "Vending machine", force = TRUE, time = INFINITY)
+	text.show_to(usr.client)
 
 /datum/tutorialStep/flock/kill
 	name = "Eliminate threat"
@@ -197,13 +213,31 @@
 		src.location = locate(src.ftutorial.center.x, src.ftutorial.center.y - 3, src.ftutorial.center.z)
 		location.UpdateOverlays(marker, "marker")
 
+/datum/tutorialStep/flock/relay
+	name = "The Relay"
+	New()
+		src.instructions = "This is the Relay, your ultimate goal. Unlocked at [FLOCK_RELAY_COMPUTE_COST] compute, when complete it will allow you to transmit the Signal and cast the Flock out towards our next target."
+		..()
+
+	SetUp()
+		..()
+		var/turf/T = get_turf(src.ftutorial.center)
+		var/obj/flock_structure/ghost/tealprint = new(T, src.ftutorial.fowner.flock, /obj/flock_structure/relay)
+		tealprint.fake = TRUE
+		SPAWN(15 SECONDS)
+			src.ftutorial.Advance()
+
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
-	if (!tutorial)
+	if (!src.tutorial)
 		boutput(src, "<span class='alert'>You're not in a tutorial, doofus. It's real. IT'S ALL REAL.</span>")
 		return
 	src.tutorial.Finish()
 	src.tutorial = null
+
+/mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
+	set name = "SKIP TUTORIAL STEP"
+	src.tutorial.Advance()
 
 /obj/machinery/junk_spawner
 	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)
