@@ -803,7 +803,6 @@ toxic - poisons
 	shot_sound = 'sound/weapons/flaregun.ogg'
 	damage = 20
 	cost = 1
-	ks_ratio = 1
 	damage_type = D_BURNING
 	hit_type = null
 	brightness = 1

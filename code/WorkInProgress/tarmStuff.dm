@@ -393,7 +393,6 @@
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	ks_ratio = 1
 	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
