@@ -768,14 +768,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 			qdel(src)
 
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip))
-			if (reagents.total_volume)
-				boutput(user, "You dip [W] into the bowl.")
-				reagents.trans_to(W, 10)
-			else
-				boutput(user, "<span class='alert'>There's nothing in the bowl to dip!</span>")
-
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/churro))
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/tortilla_chip) || istype(W, /obj/item/reagent_containers/food/snacks/churro))
 			if (reagents.total_volume)
 				boutput(user, "You dip [W] into the bowl.")
 				reagents.trans_to(W, 10)
