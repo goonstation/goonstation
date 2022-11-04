@@ -357,7 +357,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "fusionorb"
 	shot_sound = 'sound/weapons/energy/InfernoCannon.ogg'
 	damage = 60
-	stun = 15//yassTODO
+	stun = 20
 	cost = 75
 	damage_type = D_BURNING
 	dissipation_delay = 15
@@ -467,7 +467,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "orb_white"
 	shot_sound = 'sound/weapons/laserultra.ogg'
 	damage = 80
-	stun = 80//yassTODO
+	stun = 80
 	cost = 75
 	damage_type = D_BURNING
 	dissipation_delay = 0

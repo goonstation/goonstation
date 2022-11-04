@@ -329,10 +329,10 @@ toxic - poisons
 /datum/projectile/bullet/nine_mm_NATO
 	name = "bullet"
 	shot_sound = 'sound/weapons/9x19NATO.ogg'
-	damage = 5.5
-	stun = 0.5//yassTODO
+	damage = 6
+	stun = 4
 	hit_ground_chance = 75
-	dissipation_rate = 2
+	dissipation_rate = 3
 	dissipation_delay = 8
 	projectile_speed = 48
 	impact_image_state = "bhole-small"
@@ -482,7 +482,7 @@ toxic - poisons
 	sname = "biodegradable CyberFoam dart"
 	damage_type = D_KINETIC
 	damage = 0
-	stun = 1.5//yassTODO // about 33 shots to down a full-stam person
+	stun = 2.5// about 33 shots to down a full-stam person
 
 	drop_as_ammo(obj/projectile/P)
 		var/obj/item/ammo/bullets/foamdarts/dropped = ..()
@@ -514,7 +514,7 @@ toxic - poisons
 	name = "bullet"
 	shot_sound = 'sound/weapons/derringer.ogg'
 	damage = 80
-	stun = 40//yassTODO
+	stun = 40
 	dissipation_delay = 1
 	dissipation_rate = 50
 	damage_type = D_PIERCING
@@ -717,8 +717,8 @@ toxic - poisons
 	name = "rubber slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	damage = 5
-	stun = 20//yassTODO
-	dissipation_rate = 4
+	stun = 25
+	dissipation_rate = 5
 	dissipation_delay = 3
 	implanted = null
 	damage_type = D_KINETIC
@@ -1144,7 +1144,7 @@ datum/projectile/bullet/autocannon
 	icon_state = "40mm_nonlethal"
 	shot_sound = 'sound/weapons/launcher.ogg'
 	damage = 25
-	stun = 25 //yassTODO
+	stun = 50
 	dissipation_rate = 5
 	dissipation_delay = 4
 	max_range = 9
@@ -1530,7 +1530,7 @@ datum/projectile/bullet/autocannon
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_BLUNT
 	damage = 200
-	stun = 200//yassTODO
+	stun = 200
 	dissipation_delay = 300
 	dissipation_rate = 5
 	cost = 1

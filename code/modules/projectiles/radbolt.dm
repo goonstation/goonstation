@@ -4,7 +4,7 @@
 	icon_state = "cbbolt" // changed from radbolt - cogwerks
 //How much of a punch this has, tends to be seconds/damage before any resist
 	damage = 80
-	stun = 20//yassTODO
+	stun = 40
 //How much ammo this costs
 	cost = 40
 //How fast the power goes away

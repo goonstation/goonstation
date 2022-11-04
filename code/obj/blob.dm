@@ -760,7 +760,7 @@
 	color_blue = 0
 	color_icon = "#ffffff"
 	damage = 10
-	stun = 10//yassTODO
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
