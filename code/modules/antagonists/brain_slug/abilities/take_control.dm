@@ -19,11 +19,11 @@
 			spawn(3 SECONDS)
 				if (!the_mob || !the_slug) return
 				if (the_slug.loc != the_mob) return
-				violent_standup_twitch(the_mob)
-				playsound(M.loc, 'sound/effects/bones_break.ogg', 30, 1)
+				hit_twitch(the_mob)
 				spawn(2 SECONDS)
 					if (!the_mob || !the_slug) return
 					if (the_slug.loc != the_mob) return
+					make_cleanable(/obj/decal/cleanable/slime, the_mob.loc)
 					the_slug.mind?.transfer_to(the_mob)
 					the_mob.full_heal()
 		else
