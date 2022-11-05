@@ -410,18 +410,20 @@
 	var/datum/powernet/powernet = src.get_direct_powernet()
 	if (!powernet) return
 	for(var/obj/machinery/power/solar/Solar in powernet.nodes)
-		if(Solar.control) continue
+		if(Solar.control != src && Solar.control) continue
 		if(current_state != GAME_STATE_PLAYING && Solar.id != src.solar_id)
 			continue // some solars are weird
 		Solar.control = src
-		src.cdir = Solar.adir
-	for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
-		if(Tracker.control) continue
-		if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
-			continue // some solars are weird
-		Tracker.control = src
-		src.tracker = Tracker
-		break
+		Solar.ndir = src.cdir
+
+	if (!src.tracker)
+		for(var/obj/machinery/power/tracker/Tracker in powernet.nodes)
+			if(Tracker.control != src && Tracker.control) continue
+			if(current_state != GAME_STATE_PLAYING && Tracker.id != src.solar_id)
+				continue // some solars are weird
+			Tracker.control = src
+			src.tracker = Tracker
+			break
 
 // hotfix until someone edits all maps to add proper wires underneath the computers
 /obj/machinery/computer/solar_control/get_power_wire()
