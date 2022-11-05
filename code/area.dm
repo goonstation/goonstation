@@ -1545,6 +1545,10 @@ ABSTRACT_TYPE(/area/sim)
 	name = "Gun Sim"
 	icon_state = "gunsim"
 
+	dark
+		name = "Gun Sim maintenance"
+		force_fullbright = FALSE
+		icon_state = "red"
 
 /area/sim/test_area
 	name = "Toxin Test Area"
