@@ -60,10 +60,16 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	var/obj/item/cell/intcap = null
 	///Whether the array's conditions for refilling its internal capacitor are satisfied; used for load logic and overlay control
 	var/intcap_charging = FALSE
+	///Whether the door for the internal capacitor's compartment is open
+	var/intcap_door_open = FALSE
 	///How fast the internal capacitor will attempt to draw down grid power while intcap_charging is true
 	var/intcap_draw_rate = 10 KILO WATTS
 	///Amount of surplus past intcap_draw_rate that's required for charging, as a safeguard against spikes in demand
 	var/grid_surplus_threshold = 20 KILO WATTS
+
+	//If the internal capacitor is sabotaged, it will rupture, damaging the capacitor cabinet and bringing the array offline.
+	///This condition tracks the progress of array repair; status of 8 indicates full condition
+	var/repair_status = 8
 
 	New()
 		. = ..()
@@ -81,17 +87,18 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 	process()
 		. = ..()
-		src.charge_intcap()
-		if(!src.primed)
-			src.attempt_restart()
-		src.UpdateIcon() //because of apc/intcap reporting, mainly
+		if(!(status & BROKEN))
+			src.charge_intcap()
+			if(!src.primed)
+				src.attempt_restart()
+			src.UpdateIcon() //because of apc/intcap reporting, mainly
 
 	///Respond to a pad's inquiry of whether a transception can occur
 	proc/can_transceive(var/pad_netnum)
 		. = TRANSCEIVE_BUSY
 		if(src.is_transceiving)
 			return
-		if(!powered() || !src.primed)
+		if(!powered() || !src.primed || status & BROKEN)
 			return TRANSCEIVE_NOPOWER
 		if(src.failsafe_inquiry())
 			return TRANSCEIVE_POWERWARN
@@ -226,6 +233,11 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	proc/intcap_failure()
 		src.intcap.rigged = FALSE
 		src.intcap_charging = FALSE
+		src.status |= BROKEN
+		src.primed = FALSE
+		src.intcap_door_open = FALSE
+		src.repair_status = 0
+		src.UpdateIcon()
 		if (intcap.rigger)
 			message_admins("[key_name(intcap.rigger)]'s rigged cell damaged the transception array at [log_loc(src)].")
 			logTheThing(LOG_COMBAT, intcap.rigger, "'s rigged cell damaged the transception array at [log_loc(src)].")
@@ -237,6 +249,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 
 		var/epicenter = get_turf(src)
 		playsound(epicenter, "explosion", 90, 1)
+		//this doesn't actually explode because turf safe explosions don't respect "space" (ocean) turfs, and I'd like surroundings not punctured
 
 		SPAWN(0)
 			qdel(src.intcap)
@@ -245,8 +258,171 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	ex_act(severity)
 		return //it's a tough critter if you're not damaging it from the inside
 
+/obj/machinery/communications_dish/transception/attack_hand(mob/user)
+	if(src.intcap && intcap_door_open)
+		boutput(user, "<span class='notice'>You remove \the [intcap] from the cabinet's cell compartment.</span>")
+		playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+
+		user.put_in_hand_or_drop(src.intcap)
+		src.intcap = null
+		return
+	..()
+
+/obj/machinery/communications_dish/transception/attackby(obj/item/I, mob/user)
+	src.add_fingerprint(user)
+	if(status & BROKEN && !istype(I, /obj/item/grab/))
+		var/tell_you_what_to_do_next = TRUE //probably-simpler way to tell people what to do next
+
+		if (isweldingtool(I))
+			if (src.repair_status <= 2)
+				boutput(user, "You start repairing the damaged sections of the outer cabinet plating.")
+				actions.start(new/datum/action/bar/icon/array_repair_weld(user,I,src), user)
+				tell_you_what_to_do_next = FALSE
+
+		else if (iswrenchingtool(I))
+			if (src.repair_status == 3 || src.repair_status == 7)
+				var/cursed_check = src.repair_status - 3
+				boutput(user, "You start [cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 6 SECONDS, /obj/machinery/communications_dish/transception/proc/wrench_cabinet,\
+				list(user), I.icon, I.icon_state, null, null)
+				tell_you_what_to_do_next = FALSE
+
+		else if (ispryingtool(I))
+			if (src.repair_status == 4)
+				boutput(user, "You start prying out the damaged frame rods.")
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /obj/machinery/communications_dish/transception/proc/pry_cabinet,\
+				list(user), I.icon, I.icon_state, null, null)
+				tell_you_what_to_do_next = FALSE
+
+		else if(istype(I, /obj/item/sheet))
+			if (src.repair_status == 5)
+				var/obj/item/sheet/S = I
+				if (S.material && S.material.material_flags & MATERIAL_METAL)
+					S.change_stack_amount(-1)
+					boutput(user, "You install a new compartment door.")
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.repair_status++
+					src.UpdateIcon()
+					tell_you_what_to_do_next = FALSE
+
+		else if(istype(I, /obj/item/rods))
+			if (src.repair_status == 6)
+				var/obj/item/rods/R = I
+				if (R.material && R.material.material_flags & MATERIAL_METAL && R.amount > 1)
+					R.change_stack_amount(-2)
+					boutput(user, "You install new structural rods.")
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+					src.repair_status++
+					src.UpdateIcon()
+					tell_you_what_to_do_next = FALSE
+
+		if (tell_you_what_to_do_next)
+			switch (src.repair_status)
+				if(0 to 2)
+					boutput(user, "The array looks pretty beat. A good place to start would be welding the microvoltage cabinet's plating.")
+				if(3)
+					boutput(user, "The cabinet is mostly back together, but some of the rods are shredded. There are bolts holding them in place.")
+				if(4)
+					boutput(user, "The bolts for the broken rods have been removed, but it seems they'll need some prying to come out.")
+				if(5)
+					boutput(user, "With broken rods gone, this seems like a good time to grab some metal sheets and make a new compartment door.")
+				if(6)
+					boutput(user, "The internal capacitor's microvoltage cabinet seems intact now. Some rods for the frame would be good.")
+				if(7)
+					boutput(user, "The newly-repaired rods seem a bit shaky; they haven't been bolted in yet.")
+	else
+		if (ispryingtool(I))
+			boutput(user, "You [intcap_door_open ? "close" : "open"] the internal capacitor cabinet's cell compartment.")
+			src.intcap_door_open = !src.intcap_door_open
+			src.UpdateIcon()
+		else if(!src.intcap && intcap_door_open && istype(I,/obj/item/cell))
+			boutput(user, "You install [I] into the cabinet's cell compartment.")
+			user.u_equip(I)
+			I.set_loc(src)
+			src.intcap = I
+		else
+			..(I,user)
+
+/obj/machinery/communications_dish/transception/proc/wrench_cabinet(mob/user)
+	var/cursed_check = src.repair_status - 3
+	boutput(user, "You finish [cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
+	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+	src.repair_status++
+	if(src.repair_status == 8)
+		src.status &= ~BROKEN
+	src.UpdateIcon()
+
+/obj/machinery/communications_dish/transception/proc/pry_cabinet(mob/user)
+	boutput(user, "You finish prying out the damaged rods.")
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 75, 1)
+	src.repair_status++
+	src.UpdateIcon()
+
+/datum/action/bar/icon/array_repair_weld
+	duration = 5 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "array_repair_weld"
+	icon = 'icons/obj/items/tools/weldingtool.dmi'
+	icon_state = "weldingtool-on"
+	var/mob/living/user
+	var/obj/weldingtool
+	var/obj/machinery/communications_dish/transception/target
+
+	New(usermob,tool,array)
+		user = usermob
+		weldingtool = tool
+		target = array
+		..()
+
+	onUpdate()
+		..()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	loopStart()
+		..()
+		if (!isweldingtool(weldingtool) || !istype(target))
+			logTheThing(LOG_DEBUG, null, "Transception array welding action bar was passed improper objects. Somehow.")
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+	onEnd()
+		if(BOUNDS_DIST(user, target) > 0 || user == null || target == null || !user.find_in_hand(weldingtool))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(weldingtool:try_weld(user, 1))
+			target.repair_status++
+			target.UpdateIcon()
+		else
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if(target.repair_status > 2)
+			user.show_text("You finish welding the array cabinet.", "blue")
+			..()
+			return
+
+		src.onRestart()
+
 /obj/machinery/communications_dish/transception/update_icon()
-	if(powered())
+	if(repair_status < 8)
+		src.icon_state = "array_busted[repair_status]"
+	else
+		src.icon_state = "array[intcap_door_open ? "_panelopen" : null]"
+
+	if(powered() && !(status & BROKEN))
 		var/image/commglow = SafeGetOverlayImage("commglow", 'icons/obj/machines/transception.dmi', "powered")
 		commglow.plane = PLANE_ABOVE_LIGHTING
 		UpdateOverlays(commglow, "commglow", 0, 1)
