@@ -30832,10 +30832,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/toxins{
-	dir = 2;
-	
-	},
+/obj/machinery/atmospherics/pipe/tank/toxins,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQe" = (
@@ -31064,10 +31061,7 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bQH" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
-	dir = 2;
-	
-	},
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQI" = (
@@ -37668,10 +37662,10 @@
 /area/sim/racing_entry)
 "ckX" = (
 /turf/unsimulated/wall{
-	desc = "Looks pretty tough. I wouldn't take this door on in a fight.";
+	desc = "A double black security door. Looks pretty tough. I wouldn't take this door on in a fight.";
 	icon = 'icons/obj/doors/destiny.dmi';
 	icon_state = "fmorg_closed";
-	name = "double black"
+	name = "airlock"
 	},
 /area/sim/gunsim/lobby)
 "ckY" = (
