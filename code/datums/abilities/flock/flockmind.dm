@@ -199,7 +199,7 @@
 
 	if(length(F.flock.traces) >= F.flock.max_trace_count)
 		if (length(F.flock.traces) < round(FLOCK_RELAY_COMPUTE_COST / FLOCKTRACE_COMPUTE_COST))
-			boutput(holder.get_controlling_mob(), "<span class='alert'>You cannot make any Flocktraces!</span>")
+			boutput(holder.get_controlling_mob(), "<span class='alert'>You need more compute!</span>")
 		else
 			boutput(holder.get_controlling_mob(), "<span class='alert'>You cannot make any more Flocktraces!</span>")
 		return TRUE
