@@ -7,7 +7,7 @@
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/nodealert = 0
-	var/noleakgas = FALSE
+	var/leakgas = FALSE
 
 
 /obj/machinery/atmospherics/pipe/proc/check_pressure(pressure)
@@ -157,7 +157,7 @@
 	if(pressure > fatigue_pressure) check_pressure(pressure)
 
 /obj/machinery/atmospherics/pipe/simple/proc/leak_gas()
-	if (noleakgas) return
+	if (!leakgas) return
 	var/datum/gas_mixture/gas = return_air()
 	var/datum/gas_mixture/environment = loc.return_air()
 
@@ -204,7 +204,7 @@
 		parent?.mingle_with_turf(loc, volume)
 		node1?.disconnect(src)
 		node2?.disconnect(src)
-		src.noleakgas = FALSE
+		src.leakgas = TRUE
 		UpdateIcon()
 		return
 

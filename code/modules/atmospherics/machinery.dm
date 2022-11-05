@@ -77,13 +77,13 @@ Pipelines + Other Objects -> Pipe network
 	for (var/obj/machinery/atmospherics/node in src.pipeline_expansion())
 		node.initialize()
 		if (ispath(node, /obj/machinery/atmospherics/pipe))
-			node:noleakgas = FALSE
+			node:leakgas = TRUE
 		node.UpdateIcon()
 
 /obj/machinery/atmospherics/proc/itemify()
 	new /obj/item/pipeconstruct(src.loc, src)
 	for (var/obj/machinery/atmospherics/pipe/node in src.pipeline_expansion())
-		node.noleakgas = TRUE
+		node.leakgas = FALSE
 	qdel(src)
 
 /obj/machinery/atmospherics/attackby(obj/item/W, mob/user)
