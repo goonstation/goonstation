@@ -23,7 +23,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4
+        uses: hecrj/setup-rust-action@v1.4.0
 
       - name: Install Dependencies
         run: |
@@ -134,7 +134,7 @@ jobs:
           key: ${{ runner.os }}-spacemandmm
 
       - name: Setup Rust
-        uses: hecrj/setup-rust-action@v1.4
+        uses: hecrj/setup-rust-action@v1.4.0
 
       - name: Install Dependencies
         run: |
