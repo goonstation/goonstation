@@ -2117,7 +2117,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "wL" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating/airless,
@@ -2758,7 +2758,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "Av" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating/airless,
@@ -3257,7 +3257,7 @@
 /area/evilreaver/security)
 "Dy" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating,
@@ -4860,7 +4860,7 @@
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "Nu" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/machinery/door/poddoor{
@@ -5187,7 +5187,7 @@
 	},
 /area/mining/mainasteroid)
 "PO" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/decal/cleanable/gangtag{
@@ -5946,7 +5946,7 @@
 /turf/simulated/martian/floor,
 /area/noGenerate)
 "UN" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/machinery/door/poddoor{
