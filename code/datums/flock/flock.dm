@@ -28,7 +28,7 @@ var/flock_signal_unleashed = FALSE
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
 	var/list/enemies = list()
-	var/list/allies = list()
+	var/list/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
 	///Static cache of annotation images
@@ -363,12 +363,12 @@ var/flock_signal_unleashed = FALSE
 	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 	.[FLOCK_ANNOTATION_HEALTH] = health
 
-	var/image/heart = image('icons/misc/featherzone.dmi', icon_state = "heart")
-	heart.blend_mode = BLEND_ADD
-	heart.plane = PLANE_ABOVE_LIGHTING
-	heart.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
-	heart.pixel_y = 16
-	.[FLOCK_ANNOTATION_ALLY] = heart
+	var/image/ignore = image('icons/misc/featherzone.dmi', icon_state = "ignore")
+	ignore.blend_mode = BLEND_ADD
+	ignore.plane = PLANE_ABOVE_LIGHTING
+	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	ignore.pixel_y = 16
+	.[FLOCK_ANNOTATION_IGNORE] = ignore
 
 ///proc to get the indexed list of annotations on a particular mob
 /datum/flock/proc/getAnnotations(atom/target)
@@ -538,7 +538,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/updateEnemy(atom/M)
 	if(!M)
 		return
-	if (M in src.allies)
+	if (src.isIgnored(M))
 		return
 	if (isvehicle(M))
 		for (var/mob/occupant in M) // making assumption flock knows who everyone in the pod is
@@ -570,20 +570,20 @@ var/flock_signal_unleashed = FALSE
 	var/enemy_name = M
 	return (enemy_name in src.enemies)
 
-/datum/flock/proc/addAlly(atom/A)
+/datum/flock/proc/addIgnore(atom/A)
 	if (ismob(A) && find_radio_on(A))
 		boutput(A, "<i class='flocksay'>You hear echoes of the Signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
-	src.allies |= A
-	src.addAnnotation(A, FLOCK_ANNOTATION_ALLY)
+	src.ignores |= A
+	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
-/datum/flock/proc/removeAlly(atom/A)
+/datum/flock/proc/removeIgnore(atom/A)
 	if (ismob(A) && find_radio_on(A))
 		boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
-	src.allies -= A
-	src.removeAnnotation(A, FLOCK_ANNOTATION_ALLY)
+	src.ignores -= A
+	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
-/datum/flock/proc/isAlly(atom/A)
-	return A in src.allies
+/datum/flock/proc/isIgnored(atom/A)
+	return A in src.ignores
 
 // DEATH
 ///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
@@ -704,9 +704,9 @@ var/flock_signal_unleashed = FALSE
 		M = src.enemies[enemy]["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
-	for(var/atom/ally in src.allies)
-		if (QDELETED(ally))
-			src.removeAlly(ally)
+	for(var/atom/ignore in src.ignores)
+		if (QDELETED(ignore))
+			src.removeIgnore(ignore)
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)

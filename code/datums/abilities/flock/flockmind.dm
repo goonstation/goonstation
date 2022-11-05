@@ -167,8 +167,8 @@
 
 	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(M)] as [flock.isEnemy(M) ? "" : "not "]an enemy at [log_loc(src.holder.owner)].")
 
-	if (flock.isAlly(M))
-		flock.removeAlly(M)
+	if (flock.isIgnored(M))
+		flock.removeIgnore(M)
 	else if (flock.isEnemy(M))
 		flock.removeEnemy(M)
 		return
@@ -176,13 +176,13 @@
 	flock.updateEnemy(M)
 
 
-/datum/targetable/flockmindAbility/designateAlly
-	name = "Designate ally"
-	desc = "Mark or unmark someone as an ally."
-	icon_state = "designate_ally"
+/datum/targetable/flockmindAbility/designateIgnore
+	name = "Designate ignore"
+	desc = "Designate someone to be ignored by your Flock."
+	icon_state = "designate_ignore"
 	cooldown = 0.1 SECONDS
 
-/datum/targetable/flockmindAbility/designateAlly/cast(atom/target)
+/datum/targetable/flockmindAbility/designateIgnore/cast(atom/target)
 	if(..())
 		return TRUE
 
@@ -195,13 +195,13 @@
 	if (!F.flock)
 		return TRUE
 
-	logTheThing(LOG_COMBAT, holder.get_controlling_mob(), "designates [constructTarget(target)] as [F.flock.isAlly(target) ? "" : "not "]an ally at [log_loc(src.holder.owner)].")
+	logTheThing(LOG_COMBAT, holder.owner, "designates [constructTarget(target)] to [F.flock.isIgnored(target) ? "" : "not "] be ignored by their flock at [log_loc(src.holder.owner)].")
 
-	if (F.flock.isAlly(target))
-		F.flock.removeAlly(target)
+	if (F.flock.isIgnored(target))
+		F.flock.removeIgnore(target)
 	else
 		F.flock.removeEnemy(target)
-		F.flock.addAlly(target)
+		F.flock.addIgnore(target)
 
 /////////////////////////////////////////
 

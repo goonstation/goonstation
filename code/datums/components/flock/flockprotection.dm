@@ -46,7 +46,7 @@
 	else if (hasvar(source, "flock_id"))
 		report_name = "the " + source.vars["flock_id"]
 
-	if (snitch.flock.isAlly(attacker))
+	if (snitch.flock.isIgnored(attacker))
 		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_betrayal")] [attacker]", snitch.flock)
 	else if (!snitch.flock.isEnemy(attacker))
 		flock_speak(snitch, "Damage sighted on [report_name], [pick_string("flockmind.txt", "flockdrone_enemy")] [attacker]", snitch.flock)
