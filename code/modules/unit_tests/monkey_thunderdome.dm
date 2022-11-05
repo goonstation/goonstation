@@ -8,7 +8,7 @@
 		var/mob/living/carbon/human/npc/monkey/angry/testing/monke = new(pick(spawn_turfs))
 		monke.mob_flags |= HEAVYWEIGHT_AI_MOB // gotta go fast
 	LAGCHECK(LAG_HIGH)
-	sleep(8 SECONDS)
+	sleep(15 SECONDS)
 	var/caused_runtimes = runtime_count - starting_runtimes
 	if (caused_runtimes)
 		Fail("Angery monkeys caused [caused_runtimes] runtimes")
