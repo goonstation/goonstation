@@ -17,21 +17,23 @@
 		..()
 		drone_controller = addAbility(/datum/targetable/flockmindAbility/droneControl)
 
-/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute)
+/datum/abilityHolder/flockmind/proc/updateCompute(usedCompute, totalCompute, forceTextUpdate = FALSE)
 	var/mob/living/intangible/flock/F = owner
 	if(!F?.flock)
 		return //someone made a flockmind or flocktrace without a flock, or gave this ability holder to something else.
 	src.points = totalCompute - usedCompute
 	src.totalCompute = totalCompute
+	if (forceTextUpdate)
+		src.updateText()
 
 /datum/abilityHolder/flockmind/onAbilityStat()
 	..()
 	.= list()
 	.["Compute:"] = "[round(src.points)]/[round(src.totalCompute)]"
-	//var/mob/living/intangible/flock/F = owner
-	//if (!istype(F) || !F.flock)
-	//	return
-	//.["Traces:"] = "[length(F.flock.traces)]/[F.flock.max_trace_count]"
+	var/mob/living/intangible/flock/F = owner
+	if (!istype(F) || !F.flock)
+		return
+	.["Traces:"] = "[length(F.flock.traces)]/[F.flock.max_trace_count]"
 
 /atom/movable/screen/ability/topBar/flockmind
 	tens_offset_x = 19

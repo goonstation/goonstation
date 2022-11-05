@@ -24,7 +24,6 @@
 		src.flock.partitions_made++
 		if (free)
 			src.flock.free_traces++
-			//src.flock.update_computes()
 	else
 		src.death()
 
