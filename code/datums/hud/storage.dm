@@ -169,7 +169,7 @@
 				add_object(I, HUD_LAYER+1)
 			var/obj_loc = "[x+(i%sx)],[y-round(i/sx)]" //no pixel coords cause that makes click detection harder above
 			var/final_loc = "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"
-			I.screen_loc = final_loc
+			I.screen_loc = do_hud_offset_thing(I, final_loc)
 			src.obj_locs[obj_loc] = I
 			i++
 		empty_obj_loc =  "[x+(i%sx)],[y-round(i/sx)]:[pixel_y_adjust]"

@@ -1,6 +1,6 @@
 /datum/random_event/major/black_hole
 	name = "Black Hole"
-	required_elapsed_round_time = 40 MINUTES
+	required_elapsed_round_time = 26.6 MINUTES
 #ifdef RP_MODE
 	disabled = 1
 #endif

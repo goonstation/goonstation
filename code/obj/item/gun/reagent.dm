@@ -65,7 +65,7 @@
 
 		return 0
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.reagents && src.current_projectile)
 			if(src.fractional && src.reagents.total_volume > 0)
 				return 1
@@ -74,7 +74,7 @@
 		return 0
 
 	process_ammo(var/mob/user)
-		if (!canshoot())
+		if (!canshoot(user))
 			boutput(user, "<span class='alert'>\The [src]'s internal reservoir does not contain enough reagents to fire it!</span>")
 		if(!src.projectile_reagents)
 			src.reagents.remove_any(src.current_projectile.cost)

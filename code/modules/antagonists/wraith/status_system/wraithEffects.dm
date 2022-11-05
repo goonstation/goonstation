@@ -279,6 +279,8 @@
 		if (istype(M, /mob/wraith))
 			var/mob/wraith/W = M
 			if(optional)
+				M.addOverlayComposition(/datum/overlayComposition/insanity_light)
+				M.updateOverlaysClient(M.client)
 				W.forced_manifest = TRUE
 			else
 				W.haunting = TRUE
@@ -309,4 +311,6 @@
 		M.set_density(FALSE)
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_INVISIBILITY, M, INVIS_SPOOKY)
 		M.see_invisible = INVIS_SPOOKY
+		M.removeOverlayComposition(/datum/overlayComposition/insanity_light)
+		M.updateOverlaysClient(M.client)
 		. = ..()

@@ -177,43 +177,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 		body_icon = toCopy.body_icon
 		body_icon_state = toCopy.body_icon_state
-		head_icon = toCopy.head_icon
-		head_icon_state = toCopy.head_icon_state
 
-		customization_icon = toCopy.customization_icon
-
-		customization_first_color_original = toCopy.customization_first_color_original
-		customization_first_color = toCopy.customization_first_color
-		customization_first = toCopy.customization_first
-		customization_first_offset_y = toCopy.customization_first_offset_y
-		customization_first_original = toCopy.customization_first_original
-
-		customization_second_color_original = toCopy.customization_second_color_original
-		customization_second_color = toCopy.customization_second_color
-		customization_second = toCopy.customization_second
-		customization_second_offset_y = toCopy.customization_second_offset_y
-		customization_second_original = toCopy.customization_second_original
-
-		customization_third_color_original = toCopy.customization_third_color_original
-		customization_third_color = toCopy.customization_third_color
-		customization_third = toCopy.customization_third
-		customization_third_offset_y = toCopy.customization_third_offset_y
-		customization_third_original = toCopy.customization_third_original
-
-		special_hair_1_icon = toCopy.special_hair_1_icon
-		special_hair_1_state = toCopy.special_hair_1_state
-		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
-		special_hair_1_offset_y = toCopy.special_hair_1_offset_y
-
-		special_hair_2_icon = toCopy.special_hair_2_icon
-		special_hair_2_state = toCopy.special_hair_2_state
-		special_hair_2_color_ref = toCopy.special_hair_2_color_ref
-		special_hair_2_offset_y = toCopy.special_hair_2_offset_y
-
-		special_hair_3_icon = toCopy.special_hair_3_icon
-		special_hair_3_state = toCopy.special_hair_3_state
-		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
-		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
+		CopyOtherHeadAppearance(toCopy)
 
 		mob_detail_1_icon = toCopy.mob_detail_1_icon
 		mob_detail_1_state = toCopy.mob_detail_1_state
@@ -259,6 +224,45 @@ var/list/datum/bioEffect/mutini_effects = list()
 			var/mob/living/carbon/human/H = owner
 			H.update_colorful_parts()
 		return src
+
+	proc/CopyOtherHeadAppearance(var/datum/appearanceHolder/toCopy)
+		head_icon = toCopy.head_icon
+		head_icon_state = toCopy.head_icon_state
+
+		customization_icon = toCopy.customization_icon
+
+		customization_first_color_original = toCopy.customization_first_color_original
+		customization_first_color = toCopy.customization_first_color
+		customization_first = toCopy.customization_first
+		customization_first_offset_y = toCopy.customization_first_offset_y
+		customization_first_original = toCopy.customization_first_original
+
+		customization_second_color_original = toCopy.customization_second_color_original
+		customization_second_color = toCopy.customization_second_color
+		customization_second = toCopy.customization_second
+		customization_second_offset_y = toCopy.customization_second_offset_y
+		customization_second_original = toCopy.customization_second_original
+
+		customization_third_color_original = toCopy.customization_third_color_original
+		customization_third_color = toCopy.customization_third_color
+		customization_third = toCopy.customization_third
+		customization_third_offset_y = toCopy.customization_third_offset_y
+		customization_third_original = toCopy.customization_third_original
+
+		special_hair_1_icon = toCopy.special_hair_1_icon
+		special_hair_1_state = toCopy.special_hair_1_state
+		special_hair_1_color_ref = toCopy.special_hair_1_color_ref
+		special_hair_1_offset_y = toCopy.special_hair_1_offset_y
+
+		special_hair_2_icon = toCopy.special_hair_2_icon
+		special_hair_2_state = toCopy.special_hair_2_state
+		special_hair_2_color_ref = toCopy.special_hair_2_color_ref
+		special_hair_2_offset_y = toCopy.special_hair_2_offset_y
+
+		special_hair_3_icon = toCopy.special_hair_3_icon
+		special_hair_3_state = toCopy.special_hair_3_state
+		special_hair_3_color_ref = toCopy.special_hair_3_color_ref
+		special_hair_3_offset_y = toCopy.special_hair_3_offset_y
 
 	disposing()
 		owner = null

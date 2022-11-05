@@ -109,8 +109,9 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		if(!T || src.disposed) return
 		fireflash(T,1,1)
 		if(istype(H))
-			H.TakeDamage("chest",0,clamp(DNA.potency/2,10,50) + max(DNA.potency/5-20, 0)*(1-H.get_heat_protection()/100),0)//burn damage is half of the potency, soft capped at 50, with a minimum of 10, any extra potency is divided by 5 and added on. The resulting number is then reduced by heat resistance, and applied to the target.
-			H.update_burning(DNA.potency * 0.2)
+			var/p = max(DNA.potency, 0) //no vertical aymptote for you, buster
+			H.TakeDamage("chest", 0, (max(70 * p / (p + 100) + 5, 0)*(1-H.get_heat_protection()/100)), 0)//approaches 75 as potency approaches infinity
+			H.update_burning(p * 0.2)
 			boutput(H,"<span class='alert'>Hot liquid bursts out of [src], scalding you!</span>")
 		src.visible_message("<span class='alert'>[src] violently bursts into flames!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
@@ -125,7 +126,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	crop_suffix = " cob"
 	desc = "The assistants call it maize."
 	icon_state = "corn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 1
 	throwforce = 0
@@ -155,7 +156,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "clear corn cob"
 	desc = "Pure grain ethanol in a vague corn shape."
 	icon_state = "clearcorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#FFFFFF"
@@ -165,7 +166,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "Pepper corn cob"
 	desc = "Wha? Why's this called corn? It's pepper!"
 	icon_state = "peppercorn"
-	planttype = /datum/plant/crop/corn
+	planttype = /datum/plant/veg/corn
 	bites_left = 3
 	heal_amt = 3
 	food_color = "#373232"
@@ -175,7 +176,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soybean pod"
 	crop_suffix = " pod"
 	desc = "These soybeans are as close as two beans in a pod. Probably because they are literally beans in a pod."
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soy"
 	bites_left = 3
 	heal_amt = 1
@@ -188,7 +189,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "bean pod"
 	crop_suffix = " pod"
 	desc = "This bean pod contains an inordinately large bites_left of beans due to genetic engineering. How convenient."
-	planttype = /datum/plant/crop/beans
+	planttype = /datum/plant/veg/beans
 	icon_state = "beanpod"
 	bites_left = 1
 	heal_amt = 1
@@ -201,7 +202,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "pea pod"
 	crop_suffix = " pod"
 	desc = "These peas are like peas in a pod. Yeah."
-	planttype = /datum/plant/crop/peas
+	planttype = /datum/plant/veg/peas
 	icon_state = "peapod"
 	bites_left = 1
 	heal_amt = 1
@@ -221,7 +222,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "soylent chartreuse"
 	crop_suffix = " chartreuse"
 	desc = "Contains high-energy plankton!"
-	planttype = /datum/plant/crop/soy
+	planttype = /datum/plant/veg/soy
 	icon_state = "soylent"
 	bites_left = 3
 	heal_amt = 2
@@ -675,7 +676,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	name = "cucumber"
 	desc = "A widely-cultivated gourd, often served on sandwiches or pickled.  Not actually known for saving any kingdoms."
 	icon_state = "cucumber"
-	planttype = /datum/plant/veg/cucumber
+	planttype = /datum/plant/fruit/cucumber
 	w_class = W_CLASS_TINY
 	bites_left = 2
 	heal_amt = 1

@@ -38,7 +38,7 @@
 	New()
 		..()
 		src.ini_dir = src.dir
-		update_nearby_tiles(need_rebuild=1)
+		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_material)
 			src.setMaterial(getMaterial(default_material), copy = FALSE)
 		if (default_reinforcement)
@@ -310,7 +310,7 @@
 			return TRUE
 		if(istype(mover, /obj/projectile))
 			var/obj/projectile/P = mover
-			if(P.proj_data.window_pass)
+			if(P.proj_data?.window_pass)
 				return TRUE
 		if (!is_cardinal(dir))
 			return FALSE //full tile window, you can't move into it!

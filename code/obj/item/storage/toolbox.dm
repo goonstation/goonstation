@@ -42,6 +42,27 @@
 		return 1
 
 	attackby(obj/item/W, mob/user, obj/item/storage/T)
+		if (istype(W, /obj/item/tile) && !length(src.contents) && !isrobot(user)) // we are making a floorbot!
+			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+
+			user.put_in_hand_or_drop(B)
+			W.change_stack_amount(-1)
+
+			if(istype(src, /obj/item/storage/toolbox/emergency))
+				B.color_overlay = "floorbot_overlay_red"
+			else if(istype(src, /obj/item/storage/toolbox/electrical))
+				B.color_overlay = "floorbot_overlay_yellow"
+			else if(istype(src, /obj/item/storage/toolbox/artistic))
+				B.color_overlay = "floorbot_overlay_green"
+
+			if(B.color_overlay)
+				B.UpdateOverlays(image(B.icon, icon_state = B.color_overlay), "coloroverlay")
+
+			user.drop_item(src)
+			src.set_loc(B)
+			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
+			return
+
 		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
 			var/obj/item/storage/S = W
 			for (var/obj/item/I in S.get_contents())
@@ -77,9 +98,9 @@
 		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
+		/obj/item/electronics/scanner,\
 		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
-		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
 	yellow_tools

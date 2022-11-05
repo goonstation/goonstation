@@ -637,8 +637,7 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
-		if (food in src)
-			food.set_loc(get_turf(src))
+		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
 		food.vis_flags = initial(food.vis_flags)
@@ -1025,9 +1024,9 @@ TRAYS
 				else
 					ingredienttype="nonmeat"
 				var/image/foodoverlay = new /image('icons/obj/kitchen.dmi',"[ingredienttype]-[src.toppings]") //setting up an overlay image
-				foodoverlay.color = FOOD.food_color
+				foodoverlay.color = FOOD.get_food_color()
 				foodoverlay.layer = (src.layer+3)
-				toppingdata.Add(FOOD.food_color)
+				toppingdata.Add(FOOD.get_food_color())
 				FOOD.reagents?.trans_to(roll,FOOD.reagents.total_volume)
 				for(var/food_effect in FOOD.food_effects)
 					if(food_effect in roll.food_effects)

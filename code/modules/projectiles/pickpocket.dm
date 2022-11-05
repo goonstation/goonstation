@@ -4,15 +4,13 @@
 	//icon_state = null
 	icon_state = "pickpocket"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 30
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "pickpocket"
 //file location for the sound you want it to play
@@ -20,7 +18,7 @@
 //How many projectiles should be fired, each will cost the full cost
 	shot_number = 1
 //What is our damage type
-	damage_type = 0
+	damage_type = D_SPECIAL
 	//With what % do we hit mobs laying down
 	hit_ground_chance = 10
 	//Can we pass windows

@@ -415,7 +415,7 @@
 			UpdateOverlays(src.back.worn_material_texture_image, "material_back")
 		else
 			UpdateOverlays(null, "material_back")
-		src.back.screen_loc = hud.layouts[hud.layout_style]["back"]
+		src.back.screen_loc =  do_hud_offset_thing(src.back, hud.layouts[hud.layout_style]["back"])
 	else
 		UpdateOverlays(null, "wear_back")
 		UpdateOverlays(null, "material_back")
@@ -586,7 +586,7 @@
 			UpdateOverlays(src.belt.worn_material_texture_image, "material_belt")
 		else
 			UpdateOverlays(null, "material_belt")
-		src.belt.screen_loc = hud.layouts[hud.layout_style]["belt"]
+		src.belt.screen_loc = do_hud_offset_thing(belt, hud.layouts[hud.layout_style]["belt"])
 	else
 		UpdateOverlays(null, "wear_belt")
 		UpdateOverlays(null, "material_belt")
@@ -597,10 +597,10 @@
 //		src.wear_id.screen_loc = ui_id
 
 	if (src.l_store)
-		src.l_store.screen_loc = hud.layouts[hud.layout_style]["storage1"]
+		src.l_store.screen_loc = do_hud_offset_thing(src.l_store, hud.layouts[hud.layout_style]["storage1"])
 
 	if (src.r_store)
-		src.r_store.screen_loc = hud.layouts[hud.layout_style]["storage2"]
+		src.r_store.screen_loc = do_hud_offset_thing(src.r_store, hud.layouts[hud.layout_style]["storage2"])
 
 	if (src.hasStatus("handcuffed"))
 		src.remove_pulling()

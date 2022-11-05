@@ -7605,7 +7605,7 @@
 	dir = 4;
 	pixel_y = -10
 	},
-/obj/critter/nicespider{
+/mob/living/critter/spider/nice{
 	desc = "So, it was you!";
 	name = "source of all of those really atmospheric webs around"
 	},
@@ -10797,7 +10797,7 @@
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aJF" = (
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aJG" = (
@@ -11119,13 +11119,13 @@
 /area/lower_arctic/lower)
 "aKF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/lake,
 /area/lower_arctic/lower)
 "aKG" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/cobweb2,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKH" = (
@@ -11206,7 +11206,7 @@
 /turf/unsimulated/floor/arctic/abyss,
 /area/upper_arctic/exterior/abyss)
 "aKY" = (
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aKZ" = (
@@ -11469,7 +11469,7 @@
 /area/lower_arctic/lower)
 "aLU" = (
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/ice/baby,
+/mob/living/critter/spider/ice/baby,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aLV" = (
@@ -11749,7 +11749,7 @@
 /area/lower_arctic/lower)
 "aMF" = (
 /obj/decal/icefloor,
-/obj/critter/spider/ice,
+/mob/living/critter/spider/ice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aMG" = (
@@ -14266,7 +14266,7 @@
 /turf/unsimulated/floor/arctic/snow,
 /area/upper_arctic/exterior/surface)
 "aUq" = (
-/obj/critter/spider/ice/nice,
+/mob/living/critter/spider/ice/nice,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aUr" = (
@@ -16140,7 +16140,7 @@
 	},
 /area/upper_arctic/exterior/surface)
 "aZm" = (
-/obj/critter/spider/ice/queen,
+/mob/living/critter/spider/ice/queen,
 /obj/item/device/key/generic/coldsteel,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
@@ -19156,7 +19156,7 @@
 "bhl" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/plasmastone,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "bhm" = (
@@ -21249,7 +21249,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmv" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "bmw" = (
@@ -21441,9 +21441,7 @@
 	},
 /area/afterlife/heaven/hydroponics/inside)
 "bmY" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/caution/north,
@@ -21883,9 +21881,7 @@
 /turf/unsimulated/floor,
 /area/drone/office)
 "bnO" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor,
@@ -22082,7 +22078,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/assembly)
 "boi" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/caution/east,
@@ -23284,7 +23280,7 @@
 "brR" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "brS" = (
@@ -25270,7 +25266,7 @@
 /turf/unsimulated/floor/lava,
 /area/iomoon)
 "byG" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
 "byJ" = (
@@ -27169,9 +27165,6 @@
 	name = "indoor garden"
 	},
 /area/afterlife/heaven/hydroponics/inside)
-"bEN" = (
-/turf/space,
-/area/afterlife/heaven/hydroponics/inside)
 "bEO" = (
 /obj/shrub{
 	dir = 8
@@ -28361,7 +28354,7 @@
 /turf/unsimulated/floor/wood/two,
 /area/owlery/staffhall)
 "bIo" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /obj/machinery/door/poddoor/blast{
 	dir = 4;
 	id = null
@@ -30142,7 +30135,7 @@
 /turf/unsimulated/floor/delivery,
 /area/crunch)
 "bNY" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
@@ -30291,7 +30284,7 @@
 /turf/unsimulated/floor/grime,
 /area/crunch)
 "bOw" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -30589,17 +30582,13 @@
 	},
 /area/crunch)
 "bPp" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPq" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -30612,9 +30601,7 @@
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
 "bPr" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -30709,9 +30696,7 @@
 /turf/unsimulated/floor,
 /area/crunch)
 "bPF" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
 /turf/unsimulated/floor/orangeblack,
@@ -30847,7 +30832,10 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/atmospherics/pipe/tank/toxins/south,
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQe" = (
@@ -30956,9 +30944,7 @@
 /turf/unsimulated/floor/bot,
 /area/crunch)
 "bQp" = (
-/obj/machinery/conveyor{
-	basedir = 1;
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "ddan"
 	},
 /obj/item/reagent_containers/food/snacks/snack_cake,
@@ -31078,7 +31064,10 @@
 /turf/unsimulated/floor/engine,
 /area/crypt/sigma/lab)
 "bQH" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south,
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "bQI" = (
@@ -40124,7 +40113,7 @@
 /area/crunch/wtc)
 "cso" = (
 /obj/faint_shimmer,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/crunch/wtc)
 "csp" = (
@@ -41387,9 +41376,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/syndicate_station/battlecruiser)
 "cvT" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/overlay{
@@ -43551,12 +43538,12 @@
 	},
 /area/owlery/staffhall)
 "cBz" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBA" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBB" = (
@@ -43763,7 +43750,7 @@
 /area/owlery/gangzone)
 "cBY" = (
 /obj/item/raw_material/shard/glass,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlopen)
 "cBZ" = (
@@ -44394,7 +44381,7 @@
 /turf/unsimulated/floor/redblack/corner,
 /area/owlery/Owlopen)
 "cDy" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/plasticflaps,
@@ -44456,7 +44443,7 @@
 	},
 /area/owlery/Owlopen)
 "cDG" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /turf/unsimulated/floor/plating,
@@ -44962,7 +44949,7 @@
 	},
 /area/owlery/Owlopen)
 "cEN" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/machinery/crusher,
@@ -45010,7 +44997,7 @@
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/owlery/owleryhall)
 "cEU" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "owlery_trash";
 	operating = 1
 	},
@@ -45022,7 +45009,7 @@
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cEV" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "owlery_trash";
 	operating = 1
 	},
@@ -45196,7 +45183,7 @@
 	},
 /area/owlery/owleryhall)
 "cFt" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
 "cFu" = (
@@ -45890,7 +45877,7 @@
 /turf/unsimulated/floor/specialroom/arcade,
 /area/owlery/Owlmait)
 "cHb" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "owlery_trash"
 	},
 /obj/plasticflaps,
@@ -46805,7 +46792,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite{
 	dir = 1
 	},
@@ -47273,7 +47260,7 @@
 	icon_state = "rwindow";
 	reinf = 1
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/greenwhite,
 /area/owlery/owleryhall)
 "cKt" = (
@@ -49653,7 +49640,7 @@
 	},
 /area/owlery/gangzone)
 "cQj" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/item/raw_material/shard,
 /obj/disposalpipe/segment{
 	dir = 4
@@ -54522,9 +54509,7 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "dam" = (
-/obj/machinery/conveyor{
-	basedir = 8;
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "ddan"
 	},
 /obj/item/shipcomponent/engine/hermes,
@@ -66603,7 +66588,7 @@
 /turf/unsimulated/floor/wood,
 /area/centcom/garden)
 "dPy" = (
-/obj/critter/nicespider,
+/mob/living/critter/spider/nice,
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
 "dPz" = (
@@ -136066,7 +136051,7 @@ nxN
 aaa
 aXt
 bkT
-bEN
+bkT
 bmX
 jbA
 bNP
