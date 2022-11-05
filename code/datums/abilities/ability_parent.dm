@@ -171,7 +171,7 @@
 			longest_line = max(longest_line, line_length)
 			msg += "[x] [stats[x]]"
 			i++
-		msg = jointext(msg, "<br>")
+		msg.Join("<br>")
 		abilitystat.maptext = "<span class='vga l vt ol'>[msg]</span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
 
