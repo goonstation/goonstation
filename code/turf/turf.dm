@@ -61,8 +61,9 @@
 	New()
 		..()
 
+		if(global.dont_init_space)
+			return
 		src.init_lighting()
-
 		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
 
 	onMaterialChanged()
@@ -214,6 +215,7 @@
 
 /turf/space/New()
 	..()
+	if(global.dont_init_space) return
 	if (icon_state == "placeholder") icon_state = "[rand(1,25)]"
 	if (icon_state == "aplaceholder") icon_state = "a[rand(1,10)]"
 	if (icon_state == "dplaceholder") icon_state = "[rand(1,25)]"
