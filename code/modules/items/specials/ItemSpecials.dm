@@ -718,7 +718,8 @@
 			. = ..()
 			var/datum/projectile/special/spawner/P = projectile
 			P.damage_type = D_KINETIC
-			P.power = 5
+			P.damage = 5
+			P.generate_stats()
 			P.typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
 			P.icon = 'icons/mob/monkey.dmi'
 			P.icon_state = "monkey"

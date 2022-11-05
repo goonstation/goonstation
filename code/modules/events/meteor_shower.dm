@@ -3,7 +3,11 @@ var/global/meteor_shower_active = 0
 /datum/random_event/major/meteor_shower
 	name = "Meteor Shower"
 	// centcom message handled modularly here
+#ifdef RP_MODE
 	required_elapsed_round_time = 55 MINUTES
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	customization_available = 1
 	var/wave_direction = 1
 	var/meteors_in_wave = 20
@@ -21,6 +25,12 @@ var/global/meteor_shower_active = 0
 	var/shower_name = "meteor shower"
 	var/meteor_type = /obj/newmeteor/massive
 #endif
+
+	is_event_available(var/ignore_time_lock = 0)
+		. = ..()
+		if(.)
+			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
+				. = FALSE
 
 	event_effect(var/source, var/amount, var/direction, var/delay, var/warning_time, var/speed)
 		..()

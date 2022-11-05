@@ -19,12 +19,19 @@
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null
 		H.unequip_all(TRUE)
+		H.equip_sensory_items()
 
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), H.slot_head)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), H.slot_wear_suit)
-		var/obj/item/device/radio/headset/salvager/headset = new
+
+		var/obj/item/device/radio/headset/headset = H.ears
+		if(!headset)
+			headset = new /obj/item/device/radio/headset/salvager
+			H.equip_if_possible(headset, H.slot_ears)
+		else
+			headset.protected_radio = TRUE
 		headset.frequency = src.pick_radio_freq()
-		H.equip_if_possible(headset, H.slot_ears)
+
 		H.equip_if_possible(new /obj/item/salvager(H), H.slot_l_hand)
 		H.equip_if_possible(new /obj/item/clothing/under/color/grey(H), H.slot_w_uniform)
 		H.equip_if_possible(new /obj/item/storage/backpack/salvager(H), H.slot_back)
@@ -55,7 +62,11 @@
 		if (!landmarks[LANDMARK_SALVAGER])
 			message_admins("<span class='alert'><b>ERROR: couldn't find Salvager spawn landmark, aborting relocation.</b></span>")
 			return 0
-		src.owner.current.set_loc(pick(landmarks[LANDMARK_SALVAGER]))
+
+		if(length(by_type[/obj/salvager_cryotron]))
+			src.owner.current.set_loc(pick(by_type[/obj/salvager_cryotron]))
+		else
+			src.owner.current.set_loc(pick(landmarks[LANDMARK_SALVAGER]))
 
 	proc/pick_radio_freq()
 		if(starting_freq)

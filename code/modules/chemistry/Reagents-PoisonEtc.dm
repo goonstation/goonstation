@@ -945,13 +945,14 @@ datum
 			fluid_g = 60
 			fluid_b = 255
 			dispersal = 1
-			blob_damage = 4
+			blob_damage = 2
 			viscosity = 0.25
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(1 * mult)
-				M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
+				if(!ischangeling(M))
+					M.take_toxin_damage(1 * mult)
+					M.TakeDamage("chest", 0, 1 * mult, 0, DAMAGE_BURN)
 				..()
 				return
 
@@ -997,6 +998,15 @@ datum
 					var/do_an_ouch = TRUE
 
 					damage2deal = round(damage2deal)
+
+					//changelings don't take damage, but they do get a bit liquefied if they're wandering around
+					if(H && ischangeling(H))
+						if(damage2deal >= 5 && !H.disfigured && !H.wear_mask && !H.head)
+							boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+							H.disfigured = TRUE
+							H.UpdateName()
+						return
+
 					if(damage2deal >= 5) //scream and face melty
 						if(H)
 							if(do_an_ouch)
@@ -1020,6 +1030,12 @@ datum
 							var/mob/living/carbon/human/H = M
 							var/blocked = FALSE
 							if (!H.wear_mask && !H.head)
+								if(ischangeling(H)) //disfigures you, but doesn't harm you. make sure to scream to play along
+									if(!H.disfigured)
+										boutput(H, "<span class='alert'>The acid withers our visage.</span>")
+										H.disfigured = TRUE
+										H.UpdateName()
+									return
 								H.TakeDamage("head", 0, clamp((volume - 5), 8, 50), 0, DAMAGE_BURN)
 								H.emote("scream")
 								if(!H.disfigured)
@@ -1051,31 +1067,16 @@ datum
 
 								if (blocked)
 									return
-						else
+						else if(!ischangeling(M))
 							random_brute_damage(M, min(15,volume))
-					else if (volume >= 6)
+					else if (volume >= 6 && !ischangeling(M))
 						M.emote("scream")
 						M.TakeDamage("All", 0, volume / 6, 0, DAMAGE_BURN)
 					boutput(M, "<span class='alert'>The blueish acidic substance stings[volume < 6 ? " you, but isn't concentrated enough to harm you" : null]!</span>")
 
-			reaction_obj(var/obj/O, var/volume)
-				var/list/covered = holder.covered_turf()
-				if (covered.len > 16)
-					volume = (volume/covered.len)
-
-				if (istype(O,/obj/fluid))
-					return 1
-				if (isitem(O) && volume > O:w_class)
-					var/obj/item/toMelt = O
-					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
-						if(!O.hasStatus("acid"))
-							O.changeStatus("acid", 5 SECONDS, list("leave_cleanable" = 1))
-					else
-						O.visible_message("The blueish acidic substance slides off \the [O] harmlessly.")
-
 			on_plant_life(var/obj/machinery/plantpot/P)
-				P.HYPdamageplant("acid",10)
-				P.growth -= 5
+				P.HYPdamageplant("acid",8)
+				P.growth -= 4
 
 			reaction_blob(var/obj/blob/B, var/volume)
 				. = ..()
