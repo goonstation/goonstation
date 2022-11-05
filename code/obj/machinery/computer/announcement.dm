@@ -179,7 +179,7 @@
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
 			return
-		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert) as null|text
+		var/newalert = tgui_input_text(user, "Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert)
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))

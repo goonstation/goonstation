@@ -38,7 +38,8 @@ var/flock_signal_unleashed = FALSE
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
-	var/relay_in_progress_or_finished = FALSE
+	var/relay_in_progress = FALSE
+	var/relay_finished = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 

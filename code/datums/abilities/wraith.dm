@@ -672,7 +672,7 @@
 				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
 				return 1
 			else
-				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
+				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
 				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
@@ -869,6 +869,9 @@
 			W.set_loc(T)
 
 			holder.owner.mind.transfer_to(W)
+			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
+			new_holder.regenRate = AH.regenRate - 2
+			new_holder.corpsecount = AH.corpsecount - 1
 			qdel(holder.owner)
 
 			return W
