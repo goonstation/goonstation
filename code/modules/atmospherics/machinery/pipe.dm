@@ -164,7 +164,7 @@
 	var/datum/gas_mixture/hi_side = gas
 	var/datum/gas_mixture/lo_side = environment
 
-if(destroyed)
+	if(destroyed)
 		parent.mingle_with_turf(loc, volume) // maintain network for simplicity but replicate behavior of it being disconnected
 		return
 
