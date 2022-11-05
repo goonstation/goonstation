@@ -151,7 +151,7 @@
 					process()
 
 	proc/process()
-		if(hitlist.len)
+		if(length(hitlist))
 			hitlist.len = 0
 		is_processing = 1
 		while (!QDELETED(src))
