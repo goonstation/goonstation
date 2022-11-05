@@ -321,7 +321,7 @@
 					else
 						animate_spin(src, "L", 1, 0)
 
-					for (var/mob/living/M in view(1, null))
+					for (var/mob/living/M in viewers(1, null))
 						if (M == src)
 							continue
 						message = "<B>[src]</B> beep-bops at [M]."
