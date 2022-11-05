@@ -13,6 +13,7 @@
 	blinded = 0
 	anchored = 1
 	use_stamina = 0//no puff tomfuckery
+	respect_view_tint_settings = TRUE
 	var/compute = 0
 	var/datum/flock/flock = null
 	var/wear_id = null // to prevent runtimes from AIs tracking down radio signals
@@ -32,7 +33,7 @@
 	src.see_invisible = INVIS_FLOCK
 	src.see_in_dark = SEE_DARK_FULL
 	/// funk that color matrix up, my friend
-	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL)
+	src.apply_color_matrix(COLOR_MATRIX_FLOCKMIND, COLOR_MATRIX_FLOCKMIND_LABEL, TRUE)
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
 	src.previous_turf = get_turf(src)

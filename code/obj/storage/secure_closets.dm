@@ -400,6 +400,7 @@
 	_health = LOCKER_HEALTH_STRONG
 	reinforced = TRUE
 	bolted = TRUE
+	spawn_contents = list(/obj/item/item_box/contraband)
 
 // Old Mushroom-era feature I fixed up (Convair880).
 /obj/storage/secure/closet/brig_automatic

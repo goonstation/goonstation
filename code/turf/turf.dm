@@ -65,10 +65,6 @@
 
 		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity)
 
-	disposing() // DOES NOT GET CALLED ON TURFS!!!
-		SHOULD_NOT_OVERRIDE(TRUE)
-		SHOULD_CALL_PARENT(FALSE)
-
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
@@ -141,10 +137,6 @@
 		for (var/obj/O in src.contents)
 			if (HAS_FLAG(O.object_flags, HAS_DIRECTIONAL_BLOCKING))
 				ADD_FLAG(src.blocked_dirs, O.dir)
-
-	Del()
-		dispose()
-		..()
 
 	proc/on_set_opacity(turf/thisTurf, old_opacity)
 		if (length(src.camera_coverage_emitters))
