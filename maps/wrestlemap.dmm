@@ -14692,9 +14692,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "fWD" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Escape Airlock"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "fWI" = (
@@ -45965,9 +45963,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "tmQ" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Escape Airlock"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/entry)
 "tnb" = (

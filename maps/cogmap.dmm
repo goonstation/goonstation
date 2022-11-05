@@ -50671,7 +50671,7 @@
 	},
 /area/station/hydroponics/bay)
 "dJY" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "dKw" = (
@@ -52307,6 +52307,12 @@
 /obj/lattice,
 /turf/space,
 /area/station/turret_protected/armory_outside)
+"fND" = (
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
+	dir = 8
+	},
+/turf/simulated/floor/delivery,
+/area/station/hallway/secondary/entry)
 "fNQ" = (
 /obj/effects/background_objects/iustitia,
 /turf/space,
@@ -56347,7 +56353,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/research)
 "lEV" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/simulated/floor/delivery,
@@ -56456,7 +56462,7 @@
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "lRv" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -57651,6 +57657,16 @@
 /obj/firedoor_spawn,
 /turf/simulated/floor/delivery,
 /area/station/security/hos)
+"nHa" = (
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	desc = "";
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor"
+	},
+/area/shuttle/arrival/station)
 "nHu" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -113595,7 +113611,7 @@ nvq
 gNJ
 niO
 niO
-lRv
+nHa
 niO
 fhL
 adC
@@ -113897,7 +113913,7 @@ fhL
 aak
 aaw
 hnF
-lEV
+fND
 hnF
 hnF
 hnF

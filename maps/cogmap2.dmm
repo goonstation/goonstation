@@ -11406,7 +11406,7 @@
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAE" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "aAF" = (
@@ -13189,7 +13189,7 @@
 	},
 /area/shuttle/arrival/station)
 "aEB" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/unsimulated/floor{
 	desc = "";
 	dir = 8;
@@ -19216,7 +19216,7 @@
 /turf/simulated/floor/bot,
 /area/station/crew_quarters/quartersA)
 "aTi" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "aTj" = (
@@ -77481,7 +77481,7 @@
 	},
 /area/station/ranch)
 "gde" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/delivery,
 /area/station/hallway/secondary/entry)
 "ggS" = (

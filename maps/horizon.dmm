@@ -9364,7 +9364,7 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/escape)
 "azf" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/blue/checker,
 /area/station/hallway/secondary/entry)
 "azg" = (
@@ -10034,7 +10034,7 @@
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "aBo" = (
-/obj/machinery/door/airlock/pyro/external,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';
