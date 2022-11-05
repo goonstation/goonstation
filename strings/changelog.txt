@@ -1,4 +1,9 @@
 
+(t)sat nov 05 22
+(u)Kubius
+(p)11806
+(e)🪲🔄📦|C-Bug, C-Rework, A-Game-Objects
+(+)Station forcefields that aren't solid to objects should now be transparent to clicks.
 (t)fri nov 04 22
 (u)Tarmunora
 (p)262
