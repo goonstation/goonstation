@@ -161,7 +161,7 @@
 			abilitystat = new
 			abilitystat.owner = src
 
-		var/msg = ""
+		var/msg = list()
 
 		var/i = 0
 		var/longest_line = 0
@@ -169,15 +169,16 @@
 		for (var/x in stats)
 			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
 			longest_line = max(longest_line, line_length)
-			msg += "[x] [stats[x]]<br>"
+			msg += "[x] [stats[x]]"
 			i++
-
-		abilitystat.maptext = "<span class='vga l vt ol'>[msg] </span>"
+		msg = jointext(msg, "<br>")
+		abilitystat.maptext = "<span class='vga l vt ol'>[msg]</span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
-		if (i > 2)
-			abilitystat.maptext_height = ((i+1) % 2) * 32
-			abilitystat.maptext_y = -abilitystat.maptext_height + 16
-		else if (abilitystat.maptext_height > 32)
+
+		if (i >= 2)
+			abilitystat.maptext_height = i * 15
+			abilitystat.maptext_y = -abilitystat.maptext_height + 32
+		else
 			abilitystat.maptext_height = initial(abilitystat.maptext_height)
 			abilitystat.maptext_y = initial(abilitystat.maptext_y)
 
