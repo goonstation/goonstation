@@ -815,10 +815,13 @@
 	var/cooldown = 0
 	var/last_use_time = 0
 
-	var/targeted = 0 //does activating this ability let you click on something to target it?
-	var/target_anything = 0 //can you target any atom, not just people?
+	///does activating this ability let you click on something to target it?
+	var/targeted = 0
+	///can you target any atom, not just people?
+	var/target_anything = 0
 
-	var/requires_equip = FALSE // can you see this button without equipping the item
+	/// can you see this button without equipping the item
+	var/requires_equip = FALSE
 
 	var/obj/item/the_item = null
 	var/mob/the_mob = null
