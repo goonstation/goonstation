@@ -208,11 +208,6 @@ var/global/datum/region_allocator/region_allocator = new
 		free()
 		..()
 
-	Del()
-		if(src.node)
-			free()
-		. = ..()
-
 
 /datum/region_allocator
 	var/list/list/free_nodes = list()

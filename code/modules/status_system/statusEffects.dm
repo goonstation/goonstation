@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
@@ -566,13 +566,13 @@
 
 			switch(stage)
 				if(1)
-					damage_burn = 1 * prot
+					damage_burn = 1.5 * prot
 					howMuch = ""
 				if(2)
-					damage_burn = 2 * prot
+					damage_burn = 2.5 * prot
 					howMuch = "very much "
 				if(3)
-					damage_burn = 4 * prot
+					damage_burn = 5 * prot
 					howMuch = "extremely "
 
 			return ..(timePassed)

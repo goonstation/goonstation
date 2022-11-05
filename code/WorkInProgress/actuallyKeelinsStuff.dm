@@ -3063,8 +3063,8 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.set_dir(user:dir)
-		L.basedir = L.dir
+		L.dir1 = user.dir
+		L.dir2 = turn(user.dir, 180)
 		return
 
 /datum/engibox_mode/poddoor

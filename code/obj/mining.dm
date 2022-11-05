@@ -2120,10 +2120,10 @@ obj/item/clothing/gloves/concussive
 			var/action = tgui_input_list(user, "What do you want to do?", "Mineral Accumulator", list("Flip the power switch","Change the destination","Remove the power cell"))
 			if (action == "Remove the power cell")
 				var/obj/item/cell/PCEL = src.cell
-				user.put_in_hand_or_drop(PCEL)
 				boutput(user, "You remove [cell].")
 				if (PCEL) //ZeWaka: fix for null.updateicon
 					PCEL.UpdateIcon()
+				user.put_in_hand_or_drop(PCEL)
 
 				src.cell = null
 			else if (action == "Change the destination")
