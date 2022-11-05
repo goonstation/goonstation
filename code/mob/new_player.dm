@@ -773,7 +773,7 @@ a.latejoin-card:hover {
 		set name = ".ready_antag"
 
 		if(!tgui_process)
-			boutput(user, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
@@ -794,7 +794,7 @@ a.latejoin-card:hover {
 		set name = ".ready"
 
 		if(!tgui_process)
-			boutput(user, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
+			boutput(src, "<span class='alert'>Stuff is still setting up, wait a moment before readying up.</span>")
 			return
 
 		if (src.client.has_login_notice_pending(TRUE))
