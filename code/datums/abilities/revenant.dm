@@ -84,7 +84,7 @@
 		owner.set_mutantrace(null)
 		owner.set_face_icon_dirty()
 		owner.set_body_icon_dirty()
-		hud = new hud_path (owner)
+		hud = new hud_path(owner)
 		owner.attach_hud(hud)
 
 		animate_levitate(owner)
