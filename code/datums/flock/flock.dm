@@ -594,7 +594,7 @@ var/flock_signal_unleashed = FALSE
 	active_names = null
 	enemies = null
 	flockmind = null
-	//do not qdel(src), we still need the flock datum for tracking flocktrace mind connections
+	//do not qdel(src), we still need the flock datum for end of round stuff
 
 // TURFS
 

@@ -38,7 +38,8 @@ datum/preferences
 	var/be_wraith = 0
 	var/be_blob = 0
 	var/be_conspirator = 0
-	var/be_flock = 0
+	var/be_flockmind = FALSE
+	var/be_flocktrace = FALSE
 	var/be_misc = 0
 
 	var/be_random_name = 0
@@ -969,7 +970,8 @@ datum/preferences
 				be_wraith = 0
 				be_blob = 0
 				be_conspirator = 0
-				be_flock = 0
+				be_flockmind = FALSE
+				be_flocktrace = FALSE
 				be_misc = 0
 				tooltip_option = TOOLTIP_ALWAYS
 				tgui_fancy = TRUE
@@ -1379,6 +1381,7 @@ datum/preferences
 			HTML += "</td>"
 
 		HTML += "<td valign='top' class='antagprefs'>"
+		/*
 		if (user?.client?.player.get_rounds_participated() < TEAM_BASED_ROUND_REQUIREMENT)
 			HTML += "You need to play at least [TEAM_BASED_ROUND_REQUIREMENT] rounds to play group-based antagonists."
 			src.be_syndicate = FALSE
@@ -1386,6 +1389,9 @@ datum/preferences
 			src.be_gangleader = FALSE
 			src.be_revhead = FALSE
 			src.be_conspirator = FALSE
+			src.be_flockmind = FALSE
+			src.be_flocktrace = FALSE
+		*/
 		if (jobban_isbanned(user, "Syndicate"))
 			HTML += "You are banned from playing antagonist roles."
 			src.be_traitor = FALSE
@@ -1402,7 +1408,8 @@ datum/preferences
 			src.be_wraith = FALSE
 			src.be_blob = FALSE
 			src.be_conspirator = FALSE
-			src.be_flock = FALSE
+			src.be_flockmind = FALSE
+			src.be_flocktrace = FALSE
 		else
 
 			HTML += {"
@@ -1420,7 +1427,8 @@ datum/preferences
 			<a href="byond://?src=\ref[src];preferences=1;b_wraith=1" class="[src.be_wraith ? "yup" : "nope"]">[crap_checkbox(src.be_wraith)] Wraith</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_blob=1" class="[src.be_blob ? "yup" : "nope"]">[crap_checkbox(src.be_blob)] Blob</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_conspirator=1" class="[src.be_conspirator ? "yup" : "nope"]">[crap_checkbox(src.be_conspirator)] Conspirator</a>
-			<a href="byond://?src=\ref[src];preferences=1;b_flock=1" class="[src.be_flock ? "yup" : "nope"]">[crap_checkbox(src.be_flock)] Flockmind</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_flockmind=1" class="[src.be_flockmind ? "yup" : "nope"]">[crap_checkbox(src.be_flockmind)] Flockmind</a>
+			<a href="byond://?src=\ref[src];preferences=1;b_flocktrace=1" class="[src.be_flocktrace ? "yup" : "nope"]">[crap_checkbox(src.be_flocktrace)] Flocktrace</a>
 			<a href="byond://?src=\ref[src];preferences=1;b_misc=1" class="[src.be_misc ? "yup" : "nope"]">[crap_checkbox(src.be_misc)] Other Foes</a>
 		"}
 
@@ -1678,8 +1686,14 @@ datum/preferences
 			src.SetChoices(user)
 			return
 
-		if (link_tags["b_flock"])
-			src.be_flock = !( src.be_flock)
+		if (link_tags["b_flockmind"])
+			src.be_flockmind = !src.be_flockmind
+			src.be_flocktrace |= src.be_flockmind
+			src.SetChoices(user)
+			return
+
+		if (link_tags["b_flocktrace"])
+			src.be_flocktrace = !src.be_flocktrace
 			src.SetChoices(user)
 			return
 

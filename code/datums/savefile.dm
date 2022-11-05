@@ -101,7 +101,8 @@
 		F["[profileNum]_be_wraith"] << src.be_wraith
 		F["[profileNum]_be_blob"] << src.be_blob
 		F["[profileNum]_be_conspirator"] << src.be_conspirator
-		F["[profileNum]_be_flock"] << src.be_flock
+		F["[profileNum]_be_flockmind"] << src.be_flockmind
+		F["[profileNum]_be_flocktrace"] << src.be_flocktrace
 		F["[profileNum]_be_misc"] << src.be_misc
 
 		// UI settings. Ehhhhh.
@@ -290,7 +291,8 @@
 		F["[profileNum]_be_wraith"] >> src.be_wraith
 		F["[profileNum]_be_blob"] >> src.be_blob
 		F["[profileNum]_be_conspirator"] >> src.be_conspirator
-		F["[profileNum]_be_flock"] >> src.be_flock
+		F["[profileNum]_be_flockmind"] >> src.be_flockmind
+		F["[profileNum]_be_flocktrace"] >> src.be_flocktrace
 		F["[profileNum]_be_misc"] >> src.be_misc
 
 		// UI settings...
