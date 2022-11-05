@@ -183,7 +183,7 @@
 #include "standard.dm"
 #endif
 
-#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(UNIT_TESTS) && !defined(SPACE_PREFAB_RUNTIME_CHECKING)
+#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(UNIT_TESTS) && !defined(SPACE_PREFAB_RUNTIME_CHECKING) && !defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 INCLUDE_MAP("../zamujasa/football2.dmm")
 #endif
 
