@@ -195,7 +195,7 @@ jobs:
 
       - name: Build Unit Tests
         run: |
-          tools/ci/dm.sh -DCIBUILD -DUNIT_TESTS goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNIT_TESTS -DUNIT_TESTS_RUN_TILL_COMPLETION goonstation.dme
 
       - name: Run Unit Tests
         run: |

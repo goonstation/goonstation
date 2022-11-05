@@ -38,13 +38,10 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 	var/tmp/max_x = 0
 	var/tmp/max_y = 0
 
-	var/tmp/turf/T = null
-
-
 	New(w, h, cs, z)
 		..()
-		cols = w / cs
-		rows = h / cs
+		cols = ceil(w / cs) // for very small maps - we want always at least one cell
+		rows = ceil(h / cs)
 
 		hashmap = new /list(cols * rows)
 
@@ -73,9 +70,9 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		last_update = world.time
 		for (var/i in 1 to cols*rows) //clean
 			hashmap[i].len = 0
-		for (var/client/C) //register
+		for (var/client/C in clients) //register
 			if (C.mob)
-				T = get_turf(C.mob)
+				var/turf/T = get_turf(C.mob)
 				if (T?.z == my_z)
 					hashmap[CELL_POSITION(T.x, T.y)] += C.mob
 				//a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here

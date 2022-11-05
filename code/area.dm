@@ -1596,7 +1596,7 @@ ABSTRACT_TYPE(/area/station)
 	New()
 		..()
 		START_TRACKING
-		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+		SPAWN(5 SECONDS) // wait until world is actually loaded in lmao // ZEWAKA/INIT
 			initial_structure_value = calculate_structure_value()
 
 	Del()
