@@ -168,6 +168,15 @@ To remove:
 	_sightprocess?.Process(); \
 } while(0)
 
+#define PROP_UPDATE_TELEBLOCK_CAT(target, prop, old_val) do { \
+	var/is_teleblocking = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (isnull(old_val) && !isnull(is_teleblocking)) { \
+		OTHER_START_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	} else if (!isnull(old_val) && isnull(is_teleblocking)) { \
+		OTHER_STOP_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	}; \
+} while(0)
+
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -259,6 +268,7 @@ To remove:
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_NO_ICON_UPDATES(x) x("no_icon_updates", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 

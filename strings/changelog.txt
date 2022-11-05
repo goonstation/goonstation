@@ -1,4 +1,13 @@
 
+(t)sat nov 05 22
+(u)FlameArrow57
+(p)11664
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added a medal for Flock, unlocked by transmitting the Signal!
+(u)Kubius
+(p)11806
+(e)🪲🔄📦|C-Bug, C-Rework, A-Game-Objects
+(+)Station forcefields that aren't solid to objects should now be transparent to clicks.
 (t)fri nov 04 22
 (u)Tarmunora
 (p)262
