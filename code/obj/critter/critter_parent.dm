@@ -3,7 +3,7 @@
 
 //don't attack mobs in santuary zones. attacking non-mobs there is fine
 //we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+#define ATTACK_CHECK(target) ((!(!ismob(target) || get_area(target))?:sanctuary) && (isturf(target:loc) || target:loc == src.loc))
 
 /obj/critter/
 	name = "critter"
