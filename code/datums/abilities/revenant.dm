@@ -7,12 +7,6 @@
 	var/datum/bioEffect/hidden/revenant/revenant = null
 	pointName = "Wraith Points"
 
-	Stat()
-		if (relay)
-			relay.Stat()
-		if (owner)
-			stat("Human vessel integrity:", "[(owner.max_health + 50) / 1.5]%")
-
 	generatePoints(var/mult = 1)
 		if (relay)
 			relay.generatePoints(mult)
@@ -55,6 +49,9 @@
 	var/list/abilities
 	icon_state  = "evilaura"
 
+	var/datum/hud/revenant/hud
+	var/hud_path = /datum/hud/revenant
+
 	OnAdd()
 		if (ishuman(owner) && isdead(owner))
 			switch (owner:decomp_stage)
@@ -87,6 +84,9 @@
 		owner.set_mutantrace(null)
 		owner.set_face_icon_dirty()
 		owner.set_body_icon_dirty()
+		hud = new hud_path(owner)
+		owner.attach_hud(hud)
+
 		animate_levitate(owner)
 
 		APPLY_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant", 100)
@@ -100,6 +100,7 @@
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST, "revenant")
 			REMOVE_ATOM_PROPERTY(owner, PROP_MOB_STUN_RESIST_MAX, "revenant")
 			REMOVE_MOVEMENT_MODIFIER(owner, /datum/movement_modifier/revenant, src.type)
+			owner.detach_hud(hud)
 		..()
 
 	proc/ghoulTouch(var/mob/living/carbon/human/poorSob, var/obj/item/affecting)
@@ -206,7 +207,7 @@
 		owner.take_brain_damage(-120)
 		owner.bodytemperature = owner.base_body_temp
 		setalive(owner)
-
+		hud.update_health()
 
 		if (owner.health < -50 || owner.max_health < -50) // Makes revenants have a definite time limit, instead of being able to just spam abilities in deepcrit.
 			boutput(owner, "<span class='alert'><strong>This vessel has grown too weak to maintain your presence.</strong></span>")

@@ -923,6 +923,7 @@
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	src.hide_buttons()
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null

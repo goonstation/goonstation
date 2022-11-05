@@ -427,6 +427,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\hud\pod.dm"
 #include "code\datums\hud\poltergeist.dm"
 #include "code\datums\hud\render_special.dm"
+#include "code\datums\hud\revenant.dm"
 #include "code\datums\hud\robot.dm"
 #include "code\datums\hud\roundend.dm"
 #include "code\datums\hud\shell.dm"
