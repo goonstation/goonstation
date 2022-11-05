@@ -572,13 +572,13 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/addIgnore(atom/A)
 	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>You hear echoes of the Signal in your mind. In some way you can't quite explain, they seem to approve of you.</i>")
+		boutput(A, "<i class='flocksay'>A thousand whispers you didn't realise you were hearing suddenly fall silent as you feel like you are no longer being watched.</i>")
 	src.ignores |= A
 	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
 /datum/flock/proc/removeIgnore(atom/A)
 	if (ismob(A) && find_radio_on(A))
-		boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. A feeling of anger and betrayal shoots through you.</i>")
+		boutput(A, "<i class='flocksay'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</i>")
 	src.ignores -= A
 	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
