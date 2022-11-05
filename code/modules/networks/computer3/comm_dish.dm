@@ -85,7 +85,7 @@
 			var/sound_to_play = 'sound/misc/announcement_1.ogg'
 			command_alert(message, title, sound_to_play, alert_origin = "Transmission to Partner Station")
 			var/ircmsg[] = new()
-			sent = game_servers.get_buddy() ? "sent" : "failed to send"
+			var/sent = game_servers.get_buddy() ? "sent" : "failed to send"
 			ircmsg["msg"] = "[user ? user : "Unknown"] [sent] a message to __[game_servers.get_buddy()?.name]__:\n**[title]**\n[message]"
 			ircbot.export_async("admin", ircmsg)
 			if(game_servers.get_buddy())
