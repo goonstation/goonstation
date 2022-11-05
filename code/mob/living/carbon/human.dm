@@ -742,6 +742,11 @@
 	src.time_until_decomposition = rand(4 MINUTES, 10 MINUTES)
 
 	if (src.mind) // I think this is kinda important (Convair880).
+#ifdef DATALOGGER
+		if (src.mind.ckey)
+			// game_stats.Increment("playerdeaths")
+			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
+#endif
 		src.mind.register_death()
 		if (src.mind.special_role == ROLE_MINDHACK)
 			remove_mindhack_status(src, "mindhack", "death")
@@ -749,11 +754,6 @@
 			remove_mindhack_status(src, "vthrall", "death")
 		else if (src.mind.master)
 			remove_mindhack_status(src, "otherhack", "death")
-#ifdef DATALOGGER
-		if (src.mind.ckey)
-			// game_stats.Increment("playerdeaths")
-			game_stats.AddDeath(src.name, src.ckey, src.loc, log_health(src))
-#endif
 
 	logTheThing(LOG_COMBAT, src, "dies [log_health(src)] at [log_loc(src)].")
 	//src.icon_state = "dead"
