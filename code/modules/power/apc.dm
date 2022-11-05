@@ -473,6 +473,7 @@ var/zapLimiter = 0
 				W.set_loc(src)
 				cell = W
 				boutput(user, "You insert the power cell.")
+				logTheThing(LOG_STATION, user, "inserted [cell] to APC [src] [log_loc(src)].")
 				chargecount = 0
 		UpdateIcon()
 	else if	(isscrewingtool(W))
@@ -585,8 +586,9 @@ var/zapLimiter = 0
 		if(cell)
 			cell.UpdateIcon()
 			user.put_in_hand_or_drop(cell)
-			src.cell = null
 			boutput(user, "You remove the power cell.")
+			logTheThing(LOG_STATION, user, "removed [cell] from APC [src] [log_loc(src)].")
+			src.cell = null
 			charging = 0
 			src.UpdateIcon()
 
