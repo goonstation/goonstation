@@ -134,7 +134,7 @@
 			for (var/mob/living/carbon/human/mob_target in target.contents)
 				if (!isdead(mob_target))
 					continue
-				if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+				if (mob_target.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 					continue
 				H = mob_target
 				break
