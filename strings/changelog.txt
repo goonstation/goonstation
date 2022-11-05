@@ -1,5 +1,9 @@
 
 (t)sat nov 05 22
+(u)zjdtmkhzt
+(p)11722
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new mechanics component that lets device frames move around. You can read about it in the ingame mechanics book.
 (u)FlameArrow57
 (p)11664
 (e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
