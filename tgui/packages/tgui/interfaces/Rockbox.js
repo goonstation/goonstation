@@ -40,7 +40,7 @@ export const Rockbox = (_props, context) => {
                     value={default_price}
                     width={4}
                     minValue={0}
-                    format={value => "$" + value}
+                    format={value => value + "⪽"}
                     onChange={(e, value) => act('set-default-price', { newPrice: value })}
                   />
                 </Box>
@@ -76,7 +76,7 @@ export const Rockbox = (_props, context) => {
                                     value={currentOre.price}
                                     width={4}
                                     minValue={0}
-                                    format={value => "$" + value}
+                                    format={value => value + "⪽"}
                                     onChange={(e, value) => act('set-ore-price', {
                                       newPrice: value,
                                       ore: currentOre.name,

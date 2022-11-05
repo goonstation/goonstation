@@ -540,7 +540,10 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "aGx" = (
-/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south,
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
+	dir = 2;
+	
+	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
 "aGI" = (
@@ -775,7 +778,7 @@
 /area/syndicate_station)
 "aTQ" = (
 /obj/disposaloutlet/west,
-/obj/machinery/conveyor/west,
+/obj/machinery/conveyor/EW,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -972,7 +975,7 @@
 	},
 /area/swampzone/heights)
 "bgL" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -1149,7 +1152,7 @@
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/genetek)
 "bsz" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
@@ -6812,7 +6815,7 @@
 	},
 /area/swampzone/deeps)
 "idd" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -6889,7 +6892,10 @@
 /turf/unsimulated/floor/black,
 /area/swampzone/interiors/bonktek)
 "ikB" = (
-/obj/machinery/atmospherics/pipe/tank/toxins/south,
+/obj/machinery/atmospherics/pipe/tank/toxins{
+	dir = 2;
+	
+	},
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -6977,7 +6983,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "iqQ" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /obj/railing/orange/reinforced,
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
@@ -7961,7 +7967,7 @@
 	},
 /area/swampzone/ground)
 "jyR" = (
-/obj/machinery/conveyor/west,
+/obj/machinery/conveyor/EW,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek)
 "jzv" = (
@@ -9562,7 +9568,7 @@
 	},
 /area/crater/cave/lower)
 "lod" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /obj/railing/orange/reinforced,
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
@@ -10372,7 +10378,7 @@
 /area/crater/cave)
 "mqV" = (
 /obj/disposaloutlet/south,
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
 "mrh" = (
@@ -11884,7 +11890,7 @@
 	},
 /area/swampzone/deeps)
 "oaI" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /obj/railing/yellow/reinforced{
 	dir = 8
 	},
@@ -12246,7 +12252,7 @@
 /turf/unsimulated/floor/setpieces/rootfloor,
 /area/swampzone/ground/canyon)
 "oyU" = (
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "ozs" = (
@@ -12785,7 +12791,7 @@
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "piH" = (
-/obj/machinery/conveyor/south,
+/obj/machinery/conveyor/NS,
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
 "piN" = (
@@ -14595,7 +14601,7 @@
 	},
 /area/crater/biodome/research)
 "rsc" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek/maintenance)
 "rsV" = (
@@ -15294,7 +15300,7 @@
 	},
 /area/swampzone/heights)
 "sqm" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /obj/railing/yellow/reinforced,
 /obj/item/bowling_ball{
 	color = "purple"
@@ -16437,7 +16443,7 @@
 "tFV" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/cobweb,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave/lower)
 "tGb" = (
@@ -16766,7 +16772,7 @@
 "tZB" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/plasmastone,
-/obj/critter/spider/spacerachnid,
+/mob/living/critter/spider/spacerachnid,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
 "tZJ" = (
@@ -17141,7 +17147,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/south)
 "uza" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /obj/item/bowling_ball,
 /turf/unsimulated/floor,
 /area/swampzone/interiors/bonktek)
@@ -18268,7 +18274,7 @@
 /turf/unsimulated/floor/wood/seven,
 /area/swampzone/interiors/outbuildings)
 "vJR" = (
-/obj/machinery/conveyor/east,
+/obj/machinery/conveyor/WE,
 /obj/railing/yellow/reinforced{
 	dir = 4
 	},
@@ -20355,7 +20361,7 @@
 	},
 /area/syndicate_station)
 "ygc" = (
-/obj/machinery/conveyor/north,
+/obj/machinery/conveyor/SN,
 /turf/unsimulated/floor/plating,
 /area/swampzone/ground)
 "ygi" = (

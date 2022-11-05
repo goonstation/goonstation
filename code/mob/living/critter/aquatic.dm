@@ -243,7 +243,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)

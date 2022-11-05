@@ -503,7 +503,7 @@
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
-		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind)))
+		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
 		var/blob_type = /obj/blob/
@@ -759,11 +759,11 @@
 	color_green = 0
 	color_blue = 0
 	color_icon = "#ffffff"
-	power = 20
+	damage = 10
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
-	ks_ratio = 0.5
 	sname = "slime"
 	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0

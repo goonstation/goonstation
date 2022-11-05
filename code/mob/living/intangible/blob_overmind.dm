@@ -65,6 +65,8 @@
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
+	var/admin_override = FALSE //for sudo blobs
+
 	proc/start_tutorial()
 		if (tutorial)
 			return

@@ -1115,7 +1115,7 @@
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
-	/obj/critter/nicespider,
+	/mob/living/critter/spider/nice,
 	/obj/critter/goose,
 	/obj/critter/goose/swan)
 

@@ -192,8 +192,7 @@
 
 			// The person trying to use the computer should be inside the scanner, they know what they're doing
 			if(usr == scanner.occupant)
-				// Fuck you, buddy
-				trigger_anti_cheat(usr, "tried to use the genetics scanner on themselves")
+				stack_trace("[usr] (\ref[usr]) is using [src] (\ref [src]) while being inside [scanner] (\ref [src]). That's weird and they might be cheating!")
 
 			scanner.occupant = null
 			scanner.icon_state = "scanner_0"

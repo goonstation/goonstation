@@ -257,7 +257,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
@@ -270,7 +270,6 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()

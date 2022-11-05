@@ -17,8 +17,7 @@
 /turf/space,
 /area/space)
 "af" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -26,8 +25,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ag" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -35,8 +33,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ah" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -44,16 +41,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ai" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "aj" = (
-/obj/machinery/conveyor{
-	dir = 2;
+/obj/machinery/conveyor/NS{
 	icon_state = "conveyor0";
 	id = "maze-blue";
 	name = "blue line belt";
@@ -62,16 +57,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ak" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "al" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -79,8 +72,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "am" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -88,8 +80,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "an" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -100,8 +91,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ao" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -111,11 +101,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aq" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/SN{
 	tag = "icon-conveyor0 (NORTH)";
 	name = "blue line belt";
 	icon_state = "conveyor0";
-	dir = 1;
 	id = "maze-blue"
 	},
 /turf/simulated/floor/plating,
@@ -124,7 +113,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "as" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -151,7 +140,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "au" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -179,8 +168,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "av" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -188,8 +176,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -197,7 +184,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ax" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTHEAST)";
 	icon_state = "rwindow";
@@ -241,7 +228,7 @@
 	},
 /area/space)
 "aD" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -288,11 +275,10 @@
 /turf/simulated/floor,
 /area/space)
 "aI" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/SN{
 	tag = "icon-conveyor0 (NORTH)";
 	name = "blue line belt";
 	icon_state = "conveyor0";
-	dir = 1;
 	id = "maze-blue"
 	},
 /obj/machinery/door_control{
@@ -304,7 +290,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aJ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -334,8 +320,7 @@
 /turf/simulated/floor,
 /area/space)
 "aN" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -343,8 +328,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aO" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -356,8 +340,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aP" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -394,7 +377,7 @@
 /turf/simulated/floor/delivery,
 /area/space)
 "aV" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -667,7 +650,7 @@
 /turf/simulated/floor/bot,
 /area/space)
 "bJ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -682,7 +665,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bK" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -692,7 +675,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "bL" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -858,7 +841,7 @@
 /turf/simulated/floor/black,
 /area/space)
 "cd" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "ce" = (
@@ -885,7 +868,7 @@
 /turf/simulated/floor,
 /area/space)
 "ci" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -996,7 +979,7 @@
 /turf/simulated/floor,
 /area/space)
 "cw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1505,7 +1488,7 @@
 /turf/space,
 /area/space)
 "dA" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1833,7 +1816,7 @@
 /turf/simulated/floor,
 /area/space)
 "ev" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -1848,7 +1831,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ew" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -1952,7 +1935,7 @@
 /turf/simulated/floor,
 /area/space)
 "eI" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2040,7 +2023,7 @@
 /turf/simulated/floor,
 /area/space)
 "eU" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (EAST)";
 	icon_state = "rwindow";
@@ -2063,7 +2046,7 @@
 /turf/unsimulated/wall/other,
 /area/sim/tdome/tdomea)
 "eW" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 8;
@@ -2091,7 +2074,7 @@
 /turf/unsimulated/floor/white,
 /area/sim/tdome/tdomea)
 "eX" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	reinf = 1
@@ -2114,7 +2097,7 @@
 /turf/unsimulated/floor/white,
 /area/sim/tdome/tdomea)
 "eY" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 4;
@@ -2142,7 +2125,7 @@
 /turf/unsimulated/floor/white,
 /area/sim/tdome/tdomea)
 "eZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	tag = "icon-window (NORTH)";
 	icon_state = "window";
@@ -2335,7 +2318,7 @@
 	density = 1;
 	name = "blocker (thunderdome)"
 	},
-/obj/grille,
+/obj/grille/steel,
 /obj/window{
 	icon_state = "rwindow";
 	dir = 10;
@@ -2489,7 +2472,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/critter/spider,
+/mob/living/critter/spider,
 /turf/simulated/floor,
 /area/space)
 "fR" = (
@@ -2968,7 +2951,7 @@
 /turf/space,
 /area/space)
 "gT" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -3183,7 +3166,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "hl" = (
-/obj/critter/spider,
+/mob/living/critter/spider,
 /turf/simulated/floor,
 /area/space)
 "hm" = (
@@ -3230,7 +3213,7 @@
 /turf/simulated/floor,
 /area/space)
 "hu" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (WEST)";
 	icon_state = "rwindow";
@@ -3240,7 +3223,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "hv" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -3374,7 +3357,7 @@
 /turf/simulated/floor,
 /area/space)
 "hN" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
@@ -3556,7 +3539,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "in" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	tag = "icon-rwindow (NORTH)";
 	icon_state = "rwindow";
