@@ -161,7 +161,7 @@
 			abilitystat = new
 			abilitystat.owner = src
 
-		var/msg = list()
+		var/list/lines = list()
 
 		var/i = 0
 		var/longest_line = 0
@@ -169,9 +169,9 @@
 		for (var/x in stats)
 			var/line_length = length(x) + 1 + max(length(num2text(stats[x])), length(stats[x]))
 			longest_line = max(longest_line, line_length)
-			msg += "[x] [stats[x]]"
+			lines += "[x] [stats[x]]"
 			i++
-		msg.Join("<br>")
+		var/msg = lines.Join("<br>")
 		abilitystat.maptext = "<span class='vga l vt ol'>[msg]</span>"
 		abilitystat.maptext_width = longest_line * 9 //font size is 9px
 
