@@ -66,6 +66,9 @@
 			host.removeAbility(/datum/targetable/brain_slug/infest_host)
 		. = ..()
 
+	canRideMailchutes()
+		return 1
+
 /mob/living/critter/brain_slug/is_spacefaring()
 	return TRUE
 
