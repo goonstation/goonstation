@@ -148,7 +148,7 @@ that cannot be itched
 	item_state = "electronic"
 	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT | SUPPRESSATTACK
 	mats = 3
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/active = 0
 	var/distancescan = 0
 	var/target = null
@@ -184,7 +184,7 @@ that cannot be itched
 		src.add_fingerprint(user)
 
 		var/holder = src.loc
-		var/search = input(user, "Enter name, fingerprint or blood DNA.", "Find record", "") as null|text
+		var/search = tgui_input_text(user, "Enter name, fingerprint or blood DNA.", "Find record")
 		if (src.loc != holder || !search || user.stat)
 			return
 		search = copytext(sanitize(search), 1, 200)
@@ -297,7 +297,7 @@ that cannot be itched
 	var/organ_upgrade = 0
 	var/organ_scan = 0
 	var/image/scanner_status
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -440,7 +440,7 @@ that cannot be itched
 	m_amt = 200
 	mats = 5
 	var/scan_results = null
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	tooltip_flags = REBUILD_DIST
 
 	attack(mob/M, mob/user)
@@ -872,7 +872,7 @@ that cannot be itched
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null
-			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">$[round(sell_value)]"]</span>"
+			var/popup_text = "<span class='ol c pixel'[sell_value == 0 ? " style='color: #bbbbbb;'>No value" : ">[round(sell_value)][CREDIT_SIGN]"]</span>"
 			chat_text = make_chat_maptext(A, popup_text, alpha = 180, force = 1, time = 1.5 SECONDS)
 			// many of the artifacts are upside down and stuff, it makes text a bit hard to read!
 			chat_text.appearance_flags = RESET_TRANSFORM | RESET_COLOR | RESET_ALPHA

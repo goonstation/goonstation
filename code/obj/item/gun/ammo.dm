@@ -51,6 +51,7 @@
 	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
+	/// TRUE if this ammo can be refilled from an ammo bag. Used to prevent duping
 	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
@@ -306,6 +307,7 @@
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
@@ -545,6 +547,17 @@
 	ammo_type = new/datum/projectile/bullet/nine_mm_soviet
 	ammo_cat = AMMO_PISTOL_9MM_SOVIET
 
+//medic primary
+/obj/item/ammo/bullets/veritate
+	sname = "6.5×20mm AP"
+	name = "6.5×20mm magazine"
+	desc = "High-velocity pistol cartridges, loaded with armor-piercing bullets."
+	icon_state = "stenag_mag"
+	amount_left = 21
+	max_amount = 21
+	ammo_type = new/datum/projectile/bullet/veritate
+	ammo_cat = AMMO_FLECHETTE
+
 //0.357
 /obj/item/ammo/bullets/a357
 	sname = ".357 Mag"
@@ -621,6 +634,7 @@
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
+	throwforce = 0
 
 //0.40
 /obj/item/ammo/bullets/blow_darts

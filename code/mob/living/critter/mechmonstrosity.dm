@@ -370,9 +370,8 @@
 	icon_state = "syringeproj"
 	dissipation_rate = 1
 	dissipation_delay = 7
-	power = 1
+	damage = 1
 	hit_ground_chance = 10
-	ks_ratio = 1
 	shot_sound = 'sound/effects/syringeproj.ogg'
 	var/venom_id = "corruptnanites"
 	var/inject_amount = 15
@@ -452,10 +451,6 @@
 	New()
 		..()
 		playsound(src.loc, 'sound/effects/glitchy1.ogg', 50, 0)
-
-	Move()
-		playsound(src.loc, 'sound/machines/glitch4.ogg', 50, 0)
-		. = ..()
 
 	seek_target()
 

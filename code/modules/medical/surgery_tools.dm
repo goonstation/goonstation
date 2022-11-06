@@ -450,6 +450,11 @@ CONTAINS:
 			user.suiciding = 0
 		return 1
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
+
 /obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
 	if (!isliving(patient))
 		return 0
@@ -731,7 +736,7 @@ CONTAINS:
 	stamina_cost = 0
 	stamina_crit_chance = 0
 	var/in_use = 0
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
 		if (!suture_surgery(M,user))
@@ -791,7 +796,7 @@ CONTAINS:
 	stamina_crit_chance = 0
 	var/uses = 6
 	var/in_use = 0
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	//if we want this bandage to do some healing. choose how much healing of each type of damage it should do per application.
 	var/brute_heal = 0
 	var/burn_heal = 0
@@ -994,7 +999,7 @@ CONTAINS:
 
 	disposing()
 		for(var/atom/movable/AM in src)
-			AM.set_loc(src.loc)
+			AM.set_loc(get_turf(src))
 		..()
 
 	update_icon()
@@ -1115,7 +1120,7 @@ CONTAINS:
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 15
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/M, mob/user)
 		if (!ishuman(M))

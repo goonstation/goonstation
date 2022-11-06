@@ -225,11 +225,7 @@
 /turf/simulated/floor/grime,
 /area/mining/dock)
 "fc" = (
-/obj/effects/background_objects/x4{
-	name = "Regina";
-	pixel_x = -64;
-	pixel_y = -64
-	},
+/obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
 "fh" = (
@@ -1013,7 +1009,7 @@
 /turf/simulated/floor/caution/west,
 /area/mining/miningoutpost)
 "qn" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/station/solar/small_backup3)
 "qo" = (
@@ -2121,7 +2117,7 @@
 /turf/simulated/martian/floor,
 /area/evilreaver/storage/tools)
 "wL" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating/airless,
@@ -2762,7 +2758,7 @@
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
 "Av" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating/airless,
@@ -3261,7 +3257,7 @@
 /area/evilreaver/security)
 "Dy" = (
 /obj/plasticflaps,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /turf/simulated/floor/plating,
@@ -4800,7 +4796,9 @@
 /area/noGenerate)
 "MO" = (
 /obj/table/auto,
-/obj/item/magnetizer,
+/obj/item/magnetizer{
+	loaded = 1
+	},
 /obj/item/paper/magnetconstruction,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
@@ -4862,7 +4860,7 @@
 /turf/simulated/floor/delivery,
 /area/mining/hangar)
 "Nu" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/machinery/door/poddoor{
@@ -5189,7 +5187,7 @@
 	},
 /area/mining/mainasteroid)
 "PO" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/decal/cleanable/gangtag{
@@ -5948,7 +5946,7 @@
 /turf/simulated/martian/floor,
 /area/noGenerate)
 "UN" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "MINSouth"
 	},
 /obj/machinery/door/poddoor{
@@ -47081,7 +47079,7 @@ Bt
 Bt
 bi
 ab
-ep
+cT
 ab
 ab
 ab
@@ -47385,7 +47383,7 @@ bi
 ab
 ab
 ab
-cT
+ab
 ab
 ab
 ab
@@ -48594,8 +48592,8 @@ IA
 Jv
 ab
 ab
-ab
 fc
+ab
 ab
 ab
 ab

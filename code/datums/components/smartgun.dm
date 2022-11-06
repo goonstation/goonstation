@@ -119,10 +119,10 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracking = 1
 	shotcount = 0
 	while(!stopping)
-		if(!shooting && checkshots(parent) > shotcount)
+		if(!shooting && checkshots(parent, user) > shotcount)
 			for(var/mob/living/M in range(2, mouse_target))
 				ON_COOLDOWN(M, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
-				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
+				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent, user))
 					tracked_targets[M] += 1
 					shotcount++
 					src.update_targeting_images(M)
@@ -194,11 +194,11 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
 	return M != user && !isdead(M)
 
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G, mob/user)
 	var/list/ret = list()
 	if(istype(G, /obj/item/gun/kinetic))
 		var/obj/item/gun/kinetic/K = G
 		return round(K.ammo.amount_left * K.current_projectile.cost)
 	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 		return round(ret["charge"] / G.current_projectile.cost)
-	else return G.canshoot() * INFINITY //idk, just let it happen
+	else return G.canshoot(user) * INFINITY //idk, just let it happen

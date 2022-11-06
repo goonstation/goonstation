@@ -25,7 +25,7 @@
 		if (..())
 			return 1
 
-		playsound(holder.owner.loc, "sound/effects/ghostbreath.ogg", 80, 0)
+		playsound(holder.owner.loc, 'sound/effects/ghostbreath.ogg', 80, 0)
 		holder.owner.visible_message("<span class='alert'>[holder.owner] emits a rallying howl!</span>")
 
 		for (var/obj/critter/C in by_cat[TR_CAT_CRITTERS])

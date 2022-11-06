@@ -201,6 +201,23 @@
 		src.setMaterial(getMaterial("molitz"), appearance = 0, setname = 0)
 		return ..()
 
+	get_desc()
+		if(!istype(src.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = src.material
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
+		else if(molitz.iterations >= 3)
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
+		else if(molitz.iterations == 0)
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
+
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
@@ -212,6 +229,23 @@
 		src.setMaterial(getMaterial("molitz_b"), appearance = 1, setname = 0)
 		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
 		return ..()
+
+	get_desc()
+		if(!istype(src.material, /datum/material/crystal/molitz))
+			return
+		var/datum/material/crystal/molitz/molitz = src.material
+		if(molitz.iterations == 2 && molitz.unexploded == 0)
+			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
+		else if(molitz.iterations == 1 && molitz.unexploded == 0)
+			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
+		else if(molitz.iterations == 0 && molitz.unexploded == 0)
+			. += " You fail to notice any non collapsed bubbles of gas in the structure."
+		else if(molitz.iterations >= 3)
+			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
+		else if(molitz.iterations >= 1)
+			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
+		else if(molitz.iterations == 0)
+			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
@@ -608,11 +642,10 @@
 				boutput(H, "<span class='alert'><B>You crawl on [src]! Ouch!</B></span>")
 				step_on(H)
 			else
-				//Can't step on stuff if you have no legs, and it can't hurt if they're robolegs.
-
+				//Can't step on stuff if you have no legs, and it can't hurt if they're protected or not human parts.
 				if (H.mutantrace?.can_walk_on_shards)
 					return
-				if (!istype(H.limbs.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs.r_leg, /obj/item/parts/human_parts))
+				if (!istype(H.limbs?.l_leg, /obj/item/parts/human_parts) && !istype(H.limbs?.r_leg, /obj/item/parts/human_parts))
 					return
 				if(!H.shoes || (src.material && src.material.hasProperty("hard") && src.material.getProperty("hard") >= 7))
 					boutput(H, "<span class='alert'><B>You step on [src]! Ouch!</B></span>")

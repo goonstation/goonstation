@@ -504,6 +504,12 @@ Airlock index -> wire color are { 9, 4, 6, 7, 5, 8, 1, 2, 3 }.
 	req_access_txt = "52"
 	cyborgBumpAccess = FALSE
 
+/obj/machinery/door/airlock/pyro/reinforced/arrivals
+	icon_state = "arrivals_closed"
+	icon_base = "arrivals"
+	opacity = 0
+	visible = 0
+
 /obj/machinery/door/airlock/pyro/glass
 	name = "glass airlock"
 	icon_state = "glass_closed"

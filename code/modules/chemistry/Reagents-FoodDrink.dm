@@ -69,8 +69,9 @@ datum
 				return
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0)
-				..()
+				. = ..()
 				if(M.mob_flags & IS_BONEY)
+					. = FALSE
 					M.HealDamage("All", clamp(1 * volume, 0, 20), clamp(1 * volume, 0, 20)) //put a cap on instant healing
 					if(prob(15))
 						boutput(M, "<span class='notice'>The milk comforts your [pick("boanes","bones","bonez","boens","bowns","beaunes","brones","bonse")]!</span>")
@@ -230,14 +231,14 @@ datum
 					description = initial(description)
 					taste = initial(taste)
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				var/mytemp = holder.total_temperature
 				if(!volume_passed) return 1
 				if(method == INGEST)
 					if(mytemp <= T0C+7) //Nice & cold.
 						if(M.get_toxin_damage())
-							M.take_toxin_damage(-5 * mult)
+							M.take_toxin_damage(-5)
 						if (prob(25)) boutput(M, "<span class='notice'>Nice and cold! How refreshing!</span>")
 					else if (mytemp > T0C + 30) //Warm & disgusting.
 						M.emote("frown")
@@ -2032,7 +2033,6 @@ datum
 					if (volume_passed > 10)
 						if (volume_passed >= 80)
 							boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
-							M.emote("scream")
 							M.stuttering += 30
 							M.setStatusMin("weakened", 5 SECONDS)
 						else if (volume_passed >= 40 && volume_passed < 80)
@@ -2095,7 +2095,6 @@ datum
 				//var/mob/living/carbon/human/H = M
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><b>HOLY FUCK!!!!</b></span>")
-					M.emote("scream")
 					M.stuttering += 30
 					M.changeStatus("stunned", 2 SECONDS)
 					if (prob(20))
@@ -2864,7 +2863,7 @@ datum
 			transparency = 250
 			taste = "herbal"
 
-			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed, var/mult = 1)
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
 				. = ..()
 				if(!volume_passed || method != INGEST)
 					return
@@ -2872,13 +2871,13 @@ datum
 					return
 
 				if(M.get_oxygen_deprivation() && prob(45))
-					M.take_oxygen_deprivation(-1 * mult)
+					M.take_oxygen_deprivation(-1)
 				if(M.get_toxin_damage() && prob(45))
-					M.take_toxin_damage(-1 * mult)
+					M.take_toxin_damage(-1)
 				if(M.losebreath && prob(85))
-					M.losebreath -= (1 * mult)
+					M.losebreath -= (1)
 				if(prob(45))
-					M.HealDamage("All", 6 * mult, 6 * mult)
+					M.HealDamage("All", 6, 6)
 				//M.UpdateDamageIcon()
 				return
 
@@ -3712,7 +3711,6 @@ datum
 					M.make_dizzy(33 * mult)
 
 					M.take_brain_damage(9 * mult)
-					M.emote("scream")
 
 					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "orange", "orange")
 					if(probmult(25)) fake_attackEx(M, 'icons/effects/hallucinations.dmi', "lime", "lime")

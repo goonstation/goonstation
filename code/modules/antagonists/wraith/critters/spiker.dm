@@ -25,6 +25,7 @@
 			if (isnull(M.summons))
 				M.summons = list()
 			M.summons += src
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/lash)
 
@@ -48,9 +49,8 @@
 	dissipation_rate = 1
 	dissipation_delay = 7
 	icon_state = ""
-	power = 1
+	damage = 1
 	hit_ground_chance = 0
-	ks_ratio = 1.0
 	shot_sound = 'sound/misc/hastur/tentacle_hit.ogg'
 	var/list/previous_line = list()
 	//This whole line thing might be a bit inneficient and chuggy.
@@ -66,7 +66,7 @@
 
 				M.throw_at(destination, 10, 1)
 
-				playsound(M, "sound/impact_sounds/Flesh_Stab_1.ogg", 50, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
 				M.changeStatus("paralysis", 3 SECONDS)

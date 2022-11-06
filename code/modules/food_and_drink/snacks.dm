@@ -88,6 +88,11 @@
 
 	New()
 		..()
+		if (!sliced)
+			w_class = W_CLASS_NORMAL
+		else
+			w_class = W_CLASS_TINY
+
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0, copy = FALSE)
 		if (prob(1))
 			SPAWN( rand(300, 900) )
@@ -129,6 +134,7 @@
 			P.quality = src.quality
 			P.heal_amt += round((src.heal_amt/makeslices))
 			P.topping_color = src.topping_color
+			P.w_class = W_CLASS_TINY
 			if(src.sharpened)
 				src.throw_spin = 0
 			if(topping)
@@ -177,21 +183,20 @@
 				take_bleeding_damage(user, user, 50, DAMAGE_CUT)
 			..()
 
-	throw_impact(M)
-		..()
-		if (!sharpened || isnull(M))
-			return
-		if (sliced)
-			if (ishuman(M))
-				var/mob/living/carbon/human/H = M
+	throw_impact(atom/A)
+		if (!sharpened || isnull(A) || !sliced)
+			..()
+		else
+			if (iscarbon(A))
+				var/mob/living/carbon/human/H = A
 				H.implant.Add(src)
-				src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
+				src.visible_message("<span class='alert'>[src] gets embedded in [H]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 				H.changeStatus("weakened", 2 SECONDS)
-				src.set_loc(M)
-				src.transfer_all_reagents(M)
-			random_brute_damage(M, 11)
-			take_bleeding_damage(M, null, 25, DAMAGE_STAB)
+				src.set_loc(H)
+				src.transfer_all_reagents(H)
+			random_brute_damage(A, 11)
+			take_bleeding_damage(A, null, 25, DAMAGE_STAB)
 
 	proc/add_topping(var/num)
 		var/icon/I
@@ -821,7 +826,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			random_brute_damage(M, 3)
 			take_bleeding_damage(M, null, 0, DAMAGE_STAB, 0)
 			bleed(M, 3, 1)
-			M.emote("scream")
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1040,7 +1044,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					M.changeStatus("weakened", 4 SECONDS)
 				if(6 to 10)
 					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
-					M.emote("scream")
 					M.emote("sneeze")
 					M.changeStatus("weakened", 4 SECONDS)
 					SPAWN(0)
@@ -2206,7 +2209,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 1
 	heal_amt = 1
 	var/obj/item/wrapped = null
-	var/maximum_wrapped_size = 2
+	var/maximum_wrapped_size = W_CLASS_SMALL
 	food_effects = list("food_energized")
 
 	attackby(obj/item/W, mob/user)
@@ -2336,7 +2339,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
 		random_brute_damage(M, 2)
-		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/pickle
 	name = "pickle"
@@ -2664,7 +2666,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attack_self(mob/user as mob)
 		if (unwrapped)
-			return
+			attack(user, user)
 
 		unwrapped = 1
 		user.visible_message("[user] unwraps the zongzi!", "You unwrap the zongzi.")
@@ -2929,4 +2931,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			user.visible_message("<span class='alert'><b>[user]</b> futilely attempts to shove [src] into [M]'s mouth!</span>")
 			return
 
-
+/obj/item/reagent_containers/food/snacks/ratatouille
+    name = "ratatouille"
+    desc = "Stewed and caramalized vegetables. Remy not included."
+    icon = 'icons/obj/foodNdrink/food_meals.dmi'
+    icon_state = "ratatouille"
+    needspoon = true
+    heal_amt = 2
+    bites_left = 3
+    food_effects = list("food_refreshed","food_warm")

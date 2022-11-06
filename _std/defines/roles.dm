@@ -31,6 +31,7 @@
 #define ROLE_HARDMODE_TRAITOR "hard-mode traitor"
 #define ROLE_MINDHACK "mindhack"
 #define ROLE_NUKEOP_GUNBOT "nukeop gunbot"
+#define ROLE_SALVAGER "salvager"
 #define ROLE_ZOMBIE "zombie"
 
 // gimmicks

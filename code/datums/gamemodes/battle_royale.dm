@@ -186,7 +186,7 @@ var/global/area/current_battle_spawn = null
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Battle Royale","BR Protocol in effect. Observe the effects of the BR Mind Control Program, do not interfere.",1,true,true)
 
-	emergency_shuttle.disabled = 1
+	emergency_shuttle.disabled = SHUTTLE_CALL_MANUAL_CALL_DISABLED
 
 	return 1
 	// Things we are skipping:
@@ -358,10 +358,10 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	weapon_supplies.Add(/obj/item/nunchucks)
 	weapon_supplies.Add(/obj/item/quarterstaff)
 	weapon_supplies.Add(/obj/item/fireaxe)
-	weapon_supplies.Add(/obj/item/fragile_sword)
-	weapon_supplies.Add(/obj/item/katana_sheath/reverse)
-	weapon_supplies.Add(/obj/item/katana_sheath/captain)
-	weapon_supplies.Add(/obj/item/katana_sheath/nukeop)
+	weapon_supplies.Add(/obj/item/swords/fragile_sword)
+	weapon_supplies.Add(/obj/item/swords_sheaths/katana/reverse)
+	weapon_supplies.Add(/obj/item/swords_sheaths/captain)
+	weapon_supplies.Add(/obj/item/swords_sheaths/nukeop)
 	weapon_supplies.Add(/obj/item/sword/discount)
 	weapon_supplies.Add(/obj/item/storage/box/shuriken_pouch)
 	weapon_supplies.Add(/obj/item/storage/grenade_pouch/frag)

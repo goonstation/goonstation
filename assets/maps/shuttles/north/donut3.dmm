@@ -165,7 +165,9 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "ff" = (
-/obj/machinery/door/airlock/pyro/glass,
+/obj/machinery/door/airlock/pyro/glass{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor6"
 	},
@@ -624,7 +626,9 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "zk" = (
-/obj/machinery/door/airlock/pyro/glass/command,
+/obj/machinery/door/airlock/pyro/glass/command{
+	hardened = 1
+	},
 /obj/access_spawn/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -1141,12 +1145,16 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "WU" = (
-/obj/machinery/door/airlock/pyro/security,
+/obj/machinery/door/airlock/pyro/security{
+	hardened = 1
+	},
 /obj/access_spawn/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Xh" = (
-/obj/machinery/door/airlock/pyro/glass/med,
+/obj/machinery/door/airlock/pyro/glass/med{
+	hardened = 1
+	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "Xk" = (

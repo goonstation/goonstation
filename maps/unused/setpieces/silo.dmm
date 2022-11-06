@@ -433,7 +433,7 @@
 	},
 /area/space)
 "bm" = (
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "bn" = (
@@ -790,7 +790,7 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "bY" = (
@@ -1092,7 +1092,7 @@
 	icon_state = "intact";
 	dir = 4
 	},
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor,
 /area/space)
 "cz" = (
@@ -1188,7 +1188,7 @@
 /area/space)
 "cI" = (
 /obj/stomachacid,
-/obj/grille,
+/obj/grille/steel,
 /turf/unsimulated/floor/setpieces/bloodfloor/stomach,
 /area/space)
 "cJ" = (

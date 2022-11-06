@@ -25,6 +25,7 @@
 
 		last_life_update = TIME
 
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = master?.abilityHolder.points
 
@@ -56,6 +57,9 @@
 			if (master.next_area_change < TIME)
 				master.next_area_change = TIME + 15 MINUTES
 				master.get_new_booster_zones()
+
+		if(src.disposed)
+			return
 
 		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))

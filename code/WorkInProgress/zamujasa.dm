@@ -50,7 +50,6 @@
 
 #ifdef DEBUG_LIGHTING_UPDATES
 /obj/maptext_junk/RL_counter
-	icon = null
 	maptext = ""
 	anchored = 2
 	var/applies = 0
@@ -397,13 +396,12 @@
 	icon = 'icons/obj/bots/aibots.dmi'
 	icon_state = "cleanbot1"
 
-	var/area/sim/gunsim/gunsim
+	var/area/sim/gunsim/arena/gunsim
 	var/active = 0
 
 	New()
 		..()
-		SPAWN(0.5 SECONDS)
-			gunsim = locate() in world
+		gunsim = get_area_by_type(/area/sim/gunsim/arena)
 
 	attack_hand(mob/user)
 		if (active)

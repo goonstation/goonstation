@@ -246,7 +246,6 @@
 		return ""
 
 	receive_signal(datum/signal/signal)
-		boutput(world, "Packet Received")
 		if (!signal || (!signal.data["address_tag"] && !signal.data["address_1"]))
 			return
 

@@ -378,15 +378,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Janitorial Supplies"
 
 /datum/supply_packs/hydronutrient
-	name = "Hydroponics: Nutrient Pack"
-	desc = "x15 Nutrient Formulas"
+	name = "Hydroponics: Nutrient Crate"
+	desc = "Five bulk jugs of the most essential plant nutrients"
 	category = "Civilian Department"
-	contains = list(/obj/item/reagent_containers/glass/bottle/fruitful = 3,
-					/obj/item/reagent_containers/glass/bottle/mutriant = 3,
-					/obj/item/reagent_containers/glass/bottle/groboost = 3,
-					/obj/item/reagent_containers/glass/bottle/topcrop = 3,
-					/obj/item/reagent_containers/glass/bottle/powerplant = 3)
-	cost = 1000
+	contains = list(/obj/item/reagent_containers/glass/jug/saltpetrebulk,
+					/obj/item/reagent_containers/glass/jug/ammoniabulk,
+					/obj/item/reagent_containers/glass/jug/potashbulk,
+					/obj/item/reagent_containers/glass/jug/mutadonebulk,
+					/obj/item/reagent_containers/glass/jug/mutagenicbulk)
+	cost = 2000
 	containertype = /obj/storage/crate
 	containername = "Hydroponics: Nutrient Crate"
 
@@ -1208,13 +1208,13 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "Necessities Vending Machine Restocking Pack"
 
 /datum/supply_packs/catering_vending_restock
-	name = "Catering Vending Machine Restocking Pack"
-	desc = "Various Vending Machine Restock Cartridges for catering"
+	name = "Catering and Hydroponics Vending Machine Restocking Pack"
+	desc = "Various Vending Machine Restock Cartridges for catering and hydroponics"
 	contains = list(/obj/item/vending/restock_cartridge/hydroponics,
 					/obj/item/vending/restock_cartridge/kitchen)
 	cost = 1000
 	containertype = /obj/storage/crate
-	containername = "Catering Vending Machine Restocking Pack"
+	containername = "Catering and Hydroponics Vending Machine Restocking Pack"
 
 /datum/supply_packs/medical_vending_restock
 	name = "Medical Vending Machine Restock Pack"
@@ -1464,7 +1464,8 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containertype = /obj/storage/crate
 	containername = "Cargo Bay Kit"
 
-
+//Nadir is not intended to have station pods/submarines
+#ifndef MAP_OVERRIDE_NADIR
 /datum/supply_packs/complex/pod_kit
 	name = "Pod Production Kit"
 	desc = "Frames: 1x Ship Component Fabricator, 1x Reclaimer"
@@ -1473,6 +1474,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	cost = 5000
 	containertype = /obj/storage/crate
 	containername = "Pod Production Kit"
+#endif
 
 /datum/supply_packs/complex/turret_kit
 	name = "Defense Turret Kit"

@@ -29,6 +29,7 @@
 
 	var/list/obj/hallucination/hallucinations = null //can probably be on human
 
+	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
 
@@ -303,7 +304,7 @@
 	else
 		. = ..()
 
-	src.closeContextActions()
+	src.contextActionsOnMove()
 
 	src.update_grab_loc()
 
@@ -508,7 +509,7 @@
 	if (illumplane) //Wire: Fix for Cannot modify null.alpha
 		illumplane.alpha = 255
 
-	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY)
+	src.client?.set_color(length(src.active_color_matrix) ? src.active_color_matrix : COLOR_MATRIX_IDENTITY, src.respect_view_tint_settings)
 
 	SEND_SIGNAL(src, COMSIG_MOB_LOGIN)
 
@@ -1665,7 +1666,7 @@
 				else
 					color_matrix_2_apply = mult_color_matrix(color_matrix_2_apply, src.color_matrices[cmatrix])
 			src.active_color_matrix = color_matrix_2_apply
-	src.client?.set_color(src.active_color_matrix)
+	src.client?.set_color(src.active_color_matrix, src.respect_view_tint_settings)
 
 /mob/proc/adjustBodyTemp(actual, desired, incrementboost, divisor)
 	var/temperature = actual
@@ -2799,7 +2800,7 @@
 		if(force_instead)
 			newname = default_name
 		else
-			newname = input(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name ? default_name : src.real_name) as null|text
+			newname = tgui_input_text(src, "[what_you_are ? "You are \a [what_you_are]. " : null]Would you like to change your name to something else?", "Name Change", default_name || src.real_name)
 		if (!newname)
 			return
 		else
@@ -3147,8 +3148,9 @@
 		if (I.loc == get_turf(I))
 			items += I
 	if (items.len)
-		var/atom/A = input(usr, "What do you want to pick up?") as anything in items
-		src.client?.Click(A, get_turf(A))
+		var/atom/A = input(usr, "What do you want to pick up?") as null|anything in items
+		if (A)
+			src.client?.Click(A, get_turf(A))
 
 /mob/proc/can_eat(var/atom/A)
 	return 1

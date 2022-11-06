@@ -1,5 +1,4 @@
 /obj/abcuMarker
-	name = "ABCU Marker"
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (valid)"
@@ -9,7 +8,6 @@
 	layer = TURF_LAYER
 
 /obj/abcuMarker/red
-	name = "ABCU Marker"
 	desc = "Denotes an invalid tile."
 	icon = 'icons/obj/objects.dmi'
 	name = "Building marker (invalid)"

@@ -1,7 +1,8 @@
 /obj/item/pen/sleepypen
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
-	hide_attack = 1
-	move_triggered = 1
+	hide_attack = TRUE
+	move_triggered = TRUE
+	can_dip = FALSE
 
 	New()
 		..()
@@ -15,10 +16,9 @@
 			font_color = "blue"
 			font = "'Dancing Script', cursive"
 			webfont = "Dancing Script"
-			uses_handwriting = 1
+			uses_handwriting = TRUE
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
-		return
 
 	attack(mob/M, mob/user)
 		if (!ismob(M))
@@ -34,7 +34,6 @@
 
 		else
 			user.show_text("The sleepy pen is empty.", "red")
-		return
 
 	move_trigger(var/mob/M, kindof)
 		if (..() && reagents)
@@ -44,7 +43,7 @@
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
 	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
 		..()
@@ -59,7 +58,6 @@
 				src.reagents.add_reagent(pick("water", "krokodil", "methamphetamine"), 4)
 				src.reagents.add_reagent(pick("LSD", "lsd_bee", "nicotine", "jenkem", "glitter"), 6)
 				src.reagents.add_reagent(pick("radium", "porktonium", "bathsalts", "gvomit"), 2)
-		return
 
 	attack(mob/M, mob/user)
 		if (!ismob(M))
@@ -89,4 +87,3 @@
 
 		else
 			user.show_text("The sleepy pen is empty.", "red")
-		return

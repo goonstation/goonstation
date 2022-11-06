@@ -1714,6 +1714,7 @@
 	var/mailgroup2 = null //Do not refactor into a list, maps override these properties
 	var/net_id = null
 	var/frequency = FREQ_PDA
+	var/flusher_id = null
 	throw_speed = 1
 
 	ex_act(var/severity)
@@ -1772,6 +1773,11 @@
 			newsignal.data["sender"] = src.net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+
+		if (src.flusher_id)
+			for(var/obj/machinery/floorflusher/M in by_type[/obj/machinery/floorflusher])
+				if(M.mail_id == src.flusher_id)
+					M.mail_tag = H.mail_tag
 
 		flick("outlet-open", src)
 		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)

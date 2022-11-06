@@ -1385,7 +1385,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_SMALL
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/sneaky = 0
 	tooltip_flags = REBUILD_DIST
 
@@ -2006,7 +2006,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 		else
 			return ..()
 
-	canshoot()
+	canshoot(mob/user)
 		if (!my_implant)
 			return 0
 		return 1
@@ -2030,7 +2030,7 @@ circuitry. As a result neurotoxins can cause massive damage.<BR>
 
 /datum/projectile/implanter
 	name = "implant bullet"
-	power = 5
+	damage = 5
 	shot_sound = 'sound/machines/click.ogg'
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_STAB

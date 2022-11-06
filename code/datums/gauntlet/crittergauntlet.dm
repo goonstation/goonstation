@@ -780,7 +780,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 
 	proc/setUp()
 	proc/process()
-	proc/onSpawn(var/obj/critter/C)
+	proc/onSpawn(var/atom/movable/C)
 	proc/tearDown()
 
 	barricade
@@ -910,7 +910,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			for (var/obj/adventurepuzzle/triggerable/light/gauntlet/G in gauntlet_controller.gauntlet)
 				G.off()
 
-		onSpawn(var/obj/critter/C)
+		onSpawn(var/atom/movable/C)
 			var/datum/light/light = new /datum/light/point
 			light.set_brightness(0.4)
 			light.set_height(0.5)
@@ -1013,13 +1013,24 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 			var/turf/T = pick(gauntlet_controller.spawnturfs)
 			var/crit_type = pick(types)
 			showswirl(T)
-			var/obj/critter/C = new crit_type(T)
-			C.health *= health_multiplier
-			C.aggressive = 1
-			C.defensive = 1
-			C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			var/atom/mob_or_critter = new crit_type(T)
+			if(iscritter(mob_or_critter))
+				var/obj/critter/C = mob_or_critter
+				C.health *= health_multiplier
+				C.aggressive = 1
+				C.defensive = 1
+				C.opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
+			else if (isliving(mob_or_critter))
+				var/mob/living/critter/C = mob_or_critter
+				C.health *= health_multiplier //for critters that don't user health holders
+				for(var/damage_key in C.healthlist) //for critters that do
+					var/datum/healthHolder/HH = C.healthlist[damage_key]
+					HH.maximum_value *= health_multiplier
+					HH.value *= health_multiplier
+			else
+				CRASH("Gauntlet tried to spawn [mob_or_critter ? mob_or_critter.type : "null"], but only /mob/living or /obj/critter are allowed.")
 			if (ev)
-				ev.onSpawn(C)
+				ev.onSpawn(mob_or_critter)
 			count--
 		if (count < 1)
 			count = initial(count)
@@ -1132,43 +1143,43 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/baby)
+		types = list(/mob/living/critter/spider/baby)
 
 	spidericebaby
 		name = "Ice Spider Baby"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider/ice/baby)
 
 	spider
 		name = "Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider)
+		types = list(/mob/living/critter/spider)
 
 	spiderice
 		name = "Ice Spider"
 		point_cost = 5
 		count = 3
-		types = list(/obj/critter/spider/ice)
+		types = list(/mob/living/critter/spider/ice)
 
 	spiderqueen
 		name = "Ice Spider Queen"
 		point_cost = 8
 		count = 0.05
-		types = list(/obj/critter/spider/ice/queen)
+		types = list(/mob/living/critter/spider/ice/queen)
 
 	spacerachnid
 		name = "Space Arachnid"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/spider/spacerachnid)
+		types = list(/mob/living/critter/spider/spacerachnid)
 
 	ohfuckspiders
 		name = "OH FUCK SPIDERS"
 		point_cost = 8
 		count = 7
-		types = list(/obj/critter/spider,/obj/critter/spider/baby,/obj/critter/spider/ice,/obj/critter/spider/ice/baby)
+		types = list(/mob/living/critter/spider,/mob/living/critter/spider/baby,/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby)
 
 	brullbar
 		name = "Brullbar"
