@@ -37,8 +37,13 @@
 				if (src.emote_check(voluntary, 50))
 					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> lets out a high pitched shriek!</span>"
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<span class='emote'><b>[src]</b> unleashes a tiny angry fart!</span>"
 
 	death(var/gibbed)
+		//Did we die inside something?
 		if (istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/host = src.loc
 			host.slug = null
@@ -46,15 +51,16 @@
 		if (istype(src.loc, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/host = src.loc
 			host.slug = null
-			host.removeAbility(/datum/targetable/brain_slug/exit_host)
-			host.removeAbility(/datum/targetable/brain_slug/infest_host)
+			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 		if (!gibbed)
 			src.unequip_all()
+			//todo add a proper sound and death icon instead of gibs
 			playsound(src, src.deathsound, 50, 0)
 			src.gib()
 		return ..()
 
 	disposing()
+		//Were we deleted while inside something?
 		if (istype(src.loc, /mob/living/carbon/human))
 			var/mob/living/carbon/human/host = src.loc
 			host.slug = null
@@ -62,13 +68,13 @@
 		if (istype(src.loc, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/host = src.loc
 			host.slug = null
-			host.removeAbility(/datum/targetable/brain_slug/exit_host)
-			host.removeAbility(/datum/targetable/brain_slug/infest_host)
+			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 		. = ..()
 
 	canRideMailchutes()
 		return 1
 
+//We are space creatures, we fly
 /mob/living/critter/brain_slug/is_spacefaring()
 	return TRUE
 
@@ -90,25 +96,27 @@
 	if (istype(src, /mob/living/critter/small_animal))
 		AH.points = 350
 	//Then add the abilities
+	//Transfering from a human has to be a bit more obvious
+	if (!istype(src, /mob/living/carbon/human))
+		AH.addAbility(/datum/targetable/brain_slug/infest_host)
+	//Humans can go organ hunting
+	else
+		AH.addAbility(/datum/targetable/brain_slug/harvest)
 	AH.addAbility(/datum/targetable/brain_slug/exit_host)
-	AH.addAbility(/datum/targetable/brain_slug/infest_host)
-	AH.addAbility(/datum/targetable/brain_slug/spit_slime)
+	AH.addAbility(/datum/targetable/brain_slug/blinding_slime)
 	AH.addAbility(/datum/targetable/brain_slug/glue_spit)
 	AH.addAbility(/datum/targetable/brain_slug/neural_detection)
 	//Then set the infestation count to the slug's to keep track
 	if (slug)
-		AH.infestation_count = slug.abilityHolder.points
+		AH.harvest_count = slug.abilityHolder.points
 	return AH
 
-///Gives a brain slug host dangerous abilities. Used on humans.
+///Gives a brain slug host dangerous abilities. Used on humans. Currently only one ability
 /mob/proc/add_advanced_slug_abilities(var/mob/living/critter/brain_slug/the_slug = null)
 	var/datum/abilityHolder/AH = null
 	AH = src.add_basic_slug_abilities(the_slug)
 	if (AH)
 		AH.addAbility(/datum/targetable/brain_slug/restraining_spit)
-		AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
-		AH.addAbility(/datum/targetable/brain_slug/sling_spit)
-		AH.addAbility(/datum/targetable/brain_slug/summon_brood)
 
 ///Checks if a thing can be infested by a brain slug and returns false if it cant be.
 proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
@@ -124,7 +132,7 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 			boutput(caster, "<span class='notice'>This creature looks much too resilient to infest.</span>")
 			return FALSE
 
-	//Human corpses are also prime targets, if they are fresh
+	//Human corpses are also prime targets
 	else if (ishuman(mob_target))
 		if (isalive(mob_target))
 			boutput(caster, "<span class='notice'>They are too twitchy to infest. It'd be much easier if they stopped moving. Permanently.</span>")
@@ -133,8 +141,8 @@ proc/check_host_eligibility(var/mob/living/mob_target, var/mob/caster)
 		if (!mob_target.organHolder.head)
 			boutput(caster, "<span class='notice'>Try as you might, you just can't find a head to crawl into.</span>")
 			return FALSE
-		if (human_target.decomp_stage >= DECOMP_STAGE_BLOATED)
-			boutput(caster, "<span class='notice'>That body is sadly too decomposed to use.</span>")
+		if (!mob_target.organHolder.brain)
+			boutput(caster, "<span class='notice'>There seems to be no brain to control in there!</span>")
 			return FALSE
 
 		if (human_target.abilityHolder)

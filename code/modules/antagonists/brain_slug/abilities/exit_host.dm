@@ -13,6 +13,25 @@
 											"<span class='alert'>You try to exit this host but you can't concentrate enough with this poison in you!</span>")
 				holder.owner.emote("scream")
 				return FALSE
+		if (istype(holder.owner, /mob/living/critter/brain_slug))
+			var/mob/living/critter/brain_slug/the_slug = holder.owner
+			if (istype(the_slug.loc,/mob/))
+				var/mob/containing_mob = the_slug.loc
+				the_slug.set_loc(get_turf(containing_mob))
+				if (ishuman(containing_mob))
+					var/mob/living/carbon/human/old_host = containing_mob
+					old_host.slug = null
+				if (istype(containing_mob, /mob/living/critter/small_animal))
+					var/mob/living/critter/small_animal/old_host = containing_mob
+					old_host.slug = null
+				containing_mob.remove_ability_holder(/datum/abilityHolder/brain_slug)
+				return FALSE
+			else
+				boutput(the_slug, "<span class='notice'>You aren't in a host!</span>")
+				return TRUE
+		var/choice = tgui_alert(holder.owner, "Are you sure you wish to exit this body?", "Exit body", list("Yes", "No"))
+		if (!choice || choice == "No")
+			return TRUE
 		if (istype(holder.owner, /mob/living/critter/small_animal))
 			var/mob/living/critter/small_animal/caster = holder.owner
 			if (!caster.slug)
@@ -34,9 +53,9 @@
 			if (!human_host.slug)
 				boutput(holder.owner, "<span class='notice'>You have no parasite to expel... uh.</span>")
 				return TRUE
-			human_host.make_jittery(20)
+			human_host.make_jittery(1000)
 			human_host.emote("scream")
-			human_host.setStatus("stunned", 10 SECONDS)
+			human_host.setStatus("stunned", 5 SECONDS)
 			spawn(3 SECONDS)
 				if (!human_host || !human_host.slug) return
 				//Drop the slug on the floor and control it again
@@ -57,22 +76,6 @@
 				human_host.slug = null
 				human_host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 				human_host.death()
-		else if (istype(holder.owner, /mob/living/critter/brain_slug))
-			var/mob/living/critter/brain_slug/the_slug = holder.owner
-			if (istype(the_slug.loc,/mob/))
-				var/mob/containing_mob = the_slug.loc
-				the_slug.set_loc(get_turf(containing_mob))
-				if (ishuman(containing_mob))
-					var/mob/living/carbon/human/old_host = containing_mob
-					old_host.slug = null
-				if (istype(containing_mob, /mob/living/critter/small_animal))
-					var/mob/living/critter/small_animal/old_host = containing_mob
-					old_host.slug = null
-				containing_mob.remove_ability_holder(/datum/abilityHolder/brain_slug)
-				return FALSE
-			else
-				boutput(the_slug, "<span class='notice'>You aren't in a host!</span>")
-				return TRUE
 		else
 			boutput(holder.owner, "<span class='notice'>Something weird happened. Consider making a bug report.</span>")
 			return TRUE

@@ -23,13 +23,13 @@
 			our_atom.AddComponent(/datum/component/glued, linked_mob, -1, -1, FALSE)
 
 	disposing()
-		. = ..()
 		if (linked_mob)
 			REMOVE_ATOM_PROPERTY(linked_mob, PROP_MOB_CANTMOVE, "slimed_up")
 			linked_mob.anchored = FALSE
+		. = ..()
 
 	process()
-		src._health -= 1
+		src._health -= 2
 		if (linked_mob?.getStatusDuration("burning"))	//Burning will melt off the goo
 			src._health -= 2
 		if (src._health<= 0)
@@ -37,7 +37,7 @@
 
 	attack_hand(mob/user)
 		. = ..()
-		src._health -= 1
+		src._health -= 2
 		user.lastattacked = src
 		interact_particle(user, src)
 		user.visible_message("<span class='notice'>[user] removes some of the goo by hand. It's not very effective!</span>")
@@ -49,7 +49,7 @@
 		attack_particle(user,src)
 		user.lastattacked = src
 		hit_twitch(src)
-		user.visible_message("<span class='notice'>[user] Hacks away at the goo!</span>")
+		user.visible_message("<span class='notice'>[user] hacks away at the goo!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
 		if(src._health <= 0)
 			qdel(src)

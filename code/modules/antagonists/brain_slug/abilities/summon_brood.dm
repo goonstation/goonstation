@@ -2,11 +2,14 @@
 	name = "Summon brood"
 	desc = "Break down the last useful parts of this failing body and summon your brood. The body is unlikely to survive."
 	icon_state = "slimeshot"
-	cooldown = 1 SECONDS
+	cooldown = 120 SECONDS
 	targeted = 0
 	var/max_points = 200
 
 	cast()
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (holder.points > src.max_points)
 			boutput(holder.owner, "<span class='alert'>This body hasnt degraded enough yet! You need [src.max_points] stability or lower to do this!</span>")
 			return TRUE

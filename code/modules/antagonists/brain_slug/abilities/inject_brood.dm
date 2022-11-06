@@ -1,11 +1,14 @@
 /datum/targetable/brain_slug/inject_brood
 	name = "Inject brood"
-	desc = "Inject your children into a corpse."
+	desc = "Inject your brood into a corpse."
 	icon_state = "slimeshot"
 	cooldown = 80 SECONDS
 	targeted = 1
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (target == holder.owner)
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)

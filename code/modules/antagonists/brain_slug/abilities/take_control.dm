@@ -24,8 +24,11 @@
 					if (!the_mob || !the_slug) return
 					if (the_slug.loc != the_mob) return
 					make_cleanable(/obj/decal/cleanable/slime, the_mob.loc)
+					the_mob.HealDamage("All", INFINITY, INFINITY, INFINITY)
+					the_mob.take_oxygen_deprivation(-INFINITY)
 					the_slug.mind?.transfer_to(the_mob)
-					the_mob.full_heal()
+					setalive(the_mob)
+			return FALSE
 		else
 			boutput(M, "<span class='notice'>You arent inside something you can possess.</span>")
 			return TRUE

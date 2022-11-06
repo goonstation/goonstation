@@ -3,7 +3,7 @@
 	//todo make an icon
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "rat_den"
-	desc = "A glob of sticky goo. RUN!"
+	desc = "A glob of sticky goo. Why are you staring at it? RUN!"
 	density = 0
 	var/mob/living/caster = null
 
@@ -20,7 +20,7 @@
 	desc = "A pile of sticky goo, restraining movement."
 	anchored = 1
 	density = 0
-	_health = 5
+	_health = 7
 	var/stretch_range = 4
 	var/break_range = 10
 	var/active = TRUE

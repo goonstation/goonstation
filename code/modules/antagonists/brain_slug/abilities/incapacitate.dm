@@ -1,18 +1,21 @@
 /datum/targetable/brain_slug/devour_limb
 	name = "Devour"
-	desc = "Eat a human's limb for sustenance."
+	desc = "Eat a human's limb or organs for sustenance."
 	icon_state = "infest_host"
-	cooldown = 60 SECOND
+	cooldown = 50 SECOND
 	targeted = 1
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (target == holder.owner)
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to infest.</span>")
 			return TRUE
 		if (!istype(target, /mob/living/carbon/human))
-			boutput(holder.owner, "<span class='alert'>That doesn't seem to have a limb you can munch on.</span>")
+			boutput(holder.owner, "<span class='alert'>That doesn't seem to have a limb or organs you can munch on.</span>")
 			return TRUE
 		var/mob/living/carbon/human/H = target
 		actions.start(new/datum/action/bar/private/icon/devour_action(H, holder.owner), holder.owner)
@@ -25,69 +28,100 @@
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "grabbed"
 	var/mob/living/carbon/human/current_target = null
-	var/mob/living/critter/brain_slug/the_slug = null
-	var/limb = null
+	var/mob/living/caster = null
+	var/target = null
 	var/limb_acronym = null
+	var/target_is_limb = TRUE
 
 	New(var/mob/living/carbon/human/M, var/mob/living/source)
 		current_target = M
-		src.the_slug = source
-		var/mob/living/caster = the_slug
-		switch(caster.zone_sel.selecting)
+		src.caster = source
+		switch(src.caster.zone_sel.selecting)
 			if ("r_arm")
 				if (src.current_target.limbs.r_arm)
-					src.limb = src.current_target.limbs.r_arm
+					src.target = src.current_target.limbs.r_arm
 					src.limb_acronym = "r_arm"
 			if ("l_arm")
 				if (src.current_target.limbs.l_arm)
-					src.limb = src.current_target.limbs.l_arm
+					src.target = src.current_target.limbs.l_arm
 					src.limb_acronym = "l_arm"
 			if ("r_leg")
 				if (src.current_target.limbs.r_leg)
-					src.limb = src.current_target.limbs.r_leg
+					src.target = src.current_target.limbs.r_leg
 					src.limb_acronym = "r_leg"
 			if ("l_leg")
 				if (src.current_target.limbs.l_leg)
-					src.limb = src.current_target.limbs.l_leg
+					src.target = src.current_target.limbs.l_leg
 					src.limb_acronym = "l_leg"
+			if ("chest")
+				//Lets pick a random organ
+				var/list/targets = list()
+				if (src.current_target.organHolder.appendix)
+					targets += src.current_target.organHolder.appendix
+				if (src.current_target.organHolder.left_kidney)
+					targets += src.current_target.organHolder.left_kidney
+				if (src.current_target.organHolder.left_lung)
+					targets += src.current_target.organHolder.left_lung
+				if (src.current_target.organHolder.right_kidney)
+					targets += src.current_target.organHolder.right_kidney
+				if (src.current_target.organHolder.right_lung)
+					targets += src.current_target.organHolder.right_lung
+				if (src.current_target.organHolder.spleen)
+					targets += src.current_target.organHolder.spleen
+				if (src.current_target.organHolder.pancreas)
+					targets += src.current_target.organHolder.pancreas
+				if (src.current_target.organHolder.intestines)
+					targets += src.current_target.organHolder.intestines
+				if (src.current_target.organHolder.stomach)
+					targets += src.current_target.organHolder.stomach
+				//No organs left? Go for the heart
+				if (!length(targets))
+					if (src.current_target.organHolder.heart)
+						targets += src.current_target.organHolder.heart
+				if (length(targets))
+					src.target = pick(targets)
+					src.target_is_limb = FALSE
+
 		..()
 
 	onStart()
-		var/mob/living/caster = the_slug
-		if (caster == null || !isalive(caster) || !can_act(caster) || current_target == null)
+		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (limb)
-			boutput(caster, "<span class=notice>You begin to envelop [current_target]'s [limb]!</span>")
+		if (src.target)
+			if (src.target_is_limb)
+				boutput(src.caster, "<span class=notice>You begin to envelop [src.current_target]'s [src.target]!</span>")
+			else
+				boutput(src.caster, "<span class=notice>You begin to bite off [src.current_target]'s [src.target]!</span>")
 		else
-			boutput(caster, "<span class=notice>You begin to envelop [current_target]!</span>")
+			boutput(src.caster, "<span class=notice>You begin to envelop [src.current_target]!</span>")
+		hit_twitch(src.current_target)
 		..()
 
 	onUpdate()
 		..()
-		var/mob/living/caster = the_slug
-		if (caster == null || !isalive(caster) || !can_act(caster) || current_target == null || BOUNDS_DIST(caster, current_target) > 0)
+		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null || BOUNDS_DIST(src.caster, src.current_target) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
-		var/mob/living/caster = the_slug
-		random_brute_damage(current_target, 15)
-		if (limb)
-			current_target.lose_limb(src.limb_acronym)
-			caster.visible_message("<span class='alert'>[caster] chomps down on [current_target]'s [limb] and tears it apart!</span>", "<span class='alert'>You devour [current_target]'s [limb]! Delicious!</span>")
-			qdel(src.limb)
+		random_brute_damage(src.current_target, 15)
+		if (src.target)
+			if (src.target_is_limb)
+				src.current_target.lose_limb(src.limb_acronym)
+			src.caster.visible_message("<span class='alert'>[src.caster] chomps down on [src.current_target]'s [src.target] and tears it apart!</span>", "<span class='alert'>You devour [src.current_target]'s [src.target]! [pick("Delicious!", "Delightful!", "Filling!")]</span>")
+			qdel(src.target)
 		else
-			random_brute_damage(current_target, 5)
-			caster.visible_message("<span class='alert'>[caster] tears off a chunk of flesh from [current_target]'s and swallows it!</span>", "<span class='alert'>You devour some of [current_target]! Scrumptious!</span>")
+			random_brute_damage(src.current_target, 5)
+			src.caster.visible_message("<span class='alert'>[src.caster] tears off a chunk of flesh from [src.current_target]'s and swallows it!</span>", "<span class='alert'>You devour some of [src.current_target]! [pick("Scrumptious!", "Yum!")]</span>")
 		if (prob(50))
-			current_target.emote("scream")
-		playsound(current_target.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 70)
-		bleed(current_target, 10, 2)
-		caster.HealDamage("All", 15, 0)
+			src.current_target.emote("scream")
+		playsound(src.current_target.loc, 'sound/impact_sounds/Flesh_Break_2.ogg', 70)
+		bleed(src.current_target, 10, 2)
+		src.current_target.setStatus("stunned", 2 SECONDS)
+		src.caster.HealDamage("All", 15, 0)
 		..()
 
 	onInterrupt()
-		var/mob/living/caster = the_slug
-		boutput(caster, "<span class='alert'>You were interrupted!</span>")
+		boutput(src.caster, "<span class='alert'>You were interrupted!</span>")
 		..()

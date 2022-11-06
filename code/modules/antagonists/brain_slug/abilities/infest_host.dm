@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/infest_host
 	name = "Infest a host"
-	desc = "Enter the body of a living animal host or a freshly dead human."
+	desc = "Enter the body of a living animal host or a dead human."
 	icon_state = "infest_host"
 	cooldown = 30 SECOND
 	targeted = 1
@@ -8,6 +8,9 @@
 	var/is_transfer = FALSE
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (target == holder.owner)
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)
@@ -96,13 +99,29 @@
 
 		else if (istype(current_target, /mob/living/carbon/human))
 			var/mob/living/carbon/human/T = current_target
-			if (!isnpc(current_target) && !isnpcmonkey(current_target))
-				the_slug.abilityHolder.points ++
 			T.slug = the_slug
 			T.add_advanced_slug_abilities(the_slug)
-			switch(the_slug.abilityHolder.points)
-				if (4)
-					T.abilityHolder?.addAbility(/datum/targetable/brain_slug/pupate)
+			//Add abilities to the host on infest if you unlocked them
+			var/datum/abilityHolder/brain_slug/AH = null
+			if (istype(T.abilityHolder, /datum/abilityHolder/brain_slug))
+				AH = T.abilityHolder
+			else if (istype(T.abilityHolder, /datum/abilityHolder/composite))
+				var/datum/abilityHolder/composite/composite_holder = T.abilityHolder
+				for (var/datum/holder in composite_holder.holders)
+					if (istype(holder, /datum/abilityHolder/brain_slug))
+						AH = holder
+			if (AH?.harvest_count >= 2)
+				if (!AH.getAbility(/datum/targetable/brain_slug/acidic_spit))
+					AH.addAbility(/datum/targetable/brain_slug/acidic_spit)
+			if (AH?.harvest_count >= 6)
+				if (!AH.getAbility(/datum/targetable/brain_slug/sling_spit))
+					AH.addAbility(/datum/targetable/brain_slug/sling_spit)
+			if (AH?.harvest_count >= 12)
+				if (!AH.getAbility(/datum/targetable/brain_slug/summon_brood))
+					AH.addAbility(/datum/targetable/brain_slug/summon_brood)
+			if (AH?.harvest_count >= 20)
+				if (!AH.getAbility(/datum/targetable/brain_slug/pupate))
+					AH.addAbility(/datum/targetable/brain_slug/pupate)
 
 		hit_twitch(current_target)
 		logTheThing(LOG_COMBAT, caster, "[caster] has infested [current_target]")

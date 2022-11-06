@@ -1,11 +1,10 @@
 /datum/targetable/brain_slug/restraining_spit
 	name = "Restraining Spit"
-	desc = "Horfs some movement impairing goo at someone close to you."
+	desc = "Horfs some movement impairing goo at someone next to you."
 	icon_state = "slimeshot"
 	cooldown = 50 SECONDS
 	targeted = 1
-	target_anything = 0
-	pointCost = 40
+	pointCost = 30
 
 	onAttach(datum/abilityHolder/holder)
 		if (istype(holder.owner, /mob/living/critter/adult_brain_slug))
@@ -13,6 +12,9 @@
 		. = ..()
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (target == holder.owner)
 			return TRUE
 		if (BOUNDS_DIST(holder.owner, target) > 0)

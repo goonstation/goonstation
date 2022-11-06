@@ -4,7 +4,6 @@
 	icon_state = "slimeshot"
 	cooldown = 2 SECONDS
 	targeted = 0
-	pointCost = 10
 	var/active = FALSE
 
 	cast()
@@ -27,6 +26,7 @@
 			if (temp_human) temp_human.slug_vision = FALSE
 			if (temp_animal) temp_animal.slug_vision = FALSE
 		return FALSE
+
 	disposing()
 		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_XRAYVISION, src)
 		REMOVE_ATOM_PROPERTY(src.holder.owner, PROP_MOB_CANTSPRINT, src)

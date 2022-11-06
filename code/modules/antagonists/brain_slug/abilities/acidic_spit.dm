@@ -2,12 +2,15 @@
 	name = "Acidic Spit"
 	desc = "Spew a stream of acidic spit at the ground, melting whoever stands in it."
 	icon_state = "slimeshot"
-	cooldown = 60 SECONDS
+	cooldown = 80 SECONDS
 	targeted = 1
 	target_anything = 1
-	pointCost = 40
+	pointCost = 50
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (GET_DIST(holder.owner, target) > 5)
 			boutput(holder.owner, "<span class='alert'>That is too far away!</span>")
 			return TRUE

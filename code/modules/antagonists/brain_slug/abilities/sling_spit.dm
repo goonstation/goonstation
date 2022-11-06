@@ -2,12 +2,15 @@
 	name = "Slinging spit"
 	desc = "Create a string of elastic goo between two points."
 	icon_state = "slimeshot"
-	cooldown = 2 SECONDS
+	cooldown = 45 SECONDS
 	targeted = 1
 	target_anything = 1
-	pointCost = 10
+	pointCost = 30
 
 	cast(atom/target)
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		if (GET_DIST(holder.owner, target) > 5)
 			boutput(holder.owner, "<span class='alert'>That is too far away!</span>")
 			return TRUE

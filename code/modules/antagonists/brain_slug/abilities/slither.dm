@@ -4,7 +4,11 @@
 	icon_state = "slither"
 	cooldown = 30 SECONDS
 	targeted = 0
+
 	cast()
+		if (!isturf(holder.owner.loc))
+			boutput(holder.owner, "<span class='notice'>You cannot use that here!</span>")
+			return TRUE
 		playsound(holder.owner.loc, 'sound/impact_sounds/Slimy_Splat_2_Short.ogg', 30, 1, 1, 1.2)
 		holder.owner.AddComponent(/datum/component/floor_slime, "superlube", 50, 75)
 		var/datum/component/C = holder.owner.GetComponent(/datum/component/floor_slime)

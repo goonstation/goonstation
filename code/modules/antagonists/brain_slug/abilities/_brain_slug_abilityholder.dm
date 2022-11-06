@@ -5,10 +5,6 @@
 		if (!owner.holder)
 			return
 		..()
-	tens_offset_x = 19
-	tens_offset_y = 7
-	secs_offset_x = 23
-	secs_offset_y = 7
 
 /datum/abilityHolder/brain_slug
 	usesPoints = 1
@@ -18,17 +14,17 @@
 	topBarRendered = 1
 	rendered = 1
 	points = 700
-	var/infestation_count = 0
+	var/harvest_count = 0
 	onAbilityStat()
 		..()
 		.= list()
 		.["Stability:"] = round(src.points)
-		.["Infestation:"] = round(src.infestation_count)
+		.["Harvests:"] = round(src.harvest_count)
 
 /datum/abilityHolder/brain_slug_master
 	usesPoints = 1
 	regenRate = 0
-	pointName = "Infestation"
+	pointName = "Harvests"
 	tabName = "Abilities"
 	topBarRendered = 1
 	rendered = 1
@@ -36,7 +32,7 @@
 	onAbilityStat()
 		..()
 		.= list()
-		.["Infestation:"] = round(src.points)
+		.["Harvests:"] = round(src.points)
 
 ABSTRACT_TYPE(/datum/targetable/brain_slug)
 /datum/targetable/brain_slug

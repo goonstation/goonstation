@@ -18,12 +18,13 @@
 	can_help = 1
 	add_abilities = list(/datum/targetable/brain_slug/slug_burrow,
 						/datum/targetable/brain_slug/slug_molt,
-						/datum/targetable/brain_slug/devolve,
+						/datum/targetable/brain_slug/neural_detection,
 						/datum/targetable/brain_slug/acid_slither,
 						/datum/targetable/brain_slug/inject_brood,
 						/datum/targetable/brain_slug/glue_spit,
 						/datum/targetable/brain_slug/restraining_spit,
-						/datum/targetable/brain_slug/devour_limb)
+						/datum/targetable/brain_slug/devour_limb,
+						/datum/targetable/brain_slug/devolve)
 	var/bullet_reflect = FALSE
 
 	New(var/turf/T)

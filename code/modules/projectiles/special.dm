@@ -1152,11 +1152,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if (ismob(hit))
 			var/mob/M = hit
 			if(hit == P.special_data["owner"]) return 1
-			M.changeStatus("slowed", 7 SECONDS)
-			M.change_eye_blurry(5)
+			M.changeStatus("slowed", 8 SECONDS)
+			M.change_eye_blurry(10)
 			M.addOverlayComposition(/datum/overlayComposition/blinded_slime)
 			M.updateOverlaysClient(M.client)
-			SPAWN(8 SECONDS)
+			SPAWN(10 SECONDS)
 				M.removeOverlayComposition(/datum/overlayComposition/blinded_slime)
 				M.updateOverlaysClient(M.client)
 			M.remove_stamina(src.stamina_cost)
@@ -1173,7 +1173,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/slime
 	name = "slime spread"
 	sname = "slime spread"
-	spread_angle = 35
+	spread_angle = 30
 	pellets_to_fire = 3
 	spread_projectile_type = /datum/projectile/special/slug_slime
 	shot_sound = 'sound/items/sponge.ogg'

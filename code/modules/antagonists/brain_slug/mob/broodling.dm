@@ -19,12 +19,12 @@
 	var/attack_damage = 3
 	var/death_burn_duration = 15 SECONDS
 
-
 	New(var/atom/A, var/mob/living/summoner = null, var/duration = null)
 		if (summoner)
 			src.master = summoner
 		if (duration)
 			SPAWN (duration)
+				//Did we infest it in the meantime as a slug to get away? Then let's not kill it when it expires
 				if (!src.slug)
 					src.death()
 		..()
