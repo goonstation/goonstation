@@ -511,6 +511,7 @@ var/global
 	hardRebootFilePath = "data/hard-reboot"
 
 	list/icon/z_level_maps = list()
+	list/minimap_marker_targets = list()
 
 	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
 	/// used when creating new z-levels

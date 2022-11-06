@@ -26,6 +26,10 @@
 	metabolizes = FALSE
 	blood_id = null
 
+	minimaps_to_display_on = MAP_AI
+	tracked_minimap_marker = TRUE
+	minimap_marker_icon_state = "ai_eye"
+
 	var/mob/living/silicon/ai/mainframe = null
 	var/last_loc = 0
 

@@ -1090,6 +1090,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\medical\pathology\pathogen_symptoms.dm"
 #include "code\modules\medical\pathology\pathogen_tools.dm"
 #include "code\modules\minimap\minimap.dm"
+#include "code\modules\minimap\minimap_marker.dm"
 #include "code\modules\minimap\minimap_object.dm"
 #include "code\modules\mining\mining_encounters.dm"
 #include "code\modules\mining\ore.dm"

@@ -145,6 +145,10 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/datum/ai_hologram_data/holoHolder = new
 	var/list/hologramContextActions
 
+	minimaps_to_display_on = MAP_AI
+	tracked_minimap_marker = TRUE
+	minimap_marker_icon_state = "ai"
+
 	proc/set_hat(obj/item/clothing/head/hat, var/mob/user as mob)
 		if( src.hat )
 			src.hat.wear_image.pixel_y = 0

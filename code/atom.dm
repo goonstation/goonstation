@@ -397,6 +397,14 @@
 	var/throw_range = 7
 	var/throwforce = 1
 
+	// Minimap Icons.
+	///Which minimap types this object should display a marker on.
+	var/minimaps_to_display_on
+	///Whether this object is able to move, thus requiring a tracked minimap marker.
+	var/tracked_minimap_marker = FALSE
+	var/minimap_marker_icon = 'icons/obj/minimap/minimap_markers.dmi'
+	var/minimap_marker_icon_state
+
 	/// Temporary value to smuggle newloc to Uncross during Move-related procs
 	var/tmp/atom/movement_newloc = null
 
@@ -417,6 +425,9 @@
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	// Handle minimap markers.
+	src.create_minimap_marker()
+
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))
@@ -437,6 +448,8 @@
 
 
 /atom/movable/disposing()
+	src.remove_minimap_marker()
+
 	if (temp_flags & MANTA_PUSHING)
 		mantaPushList.Remove(src)
 		temp_flags &= ~MANTA_PUSHING
@@ -596,6 +609,27 @@
 		if (user.mob_flags & AT_GUNPOINT)
 			for(var/obj/item/grab/gunpoint/G in user.grabbed_by)
 				G.shoot()
+
+/atom/movable/proc/create_minimap_marker()
+	if (!minimaps_to_display_on || !minimap_marker_icon || !minimap_marker_icon_state)
+		return
+
+	if (src in minimap_marker_targets)
+		return
+
+	minimap_marker_targets += src
+
+	for_by_tcl(minimap, /obj/minimap) // Required create a new marker for each minimap, as each minimap may have a differing zoom level and focal point.
+		if ((minimap.map_type & minimaps_to_display_on) && minimap.map)
+			minimap.map.create_minimap_marker(tracked_minimap_marker, src, minimap_marker_icon, minimap_marker_icon_state)
+
+/atom/movable/proc/remove_minimap_marker()
+	if (src in minimap_marker_targets)
+		minimap_marker_targets -= src
+
+		for_by_tcl(minimap, /obj/minimap)
+			if (minimap.map && (src in minimap.map.minimap_markers))
+				minimap.map.remove_minimap_marker(src)
 
 /atom/movable/set_dir(new_dir)
 	..()
