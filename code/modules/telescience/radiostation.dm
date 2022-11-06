@@ -144,7 +144,7 @@
 		src.accents = list()
 		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
 			var/datum/bioEffect/speech/effect = new bio_type()
-			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools)
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
 				continue
 			var/name = effect.id
 			if(length(name) >= 7 && copytext(name, 1, 8) == "accent_")

@@ -14,6 +14,7 @@
 	lockedChars = list("G","C")
 	lockedTries = 3
 	icon_state = "speech"
+	var/mixingdesk_allowed = TRUE
 
 	proc/OnSpeak(var/message)
 		if (!istext(message))
@@ -843,6 +844,7 @@
 	lockedDiff = 2
 	lockedChars = list("G","C")
 	lockedTries = 3
+	mixingdesk_allowed = FALSE
 	var/static/regex/word_regex = regex("(\[a-zA-Z0-9-\]*)")
 	var/static/list/word_to_emoji = null
 	var/static/list/suffixes = list("", "ing", "s", "ed", "er", "ings")
