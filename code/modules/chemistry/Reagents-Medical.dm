@@ -498,11 +498,11 @@ datum
 								boutput(host, "<span class='alert'>Something's wrong! You can feel something trying to expel you from this host's head!</span>")
 							if (2 to 5)
 								host.take_toxin_damage(1 * mult)
-							if (6 to 25)
+							if (6 to 32)
 								host.take_toxin_damage(1.5 * mult)
 								host.make_dizzy(1 * mult)
 								host.change_misstep_chance(10 * mult)
-							if (19 to INFINITY)
+							if (33 to INFINITY)
 								if(!being_ejected)
 									being_ejected = TRUE
 									host.visible_message("<span class='alert'>[host]'s suddenly looks dazed and freezes up!</span>")
