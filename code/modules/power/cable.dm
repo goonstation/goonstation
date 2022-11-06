@@ -129,8 +129,8 @@
 
 	var/turf/T = src.loc
 
-	if (isnull(T))
-
+	if (isnull(T)) // we are getting immediately deleted? lol
+		return
 
 	// hide if turf is not intact
 	// but show if in space
