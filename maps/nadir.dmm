@@ -6926,10 +6926,9 @@
 	})
 "dtS" = (
 /obj/table/nanotrasen/auto,
-/obj/item/paper/blueprint/chart{
+/obj/item/paper/blueprint/chart/pasiphae{
 	pixel_y = 11;
-	name = "MA?U? ?ESO??NT S??OGRA?HY";
-	desc = "Some sort of complex chart that seems vaguely familiar. It's badly warped, as though the ink caught fire on its own, and you can't make much out - how was this damaged?"
+	
 	},
 /obj/cable{
 	icon_state = "2-4"
