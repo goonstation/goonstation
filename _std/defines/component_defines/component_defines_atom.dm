@@ -43,7 +43,7 @@
 	#define COMSIG_ATTACKHAND "attackhand"
 	/// when an atom changes its opacity (thing, previous_opacity)
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
-	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component)
+	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
 // ---- atom/movable signals ----
 

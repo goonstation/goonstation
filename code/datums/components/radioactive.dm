@@ -153,5 +153,8 @@ TYPEINFO(/datum/component/radioactive)
 		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch [ismob(owner) ? him_or_her(owner) : "it"]!" : ""]"
 
 	/// Returns level of radioactivity (0 to 100) - note that SEND_SIGNAL returns 0 if the signal is not registered
-	proc/get_radioactivity()
-		return src.radStrength
+	proc/get_radioactivity(atom/owner, list/return_val)
+		if(isnull(return_val))
+			return_val = list()
+		return_val += src.radStrength
+		return TRUE;
