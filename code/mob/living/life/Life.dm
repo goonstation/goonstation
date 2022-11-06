@@ -625,8 +625,6 @@
 						break
 			//If they do, roll a chance to do some hint
 			if (AH)
-				//under consideration
-				//AH.points --
 				if (AH.points > 450)
 					if (prob(3))
 						src.emote(pick("drool", "twitch", "groan", "shiver"))
