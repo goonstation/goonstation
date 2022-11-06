@@ -105,7 +105,6 @@
 		if (prob(40))
 			src.current_target.emote("scream")
 		bleed(current_target, 10, 2)
-		caster.HealDamage("All", 3, 0)
 		if (istype(src.caster, /mob/living/carbon/human))
 			var/mob/living/carbon/human/H = src.caster
 			//We do have a slug inside, yeah?
