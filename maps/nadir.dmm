@@ -6109,6 +6109,11 @@
 	dir = 1;
 	name = "autoname - SS13"
 	},
+/obj/machinery/door_control{
+	id = "ai_core";
+	name = "AI Core Shield";
+	pixel_y = -21
+	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
 "cUx" = (
@@ -6927,8 +6932,7 @@
 "dtS" = (
 /obj/table/nanotrasen/auto,
 /obj/item/paper/blueprint/chart/pasiphae{
-	pixel_y = 11;
-	
+	pixel_y = 11
 	},
 /obj/cable{
 	icon_state = "2-4"
@@ -7611,14 +7615,6 @@
 "dFR" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"dFT" = (
-/obj/machinery/door_control{
-	id = "ai_core";
-	name = "AI Core Shield";
-	pixel_y = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/turret_protected/ai)
 "dGx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -105266,7 +105262,7 @@ aDn
 ckd
 czE
 cUu
-dFT
+mIG
 efm
 aDn
 mIG
