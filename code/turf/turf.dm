@@ -65,7 +65,13 @@
 			return
 		src.init_lighting()
 
-		RegisterSignal(src, list(COMSIG_ATOM_SET_OPACITY, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART), .proc/on_set_opacity) // ZEWAKA/INIT signif.
+	set_opacity(newopacity)
+		. = ..()
+		on_set_opacity()
+
+	proc/contents_set_opacity_smart(oldopacity, atom/movable/thing)
+		on_set_opacity()
+		SEND_SIGNAL(src, COMSIG_TURF_CONTENTS_SET_OPACITY_SMART, oldopacity, thing)
 
 	onMaterialChanged()
 		..()
