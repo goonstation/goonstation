@@ -68,8 +68,7 @@
 						boutput(holder.owner, "<span class='alert'>You feel something crawl up your neck, then nothingness. Your conscience fades.</span>")
 						holder.owner.ghostize()
 						the_slug.mind.transfer_to(holder.owner)
-						holder.owner.addAbility(/datum/targetable/brain_slug/exit_host)
-						holder.owner.addAbility(/datum/targetable/brain_slug/infest_host)
+						holder.owner.add_basic_slug_abilities()
 					else
 						boutput(holder.owner, "<span class='notice'>Actually, you feel just fine! Nothing to worry about!</span>")
 		if (iscarbon(MT) && prob(60))
