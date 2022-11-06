@@ -174,7 +174,11 @@
 		loc.maptext_y = loc_maptext_y
 		qdel(src)
 
-
+/obj/maptext_spawner/pretty
+	var/font_size = 9
+	New()
+		src.loc_maptext = "<span class=\"ol vga c\" style=\"font-size:[src.font_size]pt\">[src.loc_maptext]</span>"
+		..()
 // I'm archiving a slightly improved version of the hell portal which is now gone
 
 /obj/hellportal

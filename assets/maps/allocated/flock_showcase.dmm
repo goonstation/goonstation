@@ -1,0 +1,327 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"f" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/collector
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"j" = (
+/obj/landmark/tutorial_start,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"m" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/computes
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"s" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/sentinel
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"v" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/relay
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"w" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/fabricator
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"C" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/interceptor
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"G" = (
+/obj/maptext_spawner/pretty{
+	loc_maptext = sss
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"J" = (
+/turf/simulated/floor/feather,
+/area/space)
+"L" = (
+/obj/spawner/flock_structure{
+	structure_type = /obj/flock_structure/gnesis_turret
+	},
+/turf/simulated/floor/feather,
+/area/space)
+"S" = (
+/turf/cordon,
+/area/space)
+"U" = (
+/mob/living/carbon/human/bad_immortal,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+
+(1,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}
+(2,1,1) = {"
+S
+a
+a
+J
+a
+a
+a
+a
+a
+S
+"}
+(3,1,1) = {"
+S
+a
+J
+J
+J
+J
+a
+a
+a
+S
+"}
+(4,1,1) = {"
+S
+a
+J
+f
+J
+G
+a
+a
+a
+S
+"}
+(5,1,1) = {"
+S
+a
+J
+J
+a
+a
+a
+a
+a
+S
+"}
+(6,1,1) = {"
+S
+a
+a
+m
+a
+a
+a
+a
+a
+S
+"}
+(7,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(8,1,1) = {"
+S
+a
+a
+w
+a
+a
+a
+a
+a
+S
+"}
+(9,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(10,1,1) = {"
+S
+a
+J
+J
+J
+a
+a
+a
+a
+S
+"}
+(11,1,1) = {"
+S
+a
+v
+J
+J
+a
+a
+j
+a
+S
+"}
+(12,1,1) = {"
+S
+a
+J
+J
+J
+a
+a
+a
+a
+S
+"}
+(13,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(14,1,1) = {"
+S
+a
+a
+s
+a
+a
+a
+a
+a
+S
+"}
+(15,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(16,1,1) = {"
+S
+a
+a
+C
+a
+U
+a
+a
+a
+S
+"}
+(17,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(18,1,1) = {"
+S
+a
+a
+L
+a
+a
+a
+a
+a
+S
+"}
+(19,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(20,1,1) = {"
+S
+a
+a
+a
+a
+a
+a
+a
+a
+S
+"}
+(21,1,1) = {"
+S
+S
+S
+S
+S
+S
+S
+S
+S
+S
+"}

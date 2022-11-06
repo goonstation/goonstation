@@ -7,18 +7,18 @@
 	New(mob/M)
 		. = ..()
 		src.AddStep(new /datum/tutorialStep/flock/deploy)
-		src.AddStep(new /datum/tutorialStep/flock/gatecrash)
-		src.AddStep(new /datum/tutorialStep/flock/move)
-		src.AddStep(new /datum/tutorialStep/flock/control)
-		src.AddStep(new /datum/tutorialStep/flock/gather)
-		src.AddStep(new /datum/tutorialStep/flock/convert_window)
-		src.AddStep(new /datum/tutorialStep/flock/floorrun)
-		src.AddStep(new /datum/tutorialStep/flock/release_drone)
-		src.AddStep(new /datum/tutorialStep/flock/kill)
-		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
-		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
-		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
-		src.AddStep(new /datum/tutorialStep/flock/relay)
+		// src.AddStep(new /datum/tutorialStep/flock/gatecrash)
+		// src.AddStep(new /datum/tutorialStep/flock/move)
+		// src.AddStep(new /datum/tutorialStep/flock/control)
+		// src.AddStep(new /datum/tutorialStep/flock/gather)
+		// src.AddStep(new /datum/tutorialStep/flock/convert_window)
+		// src.AddStep(new /datum/tutorialStep/flock/floorrun)
+		// src.AddStep(new /datum/tutorialStep/flock/release_drone)
+		// src.AddStep(new /datum/tutorialStep/flock/kill)
+		// src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
+		// src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
+		// src.AddStep(new /datum/tutorialStep/flock/turret_demo)
+		src.AddStep(new /datum/tutorialStep/flock/showcase)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
 			if(src.region.turf_in_region(T))
@@ -257,7 +257,8 @@
 		muzzle_flash_any(turret, 0, "muzzle_flash")
 		shoot_projectile_ST_pixel_spread(turret, turret.current_projectile, src.ftutorial.center, 0, 0 , turret.spread)
 		SPAWN(10 SECONDS)
-			src.ftutorial.Advance()
+			if (src.ftutorial.current_step == src)
+				src.ftutorial.Advance()
 
 /datum/tutorialStep/flock/relay
 	name = "The Relay"
@@ -273,8 +274,23 @@
 			qdel(cage)
 		var/obj/flock_structure/ghost/tealprint = new(T, src.ftutorial.fowner.flock, /obj/flock_structure/relay)
 		tealprint.fake = TRUE
-		SPAWN(15 SECONDS)
-			src.ftutorial.Advance()
+
+/datum/tutorialStep/flock/showcase
+	name = "Structure showcase"
+	SetUp()
+		..()
+		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
+		var/datum/allocated_region/region = prefab.load()
+		for (var/turf/T in REGION_TILES(region))
+			var/obj/spawner/flock_structure/spawner = locate() in T
+			if (spawner)
+				spawner.spawn_structure()
+		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
+			if(region.turf_in_region(T))
+				src.ftutorial.fowner.set_loc(T)
+				break
+
+
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
@@ -312,3 +328,24 @@
 					gun.shoot(target, src.loc, src)
 					sleep(1.5 SECONDS)
 
+/mob/living/carbon/human/bad_immortal
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+		src.full_heal()
+
+/obj/spawner/flock_structure
+	name = "flock structure"
+	icon = 'icons/mob/screen1.dmi'
+	icon_state = "x"
+	var/structure_type = null
+	var/ghost = FALSE
+
+	proc/spawn_structure(var/datum/flock/flock)
+		if (!ispath(src.structure_type))
+			return
+		if (src.ghost)
+			var/obj/flock_structure/ghost/ghost = new(get_turf(src), flock, src.structure_type)
+			ghost.fake = TRUE
+		else
+			new src.structure_type(get_turf(src), flock)
+		qdel(src)
