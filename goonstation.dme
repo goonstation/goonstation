@@ -1500,7 +1500,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\bell.dm"
 #include "code\obj\item\book.dm"
 #include "code\obj\item\bowling.dm"
-#include "code\obj\item\brain_slug_rewards.dm"
 #include "code\obj\item\bruisepack_ointment.dm"
 #include "code\obj\item\building_materials.dm"
 #include "code\obj\item\cable_coil.dm"
