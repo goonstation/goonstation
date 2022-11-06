@@ -2221,7 +2221,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	on_reagent_change()
 		..()
-		if (src.reagents && src.reagents.total_volume)
+		if (src.reagents?.total_volume)
 			var/image/dip = image('icons/obj/foodNdrink/food_snacks.dmi', "churro-overlay")
 			dip.color = src.reagents.get_average_color().to_rgba()
 			src.UpdateOverlays(dip, "dip")
