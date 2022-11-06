@@ -1785,6 +1785,9 @@ var/f_color_selector_handler/F_Color_Selector
 
 
 /world/proc/setMaxZ(new_maxz)
+	// when calling this proc if you don't care about the actual contents of the new z-level you might want to set
+	// global.dont_init_space = TRUE before calling this proc and unset it afterwards. This will speed things up but
+	// the space filling this z-level will be somewhat broken (which you will hopefully replace with whatever it is you want to replace it with).
 	if (!isnum(new_maxz) || new_maxz <= src.maxz)
 		return src.maxz
 	for (var/zlevel = world.maxz+1; zlevel <= new_maxz; zlevel++)

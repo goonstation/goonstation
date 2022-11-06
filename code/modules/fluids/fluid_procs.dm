@@ -82,7 +82,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	var/fluid_and_group_already_exist = 0
 
 	if (airborne)
-		if (!src.active_airborne_liquid)
+		if (!src.active_airborne_liquid || QDELETED(src.active_airborne_liquid) || QDELETED(src.active_airborne_liquid.group))
 			FG = new /datum/fluid_group/airborne
 			F = new /obj/fluid/airborne
 			src.active_airborne_liquid = F
@@ -99,7 +99,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 				if (react_volume == 0)
 					react_volume = 1
 	else
-		if (!src.active_liquid)
+		if (!src.active_liquid || QDELETED(src.active_liquid) || QDELETED(src.active_liquid.group))
 			FG = new
 			F = new /obj/fluid
 			src.active_liquid = F

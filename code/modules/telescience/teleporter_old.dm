@@ -187,29 +187,10 @@
 	var/m_blocked = 0
 
 
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		var/atom/A = atom
-		if (GET_DIST(tmploc,A) <= 5)
-			if (istype(atom, /obj/machinery/telejam))
-				var/obj/machinery/telejam/T = atom
-				if (!T.active)
-					continue
-				var/r = GET_DIST(T, tmploc)
-				if (r > T.range)
-					continue
-				m_blocked = 1
-				break
-
-		if (GET_DIST(tmploc,A) <= 4)
-			if (istype(atom, /obj/item/device/flockblocker))
-				var/obj/item/device/flockblocker/F = atom
-				if (!F.active)
-					continue
-				var/r = GET_DIST(F, tmploc)
-				if (r > F.range)
-					continue
-				m_blocked = 1
-				break
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(tmploc, A, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
+			m_blocked = 1
+			break
 
 	//if((istype(tmploc,/area/wizard_station)) || (istype(tmploc,/area/syndicate_station)))
 	var/area/myArea = get_area(tmploc)
