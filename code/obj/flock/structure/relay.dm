@@ -26,7 +26,7 @@
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
-	var/max_conv_radius = 100
+	var/max_conv_radius = 15 // increase back to 100 later if possible
 	var/list/turfs_to_convert = null
 	var/last_time_sound_played_in_seconds = 0
 	var/sound_length_in_seconds = 27
