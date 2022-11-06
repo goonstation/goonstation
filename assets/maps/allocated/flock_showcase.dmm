@@ -10,8 +10,24 @@
 	},
 /turf/simulated/floor/feather,
 /area/space)
+"i" = (
+/obj/maptext_spawner/pretty{
+	loc_maptext = Sentinels are powerful electric stun turrets, costing 150 resources.
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
 "j" = (
 /obj/landmark/tutorial_start,
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
+"k" = (
+/obj/maptext_spawner/pretty{
+	loc_maptext = Human computers convert into compute nodes, giving 60 compute.
+	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -22,6 +38,14 @@
 	},
 /turf/simulated/floor/feather,
 /area/space)
+"q" = (
+/obj/maptext_spawner/pretty{
+	loc_maptext = The Relay, your ultimate goal. Unlocked at 500 compute.
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
 "s" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/sentinel
@@ -30,7 +54,8 @@
 /area/space)
 "v" = (
 /obj/spawner/flock_structure{
-	structure_type = /obj/flock_structure/relay
+	structure_type = /obj/flock_structure/relay;
+	ghost = 1
 	},
 /turf/simulated/floor/feather,
 /area/space)
@@ -40,6 +65,14 @@
 	},
 /turf/simulated/floor/feather,
 /area/space)
+"x" = (
+/obj/maptext_spawner/pretty{
+	loc_maptext = Human resource containers convert into Flock resource Fabricators.
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
 "C" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/interceptor
@@ -48,7 +81,7 @@
 /area/space)
 "G" = (
 /obj/maptext_spawner/pretty{
-	loc_maptext = sss
+	loc_maptext = Collectors provide compute based on connected flock tiles.
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -139,7 +172,7 @@ a
 a
 m
 a
-a
+k
 a
 a
 a
@@ -163,7 +196,7 @@ a
 a
 w
 a
-a
+x
 a
 a
 a
@@ -200,7 +233,7 @@ v
 J
 J
 a
-a
+q
 j
 a
 S
@@ -235,7 +268,7 @@ a
 a
 s
 a
-a
+i
 a
 a
 a
