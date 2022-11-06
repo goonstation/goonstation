@@ -452,7 +452,7 @@
 					return
 
 		if (istype(I, /obj/item/sheet) && src.holed_up)
-			var/obj/item/sheet/S = W
+			var/obj/item/sheet/S = I
 			S.change_stack_amount(-1)
 			src.fix_hole()
 			boutput(user, "You add a sheet of plating to the pipe to patch up the hole.")
