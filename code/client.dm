@@ -178,6 +178,10 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 	src.player = make_player(key)
 	src.player.client = src
 
+	// Prefer RSC from config.txt if present, otherwise rely on PRELOAD_RSC_URL
+	if(config.rsc)
+		src.preload_rsc = config.rsc
+
 	if (!isnewplayer(src.mob) && !isnull(src.mob)) //playtime logging stuff
 		src.player.log_join_time()
 
