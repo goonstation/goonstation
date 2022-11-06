@@ -378,6 +378,9 @@ var/f_color_selector_handler/F_Color_Selector
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
 
+	participationRecorder = new()
+	//participationRecorder = new(1) //Enable debug
+
 	//This is also used pretty early
 	Z_LOG_DEBUG("World/New", "Setting up powernets...")
 	makepowernets()
