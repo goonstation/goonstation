@@ -1984,7 +1984,7 @@ var/global/noir = 0
 						B.antagonist_overlay_refresh(1, 0)
 
 						SPAWN(0)
-							var/newname = input(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change") as text
+							var/newname = tgui_input_text(B, "You are a Blob. Please choose a name for yourself, it will show in the form: <name> the Blob", "Name change")
 
 							if (newname)
 								if (length(newname) >= 26) newname = copytext(newname, 1, 26)

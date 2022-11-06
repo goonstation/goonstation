@@ -1063,6 +1063,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	proc/emit_chems(atom/hit, obj/projectile/O, angle)
 		if(!O.special_data || !length(O.special_data) || !istype(hit) || !O.reagents)
 			return
+		var/list/special_data = O.special_data
 
 		var/turf/T = get_turf(hit)
 		var/datum/reagents/chemR = O.reagents
@@ -1070,7 +1071,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(chem_amt <= 0)
 			return
 		/// If there's just a little bit left, use the rest of it
-		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * O.special_data["chem_pct_app_tile"])
+		var/amt_to_emit = (chem_amt <= 0.1) ? chem_amt : (chemR.maximum_volume * special_data["chem_pct_app_tile"])
 
 		var/datum/reagents/copied = new/datum/reagents(amt_to_emit)
 		copied = chemR.copy_to(copied, amt_to_emit/chemR.total_volume, copy_temperature = 1)
@@ -1079,15 +1080,15 @@ ABSTRACT_TYPE(/datum/projectile/special)
 			T.create_reagents(100)
 		copied.copy_to(T.reagents, 1, copy_temperature = 1)
 		copied.reaction(T, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Heat if needed
-			T.reagents?.set_reagent_temp(O.special_data["burn_temp"], TRUE)
+		if(special_data["IS_LIT"]) // Heat if needed
+			T.reagents?.set_reagent_temp(special_data["burn_temp"], TRUE)
 		for(var/atom/A in T.contents) // then all the stuff in the turf
 			if(istype(A, /obj/overlay) || istype(A, /obj/projectile))
 				continue
 			copied.reaction(A, TOUCH, 0, 0)
-		if(O.special_data["IS_LIT"]) // Reduce the temperature per turf crossed
-			O.special_data["burn_temp"] -= O.special_data["burn_temp"] * O.special_data["temp_pct_loss_atom"]
-			O.special_data["burn_temp"] = max(O.special_data["burn_temp"], T0C)
+		if(special_data["IS_LIT"]) // Reduce the temperature per turf crossed
+			special_data["burn_temp"] -= special_data["burn_temp"] * special_data["temp_pct_loss_atom"]
+			special_data["burn_temp"] = max(special_data["burn_temp"], T0C)
 		chemR.remove_any(amt_to_emit)
 
 	post_setup(obj/projectile/P)
