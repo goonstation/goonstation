@@ -65,6 +65,10 @@
 			return
 		src.init_lighting()
 
+	disposing() // DOES NOT GET CALLED ON TURFS!!!
+		SHOULD_NOT_OVERRIDE(TRUE)
+		SHOULD_CALL_PARENT(FALSE)
+
 	set_opacity(newopacity)
 		. = ..()
 		on_set_opacity()
