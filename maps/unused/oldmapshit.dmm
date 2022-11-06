@@ -17,8 +17,7 @@
 /turf/space,
 /area/space)
 "af" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -26,8 +25,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ag" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -35,8 +33,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ah" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -44,16 +41,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ai" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "aj" = (
-/obj/machinery/conveyor{
-	dir = 2;
+/obj/machinery/conveyor/NS{
 	icon_state = "conveyor0";
 	id = "maze-blue";
 	name = "blue line belt";
@@ -62,16 +57,14 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ak" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
 /turf/simulated/floor/plating,
 /area/space)
 "al" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -79,8 +72,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "am" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -88,8 +80,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "an" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -100,8 +91,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "ao" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -111,11 +101,10 @@
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aq" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/SN{
 	tag = "icon-conveyor0 (NORTH)";
 	name = "blue line belt";
 	icon_state = "conveyor0";
-	dir = 1;
 	id = "maze-blue"
 	},
 /turf/simulated/floor/plating,
@@ -179,8 +168,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "av" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -188,8 +176,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -288,11 +275,10 @@
 /turf/simulated/floor,
 /area/space)
 "aI" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/SN{
 	tag = "icon-conveyor0 (NORTH)";
 	name = "blue line belt";
 	icon_state = "conveyor0";
-	dir = 1;
 	id = "maze-blue"
 	},
 /obj/machinery/door_control{
@@ -334,8 +320,7 @@
 /turf/simulated/floor,
 /area/space)
 "aN" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -343,8 +328,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aO" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},
@@ -356,8 +340,7 @@
 /turf/simulated/floor/plating,
 /area/space)
 "aP" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "maze-red";
 	name = "red line belt"
 	},

@@ -200,3 +200,7 @@ proc/dm_dump(var/x)
 			lines[reserved_index] = val
 		else
 			lines[reserved_index] = "[jointext(path, "") || "src"] = [val]"
+
+
+/obj/merge_conflict_marker
+	// TODO icon

@@ -63,6 +63,7 @@
 		if(!try_trigger(AM)) return
 		var/mob/M = AM
 		if(!checkRun(M)) return
+		if(!M.reagents) return
 		if (M.reagents.total_volume + src.amount_to_inject >= M.reagents.maximum_volume)
 			M.reagents.remove_any(M.reagents.total_volume + amount_to_inject - M.reagents.maximum_volume)
 		M.reagents.add_reagent("madness_toxin", src.amount_to_inject)

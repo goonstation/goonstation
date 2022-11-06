@@ -19219,15 +19219,13 @@
 /turf/simulated/floor/delivery,
 /area/engine/miningoutpost)
 "Qa" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/engine/miningoutpost)
 "Qb" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /obj/machinery/door/poddoor{
@@ -19240,8 +19238,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/engine/miningoutpost)
 "Qc" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "mining"
 	},
 /turf/simulated/floor/plating/airless,

@@ -139,6 +139,7 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	var/fireloss = 0
 
 	var/mob/living/intangible/aieye/eyecam = null
+	var/obj/minimap/ai/ai_station_map
 
 	var/deployed_to_eyecam = 0
 	var/datum/ai_hologram_data/holoHolder = new
@@ -207,6 +208,8 @@ var/global/list/ai_emotions = list("Happy" = "ai_happy", \
 	START_TRACKING
 
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+
+	ai_station_map = new /obj/minimap/ai
 
 	light = new /datum/light/point
 	light.set_color(0.4, 0.7, 0.95)
