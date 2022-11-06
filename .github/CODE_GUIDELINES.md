@@ -551,9 +551,10 @@ There exists a project to provide an incredibly more advanced real-time profiler
 
 ![](https://i.imgur.com/1CEwo0g.png)
 
-To operate this, you will need to do two things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
+To operate this, you will need to do three things: download [the tracy 'viewer' application](https://github.com/wolfpld/tracy), and either compile or download the byond-tracy library.
 * The first can be downloaded here: https://github.com/wolfpld/tracy/releases (download the .7z and unzip it, it's portable)
 * The second can be trivially compiled from the C source above (and will be more performant), or you could download a version ZeWaka has compiled themselves [here](https://bit.ly/goontracy). The .dll just goes in the root folder of the game.
+* Uncomment `#define TRACY_PROFILER_HOOK` in `_std/__build.dm`
 
 If you're on Linux you need to compile both yourself manually, obviously.
 
