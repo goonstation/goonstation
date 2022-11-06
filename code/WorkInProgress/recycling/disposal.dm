@@ -188,6 +188,7 @@
 	var/base_icon_state	//! Initial icon state on map
 	var/list/mail_tag = null //! Tag of mail group for switching pipes
 
+	///If a brain slug has punched through us
 	var/holed_up = FALSE
 	var/image/pipeimg = null
 
@@ -450,6 +451,12 @@
 					boutput(user, "You must stay still while welding the pipe.")
 					return
 
+		if (istype(I, /obj/item/sheet) && src.holed_up)
+			var/obj/item/sheet/S = W
+			S.change_stack_amount(-1)
+			src.fix_hole()
+			boutput(user, "You add a sheet of plating to the pipe to patch up the hole.")
+
 	// called when pipe is cut with welder
 	proc/welded(var/user)
 
@@ -482,7 +489,7 @@
 
 		qdel(src)
 
-	//Todo add busted up overlay and chance for item to fly out.
+	//Todo add busted up overlay
 	proc/bust_open()
 		src.holed_up = TRUE
 
