@@ -122,7 +122,7 @@
 			P.special_data["ball"] = C.ball
 			P.special_data["debug"] = debug
 
-			P.proj_data.RegisterSignal(P, list(COMSIG_MOVABLE_MOVED), /datum/projectile/special/golfball/proc/check_newloc)
+			P.proj_data.RegisterSignal(P, COMSIG_MOVABLE_MOVED, /datum/projectile/special/golfball/proc/check_newloc)
 
 		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
 		C.ball = null

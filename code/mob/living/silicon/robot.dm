@@ -255,11 +255,12 @@
 
 	death(gibbed)
 		src.stat = 2
+		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
-		src.borg_death_alert()
+
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
 			src.clothes[slot].set_loc(src.loc)
