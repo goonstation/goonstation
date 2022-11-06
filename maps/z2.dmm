@@ -72024,7 +72024,7 @@
 	c_flags = 94208;
 	pixel_x = 1;
 	pixel_y = 10;
-	signal_enabled = 1
+	
 	},
 /obj/table/wood/auto/desk/lily,
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/ne,
