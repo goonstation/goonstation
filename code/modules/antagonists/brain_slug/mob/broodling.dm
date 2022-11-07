@@ -4,8 +4,8 @@
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 1
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "brain_slug"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "broodling"
 	//todo death sprite
 	speechverb_say = "clicks"
 	speechverb_exclaim = "clacks"

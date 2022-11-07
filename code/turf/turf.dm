@@ -1264,5 +1264,8 @@ proc/generate_space_color()
 	if (istype(src, /turf/simulated/floor))
 		var/turf/simulated/floor/floor_turf = src
 		floor_turf.burn_tile()
+	var/image/burning_overlay = image('icons/mob/brainslug.dmi', icon_state = "acidground")
+	src.UpdateOverlays(burning_overlay, "acid_turf")
 	SPAWN(burn_duration)
+		src.UpdateOverlays(null, "acid_turf")
 		src.acidic = FALSE

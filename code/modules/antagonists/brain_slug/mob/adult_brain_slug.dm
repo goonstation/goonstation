@@ -3,7 +3,7 @@
 	desc = "A slimy, huge space parasite that is no longer content to feed on just brains."
 	hand_count = 1
 	custom_gib_handler = /proc/gibs
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/brainslug.dmi'
 	icon_state = "brain_slug"
 	//todo death icon
 	health_brute = 160
