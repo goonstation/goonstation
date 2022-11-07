@@ -284,7 +284,7 @@
 		for (var/turf/T in REGION_TILES(region))
 			var/obj/spawner/flock_structure/spawner = locate() in T
 			if (spawner)
-				spawner.spawn_structure()
+				spawner.spawn_structure(ftutorial.fowner.flock)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				src.ftutorial.fowner.set_loc(T)
