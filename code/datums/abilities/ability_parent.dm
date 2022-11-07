@@ -197,9 +197,6 @@
 		if(owner)
 			owner.attach_hud(hud)
 
-	proc/Stat()
-		return
-
 	proc/StatAbilities()
 		if (!rendered)
 			return
