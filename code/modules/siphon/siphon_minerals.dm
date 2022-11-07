@@ -272,7 +272,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/starstone
 
 	New()
-		src.tick_req = rand(90,130) * 10
+		src.tick_req = rand(150,220) * 8
 		src.shear = rand(260,360)
 		..()
 
