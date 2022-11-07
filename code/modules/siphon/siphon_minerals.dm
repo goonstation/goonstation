@@ -268,6 +268,7 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 /datum/siphon_mineral/starstone
 	name = "Starstone"
 	tick_req = 1616
+	y_torque = 0
 	shear = 161
 	product = /obj/item/raw_material/starstone
 
