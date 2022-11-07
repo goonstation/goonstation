@@ -4,6 +4,14 @@
 	name = "reinforced plating"
 	},
 /area/space)
+"d" = (
+/obj/maptext_spawner/inert{
+	loc_maptext = "Interceptors fire gnesis bolts that annihilate bullets fired past them. Cost: 100 resources."
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
+/area/space)
 "f" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/collector
@@ -11,23 +19,15 @@
 /turf/simulated/floor/feather,
 /area/space)
 "g" = (
-/obj/maptext_spawner/pretty{
+/obj/maptext_spawner/inert{
 	loc_maptext = "Gnesis turrets fire spikes filled with coagulated gnesis into attackers. Cost: 150 resources."
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
 /area/space)
-"h" = (
-/obj/maptext_spawner/pretty{
-	loc_maptext = "Interceptors fire gnesis bolts that annihilate bullets fired past them. Cost: 100 resources."
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/space)
 "i" = (
-/obj/maptext_spawner/pretty{
+/obj/maptext_spawner/inert{
 	loc_maptext = "Sentinels are powerful electric stun turrets, costing 150 resources."
 	},
 /turf/simulated/floor/shuttlebay{
@@ -40,14 +40,6 @@
 	name = "reinforced plating"
 	},
 /area/space)
-"k" = (
-/obj/maptext_spawner/pretty{
-	loc_maptext = "Human computers convert into Flock compute nodes. Each provides 60 compute."
-	},
-/turf/simulated/floor/shuttlebay{
-	name = "reinforced plating"
-	},
-/area/space)
 "m" = (
 /obj/spawner/flock_structure{
 	structure_type = /obj/flock_structure/compute
@@ -55,7 +47,7 @@
 /turf/simulated/floor/feather,
 /area/space)
 "q" = (
-/obj/maptext_spawner/pretty{
+/obj/maptext_spawner/inert{
 	loc_maptext = "The Relay, your ultimate goal. Unlocked at 500 compute."
 	},
 /turf/simulated/floor/shuttlebay{
@@ -82,7 +74,7 @@
 /turf/simulated/floor/feather,
 /area/space)
 "x" = (
-/obj/maptext_spawner/pretty{
+/obj/maptext_spawner/inert{
 	loc_maptext = "Human resource containers convert into Flock resource Fabricators."
 	},
 /turf/simulated/floor/shuttlebay{
@@ -96,7 +88,7 @@
 /turf/simulated/floor/feather,
 /area/space)
 "G" = (
-/obj/maptext_spawner/pretty{
+/obj/maptext_spawner/inert{
 	loc_maptext = "Collectors provide compute based on connected flock tiles."
 	},
 /turf/simulated/floor/shuttlebay{
@@ -111,6 +103,14 @@
 	structure_type = /obj/flock_structure/gnesisturret
 	},
 /turf/simulated/floor/feather,
+/area/space)
+"Q" = (
+/obj/maptext_spawner/inert{
+	loc_maptext = "Human computers convert into Flock compute nodes. Each provides 60 compute."
+	},
+/turf/simulated/floor/shuttlebay{
+	name = "reinforced plating"
+	},
 /area/space)
 "S" = (
 /turf/cordon,
@@ -185,10 +185,10 @@ S
 (6,1,1) = {"
 S
 a
-a
+Q
 m
 a
-k
+a
 a
 a
 a
@@ -220,11 +220,11 @@ S
 "}
 (9,1,1) = {"
 S
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
 a
 a
 a
@@ -232,11 +232,11 @@ S
 "}
 (10,1,1) = {"
 S
-a
 J
 J
 J
-a
+J
+J
 a
 a
 a
@@ -244,11 +244,11 @@ S
 "}
 (11,1,1) = {"
 S
-a
+J
 J
 v
 J
-a
+J
 q
 j
 a
@@ -256,11 +256,11 @@ S
 "}
 (12,1,1) = {"
 S
-a
 J
 J
 J
-a
+J
+J
 a
 a
 a
@@ -268,11 +268,11 @@ S
 "}
 (13,1,1) = {"
 S
-a
-a
-a
-a
-a
+J
+J
+J
+J
+J
 a
 a
 a
@@ -305,12 +305,12 @@ S
 (16,1,1) = {"
 S
 a
-a
+d
 C
 a
-h
-U
 a
+a
+U
 a
 S
 "}
