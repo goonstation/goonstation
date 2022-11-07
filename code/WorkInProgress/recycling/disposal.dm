@@ -489,12 +489,14 @@
 
 		qdel(src)
 
-	//Todo add busted up overlay
 	proc/bust_open()
 		src.holed_up = TRUE
+		var/image/hole_overlay = image('icons/mob/brainslug.dmi', icon_state = pick("disposal_hole_1", "disposal_hole_2"))
+		src.UpdateOverlays(hole_overlay, "hole")
 
 	proc/fix_hole()
 		src.holed_up = FALSE
+		src.UpdateOverlays(null, "hole")
 
 #undef MISSING_DISPOSAL_IMAGE_COLOR
 
