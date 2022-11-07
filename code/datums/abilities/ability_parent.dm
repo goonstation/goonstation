@@ -1207,10 +1207,6 @@
 		for (var/datum/abilityHolder/H in holders)
 			H.generatePoints(mult)
 
-	Stat()
-		for (var/datum/abilityHolder/H in holders)
-			H.Stat()
-
 	StatAbilities()
 		for (var/datum/abilityHolder/H in holders)
 			H.StatAbilities()
