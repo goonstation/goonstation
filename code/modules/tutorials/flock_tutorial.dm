@@ -7,17 +7,17 @@
 	New(mob/M)
 		. = ..()
 		src.AddStep(new /datum/tutorialStep/flock/deploy)
-		// src.AddStep(new /datum/tutorialStep/flock/gatecrash)
-		// src.AddStep(new /datum/tutorialStep/flock/move)
-		// src.AddStep(new /datum/tutorialStep/flock/control)
-		// src.AddStep(new /datum/tutorialStep/flock/gather)
-		// src.AddStep(new /datum/tutorialStep/flock/convert_window)
-		// src.AddStep(new /datum/tutorialStep/flock/floorrun)
-		// src.AddStep(new /datum/tutorialStep/flock/release_drone)
-		// src.AddStep(new /datum/tutorialStep/flock/kill)
-		// src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
-		// src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
-		// src.AddStep(new /datum/tutorialStep/flock/turret_demo)
+		src.AddStep(new /datum/tutorialStep/flock/gatecrash)
+		src.AddStep(new /datum/tutorialStep/flock/move)
+		src.AddStep(new /datum/tutorialStep/flock/control)
+		src.AddStep(new /datum/tutorialStep/flock/gather)
+		src.AddStep(new /datum/tutorialStep/flock/convert_window)
+		src.AddStep(new /datum/tutorialStep/flock/floorrun)
+		src.AddStep(new /datum/tutorialStep/flock/release_drone)
+		src.AddStep(new /datum/tutorialStep/flock/kill)
+		src.AddStep(new /datum/tutorialStep/flock/build_thing/sentinel)
+		src.AddStep(new /datum/tutorialStep/flock/build_thing/interceptor)
+		src.AddStep(new /datum/tutorialStep/flock/turret_demo)
 		src.AddStep(new /datum/tutorialStep/flock/showcase)
 		src.exit_point = pick_landmark(LANDMARK_OBSERVER)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_FLOCKCONVERSION])
@@ -281,8 +281,7 @@
 		muzzle_flash_any(turret, 0, "muzzle_flash")
 		shoot_projectile_ST_pixel_spread(turret, turret.current_projectile, src.ftutorial.center, 0, 0 , turret.spread)
 		SPAWN(10 SECONDS)
-			if (src.ftutorial.current_step == src)
-				src.ftutorial.Advance()
+			src.ftutorial.Advance()
 
 /datum/tutorialStep/flock/relay
 	name = "The Relay"
@@ -301,7 +300,7 @@
 
 /datum/tutorialStep/flock/showcase
 	name = "Structure showcase"
-	instructions = "Here are all flock structures in game, refer to the wiki for detailed descriptions of all of them. Click the exit tutorial button in the bottom right corner to exit the tutorial."
+	instructions = "Here are all the flock structures you can create, along with a shadow of the relay, your ultimate goal. Click the exit tutorial button in the bottom right corner to exit the tutorial."
 	SetUp()
 		..()
 		src.ftutorial.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
@@ -327,10 +326,10 @@
 	src.tutorial.Finish()
 	src.tutorial = null
 
-//TODO: remove this
-/mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
-	set name = "SKIP TUTORIAL STEP"
-	src.tutorial.Advance()
+//for debug, do not enable on live or it will cause runtimes and break everything
+// /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
+// 	set name = "SKIP TUTORIAL STEP"
+// 	src.tutorial.Advance()
 
 /obj/machinery/junk_spawner
 	var/stuff = list(/obj/item/extinguisher, /obj/item/crowbar, /obj/item/wrench)
