@@ -3,8 +3,9 @@
 	desc = "A space parasite known to take control of feeble minds."
 	hand_count = 0
 	custom_gib_handler = /proc/gibs
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "brain_slug"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "brainslug"
+	icon_state_dead = "dead_slug"
 	health_brute = 50
 	health_burn = 40
 	flags = TABLEPASS | DOORPASS
@@ -54,9 +55,8 @@
 			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 		if (!gibbed)
 			src.unequip_all()
-			//todo add a proper sound and death icon instead of gibs
+			//todo add a proper sound
 			playsound(src, src.deathsound, 50, 0)
-			src.gib()
 		return ..()
 
 	disposing()
