@@ -272,8 +272,8 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	product = /obj/item/raw_material/starstone
 
 	New()
-		src.tick_req = rand(100,130) * 5
-		src.shear = rand(130,230)
+		src.tick_req = rand(90,130) * 10
+		src.shear = rand(260,360)
 		..()
 
 /datum/siphon_mineral/blob
