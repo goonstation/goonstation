@@ -854,7 +854,7 @@
 	},
 /area/station/science/chemistry)
 "adD" = (
-/obj/machinery/vending/coffee,
+/obj/machinery/vending/cola/blue,
 /turf/simulated/floor/carpet/red/fancy/edge/east,
 /area/station/science/lobby)
 "adE" = (
@@ -12098,7 +12098,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "aQt" = (
-/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/head)
 "aQu" = (
@@ -15199,11 +15198,8 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/item/reagent_containers/syringe,
 /obj/item/reagent_containers/glass/bottle/epinephrine,
-/obj/item/reagent_containers/glass/bottle/epinephrine{
-	pixel_x = 3;
-	pixel_y = 9
-	},
 /obj/firedoor_spawn,
+/obj/item/reagent_containers/glass/bottle/antitoxin,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZM" = (
@@ -15225,16 +15221,9 @@
 	},
 /area/station/medical/medbay)
 "aZN" = (
-/obj/item/reagent_containers/glass/bottle/antitoxin{
-	pixel_x = 4;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/glass/bottle/antitoxin,
-/obj/item/reagent_containers/syringe,
-/obj/table/reinforced/auto,
-/obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/access_spawn/medical,
+/obj/machinery/door/airlock/pyro/glass/med,
 /obj/firedoor_spawn,
+/obj/access_spawn/medical,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
 "aZP" = (
@@ -19216,14 +19205,31 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bnk" = (
-/obj/machinery/bot/secbot/beepsky,
-/obj/stool/chair/office/red{
-	dir = 8;
-	icon_state = "office_chair_red";
-	tag = "icon-office_chair_red (WEST)"
+/obj/storage/crate{
+	desc = "A private crate that isn't yours.";
+	name = "Beepsky's stuff"
 	},
-/turf/simulated/floor,
-/area/station/security/main)
+/obj/item/clothing/head/NTberet{
+	desc = "It's a momento, I guess. An old keepsake. And maybe a reminder of the things we've left behind.";
+	name = "Old Beret"
+	},
+/obj/item/storage/photo_album/beepsky,
+/obj/item/clothing/suit/det_suit/beepsky,
+/obj/item/diary,
+/obj/item/clothing/shoes/black{
+	desc = "You have no idea how a robot with wheels for locomotion could possibly require these.";
+	name = "Beepsky's Shoes"
+	},
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "N APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "bno" = (
 /obj/machinery/vending/coffee,
 /obj/disposalpipe/segment/brig{
@@ -20688,7 +20694,7 @@
 "btj" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/security/beepsky)
 "btk" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -23289,6 +23295,11 @@
 	dir = 8;
 	icon_state = "pipe-j2"
 	},
+/obj/cable{
+	d1 = 2;
+	d2 = 8;
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "bDi" = (
@@ -25698,6 +25709,7 @@
 "cay" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
+/obj/player_piano,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "cbO" = (
@@ -26318,6 +26330,9 @@
 	icon_state = "fred2"
 	},
 /area/station/crew_quarters/arcade/dungeon)
+"cGj" = (
+/turf/simulated/wall/auto/supernorn,
+/area/station/security/beepsky)
 "cGu" = (
 /obj/cable/black{
 	icon_state = "2-4"
@@ -26664,8 +26679,7 @@
 "cXA" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent,
-/obj/storage/crate/wooden,
-/obj/storage/crate/wooden,
+/obj/item/plate/pizza_box,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "cYx" = (
@@ -27154,12 +27168,9 @@
 	},
 /area/station/hallway/primary/north)
 "dse" = (
-/obj/machinery/camera{
-	c_tag = "Inner Maintenance West";
-	dir = 4
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/crew_quarters/stockex)
+/obj/item/clothing/suit/bio_suit/paramedic,
+/turf/space,
+/area/space)
 "dsL" = (
 /obj/submachine/seed_manipulator{
 	dir = 4
@@ -28180,6 +28191,12 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/black,
 /area/station/security/interrogation)
+"ekA" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "ekK" = (
 /obj/machinery/light/small{
 	dir = 1
@@ -28884,12 +28901,14 @@
 	},
 /area/station/crew_quarters/kitchen/freezer)
 "eMM" = (
-/obj/machinery/door/airlock/pyro/maintenance/alt{
-	req_access = null
+/obj/plasticflaps{
+	layer = 3
 	},
-/obj/access_spawn/maint,
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/security/beepsky)
 "eMW" = (
 /obj/submachine/cargopad{
 	name = "Research Outpost Pad"
@@ -29936,9 +29955,12 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "fCw" = (
-/obj/landmark/random_room/size3x3,
+/obj/stool/chair{
+	dir = 1;
+	icon_state = "chair"
+	},
 /turf/simulated/floor/plating,
-/area/station/maintenance/east)
+/area/station/security/beepsky)
 "fCJ" = (
 /obj/machinery/power/apc/autoname_west,
 /obj/cable{
@@ -32942,6 +32964,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
+"iuU" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/obj/machinery/bot/secbot/beepsky,
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "ivo" = (
 /obj/machinery/light/incandescent,
 /obj/machinery/manufacturer/hangar,
@@ -33245,6 +33276,16 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/refinery)
+"iHM" = (
+/obj/machinery/computer/security/wooden_tv,
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/security{
+	pixel_y = 32
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "iJV" = (
 /obj/shrub{
 	dir = 4;
@@ -36492,6 +36533,7 @@
 	},
 /obj/critter/domestic_bee/heisenbee,
 /obj/disposalpipe/segment/bent/east,
+/obj/item/reagent_containers/food/snacks/b_cupcake,
 /turf/simulated/floor/purple/side{
 	dir = 1
 	},
@@ -37187,24 +37229,10 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/scidisposal)
 "mkN" = (
-/obj/table/auto,
-/obj/item/reagent_containers/glass/bottle/oil{
-	pixel_x = 2;
-	pixel_y = 8
+/obj/storage/secure/closet/research/chemical{
+	req_access_txt = "5"
 	},
-/obj/item/reagent_containers/glass/bottle/diethylamine{
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/reagent_containers/glass/bottle/phenol{
-	pixel_x = -7;
-	pixel_y = 9
-	},
-/obj/item/reagent_containers/glass/bottle/acetone{
-	pixel_x = -7;
-	pixel_y = 2
-	},
-/obj/item/reagent_containers/glass/bottle/ammonia,
+/obj/item/paper/book/from_file/pharmacopia,
 /turf/simulated/floor/white/checker,
 /area/station/medical/medbay/pharmacy)
 "mln" = (
@@ -37815,8 +37843,8 @@
 /area/station/quartermaster/refinery)
 "mNs" = (
 /obj/table/wood/auto,
+/obj/item/plate/pizza_box,
 /obj/random_item_spawner/pizza,
-/obj/storage/crate/wooden,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "mNv" = (
@@ -41883,6 +41911,7 @@
 	dir = 4;
 	pixel_x = -4
 	},
+/obj/item/clothing/suit/cardboard_box/head_surgeon,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},
@@ -42088,6 +42117,10 @@
 /obj/machinery/disposal/small/east,
 /obj/disposalpipe/trunk{
 	dir = 1
+	},
+/obj/machinery/camera{
+	c_tag = "Inner Maintenance West";
+	dir = 4
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/stockex)
@@ -44162,6 +44195,9 @@
 	dir = 1;
 	icon_state = "pipe-c"
 	},
+/obj/cable{
+	icon_state = "1-2"
+	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/east)
 "sfy" = (
@@ -44200,6 +44236,9 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/wreckage)
+"sgA" = (
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "sgG" = (
 /obj/firedoor_spawn,
 /obj/disposalpipe/segment{
@@ -46462,10 +46501,10 @@
 /turf/space,
 /area/space)
 "tSc" = (
-/obj/submachine/slot_machine,
 /obj/decal/stage_edge{
 	layer = 2.8
 	},
+/obj/item/instrument/large/piano/grand,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/bar)
 "tSw" = (
@@ -46776,6 +46815,7 @@
 /area/station/bridge)
 "ugD" = (
 /obj/storage/secure/closet/brig,
+/obj/item/clothing/mask/clown_hat,
 /turf/simulated/floor/grime,
 /area/station/security/equipment)
 "ugE" = (
@@ -47413,14 +47453,16 @@
 /turf/simulated/floor/plating,
 /area/station/science/gen_storage)
 "uMP" = (
-/obj/tree1,
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
+/obj/table/auto,
+/obj/item/kitchen/food_box/donut_box{
+	name = "dusty donut box"
 	},
-/area/station/garden/owlery)
+/obj/shrub/dead{
+	pixel_y = 19;
+	pixel_x = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "uMQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
@@ -48502,6 +48544,10 @@
 /obj/landmark/start{
 	name = "Staff Assistant"
 	},
+/obj/machinery/camera{
+	c_tag = "Inner Maintenance West";
+	dir = 4
+	},
 /turf/simulated/floor/carpet/blue/fancy/edge{
 	dir = 8
 	},
@@ -49442,10 +49488,6 @@
 /obj/item/reagent_containers/food/snacks/croissant{
 	rand_pos = 0
 	},
-/obj/machinery/camera{
-	c_tag = "Inner Maintenance West";
-	dir = 4
-	},
 /obj/item/reagent_containers/food/snacks/plant/cherry{
 	pixel_x = 13;
 	rand_pos = 0
@@ -49723,6 +49765,7 @@
 /obj/item/clothing/under/shorts/trashsinglet,
 /obj/item/clothing/gloves/boxing,
 /obj/item/storage/box/kendo_box/hakama,
+/obj/item/bat,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
 "wPr" = (
@@ -50837,7 +50880,6 @@
 	pixel_x = -7;
 	pixel_y = 9
 	},
-/obj/item/suture,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xOa" = (
@@ -58516,7 +58558,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+dse
 aaa
 aaa
 aaa
@@ -73330,7 +73372,7 @@ aaA
 aRr
 tik
 rMB
-dse
+aRr
 jKb
 fRR
 wCY
@@ -74557,7 +74599,7 @@ fGE
 wYe
 qWA
 qWA
-uMP
+nzf
 aCy
 iss
 azU
@@ -75473,8 +75515,8 @@ bgH
 bgH
 bgH
 bkf
-bkf
-bkf
+jud
+jud
 bkf
 bkf
 bkf
@@ -89669,7 +89711,7 @@ bjC
 bkv
 boP
 bmv
-bnk
+bmv
 boe
 boP
 nbM
@@ -93003,11 +93045,11 @@ moJ
 brn
 bwo
 brn
-beT
-beM
-beM
+cGj
+iHM
+sgA
 fCw
-beT
+cGj
 aaa
 aaa
 aaa
@@ -93306,9 +93348,9 @@ ran
 bDh
 sfv
 eMM
-beM
-beM
-beM
+ekA
+sgA
+iuU
 btj
 aaa
 aaa
@@ -93607,11 +93649,11 @@ buf
 dUF
 ogh
 sva
-beT
-beM
-beM
-beM
-beT
+cGj
+bnk
+sgA
+uMP
+cGj
 aaa
 aaa
 aaa
@@ -93909,11 +93951,11 @@ bug
 bvk
 bvk
 jLw
-beT
-beT
-beT
-beT
-beT
+cGj
+cGj
+cGj
+cGj
+cGj
 acG
 acG
 acG
