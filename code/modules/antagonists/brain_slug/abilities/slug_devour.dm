@@ -1,4 +1,4 @@
-/datum/targetable/brain_slug/devour_limb
+/datum/targetable/brain_slug/slug_devour
 	name = "Devour"
 	desc = "Eat a human's limb or organs for sustenance."
 	icon_state = "infest_host"
@@ -25,8 +25,8 @@
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "action_harvest"
 	var/mob/living/carbon/human/current_target = null
 	var/mob/living/caster = null
 	var/target = null
@@ -109,7 +109,7 @@
 		if (src.target)
 			if (src.target_is_limb)
 				src.current_target.lose_limb(src.limb_acronym)
-			src.caster.visible_message("<span class='alert'>[src.caster] chomps down on [src.current_target]'s [src.target] and tears it apart!</span>", "<span class='alert'>You devour [src.current_target]'s [src.target]! [pick("Delicious!", "Delightful!", "Filling!")]</span>")
+			src.caster.visible_message("<span class='alert'>[src.caster] chomps down on [src.target] and tears it apart!</span>", "<span class='alert'>You devour [src.target]! [pick("Delicious!", "Delightful!", "Filling!")]</span>")
 			qdel(src.target)
 		else
 			random_brute_damage(src.current_target, 5)

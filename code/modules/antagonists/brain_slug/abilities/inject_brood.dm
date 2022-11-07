@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/inject_brood
 	name = "Inject brood"
-	desc = "Inject your brood into a corpse."
+	desc = "Inject your brood into a corpse, letting them burst out and attack after a short time."
 	icon_state = "slimeshot"
 	cooldown = 80 SECONDS
 	targeted = 1

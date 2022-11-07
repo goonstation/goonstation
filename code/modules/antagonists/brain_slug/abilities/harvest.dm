@@ -31,8 +31,8 @@
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
-	icon = 'icons/mob/screen1.dmi'
-	icon_state = "grabbed"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "action_harvest"
 	var/mob/living/carbon/human/current_target = null
 	var/mob/living/caster = null
 	var/organ_target = null
@@ -80,7 +80,7 @@
 		if (src.caster == null || !isalive(src.caster) || !can_act(src.caster) || src.current_target == null)
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		src.caster.visible_message("<span class='alert'><b>[src.caster] jabs their hands forward into [src.current_target]'s chest and begins grasping inside!</b></span>", "<span class='notice'>You begin to harvest [src.current_target]'s [src.organ_target].</span>")
+		src.caster.visible_message("<span class='alert'><b>[src.caster] jabs their hands forward into [src.current_target]'s chest and begins grasping inside!</b></span>", "<span class='notice'>You begin to harvest [src.organ_target].</span>")
 		playsound(src.caster.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50)
 		bleed(src.current_target, 10, 5)
 		hit_twitch(src.current_target)
@@ -100,7 +100,7 @@
 		SPAWN(0.5 SECONDS)
 			playsound(src.current_target, 'sound/impact_sounds/Flesh_Break_1.ogg', 50)
 		if (src.organ_target)
-			src.caster.visible_message("<span class='alert'>[src.caster] pulls out [src.current_target]'s [src.organ_target] and gulps it all in one piece! [pick("FUCK!", "WHAT THE HELL?", "You're going to puke.")]</span>", "<span class='alert'>You harvest [src.current_target]'s [src.organ_target]! [pick("Delicious!", "Scrumptious!", "Delectable!")]</span>")
+			src.caster.visible_message("<span class='alert'>[src.caster] pulls out [src.organ_target] and gulps it all in one piece! [pick("FUCK!", "WHAT THE HELL?", "You're going to puke.")]</span>", "<span class='alert'>You harvest [src.organ_target]! [pick("Delicious!", "Scrumptious!", "Delectable!")]</span>")
 			qdel(src.organ_target)
 		if (prob(40))
 			src.current_target.emote("scream")
