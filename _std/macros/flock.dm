@@ -26,6 +26,8 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
+#define FLOCK_RELAY_COMPUTE_COST 500 // total compute
+
 #define FLOCKTRACE_COMPUTE_COST 100
 #define FLOCK_RELAY_COMPUTE_COST 500
 
@@ -36,6 +38,9 @@
 #define FLOCK_ACHIEVEMENT_BULLETS_HIT "bullets_hit"
 
 #define FLOCK_BULLETS_HIT_THRESHOLD 15
+
+// radio effects
+#define FLOCK_RADIO_GARBLE_CHANCE 50
 
 // replication defs
 #define FLOCK_MIN_DESIRED_POP 10
