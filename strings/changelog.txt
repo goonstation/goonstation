@@ -1,5 +1,9 @@
 
 (t)mon nov 07 22
+(u)Kubius
+(p)11766
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(*)A wrecked vessel has been located southeast of the Nadir Extraction Site. Personnel are advised to approach with caution.
 (u)thegrb93
 (p)11514
 (e)🪲🍝|C-Bug, A-Catering
