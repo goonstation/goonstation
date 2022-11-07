@@ -1,5 +1,9 @@
 
 (t)mon nov 07 22
+(u)goonstation-enjoyer
+(p)11862
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)You can now rotate Trip Lasers with a crowbar again.
 (u)Kubius
 (p)11513
 (e)🆕⚖💅📦|C-Feature, C-Balance, C-QoL, A-Game-Objects
