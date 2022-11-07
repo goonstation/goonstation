@@ -1,8 +1,7 @@
 /obj/brain_slug/anchor_setter
 	name = "Sticky goo"
-	//todo make an icon
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "rat_den"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "anchor"
 	desc = "A glob of sticky goo. Why are you staring at it? RUN!"
 	density = 0
 	var/mob/living/caster = null
@@ -14,9 +13,8 @@
 
 /obj/brain_slug/elastic_anchor
 	name = "elastic_anchor"
-	//todo make an icon
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "rat_den"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "anchor"
 	desc = "A pile of sticky goo, restraining movement."
 	anchored = 1
 	density = 0
@@ -54,8 +52,8 @@
 		stretch_line.appearance_flags = 0
 		stretch_line.alpha = 0
 		stretch_line.color = stretch_line
-		stretch_line.icon = 'icons/obj/items/pinpointers.dmi'
-		stretch_line.icon_state = "hudarrow2"
+		stretch_line.icon = 'icons/mob/brainslug.dmi'
+		stretch_line.icon_state = "elastic_link"
 		animate(stretch_line, alpha=127, time=1 SECOND)
 		while(active)
 			if(src.qdeled)

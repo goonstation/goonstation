@@ -1,5 +1,5 @@
 /datum/targetable/brain_slug/glue_spit
-	name = "Adhesive Spit"
+	name = "Adhesive drool"
 	desc = "Cover something in a glue-like substance and render it adhesive."
 	icon_state = "slimeshot"
 	cooldown = 30 SECONDS

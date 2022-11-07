@@ -1,8 +1,8 @@
 /obj/machinery/brain_slug/restraining_goo
 	name = "sticky goo"
 	//todo make an icon
-	icon = 'icons/obj/objects.dmi'
-	icon_state = "rat_den"
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "restrainer"
 	desc = "A pile of sticky goo, restraining movement."
 	anchored = 0
 	density = 0

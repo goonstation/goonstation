@@ -6,7 +6,7 @@
 	hand_count = 1
 	icon = 'icons/mob/brainslug.dmi'
 	icon_state = "broodling"
-	icon_state_dead = "broodling-dead"
+	icon_state_dead = "broodling_dead"
 	speechverb_say = "clicks"
 	speechverb_exclaim = "clacks"
 	speechverb_ask = "snips"

@@ -1,5 +1,5 @@
 /datum/targetable/brain_slug/restraining_spit
-	name = "Restraining Spit"
+	name = "Restraining puddle"
 	desc = "Horfs some movement impairing goo at someone next to you."
 	icon_state = "slimeshot"
 	cooldown = 50 SECONDS
