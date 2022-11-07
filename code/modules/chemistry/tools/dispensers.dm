@@ -324,6 +324,7 @@
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "weldtank"
 	amount_per_transfer_from_this = 25
+	var/isburst = FALSE
 
 	New()
 		..()
@@ -362,13 +363,14 @@
 
 	smash()
 		..()
-		icon_state = "weldtank1"
 
 	ex_act(severity)
 		..()
-		icon_state = "weldtank1" //to ensure that a weldertank's always going to be updated by their own explosion
+		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
+		isburst = TRUE
 
-
+	is_open_container()
+		return isburst
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
 	desc = "A tank of helium."
