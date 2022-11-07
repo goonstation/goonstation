@@ -10801,7 +10801,6 @@
 /area/station/hallway/primary/west)
 "epJ" = (
 /obj/table/auto,
-/obj/item/device/detective_scanner,
 /obj/item/storage/box/evidence,
 /obj/item/storage/box/evidence,
 /obj/item/clothing/under/suit{
@@ -17702,7 +17701,6 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/quarters_south)
 "hrd" = (
-/obj/machinery/light_switch/south,
 /obj/machinery/light,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/cloner)
@@ -22588,11 +22586,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/mining/cargo_staff_room)
 "jrC" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13"
-	},
+/obj/machinery/light_switch/south,
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/cloner)
 "jrJ" = (
@@ -30882,10 +30876,8 @@
 /turf/simulated/floor/black/side,
 /area/station/engine/engineering/breakroom)
 "mZA" = (
-/obj/item/device/radio/intercom/medical{
-	pixel_y = 29
-	},
 /obj/machinery/portable_reclaimer,
+/obj/item/device/radio/intercom/medical,
 /turf/simulated/floor/blue,
 /area/station/medical/robotics)
 "mZE" = (
@@ -38527,6 +38519,10 @@
 	pixel_y = -8;
 	pixel_x = -6
 	},
+/obj/item/storage/box/health_upgrade_kit{
+	pixel_y = 7;
+	pixel_x = -8
+	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
 "qqu" = (
@@ -41683,15 +41679,15 @@
 	},
 /area/station/catwalk/south)
 "rEC" = (
-/obj/item/scalpel,
-/obj/item/scissors,
 /obj/cable{
 	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/apc/autoname_south,
-/obj/item/storage/firstaid/regular,
-/obj/table/auto,
+/obj/machinery/computer3/generic/med_data{
+	dir = 8
+	},
+/obj/machinery/power/data_terminal,
 /turf/simulated/floor/bluewhite{
 	dir = 6
 	},
@@ -47812,6 +47808,11 @@
 	dir = 6;
 	icon_state = "delivery2"
 	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13"
+	},
 /turf/simulated/floor/greenwhite,
 /area/station/medical/medbay/cloner)
 "unc" = (
@@ -48951,6 +48952,12 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/light,
+/obj/stool/chair/office/blue{
+	dir = 4
+	},
+/obj/landmark/start{
+	name = "Medical Doctor"
+	},
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay/lobby)
 "uNN" = (
@@ -52580,6 +52587,10 @@
 /obj/item/staple_gun,
 /obj/item/clothing/gloves/latex,
 /obj/item/reagent_containers/iv_drip/saline,
+/obj/item/robodefibrillator{
+	pixel_x = 4;
+	pixel_y = 2
+	},
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
