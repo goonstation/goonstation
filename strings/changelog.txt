@@ -1,6 +1,11 @@
 
 (t)mon nov 07 22
 (u)Kubius
+(p)11513
+(e)🆕⚖💅📦|C-Feature, C-Balance, C-QoL, A-Game-Objects
+(*)Spatial interdictors are now quicker to assemble, require fewer secondary assembly steps and consume much fewer materials.
+(+)Spatial interdictor mainboards are now part of the kit created at manufacturers, and no longer need to be separately scanned and reproduced.
+(u)Kubius
 (p)11766
 (e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
 (*)A wrecked vessel has been located southeast of the Nadir Extraction Site. Personnel are advised to approach with caution.
