@@ -347,6 +347,7 @@
 			explosion(src, src.loc, 20, 30, 40, 50)
 			qdel(src)
 			return
+		explosion(src, src.loc, 35, 45, 55, 55)
 #ifdef MAP_OVERRIDE_MANTA
 		world.showCinematic("manta_nukies")
 #else

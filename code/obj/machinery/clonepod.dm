@@ -269,6 +269,7 @@
 			traits.copy_to(src.occupant.traitHolder)
 
 
+			#ifndef MAP_OVERRIDE_POD_WARS
 			if(src.occupant.traitHolder.hasTrait("puritan"))
 				is_puritan = TRUE
 
@@ -298,6 +299,7 @@
 						for (var/limb in limbs)
 							if (prob(50))
 								P.limbs.sever(limb)
+			#endif
 
 		if (src.mess)
 			boutput(src.occupant, "<span class='notice'><b>Clone generation process initi&mdash;</b></span><span class='alert'> oh fuck oh god oh no no NO <b>NO NO THIS IS NOT GOOD</b></span>")

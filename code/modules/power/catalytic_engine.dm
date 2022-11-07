@@ -34,6 +34,7 @@
 
 	New()
 		..()
+		START_TRACKING
 
 		light = new /datum/light/point
 		light.attach(src)
@@ -47,6 +48,7 @@
 			UpdateIcon()
 
 	disposing()
+		STOP_TRACKING
 		src.anode_unit = null
 		src.cathode_unit = null
 		..()
@@ -171,7 +173,7 @@
 	var/overlay_dir = 1
 	///Rod condition reference for overlay; should update when rod is expended
 	var/rod_condition = 100
-	///Rod viability reference for overlay; should update when rod is installed, based on efficacy for the unit type
+	///Rod viability reference for overlay; should update when rod is installed, based on viability for the unit type
 	var/rod_viability = 100
 	///What type of unit this is; used for viability calculation
 	var/gentype = GEN_ANODE
@@ -230,7 +232,7 @@
 			if(src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
-				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
 					src.contained_rod.set_loc(src.loc)
@@ -251,7 +253,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [I] into [src]'s retention clamp.</span>")
-				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 				user.u_equip(I)
 				I.set_loc(src)
@@ -283,7 +285,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
-				playsound(src, "sound/items/Deconstruct.ogg", 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
 
 				O.set_loc(src)
 				src.contained_rod = O
@@ -322,7 +324,7 @@
 
 			src.ovr_door.icon_state = "nonvis"
 			flick("door-open",src.ovr_door)
-			playsound(src, "sound/machines/sleeper_open.ogg", 40, 1)
+			playsound(src, 'sound/machines/sleeper_open.ogg', 40, 1)
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "rod-high"
@@ -347,7 +349,7 @@
 
 				src.ovr_door.icon_state = "door-shut"
 				flick("door-close",src.ovr_door)
-				playsound(src, "sound/machines/sleeper_close.ogg", 40, 1)
+				playsound(src, 'sound/machines/sleeper_close.ogg', 40, 1)
 
 				SPAWN(0.6 SECONDS)
 
@@ -380,6 +382,17 @@
 
 		else
 			ClearSpecificOverlays("viability","condition")
+
+	///Reports installed rod's efficacy (effective power output multiplier) for use by external sources (currently power checker pda program)
+	proc/report_efficacy()
+		. = 0
+		var/cond_base = src.contained_rod.condition
+		switch(src.gentype)
+			if(GEN_ANODE)
+				. = round(src.contained_rod.anode_efficacy * cond_base * 0.01)
+			if(GEN_CATHODE)
+				. = round(src.contained_rod.cathode_efficacy * cond_base * 0.01)
+
 
 /obj/overlay/rod_unit_door
 	name = "rod door"
@@ -445,7 +458,7 @@
 	//you should only be able to make these from things with a metal material flag
 	proc/setupMaterial()
 		///Corrosion resistance slows decay per cycle by an amount proportional to resistance percentage. Total corrosion immunity = no decay.
-		var/decay_ratio_adjustment = src.material.getProperty("corrosion") * 0.00023
+		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
 		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
@@ -480,6 +493,23 @@
 		..()
 		var/ratio = min(round(condition, 20)+20,100)
 		src.icon_state = "roditem-[ratio]"
+
+	examine()
+		. = ..()
+		var/ratio = min(round(condition, 20)+20,100) //ensure parity with visual decay tiers
+		var/conditiondesc = "pretty intact"
+		switch(ratio)
+			if(20)
+				conditiondesc = "almost completely corroded"
+			if(40)
+				conditiondesc = "heavily corroded"
+			if(60)
+				conditiondesc = "moderately corroded"
+			if(80)
+				conditiondesc = "a bit corroded"
+
+		. += "\n It seems to be [conditiondesc]."
+
 
 #undef UNIT_OPEN
 #undef UNIT_INACTIVE

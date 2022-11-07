@@ -1156,6 +1156,34 @@ proc/debug_map_apc_count(delim,zlim)
 		OnStartRendering(client/C)
 			processed_areas = list()
 
+
+	landmarks
+		name = "landmarks"
+		help = "Displays map landmarks. Does NOT show landmarks that remove themselves."
+		var/list/turf_to_landmark
+
+		OnEnabled(client/C)
+			. = ..()
+			turf_to_landmark = list()
+			for(var/list/landmark_list in list(global.job_start_locations, global.landmarks))
+				for(var/name in landmark_list)
+					for(var/turf/T in landmark_list[name])
+						if(turf_to_landmark[T])
+							turf_to_landmark[T] += name
+						else
+							turf_to_landmark[T] = list(name)
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!turf_to_landmark[theTurf])
+				img.app.alpha = 0
+				return
+			else
+				img.app.alpha = 180
+				img.app.desc = "Landmarks: [jointext(turf_to_landmark[theTurf], ", ")]"
+				var/landmark_text = "<span style='font-size:6pt'>[jointext(turf_to_landmark[theTurf], "<br>")]</span>"
+				img.app.overlays = list(src.makeText(landmark_text))
+				img.app.color = debug_color_of(landmark_text)
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 

@@ -483,6 +483,18 @@
 						poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
 				src.stick_to(target, pox, poy, user)
+			if(isobj(target))
+				var/obj/O = target
+				if(O.artifact && src.scan)
+					var/datum/artifact/art = O.artifact
+					art.scan = src.scan
+					art.account = src.account
+					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					if(art.examine_hint)
+						art.examine_hint += " [target] belongs to [scan.registered]."
+					else
+						art.examine_hint = "[target] belongs to [scan.registered]."
+
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)

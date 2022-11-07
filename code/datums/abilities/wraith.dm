@@ -38,6 +38,7 @@
 	targeted = 1
 	target_anything = 1
 	preferred_holder_type = /datum/abilityHolder/wraith
+	ignore_holder_lock = 1 //So we can still do things while our summons are coming
 	theme = "wraith"
 	var/border_icon = 'icons/mob/wraith_ui.dmi'
 	var/border_state = null
@@ -133,7 +134,7 @@
 			for (var/mob/living/carbon/human/mob_target in target.contents)
 				if (!isdead(mob_target))
 					continue
-				if (H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+				if (mob_target.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
 					continue
 				H = mob_target
 				break
@@ -671,7 +672,7 @@
 				boutput(usr, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
 				return 1
 			else
-				var/message = html_encode(input("What would you like to whisper to [target]?", "Whisper", "") as text)
+				var/message = html_encode(tgui_input_text(usr, "What would you like to whisper to [target]?", "Whisper"))
 				logTheThing(LOG_SAY, usr, "WRAITH WHISPER TO [constructTarget(target,"say")]: [message]")
 				message = ghostify_message(trim(copytext(sanitize(message), 1, 255)))
 				if (!message)
@@ -691,8 +692,8 @@
 	icon_state = "bloodwriting"
 	targeted = 1
 	target_anything = 1
-	pointCost = 10
-	cooldown = 5 SECONDS
+	pointCost = 2
+	cooldown = 1 SECONDS
 	min_req_dist = 10
 	var/in_use = 0
 
@@ -744,6 +745,7 @@
 	targeted = 0
 	pointCost = 600
 	cooldown = 5 MINUTES
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
@@ -755,7 +757,9 @@
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			src.doCooldown()
 			make_poltergeist(holder.owner, T)
+			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
@@ -865,6 +869,9 @@
 			W.set_loc(T)
 
 			holder.owner.mind.transfer_to(W)
+			var/datum/abilityHolder/wraith/new_holder = W.abilityHolder
+			new_holder.regenRate = AH.regenRate - 2
+			new_holder.corpsecount = AH.corpsecount - 1
 			qdel(holder.owner)
 
 			return W
@@ -1072,18 +1079,18 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					H.visible_message("<span class='alert'>[H]'s flesh tears open before your very eyes!!</span>")
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(3 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 10)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(1 SECOND)
 					if (!(H?.loc && W?.loc)) return
 					random_brute_damage(H, 20)
-					playsound(H.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+					playsound(H.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 					new /obj/decal/cleanable/blood/drip(get_turf(H))
 					sleep(2 SECOND)
 					if (!(H?.loc && W?.loc)) return
@@ -1321,11 +1328,14 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 400
 	targeted = 1
 	cooldown = 3 MINUTES
+	ignore_holder_lock = 0
 	var/wraith_key = null
+	var/datum/mind/wraith_mind = null
+	var/datum/mind/human_mind = null
 
 	cast(mob/target)
 		if (..())
-			return 1
+			return TRUE
 		if (istype(holder.owner, /mob/wraith/wraith_trickster))
 			var/mob/wraith/wraith_trickster/W = holder.owner
 			if (W.possession_points > W.points_to_possess)
@@ -1333,8 +1343,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 					var/mob/living/carbon/human/H = target
 					if (H.traitHolder.hasTrait("training_chaplain"))
 						boutput(holder.owner, "<span class='alert'>As you try to reach inside this creature's mind, it instantly kicks you back into the aether!</span>")
-						return 0
-					var/has_mind = false
+						return FALSE
 					var/mob/dead/target_observer/slasher_ghost/WG = null
 					wraith_key = holder.owner.ckey
 					H.emote("scream")
@@ -1352,46 +1361,61 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 						H.setStatusMin("weakened", 8 SECONDS)
 						H.setStatusMin("paralysis", 8 SECONDS)
 						sleep(8 SECONDS)
-						if (!(H?.loc && W?.loc)) return
+						if (!(H?.loc && W?.loc)) return	//Wraith and the human are both gone, abort
 						var/mob/dead/observer/O = H.ghostize()
 						if(W.mind == null)	//Wraith died or was removed in the meantime
 							return
 						if (O?.mind)
+							human_mind = O.mind
 							boutput(O, "<span class='bold' style='color:red;font-size:150%'>You have been temporarily removed from your body!</span>")
 							WG = O.insert_slasher_observer(H)
 							WG.mind.dnr = TRUE
 							WG.verbs -= list(/mob/verb/setdnr)
-							has_mind = true
+						wraith_mind = W.mind
 						W.mind.transfer_to(H)
 						APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
 						sleep(45 SECONDS)
 						if (!H?.loc) return
 						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your control on this body is weakening, you will soon be kicked out of it.</span>")
 						sleep(20 SECONDS)
-						if (!H?.loc) return
-						boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
-						REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
-						if(!H?.loc) //H gibbed
+						if(!H?.loc && !W.loc) return //Everyone's dead, go home
+						if(!W.loc) //wraith got gibbed, kick them into the aether and put the human back
+							boutput(H, "<span class='alert'>You are torn apart from the body you were in but cannot find your ethereal self! You are thrown into the otherworld as a powerless ghost.</span>")
+							H.ghostize()
+							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+							if (human_mind)
+								WG.mind.dnr = FALSE
+								WG.verbs += list(/mob/verb/setdnr)
+								human_mind.transfer_to(H)
+								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
+								boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
+							return
+						if(!H?.loc) //Human gibbed, put the wraith back into their body
 							var/mob/M2 = ckey_to_mob(wraith_key)
 							M2.mind.transfer_to(W)
-						if(!W.loc) //wraith got gibbed
-							return
-						H.mind.transfer_to(W)
-						if (has_mind)
-							WG.mind.dnr = FALSE
-							WG.verbs += list(/mob/verb/setdnr)
-							WG.mind.transfer_to(H)
-							playsound(H, "sound/effects/ghost2.ogg", 50, 0)
+						else
+							boutput(H, "<span class='bold' style='color:red;font-size:150%'>Your hold on this body has been broken! You return to the aether.</span>")
+							REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
+							wraith_mind.transfer_to(W)
+							if (human_mind)
+								WG.mind.dnr = FALSE
+								WG.verbs += list(/mob/verb/setdnr)
+								human_mind.transfer_to(H)
+								playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
 						W.possession_points = 0
-						logTheThing("debug", null, null, "step 5")
 						qdel(WG)
 						H.take_brain_damage(30)
 						H.setStatus("weakened", 5 SECOND)
-						boutput(H, "The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.")
+						boutput(H, "<span class='notice'>The presence has left your body and you are thrusted back into it, immediately assaulted with a ringing headache.</span>")
 					return FALSE
 			else
 				boutput(holder.owner, "You cannot possess with only [W.possession_points] possession power. You'll need at least [(W.points_to_possess - W.possession_points)] more.")
-				return 1
+				return TRUE
+
+	disposing()
+		wraith_mind = null
+		human_mind = null
+		. = ..()
 
 /datum/targetable/wraithAbility/hallucinate
 	name = "Hallucinate"
@@ -1684,6 +1708,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	targeted = 0
 	pointCost = 400
 	cooldown = 150 SECONDS
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 
@@ -1694,7 +1719,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 		var/turf/T = get_turf(holder.owner)
 		if (isturf(T) && !istype(T, /turf/space))
 			boutput(holder.owner, "You begin to channel power to call a spirit to this realm, you won't be able to cast any other spells for the next 30 seconds!")
+			src.doCooldown()
 			make_summon(holder.owner, T)
+			return 0
 		else
 			boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 			return 1
@@ -1752,6 +1779,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	pointCost = 0
 	cooldown = 300 SECONDS
 	start_on_cooldown = 1
+	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
 	var/max_allowed_rats = 3
@@ -1784,7 +1812,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 			var/turf/T = get_turf(holder.owner)
 			if (isturf(T) && !istype(T, /turf/space))
 				boutput(holder.owner, "You begin to channel power to summon a plague rat into this realm, you won't be able to cast any other spells for the next 30 seconds!")
+				src.doCooldown()
 				make_plague_rat(holder.owner, T)
+				return 0
 			else
 				boutput(holder.owner, "<span class='alert'>You can't cast this spell on your current tile!</span>")
 				return 1

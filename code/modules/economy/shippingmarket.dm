@@ -276,6 +276,8 @@
 		var/price = 0
 		var/modifier = sell_art_datum.get_rarity_modifier()
 		var/obj/item/sticker/postit/artifact_paper/pap = locate(/obj/item/sticker/postit/artifact_paper/) in sell_art.vis_contents
+		var/obj/item/card/id/scan = sell_art_datum.scan
+		var/datum/db_record/account = sell_art_datum.account
 
 		// calculate price
 		price = calculate_artifact_price(modifier, max(pap?.lastAnalysis, 1))
@@ -312,7 +314,11 @@
 				src.artifacts_on_the_way = FALSE
 
 		// sell
-		wagesystem.shipping_budget += price
+		if (scan && account)
+			wagesystem.shipping_budget += price / 2
+			account["current_money"] += price / 2
+		else
+			wagesystem.shipping_budget += price
 		qdel(sell_art)
 
 		// give PDA group messages
@@ -577,20 +583,20 @@
 		payroll += R["wage"]
 
 	var/dat = {"<B>Budget Variables:</B>
-	<BR><BR><u><b>Total Station Funds:</b> $[num2text(totalfunds,50)]</u>
+	<BR><BR><u><b>Total Station Funds:</b> [num2text(totalfunds,50)][CREDIT_SIGN]</u>
 	<BR>
-	<BR><b>Current Payroll Budget:</b> $[num2text(wagesystem.station_budget,50)]
-	<BR><b>Current Research Budget:</b> $[num2text(wagesystem.research_budget,50)]
-	<BR><b>Current Shipping Budget:</b> $[num2text(wagesystem.shipping_budget,50)]
+	<BR><b>Current Payroll Budget:</b> [num2text(wagesystem.station_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Research Budget:</b> [num2text(wagesystem.research_budget,50)][CREDIT_SIGN]
+	<BR><b>Current Shipping Budget:</b> [num2text(wagesystem.shipping_budget,50)][CREDIT_SIGN]
 	<BR>
-	<b>Current Payroll Cost:</b> $[payroll]<HR>"}
+	<b>Current Payroll Cost:</b> [payroll][CREDIT_SIGN]<HR>"}
 
 	dat += "Shipping Market Prices<BR><BR>"
 	for(var/item_type in shippingmarket.commodities)
 		var/datum/commodity/C = shippingmarket.commodities[item_type]
 		var/viewprice = C.price
 		if (C.indemand) viewprice *= shippingmarket.demand_multiplier
-		dat += "<BR><B>[C.comname]:</B> $[viewprice] per unit "
+		dat += "<BR><B>[C.comname]:</B> [viewprice][CREDIT_SIGN] per unit "
 		if (C.indemand) dat += " <b>(High Demand!)</b>"
 	var/timer = shippingmarket.get_market_timeleft()
 	dat += "<BR><HR><b>Next Price Shift:</B> [timer]<BR>"

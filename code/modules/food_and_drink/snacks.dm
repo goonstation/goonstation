@@ -827,7 +827,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			random_brute_damage(M, 3)
 			take_bleeding_damage(M, null, 0, DAMAGE_STAB, 0)
 			bleed(M, 3, 1)
-			M.emote("scream")
 
 		if(src.hasPrize && ishuman(M))
 			var/mob/living/carbon/human/H = M
@@ -1046,7 +1045,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 					M.changeStatus("weakened", 4 SECONDS)
 				if(6 to 10)
 					boutput(M, "<span class='alert'>A squirt of some foul-smelling juice gets in your sinuses!!!</span>")
-					M.emote("scream")
 					M.emote("sneeze")
 					M.changeStatus("weakened", 4 SECONDS)
 					SPAWN(0)
@@ -2343,7 +2341,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 		..()
 		boutput(M, "<span class='alert'>OH GOD! You bite down and break a few teeth!</span>")
 		random_brute_damage(M, 2)
-		M.emote("scream")
 
 /obj/item/reagent_containers/food/snacks/pickle
 	name = "pickle"

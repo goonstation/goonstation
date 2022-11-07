@@ -9,7 +9,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/heal_amt = 0
 	var/needfork = 0
 	var/needspoon = 0
-	var/food_color = "#FF0000" //Color for various food items
+	/// Color for various food items
+	var/food_color = null
 	var/custom_food = 1 //Can it be used to make custom food like for pizzas
 	var/festivity = 0
 	var/brew_result = null // what will it make if it's brewable?
@@ -31,6 +32,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 			if (istype(M, /obj/table))
 				return 1
 		return 0
+
+	proc/get_food_color()
+		if (food_color) // keep manually defined food colors
+			return food_color
+		var/icon/I = istype(src.icon, /icon) ? src.icon : icon(src.icon, src.icon_state)
+		food_color = get_average_color(I)
+		return food_color
 
 	proc/heal(var/mob/living/M)
 		SHOULD_CALL_PARENT(TRUE)
@@ -780,6 +788,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/obj/item/reagent_containers/food/snacks/soup/custom/S = new(L.my_soup, src)
 			S.pixel_x = src.pixel_x
 			S.pixel_y = src.pixel_y
+			for(var/obj/surgery_tray/target_tray in src.loc)
+				target_tray.attach(S)
+				break
+
 			L.my_soup = null
 			L.UpdateOverlays(null, "fluid")
 
@@ -1336,7 +1348,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		src.smash(A)
 
 	pixelaction(atom/target, list/params, mob/living/user, reach)
-		if(!istype(target, /obj/table))
+		if(!istype(target, /obj/table) || src.cant_drop)
 			return ..()
 		var/obj/table/target_table = target
 		var/obj/table/source_table = locate() in get_step(user, user.dir)
@@ -1358,7 +1370,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 		var/list/turf/path = raytrace(get_turf(source_table), get_turf(target_table))
 		var/turf/last_turf = get_turf(source_table)
 		SPAWN(0)
+			var/max_iterations = 20
 			for(var/turf/T in path)
+				if(max_iterations-- <= 0)
+					break
 				if(src.loc != last_turf)
 					break
 				if(!(locate(/obj/table) in src.loc))

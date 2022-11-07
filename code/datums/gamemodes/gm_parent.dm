@@ -181,6 +181,8 @@
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
+						if (stolen >= 7)
+							traitor.current?.unlock_medal("Professional thief", TRUE)
 
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)
@@ -193,6 +195,13 @@
 									var/datum/mind/trace_mind = flock.trace_minds[trace_name]
 									//the first character in this string is an invisible brail character, because otherwise DM eats my indentation
 									stuff_to_output += "<b>⠀   [trace_name] (played by [trace_mind.displayed_key])<b>"
+
+							if (flock.relay_finished)
+								flock.flockmind_mind.current.unlock_medal("To the stars", TRUE)
+								var/time = TIME
+								for (var/mob/living/intangible/flock/trace/flocktrace as anything in flock.traces)
+									if (time - flocktrace.creation_time >= 5 MINUTES)
+										flocktrace.unlock_medal("To the stars", TRUE)
 
 				for (var/datum/objective/objective in traitor.objectives)
 	#ifdef CREW_OBJECTIVES

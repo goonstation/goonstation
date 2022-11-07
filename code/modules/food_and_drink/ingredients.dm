@@ -469,7 +469,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
 					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
-					user.emote("scream")
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
 		else ..()

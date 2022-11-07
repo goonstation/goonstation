@@ -236,12 +236,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C,var/pickable)
-		var/info = "Select a map"
-		info += "\nCurrently on: [src.current]"
-		if(pickable)
-			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
-		else
-			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
+		return tgui_input_list(C, "Select a map. Currently on: [src.current]", "Switch Map", pickable ? src.playerPickable : mapNames, src.next || src.current)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)

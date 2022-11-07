@@ -36,7 +36,7 @@
 		icon_state = "lasercannon-anim"
 
 		shoot(target, start, mob/user, POX, POY, is_dual_wield)
-			if(src.canshoot())
+			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
 
@@ -78,7 +78,7 @@
 	name = "hardlight bolt"
 	sname = "needle bolt"
 	cost = 20
-	power = 35
+	damage = 35
 	dissipation_delay = 6
 	damage_type = D_PIERCING
 	hit_type = DAMAGE_BURN
@@ -134,7 +134,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 1
+	damage = 1
 	max_range = 500
 	damage_type = D_SPECIAL
 	shot_sound = null
@@ -176,7 +176,7 @@
 	dissipation_rate = 0
 	projectile_speed = 12800
 	casing = /obj/item/casing/cannon
-	power = 125
+	damage = 125
 	implanted = /obj/item/implant/projectile/rakshasa
 	impact_image_state = "bhole-large"
 	goes_through_walls = 1
@@ -270,8 +270,7 @@
 /datum/projectile/bullet/g11
 	name = "\improper Manticore round"
 	cost = 3
-	power = 60
-	ks_ratio = 1
+	damage = 60
 	hit_ground_chance = 100
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
@@ -286,11 +285,11 @@
 	small
 		shot_sound = 'sound/weapons/9x19NATO.ogg'
 		shot_volume = 50
-		power = 15
+		damage = 15
 		hit_ground_chance = 33
 
 	void
-		power = 30
+		damage = 30
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
@@ -303,7 +302,7 @@
 			..()
 
 	blast
-		power = 15
+		damage = 15
 		damage_type = D_KINETIC
 		hit_type = DAMAGE_BLUNT
 		on_hit(atom/hit, angle, obj/projectile/O)
@@ -390,11 +389,10 @@
 	projectile_speed = 6
 	max_range = 500
 	dissipation_rate = 0
-	power = 10
+	damage = 10
 	precalculated = 0
 	shot_volume = 100
 	shot_sound = 'sound/weapons/gyrojet.ogg'
-	ks_ratio = 1
 	impact_image_state = "bhole-small"
 
 	on_launch(obj/projectile/O)
@@ -453,10 +451,9 @@
 
 /datum/projectile/bullet/deagle50cal
 	name = "bullet"
-	power = 120
+	damage = 120
 	dissipation_delay = 5
 	dissipation_rate = 5
-	ks_ratio = 1
 	implanted = /obj/item/implant/projectile/bullet_50
 	impact_image_state = "bhole-large"
 	casing = /obj/item/casing/deagle

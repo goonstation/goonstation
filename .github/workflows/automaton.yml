@@ -5,7 +5,7 @@ name: Automaton
 
 on:
   pull_request:
-    branches: master
+    branches: [master]
   push:
     branches:
       - "master"
@@ -19,10 +19,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DESTINY", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
         compiletype: ["default"]
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Dependencies
         run: |
@@ -32,7 +32,7 @@ jobs:
           sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -94,7 +94,7 @@ jobs:
         compiletype: ["default"]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
@@ -107,7 +107,7 @@ jobs:
           sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -162,7 +162,7 @@ jobs:
     runs-on: ubuntu-20.04
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Install Dependencies
         run: |
@@ -172,7 +172,7 @@ jobs:
           sudo apt install -o Acquire::Retries=3 libstdc++6:i386 libssl1.1:i386
 
       - name: Cache BYOND
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/BYOND
           key: ${{ runner.os }}-byond-${{ hashFiles('buildByond.conf')}}
@@ -195,7 +195,7 @@ jobs:
 
       - name: Build Unit Tests
         run: |
-          tools/ci/dm.sh -DCIBUILD -DUNIT_TESTS goonstation.dme
+          tools/ci/dm.sh -DCIBUILD -DUNIT_TESTS -DUNIT_TESTS_RUN_TILL_COMPLETION goonstation.dme
 
       - name: Run Unit Tests
         run: |

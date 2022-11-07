@@ -77,10 +77,3 @@ var/global/datum/participationRecorder/participationRecorder
 			count++
 
 		apiHandler.queryAPI("participation/record-multiple", payload)
-
-
-
-world/New()
-	. = ..()
-	participationRecorder = new()
-	//participationRecorder = new(1) //Enable debug

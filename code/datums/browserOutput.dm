@@ -97,7 +97,6 @@ var/global
 				//"browserassets/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
