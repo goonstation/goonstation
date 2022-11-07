@@ -277,20 +277,21 @@
 
 /datum/tutorialStep/flock/showcase
 	name = "Structure showcase"
+	src.instructions = "Here are all flock structures in game, refer to the wiki for detailed descriptions of all of them."
 	SetUp()
 		..()
 		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
 		var/datum/allocated_region/region = prefab.load()
 		for (var/turf/T in REGION_TILES(region))
-			var/obj/spawner/flock_structure/spawner = locate() in T
-			if (spawner)
-				spawner.spawn_structure(ftutorial.fowner.flock)
+			var/obj/spawner/flock_structure/structure_spawner = locate() in T
+			structure_spawner?.spawn_structure(ftutorial.fowner.flock)
+			var/mob/living/carbon/human/bad_immortal/fake_tdummy = locate() in T
+			if (fake_tdummy)
+				src.ftutorial.fowner.flock.updateEnemy(fake_tdummy)
 		for(var/turf/T in landmarks[LANDMARK_TUTORIAL_START])
 			if(region.turf_in_region(T))
 				src.ftutorial.fowner.set_loc(T)
 				break
-
-
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"
@@ -329,8 +330,15 @@
 					sleep(1.5 SECONDS)
 
 /mob/living/carbon/human/bad_immortal
+	name = "Target dummy"
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
+		for (var/obj/item/implant/I in implant) //no infinite item stacks
+			if (istype(I, /obj/item/implant/projectile))
+				I.on_remove(src)
+				implant.Remove(I)
+				qdel(I)
+
 		src.full_heal()
 
 /obj/spawner/flock_structure
