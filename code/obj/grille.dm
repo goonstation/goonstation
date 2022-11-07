@@ -60,7 +60,7 @@
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M)
+			src.setMaterial(M, copy=FALSE)
 
 	steel/broken
 		desc = "Looks like its been in this sorry state for quite some time."
@@ -91,7 +91,7 @@
 		New()
 			..()
 			var/datum/material/M = getMaterial("steel")
-			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = TRUE)
+			src.setMaterial(M, appearance = FALSE, setname = FALSE, copy = FALSE)
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)

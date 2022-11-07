@@ -43,7 +43,6 @@ var/list/ai_move_scheduled = list()
 				owner.abilityHolder.addAbility(/datum/targetable/ai_toggle)
 
 	disposing()
-		..()
 		stop_move()
 		if (owner)
 			if (owner.mob_flags & LIGHTWEIGHT_AI_MOB)

@@ -220,6 +220,8 @@
 		controller.boutput_relay_mob = null
 		var/datum/abilityHolder/composite/composite = src.abilityHolder
 		composite.removeHolder(/datum/abilityHolder/flockmind)
+		var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
+		AH.updateText()
 		if (istype(controller, /mob/living/intangible/flock/flockmind))
 			flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 		else
@@ -267,6 +269,10 @@
 	controller.boutput_relay_mob = null
 	if (give_alert)
 		boutput(controller, "<span class='flocksay'><b>\[SYSTEM: Control of drone [src.real_name] ended abruptly.\]</b></span>")
+	var/datum/abilityHolder/composite/composite = src.abilityHolder
+	composite.removeHolder(/datum/abilityHolder/flockmind)
+	var/datum/abilityHolder/flockmind/AH = src.controller.abilityHolder
+	AH.updateText()
 	if (istype(controller, /mob/living/intangible/flock/flockmind))
 		flock?.removeAnnotation(src, FLOCK_ANNOTATION_FLOCKMIND_CONTROL)
 	else

@@ -3467,7 +3467,7 @@
 	},
 /area/shuttle/arrival/station)
 "aox" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -4387,7 +4387,7 @@
 	},
 /area/station/quartermaster/office)
 "ary" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -26039,7 +26039,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "csy" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -40711,7 +40711,7 @@
 	},
 /area/station/bridge)
 "pjE" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/unsimulated/floor{

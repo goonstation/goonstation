@@ -42009,7 +42009,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/medical/asylum/bathroom)
 "mbH" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "mbM" = (
@@ -54541,7 +54541,7 @@
 /turf/simulated/floor/plating,
 /area/station/medical/morgue)
 "pJw" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/unsimulated/floor{
 	desc = "";
 	icon = 'icons/turf/shuttle.dmi';

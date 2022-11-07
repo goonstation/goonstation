@@ -1,7 +1,10 @@
 #ifdef APRIL_FOOLS
 
-#if defined(SPACE_PREFAB_RUNTIME_CHECKING) || defined( UNIT_TESTS )
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #include "blank.dm"
+
+#elif defined(UNIT_TESTS)
+#include "unit_tests.dm"
 
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "big/blank_underwater.dm"
@@ -85,8 +88,11 @@
 
 #else
 
-#if defined(SPACE_PREFAB_RUNTIME_CHECKING) || defined( UNIT_TESTS )
+#if defined(SPACE_PREFAB_RUNTIME_CHECKING)
 #include "blank.dm"
+
+#elif defined(UNIT_TESTS)
+#include "unit_tests.dm"
 
 #elif defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 #include "blank_underwater.dm"
@@ -177,7 +183,7 @@
 #include "standard.dm"
 #endif
 
-#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
+#if FOOTBALL_MODE && !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW) && !defined(UNIT_TESTS) && !defined(SPACE_PREFAB_RUNTIME_CHECKING) && !defined(UNDERWATER_PREFAB_RUNTIME_CHECKING)
 INCLUDE_MAP("../zamujasa/football2.dmm")
 #endif
 

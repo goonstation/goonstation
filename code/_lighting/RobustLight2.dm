@@ -671,28 +671,6 @@ turf
 #ifdef DEBUG_LIGHTING_UPDATES
 		var/obj/maptext_junk/RL_counter/counter = null
 #endif
-	disposing()
-		..()
-		RL_Cleanup()
-
-		var/old_lights = src.RL_Lights
-		var/old_opacity = src.opacity
-		SPAWN(0) // ugghhh fuuck
-			if (old_lights)
-				if (!RL_Lights)
-					RL_Lights = old_lights
-				else
-					RL_Lights |= old_lights
-			var/new_opacity = src.opacity
-			src.set_opacity(old_opacity)
-			RL_SetOpacity(new_opacity)
-
-			for (var/turf/T in view(RL_MaxRadius, src))
-				for (var/datum/light/light in T.RL_Lights)
-					if (light.enabled)
-						light.apply_to(src)
-			if (RL_Started)
-				RL_UPDATE_LIGHT(src)
 
 	proc
 		RL_ApplyLight(lx, ly, brightness, height2, r, g, b) // use the RL_APPLY_LIGHT macro instead if at all possible!!!!

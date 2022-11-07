@@ -244,7 +244,7 @@
 	//Priority-based target finding
 	var/mob/T
 	var/lastRating = -INFINITY
-	for (var/mob/living/carbon/M in view(7,src))
+	for (var/mob/living/carbon/M in viewers(7,src))
 		//Any reason we do not want to take this target into account AT ALL?
 		if((M == src && !ai_suicidal) || isdead(M) || (M.is_npc && !ai_attacknpc)) continue //Let's not fight ourselves (unless we're real crazy) or a dead person... or NPCs, unless we're allowed to.
 
@@ -260,7 +260,7 @@
 
 		//Why do we NOT want to go after this jerk
 		if(isunconscious(M)) rating-=8 //This one's unconscious
-		for(var/mob/living/carbon/human/H in oview(7,src))
+		for(var/mob/living/carbon/human/H in viewers(7,src))
 			if(H.ai_target == M) rating -= 4 //I'd rather fight my own fight
 		if(M.is_npc) rating -= 5 //I don't want to go after my fellow NPCs unless there is no other option
 		if(M == src) rating -= 14 //I don't want to go after myself

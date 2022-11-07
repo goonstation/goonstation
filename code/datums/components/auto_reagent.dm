@@ -27,13 +27,13 @@ TYPEINFO(/datum/component/auto_reagent)
 			return COMPONENT_INCOMPATIBLE
 
 		if(src.overflowing)
-			RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
+			RegisterSignal(parent, COMSIG_ATOM_EXAMINE, .proc/examined)
 		global.processing_items.Add(src)
 
 	UnregisterFromParent()
 		. = ..()
 		global.processing_items.Remove(src)
-		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
+		UnregisterSignal(parent, COMSIG_ATOM_EXAMINE)
 
 	/// Called every item process tick, handles adding additional reagent units and overflowing when applicable.
 	proc/process()

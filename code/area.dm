@@ -1541,10 +1541,23 @@ ABSTRACT_TYPE(/area/sim)
 	name = "B-Ball Court"
 	icon_state="vr"
 
+ABSTRACT_TYPE(/area/sim/gunsim)
 /area/sim/gunsim
 	name = "Gun Sim"
 	icon_state = "gunsim"
 
+	arena
+		name = "Gun Sim Arena"
+
+	lobby
+		name = "Gun Sim Lobby"
+		icon_state = "gunsim-lobby"
+		sanctuary = TRUE
+	maintenance
+		name = "Gun Sim Maintenance"
+		force_fullbright = FALSE
+		icon_state = "gunsim-maint"
+		sanctuary = TRUE
 
 /area/sim/test_area
 	name = "Toxin Test Area"
@@ -1596,7 +1609,7 @@ ABSTRACT_TYPE(/area/station)
 	New()
 		..()
 		START_TRACKING
-		SPAWN(10 SECONDS) // wait until world is actually loaded in lmao
+		SPAWN(5 SECONDS) // wait until world is actually loaded in lmao // ZEWAKA/INIT
 			initial_structure_value = calculate_structure_value()
 
 	Del()
