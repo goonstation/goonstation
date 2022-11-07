@@ -522,6 +522,25 @@
 		return TRUE
 	flockmind.start_tutorial()
 
+//yes this is copy pasted from blob, blob abilities are their own cursed thing so we have to reimplement
+/datum/targetable/flockmindAbility/tutorial_exit
+	name = "Exit Tutorial"
+	desc = "Exit the flock tutorial and re-enter the game."
+	icon_state = "x"
+	targeted = FALSE
+	special_screen_loc = "SOUTH,EAST"
+	cooldown = 0
+
+	cast()
+		if (..())
+			return
+		var/mob/living/intangible/flock/flockmind/flockmind = holder.owner
+		if (!flockmind.tutorial)
+			boutput(flockmind, "<span class='alert'>You're not in the tutorial!</span>")
+			return
+		flockmind.tutorial.Finish()
+		flockmind.tutorial = null
+
 /datum/targetable/flockmindAbility/droneControl
 	cooldown = 0
 	icon = null

@@ -277,9 +277,10 @@
 
 /datum/tutorialStep/flock/showcase
 	name = "Structure showcase"
-	src.instructions = "Here are all flock structures in game, refer to the wiki for detailed descriptions of all of them."
+	instructions = "Here are all flock structures in game, refer to the wiki for detailed descriptions of all of them. Click the exit tutorial button in the bottom right corner to exit the tutorial."
 	SetUp()
 		..()
+		src.ftutorial.fowner.abilityHolder.addAbility(/datum/targetable/flockmindAbility/tutorial_exit)
 		var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/flock_showcase)
 		var/datum/allocated_region/region = prefab.load()
 		for (var/turf/T in REGION_TILES(region))
@@ -301,6 +302,7 @@
 	src.tutorial.Finish()
 	src.tutorial = null
 
+//TODO: remove this
 /mob/living/intangible/flock/flockmind/verb/skip_tutorial_step()
 	set name = "SKIP TUTORIAL STEP"
 	src.tutorial.Advance()
