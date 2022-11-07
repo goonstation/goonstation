@@ -1275,7 +1275,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
 "avx" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "cargobuy"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -2256,7 +2256,7 @@
 	name = "Ticket Office"
 	})
 "aSr" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "cargosell"
 	},
 /turf/simulated/floor/orangeblack,
@@ -2656,7 +2656,7 @@
 	name = "Ringside Hallway"
 	})
 "bbJ" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory,
@@ -3240,8 +3240,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/chapel/office)
 "bpA" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	operating = 1
 	},
@@ -4191,7 +4190,7 @@
 /turf/space,
 /area/space)
 "bJc" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "chapel"
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
@@ -5119,8 +5118,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "cdw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -7877,8 +7875,7 @@
 	dir = 8;
 	pixel_x = 8
 	},
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "disposals";
 	operating = 1
 	},
@@ -10857,8 +10854,7 @@
 /turf/space,
 /area/space)
 "eot" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -10871,7 +10867,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
 "eoy" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "cargobuy"
 	},
 /turf/simulated/floor/plating,
@@ -13287,7 +13283,7 @@
 	id = "chapelgun";
 	name = "Chapel Mass Driver"
 	},
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "chapel"
 	},
 /turf/simulated/floor/plating,
@@ -14696,9 +14692,7 @@
 /turf/simulated/floor/orange,
 /area/station/engine/storage)
 "fWD" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Escape Airlock"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "fWI" = (
@@ -15148,7 +15142,7 @@
 /turf/simulated/floor/black,
 /area/listeningpost)
 "ghW" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargobuy"
 	},
 /turf/simulated/floor/orangeblack,
@@ -19423,8 +19417,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "hYW" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -21306,7 +21299,7 @@
 	name = "Security Lobby"
 	})
 "iMP" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargobuy"
 	},
 /turf/simulated/floor/plating,
@@ -21636,7 +21629,7 @@
 	},
 /area/station/security/secoffquarters)
 "iRu" = (
-/obj/machinery/conveyor/east{
+/obj/machinery/conveyor/WE{
 	id = "cargosell"
 	},
 /obj/plasticflaps,
@@ -22565,7 +22558,7 @@
 	},
 /area/station/quartermaster/office)
 "jmN" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargodesk"
 	},
 /obj/plasticflaps,
@@ -30754,7 +30747,7 @@
 /turf/simulated/floor/carpet/green/fancy/narrow/west,
 /area/station/engine/monitoring)
 "mOF" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "chapel"
 	},
 /obj/disposalpipe/segment/horizontal,
@@ -30967,8 +30960,7 @@
 /turf/space,
 /area/station/science/lab)
 "mVf" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -31778,7 +31770,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "noc" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargobuy"
 	},
 /obj/plasticflaps,
@@ -32409,7 +32401,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/cloner)
 "nCE" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -33288,8 +33280,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
 "nTT" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},
@@ -35372,7 +35363,7 @@
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "oQt" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "disposals";
 	operating = 1
 	},
@@ -37416,7 +37407,7 @@
 	},
 /area/station/hallway/secondary/exit)
 "pNN" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargobuy"
 	},
 /obj/machinery/light/small{
@@ -37499,7 +37490,7 @@
 	name = "Brig Bathroom"
 	})
 "pPX" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "cargobuy"
 	},
 /turf/space,
@@ -37659,7 +37650,7 @@
 	name = "Boardroom"
 	})
 "pUC" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -39708,7 +39699,7 @@
 	},
 /area/station/hallway/primary/west)
 "qGG" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "cargobuy"
 	},
 /obj/decal/glow{
@@ -43267,7 +43258,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn/blackred,
 /area/station/security/main)
 "sdU" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/airless/caution,
@@ -45972,9 +45963,7 @@
 /turf/simulated/floor/caution/north,
 /area/station/hallway/secondary/entry)
 "tmQ" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Escape Airlock"
-	},
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /turf/simulated/floor/shuttle,
 /area/station/hallway/secondary/entry)
 "tnb" = (
@@ -46947,7 +46936,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/science/lab)
 "tJv" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
@@ -53494,7 +53483,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
 "wzY" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "cargodesk"
 	},
 /obj/decal/tile_edge/stripe{
@@ -55688,8 +55677,7 @@
 	},
 /area/station/security/secoffquarters)
 "xrY" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "disposals";
 	operating = 1
 	},

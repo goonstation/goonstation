@@ -1281,7 +1281,8 @@
 	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	power = 75
+	damage = 60
+	stun = 15
 	cost = 75
 	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
@@ -1289,7 +1290,6 @@
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 	on_hit(atom/hit)
 		if (istype(hit, /turf))

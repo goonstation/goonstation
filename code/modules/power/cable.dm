@@ -15,12 +15,9 @@
 
 	return user.shock(src, PN ? PN.avail : 0, user.hand == LEFT_HAND ? "l_arm": "r_arm", 1, ignore_gloves ? 1 : 0)
 
-// attach a wire to a power machine - leads from the turf you are standing on
-
+/// attach a wire to a power machine - leads from the turf you are standing on
 /obj/machinery/power/attackby(obj/item/W, mob/user)
-
 	if(istype(W, /obj/item/cable_coil))
-
 		var/obj/item/cable_coil/coil = W
 
 		var/turf/T = user.loc
@@ -36,7 +33,6 @@
 
 		var/dirn = get_dir(user, src)
 
-
 		for(var/obj/cable/LC in T)
 			if(LC.d1 == dirn || LC.d2 == dirn)
 				boutput(user, "There's already a cable at that position.")
@@ -50,11 +46,8 @@
 		NC.UpdateIcon()
 		NC.update_network()
 		coil.use(1)
-		return
 	else
 		..()
-	return
-
 
 // the power cable object
 /obj/cable
@@ -131,12 +124,20 @@
 
 	d2 = text2num( copytext( icon_state, findtext(icon_state, "-")+1 ) )
 
-	if (source) src.iconmod = source.iconmod
+	if (source)
+		src.iconmod = source.iconmod
 
-	var/turf/T = src.loc			// hide if turf is not intact
-									// but show if in space
-	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid)) hide(0)
-	else if(level==1) hide(T.intact)
+	var/turf/T = src.loc
+
+	if (isnull(T)) // we are getting immediately deleted? lol
+		return
+
+	// hide if turf is not intact
+	// but show if in space
+	if(istype(T, /turf/space) && !istype(T,/turf/space/fluid))
+		hide(0)
+	else if(level==1)
+		hide(T.intact)
 
 	//cableimg = image(src.icon, src.loc, src.icon_state)
 	//cableimg.layer = OBJ_LAYER
@@ -149,16 +150,14 @@
 	START_TRACKING
 
 /obj/cable/disposing()		// called when a cable is deleted
-
 	if(!defer_powernet_rebuild)	// set if network will be rebuilt manually
-
-		if(netnum && powernets && powernets.len >= netnum)		// make sure cable & powernet data is valid
+		if(netnum && powernets && length(powernets) >= netnum)		// make sure cable & powernet data is valid
 			var/datum/powernet/PN = powernets[netnum]
 			PN.cut_cable(src)									// updated the powernets
 	else
 		defer_powernet_rebuild = 2
 
-		if(netnum && powernets && powernets.len >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
+		if(netnum && powernets && length(powernets) >= netnum) //NEED FOR CLEAN GC IN EXPLOSIONS
 			powernets[netnum].cables -= src
 
 	insulator.owner = null
@@ -169,7 +168,6 @@
 	..()													// then go ahead and delete the cable
 
 /obj/cable/hide(var/i)
-
 	if(level == 1)// && istype(loc, /turf/simulated))
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 	UpdateIcon()

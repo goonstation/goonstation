@@ -302,12 +302,12 @@ ABSTRACT_TYPE(/datum/siphon_mineral)
 	tick_req = 303
 	shear = 420
 	sens_window = 0
-	product = /obj/item/plant/herb/cannabis/mega/spawnable
+	product = /obj/item/plant/herb/cannabis/spawnable
 
-/datum/siphon_mineral/forbidden //the end comes
+/datum/siphon_mineral/forbidden
 	indexed = FALSE
 	name = "DATA EXPUNGED"
 	tick_req = 666
-	shear = 666 //this is a very hard value to reach
+	shear = 666
 	sens_window = 0
-	product = /obj/item/plutonium_core
+	product = /obj/item/reagent_containers/food/snacks/ectoplasm

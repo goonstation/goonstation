@@ -113,7 +113,7 @@
 		. = 0
 
 	disposing()
-		if (owner)
+		if (owner?.statusEffects)
 			owner.statusEffects -= src
 		src.owner = null
 		..()
@@ -2072,13 +2072,13 @@
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.AddEffect("sims_stinky")
+			M.bioHolder?.AddEffect("sims_stinky")
 
 	onRemove()
 		. = ..()
 		if(ismob(owner))
 			var/mob/M = owner
-			M.bioHolder.RemoveEffect("sims_stinky")
+			M.bioHolder?.RemoveEffect("sims_stinky")
 
 /datum/statusEffect/flock_absorb
 	id = "flock_absorbing"

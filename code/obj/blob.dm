@@ -584,10 +584,14 @@
 	var/nextAttackMsg = 0
 
 	New()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
+
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+
 		. = ..()
 		STOP_TRACKING
 
@@ -759,11 +763,11 @@
 	color_green = 0
 	color_blue = 0
 	color_icon = "#ffffff"
-	power = 20
+	damage = 10
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
-	ks_ratio = 0.5
 	sname = "slime"
 	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0

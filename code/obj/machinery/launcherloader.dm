@@ -485,7 +485,7 @@
 				src.stick_to(target, pox, poy, user)
 			if(isobj(target))
 				var/obj/O = target
-				if(O.artifact)
+				if(O.artifact && src.scan)
 					var/datum/artifact/art = O.artifact
 					art.scan = src.scan
 					art.account = src.account

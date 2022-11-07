@@ -122,7 +122,7 @@
 			P.special_data["ball"] = C.ball
 			P.special_data["debug"] = debug
 
-			P.proj_data.RegisterSignal(P, list(COMSIG_MOVABLE_MOVED), /datum/projectile/special/golfball/proc/check_newloc)
+			P.proj_data.RegisterSignal(P, COMSIG_MOVABLE_MOVED, /datum/projectile/special/golfball/proc/check_newloc)
 
 		animate(the_mob, pixel_x=0, pixel_y=0, 1 SECONDS, easing=CUBIC_EASING)
 		C.ball = null
@@ -161,10 +161,8 @@
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "golf_ball"
 	shot_sound = null
-	power = 0
+	stun = 0
 	cost = 1
-	power = 10
-	ks_ratio = 0
 	damage_type = D_SPECIAL
 	hit_type = DAMAGE_BLUNT
 	dissipation_delay = 0
