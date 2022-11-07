@@ -50,7 +50,7 @@
 /area/space)
 "m" = (
 /obj/spawner/flock_structure{
-	structure_type = /obj/flock_structure/computes
+	structure_type = /obj/flock_structure/compute
 	},
 /turf/simulated/floor/feather,
 /area/space)
@@ -108,7 +108,7 @@
 /area/space)
 "L" = (
 /obj/spawner/flock_structure{
-	structure_type = /obj/flock_structure/gnesis_turret
+	structure_type = /obj/flock_structure/gnesisturret
 	},
 /turf/simulated/floor/feather,
 /area/space)
@@ -245,8 +245,8 @@ S
 (11,1,1) = {"
 S
 a
-v
 J
+v
 J
 a
 q

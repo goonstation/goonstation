@@ -165,9 +165,13 @@
 	var/loc_maptext_height = 32
 	var/loc_maptext_x = 0
 	var/loc_maptext_y = 0
+
+	proc/get_maptext()
+		return src.loc_maptext
+
 	New()
 		..()
-		loc.maptext = loc_maptext
+		loc.maptext = src.get_maptext()
 		loc.maptext_width = loc_maptext_width
 		loc.maptext_height = loc_maptext_height
 		loc.maptext_x = loc_maptext_x
@@ -176,9 +180,9 @@
 
 /obj/maptext_spawner/pretty
 	var/font_size = 9
-	New()
-		src.loc_maptext = "<span class=\"ol vga c\" style=\"font-size:[src.font_size]pt\">[src.loc_maptext]</span>"
-		..()
+	get_maptext()
+		return "<span class=\"ol vga c\" style=\"font-size:[src.font_size]pt\">[src.loc_maptext]</span>"
+
 // I'm archiving a slightly improved version of the hell portal which is now gone
 
 /obj/hellportal
