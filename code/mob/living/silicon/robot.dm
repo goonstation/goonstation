@@ -255,11 +255,12 @@
 
 	death(gibbed)
 		src.stat = 2
+		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
-		src.borg_death_alert()
+
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
 			src.clothes[slot].set_loc(src.loc)
@@ -909,7 +910,7 @@
 			return
 
 		if(P.proj_data.ks_ratio <= 0.1)
-			src.do_disorient(clamp(P.power*4, P.proj_data.power*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
+			src.do_disorient(clamp(P.power*4, P.proj_data.stun*2, P.power+80), weakened = P.power*2, stunned = P.power*2, disorient = min(P.power, 80), remove_stamina_below_zero = 0) //bad hack, but it'll do
 			src.emote("twitch_v")// for the above, flooring stam based off the power of the datum is intentional
 		for (var/obj/item/roboupgrade/R in src.contents)
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated && dmgtype == 0)
@@ -1341,6 +1342,22 @@
 				boutput(user, "<span class='alert'>You need to move closer!</span>")
 				return
 
+			if(action == "Remove Right Arm" && !src.part_arm_r)
+				boutput(user, "<span class='alert'>There's no right arm to remove!</span>")
+				return
+			if(action == "Remove Left Arm" && !src.part_arm_l)
+				boutput(user, "<span class='alert'>There's no left arm to remove!</span>")
+				return
+			if(action == "Remove Right Leg" && !src.part_leg_r)
+				boutput(user, "<span class='alert'>There's no right leg to remove!</span>")
+				return
+			if(action == "Remove Left Leg" && !src.part_leg_l)
+				boutput(user, "<span class='alert'>There's no left leg to remove!</span>")
+				return
+			if(action == "Remove Head" && !src.part_head)
+				boutput(user, "<span class='alert'>There's no head to remove!</span>")
+				return
+
 			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
 			switch(action)
 				if("Remove Chest")
@@ -1562,12 +1579,13 @@
 						return
 
 					for (var/obj/item/roboupgrade/UPGR in src.contents) UPGR.upgrade_deactivate(src)
-					user.put_in_hand_or_drop(src.cell)
-					user.show_text("You remove [src.cell] from [src].", "red")
+					var/obj/item/cell/_cell = src.cell
+					user.put_in_hand_or_drop(_cell)
+					user.show_text("You remove [_cell] from [src].", "red")
 					src.show_text("Your power cell was removed!", "red")
 					logTheThing(LOG_COMBAT, user, "removes [constructTarget(src,"combat")]'s power cell at [log_loc(src)].") // Renders them mute and helpless (Convair880).
-					cell.add_fingerprint(user)
-					cell.UpdateIcon()
+					_cell.add_fingerprint(user)
+					_cell.UpdateIcon()
 					src.part_chest.cell = null
 					src.cell = null
 

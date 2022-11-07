@@ -261,7 +261,7 @@
 		..()
 		tooltip_rebuild = 1
 		if (istype(src.material))
-			burn_possible = src.material.getProperty("flammable") >= 1 ? TRUE : FALSE
+			burn_possible = src.material.getProperty("flammable") > 1 ? TRUE : FALSE
 			if (src.material.material_flags & MATERIAL_METAL || src.material.material_flags & MATERIAL_CRYSTAL || src.material.material_flags & MATERIAL_RUBBER)
 				burn_type = 1
 			else
@@ -923,6 +923,7 @@
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
+	src.hide_buttons()
 	for(var/datum/objectProperty/equipment/prop in src.properties)
 		prop.onUnequipped(src, user, src.properties[prop])
 	src.equipped_in_slot = null
@@ -1274,7 +1275,7 @@
 			fuckup_attack_particle(user)
 			armor_blocked = 1
 
-	if (can_disarm)
+	if (src.can_disarm && !((src.temp_flags & IS_LIMB_ITEM) && user == M))
 		msgs = user.calculate_disarm_attack(M, M.get_affecting(user), 0, 0, 0, is_shove = 1, disarming_item = src)
 	else
 		msgs.msg_group = "[usr]_attacks_[M]_with_[src]"

@@ -1,8 +1,139 @@
 
+(t)mon nov 07 22
+(u)thegrb93
+(p)11514
+(e)🪲🍝|C-Bug, A-Catering
+(+)Terrible food that gives you food poisoning no longer fills hunger
+(t)sun nov 06 22
+(u)FlameArrow57
+(p)11509
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added medals for Arcfiend and Spy Thief!
+(t)sat nov 05 22
+(u)zjdtmkhzt
+(p)11722
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(+)Added a new mechanics component that lets device frames move around. You can read about it in the ingame mechanics book.
+(u)FlameArrow57
+(p)11664
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added a medal for Flock, unlocked by transmitting the Signal!
+(u)Kubius
+(p)11806
+(e)🪲🔄📦|C-Bug, C-Rework, A-Game-Objects
+(+)Station forcefields that aren't solid to objects should now be transparent to clicks.
+(t)fri nov 04 22
+(u)Tarmunora
+(p)262
+(e)🔒⚖🔄|A-Secret, C-Balance, C-Rework
+(+)Changed misc gun balance
+(u)zjdtmkhzt
+(p)11668
+(e)🆕🗺🎨🔎📦💡|C-Feature, A-Mapping, C-Sprites, C-Code-Quality, A-Game-Objects, A-Station-Systems
+(+)Conveyors can now turn corners. Thanks to Arthur Holiday for helping me with the bendy conveyor sprites!
+(t)thu nov 03 22
+(u)Emily
+(+)Fally and Holly Dolly
+(u)tarmunora
+(+)If you have an antag-ineligible role as favourite, you will not roll captain/HoP/detective on antag rounds.
+(u)Bartimeus973
+(p)11723
+(e)🪲|C-Bug
+(+)Wraiths now inherit point regen rate and corpse counts when they evolve.
+(u)DrWolfy
+(p)11350
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Floorbots now have color based on the toolbox used and use only one floor tile to be created.
+(+)Players can now put floor tiles inside toolboxes, as long as the toolbox is not empty.
+(+)Floorbots in the first stage of construction can now be deconstructed with an empty hand. The floor tile will be lost.
+(u)RSG250
+(p)11653
+(e)⚖🌠|C-Balance, A-Events
+(*)Certain Major Random Events are now able to appear earlier in a round in Classic
+(t)wed nov 02 22
+(u)Bartimeus
+(p)11065
+(e)🆕🧛|C-Feature, A-Gamemodes
+(+)A manifested wraith/poltergeist cannot be immediately re-manifested after a spirit candle was used on them anymore.
+(u)pali
+(p)11753
+(e)🆕🏅🚨|C-Feature, A-Medal, A-Admin
+(*)If you manage to make our code error-out you now get a medal, you monster.
+(u)Amylizzle
+(p)11767
+(e)⚖💊|C-Balance, A-Medical
+(*)Too much burn damage to a limb can now incinerate that limb.
+(u)Kubius
+(p)11706
+(e)⚖🧛⚗|C-Balance, A-Gamemodes, A-Chemistry
+(*)Changelings' biology has adapted to the unique variety of acid surrounding Nadir. Be watchful.
+(t)tue nov 01 22
+(u)Lord_Earthfire
+(p)11754
+(e)🪲|C-Bug
+(+)fixes carrot splices having no occuline or carrot juice
+(u)Kubius
+(p)11646
+(e)🗺🎨⚖|A-Mapping, C-Sprites, C-Balance
+(+)Emergency suits' Nadir acid survival time has been doubled from 90 seconds to 3 minutes. As before, they are guaranteed for Nadir personnel.
+(t)mon oct 31 22
+(u)Kubius
+(p)11614
+(e)🆕🗺|C-Feature, A-Mapping
+(*)Kondaru's engine is now atmospherically gapped from the station, connected by two airbridges and a conveyor belt. This should result in significantly fewer instances of adjacent departments being barbequed by ambitious TEG setups.
+(t)sun oct 30 22
+(u)KolisDumb, DeadMan164
+(p)11727
+(e)🎨|C-Sprites
+(*)Added the tall chef hat to the game - a chef job reward available at chef level 2.
+(u)Kubius
+(p)11701
+(e)🆕|C-Feature
+(+)Filling bowls of soup on trays, including kitchen islands, should no longer detach the bowl from the tray.
+(t)sat oct 29 22
+(u)Ikea
+(p)11260
+(e)🪲⚖🔊💨|C-Bug, C-Balance, C-Sound, A-Atmospherics
+(*)Molitz crystals now come with unique examination text relating to how much gas is left inside of them
+(u)pali
+(p)8395
+(e)|
+(*)Credits symbol has been changed from $ to ⪽
+(u)Hans
+(p)11095
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Added stinging nettle to the list of plants botany can make! (More info in minor changes)
+(+)Stinging nettle will periodically inject anyone close with histamine and the chemicals spliced with it, similar to rafflesia but without the smoke.
+(+)Stinging nettle can be circumvented by wearing chemical protection, and the frequency of injecting people depends on it's endurance, while the amount of chemicals varies upon potency.
+(+)Leaf sprite provided by Clover.
+(u)Kubius
+(p)11642
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Nadir's listening post has been overhauled and reflavored. It has moved to the southwest of its predecessor.
+(u)DrWolfy
+(p)11666
+(e)🆕💅|C-Feature, C-QoL
+(+)Hyposprays and menders can now refill from reagent dispensers (foamtanks, welding tanks, etc)
+(u)Kubius
+(p)11578
+(e)🆕⚖📦|C-Feature, C-Balance, A-Game-Objects
+(+)Substantially increased the extraction rate of Nadir's Harmonic Siphon and removed the cap of one yield per machine tick. Most mineral targets extract two to three times faster; energetic materials received a smaller buff, while gold received a larger one.
+(u)Kubius
+(p)11665
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Overhauled Nadir's kitchen to significantly improve workflow for Chefs.
+(u)lofijuno
+(p)11507
+(e)🆕🎨🎩|C-Feature, C-Sprites, A-Clothing
+(+)Added a western dress costume to the clothing booth.
+(u)Shiiba
+(p)11499
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)New sprite for Genetics PDA cartridge.
 (t)fri oct 28 22
 (u)LeahTheTech
 (p)11388
-(e)🆕🎨⚖🧛‍|C-Feature, C-Sprites, C-Balance, A-Gamemodes
+(e)🆕🎨⚖🧛|C-Feature, C-Sprites, C-Balance, A-Gamemodes
 (*)Reworked the Flockmind heal ability to be an AOE.
 (u)Kubius
 (p)11643
@@ -18,7 +149,7 @@
 (+)Pies can now be sliced!
 (u)LeahTheTech
 (p)11613
-(e)🆕🔄🧛‍⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
+(e)🆕🔄🧛⚗|C-Feature, C-Rework, A-Gamemodes, A-Chemistry
 (+)LSD hallucinations are now a little more realistic.
 (t)thu oct 27 22
 (u)aloe

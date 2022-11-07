@@ -1334,8 +1334,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "atQ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -1362,8 +1361,7 @@
 	name = "The Warrens"
 	})
 "atY" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -1636,15 +1634,13 @@
 	},
 /area/station/hallway/primary/north)
 "ayA" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
 /turf/simulated/floor/airless/plating,
 /area/station/maintenance/inner/ne)
 "ayC" = (
-/obj/disposalpipe/segment/vertical,
 /obj/cable{
 	icon_state = "4-10"
 	},
@@ -1662,8 +1658,7 @@
 /turf/simulated/floor/engine/caution/westeast,
 /area/station/maintenance/inner/ne)
 "ayN" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -2505,8 +2500,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "aKQ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -2529,8 +2523,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "aKY" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -3814,7 +3807,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
 "bdA" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -4167,7 +4160,7 @@
 	},
 /area/station/maintenance/southwest)
 "bjc" = (
-/obj/machinery/conveyor/north{
+/obj/machinery/conveyor/SN{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/circuit/red,
@@ -4244,7 +4237,7 @@
 /turf/simulated/floor,
 /area/station/security/brig)
 "bkp" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmin"
 	},
 /obj/machinery/camera{
@@ -4646,7 +4639,7 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
 /area/station/medical/staff)
 "brz" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -5272,6 +5265,17 @@
 "bAO" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/medical/staff)
+"bAV" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/purple/side{
+	dir = 10
+	},
+/area/station/hallway/primary/west)
 "bAY" = (
 /obj/machinery/computer/ordercomp{
 	dir = 8
@@ -6021,10 +6025,14 @@
 	},
 /area/station/hallway/primary/west)
 "bNn" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/clothing/gloves/latex,
-/obj/item/clothing/gloves/latex,
-/obj/item/reagent_containers/dropper,
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "bNt" = (
@@ -6405,8 +6413,7 @@
 /turf/space,
 /area/space)
 "bRy" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -6921,8 +6928,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "bZy" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
 /obj/machinery/light{
@@ -8552,7 +8558,7 @@
 /area/station/turret_protected/ai)
 "cto" = (
 /obj/machinery/light/small/floor,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -9508,7 +9514,7 @@
 	name = "Rapid Transit Interchange"
 	})
 "cHH" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -10001,7 +10007,7 @@
 	name = "The Warrens"
 	})
 "cOy" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -10101,8 +10107,7 @@
 /turf/simulated/floor/orange/side,
 /area/station/hallway/secondary/east)
 "cQv" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -10563,7 +10568,7 @@
 	},
 /area/shuttle/arrival/station)
 "cVN" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -11474,7 +11479,7 @@
 	name = "Genetic Research"
 	})
 "dir" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -11980,8 +11985,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/lounge/research)
 "doQ" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "garbage";
 	operating = 1
 	},
@@ -12660,10 +12664,7 @@
 	name = "Medical Booth Morgue"
 	})
 "dxq" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
@@ -12950,8 +12951,7 @@
 /turf/simulated/floor,
 /area/station/hangar/medical)
 "dBF" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -12996,8 +12996,7 @@
 	},
 /area/station/science/bot_storage)
 "dCa" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -13103,7 +13102,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/chapel/office)
 "dDA" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -13307,7 +13306,7 @@
 	},
 /area/station/security/equipment)
 "dFn" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	operating = 1
 	},
@@ -13466,6 +13465,11 @@
 /obj/decal/stage_edge,
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/arcade)
+"dHw" = (
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "dHz" = (
 /obj/table/auto,
 /obj/machinery/computer/security/wooden_tv/small{
@@ -13547,6 +13551,7 @@
 /obj/cable{
 	icon_state = "4-9"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "dIs" = (
@@ -13622,9 +13627,7 @@
 /area/station/maintenance/south)
 "dJV" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	dir = 4
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -13944,12 +13947,11 @@
 /turf/simulated/floor/sanitary,
 /area/station/medical/crematorium)
 "dOs" = (
-/obj/disposalpipe/segment/bent/west,
+/obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "dOt" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -14131,8 +14133,7 @@
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
 "dQF" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -14150,10 +14151,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/medical/breakroom)
 "dQV" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
@@ -14186,7 +14184,7 @@
 /area/station/maintenance/solar/west)
 "dRl" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Door";
+	name = "Mechanic Quarters";
 	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
@@ -16687,7 +16685,7 @@
 /turf/simulated/floor/carpet/blue/standard/edge/sw,
 /area/station/medical/medbay/lobby)
 "eyw" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -16779,8 +16777,7 @@
 /area/station/engine/gas)
 "ezL" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/plating,
@@ -17104,7 +17101,7 @@
 /area/station/crew_quarters/data)
 "eEQ" = (
 /obj/disposaloutlet/south,
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "garbage";
 	operating = 1
 	},
@@ -18931,8 +18928,7 @@
 /area/space)
 "fek" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/landmark{
 	name = "blobstart"
@@ -19224,6 +19220,17 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/barber_shop)
+"fjA" = (
+/obj/machinery/chem_heater,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "fjC" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -19658,8 +19665,7 @@
 	name = "Dockside Restroom"
 	})
 "foG" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -19834,14 +19840,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
 "frw" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/south,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
+/obj/machinery/computer/chem_request_receiver,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "frD" = (
@@ -20251,8 +20250,7 @@
 /area/station/maintenance/inner/south)
 "fwe" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/space_heater,
 /obj/machinery/light/emergency{
@@ -20265,8 +20263,7 @@
 	})
 "fwh" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -20659,8 +20656,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "fBR" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -21653,9 +21649,7 @@
 	icon_state = "5-9"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
@@ -22244,12 +22238,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
 "fYh" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/access_spawn/engineering,
 /obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/engineering_eva,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "fYu" = (
@@ -22436,8 +22427,7 @@
 /area/station/engine/coldloop)
 "fZP" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/engine,
 /area/station/science/lab)
@@ -23083,9 +23073,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_power,
 /turf/simulated/floor/engine/caution/northsouth,
@@ -23341,7 +23329,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/station/quartermaster/office)
 "glJ" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmsend"
 	},
 /obj/machinery/activation_button/driver_button{
@@ -23522,6 +23510,15 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/north,
 /area/station/engine/engineering/ce)
+"gnK" = (
+/obj/disposalpipe/segment/morgue,
+/obj/stool/chair/office/purple{
+	dir = 8
+	},
+/turf/simulated/floor/purpleblack{
+	dir = 8
+	},
+/area/station/hallway/primary/west)
 "gnS" = (
 /obj/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
@@ -23801,8 +23798,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
 "gsd" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -24585,8 +24581,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/hallway/secondary/north)
 "gBt" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -25206,8 +25201,7 @@
 	name = "Vessel Dock Router"
 	})
 "gIf" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -25480,8 +25474,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/office)
 "gLh" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -26244,8 +26237,7 @@
 /area/station/security/equipment)
 "gUZ" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
@@ -26301,10 +26293,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
 /obj/cable{
 	icon_state = "2-8"
@@ -26901,9 +26890,7 @@
 /turf/simulated/floor/carpet/red/fancy/innercorner/se,
 /area/station/crew_quarters/arcade/dungeon)
 "heu" = (
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -26987,6 +26974,12 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/jazz)
+"hfq" = (
+/obj/storage/closet/medicalclothes,
+/turf/simulated/floor/bluewhite{
+	dir = 8
+	},
+/area/station/medical/medbay)
 "hfy" = (
 /obj/landmark/halloween,
 /turf/simulated/floor,
@@ -27393,8 +27386,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "hje" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -27677,6 +27669,9 @@
 	},
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
+"hmi" = (
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/west)
 "hmn" = (
 /obj/machinery/atmospherics/unary/furnace_connector{
 	dir = 4
@@ -29564,9 +29559,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow,
@@ -29628,8 +29621,7 @@
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "hOa" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -29864,9 +29856,9 @@
 /area/station/engine/power)
 "hQZ" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	name = "Mechanic Quarters";
+	req_access = null;
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -30983,8 +30975,7 @@
 /turf/simulated/floor/specialroom/arcade,
 /area/station/janitor/supply)
 "iiU" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -31416,8 +31407,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)
 "ipV" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -31678,8 +31668,7 @@
 	name = "Routing Outpost"
 	})
 "iua" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -32082,7 +32071,7 @@
 	},
 /area/station/engine/coldloop)
 "iyO" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -32097,8 +32086,7 @@
 	})
 "iyT" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/stool/bed,
 /obj/landmark/start{
@@ -32165,6 +32153,12 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
+"iAu" = (
+/obj/disposalpipe/segment/brig,
+/turf/simulated/floor/purple/side{
+	dir = 9
+	},
+/area/station/hallway/primary/west)
 "iAD" = (
 /obj/machinery/light{
 	dir = 8;
@@ -32617,7 +32611,7 @@
 /turf/simulated/floor/red/checker,
 /area/station/medical/medbooth)
 "iFe" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -32665,8 +32659,7 @@
 /area/station/crew_quarters/quartersA)
 "iFR" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/engine,
@@ -32779,8 +32772,7 @@
 	name = "Vessel Dock Router"
 	})
 "iHg" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -33433,10 +33425,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/security/secoffquarters)
 "iPS" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/core)
@@ -33456,12 +33445,9 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
+/obj/access_spawn/engineering,
 /obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/engineering_eva,
 /turf/simulated/floor,
 /area/station/hangar/engine)
 "iQE" = (
@@ -33582,8 +33568,7 @@
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/arcade/dungeon)
 "iSg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
 /turf/simulated/floor/delivery/caution,
@@ -33685,8 +33670,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "iUg" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -34173,8 +34157,7 @@
 /area/station/storage/warehouse)
 "jbN" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/firealarm{
 	pixel_y = 24
@@ -34709,7 +34692,7 @@
 /turf/simulated/floor/blueblack,
 /area/station/engine/coldloop)
 "jhW" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -34810,13 +34793,6 @@
 	dir = 9
 	},
 /area/station/hallway/secondary/west)
-"jiK" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
-	},
-/turf/space,
-/area/space)
 "jiM" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/light,
@@ -35062,8 +35038,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/northwest)
 "jlU" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -35188,8 +35163,7 @@
 	},
 /area/station/hallway/primary/west)
 "jnD" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -35825,10 +35799,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine/caution/westeast,
@@ -35879,7 +35850,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "jwv" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmsend"
 	},
 /obj/cable{
@@ -36015,8 +35986,7 @@
 /turf/simulated/floor/plating/random,
 /area/listeningpost)
 "jxS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -36101,8 +36071,7 @@
 /turf/simulated/floor/redblack,
 /area/station/engine/hotloop)
 "jyx" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -36249,9 +36218,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
@@ -36506,8 +36473,7 @@
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
 "jDL" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -36643,9 +36609,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_engine,
 /turf/simulated/floor/engine,
@@ -37098,8 +37062,7 @@
 	icon_state = "lattice-dir"
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/space,
 /area/space)
@@ -37109,6 +37072,13 @@
 	dir = 8
 	},
 /area/station/quartermaster/office)
+"jMe" = (
+/obj/disposalpipe/segment/morgue,
+/obj/machinery/computer/chem_requester/science,
+/turf/simulated/floor/purpleblack{
+	dir = 9
+	},
+/area/station/hallway/primary/west)
 "jMf" = (
 /obj/machinery/light{
 	dir = 1;
@@ -37236,8 +37206,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/hop)
 "jNW" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -37357,7 +37326,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/east)
 "jPz" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmin"
 	},
 /obj/machinery/light{
@@ -38545,8 +38514,7 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "kep" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -39087,7 +39055,7 @@
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
 "kkq" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -39110,10 +39078,7 @@
 /area/station/crew_quarters/hor/horprivate)
 "kkO" = (
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
@@ -39283,6 +39248,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
+"kmo" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/purple/side{
+	dir = 1
+	},
+/area/station/hallway/primary/west)
 "kmu" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor/plating,
@@ -39481,10 +39452,7 @@
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
 "koN" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
 /obj/cable{
 	icon_state = "1-2"
@@ -40009,7 +39977,7 @@
 /area/station/hallway/secondary/exit)
 "kvz" = (
 /obj/machinery/light_switch/west,
-/obj/storage/closet/medicalclothes,
+/obj/storage/secure/closet/medical/uniforms,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -40378,8 +40346,7 @@
 	})
 "kAG" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor,
 /area/station/security/brig)
@@ -41597,8 +41564,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "kRG" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "qmin"
 	},
 /obj/machinery/camera{
@@ -41663,8 +41629,7 @@
 /turf/simulated/floor/grass,
 /area/station/crew_quarters/market)
 "kSP" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -42371,6 +42336,10 @@
 	dir = 1
 	},
 /area/station/communications/centre)
+"lbF" = (
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/purple/side,
+/area/station/hallway/primary/west)
 "lbO" = (
 /turf/simulated/floor/greenblack/corner{
 	dir = 8
@@ -42609,7 +42578,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "leE" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/circuit/red,
@@ -42630,8 +42599,7 @@
 /turf/simulated/floor/wood/two,
 /area/station/medical/breakroom)
 "leX" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -45530,9 +45498,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow,
@@ -46369,7 +46335,7 @@
 /area/station/engine/hotloop)
 "lXf" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Door";
+	name = "Mechanic Quarters";
 	req_access = null
 	},
 /obj/access_spawn/engineering_mechanic,
@@ -47525,8 +47491,7 @@
 	},
 /area/station/hallway/primary/west)
 "mml" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -48971,8 +48936,7 @@
 /turf/simulated/floor/caution/south,
 /area/station/engine/hotloop)
 "mEz" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -49465,8 +49429,17 @@
 /area/station/security/checkpoint/escape)
 "mLM" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/device/reagentscanner,
-/obj/item/clothing/glasses/spectro,
+/obj/item/device/reagentscanner{
+	pixel_x = 12
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 9
+	},
+/obj/item/reagent_containers/dropper,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "mLU" = (
@@ -49569,8 +49542,7 @@
 /area/station/medical/medbooth)
 "mNQ" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	d1 = 4;
@@ -50235,8 +50207,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/se,
 /area/station/crew_quarters/quartersA)
 "mWf" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -50348,8 +50319,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/science/storage)
 "mXR" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -50601,8 +50571,7 @@
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment)
 "nbh" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -50958,8 +50927,7 @@
 	},
 /area/station/hallway/primary/east)
 "ngJ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -51262,7 +51230,7 @@
 /turf/simulated/floor/engine/caution/northsouth,
 /area/station/engine/proto)
 "nle" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part3,
@@ -51513,8 +51481,7 @@
 "npG" = (
 /obj/plasticflaps,
 /obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -51844,12 +51811,6 @@
 	dir = 4
 	},
 /area/station/mining/refinery)
-"nus" = (
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/space)
 "nuu" = (
 /obj/item/instrument/large/jukebox,
 /turf/simulated/floor/wood/seven,
@@ -51930,9 +51891,7 @@
 	},
 /obj/disposalpipe/segment/horizontal,
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
@@ -52468,8 +52427,7 @@
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
 "nCX" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -52533,8 +52491,7 @@
 	name = "Research Router"
 	})
 "nDZ" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	id = "qmsend"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -52846,8 +52803,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "nGU" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -53398,8 +53354,7 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "nOL" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -54057,8 +54012,7 @@
 	},
 /area/station/hallway/secondary/west)
 "nXw" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -54382,8 +54336,7 @@
 /area/station/maintenance/inner/ne)
 "oaY" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/plating,
@@ -55674,8 +55627,7 @@
 "orr" = (
 /obj/plasticflaps,
 /obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -55932,8 +55884,7 @@
 	},
 /area/station/crew_quarters/fitness)
 "our" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -56452,6 +56403,10 @@
 	dir = 4
 	},
 /area/station/crew_quarters/quartersA)
+"oBu" = (
+/obj/table/reinforced/chemistry/auto,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "oBE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -56537,6 +56492,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"oCl" = (
+/obj/machinery/chem_dispenser/chemical,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "oCp" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -56759,9 +56718,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
@@ -57503,8 +57460,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "oPh" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
 /turf/simulated/floor/orangeblack,
@@ -57862,8 +57818,7 @@
 /area/station/medical/cdc)
 "oVj" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/north)
@@ -58101,8 +58056,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/elect)
 "oXO" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "cannedfartbelt";
 	name = "gas transit belt"
 	},
@@ -58115,10 +58069,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Door";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
 /turf/simulated/floor/wood/seven,
@@ -58540,8 +58491,7 @@
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "pcz" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -58647,8 +58597,7 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/escape)
 "pee" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -59446,10 +59395,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_storage,
 /turf/simulated/floor/yellow/checker,
 /area/station/routing/engine)
@@ -59719,8 +59665,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -59810,8 +59755,7 @@
 /turf/simulated/floor/carpet/purple/fancy/junction/ne_w,
 /area/station/crew_quarters/hor/horprivate)
 "psC" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -61590,8 +61534,7 @@
 /turf/simulated/floor/grey/side,
 /area/station/science/bot_storage)
 "pRb" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -63490,10 +63433,7 @@
 /area/station/crew_quarters/lounge/research)
 "qsb" = (
 /obj/machinery/atmospherics/pipe/simple,
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
 /obj/firedoor_spawn,
@@ -63580,8 +63520,7 @@
 	},
 /area/station/quartermaster/office)
 "qtn" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -64191,9 +64130,7 @@
 /area/station/crew_quarters/quarters_west)
 "qCa" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_engine,
 /obj/access_spawn/engineering_power,
@@ -64219,9 +64156,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Mechanic's Lab";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
@@ -64467,8 +64402,7 @@
 	name = "Officers' Lounge"
 	})
 "qFv" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -65788,9 +65722,7 @@
 	icon_state = "4-8"
 	},
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_atmos,
 /obj/access_spawn/engineering_engine,
@@ -65975,8 +65907,7 @@
 /turf/simulated/floor,
 /area/station/engine/power)
 "qWE" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -66410,8 +66341,7 @@
 /area/station/hydroponics/bay)
 "rcx" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/meter,
 /turf/simulated/floor/caution/north,
@@ -66988,8 +66918,7 @@
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/quartersA)
 "rlB" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -67001,10 +66930,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Door";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
 /turf/simulated/floor/engine/caution/westeast,
@@ -67600,7 +67526,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
 "rtZ" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmsend"
 	},
 /turf/simulated/floor/caution/westeast,
@@ -67846,10 +67772,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/hop)
 "rwD" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -68143,7 +68066,7 @@
 	name = "Chapel Reception"
 	})
 "rAN" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -68353,8 +68276,7 @@
 /turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "rCY" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
@@ -68678,8 +68600,7 @@
 	})
 "rHk" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/portable_atmospherics/canister/air/large,
 /turf/simulated/floor/caution/south,
@@ -68921,7 +68842,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/bridge/captain)
 "rLz" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -70137,8 +70058,7 @@
 	name = "Cargo Transfer";
 	opacity = 0
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
 /obj/plasticflaps{
@@ -70460,10 +70380,7 @@
 /turf/simulated/floor/grime,
 /area/station/storage/warehouse)
 "scq" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanic's Lab";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /obj/cable{
@@ -71691,6 +71608,10 @@
 	dir = 4
 	},
 /area/station/engine/storage)
+"ssM" = (
+/obj/item/reagent_containers/glass/beaker/large,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "ssN" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -71972,8 +71893,7 @@
 	on = 1
 	},
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
@@ -72068,12 +71988,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/engineering_eva,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-4"
@@ -72081,6 +71996,8 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
+/obj/access_spawn/engineering,
+/obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "swR" = (
@@ -72150,8 +72067,7 @@
 /turf/simulated/floor/grey,
 /area/station/mining/staff_room)
 "sxS" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -73200,7 +73116,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "sKr" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmsend"
 	},
 /obj/machinery/light{
@@ -73277,8 +73193,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/science/restroom)
 "sLd" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -73289,6 +73204,11 @@
 	},
 /turf/simulated/floor/caution/westeast,
 /area/station/hydroponics/bay)
+"sLi" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "sLl" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/small{
@@ -73913,8 +73833,7 @@
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/arcade)
 "sRR" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75093,8 +75012,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -75576,8 +75494,7 @@
 /area/station/science/bot_storage)
 "tmB" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner{
@@ -75837,9 +75754,7 @@
 /area/station/maintenance/south)
 "tpM" = (
 /obj/machinery/door/airlock/pyro/engineering{
-	dir = 4;
-	name = "Engineering Door";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_power,
 /obj/firedoor_spawn,
@@ -76339,8 +76254,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "tvo" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -76348,8 +76262,7 @@
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
 "tvt" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmswapabout"
 	},
 /obj/machinery/camera{
@@ -76398,10 +76311,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_engine,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
@@ -76490,8 +76400,7 @@
 	name = "Engineering Status Room"
 	})
 "twE" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "qmin"
 	},
 /turf/simulated/floor/caution/northsouth,
@@ -76579,7 +76488,7 @@
 	name = "Diplomatic Quarters"
 	})
 "tyn" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -77544,7 +77453,7 @@
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/office)
 "tLo" = (
-/obj/storage/closet/wardrobe/red/security_gimmick,
+/obj/machinery/vending/jobclothing/security,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
@@ -77721,9 +77630,7 @@
 /area/ghostdrone_factory)
 "tNy" = (
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering,
 /obj/access_spawn/engineering_mechanic,
@@ -78164,7 +78071,7 @@
 	name = "Tanhony Creek Station"
 	})
 "tSM" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -78645,6 +78552,21 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/security/brig/genpop)
+"tYD" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/device/reagentscanner{
+	pixel_x = 12
+	},
+/obj/item/clothing/glasses/spectro{
+	pixel_y = 9
+	},
+/obj/item/clothing/gloves/latex{
+	pixel_x = -7;
+	pixel_y = -3
+	},
+/obj/item/reagent_containers/dropper,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "tYE" = (
 /obj/storage/secure/closet/personal,
 /obj/machinery/firealarm{
@@ -79058,7 +78980,7 @@
 /turf/simulated/floor,
 /area/station/engine/storage)
 "ufh" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmin"
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -79724,7 +79646,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/se)
 "umT" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -79819,10 +79741,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_atmos,
 /obj/firedoor_spawn,
 /turf/simulated/floor/black,
@@ -79876,8 +79795,7 @@
 /turf/simulated/floor/grass/leafy,
 /area/station/garden/aviary)
 "upt" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -80772,11 +80690,11 @@
 /turf/simulated/floor/black/grime,
 /area/station/storage/warehouse)
 "uzV" = (
-/obj/storage/secure/closet/medical/uniforms,
 /obj/machinery/light/emergency{
 	dir = 8;
 	pixel_x = -12
 	},
+/obj/machinery/vending/jobclothing/medical,
 /turf/simulated/floor/bluewhite{
 	dir = 9
 	},
@@ -80886,9 +80804,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
@@ -81346,8 +81262,7 @@
 /turf/simulated/floor,
 /area/station/storage/warehouse)
 "uGi" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -81569,10 +81484,8 @@
 	name = "Arrival Shuttle Hallway"
 	})
 "uIO" = (
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
 /obj/disposalpipe/segment/horizontal,
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -82483,8 +82396,7 @@
 	},
 /area/station/security/checkpoint/escape)
 "uSl" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -82803,9 +82715,7 @@
 	dir = 4
 	},
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering_mechanic,
 /obj/access_spawn/engineering,
@@ -82821,8 +82731,7 @@
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_west)
 "uVD" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	name = "cargo belt - west";
 	operating = 1
 	},
@@ -82892,7 +82801,7 @@
 /turf/simulated/floor/blue/checker,
 /area/station/crew_quarters/pool)
 "uWC" = (
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /obj/machinery/ghostdrone_factory/part2,
@@ -82947,9 +82856,7 @@
 	},
 /area/station/engine/power)
 "uXm" = (
-/obj/stool/chair/yellow{
-	dir = 8
-	},
+/obj/machinery/vending/jobclothing/engineering,
 /turf/simulated/floor/grey,
 /area/station/engine/engineering/private)
 "uXn" = (
@@ -83705,8 +83612,7 @@
 	name = "Genetic Research"
 	})
 "vge" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -84804,8 +84710,7 @@
 /area/station/maintenance/disposal)
 "vsY" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -86382,6 +86287,13 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/wood/seven,
 /area/station/garden/aviary)
+"vLV" = (
+/obj/item/storage/box/beakerbox{
+	pixel_y = 4;
+	pixel_x = -3
+	},
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "vMb" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/plating/airless/random,
@@ -86739,9 +86651,7 @@
 	name = "Honkington's Abode"
 	})
 "vQr" = (
-/obj/storage/secure/closet/medical{
-	name = "Patient Locker"
-	},
+/obj/storage/secure/closet/medical/cloning,
 /turf/simulated/floor/bluewhite{
 	dir = 4
 	},
@@ -87176,8 +87086,7 @@
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
 "vWL" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -87411,8 +87320,7 @@
 /turf/simulated/floor/white,
 /area/station/science/lobby)
 "vZQ" = (
-/obj/machinery/conveyor{
-	dir = 8;
+/obj/machinery/conveyor/EW{
 	id = "garbage";
 	operating = 1
 	},
@@ -87694,8 +87602,7 @@
 	},
 /area/station/crew_quarters/jazz)
 "wcV" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -89688,7 +89595,6 @@
 /area/station/turret_protected/ai)
 "wAw" = (
 /obj/table/auto,
-/obj/item/storage/box/plates,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -90565,9 +90471,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/machinery/door/airlock/pyro/glass/engineering{
-	dir = 4;
-	name = "Engineering";
-	req_access = null
+	dir = 4
 	},
 /obj/access_spawn/engineering,
 /obj/access_spawn/engineering_mechanic,
@@ -90762,8 +90666,7 @@
 	dir = 10;
 	icon_state = "lattice-dir"
 	},
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
 	operating = 1
 	},
@@ -90903,8 +90806,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "wOy" = (
-/obj/machinery/conveyor{
-	dir = 4;
+/obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
 	operating = 1
 	},
@@ -91256,10 +91158,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanic's Lab";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
@@ -93361,7 +93260,7 @@
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	move_lag = 7;
 	name = "cargo belt - south";
 	operating = 1
@@ -93415,7 +93314,7 @@
 /turf/simulated/floor/sanitary/white,
 /area/station/bridge/captain)
 "xtb" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	id = "qmin"
 	},
 /obj/machinery/light{
@@ -93731,10 +93630,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Engineering Door";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering_atmos,
 /turf/simulated/floor/yellowblack,
 /area/station/engine/gas)
@@ -93963,8 +93859,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "xzG" = (
-/obj/machinery/conveyor{
-	dir = 1;
+/obj/machinery/conveyor/SN{
 	id = "qmin"
 	},
 /turf/simulated/floor/airless/plating,
@@ -95518,7 +95413,7 @@
 /area/station/ranch)
 "xRQ" = (
 /obj/machinery/ghostdrone_factory,
-/obj/machinery/conveyor/west{
+/obj/machinery/conveyor/EW{
 	id = "ghostdrone"
 	},
 /turf/simulated/floor/circuit/red,
@@ -95618,10 +95513,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/vertical,
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "Mechanic's Lab";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/engineering,
 /obj/access_spawn/engineering_mechanic,
 /obj/firedoor_spawn,
 /turf/simulated/floor/yellow,
@@ -95792,8 +95684,7 @@
 "xWi" = (
 /obj/stool/bench/red/auto,
 /obj/machinery/atmospherics/pipe/simple/overfloor{
-	dir = 10;
-	
+	dir = 10
 	},
 /obj/machinery/light/small{
 	dir = 1;
@@ -96178,6 +96069,10 @@
 "yaz" = (
 /obj/table/wood/auto,
 /obj/item/decoration/ashtray,
+/obj/item/reagent_containers/food/drinks/bowl{
+	pixel_x = -12;
+	pixel_y = 9
+	},
 /turf/simulated/floor/wood,
 /area/station/medical/breakroom)
 "yaC" = (
@@ -96258,10 +96153,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/access_spawn/engineering_power,
 /turf/simulated/floor/engine/caution/misc{
 	dir = 1
@@ -96350,16 +96242,13 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "ycT" = (
-/obj/machinery/door/airlock/pyro/glass/engineering{
-	name = "Engineering";
-	req_access = null
-	},
-/obj/access_spawn/engineering_mechanic,
-/obj/access_spawn/engineering_eva,
+/obj/machinery/door/airlock/pyro/glass/engineering,
 /obj/firedoor_spawn,
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/access_spawn/engineering,
+/obj/access_spawn/engineering_mechanic,
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "ycV" = (
@@ -96910,7 +96799,7 @@
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "yiX" = (
-/obj/machinery/conveyor{
+/obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
 	operating = 1
 	},
@@ -128311,7 +128200,7 @@ aJu
 aJu
 aJu
 iBP
-jiK
+cVS
 jNH
 aJu
 mFJ
@@ -136801,8 +136690,8 @@ fQz
 tUY
 qUB
 omA
-btR
-btR
+rlZ
+rlZ
 ota
 pOo
 qjH
@@ -137120,7 +137009,7 @@ lqo
 dpl
 udI
 gMc
-bel
+oBu
 kfg
 lqo
 dpl
@@ -137421,10 +137310,10 @@ kfg
 wVc
 hgM
 udI
-uSo
-mLM
-kfg
-wVc
+ssM
+tYD
+xUE
+oCl
 hgM
 udI
 uSo
@@ -137720,12 +137609,12 @@ vNv
 pxW
 mJN
 kfg
-vmY
+fjA
 uSo
 xNx
-uSo
+vLV
 jgf
-kfg
+xUE
 vmY
 uSo
 xNx
@@ -138026,8 +137915,8 @@ frw
 ayC
 dOs
 dIo
-bNn
-kfg
+sLi
+xUE
 frw
 ayC
 dOs
@@ -138627,8 +138516,8 @@ olf
 tGj
 sbo
 wHx
-cqj
-wHx
+bAV
+iAu
 wHx
 wHx
 wHx
@@ -138929,8 +138818,8 @@ yfC
 fJi
 dIf
 pmd
-pmd
-pmd
+hmi
+dHw
 pmd
 pmd
 pmd
@@ -139231,8 +139120,8 @@ lLq
 xdT
 xdT
 yjw
-yjw
-yjw
+lbF
+kmo
 yjw
 yjw
 xfo
@@ -139533,8 +139422,8 @@ pKt
 gvR
 pKt
 kMG
-kMG
-kMG
+jMe
+gnK
 wSe
 pSp
 wSe
@@ -147034,7 +146923,7 @@ nOZ
 eyR
 uzV
 kvz
-uXR
+hfq
 uXR
 pRc
 rNh
@@ -163410,7 +163299,7 @@ kCJ
 nav
 nav
 nav
-nus
+nav
 dpO
 dpO
 dpO

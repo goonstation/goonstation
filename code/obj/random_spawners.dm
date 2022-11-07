@@ -20,10 +20,11 @@
 		..()
 		SPAWN(1 DECI SECOND)
 			src.spawn_items()
-			sleep(10 SECONDS)
+			sleep(5 SECONDS) // ZEWAKA/INIT
 			qdel(src)
 
 	proc/spawn_items()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (islist(src.guaranteed) && length(src.guaranteed))
 			for (var/obj/new_item in src.guaranteed)
 				if (!ispath(new_item))
@@ -1115,7 +1116,7 @@
 	/obj/critter/seagull/gannet,
 	/obj/critter/crow,
 	/obj/critter/seagull,
-	/obj/critter/nicespider,
+	/mob/living/critter/spider/nice,
 	/obj/critter/goose,
 	/obj/critter/goose/swan)
 

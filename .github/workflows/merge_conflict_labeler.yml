@@ -1,14 +1,17 @@
 name: "Label Merge Conflicts"
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [master]
+
 jobs:
-  triage:
+  label_conflicts:
     runs-on: ubuntu-latest
     if: github.repository == 'goonstation/goonstation'
     steps:
-      - uses: zewaka/auto-label-merge-conflicts@master
+      - uses: prince-chrismc/label-merge-conflicts-action@v2
         with:
           CONFLICT_LABEL_NAME: "S-Merge-Conflict"
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
