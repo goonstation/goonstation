@@ -1,11 +1,12 @@
 //this is designed for sounds - but maybe could be adapted for more collision / range checking stuff in the future
 
+/// Get cliented mobs from a given atom within a given range. Careful, because range is actually `max(CELL_SIZE, range)`
 #define GET_NEARBY(A,range) ((A.z <= 0 || A.z > length(spatial_z_maps)) ? null : spatial_z_maps[A.z].get_nearby(A,range))
 
 #define CELL_POSITION(X,Y) (clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1, 1, length(hashmap)))
 
 #define ADD_BUCKET(X,Y) (. |= CELL_POSITION(X, Y))
-#define SPATIAL_HASHMAP_CELL_SIZE 30
+#define SPATIAL_HASHMAP_CELL_SIZE 15 // 300x300 -> 20x20
 
 /// The global spatial Z map list, used for our spatial hashing
 var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
@@ -81,7 +82,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 
 
 
-	proc/get_atom_id(var/atom/A,var/atomboundsize = 33)
+	proc/get_atom_id(atom/A, atomboundsize = 33)
 		//usually in this kinda collision detection code you'd want to map the corners of a square....
 		//but this is for our sounds system, where the shapes of collision actually resemble a diamond
 		//so : sample 8 points around the edges of the diamond shape created by our atom
@@ -118,7 +119,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		boutput(world,s)
 		*/
 
-	proc/get_nearby(var/atom/A, var/range = 33)
+	proc/get_nearby(atom/A, range = 33)
 		//sneaky... rest period where we lazily refuse to update
 		if (world.time > last_update + (world.tick_lag*5))
 			update()
@@ -127,7 +128,7 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		range = min(range,cellsize)
 
 		.= list()
-		for (var/id in get_atom_id(A,range))
+		for (var/id in get_atom_id(A, range))
 			.+= hashmap[id];
 
 
