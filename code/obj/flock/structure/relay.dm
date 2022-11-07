@@ -23,6 +23,8 @@
 	bound_x = -64
 	bound_y = -64
 	hitTwitch = FALSE
+	show_in_tutorial = TRUE
+	tutorial_desc = "Your goal and purpose. Unlocked at 500 compute, you must then defend it while it charges before unleashing the Signal."
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	var/conversion_radius = 1
@@ -42,7 +44,6 @@
 
 /obj/flock_structure/relay/New()
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 9)
-
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite

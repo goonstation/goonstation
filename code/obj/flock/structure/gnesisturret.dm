@@ -6,10 +6,12 @@
 	name = "spiky fluid vat"
 	desc = "A vat of bubbling teal fluid, covered in hollow spikes."
 	flock_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits."
+	tutorial_desc = "A turret that fires gnesis-filled spikes at enemies, beginning their conversion to Flockbits. Consumes 20 compute passively and 50 while synthesizing gnesis."
 	icon_state = "teleblocker-off"
 	flock_id = "Gnesis turret"
 	resourcecost = 150
 	health = 80
+	show_in_tutorial = TRUE
 	///maximum volume of coagualted gnesis that can be stored in the tank
 	var/fluid_level_max = 250
 	///how much gnesis is generated per-tick while there is sufficient compute

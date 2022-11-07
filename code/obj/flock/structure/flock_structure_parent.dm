@@ -14,6 +14,9 @@ ABSTRACT_TYPE(/obj/flock_structure)
 	mat_changedesc = FALSE
 	mat_appearances_to_ignore = list("gnesis")
 	var/flock_id = "ERROR"
+	//does this structure show up in the list of flock structures shown in the tutorial?
+	var/show_in_tutorial = FALSE
+	var/tutorial_desc = ""
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds
@@ -29,10 +32,10 @@ ABSTRACT_TYPE(/obj/flock_structure)
 
 	var/fireVuln = 0.2
 	var/datum/flock/flock = null
-	//base compute provided
+	///base compute provided
 	var/compute = 0
-	//resource cost for building
-	var/resourcecost = 50
+	///resource cost for building
+	var/resourcecost = 0
 	/// can flockdrones pass through this akin to a grille? need to set USE_CANPASS to make this work however
 	var/passthrough = FALSE
 	/// TIME of last process

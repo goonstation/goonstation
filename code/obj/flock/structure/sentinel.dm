@@ -9,10 +9,12 @@
 	name = "glowing pylon"
 	desc = "A glowing pylon of sorts, faint sparks are jumping inside of it."
 	flock_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies."
+	tutorial_desc = "A charged pylon, capable of sending disorienting arcs of electricity at enemies. Consumes 20 compute."
 	icon_state = "sentinel"
 	flock_id = "Sentinel"
 	health = 80
 	resourcecost = 150
+	show_in_tutorial = TRUE
 	var/charge_status = NOT_CHARGED
 	/// 0-100 charge percent
 	var/charge = 0

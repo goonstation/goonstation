@@ -54,6 +54,30 @@
 		qdel(portal)
 		return jerk
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "FlockStructures")
+			ui.open()
+
+	ui_static_data(mob/user)
+		var/list/structures = list()
+		var/list/structure_types = concrete_typesof(/obj/flock_structure)
+		for (var/type in structure_types)
+			var/obj/flock_structure/structure = type //funny type abuse moment (515 please save us)
+			if (!initial(structure.show_in_tutorial))
+				continue
+			structures += list(list(
+				"icon" = icon2base64(icon(initial(structure.icon), initial(structure.icon_state), frame = 1)),
+				"name" = initial(structure.flock_id),
+				"description" = initial(structure.tutorial_desc) || initial(structure.flock_desc), //default to the normal description
+				"cost" = initial(structure.resourcecost)
+			))
+		return list("structures" = structures)
+
+	ui_status(mob/user)
+		return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+
 /datum/tutorialStep/flock
 	name = "Flock tutorial step"
 	instructions = "If you see this, tell a coder!!!11"
@@ -293,6 +317,7 @@
 			if(region.turf_in_region(T))
 				src.ftutorial.fowner.set_loc(T)
 				break
+		src.ftutorial.ui_interact(src.ftutorial.fowner)
 
 /mob/living/intangible/flock/flockmind/verb/help_my_tutorial_is_being_a_massive_shit()
 	set name = "EMERGENCY TUTORIAL STOP"

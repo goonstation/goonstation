@@ -3,11 +3,13 @@
 	name = "angled pedestal"
 	desc = "A strange machine. It appears to have some sort of output slot?"
 	flock_desc = "A converter that turns its contents into resource cubes."
+	tutorial_desc = "A converter that turns its contents into resource cubes. Created by converting a human resource container (vending machine, fluid tank etc.)."
 	flock_id = "Fabricator"
 	health = 20
 	health_max = 20
 	repair_per_resource = 1
 	passthrough = TRUE
+	show_in_tutorial = TRUE
 
 	var/resources_to_produce = 0
 
