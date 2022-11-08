@@ -819,20 +819,6 @@
 	SPAWN(0) //???? otherwise we runtime
 		qdel(ship)
 
-/obj/item/shipcomponent/secondary_system/crash/proc/crashtime(atom/A)
-	var/tempstate = ship.icon_state
-	ship.icon_state = "flaming"
-	if(!istype(A, /obj/critter/gunbot/drone))
-		A.meteorhit(ship)
-	playsound(ship.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-	ship.icon_state = tempstate
-	crashhits --
-	if (crashhits <= 0)
-		explosion(ship, ship.loc, 1, 2, 2, 3)
-		playsound(ship.loc, "explosion", 50, 1)
-		dispense()
-	return
-
 /obj/item/shipcomponent/secondary_system/crash/proc/crashtime2(atom/A as mob|obj|turf)
 	if (in_bump)
 		return
@@ -858,6 +844,13 @@
 				T.ReplaceWithLattice()
 			else
 				T.ReplaceWithSpace()
+			if(prob(50))
+				for (var/mob/M in src)
+					shake_camera(M, 6, 8)
+			if(prob(30))
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				boutput(ship.pilot, "<span class='alert'><B>You plow through the floor!</B></span>")
 	if(ismob(A))
 		var/mob/M = A
 		boutput(ship.pilot, "<span class='alert'><B>You crash into [M]!</B></span>")

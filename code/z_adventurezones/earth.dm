@@ -621,7 +621,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 	set_loc(newloc)
 		. = ..()
-		if(isnull(newloc))
+		if(isnull(newloc) && !QDELETED(src))
 			src.vis_contents = null
 			qdel(src)
 

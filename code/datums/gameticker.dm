@@ -240,13 +240,22 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
-	SPAWN(6000) // 10 minutes in
+#ifdef MAP_OVERRIDE_NADIR
+	SPAWN(30 MINUTES) // special catalytic engine warning
+		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
+			LAGCHECK(LAG_LOW)
+			if(CG?.gen_rate < 70000 WATTS)
+				command_alert("Reports indicate that one or more catalytic generators on [station_name()] may require replacement rods for continued operation. If catalytic rods are not replaced, this may result in sitewide power failures.", "Power Grid Warning")
+			break
+#else
+	SPAWN(10 MINUTES) // standard engine warning
 		for(var/obj/machinery/computer/power_monitor/smes/E in machine_registry[MACHINES_POWER])
 			LAGCHECK(LAG_LOW)
 			var/datum/powernet/PN = E.get_direct_powernet()
 			if(PN?.avail <= 0)
 				command_alert("Reports indicate that the engine on-board [station_name()] has not yet been started. Setting up the engine is strongly recommended, or else stationwide power failures may occur.", "Power Grid Warning", alert_origin = ALERT_STATION)
 			break
+#endif
 
 	for(var/turf/T in job_start_locations["AI"])
 		if(isnull(locate(/mob/living/silicon/ai) in T))
@@ -297,7 +306,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
-					var/mob/wraith/W = player.make_wraith()
+					var/mob/living/intangible/wraith/W = player.make_wraith()
 					if (W)
 						W.set_loc(pick_landmark(LANDMARK_OBSERVER))
 						logTheThing(LOG_DEBUG, W, "<b>Late join</b>: assigned antagonist role: wraith.")

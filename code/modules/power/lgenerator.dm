@@ -122,10 +122,11 @@
 		if (!src)
 			return
 		if (src.CL)
+			var/obj/item/cell/_CL = src.CL
 			src.CL.set_loc(get_turf(src))
 
 			if (istype(user))
-				user.put_in_hand_or_eject(src.CL) // try to eject it into the users hand, if we can
+				user.put_in_hand_or_eject(_CL) // try to eject it into the users hand, if we can
 
 			src.CL = null
 			if (src.mode == 2) // Generator doesn't need to shut down when in APC mode.

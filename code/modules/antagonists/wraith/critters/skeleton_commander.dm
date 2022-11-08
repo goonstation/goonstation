@@ -14,10 +14,10 @@
 	health_brute_vuln = 0.7
 	health_burn = 90
 	health_burn_vuln = 0.3
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
@@ -98,9 +98,9 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, "sound/effects/swoosh.ogg", 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
 				else
-					playsound(user, "sound/impact_sounds/Flesh_Cut_1.ogg", 50, 0)
+					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 0)
 				return 0
 			if (INTENT_GRAB)
 				if(!isturf(target.loc) && !isturf(target)) return

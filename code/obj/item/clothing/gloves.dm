@@ -368,7 +368,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
-	item_state = "combatgauntlets"
+	icon_state = "combatgauntlets"
+	item_state = "swat_syndie"
 
 	setupProperties()
 		..()

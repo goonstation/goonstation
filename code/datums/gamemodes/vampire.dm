@@ -11,7 +11,11 @@
 	has_werewolves = 0
 	major_threats = list(ROLE_WRAITH)
 
+#ifdef RP_MODE
 	num_enemies_divisor = 20
+#else
+	num_enemies_divisor = 15
+#endif
 
 /datum/game_mode/mixed/vampire/announce()
 	boutput(world, "<B>The current game mode is - Vampire!</B>")

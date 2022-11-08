@@ -51,6 +51,7 @@
 	var/amount_left = 0
 	var/max_amount = 1000
 	var/unusualCell
+	/// TRUE if this ammo can be refilled from an ammo bag. Used to prevent duping
 	var/refillable = TRUE
 	ammo_type = new/datum/projectile/bullet
 
@@ -306,6 +307,7 @@
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
+			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
 			if((src.material.material_flags & MATERIAL_CRYSTAL))
@@ -632,6 +634,7 @@
 	ammo_cat = AMMO_FOAMDART
 	ammo_type = new/datum/projectile/bullet/foamdart
 	delete_on_reload = TRUE
+	throwforce = 0
 
 //0.40
 /obj/item/ammo/bullets/blow_darts

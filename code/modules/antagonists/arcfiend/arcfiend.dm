@@ -47,5 +47,8 @@
 	handle_round_end(log_data)
 		var/list/dat = ..()
 		if (length(dat) && src.ability_holder)
-			dat.Insert(2, "They consumed a total of [ability_holder.lifetime_energy] units of energy during this shift.")
+			dat.Insert(2, {"They consumed a total of [ability_holder.lifetime_energy] units of energy during this shift.
+							<br>Hearts stopped: [ability_holder.hearts_stopped]"})
+		if (src.ability_holder.hearts_stopped >= 6)
+			src.owner.current.unlock_medal("A shocking demise", TRUE)
 		return dat

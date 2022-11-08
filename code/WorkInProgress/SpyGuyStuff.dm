@@ -176,15 +176,13 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "random_thing"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 10
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Tommify"
 //file location for the sound you want it to play
@@ -1043,7 +1041,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	prob_mod = 0
+	irresistible = 1
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

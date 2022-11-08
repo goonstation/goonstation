@@ -88,6 +88,7 @@
 	//Environment
 	var/env = "dev"
 	var/cdn = ""
+	var/rsc = null
 	var/disableResourceCache = 0
 
 	//Map switching stuff
@@ -346,6 +347,8 @@
 				config.env = trim(value)
 			if ("cdn")
 				config.cdn = trim(value)
+			if ("rsc")
+				config.rsc = trim(value)
 			if ("disable_resource_cache")
 				config.disableResourceCache = 1
 
@@ -436,6 +439,9 @@
 /datum/configuration/proc/getSpecialModeCase(mode)
 	switch (mode)
 		if ("blob")
+			if (map_setting == "NADIR")
+				return 0
+
 			if (src.blob_min_players > 0)
 				var/players = 0
 				for (var/mob/new_player/player in mobs)
