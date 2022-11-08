@@ -1281,6 +1281,31 @@ datum/projectile/bullet/autocannon
 		else if (O)
 			src.has_det = 0
 
+/datum/projectile/bullet/breach_flashbang
+	name = "door-breaching flashbang"
+	window_pass = 0
+	icon_state = "40mm_lethal"
+	damage_type = D_KINETIC
+	damage = 20
+	dissipation_delay = 20
+	cost = 1
+	shot_sound = 'sound/weapons/launcher.ogg'
+	impact_image_state = "bhole-large"
+	casing = /obj/item/casing/grenade
+	implanted = null
+
+	on_launch(obj/projectile/O)
+		. = ..()
+		O.AddComponent(/datum/component/proj_door_breach)
+
+	on_end(obj/projectile/O)
+		var/turf/T = get_turf(O)
+		flashpowder_reaction(T, 50)
+		sonicpowder_reaction(T, 50)
+		var/obj/machinery/door/breached = O.special_data["door_hit"]
+		if(istype(breached) && !QDELETED(breached) && !breached.cant_emag)
+			breached.open()
+		. = ..()
 
 //1.58
 // Ported from old, non-gun RPG-7 object class (Convair880).

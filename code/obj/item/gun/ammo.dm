@@ -967,6 +967,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	icon_empty = "40mm_nonlethal-0"
 	sound_load = 'sound/weapons/gunload_40mm.ogg'
 
+/obj/item/ammo/bullets/breach_flashbang
+	sname = "40mm Door-Breaching Rounds"
+	name = "40mm door-breaching rounds"
+	desc = "Some high-tech shells with an ID-chipped tip and a pyrotechnic payload."
+	ammo_type = new/datum/projectile/bullet/pbr
+	amount_left = 2
+	max_amount = 2
+	icon_state = "40mm_nonlethal"
+	ammo_cat = AMMO_GRENADE_40MM
+	w_class = W_CLASS_NORMAL
+	icon_dynamic = 0
+	icon_empty = "40mm_nonlethal-0"
+	sound_load = 'sound/weapons/gunload_40mm.ogg'
+
 //basically an internal object for converting hand-grenades into shells, but can be spawned independently.
 /obj/item/ammo/bullets/grenade_shell
 	sname = "40mm Custom Shell"
