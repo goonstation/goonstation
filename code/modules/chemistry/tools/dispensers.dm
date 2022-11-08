@@ -361,9 +361,6 @@
 		else if (ismob(usr))
 			add_fingerprint(usr, TRUE)
 
-	smash()
-		..()
-
 	ex_act(severity)
 		..()
 		icon_state = "weldtank-burst" //to ensure that a weldertank's always going to be updated by their own explosion
@@ -371,6 +368,7 @@
 
 	is_open_container()
 		return isburst
+
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
 	desc = "A tank of helium."
