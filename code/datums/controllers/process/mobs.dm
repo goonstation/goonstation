@@ -53,8 +53,8 @@
 				M.Life(src)
 				if (!(c++ % 5))
 					scheck()
-			else if(istype(X, /mob/wraith))
-				var/mob/wraith/W = X
+			else if(istype(X, /mob/living/intangible/wraith))
+				var/mob/living/intangible/wraith/W = X
 				W.Life(src)
 				scheck()
 			else if(istype(X, /mob/dead))

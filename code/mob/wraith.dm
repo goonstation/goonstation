@@ -1,7 +1,6 @@
 // Wraith
-// Technically neither living nor dead benefits us in such a way that we should be subclassing them.
 
-/mob/wraith
+/mob/living/intangible/wraith
 	name = "Wraith"
 	real_name = "Wraith"
 	desc = "Jesus Christ, how spooky."
@@ -12,10 +11,6 @@
 	icon_state = "wraith"
 #endif
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
-	density = 0
-	canmove = 1
-	blinded = 0
-	anchored = 1
 	alpha = 180
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	plane = PLANE_NOSHADOW_ABOVE
@@ -41,7 +36,7 @@
 	/// standard duration of an involuntary haunt action
 	var/forced_haunt_duration = 30 SECOND
 	var/death_icon_state = "wraith-die"
-	var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
+	//var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/last_typing = null
 	var/list/area/booster_locations = list()	//Zones in which you get more points
 	var/list/area/valid_locations = list()	//Zones that can become booster zones
@@ -92,6 +87,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_SPOOKY)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		//src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.sight |= SEE_SELF // let's not make it see through walls
 		src.see_invisible = INVIS_SPOOKY
@@ -99,7 +95,7 @@
 		src.see_in_dark = SEE_DARK_FULL
 		src.abilityHolder = new /datum/abilityHolder/wraith(src)
 		src.abilityHolder.points = 50
-		if (!istype(src, /mob/wraith/wraith_trickster) && !istype(src, /mob/wraith/wraith_decay) && !istype(src, /mob/wraith/wraith_harbinger) && !istype(src, /mob/wraith/poltergeist))
+		if (!istype(src, /mob/living/intangible/wraith/wraith_trickster) && !istype(src, /mob/living/intangible/wraith/wraith_decay) && !istype(src, /mob/living/intangible/wraith/wraith_harbinger) && !istype(src, /mob/living/intangible/wraith/poltergeist))
 			src.addAbility(/datum/targetable/wraithAbility/specialize)
 		src.addAllBasicAbilities()
 		last_life_update = TIME
@@ -143,7 +139,7 @@
 
 	disposing()
 		STOP_TRACKING
-		for (var/mob/wraith/poltergeist/P in src.poltergeists)
+		for (var/mob/living/intangible/wraith/poltergeist/P in src.poltergeists)
 			P.master = null
 		poltergeists = null
 		..()
@@ -170,7 +166,7 @@
 			for (var/mob/living/carbon/human/H in viewers(6, src))
 				if (!H.stat && !H.bioHolder.HasEffect("revenant"))
 					src.hauntBonus += 5
-					if(istype(src, /mob/wraith/wraith_trickster))
+					if(istype(src, /mob/living/intangible/wraith/wraith_trickster))
 						src.hauntBonus += 1
 
 		for_by_tcl(V, /obj/machinery/wraith/vortex_wraith)
@@ -185,11 +181,10 @@
 				get_new_booster_zones()
 
 		if (get_area(src) in booster_locations)
-			hauntBonus = (hauntBonus * 2)
+			hauntBonus += 2
 
 		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
-
 
 		src.abilityHolder.generatePoints(mult = (life_time_passed / life_tick_spacing))
 		src.abilityHolder.updateText()
@@ -201,15 +196,8 @@
 			HealDamage("chest", 1 * (life_time_passed / life_tick_spacing), 0)
 		last_life_update = TIME
 
-
-	// No log entries for unaffected mobs (Convair880).
-	ex_act(severity)
-		return
-
 	death(gibbed)
 		. = ..()
-		//Todo: some cool-ass effects here
-
 		//Back to square one with you!
 
 		var/datum/abilityHolder/wraith/W = src.abilityHolder
@@ -266,7 +254,7 @@
 	//When a master wraith dies, any of its poltergeists who are following it are thrown out. also send a message
 	proc/drop_following_poltergeists()
 		if (src.poltergeists)
-			for (var/mob/wraith/poltergeist/P in src.poltergeists)
+			for (var/mob/living/intangible/wraith/poltergeist/P in src.poltergeists)
 				if (P.following_master && locate(P) in src.poltergeists)	//just to be safe
 					var/turf/T1 = get_turf(src)
 					var/tx = T1.x + rand(3 * -1, 3)
@@ -321,6 +309,18 @@
 		if(!P.proj_data.silentshot)
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
+	ex_act(severity)
+		if (!src.density) return
+		switch(severity)
+			if(1)
+				src.TakeDamage(null, 30)
+				return
+			if(2)
+				src.TakeDamage(null, 80)
+				return
+			if(3)
+				src.TakeDamage(null, 100)
+				return
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
 		if (!src.density)
@@ -458,7 +458,6 @@
 	can_use_hands()
 		if (src.density) return 1
 		else return 0
-
 
 	is_active()
 		if (src.density) return 1
@@ -640,7 +639,7 @@
 // Subtypes
 //////////////
 
-/mob/wraith/wraith_decay
+/mob/living/intangible/wraith/wraith_decay
 	name = "Plaguebringer"
 	real_name = "plaguebringer"
 	desc = "A pestilent ghost, spreading disease wherever it goes. Just looking at it makes you queasy."
@@ -659,7 +658,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/summon_rot_hulk)
 		src.addAbility(/datum/targetable/wraithAbility/make_plague_rat)
 		src.addAbility(/datum/targetable/wraithAbility/speak)
-/mob/wraith/wraith_harbinger
+/mob/living/intangible/wraith/wraith_harbinger
 	name = "Harbinger"
 	real_name = "harbinger"
 	desc = "An evil looking, regal specter. Usually seen commanding a horde of minions."
@@ -675,7 +674,7 @@
 		src.addAbility(/datum/targetable/wraithAbility/harbinger_summon)
 		src.addAbility(/datum/targetable/wraithAbility/speak)
 
-/mob/wraith/wraith_trickster
+/mob/living/intangible/wraith/wraith_trickster
 	name = "trickster"
 	real_name = "trickster"
 	desc = "A living shadow seeking to disrupt the station with lies and deception."
@@ -725,7 +724,7 @@
 
 /mob/proc/make_wraith()
 	if (src.mind || src.client)
-		var/mob/wraith/W = new/mob/wraith(src)
+		var/mob/living/intangible/wraith/W = new/mob/living/intangible/wraith(src)
 
 		var/turf/T = get_turf(src)
 		if (!(T && isturf(T)) || ((isghostrestrictedz(T.z) || T.z != 1) && !(src.client && src.client.holder)))

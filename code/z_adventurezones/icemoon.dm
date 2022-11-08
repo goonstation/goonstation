@@ -22,7 +22,7 @@ Contents:
 		return
 
 	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_ICE_ELE)
 		if (isturf(T))
