@@ -119,11 +119,11 @@ var/flock_signal_unleashed = FALSE
 			var/mob/living/intangible/flock/trace/trace_to_promote = locate(params["origin"])
 			if(!istype(trace_to_promote.loc, /mob/living/critter/flock/drone))
 				if (!trace_to_promote.client || trace_to_promote.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
-					message += " This Flocktrace is afk."
+					message += " This Flocktrace is unresponsive."
 			else
 				var/mob/living/critter/flock/drone/host = trace_to_promote.loc
 				if (!host.client || host.controller.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
-					message += " This Flocktrace is afk."
+					message += " This Flocktrace is unresponsive."
 
 			if (tgui_alert(usr, message, "Promote Flocktrace", list("Yes", "Cancel")) != "Cancel")
 				var/choice = tgui_alert(usr, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
