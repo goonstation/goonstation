@@ -133,22 +133,14 @@
 
 		if (prob(50))
 			var/num = rand(1,9)
-			var/law_break_success = ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
-			if(law_break_success)
-				logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
-				message_admins("Ion storm added supplied law [num]: [pickedLaw]")
-			else
-				logTheThing(LOG_ADMIN, null, "Ion storm attempted to add law to law number [num], but was interdicted: [pickedLaw]")
-				message_admins("Ion storm addition to law [num] was interdicted: [pickedLaw]")
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
+			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
 		else
 			var/num = rand(1,9)
-			var/law_break_success = ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
-			if(law_break_success)
-				logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
-				message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
-			else
-				logTheThing(LOG_ADMIN, null, "Ion storm attempted to replace inherent law [num], but was interdicted: [pickedLaw]")
-				message_admins("Ion storm replacement of law [num] was interdicted: [pickedLaw]")
+			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
+			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
@@ -186,7 +178,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
-			var/atom/object = pick(targets)
+			var/object = pick(targets)
 
 			//spatial interdictor: shield general hardware from ionic interference
 			//consumes 300 units of cell charge per hardware item protected
