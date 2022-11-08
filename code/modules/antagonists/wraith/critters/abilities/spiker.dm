@@ -116,7 +116,7 @@
 
 /datum/targetable/critter/spiker/shuffle
 	name = "Shuffle"
-	desc = "Squish yourself down to cancel stuns and escape assailants."
+	desc = "Squish yourself down to cancel stuns, squeeze through doors and escape assailants."
 	cooldown = 50 SECONDS
 	targeted = 0
 	icon_state = "shuffle"
