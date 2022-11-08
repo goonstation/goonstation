@@ -18,8 +18,8 @@ TYPEINFO(/datum/component/toggle_tool_use)
 /datum/component/toggle_tool_use/Initialize()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle_force_use_as_tool)
+	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, .proc/toggle_force_use_as_tool)
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
@@ -67,11 +67,11 @@ TYPEINFO(/datum/component/barber)
 
 /datum/component/barber/haircut
 /datum/component/barber/haircut/Initialize()
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_haircut)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_haircut)
 
 /datum/component/barber/shave
 /datum/component/barber/shave/Initialize()
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_shave)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, .proc/do_shave)
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))

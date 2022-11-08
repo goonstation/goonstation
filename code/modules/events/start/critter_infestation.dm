@@ -11,9 +11,9 @@
 	list(/obj/critter/wasp),\
 	list(/obj/critter/spacescorpion),\
 	list(/obj/critter/wraithskeleton),\
-	list(/obj/critter/spider,/obj/critter/spider/baby),\
-	list(/obj/critter/spider/ice,/obj/critter/spider/ice/baby),\
-	list(/obj/critter/spider/spacerachnid),\
+	list(/mob/living/critter/spider,/mob/living/critter/spider/baby),\
+	list(/mob/living/critter/spider/ice,/mob/living/critter/spider/ice/baby),\
+	list(/mob/living/critter/spider/spacerachnid),\
 	list(/obj/critter/spacerattlesnake),\
 	list(/obj/critter/fermid),)
 

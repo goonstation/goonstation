@@ -1751,7 +1751,7 @@
 	},
 /area/moon/underground)
 "ez" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1777,7 +1777,7 @@
 	},
 /area/moon/underground)
 "eC" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -1789,7 +1789,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "eD" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -6560,7 +6560,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "oS" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6690,7 +6690,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "pi" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6749,7 +6749,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pp" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6804,7 +6804,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "pw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7406,7 +7406,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7418,7 +7418,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "ra" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7429,7 +7429,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rb" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7486,7 +7486,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ri" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7675,7 +7675,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rE" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -7686,7 +7686,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4

@@ -148,7 +148,6 @@
 
 			if (!fake)
 				if (!isdead(HH))
-					HH.emote("scream")
 					HH.changeStatus("weakened", 3 SECONDS)
 					HH.changeStatus("stunned", 3 SECONDS)
 					HH.force_laydown_standup()

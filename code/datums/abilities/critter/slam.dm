@@ -5,8 +5,7 @@
 	name = "slam"
 	icon = null
 	icon_state = "slam"
-	power = 1
-	ks_ratio = 0
+	damage = 1
 	damage_type = D_SPECIAL
 	hit_ground_chance = 0
 	dissipation_delay = 3

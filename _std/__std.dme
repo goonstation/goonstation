@@ -18,6 +18,7 @@
 #include "defines\admin.dm"
 #include "defines\ai.dm"
 #include "defines\antagonists.dm"
+#include "defines\area.dm"
 #include "defines\announcement_origins.dm"
 #include "defines\artifacts.dm"
 #include "defines\atom.dm"

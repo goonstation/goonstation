@@ -558,6 +558,7 @@
 	coat_style = "MDlabcoat"
 
 	april_fools
+		desc = "A protective laboratory coat with the blue markings of a Medical Doctor."
 		icon_state = "MDlabcoat-alt"
 		item_state = "MDlabcoat-alt"
 		coat_style = "MDlabcoat-alt"
@@ -1089,6 +1090,7 @@
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	var/rip = 0
+	acid_survival_time = 3 MINUTES
 
 	setupProperties()
 		..()

@@ -369,6 +369,10 @@ proc/get_angle(atom/a, atom/b)
 	// 	index = findtext(t, ">")
 	. = html_encode(t)
 
+///Cleans up data passed in from network packets for display so it doesn't mess with formatting
+/proc/tidy_net_data(var/t)
+	. = isnum(t) ? t : strip_html(t)
+
 /proc/map_numbers(var/x, var/in_min, var/in_max, var/out_min, var/out_max)
 	. = ((x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min)
 
@@ -477,10 +481,10 @@ proc/get_angle(atom/a, atom/b)
 	. = dir2text(angle2dir(degree))
 
 /proc/text_input(var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = sanitize(input(Message, Title, Default) as text, length)
+	. = sanitize(tgui_input_text(usr, Message, Title, Default), length)
 
 /proc/scrubbed_input(var/user, var/Message, var/Title, var/Default, var/length=MAX_MESSAGE_LEN)
-	. = strip_html(input(user, Message, Title, Default) as null|text, length)
+	. = strip_html(tgui_input_text(user, Message, Title, Default), length)
 
 /proc/LinkBlocked(turf/A, turf/B)
 	if(A == null || B == null) return 1
@@ -2258,11 +2262,11 @@ var/global/list/allowed_restricted_z_areas
   * Given user, will proompt user to select skin color from list (or custom) and returns skin tone after blending
   */
 /proc/get_standard_skintone(var/mob/user)
-	var/new_tone = input(user, "Please select skin color.", "Character Generation")  as null|anything in standard_skintones + list("Custom...")
+	var/new_tone = tgui_input_list(user, "Please select skin color.", "Character Generation", standard_skintones + "Custom...")
 	if (new_tone == "Custom...")
-		var/tone = input(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker") as null|num
-		if (!isnull(tone))
-			tone = 35 - clamp(tone, 1, 220) // range is 34 to -194
+		var/tone = tgui_input_number(user, "Please select skin tone level: 1-220 (1=albino, 35=caucasian, 150=black, 220='very' black)", "Skin tone picker", 1, 220, 1)
+		if (tone)
+			tone = 35 - clamp(round(text2num(tone)), 1, 220) // range is 34 to -194
 			//new_tone = rgb(220 + tone, 220 + tone, 220 + tone)
 			new_tone = blend_skintone(tone,tone,tone)
 		else
@@ -2312,9 +2316,9 @@ var/global/list/allowed_restricted_z_areas
 
 // DM simultaneously makes cursed shit like this work...
 // yet won't work with just the unicode raws - infinite pain
-var/___proper = "\proper"
-var/___improper = "\improper"
-var/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
+var/const/___proper = "\proper"
+var/const/___improper = "\improper"
+var/static/regex/regexTextMacro = regex("[___proper]|[___improper]", "g")
 
 /**
   * Removes the special data inserted via use of \improper etc in strings
@@ -2388,12 +2392,6 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
-
-/**
-  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
-  */
-proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
-	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp

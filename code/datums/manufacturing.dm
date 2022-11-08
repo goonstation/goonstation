@@ -821,6 +821,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/flippers
+	name = "Flippers"
+	item_paths = list("RUB")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/clothing/shoes/flippers)
+	time = 8 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/cleaner_grenade
 	name = "Cleaner Grenade"
 	item_paths = list("INS-1", "CRY-1", "molitz", "ice")
@@ -1997,6 +2006,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/engdivesuit
+	name = "Engineering Diving Suit Set"
+	item_paths = list("FAB-1","MET-1","CRY-1")
+	item_amounts = list(3,3,2)
+	item_outputs = list(/obj/item/clothing/suit/space/diving/engineering,/obj/item/clothing/head/helmet/space/engineer/diving/engineering)
+	time = 15 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/oresatchel
 	name = "Ore Satchel"
 	item_paths = list("FAB-1")
@@ -3015,11 +3033,11 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 
 /************ INTERDICTOR STUFF ************/
 
-/datum/manufacture/interdictor_frame
-	name = "Interdictor Frame Kit"
-	item_paths = list("MET-2")
-	item_amounts = list(10)
-	item_outputs = list(/obj/item/interdictor_frame_kit)
+/datum/manufacture/interdictor_kit
+	name = "Interdictor Assembly Kit"
+	item_paths = list("MET-2","CON-1")
+	item_amounts = list(10,4)
+	item_outputs = list(/obj/item/interdictor_kit)
 	time = 15 SECONDS
 	create = 1
 	category = "Machinery"
@@ -3027,7 +3045,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_lambda
 	name = "Lambda Phase-Control Rod"
 	item_paths = list("MET-2","CON-1","CRY-1","INS-1")
-	item_amounts = list(10,20,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod)
 	time = 20 SECONDS
 	create = 1
@@ -3036,7 +3054,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 /datum/manufacture/interdictor_rod_sigma
 	name = "Sigma Phase-Control Rod"
 	item_paths = list("MET-2","CON-2","INS-1","POW-1")
-	item_amounts = list(10,25,10,5)
+	item_amounts = list(2,10,5,2)
 	item_outputs = list(/obj/item/interdictor_rod/sigma)
 	time = 20 SECONDS
 	create = 1

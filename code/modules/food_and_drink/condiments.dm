@@ -9,6 +9,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	heal_amt = 0
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
@@ -187,7 +188,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
 							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
 							"<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
-						H.emote("scream")
 						random_brute_damage(user, 1)
 						src.shakes ++
 						return

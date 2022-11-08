@@ -96,11 +96,6 @@
 		..()
 		JobEquipSpawned("Janitor")
 
-/mob/living/carbon/human/normal/mechanic
-	New()
-		..()
-		JobEquipSpawned("Mechanic")
-
 /mob/living/carbon/human/normal/engineer
 	New()
 		..()

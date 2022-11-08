@@ -58,6 +58,9 @@
 				master.next_area_change = TIME + 15 MINUTES
 				master.get_new_booster_zones()
 
+		if(src.disposed)
+			return
+
 		if(hauntBonus > 0)
 			src.abilityHolder.addBonus(src.hauntBonus * (life_time_passed / life_tick_spacing))
 

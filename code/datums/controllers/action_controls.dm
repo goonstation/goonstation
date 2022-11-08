@@ -2012,6 +2012,7 @@ var/datum/action_controller/actions
 
 	onEnd()
 		..()
+		usr = owner // some stuff still uses usr, like context menus, sigh
 		target.pick_up_by(owner)
 
 

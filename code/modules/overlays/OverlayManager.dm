@@ -484,3 +484,17 @@
 		definitions.Add(insanity)
 
 		return ..()
+
+/datum/overlayComposition/insanity_light
+	New()
+		var/datum/overlayDefinition/insanity = new()
+		insanity.d_icon = 'icons/effects/overlays/insanity.dmi'
+		insanity.d_icon_state = "insanity"
+		insanity.d_blend_mode = 2
+		insanity.do_wide_fill = 0
+		insanity.d_alpha = 120
+		insanity.d_screen_loc = "CENTER-10,CENTER-7"
+		definitions.Add(insanity)
+
+		return ..()
+
