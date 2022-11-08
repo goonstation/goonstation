@@ -39,11 +39,11 @@
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.name = "long range stun tentacles"					// designation of the hand - purely for show
-		HH.icon = 'icons/mob/critter_ui.dmi'	// the icon of the hand UI background
-		HH.icon_state = "tentacles"				// the icon state of the hand UI background
-		HH.limb_name = "long range stun tentacles"					// name for the dummy holder
-		HH.limb = new /datum/limb		// if not null, the special limb to use when attack_handing
+		HH.name = "tentacles"
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "tentacles"
+		HH.limb_name = "tentacles"
+		HH.limb = new /datum/limb/tentacle
 		HH.can_hold_items = 1
 		HH.can_attack = 1
 
