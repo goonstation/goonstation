@@ -12,7 +12,7 @@
 		return 0
 	if (istype(hit, /obj/machinery/door))
 		var/obj/machinery/door/D = hit
-		if(!hit.cant_emag)
+		if(!D.cant_emag)
 			P.special_data["door_hit"] = hit
 			P.travelled = (P.max_range - 4) * 32
 			//hit.ex_act(1)
