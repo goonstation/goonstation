@@ -25944,14 +25944,7 @@
 	dir = 4;
 	icon_state = "line1"
 	},
-/obj/rack,
-/obj/item/breaching_charge{
-	pixel_x = 7
-	},
-/obj/item/breaching_charge{
-	pixel_x = -7
-	},
-/obj/item/breaching_hammer,
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/plating,
 /area/station/ai_monitored/armory)
 "kMt" = (

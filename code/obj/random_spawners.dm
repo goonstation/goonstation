@@ -1869,3 +1869,35 @@
 	one_to_three
 		min_amt2spawn = 1
 		max_amt2spawn = 3
+
+
+/obj/random_item_spawner/armory_breaching_supplies //random
+	spawn_items()
+		new /obj/item/breaching_charge{
+			pixel_x = 10;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = 4;
+			pixel_y = -2
+			}(src.loc)
+		new /obj/item/breaching_charge{
+			pixel_x = -2;
+			pixel_y = -5
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -3;
+			pixel_y = 7
+			}(src.loc)
+		new /obj/item/breaching_hammer{
+			pixel_x = -1;
+			pixel_y = 1
+			}(src.loc)
+		new /obj/item/gun/kinetic/riot40mm/breach{
+			pixel_x = -5;
+			pixel_y = 8
+			}(src.loc)
+		new /obj/item/ammo/bullets/breach_flashbang{
+			pixel_x = -4;
+			pixel_y = 3
+			}(src.loc)
