@@ -6,14 +6,14 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 //Cost to follow through on the transception, charged against grid in grid units of power
 #define ARRAY_TELECOST 2500
 
-//Alert codes
+//Alert codes for the transception array-to-pad "handshake"
 #define TRANSCEIVE_BUSY 0
 #define TRANSCEIVE_NOPOWER 1
 #define TRANSCEIVE_POWERWARN 2
 #define TRANSCEIVE_NOWIRE 3
 #define TRANSCEIVE_OK 4
 
-//Delay after a successful transception before another one may begin
+//Minimum required interval between transceptions, on the array side
 #define TRANSCEPTION_COOLDOWN 0.1
 
 //Bounds for internal capacitor charging management; can be adjusted within these ranges by the array control computer
