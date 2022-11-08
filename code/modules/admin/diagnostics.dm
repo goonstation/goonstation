@@ -243,6 +243,19 @@ proc/debug_map_apc_count(delim,zlim)
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = is_teleportation_allowed(theTurf) ? "#0f0" : "#f00"
 
+	jps_unstable
+		name = "jps unstable"
+		help = "Red is unstable, green is stable"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.color = theTurf.jpsUnstable ? "#f00" : "#0f0"
+
+	jps_cache
+		name = "jps cache"
+		help = "Green is cached, red is not."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf.jpsPassableCache != null)
+				img.app.color = theTurf.jpsPassableCache ? "#0f0" : "#f00"
+
 	blowout
 		name = "radstorm safezones"
 		help = "Green tiles are safe from irradiation, red tiles are ones that are not."
