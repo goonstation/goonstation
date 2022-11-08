@@ -81,6 +81,8 @@
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 0
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "sting"
 	var/inject_amount = 3.5
 
 	cast(atom/target)
@@ -107,3 +109,8 @@
 			MT.reagents?.add_reagent("sulfonal", inject_amount)
 			holder.owner.visible_message("<span class='alert'>[holder.owner] stings [MT] with it's stinger!</span>")
 			return FALSE
+
+	onAttach(datum/abilityHolder/holder)
+		..()
+		var/atom/movable/screen/ability/topBar/B = src.object
+		B.UpdateOverlays(image('icons/mob/brainslug.dmi', "brain_slug_frame"), "mob_type")

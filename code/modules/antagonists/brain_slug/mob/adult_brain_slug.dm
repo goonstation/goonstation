@@ -4,7 +4,7 @@
 	hand_count = 1
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/mob/brainslug.dmi'
-	icon_state = "brain_slug"
+	icon_state = "adult_brainslug"
 	//todo death icon
 	health_brute = 160
 	health_burn = 90
