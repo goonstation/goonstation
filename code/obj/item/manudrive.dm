@@ -52,7 +52,7 @@
 		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprint"
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor rods and frames."
 		icon_state = "datadisk2"
-		temp_recipe_string = list(/datum/manufacture/interdictor_frame,
+		temp_recipe_string = list(/datum/manufacture/interdictor_kit,
 		/datum/manufacture/interdictor_rod_lambda,
 		/datum/manufacture/interdictor_rod_sigma)
 

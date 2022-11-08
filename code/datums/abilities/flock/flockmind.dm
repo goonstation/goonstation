@@ -183,7 +183,7 @@
 
 /datum/targetable/flockmindAbility/partitionMind
 	name = "Partition Mind"
-	icon_state = "awaken_drone"
+	icon_state = "partition_mind"
 	cooldown = 60 SECONDS
 	targeted = FALSE
 	///Are we still waiting for ghosts to respond
@@ -357,7 +357,7 @@
 			if(!R)
 				R = M.find_in_equipment(/obj/item/device/radio)
 		if(R)
-			message = html_encode(tgui_input_text(usr, "What would you like to transmit to [M.name]?", "Transmission"))
+			message = html_encode(input("What would you like to transmit to [M.name]?", "Transmission", "") as text)
 			logTheThing(LOG_SAY, usr, "Narrowbeam Transmission to [constructTarget(target,"say")]: [message]")
 			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 			var/flockName = "--.--"

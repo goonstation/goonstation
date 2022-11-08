@@ -87,7 +87,6 @@ proc/qdel(var/datum/D)
 
 	src.tag = null // not part of components but definitely should happen
 
-	signal_enabled = FALSE
 	var/list/dc = datum_components
 	if(dc)
 		var/all_components = dc[/datum/component]
@@ -114,6 +113,7 @@ proc/qdel(var/datum/D)
 	for(var/target in signal_procs)
 		UnregisterSignal(target, signal_procs[target])
 
+/*
 /datum/Del()
 	if(!disposed)
 		disposing()
@@ -123,6 +123,7 @@ proc/qdel(var/datum/D)
 	if(!disposed)
 		disposing()
 	..()
+*/
 
 // don't override this one, just call it instead of delete to get rid of something cheaply
 #ifdef DISPOSE_IS_QDEL

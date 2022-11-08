@@ -436,6 +436,7 @@ toxic - poisons
 
 /datum/projectile/bullet/revolver_38/stunners//energy bullet things so he can actually stun something
 	name = "stun bullet"
+	damage = 0
 	stun = 20
 	dissipation_delay = 6 //One more tick before falloff begins
 	damage_type = D_ENERGY // FUCK YOU.
@@ -985,7 +986,7 @@ datum/projectile/bullet/autocannon
 		var/type_to_seek = /obj/critter/gunbot/drone //what are we going to seek
 		precalculated = 0
 		disruption = INFINITY //disrupt every system at once
-		on_hit(atom/hit, angle, var/obj/projectile/P)
+		on_hit(atom/hit, angle, obj/projectile/P)
 			if (P.data)
 				..()
 			else
@@ -996,12 +997,12 @@ datum/projectile/bullet/autocannon
 					M.do_disorient(stunned = 40)
 
 
-		on_launch(var/obj/projectile/P)
+		on_launch(obj/projectile/P)
 			var/D = locate(type_to_seek) in range(15, P)
 			if (D)
 				P.data = D
 
-		tick(var/obj/projectile/P)
+		tick(obj/projectile/P)
 			if (!P)
 				return
 			if (!P.loc)

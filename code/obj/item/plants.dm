@@ -544,7 +544,8 @@
 				M.bioHolder.AddEffect("dead_scan", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
 			else
 				M.reagents?.add_reagent("capulettium", 13)
-		M.bioHolder?.AddEffect("mute", timeleft = 40 SECONDS, do_stability = FALSE, magical = TRUE)
+		//DO NOT add the SECONDS define to this, bioHolders are cursed and don't believe in ticks
+		M.bioHolder?.AddEffect("mute", timeleft = 40, do_stability = FALSE, magical = TRUE)
 
 /obj/item/plant/flower/rose/holorose
 	name = "holo rose"

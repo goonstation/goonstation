@@ -12,6 +12,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		SPAWN(0)
 			src.update_dir()
 			for (var/obj/machinery/mining_magnet/MM in range(1,src))
@@ -20,6 +21,7 @@
 				break
 
 	disposing()
+		STOP_TRACKING
 		if (linked_magnet)
 			qdel(linked_magnet)
 		linked_magnet = null
@@ -812,7 +814,9 @@
 /obj/machinery/computer/magnet/connection_scan()
 	linked_magnets = list()
 	var/badmagnets = 0
-	for (var/obj/machinery/magnet_chassis/MC in range(20,src))
+	for_by_tcl(MC, /obj/machinery/magnet_chassis)
+		if(!IN_RANGE(MC, src, 20))
+			continue
 		if (MC.linked_magnet)
 			linked_magnets += MC.linked_magnet
 		else

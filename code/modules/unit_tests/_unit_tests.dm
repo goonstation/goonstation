@@ -38,6 +38,7 @@
 
 #include "rand.dm"
 #include "deletions.dm"
+#include "monkey_thunderdome.dm"
 #include "reagent_id_typos.dm"
 #include "record_database.dm"
 #include "unit_test.dm"

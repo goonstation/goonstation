@@ -42,8 +42,6 @@ var/flock_signal_unleashed = FALSE
 	var/mob/living/intangible/flock/flockmind/flockmind
 	var/relay_in_progress = FALSE
 	var/relay_finished = FALSE
-	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
-	var/snooping = FALSE //are both sides of communication currently accessible?
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
 

@@ -26,7 +26,7 @@
 		if (!M)
 			return 1
 
-		var/message = html_encode(tgui_input_text(usr, "Choose something to say:", "Enter Message."))
+		var/message = html_encode(input("Choose something to say:","Enter Message.","") as null|text)
 		if (!message)
 			return
 		logTheThing(LOG_SAY, M, "[message]")
