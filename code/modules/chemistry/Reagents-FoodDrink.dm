@@ -889,7 +889,7 @@ datum
 				return
 
 			proc/grantPower(var/mob/living/carbon/human/M)
-				if (!islist(mutini_effects) || !length(mutini_effects))
+				if (!islist(mutini_effects) || !length(mutini_effects) || !M.bioHolder)
 					return
 				var/power_granted = pick(mutini_effects)
 				if (M.bioHolder.HasEffect(power_granted))
