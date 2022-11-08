@@ -971,7 +971,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	sname = "40mm Door-Breaching Rounds"
 	name = "40mm door-breaching rounds"
 	desc = "Some high-tech shells with an ID-chipped tip and a pyrotechnic payload."
-	ammo_type = new/datum/projectile/bullet/pbr
+	ammo_type = new/datum/projectile/bullet/breach_flashbang
 	amount_left = 2
 	max_amount = 2
 	icon_state = "40mm_nonlethal"
