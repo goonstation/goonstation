@@ -133,14 +133,22 @@
 
 		if (prob(50))
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
-			logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
-			message_admins("Ion storm added supplied law [num]: [pickedLaw]")
+			var/law_break_success = ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,false)
+			if(law_break_success)
+				logTheThing(LOG_ADMIN, null, "Ion storm added supplied law to law number [num]: [pickedLaw]")
+				message_admins("Ion storm added supplied law [num]: [pickedLaw]")
+			else
+				logTheThing(LOG_ADMIN, null, "Ion storm attempted to add law to law number [num], but was interdicted: [pickedLaw]")
+				message_admins("Ion storm addition to law [num] was interdicted: [pickedLaw]")
 		else
 			var/num = rand(1,9)
-			ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
-			logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
-			message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
+			var/law_break_success = ticker.ai_law_rack_manager.ion_storm_all_racks(pickedLaw,num,true)
+			if(law_break_success)
+				logTheThing(LOG_ADMIN, null, "Ion storm replaced inherent law [num]: [pickedLaw]")
+				message_admins("Ion storm replaced inherent law [num]: [pickedLaw]")
+			else
+				logTheThing(LOG_ADMIN, null, "Ion storm attempted to replace inherent law [num], but was interdicted: [pickedLaw]")
+				message_admins("Ion storm replacement of law [num] was interdicted: [pickedLaw]")
 
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
@@ -178,7 +186,20 @@ ABSTRACT_TYPE(/datum/ion_category)
 		if (!length(targets))
 			build_targets()
 		for (var/i in 1 to amount)
-			var/object = pick(targets)
+			var/atom/object = pick(targets)
+
+			//spatial interdictor: shield general hardware from ionic interference
+			//consumes 300 units of cell charge per hardware item protected
+			var/interdicted = FALSE
+			for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+				if (IN_RANGE(IX,object,IX.interdict_range) && IX.expend_interdict(300))
+					interdicted = TRUE
+					//in case people say a thing was ion stormed but it actually was not because of interdiction
+					logTheThing(LOG_STATION, null, "Interdictor at [log_loc(IX)] prevented ion storm from interfering with [object.name] at [log_loc(object)]")
+					break
+			if(interdicted)
+				continue
+
 			//we don't try again if it is null, because it's possible there just are none
 			if (!isnull(object))
 				action(object)

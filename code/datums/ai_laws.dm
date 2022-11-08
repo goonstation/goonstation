@@ -122,11 +122,24 @@
 
 /* ION STORM */
 	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
+		. = FALSE //return true if any racks were affected by ion storms
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			if(istype(R,/obj/machinery/lawrack/syndicate))
 				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.
+
+			//spatial interdictor: shield law rack hardware from ionic interference
+			//consumes 800 units of cell charge per rack
+			var/interdicted = FALSE
+			for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+				if (IN_RANGE(IX,R,IX.interdict_range) && IX.expend_interdict(800))
+					interdicted = TRUE
+					break
+			if(interdicted)
+				continue
+
 			if(R.cause_law_glitch(picked_law,lawnumber,replace))
 				R.UpdateLaws()
+				. = TRUE
 
 
 /* General ai_law functions */
