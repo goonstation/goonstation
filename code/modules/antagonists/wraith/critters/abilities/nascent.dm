@@ -28,7 +28,7 @@
 
 /datum/targetable/critter/nascent/become_voidhound
 	name = "Become voidhound"
-	desc = "Become a stealthy void hound and prey on people from the shadows"
+	desc = "Become a stealthy void hound and prey on people from the shadows."
 	icon_state = "choose_hound"
 	cooldown = 0
 	targeted = 0

@@ -16,6 +16,8 @@
 	health_burn = 50
 	health_burn_vuln = 1
 	var/mob/wraith/master = null
+	///Are we currently escaping?
+	var/shuffling = FALSE
 
 	New(var/turf/T, var/mob/wraith/M = null)
 		..(T)
@@ -28,6 +30,7 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 		abilityHolder.addAbility(/datum/targetable/critter/spiker/lash)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/shuffle)
 
 	setup_healths()
 		add_hh_flesh(src.health_brute, src.health_brute_vuln)
@@ -43,6 +46,13 @@
 		HH.limb = new /datum/limb		// if not null, the special limb to use when attack_handing
 		HH.can_hold_items = 1
 		HH.can_attack = 1
+
+	click(atom/target, params, location, control)
+		if (src.shuffling)
+			boutput(src, "<span class='notice'>You cannot interact with this while in this form!</span>")
+			return
+		else
+			..()
 
 /datum/projectile/special/tentacle	//Get over here!
 	name = "tentacle"
