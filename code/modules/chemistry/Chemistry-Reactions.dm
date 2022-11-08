@@ -224,7 +224,7 @@
 		var/stunned = max(0, amount * (4 - dist) * 0.2)
 		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.2)
 		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
-		var/stam_damage = clamp(3 * amount * (8 - dist), 0, 110)
+		var/stam_damage = clamp(3 * amount * (6 - dist), 0, 100)
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
 
@@ -250,7 +250,7 @@
 		var/misstep = max(0, 2 + amount * (5 - checkdist))
 		var/ear_damage = max(0, amount * 0.2 * (3 - checkdist))
 		var/ear_tempdeaf = max(0, amount * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-		var/stamina = clamp(2.5 * amount * (10 - checkdist), 0, 110)
+		var/stamina = clamp(2.5 * amount * (8 - checkdist), 0, 100)
 
 		if (issilicon(M))
 			M.apply_sonic_stun(weak, 0)
