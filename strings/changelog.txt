@@ -1,5 +1,9 @@
 
 (t)tue nov 08 22
+(u)Mora
+(p)11823
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds Security clothing vendor to clarion
 (u)Roddy
 (p)11785
 (e)🗺💅💊|A-Mapping, C-QoL, A-Medical
