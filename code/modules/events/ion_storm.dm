@@ -184,7 +184,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 			//spatial interdictor: shield general hardware from ionic interference. law racks explicitly omitted due to sensitivity (and gameplay fun)
 			//consumes cell charge per hardware item protected, based on the category's interdict cost
 			var/interdicted = FALSE
-			for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
+			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IN_RANGE(IX,object,IX.interdict_range) && IX.expend_interdict(interdict_cost))
 					interdicted = TRUE
 					SPAWN(rand(1,8))
