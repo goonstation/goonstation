@@ -36,7 +36,6 @@
 	/// standard duration of an involuntary haunt action
 	var/forced_haunt_duration = 30 SECOND
 	var/death_icon_state = "wraith-die"
-	//var/static/image/speech_bubble = image('icons/mob/mob.dmi', "speech")
 	var/last_typing = null
 	var/list/area/booster_locations = list()	//Zones in which you get more points
 	var/list/area/valid_locations = list()	//Zones that can become booster zones
@@ -278,7 +277,7 @@
 		if (istype(mover, /obj/projectile))
 			var/obj/projectile/proj = mover
 			if (proj.proj_data.hits_wraiths)
-				return 0
+				return FALSE
 		if (src.density)
 			return FALSE
 		else
@@ -287,7 +286,7 @@
 
 	projCanHit(datum/projectile/P)
 		if (src.density || P.hits_wraiths) return 1
-		else return 0
+		else return FALSE
 
 
 	bullet_act(var/obj/projectile/P)
