@@ -1299,12 +1299,12 @@ datum/projectile/bullet/autocannon
 		O.AddComponent(/datum/component/proj_door_breach)
 
 	on_end(obj/projectile/O)
-		var/turf/T = get_turf(O)
-		flashpowder_reaction(T, 50)
-		sonicpowder_reaction(T, 50)
-		var/obj/machinery/door/breached = O.special_data["door_hit"]
 		if(istype(breached) && !QDELETED(breached) && !breached.cant_emag)
-			breached.open()
+			var/turf/T = get_turf(O)
+			flashpowder_reaction(T, 50)
+			sonicpowder_reaction(T, 50)
+			var/obj/machinery/door/breached = O.special_data["door_hit"]
+				breached.open()
 		. = ..()
 
 //1.58
