@@ -741,6 +741,27 @@ toxic - poisons
 			// impact_image_effect("K", hit)
 				//take_bleeding_damage(hit, null, round(src.power / 3), src.hit_type)
 
+/datum/projectile/bullet/sledgehammer
+	name = "\"sledgehammer\" round"
+	shot_sound = 'sound/weapons/shotgunshot.ogg'
+	icon_state = "buckshot"
+	damage = 20
+	stun = 20
+	dissipation_rate = 15
+	dissipation_delay = 1
+	implanted = null
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	impact_image_state = "bhole"
+	casing = /obj/item/casing/shotgun/gray
+
+	on_hit(atom/hit)
+		..()
+		if(istype(hit , /obj/machinery/door))
+			var/obj/machinery/door/D = hit
+			if(!D.cant_emag)
+				D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
+
 /datum/projectile/bullet/cryo
 	name = "cryogenic slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -944,16 +965,6 @@ datum/projectile/bullet/autocannon
 
 	on_hit(atom/hit)
 		explosion_new(null, get_turf(hit), 12)
-
-	knocker
-		name = "breaching round"
-		damage = 10
-		on_hit(atom/hit)
-			if(istype(hit , /obj/machinery/door))
-				var/obj/machinery/door/D = hit
-				if(!D.cant_emag)
-					D.take_damage(D.health/2) //fuck up doors without needing ex_act(1)
-			explosion_new(null, get_turf(hit), 4, 1.75)
 
 	plasma_orb
 		name = "fusion orb"
