@@ -1,5 +1,8 @@
 
 (t)tue nov 08 22
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Added new 40mm breaching flashbang rounds to the armory.
 (u)Lizzy
 (p)11856
 (e)🆕🔨|C-Feature, A-Player-Actions
