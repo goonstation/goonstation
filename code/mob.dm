@@ -2155,7 +2155,7 @@
 			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
 		else if (istype(src, /mob/living/silicon))
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
-		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
+		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
 			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))

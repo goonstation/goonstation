@@ -14,10 +14,10 @@
 	health_brute_vuln = 0.7
 	health_burn = 90
 	health_burn_vuln = 0.3
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
