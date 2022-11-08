@@ -204,7 +204,7 @@
 			// jesus christ don't teleport OURSELVES
 			return ..()
 		Z_LOG_DEBUG("shit", "Checking things: event_handler_flags [event_handler_flags], [AM] entered")
-		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/wraith) || istype(AM, /mob/living/intangible))
+		if (busy || istype(AM, /obj/overlay/tile_effect) || istype(AM, /mob/dead) || istype(AM, /mob/living/intangible))
 			Z_LOG_DEBUG("shit", "Decided not to teleport")
 			return ..()
 

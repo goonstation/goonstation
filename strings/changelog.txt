@@ -1,4 +1,20 @@
 
+(t)tue nov 08 22
+(u)Mora
+(p)11823
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds Security clothing vendor to clarion
+(u)Roddy
+(p)11785
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(*)Updated Wrestlemap's medbay.
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Added new 40mm door-breaching flashbang rounds to the armory.
+(u)Lizzy
+(p)11856
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Made ctrl+click on dragging object stop dragging the object.
 (t)mon nov 07 22
 (u)goonstation-enjoyer
 (p)11862

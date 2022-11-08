@@ -15,9 +15,9 @@
 	health_brute_vuln = 1
 	health_burn = 50
 	health_burn_vuln = 1
-	var/mob/wraith/master = null
+	var/mob/living/intangible/wraith/master = null
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		if(M != null)
 			src.master = M
