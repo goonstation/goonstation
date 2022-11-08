@@ -1102,29 +1102,26 @@
 	if(A == src)
 		return
 
-	var/atom/movable/wasPulling = src.pulling
-	if(wasPulling)
+	if(src.pulling)
 		src.remove_pulling()
-		if(wasPulling == A)
-			return
 
 	if(!can_reach(src, A) || src.restrained())
 		return
 
-	src.pulling = A
+	pulling = A
 
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
+	if(ismob(pulling))
+		var/mob/M = pulling
 		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
-	if (ishuman(src.pulling))
-		var/mob/living/carbon/human/H = src.pulling
+	if (ishuman(pulling))
+		var/mob/living/carbon/human/H = pulling
 		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_AGGRESSIVE) continue
-				src.pulling = G.assailant
+				pulling = G.assailant
 				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
