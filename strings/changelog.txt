@@ -1,4 +1,9 @@
 
+(t)tue nov 08 22
+(u)Lizzy
+(p)11856
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Made ctrl+click on dragging object stop dragging the object.
 (t)mon nov 07 22
 (u)goonstation-enjoyer
 (p)11862
