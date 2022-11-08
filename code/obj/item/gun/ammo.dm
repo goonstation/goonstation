@@ -884,13 +884,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 		desc = "Some fancy high explosive shells that really, really love pods."
 		ammo_type = new/datum/projectile/bullet/autocannon/seeker/pod_seeking
 
-	knocker
-		sname = "40mm HE Knocker"
-		name = "40mm HE airlock-breaching shells"
-		desc = "Some explosive breaching shells."
-		icon_state = "40mm_HE"
-		ammo_type = new/datum/projectile/bullet/autocannon/knocker
-
 /obj/item/ammo/bullets/grenade_round
 	sname = "40mm"
 	name = "40mm shells"
