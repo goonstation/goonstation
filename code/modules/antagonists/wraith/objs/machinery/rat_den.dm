@@ -9,7 +9,7 @@
 	var/linked_critters = 0
 	var/max_critters = 5
 	var/next_spawn_check = 10 SECONDS
-	var/process_range = 5
+	var/process_range = 2
 
 	New()
 		..()
@@ -43,5 +43,5 @@
 			if((P.health < (P.health_brute + P.health_burn)))
 				for(var/damage_type in P.healthlist)
 					var/datum/healthHolder/hh = P.healthlist[damage_type]
-					hh.HealDamage(3)
+					hh.HealDamage(6)
 				boutput(P, "The proximity of the rat den fills you with renewed malevolence.")
