@@ -87,6 +87,8 @@
 	var/uses_damage_overlays = 1 //If set to 0, the mob won't receive any damage overlays.
 
 	var/datum/mutantrace/mutantrace = null
+	/// used by mutini to store and restore what you are while randomizing mutations
+	var/datum/mutantrace/mutini_orig_mutantrace = null
 	/// used by werewolf TF to store and restore what you were before TFing into a werewolf
 	var/datum/mutantrace/coreMR = null // There are two wolves inside you. One's a wolf, the other's probably some kind of lizard. Also one's actually you, and they trade places Hannah Montana style
 

@@ -861,32 +861,41 @@ datum
 			depletion_rate = 1
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
+				. = ..()
 				if (!volume_passed)
 					return
-				if (!ishuman(M))
-					return
-				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
-				var/power_granted = pick(mutini_effects)
-				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
-				SPAWN(power_time*10)
-					if (M?.bioHolder)
-						M.bioHolder.RemoveEffect(power_granted)
+				if(ishuman(M))
+					src.grantPower(M)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
 					M = holder.my_atom
+				if(ishuman(M))
+					src.grantPower(M)
+				..()
+				return
+
+			proc/grantPower(var/mob/living/carbon/human/M)
 				if (!islist(mutini_effects) || !length(mutini_effects))
-					return ..()
+					return
 				var/power_granted = pick(mutini_effects)
+				if (M.bioHolder.HasEffect(power_granted))
+					return
 				var/power_time = rand(1,10)
-				M.bioHolder.AddEffect(power_granted)//, 0, power_time)
+				var/is_mutant_race = istype(GetBioeffectFromGlobalListByID(power_granted), /datum/bioEffect/mutantrace)
+				if(is_mutant_race)
+					if(M.mutini_orig_mutantrace)
+						return // We're already some mutini mutantrace
+					if(M.mutantrace)
+						M.mutini_orig_mutantrace = M.mutantrace
+					
+				M.bioHolder.AddEffect(power_granted)//, 0, power_time) the timeLeft var either wasn't working here or was grumpy about something so now we manually remove this below
 				SPAWN(power_time*10)
 					if (M?.bioHolder)
 						M.bioHolder.RemoveEffect(power_granted)
-				..()
-				return
+						if(is_mutant_race && M.mutini_orig_mutantrace)
+							M.set_mutantrace(M.mutini_orig_mutantrace)
+							M.mutini_orig_mutantrace = null
 
 		fooddrink/alcoholic/Manhattan
 			name = "Manhattan"
