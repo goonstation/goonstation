@@ -189,8 +189,6 @@ ABSTRACT_TYPE(/datum/ion_category)
 					interdicted = TRUE
 					SPAWN(rand(1,8))
 						playsound(object.loc, "sparks", 60, 1) //absorption noise, as a little bit of "force feedback"
-					//in case people say a thing was ion stormed but it actually was not because of interdiction
-					logTheThing(LOG_STATION, null, "Interdictor at [log_loc(IX)] prevented ion storm from interfering with [object.name] at [log_loc(object)]")
 					break
 			if(interdicted)
 				continue
