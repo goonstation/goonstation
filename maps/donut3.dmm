@@ -37893,6 +37893,12 @@
 	},
 /turf/simulated/wall/auto/reinforced/jen/blue,
 /area/station/medical/asylum/maintenance)
+"kSw" = (
+/obj/railing/yellow{
+	dir = 1
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "kSD" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -50776,6 +50782,9 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/railing/yellow{
+	dir = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "oDT" = (
@@ -60133,6 +60142,9 @@
 "reS" = (
 /obj/decal/cleanable/dirt,
 /obj/random_item_spawner/junk/one_or_zero,
+/obj/railing/yellow{
+	layer = 4
+	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "reV" = (
@@ -76850,6 +76862,9 @@
 	},
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/disposalpipe/segment,
+/obj/railing/yellow{
+	dir = 1
+	},
 /turf/simulated/floor/black/grime,
 /area/station/routing/depot)
 "vUJ" = (
@@ -82335,6 +82350,13 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge,
 /area/station/chapel/sanctuary)
+"xvI" = (
+/obj/decal/cleanable/dirt,
+/obj/railing/yellow{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/station/routing/depot)
 "xvJ" = (
 /obj/disposalpipe/segment/brig,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe,
@@ -155021,8 +155043,8 @@ rdj
 bBD
 niY
 uhu
-qNg
-eiH
+kSw
+xvI
 qNg
 pbL
 oDy
