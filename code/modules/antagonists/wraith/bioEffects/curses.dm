@@ -57,7 +57,7 @@
 
 	OnAdd()
 		. = ..()
-		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blood_status")
+		curse_icon = image('icons/mob/wraith_ui.dmi', owner, icon_state = "blind_status")
 		curse_icon.blend_mode = BLEND_ADD
 		curse_icon.plane = PLANE_ABOVE_LIGHTING
 		curse_icon.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
@@ -160,3 +160,16 @@
 			owner.bioHolder.RemoveEffect("stinky")
 		get_image_group(CLIENT_IMAGE_GROUP_CURSES).remove_image(curse_icon)
 		. = ..()
+
+//Used mostly to track if someone got rid of this curse in the meantime
+/datum/bioEffect/death_curse
+	name = "Curse of death"
+	desc = "Curse of death."
+	id = "death_curse"
+	effectType = EFFECT_TYPE_DISABILITY
+	can_copy = 0
+	isBad = 1
+	occur_in_genepools = 0
+	acceptable_in_mutini = 0
+	probability = 0
+	curable_by_mutadone = 0
