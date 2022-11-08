@@ -21,6 +21,9 @@ var/global/obj/machinery/communications_dish/transception/transception_array
 #define MAX_FREE_POWER 200 KILO WATTS
 #define MAX_CHARGE_RATE 50 KILO WATTS
 
+//Transception array's fully-repaired state number
+#define TRSC_FULLREPAIR 8
+
 /*
 Breakdown of each transception (sending or receiving of a thing through the transception system), as happens through standard cargo operations:
 
@@ -68,8 +71,8 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	var/grid_surplus_threshold = 20 KILO WATTS
 
 	//If the internal capacitor is sabotaged, it will rupture, damaging the capacitor cabinet and bringing the array offline.
-	///This condition tracks the progress of array repair; status of 8 indicates full condition
-	var/repair_status = 8
+	///This condition tracks the progress of array repair; status of 8 (defined above, change if process changes) indicates full condition
+	var/repair_status = TRSC_FULLREPAIR
 
 	New()
 		. = ..()
@@ -350,7 +353,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 	boutput(user, "You finish [cursed_check ? "reinstalling" : "removing"] the rod retention bolts.")
 	playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 	src.repair_status++
-	if(src.repair_status == 8)
+	if(src.repair_status == TRSC_FULLREPAIR)
 		src.status &= ~BROKEN
 	src.UpdateIcon()
 
@@ -417,7 +420,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 		src.onRestart()
 
 /obj/machinery/communications_dish/transception/update_icon()
-	if(repair_status < 8)
+	if(repair_status < TRSC_FULLREPAIR)
 		src.icon_state = "array_busted[repair_status]"
 	else
 		src.icon_state = "array[intcap_door_open ? "_panelopen" : null]"
@@ -522,6 +525,11 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			max_transception_readout = "[max_transceptions]"
 		else
 			max_transception_readout = "0"
+
+		var/arrayborked = "NOMINAL"
+		if(transception_array.repair_status < TRSC_FULLREPAIR)
+			arrayborked = "BREACH"
+
 		. = list(
 			"apcCellStat" = apc_cellstat_formatted,
 			"apcCellDiff" = apc_celldiff_val,
@@ -534,7 +542,7 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 			"drawRateTarget" = transception_array.intcap_draw_rate,
 			"surplusThreshold" = transception_array.grid_surplus_threshold,
 			"arrayImage" = icon2base64(icon(initial(transception_array.icon), initial(transception_array.icon_state))),
-			"arrayHealth" = "NOMINAL" //when array can be damaged, provides a string describing current level of damage
+			"arrayHealth" = arrayborked
 		)
 
 	ui_act(action, list/params)
@@ -563,6 +571,8 @@ and delivers it to the pad after a few seconds, or returns it to the queue it ca
 #undef MIN_FREE_POWER
 #undef MAX_FREE_POWER
 #undef MAX_CHARGE_RATE
+
+#undef TRSC_FULLREPAIR
 
 /obj/machinery/transception_pad
 	icon = 'icons/obj/stationobjs.dmi'
