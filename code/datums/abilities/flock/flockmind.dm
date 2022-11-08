@@ -480,9 +480,11 @@
 	var/mob/living/critter/flock/drone/drone = null
 
 /datum/targetable/flockmindAbility/droneControl/cast(atom/target)
+	//remove the selected outline component
 	var/datum/component/flock_ping/selected/ping = drone.GetComponent(/datum/component/flock_ping/selected)
 	ping.RemoveComponent()
 	qdel(ping)
+
 	if (target == src.drone)
 		return
 	//by default we try to convert the target
