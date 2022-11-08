@@ -24,10 +24,10 @@
 		if (isdead(H))
 			boutput(holder.owner, "<span class='alert'>That one is already dead! You need fresh meat!</span>")
 			return TRUE
-		actions.start(new/datum/action/bar/private/icon/slug_harvest(H, 2, holder.owner), holder.owner)
+		actions.start(new/datum/action/bar/icon/slug_harvest(H, 2, holder.owner), holder.owner)
 		return FALSE
 
-/datum/action/bar/private/icon/slug_harvest
+/datum/action/bar/icon/slug_harvest
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
@@ -143,7 +143,7 @@
 					AH.updateButtons()
 
 		if (src.recast > 0)
-			actions.start(new/datum/action/bar/private/icon/slug_harvest(src.current_target, (src.recast -1), src.caster), src.caster)
+			actions.start(new/datum/action/bar/icon/slug_harvest(src.current_target, (src.recast -1), src.caster), src.caster)
 		..()
 
 	onInterrupt()

@@ -18,10 +18,10 @@
 			boutput(holder.owner, "<span class='alert'>That doesn't seem to have a limb or organs you can munch on.</span>")
 			return TRUE
 		var/mob/living/carbon/human/H = target
-		actions.start(new/datum/action/bar/private/icon/devour_action(H, holder.owner), holder.owner)
+		actions.start(new/datum/action/bar/icon/devour_action(H, holder.owner), holder.owner)
 		return FALSE
 
-/datum/action/bar/private/icon/devour_action
+/datum/action/bar/icon/devour_action
 	duration = 3 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
