@@ -149,8 +149,7 @@ stare
 	for(var/turf/simulated/floor/feather/F in view(max_dist, holder.owner))
 		// let's not spam eggs all the time
 		if(!is_blocked_turf(F) && isnull(locate(/obj/flock_structure/egg) in F))
-			. = get_path_to(holder.owner, list(F), max_dist*2, can_be_adjacent_to_target)
-			if (length(.)) return
+			. += F
 
 ////////
 
@@ -215,9 +214,7 @@ stare
 			continue
 		if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 			continue
-		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
-		if (length(.))
-			return
+		. += T
 
 ////////
 
@@ -264,25 +261,21 @@ stare
 		if(istype(reserved) && !isfeathertile(reserved))
 			. = get_path_to(holder.owner, reserved, max_dist, 1)
 			if(length(.)) //if we got a valid path
-				return
+				return reserved //don't like this - TODO can I make it better? just need to fix reserved tiles - maybe they could expire?
 			//unreserve the turf if we can't get at it
 			F.flock.busy_tiles[F.real_name] = null
 
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			. = get_path_to(holder.owner, priority_turfs, max_dist, 1)
-			if(length(.))
-				return
+			return priority_turfs
 
 	. = list()
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if (!valid_target(T))
 			continue // this tile's been claimed by someone else
-		. = get_path_to(holder.owner, list(T), max_dist*2, 1)
-		if(length(.))
-			return
+		. += T
 
 ////////
 
@@ -348,7 +341,7 @@ stare
 		if(istype(reserved) && !isfeathertile(reserved))
 			. = get_path_to(holder.owner, reserved, max_dist, 1)
 			if(length(.))
-				return
+				return reserved //TODO make this better
 			else
 				//unreserve the turf if we can't get at it
 				F.flock.busy_tiles[F.real_name] = null
@@ -356,9 +349,7 @@ stare
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			. = get_path_to(holder.owner, priority_turfs, max_dist, 1)
-			if(length(.))
-				return
+			return priority_turfs
 
 	. = list()
 	//as drone, we want to prioritise converting doors and walls and containers
@@ -369,9 +360,7 @@ stare
 			locate(/obj/storage) in T))
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
-			. = get_path_to(holder.owner, list(T), max_dist, 1)
-			if(length(.))
-				return
+			. += T
 
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
 	if(!length(.))
@@ -379,9 +368,7 @@ stare
 			if(!isfeathertile(T) && flockTurfAllowed(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
-				. = get_path_to(holder.owner, list(T), max_dist, 1)
-				if(length(.))
-					return
+				. += T
 
 ////////
 
@@ -419,7 +406,7 @@ stare
 			continue
 		if(FH.flock == F.flock && F.get_health_percentage() < 0.66 && !isdead(F))
 			. += F
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+
 
 ////////
 
@@ -489,7 +476,6 @@ stare
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
 		if (O.flock == F.flock && O.goal > O.currentmats && IN_RANGE(holder.owner, O, max_dist))
 			. += O
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -546,7 +532,6 @@ stare
 	for(var/obj/storage/S in view(max_dist, holder.owner))
 		if(!S.open && !S.welded && !S.locked)
 			. += S
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -604,7 +589,7 @@ stare
 	for(var/obj/item/storage/I in view(max_dist, holder.owner))
 		if(length(I.contents) && I.loc != holder.owner && I.does_not_open_in_pocket)
 			. += I
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
+
 
 ////////
 
@@ -689,9 +674,7 @@ stare
 		if(!I.anchored && I.loc != holder.owner)
 			if(istype(I, /obj/item/game_kit))
 				continue
-			. = get_path_to(holder.owner, list(I), max_dist, 1)
-			if(length(.))
-				return
+			. += I
 
 ////////
 
@@ -901,7 +884,6 @@ stare
 				if (valid_target(T))
 					. += T
 					F.flock.updateEnemy(T)
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/succeedable/capture
 	name = "capture subtask"
@@ -978,7 +960,6 @@ stare
 			continue
 		if(isdead(F))
 			. += F
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -1100,7 +1081,6 @@ stare
 	for(var/atom/S in F?.flock?.deconstruct_targets)
 		if(IN_RANGE(S,holder.owner,max_dist))
 			. += S
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 ////////
 
@@ -1161,7 +1141,6 @@ stare
 	for(var/mob/living/critter/C in view(max_dist, holder.owner))
 		if(istype(C,/mob/living/critter/small_animal/bird) || istype(C,/mob/living/critter/small_animal/ranch_base/chicken))
 			. += C
-	. = get_path_to(holder.owner, ., max_dist*2, 1)
 
 /datum/aiTask/sequence/goalbased/flock/stare/reset()
 	return ..()

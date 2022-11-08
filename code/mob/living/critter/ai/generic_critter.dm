@@ -53,8 +53,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/attack/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_target(src.max_dist)
 
 /////////////// The aiTask/succeedable handles the behaviour to do when we're in range of the target
 
@@ -107,8 +106,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/scavenge/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_scavenge_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_scavenge_target(src.max_dist)
 
 ////////
 
@@ -161,8 +159,7 @@
 
 /datum/aiTask/sequence/goalbased/critter/eat/get_targets()
 	var/mob/living/critter/C = holder.owner
-	var/targets = C.seek_food_target(src.max_dist)
-	return get_path_to(holder.owner, targets, max_dist*2, 1, null, FALSE)
+	return C.seek_food_target(src.max_dist)
 
 ////////
 
