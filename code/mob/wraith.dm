@@ -312,13 +312,13 @@
 		if (!src.density) return
 		switch(severity)
 			if(1)
-				src.TakeDamage(null, 30)
+				src.TakeDamage(null, 100)
 				return
 			if(2)
 				src.TakeDamage(null, 80)
 				return
 			if(3)
-				src.TakeDamage(null, 100)
+				src.TakeDamage(null, 30)
 				return
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
