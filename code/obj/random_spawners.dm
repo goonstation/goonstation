@@ -1873,6 +1873,7 @@
 
 /obj/random_item_spawner/armory_breaching_supplies //random
 	spawn_items()
+		new /obj/rack(src.loc)
 		new /obj/item/breaching_charge{
 			pixel_x = 10;
 			pixel_y = 1
