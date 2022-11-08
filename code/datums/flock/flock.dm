@@ -125,8 +125,8 @@ var/flock_signal_unleashed = FALSE
 				if (!host.client || host.controller.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
 					message += " This Flocktrace is unresponsive."
 
-			if (tgui_alert(usr, message, "Promote Flocktrace", list("Yes", "Cancel")) != "Cancel")
-				var/choice = tgui_alert(usr, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
+			if (tgui_alert(user, message, "Promote Flocktrace", list("Yes", "Cancel")) != "Cancel")
+				var/choice = tgui_alert(user, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
 				if (choice != "Cancel")
 					if (!trace_to_promote)
 						return
