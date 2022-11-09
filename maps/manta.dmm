@@ -33261,7 +33261,7 @@
 	},
 /area/station/ranch)
 "cgW" = (
-/obj/rack,
+/obj/random_item_spawner/armory_breaching_supplies,
 /obj/item/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
@@ -33273,18 +33273,6 @@
 /obj/item/old_grenade/high_explosive{
 	pixel_x = -3;
 	pixel_y = 4
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge/NT{
-	pixel_x = 5;
-	pixel_y = 1
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
@@ -41952,10 +41940,6 @@
 	tag = ""
 	},
 /obj/machinery/light/incandescent/warm,
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "wVU" = (

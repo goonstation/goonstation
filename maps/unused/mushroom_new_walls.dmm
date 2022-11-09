@@ -26251,25 +26251,7 @@
 /turf/space,
 /area/station/turret_protected/AIbaseoutside)
 "kmh" = (
-/obj/table/reinforced/auto{
-	icon_state = "6"
-	},
-/obj/item/breaching_hammer{
-	pixel_x = -4;
-	pixel_y = 5
-	},
-/obj/item/breaching_charge{
-	pixel_x = 9;
-	pixel_y = 4
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 3;
-	pixel_y = -5
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
 "kny" = (

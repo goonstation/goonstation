@@ -408,13 +408,21 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
+/datum/aiTask/sequence/goalbased/flock/repair/valid_target(atom/target)
+	var/mob/living/critter/flock/drone/drone = holder.owner
+	if (isflockmob(target))
+		var/mob/living/critter/flock/mob_target = target
+		return mob_target.flock == drone.flock && !isdead(mob_target)
+	else if (isflockstructure(target))
+		var/obj/flock_structure/struct_target = target
+		return struct_target.flock == drone.flock
+
 /datum/aiTask/sequence/goalbased/flock/repair/get_targets()
 	. = list()
-	var/mob/living/critter/flock/drone/FH = holder.owner
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner)
 			continue
-		if(FH.flock == F.flock && F.get_health_percentage() < 0.66 && !isdead(F))
+		if(src.valid_target(F) && F.get_health_percentage() < 0.66)
 			. += F
 
 
@@ -426,8 +434,7 @@ stare
 
 /datum/aiTask/succeedable/repair/failed()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	var/mob/living/critter/flock/drone/T = holder.target
-	if(!F || !T || BOUNDS_DIST(T, F) > 0)
+	if(!F || !holder.target || BOUNDS_DIST(holder.target, F) > 0)
 		return TRUE
 	if(F && (!F.can_afford() || !F.abilityHolder))
 		return TRUE
@@ -438,19 +445,19 @@ stare
 /datum/aiTask/succeedable/repair/on_tick()
 	if(!has_started)
 		var/mob/living/critter/flock/drone/F = holder.owner
-		var/mob/living/critter/flock/drone/T = holder.target
-		if(F && F.floorrunning)
+		if(F?.floorrunning)
 			F.end_floorrunning(TRUE)
-		if(T && T.floorrunning)
-			T.end_floorrunning(TRUE)
-		if(F && T && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
+		if (istype(holder.target, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/T = holder.target
+			if(T?.floorrunning)
+				T.end_floorrunning(TRUE)
+		if(F && holder.target && BOUNDS_DIST(holder.owner, holder.target) == FALSE)
 			if(F.set_hand(2)) // nanite spray
 				holder.owner.set_dir(get_dir(holder.owner, holder.target))
-				F.hand_attack(T)
+				F.hand_attack(holder.target)
 				has_started = TRUE
 
 /datum/aiTask/succeedable/repair/on_reset()
-	..()
 	has_started = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -480,11 +487,14 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
-/datum/aiTask/sequence/goalbased/flock/deposit/get_targets()
+/datum/aiTask/sequence/goalbased/flock/deposit/valid_target(obj/flock_structure/ghost/target)
 	var/mob/living/critter/flock/drone/F = holder.owner
+	return target.flock == F.flock && target.goal > target.currentmats
+
+/datum/aiTask/sequence/goalbased/flock/deposit/get_targets()
 	. = list()
 	for (var/obj/flock_structure/ghost/O as anything in by_type[/obj/flock_structure/ghost])
-		if (O.flock == F.flock && O.goal > O.currentmats && IN_RANGE(holder.owner, O, max_dist))
+		if (src.valid_target(O) && IN_RANGE(holder.owner, O, max_dist))
 			. += O
 
 ////////
@@ -678,13 +688,15 @@ stare
 	else
 		return FALSE // can't harvest anyway, if not a flockdrone
 
+/datum/aiTask/sequence/goalbased/flock/harvest/valid_target(obj/item/I)
+	return !I.anchored && I.loc != holder.owner && !istype(I, /obj/item/game_kit)
+
 /datum/aiTask/sequence/goalbased/flock/harvest/get_targets()
 	. = list()
 	for(var/obj/item/I in view(max_dist, holder.owner))
-		if(!I.anchored && I.loc != holder.owner)
-			if(istype(I, /obj/item/game_kit))
-				continue
-			. += I
+		if (!src.valid_target(I))
+			continue
+		. += I
 
 ////////
 
@@ -963,12 +975,15 @@ stare
 		F.hud?.update_intent()
 		F.hud?.update_hands() // for observers
 
+/datum/aiTask/sequence/goalbased/flock/butcher/valid_target(mob/living/critter/flock/drone/target)
+	return isdead(target)
+
 /datum/aiTask/sequence/goalbased/flock/butcher/get_targets()
 	. = list()
 	for(var/mob/living/critter/flock/drone/F in view(max_dist, holder.owner))
 		if(F == holder.owner || F.butcherer)
 			continue
-		if(isdead(F))
+		if(src.valid_target(F))
 			. += F
 
 ////////
@@ -1278,18 +1293,94 @@ stare
 		..()
 		holder.target = get_turf(src.target)
 
+/datum/aiTask/sequence/goalbased/flock/deposit/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
+	switched_to()
+		..()
+		on_reset()
+		if (!src.valid_target(holder.target))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			flock_speak(drone, "Invalid deposit target provided by sentient level instruction.", drone.flock)
+			holder.interrupt()
+
+	on_reset()
+		..()
+		holder.target = src.target
+
+/datum/aiTask/sequence/goalbased/flock/repair/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
+	switched_to()
+		..()
+		on_reset()
+		if (!src.valid_target(holder.target))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			flock_speak(drone, "Invalid repair target provided by sentient level instruction.", drone.flock)
+			holder.interrupt()
+
+	on_reset()
+		..()
+		holder.target = src.target
+
+/datum/aiTask/sequence/goalbased/flock/harvest/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
+	switched_to()
+		..()
+		on_reset()
+		if (!src.valid_target(holder.target))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			flock_speak(drone, "Invalid harvest target provided by sentient level instruction.", drone.flock)
+			holder.interrupt()
+
+	on_reset()
+		..()
+		holder.target = src.target
+
 /datum/aiTask/timed/targeted/flockdrone_shoot/targetable
 
 	switched_to()
 		..()
 		on_reset()
-		if (!(ismob(src.target) || iscritter(src.target) || isvehicle(src.target)) || isflockmob(src.target))
+		if (!isflockvalidenemy(src.target))
 			var/mob/living/critter/flock/drone/drone = holder.owner
 			flock_speak(drone, "Invalid elimination target provided by sentient level instruction.", drone.flock)
 			holder.interrupt()
 			return
 		var/mob/living/critter/flock/drone/drone = holder.owner
 		drone.flock.updateEnemy(src.target)
+
+	on_reset()
+		..()
+		holder.target = src.target
+
+/datum/aiTask/sequence/goalbased/flock/butcher/targetable
+	New()
+		..()
+		var/datum/aiTask/succeedable/move/movesubtask = subtasks[subtask_index]
+		if(istype(movesubtask))
+			movesubtask.max_path_dist = 300
+
+	switched_to()
+		..()
+		on_reset()
+		if (!src.valid_target(src.target))
+			var/mob/living/critter/flock/drone/drone = holder.owner
+			flock_speak(drone, "Invalid recycling target provided by sentient level instruction.", drone.flock)
+			holder.interrupt()
 
 	on_reset()
 		..()

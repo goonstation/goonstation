@@ -32611,11 +32611,7 @@
 	},
 /area/station/atmos/highcap_storage)
 "rlD" = (
-/obj/rack,
-/obj/item/breaching_hammer,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
-/obj/item/breaching_charge,
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/caution/west,
 /area/space)
 "rlP" = (
