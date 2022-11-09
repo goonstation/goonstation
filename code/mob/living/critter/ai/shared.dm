@@ -77,7 +77,7 @@
 	max_fails = 2
 	var/max_path_dist = 50 //keeping this low by default, but you can override it - see /datum/aiTask/sequence/goalbased/rally for details
 	var/list/found_path = null
-	var/atom/move_target = null
+	var/turf/move_target = null
 
 // use the target from our holder
 /datum/aiTask/succeedable/move/proc/get_path()
