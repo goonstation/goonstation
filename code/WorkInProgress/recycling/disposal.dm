@@ -491,7 +491,7 @@
 
 	proc/bust_open()
 		src.holed_up = TRUE
-		var/image/hole_overlay = image('icons/mob/brainslug.dmi', icon_state = pick("disposal_hole_1", "disposal_hole_2"))
+		var/image/hole_overlay = image('icons/obj/disposal.dmi', icon_state = pick("disposal_hole_1", "disposal_hole_2"))
 		src.UpdateOverlays(hole_overlay, "hole")
 
 	proc/fix_hole()
