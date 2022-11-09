@@ -29,7 +29,7 @@
 	New(var/atom/A, var/mob/living/caster)
 		START_TRACKING
 		for (var/mob/living/M in viewers(3, src))
-			if (M != caster)
+			if (M != caster && !istype(M, /mob/living/critter/brain_slug) && !istype(M, /mob/living/critter/adult_brain_slug))
 				var/atom/movable/slime_line = new /atom/movable(src.loc)
 				line_list += slime_line
 				work(M, slime_line)

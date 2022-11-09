@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/devolve
 	name = "Devolve"
 	desc = "Return to a lesser form."
-	icon_state = "slimeshot"
+	icon_state = "devolve"
 	cooldown = 300 SECONDS
 	targeted = 0
 	start_on_cooldown = TRUE

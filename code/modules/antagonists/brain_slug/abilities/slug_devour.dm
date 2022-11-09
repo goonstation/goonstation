@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/slug_devour
 	name = "Devour"
 	desc = "Eat a human's limb or organs for sustenance."
-	icon_state = "infest_host"
+	icon_state = "devour"
 	cooldown = 50 SECOND
 	targeted = 1
 

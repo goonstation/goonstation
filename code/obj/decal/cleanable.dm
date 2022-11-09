@@ -1802,3 +1802,10 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "sec_tape_1"
 	random_icon_states = list("sec_tape_1", "sec_tape_2")
+
+/obj/decal/cleanable/slug_molt
+	name = "slimy molt"
+	desc = "Good lord, that's gross."
+	icon = 'icons/mob/brainslug.dmi'
+	icon_state = "molt"
+	slippery = 40

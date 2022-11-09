@@ -8,9 +8,9 @@
 
 	cast()
 		active = !active
-		if (!istype(holder.owner, /mob/living/carbon/human) && !istype(holder.owner, /mob/living/critter/small_animal)) return TRUE
 		var/mob/living/carbon/human/temp_human = null
 		var/mob/living/critter/small_animal/temp_animal = null
+		//Do those checks to remove the vision if they die with it on.
 		if (istype(holder.owner, /mob/living/carbon/human))
 			temp_human = holder.owner
 		if (istype(holder.owner, /mob/living/critter/small_animal))

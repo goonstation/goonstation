@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/slug_molt
 	name = "Molt"
 	desc = "Shed your old skin to cancel stuns and cover yourself in projectile-reflecting mucus for awhile."
-	icon_state = "slimeshot"
+	icon_state = "molt_icon"
 	cooldown = 60 SECONDS
 	targeted = 0
 	var/duration = 5 SECONDS
@@ -11,8 +11,7 @@
 			boutput("<span class='notice'>You have to be a brain slug to do that!</span>")
 			return TRUE
 		//todo add a sound
-		//Todo make a molt cleanable
-		make_cleanable(/obj/decal/cleanable/ash, holder.owner.loc)
+		make_cleanable(/obj/decal/cleanable/slug_molt, holder.owner.loc)
 		var/mob/living/critter/adult_brain_slug/the_slug = holder.owner
 		the_slug.visible_message("<span class='alert'>[the_slug] sheds it's skin and covers itself in sticky mucus!</span>", "<span class='notice'>You shed your skin and feel instantly refreshed!</span>")
 		the_slug.add_filter("molted", 1, color_matrix_filter(normalize_color_to_matrix("#20b351")))
