@@ -1,4 +1,9 @@
 
+(t)wed nov 09 22
+(u)Kubius
+(p)11870
+(e)⚖📦🌠|C-Balance, A-Game-Objects, A-Events
+(+)Spatial interdictors can now protect most devices from ion storms if the affected device is within interdiction range. Law racks are an exception, due to the sensitive nature of involved components.
 (t)tue nov 08 22
 (u)Mora
 (p)11823
