@@ -44,6 +44,12 @@
 		HH.can_hold_items = 1
 		HH.can_attack = 1
 
+	death(var/gibbed)
+		if (src.master)
+			src.master.summons -= src
+		src.master = null
+		return ..()
+
 /datum/projectile/special/tentacle	//Get over here!
 	name = "tentacle"
 	dissipation_rate = 1
