@@ -384,6 +384,10 @@
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
 
+	New()
+		..()
+		reagents.add_reagent("beer",1000)
+
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
@@ -599,7 +603,7 @@
 			src.icon_state = initial(src.icon_state)
 
 /obj/item/reagent_containers/food/drinks/chemtank
-	name = "unlabeled chemical barrel"
+	name = "chemical barrel"
 	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
 	icon = 'icons/obj/objects.dmi'
