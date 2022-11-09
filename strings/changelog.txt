@@ -1,4 +1,48 @@
 
+(t)wed nov 09 22
+(u)Kubius
+(p)11870
+(e)⚖📦🌠|C-Balance, A-Game-Objects, A-Events
+(+)Spatial interdictors can now protect most devices from ion storms if the affected device is within interdiction range. Law racks are an exception, due to the sensitive nature of involved components.
+(t)tue nov 08 22
+(u)Mora
+(p)11823
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Adds Security clothing vendor to clarion
+(u)Roddy
+(p)11785
+(e)🗺💅💊|A-Mapping, C-QoL, A-Medical
+(*)Updated Wrestlemap's medbay.
+(u)tarmunora
+(e)🆕|C-Feature
+(+)Added new 40mm door-breaching flashbang rounds to the armory.
+(u)Lizzy
+(p)11856
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Made ctrl+click on dragging object stop dragging the object.
+(t)mon nov 07 22
+(u)goonstation-enjoyer
+(p)11862
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)You can now rotate Trip Lasers with a crowbar again.
+(u)Kubius
+(p)11513
+(e)🆕⚖💅📦|C-Feature, C-Balance, C-QoL, A-Game-Objects
+(*)Spatial interdictors are now quicker to assemble, require fewer secondary assembly steps and consume much fewer materials.
+(+)Spatial interdictor mainboards are now part of the kit created at manufacturers, and no longer need to be separately scanned and reproduced.
+(u)Kubius
+(p)11766
+(e)🪲🆕🗺|C-Bug, C-Feature, A-Mapping
+(*)A wrecked vessel has been located southeast of the Nadir Extraction Site. Personnel are advised to approach with caution.
+(u)thegrb93
+(p)11514
+(e)🪲🍝|C-Bug, A-Catering
+(+)Terrible food that gives you food poisoning no longer fills hunger
+(t)sun nov 06 22
+(u)FlameArrow57
+(p)11509
+(e)🆕🏅🧛|C-Feature, A-Medal, A-Gamemodes
+(+)Added medals for Arcfiend and Spy Thief!
 (t)sat nov 05 22
 (u)zjdtmkhzt
 (p)11722

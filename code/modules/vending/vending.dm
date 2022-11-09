@@ -681,20 +681,26 @@
 							src.vend_ready = FALSE
 							src.paying_for = params["target"]
 							return
- // copy pasted stuff below here
-				SPAWN(src.vend_delay)
-					var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
-					var/datum/data/vending_product/product
 
-					var/list/plist = player_list || product_list
+				var/product_amount = 0 // this is to make absolutely sure that these numbers arent desynced
+				var/datum/data/vending_product/product
+
+				var/list/plist = player_list || product_list
+				for (var/datum/data/vending_product/R in plist)
+					if(R.product_path == text2path(params["target"]))
+						product_amount = R.product_amount
+						product = R
+				if(!vend_ready || product_amount <= 0 || isnull(text2path(params["target"])))
+					return
+				src.prevend_effect()
+				SPAWN(src.vend_delay)
+					if(!vend_ready) // do not proceed if players dont have money
+						return
 					for (var/datum/data/vending_product/R in plist)
 						if(R.product_path == text2path(params["target"]))
 							product_amount = R.product_amount
 							product = R
-					if(!vend_ready) // do not proceed if players dont have money
-						return
 					if(product_amount > 0 && text2path(params["target"]))
-						src.prevend_effect()
 						var/atom/product_path = text2path(params["target"])
 						var/atom/movable/vended = new product_path(src.get_output_location())
 						vended.name = product.product_name

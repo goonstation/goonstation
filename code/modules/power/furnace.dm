@@ -15,6 +15,7 @@
 	mats = 20
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+	machine_registry_idx = MACHINES_MISC
 
 	process()
 		if(status & BROKEN) return
@@ -52,7 +53,7 @@
 		//At max fuel, the state will be 4, aka all bars, then it will lower / increase as fuel is added
 		if(fuel_state != last_fuel_state) //The fuel state has changed and we need to do an update
 			last_fuel_state = fuel_state
-			for(var/i = 1; i <= 4; i++)
+			for(var/i in 1 to 4)
 				var/okey = "fuel[i]"
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)

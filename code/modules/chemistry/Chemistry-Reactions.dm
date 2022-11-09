@@ -216,7 +216,7 @@
 
 
 	for (var/mob/living/M in all_viewers(5, center))
-		if (isintangible(M) || ON_COOLDOWN(M, "flashpowder_anti_spam", 6 SECONDS))
+		if (isintangible(M) || ON_COOLDOWN(M, "flashpowder_anti_spam", 1 SECOND))
 			continue
 
 		var/anim_dur = issilicon(M) ? 30 : 60
@@ -224,13 +224,13 @@
 		var/stunned = max(0, amount * (4 - dist) * 0.2)
 		var/eye_damage = issilicon(M) ? 0 : max(0, amount * (2 - dist) * 0.2)
 		var/eye_blurry = issilicon(M) ? 0 : max(0, amount * (5 - dist) * 0.2)
-		var/stam_damage = 15 * amount
+		var/stam_damage = clamp(3 * amount * (6 - dist), 0, 100)
 
 		M.apply_flash(anim_dur, stunned, stunned, 0, eye_blurry, eye_damage, stamina_damage = stam_damage)
 
 /proc/sonicpowder_reaction(turf/center, amount, hootmode, no_fluff)
 	amount = clamp(amount/5, 0, 5)
-	if (no_fluff == 0)
+	if (!no_fluff)
 		if (hootmode)
 			playsound(center, 'sound/voice/animal/hoot.ogg', 100, 1)
 		else
@@ -239,7 +239,7 @@
 	for (var/mob/living/M in all_hearers(world.view, center))
 		if (isintangible(M) )
 			continue
-		if (!M.ears_protected_from_sound() && !ON_COOLDOWN(M, "sonicpowder_anti_spam", 6 SECONDS))
+		if (!M.ears_protected_from_sound() && !ON_COOLDOWN(M, "sonicpowder_anti_spam", 1 SECOND))
 			boutput(M, "<span class='alert'><b>[hootmode ? "HOOT" : "BANG"]</b></span>")
 		else
 			continue
@@ -250,7 +250,7 @@
 		var/misstep = max(0, 2 + amount * (5 - checkdist))
 		var/ear_damage = max(0, amount * 0.2 * (3 - checkdist))
 		var/ear_tempdeaf = max(0, amount * 0.2 * (5 - checkdist)) //annoying and unfun so reduced dramatically
-		var/stamina = max(0, 2 * amount * (7 - checkdist))
+		var/stamina = clamp(2.5 * amount * (8 - checkdist), 0, 100)
 
 		if (issilicon(M))
 			M.apply_sonic_stun(weak, 0)

@@ -664,7 +664,7 @@ proc/get_angle(atom/a, atom/b)
 		if(C.client)
 			. += C
 		LAGCHECK(LAG_REALTIME)
-	for(var/mob/wraith/M in mobs)
+	for(var/mob/living/intangible/wraith/M in mobs)
 		. += M
 		LAGCHECK(LAG_REALTIME)
 	for(var/mob/living/intangible/blob_overmind/M in mobs)
@@ -2392,12 +2392,6 @@ proc/radioGarbleText(var/message, var/per_letter_corruption_chance=40)
   */
 proc/illiterateGarbleText(var/message)
 	. = radioGarbleText(message, 100)
-
-/**
-  * Returns given text replaced by nonsense but its based off of a modifier + flock's garblyness
-  */
-proc/flockBasedGarbleText(var/message, var/modifier, var/datum/flock/f = null)
-	if(f?.snooping) . = radioGarbleText(message, f.snoop_clarity + modifier)
 
 /**
   * Returns the time in seconds since a given timestamp

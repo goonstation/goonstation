@@ -177,7 +177,7 @@
 
 /datum/targetable/flockmindAbility/partitionMind
 	name = "Partition Mind"
-	icon_state = "awaken_drone"
+	icon_state = "partition_mind"
 	cooldown = 60 SECONDS
 	targeted = FALSE
 	///Are we still waiting for ghosts to respond

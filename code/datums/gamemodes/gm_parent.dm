@@ -181,6 +181,8 @@
 						rewarded_detail = copytext(rewarded_detail, 1, -2)
 						stuff_to_output += stolen_detail
 						stuff_to_output += rewarded_detail
+						if (stolen >= 7)
+							traitor.current?.unlock_medal("Professional thief", TRUE)
 
 				if (traitor.special_role == ROLE_FLOCKMIND)
 					for (var/flockname in flocks)

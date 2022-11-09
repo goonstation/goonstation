@@ -1102,26 +1102,29 @@
 	if(A == src)
 		return
 
-	if(src.pulling)
+	var/atom/movable/wasPulling = src.pulling
+	if(wasPulling)
 		src.remove_pulling()
+		if(wasPulling == A)
+			return
 
 	if(!can_reach(src, A) || src.restrained())
 		return
 
-	pulling = A
+	src.pulling = A
 
-	if(ismob(pulling))
-		var/mob/M = pulling
+	if(ismob(src.pulling))
+		var/mob/M = src.pulling
 		M.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
-	if (ishuman(pulling))
-		var/mob/living/carbon/human/H = pulling
+	if (ishuman(src.pulling))
+		var/mob/living/carbon/human/H = src.pulling
 		if (length(H.grabbed_by))
 			for (var/obj/item/grab/G in src.grabbed_by)
 				if (G.state < GRAB_AGGRESSIVE) continue
-				pulling = G.assailant
+				src.pulling = G.assailant
 				G.assailant.pulled_by = src
 
 	pull_particle(src,pulling)
@@ -2152,7 +2155,7 @@
 			the_butt = new /obj/item/clothing/head/butt(src.loc, organHolder)
 		else if (istype(src, /mob/living/silicon))
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
-		else if (istype(src, /mob/wraith) || istype(src, /mob/dead))
+		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
 			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))

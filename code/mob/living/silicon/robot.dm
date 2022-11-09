@@ -255,11 +255,12 @@
 
 	death(gibbed)
 		src.stat = 2
+		src.borg_death_alert()
 		logTheThing(LOG_COMBAT, src, "was destroyed at [log_loc(src)].")
 		src.mind?.register_death()
 		if (src.syndicate)
 			src.remove_syndicate("death")
-		src.borg_death_alert()
+
 		src.eject_brain(fling = TRUE) //EJECT
 		for (var/slot in src.clothes)
 			src.clothes[slot].set_loc(src.loc)
@@ -542,27 +543,31 @@
 						message = "<B>[src]</B> malfunctions!"
 						src.TakeDamage("head", 2, 4)
 					if ((!src.restrained()) && (!src.getStatusDuration("weakened")))
-						if (narrator_mode)
-							playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						if (isobj(src.loc))
+							var/obj/container = src.loc
+							container.mob_flip_inside(src)
 						else
-							playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-						message = "<B>[src]</B> beep-bops!"
-						if (prob(50))
-							animate_spin(src, "R", 1, 0)
-						else
-							animate_spin(src, "L", 1, 0)
+							if (narrator_mode)
+								playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							else
+								playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							message = "<B>[src]</B> beep-bops!"
+							if (prob(50))
+								animate_spin(src, "R", 1, 0)
+							else
+								animate_spin(src, "L", 1, 0)
 
-						for (var/mob/living/M in view(1, null))
-							if (M == src)
-								continue
-							message = "<B>[src]</B> beep-bops at [M]."
-							break
+							for (var/mob/living/M in viewers(1, null))
+								if (M == src)
+									continue
+								message = "<B>[src]</B> beep-bops at [M]."
+								break
 
-						if (istype(src.buckled, /obj/machinery/conveyor))
-							message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
-							src.buckled = null
-							if(isunconscious(src))
-								setalive(src) //reset stat to ensure emote comes out
+							if (istype(src.buckled, /obj/machinery/conveyor))
+								message = "<B>[src]</B> beep-bops and flips [himself_or_herself(src)] free from the conveyor."
+								src.buckled = null
+								if(isunconscious(src))
+									setalive(src) //reset stat to ensure emote comes out
 
 			if("flex", "flexmuscles")
 				if(!part_arm_r || !part_arm_l)
