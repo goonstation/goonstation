@@ -235,6 +235,14 @@
 
 	setdir()
 
+/obj/machinery/conveyor/set_dir(new_dir)
+	var/old_dir = dir
+	. = ..()
+	var/turn_angle = turn_needed(old_dir, src.dir)
+	src.dir_in = turn(src.dir_in, turn_angle)
+	src.dir_out = turn(src.dir_out, turn_angle)
+	src.setdir()
+
 /obj/machinery/conveyor/process()
 	if(status & NOPOWER || !operating)
 		return
