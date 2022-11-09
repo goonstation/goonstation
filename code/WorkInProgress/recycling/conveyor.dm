@@ -20,8 +20,8 @@
 	machine_registry_idx = MACHINES_CONVEYORS
 	var/operating = OP_OFF	// 1 if running forward, -1 if backwards, 0 if off
 	var/operable = TRUE	// true if can operate (no broken segments in this belt run)
-	var/dir1 = null
-	var/dir2 = null
+	var/dir_in = null
+	var/dir_out = null
 	var/currentdir = SOUTH
 
 	var/id = ""			// the control ID	- must match controller ID
@@ -37,85 +37,85 @@
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
 	dir = NORTH
-	dir1 = NORTH
-	dir2 = EAST
+	dir_in = NORTH
+	dir_out = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NE-map"
 #endif
 /obj/machinery/conveyor/NS
 	dir = NORTH
-	dir1 = NORTH
-	dir2 = SOUTH
+	dir_in = NORTH
+	dir_out = SOUTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NS-map"
 #endif
 /obj/machinery/conveyor/NW
 	dir = NORTH
-	dir1 = NORTH
-	dir2 = WEST
+	dir_in = NORTH
+	dir_out = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NW-map"
 #endif
 /obj/machinery/conveyor/ES
 	dir = EAST
-	dir1 = EAST
-	dir2 = SOUTH
+	dir_in = EAST
+	dir_out = SOUTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-ES-map"
 #endif
 /obj/machinery/conveyor/EW
 	dir = EAST
-	dir1 = EAST
-	dir2 = WEST
+	dir_in = EAST
+	dir_out = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-EW-map"
 #endif
 /obj/machinery/conveyor/EN
 	dir = EAST
-	dir1 = EAST
-	dir2 = NORTH
+	dir_in = EAST
+	dir_out = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-EN-map"
 #endif
 /obj/machinery/conveyor/SW
 	dir = SOUTH
-	dir1 = SOUTH
-	dir2 = WEST
+	dir_in = SOUTH
+	dir_out = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SW-map"
 #endif
 /obj/machinery/conveyor/SN
 	dir = SOUTH
-	dir1 = SOUTH
-	dir2 = NORTH
+	dir_in = SOUTH
+	dir_out = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SN-map"
 #endif
 /obj/machinery/conveyor/SE
 	dir = SOUTH
-	dir1 = SOUTH
-	dir2 = EAST
+	dir_in = SOUTH
+	dir_out = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SE-map"
 #endif
 /obj/machinery/conveyor/WN
 	dir = WEST
-	dir1 = WEST
-	dir2 = NORTH
+	dir_in = WEST
+	dir_out = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-WN-map"
 #endif
 /obj/machinery/conveyor/WE
 	dir = WEST
-	dir1 = WEST
-	dir2 = EAST
+	dir_in = WEST
+	dir_out = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-WE-map"
 #endif
 /obj/machinery/conveyor/WS
 	dir = WEST
-	dir1 = WEST
-	dir2 = SOUTH
+	dir_in = WEST
+	dir_out = SOUTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-WS-map"
 #endif
@@ -177,20 +177,20 @@
 		SPAWN(0.1 SECONDS)
 			src.initialize()
 
-	currentdir = dir2
+	currentdir = dir_out
 	setdir()
 
 /obj/machinery/conveyor/initialize()
 	..()
-	// if the conveyor belt does not have dir1 or dir2 set they are calculated here according to the following heuristics
-	if(isnull(dir1))
-		if(isnull(dir2))
-			dir2 = dir // target dir is set to the direction of the conveyor
-		var/backdir = turn(dir2, 180)
-		var/leftdir = turn(dir2, 90)
-		var/rightdir = turn(dir2, -90)
-		// in case we crash or something we set the source dir to the opposite of the target dir as a fallback
-		dir1 = backdir
+	// if the conveyor belt does not have dir_in or dir_out set they are calculated here according to the following heuristics
+	if(isnull(dir_in))
+		if(isnull(dir_out))
+			dir_out = dir // output dir is set to the direction of the conveyor
+		var/backdir = turn(dir_out, 180)
+		var/leftdir = turn(dir_out, 90)
+		var/rightdir = turn(dir_out, -90)
+		// in case we crash or something we set the input dir to the opposite of the target dir as a fallback
+		dir_in = backdir
 		var/candidates = list(backdir, leftdir, rightdir)
 		var/scores = list() // we score each candidate by how "good" it is
 		for(var/d in candidates)
@@ -199,7 +199,7 @@
 			var/turf/T = get_step(src, d)
 			var/obj/machinery/conveyor/C = locate() in T
 			if(C)
-				if(C.dir1 == revd || C.dir == revd)
+				if(C.dir_in == revd || C.dir == revd)
 					score += 2 // points at us? that's great!
 				else
 					if(C.id == src.id)
@@ -225,13 +225,13 @@
 
 		// if left and right are tied we take backdir to compromise, we also take backdir if it's the best one
 		if(scores[2] == scores[3] || (scores[1] >= scores[2] && scores[1] >= scores[3]))
-			dir1 = backdir
+			dir_in = backdir
 		else if(scores[2] > scores[3]) // otherwise just pick the best one
-			dir1 = candidates[2]
+			dir_in = candidates[2]
 		else
-			dir1 = candidates[3]
+			dir_in = candidates[3]
 
-		currentdir = dir2
+		currentdir = dir_out
 
 	setdir()
 
@@ -253,11 +253,11 @@
 
 /// set the dir and target turf depending on the operating direction
 /obj/machinery/conveyor/proc/setdir()
-	currentdir = dir1
+	currentdir = dir_in
 	if (operating == OP_REGULAR)
-		currentdir = dir2
+		currentdir = dir_out
 	else if(operating == OP_REVERSE)
-		currentdir = dir1
+		currentdir = dir_in
 
 	next_conveyor = locate(/obj/machinery/conveyor) in get_step(src, currentdir)
 	update()
@@ -280,40 +280,40 @@
 
 	var/new_icon = "conveyor-"
 
-	var/dir1char = "N"
-	switch (dir1)
+	var/dir_in_char = "N"
+	switch (dir_in)
 		if (NORTH)
-			dir1char = "N"
+			dir_in_char = "N"
 		if (EAST)
-			dir1char = "E"
+			dir_in_char = "E"
 		if (SOUTH)
-			dir1char = "S"
+			dir_in_char = "S"
 		if (WEST)
-			dir1char = "W"
+			dir_in_char = "W"
 
-	var/dir2char = "N"
-	switch (dir2)
+	var/dir_out_char = "N"
+	switch (dir_out)
 		if (NORTH)
-			dir2char = "N"
+			dir_out_char = "N"
 		if (EAST)
-			dir2char = "E"
+			dir_out_char = "E"
 		if (SOUTH)
-			dir2char = "S"
+			dir_out_char = "S"
 		if (WEST)
-			dir2char = "W"
+			dir_out_char = "W"
 
 
 	if (operating == OP_OFF || operating == OP_REGULAR)
-		new_icon += dir1char + dir2char
+		new_icon += dir_in_char + dir_out_char
 	else if (operating == OP_REVERSE)
-		new_icon += dir2char + dir1char
+		new_icon += dir_out_char + dir_in_char
 
 	if (operating == OP_OFF || (status & NOPOWER))
 		new_icon += "-still"
 	else
 		new_icon += "-run"
 
-	if (dir1 == dir2)
+	if (dir_in == dir_out)
 		new_icon = "conveyor-fuck"
 
 	icon_state = new_icon
@@ -456,10 +456,10 @@
 	update()
 
 	var/obj/machinery/conveyor/C
-	C = locate() in get_step(src, dir1)
+	C = locate() in get_step(src, dir_in)
 	C?.set_operable(OP_REGULAR, id, 0)
 
-	C = locate() in get_step(src, dir2)
+	C = locate() in get_step(src, dir_out)
 	C?.set_operable(OP_REVERSE, id, 0)
 
 
@@ -470,11 +470,11 @@
 	operable = op
 
 	update()
-	var/propdir = dir1
+	var/propdir = dir_in
 	if (stepdir == OP_REGULAR)
-		propdir = dir1
+		propdir = dir_in
 	else if(stepdir == OP_REVERSE)
-		propdir = dir2
+		propdir = dir_out
 	var/obj/machinery/conveyor/C = locate() in get_step(src, propdir)
 	C?.set_operable(stepdir, id, op)
 
@@ -582,7 +582,7 @@
 		// wait for map load then find the conveyor in this turf
 		conv = locate() in src.loc
 		if(conv)	// divert_from dir must match possible conveyor movement
-			if(conv.dir1 != divert_from && conv.dir2 != turn(divert_from,180) )
+			if(conv.dir_in != divert_from && conv.dir_out != turn(divert_from,180) )
 				qdel(src)	// if no dir match, then delete self
 		set_divert()
 		update()
