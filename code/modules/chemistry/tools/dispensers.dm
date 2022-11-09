@@ -384,10 +384,6 @@
 	icon_state = "beertankTEMP"
 	amount_per_transfer_from_this = 25
 
-	New()
-		..()
-		reagents.add_reagent("beer",1000)
-
 /obj/reagent_dispensers/compostbin
 	name = "compost tank"
 	desc = "A device that mulches up unwanted produce into usable fertiliser."
@@ -602,3 +598,49 @@
 		else
 			src.icon_state = initial(src.icon_state)
 
+/obj/item/reagent_containers/food/drinks/chemtank
+	name = "unlabeled chemical barrel"
+	desc = "For storing medical chemicals and less savory things. It can be labeled with a pen."
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+	icon = 'icons/obj/objects.dmi'
+	icon_state = "chemtank"
+	item_state = "chemtank"
+	initial_volume = 1000
+	w_class = W_CLASS_HUGE
+	incompatible_with_chem_dispensers = 1
+	throw_speed = 1
+	throw_range = 2
+	throwforce = 15
+	can_chug = FALSE
+	two_handed = TRUE
+	p_class = 2
+	c_flags = EQUIPPED_WHILE_HELD
+	var/labeled = FALSE
+
+	setupProperties()
+		..()
+		setProperty("movespeed", 3)
+
+
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/pen) && !src.labeled)
+			var/t = input(user, "Enter label", "Label", src.name) as null|text
+			if(t && t != src.name)
+				phrase_log.log_phrase("barrel", t, no_duplicates=TRUE)
+			t = copytext(strip_html(t), 1, 24)
+			if (isnull(t) || !length(t) || t == " ")
+				return
+			if (!in_interact_range(src, user) && src.loc != user)
+				return
+
+			src.name = t
+			src.labeled = TRUE
+			src.desc = "For storing medical chemicals and less savory things."
+		else
+			..()
+			return
+
+/obj/item/reagent_containers/food/drinks/chemtank/overwrite_impact_sfx(original_sound, hit_atom, thr)
+	. = ..()
+	. = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
