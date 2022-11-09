@@ -35847,7 +35847,6 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/station/engine/inner)
 "kSx" = (
@@ -51173,7 +51172,6 @@
 /area/station/wreckage)
 "xAE" = (
 /obj/storage/closet/welding_supply,
-/obj/machinery/power/apc/autoname_south,
 /obj/cable,
 /turf/simulated/floor,
 /area/station/hangar/engine)
