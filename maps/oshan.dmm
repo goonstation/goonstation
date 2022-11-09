@@ -15997,16 +15997,10 @@
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay/pharmacy)
 "aMV" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 3;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/machinery/portable_reclaimer,
-/turf/simulated/floor/plating/random,
-/area/station/engine/elect)
+/obj/machinery/light/incandescent/warm,
+/obj/machinery/shieldgenerator/energy_shield,
+/turf/simulated/floor,
+/area/station/storage/eeva)
 "aMW" = (
 /obj/cable{
 	d1 = 1;
@@ -17082,6 +17076,7 @@
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/baroffice)
 "aPV" = (
+/obj/machinery/portable_reclaimer,
 /turf/simulated/floor/plating/random,
 /area/station/engine/elect)
 "aPW" = (
@@ -17667,11 +17662,6 @@
 	d2 = 4;
 	icon_state = "5-8"
 	},
-/obj/machinery/shieldgenerator/energy_shield,
-/turf/simulated/floor,
-/area/station/storage/eeva)
-"aRo" = (
-/obj/machinery/shieldgenerator/energy_shield,
 /turf/simulated/floor,
 /area/station/storage/eeva)
 "aRp" = (
@@ -23614,18 +23604,6 @@
 /obj/critter/martian/psychic,
 /turf/simulated/martian/floor,
 /area/evilreaver/bridge)
-"bkd" = (
-/obj/machinery/light/incandescent/warm,
-/obj/item/rods/steel{
-	amount = 50;
-	pixel_x = -2
-	},
-/obj/item/rods/steel{
-	amount = 50;
-	pixel_x = 8
-	},
-/turf/simulated/floor,
-/area/station/storage/eeva)
 "bke" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
@@ -24249,18 +24227,13 @@
 /obj/critter/martian/soldier/dead,
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
-"blD" = (
-/obj/machinery/light/incandescent/warm,
-/turf/simulated/floor/plating/random,
-/area/station/engine/elect)
 "blE" = (
 /obj/storage/cart/mechcart,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/device/multitool,
-/obj/item/storage/belt/utility,
-/obj/item/clothing/gloves/yellow,
-/turf/simulated/floor/plating/random,
-/area/station/engine/elect)
+/obj/item/rods/steel{
+	amount = 50
+	},
+/turf/simulated/floor,
+/area/station/storage/eeva)
 "blF" = (
 /obj/reagent_dispensers/foamtank,
 /turf/simulated/floor/yellow/side,
@@ -24415,9 +24388,8 @@
 /obj/item/storage/box/lightbox/tubes,
 /obj/item/hand_labeler,
 /obj/item/device/t_scanner,
-/obj/item/disk/data/cartridge/diagnostics,
-/turf/simulated/floor/plating/random,
-/area/station/engine/elect)
+/turf/simulated/floor,
+/area/station/storage/eeva)
 "bma" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side{
@@ -25840,6 +25812,10 @@
 /obj/table/auto,
 /obj/item/electronics/scanner,
 /obj/item/deconstructor,
+/obj/item/disk/data/cartridge/diagnostics{
+	pixel_x = -6;
+	pixel_y = 10
+	},
 /turf/simulated/floor/caution/west{
 	dir = 5
 	},
@@ -43588,11 +43564,16 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
 "ckV" = (
-/turf/simulated/wall/auto/supernorn,
+/obj/machinery/shieldgenerator/energy_shield,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 5;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/turf/simulated/floor,
 /area/station/storage/eeva)
-"ckW" = (
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/elect)
 "ckX" = (
 /obj/structure/girder,
 /turf/simulated/floor/plating/random,
@@ -101964,8 +101945,8 @@ aks
 aks
 aks
 aks
-ckW
-ckW
+aks
+aks
 blB
 blB
 blB
@@ -102567,9 +102548,9 @@ bfW
 bfW
 bfW
 aRn
-ckV
-aPV
-aPV
+bfW
+bfW
+bfW
 blB
 bnh
 bnR
@@ -102868,10 +102849,10 @@ bfW
 gFa
 bfW
 bjo
-aRo
-ckV
-blD
-aPV
+bfW
+bfW
+bfW
+bfW
 bmI
 bni
 bnS
@@ -103170,8 +103151,8 @@ bfW
 bfW
 bfW
 bjp
-bkd
-ckV
+bfW
+bgF
 blE
 blE
 blB
