@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/harvest
 	name = "Harvest"
 	desc = "Steal some organs from someone to sustain your body and evolve."
-	icon_state = "infest_host"
+	icon_state = "harvest"
 	cooldown = 60 SECOND
 	targeted = 1
 

@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/neural_detection
 	name = "Neural detection"
 	desc = "Slow yourself down to open your senses and expand your vision."
-	icon_state = "slimeshot"
+	icon_state = "neural_detection"
 	cooldown = 2 SECONDS
 	targeted = 0
 	var/active = FALSE

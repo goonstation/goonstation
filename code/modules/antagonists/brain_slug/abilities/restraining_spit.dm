@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/restraining_spit
 	name = "Restraining puddle"
 	desc = "Horfs some movement impairing goo at someone next to you."
-	icon_state = "slimeshot"
+	icon_state = "restrain_slime"
 	cooldown = 50 SECONDS
 	targeted = 1
 	pointCost = 30

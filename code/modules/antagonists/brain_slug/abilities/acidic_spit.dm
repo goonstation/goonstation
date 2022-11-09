@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/acidic_spit
 	name = "Acidic Spit"
 	desc = "Spew a stream of acidic spit at the ground, melting whoever stands in it."
-	icon_state = "slimeshot"
+	icon_state = "acid"
 	cooldown = 80 SECONDS
 	targeted = 1
 	target_anything = 1

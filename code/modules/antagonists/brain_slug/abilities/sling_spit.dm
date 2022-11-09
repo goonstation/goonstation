@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/sling_spit
 	name = "Elastic tether"
 	desc = "Create a string of elastic goo between two points."
-	icon_state = "slimeshot"
+	icon_state = "slinging_slime"
 	cooldown = 45 SECONDS
 	targeted = 1
 	target_anything = 1
