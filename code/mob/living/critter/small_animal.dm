@@ -1986,8 +1986,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			icon_state_dead = "iguana2-dead"
 
 	disposing()
-		. = ..()
 		STOP_TRACKING
+		. = ..()
 
 	setup_hands()
 		..()
