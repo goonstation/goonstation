@@ -1040,6 +1040,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon_state = "extinguish"
 	shot_sound = 'sound/weapons/flamethrower.ogg'
 	stun = 0
+	damage = 0
 	cost = 1
 	damage_type = D_SPECIAL
 	shot_delay = 0.1 SECONDS
