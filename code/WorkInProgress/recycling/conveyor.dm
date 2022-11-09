@@ -36,72 +36,84 @@
 
 // for all your mapping needs!
 /obj/machinery/conveyor/NE
+	dir = NORTH
 	dir1 = NORTH
 	dir2 = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NE-map"
 #endif
 /obj/machinery/conveyor/NS
+	dir = NORTH
 	dir1 = NORTH
 	dir2 = SOUTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NS-map"
 #endif
 /obj/machinery/conveyor/NW
+	dir = NORTH
 	dir1 = NORTH
 	dir2 = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-NW-map"
 #endif
 /obj/machinery/conveyor/ES
+	dir = EAST
 	dir1 = EAST
 	dir2 = SOUTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-ES-map"
 #endif
 /obj/machinery/conveyor/EW
+	dir = EAST
 	dir1 = EAST
 	dir2 = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-EW-map"
 #endif
 /obj/machinery/conveyor/EN
+	dir = EAST
 	dir1 = EAST
 	dir2 = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-EN-map"
 #endif
 /obj/machinery/conveyor/SW
+	dir = SOUTH
 	dir1 = SOUTH
 	dir2 = WEST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SW-map"
 #endif
 /obj/machinery/conveyor/SN
+	dir = SOUTH
 	dir1 = SOUTH
 	dir2 = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SN-map"
 #endif
 /obj/machinery/conveyor/SE
+	dir = SOUTH
 	dir1 = SOUTH
 	dir2 = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-SE-map"
 #endif
 /obj/machinery/conveyor/WN
+	dir = WEST
 	dir1 = WEST
 	dir2 = NORTH
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-WN-map"
 #endif
 /obj/machinery/conveyor/WE
+	dir = WEST
 	dir1 = WEST
 	dir2 = EAST
 #ifdef IN_MAP_EDITOR
 	icon_state = "conveyor-WE-map"
 #endif
 /obj/machinery/conveyor/WS
+	dir = WEST
 	dir1 = WEST
 	dir2 = SOUTH
 #ifdef IN_MAP_EDITOR
@@ -161,25 +173,66 @@
 	src.flags |= UNCRUSHABLE
 	..()
 
-	if(isnull(dir1)) // autodir
-		SPAWN(0)
-			if(isnull(dir2))
-				dir2 = dir
-			dir1 = turn(dir2, 180)
-			for(var/ndir in cardinal)
-				if(ndir == dir2)
-					continue
-				if(locate(/obj/machinery/conveyor, get_step(src, ndir)))
-					dir1 = ndir
-					break
-			currentdir = dir2
-			setdir()
+	if(current_state > GAME_STATE_PREGAME)
+		SPAWN(0.1 SECONDS)
+			src.initialize()
 
 	currentdir = dir2
 	setdir()
 
 /obj/machinery/conveyor/initialize()
 	..()
+	// if the conveyor belt does not have dir1 or dir2 set they are calculated here according to the following heuristics
+	if(isnull(dir1))
+		if(isnull(dir2))
+			dir2 = dir // target dir is set to the direction of the conveyor
+		var/backdir = turn(dir2, 180)
+		var/leftdir = turn(dir2, 90)
+		var/rightdir = turn(dir2, -90)
+		// in case we crash or something we set the source dir to the opposite of the target dir as a fallback
+		dir1 = backdir
+		var/candidates = list(backdir, leftdir, rightdir)
+		var/scores = list() // we score each candidate by how "good" it is
+		for(var/d in candidates)
+			var/revd = turn(d, 180)
+			var/score = 0
+			var/turf/T = get_step(src, d)
+			var/obj/machinery/conveyor/C = locate() in T
+			if(C)
+				if(C.dir1 == revd || C.dir == revd)
+					score += 2 // points at us? that's great!
+				else
+					if(C.id == src.id)
+						score += 0.3 // doesn't point at us and is of the same id? that's unlikely to be ever useful but better than nothing
+					else
+						score += 0.9 // doesn't point at us and has a different id? that might be pretty relevant if one gets reversed
+				if(d == backdir)
+					score += 1 // backwards is a pretty good default, let's bump it up a bit
+			var/obj/machinery/launcher_loader/ll = locate() in T
+			if(ll?.dir == revd)
+				score += 1.5 // loader pointing at us is good but not as good as a conveyor belt
+			var/obj/machinery/cargo_router/router = locate() in T
+			if(router)
+				// same for routers
+				if(router.default_direction == revd)
+					score += 1.5
+				else
+					for(var/dest in router.destinations)
+						if(router.destinations[dest] == revd)
+							score += 1.5
+							break
+			scores += score
+
+		// if left and right are tied we take backdir to compromise, we also take backdir if it's the best one
+		if(scores[2] == scores[3] || (scores[1] >= scores[2] && scores[1] >= scores[3]))
+			dir1 = backdir
+		else if(scores[2] > scores[3]) // otherwise just pick the best one
+			dir1 = candidates[2]
+		else
+			dir1 = candidates[3]
+
+		currentdir = dir2
+
 	setdir()
 
 /obj/machinery/conveyor/process()
