@@ -1,5 +1,9 @@
 
 (t)wed nov 09 22
+(u)Amylizzle
+(p)11755
+(e)🆕🎨💨|C-Feature, C-Sprites, A-Atmospherics
+(+)Adds nuclear fallout gas. Don't breathe the glowy green stuff.
 (u)Waffleloffle & Azrun
 (p)11804
 (e)🆕🎨🚨|C-Feature, C-Sprites, A-Admin
