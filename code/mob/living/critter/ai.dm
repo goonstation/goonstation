@@ -253,7 +253,7 @@ var/list/ai_move_scheduled = list()
 	/// Takes a list of atoms which are then evaluated, before setting the holder's target. Note this checks a path exists to each target
 	proc/get_best_target(list/atom/targets)
 		. = null
-		var/best_score = -1.#INF
+		var/best_score = -INFINITY
 		var/list/best_path = null
 		if(length(targets))
 			for(var/atom/A in targets)
