@@ -31,7 +31,7 @@
 	duration = 8 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT | INTERRUPT_ATTACKED
 	id = "brain_slug_devour"
-	icon = 'icons/mob/brainslug.dmi'
+	icon = 'icons/mob/brainslug_ui.dmi'
 	icon_state = "action_harvest"
 	var/mob/living/carbon/human/current_target = null
 	var/mob/living/caster = null

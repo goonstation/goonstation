@@ -36,8 +36,8 @@
 
 ABSTRACT_TYPE(/datum/targetable/brain_slug)
 /datum/targetable/brain_slug
-	icon = 'icons/mob/brainslug.dmi'
-	var/border_icon = 'icons/mob/brainslug.dmi'
+	icon = 'icons/mob/brainslug_ui.dmi'
+	var/border_icon = 'icons/mob/brainslug_ui.dmi'
 	var/border_state = "brain_slug_frame"
 
 	onAttach(datum/abilityHolder/holder)

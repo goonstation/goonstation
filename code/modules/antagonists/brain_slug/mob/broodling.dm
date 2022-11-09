@@ -81,7 +81,7 @@
 	cooldown = 30 SECONDS
 	targeted = 1
 	target_anything = 0
-	icon = 'icons/mob/brainslug.dmi'
+	icon = 'icons/mob/brainslug_ui.dmi'
 	icon_state = "sting"
 	var/inject_amount = 3.5
 
@@ -113,4 +113,4 @@
 	onAttach(datum/abilityHolder/holder)
 		..()
 		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image('icons/mob/brainslug.dmi', "brain_slug_frame"), "mob_type")
+		B.UpdateOverlays(image('icons/mob/brainslug_ui.dmi', "brain_slug_frame"), "mob_type")

@@ -1,7 +1,6 @@
 /datum/targetable/brain_slug/slug_burrow
 	name = "Burrow"
 	desc = "Bust through the flooring and attempt to enter a maintenance pipe. Can also be used when inside a disposal trunk."
-	icon = 'icons/mob/brainslug.dmi'
 	icon_state = "enter_disposal"
 	cooldown = 10 SECONDS
 	targeted = 0
