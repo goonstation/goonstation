@@ -29,6 +29,11 @@
 
 	#undef _UNSIM_TURF_GAS_DEF
 
+	/// Sum of all unstable atoms on the turf.
+	jpsUnstable = FALSE // TODO: Most turfs are stable, except the ones you'd assume are stable. Look into if this is the bst place to mark it.
+	/// Used when turf is fully stable. This cache is wiped when [/atom/set_density], [/turf/Entered] or [/turf/Exited] is called.
+	var/tmp/jpsPassableCache
+
 	//Properties for both
 	var/temperature = T20C
 
@@ -395,6 +400,8 @@ proc/generate_space_color()
 
 /turf/Exited(atom/movable/Obj, atom/newloc)
 	//MBC : nothing in the game even uses PrxoimityLeave meaningfully. I'm disabling the proc call here.
+	src.jpsUnstable -= Obj.jpsUnstable // jps turf cache - update code in Entered if modified!
+	src.jpsPassableCache = null
 
 	if (global_sims_mode)
 		var/area/Ar = loc
@@ -412,6 +419,8 @@ proc/generate_space_color()
 	///////////////////////////////////////////////////////////////////////////////////
 	..()
 	return_if_overlay_or_effect(M)
+	src.jpsUnstable += M.jpsUnstable // jps turf cache - update code in Exited if modified!
+	src.jpsPassableCache = null
 
 	if (global_sims_mode)
 		var/area/Ar = loc

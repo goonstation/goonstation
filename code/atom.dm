@@ -38,6 +38,9 @@
 
 	var/list/atom_properties
 
+	/// Whether pathfinding is forbidden from caching the passability of this atom. See [/turf/jpsPassableCache]
+	var/tmp/jpsUnstable = TRUE
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -284,6 +287,9 @@
 	SHOULD_NOT_OVERRIDE(TRUE)
 	mover.movement_newloc = target
 	return src.Uncross(mover, do_bump=do_bump)
+
+/atom/Cross(atom/movable/mover)
+	return (!density)
 
 /atom/Crossed(atom/movable/AM)
 	SHOULD_CALL_PARENT(TRUE)
@@ -946,6 +952,9 @@
 //reason for having this proc is explained below
 /atom/proc/set_density(var/newdensity)
 	src.density = HAS_ATOM_PROPERTY(src, PROP_ATOM_NEVER_DENSE) ? 0 : newdensity
+	if(src.density != newdensity)
+		var/turf/loc = src.loc // invalidate JPS cache on density changes
+		loc.jpsPassableCache = null
 
 /atom/proc/set_opacity(var/newopacity)
 	SHOULD_CALL_PARENT(TRUE)

@@ -52,26 +52,6 @@ Important Procedures
 
 */
 
-/// Whether pathfinding is forbidden from caching the passability of this atom.
-/atom/var/tmp/jpsUnstable = TRUE
-/// Pathfinding optimization. Invalidated when a turf is a Crossed/Uncrossed
-/turf/var/tmp/jpsPassableCache
-
-/atom/Cross(atom/movable/mover)
-	return (!density)
-
-/turf/Crossed(atom/movable/AM)
-	..()
-	src.jpsUnstable += AM.jpsUnstable
-	src.jpsPassableCache = null
-
-/turf/Uncrossed(atom/movable/AM)
-	..()
-	src.jpsUnstable -= AM.jpsUnstable
-	src.jpsPassableCache = null
-
-// TODO: move this into atom.dm and turf.dm respectively
-
 /atom/proc/gas_cross(turf/target)
 	return !src.gas_impermeable
 
