@@ -164,7 +164,7 @@ datum
 						var/mob/living/carbon/human/H = M
 						if (H.sims)
 							if ((hygiene_value > 0 && !(H.wear_suit || H.w_uniform)) || hygiene_value < 0)
-								if(H.get_chem_protection())
+								if(H.get_chem_protection() && hygiene_value < 0)
 									modifier = (max(0, (1 - H.get_chem_protection()/100 )))
 								H.sims.affectMotive("Hygiene", volume * hygiene_value * modifier)
 
