@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/glue_spit
 	name = "Adhesive drool"
-	desc = "Cover something in a glue-like substance and render it adhesive."
+	desc = "Cover something in a glue-like substance and render it adhesive, or slow a living being."
 	icon_state = "glue"
 	cooldown = 30 SECONDS
 	targeted = 1

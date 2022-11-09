@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/blinding_slime
 	name = "Blinding slime"
-	desc = "Turn some of your host's insides into slime, locking down doors or debilitating attackers. Costs stability to use."
+	desc = "Turn some of your host's insides into slime, locking down doors or debilitating attackers."
 	icon_state = "slimeshot"
 	cooldown = 20 SECONDS
 	targeted = 1

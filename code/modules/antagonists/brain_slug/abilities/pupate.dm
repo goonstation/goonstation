@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/pupate
 	name = "Pupate"
-	desc = "Use all the nutrients in a human body and evolve into your final, deadly form. There is no going back."
+	desc = "Use all the nutrients in a human body and evolve into your final, deadly form."
 	icon_state = "pupate"
 	cooldown = 10 SECONDS
 	targeted = 0

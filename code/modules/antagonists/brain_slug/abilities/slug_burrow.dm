@@ -320,7 +320,7 @@
 			return
 		if (prob(50))
 			animate_storage_thump(the_pipe)
-			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
+			playsound(the_pipe.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 
 	onEnd()
 		..()
@@ -336,7 +336,7 @@
 			if (prob(50))
 				var/obj/item/raw_material/scrap_metal/scrap_item = new /obj/item/raw_material/scrap_metal(the_pipe.loc)
 				ThrowRandom(scrap_item, 5, 1)
-			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
+			playsound(the_pipe.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 		var/datum/targetable/brain_slug/slug_burrow/the_ability = caster.abilityHolder.getAbility(/datum/targetable/brain_slug/slug_burrow)
 		the_ability.activate()
 
@@ -379,7 +379,7 @@
 			return
 		if (prob(40))
 			animate_storage_thump(the_pipe)
-			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
+			playsound(the_pipe.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 
 	onEnd()
 		..()
@@ -400,7 +400,7 @@
 			if (prob(50))
 				var/obj/item/raw_material/scrap_metal/scrap_item = new /obj/item/raw_material/scrap_metal(T)
 				ThrowRandom(scrap_item, 5, 1)
-			playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
+			playsound(the_pipe.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 		caster.set_loc(T)
 		for (var/mob/living/M in range(0, the_pipe))
 			if (M == caster) continue

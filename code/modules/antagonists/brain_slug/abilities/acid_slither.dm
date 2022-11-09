@@ -1,6 +1,6 @@
 /datum/targetable/brain_slug/acid_slither
 	name = "Acidic sweat"
-	desc = "Lay a trail of acid as you move."
+	desc = "Lay a trail of acid as you move for a short time."
 	icon_state = "slither"
 	cooldown = 40 SECONDS
 	targeted = 0
