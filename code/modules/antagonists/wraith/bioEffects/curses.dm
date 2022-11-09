@@ -170,6 +170,7 @@
 	can_copy = 0
 	isBad = 1
 	occur_in_genepools = 0
+	scanner_visibility = 0
 	acceptable_in_mutini = 0
 	probability = 0
 	curable_by_mutadone = 0
