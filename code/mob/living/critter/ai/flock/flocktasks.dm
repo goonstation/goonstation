@@ -253,29 +253,34 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
-
+	. = list()
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved))
-			. = get_path_to(holder.owner, reserved, max_dist, 1)
-			if(length(.)) //if we got a valid path
-				return reserved //don't like this - TODO can I make it better? just need to fix reserved tiles - maybe they could expire?
-			//unreserve the turf if we can't get at it
-			F.flock.busy_tiles[F.real_name] = null
+			//unreserve the turf - it will either be reserved again if it's valid, or a new target will be selected - can only reserve one turf per name anyway
+			F.flock.unreserveTurf(F.real_name)
+			return list(reserved)
+		else if (!isnull(reserved))
+			F.flock.unreserveTurf(F.real_name)	//clean up the reservation if it's not a valid tile anymore
 
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			return priority_turfs
+			. += priority_turfs
 
-	. = list()
 	// else just go for one nearby
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if (!valid_target(T))
 			continue // this tile's been claimed by someone else
 		. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/score_target(atom/target)
+	. = ..()
+	var/mob/living/critter/flock/F = holder.owner
+	if(length(F?.flock?.priority_tiles))
+		if(target in F.flock.priority_tiles)
+			. += 200 //because the result of scoring is based on max distance, the score of any given tile is -100 to 0, with 0 being best. Adding 200 basically allows a tile at twice the max distance to be considered.
 ////////
 
 /datum/aiTask/succeedable/build
@@ -333,24 +338,23 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/build/drone/get_targets()
 	var/mob/living/critter/flock/F = holder.owner
-
+	. = list()
 	if(F?.flock)
 		// if we can go for a tile we already have reserved, go for it
 		var/turf/simulated/reserved = F.flock.busy_tiles[F.real_name]
 		if(istype(reserved) && !isfeathertile(reserved))
-			. = get_path_to(holder.owner, reserved, max_dist, 1)
-			if(length(.))
-				return reserved //TODO make this better
-			else
-				//unreserve the turf if we can't get at it
-				F.flock.busy_tiles[F.real_name] = null
+			//unreserve the turf - it will either be reserved again if it's valid, or a new target will be selected - can only reserve one turf per name anyway
+			F.flock.unreserveTurf(F.real_name)
+			return list(reserved)
+		else if (!isnull(reserved))
+			F.flock.unreserveTurf(F.real_name)	//clean up the reservation if it's not a valid tile anymore
 
 		// if there's a priority tile we can go for, do it
 		var/list/priority_turfs = F.flock.getPriorityTurfs(F)
 		if(length(priority_turfs))
-			return priority_turfs
+			. += priority_turfs
 
-	. = list()
+	var/doorflag = FALSE
 	//as drone, we want to prioritise converting doors and walls and containers
 	for(var/turf/simulated/T in view(max_dist, holder.owner))
 		if(!isfeathertile(T) && flockTurfAllowed(T) && (
@@ -360,15 +364,22 @@ stare
 			if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 				continue
 			. += T
+			doorflag = TRUE
 
 	// if there are absolutely no walls/doors/closets in view, and no reserved tiles, then fine, you can have a floor tile
-	if(!length(.))
+	if(!doorflag)
 		for(var/turf/simulated/T in view(max_dist, holder.owner))
 			if(!isfeathertile(T) && flockTurfAllowed(T))
 				if(F?.flock && !F.flock.isTurfFree(T, F.real_name))
 					continue
 				. += T
 
+/datum/aiTask/sequence/goalbased/flock/build/drone/score_target(atom/target)
+	. = ..()
+	var/mob/living/critter/flock/F = holder.owner
+	if(length(F?.flock?.priority_tiles))
+		if(target in F.flock.priority_tiles)
+			. += 200 //because the result of scoring is based on max distance, the score of any given tile is -100 to 0, with 0 being best. Adding 200 basically allows a tile at twice the max distance to be considered.
 ////////
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
