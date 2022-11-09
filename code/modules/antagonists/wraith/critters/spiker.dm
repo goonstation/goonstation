@@ -47,7 +47,7 @@
 	death(var/gibbed)
 		if (src.master)
 			src.master.summons -= src
-		src.master = null
+			src.master = null
 		return ..()
 
 /datum/projectile/special/tentacle	//Get over here!

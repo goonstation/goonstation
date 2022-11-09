@@ -113,7 +113,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	death(var/gibbed)
 		if (src.master)
 			src.master.summons -= src
-		src.master = null
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
