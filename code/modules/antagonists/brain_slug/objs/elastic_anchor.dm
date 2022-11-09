@@ -75,6 +75,8 @@
 				the_mob.force_laydown_standup()
 				the_mob.setStatus("stunned", 2 SECONDS)
 				the_mob.throw_at(src, dist, 1)
+				var/the_sound = pick('sound/misc/boing/1.ogg', 'sound/misc/boing/2.ogg', 'sound/misc/boing/3.ogg', 'sound/misc/boing/4.ogg', 'sound/misc/boing/5.ogg', 'sound/misc/boing/6.ogg')
+				playsound(src.loc, the_sound, 80, 1, 1, 1.2)
 				recent_throw = TIME
 			src.set_dir(get_dir(src,the_mob))
 			if(stretch_line)

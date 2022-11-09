@@ -21,6 +21,6 @@
 			boutput(holder.owner, "<span class='alert'>That is too far away to restrain.</span>")
 			return TRUE
 		new /obj/machinery/brain_slug/restraining_goo(target.loc, target)
-		//Todo add a sound
+		playsound(target.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1, 1, 0.8)
 		holder.owner.visible_message("<span class='alert'>[holder.owner] spews a revolting stream of slime at [target]'s legs!</span>", "<span class='alert'>You spit restraining slime at [target] to hold them in place.</span>")
 		return FALSE

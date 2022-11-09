@@ -27,5 +27,6 @@
 				H.mind.transfer_to(new_slug)
 				new_slug.visible_message("<span class='alert'>A gigantic monster bursts out of [H]! [pick("GOOD LORD!", "GOD JESUS WHAT THE FUCK!", "You're going to be sick.")]!</span>", "<span class='alert'>You rise!</span>")
 				var/mob/living/critter/brain_slug/old_slug = H.slug
+				playsound(H.loc, 'sound/voice/creepyshriek.ogg', 80, 1, 0.4, 1.1, channel=VOLUME_CHANNEL_EMOTE)
 				qdel(old_slug)
 				H.gib()
