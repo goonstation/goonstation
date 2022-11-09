@@ -1776,7 +1776,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	desc = "Attempt to breach the veil between worlds to allow a plague rat to enter this realm."
 	icon_state = "summonrats"
 	targeted = 0
-	pointCost = 0
+	pointCost = 150
 	cooldown = 300 SECONDS
 	start_on_cooldown = 1
 	ignore_holder_lock = 0
