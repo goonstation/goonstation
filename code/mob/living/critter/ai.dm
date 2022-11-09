@@ -250,7 +250,8 @@ var/list/ai_move_scheduled = list()
 	proc/get_targets()
 		return list()
 
-	/// Takes a list of atoms which are then evaluated, before setting the holder's target. Note this checks a path exists to each target
+	/// Takes a list of atoms which are then evaluated, before setting the holder's target. Note this checks a path exists to each target. The list of
+	/// targets is expected (but not required) to be ordered from best to worst - by default view() will do this if score_target() is based on distance
 	proc/get_best_target(list/atom/targets)
 		. = null
 		var/best_score = -INFINITY
