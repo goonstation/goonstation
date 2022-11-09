@@ -633,6 +633,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("cryostylane", DNA.potency)
 
 	heal(var/mob/M)
+		..()
 		M:emote("shiver")
 		var/datum/plantgenes/DNA = src.plantgenes
 		M.bodytemperature -= DNA.potency
@@ -655,6 +656,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 		reagents.add_reagent("ghostchilijuice",25)
 
 	heal(var/mob/M)
+		..()
 		M:emote("twitch")
 		var/datum/plantgenes/DNA = src.plantgenes
 		boutput(M, "<span class='alert'>Fuck! Your mouth feels like it's on fire!</span>")
@@ -790,6 +792,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 	food_effects = list("food_cold", "food_refreshed")
 
 	heal(var/mob/M)
+		..()
 		M.HealDamage("All", src.heal_amt, src.heal_amt)
 		M.take_toxin_damage(0 - src.heal_amt)
 		M.take_oxygen_deprivation(0 - src.heal_amt)
@@ -1186,6 +1189,7 @@ ABSTRACT_TYPE(/obj/item/reagent/containers/food/snacks/plant)
 
 	heal(var/mob/M)
 		boutput(M, "<span class='alert'>Raw potato tastes pretty nasty...</span>")
+		..()
 
 /obj/item/reagent_containers/food/snacks/plant/onion
 	name = "onion"

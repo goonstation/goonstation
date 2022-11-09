@@ -130,8 +130,8 @@
 		spawn_contents = list(/obj/item/pipebomb/bomb/engineering = 6)
 
 	interdictor
-		name = "interdictor assembly kit"
-		desc = "Contains mainboards, a manudrive and a usage guide for spatial interdictors."
+		name = "interdictor fabrication crate"
+		desc = "Contains a drive with spatial interdictor manufacture data, power cells, and a usage guide for spatial interdictors."
 		req_access = list(access_engineering)
 
 		make_my_stuff()
@@ -140,14 +140,14 @@
 				B1.pixel_x = 8
 				B1.pixel_y = 3
 
-				var/obj/item/interdictor_board/B2 = new(src)
+				var/obj/item/cell/supercell/B2 = new(src)
 				B2.pixel_x = -6
 				B2.pixel_y = -3
 
-				var/obj/item/interdictor_board/B3 = new(src)
+				var/obj/item/cell/supercell/B3 = new(src)
 				B3.pixel_x = -6
 
-				var/obj/item/interdictor_board/B4 = new(src)
+				var/obj/item/cell/supercell/B4 = new(src)
 				B4.pixel_x = -6
 				B4.pixel_y = 3
 

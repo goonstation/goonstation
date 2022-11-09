@@ -1914,6 +1914,7 @@
 
 		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
+			..()
 
 		attack_self(mob/user as mob)
 			if (src.anchored)

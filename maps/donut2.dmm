@@ -3467,7 +3467,7 @@
 	},
 /area/shuttle/arrival/station)
 "aox" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/unsimulated/floor{
@@ -4387,7 +4387,7 @@
 	},
 /area/station/quartermaster/office)
 "ary" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor/arrival{
 	dir = 8
@@ -25959,27 +25959,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "cny" = (
-/obj/rack,
-/obj/item/breaching_hammer{
-	pixel_x = -1;
-	pixel_y = 1
-	},
-/obj/item/breaching_hammer{
-	pixel_x = 1;
-	pixel_y = 7
-	},
-/obj/item/breaching_charge{
-	pixel_x = 10;
-	pixel_y = 1
-	},
-/obj/item/breaching_charge{
-	pixel_x = 4;
-	pixel_y = -2
-	},
-/obj/item/breaching_charge{
-	pixel_x = -2;
-	pixel_y = -5
-	},
+/obj/random_item_spawner/armory_breaching_supplies,
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
 "coi" = (
@@ -26039,7 +26019,7 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/toilets)
 "csy" = (
-/obj/machinery/door/airlock/pyro/reinforced,
+/obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/firedoor_spawn,
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -40711,7 +40691,7 @@
 	},
 /area/station/bridge)
 "pjE" = (
-/obj/machinery/door/airlock/pyro/reinforced{
+/obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
 /turf/unsimulated/floor{
