@@ -251,7 +251,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	jps_cache
 		name = "jps cache"
-		help = "Green is cached, red is not."
+		help = "Grey is no cache. Green is passable, red is not."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			if(theTurf.jpsPassableCache != null)
 				img.app.color = theTurf.jpsPassableCache ? "#0f0" : "#f00"
