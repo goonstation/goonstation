@@ -15,7 +15,7 @@
 			boutput(holder.owner, "<span class='alert'>That is too far away!</span>")
 			return TRUE
 		var/obj/brain_slug/acidic_goo_ball = new /obj/brain_slug/acidic_goo_ball()
-		playsound(holder.owner.loc, 'sound/impact_sounds/Glub_1.ogg', 80, 1, 1, 1.2)
+		playsound(holder.owner.loc, 'sound/impact_sounds/Glub_1.ogg', 70, 1, 0.7, 1.2)
 		acidic_goo_ball.set_loc(holder.owner.loc)
 		acidic_goo_ball.throw_at(target, 6, 1)
 		holder.owner.visible_message("<span class='alert'>[holder.owner] spits out a glob of skin-melting acid at [target]!</span>")

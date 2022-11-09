@@ -15,6 +15,7 @@
 	ai_type = /datum/aiHolder/broodling
 	add_abilities = list(/datum/targetable/critter/broodling_sting)
 	is_npc = TRUE
+	var/deathsound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 	var/mob/living/master = null
 	var/attack_damage = 3
 	var/death_burn_duration = 15 SECONDS
@@ -31,6 +32,7 @@
 
 	death()
 		var/turf/T = get_turf(src)
+		playsound(src, src.deathsound, 60, 0)
 		if (!istype(T, /turf/simulated/shuttle) && !istype(T, /turf/unsimulated) && !istype(T, /turf/space))
 			T.acidify_turf(15 SECONDS)
 		..()

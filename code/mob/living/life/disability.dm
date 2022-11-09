@@ -55,7 +55,7 @@
 					random_burn_damage(owner, 11)
 				else
 					random_burn_damage(owner, 8)
-				playsound(owner, 'sound/impact_sounds/burn_sizzle.ogg', 40, 1)
+				playsound(owner, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 
 		if (owner.bioHolder)
 			var/total_stability = owner.bioHolder.genetic_stability

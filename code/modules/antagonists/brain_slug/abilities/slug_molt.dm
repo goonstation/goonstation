@@ -10,7 +10,6 @@
 		if (!istype(holder.owner, /mob/living/critter/adult_brain_slug))
 			boutput("<span class='notice'>You have to be a brain slug to do that!</span>")
 			return TRUE
-		//todo add a sound
 		make_cleanable(/obj/decal/cleanable/slug_molt, holder.owner.loc)
 		var/mob/living/critter/adult_brain_slug/the_slug = holder.owner
 		the_slug.visible_message("<span class='alert'>[the_slug] sheds it's skin and covers itself in sticky mucus!</span>", "<span class='notice'>You shed your skin and feel instantly refreshed!</span>")
@@ -27,6 +26,7 @@
 		if (the_slug.get_stamina() < 0)
 			the_slug.set_stamina(50)
 		the_slug.delStatus("resting")
+		playsound(the_slug.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 70, 1, 0.9, 1.3)
 		SPAWN (src.duration)
 			the_slug?.bullet_reflect = FALSE
 			the_slug?.remove_filter("molted")

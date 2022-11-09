@@ -9,7 +9,6 @@
 	health_brute = 50
 	health_burn = 40
 	flags = TABLEPASS | DOORPASS
-	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
 	pet_text = list("squishes","pokes","slaps","prods curiously")
 	speechverb_say = "whispers"
 	speechverb_exclaim = "squeals"
@@ -55,8 +54,6 @@
 			host.remove_ability_holder(/datum/abilityHolder/brain_slug)
 		if (!gibbed)
 			src.unequip_all()
-			//todo add a proper sound
-			playsound(src, src.deathsound, 50, 0)
 		return ..()
 
 	disposing()

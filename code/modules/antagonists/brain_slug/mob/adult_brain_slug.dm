@@ -8,7 +8,6 @@
 	icon_state_dead = "dead_adultslug"
 	health_brute = 160
 	health_burn = 90
-	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"
 	pet_text = list("squishes","pokes","slaps","prods curiously")
 	speechverb_say = "gurgles"
 	speechverb_exclaim = "roars"
@@ -51,13 +50,12 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 70, 1, 0.4, 1.1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 70, 1, 0.7, 1.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> lets out a high pitched shriek!</span>"
 
 	death(var/gibbed)
 		if (!gibbed)
 			src.unequip_all()
-			playsound(src, src.deathsound, 50, 0)
 		return ..()
 
 	bullet_act(var/obj/projectile/P)

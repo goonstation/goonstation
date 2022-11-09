@@ -1,13 +1,12 @@
 /obj/machinery/brain_slug/restraining_goo
 	name = "sticky goo"
+	icon = 'icons/mob/brainslug.dmi'
 	icon_state = "restrainer"
 	desc = "A pile of sticky goo, restraining movement."
 	anchored = 0
 	density = 0
 	_health = 30
 	var/mob/linked_mob = null
-	var/next_spawn_check = 10 SECONDS
-	//Todo change sound when it is hit to something squishy
 
 	New(var/turf/T, var/mob/mob_to_link = null)
 		..()
@@ -48,6 +47,6 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		user.visible_message("<span class='notice'>[user] hacks away at the goo!</span>")
-		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
+		playsound(src.loc, pick('sound/impact_sounds/Slimy_Hit_1.ogg', 'sound/impact_sounds/Slimy_Hit_2.ogg'), 50, 1)
 		if(src._health <= 0)
 			qdel(src)
