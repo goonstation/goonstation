@@ -742,7 +742,7 @@ stare
 	name = "shooting"
 	minimum_task_ticks = 10
 	maximum_task_ticks = 25
-	var/weight = 10
+	weight = 10
 	target_range = 12
 	var/shoot_range = 6
 	var/run_range = 3
