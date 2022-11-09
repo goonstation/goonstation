@@ -1777,8 +1777,7 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	icon_state = "summonrats"
 	targeted = 0
 	pointCost = 150
-	cooldown = 300 SECONDS
-	start_on_cooldown = 1
+	cooldown = 150 SECONDS
 	ignore_holder_lock = 0
 	var/in_use = 0
 	var/ghost_confirmation_delay  = 30 SECONDS
