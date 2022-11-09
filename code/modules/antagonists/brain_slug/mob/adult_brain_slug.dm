@@ -5,7 +5,7 @@
 	custom_gib_handler = /proc/gibs
 	icon = 'icons/mob/brainslug.dmi'
 	icon_state = "adult_brainslug"
-	//todo death icon
+	icon_state_dead = "dead_adultslug"
 	health_brute = 160
 	health_burn = 90
 	var/deathsound = "sound/impact_sounds/Generic_Snap_1.ogg"

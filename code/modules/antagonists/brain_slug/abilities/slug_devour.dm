@@ -19,7 +19,7 @@
 			return TRUE
 		var/mob/living/carbon/human/H = target
 		actions.start(new/datum/action/bar/icon/devour_action(H, holder.owner), holder.owner)
-		return FALSE
+		return TRUE
 
 /datum/action/bar/icon/devour_action
 	duration = 3 SECONDS
@@ -120,6 +120,8 @@
 		bleed(src.current_target, 10, 2)
 		src.current_target.setStatus("stunned", 2 SECONDS)
 		src.caster.HealDamage("All", 15, 0)
+		var/datum/targetable/ability = caster.abilityHolder.getAbility(/datum/targetable/brain_slug/slug_devour)
+		ability.doCooldown()
 		..()
 
 	onInterrupt()

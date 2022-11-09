@@ -1,7 +1,7 @@
 /datum/targetable/brain_slug/summon_brood
 	name = "Summon brood"
 	desc = "Break down the last useful parts of this failing body and summon your brood. The body is unlikely to survive."
-	icon_state = "slimeshot"
+	icon_state = "brood"
 	cooldown = 120 SECONDS
 	targeted = 0
 	var/max_points = 200
