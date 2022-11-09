@@ -36,15 +36,8 @@
 		// make sure we both set our target and move to our target correctly
 		var/datum/aiTask/succeedable/move/M = subtasks[subtask_index]
 		if(M && !M.move_target)
-			var/target_turf = get_turf(holder.target)
-			if(can_be_adjacent_to_target)
-				var/list/tempPath = get_path_to(holder.owner, target_turf, 40, 1, null, !M.move_through_space)
-				var/length_of_path = length(tempPath)
-				if(length_of_path) // fix runtime Cannot read length(null)
-					M.move_target = tempPath[length_of_path]
-					if(M.move_target)
-						return
-			M.move_target = target_turf
+			M.can_be_adjacent_to_target = src.can_be_adjacent_to_target
+			M.move_target = get_turf(holder.target)
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////
 // WANDER TASK
@@ -91,11 +84,11 @@
 	if(!move_target)
 		fails++
 		return
-	if(length(holder.target_path) && holder.target_path[length(holder.target_path)] == move_target)
+	if(length(holder.target_path) && GET_DIST(holder.target_path[length(holder.target_path)], move_target) <= can_be_adjacent_to_target)
 		src.found_path = holder.target_path
 	else
-		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, 0, null, !move_through_space)
-		if(get_turf(holder.target) == move_target)
+		src.found_path = get_path_to(holder.owner, move_target, src.max_path_dist, can_be_adjacent_to_target, null, !move_through_space)
+		if(GET_DIST(get_turf(holder.target), move_target) <= can_be_adjacent_to_target)
 			holder.target_path = src.found_path
 	if(!src.found_path) // no path :C
 		fails++
@@ -104,6 +97,7 @@
 	src.found_path = null
 	src.move_target = null
 
+
 /datum/aiTask/succeedable/move/on_tick()
 	if(!src.move_target)
 		fails++
@@ -111,11 +105,13 @@
 	if(!length(src.found_path))
 		get_path()
 	if(length(src.found_path))
-		holder.move_to_with_path(move_target,src.found_path,0)
+		holder.move_to_with_path(move_target, src.found_path, 0)
 
 /datum/aiTask/succeedable/move/succeeded()
 	if(move_target)
-		. = (GET_DIST(holder.owner, src.move_target) == 0)
+		. = (GET_DIST(holder.owner, src.move_target) <= can_be_adjacent_to_target)
+		if(.)
+			holder.stop_move()
 		return
 
 /datum/aiTask/succeedable/move/failed()

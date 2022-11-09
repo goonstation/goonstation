@@ -76,13 +76,12 @@ stare
 
 //this whole AI thing was built for flock, and even so, flock just has to be special
 /datum/aiTask/succeedable/move/flock/succeeded()
-	if(move_target)
-		. = (GET_DIST(holder.owner, src.move_target) == 0)
-		if(.)
-			var/mob/living/critter/flock/drone/F = holder.owner
-			if(istype(F) && F.floorrunning)
-				F.end_floorrunning(TRUE)
-		return
+	. = ..()
+	if(.)
+		var/mob/living/critter/flock/drone/F = holder.owner
+		if(istype(F) && F.floorrunning)
+			F.end_floorrunning(TRUE)
+	return
 
 /datum/aiTask/sequence/goalbased/flock/New(parentHolder, transTask)
 	..(parentHolder, transTask)

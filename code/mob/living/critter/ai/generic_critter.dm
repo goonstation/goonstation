@@ -194,8 +194,4 @@
 
 // Don't worry about this, we need to enable unsimulated turf pathing for the critter gauntlet
 /datum/aiTask/sequence/goalbased/critter
-	New()
-		..()
-		if(istype(subtasks[subtask_index], /datum/aiTask/succeedable/move))
-			var/datum/aiTask/succeedable/move/m_subtask = subtasks[subtask_index]
-			m_subtask.move_through_space = TRUE
+	move_through_space = TRUE
