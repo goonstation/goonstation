@@ -6,7 +6,7 @@
 		..()
 		appearance_flags |= NO_CLIENT_COLOR
 
-	set_loc(newloc)
+	set_loc(atom/newloc)
 		. = ..()
 		if(!isnull(newloc))
 			CRASH("HUD object [type] was moved to [newloc] ([newloc.type])")
